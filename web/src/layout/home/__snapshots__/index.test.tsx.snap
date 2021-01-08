@@ -347,7 +347,7 @@ exports[`Home index creates snapshot 1`] = `
                   class="d-none d-sm-block text-light legendIcon"
                 >
                   <small>
-                    Helm chart
+                    Helm charts
                   </small>
                 </div>
               </div>
@@ -471,7 +471,7 @@ exports[`Home index creates snapshot 1`] = `
                   class="d-none d-sm-block text-light legendIcon"
                 >
                   <small>
-                    Krew kubectl plugins
+                    Kubectl plugins
                   </small>
                 </div>
               </div>

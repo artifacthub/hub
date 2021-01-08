@@ -155,7 +155,7 @@ const HomeView = (props: Props) => {
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>Helm chart</small>
+                    <small>Helm charts</small>
                   </div>
                 </div>
               </ExternalLink>
@@ -197,7 +197,7 @@ const HomeView = (props: Props) => {
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>Krew kubectl plugins</small>
+                    <small>Kubectl plugins</small>
                   </div>
                 </div>
               </ExternalLink>
