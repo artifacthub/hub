@@ -107,7 +107,7 @@ Please note that there are some features that are not yet available for Helm rep
 
 For additional information about Helm OCI support, please see the [HIP-0006](https://github.com/helm/community/blob/master/hips/hip-0006.md).
 
-## Krew kubectl plugins repositories
+## Krew kubectl plugins repositories
 
 Artifact Hub is able to process kubectl plugins listed in [Krew index repositories](https://krew.sigs.k8s.io/docs/developer-guide/custom-indexes/). Repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
