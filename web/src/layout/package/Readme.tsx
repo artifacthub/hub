@@ -109,7 +109,7 @@ const Readme = (props: Props) => {
     <ErrorBoundary message="Something went wrong rendering the README file of this package.">
       <span data-testid="readme">
         <ReactMarkdown
-          className={`mt-3 mb-5 ${styles.md}`}
+          className={`mt-3 mb-5 position-relative ${styles.md}`}
           children={readme}
           linkTarget="_blank"
           skipHtml
