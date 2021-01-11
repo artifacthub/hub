@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 0.12.3
-appVersion: 0.12.0
+version: 0.13.0
+appVersion: 0.13.0
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/hub/chart/logo.png
 keywords:
@@ -12,6 +12,8 @@ keywords:
   - falco
   - opa
   - olm
+  - tinkerbell actions
+  - krew
 maintainers:
   - name: Sergio
     email: tegioz@icloud.com
@@ -24,29 +26,23 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
-    - Display `contains security updates` status in UI and new release emails
-    - Display `pre-release` status in UI and new release emails
-    - Add buttons to download and copy configurations
-    - Trackers can now ignore selected packages or versions
-    - Add search capabilities to values schema modal
-    - Add support for combine keywords in values schema
-    - Enrich default webhook payload template with some extra fields
-    - Falco and OPA packages are now indexed by a generic tracker
-    - Add support for multiple rules files in Falco package UI view
-    - Add support for custom install section in UI
-    - Allow pkg metadata files to use either .yaml or .yml extension
-    - Improve repository URL uniqueness check
-    - Bump Trivy to 0.14.0
+    - Add support for Tinkerbell actions
+    - Add support for Krew index repositories
+    - Add experimental OpenID connect support
+    - Improve values schema view
+    - Add endpoint for Harbor replication adapter
+    - Allow setting the branch for git based repositories
+    - Bump Trivy to 0.15.0
     - Some bugs fixes and other improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v0.12.0
+      image: artifacthub/db-migrator:v0.13.0
     - name: hub
-      image: artifacthub/hub:v0.12.0
+      image: artifacthub/hub:v0.13.0
     - name: tracker
-      image: artifacthub/tracker:v0.12.0
+      image: artifacthub/tracker:v0.13.0
     - name: scanner
-      image: artifacthub/scanner:v0.12.0
+      image: artifacthub/scanner:v0.13.0
     - name: trivy
       image: aquasec/trivy:0.15.0
