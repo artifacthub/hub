@@ -102,7 +102,7 @@ tracker:
 
 trivy:
   deploy:
-    image: aquasec/trivy:0.14.0
+    image: aquasec/trivy:0.15.0
     resources: {}
   persistence:
     enabled: false

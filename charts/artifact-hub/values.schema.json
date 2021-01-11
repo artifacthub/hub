@@ -573,7 +573,7 @@
                         "image": {
                             "title": "Trivy container image",
                             "type": "string",
-                            "default": "aquasec/trivy:0.14.0"
+                            "default": "aquasec/trivy:0.15.0"
                         },
                         "resources": {
                             "title": "Trivy pod resource requirements",
