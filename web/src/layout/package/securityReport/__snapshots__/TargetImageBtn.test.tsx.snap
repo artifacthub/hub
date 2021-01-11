@@ -1,25 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TargetImageBtn Render calls onClick 1`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render calls onClick 2`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render does not scrolls into view when target is expanded but is only one 1`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render does not scrolls into view when target is expanded but is only one 2`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render renders component 1`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render renders component 2`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render renders disabled button 1`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render renders disabled button 2`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render scrolls into view when target is expanded 1`] = `<DocumentFragment />`;
-
-exports[`TargetImageBtn Render scrolls into view when target is expanded 2`] = `<DocumentFragment />`;
-
 exports[`TargetImageBtn creates snapshot 1`] = `
 <DocumentFragment>
   <button
@@ -30,5 +10,3 @@ exports[`TargetImageBtn creates snapshot 1`] = `
   </button>
 </DocumentFragment>
 `;
-
-exports[`TargetImageBtn creates snapshot 2`] = `<DocumentFragment />`;

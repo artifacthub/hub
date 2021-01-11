@@ -176,7 +176,7 @@ const HomeView = (props: Props) => {
                 </div>
               </ExternalLink>
             </div>
-            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row align-items-center justify-content-around">
+            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-center justify-content-around">
               <ExternalLink href="https://github.com/operator-framework" className={`col ${styles.iconLink}`}>
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />

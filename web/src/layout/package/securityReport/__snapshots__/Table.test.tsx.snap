@@ -1,21 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SecurityTable Render collapses report 1`] = `<DocumentFragment />`;
-
-exports[`SecurityTable Render collapses report 2`] = `<DocumentFragment />`;
-
-exports[`SecurityTable Render renders component 1`] = `<DocumentFragment />`;
-
-exports[`SecurityTable Render renders component 2`] = `<DocumentFragment />`;
-
-exports[`SecurityTable Render renders empty report 1`] = `<DocumentFragment />`;
-
-exports[`SecurityTable Render renders empty report 2`] = `<DocumentFragment />`;
-
-exports[`SecurityTable Render renders expanded target report 1`] = `<DocumentFragment />`;
-
-exports[`SecurityTable Render renders expanded target report 2`] = `<DocumentFragment />`;
-
 exports[`SecurityTable creates snapshot 1`] = `
 <DocumentFragment>
   <div
@@ -198,5 +182,3 @@ exports[`SecurityTable creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`SecurityTable creates snapshot 2`] = `<DocumentFragment />`;
