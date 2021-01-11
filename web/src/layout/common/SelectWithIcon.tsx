@@ -30,7 +30,7 @@ const CustomSelectValue = (props: any) => (
 );
 
 const SelectWithIcon = (props: Props) => {
-  const handleOnChange = (selectedOption: ValueType<OptionWithIcon>) => {
+  const handleOnChange = (selectedOption: ValueType<OptionWithIcon, false>) => {
     if (selectedOption) {
       const value = (selectedOption as OptionWithIcon).value;
       props.onChange(value);

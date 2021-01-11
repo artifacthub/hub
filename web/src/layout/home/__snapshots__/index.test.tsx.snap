@@ -402,7 +402,7 @@ exports[`Home index creates snapshot 1`] = `
             </a>
           </div>
           <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row align-items-center justify-content-around"
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-center justify-content-around"
           >
             <a
               class="link col iconLink"
