@@ -36,6 +36,7 @@ const (
 	crdsAnnotation                 = "artifacthub.io/crds"
 	crdsExamplesAnnotation         = "artifacthub.io/crdsExamples"
 	imagesAnnotation               = "artifacthub.io/images"
+	licenseAnnotation              = "artifacthub.io/license"
 	linksAnnotation                = "artifacthub.io/links"
 	maintainersAnnotation          = "artifacthub.io/maintainers"
 	operatorAnnotation             = "artifacthub.io/operator"
@@ -440,6 +441,11 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 		if err := yaml.Unmarshal([]byte(v), &images); err == nil {
 			p.ContainersImages = images
 		}
+	}
+
+	// License
+	if v, ok := annotations[licenseAnnotation]; ok && v != "" {
+		p.License = v
 	}
 
 	// Links

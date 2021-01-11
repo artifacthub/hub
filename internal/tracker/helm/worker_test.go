@@ -268,6 +268,7 @@ func TestWorker(t *testing.T) {
 				LogoImageID: "imageID",
 				IsOperator:  true,
 				Description: "Package1 chart",
+				License:     "Apache-2.0",
 				Links: []*hub.Link{
 					{
 						Name: "link1",
@@ -518,6 +519,41 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 						Whitelisted: true,
 					},
 				},
+			},
+			"",
+		},
+		// License
+		{
+			&hub.Package{},
+			map[string]string{
+				licenseAnnotation: "Apache-2.0",
+			},
+			&hub.Package{
+				License: "Apache-2.0",
+			},
+			"",
+		},
+		{
+			&hub.Package{
+				License: "GPL-3",
+			},
+			map[string]string{
+				licenseAnnotation: "Apache-2.0",
+			},
+			&hub.Package{
+				License: "Apache-2.0",
+			},
+			"",
+		},
+		{
+			&hub.Package{
+				License: "Apache-2.0",
+			},
+			map[string]string{
+				licenseAnnotation: "",
+			},
+			&hub.Package{
+				License: "Apache-2.0",
 			},
 			"",
 		},

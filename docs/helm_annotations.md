@@ -28,6 +28,10 @@ This annotation can be used to list the operator's CRDs. They will be visible in
 
 Use this annotation to provide a list of example CRs for the operator's CRDs. Each of the examples can be opened from the corresponding CRD card in the package's detail view.
 
+- **artifacthub.io/license** *(string)*
+
+Use this annotation to indicate the chart's license. By default, Artifact Hub tries to read the chart's license from the `LICENSE` file in the chart, but it's possible to override or provide it with this annotation. It must be a valid [SPDX identifier](https://spdx.org/licenses/).
+
 - **artifacthub.io/links** *(yaml string, see example below)*
 
 This annotation allows including named links, which will be rendered nicely in Artifact Hub. You can use this annotation to include links not included previously in the Chart.yaml file, or you can use it to name links already present (in the sources section, for example).
@@ -77,6 +81,7 @@ annotations:
         name: mykind
       spec:
         replicas: 1
+  artifacthub.io/license: Apache-2.0
   artifacthub.io/links: |
     - name: link1
       url: https://link1.url
