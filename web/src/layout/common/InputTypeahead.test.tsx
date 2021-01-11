@@ -42,6 +42,10 @@ const defaultProps = {
   visibleClear: true,
 };
 
+const itemScrollMock = jest.fn();
+
+Object.defineProperty(HTMLElement.prototype, 'scroll', { configurable: true, value: itemScrollMock });
+
 describe('InputTypeahead', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -152,5 +156,67 @@ describe('InputTypeahead', () => {
     const { container } = render(<InputTypeahead {...props} />);
 
     expect(container).toBeEmptyDOMElement();
+  });
+
+  describe('on key down', () => {
+    it('highlightes first option', () => {
+      const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+
+      const options = getAllByTestId('typeaheadDropdownBtn');
+      expect(options).toHaveLength(4);
+
+      const input = getByTestId('typeaheadInput');
+      fireEvent.keyDown(input, { key: 'ArrowDown' });
+
+      expect(itemScrollMock).toHaveBeenCalledTimes(1);
+      expect(options[0]).toHaveClass('dropdown-item option selected hightlighted');
+    });
+
+    it('highlightes last option', () => {
+      const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+
+      const options = getAllByTestId('typeaheadDropdownBtn');
+      expect(options).toHaveLength(4);
+
+      const input = getByTestId('typeaheadInput');
+      fireEvent.keyDown(input, { key: 'ArrowUp' });
+
+      expect(itemScrollMock).toHaveBeenCalledTimes(1);
+      expect(options[3]).toHaveClass('dropdown-item option hightlighted');
+    });
+
+    it('highlightes first option and unselects it', () => {
+      const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+
+      const options = getAllByTestId('typeaheadDropdownBtn');
+      expect(options).toHaveLength(4);
+
+      const input = getByTestId('typeaheadInput');
+      fireEvent.keyDown(input, { key: 'ArrowDown' });
+
+      expect(itemScrollMock).toHaveBeenCalledTimes(1);
+      expect(options[0]).toHaveClass('dropdown-item option selected hightlighted');
+
+      fireEvent.keyDown(input, { key: 'Enter' });
+      expect(onChangeMock).toHaveBeenCalledTimes(1);
+      expect(onChangeMock).toHaveBeenCalledWith('key1', 'opt2', false);
+    });
+
+    it('highlightes last option and selects it', () => {
+      const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+
+      const options = getAllByTestId('typeaheadDropdownBtn');
+      expect(options).toHaveLength(4);
+
+      const input = getByTestId('typeaheadInput');
+      fireEvent.keyDown(input, { key: 'ArrowUp' });
+
+      expect(itemScrollMock).toHaveBeenCalledTimes(1);
+      expect(options[3]).toHaveClass('dropdown-item option hightlighted');
+
+      fireEvent.keyDown(input, { key: 'Enter' });
+      expect(onChangeMock).toHaveBeenCalledTimes(1);
+      expect(onChangeMock).toHaveBeenCalledWith('key2', 'opt12', true);
+    });
   });
 });

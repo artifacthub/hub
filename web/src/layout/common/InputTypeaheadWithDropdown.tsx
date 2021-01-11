@@ -95,6 +95,7 @@ const InputTypeaheadWithDropdown = (props: Props) => {
             {...props}
             inputWrapperClassName="border-bottom p-1 mb-0"
             visibleClear
+            autofocus
             onClear={() => {
               collapseDropdown();
               props.onResetSomeFilters(Object.keys(props.selected));

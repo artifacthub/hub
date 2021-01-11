@@ -21,12 +21,17 @@ interface Props {
   visibleClear: boolean;
   onChangeSelection?: () => void;
   displayItemsInValueLength?: number;
+  autofocus?: boolean;
 }
+
+const ITEM_HEIGHT = 37;
 
 const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeaheadField>) => {
   const inputEl = useRef<HTMLInputElement>(null);
+  const itemsWrapper = useRef<HTMLDivElement | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [hightlightedText, setHightlightedText] = useState<RegExp | null>(null);
+  const [highlightedItem, setHighlightedItem] = useState<number | null>(null);
 
   useImperativeHandle(ref, () => ({
     reset: () => {
@@ -44,6 +49,10 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
     let filteredItems: Option[] = [];
     let elements: any[] | null = null;
 
+    if (!isNull(highlightedItem)) {
+      setHighlightedItem(null);
+    }
+
     if (isUndefined(props.displayItemsInValueLength) || inputValue.length >= props.displayItemsInValueLength) {
       filteredItems = props.options.filter((opt: Option) => opt.name.toLowerCase().includes(inputValue.toLowerCase()));
       elements = orderBy(
@@ -60,7 +69,7 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
     }
 
     return elements;
-  }, [inputValue, props.options, props.selected, props.displayItemsInValueLength]);
+  }, [highlightedItem, props.displayItemsInValueLength, props.options, props.selected, inputValue]);
 
   const getSelectedItems = useCallback((): Option[] => {
     let selectedItems: Option[] = [];
@@ -79,7 +88,15 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
     if (!isNull(hightlightedText)) {
       const stringParts: string[] = compact(name.split(hightlightedText));
       if (stringParts.length === 1) {
-        return <>{name}</>;
+        return (
+          <span
+            className={classnames({
+              'font-weight-bold hightlighted': name.toLowerCase() === inputValue.toLowerCase(),
+            })}
+          >
+            {name}
+          </span>
+        );
       }
 
       return (
@@ -101,12 +118,12 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
     }
   };
 
-  const [visibleItems, setVisibleItems] = useState<Option[] | null>(getVisibleItems());
+  const [visibleItems, setVisibleItems] = useState<Option[] | null>(null);
   const [selectedItems, setSelectedItems] = useState<Option[]>(getSelectedItems());
 
   useEffect(() => {
     setVisibleItems(getVisibleItems());
-  }, [getVisibleItems, inputValue, props.options]);
+  }, [inputValue, props.options]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     setSelectedItems(getSelectedItems());
@@ -116,8 +133,70 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
     e.stopPropagation();
     e.preventDefault();
 
+    setHighlightedItem(null);
     setInputValue(e.target.value);
     setHightlightedText(e.target.value !== '' ? new RegExp(`(${e.target.value.toLowerCase()})`, 'gi') : null);
+  };
+
+  const onSelect = (filterKey: string, id: string, isSelected: boolean) => {
+    setHighlightedItem(null);
+    props.onChange(filterKey, id, !isSelected);
+    if (props.onChangeSelection) {
+      props.onChangeSelection();
+    }
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    switch (e.key) {
+      case 'ArrowDown':
+        updateHighlightedItem('down');
+        return;
+      case 'ArrowUp':
+        updateHighlightedItem('up');
+        return;
+      case 'Enter':
+        if (!isNull(highlightedItem) && visibleItems) {
+          const item = visibleItems[highlightedItem];
+          const isSelected =
+            props.selected.hasOwnProperty(item.filterKey) &&
+            props.selected[item.filterKey].includes(item.id.toString());
+          onSelect(item.filterKey, item.id.toString(), isSelected);
+        }
+        return;
+      default:
+        return;
+    }
+  };
+
+  const scrollDropdown = (index: number) => {
+    if (itemsWrapper && itemsWrapper.current) {
+      const itemsOnScreen = Math.floor(itemsWrapper.current.clientHeight / ITEM_HEIGHT);
+      if (index + 1 > itemsOnScreen) {
+        itemsWrapper.current.scroll(0, (index + 1 - itemsOnScreen) * ITEM_HEIGHT);
+      } else {
+        itemsWrapper.current.scroll(0, 0);
+      }
+    }
+  };
+
+  const updateHighlightedItem = (arrow: 'up' | 'down') => {
+    if (!isNull(highlightedItem)) {
+      let newIndex: number = arrow === 'up' ? highlightedItem - 1 : highlightedItem + 1;
+      if (newIndex > visibleItems!.length - 1) {
+        newIndex = 0;
+      }
+      if (newIndex < 0) {
+        newIndex = visibleItems!.length - 1;
+      }
+      scrollDropdown(newIndex);
+      setHighlightedItem(newIndex);
+    } else {
+      if (visibleItems && visibleItems.length > 0) {
+        const newIndex = arrow === 'up' ? visibleItems.length - 1 : 0;
+        scrollDropdown(newIndex);
+        setHighlightedItem(newIndex);
+      }
+    }
   };
 
   if (props.options.length === 0) return null;
@@ -139,7 +218,9 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
           name={`inputTypeahead_${props.label}`}
           value={inputValue}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           spellCheck="false"
+          autoFocus={!isUndefined(props.autofocus) && props.autofocus}
         />
 
         {props.searchIcon && <FaSearch className={`text-muted position-absolute ${styles.searchIcon}`} />}
@@ -171,8 +252,8 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
               <small className="text-muted">Sorry, no matches found</small>
             </div>
           ) : (
-            <div className={`${styles.itemsList} ${props.listClassName}`}>
-              {visibleItems.map((opt: Option) => {
+            <div className={`${styles.itemsList} ${props.listClassName}`} ref={itemsWrapper}>
+              {visibleItems.map((opt: Option, index: number) => {
                 const isSelected =
                   props.selected.hasOwnProperty(opt.filterKey) &&
                   props.selected[opt.filterKey].includes(opt.id.toString());
@@ -182,11 +263,19 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
                   <button
                     key={`opt_${opt.filterKey}_${opt.id}`}
                     data-testid="typeaheadDropdownBtn"
-                    className={classnames('dropdown-item', styles.option, props.optClassName, {
-                      [styles.selected]: isSelected,
-                    })}
+                    className={classnames(
+                      'dropdown-item',
+                      styles.option,
+                      props.optClassName,
+                      {
+                        [styles.selected]: isSelected,
+                      },
+                      {
+                        [styles.hightlighted]: index === highlightedItem,
+                      }
+                    )}
                     onClick={() => {
-                      props.onChange(opt.filterKey, opt.id.toString(), !isSelected);
+                      onSelect(opt.filterKey, opt.id.toString(), isSelected);
                       if (props.onChangeSelection) {
                         props.onChangeSelection();
                       }

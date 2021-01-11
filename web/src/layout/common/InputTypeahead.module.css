@@ -20,6 +20,10 @@
   background-color: var(--color-black-5);
 }
 
+.hightlighted {
+  background-color: var(--color-3-50);
+}
+
 .checkMark {
   left: -18px;
 }
