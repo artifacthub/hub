@@ -843,7 +843,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updateOrganization(org);
+        const response = await methods.API.updateOrganization(org, 'artifacthub');
 
         expect(fetchMock.mock.calls.length).toEqual(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub');

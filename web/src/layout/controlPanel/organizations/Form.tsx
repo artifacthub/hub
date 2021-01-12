@@ -50,16 +50,16 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
     try {
       if (isUndefined(props.organization)) {
         await API.addOrganization(organization);
+        if (!isUndefined(props.onSuccess)) {
+          props.onSuccess();
+        }
       } else {
-        if (ctx.prefs.controlPanel.selectedOrg && ctx.prefs.controlPanel.selectedOrg === organization.name) {
+        if (ctx.prefs.controlPanel.selectedOrg && ctx.prefs.controlPanel.selectedOrg === props.organization.name) {
           dispatch(updateOrg(organization.name));
         }
-        await API.updateOrganization(organization);
+        await API.updateOrganization(organization, props.organization.name);
       }
       props.setIsSending(false);
-      if (!isUndefined(props.onSuccess)) {
-        props.onSuccess();
-      }
     } catch (err) {
       props.setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -154,7 +154,6 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
         labelLegend={<small className="ml-1 font-italic">(Required)</small>}
         name="name"
         value={props.organization ? props.organization.name : ''}
-        readOnly={!isUndefined(props.organization)}
         invalidText={{
           default: 'This field is required',
           patternMismatch: 'Only lower case letters, numbers or hyphens',

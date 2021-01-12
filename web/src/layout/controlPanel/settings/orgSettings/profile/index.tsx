@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -70,7 +71,11 @@ const ProfileSection = (props: Props) => {
     <main role="main" className="p-0">
       <div className={`h3 pb-2 border-bottom ${styles.title}`}>Profile information</div>
 
-      <div className={`mt-4 mt-md-5 ${styles.form}`}>
+      <div
+        className={classnames('mt-4 mt-md-5', {
+          [styles.form]: !isNull(organization),
+        })}
+      >
         {(isUndefined(organization) || isLoading) && <Loading />}
 
         {!isUndefined(organization) && (

@@ -31,7 +31,7 @@ const (
 	getUserEmailDBQ      = `select email from "user" where alias = $1`
 	getUserOrgsDBQ       = `select get_user_organizations($1::uuid)`
 	updateAuthzPolicyDBQ = `select update_authorization_policy($1::uuid, $2::text, $3::jsonb)`
-	updateOrgDBQ         = `select update_organization($1::uuid, $2::jsonb)`
+	updateOrgDBQ         = `select update_organization($1::uuid, $2::text, $3::jsonb)`
 )
 
 var (
@@ -60,16 +60,8 @@ func (m *Manager) Add(ctx context.Context, org *hub.Organization) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Validate input
-	if org.Name == "" {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
-	}
-	if !organizationNameRE.MatchString(org.Name) {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid name")
-	}
-	if org.LogoImageID != "" {
-		if _, err := uuid.FromString(org.LogoImageID); err != nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid logo image id")
-		}
+	if err := validateOrg(org); err != nil {
+		return err
 	}
 
 	// Add org to database
@@ -287,19 +279,17 @@ func (m *Manager) GetMembersJSON(ctx context.Context, orgName string) ([]byte, e
 }
 
 // Update updates the provided organization in the database.
-func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
+func (m *Manager) Update(ctx context.Context, orgName string, org *hub.Organization) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Validate input
-	if org.LogoImageID != "" {
-		if _, err := uuid.FromString(org.LogoImageID); err != nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid logo image id")
-		}
+	if err := validateOrg(org); err != nil {
+		return err
 	}
 
 	// Authorize action
 	if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
-		OrganizationName: org.Name,
+		OrganizationName: orgName,
 		UserID:           userID,
 		Action:           hub.UpdateOrganization,
 	}); err != nil {
@@ -308,7 +298,7 @@ func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
 
 	// Update organization in database
 	orgJSON, _ := json.Marshal(org)
-	_, err := m.db.Exec(ctx, updateOrgDBQ, userID, orgJSON)
+	_, err := m.db.Exec(ctx, updateOrgDBQ, userID, orgName, orgJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -380,4 +370,20 @@ func (m *Manager) UpdateAuthorizationPolicy(
 		return hub.ErrInsufficientPrivilege
 	}
 	return err
+}
+
+// validateOrg checks if the organization provided is valid.
+func validateOrg(org *hub.Organization) error {
+	if org.Name == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
+	}
+	if !organizationNameRE.MatchString(org.Name) {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid name")
+	}
+	if org.LogoImageID != "" {
+		if _, err := uuid.FromString(org.LogoImageID); err != nil {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid logo image id")
+		}
+	}
+	return nil
 }

@@ -158,14 +158,14 @@ func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
 // Update is an http handler that updates the provided organization in the
 // database.
 func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
-	o := &hub.Organization{}
-	if err := json.NewDecoder(r.Body).Decode(&o); err != nil {
+	orgName := chi.URLParam(r, "orgName")
+	org := &hub.Organization{}
+	if err := json.NewDecoder(r.Body).Decode(&org); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Msg("invalid organization")
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	o.Name = chi.URLParam(r, "orgName")
-	if err := h.orgManager.Update(r.Context(), o); err != nil {
+	if err := h.orgManager.Update(r.Context(), orgName, org); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		helpers.RenderErrorJSON(w, err)
 		return

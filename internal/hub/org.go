@@ -27,6 +27,6 @@ type OrganizationManager interface {
 	GetByUserJSON(ctx context.Context) ([]byte, error)
 	GetAuthorizationPolicyJSON(ctx context.Context, orgName string) ([]byte, error)
 	GetMembersJSON(ctx context.Context, orgName string) ([]byte, error)
-	Update(ctx context.Context, org *Organization) error
+	Update(ctx context.Context, orgName string, org *Organization) error
 	UpdateAuthorizationPolicy(ctx context.Context, orgName string, policy *AuthorizationPolicy) error
 }

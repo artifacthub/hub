@@ -722,7 +722,7 @@ func TestUpdate(t *testing.T) {
 		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
-			_ = m.Update(context.Background(), &hub.Organization{})
+			_ = m.Update(context.Background(), "org1", &hub.Organization{})
 		})
 	})
 
@@ -731,6 +731,24 @@ func TestUpdate(t *testing.T) {
 			errMsg string
 			org    *hub.Organization
 		}{
+			{
+				"name not provided",
+				&hub.Organization{
+					Name: "",
+				},
+			},
+			{
+				"invalid name",
+				&hub.Organization{
+					Name: "_org1",
+				},
+			},
+			{
+				"invalid name",
+				&hub.Organization{
+					Name: "UPPERCASE",
+				},
+			},
 			{
 				"invalid logo image id",
 				&hub.Organization{
@@ -744,7 +762,7 @@ func TestUpdate(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil, nil, nil)
-				err := m.Update(ctx, tc.org)
+				err := m.Update(ctx, "org1", tc.org)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
@@ -755,13 +773,16 @@ func TestUpdate(t *testing.T) {
 		t.Parallel()
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
-			OrganizationName: "orgName",
+			OrganizationName: "org1",
 			UserID:           "userID",
 			Action:           hub.UpdateOrganization,
 		}).Return(tests.ErrFake)
 		m := NewManager(nil, nil, az)
 
-		err := m.Update(ctx, &hub.Organization{Name: "orgName"})
+		err := m.Update(ctx, "org1", &hub.Organization{
+			Name:        "org1",
+			DisplayName: "Organization 1 updated",
+		})
 		assert.Equal(t, tests.ErrFake, err)
 		az.AssertExpectations(t)
 	})
@@ -769,16 +790,19 @@ func TestUpdate(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, updateOrgDBQ, "userID", mock.Anything).Return(nil)
+		db.On("Exec", ctx, updateOrgDBQ, "userID", "org1", mock.Anything).Return(nil)
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
-			OrganizationName: "orgName",
+			OrganizationName: "org1",
 			UserID:           "userID",
 			Action:           hub.UpdateOrganization,
 		}).Return(nil)
 		m := NewManager(db, nil, az)
 
-		err := m.Update(ctx, &hub.Organization{Name: "orgName"})
+		err := m.Update(ctx, "org1", &hub.Organization{
+			Name:        "org1",
+			DisplayName: "Organization 1 updated",
+		})
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 		az.AssertExpectations(t)
@@ -803,16 +827,19 @@ func TestUpdate(t *testing.T) {
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, updateOrgDBQ, "userID", mock.Anything).Return(tc.dbErr)
+				db.On("Exec", ctx, updateOrgDBQ, "userID", "org1", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
-					OrganizationName: "orgName",
+					OrganizationName: "org1",
 					UserID:           "userID",
 					Action:           hub.UpdateOrganization,
 				}).Return(nil)
 				m := NewManager(db, nil, az)
 
-				err := m.Update(ctx, &hub.Organization{Name: "orgName"})
+				err := m.Update(ctx, "org1", &hub.Organization{
+					Name:        "org1",
+					DisplayName: "Organization 1 updated",
+				})
 				assert.Equal(t, tc.expectedError, err)
 				db.AssertExpectations(t)
 				az.AssertExpectations(t)
