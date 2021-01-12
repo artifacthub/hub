@@ -22,6 +22,7 @@ export const API = {
   getOrganization: jest.fn(),
   addOrganization: jest.fn(),
   updateOrganization: jest.fn(),
+  deleteOrganization: jest.fn(),
   getOrganizationMembers: jest.fn(),
   addOrganizationMember: jest.fn(),
   deleteOrganizationMember: jest.fn(),

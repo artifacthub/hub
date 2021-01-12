@@ -1,37 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Organization settings index creates snapshot 1`] = `
+exports[`Organization profile settings index creates snapshot 1`] = `
 <DocumentFragment>
   <main
     class="p-0"
     role="main"
   >
     <div
+      class="position-absolute p-5 wrapper undefined"
+    >
+      <div
+        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+      >
+        <div
+          class="spinner-border text-primary spinner undefined"
+          role="status"
+        >
+          <span
+            class="sr-only"
+          >
+            Loading...
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
       class="h3 pb-2 border-bottom title"
     >
       Profile information
     </div>
     <div
-      class="mt-4 mt-md-5 form"
+      class="mt-4 mt-md-5 mb-5 form"
+    />
+    <div
+      class="h3 mb-4 pb-2 border-bottom title"
     >
-      <div
-        class="position-absolute p-5 wrapper undefined"
-      >
-        <div
-          class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-        >
-          <div
-            class="spinner-border text-primary spinner undefined"
-            role="status"
-          >
-            <span
-              class="sr-only"
-            >
-              Loading...
-            </span>
-          </div>
-        </div>
-      </div>
+      Delete organization
     </div>
   </main>
 </DocumentFragment>
