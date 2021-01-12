@@ -81,8 +81,13 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                               >
                                 <img
                                   alt="Icon"
-                                  class="mw-100 mh-100 repoIcon"
+                                  class="mw-100 mh-100 iconLight"
                                   src="/static/media/helm-chart.svg"
+                                />
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconDark"
+                                  src="/static/media/helm-chart-light.svg"
                                 />
                               </div>
                             </span>

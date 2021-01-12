@@ -11,6 +11,7 @@ import AttachedIconToText from './AttachedIconToText';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
 import OfficialBadge from './OfficialBadge';
 import RepositoryIcon from './RepositoryIcon';
+import RepositoryIconLabel from './RepositoryIconLabel';
 import styles from './RepositoryInfo.module.css';
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
@@ -103,7 +104,7 @@ const RepositoryInfo = (props: Props) => {
         <div className="d-flex flex-row aling-items-baseline text-truncate">
           <div className="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase">
             <small>Repo:</small>
-            {props.visibleIcon && <RepositoryIcon kind={props.repository.kind} className={`ml-1 ${styles.repoIcon}`} />}
+            {props.visibleIcon && <RepositoryIconLabel kind={props.repository.kind} className="ml-1" />}
           </div>
 
           <button

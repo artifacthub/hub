@@ -75,6 +75,14 @@
     background-color: var(--color-1-500);
   }
 
+  .iconLight {
+    display: inline;
+  }
+
+  .iconDark {
+    display: none;
+  }
+
   .page-item {
     &.active .page-link {
       background-color: $color1;

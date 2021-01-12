@@ -1,14 +1,16 @@
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/elegant.css';
+import 'codemirror/theme/material-darker.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/go/go';
 import 'codemirror-rego/mode';
 
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 
+import { AppCtx } from '../../context/AppCtx';
 import styles from './CodeEditor.module.css';
 
 interface Props {
@@ -19,6 +21,9 @@ interface Props {
 }
 
 const CodeEditor: React.ElementType = (props: Props) => {
+  const { ctx } = useContext(AppCtx);
+  const { efective } = ctx.prefs.theme;
+
   const isDisabled = !isUndefined(props.disabled) && props.disabled;
 
   return (
@@ -31,7 +36,7 @@ const CodeEditor: React.ElementType = (props: Props) => {
           json: true,
           statementIndent: 2,
         },
-        theme: 'elegant',
+        theme: efective === 'dark' ? 'material-darker' : 'elegant',
         lineNumbers: true,
         inputStyle: 'contenteditable',
         viewportMargin: Infinity,

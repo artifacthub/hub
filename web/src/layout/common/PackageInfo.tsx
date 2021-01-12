@@ -16,7 +16,7 @@ import Label from './Label';
 import OfficialBadge from './OfficialBadge';
 import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageInfo.module.css';
-import RepositoryIcon from './RepositoryIcon';
+import RepositoryIconLabel from './RepositoryIconLabel';
 import RepositoryInfo from './RepositoryInfo';
 import SecurityRating from './SecutityRating';
 import SignedBadge from './SignedBadge';
@@ -48,8 +48,7 @@ const PackageInfo = (props: Props) => {
           </div>
         </span>
       )}
-
-      <RepositoryIcon className={styles.icon} kind={props.package.repository.kind} />
+      <RepositoryIconLabel kind={props.package.repository.kind} />
     </div>
   );
 
@@ -202,7 +201,7 @@ const PackageInfo = (props: Props) => {
                     <License
                       license={props.package.license}
                       className="text-truncate"
-                      linkClassName={`${styles.link} ${styles.subtitle} ${styles.licenseBtn}`}
+                      linkClassName={`${styles.link} ${styles.subtitle} ${styles.licenseBtn} text-truncate mw-100`}
                       visibleIcon={false}
                       btnType
                     />
@@ -215,10 +214,10 @@ const PackageInfo = (props: Props) => {
           <div
             className={`d-none d-${
               props.breakpointForInfoSection || 'md'
-            }-flex flex-column align-items-end mb-auto ml-3`}
+            }-flex flex-column align-items-end mb-auto ml-2`}
           >
-            <div className="mb-2">{createdAt}</div>
             {starsAndKindInfo}
+            <div className="mt-1">{createdAt}</div>
           </div>
         </div>
       </div>
@@ -229,12 +228,12 @@ const PackageInfo = (props: Props) => {
       <div
         className={`d-flex d-${
           props.breakpointForInfoSection || 'md'
-        }-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-${
+        }-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-${
           props.breakpointForInfoSection || 'md'
         }-0`}
       >
         {createdAt}
-        {starsAndKindInfo}
+        <span className="mt-1">{starsAndKindInfo}</span>
       </div>
 
       <div className={`d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto ${styles.labelsWrapper}`}>

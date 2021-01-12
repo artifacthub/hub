@@ -11,9 +11,11 @@ exports[`License creates snapshot 1`] = `
       target="_blank"
     >
       <div
-        class="d-flex align-items-center"
+        class="d-flex align-items-center mw-100 text-truncate"
       >
-        <div>
+        <div
+          class="mw-100 text-truncate undefined"
+        >
           MIT
         </div>
         <span

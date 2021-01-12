@@ -71,9 +71,9 @@ const License = (props: Props) => {
           className={props.linkClassName}
           btnType={props.btnType}
         >
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center mw-100 text-truncate">
             {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
-            <div className={props.linkContentClassName}>{props.license}</div>
+            <div className={`mw-100 text-truncate ${props.linkContentClassName}`}>{props.license}</div>
             <span
               className={classnames(styles.smallIcon, {
                 [styles.alignedSmallIcon]: isUndefined(props.visibleIcon) || !props.visibleIcon,

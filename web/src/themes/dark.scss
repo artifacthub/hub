@@ -429,12 +429,12 @@
     }
   }
 
-  .repoIcon {
-    filter: grayscale(100%) invert(1) brightness(2);
+  .iconLight {
+    display: none;
   }
 
-  .textLight .repoIcon {
-    filter: none;
+  .iconDark {
+    display: inline;
   }
 
   .imageWrapper {

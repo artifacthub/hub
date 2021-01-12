@@ -10,7 +10,11 @@
 }
 
 .tooltipArrow {
-  right: 5px !important;
+  right: 138px !important;
+}
+
+.ratingLetter {
+  top: 1px;
 }
 
 .link {
