@@ -71,8 +71,8 @@ func (m *ManagerMock) GetMembersJSON(ctx context.Context, orgName string) ([]byt
 }
 
 // Update implements the OrganizationManager interface.
-func (m *ManagerMock) Update(ctx context.Context, org *hub.Organization) error {
-	args := m.Called(ctx, org)
+func (m *ManagerMock) Update(ctx context.Context, orgName string, org *hub.Organization) error {
+	args := m.Called(ctx, orgName, org)
 	return args.Error(0)
 }
 

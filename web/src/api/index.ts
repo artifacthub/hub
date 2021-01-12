@@ -372,13 +372,13 @@ export const API = {
     });
   },
 
-  updateOrganization: (organization: Organization): Promise<null | string> => {
+  updateOrganization: (organization: Organization, name: string): Promise<null | string> => {
     const org = renameKeysInObject(organization, {
       displayName: 'display_name',
       logoImageId: 'logo_image_id',
       homeUrl: 'home_url',
     });
-    return apiFetch(`${API_BASE_URL}/orgs/${org.name}`, {
+    return apiFetch(`${API_BASE_URL}/orgs/${name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

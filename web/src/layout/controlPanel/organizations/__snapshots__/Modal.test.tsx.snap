@@ -119,7 +119,6 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                     data-testid="nameInput"
                     name="name"
                     pattern="[a-z0-9-]+"
-                    readonly=""
                     required=""
                     spellcheck="false"
                     type="text"

@@ -613,6 +613,13 @@ func TestGetMembers(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"orgName"},
+			Values: []string{"org1"},
+		},
+	}
+
 	t.Run("invalid organization provided", func(t *testing.T) {
 		testCases := []struct {
 			description string
@@ -642,10 +649,11 @@ func TestUpdate(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
 				if tc.omErr != nil {
-					hw.om.On("Update", r.Context(), mock.Anything).Return(tc.omErr)
+					hw.om.On("Update", r.Context(), "org1", mock.Anything).Return(tc.omErr)
 				}
 				hw.h.Update(w, r)
 				resp := w.Result()
@@ -696,16 +704,10 @@ func TestUpdate(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-				rctx := &chi.Context{
-					URLParams: chi.RouteParams{
-						Keys:   []string{"orgName"},
-						Values: []string{"org1"},
-					},
-				}
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.om.On("Update", r.Context(), o).Return(tc.err)
+				hw.om.On("Update", r.Context(), "org1", o).Return(tc.err)
 				hw.h.Update(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
