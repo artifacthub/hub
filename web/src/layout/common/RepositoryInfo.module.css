@@ -45,13 +45,6 @@
   word-break: break-all;
 }
 
-.repoIcon {
-  height: 16px;
-  width: auto;
-  position: relative;
-  top: 3px;
-}
-
 .infoIcon {
   min-width: 1rem;
   position: relative;

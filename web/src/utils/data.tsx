@@ -61,6 +61,7 @@ export interface RepoKindDef {
   kind: RepositoryKind;
   label: string;
   name: string;
+  singular: string;
   icon: JSX.Element;
   active: boolean;
 }
@@ -70,6 +71,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Helm,
     label: 'helm',
     name: 'Helm charts',
+    singular: 'Helm chart',
     icon: <RepositoryIcon kind={RepositoryKind.Helm} className="mw-100 mh-100" />,
     active: true,
   },
@@ -77,6 +79,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Falco,
     label: 'falco',
     name: 'Falco rules',
+    singular: 'Falco rules',
     icon: <RepositoryIcon kind={RepositoryKind.Falco} className="mw-100 mh-100" />,
     active: true,
   },
@@ -84,6 +87,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.OPA,
     label: 'opa',
     name: 'OPA policies',
+    singular: 'OPA policies',
     icon: <RepositoryIcon kind={RepositoryKind.OPA} className="mw-100 mh-100" />,
     active: true,
   },
@@ -91,6 +95,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.OLM,
     label: 'olm',
     name: 'OLM operators',
+    singular: 'OLM operator',
     icon: <RepositoryIcon kind={RepositoryKind.OLM} className="mw-100 mh-100" />,
     active: true,
   },
@@ -98,6 +103,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.TBAction,
     label: 'tbaction',
     name: 'Tinkerbell actions',
+    singular: 'Tinkerbell action',
     icon: <RepositoryIcon kind={RepositoryKind.TBAction} className="mw-100 mh-100" />,
     active: true,
   },
@@ -105,6 +111,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Krew,
     label: 'krew',
     name: 'Krew kubectl plugins',
+    singular: 'Kubectl plugin',
     icon: <RepositoryIcon kind={RepositoryKind.Krew} className="mw-100 mh-100" />,
     active: true,
   },

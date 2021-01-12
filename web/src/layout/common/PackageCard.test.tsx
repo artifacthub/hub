@@ -106,7 +106,7 @@ describe('PackageCard', () => {
       const buttons = queryAllByTestId('repoLink');
       expect(buttons).toHaveLength(2);
       const icons = queryAllByAltText('Icon');
-      expect(icons).toHaveLength(4);
+      expect(icons).toHaveLength(8);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
       fireEvent.click(buttons[0]!);

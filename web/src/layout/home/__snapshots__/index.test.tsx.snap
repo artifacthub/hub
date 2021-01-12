@@ -340,7 +340,7 @@ exports[`Home index creates snapshot 1`] = `
               >
                 <img
                   alt="Icon"
-                  class="aboutIcon repoIcon"
+                  class="aboutIcon"
                   src="/static/media/helm-chart-light.svg"
                 />
                 <div
@@ -364,7 +364,7 @@ exports[`Home index creates snapshot 1`] = `
               >
                 <img
                   alt="Icon"
-                  class="aboutIcon repoIcon"
+                  class="aboutIcon"
                   src="/static/media/falco-rules-light.svg"
                 />
                 <div
@@ -388,7 +388,7 @@ exports[`Home index creates snapshot 1`] = `
               >
                 <img
                   alt="Icon"
-                  class="aboutIcon repoIcon"
+                  class="aboutIcon"
                   src="/static/media/opa-policies-light.svg"
                 />
                 <div
@@ -416,7 +416,7 @@ exports[`Home index creates snapshot 1`] = `
               >
                 <img
                   alt="Icon"
-                  class="aboutIcon repoIcon"
+                  class="aboutIcon"
                   src="/static/media/olm-operators-light.svg"
                 />
                 <div
@@ -440,7 +440,7 @@ exports[`Home index creates snapshot 1`] = `
               >
                 <img
                   alt="Icon"
-                  class="aboutIcon repoIcon"
+                  class="aboutIcon"
                   src="/static/media/tinkerbell-actions-light.svg"
                 />
                 <div
@@ -464,7 +464,7 @@ exports[`Home index creates snapshot 1`] = `
               >
                 <img
                   alt="Icon"
-                  class="aboutIcon repoIcon"
+                  class="aboutIcon"
                   src="/static/media/krew-plugins-light.svg"
                 />
                 <div

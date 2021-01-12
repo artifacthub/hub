@@ -6,8 +6,7 @@ import styles from './Label.module.css';
 
 interface Props {
   icon?: JSX.Element;
-  rightIcon?: JSX.Element;
-  bgRightIcon?: string;
+  bgLeftIcon?: string;
   text: string;
   labelStyle?: string;
   className?: string;
@@ -26,28 +25,20 @@ const Label = (props: Props) => (
       )}
     >
       {!isUndefined(props.icon) && (
-        <div className={`text-center labelIconWrapper ${styles.iconWrapper}`}>{props.icon}</div>
+        <div
+          className={`text-center labelIconWrapper ${styles.iconWrapper}`}
+          style={{
+            backgroundColor: props.bgLeftIcon,
+          }}
+        >
+          {props.icon}
+        </div>
       )}
       <div
-        className={classnames(
-          'text-nowrap',
-          styles.labelText,
-          { [styles.labelTextNoIcon]: isUndefined(props.icon) },
-          { [styles.labelTextWithRightIcon]: !isUndefined(props.rightIcon) }
-        )}
+        className={classnames('text-nowrap', styles.labelText, { [styles.labelTextNoIcon]: isUndefined(props.icon) })}
       >
         {props.text}
       </div>
-      {!isUndefined(props.rightIcon) && (
-        <div
-          className={`text-center text-light font-weight-bold ${styles.iconRightWrapper}`}
-          style={{
-            backgroundColor: props.bgRightIcon,
-          }}
-        >
-          {props.rightIcon}
-        </div>
-      )}
     </div>
   </div>
 );

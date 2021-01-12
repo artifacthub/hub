@@ -37,12 +37,16 @@ const ICONS = {
 };
 
 const RepositoryIcon = (props: Props) => {
-  let src = ICONS[props.kind].default;
-  if (!isUndefined(props.type)) {
-    src = ICONS[props.kind][props.type];
+  if (!isUndefined(props.type) && props.type === 'white') {
+    return <img alt="Icon" src={ICONS[props.kind][props.type]} className={props.className} />;
+  } else {
+    return (
+      <>
+        <img alt="Icon" src={ICONS[props.kind].default} className={`${props.className} iconLight`} />
+        <img alt="Icon" src={ICONS[props.kind].white} className={`${props.className} iconDark`} />
+      </>
+    );
   }
-
-  return <img alt="Icon" src={src} className={`${props.className} repoIcon`} />;
 };
 
 export default RepositoryIcon;

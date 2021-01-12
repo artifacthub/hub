@@ -15,10 +15,6 @@
   padding-left: 5px;
 }
 
-.labelTextWithRightIcon {
-  padding-right: 10px;
-}
-
 .iconWrapper {
   position: relative;
   border: 1px solid var(--color-black-15);
@@ -79,6 +75,10 @@
 
 .danger .iconWrapper::before {
   background-color: var(--danger);
+}
+
+.custom .iconWrapper::before {
+  background-color: inherit;
 }
 
 .iconRightWrapper {

@@ -19,8 +19,8 @@ describe('Label', () => {
     expect(getByText('Label text')).toBeInTheDocument();
   });
 
-  it('renders right icon', () => {
-    const { getByText } = render(<Label {...defaultProps} rightIcon={<>icon</>} bgRightIcon="#ffffff" />);
+  it('renders icon with custom bg', () => {
+    const { getByText } = render(<Label {...defaultProps} icon={<>icon</>} bgLeftIcon="#ffffff" />);
 
     const icon = getByText('icon');
     expect(icon).toBeInTheDocument();
