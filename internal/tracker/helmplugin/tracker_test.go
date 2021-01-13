@@ -1,4 +1,4 @@
-package krew
+package helmplugin
 
 import (
 	"context"
@@ -24,7 +24,7 @@ func TestMain(m *testing.M) {
 
 func TestTracker(t *testing.T) {
 	r := &hub.Repository{
-		Kind:              hub.Krew,
+		Kind:              hub.HelmPlugin,
 		RepositoryID:      "00000000-0000-0000-0000-000000000001",
 		Name:              "repo1",
 		URL:               "https://github.com/org1/repo1",
@@ -74,7 +74,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("error parsing package manifest file", func(t *testing.T) {
+	t.Run("error parsing package metadata file", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup tracker and expectations
@@ -155,33 +155,16 @@ func TestTracker(t *testing.T) {
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 		tw.pm.On("Register", tw.ctx, &hub.Package{
 			Name:        "test-plugin",
-			DisplayName: "My test plugin",
-			Description: "Test plugin",
-			HomeURL:     "https://test/plugin",
-			Keywords:    []string{"kubernetes", "kubectl", "plugin", "networking", "security"},
-			Readme:      "This is just a test plugin",
+			Keywords:    []string{"helm", "helm-plugin"},
+			Description: "This is a sample test plugin",
 			Version:     "0.1.0",
-			Provider:    "Some organization",
+			Readme:      "This is the readme file of the plugin\n",
 			Repository:  r,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
 				{
-					Name: "link1",
-					URL:  "https://link1.url",
-				},
-				{
-					Name: "link2",
-					URL:  "https://link2.url",
-				},
-			},
-			Maintainers: []*hub.Maintainer{
-				{
-					Name:  "user1",
-					Email: "user1@email.com",
-				},
-				{
-					Name:  "user2",
-					Email: "user2@email.com",
+					Name: "Source",
+					URL:  r.URL,
 				},
 			},
 		}).Return(nil)

@@ -34,6 +34,10 @@ const ICONS = {
     default: '/static/media/krew-plugins.svg',
     white: '/static/media/krew-plugins-light.svg',
   },
+  [RepositoryKind.HelmPlugin]: {
+    default: '/static/media/helm-chart.svg',
+    white: '/static/media/helm-chart-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

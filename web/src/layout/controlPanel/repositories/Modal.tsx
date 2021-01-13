@@ -178,43 +178,50 @@ const RepositoryModal = (props: Props) => {
     switch (selectedKind) {
       case RepositoryKind.Helm:
         link = (
-          <ExternalLink href="/docs/repositories#helm-charts-repositories" className="text-reset">
+          <ExternalLink href="/docs/topics/repositories#helm-charts-repositories" className="text-reset">
             <u>Helm charts repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.OLM:
         link = (
-          <ExternalLink href="/docs/repositories#olm-operators-repositories" className="text-reset">
+          <ExternalLink href="/docs/topics/repositories#olm-operators-repositories" className="text-reset">
             <u>OLM operators repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.Falco:
         link = (
-          <ExternalLink href="/docs/repositories#falco-rules-repositories" className="text-reset">
+          <ExternalLink href="/docs/topics/repositories#falco-rules-repositories" className="text-reset">
             <u>Falco rules repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.OPA:
         link = (
-          <ExternalLink href="/docs/repositories#opa-policies-repositories" className="text-reset">
+          <ExternalLink href="/docs/topics/repositories#opa-policies-repositories" className="text-reset">
             <u>OPA policies repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.TBAction:
         link = (
-          <ExternalLink href="/docs/repositories#tinkerbell-actions-repositories" className="text-reset">
+          <ExternalLink href="/docs/topics/repositories#tinkerbell-actions-repositories" className="text-reset">
             <u>Tinkerbell actions</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.Krew:
         link = (
-          <ExternalLink href="/docs/repositories#krew-kubectl-plugins-repositories" className="text-reset">
+          <ExternalLink href="/docs/topics/repositories#krew-kubectl-plugins-repositories" className="text-reset">
             <u>Krew kubectl plugins</u>
+          </ExternalLink>
+        );
+        break;
+      case RepositoryKind.HelmPlugin:
+        link = (
+          <ExternalLink href="/docs/topics/repositories#helm-plugins-repositories" className="text-reset">
+            <u>Helm plugins</u>
           </ExternalLink>
         );
         break;
@@ -462,6 +469,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.OPA,
               RepositoryKind.TBAction,
               RepositoryKind.Krew,
+              RepositoryKind.HelmPlugin,
             ].includes(selectedKind) && (
               <div className="mt-4">
                 <InputField
@@ -513,7 +521,13 @@ const RepositoryModal = (props: Props) => {
               </small>
             </div>
 
-            {selectedKind !== RepositoryKind.Krew && (
+            {[
+              RepositoryKind.Helm,
+              RepositoryKind.Falco,
+              RepositoryKind.OLM,
+              RepositoryKind.OPA,
+              RepositoryKind.TBAction,
+            ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="custom-control custom-switch pl-0">
                   <input

@@ -7,6 +7,7 @@ export enum RepositoryKind {
   OLM,
   TBAction,
   Krew,
+  HelmPlugin,
 }
 
 export interface Repository {

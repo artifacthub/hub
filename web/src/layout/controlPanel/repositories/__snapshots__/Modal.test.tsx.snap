@@ -250,7 +250,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     For more information about the url format and the repository structure, please see the 
                     <a
                       class="link text-reset"
-                      href="/docs/repositories#helm-charts-repositories"
+                      href="/docs/topics/repositories#helm-charts-repositories"
                       rel="noopener noreferrer"
                       role="button"
                       target="_blank"

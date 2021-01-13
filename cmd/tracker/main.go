@@ -18,6 +18,7 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/falco"
 	"github.com/artifacthub/hub/internal/tracker/generic"
 	"github.com/artifacthub/hub/internal/tracker/helm"
+	"github.com/artifacthub/hub/internal/tracker/helmplugin"
 	"github.com/artifacthub/hub/internal/tracker/krew"
 	"github.com/artifacthub/hub/internal/tracker/olm"
 	"github.com/artifacthub/hub/internal/util"
@@ -126,6 +127,8 @@ L:
 				}
 			case hub.Helm:
 				t = helm.NewTracker(svc, r)
+			case hub.HelmPlugin:
+				t = helmplugin.NewTracker(svc, r)
 			case hub.Krew:
 				t = krew.NewTracker(svc, r)
 			case hub.OLM:

@@ -28,6 +28,7 @@ const Image = (props: Props) => {
     } else {
       switch (props.kind) {
         case RepositoryKind.Helm:
+        case RepositoryKind.HelmPlugin:
           return '/static/media/placeholder_pkg_helm.png';
         case RepositoryKind.OLM:
           return '/static/media/placeholder_pkg_olm.png';

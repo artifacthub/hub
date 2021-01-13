@@ -81,7 +81,7 @@ describe('ChangelogModal', () => {
       });
     });
 
-    it('does not render component when repo kind is Krew or Falco', async () => {
+    it('does not render component when repo kind is Krew, Falco or Helm plugin', async () => {
       const props = {
         ...defaultProps,
         packageItem: {

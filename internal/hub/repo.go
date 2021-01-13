@@ -39,6 +39,9 @@ const (
 	// Krew represents a repository with kubectl plugins that can be managed by
 	// the Krew plugin manager.
 	Krew RepositoryKind = 5
+
+	// HelmPlugin represents a repository with Helm plugins.
+	HelmPlugin RepositoryKind = 6
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -48,6 +51,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "falco"
 	case Helm:
 		return "helm"
+	case HelmPlugin:
+		return "helm-plugin"
 	case Krew:
 		return "krew"
 	case OLM:
@@ -69,6 +74,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Falco, nil
 	case "helm":
 		return Helm, nil
+	case "helm-plugin":
+		return HelmPlugin, nil
 	case "krew":
 		return Krew, nil
 	case "olm":

@@ -39,6 +39,7 @@ export enum InstallMethodKind {
   OLMOCI,
   Falco,
   Krew,
+  HelmPlugin,
 }
 
 const SPECIAL_OLM = 'community-operators';
@@ -157,6 +158,18 @@ export default (props: PackageInfo): InstallMethodOutput => {
               kind: InstallMethodKind.Krew,
               props: {
                 name: pkg.name,
+                repository: pkg.repository,
+              },
+            });
+          }
+          break;
+        case RepositoryKind.HelmPlugin:
+          if (isUndefined(pkg.install)) {
+            output.methods.push({
+              label: 'cli',
+              title: 'Helm CLI',
+              kind: InstallMethodKind.HelmPlugin,
+              props: {
                 repository: pkg.repository,
               },
             });

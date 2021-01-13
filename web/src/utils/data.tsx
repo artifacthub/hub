@@ -115,6 +115,14 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     icon: <RepositoryIcon kind={RepositoryKind.Krew} className="mw-100 mh-100" />,
     active: true,
   },
+  {
+    kind: RepositoryKind.HelmPlugin,
+    label: 'helm-plugin',
+    name: 'Helm plugins',
+    singular: 'Helm plugin',
+    icon: <RepositoryIcon kind={RepositoryKind.Helm} className="mw-100 mh-100" />,
+    active: true,
+  },
 ];
 
 export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [
