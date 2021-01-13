@@ -221,7 +221,7 @@ const PackageInfo = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className={`mb-0 mb-md-1 mt-3 overflow-hidden d-block ${styles.description} ${styles.lineClamp}`}>
+      <div className={`mb-0 mb-md-1 mt-3 overflow-hidden ${styles.description} ${styles.lineClamp}`}>
         {props.package.description}
       </div>
 

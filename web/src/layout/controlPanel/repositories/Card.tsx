@@ -214,7 +214,7 @@ const RepositoryCard = (props: Props) => {
             )}
 
             <div className="ml-auto pl-3">
-              <RepositoryIconLabel kind={props.repository.kind} />
+              <RepositoryIconLabel kind={props.repository.kind} isPlural />
             </div>
 
             <div className="ml-3">

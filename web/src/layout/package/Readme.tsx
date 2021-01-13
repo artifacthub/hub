@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -99,10 +99,6 @@ const Readme = (props: Props) => {
       return false;
     }
   };
-
-  useLayoutEffect(() => {
-    props.scrollIntoView();
-  }, [props]);
 
   let readme = props.markdownContent;
   if (!props.markdownContent.startsWith('#')) {

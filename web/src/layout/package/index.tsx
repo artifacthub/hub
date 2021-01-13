@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import map from 'lodash/map';
 import moment from 'moment';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -117,6 +117,7 @@ const PackageView = (props: Props) => {
       setApiError(null);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
       setIsLoadingPackage(false);
+      scrollIntoView();
     } catch (err) {
       if (err.kind === ErrorKind.NotFound) {
         setApiError(
@@ -274,26 +275,28 @@ const PackageView = (props: Props) => {
     </>
   );
 
-  const scrollIntoView = (id?: string) => {
-    const elId = id || props.hash;
-    if (!elId) return null;
+  const scrollIntoView = useCallback(
+    (id?: string) => {
+      const elId = id || props.hash;
+      if (!elId) return null;
 
-    try {
-      const element = document.querySelector(elId);
-      if (element) {
-        element.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
-
-        if (id) {
-          history.replace({
-            pathname: history.location.pathname,
-            hash: elId,
-          });
+      try {
+        const element = document.querySelector(elId);
+        if (element) {
+          element.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+          if (id) {
+            history.replace({
+              pathname: history.location.pathname,
+              hash: elId,
+            });
+          }
         }
+      } finally {
+        return;
       }
-    } finally {
-      return;
-    }
-  };
+    },
+    [history, props.hash]
+  );
 
   const createdAt = () => (
     <span className={`d-block d-md-none text-muted text-nowrap ${styles.date}`}>
@@ -447,7 +450,7 @@ const PackageView = (props: Props) => {
                     </div>
                   </div>
 
-                  <p className={`mb-0 d-block ${styles.description}`}>{detail.description}</p>
+                  <p className={`mb-0 ${styles.description}`}>{detail.description}</p>
 
                   <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
 
