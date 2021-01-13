@@ -7,6 +7,7 @@ import styles from './RepositoryIconLabel.module.css';
 
 interface Props {
   kind: RepositoryKind;
+  isPlural?: boolean;
   className?: string;
 }
 
@@ -19,7 +20,7 @@ const RepositoryIconLabel = (props: Props) => {
     <span className={`badge badge-light rounded-pill ${styles.badge} ${props.className}`}>
       <div className="d-flex flex-arow align-items-center">
         <div className={`position-relative ${styles.icon}`}>{repo.icon}</div>
-        <div className="ml-1">{repo.singular}</div>
+        <div className="ml-1">{props.isPlural ? repo.plural : repo.singular}</div>
       </div>
     </span>
   );

@@ -50,7 +50,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                 <div
                   class="ml-1"
                 >
-                  Helm chart
+                  Helm charts
                 </div>
               </div>
             </span>

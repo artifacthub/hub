@@ -62,6 +62,7 @@ export interface RepoKindDef {
   label: string;
   name: string;
   singular: string;
+  plural: string;
   icon: JSX.Element;
   active: boolean;
 }
@@ -72,6 +73,16 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'helm',
     name: 'Helm charts',
     singular: 'Helm chart',
+    plural: 'Helm charts',
+    icon: <RepositoryIcon kind={RepositoryKind.Helm} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
+    kind: RepositoryKind.HelmPlugin,
+    label: 'helm-plugin',
+    name: 'Helm plugins',
+    singular: 'Helm plugin',
+    plural: 'Helm plugins',
     icon: <RepositoryIcon kind={RepositoryKind.Helm} className="mw-100 mh-100" />,
     active: true,
   },
@@ -80,6 +91,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'falco',
     name: 'Falco rules',
     singular: 'Falco rules',
+    plural: 'Falco rules',
     icon: <RepositoryIcon kind={RepositoryKind.Falco} className="mw-100 mh-100" />,
     active: true,
   },
@@ -88,6 +100,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'opa',
     name: 'OPA policies',
     singular: 'OPA policies',
+    plural: 'OPA policies',
     icon: <RepositoryIcon kind={RepositoryKind.OPA} className="mw-100 mh-100" />,
     active: true,
   },
@@ -96,6 +109,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'olm',
     name: 'OLM operators',
     singular: 'OLM operator',
+    plural: 'OLM operators',
     icon: <RepositoryIcon kind={RepositoryKind.OLM} className="mw-100 mh-100" />,
     active: true,
   },
@@ -104,6 +118,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'tbaction',
     name: 'Tinkerbell actions',
     singular: 'Tinkerbell action',
+    plural: 'Tinkerbell actions',
     icon: <RepositoryIcon kind={RepositoryKind.TBAction} className="mw-100 mh-100" />,
     active: true,
   },
@@ -112,15 +127,8 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'krew',
     name: 'Krew kubectl plugins',
     singular: 'Kubectl plugin',
+    plural: 'Kubectl plugin',
     icon: <RepositoryIcon kind={RepositoryKind.Krew} className="mw-100 mh-100" />,
-    active: true,
-  },
-  {
-    kind: RepositoryKind.HelmPlugin,
-    label: 'helm-plugin',
-    name: 'Helm plugins',
-    singular: 'Helm plugin',
-    icon: <RepositoryIcon kind={RepositoryKind.Helm} className="mw-100 mh-100" />,
     active: true,
   },
 ];

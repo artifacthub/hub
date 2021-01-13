@@ -51,10 +51,6 @@
   overflow-wrap: break-word;
 }
 
-.description:first-letter {
-  text-transform: uppercase;
-}
-
 .rightColumnWrapper code,
 .codeWrapper code {
   word-wrap: normal !important;
