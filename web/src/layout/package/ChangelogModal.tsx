@@ -41,7 +41,10 @@ const ChangelogModal = (props: Props) => {
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if ([RepositoryKind.Falco, RepositoryKind.Krew].includes(props.packageItem.repository.kind)) return null;
+  if (
+    [RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(props.packageItem.repository.kind)
+  )
+    return null;
 
   const sortChangelog = (items: ChangeLog[]): ChangeLog[] => {
     const validVersions: ChangeLog[] = items.filter((item: ChangeLog) => semver.valid(item.version));

@@ -80,6 +80,7 @@ insert into repository_kind values (2, 'OPA policies');
 insert into repository_kind values (3, 'OLM operators');
 insert into repository_kind values (4, 'Tinkerbell actions');
 insert into repository_kind values (5, 'Krew kubectl plugins');
+insert into repository_kind values (6, 'Helm plugins');
 
 create table if not exists repository (
     repository_id uuid primary key default gen_random_uuid(),

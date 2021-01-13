@@ -18,6 +18,7 @@ import CustomInstall from './CustomInstall';
 import FalcoInstall from './FalcoInstall';
 import HelmInstall from './HelmInstall';
 import HelmOCIInstall from './HelmOCIInstall';
+import HelmPluginInstall from './HelmPluginInstall';
 import KrewInstall from './KrewInstall';
 import OLMInstall from './OLMInstall';
 import OLMOCIInstall from './OLMOCIInstall';
@@ -158,6 +159,8 @@ const InstallationModal = (props: Props) => {
                             return <FalcoInstall normalizedName={method.props.normalizedName!} />;
                           case InstallMethodKind.Krew:
                             return <KrewInstall name={method.props.name!} repository={method.props.repository!} />;
+                          case InstallMethodKind.HelmPlugin:
+                            return <HelmPluginInstall repository={method.props.repository!} />;
                           default:
                             return null;
                         }

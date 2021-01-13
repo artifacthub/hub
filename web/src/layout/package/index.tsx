@@ -447,7 +447,7 @@ const PackageView = (props: Props) => {
                     </div>
                   </div>
 
-                  <p className={`mb-0 ${styles.description}`}>{detail.description}</p>
+                  <p className={`mb-0 d-block ${styles.description}`}>{detail.description}</p>
 
                   <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
 

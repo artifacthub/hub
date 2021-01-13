@@ -98,6 +98,10 @@
   font-size: 0.9rem;
 }
 
+.description:first-letter {
+  text-transform: uppercase;
+}
+
 @media (hover: hover) {
   .link:hover {
     text-decoration: underline;

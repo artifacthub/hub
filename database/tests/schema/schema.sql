@@ -441,7 +441,8 @@ select results_eq(
         (2, 'OPA policies'),
         (3, 'OLM operators'),
         (4, 'Tinkerbell actions'),
-        (5, 'Krew kubectl plugins')
+        (5, 'Krew kubectl plugins'),
+        (6, 'Helm plugins')
     $$,
     'Repository kinds should exist'
 );

@@ -473,7 +473,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew$}":
+  "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin$}":
     get:
       tags:
         - Repositories
@@ -1046,6 +1046,27 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/helm-plugin/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelmPluginPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/falco/{repoName}/{packageName}":
     get:
       tags:
@@ -1173,6 +1194,28 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/helm-plugin/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelmPluginPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/falco/{repoName}/{packageName}/{version}":
     get:
       tags:
@@ -1199,7 +1242,7 @@ paths:
     get:
       tags:
         - Packages
-      summary: Get package details
+      summary: Get package version details
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
         - $ref: "#/components/parameters/PackageNameParam"
@@ -2216,6 +2259,8 @@ components:
                       type: string
                       nullable: false
                       example: "http://repo.url"
+    HelmPluginPackage:
+      $ref: "#/components/schemas/Package"
     KrewPluginsPackage:
       $ref: "#/components/schemas/Package"
     Link:
@@ -2651,6 +2696,7 @@ components:
         - 3
         - 4
         - 5
+        - 6
       description: |
         Repository kind:
           * `0` - Helm charts
@@ -2659,6 +2705,7 @@ components:
           * `3` - OLM operators
           * `4` - Tinkerbell actions
           * `5` - Krew kubectl plugins
+          * `6` - Helm plugins
     RepositoryKindParam:
       type: string
       enum:
@@ -2668,6 +2715,7 @@ components:
         - olm
         - tbaction
         - krew
+        - helm-plugin
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -2676,6 +2724,7 @@ components:
         * `olm` - OLM operators
         * `tbaction` - Tinkerbell actions
         * `krew` - Krew kubectl plugins
+        * `helm-plugin` - Helm plugins
     RepositorySummary:
       type: object
       required:
@@ -3118,7 +3167,7 @@ components:
       description: Package name
     RepoKindParam:
       in: path
-      name: ^helm$|^falco$|^opa$|^olm|^tbaction|^krew$
+      name: ^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin$
       schema:
         $ref: "#/components/schemas/RepositoryKindParam"
       required: true

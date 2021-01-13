@@ -27,16 +27,33 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
           <div
             class="ml-auto pl-3"
           >
-            <img
-              alt="Icon"
-              class="kindIcon iconLight"
-              src="/static/media/helm-chart.svg"
-            />
-            <img
-              alt="Icon"
-              class="kindIcon iconDark"
-              src="/static/media/helm-chart-light.svg"
-            />
+            <span
+              class="badge badge-light rounded-pill badge undefined"
+            >
+              <div
+                class="d-flex flex-arow align-items-center"
+              >
+                <div
+                  class="position-relative icon"
+                >
+                  <img
+                    alt="Icon"
+                    class="mw-100 mh-100 iconLight"
+                    src="/static/media/helm-chart.svg"
+                  />
+                  <img
+                    alt="Icon"
+                    class="mw-100 mh-100 iconDark"
+                    src="/static/media/helm-chart-light.svg"
+                  />
+                </div>
+                <div
+                  class="ml-1"
+                >
+                  Helm chart
+                </div>
+              </div>
+            </span>
           </div>
           <div
             class="ml-3"

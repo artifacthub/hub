@@ -20,7 +20,7 @@ import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import DisabledRepositoryBadge from '../../common/DisabledRepositoryBadge';
 import Modal from '../../common/Modal';
 import OfficialBadge from '../../common/OfficialBadge';
-import RepositoryIcon from '../../common/RepositoryIcon';
+import RepositoryIconLabel from '../../common/RepositoryIconLabel';
 import ScannerDisabledRepositoryBadge from '../../common/ScannerDisabledRepositoryBadge';
 import VerifiedPublisherBadge from '../../common/VerifiedPublisherBadge';
 import ActionBtn from '../ActionBtn';
@@ -214,7 +214,7 @@ const RepositoryCard = (props: Props) => {
             )}
 
             <div className="ml-auto pl-3">
-              <RepositoryIcon kind={props.repository.kind} className={styles.kindIcon} />
+              <RepositoryIconLabel kind={props.repository.kind} />
             </div>
 
             <div className="ml-3">

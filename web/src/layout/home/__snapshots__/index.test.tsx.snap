@@ -324,7 +324,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-4 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions and kubectl plugins.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions and kubectl plugins.
           <div
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
           >
@@ -347,7 +347,7 @@ exports[`Home index creates snapshot 1`] = `
                   class="d-none d-sm-block text-light legendIcon"
                 >
                   <small>
-                    Helm charts
+                    Helm charts and plugins
                   </small>
                 </div>
               </div>
