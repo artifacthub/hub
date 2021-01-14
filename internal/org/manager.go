@@ -23,6 +23,7 @@ const (
 	addOrgMemberDBQ      = `select add_organization_member($1::uuid, $2::text, $3::text)`
 	checkOrgNameAvailDBQ = `select organization_id from organization where name = $1`
 	confirmMembershipDBQ = `select confirm_organization_membership($1::uuid, $2::text)`
+	deleteOrgDBQ         = `select delete_organization($1::uuid, $2::text)`
 	deleteOrgMemberDBQ   = `select delete_organization_member($1::uuid, $2::text, $3::text)`
 	getAuthzPolicyDBQ    = `select get_authorization_policy($1::uuid, $2::text)`
 	getOrgDBQ            = `select get_organization($1::text)`
@@ -184,6 +185,32 @@ func (m *Manager) ConfirmMembership(ctx context.Context, orgName string) error {
 
 	// Confirm organization membership in database
 	_, err := m.db.Exec(ctx, confirmMembershipDBQ, userID, orgName)
+	return err
+}
+
+// Delete deletes the provided organization from the database.
+func (m *Manager) Delete(ctx context.Context, orgName string) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if orgName == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
+	}
+
+	// Authorize action
+	if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+		OrganizationName: orgName,
+		UserID:           userID,
+		Action:           hub.DeleteOrganization,
+	}); err != nil {
+		return err
+	}
+
+	// Delete organization from database
+	_, err := m.db.Exec(ctx, deleteOrgDBQ, userID, orgName)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 

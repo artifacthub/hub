@@ -6,7 +6,7 @@ import { mocked } from 'ts-jest/utils';
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
 import { ErrorKind, Organization } from '../../../../../types';
-import DetailsSection from './index';
+import ProfileOrgSection from './index';
 jest.mock('../../../../../api');
 
 const getMockOrganization = (fixtureId: string): Organization => {
@@ -39,7 +39,7 @@ const mockCtx = {
   },
 };
 
-describe('Organization settings index', () => {
+describe('Organization profile settings index', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -51,7 +51,7 @@ describe('Organization settings index', () => {
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
-          <DetailsSection {...defaultProps} />
+          <ProfileOrgSection {...defaultProps} />
         </Router>
       </AppCtx.Provider>
     );
@@ -66,27 +66,10 @@ describe('Organization settings index', () => {
       const mockOrganization = getMockOrganization('2');
       mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
-      render(
+      const { getByText, getAllByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <DetailsSection {...defaultProps} />
-          </Router>
-        </AppCtx.Provider>
-      );
-
-      await waitFor(() => {
-        expect(API.getOrganization).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    it('renders organization details in form', async () => {
-      const mockOrganization = getMockOrganization('5');
-      mocked(API).getOrganization.mockResolvedValue(mockOrganization);
-
-      const { getByTestId, getByAltText, getByDisplayValue } = render(
-        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <DetailsSection {...defaultProps} />
+            <ProfileOrgSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
@@ -95,14 +78,8 @@ describe('Organization settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      const form = getByTestId('organizationForm');
-
-      expect(form).toBeInTheDocument();
-      expect(getByAltText('Logo')).toBeInTheDocument();
-      expect(getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
-      expect(getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
-      expect(getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
-      expect(getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
+      expect(getByText('Profile information')).toBeInTheDocument();
+      expect(getAllByText('Delete organization')).toHaveLength(3);
     });
   });
 
@@ -113,7 +90,7 @@ describe('Organization settings index', () => {
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <DetailsSection {...defaultProps} />
+            <ProfileOrgSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
@@ -134,7 +111,7 @@ describe('Organization settings index', () => {
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <DetailsSection {...defaultProps} />
+            <ProfileOrgSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
@@ -159,7 +136,7 @@ describe('Organization settings index', () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <DetailsSection {...defaultProps} />
+            <ProfileOrgSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );

@@ -387,6 +387,12 @@ export const API = {
     });
   },
 
+  deleteOrganization: (orgName: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/orgs/${orgName}`, {
+      method: 'DELETE',
+    });
+  },
+
   getOrganizationMembers: (organizationName: string): Promise<User[]> => {
     return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/members`);
   },

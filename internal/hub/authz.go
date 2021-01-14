@@ -17,6 +17,9 @@ const (
 	// to an organization.
 	AddOrganizationRepository Action = "addOrganizationRepository"
 
+	// DeleteOrganization represents the action of deleting an organization.
+	DeleteOrganization Action = "deleteOrganization"
+
 	// DeleteOrganizationMember represents the action of deleting a member from
 	// an organization.
 	DeleteOrganizationMember Action = "deleteOrganizationMember"

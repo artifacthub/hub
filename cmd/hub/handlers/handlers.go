@@ -150,6 +150,7 @@ func (h *Handlers) setupRouter() {
 				r.Get("/", h.Organizations.Get)
 				r.Group(func(r chi.Router) {
 					r.Use(h.Users.RequireLogin)
+					r.Delete("/", h.Organizations.Delete)
 					r.Put("/", h.Organizations.Update)
 					r.Route("/authorizationPolicy", func(r chi.Router) {
 						r.Get("/", h.Organizations.GetAuthorizationPolicy)

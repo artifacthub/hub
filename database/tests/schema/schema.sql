@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(132);
+select plan(133);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -361,6 +361,7 @@ select has_function('update_notification_status');
 select has_function('add_organization');
 select has_function('add_organization_member');
 select has_function('confirm_organization_membership');
+select has_function('delete_organization');
 select has_function('delete_organization_member');
 select has_function('get_authorization_policies');
 select has_function('get_authorization_policy');

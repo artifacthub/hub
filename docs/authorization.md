@@ -93,6 +93,7 @@ This is the list of Artifact Hub actions that can be used in policies and data f
 
 - *addOrganizationMember*
 - *addOrganizationRepository*
+- *deleteOrganization*
 - *deleteOrganizationMember*
 - *deleteOrganizationRepository*
 - *getAuthorizationPolicy*

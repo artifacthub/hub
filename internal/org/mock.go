@@ -36,6 +36,12 @@ func (m *ManagerMock) ConfirmMembership(ctx context.Context, orgName string) err
 	return args.Error(0)
 }
 
+// Delete implements the OrganizationManager interface.
+func (m *ManagerMock) Delete(ctx context.Context, orgName string) error {
+	args := m.Called(ctx, orgName)
+	return args.Error(0)
+}
+
 // DeleteMember implements the OrganizationManager interface.
 func (m *ManagerMock) DeleteMember(ctx context.Context, orgName, userAlias string) error {
 	args := m.Called(ctx, orgName, userAlias)

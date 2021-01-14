@@ -322,6 +322,59 @@ func TestConfirmMembership(t *testing.T) {
 	}
 }
 
+func TestDelete(t *testing.T) {
+	testCases := []struct {
+		omErr              error
+		expectedStatusCode int
+	}{
+		{
+			nil,
+			http.StatusNoContent,
+		},
+		{
+			hub.ErrInvalidInput,
+			http.StatusBadRequest,
+		},
+		{
+			hub.ErrInsufficientPrivilege,
+			http.StatusForbidden,
+		},
+		{
+			tests.ErrFakeDB,
+			http.StatusInternalServerError,
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		var desc string
+		if tc.omErr != nil {
+			desc = tc.omErr.Error()
+		}
+		t.Run(desc, func(t *testing.T) {
+			t.Parallel()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("DELETE", "/", nil)
+			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+			rctx := &chi.Context{
+				URLParams: chi.RouteParams{
+					Keys:   []string{"orgName"},
+					Values: []string{"org1"},
+				},
+			}
+			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+			hw := newHandlersWrapper()
+			hw.om.On("Delete", r.Context(), "org1").Return(tc.omErr)
+			hw.h.Delete(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+			hw.om.AssertExpectations(t)
+		})
+	}
+}
+
 func TestDeleteMember(t *testing.T) {
 	testCases := []struct {
 		omErr              error
