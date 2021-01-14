@@ -411,6 +411,7 @@ export interface OptOutItem {
 export enum AuthorizerAction {
   AddOrganizationMember = 'addOrganizationMember',
   AddOrganizationRepository = 'addOrganizationRepository',
+  DeleteOrganization = 'deleteOrganization',
   DeleteOrganizationMember = 'deleteOrganizationMember',
   DeleteOrganizationRepository = 'deleteOrganizationRepository',
   GetAuthorizationPolicy = 'getAuthorizationPolicy',

@@ -92,6 +92,17 @@ func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+// Delete is an http handler that deletes an organization.
+func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
+	if err := h.orgManager.Delete(r.Context(), orgName); err != nil {
+		h.logger.Error().Err(err).Str("method", "Delete").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // DeleteMember is an http handler that deletes a member from the provided
 // organization.
 func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {

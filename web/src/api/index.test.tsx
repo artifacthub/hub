@@ -857,6 +857,24 @@ describe('index API', () => {
       });
     });
 
+    describe('deleteOrganization', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await methods.API.deleteOrganization('org1');
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
+        expect(response).toBe('');
+      });
+    });
+
     describe('getOrganizationMembers', () => {
       it('success', async () => {
         const members: User[] = getData('19') as User[];

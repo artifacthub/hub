@@ -99,7 +99,7 @@ create table if not exists repository (
     digest text check (digest <> ''),
     repository_kind_id integer not null default 0 references repository_kind on delete restrict,
     user_id uuid references "user" on delete restrict,
-    organization_id uuid references organization on delete restrict,
+    organization_id uuid references organization on delete cascade,
     check (user_id is not null or organization_id is not null)
 );
 

@@ -278,6 +278,26 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Organizations
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Delete organization
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/orgs/{orgName}/authorizationPolicy":
     get:
       tags:

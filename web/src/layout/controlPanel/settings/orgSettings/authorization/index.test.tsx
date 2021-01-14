@@ -357,7 +357,7 @@ describe('Authorization settings index', () => {
           authorizationEnabled: true,
           customPolicy: null,
           policyData:
-            '{\n  "roles": {\n    "owner": {\n      "users": [\n        "jdoe",\n        "jsmith"\n      ]\n    },\n    "customRole1": {\n      "users": [],\n      "allowed_actions": [\n        "addOrganizationMember",\n        "addOrganizationRepository",\n        "deleteOrganizationMember",\n        "deleteOrganizationRepository",\n        "getAuthorizationPolicy",\n        "transferOrganizationRepository",\n        "updateAuthorizationPolicy",\n        "updateOrganization",\n        "updateOrganizationRepository"\n      ]\n    }\n  }\n}',
+            '{\n  "roles": {\n    "owner": {\n      "users": [\n        "jdoe",\n        "jsmith"\n      ]\n    },\n    "customRole1": {\n      "users": [],\n      "allowed_actions": [\n        "addOrganizationMember",\n        "addOrganizationRepository",\n        "deleteOrganization",\n        "deleteOrganizationMember",\n        "deleteOrganizationRepository",\n        "getAuthorizationPolicy",\n        "transferOrganizationRepository",\n        "updateAuthorizationPolicy",\n        "updateOrganization",\n        "updateOrganizationRepository"\n      ]\n    }\n  }\n}',
           predefinedPolicy: 'rbac.v1',
         });
       });

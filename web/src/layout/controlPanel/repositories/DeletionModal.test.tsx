@@ -81,6 +81,8 @@ describe('Deletion modal Modal - packages section', () => {
     });
 
     it('calls delete repo when delete button in dropdown is clicked', async () => {
+      mocked(API).deleteRepository.mockResolvedValue(null);
+
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <DeletionModal {...defaultProps} />

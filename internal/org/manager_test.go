@@ -355,6 +355,76 @@ func TestConfirmMembership(t *testing.T) {
 	})
 }
 
+func TestDelete(t *testing.T) {
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil, nil, nil)
+		assert.Panics(t, func() {
+			_ = m.Add(context.Background(), &hub.Organization{})
+		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil, nil, nil)
+		err := m.Delete(ctx, "")
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+		assert.Contains(t, err.Error(), "name not provided")
+	})
+
+	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		az := &authz.AuthorizerMock{}
+		az.On("Authorize", ctx, &hub.AuthorizeInput{
+			OrganizationName: "org1",
+			UserID:           "userID",
+			Action:           hub.DeleteOrganization,
+		}).Return(tests.ErrFake)
+		m := NewManager(db, nil, az)
+
+		err := m.Delete(ctx, "org1")
+		assert.Equal(t, tests.ErrFake, err)
+		az.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, deleteOrgDBQ, "userID", "org1").Return(nil)
+		az := &authz.AuthorizerMock{}
+		az.On("Authorize", ctx, &hub.AuthorizeInput{
+			OrganizationName: "org1",
+			UserID:           "userID",
+			Action:           hub.DeleteOrganization,
+		}).Return(nil)
+		m := NewManager(db, nil, az)
+
+		err := m.Delete(ctx, "org1")
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, deleteOrgDBQ, "userID", "org1").Return(tests.ErrFakeDB)
+		az := &authz.AuthorizerMock{}
+		az.On("Authorize", ctx, &hub.AuthorizeInput{
+			OrganizationName: "org1",
+			UserID:           "userID",
+			Action:           hub.DeleteOrganization,
+		}).Return(nil)
+		m := NewManager(db, nil, az)
+
+		err := m.Delete(ctx, "org1")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestDeleteMember(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 

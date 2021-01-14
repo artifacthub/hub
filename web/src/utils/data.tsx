@@ -291,6 +291,7 @@ user_roles[role] {
           allowed_actions: [
             AuthorizerAction.AddOrganizationMember,
             AuthorizerAction.AddOrganizationRepository,
+            AuthorizerAction.DeleteOrganization,
             AuthorizerAction.DeleteOrganizationMember,
             AuthorizerAction.DeleteOrganizationRepository,
             AuthorizerAction.GetAuthorizationPolicy,

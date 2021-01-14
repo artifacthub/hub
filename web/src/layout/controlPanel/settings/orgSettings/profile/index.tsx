@@ -1,17 +1,16 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FaPencilAlt } from 'react-icons/fa';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
-import { AuthorizerAction, ErrorKind, Organization } from '../../../../../types';
+import { ErrorKind, Organization } from '../../../../../types';
 import Loading from '../../../../common/Loading';
 import NoData from '../../../../common/NoData';
-import ActionBtn from '../../../ActionBtn';
-import OrganizationForm from '../../../organizations/Form';
+import DeleteOrganization from './DeleteOrg';
 import styles from './ProfileSection.module.css';
+import UpdateOrganization from './UpdateOrg';
 
 interface Props {
   onAuthError: () => void;
@@ -19,18 +18,10 @@ interface Props {
 
 const ProfileSection = (props: Props) => {
   const { ctx } = useContext(AppCtx);
-  const form = useRef<HTMLFormElement>(null);
-  const [isSending, setIsSending] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [organization, setOrganization] = useState<Organization | null | undefined>(undefined);
   const selectedOrg = ctx.prefs.controlPanel.selectedOrg;
   const [apiError, setApiError] = useState<null | string>(null);
-
-  const submitForm = () => {
-    if (form.current) {
-      form.current.dispatchEvent(new Event('submit', { cancelable: true }));
-    }
-  };
 
   async function fetchOrganization() {
     try {
@@ -69,15 +60,15 @@ const ProfileSection = (props: Props) => {
 
   return (
     <main role="main" className="p-0">
+      {(isUndefined(organization) || isLoading) && <Loading />}
+
       <div className={`h3 pb-2 border-bottom ${styles.title}`}>Profile information</div>
 
       <div
-        className={classnames('mt-4 mt-md-5', {
+        className={classnames('mt-4 mt-md-5 mb-5', {
           [styles.form]: !isNull(organization),
         })}
       >
-        {(isUndefined(organization) || isLoading) && <Loading />}
-
         {!isUndefined(organization) && (
           <>
             {isNull(organization) ? (
@@ -89,48 +80,21 @@ const ProfileSection = (props: Props) => {
                 )}
               </NoData>
             ) : (
-              <>
-                {!isLoading && (
-                  <OrganizationForm
-                    ref={form}
-                    organization={!isLoading ? organization : undefined}
-                    onAuthError={props.onAuthError}
-                    onSuccess={fetchOrganization}
-                    setIsSending={setIsSending}
-                  />
-                )}
-
-                <div className="mt-4">
-                  <ActionBtn
-                    testId="updateOrgBtn"
-                    className="btn btn-sm btn-secondary"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      e.preventDefault();
-                      submitForm();
-                    }}
-                    action={AuthorizerAction.UpdateOrganization}
-                    disabled={isSending}
-                  >
-                    <>
-                      {isSending ? (
-                        <>
-                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                          <span className="ml-2">Updating organization</span>
-                        </>
-                      ) : (
-                        <div className="d-flex flex-row align-items-center text-uppercase">
-                          <FaPencilAlt className="mr-2" />
-                          <div>Update</div>
-                        </div>
-                      )}
-                    </>
-                  </ActionBtn>
-                </div>
-              </>
+              <UpdateOrganization
+                onAuthError={props.onAuthError}
+                onSuccess={fetchOrganization}
+                selectedOrg={selectedOrg!}
+                isLoading={isLoading}
+                organization={organization}
+              />
             )}
           </>
         )}
       </div>
+
+      <div className={`h3 mb-4 pb-2 border-bottom ${styles.title}`}>Delete organization</div>
+
+      {organization && <DeleteOrganization organization={organization} onAuthError={props.onAuthError} />}
     </main>
   );
 };

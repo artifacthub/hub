@@ -33,6 +33,7 @@ const tests: Test[] = [
           allowed_actions: [
             'addOrganizationMember',
             'addOrganizationRepository',
+            'deleteOrganization',
             'deleteOrganizationMember',
             'deleteOrganizationRepository',
             'getAuthorizationPolicy',
@@ -56,6 +57,7 @@ const tests: Test[] = [
       "allowed_actions": [
         "addOrganizationMember",
         "addOrganizationRepository",
+        "deleteOrganization",
         "deleteOrganizationMember",
         "deleteOrganizationRepository",
         "getAuthorizationPolicy",
