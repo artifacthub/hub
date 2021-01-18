@@ -16,4 +16,4 @@ const SmallTitle = (props: Props) => (
   </div>
 );
 
-export default SmallTitle;
+export default React.memo(SmallTitle);

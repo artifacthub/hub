@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 
 import { API } from '../../../api';
@@ -38,11 +38,11 @@ const TransferRepositoryModal = (props: Props) => {
   };
 
   // Clean API error when form is focused after validation
-  const cleanApiError = () => {
+  const cleanApiError = useCallback(() => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  };
+  }, [apiError]);
 
   const onCloseModal = () => {
     props.onClose();
@@ -237,4 +237,4 @@ const TransferRepositoryModal = (props: Props) => {
   );
 };
 
-export default TransferRepositoryModal;
+export default React.memo(TransferRepositoryModal);

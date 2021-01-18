@@ -4,7 +4,7 @@ import '../themes/default.scss';
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { FiExternalLink, FiHexagon } from 'react-icons/fi';
 import { Route, Router, Switch } from 'react-router-dom';
@@ -39,6 +39,18 @@ export default function App() {
   const [isLoadingPackage, setIsLoadingPackage] = useState(false);
   const [activeInitialTheme, setActiveInitialTheme] = useState<string | null>(null);
   const [scrollPosition, setScrollPosition] = useState<undefined | number>(undefined);
+
+  const updateScrollPosition = useCallback((position?: number) => {
+    setScrollPosition(position);
+  }, []);
+
+  const updateSearchingStatus = useCallback((status: boolean) => {
+    setIsSearching(status);
+  }, []);
+
+  const updateLoadingPkgStatus = useCallback((status: boolean) => {
+    setIsLoadingPackage(status);
+  }, []);
 
   useEffect(() => {
     const activeProfile = lsPreferences.getActiveProfile();
@@ -91,9 +103,9 @@ export default function App() {
                       <SearchView
                         {...searchParams}
                         isSearching={isSearching}
-                        setIsSearching={setIsSearching}
+                        setIsSearching={updateSearchingStatus}
                         scrollPosition={scrollPosition}
-                        setScrollPosition={setScrollPosition}
+                        setScrollPosition={updateScrollPosition}
                         fromDetail={location.state ? location.state.hasOwnProperty('fromDetail') : false}
                       />
                     </div>
@@ -115,7 +127,7 @@ export default function App() {
                       visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
                       isLoadingPackage={isLoadingPackage}
-                      setIsLoadingPackage={setIsLoadingPackage}
+                      setIsLoadingPackage={updateLoadingPkgStatus}
                       {...location.state}
                       {...match.params}
                     />

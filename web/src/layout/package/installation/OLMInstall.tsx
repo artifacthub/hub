@@ -46,4 +46,4 @@ const OLMInstall = (props: Props) => {
   );
 };
 
-export default OLMInstall;
+export default React.memo(OLMInstall);

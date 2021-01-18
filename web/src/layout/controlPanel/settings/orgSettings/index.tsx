@@ -33,4 +33,4 @@ const OrganizationSettingsSection = (props: Props) => {
   );
 };
 
-export default OrganizationSettingsSection;
+export default React.memo(OrganizationSettingsSection);

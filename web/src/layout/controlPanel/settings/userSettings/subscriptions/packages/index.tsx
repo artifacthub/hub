@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
@@ -25,34 +25,20 @@ const PackagesSection = (props: Props) => {
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
 
-  const getNotificationTitle = (kind: EventKind): string => {
+  const getNotificationTitle = useCallback((kind: EventKind): string => {
     let title = '';
     const notif = PACKAGE_SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
     if (notif) {
       title = notif.title.toLowerCase();
     }
     return title;
-  };
+  }, []);
 
-  const updateSubscriptionsPackagesOptimistically = (kind: EventKind, isActive: boolean, packageId: string) => {
-    const packageToUpdate = packages ? packages.find((item: Package) => item.packageId === packageId) : undefined;
-    if (packageToUpdate && packageToUpdate.eventKinds) {
-      const newPackages = packages!.filter((item: Package) => item.packageId !== packageId);
-      if (isActive) {
-        packageToUpdate.eventKinds = packageToUpdate.eventKinds.filter((notifKind: number) => notifKind !== kind);
-      } else {
-        packageToUpdate.eventKinds.push(kind);
-      }
+  const updateModalStatus = useCallback((status: boolean) => {
+    setModalStatus(status);
+  }, []);
 
-      if (packageToUpdate.eventKinds.length > 0) {
-        newPackages.push(packageToUpdate);
-      }
-
-      setPackages(newPackages);
-    }
-  };
-
-  async function getSubscriptions() {
+  async function fetchSubscriptions() {
     try {
       setIsLoading(true);
       setPackages(await API.getUserSubscriptions());
@@ -71,7 +57,29 @@ const PackagesSection = (props: Props) => {
     }
   }
 
+  const getSubscriptions = useCallback(() => {
+    fetchSubscriptions();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   async function changeSubscription(packageId: string, kind: EventKind, isActive: boolean, packageName: string) {
+    const updateSubscriptionsPackagesOptimistically = (kind: EventKind, isActive: boolean, packageId: string) => {
+      const packageToUpdate = packages ? packages.find((item: Package) => item.packageId === packageId) : undefined;
+      if (packageToUpdate && packageToUpdate.eventKinds) {
+        const newPackages = packages!.filter((item: Package) => item.packageId !== packageId);
+        if (isActive) {
+          packageToUpdate.eventKinds = packageToUpdate.eventKinds.filter((notifKind: number) => notifKind !== kind);
+        } else {
+          packageToUpdate.eventKinds.push(kind);
+        }
+
+        if (packageToUpdate.eventKinds.length > 0) {
+          newPackages.push(packageToUpdate);
+        }
+
+        setPackages(newPackages);
+      }
+    };
+
     updateSubscriptionsPackagesOptimistically(kind, isActive, packageId);
 
     try {
@@ -80,7 +88,7 @@ const PackagesSection = (props: Props) => {
       } else {
         await API.addSubscription(packageId, kind);
       }
-      getSubscriptions();
+      fetchSubscriptions();
     } catch (err) {
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
@@ -89,7 +97,7 @@ const PackagesSection = (props: Props) => {
             kind
           )} notification for ${packageName} package, please try again later.`,
         });
-        getSubscriptions(); // Get subscriptions if changeSubscription fails
+        fetchSubscriptions(); // Get subscriptions if changeSubscription fails
       } else {
         props.onAuthError();
       }
@@ -97,7 +105,7 @@ const PackagesSection = (props: Props) => {
   }
 
   useEffect(() => {
-    getSubscriptions();
+    fetchSubscriptions();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
@@ -110,7 +118,7 @@ const PackagesSection = (props: Props) => {
           <button
             data-testid="addSubscriptionsBtn"
             className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
-            onClick={() => setModalStatus(true)}
+            onClick={() => updateModalStatus(true)}
           >
             <div className="d-flex flex-row align-items-center justify-content-center">
               <MdAdd className="d-inline d-md-none" />
@@ -185,7 +193,7 @@ const PackagesSection = (props: Props) => {
                                   data-testid="packageLink"
                                   className="ml-2 text-dark"
                                   to={{
-                                    pathname: buildPackageURL(item),
+                                    pathname: buildPackageURL(item.normalizedName, item.repository, item.version!),
                                   }}
                                 >
                                   {item.displayName || item.name}
@@ -301,11 +309,11 @@ const PackagesSection = (props: Props) => {
         open={modalStatus}
         subscriptions={packages}
         onSuccess={getSubscriptions}
-        onClose={() => setModalStatus(false)}
+        onClose={() => updateModalStatus(false)}
         getNotificationTitle={getNotificationTitle}
       />
     </>
   );
 };
 
-export default PackagesSection;
+export default React.memo(PackagesSection);

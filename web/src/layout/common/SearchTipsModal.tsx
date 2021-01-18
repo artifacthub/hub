@@ -82,4 +82,4 @@ const SearchTipsModal = (props: Props) => {
   );
 };
 
-export default SearchTipsModal;
+export default React.memo(SearchTipsModal);

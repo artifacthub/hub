@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
@@ -40,6 +40,9 @@ const RepositoriesSection = (props: Props) => {
   const [activeOrg, setActiveOrg] = useState<undefined | string>(ctx.prefs.controlPanel.selectedOrg);
   const [apiError, setApiError] = useState<null | string>(null);
 
+  const onChangeRepoModalStatus = useCallback((status: ModalStatus) => setModalStatus(status), []);
+  const onCloseClaimModal = useCallback(() => setOpenClaimRepo(false), []);
+
   async function fetchRepositories() {
     try {
       setIsLoading(true);
@@ -69,6 +72,10 @@ const RepositoriesSection = (props: Props) => {
     }
   }
 
+  const getRepos = useCallback(() => {
+    fetchRepositories();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   useEffect(() => {
     fetchRepositories();
   }, [activeOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
@@ -91,7 +98,7 @@ const RepositoriesSection = (props: Props) => {
               <button
                 data-testid="refreshRepoBtn"
                 className={`btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
-                onClick={fetchRepositories}
+                onClick={getRepos}
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <IoMdRefresh className="d-inline d-md-none" />
@@ -135,9 +142,9 @@ const RepositoriesSection = (props: Props) => {
           <RepositoryModal
             open={modalStatus.open}
             repository={modalStatus.repository}
-            onSuccess={fetchRepositories}
+            onSuccess={getRepos}
             onAuthError={props.onAuthError}
-            onClose={() => setModalStatus({ open: false })}
+            onClose={() => onChangeRepoModalStatus({ open: false })}
           />
         )}
 
@@ -145,8 +152,8 @@ const RepositoriesSection = (props: Props) => {
           <ClaimOwnershipRepositoryModal
             open={openClaimRepo}
             onAuthError={props.onAuthError}
-            onClose={() => setOpenClaimRepo(false)}
-            onSuccess={fetchRepositories}
+            onClose={onCloseClaimModal}
+            onSuccess={getRepos}
           />
         )}
 
@@ -200,8 +207,8 @@ const RepositoriesSection = (props: Props) => {
                     key={repo.name}
                     repository={repo}
                     visibleTrackingErrorLogs={!isUndefined(props.repoName) && repo.name === props.repoName}
-                    setModalStatus={setModalStatus}
-                    onSuccess={fetchRepositories}
+                    setModalStatus={onChangeRepoModalStatus}
+                    onSuccess={getRepos}
                     onAuthError={props.onAuthError}
                   />
                 ))}
@@ -214,4 +221,4 @@ const RepositoriesSection = (props: Props) => {
   );
 };
 
-export default RepositoriesSection;
+export default React.memo(RepositoriesSection);

@@ -27,7 +27,7 @@ const RelatedPackageCard = (props: Props) => {
         data-testid="relatedPackageLink"
         className={`text-decoration-none text-reset ${styles.link}`}
         to={{
-          pathname: buildPackageURL(props.package),
+          pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),
         }}
       >
         <div className={`card-body d-flex flex-column ${styles.body}`}>
@@ -81,4 +81,4 @@ const RelatedPackageCard = (props: Props) => {
   );
 };
 
-export default RelatedPackageCard;
+export default React.memo(RelatedPackageCard);

@@ -41,4 +41,4 @@ const ExternalLink = (props: Props) => (
   </>
 );
 
-export default ExternalLink;
+export default React.memo(ExternalLink);

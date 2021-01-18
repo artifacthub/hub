@@ -157,4 +157,4 @@ const RepositoryInfo = (props: Props) => {
   );
 };
 
-export default RepositoryInfo;
+export default React.memo(RepositoryInfo);

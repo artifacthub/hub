@@ -33,4 +33,4 @@ const HelmOCIInstall = (props: Props) => {
   );
 };
 
-export default HelmOCIInstall;
+export default React.memo(HelmOCIInstall);

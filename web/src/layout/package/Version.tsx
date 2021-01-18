@@ -25,7 +25,12 @@ const Version = (props: Props) => {
     setIsLoading(true);
 
     history.push({
-      pathname: buildPackageURL(props.packageItem, true),
+      pathname: buildPackageURL(
+        props.packageItem.normalizedName,
+        props.packageItem.repository,
+        props.packageItem.version!,
+        true
+      ),
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
@@ -92,4 +97,4 @@ const Version = (props: Props) => {
   );
 };
 
-export default Version;
+export default React.memo(Version);

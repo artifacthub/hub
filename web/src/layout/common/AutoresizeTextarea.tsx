@@ -61,4 +61,4 @@ const AutoresizeTextarea = (props: Props) => {
   );
 };
 
-export default AutoresizeTextarea;
+export default React.memo(AutoresizeTextarea);

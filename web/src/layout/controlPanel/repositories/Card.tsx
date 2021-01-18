@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { HiExclamation } from 'react-icons/hi';
@@ -37,7 +37,7 @@ interface ModalStatus {
 interface Props {
   repository: Repository;
   visibleTrackingErrorLogs: boolean;
-  setModalStatus: React.Dispatch<React.SetStateAction<ModalStatus>>;
+  setModalStatus: (status: ModalStatus) => void;
   onSuccess: () => void;
   onAuthError: () => void;
 }
@@ -57,6 +57,10 @@ const RepositoryCard = (props: Props) => {
   const closeDropdown = () => {
     setDropdownMenuStatus(false);
   };
+
+  const updateBadgeModalStatus = useCallback((status: boolean) => {
+    setBadgeModalStatus(status);
+  }, []);
 
   useOutsideClick([dropdownMenu], dropdownMenuStatus, closeDropdown);
 
@@ -208,7 +212,7 @@ const RepositoryCard = (props: Props) => {
             {badgeModalStatus && (
               <BadgeModal
                 repository={props.repository}
-                onClose={() => setBadgeModalStatus(false)}
+                onClose={() => updateBadgeModalStatus(false)}
                 open={badgeModalStatus}
               />
             )}
@@ -337,4 +341,4 @@ const RepositoryCard = (props: Props) => {
   );
 };
 
-export default RepositoryCard;
+export default React.memo(RepositoryCard);

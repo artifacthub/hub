@@ -209,4 +209,4 @@ const SearchTypeaheadRepository = (props: Props) => {
   );
 };
 
-export default SearchTypeaheadRepository;
+export default React.memo(SearchTypeaheadRepository);

@@ -13,4 +13,4 @@ const DisabledRepositoryBadge = (props: Props) => {
   return <Label text="Disabled" labelStyle="warning" className={props.className} icon={<FaEyeSlash />} />;
 };
 
-export default DisabledRepositoryBadge;
+export default React.memo(DisabledRepositoryBadge);

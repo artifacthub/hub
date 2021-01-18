@@ -39,4 +39,4 @@ const TsQuery = (props: Props) => {
   );
 };
 
-export default TsQuery;
+export default React.memo(TsQuery);

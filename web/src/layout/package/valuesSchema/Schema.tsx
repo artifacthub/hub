@@ -1,6 +1,6 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import compoundJSONSchemaYAML from '../../../utils/compoundJSONSchemaYAML';
 import BlockCodeButtons from '../../common/BlockCodeButtons';
@@ -16,6 +16,7 @@ interface Props {
 }
 
 const Schema = (props: Props) => {
+  const { onPathChange } = props;
   const [activePath, setActivePath] = useState<string | undefined>();
   const [valuesYAML, setValuesYAML] = useState<string | null>(null);
   const [availablePaths, setAvailablePaths] = useState<string[] | null>(null);
@@ -29,21 +30,30 @@ const Schema = (props: Props) => {
     setAvailablePaths(paths);
   }, [props.schema, savedOpts]);
 
-  const onSearch = (selectedPath?: string) => {
-    onPathChange(selectedPath);
-  };
+  const onSchemaPathChange = useCallback(
+    (path?: string) => {
+      setActivePath(path);
+      onPathChange(path);
+    },
+    [onPathChange]
+  );
 
-  const saveSelectedOption = (path: string, index: number) => {
-    setSavedOpts({
-      ...savedOpts,
-      [path]: index,
-    });
-  };
+  const onSearch = useCallback(
+    (selectedPath?: string) => {
+      onSchemaPathChange(selectedPath);
+    },
+    [onSchemaPathChange]
+  );
 
-  const onPathChange = (path?: string) => {
-    setActivePath(path);
-    props.onPathChange(path);
-  };
+  const saveSelectedOption = useCallback(
+    (path: string, index: number) => {
+      setSavedOpts({
+        ...savedOpts,
+        [path]: index,
+      });
+    },
+    [savedOpts]
+  );
 
   useEffect(() => {
     setActivePath(props.visibleValuesSchemaPath);
@@ -83,7 +93,7 @@ const Schema = (props: Props) => {
                   isRequired={isRequired}
                   className="pt-4"
                   activePath={activePath}
-                  onActivePathChange={onPathChange}
+                  onActivePathChange={onSchemaPathChange}
                   saveSelectedOption={saveSelectedOption}
                 />
               </React.Fragment>
@@ -95,4 +105,4 @@ const Schema = (props: Props) => {
   );
 };
 
-export default Schema;
+export default React.memo(Schema);

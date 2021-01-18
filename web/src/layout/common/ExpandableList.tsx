@@ -59,4 +59,4 @@ const ExpandableList = (props: Props) => {
   );
 };
 
-export default ExpandableList;
+export default React.memo(ExpandableList);

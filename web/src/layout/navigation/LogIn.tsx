@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
@@ -26,11 +26,12 @@ interface Loading {
 
 interface Props {
   openLogIn: boolean;
-  setOpenLogIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenLogIn: (status: boolean) => void;
   redirect?: string;
 }
 
 const LogIn = (props: Props) => {
+  const { setOpenLogIn, redirect, openLogIn } = props;
   const { dispatch } = useContext(AppCtx);
   const history = useHistory();
   const loginForm = useRef<HTMLFormElement>(null);
@@ -42,33 +43,33 @@ const LogIn = (props: Props) => {
   const [email, setEmail] = useState('');
 
   // Clean API error when form is focused after validation
-  const cleanApiError = () => {
+  const cleanApiError = useCallback(() => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  };
+  }, [apiError]);
 
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-  };
+  }, []);
 
-  const onCloseModal = () => {
-    if (!isUndefined(props.redirect)) {
+  const onCloseModal = useCallback(() => {
+    if (!isUndefined(redirect)) {
       // If redirect option is defined and user closes login modal,
       // querystring is cleaned to avoid open modal again on refresh
       history.replace({
         pathname: '/',
       });
     }
-    props.setOpenLogIn(false);
-  };
+    setOpenLogIn(false);
+  }, [setOpenLogIn, history, redirect]);
 
   async function loginUser(user: UserLogin) {
     try {
       await API.login(user);
       setIsLoading({ status: false });
-      dispatch(refreshUserProfile(dispatch, props.redirect));
-      props.setOpenLogIn(false);
+      dispatch(refreshUserProfile(dispatch, redirect));
+      setOpenLogIn(false);
     } catch (err) {
       let error = compoundErrorMessage(err, 'An error occurred signing in');
       if (err.kind === ErrorKind.Unauthorized) {
@@ -124,11 +125,13 @@ const LogIn = (props: Props) => {
     }
   };
 
+  const updateLoading = useCallback((loadingStatus: Loading) => setIsLoading(loadingStatus), []);
+
   return (
     <Modal
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Sign in</div>}
       modalClassName={styles.modal}
-      open={props.openLogIn}
+      open={openLogIn}
       onClose={onCloseModal}
       error={apiError}
       cleanError={cleanApiError}
@@ -194,9 +197,9 @@ const LogIn = (props: Props) => {
         </form>
       </>
 
-      <OAuth isLoading={isLoading} setIsLoading={setIsLoading} />
+      <OAuth isLoading={isLoading} setIsLoading={updateLoading} />
     </Modal>
   );
 };
 
-export default LogIn;
+export default React.memo(LogIn);

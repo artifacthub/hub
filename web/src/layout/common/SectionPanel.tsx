@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { AuthorizerAction, Section } from '../../types';
@@ -18,16 +18,17 @@ interface Props {
 }
 
 const SectionPanel = (props: Props) => {
+  const { pathPrefix, sections, content, activeSection, defaultSection } = props;
   const history = useHistory();
-  const [activeSection, setActiveSection] = useState<string>(props.activeSection || props.defaultSection);
+  const [currentActiveSection, setCurrentActiveSection] = useState<string>(activeSection || defaultSection);
 
   useEffect(() => {
-    if (props.activeSection) {
-      setActiveSection(props.activeSection);
+    if (activeSection) {
+      setCurrentActiveSection(activeSection);
     }
-  }, [props.activeSection]);
+  }, [activeSection]);
 
-  const getBtnContent = (section: Section): JSX.Element => {
+  const getBtnContent = useCallback((section: Section): JSX.Element => {
     return (
       <>
         {section.icon && <div className={`${styles.icon} sectionIcon`}>{section.icon}</div>}
@@ -41,18 +42,26 @@ const SectionPanel = (props: Props) => {
         )}
       </>
     );
-  };
+  }, []);
+
+  const onAuthClick = useCallback(
+    (sectionName: string, e?: React.MouseEvent<HTMLButtonElement>) => {
+      if (e) e.preventDefault();
+      history.push(`${pathPrefix || ''}/${sectionName}`);
+    },
+    [history, pathPrefix]
+  );
 
   return (
     <main role="main" className="px-xs-0 px-sm-3 px-lg-0 my-md-4">
       <div className="d-flex flex-column flex-md-row justify-content-between">
         <nav className={`mb-4 ${styles.sidebar}`}>
           <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
-            {props.sections.map((section: Section) => {
+            {sections.map((section: Section) => {
               const className = classnames(
                 'd-flex list-group-item list-group-item-action flex-row align-items-center sectionItem',
                 styles.listItem,
-                { [`${styles.isActive} isActive`]: section.name === activeSection },
+                { [`${styles.isActive} isActive`]: section.name === currentActiveSection },
                 { disabled: section.disabled }
               );
               return (
@@ -71,8 +80,7 @@ const SectionPanel = (props: Props) => {
                             className={className}
                             contentClassName="flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
                             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                              e.preventDefault();
-                              history.push(`${props.pathPrefix || ''}/${section.name}`);
+                              onAuthClick(section.name, e);
                             }}
                             action={AuthorizerAction.GetAuthorizationPolicy}
                           >
@@ -86,9 +94,7 @@ const SectionPanel = (props: Props) => {
                             data-testid="sectionBtn"
                             className={`btn btn-link text-reset ${className}`}
                             disabled={section.disabled}
-                            onClick={() => {
-                              history.push(`${props.pathPrefix || ''}/${section.name}`);
-                            }}
+                            onClick={() => onAuthClick(section.name)}
                           >
                             <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100">
                               {getBtnContent(section)}
@@ -103,10 +109,10 @@ const SectionPanel = (props: Props) => {
           </div>
         </nav>
 
-        <div className={`flex-grow-1 mb-4 ${styles.list}`}>{props.content[activeSection]}</div>
+        <div className={`flex-grow-1 mb-4 ${styles.list}`}>{content[currentActiveSection]}</div>
       </div>
     </main>
   );
 };
 
-export default SectionPanel;
+export default React.memo(SectionPanel);

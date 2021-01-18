@@ -53,4 +53,4 @@ const CodeEditor: React.ElementType = (props: Props) => {
   );
 };
 
-export default CodeEditor;
+export default React.memo(CodeEditor);

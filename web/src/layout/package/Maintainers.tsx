@@ -33,4 +33,4 @@ const Maintainers = (props: Props) => {
   );
 };
 
-export default Maintainers;
+export default React.memo(Maintainers);

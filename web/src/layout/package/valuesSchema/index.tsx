@@ -2,7 +2,7 @@ import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import merger from 'json-schema-merge-allof';
 import { set } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
 
@@ -34,77 +34,77 @@ const ValuesSchema = (props: Props) => {
   const [currentVersion, setCurrentVersion] = useState<string>(props.version);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
 
-  async function deref(schemaToCheck: JSONSchema, tryCatch: boolean) {
-    try {
-      let defs = merger(await $RefParser.dereference(schemaToCheck));
-      return defs;
-    } catch (err) {
-      if (tryCatch) {
-        let tmpSchema = { ...schemaToCheck };
+  const onOpenModal = useCallback(() => {
+    async function deref(schemaToCheck: JSONSchema, tryCatch: boolean) {
+      try {
+        let defs = merger(await $RefParser.dereference(schemaToCheck));
+        return defs;
+      } catch (err) {
+        if (tryCatch) {
+          let tmpSchema = { ...schemaToCheck };
 
-        const checkProps = async (options: any, path: string[]) => {
-          for (const propName of Object.keys(options)) {
-            const currentPath = [...path, propName];
-            const value = schemaToCheck.properties![propName] as JSONSchema;
-            if (value && value.$ref) {
-              const sample: any = {
-                title: 'deref',
-                type: 'object',
-                properties: { test: value as any },
-                definitions: schemaToCheck.definitions,
-              };
+          const checkProps = async (options: any, path: string[]) => {
+            for (const propName of Object.keys(options)) {
+              const currentPath = [...path, propName];
+              const value = schemaToCheck.properties![propName] as JSONSchema;
+              if (value && value.$ref) {
+                const sample: any = {
+                  title: 'deref',
+                  type: 'object',
+                  properties: { test: value as any },
+                  definitions: schemaToCheck.definitions,
+                };
 
-              const derefValue = await deref(sample, false);
-              if (derefValue && derefValue.properties && derefValue.properties.test) {
-                const result = derefValue.properties.test as JSONSchema;
-                set(tmpSchema, currentPath, result);
-                if (result.properties) {
-                  await checkProps(result.properties, [...currentPath, 'properties']);
+                const derefValue = await deref(sample, false);
+                if (derefValue && derefValue.properties && derefValue.properties.test) {
+                  const result = derefValue.properties.test as JSONSchema;
+                  set(tmpSchema, currentPath, result);
+                  if (result.properties) {
+                    await checkProps(result.properties, [...currentPath, 'properties']);
+                  }
                 }
               }
             }
+          };
+
+          if (tmpSchema.properties) {
+            await checkProps(tmpSchema.properties, ['properties']);
           }
-        };
-
-        if (tmpSchema.properties) {
-          await checkProps(tmpSchema.properties, ['properties']);
+          return tmpSchema;
+        } else {
+          return schemaToCheck;
         }
-        return tmpSchema;
-      } else {
-        return schemaToCheck;
       }
     }
-  }
 
-  async function getValuesSchema() {
-    try {
-      setIsLoading(true);
-      setCurrentPkgId(props.packageId);
-      setCurrentVersion(props.version);
-
-      const schema = await API.getValuesSchema(props.packageId, props.version);
-      setCurrentPkgId(props.packageId);
-      setCurrentVersion(props.version);
-
+    async function getValuesSchema() {
       try {
-        setValuesSchema(await deref(schema, true));
-      } catch (err) {
-        setValuesSchema(schema);
+        setIsLoading(true);
+        setCurrentPkgId(props.packageId);
+        setCurrentVersion(props.version);
+
+        const schema = await API.getValuesSchema(props.packageId, props.version);
+        setCurrentPkgId(props.packageId);
+        setCurrentVersion(props.version);
+
+        try {
+          setValuesSchema(await deref(schema, true));
+        } catch (err) {
+          setValuesSchema(schema);
+        }
+
+        setIsLoading(false);
+        setOpenStatus(true);
+      } catch {
+        setValuesSchema(null);
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: 'An error occurred getting the values schema, please try again later.',
+        });
+        setIsLoading(false);
       }
-
-      setIsLoading(false);
-      setOpenStatus(true);
-    } catch {
-      setValuesSchema(null);
-      alertDispatcher.postAlert({
-        type: 'danger',
-        message: 'An error occurred getting the values schema, please try again later.',
-      });
-      setIsLoading(false);
     }
-  }
 
-  const onOpenModal = () => {
     if (props.hasValuesSchema) {
       if (valuesSchema && props.version === currentVersion && props.packageId === currentPkgId) {
         setOpenStatus(true);
@@ -116,22 +116,36 @@ const ValuesSchema = (props: Props) => {
         state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
       });
     }
-  };
+  }, [
+    props.version,
+    props.packageId,
+    currentPkgId,
+    currentVersion,
+    history,
+    props.hasValuesSchema,
+    props.visibleValuesSchemaPath,
+    valuesSchema,
+    props.searchUrlReferer,
+    props.fromStarredPage,
+  ]);
 
-  const onPathChange = (path?: string) => {
-    history.replace({
-      search: `?modal=values-schema${path ? `&path=${path}` : ''}`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
-  };
+  const onPathChange = useCallback(
+    (path?: string) => {
+      history.replace({
+        search: `?modal=values-schema${path ? `&path=${path}` : ''}`,
+        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+      });
+    },
+    [props.searchUrlReferer, props.fromStarredPage, history]
+  );
 
-  const onCloseModal = () => {
+  const onCloseModal = useCallback(() => {
     setOpenStatus(false);
     history.replace({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
-  };
+  }, [props.searchUrlReferer, props.fromStarredPage, history]);
 
   useEffect(() => {
     if (props.visibleValuesSchema && !openStatus) {
@@ -206,4 +220,4 @@ const ValuesSchema = (props: Props) => {
   );
 };
 
-export default ValuesSchema;
+export default React.memo(ValuesSchema);

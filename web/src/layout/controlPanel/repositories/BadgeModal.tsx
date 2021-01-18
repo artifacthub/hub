@@ -91,4 +91,4 @@ const BadgeModal = (props: Props) => {
   );
 };
 
-export default BadgeModal;
+export default React.memo(BadgeModal);

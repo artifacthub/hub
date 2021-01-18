@@ -76,4 +76,4 @@ const CVSSVector = (props: Props) => {
   );
 };
 
-export default CVSSVector;
+export default React.memo(CVSSVector);

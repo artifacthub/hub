@@ -63,4 +63,4 @@ const RandomPackages = () => {
   );
 };
 
-export default RandomPackages;
+export default React.memo(RandomPackages);

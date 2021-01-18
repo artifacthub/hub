@@ -107,4 +107,4 @@ const ResourcesList = (props: Props) => {
   );
 };
 
-export default ResourcesList;
+export default React.memo(ResourcesList);

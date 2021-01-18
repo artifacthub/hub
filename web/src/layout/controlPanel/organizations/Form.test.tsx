@@ -49,15 +49,15 @@ describe('Organization Form - organizations section', () => {
     jest.resetAllMocks();
   });
 
-  // it('creates snapshot', () => {
-  //   const result = render(
-  //     <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-  //       <OrganizationForm {...defaultProps} />
-  //     </AppCtx.Provider>
-  //   );
+  it('creates snapshot', () => {
+    const result = render(
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+        <OrganizationForm {...defaultProps} />
+      </AppCtx.Provider>
+    );
 
-  //   expect(result.asFragment()).toMatchSnapshot();
-  // });
+    expect(result.asFragment()).toMatchSnapshot();
+  });
 
   describe('Render', () => {
     it('renders component', () => {

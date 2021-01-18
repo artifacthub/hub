@@ -60,4 +60,4 @@ const Alert: React.ElementType = (props: Props) => {
   );
 };
 
-export default Alert;
+export default React.memo(Alert);

@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
@@ -28,6 +28,10 @@ const OrganizationsSection = (props: Props) => {
   const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
   const [apiError, setApiError] = useState<null | string>(null);
 
+  const updateModalStatus = useCallback((status: ModalStatus) => {
+    setModalStatus(status);
+  }, []);
+
   async function fetchOrganizations() {
     try {
       setIsLoading(true);
@@ -44,6 +48,10 @@ const OrganizationsSection = (props: Props) => {
       }
     }
   }
+
+  const getOrgs = useCallback(() => {
+    fetchOrganizations();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     fetchOrganizations();
@@ -63,7 +71,7 @@ const OrganizationsSection = (props: Props) => {
               <button
                 data-testid="addOrgButton"
                 className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
-                onClick={() => setModalStatus({ open: true })}
+                onClick={() => updateModalStatus({ open: true })}
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <MdAdd className="d-inline d-md-none" />
@@ -88,7 +96,7 @@ const OrganizationsSection = (props: Props) => {
                         data-testid="addFirstOrgBtn"
                         type="button"
                         className="btn btn-secondary"
-                        onClick={() => setModalStatus({ open: true })}
+                        onClick={() => updateModalStatus({ open: true })}
                       >
                         <div className="d-flex flex-row align-items-center">
                           <MdAddCircle className="mr-2" />
@@ -107,7 +115,7 @@ const OrganizationsSection = (props: Props) => {
                       key={`org_${org.name}`}
                       organization={org}
                       onAuthError={props.onAuthError}
-                      onSuccess={fetchOrganizations}
+                      onSuccess={getOrgs}
                     />
                   ))}
                 </div>
@@ -119,12 +127,12 @@ const OrganizationsSection = (props: Props) => {
 
       <OrganizationModal
         {...modalStatus}
-        onSuccess={fetchOrganizations}
+        onSuccess={getOrgs}
         onAuthError={props.onAuthError}
-        onClose={() => setModalStatus({ open: false })}
+        onClose={() => updateModalStatus({ open: false })}
       />
     </main>
   );
 };
 
-export default OrganizationsSection;
+export default React.memo(OrganizationsSection);

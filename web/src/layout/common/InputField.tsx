@@ -207,4 +207,4 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   );
 });
 
-export default InputField;
+export default React.memo(InputField);

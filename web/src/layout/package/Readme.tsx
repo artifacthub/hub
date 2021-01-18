@@ -101,7 +101,7 @@ const Readme = (props: Props) => {
   };
 
   let readme = props.markdownContent;
-  if (!props.markdownContent.startsWith('#')) {
+  if (!props.markdownContent.startsWith('#') && !props.markdownContent.startsWith(`${props.packageName}\n`)) {
     readme = `# ${props.packageName}\n${readme}`;
   }
 

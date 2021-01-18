@@ -172,4 +172,4 @@ const SecurityRating = (props: Props) => {
   );
 };
 
-export default SecurityRating;
+export default React.memo(SecurityRating);

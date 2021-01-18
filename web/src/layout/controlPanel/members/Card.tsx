@@ -222,4 +222,4 @@ const MemberCard = (props: Props) => {
   );
 };
 
-export default MemberCard;
+export default React.memo(MemberCard);

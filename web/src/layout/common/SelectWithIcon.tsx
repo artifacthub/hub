@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React from 'react';
+import React, { useCallback } from 'react';
 import Select, { components, ValueType } from 'react-select';
 
 import { OptionWithIcon } from '../../types';
@@ -30,12 +30,17 @@ const CustomSelectValue = (props: any) => (
 );
 
 const SelectWithIcon = (props: Props) => {
-  const handleOnChange = (selectedOption: ValueType<OptionWithIcon, false>) => {
-    if (selectedOption) {
-      const value = (selectedOption as OptionWithIcon).value;
-      props.onChange(value);
-    }
-  };
+  const { onChange } = props;
+
+  const handleOnChange = useCallback(
+    (selectedOption: ValueType<OptionWithIcon, false>) => {
+      if (selectedOption) {
+        const value = (selectedOption as OptionWithIcon).value;
+        onChange(value);
+      }
+    },
+    [onChange]
+  );
 
   const getSelectedValue = (): OptionWithIcon | undefined => {
     if (props.selected) {
@@ -95,4 +100,4 @@ const SelectWithIcon = (props: Props) => {
   );
 };
 
-export default SelectWithIcon;
+export default React.memo(SelectWithIcon);

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { FaCog, FaStar, FaUserCircle } from 'react-icons/fa';
 import { GoThreeBars } from 'react-icons/go';
 import { Link } from 'react-router-dom';
@@ -14,8 +14,8 @@ import styles from './MobileSettings.module.css';
 import ThemeMode from './ThemeMode';
 
 interface Props {
-  setOpenSignUp: React.Dispatch<React.SetStateAction<boolean>>;
-  setOpenLogIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSignUp: (status: boolean) => void;
+  setOpenLogIn: (status: boolean) => void;
   privateRoute?: boolean;
 }
 
@@ -41,6 +41,8 @@ const MobileSettings = (props: Props) => {
       return <GoThreeBars />;
     }
   };
+
+  const onOpenStatusChange = useCallback((status: boolean) => setOpenSideBarStatus(status), []);
 
   return (
     <div className={`btn-group navbar-toggler pr-0 ml-auto ${styles.navbarToggler}`}>
@@ -73,7 +75,7 @@ const MobileSettings = (props: Props) => {
             </>
           }
           open={openSideBarStatus}
-          onOpenStatusChange={(status: boolean) => setOpenSideBarStatus(status)}
+          onOpenStatusChange={onOpenStatusChange}
         >
           <>
             {!isUndefined(ctx.user) && (
@@ -154,4 +156,4 @@ const MobileSettings = (props: Props) => {
   );
 };
 
-export default MobileSettings;
+export default React.memo(MobileSettings);

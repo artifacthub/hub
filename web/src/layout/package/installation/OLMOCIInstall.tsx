@@ -69,4 +69,4 @@ spec:
   );
 };
 
-export default OLMOCIInstall;
+export default React.memo(OLMOCIInstall);

@@ -93,4 +93,4 @@ const License = (props: Props) => {
   );
 };
 
-export default License;
+export default React.memo(License);

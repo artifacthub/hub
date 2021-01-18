@@ -3,7 +3,7 @@ import { sortBy } from 'lodash';
 import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FaBuilding, FaUser } from 'react-icons/fa';
 import { GoLaw, GoPackage } from 'react-icons/go';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
@@ -44,9 +44,29 @@ interface Props {
 }
 
 const Filters = (props: Props) => {
+  const {
+    onChange,
+    activeFilters,
+    onResetSomeFilters,
+    onResetFilters,
+    deprecated,
+    operators,
+    verifiedPublisher,
+    official,
+    onOfficialChange,
+    activeTsQuery,
+    onTsQueryChange,
+    facets,
+    visibleTitle,
+    onVerifiedPublisherChange,
+  } = props;
   const getFacetsByFilterKey = (filterKey: string): Facets | undefined => {
-    return find(props.facets, (facets: Facets) => filterKey === facets.filterKey);
+    return find(facets, (facets: Facets) => filterKey === facets.filterKey);
   };
+
+  const updateValue = useCallback((name: string, value: string, checked: boolean) => onChange(name, value, checked), [
+    onChange,
+  ]);
 
   const getPublishers = (): JSX.Element | null => {
     let publishersList = null;
@@ -54,13 +74,13 @@ const Filters = (props: Props) => {
       user: [],
       org: [],
     };
-    if (props.facets) {
+    if (facets) {
       const user = getFacetsByFilterKey('user');
       let usersList: Option[] = [];
       if (!isUndefined(user)) {
         usersList = user.options.map((facet: FacetOption) => ({ ...facet, icon: <FaUser />, filterKey: 'user' }));
-        if (!isUndefined(props.activeFilters.user)) {
-          selectedPublishers.user = props.activeFilters.user;
+        if (!isUndefined(activeFilters.user)) {
+          selectedPublishers.user = activeFilters.user;
         }
       }
 
@@ -68,8 +88,8 @@ const Filters = (props: Props) => {
       let orgsList: Option[] = [];
       if (!isUndefined(org)) {
         orgsList = org.options.map((facet: FacetOption) => ({ ...facet, icon: <FaBuilding />, filterKey: 'org' }));
-        if (!isUndefined(props.activeFilters.org)) {
-          selectedPublishers.org = props.activeFilters.org;
+        if (!isUndefined(activeFilters.org)) {
+          selectedPublishers.org = activeFilters.org;
         }
       }
 
@@ -80,8 +100,8 @@ const Filters = (props: Props) => {
           options={options}
           selected={selectedPublishers}
           className="mt-2 mt-sm-3 pt-1"
-          onChange={props.onChange}
-          onResetSomeFilters={props.onResetSomeFilters}
+          onChange={updateValue}
+          onResetSomeFilters={onResetSomeFilters}
         />
       );
     }
@@ -93,7 +113,7 @@ const Filters = (props: Props) => {
     let kindElement = null;
     const kind = getFacetsByFilterKey('kind');
     if (!isUndefined(kind) && kind.options.length > 0) {
-      const active = props.activeFilters.hasOwnProperty(kind.filterKey) ? props.activeFilters[kind.filterKey] : [];
+      const active = activeFilters.hasOwnProperty(kind.filterKey) ? activeFilters[kind.filterKey] : [];
       const isChecked = (facetOptionId: string) => {
         return active.includes(facetOptionId.toString());
       };
@@ -112,7 +132,7 @@ const Filters = (props: Props) => {
                 label={option.name}
                 checked={isChecked(option.id.toString())}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  props.onChange(e.target.name, e.target.value, e.target.checked)
+                  updateValue(e.target.name, e.target.value, e.target.checked)
                 }
               />
             ))}
@@ -128,9 +148,7 @@ const Filters = (props: Props) => {
     let element = null;
     const capabilities = getFacetsByFilterKey('capabilities');
     if (!isUndefined(capabilities) && capabilities.options.length > 0) {
-      const active = props.activeFilters.hasOwnProperty(capabilities.filterKey)
-        ? props.activeFilters[capabilities.filterKey]
-        : [];
+      const active = activeFilters.hasOwnProperty(capabilities.filterKey) ? activeFilters[capabilities.filterKey] : [];
       const isChecked = (facetOptionId: string) => {
         return active.includes(facetOptionId.toString());
       };
@@ -155,7 +173,7 @@ const Filters = (props: Props) => {
                 label={option.name}
                 checked={isChecked(option.id.toString())}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  props.onChange(e.target.name, e.target.value, e.target.checked)
+                  updateValue(e.target.name, e.target.value, e.target.checked)
                 }
               />
             ))}
@@ -178,11 +196,11 @@ const Filters = (props: Props) => {
           label="repository"
           options={options}
           selected={{
-            repo: props.activeFilters.repo || [],
+            repo: activeFilters.repo || [],
           }}
           className="mt-2 mt-sm-3 pt-1"
-          onChange={props.onChange}
-          onResetSomeFilters={props.onResetSomeFilters}
+          onChange={updateValue}
+          onResetSomeFilters={onResetSomeFilters}
         />
       );
     }
@@ -201,11 +219,11 @@ const Filters = (props: Props) => {
           label="license"
           options={options}
           selected={{
-            license: props.activeFilters.license || [],
+            license: activeFilters.license || [],
           }}
           className="mt-2 mt-sm-3 pt-1"
-          onChange={props.onChange}
-          onResetSomeFilters={props.onResetSomeFilters}
+          onChange={updateValue}
+          onResetSomeFilters={onResetSomeFilters}
         />
       );
     }
@@ -214,22 +232,22 @@ const Filters = (props: Props) => {
   };
 
   return (
-    <div className={classnames(styles.filters, { 'pt-2 mt-3 mb-5': props.visibleTitle })}>
-      {props.visibleTitle && (
+    <div className={classnames(styles.filters, { 'pt-2 mt-3 mb-5': visibleTitle })}>
+      {visibleTitle && (
         <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom">
           <div className={`h6 text-uppercase mb-0 ${styles.title}`}>Filters</div>
-          {(!isEmpty(props.activeFilters) ||
-            props.deprecated ||
-            props.operators ||
-            props.verifiedPublisher ||
-            props.official ||
-            !isEmpty(props.activeTsQuery)) && (
+          {(!isEmpty(activeFilters) ||
+            deprecated ||
+            operators ||
+            verifiedPublisher ||
+            official ||
+            !isEmpty(activeTsQuery)) && (
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
               <button
                 data-testid="resetFiltersBtn"
                 className={`btn btn-link btn-sm p-0 pl-1 text-secondary ${styles.resetBtn}`}
-                onClick={props.onResetFilters}
+                onClick={onResetFilters}
               >
                 Reset
               </button>
@@ -244,8 +262,8 @@ const Filters = (props: Props) => {
           value="official"
           className={styles.checkbox}
           label="Official repositories"
-          checked={props.official || false}
-          onChange={props.onOfficialChange}
+          checked={official || false}
+          onChange={onOfficialChange}
         />
 
         <div className="d-none d-md-block">
@@ -267,8 +285,8 @@ const Filters = (props: Props) => {
           value="verifiedPublisher"
           className={styles.checkbox}
           label="Verified publishers"
-          checked={props.verifiedPublisher || false}
-          onChange={props.onVerifiedPublisherChange}
+          checked={verifiedPublisher || false}
+          onChange={onVerifiedPublisherChange}
         />
 
         <div className="d-none d-md-block">
@@ -284,7 +302,7 @@ const Filters = (props: Props) => {
         </div>
       </div>
 
-      <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
+      <TsQuery active={activeTsQuery || []} onChange={onTsQueryChange} />
       {getKindFacets()}
       {getPublishers()}
       {getRepositoryFacets()}
@@ -300,7 +318,7 @@ const Filters = (props: Props) => {
             value="operators"
             className={styles.checkbox}
             label="Only operators"
-            checked={props.operators || false}
+            checked={operators || false}
             onChange={props.onOperatorsChange}
           />
 
@@ -309,7 +327,7 @@ const Filters = (props: Props) => {
             value="deprecated"
             className={styles.checkbox}
             label="Include deprecated"
-            checked={props.deprecated || false}
+            checked={deprecated || false}
             onChange={props.onDeprecatedChange}
           />
         </div>
@@ -318,4 +336,4 @@ const Filters = (props: Props) => {
   );
 };
 
-export default Filters;
+export default React.memo(Filters);

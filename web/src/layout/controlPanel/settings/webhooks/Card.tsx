@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -21,28 +21,33 @@ interface Props {
 }
 
 const WebhookCard = (props: Props) => {
+  const { webhook, onEdition, onDeletion, onAuthError } = props;
   const { ctx } = useContext(AppCtx);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [dropdownMenuStatus, setDropdownMenuStatus] = useState<boolean>(false);
   const dropdownMenu = useRef(null);
   const [deletionModalStatus, setDeletionModalStatus] = useState<boolean>(false);
 
-  const closeDropdown = () => {
+  const closeDropdown = useCallback(() => {
     setDropdownMenuStatus(false);
-  };
+  }, []);
+
+  const onChangeDeletionModalStatus = useCallback((status: boolean) => {
+    setDeletionModalStatus(status);
+  }, []);
 
   useOutsideClick([dropdownMenu], dropdownMenuStatus, closeDropdown);
 
   async function deleteWebhook() {
     try {
       setIsDeleting(true);
-      await API.deleteWebhook(props.webhook.webhookId!, ctx.prefs.controlPanel.selectedOrg);
+      await API.deleteWebhook(webhook.webhookId!, ctx.prefs.controlPanel.selectedOrg);
       setIsDeleting(false);
-      props.onDeletion();
+      onDeletion();
     } catch (err) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {
-        props.onAuthError();
+        onAuthError();
       } else {
         alertDispatcher.postAlert({
           type: 'danger',
@@ -59,8 +64,8 @@ const WebhookCard = (props: Props) => {
           <div className="d-flex flex-row">
             <div className={`h5 card-title mb-3 mr-3 ${styles.title}`}>
               <div className="d-flex flex-row align-items-start">
-                <div>{props.webhook.name}</div>
-                {props.webhook.active ? (
+                <div>{webhook.name}</div>
+                {webhook.active ? (
                   <span
                     className={`ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase ${styles.badge}`}
                   >
@@ -117,7 +122,7 @@ const WebhookCard = (props: Props) => {
                   </>
                 }
                 header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Delete webhook</div>}
-                onClose={() => setDeletionModalStatus(false)}
+                onClose={() => onChangeDeletionModalStatus(false)}
                 open
               >
                 <div className="mt-3 mw-100 text-center">
@@ -141,7 +146,7 @@ const WebhookCard = (props: Props) => {
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
-                    props.onEdition();
+                    onEdition();
                   }}
                 >
                   <div className="d-flex flex-row align-items-center">
@@ -182,12 +187,12 @@ const WebhookCard = (props: Props) => {
 
             <div className="text-truncate">
               <small className="text-muted text-uppercase mr-2">Url:</small>
-              <small>{props.webhook.url}</small>
+              <small>{webhook.url}</small>
             </div>
 
-            {props.webhook.lastNotifications && (
+            {webhook.lastNotifications && (
               <div className="d-none d-md-inline mt-2">
-                <LastNotificationsModal notifications={props.webhook.lastNotifications} />
+                <LastNotificationsModal notifications={webhook.lastNotifications} />
               </div>
             )}
           </div>
@@ -197,4 +202,4 @@ const WebhookCard = (props: Props) => {
   );
 };
 
-export default WebhookCard;
+export default React.memo(WebhookCard);

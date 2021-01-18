@@ -12,4 +12,4 @@ const SubNavbar = (props: Props) => (
   </nav>
 );
 
-export default SubNavbar;
+export default React.memo(SubNavbar);

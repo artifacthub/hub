@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { FaCaretDown, FaCog, FaStar, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -59,7 +59,7 @@ const UserAuthDropdown = (props: Props) => {
 
         <div className="dropdown-divider my-3" />
 
-        <ThemeMode onSelection={() => setOpenStatus(false)} />
+        <ThemeMode onSelection={useCallback(() => setOpenStatus(false), [])} />
 
         <div className="dropdown-divider my-3" />
 
@@ -91,10 +91,14 @@ const UserAuthDropdown = (props: Props) => {
           </div>
         </Link>
 
-        <LogOut className="mb-2" onSuccess={() => setOpenStatus(false)} privateRoute={props.privateRoute} />
+        <LogOut
+          className="mb-2"
+          onSuccess={useCallback(() => setOpenStatus(false), [])}
+          privateRoute={props.privateRoute}
+        />
       </div>
     </div>
   );
 };
 
-export default UserAuthDropdown;
+export default React.memo(UserAuthDropdown);

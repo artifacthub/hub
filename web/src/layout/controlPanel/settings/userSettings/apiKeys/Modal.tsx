@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -29,58 +29,59 @@ interface FormValidation {
 }
 
 const APIKeyModal = (props: Props) => {
+  const { open, onClose, apiKey, onSuccess, onAuthError } = props;
   const form = useRef<HTMLFormElement>(null);
   const nameInput = useRef<RefInputField>(null);
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
-  const [apiKey, setApiKey] = useState<APIKey | undefined>(props.apiKey);
+  const [activeApiKey, setActiveApiKey] = useState<APIKey | undefined>(apiKey);
   const [apiError, setApiError] = useState<string | null>(null);
   const [apiKeyCode, setApiKeyCode] = useState<APIKeyCode | undefined>(undefined);
 
   // Clean API error when form is focused after validation
-  const cleanApiError = () => {
+  const cleanApiError = useCallback(() => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  };
+  }, [apiError]);
 
-  const onCloseModal = () => {
-    setApiKey(undefined);
+  const onCloseModal = useCallback(() => {
+    setActiveApiKey(undefined);
     setApiKeyCode(undefined);
     setIsValidated(false);
     setApiError(null);
-    props.onClose();
-  };
+    onClose();
+  }, [onClose]);
 
-  async function handleAPIKey(name: string) {
-    try {
-      if (props.apiKey) {
-        await API.updateAPIKey(props.apiKey.apiKeyId!, name);
-      } else {
-        setApiKeyCode(await API.addAPIKey(name));
-      }
-      if (props.onSuccess) {
-        props.onSuccess();
-      }
-      setIsSending(false);
+  const submitForm = useCallback(() => {
+    async function handleAPIKey(name: string) {
+      try {
+        if (apiKey) {
+          await API.updateAPIKey(apiKey.apiKeyId!, name);
+        } else {
+          setApiKeyCode(await API.addAPIKey(name));
+        }
+        if (onSuccess) {
+          onSuccess();
+        }
+        setIsSending(false);
 
-      // Modal is closed only when updating API key
-      if (props.apiKey) {
-        onCloseModal();
-      }
-    } catch (err) {
-      setIsSending(false);
-      if (err.kind !== ErrorKind.Unauthorized) {
-        setApiError(
-          `An error occurred ${isUndefined(props.apiKey) ? 'adding' : 'updating'} the API key, please try again later.`
-        );
-      } else {
-        props.onAuthError();
+        // Modal is closed only when updating API key
+        if (apiKey) {
+          onCloseModal();
+        }
+      } catch (err) {
+        setIsSending(false);
+        if (err.kind !== ErrorKind.Unauthorized) {
+          setApiError(
+            `An error occurred ${isUndefined(apiKey) ? 'adding' : 'updating'} the API key, please try again later.`
+          );
+        } else {
+          onAuthError();
+        }
       }
     }
-  }
 
-  const submitForm = () => {
     cleanApiError();
     setIsSending(true);
     if (form.current) {
@@ -91,7 +92,7 @@ const APIKeyModal = (props: Props) => {
         setIsSending(false);
       }
     }
-  };
+  }, [cleanApiError, apiKey, onAuthError, onCloseModal, onSuccess]);
 
   const validateForm = (form: HTMLFormElement): FormValidation => {
     let apiKey: APIKey | null = null;
@@ -108,31 +109,34 @@ const APIKeyModal = (props: Props) => {
     return { isValid, apiKey };
   };
 
-  const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter' && form) {
-      event.preventDefault();
-      event.stopPropagation();
-      submitForm();
-    }
-  };
+  const handleOnReturnKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>): void => {
+      if (event.key === 'Enter' && form) {
+        event.preventDefault();
+        event.stopPropagation();
+        submitForm();
+      }
+    },
+    [submitForm]
+  );
 
   useEffect(() => {
     async function getAPIKey() {
       try {
-        const currentAPIKey = await API.getAPIKey(props.apiKey!.apiKeyId!);
-        setApiKey(currentAPIKey);
+        const currentAPIKey = await API.getAPIKey(apiKey!.apiKeyId!);
+        setActiveApiKey(currentAPIKey);
         nameInput.current!.updateValue(currentAPIKey.name);
       } catch (err) {
         if (err.kind === ErrorKind.Unauthorized) {
-          props.onAuthError();
+          onAuthError();
         }
       }
     }
 
-    if (props.apiKey && isUndefined(apiKey)) {
+    if (apiKey && isUndefined(activeApiKey)) {
       getAPIKey();
     }
-  }, [apiKey, props, props.apiKey]);
+  }, [activeApiKey, onAuthError, apiKey]);
 
   const sendBtn = (
     <button
@@ -145,11 +149,11 @@ const APIKeyModal = (props: Props) => {
       {isSending ? (
         <>
           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-          <span className="ml-2">{`${props.apiKey ? 'Updating' : 'Adding'} API key`}</span>
+          <span className="ml-2">{`${apiKey ? 'Updating' : 'Adding'} API key`}</span>
         </>
       ) : (
         <div className="d-flex flex-row align-items-center text-uppercase">
-          {isUndefined(props.apiKey) ? (
+          {isUndefined(apiKey) ? (
             <>
               <MdAddCircle className="mr-2" />
               <div>Add</div>
@@ -167,10 +171,8 @@ const APIKeyModal = (props: Props) => {
 
   return (
     <Modal
-      header={
-        <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>{`${props.apiKey ? 'Update' : 'Add'} API key`}</div>
-      }
-      open={props.open}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>{`${apiKey ? 'Update' : 'Add'} API key`}</div>}
+      open={open}
       modalClassName={styles.modal}
       closeButton={isUndefined(apiKeyCode) ? sendBtn : undefined}
       onClose={onCloseModal}
@@ -241,4 +243,4 @@ const APIKeyModal = (props: Props) => {
   );
 };
 
-export default APIKeyModal;
+export default React.memo(APIKeyModal);

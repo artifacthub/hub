@@ -40,4 +40,4 @@ const AlertController = () => {
   );
 };
 
-export default AlertController;
+export default React.memo(AlertController);

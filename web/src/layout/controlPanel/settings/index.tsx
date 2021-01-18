@@ -25,4 +25,4 @@ const SettingsSection = (props: Props) => (
   </>
 );
 
-export default SettingsSection;
+export default React.memo(SettingsSection);

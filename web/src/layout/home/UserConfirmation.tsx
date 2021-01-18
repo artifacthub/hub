@@ -84,4 +84,4 @@ const UserConfirmation = (props: Props) => {
   );
 };
 
-export default UserConfirmation;
+export default React.memo(UserConfirmation);

@@ -1,14 +1,14 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CgFileDocument } from 'react-icons/cg';
 import { FaLink } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import semver from 'semver';
 
 import { API } from '../../api';
-import { ChangeLog, Package, RepositoryKind, SearchFiltersURL } from '../../types';
+import { ChangeLog, Repository, RepositoryKind, SearchFiltersURL } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import buildPackageURL from '../../utils/buildPackageURL';
 import ElementWithTooltip from '../common/ElementWithTooltip';
@@ -16,22 +16,34 @@ import Modal from '../common/Modal';
 import styles from './ChangelogModal.module.css';
 
 interface Props {
-  packageItem: Package;
+  normalizedName: string;
+  repository: Repository;
+  packageId: string;
+  hasChangelog?: boolean;
   visibleChangelog: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
 }
 
 const ChangelogModal = (props: Props) => {
+  const {
+    searchUrlReferer,
+    fromStarredPage,
+    normalizedName,
+    repository,
+    packageId,
+    hasChangelog,
+    visibleChangelog,
+  } = props;
   const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [changelog, setChangelog] = useState<ChangeLog[] | null | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageItem.packageId);
+  const [currentPkgId, setCurrentPkgId] = useState<string>(packageId);
 
   useEffect(() => {
-    if (props.visibleChangelog && !openStatus) {
-      if (props.packageItem.hasChangelog) {
+    if (visibleChangelog && !openStatus) {
+      if (hasChangelog) {
         onOpenModal();
       } else {
         history.replace({
@@ -41,69 +53,69 @@ const ChangelogModal = (props: Props) => {
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (
-    [RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(props.packageItem.repository.kind)
-  )
-    return null;
+  const onOpenModal = useCallback(() => {
+    const sortChangelog = (items: ChangeLog[]): ChangeLog[] => {
+      const validVersions: ChangeLog[] = items.filter((item: ChangeLog) => semver.valid(item.version));
+      const invalidVersions: ChangeLog[] = items.filter((item: ChangeLog) => !semver.valid(item.version));
+      try {
+        const sortedValidVersions = validVersions.sort((a, b) => (semver.lt(a.version, b.version) ? 1 : -1));
+        return [...sortedValidVersions, ...invalidVersions];
+      } catch {
+        return items;
+      }
+    };
 
-  const sortChangelog = (items: ChangeLog[]): ChangeLog[] => {
-    const validVersions: ChangeLog[] = items.filter((item: ChangeLog) => semver.valid(item.version));
-    const invalidVersions: ChangeLog[] = items.filter((item: ChangeLog) => !semver.valid(item.version));
-    try {
-      const sortedValidVersions = validVersions.sort((a, b) => (semver.lt(a.version, b.version) ? 1 : -1));
-      return [...sortedValidVersions, ...invalidVersions];
-    } catch {
-      return items;
+    async function getChangelog() {
+      try {
+        setIsLoading(true);
+        const changelog = await API.getChangelog(packageId);
+        setCurrentPkgId(packageId);
+        setChangelog(sortChangelog(changelog));
+        setIsLoading(false);
+        setOpenStatus(true);
+      } catch {
+        setChangelog(null);
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: 'An error occurred getting package changelog, please try again later.',
+        });
+        setIsLoading(false);
+      }
     }
-  };
 
-  async function getChangelog() {
-    try {
-      setIsLoading(true);
-      const changelog = await API.getChangelog(props.packageItem.packageId);
-      setCurrentPkgId(props.packageItem.packageId);
-      setChangelog(sortChangelog(changelog));
-      setIsLoading(false);
-      setOpenStatus(true);
-    } catch {
-      setChangelog(null);
-      alertDispatcher.postAlert({
-        type: 'danger',
-        message: 'An error occurred getting package changelog, please try again later.',
-      });
-      setIsLoading(false);
-    }
-  }
-
-  const onOpenModal = () => {
-    if (props.packageItem.hasChangelog) {
-      if (changelog && props.packageItem.packageId === currentPkgId) {
+    if (hasChangelog) {
+      if (changelog && packageId === currentPkgId) {
         setOpenStatus(true);
       } else {
         getChangelog();
       }
       history.replace({
         search: '?modal=changelog',
-        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+        state: { searchUrlReferer: searchUrlReferer, fromStarredPage: fromStarredPage },
       });
     }
-  };
+  }, [packageId, fromStarredPage, searchUrlReferer, currentPkgId, history, changelog, hasChangelog]);
 
-  const onCloseModal = () => {
+  const onCloseModal = useCallback(() => {
     setOpenStatus(false);
     history.replace({
       search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+      state: { searchUrlReferer: searchUrlReferer, fromStarredPage: fromStarredPage },
     });
-  };
+  }, [fromStarredPage, searchUrlReferer, history]);
 
-  const openPackagePage = (newVersion: string) => {
-    history.push({
-      pathname: buildPackageURL({ ...props.packageItem, version: newVersion }, true),
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
-    setOpenStatus(false);
-  };
+  const openPackagePage = useCallback(
+    (newVersion: string) => {
+      history.push({
+        pathname: buildPackageURL(normalizedName, repository, newVersion, true),
+        state: { searchUrlReferer: searchUrlReferer, fromStarredPage: fromStarredPage },
+      });
+      setOpenStatus(false);
+    },
+    [normalizedName, repository, fromStarredPage, searchUrlReferer, history]
+  );
+
+  if ([RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(repository.kind)) return null;
 
   return (
     <>
@@ -112,7 +124,7 @@ const ChangelogModal = (props: Props) => {
           <button
             data-testid="changelogBtn"
             className={classnames('btn btn-secondary btn-block btn-sm text-nowrap', {
-              disabled: !props.packageItem.hasChangelog,
+              disabled: !hasChangelog,
             })}
             onClick={onOpenModal}
           >
@@ -131,7 +143,7 @@ const ChangelogModal = (props: Props) => {
             </div>
           </button>
         }
-        visibleTooltip={!props.packageItem.hasChangelog}
+        visibleTooltip={!hasChangelog}
         tooltipClassName={styles.tooltip}
         tooltipMessage="No versions of this package include an annotation with information about the changes it introduces."
         active
@@ -198,4 +210,4 @@ const ChangelogModal = (props: Props) => {
   );
 };
 
-export default ChangelogModal;
+export default React.memo(ChangelogModal);

@@ -105,4 +105,4 @@ const LastNotificationsModal = (props: Props) => {
   );
 };
 
-export default LastNotificationsModal;
+export default React.memo(LastNotificationsModal);

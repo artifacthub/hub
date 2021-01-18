@@ -35,4 +35,4 @@ const UserSettingsSection = (props: Props) => {
   );
 };
 
-export default UserSettingsSection;
+export default React.memo(UserSettingsSection);

@@ -78,4 +78,4 @@ const StarredPackagesView = () => {
   );
 };
 
-export default StarredPackagesView;
+export default React.memo(StarredPackagesView);

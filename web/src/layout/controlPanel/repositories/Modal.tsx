@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 
@@ -60,11 +60,11 @@ const RepositoryModal = (props: Props) => {
     (window as any).config.allowPrivateRepositories === 'true';
 
   // Clean API error when form is focused after validation
-  const cleanApiError = () => {
+  const cleanApiError = useCallback(() => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  };
+  }, [apiError]);
 
   const onCloseModal = () => {
     props.onClose();
@@ -558,4 +558,4 @@ const RepositoryModal = (props: Props) => {
   );
 };
 
-export default RepositoryModal;
+export default React.memo(RepositoryModal);

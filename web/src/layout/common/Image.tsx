@@ -69,4 +69,4 @@ const Image = (props: Props) => {
   );
 };
 
-export default Image;
+export default React.memo(Image);

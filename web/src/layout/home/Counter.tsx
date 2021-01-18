@@ -22,4 +22,4 @@ const Counter = (props: Props) => (
   </div>
 );
 
-export default Counter;
+export default React.memo(Counter);

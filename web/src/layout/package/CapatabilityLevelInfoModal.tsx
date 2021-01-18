@@ -30,4 +30,4 @@ const CapatabilityLevelInfoModal = () => {
   );
 };
 
-export default CapatabilityLevelInfoModal;
+export default React.memo(CapatabilityLevelInfoModal);

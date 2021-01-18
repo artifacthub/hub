@@ -235,4 +235,4 @@ const HomeView = (props: Props) => {
   );
 };
 
-export default HomeView;
+export default React.memo(HomeView);

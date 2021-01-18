@@ -641,4 +641,4 @@ const AuthorizationSection = (props: Props) => {
   );
 };
 
-export default AuthorizationSection;
+export default React.memo(AuthorizationSection);

@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package } from '../../types';
-import buildPackageURL from '../../utils/buildPackageURL';
 import Version from './Version';
 
 const mockHistoryPush = jest.fn();
@@ -102,7 +101,7 @@ describe('Version', () => {
       fireEvent.click(versionLink);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: buildPackageURL(packageItem, true),
+        pathname: '/packages/helm/repo/pr',
         state: { searchUrlReferer: undefined, fromStarred: undefined },
       });
 

@@ -24,7 +24,11 @@ const PackageCard = (props: Props) => {
               data-testid="packageCardLink"
               className={`text-decoration-none text-reset ${styles.link}`}
               to={{
-                pathname: buildPackageURL(props.package),
+                pathname: buildPackageURL(
+                  props.package.normalizedName,
+                  props.package.repository,
+                  props.package.version!
+                ),
               }}
             >
               <div className="d-flex align-items-start justify-content-between mb-3">
@@ -129,4 +133,4 @@ const PackageCard = (props: Props) => {
   );
 };
 
-export default PackageCard;
+export default React.memo(PackageCard);

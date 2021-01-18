@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MdAddCircle, MdClose } from 'react-icons/md';
 
 import { API } from '../../../../../../api';
@@ -22,62 +22,68 @@ interface Props {
 }
 
 const SubscriptionModal = (props: Props) => {
+  const { open, subscriptions, onSuccess, onClose, getNotificationTitle } = props;
   const searchWrapperRef = useRef<HTMLDivElement | null>(null);
   const [apiError, setApiError] = useState(null);
   const [eventKind, setEventKind] = useState<EventKind>(EventKind.NewPackageRelease);
   const [packageItem, setPackageItem] = useState<Package | null>(null);
   const [isSending, setIsSending] = useState<boolean>(false);
+  const [subscribedPkgIds, setSubscribedPkgIds] = useState<string[]>([]);
 
-  const onCloseModal = () => {
+  const onCloseModal = useCallback(() => {
     setPackageItem(null);
-    props.onClose();
-  };
+    onClose();
+  }, [onClose]);
 
-  const submitForm = () => {
+  const submitForm = useCallback(() => {
+    async function addSubscription() {
+      try {
+        setIsSending(true);
+        await API.addSubscription(packageItem!.packageId, eventKind);
+        setPackageItem(null);
+        setIsSending(false);
+        onSuccess();
+        onClose();
+      } catch (err) {
+        setIsSending(false);
+        if (err.kind !== ErrorKind.Unauthorized) {
+          alertDispatcher.postAlert({
+            type: 'danger',
+            message: `An error occurred subscribing to ${getNotificationTitle(eventKind)} notification for ${
+              packageItem!.displayName || packageItem!.name
+            } package, please try again later.`,
+          });
+        }
+      }
+    }
+
     if (!isNull(packageItem)) {
       addSubscription();
     }
-  };
+  }, [packageItem, eventKind, getNotificationTitle, onClose, onSuccess]);
 
-  const onPackageSelection = (packageItem: Package): void => {
+  const onPackageSelection = useCallback((packageItem: Package): void => {
     setPackageItem(packageItem);
-  };
+  }, []);
 
-  const getSubscribedPackagesIds = (): string[] => {
-    if (isUndefined(props.subscriptions)) return [];
+  useEffect(() => {
+    const getSubscribedPackagesIds = (): string[] => {
+      if (isUndefined(subscriptions)) return [];
 
-    const selectedPackages = props.subscriptions.filter(
-      (item: Package) => !isUndefined(item.eventKinds) && item.eventKinds.includes(eventKind)
-    );
+      const selectedPackages = subscriptions.filter(
+        (item: Package) => !isUndefined(item.eventKinds) && item.eventKinds.includes(eventKind)
+      );
 
-    return selectedPackages.map((item: Package) => item.packageId);
-  };
+      return selectedPackages.map((item: Package) => item.packageId);
+    };
 
-  async function addSubscription() {
-    try {
-      setIsSending(true);
-      await API.addSubscription(packageItem!.packageId, eventKind);
-      setPackageItem(null);
-      setIsSending(false);
-      props.onSuccess();
-      props.onClose();
-    } catch (err) {
-      setIsSending(false);
-      if (err.kind !== ErrorKind.Unauthorized) {
-        alertDispatcher.postAlert({
-          type: 'danger',
-          message: `An error occurred subscribing to ${props.getNotificationTitle(eventKind)} notification for ${
-            packageItem!.displayName || packageItem!.name
-          } package, please try again later.`,
-        });
-      }
-    }
-  }
+    setSubscribedPkgIds(getSubscribedPackagesIds());
+  }, [subscriptions, eventKind]);
 
   return (
     <Modal
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Add subscription</div>}
-      open={props.open}
+      open={open}
       modalDialogClassName={styles.modal}
       closeButton={
         <button
@@ -102,7 +108,7 @@ const SubscriptionModal = (props: Props) => {
       }
       onClose={onCloseModal}
       error={apiError}
-      cleanError={() => setApiError(null)}
+      cleanError={useCallback(() => setApiError(null), [])}
       excludedRefs={[searchWrapperRef]}
       noScrollable
     >
@@ -193,7 +199,7 @@ const SubscriptionModal = (props: Props) => {
             </div>
           ) : (
             <div className={`mt-2 ${styles.searchWrapper}`} ref={searchWrapperRef}>
-              <SearchPackages disabledPackages={getSubscribedPackagesIds()} onSelection={onPackageSelection} />
+              <SearchPackages disabledPackages={subscribedPkgIds} onSelection={onPackageSelection} />
             </div>
           )}
         </div>
@@ -202,4 +208,4 @@ const SubscriptionModal = (props: Props) => {
   );
 };
 
-export default SubscriptionModal;
+export default React.memo(SubscriptionModal);

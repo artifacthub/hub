@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import map from 'lodash/map';
 import moment from 'moment';
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -57,7 +57,7 @@ import ValuesSchema from './valuesSchema';
 
 interface Props {
   isLoadingPackage: boolean;
-  setIsLoadingPackage: Dispatch<SetStateAction<boolean>>;
+  setIsLoadingPackage: (status: boolean) => void;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
   packageName: string;
@@ -82,6 +82,7 @@ const PackageView = (props: Props) => {
   const { isLoadingPackage, setIsLoadingPackage } = props;
   const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
   const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
+  const [sortedVersions, setSortedVersions] = useState<Version[]>([]);
 
   useScrollRestorationFix();
 
@@ -93,6 +94,12 @@ const PackageView = (props: Props) => {
       setRepositoryName(props.repositoryName);
     }
   }, [props, isLoadingPackage]);
+
+  useEffect(() => {
+    if (detail && detail.availableVersions) {
+      setSortedVersions(sortPackageVersions(detail.availableVersions));
+    }
+  }, [detail]);
 
   async function fetchPackageDetail() {
     try {
@@ -162,29 +169,14 @@ const PackageView = (props: Props) => {
     };
   }, [setIsLoadingPackage]);
 
-  let sortedVersions: Version[] = [];
-  if (detail && detail.availableVersions) {
-    sortedVersions = sortPackageVersions(detail.availableVersions);
-  }
-
-  const onChannelChange = (channel: string) => {
-    history.replace({
-      search: `?channel=${channel}`,
-    });
-    setActiveChannel(channel);
-  };
-
-  const getInstallationModal = (wrapperClassName?: string): JSX.Element | null => (
-    <div className={wrapperClassName}>
-      <InstallationModal
-        package={detail}
-        sortedVersions={sortedVersions}
-        activeChannel={activeChannel}
-        visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
-        searchUrlReferer={props.searchUrlReferer}
-        fromStarredPage={props.fromStarredPage}
-      />
-    </div>
+  const onChannelChange = useCallback(
+    (channel: string) => {
+      history.replace({
+        search: `?channel=${channel}`,
+      });
+      setActiveChannel(channel);
+    },
+    [setActiveChannel, history]
   );
 
   const getFalcoRules = (): string | FalcoRules | undefined => {
@@ -469,7 +461,14 @@ const PackageView = (props: Props) => {
                           <span>Info</span>
                         </>
                       }
-                      header={<ModalHeader package={detail} />}
+                      header={
+                        <ModalHeader
+                          displayName={detail.displayName}
+                          name={detail.name}
+                          logoImageId={detail.logoImageId}
+                          repoKind={detail.repository.kind}
+                        />
+                      }
                       className={`col mt-3 ${styles.btnMobileWrapper}`}
                     >
                       <Details
@@ -483,11 +482,23 @@ const PackageView = (props: Props) => {
                       />
                     </Modal>
 
-                    {getInstallationModal(`col mt-3 ${styles.btnMobileWrapper}`)}
+                    <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
+                      <InstallationModal
+                        package={detail}
+                        sortedVersions={sortedVersions}
+                        activeChannel={activeChannel}
+                        visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
+                        searchUrlReferer={props.searchUrlReferer}
+                        fromStarredPage={props.fromStarredPage}
+                      />
+                    </div>
 
                     <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
                       <ChangelogModal
-                        packageItem={detail}
+                        normalizedName={detail.normalizedName}
+                        repository={detail.repository}
+                        packageId={detail.packageId}
+                        hasChangelog={detail.hasChangelog}
                         visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
                         searchUrlReferer={props.searchUrlReferer}
                         fromStarredPage={props.fromStarredPage}
@@ -512,7 +523,18 @@ const PackageView = (props: Props) => {
                   <div className={`ml-5 mb-5 d-none d-md-block position-relative ${styles.additionalInfo}`}>
                     {!isNull(detail) && (
                       <div className={styles.rightColumnWrapper}>
-                        {getInstallationModal('mb-2')}
+                        <div className="mb-2">
+                          <InstallationModal
+                            package={detail}
+                            sortedVersions={sortedVersions}
+                            activeChannel={activeChannel}
+                            visibleInstallationModal={
+                              !isUndefined(props.visibleModal) && props.visibleModal === 'install'
+                            }
+                            searchUrlReferer={props.searchUrlReferer}
+                            fromStarredPage={props.fromStarredPage}
+                          />
+                        </div>
 
                         {detail.repository.kind === RepositoryKind.Helm && (
                           <div className="mb-2">
@@ -537,7 +559,10 @@ const PackageView = (props: Props) => {
 
                         <div className="mb-2">
                           <ChangelogModal
-                            packageItem={detail}
+                            normalizedName={detail.normalizedName}
+                            repository={detail.repository}
+                            packageId={detail.packageId}
+                            hasChangelog={detail.hasChangelog}
                             visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
                             searchUrlReferer={props.searchUrlReferer}
                             fromStarredPage={props.fromStarredPage}
@@ -663,4 +688,4 @@ const PackageView = (props: Props) => {
   );
 };
 
-export default PackageView;
+export default React.memo(PackageView);

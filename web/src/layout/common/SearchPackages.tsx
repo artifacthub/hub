@@ -199,4 +199,4 @@ const SearchPackages = (props: Props) => {
   );
 };
 
-export default SearchPackages;
+export default React.memo(SearchPackages);

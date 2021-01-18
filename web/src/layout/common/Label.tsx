@@ -43,4 +43,4 @@ const Label = (props: Props) => (
   </div>
 );
 
-export default Label;
+export default React.memo(Label);

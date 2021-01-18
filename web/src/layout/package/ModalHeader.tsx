@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { Package } from '../../types';
+import { RepositoryKind } from '../../types';
 import Image from '../common/Image';
 import styles from './ModalHeader.module.css';
 
 interface Props {
-  package: Package;
+  displayName?: string | null;
+  name: string;
+  logoImageId?: string;
+  repoKind: RepositoryKind;
 }
 
 const ModalHeader = (props: Props) => (
@@ -15,16 +18,16 @@ const ModalHeader = (props: Props) => (
     >
       <Image
         className={styles.image}
-        alt={props.package.displayName || props.package.name}
-        imageId={props.package.logoImageId}
-        kind={props.package.repository.kind}
+        alt={props.displayName || props.name}
+        imageId={props.logoImageId}
+        kind={props.repoKind}
       />
     </div>
 
     <div className="ml-3 flex-grow-1">
-      <div className="h5 mb-0">{props.package.displayName || props.package.name}</div>
+      <div className="h5 mb-0">{props.displayName || props.name}</div>
     </div>
   </div>
 );
 
-export default ModalHeader;
+export default React.memo(ModalHeader);

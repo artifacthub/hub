@@ -15,4 +15,4 @@ const ScannerDisabledRepositoryBadge = (props: Props) => {
   );
 };
 
-export default ScannerDisabledRepositoryBadge;
+export default React.memo(ScannerDisabledRepositoryBadge);

@@ -22,4 +22,4 @@ const SignedBadge = (props: Props) => (
   />
 );
 
-export default SignedBadge;
+export default React.memo(SignedBadge);

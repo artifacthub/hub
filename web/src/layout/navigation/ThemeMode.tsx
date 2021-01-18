@@ -101,4 +101,4 @@ const ThemeMode = (props: Props) => {
   );
 };
 
-export default ThemeMode;
+export default React.memo(ThemeMode);

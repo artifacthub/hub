@@ -19,4 +19,4 @@ const OfficialBadge = (props: Props) => (
   />
 );
 
-export default OfficialBadge;
+export default React.memo(OfficialBadge);

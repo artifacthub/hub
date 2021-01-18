@@ -88,4 +88,4 @@ const UserInvitation = (props: Props) => {
   );
 };
 
-export default UserInvitation;
+export default React.memo(UserInvitation);

@@ -92,4 +92,4 @@ const ButtonCopyToClipboard = (props: Props) => {
   );
 };
 
-export default ButtonCopyToClipboard;
+export default React.memo(ButtonCopyToClipboard);

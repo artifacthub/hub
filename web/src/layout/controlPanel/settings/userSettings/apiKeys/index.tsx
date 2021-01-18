@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../../../api';
@@ -28,7 +28,11 @@ const APIKeysSection = (props: Props) => {
     open: false,
   });
 
-  async function getAPIKeys() {
+  const updateModalStatus = useCallback((status: ModalStatus) => {
+    setModalStatus(status);
+  }, []);
+
+  async function fetchAPIKeys() {
     try {
       setIsLoading(true);
       setApiKeysList(await API.getAPIKeys());
@@ -45,8 +49,12 @@ const APIKeysSection = (props: Props) => {
     }
   }
 
+  const getAPIKeys = useCallback(() => {
+    fetchAPIKeys();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   useEffect(() => {
-    getAPIKeys();
+    fetchAPIKeys();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
@@ -61,7 +69,7 @@ const APIKeysSection = (props: Props) => {
               <button
                 data-testid="addAPIKeyBtn"
                 className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
-                onClick={() => setModalStatus({ open: true })}
+                onClick={() => updateModalStatus({ open: true })}
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <MdAdd className="d-inline d-md-none" />
@@ -85,7 +93,7 @@ const APIKeysSection = (props: Props) => {
                           data-testid="addFirstAPIKeyBtn"
                           type="button"
                           className="btn btn-secondary"
-                          onClick={() => setModalStatus({ open: true })}
+                          onClick={() => updateModalStatus({ open: true })}
                         >
                           <div className="d-flex flex-row align-items-center">
                             <MdAddCircle className="mr-2" />
@@ -103,8 +111,8 @@ const APIKeysSection = (props: Props) => {
                       <APIKeyCard
                         key={apiKey.apiKeyId!}
                         apiKey={apiKey}
-                        setModalStatus={setModalStatus}
-                        onSuccess={getAPIKeys}
+                        setModalStatus={updateModalStatus}
+                        onSuccess={fetchAPIKeys}
                         onAuthError={props.onAuthError}
                       />
                     ))}
@@ -117,7 +125,7 @@ const APIKeysSection = (props: Props) => {
           <APIKeyModal
             {...modalStatus}
             onSuccess={getAPIKeys}
-            onClose={() => setModalStatus({ open: false })}
+            onClose={() => updateModalStatus({ open: false })}
             onAuthError={props.onAuthError}
           />
         </div>
@@ -126,4 +134,4 @@ const APIKeysSection = (props: Props) => {
   );
 };
 
-export default APIKeysSection;
+export default React.memo(APIKeysSection);

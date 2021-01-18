@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { FaEnvelope } from 'react-icons/fa';
 
 import Modal from '../common/Modal';
@@ -15,10 +15,11 @@ interface Loading {
 
 interface Props {
   openSignUp: boolean;
-  setOpenSignUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSignUp: (status: boolean) => void;
 }
 
 const SignUp = (props: Props) => {
+  const { setOpenSignUp } = props;
   const form = useRef<HTMLFormElement>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [activeSignUp, setActiveSignUp] = useState(false);
@@ -26,21 +27,29 @@ const SignUp = (props: Props) => {
   const [isLoading, setIsLoading] = useState<Loading>({ status: false });
 
   // Clean API error when form is focused after validation
-  const cleanApiError = () => {
+  const cleanApiError = useCallback(() => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  };
+  }, [apiError]);
 
-  const onCloseModal = () => {
-    props.setOpenSignUp(false);
-  };
+  const onCloseModal = useCallback(() => {
+    setOpenSignUp(false);
+  }, [setOpenSignUp]);
+
+  const onNewAccountCreation = useCallback((success: boolean) => {
+    setSuccessNewAccount(success);
+  }, []);
 
   const submitForm = () => {
     if (form.current) {
       form.current.dispatchEvent(new Event('submit', { cancelable: true }));
     }
   };
+
+  const updateLoading = useCallback((loadingStatus: Loading) => setIsLoading(loadingStatus), []);
+
+  const updateApiError = useCallback((error: string | null) => setApiError(error), []);
 
   const closeButton = (
     <button className="btn btn-secondary" type="button" disabled={isLoading.status} onClick={submitForm}>
@@ -68,12 +77,12 @@ const SignUp = (props: Props) => {
       {activeSignUp ? (
         <CreateAnAccount
           ref={form}
-          setApiError={setApiError}
+          setApiError={updateApiError}
           apiError={apiError}
           success={successNewAccount}
-          setSuccess={setSuccessNewAccount}
+          setSuccess={onNewAccountCreation}
           isLoading={isLoading}
-          setIsLoading={setIsLoading}
+          setIsLoading={updateLoading}
         />
       ) : (
         <div className="my-auto">
@@ -92,11 +101,11 @@ const SignUp = (props: Props) => {
             </div>
           </button>
 
-          <OAuth separatorClassName="my-5" isLoading={isLoading} setIsLoading={setIsLoading} />
+          <OAuth separatorClassName="my-5" isLoading={isLoading} setIsLoading={updateLoading} />
         </div>
       )}
     </Modal>
   );
 };
 
-export default SignUp;
+export default React.memo(SignUp);

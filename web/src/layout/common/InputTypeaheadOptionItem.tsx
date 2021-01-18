@@ -22,4 +22,4 @@ const InputTypeaheadOptionItem = (props: Props) => (
   </>
 );
 
-export default InputTypeaheadOptionItem;
+export default React.memo(InputTypeaheadOptionItem);

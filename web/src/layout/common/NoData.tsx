@@ -27,4 +27,4 @@ const NoData = (props: Props) => (
   </div>
 );
 
-export default NoData;
+export default React.memo(NoData);

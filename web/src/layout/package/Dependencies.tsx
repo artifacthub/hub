@@ -32,4 +32,4 @@ const Dependencies = (props: Props) => {
   );
 };
 
-export default Dependencies;
+export default React.memo(Dependencies);

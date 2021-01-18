@@ -69,4 +69,4 @@ const SummaryTable = (props: Props) => {
   );
 };
 
-export default SummaryTable;
+export default React.memo(SummaryTable);

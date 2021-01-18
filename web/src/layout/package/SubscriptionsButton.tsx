@@ -208,4 +208,4 @@ const SubscriptionsButton = (props: Props) => {
   );
 };
 
-export default SubscriptionsButton;
+export default React.memo(SubscriptionsButton);

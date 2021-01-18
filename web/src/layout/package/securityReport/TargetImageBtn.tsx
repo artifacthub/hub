@@ -31,4 +31,4 @@ const TargetImageBtn = (props: Props) => {
   );
 };
 
-export default TargetImageBtn;
+export default React.memo(TargetImageBtn);

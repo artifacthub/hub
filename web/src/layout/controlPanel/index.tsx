@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { AppCtx, signOut, unselectOrg, updateOrg } from '../../context/AppCtx';
@@ -37,7 +37,7 @@ const ControlPanelView = (props: Props) => {
   const isLoggedIn = !isUndefined(ctx.user) && !isNull(ctx.user);
   const [lastSelectedOrg, setLastSelectedOrg] = useState<string | undefined>(ctx.prefs.controlPanel.selectedOrg);
 
-  const onAuthError = (): void => {
+  const onAuthError = useCallback((): void => {
     dispatch(signOut());
     history.push(
       `/login?redirect=/control-panel/${activeSection}${!isNull(activeSubsection) ? `/${activeSubsection}` : ''}`
@@ -46,23 +46,23 @@ const ControlPanelView = (props: Props) => {
       type: 'danger',
       message: 'Sorry, you are not authorized to complete this action, please make sure you are signed in',
     });
-  };
-
-  const checkIfAuthorizationIsActive = (newCtx: string): boolean => {
-    if (
-      newCtx === 'user' &&
-      props.subsection === 'authorization' &&
-      !isControlPanelSectionAvailable(newCtx, props.section, props.subsection) &&
-      !isUndefined(lastSelectedOrg)
-    ) {
-      return true;
-    }
-
-    return false;
-  };
+  }, [history, dispatch, activeSection, activeSubsection]);
 
   useEffect(() => {
     if (ctx.user) {
+      const checkIfAuthorizationIsActive = (newCtx: string): boolean => {
+        if (
+          newCtx === 'user' &&
+          props.subsection === 'authorization' &&
+          !isControlPanelSectionAvailable(newCtx, props.section, props.subsection) &&
+          !isUndefined(lastSelectedOrg)
+        ) {
+          return true;
+        }
+
+        return false;
+      };
+
       let context: 'user' | 'org' = isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org';
       if (
         ctx.user.alias === props.userAlias &&
@@ -193,4 +193,4 @@ const ControlPanelView = (props: Props) => {
   );
 };
 
-export default ControlPanelView;
+export default React.memo(ControlPanelView);

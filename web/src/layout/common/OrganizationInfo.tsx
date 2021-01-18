@@ -167,4 +167,4 @@ const OrganizationInfo = (props: Props) => {
   );
 };
 
-export default OrganizationInfo;
+export default React.memo(OrganizationInfo);

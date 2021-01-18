@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 
 import { AuthorizerAction, Organization } from '../../../../../types';
@@ -23,6 +23,10 @@ const UpdateOrganization = (props: Props) => {
     }
   };
 
+  const updateIsSending = useCallback((sending: boolean) => {
+    setIsSending(sending);
+  }, []);
+
   return (
     <>
       {!props.isLoading && (
@@ -31,7 +35,7 @@ const UpdateOrganization = (props: Props) => {
           organization={!props.isLoading ? props.organization : undefined}
           onAuthError={props.onAuthError}
           onSuccess={props.onSuccess}
-          setIsSending={setIsSending}
+          setIsSending={updateIsSending}
         />
       )}
 
@@ -65,4 +69,4 @@ const UpdateOrganization = (props: Props) => {
   );
 };
 
-export default UpdateOrganization;
+export default React.memo(UpdateOrganization);

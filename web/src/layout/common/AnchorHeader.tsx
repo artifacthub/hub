@@ -50,4 +50,4 @@ const AnchorHeader: React.ElementType = (props: Props) => {
   );
 };
 
-export default AnchorHeader;
+export default React.memo(AnchorHeader);

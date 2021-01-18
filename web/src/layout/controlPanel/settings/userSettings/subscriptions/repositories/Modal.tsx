@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness, MdClose } from 'react-icons/md';
@@ -151,7 +151,7 @@ const OptOutModal = (props: Props) => {
       }
       onClose={onCloseModal}
       error={apiError}
-      cleanError={() => setApiError(null)}
+      cleanError={useCallback(() => setApiError(null), [])}
       noScrollable
     >
       <div className="w-100 position-relative">
@@ -245,4 +245,4 @@ const OptOutModal = (props: Props) => {
   );
 };
 
-export default OptOutModal;
+export default React.memo(OptOutModal);

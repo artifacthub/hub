@@ -118,4 +118,4 @@ const InputFileField = (props: Props) => {
   );
 };
 
-export default InputFileField;
+export default React.memo(InputFileField);

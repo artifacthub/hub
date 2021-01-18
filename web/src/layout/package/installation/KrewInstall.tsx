@@ -38,4 +38,4 @@ const KrewInstall = (props: Props) => {
   );
 };
 
-export default KrewInstall;
+export default React.memo(KrewInstall);

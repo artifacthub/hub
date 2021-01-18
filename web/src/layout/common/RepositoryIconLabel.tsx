@@ -26,4 +26,4 @@ const RepositoryIconLabel = (props: Props) => {
   );
 };
 
-export default RepositoryIconLabel;
+export default React.memo(RepositoryIconLabel);

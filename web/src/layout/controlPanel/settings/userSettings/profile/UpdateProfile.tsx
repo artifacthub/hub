@@ -198,4 +198,4 @@ const UpdateProfile = (props: Props) => {
   );
 };
 
-export default UpdateProfile;
+export default React.memo(UpdateProfile);

@@ -182,4 +182,4 @@ const UpdatePassword = () => {
   );
 };
 
-export default UpdatePassword;
+export default React.memo(UpdatePassword);

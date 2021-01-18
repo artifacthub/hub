@@ -1,5 +1,5 @@
 import { isNull, slice } from 'lodash';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 
@@ -13,7 +13,7 @@ import TargetImageBtn from './TargetImageBtn';
 
 interface Props {
   expandedTarget: string | null;
-  setExpandedTarget: React.Dispatch<React.SetStateAction<string | null>>;
+  setExpandedTarget: (target: string | null) => void;
   image: string;
   reports: SecurityTargetReport[];
   hasOnlyOneTarget: boolean;
@@ -28,6 +28,15 @@ const SecurityTable = (props: Props) => {
   const getTargetName = (target: string): string => {
     return getTextBetweenParenthesis(target) || target;
   };
+
+  const changeVisibleVulnerability = useCallback((active?: string) => setVisibleVulnerability(active), []);
+
+  const onClickTargetImage = useCallback(
+    (isExpanded: boolean, targetImageName: string) => {
+      props.setExpandedTarget(isExpanded ? null : targetImageName);
+    },
+    [props]
+  );
 
   return (
     <div className="my-1">
@@ -56,7 +65,7 @@ const SecurityTable = (props: Props) => {
                     {visibleVulnerabilities.length > 0 ? (
                       <TargetImageBtn
                         isExpanded={isExpanded}
-                        onClick={() => props.setExpandedTarget(isExpanded ? null : targetImageName)}
+                        onClick={() => onClickTargetImage(isExpanded, targetImageName)}
                         disabled={visibleVulnerabilities.length === 0}
                         hasOnlyOneTarget={props.hasOnlyOneTarget}
                       >
@@ -140,7 +149,7 @@ const SecurityTable = (props: Props) => {
                                 vulnerability={item}
                                 key={`cell_${item.PkgName}_${item.VulnerabilityID}`}
                                 visibleVulnerability={visibleVulnerability}
-                                setVisibleVulnerability={setVisibleVulnerability}
+                                setVisibleVulnerability={changeVisibleVulnerability}
                               />
                             ))}
                             {list.length > visibleVulnerabilities.length && (
@@ -167,4 +176,4 @@ const SecurityTable = (props: Props) => {
   );
 };
 
-export default SecurityTable;
+export default React.memo(SecurityTable);

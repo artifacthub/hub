@@ -63,4 +63,4 @@ const RelatedPackages = (props: Props) => {
   );
 };
 
-export default RelatedPackages;
+export default React.memo(RelatedPackages);

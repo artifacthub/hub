@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FiHexagon } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
@@ -33,6 +33,14 @@ const Navbar = (props: Props) => {
     }
   }, [props.redirect]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  const updateSingUpStatus = useCallback((status: boolean) => {
+    setOpenSignUp(status);
+  }, []);
+
+  const updateLogInStatus = useCallback((status: boolean) => {
+    setOpenLogIn(status);
+  }, []);
+
   return (
     <nav
       className={classnames('navbar navbar-top navbar-expand-md navbar-dark', styles.navbar, {
@@ -56,12 +64,16 @@ const Navbar = (props: Props) => {
             </div>
           </Link>
 
-          <MobileSettings setOpenSignUp={setOpenSignUp} setOpenLogIn={setOpenLogIn} privateRoute={props.privateRoute} />
+          <MobileSettings
+            setOpenSignUp={updateSingUpStatus}
+            setOpenLogIn={updateLogInStatus}
+            privateRoute={props.privateRoute}
+          />
         </div>
 
-        {openSignUp && <SignUp openSignUp={openSignUp} setOpenSignUp={setOpenSignUp} />}
+        {openSignUp && <SignUp openSignUp={openSignUp} setOpenSignUp={updateSingUpStatus} />}
 
-        {openLogIn && <LogIn openLogIn={openLogIn} setOpenLogIn={setOpenLogIn} redirect={props.redirect} />}
+        {openLogIn && <LogIn openLogIn={openLogIn} setOpenLogIn={updateLogInStatus} redirect={props.redirect} />}
 
         {isUndefined(props.fromHome) && (
           <SearchBar
@@ -126,4 +138,4 @@ const Navbar = (props: Props) => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

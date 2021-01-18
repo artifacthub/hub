@@ -21,4 +21,4 @@ const FalcoInstall = (props: Props) => (
   </div>
 );
 
-export default FalcoInstall;
+export default React.memo(FalcoInstall);

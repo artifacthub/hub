@@ -32,23 +32,25 @@ const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
   }));
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (!visibleTooltipStatus && onBtnHover) {
-      timeout = setTimeout(() => {
-        setVisibleTooltipStatus(true);
-      }, 2000);
-    }
-    if (visibleTooltipStatus && !onBtnHover) {
-      timeout = setTimeout(() => {
-        setVisibleTooltipStatus(false);
-      }, 50);
-    }
-    return () => {
-      if (!isUndefined(timeout)) {
-        clearTimeout(timeout);
+    if (!isAuthorized) {
+      let timeout: NodeJS.Timeout;
+      if (!visibleTooltipStatus && onBtnHover) {
+        timeout = setTimeout(() => {
+          setVisibleTooltipStatus(true);
+        }, 2000);
       }
-    };
-  }, [onBtnHover, visibleTooltipStatus]);
+      if (visibleTooltipStatus && !onBtnHover) {
+        timeout = setTimeout(() => {
+          setVisibleTooltipStatus(false);
+        }, 50);
+      }
+      return () => {
+        if (!isUndefined(timeout)) {
+          clearTimeout(timeout);
+        }
+      };
+    }
+  }, [onBtnHover, visibleTooltipStatus, isAuthorized]);
 
   useEffect(() => {
     if (activeOrg) {
@@ -72,12 +74,8 @@ const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
   return (
     <span
       className="position-relative"
-      onMouseEnter={() => {
-        setOnBtnHover(true);
-      }}
-      onMouseLeave={() => {
-        setOnBtnHover(false);
-      }}
+      onMouseEnter={() => (!isAuthorized ? setOnBtnHover(true) : null)}
+      onMouseLeave={() => (!isAuthorized ? setOnBtnHover(false) : null)}
     >
       <button
         data-testid={props.testId}
@@ -102,4 +100,4 @@ const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
   );
 });
 
-export default ActionBtn;
+export default React.memo(ActionBtn);

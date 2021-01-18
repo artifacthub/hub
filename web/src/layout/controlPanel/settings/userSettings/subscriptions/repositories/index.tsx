@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness } from 'react-icons/md';
@@ -24,16 +24,20 @@ const RepositoriesSection = (props: Props) => {
   const [optOutList, setOptOutList] = useState<OptOutItem[] | undefined>(undefined);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
 
-  const getNotificationTitle = (kind: EventKind): string => {
+  const getNotificationTitle = useCallback((kind: EventKind): string => {
     let title = '';
     const notif = REPOSITORY_SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
     if (!isUndefined(notif)) {
       title = notif.title.toLowerCase();
     }
     return title;
-  };
+  }, []);
 
-  async function getOptOutList() {
+  const updateModalStatus = useCallback((status: boolean) => {
+    setModalStatus(status);
+  }, []);
+
+  async function fetchOptOutList() {
     try {
       setIsLoading(true);
       setOptOutList(await API.getOptOutList());
@@ -51,6 +55,10 @@ const RepositoriesSection = (props: Props) => {
       }
     }
   }
+
+  const getOptOutList = useCallback(() => {
+    fetchOptOutList();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const deleteOptoutEntryOptimistically = (repoId: string) => {
     const repoToUpdate = !isUndefined(optOutList)
@@ -79,7 +87,7 @@ const RepositoriesSection = (props: Props) => {
       } else {
         await API.addOptOut(repoId, kind);
       }
-      getOptOutList();
+      fetchOptOutList();
     } catch (err) {
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
@@ -88,7 +96,7 @@ const RepositoriesSection = (props: Props) => {
             kind
           )} notifications for repository ${repoName}, please try again later.`,
         });
-        getOptOutList(); // Get opt-out if changeSubscription fails
+        fetchOptOutList(); // Get opt-out if changeSubscription fails
       } else {
         props.onAuthError();
       }
@@ -96,7 +104,7 @@ const RepositoriesSection = (props: Props) => {
   }
 
   useEffect(() => {
-    getOptOutList();
+    fetchOptOutList();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
@@ -108,7 +116,7 @@ const RepositoriesSection = (props: Props) => {
           <button
             data-testid="addOptOut"
             className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
-            onClick={() => setModalStatus(true)}
+            onClick={() => updateModalStatus(true)}
           >
             <div className="d-flex flex-row align-items-center justify-content-center">
               <IoMdLogOut />
@@ -269,7 +277,7 @@ const RepositoriesSection = (props: Props) => {
         <OptOutModal
           optOutList={optOutList}
           onSuccess={getOptOutList}
-          onClose={() => setModalStatus(false)}
+          onClose={() => updateModalStatus(false)}
           onAuthError={props.onAuthError}
           getNotificationTitle={getNotificationTitle}
           open
@@ -279,4 +287,4 @@ const RepositoriesSection = (props: Props) => {
   );
 };
 
-export default RepositoriesSection;
+export default React.memo(RepositoriesSection);

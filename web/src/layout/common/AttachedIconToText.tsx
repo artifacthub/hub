@@ -67,4 +67,4 @@ const AttachedIconToText = (props: Props) => {
   );
 };
 
-export default AttachedIconToText;
+export default React.memo(AttachedIconToText);

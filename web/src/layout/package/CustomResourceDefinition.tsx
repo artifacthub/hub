@@ -132,4 +132,4 @@ const CustomResourceDefinition = (props: Props) => {
   );
 };
 
-export default CustomResourceDefinition;
+export default React.memo(CustomResourceDefinition);

@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
@@ -26,12 +26,14 @@ const MembersSection = (props: Props) => {
   const selectedOrg = ctx.prefs.controlPanel.selectedOrg;
   const [apiError, setApiError] = useState<null | string>(null);
 
-  const getConfirmedMembersNumber = (members: Member[]): number => {
-    const confirmedMembers = members.filter((member: Member) => member.confirmed);
-    return confirmedMembers.length;
-  };
+  const onChangeCloseMemberModalStatus = useCallback((status: boolean) => setModalMemberOpen(status), []);
 
   async function fetchMembers() {
+    const getConfirmedMembersNumber = (members: Member[]): number => {
+      const confirmedMembers = members.filter((member: Member) => member.confirmed);
+      return confirmedMembers.length;
+    };
+
     try {
       setIsGettingMembers(true);
       const membersList = await API.getOrganizationMembers(selectedOrg!);
@@ -49,6 +51,10 @@ const MembersSection = (props: Props) => {
       }
     }
   }
+
+  const getMembers = useCallback(() => {
+    fetchMembers();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     fetchMembers();
@@ -71,7 +77,7 @@ const MembersSection = (props: Props) => {
                 contentClassName="justify-content-center"
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
-                  setModalMemberOpen(true);
+                  onChangeCloseMemberModalStatus(true);
                 }}
                 action={AuthorizerAction.AddOrganizationMember}
               >
@@ -99,7 +105,7 @@ const MembersSection = (props: Props) => {
                       <button
                         type="button"
                         className="btn btn-secondary"
-                        onClick={() => setModalMemberOpen(true)}
+                        onClick={() => onChangeCloseMemberModalStatus(true)}
                         data-testid="addFirstMemberBtn"
                       >
                         <div className="d-flex flex-row align-items-center">
@@ -119,7 +125,7 @@ const MembersSection = (props: Props) => {
                       key={`member_${member.alias}`}
                       member={member}
                       onAuthError={props.onAuthError}
-                      onSuccess={fetchMembers}
+                      onSuccess={getMembers}
                       membersNumber={confirmedMembersNumber}
                     />
                   ))}
@@ -134,13 +140,13 @@ const MembersSection = (props: Props) => {
         <MemberModal
           open={modalMemberOpen}
           membersList={members}
-          onSuccess={fetchMembers}
+          onSuccess={getMembers}
           onAuthError={props.onAuthError}
-          onClose={() => setModalMemberOpen(false)}
+          onClose={() => onChangeCloseMemberModalStatus(false)}
         />
       )}
     </main>
   );
 };
 
-export default MembersSection;
+export default React.memo(MembersSection);

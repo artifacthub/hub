@@ -149,4 +149,4 @@ const UserContext = () => {
   );
 };
 
-export default UserContext;
+export default React.memo(UserContext);

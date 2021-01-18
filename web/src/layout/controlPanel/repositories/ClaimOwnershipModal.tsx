@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { MdBusiness, MdClose } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
@@ -56,13 +56,13 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
   };
 
   // Clean API error when form is focused after validation
-  const cleanApiError = () => {
+  const cleanApiError = useCallback(() => {
     if (!isNull(apiError)) {
       setApiError(null);
       setApiReposError(null);
       setApiOrgsError(null);
     }
-  };
+  }, [apiError]);
 
   const onCloseModal = () => {
     props.onClose();
@@ -364,4 +364,4 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
   );
 };
 
-export default ClaimRepositoryOwnerShipModal;
+export default React.memo(ClaimRepositoryOwnerShipModal);

@@ -53,4 +53,4 @@ const ProfileSection = (props: Props) => {
   );
 };
 
-export default ProfileSection;
+export default React.memo(ProfileSection);

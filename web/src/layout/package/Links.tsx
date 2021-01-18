@@ -85,4 +85,4 @@ const Links = (props: Props) => {
   );
 };
 
-export default Links;
+export default React.memo(Links);

@@ -306,4 +306,4 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
   );
 });
 
-export default InputTypeahead;
+export default React.memo(InputTypeahead);

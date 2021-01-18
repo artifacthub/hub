@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { MdDone } from 'react-icons/md';
 
 import { API } from '../../api';
@@ -25,11 +25,11 @@ interface Password {
 
 interface Props {
   apiError: string | null;
-  setApiError: React.Dispatch<React.SetStateAction<string | null>>;
+  setApiError: (error: string | null) => void;
   success: boolean;
-  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  setSuccess: (success: boolean) => void;
   isLoading: Loading;
-  setIsLoading: React.Dispatch<React.SetStateAction<Loading>>;
+  setIsLoading: (status: Loading) => void;
 }
 
 const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
@@ -41,9 +41,9 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
   const [isValidatingField, setIsValidatingField] = useState(false);
   const [password, setPassword] = useState<Password>({ value: '', isValid: false });
 
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword({ value: e.target.value, isValid: e.currentTarget.checkValidity() });
-  };
+  }, []);
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
@@ -236,4 +236,4 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
   );
 });
 
-export default CreateAnAccount;
+export default React.memo(CreateAnAccount);

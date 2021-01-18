@@ -63,4 +63,4 @@ const CustomInstall = (props: Props) => {
   );
 };
 
-export default CustomInstall;
+export default React.memo(CustomInstall);

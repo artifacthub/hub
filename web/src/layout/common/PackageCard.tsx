@@ -28,7 +28,7 @@ const PackageCard = (props: Props) => (
           }
         }}
         to={{
-          pathname: buildPackageURL(props.package),
+          pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),
           state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
         }}
       >
@@ -45,4 +45,4 @@ const PackageCard = (props: Props) => (
   </div>
 );
 
-export default PackageCard;
+export default React.memo(PackageCard);

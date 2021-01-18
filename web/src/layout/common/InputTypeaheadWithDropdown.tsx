@@ -110,4 +110,4 @@ const InputTypeaheadWithDropdown = (props: Props) => {
   );
 };
 
-export default InputTypeaheadWithDropdown;
+export default React.memo(InputTypeaheadWithDropdown);

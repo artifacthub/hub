@@ -49,4 +49,4 @@ const CommandBlock = (props: Props) => (
   </>
 );
 
-export default CommandBlock;
+export default React.memo(CommandBlock);

@@ -42,8 +42,6 @@ const Details = (props: Props) => {
     />
   ));
 
-  const versionsTitle = props.package.repository.kind === RepositoryKind.Helm ? 'Chart versions' : 'Versions';
-
   return (
     <>
       {(() => {
@@ -85,7 +83,12 @@ const Details = (props: Props) => {
       })()}
 
       <div>
-        <RSSLinkTitle title={versionsTitle} package={props.package} />
+        <RSSLinkTitle
+          title={props.package.repository.kind === RepositoryKind.Helm ? 'Chart versions' : 'Versions'}
+          normalizedName={props.package.normalizedName}
+          repository={props.package.repository}
+          version={props.package.version!}
+        />
         {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
           <p data-testid="versions">-</p>
         ) : (
@@ -147,4 +150,4 @@ const Details = (props: Props) => {
   );
 };
 
-export default Details;
+export default React.memo(Details);

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
@@ -33,11 +33,11 @@ const MemberModal = (props: Props) => {
   const [apiError, setApiError] = useState<string | null>(null);
 
   // Clean API error when form is focused after validation
-  const cleanApiError = () => {
+  const cleanApiError = useCallback(() => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  };
+  }, [apiError]);
 
   const onCloseModal = () => {
     props.onClose();
@@ -180,4 +180,4 @@ const MemberModal = (props: Props) => {
   );
 };
 
-export default MemberModal;
+export default React.memo(MemberModal);

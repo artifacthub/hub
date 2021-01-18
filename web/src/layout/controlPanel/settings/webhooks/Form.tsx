@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { FaCheck, FaPencilAlt } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
 import { MdAddCircle, MdClose } from 'react-icons/md';
@@ -242,7 +242,7 @@ const WebhookForm = (props: Props) => {
     }
   };
 
-  const checkTestAvailability = () => {
+  const checkTestAvailability = useCallback(() => {
     const formData = new FormData(form.current!);
 
     let webhook: TestWebhook = {
@@ -267,7 +267,7 @@ const WebhookForm = (props: Props) => {
       setCurrentTestWebhook(null);
       setIsAvailableTest(false);
     }
-  };
+  }, [contentType, eventKinds, payloadKind]);
 
   useEffect(() => {
     checkTestAvailability();
@@ -797,4 +797,4 @@ const WebhookForm = (props: Props) => {
   );
 };
 
-export default WebhookForm;
+export default React.memo(WebhookForm);

@@ -19,4 +19,4 @@ const VerifiedPublisherBadge = (props: Props) => (
   />
 );
 
-export default VerifiedPublisherBadge;
+export default React.memo(VerifiedPublisherBadge);

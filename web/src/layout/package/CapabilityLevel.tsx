@@ -51,4 +51,4 @@ const CapabilityLevel = (props: Props) => {
   );
 };
 
-export default CapabilityLevel;
+export default React.memo(CapabilityLevel);

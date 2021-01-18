@@ -22,4 +22,4 @@ const HelmPluginInstall = (props: Props) => {
   );
 };
 
-export default HelmPluginInstall;
+export default React.memo(HelmPluginInstall);

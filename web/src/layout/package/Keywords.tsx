@@ -58,4 +58,4 @@ const Keywords = (props: Props) => {
   );
 };
 
-export default Keywords;
+export default React.memo(Keywords);

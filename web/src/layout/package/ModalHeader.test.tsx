@@ -1,28 +1,13 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import { Package } from '../../types';
 import ModalHeader from './ModalHeader';
 
-const packageItem: Package = {
-  packageId: 'id',
+const defaultProps = {
   name: 'test',
   displayName: 'Pretty name',
-  description: 'desc',
   logoImageId: 'imageId',
-  appVersion: '1.0.0',
-  normalizedName: 'pr',
-  maintainers: [{ email: 'main@tainer.com', name: 'maintainerName' }],
-  deprecated: false,
-  isOperator: false,
-  repository: {
-    kind: 0,
-    name: 'stable',
-    url: 'repoUrl',
-    userAlias: 'user',
-  },
-  createdAt: 0,
-  signed: false,
+  repoKind: 0,
 };
 
 describe('Links', () => {
@@ -31,23 +16,23 @@ describe('Links', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<ModalHeader package={packageItem} />);
+    const result = render(<ModalHeader {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByAltText } = render(<ModalHeader package={packageItem} />);
+      const { getByText, getByAltText } = render(<ModalHeader {...defaultProps} />);
 
-      expect(getByText(packageItem.displayName!)).toBeInTheDocument();
-      expect(getByAltText(packageItem.displayName!)).toBeInTheDocument();
+      expect(getByText(defaultProps.displayName!)).toBeInTheDocument();
+      expect(getByAltText(defaultProps.displayName!)).toBeInTheDocument();
     });
 
     it('renders component without displayName', () => {
-      const { getByText, getByAltText } = render(<ModalHeader package={{ ...packageItem, displayName: null }} />);
+      const { getByText, getByAltText } = render(<ModalHeader {...defaultProps} displayName={undefined} />);
 
-      expect(getByText(packageItem.name)).toBeInTheDocument();
-      expect(getByAltText(packageItem.name)).toBeInTheDocument();
+      expect(getByText(defaultProps.name)).toBeInTheDocument();
+      expect(getByAltText(defaultProps.name)).toBeInTheDocument();
     });
   });
 });

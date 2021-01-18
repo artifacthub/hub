@@ -126,4 +126,4 @@ const StarButton = (props: Props) => {
   );
 };
 
-export default StarButton;
+export default React.memo(StarButton);

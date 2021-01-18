@@ -1,51 +1,59 @@
-import { Package } from '../types';
+import { Repository } from '../types';
 import buildPackageURL from './buildPackageURL';
 
-const getMockPackage = (fixtureId: string): Package => {
-  return require(`./__fixtures__/buildPackageURL/${fixtureId}.json`) as Package;
+interface Props {
+  normalizedName: string;
+  repository: Repository;
+  version: string;
+}
+
+const getmockProps = (fixtureId: string): Props => {
+  return require(`./__fixtures__/buildPackageURL/${fixtureId}.json`) as Props;
 };
 
 describe('buildPackageURL', () => {
   describe('Helm kind', () => {
     it('renders URL without version', () => {
-      const mockPackage = getMockPackage('2');
-      expect(buildPackageURL(mockPackage)).toBe(`/packages/helm/${mockPackage.repository.name}/${mockPackage.name}`);
+      const mockProps = getmockProps('2');
+      expect(buildPackageURL(mockProps.normalizedName, mockProps.repository, mockProps.version)).toBe(
+        `/packages/helm/${mockProps.repository.name}/${mockProps.normalizedName}`
+      );
     });
 
     it('renders URL with version', () => {
-      const mockPackage = getMockPackage('3');
-      expect(buildPackageURL(mockPackage, true)).toBe(
-        `/packages/helm/${mockPackage.repository.name}/${mockPackage.name}/${mockPackage.version}`
+      const mockProps = getmockProps('3');
+      expect(buildPackageURL(mockProps.normalizedName, mockProps.repository, mockProps.version, true)).toBe(
+        `/packages/helm/${mockProps.repository.name}/${mockProps.normalizedName}/${mockProps.version}`
       );
     });
   });
 
   describe('Others kinds', () => {
     it('renders Falco rules', () => {
-      const mockPackage = getMockPackage('4');
-      expect(buildPackageURL(mockPackage, true)).toBe(
-        `/packages/falco/${mockPackage.repository.name}/${mockPackage.normalizedName}`
+      const mockProps = getmockProps('4');
+      expect(buildPackageURL(mockProps.normalizedName, mockProps.repository, mockProps.version, true)).toBe(
+        `/packages/falco/${mockProps.repository.name}/${mockProps.normalizedName}`
       );
     });
 
     it('renders Falco rules with version', () => {
-      const mockPackage = getMockPackage('5');
-      expect(buildPackageURL(mockPackage, true)).toBe(
-        `/packages/falco/${mockPackage.repository.name}/${mockPackage.normalizedName}/${mockPackage.version}`
+      const mockProps = getmockProps('5');
+      expect(buildPackageURL(mockProps.normalizedName, mockProps.repository, mockProps.version, true)).toBe(
+        `/packages/falco/${mockProps.repository.name}/${mockProps.normalizedName}/${mockProps.version}`
       );
     });
 
     it('renders OPA policies', () => {
-      const mockPackage = getMockPackage('6');
-      expect(buildPackageURL(mockPackage, true)).toBe(
-        `/packages/opa/${mockPackage.repository.name}/${mockPackage.normalizedName}`
+      const mockProps = getmockProps('6');
+      expect(buildPackageURL(mockProps.normalizedName, mockProps.repository, mockProps.version, true)).toBe(
+        `/packages/opa/${mockProps.repository.name}/${mockProps.normalizedName}`
       );
     });
 
     it('renders OPA policies with version', () => {
-      const mockPackage = getMockPackage('7');
-      expect(buildPackageURL(mockPackage, true)).toBe(
-        `/packages/opa/${mockPackage.repository.name}/${mockPackage.normalizedName}/${mockPackage.version}`
+      const mockProps = getmockProps('7');
+      expect(buildPackageURL(mockProps.normalizedName, mockProps.repository, mockProps.version, true)).toBe(
+        `/packages/opa/${mockProps.repository.name}/${mockProps.normalizedName}/${mockProps.version}`
       );
     });
   });

@@ -13,7 +13,7 @@ interface Props {
   index: number;
   vulnerability: Vulnerability;
   visibleVulnerability?: string;
-  setVisibleVulnerability: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setVisibleVulnerability: (active: string | undefined) => void;
 }
 
 const SecurityCell = (props: Props) => {
@@ -118,4 +118,4 @@ const SecurityCell = (props: Props) => {
   );
 };
 
-export default SecurityCell;
+export default React.memo(SecurityCell);

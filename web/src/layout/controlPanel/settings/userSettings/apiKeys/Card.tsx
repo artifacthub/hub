@@ -19,7 +19,7 @@ interface ModalStatus {
 
 interface Props {
   apiKey: APIKey;
-  setModalStatus: React.Dispatch<React.SetStateAction<ModalStatus>>;
+  setModalStatus: (status: ModalStatus) => void;
   onSuccess: () => void;
   onAuthError: () => void;
 }
@@ -173,4 +173,4 @@ const APIKeyCard = (props: Props) => {
   );
 };
 
-export default APIKeyCard;
+export default React.memo(APIKeyCard);

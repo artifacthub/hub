@@ -23,7 +23,7 @@ interface Props {
   onSuccess?: () => void;
   onAuthError: () => void;
   setIsSending: (status: boolean) => void;
-  setApiError?: React.Dispatch<React.SetStateAction<null | string>>;
+  setApiError?: (error: null | string) => void;
 }
 
 const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
@@ -211,4 +211,4 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
   );
 });
 
-export default OrganizationForm;
+export default React.memo(OrganizationForm);

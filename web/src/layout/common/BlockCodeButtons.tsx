@@ -40,4 +40,4 @@ const BlockCodeButtons = (props: Props) => {
   );
 };
 
-export default BlockCodeButtons;
+export default React.memo(BlockCodeButtons);

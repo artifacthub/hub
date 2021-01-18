@@ -1,7 +1,7 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
-import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { isArray, isEmpty, isEqual, isNull, isUndefined } from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { ActiveJSONSchemaValue } from '../../../types';
 import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchema';
@@ -22,12 +22,23 @@ interface Props {
   onActivePathChange: (path?: string) => void;
   saveSelectedOption: (path: string, index: number) => void;
   hasDecorator?: boolean;
-  isArrayParent?: boolean;
 }
 
 interface ValueProp {
   content: JSX.Element | null;
   className?: string;
+}
+
+interface PathProps {
+  isArrayParent: boolean;
+  name: string;
+  activePath?: string;
+  path?: string;
+}
+
+interface CurrentPath {
+  path: string;
+  isExpanded: boolean;
 }
 
 const getValue = (newValue: any): ValueProp => {
@@ -112,9 +123,33 @@ const getValue = (newValue: any): ValueProp => {
   }
 };
 
+const checkCurrentPath = (pathProps: PathProps) => {
+  const currentPath = getJMESPathForValuesSchema(
+    pathProps.isArrayParent ? `${pathProps.name}[0]` : pathProps.name,
+    pathProps.path
+  );
+  const isExpanded = !isUndefined(pathProps.activePath) && pathProps.activePath === currentPath;
+
+  return { isExpanded: isExpanded, path: currentPath };
+};
+
 const SchemaLine = (props: Props) => {
+  const {
+    saveSelectedOption,
+    activePath,
+    name,
+    path,
+    value,
+    isRequired,
+    onActivePathChange,
+    level,
+    hasDecorator,
+    className,
+    definitions,
+  } = props;
+
   async function getCurrentJSON() {
-    let currentValue = props.value;
+    let currentValue = value;
     let error = false;
 
     let options = [currentValue];
@@ -136,7 +171,7 @@ const SchemaLine = (props: Props) => {
       checkCombinations(currentValue);
     }
 
-    setValue({
+    setCurrentValue({
       active: 0,
       combinationType: comb,
       options: options,
@@ -144,74 +179,97 @@ const SchemaLine = (props: Props) => {
     });
   }
 
-  const [value, setValue] = useState<ActiveJSONSchemaValue | null>({
+  const [currentValue, setCurrentValue] = useState<ActiveJSONSchemaValue | null>({
     active: 0,
     combinationType: null,
-    options: [props.value],
+    options: [value],
     error: false,
   });
-  const activeValue = value ? value.options[value.active] : null;
+  const activeValue = currentValue ? currentValue.options[currentValue.active] : null;
 
   useEffect(() => {
     getCurrentJSON();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isNull(value) || isNull(activeValue)) return null;
+  const [valueStatus, setValueStatus] = useState<ValueProp>(getValue(activeValue));
 
-  const { className, content } = getValue(activeValue);
+  useEffect(() => {
+    setValueStatus(getValue(activeValue));
+  }, [activeValue]);
 
-  let children = activeValue.properties;
+  let children = !isNull(activeValue) ? activeValue.properties : {};
   let isArrayParent = false;
-  if (
-    props.value.type === 'array' &&
-    props.value.items &&
-    (props.value.items as JSONSchema).hasOwnProperty('properties')
-  ) {
+  if (value.type === 'array' && value.items && (value.items as JSONSchema).hasOwnProperty('properties')) {
     isArrayParent = true;
-    children = (props.value.items as JSONSchema).properties;
+    children = (value.items as JSONSchema).properties;
   }
 
-  const currentPath = getJMESPathForValuesSchema(isArrayParent ? `${props.name}[0]` : props.name, props.path);
-  const isExpanded = !isUndefined(props.activePath) && props.activePath === currentPath;
+  const [currentPath, setCurrentPath] = useState<CurrentPath | null>(
+    checkCurrentPath({
+      isArrayParent: isArrayParent,
+      name: name,
+      activePath: activePath,
+      path: path,
+    })
+  );
 
-  const onChangeSelectedValue = (newValue: ActiveJSONSchemaValue) => {
-    setValue(newValue);
-    props.saveSelectedOption(currentPath, newValue.active);
-  };
+  useEffect(() => {
+    const newPath = checkCurrentPath({
+      isArrayParent: isArrayParent,
+      name: name,
+      activePath: activePath,
+      path: path,
+    });
+    if (isNull(currentPath) || !isEqual(newPath, currentPath)) {
+      setCurrentPath(newPath);
+    }
+  }, [activePath]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  const onChangeSelectedValue = useCallback(
+    (newValue: ActiveJSONSchemaValue) => {
+      setCurrentValue(newValue);
+      if (!isNull(currentPath)) {
+        saveSelectedOption(currentPath.path, newValue.active);
+      }
+    },
+    [currentPath, saveSelectedOption]
+  );
+
+  if (isNull(currentValue) || isNull(activeValue)) return null;
 
   return (
     <React.Fragment>
       <div className={`row position-relative ${styles.wrapper}`} data-testid="schemaLine">
         <div
           data-testid="lineContent"
-          className={`col-7 bg-dark text-light position-relative py-1 user-select-none ${styles.content} ${props.className}`}
-          onClick={() => props.onActivePathChange(!isExpanded ? currentPath : undefined)}
+          className={`col-7 bg-dark text-light position-relative py-1 user-select-none ${styles.content} ${className}`}
+          onClick={() => onActivePathChange(currentPath && !currentPath.isExpanded ? currentPath.path : undefined)}
         >
-          <div className={`level${props.level} text-monospace`}>
+          <div className={`level${level} text-monospace`}>
             {activeValue.title && <div className="text-muted text-truncate"># {activeValue.title}</div>}
-            <span className={classnames({ [`position-relative ${styles.hasDecorator}`]: props.hasDecorator })}>
-              {props.name}:{' '}
-            </span>
-            <span data-testid="defaultValue" className={`${className} ${styles.line}`}>
-              {content}
+            <span className={classnames({ [`position-relative ${styles.hasDecorator}`]: hasDecorator })}>{name}: </span>
+            <span data-testid="defaultValue" className={`${valueStatus.className} ${styles.line}`}>
+              {valueStatus.content}
             </span>
           </div>
         </div>
 
         <div className={`col-5 position-relative py-1 ${styles.description}`}>
-          <SchemaDefinition
-            def={value}
-            setValue={onChangeSelectedValue}
-            isRequired={props.isRequired}
-            defaultValue={content}
-            isExpanded={isExpanded}
-            path={currentPath}
-            onActivePathChange={props.onActivePathChange}
-          />
+          {!isNull(currentPath) && (
+            <SchemaDefinition
+              def={currentValue}
+              setValue={onChangeSelectedValue}
+              isRequired={isRequired}
+              defaultValue={valueStatus.content}
+              isExpanded={currentPath.isExpanded}
+              path={currentPath.path}
+              onActivePathChange={onActivePathChange}
+            />
+          )}
         </div>
       </div>
 
-      {children && (
+      {children && currentPath && (
         <>
           {Object.keys(children).map((propName: string, index: number) => {
             const currentValue = children![propName] as JSONSchema;
@@ -219,23 +277,22 @@ const SchemaLine = (props: Props) => {
             let isRequired = activeValue.required ? activeValue.required.includes(propName) : false;
             if (isArrayParent) {
               isRequired =
-                (props.value.items as JSONSchema).hasOwnProperty('required') &&
-                ((props.value.items! as JSONSchema).required as string[]).includes(propName);
+                (value.items as JSONSchema).hasOwnProperty('required') &&
+                ((value.items! as JSONSchema).required as string[]).includes(propName);
             }
             return (
-              <React.Fragment key={`${props.name}_${propName}`}>
+              <React.Fragment key={`${name}_${propName}`}>
                 <SchemaLine
-                  definitions={props.definitions}
+                  definitions={definitions}
                   value={currentValue}
                   name={propName}
-                  level={isArrayParent ? props.level + 2 : props.level + 1}
+                  level={isArrayParent ? level + 2 : level + 1}
                   isRequired={isRequired}
-                  path={currentPath}
-                  activePath={props.activePath}
-                  onActivePathChange={props.onActivePathChange}
-                  saveSelectedOption={props.saveSelectedOption}
+                  path={currentPath.path}
+                  activePath={activePath}
+                  onActivePathChange={onActivePathChange}
+                  saveSelectedOption={saveSelectedOption}
                   hasDecorator={isArrayParent && index === 0}
-                  isArrayParent={isArrayParent}
                 />
               </React.Fragment>
             );
@@ -246,4 +303,4 @@ const SchemaLine = (props: Props) => {
   );
 };
 
-export default SchemaLine;
+export default React.memo(SchemaLine);

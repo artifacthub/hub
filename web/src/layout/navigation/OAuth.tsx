@@ -11,7 +11,7 @@ interface Loading {
 interface Props {
   separatorClassName?: string;
   isLoading: Loading;
-  setIsLoading: React.Dispatch<React.SetStateAction<Loading>>;
+  setIsLoading: (status: Loading) => void;
 }
 
 const GITHUB_LOGO = '/static/media/github-mark.svg';
@@ -98,4 +98,4 @@ const OAuth = (props: Props) => {
   );
 };
 
-export default OAuth;
+export default React.memo(OAuth);

@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 
@@ -17,13 +17,14 @@ interface Props {
 }
 
 const OrganizationModal = (props: Props) => {
+  const { onClose, onSuccess, organization, open, onAuthError } = props;
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [apiError, setApiError] = useState<null | string>(null);
 
-  const onCloseModal = () => {
-    props.onClose();
-  };
+  const onCloseModal = useCallback(() => {
+    onClose();
+  }, [onClose]);
 
   const submitForm = () => {
     if (form.current) {
@@ -31,14 +32,22 @@ const OrganizationModal = (props: Props) => {
     }
   };
 
+  const updateApiError = useCallback((error: string | null) => {
+    setApiError(error);
+  }, []);
+
+  const updateIsSending = useCallback((sending: boolean) => {
+    setIsSending(sending);
+  }, []);
+
   return (
     <Modal
       header={
         <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>
-          {isUndefined(props.organization) ? <>Add organization</> : <>Update organization</>}
+          {isUndefined(organization) ? <>Add organization</> : <>Update organization</>}
         </div>
       }
-      open={props.open}
+      open={open}
       modalClassName={styles.modal}
       closeButton={
         <button className="btn btn-sm btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
@@ -46,12 +55,12 @@ const OrganizationModal = (props: Props) => {
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
               <span className="ml-2">
-                {isUndefined(props.organization) ? <>Adding organization</> : <>Updating organization</>}
+                {isUndefined(organization) ? <>Adding organization</> : <>Updating organization</>}
               </span>
             </>
           ) : (
             <div className="d-flex flex-row align-items-center text-uppercase">
-              {isUndefined(props.organization) ? (
+              {isUndefined(organization) ? (
                 <>
                   <MdAddCircle className="mr-2" />
                   <div>Add</div>
@@ -73,20 +82,20 @@ const OrganizationModal = (props: Props) => {
       <div className="w-100">
         <OrganizationForm
           ref={form}
-          organization={props.organization}
+          organization={organization}
           onSuccess={() => {
-            if (!isUndefined(props.onSuccess)) {
-              props.onSuccess();
+            if (!isUndefined(onSuccess)) {
+              onSuccess();
             }
             onCloseModal();
           }}
-          setIsSending={setIsSending}
-          onAuthError={props.onAuthError}
-          setApiError={setApiError}
+          setIsSending={updateIsSending}
+          onAuthError={onAuthError}
+          setApiError={updateApiError}
         />
       </div>
     </Modal>
   );
 };
 
-export default OrganizationModal;
+export default React.memo(OrganizationModal);

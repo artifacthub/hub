@@ -22,4 +22,4 @@ const SubscriptionsSection = (props: Props) => (
   </div>
 );
 
-export default SubscriptionsSection;
+export default React.memo(SubscriptionsSection);

@@ -62,4 +62,4 @@ const LogOut = (props: Props) => {
   );
 };
 
-export default LogOut;
+export default React.memo(LogOut);

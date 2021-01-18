@@ -119,4 +119,4 @@ const DeletionModal = (props: Props) => {
   );
 };
 
-export default DeletionModal;
+export default React.memo(DeletionModal);

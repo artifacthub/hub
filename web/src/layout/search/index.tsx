@@ -3,7 +3,7 @@ import every from 'lodash/every';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
@@ -30,9 +30,9 @@ interface FiltersProp {
 
 interface Props {
   isSearching: boolean;
-  setIsSearching: Dispatch<SetStateAction<boolean>>;
+  setIsSearching: (status: boolean) => void;
   scrollPosition?: number;
-  setScrollPosition: Dispatch<SetStateAction<number | undefined>>;
+  setScrollPosition: (position?: number) => void;
   tsQueryWeb?: string;
   tsQuery?: string[];
   pageNumber: number;
@@ -45,6 +45,20 @@ interface Props {
 }
 
 const SearchView = (props: Props) => {
+  const {
+    pageNumber,
+    tsQuery,
+    tsQueryWeb,
+    filters,
+    deprecated,
+    operators,
+    verifiedPublisher,
+    official,
+    isSearching,
+    setIsSearching,
+    scrollPosition,
+    setScrollPosition,
+  } = props;
   const { ctx, dispatch } = useContext(AppCtx);
   const history = useHistory();
   const [searchResults, setSearchResults] = useState<SearchResults>({
@@ -58,7 +72,6 @@ const SearchView = (props: Props) => {
       limit: ctx.prefs.search.limit,
     },
   });
-  const { isSearching, setIsSearching, scrollPosition, setScrollPosition } = props;
   const [apiError, setApiError] = useState<string | null>(null);
 
   const isEmptyFacets = (): boolean => {
@@ -73,83 +86,95 @@ const SearchView = (props: Props) => {
 
   useScrollRestorationFix();
 
-  const saveScrollPosition = () => {
+  const saveScrollPosition = useCallback(() => {
     setScrollPosition(window.scrollY);
-  };
+  }, [setScrollPosition]);
 
-  const updateWindowScrollPosition = (newPosition: number) => {
+  const updateWindowScrollPosition = useCallback((newPosition: number) => {
     window.scrollTo(0, newPosition);
-  };
+  }, []);
 
-  const prepareSelectedFilters = (name: string, newFilters: string[], prevFilters: FiltersProp): FiltersProp => {
-    let cleanFilters: FiltersProp = {};
-    switch (name) {
-      case 'kind':
-        // Remove selected chart repositories when some kind different to Chart is selected and Chart is not selected
-        if (newFilters.length > 0 && !newFilters.includes(RepositoryKind.Helm.toString())) {
-          cleanFilters['repo'] = [];
-        }
-        break;
-    }
+  const prepareSelectedFilters = useCallback(
+    (name: string, newFilters: string[], prevFilters: FiltersProp): FiltersProp => {
+      let cleanFilters: FiltersProp = {};
+      switch (name) {
+        case 'kind':
+          // Remove selected chart repositories when some kind different to Chart is selected and Chart is not selected
+          if (newFilters.length > 0 && !newFilters.includes(RepositoryKind.Helm.toString())) {
+            cleanFilters['repo'] = [];
+          }
+          break;
+      }
 
+      return {
+        ...prevFilters,
+        [name]: newFilters,
+        ...cleanFilters,
+      };
+    },
+    []
+  );
+
+  const getCurrentFilters = useCallback((): SearchFiltersURL => {
     return {
-      ...prevFilters,
-      [name]: newFilters,
-      ...cleanFilters,
+      pageNumber: pageNumber,
+      tsQueryWeb: tsQueryWeb,
+      tsQuery: tsQuery,
+      filters: filters,
+      deprecated: deprecated,
+      operators: operators,
+      verifiedPublisher: verifiedPublisher,
+      official: official,
     };
-  };
+  }, [pageNumber, tsQuery, tsQueryWeb, filters, deprecated, operators, verifiedPublisher, official]);
 
-  const getCurrentFilters = (): SearchFiltersURL => {
-    return {
-      pageNumber: props.pageNumber,
-      tsQueryWeb: props.tsQueryWeb,
-      tsQuery: props.tsQuery,
-      filters: props.filters,
-      deprecated: props.deprecated,
-      operators: props.operators,
-      verifiedPublisher: props.verifiedPublisher,
-      official: props.official,
-    };
-  };
+  const updateCurrentPage = useCallback(
+    (searchChanges: any) => {
+      history.push({
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          ...getCurrentFilters(),
+          pageNumber: 1,
+          ...searchChanges,
+        }),
+      });
+    },
+    [] /* eslint-disable-line react-hooks/exhaustive-deps */
+  );
 
-  const updateCurrentPage = (searchChanges: any) => {
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-        ...searchChanges,
-      }),
-    });
-  };
+  const onFiltersChange = useCallback(
+    (name: string, value: string, checked: boolean): void => {
+      let newFilters = isUndefined(filters[name]) ? [] : filters[name].slice();
+      if (checked) {
+        newFilters.push(value);
+      } else {
+        newFilters = newFilters.filter((el) => el !== value);
+      }
 
-  const onFiltersChange = (name: string, value: string, checked: boolean): void => {
-    let newFilters = isUndefined(props.filters[name]) ? [] : props.filters[name].slice();
-    if (checked) {
-      newFilters.push(value);
-    } else {
-      newFilters = newFilters.filter((el) => el !== value);
-    }
+      updateCurrentPage({
+        filters: prepareSelectedFilters(name, newFilters, filters),
+      });
+    },
+    [filters, updateCurrentPage, prepareSelectedFilters]
+  );
 
-    updateCurrentPage({
-      filters: prepareSelectedFilters(name, newFilters, props.filters),
-    });
-  };
+  const onResetSomeFilters = useCallback(
+    (filterKeys: string[]): void => {
+      let newFilters: FiltersProp = {};
+      filterKeys.forEach((fKey: string) => {
+        newFilters[fKey] = [];
+      });
 
-  const onResetSomeFilters = (filterKeys: string[]): void => {
-    let newFilters: FiltersProp = {};
-    filterKeys.forEach((fKey: string) => {
-      newFilters[fKey] = [];
-    });
-
-    updateCurrentPage({
-      filters: { ...props.filters, ...newFilters },
-    });
-  };
+      updateCurrentPage({
+        filters: { ...filters, ...newFilters },
+      });
+    },
+    [filters, updateCurrentPage]
+  );
 
   const onTsQueryChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, checked } = e.target;
-    let query = isUndefined(props.tsQuery) ? [] : props.tsQuery.slice();
+    let query = isUndefined(tsQuery) ? [] : tsQuery.slice();
     if (checked) {
       query.push(value);
     } else {
@@ -161,50 +186,52 @@ const SearchView = (props: Props) => {
     });
   };
 
-  const onDeprecatedChange = (): void => {
+  const onDeprecatedChange = useCallback((): void => {
     updateCurrentPage({
-      deprecated: !isUndefined(props.deprecated) && !isNull(props.deprecated) ? !props.deprecated : true,
+      deprecated: !isUndefined(deprecated) && !isNull(deprecated) ? !deprecated : true,
     });
-  };
+  }, [deprecated, updateCurrentPage]);
 
-  const onOperatorsChange = (): void => {
+  const onOperatorsChange = useCallback((): void => {
     updateCurrentPage({
-      operators: !isUndefined(props.operators) && !isNull(props.operators) ? !props.operators : true,
+      operators: !isUndefined(operators) && !isNull(operators) ? !operators : true,
     });
-  };
+  }, [operators, updateCurrentPage]);
 
-  const onVerifiedPublisherChange = (): void => {
+  const onVerifiedPublisherChange = useCallback((): void => {
     updateCurrentPage({
-      verifiedPublisher:
-        !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) ? !props.verifiedPublisher : true,
+      verifiedPublisher: !isUndefined(verifiedPublisher) && !isNull(verifiedPublisher) ? !verifiedPublisher : true,
     });
-  };
+  }, [verifiedPublisher, updateCurrentPage]);
 
-  const onOfficialChange = (): void => {
+  const onOfficialChange = useCallback((): void => {
     updateCurrentPage({
-      official: !isUndefined(props.official) && !isNull(props.official) ? !props.official : true,
+      official: !isUndefined(official) && !isNull(official) ? !official : true,
     });
-  };
+  }, [official, updateCurrentPage]);
 
-  const onResetFilters = (): void => {
+  const onResetFilters = useCallback((): void => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
+        tsQueryWeb: tsQueryWeb,
         tsQuery: [],
         filters: {},
       }),
     });
-  };
+  }, [tsQueryWeb]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  const onPageNumberChange = (pageNumber: number): void => {
-    updateCurrentPage({
-      pageNumber: pageNumber,
-    });
-  };
+  const onPageNumberChange = useCallback(
+    (newPageNumber: number): void => {
+      updateCurrentPage({
+        pageNumber: newPageNumber,
+      });
+    },
+    [updateCurrentPage]
+  );
 
-  const onPaginationLimitChange = (newLimit: number): void => {
+  const onPaginationLimitChange = useCallback((newLimit: number): void => {
     history.replace({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -215,21 +242,21 @@ const SearchView = (props: Props) => {
     setScrollPosition(0);
     updateWindowScrollPosition(0);
     dispatch(updateLimit(newLimit));
-  };
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     async function fetchSearchResults() {
       setIsSearching(true);
       const query = {
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
-        filters: props.filters,
-        offset: (props.pageNumber - 1) * ctx.prefs.search.limit,
+        tsQueryWeb: tsQueryWeb,
+        tsQuery: tsQuery,
+        filters: filters,
+        offset: (pageNumber - 1) * ctx.prefs.search.limit,
         limit: ctx.prefs.search.limit,
-        deprecated: props.deprecated,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
+        deprecated: deprecated,
+        operators: operators,
+        verifiedPublisher: verifiedPublisher,
+        official: official,
       };
 
       try {
@@ -287,25 +314,20 @@ const SearchView = (props: Props) => {
     // prettier-ignore
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [
-    props.tsQueryWeb,
-    JSON.stringify(props.tsQuery),
-    props.pageNumber,
-    JSON.stringify(props.filters), // https://twitter.com/dan_abramov/status/1104414272753487872
-    props.deprecated,
-    props.operators,
-    props.verifiedPublisher,
-    props.official,
+    tsQueryWeb,
+    JSON.stringify(tsQuery),
+    pageNumber,
+    JSON.stringify(filters), // https://twitter.com/dan_abramov/status/1104414272753487872
+    deprecated,
+    operators,
+    verifiedPublisher,
+    official,
     ctx.prefs.search.limit,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   const activeFilters =
-    props.deprecated ||
-    props.operators ||
-    props.verifiedPublisher ||
-    props.official ||
-    !isUndefined(props.tsQuery) ||
-    !isEmpty(props.filters);
+    deprecated || operators || verifiedPublisher || official || !isUndefined(tsQuery) || !isEmpty(filters);
 
   return (
     <>
@@ -352,15 +374,15 @@ const SearchView = (props: Props) => {
                 >
                   <Filters
                     facets={searchResults.data.facets}
-                    activeFilters={props.filters}
-                    activeTsQuery={props.tsQuery}
+                    activeFilters={filters}
+                    activeTsQuery={tsQuery}
                     onChange={onFiltersChange}
                     onResetSomeFilters={onResetSomeFilters}
                     onTsQueryChange={onTsQueryChange}
-                    deprecated={props.deprecated}
-                    operators={props.operators}
-                    verifiedPublisher={props.verifiedPublisher}
-                    official={props.official}
+                    deprecated={deprecated}
+                    operators={operators}
+                    verifiedPublisher={verifiedPublisher}
+                    official={official}
                     onDeprecatedChange={onDeprecatedChange}
                     onOperatorsChange={onOperatorsChange}
                     onVerifiedPublisherChange={onVerifiedPublisherChange}
@@ -376,17 +398,17 @@ const SearchView = (props: Props) => {
                   {searchResults.metadata.total > 0 && (
                     <span className="pr-1">
                       {searchResults.metadata.offset + 1} -{' '}
-                      {searchResults.metadata.total < ctx.prefs.search.limit * props.pageNumber
+                      {searchResults.metadata.total < ctx.prefs.search.limit * pageNumber
                         ? searchResults.metadata.total
-                        : ctx.prefs.search.limit * props.pageNumber}{' '}
+                        : ctx.prefs.search.limit * pageNumber}{' '}
                       <span className="ml-1">of</span>{' '}
                     </span>
                   )}
                   {searchResults.metadata.total}
                   <span className="pl-1"> results </span>
-                  {props.tsQueryWeb && props.tsQueryWeb !== '' && (
+                  {tsQueryWeb && tsQueryWeb !== '' && (
                     <span className="d-none d-sm-inline pl-1">
-                      for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
+                      for "<span className="font-weight-bold">{tsQueryWeb}</span>"
                     </span>
                   )}
                   {activeFilters && <small className="font-italic ml-1"> (some filters applied)</small>}
@@ -414,15 +436,15 @@ const SearchView = (props: Props) => {
               <div className="mr-5">
                 <Filters
                   facets={searchResults.data.facets}
-                  activeFilters={props.filters}
-                  activeTsQuery={props.tsQuery}
+                  activeFilters={filters}
+                  activeTsQuery={tsQuery}
                   onChange={onFiltersChange}
                   onResetSomeFilters={onResetSomeFilters}
                   onTsQueryChange={onTsQueryChange}
-                  deprecated={props.deprecated}
-                  operators={props.operators}
-                  verifiedPublisher={props.verifiedPublisher}
-                  official={props.official}
+                  deprecated={deprecated}
+                  operators={operators}
+                  verifiedPublisher={verifiedPublisher}
+                  official={official}
                   onDeprecatedChange={onDeprecatedChange}
                   onOperatorsChange={onOperatorsChange}
                   onVerifiedPublisherChange={onVerifiedPublisherChange}
@@ -448,16 +470,16 @@ const SearchView = (props: Props) => {
                         We're sorry!
                         <p className={`h6 mb-0 mt-3 ${styles.noDataMessage}`}>
                           <span> We can't seem to find any packages that match your search </span>
-                          {props.tsQueryWeb && (
+                          {tsQueryWeb && (
                             <span className="pl-1">
-                              for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
+                              for "<span className="font-weight-bold">{tsQueryWeb}</span>"
                             </span>
                           )}
-                          {!isEmpty(props.filters) && <span className="pl-1">with the selected filters</span>}
+                          {!isEmpty(filters) && <span className="pl-1">with the selected filters</span>}
                         </p>
                         <p className={`h6 mb-0 mt-5 ${styles.noDataMessage}`}>
                           You can{' '}
-                          {!isEmpty(props.filters) ? (
+                          {!isEmpty(filters) ? (
                             <button
                               data-testid="resetFiltersLink"
                               className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-0"
@@ -502,14 +524,14 @@ const SearchView = (props: Props) => {
                           key={item.packageId}
                           package={item}
                           searchUrlReferer={{
-                            tsQueryWeb: props.tsQueryWeb,
-                            tsQuery: props.tsQuery,
-                            pageNumber: props.pageNumber,
-                            filters: props.filters,
-                            deprecated: props.deprecated,
-                            operators: props.operators,
-                            verifiedPublisher: props.verifiedPublisher,
-                            official: props.official,
+                            tsQueryWeb: tsQueryWeb,
+                            tsQuery: tsQuery,
+                            pageNumber: pageNumber,
+                            filters: filters,
+                            deprecated: deprecated,
+                            operators: operators,
+                            verifiedPublisher: verifiedPublisher,
+                            official: official,
                           }}
                           saveScrollPosition={saveScrollPosition}
                           visibleSignedBadge
@@ -521,7 +543,7 @@ const SearchView = (props: Props) => {
                       limit={ctx.prefs.search.limit}
                       offset={searchResults.metadata.offset}
                       total={searchResults.metadata.total}
-                      active={props.pageNumber}
+                      active={pageNumber}
                       onChange={onPageNumberChange}
                     />
                   </>
@@ -535,4 +557,4 @@ const SearchView = (props: Props) => {
   );
 };
 
-export default SearchView;
+export default React.memo(SearchView);

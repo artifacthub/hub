@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package } from '../../types';
-import buildPackageURL from '../../utils/buildPackageURL';
 import RelatedPackageCard from './RelatedPackageCard';
 
 const getMockPackage = (fixtureId: string): Package => {
@@ -89,7 +88,7 @@ describe('RelatedPackageCard', () => {
       const link = queryByTestId('relatedPackageLink');
       expect(link).toBeInTheDocument();
       fireEvent.click(link!);
-      expect(window.location.pathname).toBe(buildPackageURL(mockPackage));
+      expect(window.location.pathname).toBe('/packages/helm/incubator/pr');
     });
   });
 

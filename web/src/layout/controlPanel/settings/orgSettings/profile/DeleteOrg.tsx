@@ -147,4 +147,4 @@ const DeleteOrganization = (props: Props) => {
   );
 };
 
-export default DeleteOrganization;
+export default React.memo(DeleteOrganization);

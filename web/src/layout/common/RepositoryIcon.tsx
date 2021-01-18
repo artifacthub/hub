@@ -53,4 +53,4 @@ const RepositoryIcon = (props: Props) => {
   }
 };
 
-export default RepositoryIcon;
+export default React.memo(RepositoryIcon);

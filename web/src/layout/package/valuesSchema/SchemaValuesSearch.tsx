@@ -51,4 +51,4 @@ const SchemaValuesSearch = (props: Props) => {
   );
 };
 
-export default SchemaValuesSearch;
+export default React.memo(SchemaValuesSearch);

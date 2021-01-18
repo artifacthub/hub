@@ -93,4 +93,4 @@ const SecurityReport = (props: Props) => {
   );
 };
 
-export default SecurityReport;
+export default React.memo(SecurityReport);

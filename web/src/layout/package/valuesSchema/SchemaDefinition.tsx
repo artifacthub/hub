@@ -444,4 +444,4 @@ const SchemaDefinition = (props: Props) => {
   );
 };
 
-export default SchemaDefinition;
+export default React.memo(SchemaDefinition);

@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
@@ -49,6 +49,10 @@ const SecurityModal = (props: Props) => {
     }
   };
 
+  const updateExpandedTarget = useCallback((target: string | null) => {
+    setExpandedTarget(target);
+  }, []);
+
   async function getSecurityReports() {
     try {
       setIsLoading(true);
@@ -81,13 +85,14 @@ const SecurityModal = (props: Props) => {
     });
   };
 
-  const onCloseModal = () => {
+  const onCloseModal = useCallback(() => {
     setOpenStatus(false);
+    setExpandedTarget(null);
     history.replace({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
-  };
+  }, [history, props.fromStarredPage, props.searchUrlReferer]);
 
   useEffect(() => {
     if (props.visibleSecurityReport && !openStatus) {
@@ -149,7 +154,7 @@ const SecurityModal = (props: Props) => {
                         reports={report[image]}
                         key={`image_${image}`}
                         expandedTarget={expandedTarget}
-                        setExpandedTarget={setExpandedTarget}
+                        setExpandedTarget={updateExpandedTarget}
                         hasOnlyOneTarget={hasOnlyOneTarget}
                       />
                     );
@@ -164,4 +169,4 @@ const SecurityModal = (props: Props) => {
   );
 };
 
-export default SecurityModal;
+export default React.memo(SecurityModal);

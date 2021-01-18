@@ -138,4 +138,4 @@ const WebhooksSection = (props: Props) => {
   );
 };
 
-export default WebhooksSection;
+export default React.memo(WebhooksSection);

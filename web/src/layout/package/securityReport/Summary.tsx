@@ -59,4 +59,4 @@ const SecuritySummary = (props: Props) => {
   );
 };
 
-export default SecuritySummary;
+export default React.memo(SecuritySummary);

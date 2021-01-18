@@ -264,4 +264,4 @@ const OrganizationCard = (props: Props) => {
   );
 };
 
-export default OrganizationCard;
+export default React.memo(OrganizationCard);

@@ -50,4 +50,4 @@ const GuestDropdown = () => {
   );
 };
 
-export default GuestDropdown;
+export default React.memo(GuestDropdown);
