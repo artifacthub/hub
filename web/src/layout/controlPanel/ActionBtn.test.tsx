@@ -40,12 +40,12 @@ describe('ActionBtn', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
+    jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <ActionBtn {...defaultProps}>

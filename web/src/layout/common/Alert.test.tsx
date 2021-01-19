@@ -15,10 +15,14 @@ const defaultProps = {
   onClose: onCloseMock,
 };
 
-jest.useFakeTimers();
-
 describe('Alert', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
   afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -33,13 +37,13 @@ describe('Alert', () => {
     const alertWrapper = getByTestId('alertWrapper');
     expect(alertWrapper).toBeInTheDocument();
     expect(alertWrapper).not.toHaveClass('isAlertActive');
-
     expect(queryByRole('alert')).toBeNull();
 
     rerender(<Alert {...defaultProps} message="errorMessage" />);
 
     expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
     expect(alertWrapper).toHaveClass('isAlertActive');
+
     const alert = getByRole('alert');
     expect(alert).toBeInTheDocument();
     expect(getByText('errorMessage')).toBeInTheDocument();

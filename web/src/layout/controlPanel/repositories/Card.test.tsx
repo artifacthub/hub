@@ -58,9 +58,9 @@ describe('Repository Card - packages section', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
+    jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
@@ -69,7 +69,6 @@ describe('Repository Card - packages section', () => {
         <Card {...defaultProps} />
       </AppCtx.Provider>
     );
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 
@@ -227,7 +226,6 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
       const { getByText, getByRole, rerender } = render(component);
-
       expect(getByText('Show errors log')).toBeInTheDocument();
 
       rerender(component);
@@ -252,7 +250,6 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
       const { queryByText, getByText, getByRole, rerender } = render(component);
-
       expect(queryByText('Show errors log')).toBeNull();
 
       rerender(component);
