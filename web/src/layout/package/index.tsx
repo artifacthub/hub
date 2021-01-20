@@ -596,7 +596,7 @@ const PackageView = (props: Props) => {
                                         switch (typeof rules) {
                                           case 'string':
                                             return (
-                                              <div className="position-relative">
+                                              <div className="d-flex position-relative">
                                                 <BlockCodeButtons
                                                   content={rules}
                                                   filename={`${detail.normalizedName}-rules.yaml`}
