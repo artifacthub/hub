@@ -15,10 +15,14 @@ Object.defineProperty(navigator, 'clipboard', {
   writable: true,
 });
 
-jest.useFakeTimers();
-
 describe('ButtonCopyToClipboard', () => {
   beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -39,7 +43,9 @@ describe('ButtonCopyToClipboard', () => {
       expect(clipboardWriteTextMock).toHaveBeenCalledWith('Text to copy');
     });
 
-    expect(getByRole('tooltip')).toBeInTheDocument();
+    waitFor(() => {
+      expect(getByRole('tooltip')).toBeInTheDocument();
+    });
   });
 
   it('hides tooltip after 2 seconds', async () => {
@@ -53,8 +59,10 @@ describe('ButtonCopyToClipboard', () => {
       expect(getByRole('tooltip')).toBeInTheDocument();
     });
 
-    expect(setTimeout).toHaveBeenCalledTimes(1);
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 2000);
+    waitFor(() => {
+      expect(setTimeout).toHaveBeenCalledTimes(2);
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 2000);
+    });
   });
 
   it('renders tooltip after clicking button when navidator.clipboard is undefined', async () => {

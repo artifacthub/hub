@@ -1,3 +1,5 @@
+import { waitFor } from '@testing-library/react';
+
 import { Alert } from '../types';
 import alertDispatcher from './alertDispatcher';
 
@@ -11,7 +13,12 @@ const alertSample: Alert = {
 describe('alertDispatcher', () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+    jest.resetAllMocks();
   });
 
   it('receives alert after subscription', () => {
@@ -32,7 +39,7 @@ describe('alertDispatcher', () => {
     expect(subscriptionMock).toHaveBeenCalledWith(null);
   });
 
-  it('dismiss alert when default time has finished', () => {
+  it('dismiss alert when default time has finished', async () => {
     alertDispatcher.subscribe({
       updateAlertWrapper: (alert: Alert | null) => subscriptionMock(alert),
     });
@@ -44,10 +51,10 @@ describe('alertDispatcher', () => {
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 5000);
 
-    jest.runAllTimers();
-
-    expect(subscriptionMock).toHaveBeenCalledTimes(2);
-    expect(subscriptionMock).toHaveBeenCalledWith(null);
+    await waitFor(() => {
+      expect(subscriptionMock).toHaveBeenCalledTimes(2);
+      expect(subscriptionMock).toHaveBeenCalledWith(null);
+    });
   });
 
   it('dismiss alert with custom time', () => {
@@ -59,7 +66,5 @@ describe('alertDispatcher', () => {
 
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 3000);
-
-    jest.runAllTimers();
   });
 });

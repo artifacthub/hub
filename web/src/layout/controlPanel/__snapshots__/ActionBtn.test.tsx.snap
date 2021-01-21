@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ActionBtn renders correctly 1`] = `
+exports[`ActionBtn creates snapshot 1`] = `
 <DocumentFragment>
   <span
     class="position-relative"

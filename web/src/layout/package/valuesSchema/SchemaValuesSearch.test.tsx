@@ -16,20 +16,18 @@ describe('SchemaValuesSearch', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
+    jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
     const result = render(<SchemaValuesSearch {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   it('renders component', () => {
     const { getByTestId } = render(<SchemaValuesSearch {...defaultProps} />);
-
     expect(getByTestId('typeaheadInput')).toBeInTheDocument();
   });
 

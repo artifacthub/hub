@@ -16,9 +16,9 @@ describe('ElementWithTooltip', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
+    jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
@@ -33,11 +33,7 @@ describe('ElementWithTooltip', () => {
   });
 
   it('does not render label', () => {
-    const props = {
-      ...defaultProps,
-      active: false,
-    };
-    const { container } = render(<ElementWithTooltip {...props} />);
+    const { container } = render(<ElementWithTooltip {...defaultProps} active={false} />);
     expect(container).toBeEmptyDOMElement();
   });
 

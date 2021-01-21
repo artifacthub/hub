@@ -32,9 +32,9 @@ describe('OrganizationInfo', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
+    jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
@@ -51,6 +51,7 @@ describe('OrganizationInfo', () => {
   it('calls history push to click org link', () => {
     const { getByTestId } = render(<OrganizationInfo {...defaultProps} />);
     fireEvent.click(getByTestId('orgLink'));
+
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
     expect(mockHistoryPush).toHaveBeenCalledWith({
       pathname: '/packages/search',

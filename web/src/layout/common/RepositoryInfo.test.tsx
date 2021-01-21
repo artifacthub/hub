@@ -36,9 +36,9 @@ describe('RepositoryInfo', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
+    jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
@@ -55,6 +55,7 @@ describe('RepositoryInfo', () => {
   it('calls history push to click repo link', () => {
     const { getByTestId } = render(<RepositoryInfo {...defaultProps} />);
     fireEvent.click(getByTestId('repoLink'));
+
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
     expect(mockHistoryPush).toHaveBeenCalledWith({
       pathname: '/packages/search',
