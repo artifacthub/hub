@@ -264,6 +264,11 @@
                                 "github": {
                                     "type": "object",
                                     "properties": {
+                                        "enabled": {
+                                            "title": "Enable Github oauth",
+                                            "type": "boolean",
+                                            "default": true
+                                        },
                                         "clientID": {
                                             "title": "Github oauth client id",
                                             "type": "string",
@@ -296,6 +301,11 @@
                                 "google": {
                                     "type": "object",
                                     "properties": {
+                                        "enabled": {
+                                            "title": "Enable Google oauth",
+                                            "type": "boolean",
+                                            "default": true
+                                        },
                                         "clientID": {
                                             "title": "Google oauth client id",
                                             "type": "string",
@@ -328,6 +338,11 @@
                                 "oidc": {
                                     "type": "object",
                                     "properties": {
+                                        "enabled": {
+                                            "title": "Enable OIDC",
+                                            "type": "boolean",
+                                            "default": false
+                                        },
                                         "issuerURL": {
                                             "title": "OpenID connect issuer url",
                                             "type": "string",
