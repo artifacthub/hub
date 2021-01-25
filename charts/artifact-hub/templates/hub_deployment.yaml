@@ -52,10 +52,19 @@ spec:
         - name: hub
           image: {{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag }}
           imagePullPolicy: {{ .Values.pullPolicy }}
+          {{- if .Values.hub.server.cacheDir }}
+          env:
+            - name: XDG_CACHE_HOME
+              value: {{ .Values.hub.server.cacheDir | quote }}
+          {{- end }}
           volumeMounts:
           - name: hub-config
-            mountPath: "/home/hub/.cfg"
+            mountPath: "/artifacthub/.cfg"
             readOnly: true
+          {{- if .Values.hub.server.cacheDir }}
+          - name: cache-dir
+            mountPath: {{ .Values.hub.server.cacheDir | quote }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 8000
@@ -66,3 +75,7 @@ spec:
       - name: hub-config
         secret:
           secretName: hub-config
+      {{- if .Values.hub.server.cacheDir }}
+      - name: cache-dir
+        emptyDir: {}
+      {{- end }}

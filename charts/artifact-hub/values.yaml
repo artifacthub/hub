@@ -39,6 +39,7 @@ hub:
     resources: {}
   server:
     allowPrivateRepositories: false
+    cacheDir: ""
     baseURL: ""
     shutdownTimeout: 10s
     basicAuth:
@@ -95,6 +96,7 @@ scanner:
     resources: {}
   concurrency: 10
   trivyURL: http://trivy:8081
+  cacheDir: ""
   dockerUsername: ""
   dockerPassword: ""
 
@@ -103,6 +105,7 @@ tracker:
     image:
       repository: artifacthub/tracker
     resources: {}
+  cacheDir: ""
   concurrency: 10
   repositoriesNames: []
   repositoriesKinds: []
