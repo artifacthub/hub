@@ -79,6 +79,19 @@ const Details = (props: Props) => {
                 </select>
               </div>
             );
+          case RepositoryKind.TektonTask:
+            return (
+              <>
+                {props.package.data && props.package.data.pipelinesMinVersion && (
+                  <div>
+                    <SmallTitle text="Pipeline minimal version" />
+                    <p data-testid="appVersion" className="text-truncate">
+                      {props.package.data.pipelinesMinVersion}
+                    </p>
+                  </div>
+                )}
+              </>
+            );
           default:
             return null;
         }

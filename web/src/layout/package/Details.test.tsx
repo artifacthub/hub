@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
-import { Package, Version } from '../../types';
+import { Package, PackageLink, Version } from '../../types';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import Details from './Details';
@@ -27,6 +27,8 @@ const defaultProps = {
     {
       version: '1.0.0',
       createdAt: 0,
+      containsSecurityUpdates: false,
+      prerelease: false,
     },
   ],
   activeChannel: null,
@@ -90,7 +92,7 @@ describe('Details', () => {
       it('renders correct app version', () => {
         const mockPackage = getMockPackage('3');
         const { queryByText } = render(<Details {...defaultProps} package={mockPackage} />);
-        expect(queryByText(mockPackage.appVersion)).toBeInTheDocument();
+        expect(queryByText(mockPackage.appVersion!)).toBeInTheDocument();
       });
 
       it("does not render app version when package hasn't", () => {
@@ -231,9 +233,11 @@ describe('Details', () => {
             {
               version: '1.0.0',
               createdAt: 0,
+              containsSecurityUpdates: false,
+              prerelease: false,
             },
-            { version: '0.2.0', createdAt: 0 },
-            { version: '0.2.3', createdAt: 0 },
+            { version: '0.2.0', createdAt: 0, containsSecurityUpdates: false, prerelease: false },
+            { version: '0.2.3', createdAt: 0, containsSecurityUpdates: false, prerelease: false },
           ]}
         />
       );
@@ -347,6 +351,21 @@ describe('Details', () => {
       expect(getByText('key2')).toBeInTheDocument();
       expect(getByText('MIT')).toBeInTheDocument();
       expect(getAllByText('-')).toHaveLength(1);
+    });
+  });
+
+  describe('Tekton task', () => {
+    it('renders component', () => {
+      const mockPackage = getMockPackage('18');
+      const { getByText } = render(<Details package={mockPackage} {...defaultProps} />);
+
+      expect(getByText('Versions')).toBeInTheDocument();
+      expect(getByText('Pipeline minimal version')).toBeInTheDocument();
+      expect(getByText('Keywords')).toBeInTheDocument();
+
+      expect(getByText('tekton')).toBeInTheDocument();
+      expect(getByText('task')).toBeInTheDocument();
+      expect(getByText('cli')).toBeInTheDocument();
     });
   });
 });

@@ -350,4 +350,25 @@ describe('Package index', () => {
       await waitFor(() => {});
     });
   });
+
+  describe('Tekton task', () => {
+    it('renders task properly', async () => {
+      const mockPackage = getMockPackage('13');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      const { getByTestId, getByText } = render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(getByText('Manifest YAML')).toBeInTheDocument();
+
+        expect(getByTestId('tektonManifestBtn')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {});
+    });
+  });
 });

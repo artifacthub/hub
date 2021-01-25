@@ -1,0 +1,53 @@
+{
+  "packageId": "1a8c97dc-7fc9-47ef-8aad-7c1431d6d2a7",
+  "name": "tkn",
+  "normalizedName": "tkn",
+  "isOperator": false,
+  "displayName": "Tekton CLI",
+  "description": "This task performs operations on Tekton resources using tkn",
+  "keywords": ["tekton", "task", "cli"],
+  "readme": "# tkn\n\nThis task performs operations on Tekton resources using\n[`tkn`](https://github.com/tektoncd/cli).\n\n## Install the Task\n\n```bash\nkubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/master/task/tkn/0.2/tkn.yaml\n```\n\n## Parameters\n\n| name      | description                                 | default                               |\n| --------- | ------------------------------------------- | ------------------------------------- |\n| TKN_IMAGE | `tkn` CLI container image to run this task. | gcr.io/tekton-releases/dogfooding/tkn |\n| ARGS      | The arguments to pass to the `tkn` CLI.     | --help                                |\n| SCRIPT    | `tkn` CLI script to execute                 | tkn \\$@                               |\n\n## Workspaces\n\n- **kubeconfig**: An [optional workspace](https://github.com/tektoncd/pipeline/blob/master/docs/workspaces.md#using-workspaces-in-tasks) that allows you to provide a `.kube/config` file for `tkn` to access the cluster. The file should be placed at the root of the Workspace with name `kubeconfig`.\n\n## Usage\n\n1. Passing only `ARGS`\n\n```yaml\napiVersion: tekton.dev/v1beta1\nkind: TaskRun\nmetadata:\n  name: tkn-run\nspec:\n  taskRef:\n    name: tkn\n  params:\n    - name: ARGS\n      value:\n        - task\n        - list\n```\n\n2. Passing `SCRIPT` and `ARGS` and `WORKSPACE`\n\n   1. Sample secret can be found [here](https://github.com/tektoncd/catalog/tree/master/task/tkn/0.2/samples/secrets.yaml)\n\n   2. Create `TaskRun`\n\n   ```yaml\n   apiVersion: tekton.dev/v1beta1\n   kind: TaskRun\n   metadata:\n     name: tkn-run\n   spec:\n     taskRef:\n       name: tkn\n     workspaces:\n       - name: kubeconfig\n         secret:\n           secretName: kubeconfig\n     params:\n       - name: SCRIPT\n         value: |\n           tkn task start $1\n           tkn taskrun list\n           tkn task logs $1 -f\n       - name: ARGS\n         value:\n           - taskRunName\n   ```\n",
+  "links": [
+    {
+      "url": "https://github.com/tektoncd/catalog/blob/master/task/tkn/0.2/tkn.yaml",
+      "name": "source"
+    }
+  ],
+  "data": {
+    "manifestRaw": "---\napiVersion: tekton.dev/v1beta1\nkind: Task\nmetadata:\n  name: tkn\n  labels:\n    app.kubernetes.io/version: \"0.2\"\n  annotations:\n    tekton.dev/pipelines.minVersion: \"0.17.0\"\n    tekton.dev/tags: cli\n    tekton.dev/displayName: \"Tekton CLI\"\nspec:\n  workspaces:\n    - name: kubeconfig\n      description: >-\n        An optional workspace that allows you to provide a .kube/config\n        file for tkn to access the cluster. The file should be placed at\n        the root of the Workspace with name kubeconfig.\n      optional: true\n  description: >-\n    This task performs operations on Tekton resources using tkn\n\n  params:\n    - name: TKN_IMAGE\n      description: tkn CLI container image to run this task\n      default: gcr.io/tekton-releases/dogfooding/tkn@sha256:defb97935a4d4be26c760e43a397b649fb5591ac1aa6a736ada01e559c13767b\n    - name: SCRIPT\n      description: tkn CLI script to execute\n      type: string\n      default: \"tkn $@\"\n    - name: ARGS\n      type: array\n      description: tkn CLI arguments to run\n      default: [\"--help\"]\n  steps:\n    - name: tkn\n      image: \"$(params.TKN_IMAGE)\"\n      script: |\n        if [ \"$(workspaces.kubeconfig.bound)\" == \"true\" ] && [[ -e $(workspaces.kubeconfig.path)/kubeconfig ]]; then\n          export KUBECONFIG=$(workspaces.kubeconfig.path)/kubeconfig\n        fi\n\n        $(params.SCRIPT)\n      args: [\"$(params.ARGS)\"]\n",
+    "pipelinesMinVersion": "0.17.0"
+  },
+  "version": "0.2.0",
+  "availableVersions": [
+    {
+      "version": "0.2.0",
+      "containsSecurityUpdates": false,
+      "prerelease": false,
+      "createdAt": 1611593453
+    },
+    {
+      "version": "0.1.0",
+      "containsSecurityUpdates": false,
+      "prerelease": false,
+      "createdAt": 1611593453
+    }
+  ],
+  "deprecated": false,
+  "containsSecurityUpdates": false,
+  "prerelease": false,
+  "signed": false,
+  "contentUrl": "https://github.com/tektoncd/catalog/raw/master/task/tkn/0.2/tkn.yaml",
+  "hasValuesSchema": false,
+  "hasChangelog": false,
+  "createdAt": 1611593453,
+  "repository": {
+    "repositoryId": "3dda1751-304e-48c3-b4c8-454320881ed0",
+    "name": "tekton-test",
+    "url": "https://github.com/tektoncd/catalog/task",
+    "private": false,
+    "kind": 7,
+    "verifiedPublisher": false,
+    "official": false,
+    "userAlias": "cynthia-sg"
+  }
+}

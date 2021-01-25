@@ -156,7 +156,7 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 		} else {
 			tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 		}
-	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OPA, hub.TBAction:
+	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OPA, hub.TBAction, hub.TektonTask:
 		tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 	}
 
@@ -174,7 +174,7 @@ func (t *Tracker) getRepositoryMetadata() *hub.RepositoryMetadata {
 			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
 			md, _ = t.svc.Rm.GetMetadata(u.String())
 		}
-	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OLM, hub.OPA, hub.TBAction:
+	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OLM, hub.OPA, hub.TBAction, hub.TektonTask:
 		md, _ = t.svc.Rm.GetMetadata(filepath.Join(t.basePath, hub.RepositoryMetadataFile))
 	}
 

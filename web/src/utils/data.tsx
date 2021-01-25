@@ -131,6 +131,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     icon: <RepositoryIcon kind={RepositoryKind.Krew} className="mw-100 mh-100" />,
     active: true,
   },
+  {
+    kind: RepositoryKind.TektonTask,
+    label: 'tekton-task',
+    name: 'Tekton tasks',
+    singular: 'Tekton task',
+    plural: 'Tekton tasks',
+    icon: <RepositoryIcon kind={RepositoryKind.TektonTask} className="mw-100 mh-100" />,
+    active: true,
+  },
 ];
 
 export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [

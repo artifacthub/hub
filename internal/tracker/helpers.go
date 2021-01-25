@@ -12,6 +12,7 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/source/helmplugin"
 	"github.com/artifacthub/hub/internal/tracker/source/krew"
 	"github.com/artifacthub/hub/internal/tracker/source/olm"
+	"github.com/artifacthub/hub/internal/tracker/source/tekton"
 	"github.com/spf13/viper"
 )
 
@@ -103,6 +104,8 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 		source = olm.NewTrackerSource(i)
 	case hub.OPA, hub.TBAction:
 		source = generic.NewTrackerSource(i)
+	case hub.TektonTask:
+		source = tekton.NewTrackerSource(i)
 	}
 	return source
 }

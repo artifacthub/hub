@@ -11,6 +11,7 @@ The following repositories kinds are supported at the moment:
 - [OLM operators repositories](#olm-operators-repositories)
 - [OPA policies repositories](#opa-policies-repositories)
 - [Tinkerbell actions repositories](#tinkerbell-actions-repositories)
+- [Tekton tasks repositories](#tekton-tasks-repositories)
 
 This guide also contains additional information about the following repositories topics:
 
@@ -293,6 +294,21 @@ In the previous case, even the `package1` directory could be omitted. The reason
 Each package version **needs** an `artifacthub-pkg.yml` metadata file. Please see the file [spec](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml) for more details. The [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml) repository metadata file shown above can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at `/path/to/packages`.
 
 Once you have added your repository, you are all set up. As you add new versions of your actions packages or even new packages to your git repository, they'll be automatically indexed and listed in Artifact Hub.
+
+## Tekton tasks repositories
+
+Artifact Hub is able to process Tekton tasks listed in [Tekton catalog repositories](https://github.com/tektoncd/catalog#catalog-structure). Repositories are expected to be hosted in Github or Gitlab. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+
+- `https://github.com/user/repo[/path/to/packages]`
+- `https://gitlab.com/user/repo[/path/to/packages]`
+
+By default the `master` branch is used, but it's possible to specify a different one from the UI.
+
+For more information about the structure of the Tekton catalog repository, please see the [Tekton catalog](https://github.com/tektoncd/catalog#catalog-structure) official documentation.
+
+Most of the metadata Artifact Hub needs is extracted from the tasks's manifest file. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `task manifest` file. For more information, please see the [Artifact Hub Tekton annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/tekton_annotations.md).
+
+There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at the root of the repository.
 
 ## Verified Publisher
 

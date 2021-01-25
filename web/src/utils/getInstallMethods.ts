@@ -40,6 +40,7 @@ export enum InstallMethodKind {
   Falco,
   Krew,
   HelmPlugin,
+  Tekton,
 }
 
 const SPECIAL_OLM = 'community-operators';
@@ -171,6 +172,18 @@ export default (props: PackageInfo): InstallMethodOutput => {
               kind: InstallMethodKind.HelmPlugin,
               props: {
                 repository: pkg.repository,
+              },
+            });
+          }
+          break;
+        case RepositoryKind.TektonTask:
+          if (isUndefined(pkg.install)) {
+            output.methods.push({
+              label: 'kubectl',
+              title: 'Kubectl',
+              kind: InstallMethodKind.Tekton,
+              props: {
+                contentUrl: pkg.contentUrl,
               },
             });
           }
