@@ -59,7 +59,7 @@ spec:
           {{- end }}
           volumeMounts:
           - name: hub-config
-            mountPath: "/home/hub/.cfg"
+            mountPath: "/artifacthub/.cfg"
             readOnly: true
           {{- if .Values.hub.server.cacheDir }}
           - name: cache-dir

@@ -39,7 +39,7 @@ spec:
             {{- end }}
             volumeMounts:
             - name: tracker-config
-              mountPath: "/home/tracker/.cfg"
+              mountPath: "/artifacthub/.cfg"
               readOnly: true
             {{- if .Values.tracker.cacheDir }}
             - name: cache-dir
