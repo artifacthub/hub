@@ -267,7 +267,7 @@
                                         "enabled": {
                                             "title": "Enable Github oauth",
                                             "type": "boolean",
-                                            "default": true
+                                            "default": false
                                         },
                                         "clientID": {
                                             "title": "Github oauth client id",
@@ -304,7 +304,7 @@
                                         "enabled": {
                                             "title": "Enable Google oauth",
                                             "type": "boolean",
-                                            "default": true
+                                            "default": false
                                         },
                                         "clientID": {
                                             "title": "Google oauth client id",

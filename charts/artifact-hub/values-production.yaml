@@ -45,8 +45,10 @@ hub:
     shutdownTimeout: 20s
     oauth:
       github:
+        enabled: true
         redirectURL: https://artifacthub.io/oauth/github/callback
       google:
+        enabled: true
         redirectURL: https://artifacthub.io/oauth/google/callback
 
 scanner:

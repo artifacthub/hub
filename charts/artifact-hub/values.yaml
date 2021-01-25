@@ -50,7 +50,7 @@ hub:
       secure: false
     oauth:
       github:
-        enabled: true
+        enabled: false
         clientID: ""
         clientSecret: ""
         redirectURL: ""
@@ -58,7 +58,7 @@ hub:
           - read:user
           - user:email
       google:
-        enabled: true
+        enabled: false
         clientID: ""
         clientSecret: ""
         redirectURL: ""
