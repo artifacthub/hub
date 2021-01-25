@@ -12,7 +12,7 @@ import (
 
 var update = flag.Bool("update", false, "Write image versions to testdata directory")
 
-func TestGenerateImageVersions(t *testing.T) {
+func TestGenerateVersions(t *testing.T) {
 	t.Parallel()
 
 	// Read sample images
@@ -22,11 +22,11 @@ func TestGenerateImageVersions(t *testing.T) {
 	require.NoError(t, err)
 
 	// Check the data provided must be a valid image
-	_, err = GenerateImageVersions(invalidImgData)
+	_, err = GenerateVersions(invalidImgData)
 	require.Error(t, err)
 
 	// Generate image1 versions and check we get the expected results
-	imgVersions, err := GenerateImageVersions(validImgData)
+	imgVersions, err := GenerateVersions(validImgData)
 	require.NoError(t, err)
 	if *update {
 		// Update image1 versions in testdata

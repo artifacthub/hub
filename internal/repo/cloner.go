@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	defaultBranch = "master"
+	DefaultBranch = "master"
 )
 
 // Cloner is a hub.RepositoryCloner implementation.
@@ -43,7 +43,7 @@ func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string
 	}
 	branch := r.Branch
 	if branch == "" {
-		branch = defaultBranch
+		branch = DefaultBranch
 	}
 	_, err = git.PlainCloneContext(ctx, tmpDir, false, &git.CloneOptions{
 		URL:           repoBaseURL,

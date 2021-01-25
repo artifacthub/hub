@@ -71,7 +71,7 @@ func (s *ImageStore) SaveImage(ctx context.Context, data []byte) (string, error)
 	}
 
 	// Generate image versions of different sizes and store them
-	imageVersions, err := img.GenerateImageVersions(data)
+	imageVersions, err := img.GenerateVersions(data)
 	if err != nil {
 		return "", err
 	}

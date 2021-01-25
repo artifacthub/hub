@@ -48,6 +48,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 	if err := ValidatePackageMetadata(md); err != nil {
 		return nil, err
 	}
+	sv, _ := semver.NewVersion(md.Version)
 	p := &hub.Package{
 		Name:                    md.Name,
 		IsOperator:              md.Operator,
@@ -61,7 +62,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		ContainsSecurityUpdates: md.ContainsSecurityUpdates,
 		Prerelease:              md.Prerelease,
 		Links:                   md.Links,
-		Version:                 md.Version,
+		Version:                 sv.String(),
 		AppVersion:              md.AppVersion,
 		Digest:                  md.Digest,
 		Deprecated:              md.Deprecated,

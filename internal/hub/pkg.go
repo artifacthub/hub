@@ -79,7 +79,7 @@ type Package struct {
 	ContainersImages        []*ContainerImage      `json:"containers_images"`
 	Provider                string                 `json:"provider"`
 	HasValuesSchema         bool                   `json:"has_values_schema"`
-	ValuesSchema            json.RawMessage        `json:"values_schema"`
+	ValuesSchema            json.RawMessage        `json:"values_schema,omitempty"`
 	HasChangeLog            bool                   `json:"has_changelog"`
 	Changes                 []string               `json:"changes"`
 	ContainsSecurityUpdates bool                   `json:"contains_security_updates"`

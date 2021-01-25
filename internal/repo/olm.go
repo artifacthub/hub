@@ -12,15 +12,15 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 )
 
-// OLMRepositoryExporter provides a mechanism to export the packages available
-// in an OLM repository stored in an OCI registry.
-type OLMRepositoryExporter struct{}
+// OLMOCIExporter provides a mechanism to export the packages available in an
+// OLM repository stored in an OCI registry.
+type OLMOCIExporter struct{}
 
 // ExportRepository exports the packages available in a repository stored in a
 // OCI registry using the appregistry manifest format. It returns the temporary
 // directory where the packages will be stored. It's the caller's responsibility
 // to delete it when done.
-func (e *OLMRepositoryExporter) ExportRepository(ctx context.Context, r *hub.Repository) (string, error) {
+func (e *OLMOCIExporter) ExportRepository(ctx context.Context, r *hub.Repository) (string, error) {
 	// Setup temporary directory to store content
 	tmpDir, err := ioutil.TempDir("", "artifact-hub")
 	if err != nil {

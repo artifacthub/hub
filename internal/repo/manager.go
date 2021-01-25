@@ -501,7 +501,12 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 		}
 		owner := pathParts[0]
 		repo := pathParts[1]
+		branch := r.Branch
+		if branch == "" {
+			branch = DefaultBranch
+		}
 		opt := &github.CommitsListOptions{
+			SHA: branch,
 			ListOptions: github.ListOptions{
 				Page:    0,
 				PerPage: 1,

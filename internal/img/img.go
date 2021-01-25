@@ -3,9 +3,21 @@ package img
 import (
 	"bytes"
 	"context"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 
 	"github.com/disintegration/imaging"
+	"github.com/vincent-petithory/dataurl"
+	"golang.org/x/time/rate"
 )
+
+// HTTPClient defines the methods an HTTPClient implementation must provide.
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
 
 // Store describes the methods an image.Store implementation must provide.
 type Store interface {
@@ -16,15 +28,15 @@ type Store interface {
 	SaveImage(ctx context.Context, data []byte) (imageID string, err error)
 }
 
-// ImageVersion represents a specific size version of an image.
-type ImageVersion struct {
+// Version represents a specific size version of an image.
+type Version struct {
 	Version string
 	Data    []byte
 }
 
-// GenerateImageVersions generates multiple versions of different sizes for the
+// GenerateVersions generates multiple versions of different sizes for the
 // image provided.
-func GenerateImageVersions(data []byte) ([]*ImageVersion, error) {
+func GenerateVersions(data []byte) ([]*Version, error) {
 	// Define versions spec
 	spec := []struct {
 		version string
@@ -44,18 +56,62 @@ func GenerateImageVersions(data []byte) ([]*ImageVersion, error) {
 	}
 
 	// Generate image versions
-	imgVersions := make([]*ImageVersion, 0, len(spec))
+	imgVersions := make([]*Version, 0, len(spec))
 	for _, e := range spec {
 		imgVersion := imaging.Fit(img, e.width, e.height, imaging.Lanczos)
 		var buf bytes.Buffer
 		if err := imaging.Encode(&buf, imgVersion, imaging.PNG); err != nil {
 			return nil, err
 		}
-		imgVersions = append(imgVersions, &ImageVersion{
+		imgVersions = append(imgVersions, &Version{
 			Version: e.version,
 			Data:    buf.Bytes(),
 		})
 	}
 
 	return imgVersions, nil
+}
+
+// Get gets the image located at the url provided. If it's a data url the image
+// is extracted from it. Otherwise it's downloaded using the url.
+func Get(
+	ctx context.Context,
+	hc HTTPClient,
+	githubToken string,
+	githubRL *rate.Limiter,
+	imageURL string,
+) ([]byte, error) {
+	// Image in data url
+	if strings.HasPrefix(imageURL, "data:") {
+		dataURL, err := dataurl.DecodeString(imageURL)
+		if err != nil {
+			return nil, err
+		}
+		return dataURL.Data, nil
+	}
+
+	// Download image using url provided
+	req, _ := http.NewRequest("GET", imageURL, nil)
+	u, err := url.Parse(imageURL)
+	if err != nil {
+		return nil, err
+	}
+	if u.Host == "github.com" || u.Host == "raw.githubusercontent.com" {
+		// Authenticate and rate limit requests to Github
+		if githubToken != "" {
+			req.Header.Set("Authorization", fmt.Sprintf("token %s", githubToken))
+		}
+		if githubRL != nil {
+			_ = githubRL.Wait(ctx)
+		}
+	}
+	resp, err := hc.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusOK {
+		return ioutil.ReadAll(resp.Body)
+	}
+	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
 }

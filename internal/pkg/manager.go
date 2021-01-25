@@ -297,6 +297,18 @@ func (m *Manager) Unregister(ctx context.Context, pkg *hub.Package) error {
 	return err
 }
 
+// BuildKey returns a key that identifies a concrete package version.
+func BuildKey(p *hub.Package) string {
+	return p.Name + "@" + p.Version
+}
+
+// ParseKey parses a key identifying a package version and returns its name and
+// version.
+func ParseKey(key string) (string, string) {
+	p := strings.Split(key, "@")
+	return p[0], p[1]
+}
+
 // getUserID returns the user id from the context provided when available.
 func getUserID(ctx context.Context) *string {
 	var userID *string
