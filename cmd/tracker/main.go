@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
+	"runtime/debug"
 	"sync"
 	"syscall"
 	"time"
@@ -15,12 +16,7 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
-	"github.com/artifacthub/hub/internal/tracker/falco"
-	"github.com/artifacthub/hub/internal/tracker/generic"
-	"github.com/artifacthub/hub/internal/tracker/helm"
-	"github.com/artifacthub/hub/internal/tracker/helmplugin"
-	"github.com/artifacthub/hub/internal/tracker/krew"
-	"github.com/artifacthub/hub/internal/tracker/olm"
+	"github.com/artifacthub/hub/internal/tracker/errors"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/time/rate"
@@ -28,7 +24,6 @@ import (
 
 const (
 	githubMaxRequestsPerHour = 5000
-	cloudNativeSecurityHub   = "https://github.com/falcosecurity/cloud-native-security-hub/resources/falco"
 )
 
 func main() {
@@ -73,28 +68,31 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("image store setup failed")
 	}
-	repos, err := tracker.GetRepositories(ctx, cfg, rm)
-	if err != nil {
-		log.Fatal().Err(err).Msg("error getting repositories")
-	}
-	ec := tracker.NewDBErrorsCollector(rm, repos)
+	ec := errors.NewCollector(rm)
 	githubRL := rate.NewLimiter(rate.Every(1*time.Hour), githubMaxRequestsPerHour)
 	go func() {
 		<-time.After(1 * time.Hour)
 		githubRL.SetLimit(rate.Every(1 * time.Hour / githubMaxRequestsPerHour))
 	}()
-	svc := &tracker.Services{
-		Ctx:      ctx,
-		Cfg:      cfg,
-		Rm:       rm,
-		Pm:       pm,
-		Is:       is,
-		Ec:       ec,
-		Hc:       &http.Client{Timeout: 10 * time.Second},
-		GithubRL: githubRL,
+	svc := &hub.TrackerServices{
+		Ctx:                ctx,
+		Cfg:                cfg,
+		Rm:                 rm,
+		Pm:                 pm,
+		Rc:                 &repo.Cloner{},
+		Oe:                 &repo.OLMOCIExporter{},
+		Ec:                 ec,
+		Hc:                 &http.Client{Timeout: 10 * time.Second},
+		Is:                 is,
+		GithubRL:           githubRL,
+		SetupTrackerSource: tracker.SetupSource,
 	}
 
 	// Track registered repositories
+	repos, err := tracker.GetRepositories(ctx, cfg, rm)
+	if err != nil {
+		log.Fatal().Err(err).Msg("error getting repositories")
+	}
 	cfg.SetDefault("tracker.concurrency", 1)
 	limiter := make(chan struct{}, cfg.GetInt("tracker.concurrency"))
 	var wg sync.WaitGroup
@@ -113,32 +111,16 @@ L:
 				<-limiter
 				wg.Done()
 			}()
-			var t tracker.Tracker
-			switch r.Kind {
-			case hub.Falco:
-				// Temporary solution to maintain backwards compatibility with
-				// the only Falco rules repository registered at the moment in
-				// artifacthub.io using the structure and metadata format used
-				// by the cloud native security hub.
-				if r.URL == cloudNativeSecurityHub {
-					t = falco.NewTracker(svc, r)
-				} else {
-					t = generic.NewTracker(svc, r)
+			logger := log.With().Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Logger()
+			defer func() {
+				if r := recover(); r != nil {
+					logger.Error().Bytes("stacktrace", debug.Stack()).Interface("recover", r).Send()
 				}
-			case hub.Helm:
-				t = helm.NewTracker(svc, r)
-			case hub.HelmPlugin:
-				t = helmplugin.NewTracker(svc, r)
-			case hub.Krew:
-				t = krew.NewTracker(svc, r)
-			case hub.OLM:
-				t = olm.NewTracker(svc, r)
-			case hub.OPA, hub.TBAction:
-				t = generic.NewTracker(svc, r)
-			}
-			if err := tracker.TrackRepository(ctx, cfg, rm, t, r); err != nil {
-				svc.Ec.Append(r.RepositoryID, err)
-				log.Error().Err(err).Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Send()
+			}()
+			t := tracker.New(svc, r, logger)
+			if err := t.Run(); err != nil {
+				logger.Error().Err(err).Send()
+				svc.Ec.Append(r.RepositoryID, err.Error())
 			}
 		}(r)
 	}

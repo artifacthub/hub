@@ -190,14 +190,25 @@ func (m *ManagerMock) UpdateDigest(ctx context.Context, repositoryID, digest str
 	return args.Error(0)
 }
 
-// OLMRepositoryExporterMock is a mock implementation of the
-// OLMRepositoryExporter interface.
-type OLMRepositoryExporterMock struct {
+// OCITagsGetterMock is a mock implementation of the OCITagsGetter interface.
+type OCITagsGetterMock struct {
 	mock.Mock
 }
 
-// ExportRepository implements the OLMRepositoryExporter interface.
-func (m *OLMRepositoryExporterMock) ExportRepository(ctx context.Context, r *hub.Repository) (string, error) {
+// Tags implements the OCITagsGetter interface.
+func (m *OCITagsGetterMock) Tags(ctx context.Context, r *hub.Repository) ([]string, error) {
+	args := m.Called(ctx, r)
+	tags, _ := args.Get(0).([]string)
+	return tags, args.Error(1)
+}
+
+// OLMOCIExporterMock is a mock implementation of the OLMOCIExporter interface.
+type OLMOCIExporterMock struct {
+	mock.Mock
+}
+
+// ExportRepository implements the OLMOCIExporter interface.
+func (m *OLMOCIExporterMock) ExportRepository(ctx context.Context, r *hub.Repository) (string, error) {
 	args := m.Called(ctx, r)
 	return args.String(0), args.Error(1)
 }

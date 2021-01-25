@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: FalcoRules
+vendor: Sample provider
+name: test
+shortDescription: Short description
+version: 0.1.0
+description: Description
+keywords:
+  - kw1
+  - kw2
+rules:
+  - raw: Falco rules in YAML
+icon: https://icon.url

@@ -3,473 +3,501 @@ package tracker
 import (
 	"context"
 	"errors"
-	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/img"
+	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
+	trerrors "github.com/artifacthub/hub/internal/tracker/errors"
+	"github.com/artifacthub/hub/internal/tracker/source"
+	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/time/rate"
 )
 
-func TestGetRepositories(t *testing.T) {
-	ctx := context.Background()
-	repo1 := &hub.Repository{
-		Name: "repo1",
-		Kind: hub.Helm,
+func TestTracker(t *testing.T) {
+	// Define some repositories and packages for the tests
+	r1 := &hub.Repository{
+		RepositoryID: "repo1",
+		Kind:         hub.Helm,
+		URL:          "https://repo.url",
 	}
-	repo2 := &hub.Repository{
-		Name: "repo2",
-		Kind: hub.OLM,
+	p1v1 := &hub.Package{
+		Name:       "pkg1",
+		Version:    "1.0.0",
+		Repository: r1,
 	}
-	repo3 := &hub.Repository{
-		Name:     "repo3",
-		Kind:     hub.OPA,
-		Disabled: true,
+	p1v2 := &hub.Package{
+		Name:       "pkg1",
+		Version:    "2.0.0",
+		Repository: r1,
 	}
-
-	t.Run("error getting repository by name", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		rm := &repo.ManagerMock{}
-		rm.On("GetByName", ctx, "repo1", true).Return(nil, tests.ErrFake)
-
-		// Run test and check expectations
-		cfg := viper.New()
-		cfg.Set("tracker.repositoriesNames", []string{"repo1"})
-		repos, err := GetRepositories(ctx, cfg, rm)
-		assert.True(t, errors.Is(err, tests.ErrFake))
-		assert.Nil(t, repos)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("get repositories by name", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		rm := &repo.ManagerMock{}
-		rm.On("GetByName", ctx, "repo1", true).Return(repo1, nil)
-		rm.On("GetByName", ctx, "repo2", true).Return(repo2, nil)
-
-		// Run test and check expectations
-		cfg := viper.New()
-		cfg.Set("tracker.repositoriesNames", []string{"repo1", "repo2"})
-		repos, err := GetRepositories(ctx, cfg, rm)
-		assert.Nil(t, err)
-		assert.ElementsMatch(t, []*hub.Repository{repo1, repo2}, repos)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("error getting kind from name", func(t *testing.T) {
-		t.Parallel()
-		cfg := viper.New()
-		cfg.Set("tracker.repositoriesKinds", []string{"invalid"})
-		repos, err := GetRepositories(ctx, cfg, nil)
-		assert.Error(t, err)
-		assert.Nil(t, repos)
-	})
-
-	t.Run("error getting repository by kind", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		rm := &repo.ManagerMock{}
-		rm.On("GetByKind", ctx, hub.Helm, true).Return(nil, tests.ErrFake)
-
-		// Run test and check expectations
-		cfg := viper.New()
-		cfg.Set("tracker.repositoriesKinds", []string{"helm"})
-		repos, err := GetRepositories(ctx, cfg, rm)
-		assert.True(t, errors.Is(err, tests.ErrFake))
-		assert.Nil(t, repos)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("get repositories by kind", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		rm := &repo.ManagerMock{}
-		rm.On("GetByKind", ctx, hub.Helm, true).Return([]*hub.Repository{repo1}, nil)
-		rm.On("GetByKind", ctx, hub.OLM, true).Return([]*hub.Repository{repo2}, nil)
-
-		// Run test and check expectations
-		cfg := viper.New()
-		cfg.Set("tracker.repositoriesKinds", []string{"helm", "olm"})
-		repos, err := GetRepositories(ctx, cfg, rm)
-		assert.Nil(t, err)
-		assert.ElementsMatch(t, []*hub.Repository{repo1, repo2}, repos)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("names have preference over kinds when both are provided", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		rm := &repo.ManagerMock{}
-		rm.On("GetByName", ctx, "repo1", true).Return(repo1, nil)
-		rm.On("GetByName", ctx, "repo2", true).Return(repo2, nil)
-
-		// Run test and check expectations
-		cfg := viper.New()
-		cfg.Set("tracker.repositoriesNames", []string{"repo1", "repo2"})
-		cfg.Set("tracker.repositoriesKinds", []string{"helm", "olm"})
-		repos, err := GetRepositories(ctx, cfg, rm)
-		assert.Nil(t, err)
-		assert.ElementsMatch(t, []*hub.Repository{repo1, repo2}, repos)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("error getting all repositories", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		rm := &repo.ManagerMock{}
-		rm.On("GetAll", ctx, true).Return(nil, tests.ErrFake)
-
-		// Run test and check expectations
-		cfg := viper.New()
-		repos, err := GetRepositories(ctx, cfg, rm)
-		assert.True(t, errors.Is(err, tests.ErrFake))
-		assert.Nil(t, repos)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("get all repositories", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		rm := &repo.ManagerMock{}
-		rm.On("GetAll", ctx, true).Return([]*hub.Repository{repo1, repo2, repo3}, nil)
-
-		// Run test and check expectations
-		cfg := viper.New()
-		repos, err := GetRepositories(ctx, cfg, rm)
-		assert.Nil(t, err)
-		assert.ElementsMatch(t, []*hub.Repository{repo1, repo2}, repos)
-		rm.AssertExpectations(t)
-	})
-}
-
-func TestTrackRepository(t *testing.T) {
-	ctx := context.Background()
+	p2v1 := &hub.Package{
+		Name:       "pkg2",
+		Version:    "1.0.0",
+		Repository: r1,
+	}
 
 	t.Run("error getting repository remote digest", func(t *testing.T) {
 		t.Parallel()
 
-		// Setup expectations
+		// Setup services and expectations
 		r := &hub.Repository{}
-		rm := &repo.ManagerMock{}
-		tm := &Mock{}
-		rm.On("GetRemoteDigest", ctx, r).Return("", tests.ErrFake)
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r).Return("", tests.ErrFake)
 
 		// Run test and check expectations
-		err := TrackRepository(ctx, viper.New(), rm, tm, r)
+		err := New(sw.svc, r, zerolog.Nop()).Run()
 		assert.True(t, errors.Is(err, tests.ErrFake))
-		rm.AssertExpectations(t)
+		sw.assertExpectations(t)
 	})
 
-	t.Run("repository has't been updated, same digest", func(t *testing.T) {
+	t.Run("repository has not been updated, same digest", func(t *testing.T) {
 		t.Parallel()
 
-		// Setup expectations
+		// Setup services and expectations
 		r := &hub.Repository{
 			Digest: "digest",
 		}
-		rm := &repo.ManagerMock{}
-		tm := &Mock{}
-		rm.On("GetRemoteDigest", ctx, r).Return("digest", nil)
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r).Return(r.Digest, nil)
 
 		// Run test and check expectations
-		err := TrackRepository(ctx, viper.New(), rm, tm, r)
+		err := New(sw.svc, r, zerolog.Nop()).Run()
 		assert.Nil(t, err)
-		rm.AssertExpectations(t)
+		sw.assertExpectations(t)
 	})
 
-	t.Run("repository hasn't been updated, but bypassDigestCheck is enabled", func(t *testing.T) {
+	t.Run("repository has not been updated, but bypassDigestCheck is enabled", func(t *testing.T) {
 		t.Parallel()
 
-		// Setup expectations
+		// Setup services and expectations
 		r := &hub.Repository{
-			Digest: "digest",
+			RepositoryID: "repo1",
+			Digest:       "digest",
 		}
-		rm := &repo.ManagerMock{}
-		tm := &Mock{}
-		rm.On("GetRemoteDigest", ctx, r).Return("digest", nil)
-		tm.On("Track").Return(nil)
+		sw := newServicesWrapper()
+		sw.svc.Cfg.Set("tracker.bypassDigestCheck", true)
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r).Return(r.Digest, nil)
+		sw.ec.On("Init", r.RepositoryID)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
-		cfg := viper.New()
-		cfg.Set("tracker.bypassDigestCheck", true)
-		err := TrackRepository(ctx, cfg, rm, tm, r)
-		assert.Nil(t, err)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("error tracking repository", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		r := &hub.Repository{}
-		rm := &repo.ManagerMock{}
-		tm := &Mock{}
-		rm.On("GetRemoteDigest", ctx, r).Return("", nil)
-		tm.On("Track").Return(tests.ErrFake)
-
-		// Run test and check expectations
-		err := TrackRepository(ctx, viper.New(), rm, tm, r)
+		err := New(sw.svc, r, zerolog.Nop()).Run()
 		assert.True(t, errors.Is(err, tests.ErrFake))
-		rm.AssertExpectations(t)
+		sw.assertExpectations(t)
 	})
 
-	t.Run("repository tracked successfully, no need to update digest", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		r := &hub.Repository{}
-		rm := &repo.ManagerMock{}
-		tm := &Mock{}
-		rm.On("GetRemoteDigest", ctx, r).Return("", nil)
-		tm.On("Track").Return(nil)
-
-		// Run test and check expectations
-		err := TrackRepository(ctx, viper.New(), rm, tm, r)
-		assert.Nil(t, err)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("repository tracked successfully, digest updated", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		r := &hub.Repository{
-			Digest: "digest1",
+	t.Run("error cloning or exporting repository", func(t *testing.T) {
+		repositories := []*hub.Repository{
+			{
+				RepositoryID: "test1",
+				Kind:         hub.OLM,
+				URL:          "https://github.com/org1/repo1",
+			},
+			{
+				RepositoryID: "test2",
+				Kind:         hub.OLM,
+				URL:          "oci://github.com/org1/repo1",
+			},
+			{
+				RepositoryID: "test3",
+				Kind:         hub.OPA,
+			},
 		}
-		rm := &repo.ManagerMock{}
-		tm := &Mock{}
-		rm.On("GetRemoteDigest", ctx, r).Return("digest2", nil)
-		tm.On("Track").Return(nil)
-		rm.On("UpdateDigest", ctx, r.RepositoryID, "digest2").Return(nil)
+		for _, r := range repositories {
+			r := r
+			t.Run(r.RepositoryID, func(t *testing.T) {
+				t.Parallel()
+
+				// Setup services and expectations
+				sw := newServicesWrapper()
+				sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r).Return("", nil)
+				sw.ec.On("Init", r.RepositoryID)
+				switch r.Kind {
+				case hub.OLM:
+					if strings.HasPrefix(r.URL, hub.RepositoryOCIPrefix) {
+						sw.oe.On("ExportRepository", sw.svc.Ctx, r).Return("", tests.ErrFake)
+					} else {
+						sw.rc.On("CloneRepository", sw.svc.Ctx, r).Return("", "", tests.ErrFake)
+					}
+				case hub.OPA:
+					sw.rc.On("CloneRepository", sw.svc.Ctx, r).Return("", "", tests.ErrFake)
+				}
+
+				// Run test and check expectations
+				err := New(sw.svc, r, zerolog.Nop()).Run()
+				assert.True(t, errors.Is(err, tests.ErrFake))
+				sw.assertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("error loading packages registered", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
-		err := TrackRepository(ctx, viper.New(), rm, tm, r)
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.True(t, errors.Is(err, tests.ErrFake))
+		sw.assertExpectations(t)
+	})
+
+	t.Run("error getting packages available", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(nil, tests.ErrFake)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.True(t, errors.Is(err, tests.ErrFake))
+		sw.assertExpectations(t)
+	})
+
+	t.Run("no packages available, nothing to do", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{}, nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
 		assert.Nil(t, err)
-		rm.AssertExpectations(t)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("error registering package", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v1): p1v1,
+		}, nil)
+		sw.pm.On("Register", sw.svc.Ctx, p1v1).Return(tests.ErrFake)
+		expectedErr := "error registering package pkg1 version 1.0.0: fake error for tests"
+		sw.ec.On("Append", r1.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("package available but not registered because it already was", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
+			pkg.BuildKey(p1v1): "",
+		}, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v1): p1v1,
+		}, nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("package available but not registered because it should be ignored", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(&hub.RepositoryMetadata{
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name: p1v1.Name,
+				},
+			},
+		}, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v1): p1v1,
+		}, nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("package registered successfully", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v1): p1v1,
+		}, nil)
+		sw.pm.On("Register", sw.svc.Ctx, p1v1).Return(nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("two packages registered successfully", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v1): p1v1,
+			pkg.BuildKey(p2v1): p2v1,
+		}, nil)
+		sw.pm.On("Register", sw.svc.Ctx, p1v1).Return(nil)
+		sw.pm.On("Register", sw.svc.Ctx, p2v1).Return(nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("error unregistering package", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
+			pkg.BuildKey(p1v1): "",
+			pkg.BuildKey(p1v2): "",
+		}, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v2): p1v2,
+		}, nil)
+		sw.pm.On("Unregister", sw.svc.Ctx, p1v1).Return(tests.ErrFake)
+		expectedErr := "error unregistering package pkg1 version 1.0.0: fake error for tests"
+		sw.ec.On("Append", r1.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("no packages unregistered because the are none available", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
+			pkg.BuildKey(p1v1): "",
+			pkg.BuildKey(p1v2): "",
+		}, nil)
+		sw.src.On("GetPackagesAvailable").Return(nil, nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("package unregistered successfully", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
+			pkg.BuildKey(p1v1): "",
+			pkg.BuildKey(p1v2): "",
+		}, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v2): p1v2,
+		}, nil)
+		sw.pm.On("Unregister", sw.svc.Ctx, p1v1).Return(nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("ignored package unregistered successfully", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(&hub.RepositoryMetadata{
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name:    p1v1.Name,
+					Version: p1v1.Version,
+				},
+			},
+		}, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
+			pkg.BuildKey(p1v1): "",
+			pkg.BuildKey(p1v2): "",
+		}, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v1): p1v1,
+			pkg.BuildKey(p1v2): p1v2,
+		}, nil)
+		sw.pm.On("Unregister", sw.svc.Ctx, p1v1).Return(nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("error setting verified publisher flag", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(&hub.RepositoryMetadata{
+			RepositoryID: r1.RepositoryID,
+		}, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{}, nil)
+		sw.rm.On("SetVerifiedPublisher", sw.svc.Ctx, r1.RepositoryID, true).Return(tests.ErrFake)
+		expectedErr := "error setting verified publisher flag: error setting verified publisher flag: fake error for tests"
+		sw.ec.On("Append", r1.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
 	})
 
 	t.Run("error updating repository digest", func(t *testing.T) {
 		t.Parallel()
 
-		// Setup expectations
-		r := &hub.Repository{
-			Digest: "digest1",
-		}
-		rm := &repo.ManagerMock{}
-		tm := &Mock{}
-		rm.On("GetRemoteDigest", ctx, r).Return("digest2", nil)
-		tm.On("Track").Return(nil)
-		rm.On("UpdateDigest", ctx, r.RepositoryID, "digest2").Return(tests.ErrFake)
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("digest", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{}, nil)
+		sw.rm.On("UpdateDigest", sw.svc.Ctx, r1.RepositoryID, "digest").Return(tests.ErrFake)
 
 		// Run test and check expectations
-		err := TrackRepository(ctx, viper.New(), rm, tm, r)
-		assert.True(t, errors.Is(err, tests.ErrFake))
-		rm.AssertExpectations(t)
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
 	})
 }
 
-func TestSetVerifiedPublisherFlag(t *testing.T) {
-	ctx := context.Background()
-
-	// Setup some services required by tests
-	repo1ID := "00000000-0000-0000-0000-000000000001"
-
-	t.Run("verified publisher flag set to true successfully (remote url)", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		r := &hub.Repository{
-			RepositoryID:      repo1ID,
-			VerifiedPublisher: false,
-		}
-		md := &hub.RepositoryMetadata{
-			RepositoryID: r.RepositoryID,
-		}
-		rm := &repo.ManagerMock{}
-		rm.On("SetVerifiedPublisher", ctx, r.RepositoryID, true).Return(nil)
-
-		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, md)
-		assert.Nil(t, err)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("verified publisher flag not set as it was already true", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		r := &hub.Repository{
-			RepositoryID:      repo1ID,
-			VerifiedPublisher: true,
-		}
-		md := &hub.RepositoryMetadata{
-			RepositoryID: r.RepositoryID,
-		}
-		rm := &repo.ManagerMock{}
-
-		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, md)
-		assert.Nil(t, err)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("verified publisher flag not set: it was false and md file did not exist", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		r := &hub.Repository{
-			RepositoryID:      repo1ID,
-			VerifiedPublisher: false,
-		}
-		rm := &repo.ManagerMock{}
-
-		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, nil)
-		assert.Nil(t, err)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("verified publisher flag set to false: it was true and md file did not exist", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		r := &hub.Repository{
-			RepositoryID:      repo1ID,
-			VerifiedPublisher: true,
-		}
-		rm := &repo.ManagerMock{}
-		rm.On("SetVerifiedPublisher", ctx, r.RepositoryID, false).Return(nil)
-
-		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, nil)
-		assert.Nil(t, err)
-		rm.AssertExpectations(t)
-	})
-
-	t.Run("set verified publisher flag failed", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup expectations
-		r := &hub.Repository{
-			RepositoryID:      repo1ID,
-			VerifiedPublisher: false,
-		}
-		md := &hub.RepositoryMetadata{
-			RepositoryID: r.RepositoryID,
-		}
-		rm := &repo.ManagerMock{}
-		rm.On("SetVerifiedPublisher", ctx, r.RepositoryID, true).Return(tests.ErrFake)
-
-		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, md)
-		assert.True(t, errors.Is(err, tests.ErrFake))
-		rm.AssertExpectations(t)
-	})
+type servicesWrapper struct {
+	rm  *repo.ManagerMock
+	pm  *pkg.ManagerMock
+	rc  *repo.ClonerMock
+	oe  *repo.OLMOCIExporterMock
+	ec  *trerrors.CollectorMock
+	hc  *tests.HTTPClientMock
+	is  *img.StoreMock
+	src *source.Mock
+	svc *hub.TrackerServices
 }
 
-func TestShouldIgnorePackage(t *testing.T) {
-	testCases := []struct {
-		md             *hub.RepositoryMetadata
-		name           string
-		version        string
-		expectedResult bool
-	}{
-		{
-			&hub.RepositoryMetadata{
-				Ignore: []*hub.RepositoryIgnoreEntry{
-					{
-						Name: "pkg1",
-					},
-				},
-			},
-			"pkg1",
-			"1.0.0",
-			true,
-		},
-		{
-			&hub.RepositoryMetadata{
-				Ignore: []*hub.RepositoryIgnoreEntry{
-					{
-						Name: "pkg2",
-					},
-				},
-			},
-			"pkg1",
-			"1.0.0",
-			false,
-		},
-		{
-			&hub.RepositoryMetadata{
-				Ignore: []*hub.RepositoryIgnoreEntry{},
-			},
-			"pkg1",
-			"1.0.0",
-			false,
-		},
-		{
-			nil,
-			"pkg1",
-			"1.0.0",
-			false,
-		},
-		{
-			&hub.RepositoryMetadata{
-				Ignore: []*hub.RepositoryIgnoreEntry{
-					{
-						Name:    "pkg1",
-						Version: "beta",
-					},
-				},
-			},
-			"pkg1",
-			"1.0.0-beta1",
-			true,
-		},
-		{
-			&hub.RepositoryMetadata{
-				Ignore: []*hub.RepositoryIgnoreEntry{
-					{
-						Name:    "pkg1",
-						Version: "1.0.0",
-					},
-				},
-			},
-			"pkg1",
-			"1.0.0",
-			true,
-		},
-		{
-			&hub.RepositoryMetadata{
-				Ignore: []*hub.RepositoryIgnoreEntry{
-					{
-						Name:    "pkg1",
-						Version: "1.0.0",
-					},
-				},
-			},
-			"pkg1",
-			"1.0.1",
-			false,
-		},
-	}
-	for i, tc := range testCases {
-		tc := tc
-		t.Run(fmt.Sprintf("Test case %d", i), func(t *testing.T) {
-			t.Parallel()
+func newServicesWrapper() *servicesWrapper {
+	// Setup mocks
+	rm := &repo.ManagerMock{}
+	pm := &pkg.ManagerMock{}
+	rc := &repo.ClonerMock{}
+	oe := &repo.OLMOCIExporterMock{}
+	ec := &trerrors.CollectorMock{}
+	hc := &tests.HTTPClientMock{}
+	is := &img.StoreMock{}
+	src := &source.Mock{}
 
-			result := ShouldIgnorePackage(tc.md, tc.name, tc.version)
-			assert.Equal(t, tc.expectedResult, result)
-		})
+	// Setup tracker services using mocks
+	svc := &hub.TrackerServices{
+		Ctx:      context.Background(),
+		Cfg:      viper.New(),
+		Rm:       rm,
+		Pm:       pm,
+		Rc:       rc,
+		Oe:       oe,
+		Ec:       ec,
+		Hc:       hc,
+		Is:       is,
+		GithubRL: rate.NewLimiter(rate.Inf, 0),
+		SetupTrackerSource: func(i *hub.TrackerSourceInput) hub.TrackerSource {
+			return src
+		},
 	}
+
+	// Setup services wrapper and return it
+	return &servicesWrapper{
+		rm:  rm,
+		pm:  pm,
+		rc:  rc,
+		oe:  oe,
+		ec:  ec,
+		hc:  hc,
+		is:  is,
+		src: src,
+		svc: svc,
+	}
+}
+
+func (sw *servicesWrapper) assertExpectations(t *testing.T) {
+	sw.rm.AssertExpectations(t)
+	sw.pm.AssertExpectations(t)
+	sw.rc.AssertExpectations(t)
+	sw.oe.AssertExpectations(t)
+	sw.ec.AssertExpectations(t)
+	sw.hc.AssertExpectations(t)
+	sw.is.AssertExpectations(t)
+	sw.src.AssertExpectations(t)
 }

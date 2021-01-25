@@ -70,7 +70,7 @@ const RepositoryCard = (props: Props) => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const getLastTracking = (): JSX.Element => {
-    const nextProcessedTime: number = minutesToNearestInterval(30);
+    const nextCheckTime: number = minutesToNearestInterval(30);
 
     if (isUndefined(props.repository.lastTrackingTs) || isNull(props.repository.lastTrackingTs)) {
       return (
@@ -78,8 +78,8 @@ const RepositoryCard = (props: Props) => {
           Not processed yet
           {props.repository.disabled
             ? '.'
-            : nextProcessedTime > 0
-            ? `, it will be processed automatically in ~ ${nextProcessedTime} minutes`
+            : nextCheckTime > 0
+            ? `, it will be processed automatically in ~ ${nextCheckTime} minutes`
             : ', it will be processed automatically in less than 30 minutes'}
         </>
       );
@@ -92,9 +92,9 @@ const RepositoryCard = (props: Props) => {
       </>
     );
 
-    let messageAboutNextProcessedTime: string = '';
-    if (nextProcessedTime > 0 && !props.repository.disabled) {
-      messageAboutNextProcessedTime = `(it will be processed again in ~ ${nextProcessedTime} minutes)`;
+    let nextCheckMsg: string = '';
+    if (nextCheckTime > 0 && !props.repository.disabled) {
+      nextCheckMsg = `(it will be checked for updates again in ~ ${nextCheckTime} minutes)`;
     }
 
     if (hasErrors) {
@@ -126,7 +126,7 @@ const RepositoryCard = (props: Props) => {
               </SyntaxHighlighter>
             </div>
           </Modal>
-          <span className="ml-3 font-italic text-muted">{messageAboutNextProcessedTime}</span>
+          <span className="ml-3 font-italic text-muted">{nextCheckMsg}</span>
         </>
       );
     } else {
@@ -148,7 +148,7 @@ const RepositoryCard = (props: Props) => {
               </div>
             </Modal>
           )}
-          <span className="ml-1 font-italic text-muted">{messageAboutNextProcessedTime}</span>
+          <span className="ml-1 font-italic text-muted">{nextCheckMsg}</span>
         </>
       );
     }

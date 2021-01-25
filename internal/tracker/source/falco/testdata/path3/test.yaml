@@ -1,0 +1,3 @@
+kind: FalcoRules
+name: test
+version: invalid

@@ -1,0 +1,4 @@
+metadata:
+  name: test-plugin
+spec:
+  version: invalid

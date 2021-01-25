@@ -4,7 +4,7 @@ go 1.15
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
-	github.com/containerd/containerd v1.4.3
+	github.com/containerd/containerd v1.3.4
 	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/deislabs/oras v0.8.1
 	github.com/disintegration/imaging v1.6.2
@@ -22,7 +22,6 @@ require (
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
-	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/jackc/pgconn v1.7.2
 	github.com/jackc/pgx/v4 v4.9.2
 	github.com/mailru/easyjson v0.7.6 // indirect

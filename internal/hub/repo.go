@@ -95,9 +95,15 @@ type HelmIndexLoader interface {
 	LoadIndex(r *Repository) (*helmrepo.IndexFile, string, error)
 }
 
-// OLMRepositoryExporter describes the methods an OLMRepositoryExporter
-// implementation must provide.
-type OLMRepositoryExporter interface {
+// OCITagsGetter is the interface that wraps the Tags method, used to get all
+// the tags available for a given repository in a OCI registry.
+type OCITagsGetter interface {
+	Tags(ctx context.Context, r *Repository) ([]string, error)
+}
+
+// OLMOCIExporter describes the methods an OLMOCIExporter implementation must
+// must provide.
+type OLMOCIExporter interface {
 	ExportRepository(ctx context.Context, r *Repository) (tmpDir string, err error)
 }
 

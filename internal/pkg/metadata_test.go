@@ -59,7 +59,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 		},
 		{
 			&hub.PackageMetadata{
-				Version:     "1.0.0",
+				Version:     "v1.0.0",
 				Name:        "pkg1",
 				DisplayName: "Package 1",
 				CreatedAt:   "2006-01-02T15:04:05Z",
