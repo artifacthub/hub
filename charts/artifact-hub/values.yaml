@@ -50,6 +50,7 @@ hub:
       secure: false
     oauth:
       github:
+        enabled: false
         clientID: ""
         clientSecret: ""
         redirectURL: ""
@@ -57,12 +58,23 @@ hub:
           - read:user
           - user:email
       google:
+        enabled: false
         clientID: ""
         clientSecret: ""
         redirectURL: ""
         scopes:
           - https://www.googleapis.com/auth/userinfo.email
           - https://www.googleapis.com/auth/userinfo.profile
+      oidc:
+        enabled: false
+        issuerURL: ""
+        clientID: ""
+        clientSecret: ""
+        redirectURL: ""
+        scopes:
+          - openid
+          - profile
+          - email
     xffIndex: 0
   email:
     fromName: ""
