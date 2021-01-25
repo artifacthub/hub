@@ -16,6 +16,7 @@ func SetupConfig(cmd string) (*viper.Viper, error) {
 	// Config file
 	cfg.SetConfigName(cmd)
 	cfg.AddConfigPath("$HOME/.cfg")
+	cfg.AddConfigPath("/artifacthub/.cfg")
 	if err := cfg.ReadInConfig(); err != nil {
 		return nil, err
 	}
