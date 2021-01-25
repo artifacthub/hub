@@ -32,11 +32,24 @@ spec:
           - name: tracker
             image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag }}
             imagePullPolicy: {{ .Values.pullPolicy }}
+            {{- if .Values.tracker.cacheDir }}
+            env:
+              - name: XDG_CACHE_HOME
+                value: {{ .Values.tracker.cacheDir | quote }}
+            {{- end }}
             volumeMounts:
             - name: tracker-config
               mountPath: "/home/tracker/.cfg"
               readOnly: true
+            {{- if .Values.tracker.cacheDir }}
+            - name: cache-dir
+              mountPath: {{ .Values.tracker.cacheDir | quote }}
+            {{- end }}
           volumes:
           - name: tracker-config
             secret:
               secretName: tracker-config
+          {{- if .Values.tracker.cacheDir }}
+          - name: cache-dir
+            emptyDir: {}
+          {{- end }}

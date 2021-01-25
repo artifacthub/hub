@@ -216,6 +216,11 @@
                             "type": "boolean",
                             "default": false
                         },
+                        "cacheDir": {
+                            "title": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                            "type": "string",
+                            "default": ""
+                        },
                         "baseURL": {
                             "title": "Hub server base url",
                             "type": "string",
@@ -484,6 +489,11 @@
                     "type": "string",
                     "default": "http://trivy:8081"
                 },
+                "cacheDir": {
+                    "title": "If set, the cache directories for the Trivy and Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                    "type": "string",
+                    "default": ""
+                },
                 "dockerUsername": {
                     "title": "Docker registry username",
                     "type": "string",
@@ -505,6 +515,11 @@
                     "title": "Bypass digest check",
                     "type": "boolean",
                     "default": false
+                },
+                "cacheDir": {
+                    "title": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                    "type": "string",
+                    "default": ""
                 },
                 "concurrency": {
                     "title": "Repositories to process concurrently",
