@@ -428,10 +428,10 @@ exports[`Home index creates snapshot 1`] = `
             </a>
           </div>
           <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-center justify-content-around"
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 align-items-strecht row justify-content-center"
           >
             <a
-              class="link col iconLink"
+              class="link col-3 iconLink"
               href="https://tinkerbell.org"
               rel="noopener noreferrer"
               role="button"
@@ -455,7 +455,7 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
-              class="link col iconLink"
+              class="link col-3 iconLink"
               href="https://krew.sigs.k8s.io"
               rel="noopener noreferrer"
               role="button"
@@ -479,7 +479,7 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
-              class="link col iconLink"
+              class="link col-3 iconLink"
               href="https://tekton.dev"
               rel="noopener noreferrer"
               role="button"

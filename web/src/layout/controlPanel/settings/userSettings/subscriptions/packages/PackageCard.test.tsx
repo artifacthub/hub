@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package } from '../../../../../../types';
-import buildPackageURL from '../../../../../../utils/buildPackageURL';
 import PackageCard from './PackageCard';
 
 const getMockPackage = (fixtureId: string): Package => {
@@ -103,7 +102,7 @@ describe('PackageCard', () => {
       );
       const link = getByTestId('packageCardLink');
       expect(link).toBeInTheDocument();
-      expect(link).toHaveProperty('href', `http://localhost${buildPackageURL(mockPackage)}`);
+      expect(link).toHaveProperty('href', 'http://localhost/packages/helm/stable/airflow');
     });
   });
 

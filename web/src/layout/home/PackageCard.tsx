@@ -18,7 +18,7 @@ const PackageCard = (props: Props) => (
         data-testid="link"
         className={`text-decoration-none text-reset h-100 ${styles.link}`}
         to={{
-          pathname: buildPackageURL(props.package),
+          pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),
         }}
       >
         <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>

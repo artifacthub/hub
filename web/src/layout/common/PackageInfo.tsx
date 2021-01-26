@@ -74,7 +74,11 @@ const PackageInfo = (props: Props) => {
               data-testid="imageLink"
               className={`text-decoration-none text-reset ${styles.link}`}
               to={{
-                pathname: buildPackageURL(props.package),
+                pathname: buildPackageURL(
+                  props.package.normalizedName,
+                  props.package.repository,
+                  props.package.version!
+                ),
               }}
             >
               {packageImage}
@@ -93,7 +97,11 @@ const PackageInfo = (props: Props) => {
                     data-testid="packageLink"
                     className={`${styles.link} text-reset text-truncate`}
                     to={{
-                      pathname: buildPackageURL(props.package),
+                      pathname: buildPackageURL(
+                        props.package.normalizedName,
+                        props.package.repository,
+                        props.package.version!
+                      ),
                     }}
                   >
                     <div className={`text-truncate ${styles.title}`}>
@@ -256,7 +264,7 @@ const PackageInfo = (props: Props) => {
           summary={props.package.securityReportSummary}
           className="d-inline mt-3"
           onlyBadge={false}
-          withLink={buildPackageURL(props.package)}
+          withLink={buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!)}
         />
       </div>
     </>

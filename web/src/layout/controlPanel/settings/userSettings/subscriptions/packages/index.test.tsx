@@ -6,7 +6,6 @@ import { mocked } from 'ts-jest/utils';
 import { API } from '../../../../../../api';
 import { ErrorKind, Package } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
-import buildPackageURL from '../../../../../../utils/buildPackageURL';
 import PackagesSection from '../index';
 jest.mock('../../../../../../api');
 jest.mock('../../../../../../utils/alertDispatcher');
@@ -309,7 +308,7 @@ describe('PackagesSection', () => {
       expect(links).toHaveLength(8);
       fireEvent.click(links[0]);
 
-      expect(window.location.pathname).toBe(buildPackageURL(mockSubscriptions[0]));
+      expect(window.location.pathname).toBe('/packages/helm/stable/airflow');
     });
 
     it('on user link click', async () => {

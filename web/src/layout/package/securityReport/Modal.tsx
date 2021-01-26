@@ -83,6 +83,7 @@ const SecurityModal = (props: Props) => {
 
   const onCloseModal = () => {
     setOpenStatus(false);
+    setExpandedTarget(null);
     history.replace({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
