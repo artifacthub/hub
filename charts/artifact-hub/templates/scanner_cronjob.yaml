@@ -39,7 +39,7 @@ spec:
             {{- end }}
             volumeMounts:
             - name: scanner-config
-              mountPath: "/artifacthub/.cfg"
+              mountPath: {{ .Values.scanner.configDir | quote }}
               readOnly: true
             {{- if .Values.scanner.cacheDir }}
             - name: cache-dir

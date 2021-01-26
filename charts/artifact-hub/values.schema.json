@@ -60,6 +60,16 @@
                     "title": "Load demo user and sample repositories",
                     "type": "boolean",
                     "default": true
+                },
+                "configDir": {
+                    "title": "Config directory path",
+                    "description": "Directory path where the configuration files should be mounted.",
+                    "type": "string",
+                    "enum": [
+                        "/home/db-migrator/.cfg",
+                        "/artifacthub/.cfg"
+                    ],
+                    "default": "/home/db-migrator/.cfg"
                 }
             },
             "required": ["job", "loadSampleData"]
@@ -221,6 +231,16 @@
                             "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
                             "type": "string",
                             "default": ""
+                        },
+                        "configDir": {
+                            "title": "Config directory path",
+                            "description": "Directory path where the configuration files should be mounted.",
+                            "type": "string",
+                            "enum": [
+                                "/home/hub/.cfg",
+                                "/artifacthub/.cfg"
+                            ],
+                            "default": "/home/hub/.cfg"
                         },
                         "baseURL": {
                             "title": "Hub server base url",
@@ -496,6 +516,16 @@
                     "type": "string",
                     "default": ""
                 },
+                "configDir": {
+                    "title": "Config directory path",
+                    "description": "Directory path where the configuration files should be mounted.",
+                    "type": "string",
+                    "enum": [
+                        "/home/scanner/.cfg",
+                        "/artifacthub/.cfg"
+                    ],
+                    "default": "/home/scanner/.cfg"
+                },
                 "dockerUsername": {
                     "title": "Docker registry username",
                     "type": "string",
@@ -523,6 +553,16 @@
                     "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
                     "type": "string",
                     "default": ""
+                },
+                "configDir": {
+                    "title": "Config directory path",
+                    "description": "Directory path where the configuration files should be mounted.",
+                    "type": "string",
+                    "enum": [
+                        "/home/tracker/.cfg",
+                        "/artifacthub/.cfg"
+                    ],
+                    "default": "/home/tracker/.cfg"
                 },
                 "concurrency": {
                     "title": "Repositories to process concurrently",
