@@ -36,6 +36,7 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 		"PATH=" + os.Getenv("PATH"),
 		"USER=" + os.Getenv("USER"),
 		"HOME=" + os.Getenv("HOME"),
+		"TRIVY_CACHE_DIR=" + os.Getenv("TRIVY_CACHE_DIR"),
 	}
 
 	// If the registry is the Docker Hub, include credentials to avoid rate
