@@ -443,7 +443,8 @@ select results_eq(
         (3, 'OLM operators'),
         (4, 'Tinkerbell actions'),
         (5, 'Krew kubectl plugins'),
-        (6, 'Helm plugins')
+        (6, 'Helm plugins'),
+        (7, 'Tekton tasks')
     $$,
     'Repository kinds should exist'
 );

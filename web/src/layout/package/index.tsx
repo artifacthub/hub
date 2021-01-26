@@ -53,6 +53,7 @@ import RelatedPackages from './RelatedPackages';
 import ResourcesList from './ResourcesList';
 import StarButton from './StarButton';
 import SubscriptionsButton from './SubscriptionsButton';
+import TektonManifestModal from './TektonManifestModal';
 import ValuesSchema from './valuesSchema';
 
 interface Props {
@@ -217,6 +218,20 @@ const PackageView = (props: Props) => {
       policies = detail.data.policies;
     }
     return policies;
+  };
+
+  const getTektonManifest = (): string | undefined => {
+    let manifest: string | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.manifestRaw)
+    ) {
+      manifest = detail.data.manifestRaw as string;
+    }
+    return manifest;
   };
 
   const getCRDs = (): CustomResourcesDefinition[] | undefined => {
@@ -513,6 +528,13 @@ const PackageView = (props: Props) => {
                     {!isNull(detail) && (
                       <div className={styles.rightColumnWrapper}>
                         {getInstallationModal('mb-2')}
+
+                        {detail.repository.kind === RepositoryKind.TektonTask && (
+                          <TektonManifestModal
+                            normalizedName={detail.normalizedName}
+                            manifestRaw={getTektonManifest()}
+                          />
+                        )}
 
                         {detail.repository.kind === RepositoryKind.Helm && (
                           <div className="mb-2">

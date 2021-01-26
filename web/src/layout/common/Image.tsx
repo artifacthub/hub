@@ -40,6 +40,8 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_tbaction.png';
         case RepositoryKind.Krew:
           return '/static/media/placeholder_pkg_krew.png';
+        case RepositoryKind.TektonTask:
+          return '/static/media/placeholder_pkg_tekton-task.png';
         default:
           return PLACEHOLDER_SRC;
       }

@@ -493,7 +493,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin$}":
+  "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task$}":
     get:
       tags:
         - Repositories
@@ -1192,6 +1192,27 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/tekton-task/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TektonTaskPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/helm/{repoName}/{packageName}/{version}":
     get:
       tags:
@@ -1340,6 +1361,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TBActionPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/tekton-task/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TektonTaskPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -2442,6 +2485,22 @@ components:
                         condition: (evt.num < 0)
     TBActionPackage:
       $ref: "#/components/schemas/Package"
+    TektonTaskPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                pipelines.minVersion:
+                  type: string
+                  example: 2.0.0
+                manifestRaw:
+                  type: string
+                  additionalProperties:
+                    type: string
+                  example: "apiVersion: tekton.dev/v1beta1"
     Package:
       allOf:
         - $ref: "#/components/schemas/PackageSummary"
@@ -2726,6 +2785,7 @@ components:
           * `4` - Tinkerbell actions
           * `5` - Krew kubectl plugins
           * `6` - Helm plugins
+          * `7` - Tekton tasks
     RepositoryKindParam:
       type: string
       enum:
@@ -2736,6 +2796,7 @@ components:
         - tbaction
         - krew
         - helm-plugin
+        - tekton-task
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -2745,6 +2806,7 @@ components:
         * `tbaction` - Tinkerbell actions
         * `krew` - Krew kubectl plugins
         * `helm-plugin` - Helm plugins
+        * `tekton` - Tekton tasks
     RepositorySummary:
       type: object
       required:
@@ -3187,7 +3249,7 @@ components:
       description: Package name
     RepoKindParam:
       in: path
-      name: ^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin$
+      name: ^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task$
       schema:
         $ref: "#/components/schemas/RepositoryKindParam"
       required: true

@@ -22,6 +22,7 @@ import HelmPluginInstall from './HelmPluginInstall';
 import KrewInstall from './KrewInstall';
 import OLMInstall from './OLMInstall';
 import OLMOCIInstall from './OLMOCIInstall';
+import TektonInstall from './TektonInstall';
 
 interface Props {
   package?: Package | null;
@@ -161,6 +162,8 @@ const InstallationModal = (props: Props) => {
                             return <KrewInstall name={method.props.name!} repository={method.props.repository!} />;
                           case InstallMethodKind.HelmPlugin:
                             return <HelmPluginInstall repository={method.props.repository!} />;
+                          case InstallMethodKind.Tekton:
+                            return <TektonInstall contentUrl={method.props.contentUrl!} />;
                           default:
                             return null;
                         }

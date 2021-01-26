@@ -8,6 +8,7 @@ export enum RepositoryKind {
   TBAction,
   Krew,
   HelmPlugin,
+  TektonTask,
 }
 
 export interface Repository {
@@ -130,6 +131,8 @@ export interface PackageData {
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];
   isGlobalOperator?: boolean;
+  manifestRaw?: string;
+  pipelinesMinVersion?: string;
 }
 
 export interface OPAPolicies {

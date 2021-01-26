@@ -171,7 +171,7 @@ func (h *Handlers) setupRouter() {
 		r.Route("/repositories", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
 			r.Get("/", h.Repositories.GetAll)
-			r.Get("/{kind:^helm$|^falco$|^olm$|^opa|^tbaction|^krew|^helm-plugin$}", h.Repositories.GetByKind)
+			r.Get("/{kind:^helm$|^falco$|^olm$|^opa|^tbaction|^krew|^helm-plugin|^tekton-task$}", h.Repositories.GetByKind)
 			r.Route("/user", func(r chi.Router) {
 				r.Get("/", h.Repositories.GetOwnedByUser)
 				r.Post("/", h.Repositories.Add)
@@ -200,7 +200,7 @@ func (h *Handlers) setupRouter() {
 			r.Get("/stats", h.Packages.GetStats)
 			r.Get("/search", h.Packages.Search)
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
-			r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin$}/{repoName}/{packageName}", func(r chi.Router) {
+			r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task$}/{repoName}/{packageName}", func(r chi.Router) {
 				r.Get("/feed/rss", h.Packages.RssFeed)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
@@ -333,7 +333,7 @@ func (h *Handlers) setupRouter() {
 
 	// Index special entry points
 	r.Route("/packages", func(r chi.Router) {
-		r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin$}/{repoName}/{packageName}", func(r chi.Router) {
+		r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task$}/{repoName}/{packageName}", func(r chi.Router) {
 			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.ServeIndex)
 			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.ServeIndex)
 		})
