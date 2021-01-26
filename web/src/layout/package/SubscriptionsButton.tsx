@@ -22,6 +22,7 @@ const SubscriptionsButton = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [activeSubscriptions, setActiveSubscriptions] = useState<Subscription[] | undefined | null>(undefined);
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
+  const [activePkgId, setActivePkgId] = useState(props.packageId);
 
   const ref = useRef(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
@@ -63,6 +64,7 @@ const SubscriptionsButton = (props: Props) => {
         if (visibleLoading) {
           setIsLoading(true);
         }
+        setActivePkgId(props.packageId);
         setActiveSubscriptions(await API.getPackageSubscriptions(props.packageId));
         if (visibleLoading) {
           setIsLoading(false);
@@ -84,13 +86,14 @@ const SubscriptionsButton = (props: Props) => {
 
   useEffect(() => {
     if (
-      !isUndefined(ctx.user) &&
-      ((!isNull(ctx.user) && isUndefined(activeSubscriptions)) ||
-        (isNull(ctx.user) && !isUndefined(activeSubscriptions)))
+      (!isUndefined(ctx.user) &&
+        ((!isNull(ctx.user) && isUndefined(activeSubscriptions)) ||
+          (isNull(ctx.user) && !isUndefined(activeSubscriptions)))) ||
+      props.packageId !== activePkgId
     ) {
       getSubscriptions();
     }
-  }, [ctx.user]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.user, props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   async function changeSubscription(kind: EventKind, isActive: boolean) {
     updateOptimisticallyActiveSubscriptions(kind, isActive);
