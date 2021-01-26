@@ -45,7 +45,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
             >
               <form
                 autocomplete="on"
-                class="w-100 needs-validation"
+                class="w-100 overflow-hidden needs-validation"
                 data-testid="repoForm"
                 novalidate=""
               >

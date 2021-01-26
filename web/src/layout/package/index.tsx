@@ -53,6 +53,7 @@ import RelatedPackages from './RelatedPackages';
 import ResourcesList from './ResourcesList';
 import StarButton from './StarButton';
 import SubscriptionsButton from './SubscriptionsButton';
+import TektonManifestModal from './TektonManifestModal';
 import ValuesSchema from './valuesSchema';
 
 interface Props {
@@ -217,6 +218,20 @@ const PackageView = (props: Props) => {
       policies = detail.data.policies;
     }
     return policies;
+  };
+
+  const getTektonManifest = (): string | undefined => {
+    let manifest: string | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.manifestRaw)
+    ) {
+      manifest = detail.data.manifestRaw as string;
+    }
+    return manifest;
   };
 
   const getCRDs = (): CustomResourcesDefinition[] | undefined => {
@@ -469,7 +484,14 @@ const PackageView = (props: Props) => {
                           <span>Info</span>
                         </>
                       }
-                      header={<ModalHeader package={detail} />}
+                      header={
+                        <ModalHeader
+                          displayName={detail.displayName}
+                          name={detail.name}
+                          logoImageId={detail.logoImageId}
+                          repoKind={detail.repository.kind}
+                        />
+                      }
                       className={`col mt-3 ${styles.btnMobileWrapper}`}
                     >
                       <Details
@@ -487,7 +509,10 @@ const PackageView = (props: Props) => {
 
                     <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
                       <ChangelogModal
-                        packageItem={detail}
+                        packageId={detail.packageId}
+                        normalizedName={detail.normalizedName}
+                        repository={detail.repository}
+                        hasChangelog={detail.hasChangelog!}
                         visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
                         searchUrlReferer={props.searchUrlReferer}
                         fromStarredPage={props.fromStarredPage}
@@ -514,6 +539,13 @@ const PackageView = (props: Props) => {
                       <div className={styles.rightColumnWrapper}>
                         {getInstallationModal('mb-2')}
 
+                        {detail.repository.kind === RepositoryKind.TektonTask && (
+                          <TektonManifestModal
+                            normalizedName={detail.normalizedName}
+                            manifestRaw={getTektonManifest()}
+                          />
+                        )}
+
                         {detail.repository.kind === RepositoryKind.Helm && (
                           <div className="mb-2">
                             <ValuesSchema
@@ -537,7 +569,10 @@ const PackageView = (props: Props) => {
 
                         <div className="mb-2">
                           <ChangelogModal
-                            packageItem={detail}
+                            packageId={detail.packageId}
+                            normalizedName={detail.normalizedName}
+                            repository={detail.repository}
+                            hasChangelog={detail.hasChangelog!}
                             visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
                             searchUrlReferer={props.searchUrlReferer}
                             fromStarredPage={props.fromStarredPage}

@@ -33,16 +33,12 @@ const Details = (props: Props) => {
       key={`${av_version.version}_${index}`}
       isActive={av_version.version === props.package.version}
       {...av_version}
-      packageItem={{
-        ...props.package,
-        version: av_version.version,
-      }}
+      normalizedName={props.package.normalizedName}
+      repository={props.package.repository}
       searchUrlReferer={props.searchUrlReferer}
       fromStarredPage={props.fromStarredPage}
     />
   ));
-
-  const versionsTitle = props.package.repository.kind === RepositoryKind.Helm ? 'Chart versions' : 'Versions';
 
   return (
     <>
@@ -85,7 +81,12 @@ const Details = (props: Props) => {
       })()}
 
       <div>
-        <RSSLinkTitle title={versionsTitle} package={props.package} />
+        <RSSLinkTitle
+          title={props.package.repository.kind === RepositoryKind.Helm ? 'Chart versions' : 'Versions'}
+          normalizedName={props.package.normalizedName}
+          repository={props.package.repository}
+          version={props.package.version!}
+        />
         {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
           <p data-testid="versions">-</p>
         ) : (
@@ -94,6 +95,17 @@ const Details = (props: Props) => {
           </div>
         )}
       </div>
+
+      {props.package.repository.kind === RepositoryKind.TektonTask &&
+        props.package.data &&
+        props.package.data.pipelinesMinVersion && (
+          <div>
+            <SmallTitle text="Pipeline minimal version" />
+            <p data-testid="appVersion" className="text-truncate">
+              {props.package.data.pipelinesMinVersion}
+            </p>
+          </div>
+        )}
 
       <SecurityReport
         summary={props.package.securityReportSummary}

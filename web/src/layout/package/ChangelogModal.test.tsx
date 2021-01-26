@@ -23,25 +23,15 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const defaultProps = {
-  packageItem: {
-    packageId: 'id',
-    name: 'test',
-    normalizedName: 'test',
-    displayName: 'Pretty name',
-    description: 'desc',
-    logoImageId: 'imageId',
-    appVersion: '1.0.0',
-    deprecated: false,
-    signed: false,
-    createdAt: 0,
-    hasChangelog: true,
-    repository: {
-      repositoryId: '0acb228c-17ab-4e50-85e9-ffc7102ea423',
-      kind: 0,
-      name: 'stable',
-      url: 'repoUrl',
-      userAlias: 'user',
-    },
+  packageId: 'id',
+  normalizedName: 'test',
+  hasChangelog: true,
+  repository: {
+    repositoryId: '0acb228c-17ab-4e50-85e9-ffc7102ea423',
+    kind: 0,
+    name: 'stable',
+    url: 'repoUrl',
+    userAlias: 'user',
   },
   visibleChangelog: false,
 };
@@ -77,19 +67,16 @@ describe('ChangelogModal', () => {
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
-        expect(API.getChangelog).toHaveBeenCalledWith(defaultProps.packageItem.packageId);
+        expect(API.getChangelog).toHaveBeenCalledWith('id');
       });
     });
 
     it('does not render component when repo kind is Krew, Falco or Helm plugin', async () => {
       const props = {
         ...defaultProps,
-        packageItem: {
-          ...defaultProps.packageItem,
-          repository: {
-            ...defaultProps.packageItem.repository,
-            kind: 5,
-          },
+        repository: {
+          ...defaultProps.repository,
+          kind: 5,
         },
       };
       const { container } = render(<ChangelogModal {...props} />);
@@ -98,14 +85,7 @@ describe('ChangelogModal', () => {
     });
 
     it('renders disabled button when package has not changelog and does not call getChangelog', async () => {
-      const props = {
-        ...defaultProps,
-        packageItem: {
-          ...defaultProps.packageItem,
-          hasChangelog: false,
-        },
-      };
-      const { getByTestId } = render(<ChangelogModal {...props} />);
+      const { getByTestId } = render(<ChangelogModal {...defaultProps} hasChangelog={false} />);
 
       const btn = getByTestId('changelogBtn');
       expect(btn).toHaveClass('disabled');
@@ -209,14 +189,6 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('7');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const props = {
-        ...defaultProps,
-        packageItem: {
-          ...defaultProps.packageItem,
-          packageId: 'id2',
-        },
-      };
-
       const { rerender, getByText } = render(<ChangelogModal {...defaultProps} />);
 
       const btn = getByText('Changelog');
@@ -224,16 +196,16 @@ describe('ChangelogModal', () => {
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
-        expect(API.getChangelog).toHaveBeenCalledWith(defaultProps.packageItem.packageId);
+        expect(API.getChangelog).toHaveBeenCalledWith('id');
       });
 
-      rerender(<ChangelogModal {...props} />);
+      rerender(<ChangelogModal {...defaultProps} packageId="id2" />);
 
       fireEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(2);
-        expect(API.getChangelog).toHaveBeenCalledWith(props.packageItem.packageId);
+        expect(API.getChangelog).toHaveBeenCalledWith('id2');
       });
     });
 
@@ -247,7 +219,7 @@ describe('ChangelogModal', () => {
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
-        expect(API.getChangelog).toHaveBeenCalledWith(defaultProps.packageItem.packageId);
+        expect(API.getChangelog).toHaveBeenCalledWith('id');
       });
 
       const btn = getByTestId('closeModalFooterBtn');

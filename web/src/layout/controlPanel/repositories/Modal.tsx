@@ -225,6 +225,13 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.TektonTask:
+        link = (
+          <ExternalLink href="/docs/topics/repositories#tekton-tasks-repositories" className="text-reset">
+            <u>Tekton tasks</u>
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -362,7 +369,11 @@ const RepositoryModal = (props: Props) => {
           <form
             data-testid="repoForm"
             ref={form}
-            className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
+            className={classnames(
+              'w-100 overflow-hidden',
+              { 'needs-validation': !isValidated },
+              { 'was-validated': isValidated }
+            )}
             onFocus={cleanApiError}
             autoComplete="on"
             noValidate
@@ -470,6 +481,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TBAction,
               RepositoryKind.Krew,
               RepositoryKind.HelmPlugin,
+              RepositoryKind.TektonTask,
             ].includes(selectedKind) && (
               <div className="mt-4">
                 <InputField
@@ -527,6 +539,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.OLM,
               RepositoryKind.OPA,
               RepositoryKind.TBAction,
+              RepositoryKind.TektonTask,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="custom-control custom-switch pl-0">

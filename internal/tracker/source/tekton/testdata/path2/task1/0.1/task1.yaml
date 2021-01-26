@@ -1,0 +1,8 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task1
+  labels:
+    app.kubernetes.io/version: "invalid"
+spec:
+  description:

@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Package, SearchFiltersURL } from '../../types';
+import { Repository, SearchFiltersURL } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import styles from './Version.module.css';
 
@@ -12,7 +12,8 @@ interface Props {
   containsSecurityUpdates: boolean;
   prerelease: boolean;
   createdAt: number;
-  packageItem: Package;
+  normalizedName: string;
+  repository: Repository;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
 }
@@ -25,7 +26,7 @@ const Version = (props: Props) => {
     setIsLoading(true);
 
     history.push({
-      pathname: buildPackageURL(props.packageItem, true),
+      pathname: buildPackageURL(props.normalizedName, props.repository, props.version, true),
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };

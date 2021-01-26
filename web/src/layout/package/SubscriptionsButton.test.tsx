@@ -140,6 +140,32 @@ describe('SubscriptionsButton', () => {
           expect(API.addSubscription).toHaveBeenCalledWith(defaultProps.packageId, 0);
         });
       });
+
+      it('calls getPackageSubscriptions when a new package is rendered', async () => {
+        mocked(API).getPackageSubscriptions.mockResolvedValue([]);
+
+        const { rerender } = render(
+          <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+            <SubscriptionsButton {...defaultProps} />
+          </AppCtx.Provider>
+        );
+
+        await waitFor(() => {
+          expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
+          expect(API.getPackageSubscriptions).toHaveBeenCalledWith('id');
+        });
+
+        rerender(
+          <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+            <SubscriptionsButton packageId="id2" />
+          </AppCtx.Provider>
+        );
+
+        await waitFor(() => {
+          expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(2);
+          expect(API.getPackageSubscriptions).toHaveBeenLastCalledWith('id2');
+        });
+      });
     });
 
     describe('does not render component', () => {

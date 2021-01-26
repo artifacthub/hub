@@ -2,8 +2,6 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Package } from '../../types';
-import buildPackageURL from '../../utils/buildPackageURL';
 import Version from './Version';
 
 const mockHistoryPush = jest.fn();
@@ -15,17 +13,13 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const packageItem: Package = {
-  packageId: 'id',
-  name: 'test',
-  displayName: 'Pretty name',
-  description: 'desc',
-  logoImageId: 'imageId',
-  appVersion: '1.0.0',
+const defaultProps = {
+  isActive: false,
+  version: '1.0.1',
+  containsSecurityUpdates: false,
+  prerelease: false,
+  createdAt: 0,
   normalizedName: 'pr',
-  deprecated: false,
-  isOperator: false,
-  keywords: ['key1', 'key2'],
   repository: {
     kind: 0,
     name: 'repo',
@@ -33,26 +27,6 @@ const packageItem: Package = {
     url: 'http://repo.test',
     userAlias: 'user',
   },
-  createdAt: 1,
-  signed: false,
-  availableVersions: [
-    {
-      version: '1.0.0',
-      containsSecurityUpdates: false,
-      prerelease: false,
-      createdAt: 1,
-    },
-    { version: '1.0.1', containsSecurityUpdates: false, prerelease: false, createdAt: 1 },
-  ],
-};
-
-const defaultProps = {
-  isActive: false,
-  version: '1.0.1',
-  containsSecurityUpdates: false,
-  prerelease: false,
-  createdAt: 0,
-  packageItem: packageItem,
 };
 
 describe('Version', () => {
@@ -102,7 +76,7 @@ describe('Version', () => {
       fireEvent.click(versionLink);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: buildPackageURL(packageItem, true),
+        pathname: '/packages/helm/repo/pr/1.0.1',
         state: { searchUrlReferer: undefined, fromStarred: undefined },
       });
 

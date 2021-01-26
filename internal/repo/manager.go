@@ -231,7 +231,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		u, _ := url.Parse(r.URL)
 		u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
 		mdFile = u.String()
-	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OLM, hub.OPA, hub.TBAction:
+	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OLM, hub.OPA, hub.TBAction, hub.TektonTask:
 		tmpDir, packagesPath, err := m.rc.CloneRepository(ctx, r)
 		if err != nil {
 			return err
@@ -665,7 +665,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 				return err
 			}
 		}
-	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OLM, hub.OPA, hub.TBAction:
+	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OLM, hub.OPA, hub.TBAction, hub.TektonTask:
 		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
 			return errors.New("invalid url format")
 		}
@@ -712,6 +712,7 @@ func isValidKind(kind hub.RepositoryKind) bool {
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
+		hub.TektonTask,
 	} {
 		if kind == validKind {
 			return true

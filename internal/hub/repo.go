@@ -42,6 +42,9 @@ const (
 
 	// HelmPlugin represents a repository with Helm plugins.
 	HelmPlugin RepositoryKind = 6
+
+	// TektonTask represents a repository with Tekton tasks.
+	TektonTask RepositoryKind = 7
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -61,6 +64,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "opa"
 	case TBAction:
 		return "tbaction"
+	case TektonTask:
+		return "tekton-task"
 	default:
 		return ""
 	}
@@ -84,6 +89,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return OPA, nil
 	case "tbaction":
 		return TBAction, nil
+	case "tekton-task":
+		return TektonTask, nil
 	default:
 		return -1, errors.New("invalid kind name")
 	}

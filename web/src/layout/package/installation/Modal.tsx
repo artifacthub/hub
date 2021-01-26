@@ -22,6 +22,7 @@ import HelmPluginInstall from './HelmPluginInstall';
 import KrewInstall from './KrewInstall';
 import OLMInstall from './OLMInstall';
 import OLMOCIInstall from './OLMOCIInstall';
+import TektonInstall from './TektonInstall';
 
 interface Props {
   package?: Package | null;
@@ -99,7 +100,18 @@ const InstallationModal = (props: Props) => {
         active
       />
 
-      <Modal header={<ModalHeader package={props.package!} />} onClose={onCloseModal} open={openStatus}>
+      <Modal
+        header={
+          <ModalHeader
+            displayName={props.package!.displayName}
+            name={props.package!.name}
+            logoImageId={props.package!.logoImageId}
+            repoKind={props.package!.repository.kind}
+          />
+        }
+        onClose={onCloseModal}
+        open={openStatus}
+      >
         <>
           {installMethods.methods.length > 0 && (
             <>
@@ -161,6 +173,8 @@ const InstallationModal = (props: Props) => {
                             return <KrewInstall name={method.props.name!} repository={method.props.repository!} />;
                           case InstallMethodKind.HelmPlugin:
                             return <HelmPluginInstall repository={method.props.repository!} />;
+                          case InstallMethodKind.Tekton:
+                            return <TektonInstall contentUrl={method.props.contentUrl!} />;
                           default:
                             return null;
                         }

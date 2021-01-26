@@ -121,6 +121,33 @@ const QUERIES: SampleQuery[] = [
       },
     },
   },
+  {
+    label: 'Helm plugins',
+    filters: {
+      pageNumber: 1,
+      filters: {
+        kind: [RepositoryKind.HelmPlugin.toString()],
+      },
+    },
+  },
+  {
+    label: 'Kubectl plugins',
+    filters: {
+      pageNumber: 1,
+      filters: {
+        kind: [RepositoryKind.Krew.toString()],
+      },
+    },
+  },
+  {
+    label: 'Tekton tasks',
+    filters: {
+      pageNumber: 1,
+      filters: {
+        kind: [RepositoryKind.TektonTask.toString()],
+      },
+    },
+  },
 ];
 
 const QUERIES_NUMBER = 5;

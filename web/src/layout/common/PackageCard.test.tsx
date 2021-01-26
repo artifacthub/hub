@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package } from '../../types';
-import buildPackageURL from '../../utils/buildPackageURL';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import PackageCard from './PackageCard';
 
@@ -163,7 +162,7 @@ describe('PackageCard', () => {
       expect(link).toBeInTheDocument();
       fireEvent.click(link!);
       expect(mockSaveScrollPosition).toHaveBeenCalledTimes(1);
-      expect(window.location.pathname).toBe(buildPackageURL(mockPackage));
+      expect(window.location.pathname).toBe('/packages/helm/test/test');
     });
   });
 });

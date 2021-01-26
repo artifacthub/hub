@@ -38,6 +38,10 @@ const ICONS = {
     default: '/static/media/helm-chart.svg',
     white: '/static/media/helm-chart-light.svg',
   },
+  [RepositoryKind.TektonTask]: {
+    default: '/static/media/tekton-pkg.svg',
+    white: '/static/media/tekton-pkg-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

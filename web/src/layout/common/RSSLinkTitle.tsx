@@ -1,14 +1,16 @@
 import React from 'react';
 import { FaRss } from 'react-icons/fa';
 
-import { Package } from '../../types';
+import { Repository } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import getHubBaseURL from '../../utils/getHubBaseURL';
 import styles from './RSSLinkTitle.module.css';
 
 interface Props {
   title: string;
-  package: Package;
+  normalizedName: string;
+  repository: Repository;
+  version: string;
 }
 
 const RSSLinkTitle = (props: Props) => (
@@ -24,7 +26,11 @@ const RSSLinkTitle = (props: Props) => (
         role="button"
         target="_blank"
         type="application/rss+xml"
-        href={`${getHubBaseURL()}/api/v1${buildPackageURL(props.package)}/feed/rss`}
+        href={`${getHubBaseURL()}/api/v1${buildPackageURL(
+          props.normalizedName,
+          props.repository,
+          props.version
+        )}/feed/rss`}
       >
         <div className="d-flex flex-row align-items-center">
           <FaRss className="mr-1" />

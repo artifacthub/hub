@@ -55,7 +55,14 @@ const RelatedPackages = (props: Props) => {
       <div className="pt-1">
         {packages.map((item: Package) => (
           <div key={`reltedCard_${item.packageId}`}>
-            <RelatedPackageCard package={item} />
+            <RelatedPackageCard
+              normalizedName={item.normalizedName}
+              name={item.name}
+              displayName={item.displayName}
+              logoImageId={item.logoImageId}
+              version={item.version!}
+              repository={item.repository}
+            />
           </div>
         ))}
       </div>
