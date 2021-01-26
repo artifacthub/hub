@@ -10,7 +10,7 @@ import buildPackageURL from '../../../../../../utils/buildPackageURL';
 import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
 import prepareQueryString from '../../../../../../utils/prepareQueryString';
 import Image from '../../../../../common/Image';
-import Loading from '../../../../../common/Loading';
+import LoadingBar from '../../../../../common/LoadingBar';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from '../SubscriptionsSection.module.css';
 import SubscriptionModal from './Modal';
@@ -102,7 +102,7 @@ const PackagesSection = (props: Props) => {
 
   return (
     <>
-      {(isUndefined(packages) || isLoading) && <Loading />}
+      {(isUndefined(packages) || isLoading) && <LoadingBar />}
 
       <div className="d-flex flex-row align-items-start justify-content-between pb-2 mt-5">
         <div className={`h4 mb-0 ${styles.title}`}>Packages</div>

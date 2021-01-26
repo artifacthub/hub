@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { API } from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
 import { ErrorKind, Package } from '../../types';
-import Loading from '../common/Loading';
+import LoadingBar from '../common/LoadingBar';
 import NoData from '../common/NoData';
 import PackageCard from '../common/PackageCard';
 import styles from './StarredPackagesView.module.css';
@@ -45,7 +45,7 @@ const StarredPackagesView = () => {
 
   return (
     <div className="d-flex flex-column flex-grow-1 position-relative">
-      {(isUndefined(packages) || isLoading) && <Loading />}
+      {(isUndefined(packages) || isLoading) && <LoadingBar />}
 
       <main role="main" className="container-lg px-sm-4 px-lg-0 py-5">
         <div className="flex-grow-1 position-relative">

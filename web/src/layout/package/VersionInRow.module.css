@@ -1,0 +1,14 @@
+.versionCell {
+  min-width: 50%;
+  width: 75%;
+  max-width: 75%;
+}
+
+.badge {
+  border: 1px solid var(--orange);
+  color: var(--orange);
+}
+
+.activeVersion {
+  padding-right: 0.75rem;
+}

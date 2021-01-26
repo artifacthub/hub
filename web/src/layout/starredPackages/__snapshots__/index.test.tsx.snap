@@ -6,22 +6,12 @@ exports[`StarredPackagesView renders correctly 1`] = `
     class="d-flex flex-column flex-grow-1 position-relative"
   >
     <div
-      class="position-absolute p-5 wrapper undefined"
+      class="position-fixed wrapper"
     >
       <div
-        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-      >
-        <div
-          class="spinner-border text-primary spinner undefined"
-          role="status"
-        >
-          <span
-            class="sr-only"
-          >
-            Loading...
-          </span>
-        </div>
-      </div>
+        class="progressLine progressLine"
+        role="status"
+      />
     </div>
     <main
       class="container-lg px-sm-4 px-lg-0 py-5"

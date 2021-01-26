@@ -26,7 +26,7 @@ import stringifyPolicyData from '../../../../../utils/stringifyPolicyData';
 import Alert from '../../../../common/Alert';
 import CodeEditor from '../../../../common/CodeEditor';
 import ExternalLink from '../../../../common/ExternalLink';
-import Loading from '../../../../common/Loading';
+import LoadingBar from '../../../../common/LoadingBar';
 import Modal from '../../../../common/Modal';
 import NoData from '../../../../common/NoData';
 import ActionBtn from '../../../ActionBtn';
@@ -384,7 +384,8 @@ const AuthorizationSection = (props: Props) => {
 
   return (
     <main role="main" className="p-0">
-      {(isUndefined(orgPolicy) || isLoading) && <Loading />}
+      {(isUndefined(orgPolicy) || isLoading) && <LoadingBar />}
+
       <Prompt
         when={!isNull(orgPolicy) && !isUndefined(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges()}
         message="You have some unsaved changes in your policy data. If you continue without saving, those changes will be lost."

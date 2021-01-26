@@ -1,10 +1,10 @@
 import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Channel, Package, RepositoryKind, SearchFiltersURL, Version as VersionData } from '../../types';
-import ExpandableList from '../common/ExpandableList';
 import RSSLinkTitle from '../common/RSSLinkTitle';
+import SeeAllModal from '../common/SeeAllModal';
 import SmallTitle from '../common/SmallTitle';
 import CapabilityLevel from './CapabilityLevel';
 import ContainersImages from './ContainersImages';
@@ -16,6 +16,7 @@ import Links from './Links';
 import Maintainers from './Maintainers';
 import SecurityReport from './securityReport';
 import Version from './Version';
+import VersionInRow from './VersionInRow';
 
 interface Props {
   package: Package;
@@ -27,18 +28,73 @@ interface Props {
   visibleSecurityReport: boolean;
 }
 
+interface VersionsProps {
+  items: JSX.Element[];
+  itemsForModal: JSX.Element[] | JSX.Element;
+}
+
 const Details = (props: Props) => {
-  const allVersions: JSX.Element[] = props.sortedVersions.map((av_version: VersionData, index: number) => (
-    <Version
-      key={`${av_version.version}_${index}`}
-      isActive={av_version.version === props.package.version}
-      {...av_version}
-      normalizedName={props.package.normalizedName}
-      repository={props.package.repository}
-      searchUrlReferer={props.searchUrlReferer}
-      fromStarredPage={props.fromStarredPage}
-    />
-  ));
+  const getAllVersions = useCallback((): VersionsProps => {
+    let items: JSX.Element[] = [];
+    let itemsForModal: JSX.Element[] = [];
+
+    props.sortedVersions.forEach((av_version: VersionData, index: number) => {
+      items.push(
+        <Version
+          key={`${av_version.version}_${index}`}
+          isActive={av_version.version === props.package.version}
+          {...av_version}
+          normalizedName={props.package.normalizedName}
+          repository={props.package.repository}
+          searchUrlReferer={props.searchUrlReferer}
+          fromStarredPage={props.fromStarredPage}
+        />
+      );
+
+      itemsForModal.push(
+        <VersionInRow
+          key={`${av_version.version}_inline_${index}`}
+          isActive={av_version.version === props.package.version}
+          {...av_version}
+          normalizedName={props.package.normalizedName}
+          repository={props.package.repository}
+          searchUrlReferer={props.searchUrlReferer}
+          fromStarredPage={props.fromStarredPage}
+        />
+      );
+    });
+
+    return {
+      items,
+      itemsForModal: (
+        <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
+          <thead>
+            <tr className={`table-primary ${styles.tableTitle}`}>
+              <th scope="col">
+                <span className="px-1">Version</span>
+              </th>
+              <th scope="col" className={styles.releasedCell}>
+                <span className="px-1">Released</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>{itemsForModal}</tbody>
+        </table>
+      ),
+    };
+  }, [
+    props.fromStarredPage,
+    props.package.normalizedName,
+    props.package.repository,
+    props.package.version,
+    props.searchUrlReferer,
+    props.sortedVersions,
+  ]);
+  const [versions, setVersions] = useState<VersionsProps>(getAllVersions());
+
+  useEffect(() => {
+    setVersions(getAllVersions());
+  }, [props.package.version, props.package.packageId, getAllVersions]);
 
   return (
     <>
@@ -91,7 +147,12 @@ const Details = (props: Props) => {
           <p data-testid="versions">-</p>
         ) : (
           <div className="mb-3" data-testid="versions">
-            <ExpandableList items={allVersions} visibleItems={3} resetStatusOnChange={props.package.packageId} />
+            <SeeAllModal
+              title={props.package.repository.kind === RepositoryKind.Helm ? 'Chart versions' : 'Versions'}
+              {...versions}
+              packageId={props.package.packageId}
+              version={props.package.version}
+            />
           </div>
         )}
       </div>

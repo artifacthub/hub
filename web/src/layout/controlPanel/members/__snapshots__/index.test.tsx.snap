@@ -70,22 +70,12 @@ exports[`Members section index creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="position-absolute p-5 wrapper undefined"
+        class="position-fixed wrapper"
       >
         <div
-          class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-        >
-          <div
-            class="spinner-border text-primary spinner undefined"
-            role="status"
-          >
-            <span
-              class="sr-only"
-            >
-              Loading...
-            </span>
-          </div>
-        </div>
+          class="progressLine progressLine"
+          role="status"
+        />
       </div>
       <div
         class="mt-5"

@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { Dependency } from '../../types';
@@ -8,6 +8,11 @@ const getMockDependencies = (fixtureId: string): Dependency[] => {
   return require(`./__fixtures__/Dependencies/${fixtureId}.json`) as Dependency[];
 };
 
+const defaultProps = {
+  title: 'Containers Images',
+  packageId: 'id',
+};
+
 describe('Dependencies', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -15,14 +20,14 @@ describe('Dependencies', () => {
 
   it('creates snapshot', () => {
     const mockDependencies = getMockDependencies('1');
-    const result = render(<Dependencies dependencies={mockDependencies} />);
+    const result = render(<Dependencies dependencies={mockDependencies} {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
       const mockDependencies = getMockDependencies('2');
-      const { getByText, getAllByTestId } = render(<Dependencies dependencies={mockDependencies} />);
+      const { getByText, getAllByTestId } = render(<Dependencies dependencies={mockDependencies} {...defaultProps} />);
 
       expect(getByText('Dependencies')).toBeInTheDocument();
 
@@ -32,22 +37,26 @@ describe('Dependencies', () => {
       expect(dependencies[1]).toHaveTextContent(`${mockDependencies[1].name}@${mockDependencies[1].version}`);
     });
 
-    it('renders 5 dependencies max', () => {
+    it('renders 3 dependencies max + see all modal', () => {
       const mockDependencies = getMockDependencies('3');
-      const { getByText, getAllByTestId, getByTestId } = render(<Dependencies dependencies={mockDependencies} />);
+      const { getByText, getAllByTestId, getByTestId } = render(
+        <Dependencies dependencies={mockDependencies} {...defaultProps} />
+      );
 
-      expect(getAllByTestId('dependencyItem')).toHaveLength(5);
-      expect(getByText('Show more...'));
+      expect(getAllByTestId('dependencyItem')).toHaveLength(8); // 3 + 5 mobile version
+      expect(getByText('See all'));
 
-      const btn = getByTestId('expandableListBtn');
+      const btn = getByTestId('seeAllModalBtn');
       fireEvent.click(btn);
 
-      expect(getAllByTestId('dependencyItem')).toHaveLength(7);
-      expect(getByText('Show less...'));
+      waitFor(() => {
+        expect(getByText('Title'));
+        expect(getAllByTestId('dependencyItem')).toHaveLength(7);
+      });
     });
 
     it('does not render component when dependencies are undefined', () => {
-      const { container } = render(<Dependencies />);
+      const { container } = render(<Dependencies {...defaultProps} />);
       expect(container).toBeEmptyDOMElement();
     });
   });
