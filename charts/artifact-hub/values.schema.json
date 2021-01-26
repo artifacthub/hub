@@ -217,7 +217,8 @@
                             "default": false
                         },
                         "cacheDir": {
-                            "title": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                            "title": "Cache directory path",
+                            "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
                             "type": "string",
                             "default": ""
                         },
@@ -490,7 +491,8 @@
                     "default": "http://trivy:8081"
                 },
                 "cacheDir": {
-                    "title": "If set, the cache directories for the Trivy and Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                    "title": "Cache directory path",
+                    "description": "If set, the cache directory for the Trivy client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
                     "type": "string",
                     "default": ""
                 },
@@ -517,7 +519,8 @@
                     "default": false
                 },
                 "cacheDir": {
-                    "title": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                    "title": "Cache directory path",
+                    "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
                     "type": "string",
                     "default": ""
                 },

@@ -36,8 +36,6 @@ spec:
             env:
               - name: TRIVY_CACHE_DIR
                 value: {{ .Values.scanner.cacheDir | quote }}
-              - name: XDG_CACHE_HOME
-                value: {{ .Values.scanner.cacheDir | quote }}
             {{- end }}
             volumeMounts:
             - name: scanner-config
