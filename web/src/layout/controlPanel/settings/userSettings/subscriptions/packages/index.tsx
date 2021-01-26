@@ -185,7 +185,7 @@ const PackagesSection = (props: Props) => {
                                   data-testid="packageLink"
                                   className="ml-2 text-dark"
                                   to={{
-                                    pathname: buildPackageURL(item),
+                                    pathname: buildPackageURL(item.normalizedName, item.repository, item.version!),
                                   }}
                                 >
                                   {item.displayName || item.name}

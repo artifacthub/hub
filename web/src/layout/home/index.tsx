@@ -185,8 +185,8 @@ const HomeView = (props: Props) => {
                 </div>
               </ExternalLink>
             </div>
-            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-center justify-content-around">
-              <ExternalLink href="https://tinkerbell.org" className={`col ${styles.iconLink}`}>
+            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 align-items-strecht row justify-content-center">
+              <ExternalLink href="https://tinkerbell.org" className={`col-3 ${styles.iconLink}`}>
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -194,7 +194,7 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-              <ExternalLink href="https://krew.sigs.k8s.io" className={`col ${styles.iconLink}`}>
+              <ExternalLink href="https://krew.sigs.k8s.io" className={`col-3 ${styles.iconLink}`}>
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -202,7 +202,7 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-              <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`}>
+              <ExternalLink href="https://tekton.dev" className={`col-3 ${styles.iconLink}`}>
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>

@@ -127,7 +127,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'krew',
     name: 'Krew kubectl plugins',
     singular: 'Kubectl plugin',
-    plural: 'Kubectl plugin',
+    plural: 'Kubectl plugins',
     icon: <RepositoryIcon kind={RepositoryKind.Krew} className="mw-100 mh-100" />,
     active: true,
   },

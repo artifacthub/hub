@@ -100,7 +100,18 @@ const InstallationModal = (props: Props) => {
         active
       />
 
-      <Modal header={<ModalHeader package={props.package!} />} onClose={onCloseModal} open={openStatus}>
+      <Modal
+        header={
+          <ModalHeader
+            displayName={props.package!.displayName}
+            name={props.package!.name}
+            logoImageId={props.package!.logoImageId}
+            repoKind={props.package!.repository.kind}
+          />
+        }
+        onClose={onCloseModal}
+        open={openStatus}
+      >
         <>
           {installMethods.methods.length > 0 && (
             <>

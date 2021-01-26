@@ -484,7 +484,14 @@ const PackageView = (props: Props) => {
                           <span>Info</span>
                         </>
                       }
-                      header={<ModalHeader package={detail} />}
+                      header={
+                        <ModalHeader
+                          displayName={detail.displayName}
+                          name={detail.name}
+                          logoImageId={detail.logoImageId}
+                          repoKind={detail.repository.kind}
+                        />
+                      }
                       className={`col mt-3 ${styles.btnMobileWrapper}`}
                     >
                       <Details
@@ -502,7 +509,10 @@ const PackageView = (props: Props) => {
 
                     <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
                       <ChangelogModal
-                        packageItem={detail}
+                        packageId={detail.packageId}
+                        normalizedName={detail.normalizedName}
+                        repository={detail.repository}
+                        hasChangelog={detail.hasChangelog!}
                         visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
                         searchUrlReferer={props.searchUrlReferer}
                         fromStarredPage={props.fromStarredPage}
@@ -559,7 +569,10 @@ const PackageView = (props: Props) => {
 
                         <div className="mb-2">
                           <ChangelogModal
-                            packageItem={detail}
+                            packageId={detail.packageId}
+                            normalizedName={detail.normalizedName}
+                            repository={detail.repository}
+                            hasChangelog={detail.hasChangelog!}
                             visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
                             searchUrlReferer={props.searchUrlReferer}
                             fromStarredPage={props.fromStarredPage}

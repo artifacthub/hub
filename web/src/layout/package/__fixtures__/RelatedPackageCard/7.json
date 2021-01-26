@@ -1,14 +1,8 @@
 {
-  "packageId": "id",
   "name": "test",
   "displayName": "Pretty name",
-  "description": "desc",
-  "logoImageId": "imageId",
-  "appVersion": "1.0.0",
+  "version": "1.0.0",
   "normalizedName": "pr",
-  "deprecated": false,
-  "isOperator": false,
-  "keywords": ["key1", "key2"],
   "repository": {
     "repositoryid": "id",
     "kind": 0,

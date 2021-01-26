@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import semver from 'semver';
 
 import { API } from '../../api';
-import { ChangeLog, Package, RepositoryKind, SearchFiltersURL } from '../../types';
+import { ChangeLog, Repository, RepositoryKind, SearchFiltersURL } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import buildPackageURL from '../../utils/buildPackageURL';
 import ElementWithTooltip from '../common/ElementWithTooltip';
@@ -16,7 +16,10 @@ import Modal from '../common/Modal';
 import styles from './ChangelogModal.module.css';
 
 interface Props {
-  packageItem: Package;
+  normalizedName: string;
+  repository: Repository;
+  packageId: string;
+  hasChangelog: boolean;
   visibleChangelog: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -27,11 +30,11 @@ const ChangelogModal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [changelog, setChangelog] = useState<ChangeLog[] | null | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageItem.packageId);
+  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
 
   useEffect(() => {
     if (props.visibleChangelog && !openStatus) {
-      if (props.packageItem.hasChangelog) {
+      if (props.hasChangelog) {
         onOpenModal();
       } else {
         history.replace({
@@ -41,9 +44,7 @@ const ChangelogModal = (props: Props) => {
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (
-    [RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(props.packageItem.repository.kind)
-  )
+  if ([RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(props.repository.kind))
     return null;
 
   const sortChangelog = (items: ChangeLog[]): ChangeLog[] => {
@@ -60,8 +61,8 @@ const ChangelogModal = (props: Props) => {
   async function getChangelog() {
     try {
       setIsLoading(true);
-      const changelog = await API.getChangelog(props.packageItem.packageId);
-      setCurrentPkgId(props.packageItem.packageId);
+      const changelog = await API.getChangelog(props.packageId);
+      setCurrentPkgId(props.packageId);
       setChangelog(sortChangelog(changelog));
       setIsLoading(false);
       setOpenStatus(true);
@@ -76,8 +77,8 @@ const ChangelogModal = (props: Props) => {
   }
 
   const onOpenModal = () => {
-    if (props.packageItem.hasChangelog) {
-      if (changelog && props.packageItem.packageId === currentPkgId) {
+    if (props.hasChangelog) {
+      if (changelog && props.packageId === currentPkgId) {
         setOpenStatus(true);
       } else {
         getChangelog();
@@ -99,7 +100,7 @@ const ChangelogModal = (props: Props) => {
 
   const openPackagePage = (newVersion: string) => {
     history.push({
-      pathname: buildPackageURL({ ...props.packageItem, version: newVersion }, true),
+      pathname: buildPackageURL(props.normalizedName, props.repository, newVersion, true),
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
     setOpenStatus(false);
@@ -112,7 +113,7 @@ const ChangelogModal = (props: Props) => {
           <button
             data-testid="changelogBtn"
             className={classnames('btn btn-secondary btn-block btn-sm text-nowrap', {
-              disabled: !props.packageItem.hasChangelog,
+              disabled: !props.hasChangelog,
             })}
             onClick={onOpenModal}
           >
@@ -131,7 +132,7 @@ const ChangelogModal = (props: Props) => {
             </div>
           </button>
         }
-        visibleTooltip={!props.packageItem.hasChangelog}
+        visibleTooltip={!props.hasChangelog}
         tooltipClassName={styles.tooltip}
         tooltipMessage="No versions of this package include an annotation with information about the changes it introduces."
         active
