@@ -53,22 +53,12 @@ exports[`Search index creates snapshot 1`] = `
     class="d-flex position-relative pt-3 pb-3 flex-grow-1"
   >
     <div
-      class="position-absolute p-5 wrapper position-fixed"
+      class="position-fixed wrapper"
     >
       <div
-        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-      >
-        <div
-          class="spinner-border text-primary spinner undefined"
-          role="status"
-        >
-          <span
-            class="sr-only"
-          >
-            Loading...
-          </span>
-        </div>
-      </div>
+        class="progressLine progressLine"
+        role="status"
+      />
     </div>
     <main
       class="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between"

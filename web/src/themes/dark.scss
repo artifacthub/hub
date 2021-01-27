@@ -25,6 +25,7 @@
   --color-black-15: rgba(255, 255, 255, 0.15);
   --color-black-25: rgba(255, 255, 255, 0.25);
   --color-black-75: rgba(255, 255, 255, 0.75);
+  --color-black-90: rgba(255, 255, 255, 0.9);
 
   --color-white-50: rgba(0, 0, 0, 0.5);
 
@@ -408,6 +409,14 @@
     path {
       stroke: var(--color-font);
     }
+  }
+
+  .progressLine {
+    background-color: var(--color-black-25);
+  }
+
+  .progressLine:after {
+    background-color: var(--color-black-90);
   }
 
   .sectionItem {

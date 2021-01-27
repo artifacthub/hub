@@ -1,3 +1,25 @@
+.table tbody {
+  background-color: var(--white);
+}
+
+.table,
+.table th,
+.table td {
+  border-color: var(--color-1-300) !important;
+}
+
+.fitCell {
+  width: 1%;
+}
+
+.tableTitle th {
+  border-bottom-color: var(--color-1-300) !important;
+}
+
+.tableTitle:hover {
+  background-color: inherit !important;
+}
+
 .dependency {
   font-size: 0.9rem;
   overflow-wrap: break-word;
@@ -5,4 +27,8 @@
 
 .separator {
   padding: 0 2px;
+}
+
+.textWrapper {
+  table-layout: fixed;
 }

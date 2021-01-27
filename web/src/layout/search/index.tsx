@@ -13,7 +13,7 @@ import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import { Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
-import Loading from '../common/Loading';
+import LoadingBar from '../common/LoadingBar';
 import NoData from '../common/NoData';
 import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
@@ -406,7 +406,7 @@ const SearchView = (props: Props) => {
       </SubNavbar>
 
       <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
-        {(isSearching || isNull(searchResults.data.packages)) && <Loading className="position-fixed" />}
+        {(isSearching || isNull(searchResults.data.packages)) && <LoadingBar />}
 
         <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between">
           {!isEmptyFacets() && (

@@ -5,7 +5,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../../../api';
 import { APIKey, ErrorKind } from '../../../../../types';
-import Loading from '../../../../common/Loading';
+import LoadingBar from '../../../../common/LoadingBar';
 import NoData from '../../../../common/NoData';
 import styles from './APIKeysSection.module.css';
 import APIKeyCard from './Card';
@@ -51,7 +51,7 @@ const APIKeysSection = (props: Props) => {
 
   return (
     <div className="d-flex flex-column flex-grow-1">
-      {(isUndefined(apiKeysList) || isLoading) && <Loading />}
+      {(isUndefined(apiKeysList) || isLoading) && <LoadingBar />}
 
       <main role="main" className="p-0">
         <div className="flex-grow-1">

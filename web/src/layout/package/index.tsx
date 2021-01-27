@@ -32,7 +32,7 @@ import BlockCodeButtons from '../common/BlockCodeButtons';
 import ExternalLink from '../common/ExternalLink';
 import Image from '../common/Image';
 import Label from '../common/Label';
-import Loading from '../common/Loading';
+import LoadingBar from '../common/LoadingBar';
 import Modal from '../common/Modal';
 import NoData from '../common/NoData';
 import OfficialBadge from '../common/OfficialBadge';
@@ -379,7 +379,7 @@ const PackageView = (props: Props) => {
       )}
 
       <div data-testid="mainPackage" className="position-relative flex-grow-1">
-        {isLoadingPackage && <Loading className="position-fixed" />}
+        {isLoadingPackage && <LoadingBar />}
 
         {!isUndefined(detail) && (
           <>

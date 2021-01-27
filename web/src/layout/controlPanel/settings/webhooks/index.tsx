@@ -6,7 +6,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, Webhook } from '../../../../types';
-import Loading from '../../../common/Loading';
+import LoadingBar from '../../../common/LoadingBar';
 import NoData from '../../../common/NoData';
 import WebhookCard from './Card';
 import WebhookForm from './Form';
@@ -82,7 +82,7 @@ const WebhooksSection = (props: Props) => {
                 </div>
               </div>
 
-              {(isGettingWebhooks || isUndefined(webhooks)) && <Loading />}
+              {(isGettingWebhooks || isUndefined(webhooks)) && <LoadingBar />}
 
               <div className="mt-4 mt-md-5">
                 <p className="m-0">Webhooks notify external services when certain events happen.</p>
