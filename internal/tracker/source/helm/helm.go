@@ -202,7 +202,8 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion, stor
 	// available in the chart archive, like the readme file, the license, etc.
 	// Otherwise, the minimal version of the package prepared above is enough.
 	bypassDigestCheck := s.i.Svc.Cfg.GetBool("tracker.bypassDigestCheck")
-	if _, ok := s.i.PackagesRegistered[pkg.BuildKey(p)]; !ok || bypassDigestCheck {
+	digest, ok := s.i.PackagesRegistered[pkg.BuildKey(p)]
+	if !ok || chartVersion.Digest != digest || bypassDigestCheck {
 		// Load chart from remote archive
 		chart, err := s.loadChartArchive(chartURL)
 		if err != nil {
