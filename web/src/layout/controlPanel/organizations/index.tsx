@@ -5,7 +5,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { ErrorKind, Organization } from '../../../types';
-import LoadingBar from '../../common/LoadingBar';
+import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import OrganizationCard from './Card';
 import OrganizationModal from './Modal';
@@ -74,7 +74,7 @@ const OrganizationsSection = (props: Props) => {
             </div>
           </div>
 
-          {(isLoading || isUndefined(organizations)) && <LoadingBar />}
+          {(isLoading || isUndefined(organizations)) && <Loading />}
 
           {!isUndefined(organizations) && (
             <>

@@ -35,6 +35,10 @@
   line-height: 1.5rem;
 }
 
+.spinner {
+  top: 50%;
+}
+
 @media only screen and (min-width: 768px) {
   .list {
     flex-basis: calc(100% - 250px);

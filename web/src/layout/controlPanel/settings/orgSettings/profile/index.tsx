@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
 import { ErrorKind, Organization } from '../../../../../types';
-import LoadingBar from '../../../../common/LoadingBar';
+import Loading from '../../../../common/Loading';
 import NoData from '../../../../common/NoData';
 import DeleteOrganization from './DeleteOrg';
 import styles from './ProfileSection.module.css';
@@ -60,7 +60,7 @@ const ProfileSection = (props: Props) => {
 
   return (
     <main role="main" className="p-0">
-      {(isUndefined(organization) || isLoading) && <LoadingBar />}
+      {(isUndefined(organization) || isLoading) && <Loading />}
 
       <div className={`h3 pb-2 border-bottom ${styles.title}`}>Profile information</div>
 

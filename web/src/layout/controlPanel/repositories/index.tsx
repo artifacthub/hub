@@ -10,7 +10,7 @@ import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import { AuthorizerAction, ErrorKind, Repository as Repo } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
-import LoadingBar from '../../common/LoadingBar';
+import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import ActionBtn from '../ActionBtn';
 import RepositoryCard from './Card';
@@ -150,7 +150,7 @@ const RepositoriesSection = (props: Props) => {
           />
         )}
 
-        {(isLoading || isUndefined(repositories)) && <LoadingBar />}
+        {(isLoading || isUndefined(repositories)) && <Loading />}
 
         <p className="mt-5">
           If you want your repositories to be labeled as <span className="font-weight-bold">Verified Publisher</span>,

@@ -6,7 +6,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { AuthorizerAction, ErrorKind, Member } from '../../../types';
-import LoadingBar from '../../common/LoadingBar';
+import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import ActionBtn from '../ActionBtn';
 import MemberCard from './Card';
@@ -85,7 +85,7 @@ const MembersSection = (props: Props) => {
           </div>
         </div>
 
-        {(isGettingMembers || isUndefined(members)) && <LoadingBar />}
+        {(isGettingMembers || isUndefined(members)) && <Loading />}
 
         <div className="mt-5">
           {!isUndefined(members) && (

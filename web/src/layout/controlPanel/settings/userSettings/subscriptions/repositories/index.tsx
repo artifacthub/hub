@@ -10,7 +10,7 @@ import { ErrorKind, EventKind, OptOutItem } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
 import prepareQueryString from '../../../../../../utils/prepareQueryString';
-import LoadingBar from '../../../../../common/LoadingBar';
+import Loading from '../../../../../common/Loading';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from '../SubscriptionsSection.module.css';
 import OptOutModal from './Modal';
@@ -101,7 +101,7 @@ const RepositoriesSection = (props: Props) => {
 
   return (
     <div className="mt-5 pt-3">
-      {(isUndefined(optOutList) || isLoading) && <LoadingBar />}
+      {(isUndefined(optOutList) || isLoading) && <Loading />}
       <div className="d-flex flex-row align-items-start justify-content-between pb-2">
         <div className={`h4 pb-0 ${styles.title}`}>Repositories</div>
         <div>
