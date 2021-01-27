@@ -60,9 +60,19 @@
                     "title": "Load demo user and sample repositories",
                     "type": "boolean",
                     "default": true
+                },
+                "configDir": {
+                    "title": "Config directory path",
+                    "description": "Directory path where the configuration files should be mounted.",
+                    "type": "string",
+                    "enum": [
+                        "/home/db-migrator/.cfg",
+                        "/artifacthub/.cfg"
+                    ],
+                    "default": "/home/db-migrator/.cfg"
                 }
             },
-            "required": ["job", "loadSampleData"]
+            "required": ["job", "loadSampleData", "configDir"]
         },
         "fullnameOverride": {
             "type": "string",
@@ -215,6 +225,22 @@
                             "title": "Allow adding private repositories to the Hub",
                             "type": "boolean",
                             "default": false
+                        },
+                        "cacheDir": {
+                            "title": "Cache directory path",
+                            "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "configDir": {
+                            "title": "Config directory path",
+                            "description": "Directory path where the configuration files should be mounted.",
+                            "type": "string",
+                            "enum": [
+                                "/home/hub/.cfg",
+                                "/artifacthub/.cfg"
+                            ],
+                            "default": "/home/hub/.cfg"
                         },
                         "baseURL": {
                             "title": "Hub server base url",
@@ -391,7 +417,7 @@
                             "default": 0
                         }
                     },
-                    "required": ["allowPrivateRepositories", "baseURL", "shutdownTimeout", "basicAuth", "cookie", "xffIndex"]
+                    "required": ["allowPrivateRepositories", "configDir", "baseURL", "shutdownTimeout", "basicAuth", "cookie", "xffIndex"]
                 },
                 "service": {
                     "type": "object",
@@ -484,6 +510,22 @@
                     "type": "string",
                     "default": "http://trivy:8081"
                 },
+                "cacheDir": {
+                    "title": "Cache directory path",
+                    "description": "If set, the cache directory for the Trivy client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                    "type": "string",
+                    "default": ""
+                },
+                "configDir": {
+                    "title": "Config directory path",
+                    "description": "Directory path where the configuration files should be mounted.",
+                    "type": "string",
+                    "enum": [
+                        "/home/scanner/.cfg",
+                        "/artifacthub/.cfg"
+                    ],
+                    "default": "/home/scanner/.cfg"
+                },
                 "dockerUsername": {
                     "title": "Docker registry username",
                     "type": "string",
@@ -495,7 +537,7 @@
                     "default": ""
                 }
             },
-            "required": ["concurrency", "cronjob", "trivyURL"]
+            "required": ["concurrency", "cronjob", "trivyURL", "configDir"]
         },
         "tracker": {
             "title": "Tracker configuration",
@@ -505,6 +547,22 @@
                     "title": "Bypass digest check",
                     "type": "boolean",
                     "default": false
+                },
+                "cacheDir": {
+                    "title": "Cache directory path",
+                    "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                    "type": "string",
+                    "default": ""
+                },
+                "configDir": {
+                    "title": "Config directory path",
+                    "description": "Directory path where the configuration files should be mounted.",
+                    "type": "string",
+                    "enum": [
+                        "/home/tracker/.cfg",
+                        "/artifacthub/.cfg"
+                    ],
+                    "default": "/home/tracker/.cfg"
                 },
                 "concurrency": {
                     "title": "Repositories to process concurrently",
@@ -576,7 +634,7 @@
                     "uniqueItems": true
                 }
             },
-            "required": ["bypassDigestCheck", "concurrency", "cronjob", "events", "imageStore", "repositoriesKinds", "repositoriesNames"]
+            "required": ["bypassDigestCheck", "configDir", "concurrency", "cronjob", "events", "imageStore", "repositoriesKinds", "repositoriesNames"]
         },
         "trivy": {
             "title": "Trivy configuration",

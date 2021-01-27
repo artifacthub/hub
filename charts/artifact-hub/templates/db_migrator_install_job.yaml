@@ -27,10 +27,10 @@ spec:
         imagePullPolicy: {{ .Values.pullPolicy }}
         env:
           - name: TERN_CONF
-            value: /home/db-migrator/.cfg/tern.conf
+            value: {{ .Values.dbMigrator.configDir }}/tern.conf
         volumeMounts:
           - name: db-migrator-config
-            mountPath: "/home/db-migrator/.cfg"
+            mountPath: {{ .Values.dbMigrator.configDir }}
             readOnly: true
         command: ["./migrate.sh"]
       volumes:

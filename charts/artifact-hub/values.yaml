@@ -20,6 +20,7 @@ dbMigrator:
     image:
       repository: artifacthub/db-migrator
   loadSampleData: true
+  configDir: "/home/db-migrator/.cfg"
 
 hub:
   ingress:
@@ -39,6 +40,8 @@ hub:
     resources: {}
   server:
     allowPrivateRepositories: false
+    cacheDir: ""
+    configDir: "/home/hub/.cfg"
     baseURL: ""
     shutdownTimeout: 10s
     basicAuth:
@@ -95,6 +98,8 @@ scanner:
     resources: {}
   concurrency: 10
   trivyURL: http://trivy:8081
+  cacheDir: ""
+  configDir: "/home/scanner/.cfg"
   dockerUsername: ""
   dockerPassword: ""
 
@@ -103,6 +108,8 @@ tracker:
     image:
       repository: artifacthub/tracker
     resources: {}
+  cacheDir: ""
+  configDir: "/home/tracker/.cfg"
   concurrency: 10
   repositoriesNames: []
   repositoriesKinds: []
