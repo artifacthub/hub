@@ -275,6 +275,28 @@ func TestTracker(t *testing.T) {
 		sw.assertExpectations(t)
 	})
 
+	t.Run("package registered again because digest has changed", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
+			pkg.BuildKey(p1v1): "new digest",
+		}, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+			pkg.BuildKey(p1v1): p1v1,
+		}, nil)
+		sw.pm.On("Register", sw.svc.Ctx, p1v1).Return(nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
 	t.Run("two packages registered successfully", func(t *testing.T) {
 		t.Parallel()
 

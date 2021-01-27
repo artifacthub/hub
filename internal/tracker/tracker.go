@@ -83,7 +83,8 @@ func (t *Tracker) Run() error {
 		}
 
 		// Check if this package version is already registered
-		if _, ok := t.packagesRegistered[pkg.BuildKey(p)]; ok && !bypassDigestCheck {
+		digest, ok := t.packagesRegistered[pkg.BuildKey(p)]
+		if ok && p.Digest == digest && !bypassDigestCheck {
 			continue
 		}
 
