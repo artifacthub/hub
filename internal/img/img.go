@@ -21,6 +21,10 @@ type HTTPClient interface {
 
 // Store describes the methods an image.Store implementation must provide.
 type Store interface {
+	// DownloadAndSaveImage downloads the image located at the url provided and
+	// stores it returning the image ID.
+	DownloadAndSaveImage(ctx context.Context, imageURL string) (imageID string, err error)
+
 	// GetImage returns the image identified by the ID and version provided.
 	GetImage(ctx context.Context, imageID, version string) (datd []byte, err error)
 
@@ -72,9 +76,9 @@ func GenerateVersions(data []byte) ([]*Version, error) {
 	return imgVersions, nil
 }
 
-// Get gets the image located at the url provided. If it's a data url the image
-// is extracted from it. Otherwise it's downloaded using the url.
-func Get(
+// Download downloads the image located at the url provided. If it's a data url
+// the image is extracted from it. Otherwise it's downloaded using the url.
+func Download(
 	ctx context.Context,
 	hc HTTPClient,
 	githubToken string,

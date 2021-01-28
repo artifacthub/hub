@@ -1,7 +1,6 @@
 package helm
 
 import (
-	"bytes"
 	"errors"
 	"io/ioutil"
 	"net/http"
@@ -89,7 +88,6 @@ func TestTrackerSource(t *testing.T) {
 		CreatedAt:               0,
 	}
 	logoImageURL := "http://icon.url"
-	imageData, _ := ioutil.ReadFile("testdata/red-dot.png")
 
 	t.Run("error loading repository index file", func(t *testing.T) {
 		t.Parallel()
@@ -240,79 +238,18 @@ func TestTrackerSource(t *testing.T) {
 			Body:       f,
 			StatusCode: http.StatusOK,
 		}, nil)
-		reqLogo, _ := http.NewRequest("GET", logoImageURL, nil)
-		sw.Hc.On("Do", reqLogo).Return(nil, tests.ErrFake)
 		reqProv, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
 		sw.Hc.On("Do", reqProv).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
-		expectedErr := "error getting image http://icon.url: fake error for tests (package: pkg1 version: 1.0.0)"
+		sw.Is.On("DownloadAndSaveImage", sw.Svc.Ctx, logoImageURL).Return("", tests.ErrFake)
+		expectedErr := "error getting logo image http://icon.url: fake error for tests (package: pkg1 version: 1.0.0)"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
 		p := source.ClonePackage(basePkg)
 		p.Repository = i.Repository
-		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
-		assert.Equal(t, map[string]*hub.Package{
-			pkg.BuildKey(p): p,
-		}, packages)
-		assert.NoError(t, err)
-		sw.AssertExpectations(t)
-	})
-
-	t.Run("error saving logo image, package returned anyway", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup services and expectations
-		sw := source.NewTestsServicesWrapper()
-		i := &hub.TrackerSourceInput{
-			Repository: &hub.Repository{
-				URL: "https://repo.url",
-			},
-			Svc: sw.Svc,
-		}
-		il := &repo.HelmIndexLoaderMock{}
-		il.On("LoadIndex", i.Repository).Return(&helmrepo.IndexFile{
-			Entries: map[string]helmrepo.ChartVersions{
-				"pkg1": []*helmrepo.ChartVersion{
-					{
-						Metadata: &chart.Metadata{
-							Name:    "pkg1",
-							Version: "1.0.0",
-							Icon:    logoImageURL,
-						},
-						URLs: []string{
-							"https://repo.url/pkg1-1.0.0.tgz",
-						},
-					},
-				},
-			},
-		}, "", nil)
-		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
-		reqChart, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
-		sw.Hc.On("Do", reqChart).Return(&http.Response{
-			Body:       f,
-			StatusCode: http.StatusOK,
-		}, nil)
-		reqLogo, _ := http.NewRequest("GET", logoImageURL, nil)
-		sw.Hc.On("Do", reqLogo).Return(&http.Response{
-			Body:       ioutil.NopCloser(bytes.NewReader(imageData)),
-			StatusCode: http.StatusOK,
-		}, nil)
-		reqProv, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
-		sw.Hc.On("Do", reqProv).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
-			StatusCode: http.StatusNotFound,
-		}, nil)
-		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("", tests.ErrFake)
-		expectedErr := "error saving image http://icon.url: fake error for tests (package: pkg1 version: 1.0.0)"
-		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
-
-		// Run test and check expectations
-		p := source.ClonePackage(basePkg)
-		p.Repository = i.Repository
-		p.LogoURL = logoImageURL
 		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
 			pkg.BuildKey(p): p,
@@ -355,17 +292,12 @@ func TestTrackerSource(t *testing.T) {
 			Body:       f,
 			StatusCode: http.StatusOK,
 		}, nil)
-		reqLogo, _ := http.NewRequest("GET", logoImageURL, nil)
-		sw.Hc.On("Do", reqLogo).Return(&http.Response{
-			Body:       ioutil.NopCloser(bytes.NewReader(imageData)),
-			StatusCode: http.StatusOK,
-		}, nil)
 		reqProv, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
 		sw.Hc.On("Do", reqProv).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
-		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("logoImageID", nil)
+		sw.Is.On("DownloadAndSaveImage", sw.Svc.Ctx, logoImageURL).Return("logoImageID", nil)
 
 		// Run test and check expectations
 		p := source.ClonePackage(basePkg)
