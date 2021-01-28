@@ -102,7 +102,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		})
 
 		// Process package versions
-		for i, entryV := range versions {
+		for _, entryV := range versions {
 			// Get package version CSV
 			version := entryV.Name()
 			pkgVersionPath := filepath.Join(pkgPath, version)
@@ -113,8 +113,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			}
 
 			// Prepare and store package version
-			storeLogo := i == 0
-			p := s.preparePackage(s.i.Repository, manifest, csv, csvData, storeLogo)
+			p := s.preparePackage(s.i.Repository, manifest, csv, csvData)
 			packagesAvailable[pkg.BuildKey(p)] = p
 		}
 
@@ -133,7 +132,6 @@ func (s *TrackerSource) preparePackage(
 	manifest *manifests.PackageManifest,
 	csv *operatorsv1alpha1.ClusterServiceVersion,
 	csvData []byte,
-	storeLogo bool,
 ) *hub.Package {
 	// Prepare package from manifest and csv
 	p := &hub.Package{
@@ -188,8 +186,8 @@ func (s *TrackerSource) preparePackage(
 		})
 	}
 
-	// Store logo when available if requested
-	if storeLogo && len(csv.Spec.Icon) > 0 && csv.Spec.Icon[0].Data != "" {
+	// Store logo when available
+	if len(csv.Spec.Icon) > 0 && csv.Spec.Icon[0].Data != "" {
 		data, err := base64.StdEncoding.DecodeString(csv.Spec.Icon[0].Data)
 		if err != nil {
 			s.warn(fmt.Errorf("error decoding package %s logo image: %w", p.Name, err))

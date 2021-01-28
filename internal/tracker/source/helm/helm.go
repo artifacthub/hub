@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"image"
 	"io"
 	"net/http"
 	"net/url"
@@ -15,7 +14,6 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/license"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
@@ -83,7 +81,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 	limiter := make(chan struct{}, concurrency)
 	var wg sync.WaitGroup
 	for _, chartVersions := range charts {
-		for i, chartVersion := range chartVersions {
+		for _, chartVersion := range chartVersions {
 			// Return ASAP if context is cancelled
 			select {
 			case <-s.i.Svc.Ctx.Done():
@@ -95,13 +93,12 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			// Prepare and store package version
 			limiter <- struct{}{}
 			wg.Add(1)
-			storeLogo := i == 0
 			go func(chartVersion *helmrepo.ChartVersion) {
 				defer func() {
 					<-limiter
 					wg.Done()
 				}()
-				p, err := s.preparePackage(chartVersion, storeLogo)
+				p, err := s.preparePackage(chartVersion)
 				if err != nil {
 					s.warn(chartVersion.Metadata, fmt.Errorf("error preparing package: %w", err))
 					return
@@ -162,7 +159,7 @@ func (s *TrackerSource) getCharts() (map[string][]*helmrepo.ChartVersion, error)
 }
 
 // preparePackage prepares a package version using the chart version provided.
-func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion, storeLogo bool) (*hub.Package, error) {
+func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hub.Package, error) {
 	// Parse package version
 	md := chartVersion.Metadata
 	sv, err := semver.NewVersion(md.Version)
@@ -211,17 +208,13 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion, stor
 		}
 
 		// Store logo when available if requested
-		if md.Icon != "" && storeLogo {
-			githubToken := s.i.Svc.Cfg.GetString("tracker.githubToken")
-			data, err := img.Get(s.i.Svc.Ctx, s.i.Svc.Hc, githubToken, s.i.Svc.GithubRL, md.Icon)
-			if err != nil {
-				s.warn(md, fmt.Errorf("error getting image %s: %w", md.Icon, err))
-			} else {
+		if md.Icon != "" {
+			logoImageID, err := s.i.Svc.Is.DownloadAndSaveImage(s.i.Svc.Ctx, md.Icon)
+			if err == nil {
 				p.LogoURL = md.Icon
-				p.LogoImageID, err = s.i.Svc.Is.SaveImage(s.i.Svc.Ctx, data)
-				if err != nil && !errors.Is(err, image.ErrFormat) {
-					s.warn(md, fmt.Errorf("error saving image %s: %w", md.Icon, err))
-				}
+				p.LogoImageID = logoImageID
+			} else {
+				s.warn(md, fmt.Errorf("error getting logo image %s: %w", md.Icon, err))
 			}
 		}
 

@@ -1,9 +1,7 @@
 package falco
 
 import (
-	"errors"
 	"fmt"
-	"image"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -11,7 +9,6 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"gopkg.in/yaml.v2"
@@ -135,16 +132,12 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *RulesMetadata, pkg
 
 	// Register logo image if available
 	if md.Icon != "" {
-		githubToken := s.i.Svc.Cfg.GetString("tracker.githubToken")
-		data, err := img.Get(s.i.Svc.Ctx, s.i.Svc.Hc, githubToken, s.i.Svc.GithubRL, md.Icon)
-		if err != nil {
-			s.warn(fmt.Errorf("error downloading package %s version %s image: %w", p.Name, p.Version, err))
-		} else {
+		logoImageID, err := s.i.Svc.Is.DownloadAndSaveImage(s.i.Svc.Ctx, md.Icon)
+		if err == nil {
 			p.LogoURL = md.Icon
-			p.LogoImageID, err = s.i.Svc.Is.SaveImage(s.i.Svc.Ctx, data)
-			if err != nil && !errors.Is(err, image.ErrFormat) {
-				s.warn(fmt.Errorf("error saving package %s version %s image: %w", p.Name, p.Version, err))
-			}
+			p.LogoImageID = logoImageID
+		} else {
+			s.warn(fmt.Errorf("error getting package %s version %s logo image: %w", p.Name, p.Version, err))
 		}
 	}
 

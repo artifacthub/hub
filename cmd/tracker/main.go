@@ -64,16 +64,17 @@ func main() {
 	}
 	rm := repo.NewManager(cfg, db, az)
 	pm := pkg.NewManager(db)
-	is, err := util.SetupImageStore(cfg, db)
-	if err != nil {
-		log.Fatal().Err(err).Msg("image store setup failed")
-	}
-	ec := errors.NewCollector(rm)
+	hc := &http.Client{Timeout: 10 * time.Second}
 	githubRL := rate.NewLimiter(rate.Every(1*time.Hour), githubMaxRequestsPerHour)
 	go func() {
 		<-time.After(1 * time.Hour)
 		githubRL.SetLimit(rate.Every(1 * time.Hour / githubMaxRequestsPerHour))
 	}()
+	is, err := util.SetupImageStore(cfg, db, hc, githubRL)
+	if err != nil {
+		log.Fatal().Err(err).Msg("image store setup failed")
+	}
+	ec := errors.NewCollector(rm)
 	svc := &hub.TrackerServices{
 		Ctx:                ctx,
 		Cfg:                cfg,
@@ -82,7 +83,7 @@ func main() {
 		Rc:                 &repo.Cloner{},
 		Oe:                 &repo.OLMOCIExporter{},
 		Ec:                 ec,
-		Hc:                 &http.Client{Timeout: 10 * time.Second},
+		Hc:                 hc,
 		Is:                 is,
 		GithubRL:           githubRL,
 		SetupTrackerSource: tracker.SetupSource,

@@ -53,6 +53,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("authorizer setup failed")
 	}
+	hc := &http.Client{Timeout: 10 * time.Second}
 
 	// Setup and launch http server
 	ctx, stop := context.WithCancel(context.Background())
@@ -64,7 +65,7 @@ func main() {
 		SubscriptionManager: subscription.NewManager(db),
 		WebhookManager:      webhook.NewManager(db),
 		APIKeyManager:       apikey.NewManager(db),
-		ImageStore:          pg.NewImageStore(db),
+		ImageStore:          pg.NewImageStore(cfg, db, hc, nil),
 		Authorizer:          az,
 	}
 	h, err := handlers.Setup(ctx, cfg, hSvc)

@@ -4,11 +4,15 @@ import (
 	"context"
 	"crypto/sha256"
 	"errors"
+	"sync"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	svg "github.com/h2non/go-is-svg"
+	lru "github.com/hashicorp/golang-lru"
 	"github.com/jackc/pgx/v4"
+	"github.com/spf13/viper"
+	"golang.org/x/time/rate"
 )
 
 const (
@@ -16,6 +20,9 @@ const (
 	getImageDBQ      = `select get_image($1::uuid, $2::text)`
 	getImageIDDBQ    = `select image_id from image where original_hash = $1`
 	registerImageDBQ = `select register_image($1::bytea, $2::text, $3::bytea)`
+
+	// Cache
+	cacheSize = 250
 )
 
 // DB defines the methods the database handler must provide.
@@ -26,14 +33,58 @@ type DB interface {
 // ImageStore is an image.Store implementation that uses PostgreSQL as the
 // underlying storage.
 type ImageStore struct {
-	db DB
+	cfg      *viper.Viper
+	db       DB
+	hc       img.HTTPClient
+	githubRL *rate.Limiter
+	cache    *lru.Cache
+	mutexes  sync.Map
 }
 
 // NewImageStore creates a new ImageStore instance.
-func NewImageStore(db DB) *ImageStore {
+func NewImageStore(
+	cfg *viper.Viper,
+	db DB,
+	hc img.HTTPClient,
+	githubRL *rate.Limiter,
+) *ImageStore {
+	cache, _ := lru.New(cacheSize)
 	return &ImageStore{
-		db: db,
+		cfg:      cfg,
+		db:       db,
+		hc:       hc,
+		githubRL: githubRL,
+		cache:    cache,
 	}
+}
+
+// DownloadAndSaveImage implements the image.Store interface.
+func (s *ImageStore) DownloadAndSaveImage(ctx context.Context, imageURL string) (string, error) {
+	// Make sure we only process the same image once at a time
+	v, _ := s.mutexes.LoadOrStore(imageURL, &sync.Mutex{})
+	imageMu := v.(*sync.Mutex)
+	imageMu.Lock()
+	defer imageMu.Unlock()
+
+	// Try to get image data from the cache to avoid hitting the source
+	var data []byte
+	var err error
+	v, ok := s.cache.Get(imageURL)
+	if ok {
+		data = v.([]byte)
+	} else {
+		// Image not found in the cache. Download it from source and store it
+		// in the cache.
+		githubToken := s.cfg.GetString("tracker.githubToken")
+		data, err = img.Download(ctx, s.hc, githubToken, s.githubRL, imageURL)
+		if err != nil {
+			return "", err
+		}
+		s.cache.Add(imageURL, data)
+	}
+
+	// Store image in the database
+	return s.SaveImage(ctx, data)
 }
 
 // GetImage returns an image stored in the database.
