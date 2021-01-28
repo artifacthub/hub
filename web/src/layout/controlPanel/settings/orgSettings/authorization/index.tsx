@@ -26,7 +26,7 @@ import stringifyPolicyData from '../../../../../utils/stringifyPolicyData';
 import Alert from '../../../../common/Alert';
 import CodeEditor from '../../../../common/CodeEditor';
 import ExternalLink from '../../../../common/ExternalLink';
-import LoadingBar from '../../../../common/LoadingBar';
+import Loading from '../../../../common/Loading';
 import Modal from '../../../../common/Modal';
 import NoData from '../../../../common/NoData';
 import ActionBtn from '../../../ActionBtn';
@@ -384,7 +384,7 @@ const AuthorizationSection = (props: Props) => {
 
   return (
     <main role="main" className="p-0">
-      {(isUndefined(orgPolicy) || isLoading) && <LoadingBar />}
+      {(isUndefined(orgPolicy) || isLoading) && <Loading />}
 
       <Prompt
         when={!isNull(orgPolicy) && !isUndefined(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges()}
