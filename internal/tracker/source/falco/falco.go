@@ -104,11 +104,15 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *RulesMetadata, pkg
 	var blobPath string
 	switch provider {
 	case "github":
-		blobPath = "blob/master"
+		blobPath = "blob"
 	case "gitlab":
-		blobPath = "-/blob/master"
+		blobPath = "-/blob"
 	}
-	sourceURL := fmt.Sprintf("%s/%s/%s%s", repoBaseURL, blobPath, pkgsPath, pkgPath)
+	branch := r.Branch
+	if branch == "" {
+		branch = repo.DefaultBranch
+	}
+	sourceURL := fmt.Sprintf("%s/%s/%s/%s%s", repoBaseURL, blobPath, branch, pkgsPath, pkgPath)
 
 	// Prepare package from metadata
 	p := &hub.Package{
