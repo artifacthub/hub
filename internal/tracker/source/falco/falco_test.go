@@ -21,7 +21,7 @@ func TestTrackerSource(t *testing.T) {
 		Links: []*hub.Link{
 			{
 				Name: "source",
-				URL:  "https://github.com/org1/repo1/blob/master/path/to/packages/test.yaml",
+				URL:  "https://github.com/org1/repo1/blob/main/path/to/packages/test.yaml",
 			},
 		},
 	}
@@ -92,7 +92,8 @@ func TestTrackerSource(t *testing.T) {
 		sw := source.NewTestsServicesWrapper()
 		i := &hub.TrackerSourceInput{
 			Repository: &hub.Repository{
-				URL: "https://github.com/org1/repo1/path/to/packages",
+				URL:    "https://github.com/org1/repo1/path/to/packages",
+				Branch: "main",
 			},
 			BasePath: "testdata/path4",
 			Svc:      sw.Svc,
@@ -122,7 +123,8 @@ func TestTrackerSource(t *testing.T) {
 		sw := source.NewTestsServicesWrapper()
 		i := &hub.TrackerSourceInput{
 			Repository: &hub.Repository{
-				URL: "https://github.com/org1/repo1/path/to/packages",
+				URL:    "https://github.com/org1/repo1/path/to/packages",
+				Branch: "main",
 			},
 			BasePath: "testdata/path4",
 			Svc:      sw.Svc,
