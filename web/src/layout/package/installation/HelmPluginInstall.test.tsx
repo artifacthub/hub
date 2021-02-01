@@ -18,6 +18,10 @@ const defaultProps = {
 };
 
 describe('HelmPluginInstall', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<HelmPluginInstall {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

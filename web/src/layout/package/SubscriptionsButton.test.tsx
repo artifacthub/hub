@@ -65,6 +65,7 @@ describe('SubscriptionsButton', () => {
     );
 
     await waitFor(() => {
+      expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -126,8 +127,6 @@ describe('SubscriptionsButton', () => {
         await waitFor(() => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
         });
-
-        await waitFor(() => {});
 
         expect(getByTestId('uncheckedSubsBtn')).toBeInTheDocument();
         const btn = getByTestId('newReleaseBtn');
@@ -234,8 +233,6 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {});
-
         expect(getByTestId('uncheckedSubsBtn')).toBeInTheDocument();
         const btn = getByTestId('newReleaseBtn');
         expect(btn).toBeInTheDocument();
@@ -275,8 +272,6 @@ describe('SubscriptionsButton', () => {
         expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
         expect(API.getPackageSubscriptions).toHaveBeenCalledWith(defaultProps.packageId);
       });
-
-      await waitFor(() => {});
 
       expect(getByText('New releases')).toBeInTheDocument();
       expect(getByText('Receive a notification when a new version of this package is released.')).toBeInTheDocument();

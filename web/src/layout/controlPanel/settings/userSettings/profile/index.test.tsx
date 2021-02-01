@@ -49,6 +49,7 @@ describe('User settings index', () => {
     );
 
     await waitFor(() => {
+      expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });

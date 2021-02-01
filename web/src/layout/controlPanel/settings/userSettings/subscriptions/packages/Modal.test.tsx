@@ -31,9 +31,8 @@ describe('SubscriptionModal', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const result = render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('1')} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

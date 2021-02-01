@@ -52,6 +52,7 @@ describe('Package index', () => {
     );
 
     await waitFor(() => {
+      expect(API.getPackage).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -87,10 +88,9 @@ describe('Package index', () => {
         </Router>
       );
 
-      const spinner = await waitFor(() => getByRole('status'));
-
-      expect(spinner).toBeTruthy();
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(getByRole('status')).toBeTruthy();
+      });
     });
   });
 
@@ -150,7 +150,7 @@ describe('Package index', () => {
   });
 
   describe('Go back button', () => {
-    it('creates snapshot', async () => {
+    it('proper behaviour', async () => {
       const searchUrlReferer = {
         tsQueryWeb: 'test',
         filters: {},
@@ -167,7 +167,6 @@ describe('Package index', () => {
       );
 
       const goBack = await waitFor(() => getByTestId('goBack'));
-
       expect(goBack).toBeInTheDocument();
       fireEvent.click(goBack);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -176,8 +175,6 @@ describe('Package index', () => {
         search: prepareQuerystring(searchUrlReferer),
         state: { fromDetail: true },
       });
-
-      await waitFor(() => {});
     });
   });
 
@@ -206,8 +203,6 @@ describe('Package index', () => {
           deprecated: mockPackage.deprecated,
         }),
       });
-
-      await waitFor(() => {});
     });
   });
 
@@ -222,10 +217,9 @@ describe('Package index', () => {
         </Router>
       );
 
-      const dialog = await waitFor(() => getByRole('dialog'));
-      expect(dialog).toBeInTheDocument();
-
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(getByRole('dialog')).toBeInTheDocument();
+      });
     });
   });
 
@@ -240,33 +234,29 @@ describe('Package index', () => {
         </Router>
       );
 
-      await waitFor(() => getByTestId('mainPackage'));
-
-      const noData = getByTestId('noData');
+      const noData = await waitFor(() => getByTestId('noData'));
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('No README file available for this package');
       expect(queryByTestId('readme')).toBeNull();
-
-      await waitFor(() => {});
     });
 
     it('renders it correctly', async () => {
       const mockPackage = getMockPackage('8');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByTestId, queryByTestId } = render(
+      const { queryByTestId } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => getByTestId('mainPackage'));
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
 
-      const readme = queryByTestId('readme');
+      const readme = await waitFor(() => queryByTestId('readme'));
       expect(readme).toBeInTheDocument();
       expect(readme).toHaveTextContent(mockPackage.readme!);
-
-      await waitFor(() => {});
     });
   });
 
@@ -275,17 +265,17 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('9');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByTestId, getAllByText } = render(
+      const { getAllByText } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => getByTestId('mainPackage'));
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
 
       expect(getAllByText('Verified Publisher')).toHaveLength(2);
-
-      await waitFor(() => {});
     });
   });
 
@@ -300,11 +290,12 @@ describe('Package index', () => {
         </Router>
       );
 
-      await waitFor(() => getByTestId('mainPackage'));
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
 
       expect(getByText('Custom Resource Definitions')).toBeInTheDocument();
       expect(getByTestId('resourceDefinition')).toBeInTheDocument();
-      await waitFor(() => {});
     });
   });
 
@@ -313,17 +304,18 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('11');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByText, getByTestId, getAllByTestId } = render(
+      const { getByText, getAllByTestId } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => getByTestId('mainPackage'));
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
 
       expect(getByText('Custom Resource Definitions')).toBeInTheDocument();
       expect(getAllByTestId('resourceDefinition')).toHaveLength(1);
-      await waitFor(() => {});
     });
   });
 
@@ -332,22 +324,20 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('12');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByTestId, getByText } = render(
+      const { getAllByTestId, getByTestId, getByText } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => getByTestId('mainPackage'));
-
-      waitFor(() => {
-        expect(getByText('Rules')).toBeInTheDocument();
-
-        expect(getByTestId('ctcBtn')).toBeInTheDocument();
-        expect(getByTestId('downloadBtn')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      await waitFor(() => {});
+      expect(getByTestId('mainPackage')).toBeInTheDocument();
+      expect(getByText('Rules')).toBeInTheDocument();
+      expect(getAllByTestId('ctcBtn')).toHaveLength(2);
+      expect(getByTestId('downloadBtn')).toBeInTheDocument();
     });
   });
 
@@ -363,12 +353,11 @@ describe('Package index', () => {
       );
 
       await waitFor(() => {
-        expect(getByText('Manifest YAML')).toBeInTheDocument();
-
-        expect(getByTestId('tektonManifestBtn')).toBeInTheDocument();
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      await waitFor(() => {});
+      expect(getByText('Manifest YAML')).toBeInTheDocument();
+      expect(getByTestId('tektonManifestBtn')).toBeInTheDocument();
     });
   });
 });

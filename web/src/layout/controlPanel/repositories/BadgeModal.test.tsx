@@ -24,7 +24,6 @@ describe('Badge Modal - repositories section', () => {
 
   it('creates snapshot', () => {
     const result = render(<BadgeModal {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

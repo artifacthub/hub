@@ -19,6 +19,10 @@ const defaultProps = {
 };
 
 describe('OLMOCIInstall', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<OLMOCIInstall {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

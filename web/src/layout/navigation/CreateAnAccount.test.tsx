@@ -27,7 +27,6 @@ describe('CreateAnAccount', () => {
 
   it('creates snapshot', () => {
     const result = render(<CreateAnAccount {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

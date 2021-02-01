@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RepositoriesSection renders correctly 1`] = `
+exports[`RepositoriesSection creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-5 pt-3"

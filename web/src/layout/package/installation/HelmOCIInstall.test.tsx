@@ -20,6 +20,10 @@ const defaultProps = {
 };
 
 describe('HelmOCIInstall', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<HelmOCIInstall {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

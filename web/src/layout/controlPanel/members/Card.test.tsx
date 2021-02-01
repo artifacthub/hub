@@ -101,12 +101,13 @@ describe('Member Card - members section', () => {
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-      expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
-      expect(API.deleteOrganizationMember).toHaveBeenCalledWith(
-        mockCtx.prefs.controlPanel.selectedOrg,
-        memberMock.alias
-      );
+      await waitFor(() => {
+        expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
+        expect(API.deleteOrganizationMember).toHaveBeenCalledWith(
+          mockCtx.prefs.controlPanel.selectedOrg,
+          memberMock.alias
+        );
+      });
     });
 
     it('calls deleteOrganizationMember to remove yourself from the organization', async () => {
@@ -132,12 +133,13 @@ describe('Member Card - members section', () => {
       const btn = getByTestId('leaveOrRemoveBtn');
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-      expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
-      expect(API.deleteOrganizationMember).toHaveBeenCalledWith(
-        mockCtx.prefs.controlPanel.selectedOrg,
-        mockCtx.user.alias
-      );
+      await waitFor(() => {
+        expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
+        expect(API.deleteOrganizationMember).toHaveBeenCalledWith(
+          mockCtx.prefs.controlPanel.selectedOrg,
+          mockCtx.user.alias
+        );
+      });
     });
   });
 });

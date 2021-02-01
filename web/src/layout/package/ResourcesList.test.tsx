@@ -18,6 +18,10 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('ResourcesList', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const mockResources = getmockResources('1');
     const result = render(<ResourcesList resources={mockResources} kind={RepositoryKind.OPA} normalizedName="pkg" />);

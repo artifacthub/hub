@@ -19,7 +19,7 @@ const mockCtx = {
 
 const mockDispatch = jest.fn();
 
-describe('MobileSettings', () => {
+describe('ThemeMode', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });

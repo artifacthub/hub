@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SettingsSection renders correctly 1`] = `
+exports[`SettingsSection creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     user

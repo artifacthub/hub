@@ -41,9 +41,8 @@ describe('ValuesSchema', () => {
 
     await waitFor(() => {
       expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+      expect(result.asFragment()).toMatchSnapshot();
     });
-
-    expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {

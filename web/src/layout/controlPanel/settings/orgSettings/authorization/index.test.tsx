@@ -97,6 +97,8 @@ describe('Authorization settings index', () => {
     );
 
     await waitFor(() => {
+      expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
+      expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });

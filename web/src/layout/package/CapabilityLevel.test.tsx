@@ -3,7 +3,11 @@ import React from 'react';
 
 import CapabilityLevel from './CapabilityLevel';
 
-describe('DefaultDetails', () => {
+describe('CapabilityLevel', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<CapabilityLevel capabilityLevel="deep insights" />);
     expect(result.asFragment()).toMatchSnapshot();

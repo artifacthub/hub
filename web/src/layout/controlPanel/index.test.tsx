@@ -60,13 +60,12 @@ describe('ControlPanelView', () => {
         </Router>
       </AppCtx.Provider>
     );
-    expect(result.asFragment()).toMatchSnapshot();
-    await waitFor(() => {});
+    await waitFor(() => expect(result.asFragment()).toMatchSnapshot());
   });
 
   it('calls history replace when section is undefined', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
-    const { getByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView />
@@ -74,11 +73,10 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => getByRole('main'));
-    expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-    expect(mockHistoryReplace).toHaveBeenCalledWith('/control-panel/repositories');
-
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith('/control-panel/repositories');
+    });
   });
 
   it('renders 3 sections on user context', async () => {
@@ -91,14 +89,14 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => getByRole('main'));
-    const tabs = getAllByRole('tab');
-    expect(getByRole('tablist')).toBeInTheDocument();
-    expect(tabs).toHaveLength(3);
-    expect(tabs[0]).toHaveTextContent('Repositories');
-    expect(tabs[1]).toHaveTextContent('Organizations');
-    expect(tabs[2]).toHaveTextContent('Settings');
-    await waitFor(() => {});
+    await waitFor(() => {
+      const tabs = getAllByRole('tab');
+      expect(getByRole('tablist')).toBeInTheDocument();
+      expect(tabs).toHaveLength(3);
+      expect(tabs[0]).toHaveTextContent('Repositories');
+      expect(tabs[1]).toHaveTextContent('Organizations');
+      expect(tabs[2]).toHaveTextContent('Settings');
+    });
   });
 
   it('renders 3 sections on org context', async () => {
@@ -111,19 +109,19 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => getByRole('main'));
-    const tabs = getAllByRole('tab');
-    expect(getByRole('tablist')).toBeInTheDocument();
-    expect(tabs).toHaveLength(3);
-    expect(tabs[0]).toHaveTextContent('Repositories');
-    expect(tabs[1]).toHaveTextContent('Members');
-    expect(tabs[2]).toHaveTextContent('Settings');
-    await waitFor(() => {});
+    await waitFor(() => {
+      const tabs = getAllByRole('tab');
+      expect(getByRole('tablist')).toBeInTheDocument();
+      expect(tabs).toHaveLength(3);
+      expect(tabs[0]).toHaveTextContent('Repositories');
+      expect(tabs[1]).toHaveTextContent('Members');
+      expect(tabs[2]).toHaveTextContent('Settings');
+    });
   });
 
   it('calls updateOrg from ctx when organization name is defined', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
-    const { getByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" organizationName="org" repoName="repo" />
@@ -131,17 +129,15 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => getByRole('main'));
-
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
-
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledTimes(1);
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
+    });
   });
 
   it('calls updateOrg from ctx when organization userAlias is empty', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
-    const { getByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" organizationName="org" userAlias="" repoName="repo" />
@@ -149,17 +145,15 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => getByRole('main'));
-
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
-
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledTimes(1);
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
+    });
   });
 
   it('calls unselectOrg from ctx when user alias is defined', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
-    const { getByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" userAlias="test" repoName="repo" />
@@ -167,17 +161,15 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => getByRole('main'));
-
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'unselectOrg' });
-
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledTimes(1);
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'unselectOrg' });
+    });
   });
 
   it('calls unselectOrg from ctx when user alias is defined and org name is empty', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
-    const { getByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" userAlias="test" organizationName="" repoName="repo" />
@@ -185,17 +177,15 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => getByRole('main'));
-
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'unselectOrg' });
-
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledTimes(1);
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'unselectOrg' });
+    });
   });
 
   it('calls history replace when org name is defined, but not repo name', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
-    const { getByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" organizationName="org" />
@@ -203,14 +193,12 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => getByRole('main'));
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledTimes(1);
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
 
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
-
-    expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-    expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
-
-    await waitFor(() => {});
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+    });
   });
 });

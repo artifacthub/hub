@@ -33,7 +33,6 @@ describe('API key Card - API keys section', () => {
 
   it('creates snapshot', () => {
     const result = render(<Card {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 
@@ -60,8 +59,9 @@ describe('API key Card - API keys section', () => {
       const btn = getByTestId('deleteAPIKeyBtn');
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-      expect(API.deleteAPIKey).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(API.deleteAPIKey).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('calls setModalStatusMock when Edit button is clicked', () => {

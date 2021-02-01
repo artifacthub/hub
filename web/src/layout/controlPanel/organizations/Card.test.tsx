@@ -91,9 +91,10 @@ describe('Organization Card - organization section', () => {
 
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-      expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-      expect(API.confirmOrganizationMembership).toHaveBeenCalledWith(organizationMock.name);
+      await waitFor(() => {
+        expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
+        expect(API.confirmOrganizationMembership).toHaveBeenCalledWith(organizationMock.name);
+      });
     });
 
     it('calls deleteOrganizationMember when leave button in dropdown is clicked', async () => {
@@ -110,9 +111,10 @@ describe('Organization Card - organization section', () => {
       const btn = getByTestId('leaveOrgBtn');
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-      expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
-      expect(API.deleteOrganizationMember).toHaveBeenCalledWith(organizationMock.name, mockCtx.user.alias);
+      await waitFor(() => {
+        expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
+        expect(API.deleteOrganizationMember).toHaveBeenCalledWith(organizationMock.name, mockCtx.user.alias);
+      });
     });
   });
 

@@ -10,7 +10,6 @@ describe('GuestDropdown', () => {
 
   it('creates snapshot', () => {
     const result = render(<GuestDropdown />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

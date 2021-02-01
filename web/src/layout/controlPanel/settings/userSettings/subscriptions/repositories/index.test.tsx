@@ -30,7 +30,7 @@ describe('RepositoriesSection', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', async () => {
+  it('creates snapshot', async () => {
     const mockOptOut = getMockOptOut('1');
     mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
 
@@ -41,6 +41,7 @@ describe('RepositoriesSection', () => {
     );
 
     await waitFor(() => {
+      expect(API.getOptOutList).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -85,11 +86,9 @@ describe('RepositoriesSection', () => {
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
 
-      await waitFor(() => {
-        const modal = getByRole('dialog');
-        expect(modal).toBeInTheDocument();
-        expect(modal).toHaveClass('active');
-      });
+      const modal = await waitFor(() => getByRole('dialog'));
+      expect(modal).toBeInTheDocument();
+      expect(modal).toHaveClass('active');
     });
   });
 
@@ -110,8 +109,6 @@ describe('RepositoriesSection', () => {
         expect(getAllByTestId('orgLink')).toHaveLength(1);
         expect(getAllByTestId('repoLink')).toHaveLength(3);
       });
-
-      await waitFor(() => {});
     });
 
     it('does not display list when no packages', async () => {
@@ -129,8 +126,6 @@ describe('RepositoriesSection', () => {
       });
 
       expect(queryByTestId('repositoriesList')).toBeNull();
-
-      await waitFor(() => {});
     });
 
     it('calls alertDispatcher when getOptOutList call fails with not Unauthorized error', async () => {
@@ -149,8 +144,6 @@ describe('RepositoriesSection', () => {
           message: 'An error occurred getting your opt-out entries list, please try again later.',
         });
       });
-
-      await waitFor(() => {});
     });
 
     it('calls history push to load login modal when user is not signed in', async () => {
@@ -167,7 +160,6 @@ describe('RepositoriesSection', () => {
       await waitFor(() => getByText('Repositories'));
 
       expect(mockOnAuthError).toHaveBeenCalledTimes(1);
-      await waitFor(() => {});
     });
   });
 

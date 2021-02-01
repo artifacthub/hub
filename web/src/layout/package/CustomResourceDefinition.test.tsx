@@ -9,6 +9,10 @@ const getMockResources = (fixtureId: string): CustomResourcesDefinition[] => {
 };
 
 describe('CustomResourceDefinition', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const mockResources = getMockResources('1');
     const result = render(<CustomResourceDefinition resources={mockResources} normalizedName="pkg-name" />);

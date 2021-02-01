@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
 import { SecurityTargetReport } from '../../../types';
@@ -29,10 +29,7 @@ describe('SecurityTable', () => {
     const mockReports = getMockSecurityReport('1');
 
     const result = render(<SecurityTable {...defaultProps} reports={mockReports} />);
-
-    waitFor(() => {
-      expect(result.asFragment()).toMatchSnapshot();
-    });
+    expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -87,7 +84,7 @@ describe('SecurityTable', () => {
 
       const reportBtn = getByTestId('btnExpand');
       expect(reportBtn).toBeInTheDocument();
-      expect(reportBtn).toHaveTextContent('Target:centos 7.7.1908Rating:Hide vulnerabilities');
+      expect(reportBtn).toHaveTextContent('Target:centos 7.7.1908Rating:FHide vulnerabilities');
 
       expect(getByText('ID')).toBeInTheDocument();
       expect(getByText('Severity')).toBeInTheDocument();

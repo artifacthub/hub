@@ -16,7 +16,6 @@ describe('Update password - user settings', () => {
 
   it('creates snapshot', () => {
     const result = render(<UpdatePassword />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 
@@ -46,10 +45,10 @@ describe('Update password - user settings', () => {
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-
-      expect(API.updatePassword).toBeCalledTimes(1);
-      expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass');
+      await waitFor(() => {
+        expect(API.updatePassword).toBeCalledTimes(1);
+        expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass');
+      });
     });
 
     it('escapes password properly', async () => {
@@ -67,10 +66,10 @@ describe('Update password - user settings', () => {
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-
-      expect(API.updatePassword).toBeCalledTimes(1);
-      expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass$^');
+      await waitFor(() => {
+        expect(API.updatePassword).toBeCalledTimes(1);
+        expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass$^');
+      });
     });
 
     it("doesn`t pass form validation when passwords don't match", async () => {
@@ -88,9 +87,9 @@ describe('Update password - user settings', () => {
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-
-      expect(API.updatePassword).toBeCalledTimes(0);
+      await waitFor(() => {
+        expect(API.updatePassword).toBeCalledTimes(0);
+      });
     });
   });
 

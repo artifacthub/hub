@@ -18,6 +18,10 @@ const defaultProps = {
 };
 
 describe('KrewInstall', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<KrewInstall {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

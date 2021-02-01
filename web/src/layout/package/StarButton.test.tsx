@@ -34,6 +34,8 @@ describe('StarButton', () => {
   });
 
   it('creates snapshot', async () => {
+    mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
+
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <StarButton {...defaultProps} />
@@ -41,6 +43,7 @@ describe('StarButton', () => {
     );
 
     await waitFor(() => {
+      expect(API.getStars).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });

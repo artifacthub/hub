@@ -53,6 +53,10 @@ const activeMetrics: Tests[] = [
 ];
 
 describe('CVSSVector', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<CVSSVector {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

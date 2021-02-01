@@ -13,6 +13,10 @@ const defaultProps = {
 };
 
 describe('UserConfirmation', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', async () => {
     mocked(API).verifyEmail.mockResolvedValue(null);
 
@@ -23,6 +27,7 @@ describe('UserConfirmation', () => {
     );
 
     await waitFor(() => {
+      expect(API.verifyEmail).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -37,8 +42,9 @@ describe('UserConfirmation', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('You email has been verified! Please, login to Artifact Hub.')).toBeInTheDocument();
+      expect(API.verifyEmail).toHaveBeenCalledTimes(1);
     });
+    expect(getByText('You email has been verified! Please, login to Artifact Hub.')).toBeInTheDocument();
   });
 
   it('does not render component when email code is undefined', () => {
@@ -65,8 +71,9 @@ describe('UserConfirmation', () => {
       );
 
       await waitFor(() => {
-        expect(getByText('Sorry, custom error')).toBeInTheDocument();
+        expect(API.verifyEmail).toHaveBeenCalledTimes(1);
       });
+      expect(getByText('Sorry, custom error')).toBeInTheDocument();
     });
 
     it('Code has expired', async () => {
@@ -82,8 +89,10 @@ describe('UserConfirmation', () => {
       );
 
       await waitFor(() => {
-        expect(getByText('Sorry, email verification code has expired.')).toBeInTheDocument();
+        expect(API.verifyEmail).toHaveBeenCalledTimes(1);
       });
+
+      expect(getByText('Sorry, email verification code has expired.')).toBeInTheDocument();
     });
 
     it('default error message', async () => {
@@ -98,10 +107,12 @@ describe('UserConfirmation', () => {
       );
 
       await waitFor(() => {
-        expect(
-          getByText('An error occurred verifying your email, please contact us about this issue.')
-        ).toBeInTheDocument();
+        expect(API.verifyEmail).toHaveBeenCalledTimes(1);
       });
+
+      expect(
+        getByText('An error occurred verifying your email, please contact us about this issue.')
+      ).toBeInTheDocument();
     });
   });
 });

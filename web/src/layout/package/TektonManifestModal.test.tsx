@@ -10,6 +10,10 @@ const defaultProps = {
 };
 
 describe('TektonManifestModal', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<TektonManifestModal {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

@@ -17,6 +17,10 @@ const defaultProps = {
 };
 
 describe('SecurityReport', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<SecurityReport {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

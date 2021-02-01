@@ -28,7 +28,6 @@ describe('Organization settings index', () => {
     const mockOrganization = getMockOrganization('1');
 
     const result = render(<UpdateOrg {...defaultProps} organization={mockOrganization} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

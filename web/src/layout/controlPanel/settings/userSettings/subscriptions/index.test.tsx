@@ -14,9 +14,8 @@ describe('SubscriptionsSection', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', async () => {
+  it('creates snapshot', async () => {
     const result = render(<SubscriptionsSection {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

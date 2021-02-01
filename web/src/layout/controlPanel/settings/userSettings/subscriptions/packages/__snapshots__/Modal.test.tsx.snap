@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubscriptionModal renders correctly 1`] = `
+exports[`SubscriptionModal creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div

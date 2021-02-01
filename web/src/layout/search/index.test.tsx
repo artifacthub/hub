@@ -56,6 +56,7 @@ describe('Search index', () => {
     );
 
     await waitFor(() => {
+      expect(API.searchPackages).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -90,7 +91,6 @@ describe('Search index', () => {
 
       expect(results).toBeInTheDocument();
       expect(results).toHaveTextContent('1 - 7 of 7 results for "test"');
-      await waitFor(() => {});
     });
 
     it('renders correct legend with some filters applied', async () => {
@@ -104,10 +104,8 @@ describe('Search index', () => {
       );
 
       const results = await waitFor(() => getByTestId('resultsText'));
-
       expect(results).toBeInTheDocument();
       expect(getByText(/(some filters applied)/i)).toBeInTheDocument();
-      await waitFor(() => {});
     });
 
     it('renders error message when searchPackages call fails', async () => {
@@ -140,10 +138,9 @@ describe('Search index', () => {
           <SearchView {...defaultProps} />
         </Router>
       );
-      const packages = await waitFor(() => getAllByRole('listitem'));
 
+      const packages = await waitFor(() => getAllByRole('listitem'));
       expect(packages).toHaveLength(7);
-      await waitFor(() => {});
     });
 
     it('displays no data component when no packages', async () => {
@@ -163,8 +160,6 @@ describe('Search index', () => {
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
       expect(getByTestId('resetLink')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
   });
 
@@ -184,7 +179,6 @@ describe('Search index', () => {
       // Desktop + mobile (sidebar)
       expect(facets).toHaveLength(2 * 3);
       expect(options).toHaveLength(15 * 2);
-      await waitFor(() => {});
     });
 
     it('calls history push on filters change', async () => {
@@ -210,8 +204,6 @@ describe('Search index', () => {
           deprecated: false,
         }),
       });
-
-      await waitFor(() => {});
     });
 
     it('does not render filters', async () => {
@@ -228,8 +220,6 @@ describe('Search index', () => {
         expect(queryAllByTestId('facetBlock')).toHaveLength(0);
         expect(queryByRole('complementary')).toBeNull();
       });
-
-      await waitFor(() => {});
     });
   });
 
@@ -238,36 +228,34 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('10');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { queryByRole, queryByLabelText } = render(
+      const { queryByLabelText } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => queryByRole('main'));
-
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
       const pagination = queryByLabelText('pagination');
       expect(pagination).toBeNull();
-
-      await waitFor(() => {});
     });
 
     it('renders pagination', async () => {
       const mockSearchResults = getMockSearchResults('11');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { queryByRole, queryByLabelText } = render(
+      const { queryByLabelText } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => queryByRole('main'));
-
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
       const pagination = queryByLabelText('pagination');
       expect(pagination).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
 
     it('calls history push on page change keeping current active filters', async () => {
@@ -279,13 +267,15 @@ describe('Search index', () => {
         filters: { kind: ['0'] },
       };
 
-      const { queryByRole, queryByLabelText } = render(
+      const { queryByLabelText } = render(
         <Router>
           <SearchView {...props} />
         </Router>
       );
 
-      await waitFor(() => queryByRole('main'));
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
 
       const pagination = queryByLabelText('pagination');
       expect(pagination).toBeInTheDocument();
@@ -302,8 +292,6 @@ describe('Search index', () => {
           deprecated: false,
         }),
       });
-
-      await waitFor(() => {});
     });
   });
 
@@ -318,10 +306,8 @@ describe('Search index', () => {
         </Router>
       );
 
-      await waitFor(() => {
-        const paginationLimit = getByLabelText('pagination-limit') as HTMLSelectElement;
-        expect(paginationLimit.value).toBe('20');
-      });
+      const paginationLimit = await waitFor(() => getByLabelText('pagination-limit') as HTMLSelectElement);
+      expect(paginationLimit.value).toBe('20');
     });
 
     it('updates limit value', async () => {
@@ -354,8 +340,6 @@ describe('Search index', () => {
           deprecated: false,
         }),
       });
-
-      await waitFor(() => {});
     });
   });
 
@@ -383,8 +367,6 @@ describe('Search index', () => {
           deprecated: false,
         }),
       });
-
-      await waitFor(() => {});
     });
 
     it('calls history push with proper filters when package kind Chart is checked', async () => {
@@ -410,8 +392,6 @@ describe('Search index', () => {
           deprecated: false,
         }),
       });
-
-      await waitFor(() => {});
     });
 
     it('calls history push with proper filters when package kind filter different to Chart is checked', async () => {
@@ -437,8 +417,6 @@ describe('Search index', () => {
           deprecated: false,
         }),
       });
-
-      await waitFor(() => {});
     });
   });
 
@@ -489,17 +467,12 @@ describe('Search index', () => {
         });
       });
 
-      await waitFor(() => getByRole('main'));
-
       const noData = await waitFor(() => getByTestId('noData'));
-
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
       expect(checks).toHaveLength(28);
-
-      await waitFor(() => {});
     });
   });
 
@@ -508,14 +481,15 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('23');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId, getByRole } = render(
+      const { getByTestId } = render(
         <Router>
           <SearchView {...defaultProps} verifiedPublisher official deprecated filters={{ repo: ['stable'] }} />
         </Router>
       );
 
-      await waitFor(() => getByRole('main'));
-
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
       const resetBtn = getByTestId('resetBtn');
       expect(resetBtn).toBeInTheDocument();
       fireEvent.click(resetBtn);
@@ -529,21 +503,21 @@ describe('Search index', () => {
           filters: {},
         }),
       });
-
-      await waitFor(() => {});
     });
 
     it('resets all filters included tsQueryWeb when resetLink is clicked', async () => {
       const mockSearchResults = getMockSearchResults('24');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId, getByRole } = render(
+      const { getByTestId } = render(
         <Router>
           <SearchView {...defaultProps} filters={{}} />
         </Router>
       );
 
-      await waitFor(() => getByRole('main'));
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
 
       const resetLink = getByTestId('resetLink');
       expect(resetLink).toBeInTheDocument();
@@ -558,21 +532,21 @@ describe('Search index', () => {
           filters: {},
         }),
       });
-
-      await waitFor(() => {});
     });
 
     it('resets filters when resetFiltersLink is clicked', async () => {
       const mockSearchResults = getMockSearchResults('24');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId, getByRole } = render(
+      const { getByTestId } = render(
         <Router>
           <SearchView {...defaultProps} verifiedPublisher official deprecated filters={{ repo: ['stable'] }} />
         </Router>
       );
 
-      await waitFor(() => getByRole('main'));
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
 
       const resetFiltersLink = getByTestId('resetFiltersLink');
       expect(resetFiltersLink).toBeInTheDocument();
@@ -587,8 +561,6 @@ describe('Search index', () => {
           filters: {},
         }),
       });
-
-      await waitFor(() => {});
     });
   });
 });

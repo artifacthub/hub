@@ -15,9 +15,8 @@ describe('SettingsSection', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const result = render(<SettingsSection context="user" {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 
@@ -32,12 +31,6 @@ describe('SettingsSection', () => {
       const { getByText } = render(<SettingsSection context="org" {...defaultProps} />);
 
       expect(getByText('org')).toBeInTheDocument();
-    });
-
-    it('does not render context when context is not user or org', () => {
-      const { container } = render(<SettingsSection context={null} {...defaultProps} />);
-
-      expect(container).toBeEmptyDOMElement();
     });
   });
 });

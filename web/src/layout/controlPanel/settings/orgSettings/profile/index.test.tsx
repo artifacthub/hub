@@ -57,6 +57,7 @@ describe('Organization profile settings index', () => {
     );
 
     await waitFor(() => {
+      expect(API.getOrganization).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });

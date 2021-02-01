@@ -4,6 +4,10 @@ import React from 'react';
 import CapatabilityLevelInfoModal from './CapatabilityLevelInfoModal';
 
 describe('CapatabilityLevelInfoModal', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<CapatabilityLevelInfoModal />);
     expect(result.asFragment()).toMatchSnapshot();
