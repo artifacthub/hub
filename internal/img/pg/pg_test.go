@@ -1,13 +1,17 @@
 package pg
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
 	"io/ioutil"
+	"net/http"
+	"sync"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/jackc/pgx/v4"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -22,6 +26,81 @@ func TestNewImageStore(t *testing.T) {
 	assert.IsType(t, &ImageStore{}, s)
 	assert.Equal(t, db, s.db)
 	assert.Equal(t, hc, s.hc)
+}
+
+func TestDownloadAndSaveImage(t *testing.T) {
+	cfg := viper.New()
+	ctx := context.Background()
+	svgImgURL := "https://raw.githubusercontent.com/image.svg"
+	svgImgData, err := ioutil.ReadFile("testdata/image.svg")
+	require.NoError(t, err)
+	sumSvgImg := sha256.Sum256(svgImgData)
+	svgImgHash := sumSvgImg[:]
+
+	t.Run("image not found in cache, it needs to be downloaded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows)
+		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil)
+		hc := &tests.HTTPClientMock{}
+		req, _ := http.NewRequest("GET", svgImgURL, nil)
+		hc.On("Do", req).Return(&http.Response{
+			Body:       ioutil.NopCloser(bytes.NewReader(svgImgData)),
+			StatusCode: http.StatusOK,
+		}, nil)
+		s := NewImageStore(cfg, db, hc, nil)
+
+		imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, "svgImgID", imageID)
+		db.AssertExpectations(t)
+		hc.AssertExpectations(t)
+	})
+
+	t.Run("image found in cache, no need to download it", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows)
+		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil)
+		hc := &tests.HTTPClientMock{}
+		s := NewImageStore(cfg, db, hc, nil)
+		s.cache.Add(svgImgURL, svgImgData)
+
+		imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, "svgImgID", imageID)
+		db.AssertExpectations(t)
+		hc.AssertExpectations(t)
+	})
+
+	t.Run("multiple goroutines calling simultaneously, image is downloaded and saved once", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return("svgImgID", nil).Times(2)
+		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows).Once()
+		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil).Once()
+		hc := &tests.HTTPClientMock{}
+		req, _ := http.NewRequest("GET", svgImgURL, nil)
+		hc.On("Do", req).Return(&http.Response{
+			Body:       ioutil.NopCloser(bytes.NewReader(svgImgData)),
+			StatusCode: http.StatusOK,
+		}, nil).Once()
+		s := NewImageStore(cfg, db, hc, nil)
+
+		var wg sync.WaitGroup
+		for i := 0; i < 3; i++ {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
+				assert.Equal(t, nil, err)
+				assert.Equal(t, "svgImgID", imageID)
+			}()
+		}
+		wg.Wait()
+		db.AssertExpectations(t)
+		hc.AssertExpectations(t)
+	})
 }
 
 func TestGetImage(t *testing.T) {
@@ -82,7 +161,7 @@ func TestSaveImage(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows)
-		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", mock.Anything).Return("svgImgID", nil)
+		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil)
 		s := NewImageStore(nil, db, nil, nil)
 
 		imageID, err := s.SaveImage(ctx, svgImgData)

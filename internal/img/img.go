@@ -38,44 +38,6 @@ type Version struct {
 	Data    []byte
 }
 
-// GenerateVersions generates multiple versions of different sizes for the
-// image provided.
-func GenerateVersions(data []byte) ([]*Version, error) {
-	// Define versions spec
-	spec := []struct {
-		version string
-		width   int
-		height  int
-	}{
-		{"1x", 80, 80},
-		{"2x", 160, 160},
-		{"3x", 240, 240},
-		{"4x", 320, 320},
-	}
-
-	// Decode original image data
-	img, err := imaging.Decode(bytes.NewReader(data))
-	if err != nil {
-		return nil, err
-	}
-
-	// Generate image versions
-	imgVersions := make([]*Version, 0, len(spec))
-	for _, e := range spec {
-		imgVersion := imaging.Fit(img, e.width, e.height, imaging.Lanczos)
-		var buf bytes.Buffer
-		if err := imaging.Encode(&buf, imgVersion, imaging.PNG); err != nil {
-			return nil, err
-		}
-		imgVersions = append(imgVersions, &Version{
-			Version: e.version,
-			Data:    buf.Bytes(),
-		})
-	}
-
-	return imgVersions, nil
-}
-
 // Download downloads the image located at the url provided. If it's a data url
 // the image is extracted from it. Otherwise it's downloaded using the url.
 func Download(
@@ -118,4 +80,42 @@ func Download(
 		return ioutil.ReadAll(resp.Body)
 	}
 	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+}
+
+// GenerateVersions generates multiple versions of different sizes for the
+// image provided.
+func GenerateVersions(data []byte) ([]*Version, error) {
+	// Define versions spec
+	spec := []struct {
+		version string
+		width   int
+		height  int
+	}{
+		{"1x", 80, 80},
+		{"2x", 160, 160},
+		{"3x", 240, 240},
+		{"4x", 320, 320},
+	}
+
+	// Decode original image data
+	img, err := imaging.Decode(bytes.NewReader(data))
+	if err != nil {
+		return nil, err
+	}
+
+	// Generate image versions
+	imgVersions := make([]*Version, 0, len(spec))
+	for _, e := range spec {
+		imgVersion := imaging.Fit(img, e.width, e.height, imaging.Lanczos)
+		var buf bytes.Buffer
+		if err := imaging.Encode(&buf, imgVersion, imaging.PNG); err != nil {
+			return nil, err
+		}
+		imgVersions = append(imgVersions, &Version{
+			Version: e.version,
+			Data:    buf.Bytes(),
+		})
+	}
+
+	return imgVersions, nil
 }
