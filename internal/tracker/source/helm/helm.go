@@ -427,35 +427,37 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {
 		var changes []string
-		if err := yaml.Unmarshal([]byte(v), &changes); err == nil {
-			p.Changes = changes
+		if err := yaml.Unmarshal([]byte(v), &changes); err != nil {
+			return fmt.Errorf("invalid changes value: %s", v)
 		}
+		p.Changes = changes
 	}
 
 	// CRDs
 	if v, ok := annotations[crdsAnnotation]; ok {
 		var crds []interface{}
-		if err := yaml.Unmarshal([]byte(v), &crds); err == nil {
-			p.CRDs = crds
+		if err := yaml.Unmarshal([]byte(v), &crds); err != nil {
+			return fmt.Errorf("invalid crds value: %s", v)
 		}
+		p.CRDs = crds
 	}
 
 	// CRDs examples
 	if v, ok := annotations[crdsExamplesAnnotation]; ok {
 		var crdsExamples []interface{}
-		if err := yaml.Unmarshal([]byte(v), &crdsExamples); err == nil {
-			p.CRDsExamples = crdsExamples
-		} else {
-			fmt.Println(err)
+		if err := yaml.Unmarshal([]byte(v), &crdsExamples); err != nil {
+			return fmt.Errorf("invalid crdsExamples value: %s", v)
 		}
+		p.CRDsExamples = crdsExamples
 	}
 
 	// Images
 	if v, ok := annotations[imagesAnnotation]; ok {
 		var images []*hub.ContainerImage
-		if err := yaml.Unmarshal([]byte(v), &images); err == nil {
-			p.ContainersImages = images
+		if err := yaml.Unmarshal([]byte(v), &images); err != nil {
+			return fmt.Errorf("invalid images value: %s", v)
 		}
+		p.ContainersImages = images
 	}
 
 	// License
@@ -503,7 +505,7 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[operatorAnnotation]; ok {
 		isOperator, err := strconv.ParseBool(v)
 		if err != nil {
-			return errors.New("invalid operator value")
+			return fmt.Errorf("invalid operator value: %s", v)
 		}
 		p.IsOperator = isOperator
 	}
@@ -515,14 +517,17 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[prereleaseAnnotation]; ok {
 		prerelease, err := strconv.ParseBool(v)
 		if err != nil {
-			return errors.New("invalid prerelease value")
+			return fmt.Errorf("invalid prerelease value: %s", v)
 		}
 		p.Prerelease = prerelease
 	}
 
 	// Security updates
-	containsSecurityUpdates, err := strconv.ParseBool(annotations[securityUpdatesAnnotation])
-	if err == nil {
+	if v, ok := annotations[securityUpdatesAnnotation]; ok {
+		containsSecurityUpdates, err := strconv.ParseBool(v)
+		if err != nil {
+			return fmt.Errorf("invalid containsSecurityUpdates value: %s", v)
+		}
 		p.ContainsSecurityUpdates = containsSecurityUpdates
 	}
 
