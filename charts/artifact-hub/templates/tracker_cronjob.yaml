@@ -30,7 +30,7 @@ spec:
             command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
           containers:
           - name: tracker
-            image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag }}
+            image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default .Chart.AppVersion }}
             imagePullPolicy: {{ .Values.pullPolicy }}
             {{- if .Values.tracker.cacheDir }}
             env:

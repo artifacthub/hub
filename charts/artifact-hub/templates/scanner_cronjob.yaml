@@ -30,7 +30,7 @@ spec:
             command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
           containers:
           - name: scanner
-            image: {{ .Values.scanner.cronjob.image.repository }}:{{ .Values.imageTag }}
+            image: {{ .Values.scanner.cronjob.image.repository }}:{{ .Values.imageTag | default .Chart.AppVersion }}
             imagePullPolicy: {{ .Values.pullPolicy }}
             {{- if .Values.scanner.cacheDir }}
             env:

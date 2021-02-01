@@ -50,7 +50,7 @@ spec:
       {{- end }}
       containers:
         - name: hub
-          image: {{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag }}
+          image: {{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           {{- if .Values.hub.server.cacheDir }}
           env:

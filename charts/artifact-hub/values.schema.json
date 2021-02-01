@@ -444,8 +444,9 @@
         },
         "imageTag": {
             "title": "Tag used when pulling images",
+            "description": "Defaults to the Chart's appVersion.",
             "type": "string",
-            "default": "latest"
+            "default": ""
         },
         "log": {
             "type": "object",
@@ -682,5 +683,5 @@
             "required": ["deploy", "persistence"]
         }
     },
-    "required": ["imageTag", "pullPolicy", "log", "db", "dbMigrator", "hub", "scanner", "tracker", "trivy", "postgresql"]
+    "required": ["pullPolicy", "log", "db", "dbMigrator", "hub", "scanner", "tracker", "trivy", "postgresql"]
 }
