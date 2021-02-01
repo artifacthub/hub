@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"reflect"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -151,6 +152,81 @@ func TestGetRepositories(t *testing.T) {
 		assert.ElementsMatch(t, []*hub.Repository{repo1, repo2}, repos)
 		rm.AssertExpectations(t)
 	})
+}
+
+func TestSetupSource(t *testing.T) {
+	testCases := []struct {
+		r            *hub.Repository
+		expectedType string
+	}{
+		{
+			&hub.Repository{
+				Kind: hub.Falco,
+				URL:  cloudNativeSecurityHub,
+			},
+			"*falco.TrackerSource",
+		},
+		{
+			&hub.Repository{
+				Kind: hub.Falco,
+			},
+			"*generic.TrackerSource",
+		},
+		{
+			&hub.Repository{
+				Kind: hub.Helm,
+			},
+			"*helm.TrackerSource",
+		},
+		{
+			&hub.Repository{
+				Kind: hub.HelmPlugin,
+			},
+			"*helmplugin.TrackerSource",
+		},
+		{
+			&hub.Repository{
+				Kind: hub.Krew,
+			},
+			"*krew.TrackerSource",
+		},
+		{
+			&hub.Repository{
+				Kind: hub.OLM,
+			},
+			"*olm.TrackerSource",
+		},
+		{
+			&hub.Repository{
+				Kind: hub.OPA,
+			},
+			"*generic.TrackerSource",
+		},
+		{
+			&hub.Repository{
+				Kind: hub.TBAction,
+			},
+			"*generic.TrackerSource",
+		},
+		{
+			&hub.Repository{
+				Kind: hub.TektonTask,
+			},
+			"*tekton.TrackerSource",
+		},
+	}
+	for i, tc := range testCases {
+		tc := tc
+		t.Run(fmt.Sprintf("Test case %d", i), func(t *testing.T) {
+			t.Parallel()
+
+			i := &hub.TrackerSourceInput{
+				Repository: tc.r,
+			}
+			source := SetupSource(i)
+			assert.Equal(t, tc.expectedType, reflect.TypeOf(source).String())
+		})
+	}
 }
 
 func TestSetVerifiedPublisherFlag(t *testing.T) {
