@@ -8,6 +8,7 @@ import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, SearchResults, Webhook } from '../../../../types';
 import WebhookForm from './Form';
 jest.mock('../../../../api');
+jest.mock('../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
 
 const getMockWebhook = (fixtureId: string): Webhook => {
   return require(`./__fixtures__/Form/${fixtureId}.json`) as Webhook;
@@ -20,9 +21,6 @@ const getMockSearch = (fixtureId: string): SearchResults => {
 const mockOnSuccess = jest.fn();
 const mockOnClose = jest.fn();
 const mockOnAuthError = jest.fn();
-const scrollIntoViewMock = jest.fn();
-
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   onSuccess: mockOnSuccess,
@@ -496,7 +494,7 @@ describe('WebhookForm', () => {
             </Router>
           </AppCtx.Provider>
         );
-        const { getByTestId, getByText, rerender } = render(component);
+        const { getByTestId, getByText } = render(component);
 
         const input = getByTestId('nameInput');
         fireEvent.change(input, { target: { value: 'test' } });
@@ -515,10 +513,9 @@ describe('WebhookForm', () => {
           );
         });
 
-        rerender(component);
-
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
+        await waitFor(() => {
+          expect(getByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
+        });
       });
 
       it('without error message', async () => {
@@ -553,8 +550,9 @@ describe('WebhookForm', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred updating the webhook, please try again later.')).toBeInTheDocument();
+        await waitFor(() => {
+          expect(getByText('An error occurred updating the webhook, please try again later.')).toBeInTheDocument();
+        });
       });
     });
 
@@ -732,8 +730,9 @@ describe('WebhookForm', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred testing the webhook: custom error')).toBeInTheDocument();
+        await waitFor(() => {
+          expect(getByText('An error occurred testing the webhook: custom error')).toBeInTheDocument();
+        });
       });
 
       it('default error', async () => {
@@ -764,8 +763,9 @@ describe('WebhookForm', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred testing the webhook, please try again later.')).toBeInTheDocument();
+        await waitFor(() => {
+          expect(getByText('An error occurred testing the webhook, please try again later.')).toBeInTheDocument();
+        });
       });
     });
   });

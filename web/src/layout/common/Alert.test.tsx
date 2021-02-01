@@ -11,7 +11,6 @@ window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 const defaultProps = {
   message: null,
   type: 'danger',
-  activeScroll: true,
   onClose: onCloseMock,
 };
 

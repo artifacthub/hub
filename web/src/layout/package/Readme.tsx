@@ -60,7 +60,7 @@ const Readme = (props: Props) => {
   const Link: React.ElementType = (data: LinkProps) => {
     if (/^https?:/.test(data.href)) {
       return (
-        <a href={data.href} target={data.target}>
+        <a href={data.href} target={data.target} rel="noopener noreferrer">
           {data.children}
         </a>
       );

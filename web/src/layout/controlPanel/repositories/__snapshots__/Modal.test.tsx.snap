@@ -41,11 +41,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
             class="modal-body p-4 h-100 d-flex flex-column"
           >
             <div
-              class="w-100 body"
+              class="w-100"
             >
               <form
                 autocomplete="on"
-                class="w-100 overflow-hidden needs-validation"
+                class="w-100 needs-validation"
                 data-testid="repoForm"
                 novalidate=""
               >

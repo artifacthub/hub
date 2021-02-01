@@ -600,7 +600,7 @@ const AuthorizationSection = (props: Props) => {
           </>
         )}
 
-        <Alert message={apiError} type="danger" onClose={() => setApiError(null)} activeScroll />
+        <Alert message={apiError} type="danger" onClose={() => setApiError(null)} />
       </div>
 
       {confirmationModal.open && (

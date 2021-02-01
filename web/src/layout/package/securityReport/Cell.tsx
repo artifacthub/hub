@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash';
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FaCaretDown, FaCaretRight, FaLink } from 'react-icons/fa';
 
 import { Vulnerability, VulnerabilitySeverity } from '../../../types';
@@ -10,13 +10,15 @@ import styles from './Cell.module.css';
 import CVSSVector from './CVSSVector';
 
 interface Props {
-  index: number;
+  name: string;
   vulnerability: Vulnerability;
-  visibleVulnerability?: string;
+  isExpanded: boolean;
   setVisibleVulnerability: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const SecurityCell = (props: Props) => {
+  const ref = useRef<HTMLTableRowElement>(null);
+
   const getMainReference = (): JSX.Element | null => {
     if (isUndefined(props.vulnerability.References) || props.vulnerability.References.length === 0) {
       return null;
@@ -39,20 +41,23 @@ const SecurityCell = (props: Props) => {
   };
 
   const severity: VulnerabilitySeverity = props.vulnerability.Severity.toLowerCase() as VulnerabilitySeverity;
-  const isExpanded = props.visibleVulnerability === `${props.vulnerability.VulnerabilityID}_${props.index}`;
+
+  useEffect(() => {
+    // Scrolls content into view when a vulnerability is expanded
+    if (props.isExpanded && ref && ref.current) {
+      ref.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    }
+  }, [props.isExpanded]);
 
   return (
     <>
       <tr
         data-testid="vulnerabilityCell"
         className={styles.clickableCell}
-        onClick={() =>
-          props.setVisibleVulnerability(
-            !isExpanded ? `${props.vulnerability.VulnerabilityID}_${props.index}` : undefined
-          )
-        }
+        onClick={() => props.setVisibleVulnerability(!props.isExpanded ? props.name : undefined)}
+        ref={ref}
       >
-        <td className="align-middle text-primary">{isExpanded ? <FaCaretDown /> : <FaCaretRight />}</td>
+        <td className="align-middle text-primary">{props.isExpanded ? <FaCaretDown /> : <FaCaretRight />}</td>
         <td className="align-middle text-nowrap">
           {props.vulnerability.VulnerabilityID}
           {getMainReference()}
@@ -82,7 +87,7 @@ const SecurityCell = (props: Props) => {
         </td>
       </tr>
 
-      {isExpanded && (
+      {props.isExpanded && (
         <tr data-testid="vulnerabilityDetail" className={styles.noClickableCell}>
           <td colSpan={6}>
             <div className="m-3">

@@ -9,6 +9,7 @@ import { ErrorKind, OrganizationPolicy, User } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import AuthorizationSection from './index';
 jest.mock('../../../../../utils/alertDispatcher');
+jest.mock('../../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
 
 jest.mock('../../../../common/CodeEditor', () => () => <div />);
 jest.mock('../../../../../api');
@@ -40,11 +41,9 @@ const getOrganizationMembers = (): User[] => {
 };
 
 const onAuthErrorMock = jest.fn();
-const scrollIntoViewMock = jest.fn();
 const openMock = jest.fn();
 
 window.open = openMock;
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   onAuthError: onAuthErrorMock,
@@ -455,10 +454,11 @@ describe('Authorization settings index', () => {
           });
         });
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(
-          getByText('You do not have permissions to update the policy from the organization.')
-        ).toBeInTheDocument();
+        await waitFor(() => {
+          expect(
+            getByText('You do not have permissions to update the policy from the organization.')
+          ).toBeInTheDocument();
+        });
 
         waitFor(() => {
           expect(switchBtn).toBeDisabled();
@@ -510,14 +510,13 @@ describe('Authorization settings index', () => {
           });
         });
 
-        rerender(component);
-
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(
-          getByText(
-            /An error occurred updating the policy: invalid input: editing user will be locked out with this policy/i
-          )
-        ).toBeInTheDocument();
+        await waitFor(() => {
+          expect(
+            getByText(
+              /An error occurred updating the policy: invalid input: editing user will be locked out with this policy/i
+            )
+          ).toBeInTheDocument();
+        });
       });
 
       it('Default error', async () => {
@@ -564,10 +563,9 @@ describe('Authorization settings index', () => {
           });
         });
 
-        rerender(component);
-
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText(/An error occurred updating the policy, please try again later./i)).toBeInTheDocument();
+        await waitFor(() => {
+          expect(getByText(/An error occurred updating the policy, please try again later./i)).toBeInTheDocument();
+        });
       });
     });
   });

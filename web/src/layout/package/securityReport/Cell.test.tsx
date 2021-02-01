@@ -5,9 +5,12 @@ import { VulnerabilitySeverity } from '../../../types';
 import SecurityCell from './Cell';
 
 const mockSetVisibleVulnerability = jest.fn();
+const scrollIntoViewMock = jest.fn();
+
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
-  index: 1,
+  name: 'CVE-2020-8492_1',
   vulnerability: {
     Description:
       'Python 2.7 through 2.7.17, 3.5 through 3.5.9, 3.6 through 3.6.10, 3.7 through 3.7.6, and 3.8 through 3.8.1 allows an HTTP server to conduc',
@@ -29,6 +32,7 @@ const defaultProps = {
     Title: 'python: wrong backtracking in urllib.request.AbstractBasicAuthHandler allows for a ReDoS',
     VulnerabilityID: 'CVE-2020-8492',
   },
+  isExpanded: false,
   setVisibleVulnerability: mockSetVisibleVulnerability,
 };
 
@@ -160,11 +164,12 @@ describe('SecuritySummary', () => {
 
     it('renders cell without fixed version', () => {
       const props = {
-        index: 1,
+        name: 'CVE-2020-8492_1',
         vulnerability: {
           ...defaultProps.vulnerability,
           InstalledVersion: undefined,
         },
+        isExpanded: false,
         setVisibleVulnerability: mockSetVisibleVulnerability,
       };
 
@@ -182,7 +187,7 @@ describe('SecuritySummary', () => {
     });
 
     it('opens vulnerability detail', () => {
-      const { queryByTestId, getByTestId } = render(
+      const { queryByTestId, getByTestId, rerender } = render(
         <table>
           <tbody>
             <SecurityCell {...defaultProps} />
@@ -196,13 +201,23 @@ describe('SecuritySummary', () => {
 
       expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
       expect(mockSetVisibleVulnerability).toHaveBeenCalledWith('CVE-2020-8492_1');
+
+      rerender(
+        <table>
+          <tbody>
+            <SecurityCell {...defaultProps} isExpanded />
+          </tbody>
+        </table>
+      );
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
     });
 
     it('Closes vulnerability detail', () => {
       const { getByTestId } = render(
         <table>
           <tbody>
-            <SecurityCell {...defaultProps} visibleVulnerability="CVE-2020-8492_1" />
+            <SecurityCell {...defaultProps} isExpanded />
           </tbody>
         </table>
       );
@@ -220,11 +235,12 @@ describe('SecuritySummary', () => {
     for (let i = 0; i < badges.length; i++) {
       it('returns proper badge', () => {
         const props = {
-          index: 1,
+          name: 'CVE-2020-8492_1',
           vulnerability: {
             ...defaultProps.vulnerability,
             Severity: badges[i].severity,
           },
+          isExpanded: false,
           setVisibleVulnerability: mockSetVisibleVulnerability,
         };
 
@@ -247,12 +263,13 @@ describe('SecuritySummary', () => {
     for (let i = 0; i < references.length; i++) {
       it('returns correct one', () => {
         const props = {
-          index: 1,
+          name: 'CVE-2020-8492_1',
           vulnerability: {
             ...defaultProps.vulnerability,
             VulnerabilityID: references[i].cve,
             References: references[i].list,
           },
+          isExpanded: false,
           setVisibleVulnerability: mockSetVisibleVulnerability,
         };
 
