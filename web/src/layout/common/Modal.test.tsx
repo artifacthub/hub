@@ -3,11 +3,10 @@ import React from 'react';
 
 import Modal from './Modal';
 
+jest.mock('./Alert', () => (props: any) => <div>{props.message}</div>);
+
 const onCloseMock = jest.fn();
 const cleanErrorMock = jest.fn();
-const scrollIntoViewMock = jest.fn();
-
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   header: 'title',
@@ -52,15 +51,8 @@ describe('Modal', () => {
   });
 
   it('renders error alert if error is defined', () => {
-    const { getByTestId, getByRole, getByText } = render(<Modal {...defaultProps} error="api error" />);
-    expect(getByRole('alert')).toBeInTheDocument();
+    const { getByText } = render(<Modal {...defaultProps} error="api error" />);
     expect(getByText('api error')).toBeInTheDocument();
-    expect(getByTestId('closeAlertBtn')).toBeInTheDocument();
-
-    expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-
-    fireEvent.click(getByTestId('closeAlertBtn'));
-    expect(cleanErrorMock).toHaveBeenCalledTimes(1);
   });
 
   it('opens Modal to click Open Modal btn', () => {

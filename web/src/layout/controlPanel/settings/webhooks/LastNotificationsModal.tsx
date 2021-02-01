@@ -36,13 +36,9 @@ const LastNotificationsModal = (props: Props) => {
             <thead>
               <tr className={`table-primary ${styles.tableTitle}`}>
                 <th scope="col">Notification id</th>
-                <th scope="col" className="text-center">
-                  Created at
-                </th>
+                <th scope="col">Created at</th>
                 <th scope="col">Processed</th>
-                <th scope="col" className="text-center">
-                  Processed at
-                </th>
+                <th scope="col">Processed at</th>
                 <th scope="col">Succeeded</th>
               </tr>
             </thead>

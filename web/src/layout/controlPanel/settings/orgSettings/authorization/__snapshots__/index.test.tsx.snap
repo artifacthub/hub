@@ -65,10 +65,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
         </a>
         .
       </p>
-      <div
-        class="alertWrapper"
-        data-testid="alertWrapper"
-      />
+      <div />
     </div>
   </main>
 </DocumentFragment>

@@ -124,7 +124,7 @@ const Modal = (props: Props) => {
             <div className="modal-body p-4 h-100 d-flex flex-column">
               {openStatus && <>{props.children}</>}
               <div>
-                <Alert message={props.error || null} type="danger" onClose={props.cleanError} activeScroll />
+                <Alert message={props.error || null} type="danger" onClose={props.cleanError} />
               </div>
             </div>
 

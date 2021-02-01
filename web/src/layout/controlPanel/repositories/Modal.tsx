@@ -339,7 +339,7 @@ const RepositoryModal = (props: Props) => {
       error={apiError}
       cleanError={cleanApiError}
     >
-      <div className={`w-100 ${styles.body}`}>
+      <div className="w-100">
         {visibleDisabledConfirmation ? (
           <>
             <div className="alert alert-warning my-4">
@@ -369,11 +369,7 @@ const RepositoryModal = (props: Props) => {
           <form
             data-testid="repoForm"
             ref={form}
-            className={classnames(
-              'w-100 overflow-hidden',
-              { 'needs-validation': !isValidated },
-              { 'was-validated': isValidated }
-            )}
+            className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
             onFocus={cleanApiError}
             autoComplete="on"
             noValidate

@@ -134,15 +134,18 @@ const SecurityTable = (props: Props) => {
                             </tr>
                           </thead>
                           <tbody>
-                            {visibleVulnerabilities.map((item: Vulnerability, index: number) => (
-                              <SecurityCell
-                                index={index}
-                                vulnerability={item}
-                                key={`cell_${item.PkgName}_${item.VulnerabilityID}`}
-                                visibleVulnerability={visibleVulnerability}
-                                setVisibleVulnerability={setVisibleVulnerability}
-                              />
-                            ))}
+                            {visibleVulnerabilities.map((item: Vulnerability, index: number) => {
+                              const vulnerabilityName = `${item.VulnerabilityID}_${index}`;
+                              return (
+                                <SecurityCell
+                                  name={vulnerabilityName}
+                                  vulnerability={item}
+                                  key={`cell_${item.PkgName}_${item.VulnerabilityID}`}
+                                  isExpanded={visibleVulnerability === vulnerabilityName}
+                                  setVisibleVulnerability={setVisibleVulnerability}
+                                />
+                              );
+                            })}
                             {list.length > visibleVulnerabilities.length && (
                               <tr>
                                 <td colSpan={6} className="align-middle text-right pt-3">

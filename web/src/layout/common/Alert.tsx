@@ -7,7 +7,6 @@ import styles from './Alert.module.css';
 interface Props {
   message: string | null;
   type?: 'danger' | 'warning' | 'success';
-  activeScroll: boolean;
   onClose?: () => void;
 }
 
@@ -28,7 +27,7 @@ const Alert: React.ElementType = (props: Props) => {
     } else {
       setErrorMessage(props.message);
       setIsVisible(true);
-      errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
+      errorWrapper.current!.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     }
 
     return () => {
