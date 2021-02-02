@@ -23,7 +23,8 @@ import (
 )
 
 const (
-	githubMaxRequestsPerHour = 5000
+	githubMaxRequestsPerHourUnauthenticated = 60
+	githubMaxRequestsPerHourAuthenticated   = 5000
 )
 
 func main() {
@@ -65,10 +66,14 @@ func main() {
 	rm := repo.NewManager(cfg, db, az)
 	pm := pkg.NewManager(db)
 	hc := &http.Client{Timeout: 10 * time.Second}
+	githubMaxRequestsPerHour := githubMaxRequestsPerHourUnauthenticated
+	if cfg.GetString("tracker.githubToken") != "" {
+		githubMaxRequestsPerHour = githubMaxRequestsPerHourAuthenticated
+	}
 	githubRL := rate.NewLimiter(rate.Every(1*time.Hour), githubMaxRequestsPerHour)
 	go func() {
 		<-time.After(1 * time.Hour)
-		githubRL.SetLimit(rate.Every(1 * time.Hour / githubMaxRequestsPerHour))
+		githubRL.SetLimit(rate.Every(1 * time.Hour / time.Duration(githubMaxRequestsPerHour)))
 	}()
 	is, err := util.SetupImageStore(cfg, db, hc, githubRL)
 	if err != nil {
