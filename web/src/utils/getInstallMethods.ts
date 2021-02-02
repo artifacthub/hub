@@ -17,6 +17,7 @@ export interface InstallMethod {
     install?: string;
     activeChannel?: string;
     isGlobalOperator?: boolean;
+    isPrivate?: boolean;
   };
 }
 
@@ -134,6 +135,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
                   name: pkg.name,
                   isGlobalOperator: pkg.data!.isGlobalOperator,
                   activeChannel: activeChannel,
+                  isPrivate: pkg.repository.private,
                 },
               });
             }
@@ -147,6 +149,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
               kind: InstallMethodKind.Falco,
               props: {
                 normalizedName: pkg.normalizedName,
+                isPrivate: pkg.repository.private,
               },
             });
           }
@@ -184,6 +187,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
               kind: InstallMethodKind.Tekton,
               props: {
                 contentUrl: pkg.contentUrl,
+                isPrivate: pkg.repository!.private,
               },
             });
           }

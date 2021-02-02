@@ -18,6 +18,7 @@
     "organizationDisplayName": "Helm",
     "verifiedPublisher": true,
     "official": false,
-    "url": "https://repo.url"
+    "url": "https://repo.url",
+    "private": false
   }
 }

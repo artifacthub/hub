@@ -10,6 +10,7 @@ const repo: Repository = {
   displayName: 'Repo',
   url: 'http://repo.test',
   userAlias: 'user',
+  private: false,
 };
 const defaultProps = {
   name: 'packageName',
@@ -53,6 +54,16 @@ describe('KrewInstall', () => {
       const link = getByText('Need Krew?');
       expect(link).toBeInTheDocument();
       expect(link).toHaveProperty('href', 'https://krew.sigs.k8s.io/docs/user-guide/setup/install/');
+    });
+
+    it('renders private repo', () => {
+      const { getByRole } = render(
+        <KrewInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />
+      );
+
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });
   });
 });

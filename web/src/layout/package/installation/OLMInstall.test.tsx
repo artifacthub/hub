@@ -6,6 +6,7 @@ import OLMInstall from './OLMInstall';
 const defaultProps = {
   name: 'packageName',
   activeChannel: 'stable',
+  isPrivate: false,
 };
 
 describe('OLMInstall', () => {
@@ -43,6 +44,14 @@ describe('OLMInstall', () => {
     it('renders global operator', () => {
       const { getByText } = render(<OLMInstall {...defaultProps} isGlobalOperator />);
       expect(getByText('kubectl get csv -n operators')).toBeInTheDocument();
+    });
+
+    it('renders private repo', () => {
+      const { getByRole } = render(<OLMInstall {...defaultProps} isPrivate />);
+
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });
   });
 });

@@ -10,6 +10,7 @@ const repo: Repository = {
   displayName: 'Repo',
   url: 'http://repo.test',
   userAlias: 'user',
+  private: false,
 };
 const defaultProps = {
   name: 'packageName',
@@ -48,6 +49,16 @@ describe('HelmInstall', () => {
       expect(contentUrl).toBeInTheDocument();
       expect(contentUrl).toHaveTextContent('this link');
       expect(contentUrl).toHaveProperty('href', 'http://content.url/');
+    });
+
+    it('renders private repo', () => {
+      const { getByRole } = render(
+        <HelmInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />
+      );
+
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });
   });
 });

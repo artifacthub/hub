@@ -157,6 +157,7 @@ const InstallationModal = (props: Props) => {
                                 name={method.props.name!}
                                 activeChannel={method.props.activeChannel!}
                                 isGlobalOperator={method.props.isGlobalOperator}
+                                isPrivate={method.props.isPrivate}
                               />
                             );
                           case InstallMethodKind.OLMOCI:
@@ -168,13 +169,20 @@ const InstallationModal = (props: Props) => {
                               />
                             );
                           case InstallMethodKind.Falco:
-                            return <FalcoInstall normalizedName={method.props.normalizedName!} />;
+                            return (
+                              <FalcoInstall
+                                normalizedName={method.props.normalizedName!}
+                                isPrivate={method.props.isPrivate}
+                              />
+                            );
                           case InstallMethodKind.Krew:
                             return <KrewInstall name={method.props.name!} repository={method.props.repository!} />;
                           case InstallMethodKind.HelmPlugin:
                             return <HelmPluginInstall repository={method.props.repository!} />;
                           case InstallMethodKind.Tekton:
-                            return <TektonInstall contentUrl={method.props.contentUrl!} />;
+                            return (
+                              <TektonInstall contentUrl={method.props.contentUrl!} isPrivate={method.props.isPrivate} />
+                            );
                           default:
                             return null;
                         }

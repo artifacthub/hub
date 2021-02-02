@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"strings"
@@ -9,6 +10,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
 const (
@@ -34,6 +36,8 @@ func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string
 		if len(matches) == 4 {
 			packagesPath = strings.TrimSuffix(matches[3], "/")
 		}
+	default:
+		return "", "", errors.New("repository kind not supported")
 	}
 
 	// Clone git repository
@@ -41,19 +45,32 @@ func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string
 	if err != nil {
 		return "", "", fmt.Errorf("error creating temp dir: %w", err)
 	}
-	branch := r.Branch
-	if branch == "" {
-		branch = DefaultBranch
-	}
-	_, err = git.PlainCloneContext(ctx, tmpDir, false, &git.CloneOptions{
+	cloneOptions := &git.CloneOptions{
 		URL:           repoBaseURL,
-		ReferenceName: plumbing.NewBranchReferenceName(branch),
+		ReferenceName: plumbing.NewBranchReferenceName(GetBranch(r)),
 		SingleBranch:  true,
 		Depth:         1,
-	})
+	}
+	if r.AuthPass != "" {
+		cloneOptions.Auth = &http.BasicAuth{
+			Username: "artifact-hub",
+			Password: r.AuthPass,
+		}
+	}
+	_, err = git.PlainCloneContext(ctx, tmpDir, false, cloneOptions)
 	if err != nil {
 		return "", "", err
 	}
 
 	return tmpDir, packagesPath, nil
+}
+
+// GetBranch returns the branch configured in the repository or the default one
+// if none was provided.
+func GetBranch(r *hub.Repository) string {
+	branch := r.Branch
+	if branch == "" {
+		branch = DefaultBranch
+	}
+	return branch
 }

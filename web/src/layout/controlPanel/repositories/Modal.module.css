@@ -1,6 +1,11 @@
 .modal {
   max-width: 90%;
   width: 620px !important;
+  height: 922px;
+}
+
+.allowPrivateModal {
+  height: 1060px;
 }
 
 .inputAdditionalInfoURL {

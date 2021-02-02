@@ -245,7 +245,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   class="text-muted text-break mt-1"
                 >
                   <p
-                    class="mb-0"
+                    class="mb-4"
                   >
                     For more information about the url format and the repository structure, please see the 
                     <a
@@ -275,7 +275,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   </p>
                 </small>
                 <div
-                  class="mt-4 mb-3"
+                  class="mb-4"
                 >
                   <div
                     class="custom-control custom-switch pl-0"

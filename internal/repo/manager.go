@@ -19,6 +19,10 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/config"
+	githttp "github.com/go-git/go-git/v5/plumbing/transport/http"
+	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
 	"github.com/google/go-github/github"
@@ -493,31 +497,29 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 		}
 		digest = desc.Digest.String()
 
-	case SchemeIsHTTP(u) && u.Host == "github.com":
+	case GitRepoURLRE.MatchString(r.URL):
 		// Digest is obtained from the last commit in the repository
-		pathParts := strings.Split(strings.TrimPrefix(u.Path, "/"), "/")
-		if len(pathParts) < 2 {
-			break
+		matches := GitRepoURLRE.FindStringSubmatch(r.URL)
+		repoBaseURL := matches[1]
+		remote := git.NewRemote(memory.NewStorage(), &config.RemoteConfig{
+			URLs: []string{repoBaseURL},
+		})
+		listOptions := &git.ListOptions{}
+		if r.AuthPass != "" {
+			listOptions.Auth = &githttp.BasicAuth{
+				Username: "artifact-hub",
+				Password: r.AuthPass,
+			}
 		}
-		owner := pathParts[0]
-		repo := pathParts[1]
-		branch := r.Branch
-		if branch == "" {
-			branch = DefaultBranch
-		}
-		opt := &github.CommitsListOptions{
-			SHA: branch,
-			ListOptions: github.ListOptions{
-				Page:    0,
-				PerPage: 1,
-			},
-		}
-		commits, _, err := m.gh.Repositories.ListCommits(ctx, owner, repo, opt)
+		refs, err := remote.List(listOptions)
 		if err != nil {
 			return digest, err
 		}
-		if len(commits) == 1 {
-			digest = *commits[0].SHA
+		branch := GetBranch(r)
+		for _, ref := range refs {
+			if ref.Name().IsBranch() && ref.Name().Short() == branch {
+				digest = ref.Hash().String()
+			}
 		}
 	}
 
@@ -678,9 +680,6 @@ func (m *Manager) validateCredentials(r *hub.Repository) error {
 	allowPrivateRepos := m.cfg.GetBool("server.allowPrivateRepositories")
 	if !allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") {
 		return errors.New("private repositories not allowed")
-	}
-	if allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") && r.Kind != hub.Helm {
-		return errors.New("only helm private repositories are allowed")
 	}
 	return nil
 }

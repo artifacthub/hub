@@ -238,7 +238,7 @@ const RepositoryModal = (props: Props) => {
 
     return (
       <small className="text-muted text-break mt-1">
-        <p className="mb-0">
+        <p className="mb-4">
           For more information about the url format and the repository structure, please see the {link} section in the{' '}
           <ExternalLink href="/docs/repositories" className="text-reset">
             <u>repositories guide</u>
@@ -445,29 +445,6 @@ const RepositoryModal = (props: Props) => {
               required
             />
 
-            {selectedKind === RepositoryKind.Helm && allowPrivateRepositories && (
-              <div className="form-row">
-                <InputField
-                  className="col-sm-12 col-md-6"
-                  type="text"
-                  label="Username"
-                  name="authUser"
-                  autoComplete="off"
-                  value={props.repository ? props.repository.authUser || '' : ''}
-                />
-
-                <InputField
-                  className="col-sm-12 col-md-6"
-                  type="password"
-                  label="Password"
-                  name="authPass"
-                  autoComplete="off"
-                  value={props.repository ? props.repository.authPass || '' : ''}
-                  visiblePassword
-                />
-              </div>
-            )}
-
             {getAdditionalInfo()}
 
             {[
@@ -479,7 +456,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.HelmPlugin,
               RepositoryKind.TektonTask,
             ].includes(selectedKind) && (
-              <div className="mt-4">
+              <div>
                 <InputField
                   type="text"
                   label="Branch"
@@ -498,7 +475,56 @@ const RepositoryModal = (props: Props) => {
               </div>
             )}
 
-            <div className="mt-4 mb-3">
+            {allowPrivateRepositories && (
+              <>
+                {(() => {
+                  switch (selectedKind) {
+                    case RepositoryKind.Helm:
+                      return (
+                        <div className="form-row">
+                          <InputField
+                            className="col-sm-12 col-md-6"
+                            type="text"
+                            label="Username"
+                            name="authUser"
+                            autoComplete="off"
+                            value={props.repository ? props.repository.authUser || '' : ''}
+                          />
+
+                          <InputField
+                            className="col-sm-12 col-md-6"
+                            type="password"
+                            label="Password"
+                            name="authPass"
+                            autoComplete="off"
+                            value={props.repository ? props.repository.authPass || '' : ''}
+                            visiblePassword
+                          />
+                        </div>
+                      );
+
+                    default:
+                      return (
+                        <div>
+                          <InputField
+                            type="text"
+                            label="Authentication token"
+                            name="authPass"
+                            additionalInfo={
+                              <small className="text-muted text-break mt-1">
+                                <p className="mb-0">Authentication token used in private git based repositories.</p>
+                              </small>
+                            }
+                            value={props.repository ? props.repository.authPass || '' : ''}
+                          />
+                        </div>
+                      );
+                  }
+                })()}
+              </>
+            )}
+
+            <div className="mb-4">
               <div className="custom-control custom-switch pl-0">
                 <input
                   data-testid="toggleDisabledRepo"

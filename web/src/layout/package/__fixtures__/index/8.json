@@ -16,6 +16,7 @@
     "name": "incubator",
     "organizationName": "helm",
     "organizationDisplayName": "Helm",
-    "url": "https://repo.url"
+    "url": "https://repo.url",
+    "private": false
   }
 }

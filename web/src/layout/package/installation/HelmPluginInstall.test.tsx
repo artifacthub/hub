@@ -10,6 +10,7 @@ const repo: Repository = {
   displayName: 'Repo',
   url: 'http://repo.test',
   userAlias: 'user',
+  private: false,
 };
 const defaultProps = {
   name: 'packageName',
@@ -32,6 +33,16 @@ describe('HelmPluginInstall', () => {
       const link = getByText('Need Helm?');
       expect(link).toBeInTheDocument();
       expect(link).toHaveProperty('href', 'https://helm.sh/docs/intro/quickstart/');
+    });
+
+    it('renders private repo', () => {
+      const { getByRole } = render(
+        <HelmPluginInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />
+      );
+
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });
   });
 });

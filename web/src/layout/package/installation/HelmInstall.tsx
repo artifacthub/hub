@@ -23,7 +23,7 @@ const HelmInstall = (props: Props) => {
         />
 
         {props.repository.private && (
-          <div className={`alert alert-warning my-4 ${styles.alert}`}>
+          <div className={`alert alert-warning my-4 ${styles.alert}`} role="alert">
             <span className="font-weight-bold text-uppercase">Important:</span> This repository is{' '}
             <span className="font-weight-bold">private</span> and requires some credentials.
           </div>

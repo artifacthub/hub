@@ -116,10 +116,7 @@ func (s *TrackerSource) preparePackage(
 		blobPath = "-/blob"
 		rawPath = "-/raw"
 	}
-	branch := r.Branch
-	if branch == "" {
-		branch = repo.DefaultBranch
-	}
+	branch := repo.GetBranch(r)
 	pkgVersionPath := strings.TrimPrefix(pkgPath, s.i.BasePath)
 	contentURL := fmt.Sprintf("%s/%s/%s/%s%s/%s.yaml",
 		repoBaseURL, rawPath, branch, pkgsPath, pkgVersionPath, manifest.Name)
