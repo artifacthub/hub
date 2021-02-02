@@ -1,0 +1,3 @@
+# `imageTag: latest` is used for the CI tests (with the GitHub action `helm/chart-testing-action`)
+# (since the Chart's appVersion - which is the default for `imageTag` - might not be released yet)
+imageTag: latest
