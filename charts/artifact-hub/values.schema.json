@@ -76,7 +76,15 @@
         },
         "fullnameOverride": {
             "type": "string",
+            "title": "Fullname override",
+            "description": "Overwrites the installation's fullname generation (used for the dynamic resource name prefix).",
             "default": ""
+        },
+        "dynamicResourceNamePrefixEnabled": {
+            "type": "boolean",
+            "title": "Enable dynamic resource name prefix",
+            "description": "Enabling the dynamic resource name prefix ensures that the resources are named dynamically based on the Helm installation's name. This allows multiple installations of this chart in a single Kubernetes namespace. The prefix can be defined by using the `fullnameOverride`.",
+            "default": false
         },
         "hub": {
             "title": "Hub configuration",

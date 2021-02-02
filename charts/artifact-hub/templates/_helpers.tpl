@@ -60,3 +60,18 @@ For example on GKE it returns "15+" instead of "15"
 {{- $minorVersion := .Capabilities.KubeVersion.Minor | regexFind "[0-9]+" -}}
 {{- printf "%s.%s" .Capabilities.KubeVersion.Major $minorVersion -}}
 {{- end -}}
+
+{{/*
+Kubernetes resource name prefix
+Using the prefix allows deploying multiple instances of the Chart in a single Kubernetes namespace.
+If the dynamic resource name prefix is disabled, this template results in an empty string.
+As described in `chart.fullname`, the length limit for some resource names is 63.
+Therefore, we truncate the prefix to have a max-length of 44 to respect this limit considering the
+longest resource name ("db-migrator-install" = 19 chars).
+*/}}
+{{- define "chart.resourceNamePrefix" -}}
+{{- if .Values.dynamicResourceNamePrefixEnabled -}}
+{{- (include "chart.fullname" .) | trunc 43 | trimSuffix "-" | printf "%s-" -}}
+{{- end -}}
+{{- end -}}
+

@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: db-migrator-install
+  name: {{ include "chart.resourceNamePrefix" . }}db-migrator-install
 spec:
   template:
     spec:
@@ -36,5 +36,5 @@ spec:
       volumes:
       - name: db-migrator-config
         secret:
-          secretName: db-migrator-config
+          secretName: {{ include "chart.resourceNamePrefix" . }}db-migrator-config
 {{- end }}

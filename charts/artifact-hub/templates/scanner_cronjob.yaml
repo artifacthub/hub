@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: scanner
+  name: {{ include "chart.resourceNamePrefix" . }}scanner
 spec:
   schedule: "15,45 * * * *"
   successfulJobsHistoryLimit: 1
@@ -48,7 +48,7 @@ spec:
           volumes:
           - name: scanner-config
             secret:
-              secretName: scanner-config
+              secretName: {{ include "chart.resourceNamePrefix" . }}scanner-config
           {{- if .Values.scanner.cacheDir }}
           - name: cache-dir
             emptyDir: {}

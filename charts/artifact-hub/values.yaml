@@ -2,6 +2,7 @@ nameOverride: ""
 fullnameOverride: ""
 imagePullSecrets: []
 imageTag: ""
+dynamicResourceNamePrefixEnabled: false
 pullPolicy: IfNotPresent
 
 log:

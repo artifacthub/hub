@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: tracker
+  name: {{ include "chart.resourceNamePrefix" . }}tracker
 spec:
   schedule: "0,30 * * * *"
   successfulJobsHistoryLimit: 1
@@ -48,7 +48,7 @@ spec:
           volumes:
           - name: tracker-config
             secret:
-              secretName: tracker-config
+              secretName: {{ include "chart.resourceNamePrefix" . }}tracker-config
           {{- if .Values.tracker.cacheDir }}
           - name: cache-dir
             emptyDir: {}

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: trivy
+  name: {{ include "chart.resourceNamePrefix" . }}trivy
   labels:
     app.kubernetes.io/component: trivy
     {{- include "chart.labels" . | nindent 4 }}

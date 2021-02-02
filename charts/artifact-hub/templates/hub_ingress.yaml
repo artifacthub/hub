@@ -6,7 +6,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: hub
+  name: {{ include "chart.resourceNamePrefix" . }}hub
   labels:
     app.kubernetes.io/component: hub
     {{- include "chart.labels" . | nindent 4 }}
