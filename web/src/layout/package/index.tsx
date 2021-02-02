@@ -534,7 +534,7 @@ const PackageView = (props: Props) => {
                 </NoData>
               ) : (
                 <div className="px-xs-0 px-sm-3 px-lg-0">
-                  <div className={`ml-5 mb-5 d-none d-md-block position-relative ${styles.additionalInfo}`}>
+                  <div className={`ml-5 mb-5 d-none d-md-block position-relative float-right ${styles.additionalInfo}`}>
                     {!isNull(detail) && (
                       <div className={styles.rightColumnWrapper}>
                         {getInstallationModal('mb-2')}

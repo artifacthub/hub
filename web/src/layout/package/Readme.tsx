@@ -1,10 +1,11 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
+import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import AnchorHeader from '../common/AnchorHeader';
 import ErrorBoundary from '../common/ErrorBoundary';
 import styles from './Readme.module.css';
@@ -49,10 +50,32 @@ const Readme = (props: Props) => {
   };
 
   const Image: React.ElementType = (data: ImageProps) => {
+    const img = useRef<HTMLImageElement>(null);
     const [error, setError] = useState<boolean>(false);
+    const [isBigImage, setIsBigImage] = useState<boolean>(false);
+    const point = useBreakpointDetect();
+
+    const checkImageInBreakpoint = useCallback(() => {
+      if (!isNull(img) && img.current && point && ['md', 'lg', 'xl'].includes(point) && img.current!.width > 410) {
+        setIsBigImage(true);
+      }
+    }, [point]);
+
+    useEffect(() => {
+      checkImageInBreakpoint();
+    }, [point, checkImageInBreakpoint]);
 
     return /^https?:/.test(data.src) ? (
-      <img src={data.src} alt={data.alt} className={classnames({ 'd-none': error })} onError={() => setError(true)} />
+      <span className={classnames({ 'overflow-hidden d-table-cell': isBigImage })}>
+        <img
+          ref={img}
+          src={data.src}
+          alt={data.alt}
+          className={classnames({ 'd-none': error })}
+          onError={() => setError(true)}
+          onLoad={checkImageInBreakpoint}
+        />
+      </span>
     ) : null;
   };
 
