@@ -336,6 +336,6 @@ Once the repository metadata file has been set up, you can proceed from the Arti
 
 ## Private repositories
 
-Artifact Hub supports adding private Helm repositories. By default this feature is disabled, but you can enable it in your own Artifact Hub deployment setting the `hub.server.allowPrivateRepositories` configuration setting to `true`. When enabled, you'll be allowed to add the basic auth credentials for the repository in the add/update repository modal in the control panel. Credentials are not exposed in the Artifact Hub UI, so users will need to get them separately. The installation instructions modal will display a warning to users when the package displayed belongs to a private repository.
+Artifact Hub supports adding private repositories (except OLM OCI based). By default this feature is disabled, but you can enable it in your own Artifact Hub deployment setting the `hub.server.allowPrivateRepositories` configuration setting to `true`. When enabled, you'll be allowed to add the authentication credentials for the repository in the add/update repository modal in the control panel. Credentials are not exposed in the Artifact Hub UI, so users will need to get them separately. The installation instructions modal will display a warning to users when the package displayed belongs to a private repository.
 
 *Please note that this feature is not enabled in `artifacthub.io`.*

@@ -15,5 +15,13 @@ describe('TektonInstall', () => {
 
       expect(getByText('kubectl apply -f https://url.com')).toBeInTheDocument();
     });
+
+    it('renders private repo', () => {
+      const { getByRole } = render(<TektonInstall contentUrl="https://url.com" isPrivate />);
+
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
+    });
   });
 });

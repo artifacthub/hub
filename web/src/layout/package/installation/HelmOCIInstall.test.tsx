@@ -10,7 +10,9 @@ const repo: Repository = {
   displayName: 'Repo',
   url: 'oci://ghcr.io/artifacthub/artifact-hub',
   userAlias: 'user',
+  private: false,
 };
+
 const defaultProps = {
   name: 'packageName',
   version: '1.0.0',
@@ -34,6 +36,16 @@ describe('HelmOCIInstall', () => {
       expect(getByText('Export chart to directory')).toBeInTheDocument();
       expect(getByText('Install chart')).toBeInTheDocument();
       expect(getByText('helm install my-packageName ./packageName')).toBeInTheDocument();
+    });
+
+    it('renders private repo', () => {
+      const { getByRole } = render(
+        <HelmOCIInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />
+      );
+
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });
   });
 });

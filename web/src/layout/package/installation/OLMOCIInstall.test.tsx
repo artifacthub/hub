@@ -10,6 +10,7 @@ const repo: Repository = {
   displayName: 'Repo',
   url: 'oci://docker.io/ibmcom/ibm-operator-catalog:latest',
   userAlias: 'user',
+  private: false,
 };
 const defaultProps = {
   name: 'packageName',
@@ -44,6 +45,16 @@ describe('OLMOCIInstall', () => {
         'href',
         'https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md'
       );
+    });
+
+    it('renders private repo', () => {
+      const { getByRole } = render(
+        <OLMOCIInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />
+      );
+
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });
   });
 });

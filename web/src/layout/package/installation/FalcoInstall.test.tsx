@@ -23,5 +23,13 @@ describe('FalcoInstall', () => {
       expect(helmLink).toBeInTheDocument();
       expect(helmLink).toHaveProperty('href', 'https://helm.sh/docs/intro/quickstart/');
     });
+
+    it('renders private repo', () => {
+      const { getByRole } = render(<FalcoInstall normalizedName="falco-repo" isPrivate />);
+
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
+    });
   });
 });

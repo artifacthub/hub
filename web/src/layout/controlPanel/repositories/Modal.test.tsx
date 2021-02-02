@@ -4,7 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, Repository } from '../../../types';
+import { ErrorKind, Repository, RepositoryKind } from '../../../types';
 import Modal from './Modal';
 jest.mock('../../../api');
 
@@ -80,6 +80,21 @@ describe('Repository Modal - repositories section', () => {
       expect(getByDisplayValue(repoMock.displayName!)).toBeInTheDocument();
       expect(getByDisplayValue(repoMock.url)).toBeInTheDocument();
       expect(getByTestId('toggleDisabledRepo')).toBeInTheDocument();
+    });
+
+    it('renders private not Helm charts repo', () => {
+      (window as any).config = {
+        allowPrivateRepositories: 'true',
+      };
+
+      const { getByText, queryByTestId } = render(
+        <Modal {...defaultProps} repository={{ ...repoMock, kind: RepositoryKind.HelmPlugin, authPass: 'pass123' }} />
+      );
+
+      expect(getByText('Update repository')).toBeInTheDocument();
+      expect(getByText('Update')).toBeInTheDocument();
+      expect(getByText('Authentication token')).toBeInTheDocument();
+      expect(queryByTestId('authUserInput')).toBeNull();
     });
 
     describe('Add repo', () => {
@@ -514,7 +529,7 @@ describe('Repository Modal - repositories section', () => {
     });
 
     describe('When allowPrivateRepositories is true', () => {
-      it('renders Add repo', () => {
+      it('renders Add repo for Helm charts', () => {
         (window as any).config = {
           allowPrivateRepositories: 'true',
         };
@@ -527,7 +542,7 @@ describe('Repository Modal - repositories section', () => {
         expect(getByTestId('authPassInput')).toBeInTheDocument();
       });
 
-      it('calls add repo', async () => {
+      it('calls add repo for Helm charts', async () => {
         (window as any).config = {
           allowPrivateRepositories: 'true',
         };
@@ -567,7 +582,7 @@ describe('Repository Modal - repositories section', () => {
         expect(onSuccessMock).toHaveBeenCalledTimes(1);
       });
 
-      it('calls update repository', async () => {
+      it('calls update repository for Helm charts', async () => {
         (window as any).config = {
           allowPrivateRepositories: 'true',
         };

@@ -79,6 +79,7 @@
     "displayName": "Community Operators",
     "repositoryId": "0f467c6e-3eb4-4b6c-8140-410c084de5b8",
     "organizationName": "operator-framework",
-    "organizationDisplayName": "Operator Framework"
+    "organizationDisplayName": "Operator Framework",
+    "private": false
   }
 }
