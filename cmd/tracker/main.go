@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"os"
 	"os/exec"
@@ -16,7 +17,7 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
-	"github.com/artifacthub/hub/internal/tracker/errors"
+	trerrors "github.com/artifacthub/hub/internal/tracker/errors"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/time/rate"
@@ -25,6 +26,11 @@ import (
 const (
 	githubMaxRequestsPerHourUnauthenticated = 60
 	githubMaxRequestsPerHourAuthenticated   = 5000
+	repositoryTimeout                       = 5 * time.Minute
+)
+
+var (
+	errTimeout = errors.New("repository tracking timed out")
 )
 
 func main() {
@@ -79,7 +85,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("image store setup failed")
 	}
-	ec := errors.NewCollector(rm)
+	ec := trerrors.NewCollector(rm)
 	svc := &hub.TrackerServices{
 		Ctx:                ctx,
 		Cfg:                cfg,
@@ -118,15 +124,27 @@ L:
 				wg.Done()
 			}()
 			logger := log.With().Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Logger()
-			defer func() {
-				if r := recover(); r != nil {
-					logger.Error().Bytes("stacktrace", debug.Stack()).Interface("recover", r).Send()
+			done := make(chan struct{})
+			go func() {
+				defer func() {
+					done <- struct{}{}
+				}()
+				defer func() {
+					if r := recover(); r != nil {
+						logger.Error().Bytes("stacktrace", debug.Stack()).Interface("recover", r).Send()
+					}
+				}()
+				t := tracker.New(svc, r, logger)
+				if err := t.Run(); err != nil {
+					logger.Error().Err(err).Send()
+					svc.Ec.Append(r.RepositoryID, err.Error())
 				}
 			}()
-			t := tracker.New(svc, r, logger)
-			if err := t.Run(); err != nil {
-				logger.Error().Err(err).Send()
-				svc.Ec.Append(r.RepositoryID, err.Error())
+			select {
+			case <-done:
+			case <-time.After(repositoryTimeout):
+				logger.Error().Err(errTimeout).Send()
+				svc.Ec.Append(r.RepositoryID, errTimeout.Error())
 			}
 		}(r)
 	}
