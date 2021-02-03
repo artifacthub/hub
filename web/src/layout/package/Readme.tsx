@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { isArray, isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -32,7 +33,7 @@ interface LinkProps {
   children: any;
 }
 
-interface TableProps {
+interface BasicProps {
   children: JSX.Element | JSX.Element[];
 }
 
@@ -81,9 +82,20 @@ const Readme = (props: Props) => {
 
   // Only for external links and anchors
   const Link: React.ElementType = (data: LinkProps) => {
+    const isContentImage = data.children && isArray(data.children) ? !isUndefined(data.children[0].props.src) : false;
+
     if (/^https?:/.test(data.href)) {
       return (
-        <a href={data.href} target={data.target} rel="noopener noreferrer">
+        // We need to force display inline when content is not an image due to
+        // .paragraph a:only-child {
+        //   display: table-cell;
+        // }
+        <a
+          href={data.href}
+          target={data.target}
+          rel="noopener noreferrer"
+          className={classnames({ 'd-inline': !isContentImage })}
+        >
           {data.children}
         </a>
       );
@@ -91,7 +103,7 @@ const Readme = (props: Props) => {
     } else if (data.href.startsWith('#') && isElementInView(data.href)) {
       return (
         <button
-          className={`btn btn-link d-inline-block text-left border-0 p-0 ${styles.btnLink}`}
+          className={classnames('btn btn-link text-left border-0 p-0', styles.btnLink)}
           onClick={() => props.scrollIntoView(data.href)}
         >
           {data.children}
@@ -102,15 +114,16 @@ const Readme = (props: Props) => {
     }
   };
 
-  const LinkRef: React.ElementType = (data: LinkProps) => {
-    return <span className="font-weight-bold">{data.children}</span>;
-  };
-
-  const Table: React.ElementType = (data: TableProps) => (
+  const Table: React.ElementType = (data: BasicProps) => (
     <div className="mw-100 overflow-auto">
       <table>{data.children}</table>
     </div>
   );
+
+  const Paragraph: React.ElementType = (data: BasicProps) => {
+    const isOneChild = data.children && isArray(data.children) && data.children.length === 1;
+    return <p className={classnames({ 'd-block w-100 h-100': isOneChild }, styles.paragraph)}>{data.children}</p>;
+  };
 
   const Heading: React.ElementType = (data) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
 
@@ -140,9 +153,11 @@ const Readme = (props: Props) => {
             code: Code,
             image: Image,
             link: Link,
-            linkReference: LinkRef,
+            imageReference: Image,
+            linkReference: Link,
             table: Table,
             heading: Heading,
+            paragraph: Paragraph,
           }}
         />
       </span>
