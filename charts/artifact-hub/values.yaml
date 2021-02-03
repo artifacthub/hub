@@ -98,7 +98,7 @@ scanner:
       repository: artifacthub/scanner
     resources: {}
   concurrency: 10
-  trivyURL: http://trivy:8081
+  trivyURL: ""
   cacheDir: ""
   configDir: "/home/scanner/.cfg"
   dockerUsername: ""

@@ -16,7 +16,7 @@ metadata:
   {{- end }}
 spec:
   backend:
-    serviceName: hub
+    serviceName: {{ include "chart.resourceNamePrefix" . }}hub
     servicePort: {{ .Values.hub.service.port }}
   {{- with .Values.hub.ingress.rules }}
   rules:
