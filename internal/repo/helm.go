@@ -1,8 +1,9 @@
 package repo
 
 import (
+	"time"
+
 	"github.com/artifacthub/hub/internal/hub"
-	"helm.sh/helm/v3/pkg/cli"
 	"helm.sh/helm/v3/pkg/getter"
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
@@ -19,7 +20,14 @@ func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, str
 		Username: r.AuthUser,
 		Password: r.AuthPass,
 	}
-	getters := getter.All(&cli.EnvSettings{})
+	getters := getter.Providers{
+		{
+			Schemes: []string{"http", "https"},
+			New: func(options ...getter.Option) (getter.Getter, error) {
+				return getter.NewHTTPGetter(getter.WithTimeout(10 * time.Second))
+			},
+		},
+	}
 	chartRepository, err := helmrepo.NewChartRepository(repoConfig, getters)
 	if err != nil {
 		return nil, "", err
