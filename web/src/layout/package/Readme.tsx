@@ -125,6 +125,10 @@ const Readme = (props: Props) => {
     return <p className={classnames({ 'd-block w-100 h-100': isOneChild }, styles.paragraph)}>{data.children}</p>;
   };
 
+  const Blockquote: React.ElementType = (data: BasicProps) => {
+    return <blockquote className={`text-muted ${styles.quote}`}>{data.children}</blockquote>;
+  };
+
   const Heading: React.ElementType = (data) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
 
   const isElementInView = (id: string) => {
@@ -136,10 +140,29 @@ const Readme = (props: Props) => {
     }
   };
 
-  let readme = props.markdownContent;
-  if (!props.markdownContent.startsWith('#')) {
-    readme = `# ${props.packageName}\n${readme}`;
-  }
+  const checkReadme = (): string => {
+    let title = '';
+
+    const hasTitle = (): boolean => {
+      if (props.markdownContent.startsWith('#')) return true;
+
+      let hasTitle = false;
+      const mdContent = props.markdownContent.split('\n');
+      if (mdContent.length > 1) {
+        const secondLine = mdContent[1];
+        if (secondLine.includes('===') || secondLine.includes('---')) {
+          hasTitle = true;
+        }
+      }
+      return hasTitle;
+    };
+    if (!hasTitle()) {
+      title = `# ${props.packageName}\n`;
+    }
+    return `${title}${props.markdownContent}`;
+  };
+
+  let readme = checkReadme();
 
   return (
     <ErrorBoundary message="Something went wrong rendering the README file of this package.">
@@ -158,6 +181,7 @@ const Readme = (props: Props) => {
             table: Table,
             heading: Heading,
             paragraph: Paragraph,
+            blockquote: Blockquote,
           }}
         />
       </span>
