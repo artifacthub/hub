@@ -444,7 +444,7 @@
         },
         "imageTag": {
             "title": "Tag used when pulling images",
-            "description": "Defaults to the Chart's appVersion.",
+            "description": "Defaults to the Chart's appVersion, prefixed with a `v`.",
             "type": "string",
             "default": ""
         },

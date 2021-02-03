@@ -26,7 +26,7 @@ spec:
         command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
       containers:
       - name: db-migrator
-        image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default .Chart.AppVersion }}
+        image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
         imagePullPolicy: {{ .Values.pullPolicy }}
         env:
           - name: TERN_CONF
