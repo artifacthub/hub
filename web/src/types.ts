@@ -133,6 +133,7 @@ export interface PackageData {
   isGlobalOperator?: boolean;
   manifestRaw?: string;
   pipelinesMinVersion?: string;
+  platforms?: string[];
 }
 
 export interface OPAPolicies {

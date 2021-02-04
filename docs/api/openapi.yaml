@@ -2325,7 +2325,22 @@ components:
     HelmPluginPackage:
       $ref: "#/components/schemas/Package"
     KrewPluginsPackage:
-      $ref: "#/components/schemas/Package"
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                platforms:
+                  type: array
+                  items:
+                    type: string
+                    nullable: false
+                    example:
+                      - darwin/amd64
+                      - linux/amd64
     Link:
       type: object
       nullable: false

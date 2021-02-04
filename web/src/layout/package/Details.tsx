@@ -14,6 +14,7 @@ import Keywords from './Keywords';
 import License from './License';
 import Links from './Links';
 import Maintainers from './Maintainers';
+import Platforms from './Platforms';
 import SecurityReport from './securityReport';
 import Version from './Version';
 import VersionInRow from './VersionInRow';
@@ -213,6 +214,11 @@ const Details = (props: Props) => {
         !isNull(props.package.data) && (
           <Dependencies dependencies={props.package.data.dependencies} packageId={props.package.packageId} />
         )}
+
+      {props.package.repository.kind === RepositoryKind.Krew &&
+        !isUndefined(props.package.data) &&
+        !isNull(props.package.data) &&
+        !isUndefined(props.package.data.platforms) && <Platforms platforms={props.package.data.platforms} />}
 
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />

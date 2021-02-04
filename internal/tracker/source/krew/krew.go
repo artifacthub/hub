@@ -4,15 +4,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
+	"sort"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/krew/pkg/index"
 	"sigs.k8s.io/yaml"
 )
 
 const (
+	// Annotations
 	displayNameAnnotation = "artifacthub.io/displayName"
 	keywordsAnnotation    = "artifacthub.io/keywords"
 	licenseAnnotation     = "artifacthub.io/license"
@@ -20,6 +23,10 @@ const (
 	maintainersAnnotation = "artifacthub.io/maintainers"
 	providerAnnotation    = "artifacthub.io/provider"
 	readmeAnnotation      = "artifacthub.io/readme"
+
+	// Platform keys
+	os   = "os"
+	arch = "arch"
 )
 
 // TrackerSource is a hub.TrackerSource implementation for Krew plugins
@@ -97,6 +104,26 @@ func preparePackage(r *hub.Repository, manifest *index.Plugin) (*hub.Package, er
 	}
 	version := sv.String()
 
+	// Prepare supported platforms
+	var platforms []string
+	for _, platform := range manifest.Spec.Platforms {
+		l := platform.Selector.MatchLabels
+		switch {
+		case l[os] != "" && l[arch] != "":
+			platforms = append(platforms, fmt.Sprintf("%s/%s", l[os], l[arch]))
+		case l[os] != "":
+			platforms = append(platforms, l[os])
+		}
+		for _, e := range platform.Selector.MatchExpressions {
+			if e.Operator == metav1.LabelSelectorOpIn {
+				if e.Key == os {
+					platforms = append(platforms, e.Values...)
+				}
+			}
+		}
+	}
+	sort.Strings(platforms)
+
 	// Prepare package from manifest
 	p := &hub.Package{
 		Name:        name,
@@ -105,6 +132,9 @@ func preparePackage(r *hub.Repository, manifest *index.Plugin) (*hub.Package, er
 		HomeURL:     manifest.Spec.Homepage,
 		Readme:      manifest.Spec.Description,
 		Repository:  r,
+		Data: map[string]interface{}{
+			"platforms": platforms,
+		},
 	}
 
 	// Enrich package with information from annotations

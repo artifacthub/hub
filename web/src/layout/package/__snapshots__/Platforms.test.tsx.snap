@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Platforms creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span>
+        Supported platforms
+      </span>
+    </small>
+  </div>
+  <div
+    class="mb-3 d-flex flex-row flex-wrap"
+  >
+    <div
+      class="d-inline badge font-weight-normal mr-2 mb-1 mw-100 text-truncate badge"
+      data-testid="platformBadge"
+    >
+      darwin
+    </div>
+    <div
+      class="d-inline badge font-weight-normal mr-2 mb-1 mw-100 text-truncate badge"
+      data-testid="platformBadge"
+    >
+      linux
+    </div>
+    <div
+      class="d-inline badge font-weight-normal mr-2 mb-1 mw-100 text-truncate badge"
+      data-testid="platformBadge"
+    >
+      windows
+    </div>
+  </div>
+</DocumentFragment>
+`;
