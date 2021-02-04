@@ -99,6 +99,21 @@
   display: table-cell;
 }
 
+.quote {
+  position: relative;
+  padding-left: 0.75rem;
+}
+
+.quote::before {
+  content: '';
+  position: absolute;
+  border-left: 3px solid var(--color-1-500);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+}
+
 @media only screen and (max-width: 575.98px) {
   .md {
     margin-left: 15px;
