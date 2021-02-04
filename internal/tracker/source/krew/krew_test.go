@@ -111,6 +111,9 @@ func TestTrackerSource(t *testing.T) {
 					Email: "user2@email.com",
 				},
 			},
+			Data: map[string]interface{}{
+				"platforms": []string{"linux/amd64"},
+			},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{

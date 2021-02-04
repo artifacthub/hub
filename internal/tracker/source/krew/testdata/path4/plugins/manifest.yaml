@@ -25,3 +25,8 @@ spec:
   shortDescription: Test plugin
   homepage: https://test/plugin
   description: This is just a test plugin
+  platforms:
+    - selector:
+        matchLabels:
+          os: linux
+          arch: amd64

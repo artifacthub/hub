@@ -1,0 +1,4 @@
+.badge {
+  background-color: var(--color-black-15) !important;
+  color: var(--color-font);
+}
