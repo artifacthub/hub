@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hub
+  name: {{ include "chart.resourceNamePrefix" . }}hub
   labels:
     app.kubernetes.io/component: hub
     {{- include "chart.labels" . | nindent 4 }}
@@ -30,7 +30,7 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       {{- if .Release.IsInstall }}
-      serviceAccountName: hub
+      serviceAccountName: {{ include "chart.resourceNamePrefix" . }}hub
       {{- end }}
       initContainers:
       - name: check-db-ready
@@ -46,7 +46,7 @@ spec:
       - name: check-db-migrator-run
         image: "bitnami/kubectl:{{ template "chart.KubernetesVersion" . }}"
         imagePullPolicy: IfNotPresent
-        command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/db-migrator-install', '--timeout=60s']
+        command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/{{ include "chart.resourceNamePrefix" . }}db-migrator-install', '--timeout=60s']
       {{- end }}
       containers:
         - name: hub
@@ -74,7 +74,7 @@ spec:
       volumes:
       - name: hub-config
         secret:
-          secretName: hub-config
+          secretName: {{ include "chart.resourceNamePrefix" . }}hub-config
       {{- if .Values.hub.server.cacheDir }}
       - name: cache-dir
         emptyDir: {}

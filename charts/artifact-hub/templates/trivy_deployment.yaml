@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trivy
+  name: {{ include "chart.resourceNamePrefix" . }}trivy
   labels:
     app.kubernetes.io/component: trivy
     {{- include "chart.labels" . | nindent 4 }}
@@ -36,7 +36,7 @@ spec:
       - name: trivy
       {{- if .Values.trivy.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: trivy
+          claimName: {{ include "chart.resourceNamePrefix" . }}trivy
       {{- else }}
         emptyDir: {}
       {{- end -}}
