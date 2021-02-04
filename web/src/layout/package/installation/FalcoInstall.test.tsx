@@ -4,6 +4,10 @@ import React from 'react';
 import FalcoInstall from './FalcoInstall';
 
 describe('FalcoInstall', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<FalcoInstall normalizedName="falco-repo" />);
     expect(result.asFragment()).toMatchSnapshot();

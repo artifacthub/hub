@@ -31,7 +31,6 @@ describe('Update profile - user settings', () => {
 
   it('creates snapshot', () => {
     const result = render(<UpdateProfile {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

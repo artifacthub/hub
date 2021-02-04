@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OrganizationSettingsSection renders correctly 1`] = `
+exports[`OrganizationSettingsSection creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     profile

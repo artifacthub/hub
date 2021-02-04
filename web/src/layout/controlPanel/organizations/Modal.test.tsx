@@ -27,7 +27,6 @@ describe('OrganizationModal - organizations section', () => {
 
   it('creates snapshot', () => {
     const result = render(<Modal {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

@@ -49,6 +49,7 @@ describe('Organizations section index', () => {
     );
 
     await waitFor(() => {
+      expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -83,13 +84,11 @@ describe('Organizations section index', () => {
         </AppCtx.Provider>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
-
-      expect(noData).toBeInTheDocument();
+      await waitFor(() => {
+        expect(getByTestId('noData')).toBeInTheDocument();
+      });
       expect(getByText('Do you need to create a organization?')).toBeInTheDocument();
       expect(getByTestId('addFirstOrgBtn')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
 
     it('renders organization form when add first org button is clicked', async () => {
@@ -104,8 +103,9 @@ describe('Organizations section index', () => {
         </AppCtx.Provider>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
-      expect(noData).toBeInTheDocument();
+      await waitFor(() => {
+        expect(getByTestId('noData')).toBeInTheDocument();
+      });
 
       expect(queryByText('Name')).toBeNull();
       expect(queryByText('Display name')).toBeNull();
@@ -118,8 +118,6 @@ describe('Organizations section index', () => {
       expect(queryByText('Display name')).toBeInTheDocument();
       expect(queryByText('Home URL')).toBeInTheDocument();
       expect(queryByText('Description')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
 
     it('renders organization form when add org button is clicked', async () => {
@@ -143,12 +141,11 @@ describe('Organizations section index', () => {
       expect(queryByText('Description')).toBeNull();
 
       fireEvent.click(addBtn);
+
       expect(queryByText('Name')).toBeInTheDocument();
       expect(queryByText('Display name')).toBeInTheDocument();
       expect(queryByText('Home URL')).toBeInTheDocument();
       expect(queryByText('Description')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
   });
 
@@ -164,9 +161,9 @@ describe('Organizations section index', () => {
       </AppCtx.Provider>
     );
 
-    const cards = await waitFor(() => getAllByTestId('organizationCard'));
-    expect(cards).toHaveLength(2);
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(getAllByTestId('organizationCard')).toHaveLength(2);
+    });
   });
 
   describe('on getUserOrganizations error', () => {
@@ -201,11 +198,8 @@ describe('Organizations section index', () => {
 
       await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));
 
-      const noData = getByTestId('noData');
-      expect(noData).toBeInTheDocument();
+      expect(getByTestId('noData')).toBeInTheDocument();
       expect(getByText(/An error occurred getting your organizations, please try again later./i)).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
   });
 });

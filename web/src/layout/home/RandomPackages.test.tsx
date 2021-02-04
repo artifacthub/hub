@@ -28,6 +28,7 @@ describe('RandomPackages', () => {
     );
 
     await waitFor(() => {
+      expect(API.getRandomPackages).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });

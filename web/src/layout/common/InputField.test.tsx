@@ -102,8 +102,9 @@ describe('InputField', () => {
       const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
       input.blur();
       expect(API.checkAvailability).toBeCalledTimes(1);
-      expect(input).toBeValid();
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(input).toBeValid();
+      });
     });
 
     it('value is taken', async () => {
@@ -154,8 +155,9 @@ describe('InputField', () => {
       const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
       input.blur();
       expect(API.checkAvailability).toBeCalledTimes(1);
-      expect(input).toBeValid();
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(input).toBeValid();
+      });
     });
   });
 
@@ -180,8 +182,9 @@ describe('InputField', () => {
       const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
       input.blur();
       expect(API.checkAvailability).toBeCalledTimes(1);
-      expect(input).toBeValid();
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(input).toBeValid();
+      });
     });
 
     it('resource is not valid', async () => {

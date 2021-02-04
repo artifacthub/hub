@@ -78,6 +78,7 @@ describe('Transfer Repository Modal - packages section', () => {
     );
 
     await waitFor(() => {
+      expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });

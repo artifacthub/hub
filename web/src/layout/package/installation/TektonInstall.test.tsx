@@ -4,6 +4,10 @@ import React from 'react';
 import TektonInstall from './TektonInstall';
 
 describe('TektonInstall', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<TektonInstall contentUrl="https://url.com" />);
     expect(result.asFragment()).toMatchSnapshot();

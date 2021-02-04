@@ -34,6 +34,7 @@ describe('RelatedPackages', () => {
     );
 
     await waitFor(() => {
+      expect(API.searchPackages).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });

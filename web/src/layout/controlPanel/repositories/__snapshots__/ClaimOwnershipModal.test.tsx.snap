@@ -91,6 +91,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                             autocomplete="new-input"
                             class="flex-grow-1 px-3 input"
                             data-testid="searchTypeaheadRepositoryInput"
+                            disabled=""
                             name="searchRepo"
                             placeholder=""
                             required=""
@@ -98,6 +99,14 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                             type="text"
                             value=""
                           />
+                          <div
+                            class="position-absolute text-secondary loading"
+                          >
+                            <span
+                              class="spinner-border spinner-border-sm"
+                              data-testid="searchBarSpinning"
+                            />
+                          </div>
                           <div
                             class="position-absolute invalid-feedback fieldFeedback"
                           >
@@ -163,33 +172,19 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                       class="custom-select"
                       data-testid="select_claim_orgs"
                       required=""
-                    >
-                      <option
-                        value=""
-                      >
-                        Select organization
-                      </option>
-                      <option
-                        value="test"
-                      >
-                        test
-                      </option>
-                      <option
-                        value="orgTest"
-                      >
-                        orgTest
-                      </option>
-                      <option
-                        value="helm"
-                      >
-                        helm
-                      </option>
-                    </select>
+                    />
                     <div
                       class="invalid-feedback fieldFeedback"
                     >
                       This field is required
                     </div>
+                  </div>
+                  <div
+                    class="d-inline ml-3"
+                  >
+                    <span
+                      class="spinner-border spinner-border-sm text-primary"
+                    />
                   </div>
                 </div>
                 <small

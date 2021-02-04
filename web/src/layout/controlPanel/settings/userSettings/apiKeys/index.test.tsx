@@ -35,6 +35,7 @@ describe('API keys section index', () => {
     );
 
     await waitFor(() => {
+      expect(API.getAPIKeys).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -70,8 +71,6 @@ describe('API keys section index', () => {
       expect(noData).toBeInTheDocument();
       expect(getByText('Add your first API key!')).toBeInTheDocument();
       expect(getByTestId('addFirstAPIKeyBtn')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
 
     it('renders API form form when add first API key button is clicked', async () => {
@@ -92,8 +91,6 @@ describe('API keys section index', () => {
       const addBtn = getByTestId('addFirstAPIKeyBtn');
       fireEvent.click(addBtn);
       expect(queryByText('Name')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
 
     it('renders API key form when add API key button is clicked', async () => {
@@ -114,8 +111,6 @@ describe('API keys section index', () => {
       const addBtn = getByTestId('addAPIKeyBtn');
       fireEvent.click(addBtn);
       expect(queryByText('Name')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
   });
 
@@ -131,7 +126,6 @@ describe('API keys section index', () => {
 
     const cards = await waitFor(() => getAllByTestId('APIKeyCard'));
     expect(cards).toHaveLength(2);
-    await waitFor(() => {});
   });
 
   describe('on getAPIKeys error', () => {
@@ -165,8 +159,6 @@ describe('API keys section index', () => {
       const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(getByText(/An error occurred getting your API keys, please try again later./i)).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
   });
 });

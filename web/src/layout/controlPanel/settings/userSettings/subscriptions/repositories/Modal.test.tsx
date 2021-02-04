@@ -67,7 +67,7 @@ describe('OptOutModal', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', async () => {
+  it('creates snapshot', async () => {
     mocked(API).getUserOrganizations.mockResolvedValue(getMockOrgs());
     mocked(API)
       .getRepositories.mockResolvedValue(getMockRepos('artifacthub'))
@@ -83,9 +83,8 @@ describe('OptOutModal', () => {
     await waitFor(() => {
       expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
       expect(API.getRepositories).toHaveBeenCalledTimes(3);
+      expect(result.asFragment()).toMatchSnapshot();
     });
-
-    expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {

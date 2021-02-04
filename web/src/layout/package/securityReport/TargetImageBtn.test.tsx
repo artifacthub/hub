@@ -24,9 +24,7 @@ describe('TargetImageBtn', () => {
   it('creates snapshot', () => {
     const result = render(<TargetImageBtn {...defaultProps} />);
 
-    waitFor(() => {
-      expect(result.asFragment()).toMatchSnapshot();
-    });
+    expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {

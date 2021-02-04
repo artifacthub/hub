@@ -57,6 +57,7 @@ describe('Members section index', () => {
     );
 
     await waitFor(() => {
+      expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -91,13 +92,11 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
-
-      expect(noData).toBeInTheDocument();
+      await waitFor(() => {
+        expect(getByTestId('noData')).toBeInTheDocument();
+      });
       expect(getByText('Do you want to add a member?')).toBeInTheDocument();
       expect(getByTestId('addFirstMemberBtn')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
 
     it('renders 2 members card', async () => {
@@ -112,10 +111,9 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const cards = await waitFor(() => getAllByTestId('memberCard'));
-      expect(cards).toHaveLength(2);
-
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(getAllByTestId('memberCard')).toHaveLength(2);
+      });
     });
 
     it('renders organization form when add org button is clicked', async () => {
@@ -136,9 +134,10 @@ describe('Members section index', () => {
       expect(queryByText('Username')).toBeNull();
 
       fireEvent.click(addBtn);
-      expect(queryByText('Username')).toBeInTheDocument();
 
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(queryByText('Username')).toBeInTheDocument();
+      });
     });
 
     it('renders organization form when add org button is clicked', async () => {
@@ -158,9 +157,10 @@ describe('Members section index', () => {
       expect(firstBtn).toBeInTheDocument();
 
       fireEvent.click(firstBtn);
-      expect(queryByText('Username')).toBeInTheDocument();
 
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(queryByText('Username')).toBeInTheDocument();
+      });
     });
   });
 
@@ -196,13 +196,12 @@ describe('Members section index', () => {
 
       await waitFor(() => expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1));
 
-      const noData = getByTestId('noData');
-      expect(noData).toBeInTheDocument();
-      expect(
-        getByText(/An error occurred getting the organization members, please try again later./i)
-      ).toBeInTheDocument();
-
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(getByTestId('noData')).toBeInTheDocument();
+        expect(
+          getByText(/An error occurred getting the organization members, please try again later./i)
+        ).toBeInTheDocument();
+      });
     });
   });
 });

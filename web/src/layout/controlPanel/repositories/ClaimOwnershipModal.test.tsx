@@ -77,9 +77,8 @@ describe('Claim Repository Modal - repositories section', () => {
     await waitFor(() => {
       expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
       expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
+      expect(result.asFragment()).toMatchSnapshot();
     });
-
-    expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {

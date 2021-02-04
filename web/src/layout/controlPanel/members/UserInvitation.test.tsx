@@ -13,6 +13,10 @@ const defaultProps = {
 };
 
 describe('UserInvitation', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', async () => {
     mocked(API).confirmOrganizationMembership.mockResolvedValue(null);
 
@@ -23,6 +27,7 @@ describe('UserInvitation', () => {
     );
 
     await waitFor(() => {
+      expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -37,6 +42,7 @@ describe('UserInvitation', () => {
     );
 
     await waitFor(() => {
+      expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
       expect(getByText('You have accepted the invitation to join the organization.')).toBeInTheDocument();
     });
   });
@@ -65,6 +71,7 @@ describe('UserInvitation', () => {
       );
 
       await waitFor(() => {
+        expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
         expect(getByText('The request sent was not valid')).toBeInTheDocument();
       });
     });
@@ -81,6 +88,7 @@ describe('UserInvitation', () => {
       );
 
       await waitFor(() => {
+        expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
         expect(
           getByText(
             'Please sign in to accept the invitation to join the organization. You can accept it from the Control Panel, in the organizations tab, or from the link you received in the invitation email.'
@@ -101,6 +109,7 @@ describe('UserInvitation', () => {
       );
 
       await waitFor(() => {
+        expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
         expect(
           getByText('An error occurred accepting your invitation, please contact us about this issue.')
         ).toBeInTheDocument();

@@ -26,7 +26,6 @@ describe('SignUp', () => {
 
   it('creates snapshot', () => {
     const result = render(<SignUp {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

@@ -44,6 +44,10 @@ const defaultProps = {
 };
 
 describe('HelmInstall', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<Modal {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

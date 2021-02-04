@@ -34,8 +34,11 @@ describe('Home index', () => {
         <HomeView {...defaultProps} />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
-    await waitFor(() => {});
+
+    await waitFor(() => {
+      expect(API.getStats).toHaveBeenCalledTimes(1);
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -48,8 +51,10 @@ describe('Home index', () => {
           <HomeView {...defaultProps} />
         </Router>
       );
-      expect(API.getStats).toHaveBeenCalledTimes(1);
-      await waitFor(() => {});
+
+      await waitFor(() => {
+        expect(API.getStats).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('renders dash symbol when results are 0', async () => {
@@ -68,9 +73,7 @@ describe('Home index', () => {
       );
 
       const emptyStats = await waitFor(() => getAllByText('-'));
-
       expect(emptyStats).toHaveLength(2);
-      await waitFor(() => {});
     });
 
     it('renders dash symbol when getStats call fails', async () => {
@@ -106,7 +109,6 @@ describe('Home index', () => {
       expect(heading).toBeInTheDocument();
       expect(getByText('Find, install and publish')).toBeInTheDocument();
       expect(getByText('Kubernetes packages')).toBeInTheDocument();
-      await waitFor(() => {});
     });
   });
 

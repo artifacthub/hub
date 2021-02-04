@@ -11,7 +11,6 @@ jest.mock('../../../api');
 const onSuccessMock = jest.fn();
 const onAuthErrorMock = jest.fn();
 const scrollIntoViewMock = jest.fn();
-
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {

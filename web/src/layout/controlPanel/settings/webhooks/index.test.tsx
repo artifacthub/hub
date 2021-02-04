@@ -48,7 +48,7 @@ describe('WebhooksSection', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', async () => {
+  it('creates snapshot', async () => {
     const mockWebhooks = getMockWebhooks('1');
     mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
 
@@ -61,6 +61,7 @@ describe('WebhooksSection', () => {
     );
 
     await waitFor(() => {
+      expect(API.getWebhooks).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });

@@ -73,6 +73,7 @@ describe('UserContext', () => {
     );
 
     await waitFor(() => {
+      expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -107,9 +108,9 @@ describe('UserContext', () => {
         </AppCtx.Provider>
       );
 
-      const spinner = await waitFor(() => getByRole('status'));
-      expect(spinner).toBeTruthy();
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(getByRole('status')).toBeTruthy();
+      });
     });
 
     it('displays dropdown with ctx', async () => {
@@ -139,12 +140,12 @@ describe('UserContext', () => {
 
       expect(ctxDropdown).toHaveClass('show');
 
-      expect(API.getUserOrganizations).toHaveBeenCalledTimes(2);
+      await waitFor(() => {
+        expect(API.getUserOrganizations).toHaveBeenCalledTimes(2);
+      });
 
       expect(getByTestId('userCtxBtn')).toBeInTheDocument();
       expect(getAllByTestId('orgCtxBtn')).toHaveLength(mockOrgs.length);
-
-      await waitFor(() => {});
     });
 
     it('renders only user ctx when no orgs', async () => {
@@ -161,12 +162,9 @@ describe('UserContext', () => {
 
       await waitFor(() => {
         expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(getByTestId('userCtxBtn')).toBeInTheDocument();
+        expect(queryAllByTestId('orgCtxBtn')).toHaveLength(0);
       });
-
-      expect(getByTestId('userCtxBtn')).toBeInTheDocument();
-      expect(queryAllByTestId('orgCtxBtn')).toHaveLength(0);
-
-      await waitFor(() => {});
     });
 
     it('calls updateOrg when org ctx button is clicked', async () => {

@@ -10,6 +10,10 @@ const defaultProps = {
 };
 
 describe('OLMInstall', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<OLMInstall {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();

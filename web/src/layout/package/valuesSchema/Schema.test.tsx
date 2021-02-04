@@ -10,6 +10,8 @@ const defaultSchema = require('./__fixtures__/index/1.json') as JSONSchema;
 const defaultProps = {
   pkgName: 'pkg',
   schema: defaultSchema,
+  normalizedName: 'pkg-norm',
+  onPathChange: jest.fn(),
 };
 
 describe('Schema', () => {

@@ -9,6 +9,10 @@ const getMockSecurityReport = (fixtureId: string): SecurityReport => {
 };
 
 describe('SummaryTable', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<SummaryTable report={getMockSecurityReport('1')} />);
     expect(result.asFragment()).toMatchSnapshot();

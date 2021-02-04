@@ -36,7 +36,6 @@ describe('OAuth', () => {
 
   it('creates snapshot', () => {
     const result = render(<OAuth {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

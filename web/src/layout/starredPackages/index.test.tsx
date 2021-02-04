@@ -26,7 +26,7 @@ describe('StarredPackagesView', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', async () => {
+  it('creates snapshot', async () => {
     const mockPackages = getMockStarredPackages('1');
     mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
 
@@ -37,6 +37,7 @@ describe('StarredPackagesView', () => {
     );
 
     await waitFor(() => {
+      expect(API.getStarredByUser).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -69,10 +70,9 @@ describe('StarredPackagesView', () => {
           <StarredPackagesView />
         </Router>
       );
-      const packages = await waitFor(() => getAllByRole('listitem'));
 
+      const packages = await waitFor(() => getAllByRole('listitem'));
       expect(packages).toHaveLength(5);
-      await waitFor(() => {});
     });
 
     it('displays no data component when no packages', async () => {
@@ -86,11 +86,8 @@ describe('StarredPackagesView', () => {
       );
 
       const noData = await waitFor(() => getByTestId('noData'));
-
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('You have not starred any package yet');
-
-      await waitFor(() => {});
     });
 
     it('renders error message when getStarredByUser call fails with not unauthorized error', async () => {
@@ -103,11 +100,8 @@ describe('StarredPackagesView', () => {
       );
 
       const noData = await waitFor(() => getByTestId('noData'));
-
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting your starred packages, please try again later./i);
-
-      await waitFor(() => {});
     });
 
     it('calls history push to load login modal when user is not signed in', async () => {
@@ -115,17 +109,16 @@ describe('StarredPackagesView', () => {
         kind: ErrorKind.Unauthorized,
       });
 
-      const { getByRole } = render(
+      render(
         <Router>
           <StarredPackagesView />
         </Router>
       );
 
-      await waitFor(() => getByRole('main'));
-
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/packages/starred');
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/packages/starred');
+      });
     });
   });
 });

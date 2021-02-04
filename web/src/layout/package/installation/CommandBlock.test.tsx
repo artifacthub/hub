@@ -4,6 +4,10 @@ import React from 'react';
 import CommandBlock from './CommandBlock';
 
 describe('CommandBlock', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<CommandBlock command="command" />);
     expect(result.asFragment()).toMatchSnapshot();

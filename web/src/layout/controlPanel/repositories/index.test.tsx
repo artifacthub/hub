@@ -59,6 +59,7 @@ describe('Repository index', () => {
     );
 
     await waitFor(() => {
+      expect(API.getRepositories).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -97,13 +98,12 @@ describe('Repository index', () => {
         </AppCtx.Provider>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
+      await waitFor(() => {
+        expect(getByTestId('noData')).toBeInTheDocument();
+      });
 
-      expect(noData).toBeInTheDocument();
       expect(getByText('Add your first repository!')).toBeInTheDocument();
       expect(getByTestId('addFirstRepoBtn')).toBeInTheDocument();
-
-      await waitFor(() => {});
     });
 
     it('renders list with 3 repositories', async () => {
@@ -118,12 +118,10 @@ describe('Repository index', () => {
         </AppCtx.Provider>
       );
 
-      const list = await waitFor(() => getByTestId('repoList'));
-
-      expect(list).toBeInTheDocument();
+      await waitFor(() => {
+        expect(getByTestId('repoList')).toBeInTheDocument();
+      });
       expect(getAllByTestId('repoCard')).toHaveLength(3);
-
-      await waitFor(() => {});
     });
 
     it('calls getRepositories to click Refresh button', async () => {
@@ -141,16 +139,15 @@ describe('Repository index', () => {
       const refreshBtn = await waitFor(() => getByTestId('refreshRepoBtn'));
       expect(refreshBtn).toBeInTheDocument();
       fireEvent.click(refreshBtn);
-      expect(API.getRepositories).toHaveBeenCalledTimes(2);
 
-      await waitFor(() => {});
+      await waitFor(() => expect(API.getRepositories).toHaveBeenCalledTimes(2));
     });
 
     it('calls history replace when repo name is defined and is not into repositories list', async () => {
       const mockRepository = getMockRepository('7');
       mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <Repository {...defaultProps} repoName="repo" />
@@ -158,11 +155,10 @@ describe('Repository index', () => {
         </AppCtx.Provider>
       );
 
-      await waitFor(() => getByTestId('repoList'));
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
-
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+        expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+      });
     });
   });
 

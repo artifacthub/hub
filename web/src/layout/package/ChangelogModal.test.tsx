@@ -49,9 +49,8 @@ describe('ChangelogModal', () => {
 
     await waitFor(() => {
       expect(API.getChangelog).toHaveBeenCalledTimes(1);
+      expect(result.asFragment()).toMatchSnapshot();
     });
-
-    expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {

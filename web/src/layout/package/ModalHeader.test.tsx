@@ -10,7 +10,7 @@ const defaultProps = {
   repoKind: 0,
 };
 
-describe('Links', () => {
+describe('ModalHeader', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });

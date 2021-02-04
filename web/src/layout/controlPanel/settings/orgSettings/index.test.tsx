@@ -15,9 +15,8 @@ describe('OrganizationSettingsSection', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const result = render(<OrganizationSettingsSection {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

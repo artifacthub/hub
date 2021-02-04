@@ -25,9 +25,8 @@ describe('SearchPackages', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const result = render(<SearchPackages {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

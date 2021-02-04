@@ -49,9 +49,8 @@ describe('SecurityModal', () => {
 
     await waitFor(() => {
       expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+      expect(result.asFragment()).toMatchSnapshot();
     });
-
-    expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {

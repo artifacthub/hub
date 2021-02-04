@@ -25,7 +25,7 @@ describe('PackagesSection', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', async () => {
+  it('creates snapshot', async () => {
     const mockSubscriptions = getMockSubscriptions('1');
     mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
@@ -36,6 +36,7 @@ describe('PackagesSection', () => {
     );
 
     await waitFor(() => {
+      expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -110,8 +111,6 @@ describe('PackagesSection', () => {
         expect(getAllByTestId('subsTableCell')).toHaveLength(8);
         expect(getAllByRole('listitem')).toHaveLength(8);
       });
-
-      await waitFor(() => {});
     });
 
     it('does not display list when no packages', async () => {
@@ -131,8 +130,6 @@ describe('PackagesSection', () => {
       const packagesList = queryByTestId('packagesList');
 
       expect(packagesList).toBeNull();
-
-      await waitFor(() => {});
     });
 
     it('calls alertDispatcher when getUserSubscriptions call fails with not Unauthorized error', async () => {
@@ -151,8 +148,6 @@ describe('PackagesSection', () => {
           message: 'An error occurred getting your subscriptions, please try again later.',
         });
       });
-
-      await waitFor(() => {});
     });
 
     it('calls history push to load login modal when user is not signed in', async () => {
@@ -160,16 +155,13 @@ describe('PackagesSection', () => {
         kind: ErrorKind.Unauthorized,
       });
 
-      const { getByRole } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => getByRole('main'));
-
-      expect(mockOnAuthError).toHaveBeenCalledTimes(1);
-      await waitFor(() => {});
+      await waitFor(() => expect(mockOnAuthError).toHaveBeenCalledTimes(1));
     });
   });
 

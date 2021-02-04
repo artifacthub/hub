@@ -8,9 +8,12 @@ const defaultProps = {
 };
 
 describe('SubNavbar', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const result = render(<SubNavbar {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 

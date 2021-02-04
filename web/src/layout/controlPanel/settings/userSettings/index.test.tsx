@@ -17,7 +17,6 @@ describe('UserSettingsSection', () => {
 
   it('renders correctly', () => {
     const result = render(<UserSettingsSection {...defaultProps} />);
-
     expect(result.asFragment()).toMatchSnapshot();
   });
 
