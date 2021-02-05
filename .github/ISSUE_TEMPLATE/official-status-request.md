@@ -3,7 +3,7 @@ name: Official status request
 about: Request official status for your repository
 title: ''
 labels: official status request
-assignees: tegioz
+assignees: ''
 
 ---
 

@@ -16,6 +16,7 @@ The following repositories kinds are supported at the moment:
 This guide also contains additional information about the following repositories topics:
 
 - [Verified publisher](#verified-publisher)
+- [Official status](#official-status)
 - [Ownership claim](#ownership-claim)
 - [Private repositories](#private-repositories)
 
@@ -321,6 +322,19 @@ Publishers can be verified through the [artifacthub-repo.yml](https://github.com
 *Please note that the **artifacthub-repo.yml** metadata file must be located at the repository URL's path. In Helm repositories, for example, this means it must be located at the same level of the chart repository **index.yaml** file, and it must be served from the chart repository HTTP server as well.*
 
 *The verified publisher flag won't be set until the next time the repository is processed. Please keep in mind that repository won't be processed if it hasn't changed since the last time it was processed. Depending on the repository kind, this is checked in a different way. For Helm http based repositories, we consider it has changed if the `index.yaml` file changes. For git based repositories, it does when the hash of the last commit in the branch you set up changes.*
+
+## Official status
+
+In Artifact Hub, the `official` status means that the publisher **owns the software deployed** by *all* the packages available in the repository. When this status is granted for a repository, all packages available on it will display a badge on the UI.
+
+**Before applying for this status, please make sure your repository complies with the following requirements:**
+
+- The repository has already obtained the [Verified Publisher](https://artifacthub.io/docs/topics/repositories/#verified-publisher) status.
+- The repository *only* contains `official` packages. A mix of official and non-official packages is not allowed at the moment, but we are considering to allow the `official` status to be set [at the package level](https://github.com/artifacthub/hub/issues/972) and this might change in the future.
+- The user requesting the status is the publisher of the repository in Artifact Hub, or belongs to the organization publishing it.
+- The packages available in the repository provide some documentation, usually in the form of a `README.md` file.
+
+Once you have verified that the requirements are met, please file an issue [using this template](https://github.com/artifacthub/hub/issues/new?labels=official+status+request&template=official-status-request.md&title=) to apply.
 
 ## Ownership claim
 
