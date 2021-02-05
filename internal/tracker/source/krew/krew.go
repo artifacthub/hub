@@ -64,19 +64,19 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		// Read and parse plugin manifest file
-		data, err := ioutil.ReadFile(filepath.Join(pluginsPath, file.Name()))
+		manifestRaw, err := ioutil.ReadFile(filepath.Join(pluginsPath, file.Name()))
 		if err != nil {
 			s.warn(fmt.Errorf("error reading plugin manifest file: %w", err))
 			continue
 		}
 		var manifest *index.Plugin
-		if err = yaml.Unmarshal(data, &manifest); err != nil || manifest == nil {
+		if err = yaml.Unmarshal(manifestRaw, &manifest); err != nil || manifest == nil {
 			s.warn(fmt.Errorf("error unmarshaling plugin manifest file: %w", err))
 			continue
 		}
 
 		// Prepare and store package version
-		p, err := preparePackage(s.i.Repository, manifest)
+		p, err := preparePackage(s.i.Repository, manifest, manifestRaw)
 		if err != nil {
 			s.warn(fmt.Errorf("error preparing package: %w", err))
 			continue
@@ -95,7 +95,7 @@ func (s *TrackerSource) warn(err error) {
 }
 
 // preparePackage prepares a package version using the plugin manifest provided.
-func preparePackage(r *hub.Repository, manifest *index.Plugin) (*hub.Package, error) {
+func preparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byte) (*hub.Package, error) {
 	// Extract package name and version from manifest
 	name := manifest.ObjectMeta.Name
 	sv, err := semver.NewVersion(manifest.Spec.Version)
@@ -133,7 +133,8 @@ func preparePackage(r *hub.Repository, manifest *index.Plugin) (*hub.Package, er
 		Readme:      manifest.Spec.Description,
 		Repository:  r,
 		Data: map[string]interface{}{
-			"platforms": platforms,
+			"manifestRaw": string(manifestRaw),
+			"platforms":   platforms,
 		},
 	}
 

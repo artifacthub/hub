@@ -1,6 +1,7 @@
 package krew
 
 import (
+	"io/ioutil"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -80,6 +81,7 @@ func TestTrackerSource(t *testing.T) {
 		}
 
 		// Run test and check expectations
+		manifestRaw, _ := ioutil.ReadFile("testdata/path4/plugins/manifest.yaml")
 		p := &hub.Package{
 			Name:        "test-plugin",
 			DisplayName: "My test plugin",
@@ -112,7 +114,8 @@ func TestTrackerSource(t *testing.T) {
 				},
 			},
 			Data: map[string]interface{}{
-				"platforms": []string{"linux/amd64"},
+				"manifestRaw": string(manifestRaw),
+				"platforms":   []string{"linux/amd64"},
 			},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()

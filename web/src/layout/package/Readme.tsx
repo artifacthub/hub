@@ -122,6 +122,7 @@ const Readme = (props: Props) => {
 
   const Paragraph: React.ElementType = (data: BasicProps) => {
     const isOneChild = data.children && isArray(data.children) && data.children.length === 1;
+    if (isUndefined(data.children)) return null;
     return <p className={classnames({ 'd-block w-100 h-100': isOneChild }, styles.paragraph)}>{data.children}</p>;
   };
 

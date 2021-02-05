@@ -359,5 +359,26 @@ describe('Package index', () => {
       expect(getByText('Manifest YAML')).toBeInTheDocument();
       expect(getByTestId('tektonManifestBtn')).toBeInTheDocument();
     });
+
+    describe('Krew kubectl plugin', () => {
+      it('renders plugin properly', async () => {
+        const mockPackage = getMockPackage('14');
+        mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+        const { getByText, getAllByTestId, getByTestId } = render(
+          <Router>
+            <PackageView {...defaultProps} />
+          </Router>
+        );
+
+        await waitFor(() => {
+          expect(API.getPackage).toHaveBeenCalledTimes(1);
+        });
+
+        expect(getByText('Manifest')).toBeInTheDocument();
+        expect(getAllByTestId('ctcBtn')).toHaveLength(2);
+        expect(getByTestId('downloadBtn')).toBeInTheDocument();
+      });
+    });
   });
 });
