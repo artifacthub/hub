@@ -255,4 +255,36 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+
+	t.Run("falco package (using logo url) returned, no errors", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				Kind: hub.Falco,
+			},
+			BasePath: "testdata/path8",
+			Svc:      sw.Svc,
+		}
+		sw.Is.On("DownloadAndSaveImage", sw.Svc.Ctx, "https://logo.url/red-dot.png").Return("logoImageID", nil)
+
+		// Run test and check expectations
+		p := source.ClonePackage(basePkg)
+		p.Repository = i.Repository
+		p.LogoURL = "https://logo.url/red-dot.png"
+		p.LogoImageID = "logoImageID"
+		p.Data = map[string]interface{}{
+			"rules": map[string]string{
+				"file1-rules.yaml": "falco rules\n",
+			},
+		}
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{
+			pkg.BuildKey(p): p,
+		}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
 }

@@ -108,6 +108,14 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *hub.PackageMetadat
 				s.warn(fmt.Errorf("error saving package %s version %s logo: %w", md.Name, md.Version, err))
 			}
 		}
+	} else if md.LogoURL != "" {
+		logoImageID, err := s.i.Svc.Is.DownloadAndSaveImage(s.i.Svc.Ctx, md.LogoURL)
+		if err == nil {
+			p.LogoURL = md.LogoURL
+			p.LogoImageID = logoImageID
+		} else {
+			s.warn(fmt.Errorf("error getting package %s version %s logo: %w", md.Name, md.Version, err))
+		}
 	}
 
 	return p, nil

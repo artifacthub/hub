@@ -14,6 +14,8 @@ import (
 )
 
 const (
+	// DefaultBranch represents the branch used by default when cloning a
+	// repository if no branch has been configured on it.
 	DefaultBranch = "master"
 )
 
