@@ -99,7 +99,7 @@ const Filters = (props: Props) => {
       };
 
       kindElement = (
-        <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
+        <div role="menuitem" className={`mt-1 mt-sm-2 pt-1 ${styles.facet}`}>
           <SmallTitle text={kind.title} className="text-secondary font-weight-bold" />
           <div className="mt-3">
             {kind.options.map((option: FacetOption) => (
@@ -284,8 +284,8 @@ const Filters = (props: Props) => {
         </div>
       </div>
 
-      <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
       {getKindFacets()}
+      <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
       {getPublishers()}
       {getRepositoryFacets()}
       {getLicenseFacets()}

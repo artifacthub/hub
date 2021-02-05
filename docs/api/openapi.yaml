@@ -2341,6 +2341,11 @@ components:
                     example:
                       - darwin/amd64
                       - linux/amd64
+                manifestRaw:
+                  type: string
+                  additionalProperties:
+                    type: string
+                  example: "apiVersion: krew.googlecontainertools.github.com/v1alpha2"
     Link:
       type: object
       nullable: false

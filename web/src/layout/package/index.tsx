@@ -220,7 +220,7 @@ const PackageView = (props: Props) => {
     return policies;
   };
 
-  const getTektonManifest = (): string | undefined => {
+  const getManifestRaw = (): string | undefined => {
     let manifest: string | undefined;
     if (
       !isUndefined(detail) &&
@@ -539,33 +539,42 @@ const PackageView = (props: Props) => {
                       <div className={styles.rightColumnWrapper}>
                         {getInstallationModal('mb-2')}
 
-                        {detail.repository.kind === RepositoryKind.TektonTask && (
-                          <TektonManifestModal
-                            normalizedName={detail.normalizedName}
-                            manifestRaw={getTektonManifest()}
-                          />
-                        )}
+                        {(() => {
+                          switch (detail.repository.kind) {
+                            case RepositoryKind.TektonTask:
+                              return (
+                                <TektonManifestModal
+                                  normalizedName={detail.normalizedName}
+                                  manifestRaw={getManifestRaw()}
+                                />
+                              );
 
-                        {detail.repository.kind === RepositoryKind.Helm && (
-                          <div className="mb-2">
-                            <ValuesSchema
-                              hasValuesSchema={detail.hasValuesSchema}
-                              packageId={detail.packageId}
-                              version={detail.version!}
-                              normalizedName={detail.normalizedName}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                              visibleValuesSchema={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                              }
-                              visibleValuesSchemaPath={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                                  ? props.visibleValuesSchemaPath
-                                  : undefined
-                              }
-                            />
-                          </div>
-                        )}
+                            case RepositoryKind.Helm:
+                              return (
+                                <div className="mb-2">
+                                  <ValuesSchema
+                                    hasValuesSchema={detail.hasValuesSchema}
+                                    packageId={detail.packageId}
+                                    version={detail.version!}
+                                    normalizedName={detail.normalizedName}
+                                    searchUrlReferer={props.searchUrlReferer}
+                                    fromStarredPage={props.fromStarredPage}
+                                    visibleValuesSchema={
+                                      !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                    }
+                                    visibleValuesSchemaPath={
+                                      !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                        ? props.visibleValuesSchemaPath
+                                        : undefined
+                                    }
+                                  />
+                                </div>
+                              );
+
+                            default:
+                              return null;
+                          }
+                        })()}
 
                         <div className="mb-2">
                           <ChangelogModal
@@ -631,7 +640,7 @@ const PackageView = (props: Props) => {
                                         switch (typeof rules) {
                                           case 'string':
                                             return (
-                                              <div className="d-flex position-relative">
+                                              <div className="d-flex d-xxl-inline-block mw-100 position-relative">
                                                 <BlockCodeButtons
                                                   content={rules}
                                                   filename={`${detail.normalizedName}-rules.yaml`}
@@ -672,6 +681,32 @@ const PackageView = (props: Props) => {
                                         normalizedName={detail.normalizedName}
                                         kind={detail.repository.kind}
                                       />
+                                    </div>
+                                  )}
+                                </>
+                              );
+
+                            case RepositoryKind.Krew:
+                              let manifest: string | undefined = getManifestRaw();
+                              return (
+                                <>
+                                  {!isUndefined(manifest) && (
+                                    <div className={`mb-5 ${styles.codeWrapper}`}>
+                                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Manifest" />
+
+                                      <div className="d-flex d-xxl-inline-block mw-100 position-relative">
+                                        <BlockCodeButtons
+                                          content={manifest}
+                                          filename={`${detail.normalizedName}-rules.yaml`}
+                                        />
+                                        <SyntaxHighlighter
+                                          language="yaml"
+                                          style={tomorrowNight}
+                                          customStyle={{ padding: '1.5rem' }}
+                                        >
+                                          {manifest}
+                                        </SyntaxHighlighter>
+                                      </div>
                                     </div>
                                   )}
                                 </>

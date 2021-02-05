@@ -1,0 +1,40 @@
+{
+  "packageId": "b28c28d8-9000-4084-98f2-5e10e77f89d3",
+  "name": "advise-psp",
+  "normalizedName": "advise-psp",
+  "isOperator": false,
+  "description": "Suggests PodSecurityPolicies for cluster.",
+  "keywords": ["kubernetes", "kubectl", "plugin"],
+  "homeUrl": "https://github.com/sysdiglabs/kube-psp-advisor",
+  "readme": "Suggests PSPs based on the required capabilities of the currently running\nworkloads or a given manifest.\n",
+  "data": {
+    "platforms": ["darwin/amd64", "linux/amd64"],
+    "manifestRaw": "apiVersion: krew.googlecontainertools.github.com/v1alpha2\nkind: Plugin\nmetadata:\n  name: advise-psp\nspec:\n  version: v2.0.0\n  homepage: https://github.com/sysdiglabs/kube-psp-advisor\n  platforms:\n  - selector:\n      matchLabels:\n        os: darwin\n        arch: amd64\n    uri: https://github.com/sysdiglabs/kube-psp-advisor/releases/download/v2.0.0/kube-psp-advisor_v2.0.0_darwin_amd64.tar.gz\n    sha256: 1a30c3dc8a8fdbd9491411a9059e1f3c100feb6931b010f15403c5e625fd3489\n    bin: kubectl-advise-psp\n  - selector:\n      matchLabels:\n        os: linux\n        arch: amd64\n    uri: https://github.com/sysdiglabs/kube-psp-advisor/releases/download/v2.0.0/kube-psp-advisor_v2.0.0_linux_amd64.tar.gz\n    sha256: 33680f8c405b516f978971aabb433cffbc8202ab49b1611a43a3ffc169de935c\n    bin: kubectl-advise-psp\n  shortDescription: Suggests PodSecurityPolicies for cluster.\n  description: |\n    Suggests PSPs based on the required capabilities of the currently running\n    workloads or a given manifest.\n"
+  },
+  "version": "2.0.0",
+  "availableVersions": [
+    {
+      "version": "2.0.0",
+      "containsSecurityUpdates": false,
+      "prerelease": false,
+      "createdAt": 1612516630
+    }
+  ],
+  "deprecated": false,
+  "containsSecurityUpdates": false,
+  "prerelease": false,
+  "signed": false,
+  "hasValuesSchema": false,
+  "hasChangelog": false,
+  "createdAt": 1612516630,
+  "repository": {
+    "repositoryId": "cf584636-59ee-4164-88a3-4fa2148bced9",
+    "name": "kr",
+    "url": "https://github.com/kubernetes-sigs/krew-index",
+    "private": false,
+    "kind": 5,
+    "verified_publisher": false,
+    "official": false,
+    "userAlias": "user"
+  }
+}
