@@ -121,6 +121,7 @@ type PackageMetadata struct {
 	CreatedAt               string            `yaml:"createdAt"`
 	Description             string            `yaml:"description"`
 	LogoPath                string            `yaml:"logoPath"`
+	LogoURL                 string            `yaml:"logoURL"`
 	Digest                  string            `yaml:"digest"`
 	License                 string            `yaml:"license"`
 	HomeURL                 string            `yaml:"homeURL"`
