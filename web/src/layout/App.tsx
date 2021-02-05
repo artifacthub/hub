@@ -1,12 +1,9 @@
 import './App.css';
 import '../themes/default.scss';
 
-import classnames from 'classnames';
 import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
 import React, { useEffect, useState } from 'react';
-import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
-import { FiExternalLink, FiHexagon } from 'react-icons/fi';
 import { Route, Router, Switch } from 'react-router-dom';
 
 import { AppCtxProvider, updateActiveStyleSheet } from '../context/AppCtx';
@@ -14,16 +11,17 @@ import buildSearchParams from '../utils/buildSearchParams';
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import history from '../utils/history';
 import lsPreferences from '../utils/localStoragePreferences';
-import styles from './App.module.css';
 import AlertController from './common/AlertController';
-import ExternalLink from './common/ExternalLink';
 import ControlPanelView from './controlPanel';
 import HomeView from './home';
+import Footer from './navigation/Footer';
 import Navbar from './navigation/Navbar';
 import NotFound from './notFound';
 import PackageView from './package';
 import SearchView from './search';
 import StarredPackagesView from './starredPackages';
+
+const ScrollMemory = require('react-router-scroll-memory');
 
 const getQueryParam = (query: string, param: string): string | undefined => {
   let result;
@@ -36,7 +34,6 @@ const getQueryParam = (query: string, param: string): string | undefined => {
 
 export default function App() {
   const [isSearching, setIsSearching] = useState(false);
-  const [isLoadingPackage, setIsLoadingPackage] = useState(false);
   const [activeInitialTheme, setActiveInitialTheme] = useState<string | null>(null);
   const [scrollPosition, setScrollPosition] = useState<undefined | number>(undefined);
 
@@ -57,6 +54,7 @@ export default function App() {
     <AppCtxProvider>
       <Router history={history}>
         <div className="d-flex flex-column min-vh-100 position-relative">
+          <ScrollMemory />
           <AlertController />
           <Switch>
             <Route
@@ -75,6 +73,7 @@ export default function App() {
                     orgToConfirm={getQueryParam(location.search, 'org')}
                     onOauthFailed={location.pathname === '/oauth-failed'}
                   />
+                  <Footer />
                 </div>
               )}
             />
@@ -114,8 +113,6 @@ export default function App() {
                       channel={getQueryParam(location.search, 'channel')}
                       visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
-                      isLoadingPackage={isLoadingPackage}
-                      setIsLoadingPackage={setIsLoadingPackage}
                       {...location.state}
                       {...match.params}
                     />
@@ -138,6 +135,7 @@ export default function App() {
                       repoName={getQueryParam(location.search, 'repo-name') || undefined}
                     />
                   </div>
+                  <Footer />
                 </>
               )}
             />
@@ -151,6 +149,7 @@ export default function App() {
                   <div className="d-flex flex-column flex-grow-1">
                     <StarredPackagesView />
                   </div>
+                  <Footer />
                 </>
               )}
             />
@@ -160,107 +159,11 @@ export default function App() {
                 <>
                   <Navbar isSearching={isSearching} />
                   <NotFound />
+                  <Footer />
                 </>
               )}
             />
           </Switch>
-
-          <footer
-            className={classnames('position-relative', styles.footer, {
-              [styles.invisibleFooter]: isSearching || isLoadingPackage,
-            })}
-          >
-            <div className={classnames('container-lg px-4', { invisible: isSearching || isLoadingPackage })}>
-              <div
-                className={`d-flex flex-row flex-wrap align-items-stretch justify-content-between ${styles.footerContent}`}
-              >
-                <div>
-                  <div className="h6 font-weight-bold text-uppercase">Project</div>
-                  <div className="d-flex flex-column text-left">
-                    <ExternalLink className="text-muted mb-1" href="/docs">
-                      Getting started
-                    </ExternalLink>
-                    <ExternalLink className="text-muted mb-1" href="https://artifacthub.github.io/hub/api/">
-                      API docs
-                    </ExternalLink>
-                    <ExternalLink className="text-muted mb-1" href="https://blog.artifacthub.io/blog/">
-                      Blog
-                    </ExternalLink>
-                    <ExternalLink
-                      className="text-muted mb-1"
-                      href="https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
-                    >
-                      Code of conduct
-                    </ExternalLink>
-                    <ExternalLink
-                      className="text-muted mb-1"
-                      href="https://github.com/artifacthub/hub/blob/master/CONTRIBUTING.md"
-                    >
-                      Contributing
-                    </ExternalLink>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="h6 font-weight-bold text-uppercase">Community</div>
-                  <div className="d-flex flex-column text-left">
-                    <ExternalLink className="text-muted mb-1" href="https://github.com/cncf/hub">
-                      <div className="d-flex align-items-center">
-                        <FaGithub className="mr-2" />
-                        GitHub
-                      </div>
-                    </ExternalLink>
-                    <ExternalLink
-                      className="text-muted mb-1"
-                      href="https://cloud-native.slack.com/channels/artifact-hub"
-                    >
-                      <div className="d-flex align-items-center">
-                        <FaSlack className="mr-2" />
-                        Slack
-                      </div>
-                    </ExternalLink>
-                    <ExternalLink className="text-muted mb-1" href="https://twitter.com/cncfartifacthub">
-                      <div className="d-flex align-items-center">
-                        <FaTwitter className="mr-2" />
-                        Twitter
-                      </div>
-                    </ExternalLink>
-                  </div>
-                </div>
-
-                <div className={styles.fullMobileSection}>
-                  <div className="h6 font-weight-bold text-uppercase">About</div>
-                  <div className={`text-muted ${styles.copyrightContent}`}>
-                    Artifact Hub is an <b className="d-inline-block">Open Source</b> project licensed under the{' '}
-                    <ExternalLink
-                      className="d-inline-block text-muted mb-1"
-                      href="https://www.apache.org/licenses/LICENSE-2.0"
-                    >
-                      <div className="d-flex align-items-center">
-                        Apache License 2.0
-                        <span className={styles.smallIcon}>
-                          <FiExternalLink className="ml-1" />
-                        </span>
-                      </div>
-                    </ExternalLink>
-                  </div>
-                </div>
-
-                <div className={`ml-0 ml-lg-auto mt-3 mt-lg-0 text-center ${styles.fullMobileSection}`}>
-                  <div className="d-flex flex-column align-items-center h-100">
-                    <div className={styles.hexagon}>
-                      <FiHexagon />
-                    </div>
-                    <div className="mt-2 mt-lg-auto">
-                      <small>
-                        <span className="d-none d-sm-inline mr-1">Copyright</span>© The Artifact Hub Authors
-                      </small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </footer>
         </div>
       </Router>
     </AppCtxProvider>

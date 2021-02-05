@@ -19,6 +19,7 @@ import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
 import SampleQueries from '../common/SampleQueries';
 import Sidebar from '../common/Sidebar';
+import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
 import Filters from './Filters';
 import PaginationLimit from './PaginationLimit';
@@ -533,6 +534,8 @@ const SearchView = (props: Props) => {
           </div>
         </main>
       </div>
+
+      <Footer isHidden={isSearching || isNull(searchResults.data.packages)} />
     </>
   );
 };

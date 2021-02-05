@@ -6,6 +6,7 @@
 
 .invisibleFooter {
   background-color: var(--color-white-50);
+  border-top-color: transparent !important;
 }
 
 .brand {

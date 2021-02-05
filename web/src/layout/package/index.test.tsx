@@ -14,7 +14,6 @@ const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
 };
 
-const mockIsLoading = jest.fn();
 const mockHistoryPush = jest.fn();
 const mockHistoryReplace = jest.fn();
 
@@ -28,8 +27,6 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const defaultProps = {
-  isLoadingPackage: false,
-  setIsLoadingPackage: mockIsLoading,
   repositoryKind: 'helm',
   repositoryName: 'repoName',
   packageName: 'packageName',
@@ -79,7 +76,6 @@ describe('Package index', () => {
 
       const props = {
         ...defaultProps,
-        isLoadingPackage: true,
       };
 
       const { getByRole } = render(

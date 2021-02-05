@@ -1,36 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Package index creates snapshot 1`] = `
+exports[`Footer creates snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="position-relative flex-grow-1"
-    data-testid="mainPackage"
-  >
-    <div
-      class="position-absolute p-5 wrapper undefined"
-    >
-      <div
-        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-      >
-        <div
-          class="spinner-border text-primary spinner position-fixed spinner"
-          role="status"
-        >
-          <span
-            class="sr-only"
-          >
-            Loading...
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
   <footer
-    class="position-relative footer invisibleFooter"
+    class="position-relative footer"
     role="contentinfo"
   >
     <div
-      class="container-lg px-4 invisible"
+      class="container-lg px-4"
     >
       <div
         class="d-flex flex-row flex-wrap align-items-stretch justify-content-between footerContent"
