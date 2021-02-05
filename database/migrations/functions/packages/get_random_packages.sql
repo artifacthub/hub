@@ -8,7 +8,6 @@ returns setof json as $$
         join snapshot s using (package_id)
         where s.version = p.latest_version
         and (s.deprecated is null or s.deprecated = false)
-        and p.logo_image_id is not null
         and s.readme is not null
         and s.created_at between current_timestamp - '6 months'::interval and current_timestamp
         order by random() limit 10
