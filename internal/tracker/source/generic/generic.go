@@ -81,10 +81,7 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *hub.PackageMetadat
 	p.Repository = r
 
 	// Include kind specific data into package
-	ignorer, err := ignore.CompileIgnoreLines(md.Ignore...)
-	if err != nil {
-		return nil, fmt.Errorf("error processing package %s version %s ignore entries: %w", md.Name, md.Version, err)
-	}
+	ignorer := ignore.CompileIgnoreLines(md.Ignore...)
 	var data map[string]interface{}
 	switch r.Kind {
 	case hub.Falco:
