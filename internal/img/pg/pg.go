@@ -33,12 +33,13 @@ type DB interface {
 // ImageStore is an image.Store implementation that uses PostgreSQL as the
 // underlying storage.
 type ImageStore struct {
-	cfg      *viper.Viper
-	db       DB
-	hc       img.HTTPClient
-	githubRL *rate.Limiter
-	cache    *lru.Cache
-	mutexes  sync.Map
+	cfg         *viper.Viper
+	db          DB
+	hc          img.HTTPClient
+	githubRL    *rate.Limiter
+	imagesCache *lru.Cache
+	errorsCache *lru.Cache
+	mutexes     sync.Map
 }
 
 // NewImageStore creates a new ImageStore instance.
@@ -48,39 +49,48 @@ func NewImageStore(
 	hc img.HTTPClient,
 	githubRL *rate.Limiter,
 ) *ImageStore {
-	cache, _ := lru.New(cacheSize)
+	imagesCache, _ := lru.New(cacheSize)
+	errorsCache, _ := lru.New(cacheSize)
 	return &ImageStore{
-		cfg:      cfg,
-		db:       db,
-		hc:       hc,
-		githubRL: githubRL,
-		cache:    cache,
+		cfg:         cfg,
+		db:          db,
+		hc:          hc,
+		githubRL:    githubRL,
+		imagesCache: imagesCache,
+		errorsCache: errorsCache,
 	}
 }
 
 // DownloadAndSaveImage implements the image.Store interface.
 func (s *ImageStore) DownloadAndSaveImage(ctx context.Context, imageURL string) (string, error) {
 	// Make sure we only process the same image once at a time
-	v, _ := s.mutexes.LoadOrStore(imageURL, &sync.Mutex{})
-	imageMu := v.(*sync.Mutex)
+	cachedImage, _ := s.mutexes.LoadOrStore(imageURL, &sync.Mutex{})
+	imageMu := cachedImage.(*sync.Mutex)
 	imageMu.Lock()
 	defer imageMu.Unlock()
 
 	// Try to get image data from the cache to avoid hitting the source
 	var data []byte
 	var err error
-	v, ok := s.cache.Get(imageURL)
+	cachedImage, ok := s.imagesCache.Get(imageURL)
 	if ok {
-		data = v.([]byte)
+		data = cachedImage.([]byte)
 	} else {
-		// Image not found in the cache. Download it from source and store it
-		// in the cache.
+		// Image not found in the cache. Check if we've tried downloading it
+		// already, returning the cached error if available.
+		cachedError, ok := s.errorsCache.Get(imageURL)
+		if ok {
+			return "", cachedError.(error)
+		}
+
+		// Download it from source and store it in the cache.
 		githubToken := s.cfg.GetString("tracker.githubToken")
 		data, err = img.Download(ctx, s.hc, githubToken, s.githubRL, imageURL)
 		if err != nil {
+			s.errorsCache.Add(imageURL, err)
 			return "", err
 		}
-		s.cache.Add(imageURL, data)
+		s.imagesCache.Add(imageURL, data)
 	}
 
 	// Store image in the database
