@@ -55,6 +55,9 @@ func TestTrackerSource(t *testing.T) {
 				"spec": interface{}(nil),
 			},
 		},
+		Data: map[string]interface{}{
+			"apiVersion": "v2",
+		},
 		Version:    "1.0.0",
 		AppVersion: "1.0.0",
 		ContentURL: "https://repo.url/pkg1-1.0.0.tgz",

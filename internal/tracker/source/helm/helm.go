@@ -354,6 +354,10 @@ func enrichPackageFromArchive(p *hub.Package, chart *chart.Chart) error {
 	p.AppVersion = md.AppVersion
 	p.Deprecated = md.Deprecated
 	p.ValuesSchema = chart.Schema
+	p.Data = map[string]interface{}{}
+
+	// API version
+	p.Data["apiVersion"] = chart.Metadata.APIVersion
 
 	// Dependencies
 	dependencies := make([]map[string]string, 0, len(md.Dependencies))
@@ -365,9 +369,7 @@ func enrichPackageFromArchive(p *hub.Package, chart *chart.Chart) error {
 		})
 	}
 	if len(dependencies) > 0 {
-		p.Data = map[string]interface{}{
-			"dependencies": dependencies,
-		}
+		p.Data["dependencies"] = dependencies
 	}
 
 	// License
