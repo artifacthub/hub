@@ -10,5 +10,5 @@
 
 .linkText {
   font-size: 0.9rem;
-  overflow-wrap: break-word;
+  word-break: break-all;
 }

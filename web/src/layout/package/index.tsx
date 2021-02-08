@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import map from 'lodash/map';
 import moment from 'moment';
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -41,6 +41,7 @@ import RepositoryIcon from '../common/RepositoryIcon';
 import RepositoryInfo from '../common/RepositoryInfo';
 import SignedBadge from '../common/SignedBadge';
 import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
+import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
 import ChangelogModal from './ChangelogModal';
 import CustomResourceDefinition from './CustomResourceDefinition';
@@ -57,8 +58,6 @@ import TektonManifestModal from './TektonManifestModal';
 import ValuesSchema from './valuesSchema';
 
 interface Props {
-  isLoadingPackage: boolean;
-  setIsLoadingPackage: Dispatch<SetStateAction<boolean>>;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
   packageName: string;
@@ -73,6 +72,7 @@ interface Props {
 
 const PackageView = (props: Props) => {
   const history = useHistory();
+  const [isLoadingPackage, setIsLoadingPackage] = useState(false);
   const [packageName, setPackageName] = useState(props.packageName);
   const [repositoryKind, setRepositoryKind] = useState(props.repositoryKind);
   const [repositoryName, setRepositoryName] = useState(props.repositoryName);
@@ -80,7 +80,6 @@ const PackageView = (props: Props) => {
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
   const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators, verifiedPublisher, official } =
     props.searchUrlReferer || {};
-  const { isLoadingPackage, setIsLoadingPackage } = props;
   const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
   const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
 
@@ -729,6 +728,8 @@ const PackageView = (props: Props) => {
           </>
         )}
       </div>
+
+      <Footer isHidden={isLoadingPackage || isUndefined(detail)} />
     </>
   );
 };
