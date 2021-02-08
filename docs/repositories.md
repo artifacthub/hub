@@ -334,7 +334,7 @@ In Artifact Hub, the `official` status means that the publisher **owns the softw
 - The user requesting the status is the publisher of the repository in Artifact Hub, or belongs to the organization publishing it.
 - The packages available in the repository provide some documentation, usually in the form of a `README.md` file.
 
-Once you have verified that the requirements are met, please file an issue [using this template](https://github.com/artifacthub/hub/issues/new?labels=official+status+request&template=official-status-request.md&title=) to apply.
+Once you have verified that the requirements are met, please file an issue [using this template](https://github.com/artifacthub/hub/issues/new?assignees=&labels=official+status+request&template=official-status-request.md&title=%5BOFFICIAL%5D+Your+repository+or+project+name) to apply.
 
 ## Ownership claim
 
