@@ -57,6 +57,21 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		hc.AssertExpectations(t)
 	})
 
+	t.Run("error downloading image", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		hc := &tests.HTTPClientMock{}
+		req, _ := http.NewRequest("GET", svgImgURL, nil)
+		hc.On("Do", req).Return(nil, tests.ErrFake)
+		s := NewImageStore(cfg, db, hc, nil)
+
+		imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
+		assert.Equal(t, tests.ErrFake, err)
+		assert.Equal(t, "", imageID)
+		db.AssertExpectations(t)
+		hc.AssertExpectations(t)
+	})
+
 	t.Run("image found in cache, no need to download it", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
@@ -64,7 +79,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil)
 		hc := &tests.HTTPClientMock{}
 		s := NewImageStore(cfg, db, hc, nil)
-		s.cache.Add(svgImgURL, svgImgData)
+		s.imagesCache.Add(svgImgURL, svgImgData)
 
 		imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
 		assert.Equal(t, nil, err)
@@ -95,6 +110,29 @@ func TestDownloadAndSaveImage(t *testing.T) {
 				imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
 				assert.Equal(t, nil, err)
 				assert.Equal(t, "svgImgID", imageID)
+			}()
+		}
+		wg.Wait()
+		db.AssertExpectations(t)
+		hc.AssertExpectations(t)
+	})
+
+	t.Run("multiple goroutines calling simultaneously, image download failed (only tried once)", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		hc := &tests.HTTPClientMock{}
+		req, _ := http.NewRequest("GET", svgImgURL, nil)
+		hc.On("Do", req).Return(nil, tests.ErrFake).Once()
+		s := NewImageStore(cfg, db, hc, nil)
+
+		var wg sync.WaitGroup
+		for i := 0; i < 3; i++ {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
+				assert.Equal(t, tests.ErrFake, err)
+				assert.Equal(t, "", imageID)
 			}()
 		}
 		wg.Wait()
