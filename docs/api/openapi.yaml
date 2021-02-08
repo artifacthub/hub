@@ -2302,6 +2302,10 @@ components:
               type: object
               nullable: false
               properties:
+                apiVersion:
+                  type: string
+                  example: v2
+                  nullable: false
                 dependencies:
                   type: object
                   nullable: false

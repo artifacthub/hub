@@ -86,8 +86,8 @@ export default (props: PackageInfo): InstallMethodOutput => {
               },
             });
           } else {
-            output.methods.push(
-              {
+            if (pkg.data && pkg.data.apiVersion && pkg.data.apiVersion === 'v2') {
+              output.methods.push({
                 label: 'v3',
                 title: 'Helm v3',
                 kind: InstallMethodKind.Helm,
@@ -97,19 +97,33 @@ export default (props: PackageInfo): InstallMethodOutput => {
                   repository: pkg.repository,
                   contentUrl: pkg.contentUrl,
                 },
-              },
-              {
-                label: 'v2',
-                title: 'Helm v2',
-                kind: InstallMethodKind.Helm,
-                props: {
-                  name: pkg.name,
-                  version: pkg.version,
-                  repository: pkg.repository,
-                  contentUrl: pkg.contentUrl,
+              });
+            } else {
+              output.methods.push(
+                {
+                  label: 'v3',
+                  title: 'Helm v3',
+                  kind: InstallMethodKind.Helm,
+                  props: {
+                    name: pkg.name,
+                    version: pkg.version,
+                    repository: pkg.repository,
+                    contentUrl: pkg.contentUrl,
+                  },
                 },
-              }
-            );
+                {
+                  label: 'v2',
+                  title: 'Helm v2',
+                  kind: InstallMethodKind.Helm,
+                  props: {
+                    name: pkg.name,
+                    version: pkg.version,
+                    repository: pkg.repository,
+                    contentUrl: pkg.contentUrl,
+                  },
+                }
+              );
+            }
           }
           break;
         case RepositoryKind.OLM:

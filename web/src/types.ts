@@ -134,6 +134,7 @@ export interface PackageData {
   manifestRaw?: string;
   pipelinesMinVersion?: string;
   platforms?: string[];
+  apiVersion?: string;
 }
 
 export interface OPAPolicies {
