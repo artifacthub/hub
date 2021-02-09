@@ -1,5 +1,5 @@
 # Build backend
-FROM golang:1.15-alpine3.12 AS backend-builder
+FROM golang:1.15-alpine3.13 AS backend-builder
 WORKDIR /go/src/github.com/artifacthub/hub
 COPY go.* ./
 COPY cmd/hub cmd/hub
@@ -28,7 +28,7 @@ RUN scripts/prepare-docs.sh
 RUN cd docs/www && hugo
 
 # Final stage
-FROM alpine:3.12
+FROM alpine:3.13
 RUN apk --no-cache add ca-certificates && addgroup -S hub && adduser -S hub -G hub
 USER hub
 WORKDIR /home/hub
