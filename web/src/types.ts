@@ -11,6 +11,11 @@ export enum RepositoryKind {
   TektonTask,
 }
 
+export enum HelmChartType {
+  Library = 'library',
+  Application = 'application',
+}
+
 export interface Repository {
   repositoryId?: string;
   name: string;
@@ -135,6 +140,8 @@ export interface PackageData {
   pipelinesMinVersion?: string;
   platforms?: string[];
   apiVersion?: string;
+  type?: HelmChartType;
+  kubeVersion?: string;
 }
 
 export interface OPAPolicies {

@@ -2,7 +2,7 @@ import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Channel, Package, RepositoryKind, SearchFiltersURL, Version as VersionData } from '../../types';
+import { Channel, HelmChartType, Package, RepositoryKind, SearchFiltersURL, Version as VersionData } from '../../types';
 import RSSLinkTitle from '../common/RSSLinkTitle';
 import SeeAllModal from '../common/SeeAllModal';
 import SmallTitle from '../common/SmallTitle';
@@ -158,16 +158,52 @@ const Details = (props: Props) => {
         )}
       </div>
 
-      {props.package.repository.kind === RepositoryKind.TektonTask &&
-        props.package.data &&
-        props.package.data.pipelinesMinVersion && (
-          <div>
-            <SmallTitle text="Pipeline minimal version" />
-            <p data-testid="appVersion" className="text-truncate">
-              {props.package.data.pipelinesMinVersion}
-            </p>
-          </div>
-        )}
+      {(() => {
+        switch (props.package.repository.kind) {
+          case RepositoryKind.Helm:
+            return (
+              <>
+                {props.package.data && (
+                  <>
+                    {props.package.data.type &&
+                      [HelmChartType.Application, HelmChartType.Library].includes(props.package.data.type) && (
+                        <div>
+                          <SmallTitle text="Type" />
+                          <p data-testid="chartType" className="text-truncate">
+                            {props.package.data.type}
+                          </p>
+                        </div>
+                      )}
+
+                    {props.package.data.kubeVersion && (
+                      <div>
+                        <SmallTitle text="Kubernetes version" />
+                        <p data-testid="kubeVersion" className="text-truncate">
+                          {props.package.data.kubeVersion}
+                        </p>
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
+            );
+          case RepositoryKind.TektonTask:
+            return (
+              <>
+                {props.package.data && props.package.data.pipelinesMinVersion && (
+                  <div>
+                    <SmallTitle text="Pipeline minimal version" />
+                    <p data-testid="appVersion" className="text-truncate">
+                      {props.package.data.pipelinesMinVersion}
+                    </p>
+                  </div>
+                )}
+              </>
+            );
+          default:
+            return null;
+        }
+      })()}
 
       <SecurityReport
         summary={props.package.securityReportSummary}
