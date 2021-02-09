@@ -22,7 +22,7 @@ spec:
       containers:
         - name: trivy
           image: {{ .Values.trivy.deploy.image }}
-          command: ['trivy', 'server', '--debug', '--cache-dir', '/trivy', '--listen', '0.0.0.0:8081']
+          command: ['trivy', '--debug', '--cache-dir', '/trivy', 'server', '--listen', '0.0.0.0:8081']
           volumeMounts:
           - name: trivy
             mountPath: "/trivy"
