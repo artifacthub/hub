@@ -39,6 +39,10 @@
   border: 1px solid var(--color-1-10);
 }
 
+.wrapper {
+  z-index: 1;
+}
+
 @media (hover: hover) {
   .wrapper:hover .tooltip {
     opacity: 1;

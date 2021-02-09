@@ -124,7 +124,7 @@ describe('RelatedPackageCard', () => {
         </Router>
       );
 
-      expect(getByText(new RegExp(mockProps.repository.organizationDisplayName!, 'i'))).toBeInTheDocument();
+      expect(getByText(new RegExp('Org name', 'i'))).toBeInTheDocument();
       expect(getByText('/')).toBeInTheDocument();
     });
 

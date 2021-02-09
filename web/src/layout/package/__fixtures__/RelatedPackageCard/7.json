@@ -7,7 +7,7 @@
     "repositoryid": "id",
     "kind": 0,
     "name": "incubator",
-    "organizationName": "helm",
-    "organizationDisplayName": "Helm"
+    "organizationName": "org",
+    "organizationDisplayName": "Org name"
   }
 }

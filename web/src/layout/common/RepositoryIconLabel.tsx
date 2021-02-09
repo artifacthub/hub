@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { isUndefined } from 'lodash';
 import React from 'react';
 
@@ -9,6 +10,8 @@ interface Props {
   kind: RepositoryKind;
   isPlural?: boolean;
   className?: string;
+  iconClassName?: string;
+  noBackground?: boolean;
 }
 
 const RepositoryIconLabel = (props: Props) => {
@@ -17,9 +20,17 @@ const RepositoryIconLabel = (props: Props) => {
   if (isUndefined(repo)) return null;
 
   return (
-    <span className={`badge badge-light rounded-pill ${styles.badge} ${props.className}`}>
-      <div className="d-flex flex-arow align-items-center">
-        <div className={`position-relative ${styles.icon}`}>{repo.icon}</div>
+    <span
+      className={classnames(
+        {
+          [`badge badge-light rounded-pill ${styles.bg}`]: isUndefined(props.noBackground) || !props.noBackground,
+        },
+        styles.badge,
+        props.className
+      )}
+    >
+      <div className="d-flex flex-row align-items-center">
+        <div className={`position-relative ${styles.icon} ${props.iconClassName}`}>{repo.icon}</div>
         <div className="ml-1">{props.isPlural ? repo.plural : repo.singular}</div>
       </div>
     </span>

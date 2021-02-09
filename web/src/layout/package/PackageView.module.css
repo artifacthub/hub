@@ -30,10 +30,6 @@
   width: 230px;
 }
 
-.relatedPackagesWrapper {
-  max-width: 230px;
-}
-
 .subtitle {
   line-height: 20px;
 }
@@ -228,15 +224,21 @@
     max-width: calc(100% - 380px);
   }
 
-  .info {
-    width: 310px;
-  }
-
   .relatedPackagesWrapper {
     max-width: 310px;
   }
 
+  .info {
+    width: 310px;
+  }
+
   .noReadmeWrapper {
     margin-right: 0;
+  }
+}
+
+@media only screen and (min-width: 767.98px) and (max-width: 1920px) {
+  .relatedPackagesWrapper {
+    max-width: 230px;
   }
 }

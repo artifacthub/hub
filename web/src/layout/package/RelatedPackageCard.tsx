@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Repository } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import Image from '../common/Image';
-import RepositoryIcon from '../common/RepositoryIcon';
+import RepositoryIconLabel from '../common/RepositoryIconLabel';
 import styles from './RelatedPackageCard.module.css';
 
 interface Props {
@@ -34,45 +34,47 @@ const RelatedPackageCard = (props: Props) => {
         }}
       >
         <div className={`card-body d-flex flex-column ${styles.body}`}>
-          <div className="d-flex align-items-start justify-content-between flex-grow-1 mw-100">
-            <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
-              <div
-                className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
-              >
-                <Image
-                  imageId={props.logoImageId}
-                  alt={`Logo ${props.displayName || props.name}`}
-                  className={styles.image}
-                  kind={props.repository.kind}
-                />
-              </div>
+          <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
+            <div
+              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
+            >
+              <Image
+                imageId={props.logoImageId}
+                alt={`Logo ${props.displayName || props.name}`}
+                className={styles.image}
+                kind={props.repository.kind}
+              />
+            </div>
 
-              <div className={`ml-2 h-100 flex-grow-1 ${styles.truncateWrapper}`}>
-                <div className="h-100 d-flex flex-row justify-content-between">
-                  <div className="mr-2 text-truncate w-100">
-                    <div className={`align-self-end text-truncate card-title mb-2 ${styles.title}`}>
-                      {props.displayName || props.name}
-                    </div>
-                    <div className={`card-subtitle align-items-center text-muted ${styles.subtitle}`}>
-                      <div className="w-100">
-                        <div className="text-truncate">
-                          {!isRepeatedRepoName() && (
-                            <>
-                              {props.repository.userAlias ||
-                                props.repository.organizationDisplayName ||
-                                props.repository.organizationName}
-                              <span className="px-1">/</span>
-                            </>
-                          )}
+            <div className={`ml-2 h-100 flex-grow-1 ${styles.truncateWrapper}`}>
+              <div className="h-100 d-flex flex-row justify-content-between">
+                <div className="text-truncate w-100">
+                  <div className={styles.kind}>
+                    <RepositoryIconLabel
+                      kind={props.repository.kind}
+                      className={`font-weight-bold ${styles.badge}`}
+                      iconClassName={styles.badgeIcon}
+                      noBackground
+                    />
+                  </div>
+                  <div className={`align-self-end text-truncate card-title mb-2 ${styles.title}`}>
+                    {props.displayName || props.name}
+                  </div>
+                  <div className={`card-subtitle align-items-center text-muted ${styles.subtitle}`}>
+                    <div className="w-100">
+                      <div className="text-truncate">
+                        {!isRepeatedRepoName() && (
+                          <>
+                            {props.repository.userAlias ||
+                              props.repository.organizationDisplayName ||
+                              props.repository.organizationName}
+                            <span className="px-1">/</span>
+                          </>
+                        )}
 
-                          {props.repository.displayName || props.repository.name}
-                        </div>
+                        {props.repository.displayName || props.repository.name}
                       </div>
                     </div>
-                  </div>
-
-                  <div className={`align-self-start d-flex align-items-center text-uppercase ${styles.kind}`}>
-                    <RepositoryIcon className={styles.icon} kind={props.repository.kind} />
                   </div>
                 </div>
               </div>

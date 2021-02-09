@@ -1,9 +1,12 @@
 .badge {
   font-size: 75%;
-  background-color: var(--color-1-5);
-  border: 1px solid var(--color-1-10);
   text-transform: none;
   height: 19px;
+}
+
+.bg {
+  background-color: var(--color-1-5);
+  border: 1px solid var(--color-1-10);
 }
 
 .icon {

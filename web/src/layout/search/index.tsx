@@ -515,7 +515,6 @@ const SearchView = (props: Props) => {
                             official: props.official,
                           }}
                           saveScrollPosition={saveScrollPosition}
-                          visibleSignedBadge
                         />
                       ))}
                     </div>
