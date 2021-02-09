@@ -6,6 +6,7 @@ import NoData from './NoData';
 interface Props {
   message: string;
   children: JSX.Element;
+  className?: string;
 }
 
 interface State {
@@ -27,7 +28,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 
     if (state.hasError) {
       return (
-        <NoData>
+        <NoData className={props.className}>
           <>
             {props.message}
             <div className="h6 mt-4">

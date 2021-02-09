@@ -73,6 +73,8 @@ describe('Details', () => {
       );
 
       expect(getByText('Application version')).toBeInTheDocument();
+      expect(getByText('Type')).toBeInTheDocument();
+      expect(getByText('Kubernetes version')).toBeInTheDocument();
       expect(getByText('Chart versions')).toBeInTheDocument();
       expect(queryByText('Links')).toBeNull();
       expect(getByText('License')).toBeInTheDocument();

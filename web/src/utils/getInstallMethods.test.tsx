@@ -1,4 +1,4 @@
-import { Package, Version } from '../types';
+import { HelmChartType, Package, Version } from '../types';
 import getInstallMethods, { InstallMethodOutput } from './getInstallMethods';
 
 interface Tests {
@@ -1251,7 +1251,7 @@ const tests: Tests[] = [
     },
   },
   {
-    title: 'Helm package - chart APi version 2',
+    title: 'Helm package - chart API version 2',
     input: {
       pkg: {
         packageId: 'id',
@@ -1311,7 +1311,7 @@ const tests: Tests[] = [
     },
   },
   {
-    title: 'Helm package - chart APi version 1',
+    title: 'Helm package - chart API version 1',
     input: {
       pkg: {
         packageId: 'id',
@@ -1389,6 +1389,43 @@ const tests: Tests[] = [
         },
       ],
     },
+  },
+  {
+    title: 'Helm package - library type',
+    input: {
+      pkg: {
+        packageId: 'id',
+        name: 'artifact-hub',
+        normalizedName: 'artifact-hub',
+        displayName: 'artifact-hub',
+        description: 'desc',
+        logoImageId: 'img',
+        deprecated: false,
+        signed: false,
+        createdAt: 1574121600,
+        isOperator: false,
+        version: '0.11.0',
+        availableVersions: [
+          { version: '0.6.0', createdAt: 1600841229, containsSecurityUpdates: false, prerelease: false },
+          { version: '0.5.0', createdAt: 1599125273, containsSecurityUpdates: false, prerelease: false },
+        ],
+        appVersion: '0.11.0',
+        contentUrl: 'https://artifacthub.github.io/hub/chart/artifact-hub-0.11.0.tgz',
+        repository: {
+          repositoryId: 'd2b93c16-4f70-43e7-b50c-0dccb4c82756',
+          name: 'artifact-hub',
+          url: 'https://artifacthub.github.io/hub/chart/',
+          private: false,
+          kind: 0,
+          verifiedPublisher: false,
+          official: false,
+          userAlias: 'user',
+        },
+        data: { apiVersion: 'v2', type: HelmChartType.Library },
+      },
+      sortedVersions: [{ version: '0.11.0', createdAt: 1607006504, containsSecurityUpdates: false, prerelease: false }],
+    },
+    output: { methods: [], errorMessage: 'A library chart is not installable' },
   },
 ];
 

@@ -2306,6 +2306,14 @@ components:
                   type: string
                   example: v2
                   nullable: false
+                type:
+                  type: string
+                  example: application
+                  nullable: false
+                kubeVersion:
+                  type: string
+                  example: ">=1.16.0-0"
+                  nullable: false
                 dependencies:
                   type: object
                   nullable: false
