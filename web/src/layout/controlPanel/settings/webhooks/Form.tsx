@@ -83,7 +83,7 @@ const WebhookForm = (props: Props) => {
     !isUndefined(props.webhook) && props.webhook.contentType ? props.webhook.contentType : ''
   );
   const [template, setTemplate] = useState<string>(
-    !isUndefined(props.webhook) && props.webhook.template ? props.webhook.template : DEFAULT_PAYLOAD_TEMPLATE
+    !isUndefined(props.webhook) && props.webhook.template ? props.webhook.template : ''
   );
   const [isAvailableTest, setIsAvailableTest] = useState<boolean>(false);
   const [currentTestWebhook, setCurrentTestWebhook] = useState<TestWebhook | null>(null);
@@ -91,11 +91,11 @@ const WebhookForm = (props: Props) => {
   const [isSendingTest, setIsSendingTest] = useState<boolean>(false);
 
   const getPayloadKind = (): PayloadKind => {
-    let payloadKind: PayloadKind = DEAFULT_PAYLOAD_KIND;
-    if (!isUndefined(props.webhook) && !isNull(props.webhook.contentType) && !isNull(props.webhook.template)) {
-      payloadKind = PayloadKind.custom;
+    let currentPayloadKind: PayloadKind = DEAFULT_PAYLOAD_KIND;
+    if (!isUndefined(props.webhook) && props.webhook.contentType && props.webhook.template) {
+      currentPayloadKind = PayloadKind.custom;
     }
-    return payloadKind;
+    return currentPayloadKind;
   };
 
   const [payloadKind, setPayloadKind] = useState<PayloadKind>(getPayloadKind());
@@ -192,7 +192,7 @@ const WebhookForm = (props: Props) => {
       if (payloadKind === PayloadKind.custom) {
         webhook = {
           ...webhook,
-          template: formData.get('template') as string,
+          template: template,
           contentType: contentType,
         };
       }
@@ -242,6 +242,11 @@ const WebhookForm = (props: Props) => {
     }
   };
 
+  const updateTemplate = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTemplate(e.target.value);
+    checkTestAvailability();
+  };
+
   const checkTestAvailability = () => {
     const formData = new FormData(form.current!);
 
@@ -253,7 +258,7 @@ const WebhookForm = (props: Props) => {
     if (payloadKind === PayloadKind.custom) {
       webhook = {
         ...webhook,
-        template: formData.get('template') as string,
+        template: template,
         contentType: contentType,
       };
     }
@@ -530,12 +535,6 @@ const WebhookForm = (props: Props) => {
                     onChange={() => {
                       setPayloadKind(item.kind);
                       setIsValidated(false);
-                      if (item.kind === PayloadKind.default && contentType !== '') {
-                        contentTypeInput.current!.reset();
-                        setTemplate(DEFAULT_PAYLOAD_TEMPLATE);
-                      } else {
-                        setTemplate('');
-                      }
                       checkTestAvailability();
                     }}
                   />
@@ -612,12 +611,12 @@ const WebhookForm = (props: Props) => {
               <div className="col-xxl-8">
                 <AutoresizeTextarea
                   name="template"
-                  value={template}
+                  value={payloadKind === PayloadKind.default ? DEFAULT_PAYLOAD_TEMPLATE : template}
                   disabled={payloadKind === PayloadKind.default}
                   required={payloadKind !== PayloadKind.default}
                   invalidText="This field is required"
                   minRows={6}
-                  onChange={checkTestAvailability}
+                  onChange={updateTemplate}
                 />
               </div>
             </div>

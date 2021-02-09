@@ -49,7 +49,7 @@ const RelatedPackageCard = (props: Props) => {
             </div>
 
             <div className={`ml-2 h-100 flex-grow-1 ${styles.truncateWrapper}`}>
-              <div className="h-100 d-flex flex-row justify-content-between">
+              <div className="d-flex flex-row justify-content-between">
                 <div className="text-truncate w-100">
                   <div className={`d-flex flex-row align-items-center justify-content-between ${styles.legend}`}>
                     <div className={styles.kind}>
