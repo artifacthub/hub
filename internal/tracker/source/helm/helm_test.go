@@ -56,7 +56,9 @@ func TestTrackerSource(t *testing.T) {
 			},
 		},
 		Data: map[string]interface{}{
-			"apiVersion": "v2",
+			"apiVersion":  "v2",
+			"kubeVersion": ">= 1.13.0 < 1.15.0",
+			"type":        "application",
 		},
 		Version:    "1.0.0",
 		AppVersion: "1.0.0",
