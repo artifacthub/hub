@@ -62,6 +62,7 @@ const RelatedPackages = (props: Props) => {
               logoImageId={item.logoImageId}
               version={item.version!}
               repository={item.repository}
+              stars={item.stars}
             />
           </div>
         ))}

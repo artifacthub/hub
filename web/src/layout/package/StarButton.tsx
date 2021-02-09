@@ -9,6 +9,7 @@ import { AppCtx, signOut } from '../../context/AppCtx';
 import { ErrorKind, PackageStars } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import prettifyNumber from '../../utils/prettifyNumber';
+import StarBadge from '../common/StarBadge';
 import styles from './StarButton.module.css';
 
 interface Props {
@@ -82,14 +83,7 @@ const StarButton = (props: Props) => {
 
   return (
     <>
-      {isNumber(packageStars.stars) && (
-        <div className={`d-inline d-md-none badge badge-pill badge-light ${styles.mobileStarBadge}`}>
-          <div className="d-flex align-items-center">
-            <FaStar className="mr-1" />
-            <div>{prettifyNumber(packageStars.stars)}</div>
-          </div>
-        </div>
-      )}
+      <StarBadge className="d-inline d-md-none" starsNumber={packageStars.stars} />
 
       <div className={`d-none d-md-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
         <button

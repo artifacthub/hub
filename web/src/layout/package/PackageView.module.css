@@ -168,6 +168,7 @@
   .optsWrapper {
     margin-top: 1.5rem;
     position: relative !important;
+    padding-right: 0;
   }
 
   .deprecatedBadge {
