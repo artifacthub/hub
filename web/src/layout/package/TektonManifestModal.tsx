@@ -34,7 +34,6 @@ const TektonManifestModal = (props: Props) => {
       {openStatus && (
         <Modal
           modalDialogClassName={styles.modalDialog}
-          modalClassName="h-100"
           header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Manifest YAML</div>}
           onClose={() => setOpenStatus(false)}
           open={openStatus}

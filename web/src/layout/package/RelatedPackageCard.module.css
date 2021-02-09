@@ -58,6 +58,7 @@
 .subtitle {
   font-size: 0.7rem;
   line-height: 1rem;
+  margin-top: -0.275rem;
 }
 
 .subtitle span {
