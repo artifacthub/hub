@@ -34,11 +34,6 @@
   left: calc(50% - 4px);
 }
 
-.mobileStarBadge {
-  background-color: var(--color-1-5);
-  border: 1px solid var(--color-1-10);
-}
-
 .wrapper {
   z-index: 1;
 }

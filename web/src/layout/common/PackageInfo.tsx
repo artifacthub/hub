@@ -1,15 +1,12 @@
-import { isNumber } from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
-import { FaStar } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import cutString from '../../utils/cutString';
 import prepareQueryString from '../../utils/prepareQueryString';
-import prettifyNumber from '../../utils/prettifyNumber';
 import License from '../package/License';
 import Image from './Image';
 import Label from './Label';
@@ -20,6 +17,7 @@ import RepositoryIconLabel from './RepositoryIconLabel';
 import RepositoryInfo from './RepositoryInfo';
 import SecurityRating from './SecutityRating';
 import SignedBadge from './SignedBadge';
+import StarBadge from './StarBadge';
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 interface Props {
@@ -39,14 +37,7 @@ const PackageInfo = (props: Props) => {
 
   const starsAndKindInfo = (
     <div className={`align-self-start d-flex align-items-center text-uppercase ml-auto ${styles.kind}`}>
-      {isNumber(props.package.stars) && (
-        <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
-          <div className="d-flex align-items-center">
-            <FaStar className="mr-1" />
-            <div>{prettifyNumber(props.package.stars)}</div>
-          </div>
-        </span>
-      )}
+      <StarBadge className="mr-2" starsNumber={props.package.stars} />
       <RepositoryIconLabel kind={props.package.repository.kind} />
     </div>
   );

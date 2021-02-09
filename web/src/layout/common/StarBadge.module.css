@@ -1,0 +1,13 @@
+.badge {
+  background-color: var(--color-1-5);
+  border: 1px solid var(--color-1-10);
+}
+
+.size-xs {
+  font-size: 0.45rem;
+  padding: 0.15em 0.4em;
+}
+
+.size-xs .icon {
+  font-size: 0.95em;
+}

@@ -5,6 +5,7 @@ import { Repository } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import Image from '../common/Image';
 import RepositoryIconLabel from '../common/RepositoryIconLabel';
+import StarBadge from '../common/StarBadge';
 import styles from './RelatedPackageCard.module.css';
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
   name: string;
   displayName?: string | null;
   logoImageId?: string | null;
+  stars?: number | null;
 }
 
 const RelatedPackageCard = (props: Props) => {
@@ -49,13 +51,16 @@ const RelatedPackageCard = (props: Props) => {
             <div className={`ml-2 h-100 flex-grow-1 ${styles.truncateWrapper}`}>
               <div className="h-100 d-flex flex-row justify-content-between">
                 <div className="text-truncate w-100">
-                  <div className={styles.kind}>
-                    <RepositoryIconLabel
-                      kind={props.repository.kind}
-                      className={`font-weight-bold ${styles.badge}`}
-                      iconClassName={styles.badgeIcon}
-                      noBackground
-                    />
+                  <div className={`d-flex flex-row align-items-center justify-content-between ${styles.legend}`}>
+                    <div className={styles.kind}>
+                      <RepositoryIconLabel
+                        kind={props.repository.kind}
+                        className={`font-weight-bold ${styles.badge}`}
+                        iconClassName={styles.badgeIcon}
+                        noBackground
+                      />
+                    </div>
+                    <StarBadge starsNumber={props.stars} size="xs" />
                   </div>
                   <div className={`align-self-end text-truncate card-title mb-2 ${styles.title}`}>
                     {props.displayName || props.name}
