@@ -13,7 +13,6 @@ interface Props {
   saveScrollPosition?: () => void;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
-  visibleSignedBadge?: boolean;
 }
 
 const PackageCard = (props: Props) => (
@@ -33,12 +32,7 @@ const PackageCard = (props: Props) => (
         }}
       >
         <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
-          <PackageInfo
-            package={props.package}
-            visibleSignedBadge={props.visibleSignedBadge}
-            withPackageLinks={false}
-            breakpointForInfoSection="lg"
-          />
+          <PackageInfo package={props.package} withPackageLinks={false} breakpointForInfoSection="lg" />
         </div>
       </Link>
     </div>

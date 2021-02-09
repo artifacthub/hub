@@ -24,7 +24,6 @@ import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 interface Props {
   package: Package;
-  visibleSignedBadge?: boolean;
   withPackageLinks: boolean;
   breakpointForInfoSection?: string;
 }
@@ -253,7 +252,7 @@ const PackageInfo = (props: Props) => {
         {props.package.deprecated && (
           <Label text="Deprecated" icon={<AiOutlineStop />} labelStyle="danger" className="d-inline mt-3" />
         )}
-        {props.visibleSignedBadge && (
+        {props.package.signed && (
           <SignedBadge
             signed={props.package.signed}
             repositoryKind={props.package.repository.kind}

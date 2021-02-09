@@ -52,11 +52,11 @@
 
 .title {
   line-height: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .subtitle {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   line-height: 1rem;
 }
 
@@ -66,7 +66,7 @@
 
 .kind {
   font-size: 0.8rem;
-  color: var(--color-1-500);
+  margin-bottom: 0.15rem;
 }
 
 .truncateWrapper {
@@ -76,4 +76,28 @@
 .starBadge {
   background-color: var(--color-1-5);
   border: 1px solid var(--color-1-10);
+}
+
+.badge {
+  height: 17px;
+}
+
+.badgeIcon {
+  height: 10px;
+  width: 10px;
+  top: -3px;
+}
+
+@media (min-width: 1920px) {
+  .title {
+    font-size: 0.9rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .subtitle span {
+    font-size: 0.65rem;
+  }
 }

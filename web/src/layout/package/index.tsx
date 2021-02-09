@@ -96,22 +96,22 @@ const PackageView = (props: Props) => {
 
   async function fetchPackageDetail() {
     try {
-      const detail = await API.getPackage({
+      const detailPkg = await API.getPackage({
         packageName: packageName,
         version: version,
         repositoryKind: repositoryKind,
         repositoryName: repositoryName,
       });
-      let metaTitle = `${detail.normalizedName} ${detail.version} · ${
-        detail.repository.userAlias || detail.repository.organizationName
-      }/${detail.repository.name}`;
-      updateMetaIndex(metaTitle, detail.description);
-      setDetail(detail);
-      if (isUndefined(activeChannel) && detail.repository.kind === RepositoryKind.OLM) {
-        if (detail.defaultChannel) {
-          setActiveChannel(detail.defaultChannel);
-        } else if (detail.channels && detail.channels.length > 0) {
-          setActiveChannel(detail.channels[0].name);
+      let metaTitle = `${detailPkg.normalizedName} ${detailPkg.version} · ${
+        detailPkg.repository.userAlias || detailPkg.repository.organizationName
+      }/${detailPkg.repository.name}`;
+      updateMetaIndex(metaTitle, detailPkg.description);
+      setDetail(detailPkg);
+      if (isUndefined(activeChannel) && detailPkg.repository.kind === RepositoryKind.OLM) {
+        if (detailPkg.defaultChannel) {
+          setActiveChannel(detailPkg.defaultChannel);
+        } else if (detailPkg.channels && detailPkg.channels.length > 0) {
+          setActiveChannel(detailPkg.channels[0].name);
         }
       }
       setApiError(null);
@@ -532,74 +532,78 @@ const PackageView = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="px-xs-0 px-sm-3 px-lg-0">
-                  <div className={`ml-5 mb-5 d-none d-md-block position-relative float-right ${styles.additionalInfo}`}>
+                <div className="d-flex flex-column-reverse d-md-block px-xs-0 px-sm-3 px-lg-0">
+                  <div
+                    className={`ml-0 ml-md-5 mb-5 position-relative float-none float-md-right ${styles.additionalInfo}`}
+                  >
                     {!isNull(detail) && (
                       <div className={styles.rightColumnWrapper}>
-                        {getInstallationModal('mb-2')}
+                        <div className="d-none d-md-block">
+                          {getInstallationModal('mb-2')}
 
-                        {(() => {
-                          switch (detail.repository.kind) {
-                            case RepositoryKind.TektonTask:
-                              return (
-                                <TektonManifestModal
-                                  normalizedName={detail.normalizedName}
-                                  manifestRaw={getManifestRaw()}
-                                />
-                              );
-
-                            case RepositoryKind.Helm:
-                              return (
-                                <div className="mb-2">
-                                  <ValuesSchema
-                                    hasValuesSchema={detail.hasValuesSchema}
-                                    packageId={detail.packageId}
-                                    version={detail.version!}
+                          {(() => {
+                            switch (detail.repository.kind) {
+                              case RepositoryKind.TektonTask:
+                                return (
+                                  <TektonManifestModal
                                     normalizedName={detail.normalizedName}
-                                    searchUrlReferer={props.searchUrlReferer}
-                                    fromStarredPage={props.fromStarredPage}
-                                    visibleValuesSchema={
-                                      !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                                    }
-                                    visibleValuesSchemaPath={
-                                      !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                                        ? props.visibleValuesSchemaPath
-                                        : undefined
-                                    }
+                                    manifestRaw={getManifestRaw()}
                                   />
-                                </div>
-                              );
+                                );
 
-                            default:
-                              return null;
-                          }
-                        })()}
+                              case RepositoryKind.Helm:
+                                return (
+                                  <div className="mb-2">
+                                    <ValuesSchema
+                                      hasValuesSchema={detail.hasValuesSchema}
+                                      packageId={detail.packageId}
+                                      version={detail.version!}
+                                      normalizedName={detail.normalizedName}
+                                      searchUrlReferer={props.searchUrlReferer}
+                                      fromStarredPage={props.fromStarredPage}
+                                      visibleValuesSchema={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                      }
+                                      visibleValuesSchemaPath={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                          ? props.visibleValuesSchemaPath
+                                          : undefined
+                                      }
+                                    />
+                                  </div>
+                                );
 
-                        <div className="mb-2">
-                          <ChangelogModal
-                            packageId={detail.packageId}
-                            normalizedName={detail.normalizedName}
-                            repository={detail.repository}
-                            hasChangelog={detail.hasChangelog!}
-                            visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
-                            searchUrlReferer={props.searchUrlReferer}
-                            fromStarredPage={props.fromStarredPage}
-                          />
-                        </div>
+                              default:
+                                return null;
+                            }
+                          })()}
 
-                        <div className={`card shadow-sm position-relative info ${styles.info}`}>
-                          <div className={`card-body ${styles.detailsBody}`}>
-                            <Details
-                              package={detail}
-                              activeChannel={activeChannel}
-                              onChannelChange={onChannelChange}
-                              sortedVersions={sortedVersions}
+                          <div className="mb-2">
+                            <ChangelogModal
+                              packageId={detail.packageId}
+                              normalizedName={detail.normalizedName}
+                              repository={detail.repository}
+                              hasChangelog={detail.hasChangelog!}
+                              visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
                               searchUrlReferer={props.searchUrlReferer}
                               fromStarredPage={props.fromStarredPage}
-                              visibleSecurityReport={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
-                              }
                             />
+                          </div>
+
+                          <div className={`card shadow-sm position-relative info ${styles.info}`}>
+                            <div className={`card-body ${styles.detailsBody}`}>
+                              <Details
+                                package={detail}
+                                activeChannel={activeChannel}
+                                onChannelChange={onChannelChange}
+                                sortedVersions={sortedVersions}
+                                searchUrlReferer={props.searchUrlReferer}
+                                fromStarredPage={props.fromStarredPage}
+                                visibleSecurityReport={
+                                  !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
+                                }
+                              />
+                            </div>
                           </div>
                         </div>
 

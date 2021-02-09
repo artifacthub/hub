@@ -56,6 +56,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
   if (pkg && pkg.version) {
     if (
       pkg.repository.kind === RepositoryKind.OLM &&
+      pkg.repository.name === SPECIAL_OLM &&
       sortedVersions.length > 0 &&
       pkg.version !== sortedVersions[0].version
     ) {
