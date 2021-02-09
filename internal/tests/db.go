@@ -110,7 +110,7 @@ func (m *TXMock) Query(ctx context.Context, sql string, args ...interface{}) (pg
 	return nil, nil
 }
 
-// Query implements the pgx.Tx interface.
+// QueryFunc implements the pgx.Tx interface.
 func (m *TXMock) QueryFunc(
 	ctx context.Context,
 	sql string,

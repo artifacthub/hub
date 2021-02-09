@@ -372,6 +372,9 @@ func enrichPackageFromArchive(p *hub.Package, chart *chart.Chart) error {
 		p.Data["dependencies"] = dependencies
 	}
 
+	// Kubernetes version
+	p.Data["kubeVersion"] = chart.Metadata.KubeVersion
+
 	// License
 	licenseFile := getFile(chart, "LICENSE")
 	if licenseFile != nil {
@@ -414,6 +417,9 @@ func enrichPackageFromArchive(p *hub.Package, chart *chart.Chart) error {
 	if readme != nil {
 		p.Readme = string(readme.Data)
 	}
+
+	// Type
+	p.Data["type"] = chart.Metadata.Type
 
 	// Enrich package with information from annotations
 	if err := enrichPackageFromAnnotations(p, md.Annotations); err != nil {
