@@ -27,7 +27,7 @@ type TrivyScanner struct {
 // Scan implements the Scanner interface.
 func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 	// Setup trivy command
-	cmd := exec.CommandContext(s.Ctx, "trivy", "client", "--quiet", "--remote", s.URL, "-f", "json", image) // #nosec
+	cmd := exec.CommandContext(s.Ctx, "trivy", "--quiet", "client", "--remote", s.URL, "-f", "json", image) // #nosec
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
