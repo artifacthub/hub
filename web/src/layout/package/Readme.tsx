@@ -82,7 +82,10 @@ const Readme = (props: Props) => {
 
   // Only for external links and anchors
   const Link: React.ElementType = (data: LinkProps) => {
-    const isContentImage = data.children && isArray(data.children) ? !isUndefined(data.children[0].props.src) : false;
+    const isContentImage =
+      data.children && isArray(data.children) && data.children.length > 0
+        ? !isUndefined(data.children[0].props.src)
+        : false;
 
     if (/^https?:/.test(data.href)) {
       return (
@@ -166,7 +169,10 @@ const Readme = (props: Props) => {
   let readme = checkReadme();
 
   return (
-    <ErrorBoundary message="Something went wrong rendering the README file of this package.">
+    <ErrorBoundary
+      className="d-table-cell overflow-hidden"
+      message="Something went wrong rendering the README file of this package."
+    >
       <span data-testid="readme">
         <ReactMarkdown
           className={`mt-3 mb-5 position-relative ${styles.md}`}

@@ -17,5 +17,9 @@
   "license": "MIT",
   "createdAt": 1,
   "signed": false,
-  "capabilities": "basic install"
+  "data": {
+    "type": "application",
+    "apiVersion": "v2",
+    "kubeVersion": ">= 1.18.0"
+  }
 }
