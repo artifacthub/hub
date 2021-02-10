@@ -91,6 +91,7 @@ export interface Package {
   contentUrl?: string;
   containsSecurityUpdates?: boolean;
   prerelease?: boolean;
+  recommendations?: Recommendation[];
 }
 
 export interface ContainerImage {
@@ -127,6 +128,17 @@ export interface Dependency {
   name: string;
   version: string;
   repository?: string;
+}
+
+export interface Recommendation {
+  url: string;
+}
+
+export interface RecommendedPackage {
+  url: string;
+  kind: RepositoryKind;
+  normalizedName: string;
+  repoName: string;
 }
 
 export interface PackageData {

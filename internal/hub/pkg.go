@@ -85,6 +85,7 @@ type Package struct {
 	ContainsSecurityUpdates bool                   `json:"contains_security_updates"`
 	Prerelease              bool                   `json:"prerelease"`
 	Maintainers             []*Maintainer          `json:"maintainers"`
+	Recommendations         []*Recommendation      `json:"recommendations"`
 	Repository              *Repository            `json:"repository"`
 	CreatedAt               int64                  `json:"created_at,omitempty"`
 }
@@ -140,6 +141,12 @@ type PackageMetadata struct {
 	Maintainers             []*Maintainer     `yaml:"maintainers"`
 	Provider                *Provider         `yaml:"provider"`
 	Ignore                  []string          `yaml:"ignore"`
+	Recommendations         []*Recommendation `yaml:"recommendations"`
+}
+
+// Recommendation represents some information about a recommended package.
+type Recommendation struct {
+	URL string `json:"url" yaml:"url"`
 }
 
 // SnapshotSecurityReport represents some information about the security

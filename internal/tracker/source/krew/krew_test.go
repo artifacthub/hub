@@ -113,6 +113,11 @@ func TestTrackerSource(t *testing.T) {
 					Email: "user2@email.com",
 				},
 			},
+			Recommendations: []*hub.Recommendation{
+				{
+					URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+				},
+			},
 			Data: map[string]interface{}{
 				"manifestRaw": string(manifestRaw),
 				"platforms":   []string{"linux/amd64"},

@@ -83,6 +83,11 @@ func TestTrackerSource(t *testing.T) {
 				"kind":       "Test",
 			},
 		},
+		Recommendations: []*hub.Recommendation{
+			{
+				URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+			},
+		},
 		Data: map[string]interface{}{
 			"isGlobalOperator": true,
 		},

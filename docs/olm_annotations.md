@@ -30,6 +30,10 @@ Use this annotation to indicate the operator's license. It must be a valid [SPDX
 
 Use this annotation to indicate that this operator version is a pre-release. This status will be displayed in the UI's package view, as well as in new releases notifications emails.
 
+- **artifacthub.io/recommendations** *(yaml string, see example below)*
+
+This annotation allows recommending other related packages. Recommended packages will be featured in the package detail view in Artifact Hub.
+
 ## Example
 
 Artifact Hub annotations in `CSV` file:
@@ -50,6 +54,9 @@ metadata:
       Content added here will be displayed when the INSTALL button on the package details page is clicked.
     artifacthub.io/license: Apache-2.0
     artifacthub.io/prerelease: "false"
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+      - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
 spec:
     ...
 ```

@@ -42,6 +42,11 @@ func TestTrackerSource(t *testing.T) {
 			"feature 1",
 			"fix 1",
 		},
+		Recommendations: []*hub.Recommendation{
+			{
+				URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+			},
+		},
 		ContainsSecurityUpdates: true,
 		Prerelease:              true,
 		Maintainers: []*hub.Maintainer{

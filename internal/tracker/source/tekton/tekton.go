@@ -16,11 +16,12 @@ import (
 )
 
 const (
-	changesAnnotation     = "artifacthub.io/changes"
-	licenseAnnotation     = "artifacthub.io/license"
-	linksAnnotation       = "artifacthub.io/links"
-	maintainersAnnotation = "artifacthub.io/maintainers"
-	providerAnnotation    = "artifacthub.io/provider"
+	changesAnnotation         = "artifacthub.io/changes"
+	licenseAnnotation         = "artifacthub.io/license"
+	linksAnnotation           = "artifacthub.io/links"
+	maintainersAnnotation     = "artifacthub.io/maintainers"
+	providerAnnotation        = "artifacthub.io/provider"
+	recommendationsAnnotation = "artifacthub.io/recommendations"
 )
 
 // TrackerSource is a hub.TrackerSource implementation for Tekton repositories.
@@ -240,6 +241,15 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 
 	// Provider
 	p.Provider = annotations[providerAnnotation]
+
+	// Recommendations
+	if v, ok := annotations[recommendationsAnnotation]; ok {
+		var recommendations []*hub.Recommendation
+		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
+			return fmt.Errorf("invalid recommendations value: %s", v)
+		}
+		p.Recommendations = recommendations
+	}
 
 	return nil
 }

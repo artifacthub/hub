@@ -75,6 +75,7 @@ begin
             join package__maintainer pm using (maintainer_id)
             where pm.package_id = v_package_id
         ),
+        'recommendations', s.recommendations,
         'repository', (select get_repository_summary(r.repository_id))
     ))
     from package p

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecommendedPackageCard creates snapshot 1`] = `
+<DocumentFragment>
+  <a
+    class="d-inline-block text-decoration-none text-dark h5 mb-2 mr-3"
+    data-testid="recommended-pkg"
+    href="/packages/helm/artifact-hub/artifact-hub"
+  >
+    <div
+      class="badge badge-rounded badge-light rounded-pill d-flex flex-row border align-items-center py-2 px-3"
+    >
+      <div
+        class="position-relative mr-3 iconKind separator"
+      >
+        <span
+          class="badge"
+        >
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <div
+              class="position-relative icon undefined"
+            >
+              <img
+                alt="Icon"
+                class="mw-100 mh-100 iconLight"
+                src="/static/media/helm-chart.svg"
+              />
+              <img
+                alt="Icon"
+                class="mw-100 mh-100 iconDark"
+                src="/static/media/helm-chart-light.svg"
+              />
+            </div>
+            <div
+              class="ml-1"
+            >
+              Helm chart
+            </div>
+          </div>
+        </span>
+      </div>
+      <div
+        class="ml-3 text-truncate badgeContent"
+      >
+        <span
+          class="mr-3 font-weight-bold"
+        >
+          artifact-hub
+        </span>
+        <small
+          class="text-muted"
+        >
+          REPO:
+        </small>
+         
+        <span>
+          artifact-hub
+        </span>
+      </div>
+    </div>
+  </a>
+</DocumentFragment>
+`;

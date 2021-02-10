@@ -27,6 +27,7 @@ const (
 	installAnnotation         = "artifacthub.io/install"
 	licenseAnnotation         = "artifacthub.io/license"
 	prereleaseAnnotation      = "artifacthub.io/prerelease"
+	recommendationsAnnotation = "artifacthub.io/recommendations"
 	securityUpdatesAnnotation = "artifacthub.io/containsSecurityUpdates"
 )
 
@@ -237,6 +238,14 @@ func (s *TrackerSource) preparePackage(
 	var crdsExamples []interface{}
 	if err := json.Unmarshal([]byte(csv.Annotations["alm-examples"]), &crdsExamples); err == nil {
 		p.CRDsExamples = crdsExamples
+	}
+
+	// Recommendations
+	if v, ok := csv.Annotations[recommendationsAnnotation]; ok {
+		var recommendations []*hub.Recommendation
+		if err := yaml.Unmarshal([]byte(v), &recommendations); err == nil {
+			p.Recommendations = recommendations
+		}
 	}
 
 	// Misc

@@ -36,6 +36,10 @@ Each package in Artifact Hub is expected to provide a `readme` file that is rend
 
 This annotation allows providing an Artifact Hub specific readme file in markdown format.
 
+- **artifacthub.io/recommendations** *(yaml string, see example below)*
+
+This annotation allows recommending other related packages. Recommended packages will be featured in the package detail view in Artifact Hub.
+
 ## Example
 
 Artifact Hub annotations in `plugin manifest` file:
@@ -63,6 +67,9 @@ metadata:
       ## Package documentation in markdown format
 
       Content added here will be displayed when the package's view in the UI.
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+      - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
 spec:
     ...
 ```

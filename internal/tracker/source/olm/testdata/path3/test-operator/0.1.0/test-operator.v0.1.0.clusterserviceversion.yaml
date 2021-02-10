@@ -12,6 +12,8 @@ metadata:
       Install instructions (markdown)
     artifacthub.io/license: Apache-2.0
     artifacthub.io/prerelease: "true"
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
     capabilities: Basic Install
     categories: Application Runtime
     containerImage: repo.url:latest

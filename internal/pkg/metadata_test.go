@@ -103,6 +103,11 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 				Provider: &hub.Provider{
 					Name: "Package provider",
 				},
+				Recommendations: []*hub.Recommendation{
+					{
+						URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+					},
+				},
 			},
 			&hub.Package{
 				Name:        "pkg1",
@@ -143,6 +148,11 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 					{
 						Name:  "maintainer1",
 						Email: "maintainer1@email.com",
+					},
+				},
+				Recommendations: []*hub.Recommendation{
+					{
+						URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
 					},
 				},
 				CreatedAt: 1136214245,

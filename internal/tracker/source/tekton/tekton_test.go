@@ -103,6 +103,11 @@ func TestTrackerSource(t *testing.T) {
 				"Added cool feature",
 				"Fixed minor bug",
 			},
+			Recommendations: []*hub.Recommendation{
+				{
+					URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+				},
+			},
 			Data: map[string]interface{}{
 				"manifestRaw":          string(manifestRaw),
 				"pipelines.minVersion": "0.12.1",

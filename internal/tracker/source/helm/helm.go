@@ -40,6 +40,7 @@ const (
 	operatorAnnotation             = "artifacthub.io/operator"
 	operatorCapabilitiesAnnotation = "artifacthub.io/operatorCapabilities"
 	prereleaseAnnotation           = "artifacthub.io/prerelease"
+	recommendationsAnnotation      = "artifacthub.io/recommendations"
 	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
 
 	helmChartConfigMediaType       = "application/vnd.cncf.helm.config.v1+json"
@@ -528,6 +529,15 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 			return fmt.Errorf("invalid prerelease value: %s", v)
 		}
 		p.Prerelease = prerelease
+	}
+
+	// Recommendations
+	if v, ok := annotations[recommendationsAnnotation]; ok {
+		var recommendations []*hub.Recommendation
+		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
+			return fmt.Errorf("invalid recommendations value: %s", v)
+		}
+		p.Recommendations = recommendations
 	}
 
 	// Security updates

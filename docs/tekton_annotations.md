@@ -26,6 +26,10 @@ Use this annotation to list the maintainers of this package. Please note that th
 
 Use this annotation to indicate the name of the organization or user providing this package. This may be useful for repositories where packages are provided by a different entity than the one publishing them in Artifact Hub.
 
+- **artifacthub.io/recommendations** *(yaml string, see example below)*
+
+This annotation allows recommending other related packages. Recommended packages will be featured in the package detail view in Artifact Hub.
+
 ## Example
 
 Artifact Hub annotations in `task manifest` file:
@@ -48,6 +52,9 @@ metadata:
       - name: user2
         email: user2@email.com
     artifacthub.io/provider: Some organization
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+      - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
 spec:
     ...
 ```

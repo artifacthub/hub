@@ -19,7 +19,8 @@ metadata:
       - name: user2
         email: user2@email.com
     artifacthub.io/provider: Some organization
-    artifacthub.io/readme: |
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
 spec:
   version: v0.1.0
   shortDescription: Test plugin

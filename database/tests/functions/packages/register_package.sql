@@ -91,6 +91,11 @@ select register_package('
             "email": "email2"
         }
     ],
+    "recommendations": [
+        {
+            "url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"
+        }
+    ],
     "repository": {
         "repository_id": "00000000-0000-0000-0000-000000000001"
     }
@@ -160,6 +165,7 @@ select results_eq(
             s.changes,
             s.contains_security_updates,
             s.prerelease,
+            s.recommendations,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -195,6 +201,7 @@ select results_eq(
             }'::text[],
             true,
             true,
+            '[{"url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"}]'::jsonb,
             '2020-06-16 11:20:34+02'::timestamptz
         )
     $$,
