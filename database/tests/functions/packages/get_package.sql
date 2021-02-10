@@ -97,6 +97,7 @@ insert into snapshot (
     changes,
     contains_security_updates,
     prerelease,
+    recommendations,
     created_at
 ) values (
     :'package1ID',
@@ -126,6 +127,7 @@ insert into snapshot (
     '{"feature 1", "fix 1"}',
     true,
     true,
+    '[{"url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"}]',
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -299,6 +301,11 @@ select is(
                 "email": "email2"
             }
         ],
+        "recommendations": [
+            {
+                "url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"
+            }
+        ],
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
             "kind": 0,
@@ -410,6 +417,11 @@ select is(
             {
                 "name": "name2",
                 "email": "email2"
+            }
+        ],
+        "recommendations": [
+            {
+                "url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"
             }
         ],
         "repository": {

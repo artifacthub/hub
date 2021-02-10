@@ -20,6 +20,8 @@ metadata:
       - name: user2
         email: user2@email.com
     artifacthub.io/provider: Some organization
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
     tekton.dev/pipelines.minVersion: "0.12.1"
     tekton.dev/tags: tag1, tag2
     tekton.dev/displayName: "Task 1"

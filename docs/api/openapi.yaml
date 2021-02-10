@@ -2686,6 +2686,17 @@ components:
             prerelease:
               type: boolean
               nullable: false
+            recommendations:
+              type: array
+              items:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+                    example: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+                    nullable: false
+              nullable: false
     PackageSummary:
       type: object
       required:

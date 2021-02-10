@@ -50,6 +50,7 @@ import InstallationModal from './installation/Modal';
 import ModalHeader from './ModalHeader';
 import styles from './PackageView.module.css';
 import Readme from './Readme';
+import RecommendedPackages from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
 import ResourcesList from './ResourcesList';
 import StarButton from './StarButton';
@@ -383,143 +384,147 @@ const PackageView = (props: Props) => {
         {!isUndefined(detail) && (
           <>
             {!isNull(detail) && (
-              <div className={`jumbotron package-detail-jumbotron ${styles.jumbotron}`}>
-                <div className="container-lg px-sm-4 px-lg-0 position-relative">
-                  <div className="d-flex align-items-start w-100 mb-3">
-                    <div className="d-flex align-items-center flex-grow-1 mw-100">
-                      <div
-                        className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper} imageWrapper`}
-                      >
-                        <Image
-                          className={styles.image}
-                          alt={detail.displayName || detail.name}
-                          imageId={detail.logoImageId}
-                          kind={detail.repository.kind}
-                        />
-                      </div>
-
-                      <div className={`ml-3 flex-grow-1 ${styles.wrapperWithContentEllipsis}`}>
-                        <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
-                          <div className={`h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
-                            {detail.displayName || detail.name}
-                          </div>
-                          <div className="d-none d-md-flex ml-3">{getBadges(false, 'mt-1')}</div>
-                        </div>
-
-                        <div className={`d-flex d-md-none text-truncate mt-2 w-100 ${styles.mobileSubtitle}`}>
-                          <small className="text-muted text-uppercase">Repo: </small>
-                          <div className={`mx-1 d-inline ${styles.mobileIcon}`}>
-                            <RepositoryIcon kind={detail.repository.kind} className={styles.repoIcon} />
-                          </div>
-                          <span className={`text-dark d-inline-block text-truncate mw-100 ${styles.mobileVersion}`}>
-                            {detail.repository.displayName || detail.repository.name}
-                          </span>
-                        </div>
-
-                        <div className={`d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}>
-                          {detail.repository.userAlias ? (
-                            <div className={`mr-2 text-truncate ${styles.mw50}`}>
-                              <small className="mr-1 text-uppercase text-muted">User: </small>
-
-                              <Link
-                                className="text-dark"
-                                to={{
-                                  pathname: '/packages/search',
-                                  search: prepareQueryString({
-                                    pageNumber: 1,
-                                    filters: {
-                                      user: [detail.repository.userAlias!],
-                                    },
-                                    deprecated: detail.deprecated || false,
-                                    operators: detail.isOperator || false,
-                                    verifiedPublisher: detail.repository.verifiedPublisher || false,
-                                    official: detail.repository.official || false,
-                                  }),
-                                }}
-                              >
-                                {detail.repository.userAlias}
-                              </Link>
-                            </div>
-                          ) : (
-                            <OrganizationInfo
-                              className={`mr-2 text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
-                              organizationName={detail.repository.organizationName!}
-                              organizationDisplayName={detail.repository.organizationDisplayName}
-                              deprecated={detail.deprecated}
-                              visibleLegend
-                            />
-                          )}
-
-                          <RepositoryInfo
-                            repository={detail.repository}
-                            deprecated={detail.deprecated}
-                            className={`text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
-                            repoLabelClassName={styles.repoLabel}
-                            visibleInfoIcon
-                            visibleIcon
-                            withLabels
+              <>
+                <div className={`jumbotron package-detail-jumbotron ${styles.jumbotron}`}>
+                  <div className="container-lg px-sm-4 px-lg-0 position-relative">
+                    <div className="d-flex align-items-start w-100 mb-3">
+                      <div className="d-flex align-items-center flex-grow-1 mw-100">
+                        <div
+                          className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                        >
+                          <Image
+                            className={styles.image}
+                            alt={detail.displayName || detail.name}
+                            imageId={detail.logoImageId}
+                            kind={detail.repository.kind}
                           />
+                        </div>
+
+                        <div className={`ml-3 flex-grow-1 ${styles.wrapperWithContentEllipsis}`}>
+                          <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
+                            <div className={`h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
+                              {detail.displayName || detail.name}
+                            </div>
+                            <div className="d-none d-md-flex ml-3">{getBadges(false, 'mt-1')}</div>
+                          </div>
+
+                          <div className={`d-flex d-md-none text-truncate mt-2 w-100 ${styles.mobileSubtitle}`}>
+                            <small className="text-muted text-uppercase">Repo: </small>
+                            <div className={`mx-1 d-inline ${styles.mobileIcon}`}>
+                              <RepositoryIcon kind={detail.repository.kind} className={styles.repoIcon} />
+                            </div>
+                            <span className={`text-dark d-inline-block text-truncate mw-100 ${styles.mobileVersion}`}>
+                              {detail.repository.displayName || detail.repository.name}
+                            </span>
+                          </div>
+
+                          <div className={`d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}>
+                            {detail.repository.userAlias ? (
+                              <div className={`mr-2 text-truncate ${styles.mw50}`}>
+                                <small className="mr-1 text-uppercase text-muted">User: </small>
+
+                                <Link
+                                  className="text-dark"
+                                  to={{
+                                    pathname: '/packages/search',
+                                    search: prepareQueryString({
+                                      pageNumber: 1,
+                                      filters: {
+                                        user: [detail.repository.userAlias!],
+                                      },
+                                      deprecated: detail.deprecated || false,
+                                      operators: detail.isOperator || false,
+                                      verifiedPublisher: detail.repository.verifiedPublisher || false,
+                                      official: detail.repository.official || false,
+                                    }),
+                                  }}
+                                >
+                                  {detail.repository.userAlias}
+                                </Link>
+                              </div>
+                            ) : (
+                              <OrganizationInfo
+                                className={`mr-2 text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
+                                organizationName={detail.repository.organizationName!}
+                                organizationDisplayName={detail.repository.organizationDisplayName}
+                                deprecated={detail.deprecated}
+                                visibleLegend
+                              />
+                            )}
+
+                            <RepositoryInfo
+                              repository={detail.repository}
+                              deprecated={detail.deprecated}
+                              className={`text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
+                              repoLabelClassName={styles.repoLabel}
+                              visibleInfoIcon
+                              visibleIcon
+                              withLabels
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <p className={`mb-0 ${styles.description}`}>{detail.description}</p>
+                    <p className={`mb-0 ${styles.description}`}>{detail.description}</p>
 
-                  <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
+                    <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
 
-                  <div className={`position-absolute d-flex flex-row align-items-center ${styles.optsWrapper}`}>
-                    {createdAt()}
-                    <StarButton packageId={detail.packageId} />
-                    <SubscriptionsButton packageId={detail.packageId} />
-                  </div>
+                    <div className={`position-absolute d-flex flex-row align-items-center ${styles.optsWrapper}`}>
+                      {createdAt()}
+                      <StarButton packageId={detail.packageId} />
+                      <SubscriptionsButton packageId={detail.packageId} />
+                    </div>
 
-                  <div className="row align-items-baseline d-md-none">
-                    <Modal
-                      buttonType="btn-secondary btn-sm text-nowrap"
-                      buttonContent={
-                        <>
-                          <FiPlus className="mr-2" />
-                          <span>Info</span>
-                        </>
-                      }
-                      header={
-                        <ModalHeader
-                          displayName={detail.displayName}
-                          name={detail.name}
-                          logoImageId={detail.logoImageId}
-                          repoKind={detail.repository.kind}
+                    <div className="row align-items-baseline d-md-none">
+                      <Modal
+                        buttonType="btn-secondary btn-sm text-nowrap"
+                        buttonContent={
+                          <>
+                            <FiPlus className="mr-2" />
+                            <span>Info</span>
+                          </>
+                        }
+                        header={
+                          <ModalHeader
+                            displayName={detail.displayName}
+                            name={detail.name}
+                            logoImageId={detail.logoImageId}
+                            repoKind={detail.repository.kind}
+                          />
+                        }
+                        className={`col mt-3 ${styles.btnMobileWrapper}`}
+                      >
+                        <Details
+                          package={detail}
+                          activeChannel={activeChannel}
+                          onChannelChange={onChannelChange}
+                          sortedVersions={sortedVersions}
+                          searchUrlReferer={props.searchUrlReferer}
+                          fromStarredPage={props.fromStarredPage}
+                          visibleSecurityReport={false}
                         />
-                      }
-                      className={`col mt-3 ${styles.btnMobileWrapper}`}
-                    >
-                      <Details
-                        package={detail}
-                        activeChannel={activeChannel}
-                        onChannelChange={onChannelChange}
-                        sortedVersions={sortedVersions}
-                        searchUrlReferer={props.searchUrlReferer}
-                        fromStarredPage={props.fromStarredPage}
-                        visibleSecurityReport={false}
-                      />
-                    </Modal>
+                      </Modal>
 
-                    {getInstallationModal(`col mt-3 ${styles.btnMobileWrapper}`)}
+                      {getInstallationModal(`col mt-3 ${styles.btnMobileWrapper}`)}
 
-                    <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
-                      <ChangelogModal
-                        packageId={detail.packageId}
-                        normalizedName={detail.normalizedName}
-                        repository={detail.repository}
-                        hasChangelog={detail.hasChangelog!}
-                        visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
-                        searchUrlReferer={props.searchUrlReferer}
-                        fromStarredPage={props.fromStarredPage}
-                      />
+                      <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
+                        <ChangelogModal
+                          packageId={detail.packageId}
+                          normalizedName={detail.normalizedName}
+                          repository={detail.repository}
+                          hasChangelog={detail.hasChangelog!}
+                          visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
+                          searchUrlReferer={props.searchUrlReferer}
+                          fromStarredPage={props.fromStarredPage}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+
+                <RecommendedPackages recommendations={detail.recommendations} />
+              </>
             )}
 
             <div className="container-lg px-sm-4 px-lg-0">

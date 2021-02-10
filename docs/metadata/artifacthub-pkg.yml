@@ -42,3 +42,5 @@ provider: # (optional)
   name: The name of the individual, company, or service that provides this package (optional)
 ignore: # (optional, entries use .gitignore syntax)
   - lib
+recommendations: # (optional, list of recommended packages)
+  - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub

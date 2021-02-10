@@ -88,6 +88,11 @@ func TestTrackerSource(t *testing.T) {
 			"Added cool feature",
 			"Fixed minor bug",
 		},
+		Recommendations: []*hub.Recommendation{
+			{
+				URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+			},
+		},
 		ContainsSecurityUpdates: true,
 		Prerelease:              true,
 		CreatedAt:               0,
@@ -708,6 +713,23 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			map[string]string{},
 			&hub.Package{
 				Prerelease: true,
+			},
+			"",
+		},
+		// Recommendations
+		{
+			&hub.Package{},
+			map[string]string{
+				recommendationsAnnotation: `
+- url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+`,
+			},
+			&hub.Package{
+				Recommendations: []*hub.Recommendation{
+					{
+						URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+					},
+				},
 			},
 			"",
 		},

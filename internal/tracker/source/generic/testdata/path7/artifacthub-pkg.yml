@@ -30,3 +30,5 @@ maintainers:
     email: test@email.com
 provider:
   name: Provider
+recommendations:
+  - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub

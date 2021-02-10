@@ -16,13 +16,14 @@ import (
 
 const (
 	// Annotations
-	displayNameAnnotation = "artifacthub.io/displayName"
-	keywordsAnnotation    = "artifacthub.io/keywords"
-	licenseAnnotation     = "artifacthub.io/license"
-	linksAnnotation       = "artifacthub.io/links"
-	maintainersAnnotation = "artifacthub.io/maintainers"
-	providerAnnotation    = "artifacthub.io/provider"
-	readmeAnnotation      = "artifacthub.io/readme"
+	displayNameAnnotation     = "artifacthub.io/displayName"
+	keywordsAnnotation        = "artifacthub.io/keywords"
+	licenseAnnotation         = "artifacthub.io/license"
+	linksAnnotation           = "artifacthub.io/links"
+	maintainersAnnotation     = "artifacthub.io/maintainers"
+	providerAnnotation        = "artifacthub.io/provider"
+	readmeAnnotation          = "artifacthub.io/readme"
+	recommendationsAnnotation = "artifacthub.io/recommendations"
 
 	// Platform keys
 	os   = "os"
@@ -193,6 +194,15 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	// Readme
 	if v, ok := annotations[readmeAnnotation]; ok && v != "" {
 		p.Readme = v
+	}
+
+	// Recommendations
+	if v, ok := annotations[recommendationsAnnotation]; ok {
+		var recommendations []*hub.Recommendation
+		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
+			return fmt.Errorf("invalid recommendations value: %s", v)
+		}
+		p.Recommendations = recommendations
 	}
 
 	return nil
