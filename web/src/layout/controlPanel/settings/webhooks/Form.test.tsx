@@ -146,7 +146,7 @@ describe('WebhookForm', () => {
       ).toBeInTheDocument();
 
       expect(getByTestId('contentTypeInput')).toBeInTheDocument();
-      expect(getByText('Content type')).toBeInTheDocument();
+      expect(getByText('Request Content-Type')).toBeInTheDocument();
       expect(getByTestId('contentTypeInput')).toHaveValue(mockWebhook.contentType!);
 
       expect(getByText('Template')).toBeInTheDocument();
@@ -237,7 +237,7 @@ describe('WebhookForm', () => {
       ).toBeNull();
 
       expect(getByTestId('contentTypeInput')).toBeInTheDocument();
-      expect(getByText('Content type')).toBeInTheDocument();
+      expect(getByText('Request Content-Type')).toBeInTheDocument();
       expect(getByTestId('contentTypeInput')).toHaveValue('');
       expect(getByPlaceholderText('application/cloudevents+json')).toBeInTheDocument();
 

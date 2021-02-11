@@ -14,6 +14,7 @@ import lsPreferences from '../utils/localStoragePreferences';
 import AlertController from './common/AlertController';
 import ControlPanelView from './controlPanel';
 import HomeView from './home';
+import BannerMOTD from './navigation/BannerMOTD';
 import Footer from './navigation/Footer';
 import Navbar from './navigation/Navbar';
 import NotFound from './notFound';
@@ -56,6 +57,7 @@ export default function App() {
         <div className="d-flex flex-column min-vh-100 position-relative">
           <ScrollMemory />
           <AlertController />
+          <BannerMOTD />
           <Switch>
             <Route
               path={['/', '/verify-email', '/login', '/accept-invitation', '/oauth-failed']}

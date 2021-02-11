@@ -573,10 +573,10 @@ const WebhookForm = (props: Props) => {
               <InputField
                 ref={contentTypeInput}
                 type="text"
-                label="Content type"
+                label="Request Content-Type"
                 name="contentType"
                 value={contentType}
-                placeholder={payloadKind === PayloadKind.default ? 'application/cloudevents+json' : ''}
+                placeholder={payloadKind === PayloadKind.default ? 'application/cloudevents+json' : 'application/json'}
                 disabled={payloadKind === PayloadKind.default}
                 required={payloadKind !== PayloadKind.default}
                 invalidText={{

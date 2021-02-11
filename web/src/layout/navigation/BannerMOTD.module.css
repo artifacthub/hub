@@ -1,0 +1,18 @@
+.wrapper {
+  font-size: 0.85rem;
+  line-height: 0.95rem;
+  border-width: 0;
+  border-bottom-width: 2px;
+}
+
+.close {
+  top: 0;
+  bottom: 0;
+  right: 10px;
+  color: black !important;
+}
+
+.infoAlert {
+  background-color: var(--color-1-100);
+  border-color: var(--color-1-300);
+}

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BannerMOTD creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="alert mb-0 py-2 rounded-0 text-center alert-info infoAlert wrapper"
+    role="alert"
+  >
+    <div
+      class="container-lg px-sm-4 px-lg-0"
+    >
+      this is a sample
+    </div>
+    <button
+      class="close position-absolute close"
+      data-testid="closeBannerMOTD"
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ×
+      </span>
+    </button>
+  </div>
+</DocumentFragment>
+`;

@@ -153,6 +153,8 @@ func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
 		"githubAuth":               h.cfg.IsSet("server.oauth.github"),
 		"googleAuth":               h.cfg.IsSet("server.oauth.google"),
 		"oidcAuth":                 h.cfg.IsSet("server.oauth.oidc"),
+		"motd":                     h.cfg.GetString("server.motd"),
+		"motdSeverity":             h.cfg.GetString("server.motdSeverity"),
 	}
 	if err := h.indexTmpl.Execute(w, data); err != nil {
 		h.logger.Error().Err(err).Msg("Error executing index template")
