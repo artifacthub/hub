@@ -292,6 +292,19 @@
                             },
                             "required": ["secure"]
                         },
+                        "motd": {
+                            "title": "Message of the day",
+                            "description": "The message of the day will be displayed in a banner on the top of the Artifact Hub UI.",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "motdSeverity": {
+                            "title": "Message of the day severity",
+                            "description": "The color used for the banner will be based on the severity selected.",
+                            "type": "string",
+                            "default": "info",
+                            "enum": ["info", "warning", "error"]
+                        },
                         "oauth": {
                             "type": "object",
                             "properties": {
@@ -452,7 +465,7 @@
         },
         "imageTag": {
             "title": "Tag used when pulling images",
-            "description": "Defaults to the Chart's appVersion, prefixed with a `v`.",
+            "description": "Defaults to the Chart's appVersion, prefixed with a 'v'.",
             "type": "string",
             "default": ""
         },

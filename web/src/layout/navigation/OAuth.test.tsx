@@ -32,6 +32,7 @@ describe('OAuth', () => {
 
   afterEach(() => {
     jest.resetAllMocks();
+    delete (window as any).config;
   });
 
   it('creates snapshot', () => {

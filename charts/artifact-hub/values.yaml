@@ -45,6 +45,8 @@ hub:
     configDir: "/home/hub/.cfg"
     baseURL: ""
     shutdownTimeout: 10s
+    motd: ""
+    motdSeverity: info
     basicAuth:
       enabled: false
       username: hub
