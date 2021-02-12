@@ -56,4 +56,7 @@ export const API = {
   getValuesSchema: jest.fn(),
   getChangelog: jest.fn(),
   triggerTestInRegoPlayground: jest.fn(),
+  requestPasswordResetCode: jest.fn(),
+  verifyPasswordResetCode: jest.fn(),
+  resetPassword: jest.fn(),
 };

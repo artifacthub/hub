@@ -18,24 +18,35 @@ import (
 
 const (
 	// Database queries
-	checkUserAliasAvailDBQ = `select check_user_alias_availability($1::text)`
-	checkUserCredsDBQ      = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true`
-	deleteSessionDBQ       = `delete from session where session_id = $1`
-	getAPIKeyUserIDDBQ     = `select user_id from api_key where key = $1`
-	getSessionDBQ          = `select user_id, floor(extract(epoch from created_at)) from session where session_id = $1`
-	getUserIDDBQ           = `select user_id from "user" where email = $1`
-	getUserPasswordDBQ     = `select password from "user" where user_id = $1 and password is not null`
-	getUserProfileDBQ      = `select get_user_profile($1::uuid)`
-	registerSessionDBQ     = `select register_session($1::jsonb)`
-	registerUserDBQ        = `select register_user($1::jsonb)`
-	updateUserPasswordDBQ  = `select update_user_password($1::uuid, $2::text, $3::text)`
-	updateUserProfileDBQ   = `select update_user_profile($1::uuid, $2::jsonb)`
-	verifyEmailDBQ         = `select verify_email($1::uuid)`
+	checkUserAliasAvailDBQ       = `select check_user_alias_availability($1::text)`
+	checkUserCredsDBQ            = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true`
+	deleteSessionDBQ             = `delete from session where session_id = $1`
+	getAPIKeyUserIDDBQ           = `select user_id from api_key where key = $1`
+	getSessionDBQ                = `select user_id, floor(extract(epoch from created_at)) from session where session_id = $1`
+	getUserIDDBQ                 = `select user_id from "user" where email = $1`
+	getUserPasswordDBQ           = `select password from "user" where user_id = $1 and password is not null`
+	getUserProfileDBQ            = `select get_user_profile($1::uuid)`
+	registerPasswordResetCodeDBQ = `select register_password_reset_code($1::text)`
+	registerSessionDBQ           = `select register_session($1::jsonb)`
+	registerUserDBQ              = `select register_user($1::jsonb)`
+	resetUserPasswordDBQ         = `select reset_user_password($1::uuid, $2::text)`
+	updateUserPasswordDBQ        = `select update_user_password($1::uuid, $2::text, $3::text)`
+	updateUserProfileDBQ         = `select update_user_profile($1::uuid, $2::jsonb)`
+	verifyEmailDBQ               = `select verify_email($1::uuid)`
+	verifyPasswordResetCodeDBQ   = `select verify_password_reset_code($1::uuid)`
 )
 
 var (
 	// ErrInvalidPassword indicates that the password provided is not valid.
 	ErrInvalidPassword = errors.New("invalid password")
+
+	// ErrInvalidPasswordResetCode indicates that the password reset code
+	// provided is not valid.
+	ErrInvalidPasswordResetCode = errors.New("invalid password reset code")
+
+	// errInvalidPasswordResetCodeDB represents the error returned from the
+	// database when the password reset code is not valid.
+	errInvalidPasswordResetCodeDB = errors.New("ERROR: invalid password reset code (SQLSTATE P0001)")
 
 	// ErrNotFound indicates that the user does not exist.
 	ErrNotFound = errors.New("user not found")
@@ -237,6 +248,50 @@ func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
 	return userID, nil
 }
 
+// RegisterPasswordResetCode registers a code that allows the user identified
+// by the email provided to reset the password. A link containing the code will
+// be email to the user to initiate the password reset process.
+func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail, baseURL string) error {
+	// Validate input
+	if userEmail == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "email not provided")
+	}
+	if m.es != nil {
+		u, err := url.Parse(baseURL)
+		if err != nil || u.Scheme == "" || u.Host == "" {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
+		}
+	}
+
+	// Register password reset code in database
+	var code *string
+	err := m.db.QueryRow(ctx, registerPasswordResetCodeDBQ, userEmail).Scan(&code)
+	if err != nil {
+		return err
+	}
+
+	// Send password reset email
+	if code != nil && m.es != nil {
+		templateData := map[string]string{
+			"link": fmt.Sprintf("%s/reset-password?code=%s", baseURL, *code),
+		}
+		var emailBody bytes.Buffer
+		if err := passwordResetTmpl.Execute(&emailBody, templateData); err != nil {
+			return err
+		}
+		emailData := &email.Data{
+			To:      userEmail,
+			Subject: "Password reset",
+			Body:    emailBody.Bytes(),
+		}
+		if err := m.es.SendEmail(emailData); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 // RegisterSession registers a user session in the database.
 func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]byte, error) {
 	// Validate input
@@ -318,6 +373,60 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 	return nil
 }
 
+// ResetPassword resets the user password in the database.
+func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL string) error {
+	// Validate input
+	if code == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
+	}
+	if newPassword == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "new password not provided")
+	}
+	if m.es != nil {
+		u, err := url.Parse(baseURL)
+		if err != nil || u.Scheme == "" || u.Host == "" {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
+		}
+	}
+
+	// Hash new password
+	newHashed, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+
+	// Reset user password in database
+	var userEmail string
+	err = m.db.QueryRow(ctx, resetUserPasswordDBQ, code, string(newHashed)).Scan(&userEmail)
+	if err != nil {
+		if err.Error() == errInvalidPasswordResetCodeDB.Error() {
+			return ErrInvalidPasswordResetCode
+		}
+		return err
+	}
+
+	// Send password reset success email
+	if m.es != nil {
+		templateData := map[string]string{
+			"baseURL": baseURL,
+		}
+		var emailBody bytes.Buffer
+		if err := passwordResetSuccessTmpl.Execute(&emailBody, templateData); err != nil {
+			return err
+		}
+		emailData := &email.Data{
+			To:      userEmail,
+			Subject: "Your password has been reset",
+			Body:    emailBody.Bytes(),
+		}
+		if err := m.es.SendEmail(emailData); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 // UpdatePassword updates the user password in the database.
 func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
@@ -385,4 +494,19 @@ func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {
 	// Verify email in database
 	err := m.db.QueryRow(ctx, verifyEmailDBQ, code).Scan(&verified)
 	return verified, err
+}
+
+// VerifyPasswordResetCode verifies if the provided code is valid.
+func (m *Manager) VerifyPasswordResetCode(ctx context.Context, code string) error {
+	// Validate input
+	if code == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
+	}
+
+	// Verify password reset code in database
+	_, err := m.db.Exec(ctx, verifyPasswordResetCodeDBQ, code)
+	if err != nil && err.Error() == errInvalidPasswordResetCodeDB.Error() {
+		return ErrInvalidPasswordResetCode
+	}
+	return err
 }

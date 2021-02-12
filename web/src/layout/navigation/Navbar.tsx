@@ -20,11 +20,14 @@ interface Props {
   searchText?: string;
   redirect?: string;
   privateRoute?: boolean;
+  visibleModal?: string;
 }
 
 const Navbar = (props: Props) => {
   const { ctx } = useContext(AppCtx);
-  const openLogInModal = !isUndefined(props.redirect) && isNull(ctx.user);
+  const openLogInModal =
+    (!isUndefined(props.redirect) && isNull(ctx.user)) ||
+    (!isUndefined(props.visibleModal) && props.visibleModal === 'login');
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const [openLogIn, setOpenLogIn] = useState<boolean>(openLogInModal);
   useEffect(() => {
@@ -61,7 +64,14 @@ const Navbar = (props: Props) => {
 
         {openSignUp && <SignUp openSignUp={openSignUp} setOpenSignUp={setOpenSignUp} />}
 
-        {openLogIn && <LogIn openLogIn={openLogIn} setOpenLogIn={setOpenLogIn} redirect={props.redirect} />}
+        {openLogIn && (
+          <LogIn
+            openLogIn={openLogIn}
+            setOpenLogIn={setOpenLogIn}
+            redirect={props.redirect}
+            visibleModal={props.visibleModal}
+          />
+        )}
 
         {isUndefined(props.fromHome) && (
           <SearchBar

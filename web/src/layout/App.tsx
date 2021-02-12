@@ -60,19 +60,27 @@ export default function App() {
           <BannerMOTD />
           <Switch>
             <Route
-              path={['/', '/verify-email', '/login', '/accept-invitation', '/oauth-failed']}
+              path={['/', '/verify-email', '/login', '/accept-invitation', '/oauth-failed', '/reset-password']}
               exact
               render={({ location }) => (
                 <div className="d-flex flex-column flex-grow-1">
                   <Navbar
                     isSearching={isSearching}
                     redirect={getQueryParam(location.search, 'redirect') || undefined}
+                    visibleModal={getQueryParam(location.search, 'modal') || undefined}
                     fromHome
                   />
                   <HomeView
                     isSearching={isSearching}
-                    emailCode={getQueryParam(location.search, 'code')}
-                    orgToConfirm={getQueryParam(location.search, 'org')}
+                    emailCode={
+                      location.pathname === '/verify-email' ? getQueryParam(location.search, 'code') : undefined
+                    }
+                    resetPwdCode={
+                      location.pathname === '/reset-password' ? getQueryParam(location.search, 'code') : undefined
+                    }
+                    orgToConfirm={
+                      location.pathname === '/accept-invitation' ? getQueryParam(location.search, 'org') : undefined
+                    }
                     onOauthFailed={location.pathname === '/oauth-failed'}
                   />
                   <Footer />

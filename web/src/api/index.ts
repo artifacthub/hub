@@ -100,6 +100,11 @@ const handleErrors = async (res: any) => {
           kind: ErrorKind.Forbidden,
         };
         break;
+      case 410:
+        error = {
+          kind: ErrorKind.Gone,
+        };
+        break;
       default:
         try {
           let text = await res.json();
@@ -633,6 +638,44 @@ export const API = {
 
   getChangelog: (packageId: string): Promise<ChangeLog[]> => {
     return apiFetch(`${API_BASE_URL}/packages/${packageId}/changelog`);
+  },
+
+  // Reset password
+  requestPasswordResetCode: (email: string): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/users/password-reset-code`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    });
+  },
+
+  verifyPasswordResetCode: (code: string): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/users/verify-password-reset-code`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        code: code,
+      }),
+    });
+  },
+
+  resetPassword: (code: string, password: string): Promise<null> => {
+    return apiFetch(`${API_BASE_URL}/users/reset-password`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        code: code,
+        password: password,
+      }),
+    });
   },
 
   // External API call

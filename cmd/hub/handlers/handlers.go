@@ -129,7 +129,10 @@ func (h *Handlers) setupRouter() {
 		r.Route("/users", func(r chi.Router) {
 			r.Post("/", h.Users.RegisterUser)
 			r.Post("/login", h.Users.Login)
+			r.Post("/password-reset-code", h.Users.RegisterPasswordResetCode)
+			r.Put("/reset-password", h.Users.ResetPassword)
 			r.Post("/verify-email", h.Users.VerifyEmail)
+			r.Post("/verify-password-reset-code", h.Users.VerifyPasswordResetCode)
 			r.Group(func(r chi.Router) {
 				r.Use(h.Users.RequireLogin)
 				r.Get("/logout", h.Users.Logout)
