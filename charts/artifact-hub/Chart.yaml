@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 0.14.5
-appVersion: 0.14.0
+version: 0.15.0
+appVersion: 0.15.0
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/hub/chart/logo.png
 keywords:
@@ -27,25 +27,32 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
-    - Add support for Helm plugins repositories
-    - Add support for Tekton tasks repositories
-    - Improve how versions, images and dependencies are displayed in package view
-    - Refactor trackers
-    - Allow deleting organizations
-    - Allow updating organizations' name
-    - Helm charts' license can now be overriding using annotations
-    - Allow disabling oauth providers using new `enabled` flag
-    - Components config and cache paths can now be configured from the chart
+    - Add support for publisher recommendations
+    - Add support for private git based repositories
+    - List supported platforms for krew kubectl plugins
+    - Display krew kubectl plugins manifest yaml
+    - Charts using API v2 now only display installation instructions for Helm v3
+    - Display stars in related packages cards
+    - Helm charts kubeVersion and type is now tracked and displayed on the UI
+    - Add banner to display message of the day
+    - Allow referencing external logo images in artifacthub-pkg.yaml file
+    - Allow dynamic resource names in Artifact Hub Helm chart
+    - Use chart's appVersion as default image tag
+    - Setup Gitlab rate limiter based on token presence
+    - Set timeout for each repository tracked
+    - Bump Alpine to 3.13
+    - Bump Trivy to 0.16.0
+    - Upgrade backend dependencies
     - Some bugs fixes and other improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v0.14.0
+      image: artifacthub/db-migrator:v0.15.0
     - name: hub
-      image: artifacthub/hub:v0.14.0
+      image: artifacthub/hub:v0.15.0
     - name: tracker
-      image: artifacthub/tracker:v0.14.0
+      image: artifacthub/tracker:v0.15.0
     - name: scanner
-      image: artifacthub/scanner:v0.14.0
+      image: artifacthub/scanner:v0.15.0
     - name: trivy
       image: aquasec/trivy:0.16.0
