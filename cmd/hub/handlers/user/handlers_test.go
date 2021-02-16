@@ -495,6 +495,55 @@ func TestLogout(t *testing.T) {
 	})
 }
 
+func TestRegisterPasswordResetCode(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`email`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.h.RegisterPasswordResetCode(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("register password reset code failed", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"email": "email"}`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("RegisterPasswordResetCode", r.Context(), "email", "baseURL").Return(tests.ErrFakeDB)
+		hw.h.RegisterPasswordResetCode(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusCreated, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("register password reset code succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"email": "email"}`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("RegisterPasswordResetCode", r.Context(), "email", "baseURL").Return(tests.ErrFakeDB)
+		hw.h.RegisterPasswordResetCode(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusCreated, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+}
+
 func TestRegisterUser(t *testing.T) {
 	t.Run("no user provided", func(t *testing.T) {
 		t.Parallel()
@@ -774,6 +823,73 @@ func TestRequireLogin(t *testing.T) {
 	})
 }
 
+func TestResetPassword(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`code`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.h.ResetPassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("password reset failed (invalid code)", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"code": "code", "password": "password"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("ResetPassword", r.Context(), "code", "password", "baseURL").
+			Return(user.ErrInvalidPasswordResetCode)
+		hw.h.ResetPassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("password reset failed (db error)", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"code": "code", "password": "password"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("ResetPassword", r.Context(), "code", "password", "baseURL").Return(tests.ErrFakeDB)
+		hw.h.ResetPassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("password reset succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"code": "code", "password": "password"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("ResetPassword", r.Context(), "code", "password", "baseURL").Return(nil)
+		hw.h.ResetPassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+}
+
 func TestUpdatePassword(t *testing.T) {
 	t.Run("no old password provided", func(t *testing.T) {
 		t.Parallel()
@@ -986,6 +1102,64 @@ func TestVerifyEmail(t *testing.T) {
 			hw.um.AssertExpectations(t)
 		})
 	}
+}
+
+func TestVerifyPasswordResetCode(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`code`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.h.VerifyPasswordResetCode(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("valid input", func(t *testing.T) {
+		testCases := []struct {
+			description        string
+			err                error
+			expectedStatusCode int
+		}{
+			{
+				"valid code",
+				nil,
+				http.StatusOK,
+			},
+			{
+				"invalid code",
+				user.ErrInvalidPasswordResetCode,
+				http.StatusGone,
+			},
+			{
+				"database error",
+				tests.ErrFakeDB,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(`{"code": "code"}`))
+
+				hw := newHandlersWrapper()
+				hw.um.On("VerifyPasswordResetCode", r.Context(), "code").Return(tc.err)
+				hw.h.VerifyPasswordResetCode(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.um.AssertExpectations(t)
+			})
+		}
+	})
 }
 
 func testsOK(w http.ResponseWriter, r *http.Request) {}

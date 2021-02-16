@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(133);
+select plan(138);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -26,6 +26,7 @@ select tables_are(array[
     'organization',
     'package',
     'package__maintainer',
+    'password_reset_code',
     'repository',
     'repository_kind',
     'session',
@@ -129,6 +130,11 @@ select columns_are('package', array[
 select columns_are('package__maintainer', array[
     'package_id',
     'maintainer_id'
+]);
+select columns_are('password_reset_code', array[
+    'password_reset_code_id',
+    'user_id',
+    'created_at'
 ]);
 select columns_are('repository', array[
     'repository_id',
@@ -295,6 +301,10 @@ select indexes_are('package', array[
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'
 ]);
+select indexes_are('password_reset_code', array[
+    'password_reset_code_pkey',
+    'password_reset_code_user_id_key'
+]);
 select indexes_are('repository', array[
     'repository_pkey',
     'repository_name_key',
@@ -419,11 +429,14 @@ select has_function('get_user_subscriptions');
 -- Users
 select has_function('check_user_alias_availability');
 select has_function('get_user_profile');
+select has_function('register_password_reset_code');
 select has_function('register_session');
 select has_function('register_user');
+select has_function('reset_user_password');
 select has_function('update_user_password');
 select has_function('update_user_profile');
 select has_function('verify_email');
+select has_function('verify_password_reset_code');
 -- Webhooks
 select has_function('add_webhook');
 select has_function('delete_webhook');

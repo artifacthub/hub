@@ -59,9 +59,12 @@ type UserManager interface {
 	GetProfile(ctx context.Context) (*User, error)
 	GetProfileJSON(ctx context.Context) ([]byte, error)
 	GetUserID(ctx context.Context, email string) (string, error)
+	RegisterPasswordResetCode(ctx context.Context, userEmail, baseURL string) error
 	RegisterSession(ctx context.Context, session *Session) ([]byte, error)
 	RegisterUser(ctx context.Context, user *User, baseURL string) error
+	ResetPassword(ctx context.Context, code, newPassword, baseURL string) error
 	UpdatePassword(ctx context.Context, old, new string) error
 	UpdateProfile(ctx context.Context, user *User) error
 	VerifyEmail(ctx context.Context, code string) (bool, error)
+	VerifyPasswordResetCode(ctx context.Context, code string) error
 }

@@ -51,6 +51,7 @@ describe('LogIn', () => {
       expect(getByText('Email')).toBeInTheDocument();
       expect(getByText('Password')).toBeInTheDocument();
       expect(getByTestId('logInBtn')).toBeInTheDocument();
+      expect(getByTestId('resetPasswordTabBtn')).toBeInTheDocument();
     });
 
     it('updates all fields and calls login', async () => {
@@ -190,6 +191,32 @@ describe('LogIn', () => {
       await waitFor(() => {
         expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
         expect(mockHistoryReplace).toHaveBeenCalledWith({ pathname: '/' });
+      });
+    });
+
+    describe('Reset password', () => {
+      it('displays form', () => {
+        const { getByText, getByTestId } = render(
+          <Router>
+            <LogIn {...defaultProps} />
+          </Router>
+        );
+
+        const tabBtn = getByTestId('resetPasswordTabBtn');
+        expect(tabBtn).toBeInTheDocument();
+
+        fireEvent.click(tabBtn);
+
+        const backBtn = getByTestId('resetPasswordBackBtn');
+        expect(backBtn).toBeInTheDocument();
+        expect(backBtn).toHaveTextContent('Back to Sign in');
+
+        expect(getByText('Forgot Password?')).toBeInTheDocument();
+        expect(getByTestId('resetPasswordForm')).toBeInTheDocument();
+        expect(
+          getByText('Please enter your email address and we will send you a password reset link.')
+        ).toBeInTheDocument();
+        expect(getByTestId('resetPwdEmailInput')).toBeInTheDocument();
       });
     });
   });

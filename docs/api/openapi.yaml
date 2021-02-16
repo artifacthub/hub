@@ -95,7 +95,7 @@ paths:
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "410":
-          description: The code provided has expired
+          $ref: "#/components/responses/GoneError"
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
@@ -178,6 +178,85 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/password-reset-code:
+    post:
+      tags:
+        - Users
+      summary: Register a code to reset the password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/verify-password-reset-code:
+    post:
+      tags:
+        - Users
+      summary: Verify a reset password code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code
+              properties:
+                code:
+                  type: string
+                  format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "410":
+          $ref: "#/components/responses/GoneError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/reset-password:
+    put:
+      tags:
+        - Users
+      summary: Reset the user's password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code
+                - password
+              properties:
+                code:
+                  type: string
+                  format: uuid
+                password:
+                  type: string
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
@@ -3377,6 +3456,8 @@ components:
             $ref: "#/components/schemas/Error"
     Created:
       description: The request has succeeded and has led to the creation of a resource
+    GoneError:
+      description: The code provided has expired
     Forbidden:
       description: The user does not have permission to perform the requested operation
       content:

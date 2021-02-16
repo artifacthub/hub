@@ -396,6 +396,23 @@ func (h *Handlers) OauthRedirect(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, authCodeURL, http.StatusSeeOther)
 }
 
+// RegisterPasswordResetCode is an http handler used to register a code to
+// reset the password. The code will be emailed to the address provided.
+func (h *Handlers) RegisterPasswordResetCode(w http.ResponseWriter, r *http.Request) {
+	var input map[string]string
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		h.logger.Error().Err(err).Str("method", "RegisterPasswordResetCode").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	_ = h.userManager.RegisterPasswordResetCode(
+		r.Context(),
+		input["email"],
+		h.cfg.GetString("server.baseURL"),
+	)
+	w.WriteHeader(http.StatusCreated)
+}
+
 // RegisterUser is an http handler used to register a user in the hub database.
 func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	u := &hub.User{}
@@ -673,6 +690,32 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 	})
 }
 
+// ResetPassword is an http handler used to reset the user's password.
+func (h *Handlers) ResetPassword(w http.ResponseWriter, r *http.Request) {
+	var input map[string]string
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		h.logger.Error().Err(err).Str("method", "ResetPassword").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	err := h.userManager.ResetPassword(
+		r.Context(),
+		input["code"],
+		input["password"],
+		h.cfg.GetString("server.baseURL"),
+	)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "ResetPassword").Send()
+		if err == user.ErrInvalidPasswordResetCode {
+			helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
+		} else {
+			helpers.RenderErrorJSON(w, err)
+		}
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // UpdatePassword is an http handler used to update the password in the hub
 // database.
 func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
@@ -732,6 +775,28 @@ func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// VerifyPasswordResetCode is an http handler used to verify a reset password
+// code.
+func (h *Handlers) VerifyPasswordResetCode(w http.ResponseWriter, r *http.Request) {
+	var input map[string]string
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		h.logger.Error().Err(err).Str("method", "VerifyPasswordResetCode").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	err := h.userManager.VerifyPasswordResetCode(r.Context(), input["code"])
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "VerifyPasswordResetCode").Send()
+		if err == user.ErrInvalidPasswordResetCode {
+			helpers.RenderErrorWithCodeJSON(w, err, http.StatusGone)
+		} else {
+			helpers.RenderErrorJSON(w, err)
+		}
+		return
+	}
+	w.WriteHeader(http.StatusOK)
 }
 
 // OauthState represents the state of an oauth authorization session, used to

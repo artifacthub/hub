@@ -583,6 +583,86 @@ func TestRegisterSession(t *testing.T) {
 	})
 }
 
+func TestRegisterPasswordResetCode(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg    string
+			userEmail string
+			baseURL   string
+		}{
+			{
+				"email not provided",
+				"",
+				"http://baseurl.com",
+			},
+			{
+				"invalid base url",
+				"email@email.com",
+				"invalid",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				es := &email.SenderMock{}
+				m := NewManager(nil, es)
+
+				err := m.RegisterPasswordResetCode(ctx, tc.userEmail, tc.baseURL)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("successful password reset code registration in database", func(t *testing.T) {
+		code := "passwordResetCode"
+		testCases := []struct {
+			description         string
+			emailSenderResponse error
+		}{
+			{
+				"password reset code sent successfully",
+				nil,
+			},
+			{
+				"error sending password reset code",
+				email.ErrFakeSenderFailure,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				db := &tests.DBMock{}
+				db.On("QueryRow", ctx, registerPasswordResetCodeDBQ, "email@email.com").Return(&code, nil)
+				es := &email.SenderMock{}
+				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
+				m := NewManager(db, es)
+
+				err := m.RegisterPasswordResetCode(ctx, "email@email.com", "http://baseurl.com")
+				assert.Equal(t, tc.emailSenderResponse, err)
+				db.AssertExpectations(t)
+				es.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("database error registering password reset code", func(t *testing.T) {
+		t.Parallel()
+		code := ""
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, registerPasswordResetCodeDBQ, "email@email.com").Return(&code, tests.ErrFakeDB)
+		m := NewManager(db, nil)
+
+		err := m.RegisterPasswordResetCode(ctx, "email@email.com", "http://baseurl.com")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestRegisterUser(t *testing.T) {
 	ctx := context.Background()
 
@@ -618,7 +698,6 @@ func TestRegisterUser(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				es := &email.SenderMock{}
-				es.On("SendEmail", mock.Anything).Return(nil)
 				m := NewManager(nil, es)
 
 				err := m.RegisterUser(ctx, tc.user, tc.baseURL)
@@ -684,6 +763,110 @@ func TestRegisterUser(t *testing.T) {
 		err := m.RegisterUser(ctx, u, "http://baseurl.com")
 		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
+	})
+}
+
+func TestResetPassword(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg      string
+			code        string
+			newPassword string
+			baseURL     string
+		}{
+			{
+				"code not provided",
+				"",
+				"newPassword",
+				"http://baseurl.com",
+			},
+			{
+				"new password not provided",
+				"code",
+				"",
+				"http://baseurl.com",
+			},
+			{
+				"invalid base url",
+				"code",
+				"newPassword",
+				"invalid",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				es := &email.SenderMock{}
+				m := NewManager(nil, es)
+				err := m.ResetPassword(ctx, tc.code, tc.newPassword, tc.baseURL)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("database error resetting password", func(t *testing.T) {
+		testCases := []struct {
+			dbErr       error
+			expectedErr error
+		}{
+			{
+				tests.ErrFake,
+				tests.ErrFake,
+			},
+			{
+				errInvalidPasswordResetCodeDB,
+				ErrInvalidPasswordResetCode,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
+				db := &tests.DBMock{}
+				db.On("QueryRow", ctx, resetUserPasswordDBQ, "code", mock.Anything).Return("", tc.dbErr)
+				m := NewManager(db, nil)
+
+				err := m.ResetPassword(ctx, "code", "newPassword", "http://baseurl.com")
+				assert.Equal(t, tc.expectedErr, err)
+				db.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("successful password reset in database", func(t *testing.T) {
+		testCases := []struct {
+			description         string
+			emailSenderResponse error
+		}{
+			{
+				"password reset success email sent successfully",
+				nil,
+			},
+			{
+				"error sending password reset success email",
+				email.ErrFakeSenderFailure,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				db := &tests.DBMock{}
+				db.On("QueryRow", ctx, resetUserPasswordDBQ, "code", mock.Anything).Return("email", nil)
+				es := &email.SenderMock{}
+				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
+				m := NewManager(db, es)
+
+				err := m.ResetPassword(ctx, "code", "newPassword", "http://baseurl.com")
+				assert.Equal(t, tc.emailSenderResponse, err)
+				db.AssertExpectations(t)
+				es.AssertExpectations(t)
+			})
+		}
 	})
 }
 
@@ -867,6 +1050,72 @@ func TestVerifyEmail(t *testing.T) {
 		verified, err := m.VerifyEmail(ctx, "emailVerificationCode")
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.False(t, verified)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestVerifyPasswordResetCode(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			code   string
+		}{
+			{
+				"code not provided",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				m := NewManager(nil, nil)
+				err := m.VerifyPasswordResetCode(ctx, tc.code)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("database error verifying password reset code", func(t *testing.T) {
+		testCases := []struct {
+			dbErr       error
+			expectedErr error
+		}{
+			{
+				tests.ErrFake,
+				tests.ErrFake,
+			},
+			{
+				errInvalidPasswordResetCodeDB,
+				ErrInvalidPasswordResetCode,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, verifyPasswordResetCodeDBQ, "code").Return(tc.dbErr)
+				m := NewManager(db, nil)
+
+				err := m.VerifyPasswordResetCode(ctx, "code")
+				assert.Equal(t, tc.expectedErr, err)
+				db.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("password code verified successfully in database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, verifyPasswordResetCodeDBQ, "code").Return(nil)
+		m := NewManager(db, nil)
+
+		err := m.VerifyPasswordResetCode(ctx, "code")
+		assert.Equal(t, nil, err)
 		db.AssertExpectations(t)
 	})
 }

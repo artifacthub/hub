@@ -74,11 +74,14 @@
 
 {{ template "users/check_user_alias_availability.sql" }}
 {{ template "users/get_user_profile.sql" }}
+{{ template "users/register_password_reset_code.sql" }}
 {{ template "users/register_session.sql" }}
 {{ template "users/register_user.sql" }}
+{{ template "users/reset_user_password.sql" }}
 {{ template "users/update_user_password.sql" }}
 {{ template "users/update_user_profile.sql" }}
 {{ template "users/verify_email.sql" }}
+{{ template "users/verify_password_reset_code.sql" }}
 
 {{ template "webhooks/add_webhook.sql" }}
 {{ template "webhooks/delete_webhook.sql" }}
