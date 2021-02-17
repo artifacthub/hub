@@ -28,12 +28,6 @@ hub:
                 serviceName: hub
                 servicePort: 80
   deploy:
-    readinessGates:
-      # This readiness gate expects the ingress and service to have a static name.
-      # If dynamicResourceNamePrefixEnabled=true, the gate needs to be changed to the following format:
-      # target-health.alb.ingress.k8s.aws/<dynamic-prefix>hub_<dynamic-prefix>hub_80
-      # The "dynamic-prefix" is generated in the helper function `chart.resourceNamePrefix`.
-      - conditionType: target-health.alb.ingress.k8s.aws/hub_hub_80
     replicaCount: 2
     resources:
       requests:
