@@ -39,9 +39,9 @@ const CustomResourceDefinition = (props: Props) => {
   return (
     <div className={styles.wrapper}>
       <div className="d-flex flex-wrap mt-4">
-        {props.resources.map((resourceDefinition: CustomResourcesDefinition) => {
+        {props.resources.map((resourceDefinition: CustomResourcesDefinition, index: number) => {
           return (
-            <div className="col-12 col-lg-6 col-xxl-4 mb-4" key={`resourceDef_${resourceDefinition.kind}`}>
+            <div className="col-12 col-lg-6 col-xxl-4 mb-4" key={`resourceDef_${resourceDefinition.kind}_${index}`}>
               <div className="card h-100" data-testid="resourceDefinition">
                 <div className="card-body d-flex flex-column">
                   <h6 className="card-title mb-3">{resourceDefinition.displayName || resourceDefinition.name}</h6>

@@ -22,6 +22,11 @@ const mockCtx = {
       configured: 'light',
       automatic: false,
     },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
+    },
   },
 };
 
@@ -36,6 +41,11 @@ const mockOrgCtx = {
       configured: 'light',
       automatic: false,
     },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
+    },
   },
 };
 
@@ -49,6 +59,11 @@ const mockOrgCtx1 = {
     theme: {
       configured: 'light',
       automatic: false,
+    },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
     },
   },
 };

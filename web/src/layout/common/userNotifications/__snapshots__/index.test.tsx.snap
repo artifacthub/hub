@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserNotificationsController creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-none d-md-flex justify-content-center align-items-center w-100"
+  >
+    <div
+      class="position-fixed toast fade toast show isVisible notificationCard"
+      role="alert"
+    >
+      <div
+        class="toast-body"
+        data-testid="notificationContent"
+      >
+        <div>
+          <div
+            class="float-right"
+          >
+            <div
+              class="d-flex flex-row align-items-start"
+            >
+              <button
+                class="btn btn-link text-dark py-0 position-relative btn"
+                data-testid="disableNotificationsBtn"
+                type="button"
+              >
+                Don't show me more again
+              </button>
+              <button
+                class="close position-relative closeBtn"
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ×
+                </span>
+              </button>
+            </div>
+          </div>
+          <span>
+            <div
+              class="content"
+            >
+              <h2
+                class="text-secondary"
+              >
+                Filters
+              </h2>
+              <p>
+                Using the 
+                <strong>
+                  filters
+                </strong>
+                 on the left column, you can narrow down search results. You can filter by 
+                <em>
+                  kind
+                </em>
+                , 
+                <em>
+                  category
+                </em>
+                , 
+                <em>
+                  publisher
+                </em>
+                , 
+                <em>
+                  repository
+                </em>
+                 and 
+                <em>
+                  license
+                </em>
+                , as well as only showing packages from 
+                <strong>
+                  official repositories
+                </strong>
+                 or 
+                <strong>
+                  verified publishers
+                </strong>
+                .
+              </p>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

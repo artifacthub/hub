@@ -8,10 +8,16 @@ const LS_ITEM = 'prefs';
 export const DEFAULT_SEARCH_LIMIT = 20;
 const DEFAULT_THEME = 'light';
 const LS_ACTIVE_PROFILE = 'activeProfile';
+
 const DEFAULT_PREFS: Prefs = {
   search: { limit: DEFAULT_SEARCH_LIMIT },
   controlPanel: {},
   theme: { configured: DEFAULT_THEME, automatic: false },
+  notifications: {
+    lastDisplayedTime: null,
+    enabled: true,
+    displayed: [],
+  },
 };
 
 export class LocalStoragePreferences {

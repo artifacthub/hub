@@ -1,0 +1,44 @@
+{
+  "notifications": [
+    {
+      "body": "## Light and dark themes\nYou can switch between the **light** and **dark** themes from the icon in the *top right in the navigation bar*. It is also possible to use the **automatic** mode, that will rely on your system setting when available.",
+      "linkTip": "home"
+    },
+    {
+      "body": "## Filters\nUsing the **filters** on the left column, you can narrow down search results. You can filter by *kind*, *category*, *publisher*, *repository* and *license*, as well as only showing packages from **official repositories** or **verified publishers**.",
+      "linkTip": "search"
+    },
+    {
+      "body": "## Search tip\nUse **multiple words** to refine your search. Example: *kafka operator*.",
+      "linkTip": "search"
+    },
+    {
+      "body": "## Search tip\nUse **-** to exclude words from your search. Example: *apache -solr -hadoop*.",
+      "linkTip": "search"
+    },
+    {
+      "body": "## Search tip\nPut a phrase inside **double quotes** for an exact match. Example: *\"monitoring system\"*.",
+      "linkTip": "search"
+    },
+    {
+      "body": "## Search tip\nUse **or** to combine multiple searches. Example: *postgresql or mysql*.",
+      "linkTip": "search"
+    },
+    {
+      "body": "## New release notifications\nUsing the bell icon on the *top right* of this screen, you can subscribe to receive **email notifications** when a new version of the packages you are interested in is released. You can manage all your subscriptions from the control panel.",
+      "linkTip": "package"
+    },
+    {
+      "body": "## Webhooks notifications\nFrom the control panel, you can setup **webhooks** to notify *external services* when certain events happen. This could be, for example, posting a notification to Slack when a new version of certain packages is released.",
+      "linkTip": "package"
+    },
+    {
+      "body": "## Star your favorite packages\nBy starring your favorite packages, you help them **stand out in search results**, helping users when deciding among multiple alternatives.",
+      "linkTip": "package"
+    },
+    {
+      "body": "## Related packages\nOn the *right column*, below the package summary section, you will find some packages related to the one you are currently viewing.",
+      "linkTip": "package"
+    }
+  ]
+}
