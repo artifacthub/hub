@@ -20,3 +20,4 @@ The documentation is organized in the following topics:
 | [Authorization](/docs/topics/authorization)              | Explains how the authorization mechanism that allows organizations to define what actions can be performed by their members works and how to set it up. |
 | [Architecture](/docs/topics/architecture)                | Describes the components that form Artifact Hub, what each of them do and the layout of the source repository.                                          |
 | [Development environment setup](/docs/topics/dev)        | This guide will help contributors setup their development environment to do some work on Artifact Hub.                                                  |
+| [Infrastructure](/docs/topics/infrastructure)            | Describes the infrastructure used to deploy the production and staging environments of `artifacthub.io`.                                                |
