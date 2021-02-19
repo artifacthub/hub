@@ -2,6 +2,7 @@ import { createBrowserHistory } from 'history';
 
 import analytics from '../analytics/analytics';
 import updateMetaIndex from './updateMetaIndex';
+import notificationsDispatcher from './userNotificationsDispatcher';
 const history = createBrowserHistory();
 
 const detailPath = /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task)\//;
@@ -12,6 +13,8 @@ history.listen((location) => {
     updateMetaIndex();
   }
   analytics.page();
+  // Clean notifications to change location
+  notificationsDispatcher.dismissNotification();
 });
 
 export default history;

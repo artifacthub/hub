@@ -41,6 +41,11 @@ const mockWithoutSelectedOrgCtx = {
       configured: 'light',
       automatic: false,
     },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
+    },
   },
 };
 
@@ -54,6 +59,11 @@ const mockWithSelectedOrgCtx = {
     theme: {
       configured: 'light',
       automatic: false,
+    },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
     },
   },
 };

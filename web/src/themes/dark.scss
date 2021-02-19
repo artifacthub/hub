@@ -13,7 +13,7 @@
   --color-1-5: rgba(15, 14, 17, 0.95);
   --color-1-10: rgba(15, 14, 17, 0.9);
   --color-1-20: rgba(15, 14, 17, 0.8);
-
+  --color-1-95: rgba(15, 14, 17, 0.95);
   --color-2-500: #0f0e11;
 
   --color-2-10: rgba(var(--color-2-500), 0.1);
@@ -28,6 +28,7 @@
   --color-black-90: rgba(255, 255, 255, 0.9);
 
   --color-white-50: rgba(0, 0, 0, 0.5);
+  --color-white-95: rgba(0, 0, 0, 0.95);
 
   --logo-font: 'Archivo Black', cursive;
 
@@ -227,6 +228,10 @@
     background-color: var(--color-1-500) !important;
     border-color: var(--border-md) !important;
     box-shadow: none !important;
+  }
+
+  .notificationCard {
+    box-shadow: 0px 0px 25px 5px var(--color-black-25);
   }
 
   .activeVersion {

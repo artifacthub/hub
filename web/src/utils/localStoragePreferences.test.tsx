@@ -7,13 +7,24 @@ const defaultPrefs = {
     configured: 'light',
     automatic: false,
   },
+  notifications: {
+    lastDisplayedTime: null,
+    enabled: true,
+    displayed: [],
+  },
 };
+
 const initialUserPrefs = {
   controlPanel: {},
   search: { limit: 60 },
   theme: {
     configured: 'light',
     automatic: false,
+  },
+  notifications: {
+    lastDisplayedTime: null,
+    enabled: true,
+    displayed: [],
   },
 };
 
@@ -40,6 +51,11 @@ describe('localStoragePreferences', () => {
         configured: 'light',
         automatic: false,
       },
+      notifications: {
+        lastDisplayedTime: null,
+        enabled: true,
+        displayed: [],
+      },
     };
     lsPreferences.setPrefs(userPrefs, 'user1');
     expect(lsPreferences.getPrefs('user1')).toStrictEqual(userPrefs);
@@ -56,6 +72,11 @@ describe('localStoragePreferences', () => {
       theme: {
         configured: 'light',
         automatic: false,
+      },
+      notifications: {
+        lastDisplayedTime: null,
+        enabled: true,
+        displayed: [],
       },
     };
     lsPreferences.setPrefs(userPrefs, 'user2');

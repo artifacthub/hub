@@ -317,6 +317,12 @@ export interface AvailabilityInfo {
   excluded: string[];
 }
 
+export interface NotificationsPrefs {
+  lastDisplayedTime: null | number;
+  enabled: boolean;
+  displayed: string[];
+}
+
 export interface Prefs {
   theme: ThemePrefs;
   controlPanel: {
@@ -325,6 +331,7 @@ export interface Prefs {
   search: {
     limit: number;
   };
+  notifications: NotificationsPrefs;
 }
 
 export interface ThemePrefs {
@@ -551,4 +558,17 @@ export interface ActiveJSONSchemaValue {
   combinationType: string | null;
   options: JSONSchema[];
   error?: boolean;
+}
+
+export interface UserNotification {
+  id: string;
+  body: string;
+  linkTip?: string;
+}
+
+export enum PathTips {
+  Home = 'home',
+  Package = 'package',
+  Search = 'search',
+  ControlPanel = 'control-panel',
 }

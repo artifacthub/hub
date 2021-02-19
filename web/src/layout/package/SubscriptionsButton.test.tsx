@@ -23,6 +23,11 @@ const mockCtx = {
       configured: 'light',
       automatic: false,
     },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
+    },
   },
 };
 
@@ -35,6 +40,11 @@ const mockNotSignedInCtx = {
       configured: 'light',
       automatic: false,
     },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
+    },
   },
 };
 
@@ -46,6 +56,11 @@ const mockUndefinedUserCtx = {
     theme: {
       configured: 'light',
       automatic: false,
+    },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
     },
   },
 };

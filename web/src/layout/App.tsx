@@ -12,6 +12,7 @@ import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import history from '../utils/history';
 import lsPreferences from '../utils/localStoragePreferences';
 import AlertController from './common/AlertController';
+import UserNotificationsController from './common/userNotifications';
 import ControlPanelView from './controlPanel';
 import HomeView from './home';
 import BannerMOTD from './navigation/BannerMOTD';
@@ -58,6 +59,7 @@ export default function App() {
           <ScrollMemory />
           <AlertController />
           <BannerMOTD />
+          <UserNotificationsController />
           <Switch>
             <Route
               path={['/', '/verify-email', '/login', '/accept-invitation', '/oauth-failed', '/reset-password']}

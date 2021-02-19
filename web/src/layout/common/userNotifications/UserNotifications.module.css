@@ -1,0 +1,44 @@
+.toast {
+  opacity: 0;
+  bottom: 20px;
+  transition: opacity 0.3s ease-in-out;
+  width: 700px;
+  max-width: 80%;
+  background-color: var(--white);
+  border: 3px solid var(--color-1-500);
+  border-radius: 15px;
+  z-index: 1100;
+}
+
+.isVisible {
+  opacity: 1;
+  box-shadow: 0px 0px 15px 0 var(--color-black-75);
+}
+
+.btn {
+  font-size: 0.65rem;
+  line-height: 1rem;
+  top: -2px;
+}
+
+.closeBtn {
+  top: -5px;
+}
+
+.content {
+  font-size: 0.8rem;
+}
+
+.content code {
+  color: var(--color-1-700);
+}
+
+.content *:is(h1, h2, h3, h4, h5, h6) {
+  font-weight: bold;
+  font-size: 0.85rem;
+  line-height: 1rem;
+}
+
+.content p {
+  margin-bottom: 0rem;
+}

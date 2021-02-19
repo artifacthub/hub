@@ -32,7 +32,9 @@ type Action =
   | { type: 'updateLimit'; limit: number }
   | { type: 'updateTheme'; theme: string }
   | { type: 'updateEfectiveTheme'; theme: string }
-  | { type: 'enableAutomaticTheme'; enabled: boolean };
+  | { type: 'enableAutomaticTheme'; enabled: boolean }
+  | { type: 'enabledDisplayedNotifications'; enabled: boolean }
+  | { type: 'addNewDisplayedNotification'; id: string };
 
 export const AppCtx = createContext<{
   ctx: AppState;
@@ -72,6 +74,14 @@ export function updateEfectiveTheme(theme: string) {
 
 export function enableAutomaticTheme(enabled: boolean) {
   return { type: 'enableAutomaticTheme', enabled };
+}
+
+export function enabledDisplayedNotifications(enabled: boolean) {
+  return { type: 'enabledDisplayedNotifications', enabled };
+}
+
+export function addNewDisplayedNotification(id: string) {
+  return { type: 'addNewDisplayedNotification', id };
 }
 
 export async function refreshUserProfile(dispatch: React.Dispatch<any>, redirectUrl?: string) {
@@ -133,10 +143,11 @@ function getCurrentSystemActiveTheme(prefs: ThemePrefs): ThemePrefs {
 }
 
 export function appReducer(state: AppState, action: Action) {
+  let prefs;
   switch (action.type) {
     case 'signIn':
-      const tmpUserPrefs = lsStorage.getPrefs(action.profile.alias);
-      const userPrefs = { ...tmpUserPrefs, theme: getCurrentSystemActiveTheme(tmpUserPrefs.theme) };
+      prefs = lsStorage.getPrefs(action.profile.alias);
+      const userPrefs = { ...prefs, theme: getCurrentSystemActiveTheme(prefs.theme) };
       updateActiveStyleSheet(userPrefs.theme.efective || userPrefs.theme.configured);
       lsStorage.setPrefs(userPrefs, action.profile.alias);
       lsStorage.setActiveProfile(action.profile.alias);
@@ -146,49 +157,49 @@ export function appReducer(state: AppState, action: Action) {
       };
 
     case 'unselectOrg':
-      const unselectedOrgPrefs = updateSelectedOrg(state.prefs);
-      lsStorage.setPrefs(unselectedOrgPrefs, state.user!.alias);
+      prefs = updateSelectedOrg(state.prefs);
+      lsStorage.setPrefs(prefs, state.user!.alias);
       redirectToControlPanel('user');
       return {
         ...state,
-        prefs: unselectedOrgPrefs,
+        prefs: prefs,
       };
 
     case 'signOut':
-      const tmpGuestPrefs = lsStorage.getPrefs();
-      const guestPrefs = { ...tmpGuestPrefs, theme: getCurrentSystemActiveTheme(tmpGuestPrefs.theme) };
+      prefs = lsStorage.getPrefs();
+      const guestPrefs = { ...prefs, theme: getCurrentSystemActiveTheme(prefs.theme) };
       lsStorage.setPrefs(guestPrefs);
       lsStorage.setActiveProfile();
       updateActiveStyleSheet(guestPrefs.theme.efective || guestPrefs.theme.configured);
       return { user: null, prefs: guestPrefs };
 
     case 'updateOrg':
-      const newPrefs = updateSelectedOrg(state.prefs, action.name);
-      lsStorage.setPrefs(newPrefs, state.user!.alias);
+      prefs = updateSelectedOrg(state.prefs, action.name);
+      lsStorage.setPrefs(prefs, state.user!.alias);
       if (isUndefined(state.prefs.controlPanel.selectedOrg) || action.name !== state.prefs.controlPanel.selectedOrg) {
         redirectToControlPanel('org');
       }
       return {
         ...state,
-        prefs: newPrefs,
+        prefs: prefs,
       };
 
     case 'updateLimit':
-      const updatedPrefs = {
+      prefs = {
         ...state.prefs,
         search: {
           ...state.prefs.search,
           limit: action.limit,
         },
       };
-      lsStorage.setPrefs(updatedPrefs, state.user ? state.user.alias : undefined);
+      lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
       return {
         ...state,
-        prefs: updatedPrefs,
+        prefs: prefs,
       };
 
     case 'updateTheme':
-      const updatedUserPrefs = {
+      prefs = {
         ...state.prefs,
         theme: {
           configured: action.theme,
@@ -196,35 +207,35 @@ export function appReducer(state: AppState, action: Action) {
           automatic: false,
         },
       };
-      lsStorage.setPrefs(updatedUserPrefs, state.user ? state.user.alias : undefined);
+      lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
       updateActiveStyleSheet(action.theme);
       return {
         ...state,
-        prefs: updatedUserPrefs,
+        prefs: prefs,
       };
 
     case 'updateEfectiveTheme':
-      const updatedThemePrefs = {
+      prefs = {
         ...state.prefs,
         theme: {
           ...state.prefs.theme,
           efective: action.theme,
         },
       };
-      lsStorage.setPrefs(updatedThemePrefs, state.user ? state.user.alias : undefined);
+      lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
       updateActiveStyleSheet(action.theme);
       return {
         ...state,
-        prefs: updatedThemePrefs,
+        prefs: prefs,
       };
 
     case 'enableAutomaticTheme':
-      const updatedThemeUserPrefs = updateAutomaticTheme(state.prefs, action.enabled);
-      lsStorage.setPrefs(updatedThemeUserPrefs, state.user ? state.user.alias : undefined);
-      updateActiveStyleSheet(updatedThemeUserPrefs.theme.efective || updatedThemeUserPrefs.theme.configured);
+      prefs = updateAutomaticTheme(state.prefs, action.enabled);
+      lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
+      updateActiveStyleSheet(prefs.theme.efective || prefs.theme.configured);
       return {
         ...state,
-        prefs: updatedThemeUserPrefs,
+        prefs: prefs,
       };
 
     case 'updateUser':
@@ -237,6 +248,36 @@ export function appReducer(state: AppState, action: Action) {
           ...action.user,
         },
       };
+
+    case 'enabledDisplayedNotifications':
+      prefs = {
+        ...state.prefs,
+        notifications: {
+          ...state.prefs.notifications,
+          enabled: action.enabled,
+        },
+      };
+      lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
+      return {
+        ...state,
+        prefs: prefs,
+      };
+
+    case 'addNewDisplayedNotification':
+      prefs = {
+        ...state.prefs,
+        notifications: {
+          ...state.prefs.notifications,
+          displayed: [...state.prefs.notifications.displayed, action.id],
+          lastDisplayedTime: Date.now(),
+        },
+      };
+      lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
+      return {
+        ...state,
+        prefs: prefs,
+      };
+
     default:
       return { ...state };
   }

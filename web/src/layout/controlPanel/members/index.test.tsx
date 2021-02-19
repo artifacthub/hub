@@ -36,6 +36,11 @@ const mockCtx = {
       configured: 'light',
       automatic: false,
     },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
+    },
   },
 };
 
