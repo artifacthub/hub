@@ -27,6 +27,17 @@ const ContainersImages = (props: Props) => {
     let itemsForModal: JSX.Element[] = [];
 
     props.containers.forEach((containerImage: ContainerImage, index: number) => {
+      const copyBtn = (
+        <>
+          {!isUndefined(containerImage.image) && (
+            <ButtonCopyToClipboard
+              text={containerImage.image}
+              className={`btn-link text-secondary border-0 ${styles.copyBtn}`}
+            />
+          )}
+        </>
+      );
+
       items.push(
         <div
           data-testid="containerImageItem"
@@ -38,10 +49,7 @@ const ContainersImages = (props: Props) => {
             <div data-testid="containerImage" className={`text-truncate ${styles.containerImage}`}>
               {containerImage.name || containerImage.image}
             </div>
-            <ButtonCopyToClipboard
-              text={containerImage.image}
-              className={`btn-link text-secondary border-0 ${styles.copyBtn}`}
-            />
+            {copyBtn}
           </div>
         </div>
       );
@@ -56,10 +64,7 @@ const ContainersImages = (props: Props) => {
               <div data-testid="containerImage" className="text-truncate pl-1">
                 {containerImage.name || containerImage.image}
               </div>
-              <ButtonCopyToClipboard
-                text={containerImage.name || containerImage.image}
-                className={`btn-link text-secondary border-0 ${styles.copyBtn}`}
-              />
+              {copyBtn}
             </div>
           </td>
         </tr>
