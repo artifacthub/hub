@@ -15,7 +15,7 @@ const GuestDropdown = () => {
     <div className="btn-group">
       <button
         data-testid="guestDropdownBtn"
-        className="btn p-0 position-relative"
+        className={`btn p-0 position-relative ${styles.btn}`}
         type="button"
         onClick={() => setOpenStatus(true)}
       >

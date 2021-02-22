@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import SearchTypeaheadRepository from './SearchTypeaheadRepository';
@@ -137,5 +137,91 @@ describe('SearchTypeaheadRepository', () => {
     const input = getByPlaceholderText(`There aren't any repositories you can manage at the moment.`);
     expect(input).toBeInTheDocument();
     expect(input).toBeDisabled();
+  });
+
+  describe('when minCharacters is defined', () => {
+    it('opens dropdown', () => {
+      const { getByTestId, getAllByTestId } = render(<SearchTypeaheadRepository minCharacters={3} {...defaultProps} />);
+
+      const input = getByTestId('searchTypeaheadRepositoryInput');
+      fireEvent.change(input, { target: { value: 'git' } });
+
+      waitFor(() => {
+        expect(getByTestId('searchTypeaheadRepositoryDropdown')).toHaveClass('show');
+
+        const repos = getAllByTestId('repoItem');
+        expect(repos).toHaveLength(3);
+        expect(repos[0]).toHaveClass('clickableCell');
+        expect(repos[1]).toHaveClass('disabledCell');
+        expect(repos[2]).toHaveClass('clickableCell');
+      });
+    });
+    it('selects option', () => {
+      const { getByTestId, getAllByTestId } = render(<SearchTypeaheadRepository minCharacters={3} {...defaultProps} />);
+
+      const input = getByTestId('searchTypeaheadRepositoryInput');
+      fireEvent.change(input, { target: { value: 'git' } });
+
+      waitFor(() => {
+        expect(getByTestId('searchTypeaheadRepositoryDropdown')).toHaveClass('show');
+
+        const btns = getAllByTestId('repoItem');
+        fireEvent.click(btns[0]);
+
+        expect(onSelectMock).toHaveBeenCalledTimes(1);
+        expect(onSelectMock).toHaveBeenCalledWith(mockRepositories[0]);
+      });
+    });
+
+    it('filters options on input change with more than 3 characters', () => {
+      const { getByTestId, getAllByTestId, getAllByText } = render(
+        <SearchTypeaheadRepository minCharacters={3} {...defaultProps} />
+      );
+
+      const input = getByTestId('searchTypeaheadRepositoryInput');
+      fireEvent.change(input, { target: { value: 'hub' } });
+
+      waitFor(() => {
+        expect(getAllByTestId('repoItem')).toHaveLength(2);
+        expect(getAllByTestId('repoItem')[0]).toHaveTextContent('artifact-hub');
+        expect(getAllByTestId('repoItem')[1]).toHaveTextContent('security-hubdemo');
+        expect(getAllByText('hub')).toHaveLength(2);
+        expect(getAllByText('hub')[0]).toHaveClass('hightlighted');
+      });
+    });
+
+    it('filters options on input change by name and url', () => {
+      const { getByTestId, getAllByTestId } = render(
+        <SearchTypeaheadRepository minCharacters={3} {...defaultProps} searchInUrl />
+      );
+
+      const input = getByTestId('searchTypeaheadRepositoryInput');
+      fireEvent.change(input, { target: { value: 'hub' } });
+
+      waitFor(() => {
+        expect(getAllByTestId('repoItem')).toHaveLength(3);
+        expect(getAllByTestId('repoItem')[0]).toHaveTextContent('artifact-hub');
+        expect(getAllByTestId('repoItem')[1]).toHaveTextContent(
+          'community-operatorshttps://github.com/operator-framework/community-operators/upstream-community-operatorsdemo'
+        );
+        expect(getAllByTestId('repoItem')[2]).toHaveTextContent(
+          'security-hubhttps://github.com/falcosecurity/cloud-native-security-hub/resources/falcodemo'
+        );
+      });
+    });
+
+    it('renders placeholder when any results', () => {
+      const { getByTestId, queryAllByTestId, getByText } = render(
+        <SearchTypeaheadRepository minCharacters={3} {...defaultProps} />
+      );
+
+      const input = getByTestId('searchTypeaheadRepositoryInput');
+      fireEvent.change(input, { target: { value: 'test' } });
+
+      waitFor(() => {
+        expect(queryAllByTestId('repoItem')).toHaveLength(0);
+        expect(getByText('Sorry, no matches found')).toBeInTheDocument();
+      });
+    });
   });
 });
