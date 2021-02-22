@@ -187,11 +187,9 @@ describe('Claim Repository Modal - repositories section', () => {
 
       const input = getByTestId('searchTypeaheadRepositoryInput');
       expect(input).toBeInTheDocument();
-      expect(input).toHaveValue('');
+      fireEvent.change(input, { target: { value: 'ch' } });
 
-      fireEvent.focus(input);
-
-      const buttons = getAllByTestId('repoItem');
+      const buttons = await waitFor(() => getAllByTestId('repoItem'));
       expect(buttons).toHaveLength(2);
     });
 
@@ -219,11 +217,9 @@ describe('Claim Repository Modal - repositories section', () => {
 
         const input = getByTestId('searchTypeaheadRepositoryInput');
         expect(input).toBeInTheDocument();
-        expect(input).toHaveValue('');
+        fireEvent.change(input, { target: { value: 'gi' } });
 
-        fireEvent.focus(input);
-
-        const buttons = getAllByTestId('repoItem');
+        const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[0]);
 
         const activeRepo = getByTestId('activeRepoItem');
@@ -266,11 +262,9 @@ describe('Claim Repository Modal - repositories section', () => {
 
         const input = getByTestId('searchTypeaheadRepositoryInput');
         expect(input).toBeInTheDocument();
-        expect(input).toHaveValue('');
+        fireEvent.change(input, { target: { value: 'gi' } });
 
-        fireEvent.focus(input);
-
-        const buttons = getAllByTestId('repoItem');
+        const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
 
         const radio = getByText('Organization');
@@ -285,7 +279,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
-          expect(API.claimRepositoryOwnership).toHaveBeenCalledWith(mockRepositories[1], 'helm');
+          expect(API.claimRepositoryOwnership).toHaveBeenCalledWith(mockRepositories[2], 'helm');
         });
 
         waitFor(() => {
@@ -316,9 +310,9 @@ describe('Claim Repository Modal - repositories section', () => {
         });
 
         const input = getByTestId('searchTypeaheadRepositoryInput');
-        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: 'gi' } });
 
-        const buttons = getAllByTestId('repoItem');
+        const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
 
         const btn = getByTestId('claimRepoBtn');
@@ -354,9 +348,9 @@ describe('Claim Repository Modal - repositories section', () => {
         });
 
         const input = getByTestId('searchTypeaheadRepositoryInput');
-        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: 'gi' } });
 
-        const buttons = getAllByTestId('repoItem');
+        const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
 
         const btn = getByTestId('claimRepoBtn');
@@ -396,9 +390,9 @@ describe('Claim Repository Modal - repositories section', () => {
         });
 
         const input = getByTestId('searchTypeaheadRepositoryInput');
-        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: 'gi' } });
 
-        const buttons = getAllByTestId('repoItem');
+        const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
 
         const btn = getByTestId('claimRepoBtn');
@@ -437,9 +431,9 @@ describe('Claim Repository Modal - repositories section', () => {
         });
 
         const input = getByTestId('searchTypeaheadRepositoryInput');
-        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: 'gi' } });
 
-        const buttons = getAllByTestId('repoItem');
+        const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
 
         const btn = getByTestId('claimRepoBtn');

@@ -147,11 +147,9 @@ describe('OptOutModal', () => {
 
       const input = getByTestId('searchTypeaheadRepositoryInput');
       expect(input).toBeInTheDocument();
-      expect(input).toHaveValue('');
+      fireEvent.change(input, { target: { value: 'sec' } });
 
-      fireEvent.focus(input);
-
-      const buttons = getAllByTestId('repoItem');
+      const buttons = await waitFor(() => getAllByTestId('repoItem'));
       fireEvent.click(buttons[0]);
 
       const activeRepo = getByTestId('activeRepoItem');
@@ -196,11 +194,9 @@ describe('OptOutModal', () => {
 
       const input = getByTestId('searchTypeaheadRepositoryInput');
       expect(input).toBeInTheDocument();
-      expect(input).toHaveValue('');
+      fireEvent.change(input, { target: { value: 'sec' } });
 
-      fireEvent.focus(input);
-
-      const buttons = getAllByTestId('repoItem');
+      const buttons = await waitFor(() => getAllByTestId('repoItem'));
       fireEvent.click(buttons[0]);
 
       const activeRepo = getByTestId('activeRepoItem');

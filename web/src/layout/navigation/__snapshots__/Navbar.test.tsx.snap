@@ -72,7 +72,7 @@ exports[`Navbar creates snapshot 1`] = `
               class="btn-group"
             >
               <button
-                class="btn p-0 position-relative"
+                class="btn p-0 position-relative btn"
                 data-testid="userAuthBtn"
                 type="button"
               >

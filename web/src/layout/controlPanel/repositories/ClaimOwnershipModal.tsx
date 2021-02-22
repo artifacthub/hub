@@ -283,6 +283,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                     isLoading={isFetchingRepositories}
                     onSelect={onRepoSelect}
                     placeholder="There aren't any repositories whose ownership you can claim at the moment."
+                    minCharacters={2}
                     searchInUrl
                   />
                 </div>

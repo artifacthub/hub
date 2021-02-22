@@ -7,6 +7,10 @@
   font-size: 1.25rem !important;
 }
 
+.btn {
+  z-index: 1;
+}
+
 .iconWrapper {
   background-color: var(--color-1-700);
   padding: 2px;

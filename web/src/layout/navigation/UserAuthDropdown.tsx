@@ -26,7 +26,7 @@ const UserAuthDropdown = (props: Props) => {
     <div className="btn-group">
       <button
         data-testid="userAuthBtn"
-        className="btn p-0 position-relative"
+        className={`btn p-0 position-relative ${styles.btn}`}
         type="button"
         onClick={() => setOpenStatus(true)}
       >

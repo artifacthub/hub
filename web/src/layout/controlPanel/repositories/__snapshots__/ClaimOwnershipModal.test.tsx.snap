@@ -113,6 +113,10 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                             This field is required
                           </div>
                         </div>
+                        <div
+                          class="dropdown-menu p-0 w-100 shadow-sm dropdown"
+                          data-testid="searchTypeaheadRepositoryDropdown"
+                        />
                       </div>
                     </div>
                   </div>
