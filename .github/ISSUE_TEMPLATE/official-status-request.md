@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-*In Artifact Hub, the `official` status means that the publisher **owns the software deployed** by *all* the packages available in the repository. When this status is granted for a repository, all packages available on it will display the `official` badge.*
+In Artifact Hub, the `official` status means that the publisher **owns the software deployed** by *all* the packages available in the repository. If we consider the *example* of a [chart used to install Consul](https://artifacthub.io/packages/helm/hashicorp/consul), to obtain the `official` status the publisher should be the owner of the Consul software (HashiCorp in this case), not just the chart. When this status is granted for a repository, all packages available on it will display the `official` badge, so all packages in the repository **must** be official.
 
 - **Repository name** *(in `artifacthub.io`)*: ...
 - **Project URL:** ...
