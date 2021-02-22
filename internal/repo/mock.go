@@ -19,6 +19,26 @@ func (m *ClonerMock) CloneRepository(ctx context.Context, r *hub.Repository) (st
 	return args.String(0), args.String(1), args.Error(2)
 }
 
+// ErrorsCollectorMock is mock ErrorsCollector implementation.
+type ErrorsCollectorMock struct {
+	mock.Mock
+}
+
+// Append implements the ErrorsCollector interface.
+func (m *ErrorsCollectorMock) Append(repositoryID string, err string) {
+	m.Called(repositoryID, err)
+}
+
+// Flush implements the ErrorsCollector interface.
+func (m *ErrorsCollectorMock) Flush() {
+	m.Called()
+}
+
+// Init implements the ErrorsCollector interface.
+func (m *ErrorsCollectorMock) Init(repositoryID string) {
+	m.Called(repositoryID)
+}
+
 // HelmIndexLoaderMock is a mock implementation of the HelmIndexLoader
 // interface.
 type HelmIndexLoaderMock struct {
@@ -158,6 +178,12 @@ func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context, includeCredentials
 	args := m.Called(ctx)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
+}
+
+// SetLastScanningResults implements the RepositoryManager interface.
+func (m *ManagerMock) SetLastScanningResults(ctx context.Context, repositoryID, errs string) error {
+	args := m.Called(ctx, repositoryID, errs)
+	return args.Error(0)
 }
 
 // SetLastTrackingResults implements the RepositoryManager interface.

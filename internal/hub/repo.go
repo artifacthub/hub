@@ -137,6 +137,7 @@ type Repository struct {
 	OrganizationID          string         `json:"organization_id"`
 	OrganizationName        string         `json:"organization_name"`
 	OrganizationDisplayName string         `json:"organization_display_name"`
+	LastScanningErrors      string         `json:"last_scanning_errors"`
 	LastTrackingErrors      string         `json:"last_tracking_errors"`
 	VerifiedPublisher       bool           `json:"verified_publisher"`
 	Official                bool           `json:"official"`
@@ -172,6 +173,7 @@ type RepositoryManager interface {
 	GetOwnedByOrgJSON(ctx context.Context, orgName string, includeCredentials bool) ([]byte, error)
 	GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error)
 	GetRemoteDigest(ctx context.Context, r *Repository) (string, error)
+	SetLastScanningResults(ctx context.Context, repositoryID, errs string) error
 	SetLastTrackingResults(ctx context.Context, repositoryID, errs string) error
 	SetVerifiedPublisher(ctx context.Context, repositorID string, verified bool) error
 	Transfer(ctx context.Context, name, orgName string, ownershipClaim bool) error

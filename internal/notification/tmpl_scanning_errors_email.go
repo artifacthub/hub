@@ -2,13 +2,13 @@ package notification
 
 import "html/template"
 
-var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
+var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
 <!doctype html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{ .Repository.name }} tracking errors</title>
+    <title>{{ .Repository.name }} scanning errors</title>
     <style>
     @media only screen and (max-width: 620px) {
       table[class=body] h1 {
@@ -105,7 +105,7 @@ var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
           <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; padding: 10px;">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Repository.name }} tracking errors</span>
+            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Repository.name }} security vulnerabilities scan errors</span>
             <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px; border-top: 7px solid #C00004;">
 
               <!-- START MAIN CONTENT AREA -->
@@ -115,11 +115,7 @@ var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-                          We encountered some errors while tracking repository <strong>{{ .Repository.name }}</strong>.
-                        </p>
-
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-                          Some or all of these errors may be just warnings, and it's possible that your packages have been still indexed properly. However, it'd be great if you can take a look at them just in case there is something missing or failing in your repository that may affect how your content is displayed on Artifact Hub.
+                          We encountered some errors while scanning the packages in repository <strong>{{ .Repository.name }}</strong> for security vulnerabilities.
                         </p>
 
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">
@@ -133,11 +129,11 @@ var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
                             <tr>
                               <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding: 16px;">
                                 <code style="overflow-x: auto;">
-                                  {{ range $index, $trackingError := .Repository.lastTrackingErrors }}
+                                  {{ range $index, $scanningError := .Repository.lastScanningErrors }}
                                     {{ if $index }}
-                                      <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important; border-top: 1px solid #333; padding-top: 15px; font-size: 13px; ">{{ $trackingError }}</p>
+                                      <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important; border-top: 1px solid #333; padding-top: 15px; font-size: 13px; ">{{ $scanningError }}</p>
                                     {{ else }}
-                                      <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important;font-size: 13px;">{{ $trackingError }}</p>
+                                      <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important;font-size: 13px;">{{ $scanningError }}</p>
                                     {{end}}
                                   {{ end }}
                                 </code>
@@ -153,7 +149,7 @@ var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
                                 <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                   <tbody>
                                     <tr>
-                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .BaseURL }}/control-panel/repositories?modal=tracking&user-alias={{ .Repository.userAlias }}&org-name={{ .Repository.organizationName }}&repo-name={{ .Repository.name }}" target="_blank" style="display: inline-block; color: #ffffff; background-color: #39596C; border: solid 1px #39596C; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; border-color: #39596C;">View in Artifact Hub</a> </div></td>
+                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .BaseURL }}/control-panel/repositories?modal=scanning&user-alias={{ .Repository.userAlias }}&org-name={{ .Repository.organizationName }}&repo-name={{ .Repository.name }}" target="_blank" style="display: inline-block; color: #ffffff; background-color: #39596C; border: solid 1px #39596C; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; border-color: #39596C;">View in Artifact Hub</a> </div></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -166,7 +162,7 @@ var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
                           <tbody>
                             <tr>
                               <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; color: #545454; padding-bottom: 10px; padding-top: 10px; text-align: center;">
-                                <p style="color: #545454; font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span style="color: #545454; background-color: #ffffff; text-align: center;">{{ .BaseURL }}/control-panel/repositories?modal=tracking&user-alias={{ .Repository.userAlias }}&org-name={{ .Repository.organizationName }}&repo-name={{ .Repository.name }}</span></p>
+                                <p style="color: #545454; font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span style="color: #545454; background-color: #ffffff; text-align: center;">{{ .BaseURL }}/control-panel/repositories?modal=scanning&user-alias={{ .Repository.userAlias }}&org-name={{ .Repository.organizationName }}&repo-name={{ .Repository.name }}</span></p>
                               </td>
                             </tr>
                           </tbody>

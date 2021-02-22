@@ -155,6 +155,7 @@ select is(
     get_snapshots_to_scan()::jsonb,
     '[
         {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
             "package_id": "00000000-0000-0000-0000-000000000001",
             "version": "1.0.0",
             "containers_images": [
@@ -164,6 +165,7 @@ select is(
             ]
         },
         {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
             "package_id": "00000000-0000-0000-0000-000000000001",
             "version": "0.0.9",
             "containers_images": [
@@ -173,6 +175,7 @@ select is(
             ]
         },
         {
+            "repository_id": "00000000-0000-0000-0000-000000000002",
             "package_id": "00000000-0000-0000-0000-000000000002",
             "version": "1.0.0",
             "containers_images": [
@@ -183,6 +186,7 @@ select is(
             ]
         },
         {
+            "repository_id": "00000000-0000-0000-0000-000000000002",
             "package_id": "00000000-0000-0000-0000-000000000003",
             "version": "0.0.9",
             "containers_images": [

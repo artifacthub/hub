@@ -13,3 +13,11 @@ var (
 	// ErrNotFound indicates that the requested item was not found.
 	ErrNotFound = errors.New("not found")
 )
+
+// ErrorsCollector interface defines the methods that an errors collector
+// implementation should provide.
+type ErrorsCollector interface {
+	Append(repositoryID string, err string)
+	Flush()
+	Init(repositoryID string)
+}

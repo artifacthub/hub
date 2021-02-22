@@ -17,7 +17,7 @@
     "verifiedPublisher": false,
     "official": false,
     "lastTrackingTs": 1605212420,
-    "userAlias": "cynthia-sg"
+    "userAlias": "user1"
   },
   {
     "repositoryId": "1989c5db-14e1-4c0e-ba97-7c00c2ee796a",
@@ -38,7 +38,7 @@
     "official": false,
     "lastTrackingTs": 1605212420,
     "lastTrackingErrors": "error getting package ibm-blockchain version 2.5.1 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-blockchain/2.5.1\nerror getting package ibm-eventstreams version 2.0.0 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.0.0\nerror getting package ibm-eventstreams version 2.0.1 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.0.1\nerror getting package ibm-eventstreams version 2.1.0 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.1.0",
-    "userAlias": "cynthia-sg"
+    "userAlias": "user1"
   },
   {
     "repositoryId": "9b989d77-45b2-4636-ae4e-6f77d6a1776f",

@@ -2272,6 +2272,7 @@ components:
         Event kind:
           * `0` - New package release
           * `2` - Repository tracking errors
+          * `4` - Repository scanning errors
     Facets:
       type: object
       required:
@@ -2866,6 +2867,7 @@ components:
           required:
             - digest
             - last_tracking_ts
+            - last_scanning_ts
             - disabled
             - scanner_disabled
           properties:
@@ -2876,6 +2878,13 @@ components:
               type: integer
               nullable: false
             last_tracking_errors:
+              type: string
+              nullable: false
+              example: Error
+            last_scanning_ts:
+              type: integer
+              nullable: false
+            last_scanning_errors:
               type: string
               nullable: false
               example: Error

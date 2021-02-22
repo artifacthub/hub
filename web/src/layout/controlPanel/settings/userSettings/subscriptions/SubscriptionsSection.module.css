@@ -69,6 +69,12 @@
   font-size: 85%;
 }
 
+.switchLoading {
+  top: 0;
+  right: 50%;
+  margin-right: -32px;
+}
+
 @media only screen and (max-width: 767.98px) {
   .btnAction {
     margin-left: 0.6rem;
@@ -81,5 +87,9 @@
 
   .title {
     font-size: 1.5rem;
+  }
+
+  .table {
+    font-size: 0.8rem;
   }
 }

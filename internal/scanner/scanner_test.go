@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -14,6 +15,7 @@ import (
 
 func TestScanSnapshot(t *testing.T) {
 	ctx := context.Background()
+	repositoryID := "00000000-0000-0000-0000-000000000001"
 	packageID := "00000000-0000-0000-0000-000000000001"
 	version := "1.0.0"
 	image := "repo/image:tag"
@@ -22,35 +24,45 @@ func TestScanSnapshot(t *testing.T) {
 		t.Parallel()
 		scannerMock := &Mock{}
 		scannerMock.On("Scan", image).Return(nil, tests.ErrFake)
+		ecMock := &repo.ErrorsCollectorMock{}
+		ecMock.On("Init", repositoryID)
+		ecMock.On("Append", repositoryID, "error scanning image repo/image:tag: fake error for tests")
 
 		snapshot := &hub.SnapshotToScan{
-			PackageID: packageID,
-			Version:   version,
+			RepositoryID: repositoryID,
+			PackageID:    packageID,
+			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
 					Image: image,
 				},
 			},
 		}
-		report, err := ScanSnapshot(ctx, scannerMock, snapshot)
+		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
 		require.True(t, errors.Is(err, tests.ErrFake))
 		assert.Nil(t, report)
+		scannerMock.AssertExpectations(t)
+		ecMock.AssertExpectations(t)
 	})
 
 	t.Run("image using latest tag", func(t *testing.T) {
 		t.Parallel()
 		scannerMock := &Mock{}
+		ecMock := &repo.ErrorsCollectorMock{}
+		ecMock.On("Init", repositoryID)
+		ecMock.On("Append", repositoryID, "latest tag not supported: repo/image:latest")
 
 		snapshot := &hub.SnapshotToScan{
-			PackageID: packageID,
-			Version:   version,
+			RepositoryID: repositoryID,
+			PackageID:    packageID,
+			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
 					Image: "repo/image:latest",
 				},
 			},
 		}
-		report, err := ScanSnapshot(ctx, scannerMock, snapshot)
+		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
 		require.Nil(t, err)
 		assert.Equal(t, &hub.SnapshotSecurityReport{
 			PackageID: packageID,
@@ -58,23 +70,29 @@ func TestScanSnapshot(t *testing.T) {
 			Full:      nil,
 			Summary:   nil,
 		}, report)
+		scannerMock.AssertExpectations(t)
+		ecMock.AssertExpectations(t)
 	})
 
 	t.Run("image not found", func(t *testing.T) {
 		t.Parallel()
 		scannerMock := &Mock{}
 		scannerMock.On("Scan", image).Return(nil, ErrImageNotFound)
+		ecMock := &repo.ErrorsCollectorMock{}
+		ecMock.On("Init", repositoryID)
+		ecMock.On("Append", repositoryID, "image not found: repo/image:tag")
 
 		snapshot := &hub.SnapshotToScan{
-			PackageID: packageID,
-			Version:   version,
+			RepositoryID: repositoryID,
+			PackageID:    packageID,
+			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
 					Image: image,
 				},
 			},
 		}
-		report, err := ScanSnapshot(ctx, scannerMock, snapshot)
+		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
 		require.Nil(t, err)
 		assert.Equal(t, &hub.SnapshotSecurityReport{
 			PackageID: packageID,
@@ -82,42 +100,52 @@ func TestScanSnapshot(t *testing.T) {
 			Full:      nil,
 			Summary:   nil,
 		}, report)
+		scannerMock.AssertExpectations(t)
+		ecMock.AssertExpectations(t)
 	})
 
 	t.Run("error unmarshalling report", func(t *testing.T) {
 		t.Parallel()
 		scannerMock := &Mock{}
 		scannerMock.On("Scan", image).Return(`invalid: "`, nil)
+		ecMock := &repo.ErrorsCollectorMock{}
+		ecMock.On("Init", repositoryID)
 
 		snapshot := &hub.SnapshotToScan{
-			PackageID: packageID,
-			Version:   version,
+			RepositoryID: repositoryID,
+			PackageID:    packageID,
+			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
 					Image: image,
 				},
 			},
 		}
-		report, err := ScanSnapshot(ctx, scannerMock, snapshot)
+		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
 		require.Error(t, err)
 		assert.Nil(t, report)
+		scannerMock.AssertExpectations(t)
+		ecMock.AssertExpectations(t)
 	})
 
 	t.Run("image report generated successfully", func(t *testing.T) {
 		t.Parallel()
 		scannerMock := &Mock{}
 		scannerMock.On("Scan", image).Return(sampleReportData, nil)
+		ecMock := &repo.ErrorsCollectorMock{}
+		ecMock.On("Init", repositoryID)
 
 		snapshot := &hub.SnapshotToScan{
-			PackageID: packageID,
-			Version:   version,
+			RepositoryID: repositoryID,
+			PackageID:    packageID,
+			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
 					Image: image,
 				},
 			},
 		}
-		report, err := ScanSnapshot(ctx, scannerMock, snapshot)
+		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
 		require.Nil(t, err)
 		var expectedImageFullReport []interface{}
 		err = json.Unmarshal(sampleReportData, &expectedImageFullReport)
@@ -133,6 +161,8 @@ func TestScanSnapshot(t *testing.T) {
 				Medium: 1,
 			},
 		}, report)
+		scannerMock.AssertExpectations(t)
+		ecMock.AssertExpectations(t)
 	})
 }
 

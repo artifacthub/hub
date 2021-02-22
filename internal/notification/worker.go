@@ -211,6 +211,15 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 		if err := newReleaseEmailTmpl.Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
+	case hub.RepositoryScanningErrors:
+		tmplData, err := w.prepareRepoNotificationTemplateData(ctx, e)
+		if err != nil {
+			return email.Data{}, err
+		}
+		subject = fmt.Sprintf("Something went wrong scanning repository %s", tmplData.Repository["name"])
+		if err := scanningErrorsEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+			return email.Data{}, err
+		}
 	case hub.RepositoryTrackingErrors:
 		tmplData, err := w.prepareRepoNotificationTemplateData(ctx, e)
 		if err != nil {
@@ -319,6 +328,8 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 	// Prepare template data
 	var eventKindStr string
 	switch e.EventKind {
+	case hub.RepositoryScanningErrors:
+		eventKindStr = "repository.scanning-errors"
 	case hub.RepositoryTrackingErrors:
 		eventKindStr = "repository.tracking-errors"
 	case hub.RepositoryOwnershipClaim:
@@ -336,6 +347,7 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 			"name":               r.Name,
 			"userAlias":          r.UserAlias,
 			"organizationName":   r.OrganizationName,
+			"lastScanningErrors": strings.Split(r.LastScanningErrors, "\n"),
 			"lastTrackingErrors": strings.Split(r.LastTrackingErrors, "\n"),
 		},
 	}, nil

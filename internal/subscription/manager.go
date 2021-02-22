@@ -125,7 +125,7 @@ func (m *Manager) GetSubscriptors(ctx context.Context, e *hub.Event) ([]*hub.Use
 	switch e.EventKind {
 	case hub.NewRelease:
 		err = m.db.QueryRow(ctx, getPkgSubscriptorsDBQ, e.PackageID, e.EventKind).Scan(&dataJSON)
-	case hub.RepositoryTrackingErrors:
+	case hub.RepositoryScanningErrors, hub.RepositoryTrackingErrors:
 		err = m.db.QueryRow(ctx, getRepoSubscriptorsDBQ, e.RepositoryID, e.EventKind).Scan(&dataJSON)
 	case hub.RepositoryOwnershipClaim:
 		dataJSON, _ = json.Marshal(e.Data["subscriptors"])
@@ -160,7 +160,9 @@ func validateOptOut(o *hub.OptOut) error {
 	if _, err := uuid.FromString(o.RepositoryID); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid repository id")
 	}
-	if o.EventKind != hub.RepositoryTrackingErrors {
+	switch o.EventKind {
+	case hub.RepositoryScanningErrors, hub.RepositoryTrackingErrors:
+	default:
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
 	}
 	return nil

@@ -33,6 +33,10 @@ const (
 	// RepositoryOwnershipClaim represents an event for a repository ownership
 	// claim.
 	RepositoryOwnershipClaim EventKind = 3
+
+	// RepositoryScanningErrors represents an event for errors that occur while
+	// a repository is being scanned.
+	RepositoryScanningErrors EventKind = 4
 )
 
 // EventManager describes the methods an EventManager implementation must

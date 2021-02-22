@@ -158,30 +158,34 @@ const OptOutModal = (props: Props) => {
         <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
           Events
         </label>
-        {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-          return (
-            <div className="custom-control custom-radio mb-3" key={`radio_${subs.name}`}>
-              <input
-                data-testid={`radio_${subs.kind}`}
-                className="custom-control-input"
-                type="radio"
-                name="kind"
-                id={subs.name}
-                value={subs.kind}
-                disabled={!subs.enabled}
-                checked={subs.kind === eventKind}
-                onChange={() => setEventKind(subs.kind)}
-                required
-              />
-              <label className="custom-control-label" htmlFor={subs.name}>
-                <div className="d-flex flex-row align-items-center ml-2">
-                  {subs.icon}
-                  <div className="ml-1">{subs.title}</div>
+        <div className="d-flex flex-row flex-wrap mb-3">
+          {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+            return (
+              <div className="mr-4" key={`radio_${subs.name}`}>
+                <div className="custom-control custom-radio text-nowrap my-1 my-md-0">
+                  <input
+                    data-testid={`radio_${subs.kind}`}
+                    className="custom-control-input"
+                    type="radio"
+                    name="kind"
+                    id={subs.name}
+                    value={subs.kind}
+                    disabled={!subs.enabled}
+                    checked={subs.kind === eventKind}
+                    onChange={() => setEventKind(subs.kind)}
+                    required
+                  />
+                  <label className="custom-control-label" htmlFor={subs.name}>
+                    <div className="d-flex flex-row align-items-center ml-2">
+                      {subs.icon}
+                      <div className="ml-1">{subs.title}</div>
+                    </div>
+                  </label>
                 </div>
-              </label>
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
+        </div>
 
         <div className="d-flex flex-column mb-3">
           <label className={`font-weight-bold ${styles.label}`} htmlFor="description">

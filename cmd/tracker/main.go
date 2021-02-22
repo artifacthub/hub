@@ -17,7 +17,6 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
-	trerrors "github.com/artifacthub/hub/internal/tracker/errors"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/time/rate"
@@ -85,7 +84,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("image store setup failed")
 	}
-	ec := trerrors.NewCollector(rm)
+	ec := repo.NewErrorsCollector(rm, repo.Tracker)
 	svc := &hub.TrackerServices{
 		Ctx:                ctx,
 		Cfg:                cfg,

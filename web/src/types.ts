@@ -28,6 +28,8 @@ export interface Repository {
   kind: RepositoryKind;
   lastTrackingTs?: number | null;
   lastTrackingErrors?: string | null;
+  lastScanningTs?: number | null;
+  lastScanningErrors?: string | null;
   verifiedPublisher?: boolean;
   official?: boolean;
   private?: boolean;
@@ -349,6 +351,8 @@ export enum EventKind {
   NewPackageRelease = 0,
   SecurityAlert,
   RepositoryTrackingErrors,
+  RepositoryOwnershipClaim,
+  RepositoryScanningErrors,
 }
 
 export interface Subscription {

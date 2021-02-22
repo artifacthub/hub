@@ -94,23 +94,26 @@ describe('Repository Card - packages section', () => {
       expect(getByText('Not processed yet, it will be processed automatically in ~ 3 minutes')).toBeInTheDocument();
     });
 
-    it('renders component with last tracking info', () => {
+    it('renders component with last tracking and scanning info', () => {
       const props = {
         ...defaultProps,
         repository: {
           ...repoMock,
           lastTrackingTs: moment().unix(),
           lastTrackingErrors: 'errors tracking',
+          lastScanningTs: moment().unix(),
+          lastScanningErrors: 'errors scanning',
         },
       };
-      const { getByText } = render(
+      const { getByText, getAllByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...props} />
         </AppCtx.Provider>
       );
 
-      expect(getByText('a few seconds ago')).toBeInTheDocument();
-      expect(getByText('Show errors log')).toBeInTheDocument();
+      expect(getAllByText('a few seconds ago')).toHaveLength(2);
+      expect(getByText('Show tracking errors log')).toBeInTheDocument();
+      expect(getByText('Show scanning errors log')).toBeInTheDocument();
     });
 
     it('renders verified publisher badge', () => {
@@ -214,7 +217,7 @@ describe('Repository Card - packages section', () => {
       });
     });
 
-    it('opens logs modal when visibleTrackingErrorLogs is true and repo has errors', () => {
+    it('opens logs modal when visibleModal is tracking and repo has errors', () => {
       const props = {
         ...defaultProps,
         repository: {
@@ -222,7 +225,7 @@ describe('Repository Card - packages section', () => {
           lastTrackingTs: moment().unix(),
           lastTrackingErrors: 'errors tracking',
         },
-        visibleTrackingErrorLogs: true,
+        visibleModal: 'tracking',
       };
 
       const component = (
@@ -231,7 +234,7 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
       const { getByText, getByRole, rerender } = render(component);
-      expect(getByText('Show errors log')).toBeInTheDocument();
+      expect(getByText('Show tracking errors log')).toBeInTheDocument();
 
       rerender(component);
 
@@ -240,14 +243,41 @@ describe('Repository Card - packages section', () => {
       expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
     });
 
-    it('opens empty errors modal with default message when visibleTrackingErrorLogs is true and repo has not errors', () => {
+    it('opens logs modal when visibleModal is scanning and repo has errors', () => {
+      const props = {
+        ...defaultProps,
+        repository: {
+          ...repoMock,
+          lastTrackingTs: moment().unix(),
+          lastScanningTs: moment().unix(),
+          lastScanningErrors: 'errors scanning',
+        },
+        visibleModal: 'scanning',
+      };
+
+      const component = (
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...props} />
+        </AppCtx.Provider>
+      );
+      const { getByText, getByRole, rerender } = render(component);
+      expect(getByText('Show scanning errors log')).toBeInTheDocument();
+
+      rerender(component);
+
+      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+    });
+
+    it('opens empty errors modal with default message when visibleModal is tracking and repo has not errors', () => {
       const props = {
         ...defaultProps,
         repository: {
           ...repoMock,
           lastTrackingTs: moment().unix(),
         },
-        visibleTrackingErrorLogs: true,
+        visibleModal: 'tracking',
       };
       const component = (
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -255,13 +285,49 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
       const { queryByText, getByText, getByRole, rerender } = render(component);
-      expect(queryByText('Show errors log')).toBeNull();
+      expect(queryByText('Show tracking errors log')).toBeNull();
 
       rerender(component);
 
       expect(getByRole('dialog')).toBeInTheDocument();
       expect(
         getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./g)
+      ).toBeInTheDocument();
+      expect(
+        getByText(
+          /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./g
+        )
+      ).toBeInTheDocument();
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+    });
+
+    it('opens empty errors modal with default message when visibleModal is scanning and repo has not errors', () => {
+      const props = {
+        ...defaultProps,
+        repository: {
+          ...repoMock,
+          lastTrackingTs: moment().unix(),
+          lastScanningTs: moment().unix(),
+        },
+        visibleModal: 'scanning',
+      };
+      const component = (
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...props} />
+        </AppCtx.Provider>
+      );
+      const { queryByText, getByText, getByRole, rerender } = render(component);
+      expect(queryByText('Show scanning errors log')).toBeNull();
+
+      rerender(component);
+
+      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(
+        getByText(
+          /It looks like the last security vulnerabilities scan of this repository worked fine and no errors were produced./g
+        )
       ).toBeInTheDocument();
       expect(
         getByText(

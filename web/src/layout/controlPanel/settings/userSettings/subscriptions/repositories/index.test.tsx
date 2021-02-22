@@ -66,6 +66,7 @@ describe('RepositoriesSection', () => {
       expect(getByText('Repository')).toBeInTheDocument();
       expect(getByText('Publisher')).toBeInTheDocument();
       expect(getByText('Tracking errors')).toBeInTheDocument();
+      expect(getByText('Scanning errors')).toBeInTheDocument();
     });
 
     it('opens Add opt out modal', async () => {
@@ -180,12 +181,12 @@ describe('RepositoriesSection', () => {
       });
 
       const checkbox: HTMLInputElement = getByTestId(
-        `${mockOptOut[0].optOutId}_trackingErrors_input`
+        `subs_${mockOptOut[0].repository.repositoryId}_2_input`
       ) as HTMLInputElement;
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
 
-      const label = getByTestId(`${mockOptOut[0].optOutId}_trackingErrors_label`);
+      const label = getByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_label`);
       fireEvent.click(label);
 
       await waitFor(() => {
@@ -205,7 +206,7 @@ describe('RepositoriesSection', () => {
       mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
       mocked(API).deleteOptOut.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByTestId, queryByTestId } = render(
+      const { getByTestId, queryByTestId, getByRole } = render(
         <Router>
           <RepositoriesSection {...defaultProps} />
         </Router>
@@ -215,14 +216,14 @@ describe('RepositoriesSection', () => {
         expect(API.getOptOutList).toHaveBeenCalledTimes(1);
       });
 
-      expect(queryByTestId(`${mockOptOut[0].optOutId}_trackingErrors_input`)).toBeInTheDocument();
+      expect(getByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
 
-      const label = getByTestId(`${mockOptOut[0].optOutId}_trackingErrors_label`);
+      const label = getByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_label`);
       fireEvent.click(label);
 
-      // Remove it optimistically from document
+      // Loading
       await waitFor(() => {
-        expect(queryByTestId(`${mockOptOut[0].optOutId}_trackingErrors_input`)).toBeNull();
+        expect(getByRole('status')).toBeInTheDocument();
       });
 
       expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
@@ -238,9 +239,8 @@ describe('RepositoriesSection', () => {
         expect(API.getOptOutList).toHaveBeenCalledTimes(2);
       });
 
-      // Add it again if opt-out entry deletion failed
       await waitFor(() => {
-        expect(queryByTestId(`${mockOptOut[0].optOutId}_trackingErrors_input`)).toBeInTheDocument();
+        expect(queryByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
       });
     });
 
@@ -251,7 +251,7 @@ describe('RepositoriesSection', () => {
         kind: ErrorKind.Unauthorized,
       });
 
-      const { getByTestId, queryByTestId } = render(
+      const { getByTestId } = render(
         <Router>
           <RepositoriesSection {...defaultProps} />
         </Router>
@@ -261,11 +261,11 @@ describe('RepositoriesSection', () => {
         expect(API.getOptOutList).toHaveBeenCalledTimes(1);
       });
 
-      const label = getByTestId(`${mockOptOut[1].optOutId}_trackingErrors_label`);
+      const label = getByTestId(`subs_${mockOptOut[1].repository.repositoryId}_2_label`);
       fireEvent.click(label);
 
       await waitFor(() => {
-        expect(queryByTestId(`${mockOptOut[1].optOutId}_trackingErrors_input`)).toBeNull();
+        expect(getByTestId(`subs_${mockOptOut[1].repository.repositoryId}_2_input`)).toBeDisabled();
       });
 
       await waitFor(() => {

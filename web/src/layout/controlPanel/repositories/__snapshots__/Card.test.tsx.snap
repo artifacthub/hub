@@ -233,6 +233,16 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
             Not processed yet, it will be processed automatically in ~ 3 minutes
           </small>
         </div>
+        <div>
+          <small
+            class="text-muted text-uppercase mr-1"
+          >
+            Last security scan: 
+          </small>
+          <small>
+            -
+          </small>
+        </div>
         <div
           class="mt-3 m-md-0 d-flex flex-row d-md-none"
         />

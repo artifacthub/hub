@@ -142,6 +142,7 @@ export default function App() {
                   <div className="d-flex flex-column flex-grow-1">
                     <ControlPanelView
                       {...match.params}
+                      visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       userAlias={getQueryParam(location.search, 'user-alias') || undefined}
                       organizationName={getQueryParam(location.search, 'org-name') || undefined}
                       repoName={getQueryParam(location.search, 'repo-name') || undefined}

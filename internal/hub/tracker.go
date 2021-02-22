@@ -10,14 +10,6 @@ import (
 	"golang.org/x/time/rate"
 )
 
-// ErrorsCollector interface defines the methods that an errors collector
-// implementation should provide.
-type ErrorsCollector interface {
-	Append(repositoryID string, err string)
-	Flush()
-	Init(repositoryID string)
-}
-
 // HTTPClient defines the methods an HTTPClient implementation must provide.
 type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
