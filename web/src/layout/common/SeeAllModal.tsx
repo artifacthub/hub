@@ -52,6 +52,10 @@ const SeeAllModal = (props: Props) => {
         <>
           {visibleItems}
 
+          <div className={`d-block d-md-none ${styles.legend}`}>
+            <small className="text-muted font-italic">Displaying only the first 5 entries</small>
+          </div>
+
           <button
             data-testid="seeAllModalBtn"
             className={`btn btn-link pl-0 d-none d-md-block position-relative ${styles.btn}`}

@@ -31,6 +31,7 @@ describe('SeeAllModal', () => {
     fireEvent.click(btn);
 
     waitFor(() => {
+      expect(getByText('Displaying only the first 5 entries')).toBeInTheDocument();
       expect(getByText('title')).toBeInTheDocument();
       expect(queryAllByTestId('item')).toHaveLength(12);
     });
