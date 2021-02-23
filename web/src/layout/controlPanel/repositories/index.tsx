@@ -26,6 +26,7 @@ interface ModalStatus {
 interface Props {
   onAuthError: () => void;
   repoName?: string;
+  visibleModal?: string;
 }
 
 const RepositoriesSection = (props: Props) => {
@@ -199,7 +200,12 @@ const RepositoriesSection = (props: Props) => {
                   <RepositoryCard
                     key={repo.name}
                     repository={repo}
-                    visibleTrackingErrorLogs={!isUndefined(props.repoName) && repo.name === props.repoName}
+                    visibleModal={
+                      // Legacy - old tracking errors email were not passing modal param
+                      !isUndefined(props.repoName) && repo.name === props.repoName
+                        ? props.visibleModal || 'tracking'
+                        : undefined
+                    }
                     setModalStatus={setModalStatus}
                     onSuccess={fetchRepositories}
                     onAuthError={props.onAuthError}

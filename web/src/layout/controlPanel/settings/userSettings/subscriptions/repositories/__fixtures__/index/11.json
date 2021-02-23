@@ -1,0 +1,44 @@
+[
+  {
+    "optOutId": "257d7663-5430-4fff-be96-7d86abd3d867",
+    "repository": {
+      "repositoryId": "b4b4973f-08f0-430a-acb3-2c6ec5449495",
+      "name": "hub",
+      "url": "https://artifacthub.github.io/hub/chart/",
+      "private": false,
+      "kind": 0,
+      "verifiedPublisher": false,
+      "official": false,
+      "userAlias": "user1"
+    },
+    "eventKind": 4
+  },
+  {
+    "optOutId": "2e5080ee-91b1-41bb-b4dd-35d9718461d1",
+    "repository": {
+      "repositoryId": "b4b4973f-08f0-430a-acb3-2c6ec5449495",
+      "name": "hub",
+      "url": "https://artifacthub.github.io/hub/chart/",
+      "private": false,
+      "kind": 0,
+      "verifiedPublisher": false,
+      "official": false,
+      "userAlias": "user1"
+    },
+    "eventKind": 2
+  },
+  {
+    "optOutId": "3b9aef73-33be-4216-9c39-991e1044552c",
+    "repository": {
+      "repositoryId": "38b8d828-27a9-42a2-81ce-19b24d3e2fad",
+      "name": "deprek",
+      "url": "https://github.com/user1/deprek8ion/policies",
+      "private": false,
+      "kind": 2,
+      "verifiedPublisher": false,
+      "official": false,
+      "userAlias": "user1"
+    },
+    "eventKind": 2
+  }
+]

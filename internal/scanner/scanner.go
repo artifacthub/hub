@@ -21,20 +21,26 @@ func ScanSnapshot(
 	ctx context.Context,
 	scanner Scanner,
 	snapshot *hub.SnapshotToScan,
+	ec hub.ErrorsCollector,
 ) (*hub.SnapshotSecurityReport, error) {
 	full := make(map[string][]interface{})
+	ec.Init(snapshot.RepositoryID)
 
 	for _, image := range snapshot.ContainersImages {
 		parts := strings.Split(image.Image, ":")
 		if len(parts) == 1 || parts[1] == "latest" {
+			ec.Append(snapshot.RepositoryID, fmt.Sprintf("latest tag not supported: %s", image.Image))
 			continue
 		}
 		reportData, err := scanner.Scan(image.Image)
 		if err != nil {
 			if errors.Is(err, ErrImageNotFound) {
+				ec.Append(snapshot.RepositoryID, fmt.Sprintf("%s: %s", err.Error(), image.Image))
 				continue
 			}
-			return nil, fmt.Errorf("error scanning image %s: %w", image.Image, err)
+			err := fmt.Errorf("error scanning image %s: %w", image.Image, err)
+			ec.Append(snapshot.RepositoryID, err.Error())
+			return nil, err
 		}
 		var imageFullReport []interface{}
 		if err := json.Unmarshal(reportData, &imageFullReport); err != nil {

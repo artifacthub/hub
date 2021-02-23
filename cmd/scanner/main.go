@@ -8,8 +8,10 @@ import (
 	"sync"
 	"syscall"
 
+	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/scanner"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
@@ -47,7 +49,13 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("database setup failed")
 	}
+	az, err := authz.NewAuthorizer(db)
+	if err != nil {
+		log.Fatal().Err(err).Msg("authorizer setup failed")
+	}
+	rm := repo.NewManager(cfg, db, az)
 	pm := pkg.NewManager(db)
+	ec := repo.NewErrorsCollector(rm, repo.Scanner)
 
 	// Scan pending snapshots
 	trivyURL := cfg.GetString("scanner.trivyURL")
@@ -81,7 +89,7 @@ L:
 
 			logger := log.With().Str("pkg", snapshot.PackageID).Str("version", snapshot.Version).Logger()
 			logger.Info().Msg("scanning snapshot")
-			report, err := scanner.ScanSnapshot(ctx, trivyScanner, snapshot)
+			report, err := scanner.ScanSnapshot(ctx, trivyScanner, snapshot, ec)
 			if err != nil {
 				logger.Error().Err(err).Send()
 			}
@@ -93,5 +101,6 @@ L:
 		}(s)
 	}
 	wg.Wait()
+	ec.Flush()
 	log.Info().Msg("scanner finished")
 }

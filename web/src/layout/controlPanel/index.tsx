@@ -22,6 +22,7 @@ interface Props {
   userAlias?: string;
   organizationName?: string;
   repoName?: string;
+  visibleModal?: string;
 }
 
 const DEFAULT_SECTION = 'repositories';

@@ -57,6 +57,7 @@
 {{ template "repositories/get_repository_packages_digest.sql" }}
 {{ template "repositories/get_org_repositories.sql" }}
 {{ template "repositories/get_user_repositories.sql" }}
+{{ template "repositories/set_last_scanning_results.sql" }}
 {{ template "repositories/set_last_tracking_results.sql" }}
 {{ template "repositories/set_verified_publisher.sql" }}
 {{ template "repositories/transfer_repository.sql" }}

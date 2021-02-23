@@ -46,6 +46,7 @@ const (
 	getReposByKindDBQ         = `select get_repositories_by_kind($1::int, $2::boolean)`
 	getUserReposDBQ           = `select get_user_repositories($1::uuid, $2::boolean)`
 	getUserEmailDBQ           = `select email from "user" where user_id = $1`
+	setLastScanningResultsDBQ = `select set_last_scanning_results($1::uuid, $2::text, $3::boolean)`
 	setLastTrackingResultsDBQ = `select set_last_tracking_results($1::uuid, $2::text, $3::boolean)`
 	setVerifiedPublisherDBQ   = `select set_verified_publisher($1::uuid, $2::boolean)`
 	transferRepoDBQ           = `select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)`
@@ -524,6 +525,20 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 	}
 
 	return digest, nil
+}
+
+// SetLastScanningResults updates the timestamp and errors of the last scanning
+// of the provided repository in the database.
+func (m *Manager) SetLastScanningResults(ctx context.Context, repositoryID, errs string) error {
+	// Validate input
+	if _, err := uuid.FromString(repositoryID); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid repository id")
+	}
+
+	// Update last scanning results in database
+	scanningErrorsEventsEnabled := m.cfg.GetBool("scanner.events.scanningErrors")
+	_, err := m.db.Exec(ctx, setLastScanningResultsDBQ, repositoryID, errs, scanningErrorsEventsEnabled)
+	return err
 }
 
 // SetLastTrackingResults updates the timestamp and errors of the last tracking

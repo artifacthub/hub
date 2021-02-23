@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubscriptionSwitch renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="custom-control custom-switch ml-2 position-relative"
+  >
+    <input
+      class="custom-control-input checkbox"
+      data-testid="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4_input"
+      disabled=""
+      id="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4"
+      type="checkbox"
+    />
+    <label
+      class="custom-control-label"
+      data-testid="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4_label"
+      for="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4"
+    />
+  </div>
+</DocumentFragment>
+`;

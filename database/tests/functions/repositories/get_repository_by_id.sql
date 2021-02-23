@@ -26,6 +26,8 @@ insert into repository (
     digest,
     repository_kind_id,
     user_id,
+    last_scanning_ts,
+    last_scanning_errors,
     last_tracking_ts,
     last_tracking_errors
 )
@@ -40,6 +42,8 @@ values (
     'digest',
     0,
     :'user1ID',
+    '2020-06-16 11:20:34+02',
+    'error1\nerror2\n',
     '2020-06-16 11:20:34+02',
     'error1\nerror2\n'
 );
@@ -59,6 +63,8 @@ select is(
         "disabled": false,
         "scanner_disabled": false,
         "digest": "digest",
+        "last_scanning_ts": 1592299234,
+        "last_scanning_errors": "error1\\nerror2\\n",
         "last_tracking_ts": 1592299234,
         "last_tracking_errors": "error1\\nerror2\\n",
         "user_alias": "user1"
@@ -81,6 +87,8 @@ select is(
         "disabled": false,
         "scanner_disabled": false,
         "digest": "digest",
+        "last_scanning_ts": 1592299234,
+        "last_scanning_errors": "error1\\nerror2\\n",
         "last_tracking_ts": 1592299234,
         "last_tracking_errors": "error1\\nerror2\\n",
         "user_alias": "user1"

@@ -7,8 +7,8 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
+	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
-	"github.com/artifacthub/hub/internal/tracker/errors"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"golang.org/x/time/rate"
@@ -17,7 +17,7 @@ import (
 // TestsServicesWrapper is wrapper around a TrackerSourceServices instance used
 // in tests.
 type TestsServicesWrapper struct {
-	Ec  *errors.CollectorMock
+	Ec  *repo.ErrorsCollectorMock
 	Hc  *tests.HTTPClientMock
 	Is  *img.StoreMock
 	Svc *hub.TrackerSourceServices
@@ -26,7 +26,7 @@ type TestsServicesWrapper struct {
 // NewTestsServicesWrapper creates a new TestsServicesWrapper instance.
 func NewTestsServicesWrapper() *TestsServicesWrapper {
 	// Setup mocks
-	ec := &errors.CollectorMock{}
+	ec := &repo.ErrorsCollectorMock{}
 	hc := &tests.HTTPClientMock{}
 	is := &img.StoreMock{}
 

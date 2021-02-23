@@ -25,6 +25,7 @@ export interface SubscriptionItem {
   icon: JSX.Element;
   name: string;
   title: string;
+  shortTitle?: string;
   description: string;
   enabled: boolean;
 }
@@ -52,7 +53,17 @@ export const REPOSITORY_SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
     icon: <TiWarning />,
     name: 'trackingErrors',
     title: 'Tracking errors',
+    shortTitle: 'Track',
     description: 'Receive a notification when repository tracking errors.',
+    enabled: true,
+  },
+  {
+    kind: EventKind.RepositoryScanningErrors,
+    icon: <TiWarning />,
+    name: 'scanningErrors',
+    title: 'Scanning errors',
+    shortTitle: 'Scan',
+    description: 'Receive a notification when repository scanning for security vulnerabilities errors.',
     enabled: true,
   },
 ];

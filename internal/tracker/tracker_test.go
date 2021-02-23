@@ -11,7 +11,6 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
-	trerrors "github.com/artifacthub/hub/internal/tracker/errors"
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
@@ -464,7 +463,7 @@ type servicesWrapper struct {
 	pm  *pkg.ManagerMock
 	rc  *repo.ClonerMock
 	oe  *repo.OLMOCIExporterMock
-	ec  *trerrors.CollectorMock
+	ec  *repo.ErrorsCollectorMock
 	hc  *tests.HTTPClientMock
 	is  *img.StoreMock
 	src *source.Mock
@@ -477,7 +476,7 @@ func newServicesWrapper() *servicesWrapper {
 	pm := &pkg.ManagerMock{}
 	rc := &repo.ClonerMock{}
 	oe := &repo.OLMOCIExporterMock{}
-	ec := &trerrors.CollectorMock{}
+	ec := &repo.ErrorsCollectorMock{}
 	hc := &tests.HTTPClientMock{}
 	is := &img.StoreMock{}
 	src := &source.Mock{}

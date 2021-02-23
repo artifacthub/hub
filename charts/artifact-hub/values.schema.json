@@ -498,11 +498,27 @@
             "title": "Scanner configuration",
             "type": "object",
             "properties": {
+                "cacheDir": {
+                    "title": "Cache directory path",
+                    "description": "If set, the cache directory for the Trivy client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                    "type": "string",
+                    "default": ""
+                },
                 "concurrency": {
                     "title": "Snapshots to process concurrently",
                     "type": "integer",
                     "default": 10,
                     "minimum": 1
+                },
+                "configDir": {
+                    "title": "Config directory path",
+                    "description": "Directory path where the configuration files should be mounted.",
+                    "type": "string",
+                    "enum": [
+                        "/home/scanner/.cfg",
+                        "/artifacthub/.cfg"
+                    ],
+                    "default": "/home/scanner/.cfg"
                 },
                 "cronjob": {
                     "type": "object",
@@ -527,40 +543,34 @@
                     },
                     "required": ["image", "resources"]
                 },
-                "trivyURL": {
-                    "title": "Trivy server url",
-                    "type": "string",
-                    "description": "Defaults to the Trivy service's internal URL.",
-                    "default": ""
-                },
-                "cacheDir": {
-                    "title": "Cache directory path",
-                    "description": "If set, the cache directory for the Trivy client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",
+                "dockerPassword": {
+                    "title": "Docker registry password",
                     "type": "string",
                     "default": ""
-                },
-                "configDir": {
-                    "title": "Config directory path",
-                    "description": "Directory path where the configuration files should be mounted.",
-                    "type": "string",
-                    "enum": [
-                        "/home/scanner/.cfg",
-                        "/artifacthub/.cfg"
-                    ],
-                    "default": "/home/scanner/.cfg"
                 },
                 "dockerUsername": {
                     "title": "Docker registry username",
                     "type": "string",
                     "default": ""
                 },
-                "dockerPassword": {
-                    "title": "Docker registry password",
+                "events": {
+                    "type": "object",
+                    "properties": {
+                        "scanningErrors": {
+                            "title": "Enable repository scanning errors events",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                },
+                "trivyURL": {
+                    "title": "Trivy server url",
                     "type": "string",
+                    "description": "Defaults to the Trivy service's internal URL.",
                     "default": ""
                 }
             },
-            "required": ["concurrency", "cronjob", "trivyURL", "configDir"]
+            "required": ["concurrency", "configDir", "cronjob", "events", "trivyURL"]
         },
         "tracker": {
             "title": "Tracker configuration",

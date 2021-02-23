@@ -170,6 +170,7 @@ type SecurityReportSummary struct {
 // SnapshotToScan represents some information about a package's snapshot that
 // needs to be scanned for security vulnerabilities.
 type SnapshotToScan struct {
+	RepositoryID     string            `json:"repository_id"`
 	PackageID        string            `json:"package_id"`
 	Version          string            `json:"version"`
 	ContainersImages []*ContainerImage `json:"containers_images"`

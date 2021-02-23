@@ -22,6 +22,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const repoID = "00000000-0000-0000-0000-000000000001"
+
 var cfg = viper.New()
 
 func TestAdd(t *testing.T) {
@@ -760,7 +762,6 @@ func TestGetAllJSON(t *testing.T) {
 
 func TestGetByID(t *testing.T) {
 	ctx := context.Background()
-	repoID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -1242,9 +1243,41 @@ func TestGetRemoteDigest(t *testing.T) {
 	})
 }
 
+func TestSetLastScanningResults(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(cfg, nil, nil)
+		err := m.SetLastScanningResults(ctx, "invalid", "errors")
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+	})
+
+	t.Run("database update succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, setLastScanningResultsDBQ, repoID, "errors", false).Return(nil)
+		m := NewManager(cfg, db, nil)
+
+		err := m.SetLastScanningResults(ctx, repoID, "errors")
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, setLastScanningResultsDBQ, repoID, "errors", false).Return(tests.ErrFakeDB)
+		m := NewManager(cfg, db, nil)
+
+		err := m.SetLastScanningResults(ctx, repoID, "errors")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestSetLastTrackingResults(t *testing.T) {
 	ctx := context.Background()
-	repoID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
@@ -1278,7 +1311,6 @@ func TestSetLastTrackingResults(t *testing.T) {
 
 func TestSetVerifiedPublisher(t *testing.T) {
 	ctx := context.Background()
-	repoID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()

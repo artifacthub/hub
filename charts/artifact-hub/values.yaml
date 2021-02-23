@@ -105,6 +105,8 @@ scanner:
   configDir: "/home/scanner/.cfg"
   dockerUsername: ""
   dockerPassword: ""
+  events:
+    scanningErrors: false
 
 tracker:
   cronjob:

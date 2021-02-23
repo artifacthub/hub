@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(138);
+select plan(139);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -146,6 +146,8 @@ select columns_are('repository', array[
     'auth_pass',
     'last_tracking_ts',
     'last_tracking_errors',
+    'last_scanning_ts',
+    'last_scanning_errors',
     'verified_publisher',
     'official',
     'disabled',
@@ -412,6 +414,7 @@ select has_function('get_repository_packages_digest');
 select has_function('get_repository_summary');
 select has_function('get_org_repositories');
 select has_function('get_user_repositories');
+select has_function('set_last_scanning_results');
 select has_function('set_last_tracking_results');
 select has_function('set_verified_publisher');
 select has_function('transfer_repository');
@@ -470,7 +473,8 @@ select results_eq(
         (0, 'New package release'),
         (1, 'Security alert'),
         (2, 'Repository tracking errors'),
-        (3, 'Repository ownership claim')
+        (3, 'Repository ownership claim'),
+        (4, 'Repository scanning errors')
     $$,
     'Event kinds should exist'
 );

@@ -36,7 +36,7 @@ interface ModalStatus {
 
 interface Props {
   repository: Repository;
-  visibleTrackingErrorLogs: boolean;
+  visibleModal?: string;
   setModalStatus: React.Dispatch<React.SetStateAction<ModalStatus>>;
   onSuccess: () => void;
   onAuthError: () => void;
@@ -52,7 +52,10 @@ const RepositoryCard = (props: Props) => {
   const dropdownMenu = useRef(null);
   const organizationName = ctx.prefs.controlPanel.selectedOrg;
   const hasErrors = !isUndefined(props.repository.lastTrackingErrors) && !isNull(props.repository.lastTrackingErrors);
+  const hasScanningErrors =
+    !isUndefined(props.repository.lastScanningErrors) && !isNull(props.repository.lastScanningErrors);
   const [openErrorsModal, setOpenErrorsModal] = useState<boolean>(false);
+  const [openScanningErrorsModal, setOpenScanningErrorsModal] = useState<boolean>(false);
 
   const closeDropdown = () => {
     setDropdownMenuStatus(false);
@@ -61,8 +64,12 @@ const RepositoryCard = (props: Props) => {
   useOutsideClick([dropdownMenu], dropdownMenuStatus, closeDropdown);
 
   useEffect(() => {
-    if (props.visibleTrackingErrorLogs) {
-      setOpenErrorsModal(true);
+    if (props.visibleModal) {
+      if (props.visibleModal === 'scanning') {
+        setOpenScanningErrorsModal(true);
+      } else {
+        setOpenErrorsModal(true);
+      }
       history.replace({
         search: '',
       });
@@ -108,13 +115,13 @@ const RepositoryCard = (props: Props) => {
             buttonContent={
               <div className="d-flex flex-row align-items-center">
                 <HiExclamation className="mr-2" />
-                <span className="d-none d-sm-inline">Show errors log</span>
+                <span className="d-none d-sm-inline">Show tracking errors log</span>
                 <span className="d-inline d-sm-none">Logs</span>
               </div>
             }
             header={
               <div className={`h3 m-2 flex-grow-1 text-truncate ${styles.title}`}>
-                Errors log - {props.repository.displayName || props.repository.name}
+                Tracking errors log - {props.repository.displayName || props.repository.name}
               </div>
             }
             open={openErrorsModal}
@@ -136,11 +143,108 @@ const RepositoryCard = (props: Props) => {
           {openErrorsModal && (
             <Modal
               className={`d-inline-block ${styles.modal}`}
-              header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Errors log</div>}
+              header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Tracking errors log</div>}
               open
             >
               <div className="h5 text-center my-5 mw-100">
                 It looks like the last tracking of this repository worked fine and no errors were produced.
+                <br />
+                <br />
+                If you have arrived to this screen from an email listing some errors, please keep in mind those may have
+                been already solved.
+              </div>
+            </Modal>
+          )}
+          <span className="ml-1 font-italic text-muted">{nextCheckMsg}</span>
+        </>
+      );
+    }
+  };
+
+  const getLastScanning = (): JSX.Element => {
+    const nextCheckTime: number = minutesToNearestInterval(30, 15);
+
+    if (
+      props.repository.scannerDisabled ||
+      isUndefined(props.repository.lastTrackingTs) ||
+      isNull(props.repository.lastTrackingTs)
+    )
+      return <>-</>;
+
+    if (isUndefined(props.repository.lastScanningTs) || isNull(props.repository.lastScanningTs)) {
+      return (
+        <>
+          Not scanned yet
+          {props.repository.disabled
+            ? '.'
+            : nextCheckTime > 0
+            ? `, it will be scanned for security vulnerabilities in ~ ${nextCheckTime} minutes`
+            : ', it will be scanned for security vulnerabilities in less than 30 minutes'}
+        </>
+      );
+    }
+
+    const content = (
+      <>
+        <span>{moment(props.repository.lastScanningTs! * 1000).fromNow()}</span>
+        {hasScanningErrors ? (
+          <FaExclamation className="mx-2 text-warning" />
+        ) : (
+          <FaCheck className="mx-2 text-success" />
+        )}
+      </>
+    );
+
+    let nextCheckMsg: string = '';
+    if (nextCheckTime > 0 && !props.repository.disabled) {
+      nextCheckMsg = `(it will be checked for updates again in ~ ${nextCheckTime} minutes)`;
+    }
+
+    if (hasScanningErrors) {
+      return (
+        <>
+          {content}
+          <Modal
+            modalDialogClassName={styles.modalDialog}
+            className={`d-inline-block ${styles.modal}`}
+            buttonType={`ml-1 btn badge btn-secondary ${styles.btn}`}
+            buttonContent={
+              <div className="d-flex flex-row align-items-center">
+                <HiExclamation className="mr-2" />
+                <span className="d-none d-sm-inline">Show scanning errors log</span>
+                <span className="d-inline d-sm-none">Logs</span>
+              </div>
+            }
+            header={
+              <div className={`h3 m-2 flex-grow-1 text-truncate ${styles.title}`}>
+                Scanning errors log - {props.repository.displayName || props.repository.name}
+              </div>
+            }
+            open={openScanningErrorsModal}
+            onClose={() => setOpenErrorsModal(false)}
+          >
+            <div className="mt-3 mw-100">
+              <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
+                {props.repository.lastScanningErrors}
+              </SyntaxHighlighter>
+            </div>
+          </Modal>
+          <span className="ml-3 font-italic text-muted">{nextCheckMsg}</span>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {content}
+          {openScanningErrorsModal && (
+            <Modal
+              className={`d-inline-block ${styles.modal}`}
+              header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Scanning errors log</div>}
+              open
+            >
+              <div className="h5 text-center my-5 mw-100">
+                It looks like the last security vulnerabilities scan of this repository worked fine and no errors were
+                produced.
                 <br />
                 <br />
                 If you have arrived to this screen from an email listing some errors, please keep in mind those may have
@@ -324,6 +428,10 @@ const RepositoryCard = (props: Props) => {
           <div>
             <small className="text-muted text-uppercase mr-1">Last processed: </small>
             <small>{getLastTracking()}</small>
+          </div>
+          <div>
+            <small className="text-muted text-uppercase mr-1">Last security scan: </small>
+            <small>{getLastScanning()}</small>
           </div>
 
           <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
