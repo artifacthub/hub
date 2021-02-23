@@ -24,6 +24,7 @@ begin
         'normalized_name', p.normalized_name,
         'logo_image_id', p.logo_image_id,
         'is_operator', p.is_operator,
+        'official', p.official,
         'channels', p.channels,
         'default_channel', p.default_channel,
         'display_name', s.display_name,

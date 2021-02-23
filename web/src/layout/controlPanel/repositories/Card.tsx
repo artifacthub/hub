@@ -271,6 +271,7 @@ const RepositoryCard = (props: Props) => {
               <OfficialBadge
                 official={props.repository.official}
                 className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+                type="repo"
               />
 
               <VerifiedPublisherBadge
@@ -435,7 +436,7 @@ const RepositoryCard = (props: Props) => {
           </div>
 
           <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
-            <OfficialBadge official={props.repository.official} className="mr-3" />
+            <OfficialBadge official={props.repository.official} className="mr-3" type="repo" />
             <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} className="mr-3" />
             <DisabledRepositoryBadge disabled={props.repository.disabled!} />
           </div>

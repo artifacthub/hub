@@ -19,6 +19,7 @@ insert into package (
     latest_version,
     logo_image_id,
     stars,
+    official,
     repository_id
 ) values (
     :'package1ID',
@@ -26,6 +27,7 @@ insert into package (
     '1.0.0',
     :'image1ID',
     10,
+    true,
     :'repo1ID'
 );
 insert into snapshot (
@@ -61,6 +63,7 @@ select is(
         "normalized_name": "package1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "stars": 10,
+        "official": true,
         "display_name": "Package 1",
         "description": "description",
         "version": "1.0.0",

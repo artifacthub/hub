@@ -300,7 +300,7 @@ describe('Filters', () => {
       const { getByLabelText, getAllByTestId } = render(<Filters {...defaultProps} />);
 
       expect(getAllByTestId('checkbox')).toHaveLength(23);
-      expect(getByLabelText('Official repositories')).toBeInTheDocument();
+      expect(getByLabelText('Official')).toBeInTheDocument();
       expect(getByLabelText('Verified publishers')).toBeInTheDocument();
       expect(getByLabelText('Include deprecated')).toBeInTheDocument();
     });
@@ -347,10 +347,10 @@ describe('Filters', () => {
       expect(onVerifiedPublisherChangeMock).toHaveBeenCalledTimes(1);
     });
 
-    it('calls officalChange mock when official repositories checkbox is clicked', () => {
+    it('calls officalChange mock when official checkbox is clicked', () => {
       const { getByLabelText } = render(<Filters {...defaultProps} />);
 
-      const opt = getByLabelText('Official repositories');
+      const opt = getByLabelText('Official');
       expect(opt).toBeInTheDocument();
       fireEvent.click(opt);
       expect(onOfficialChangeMock).toHaveBeenCalledTimes(1);

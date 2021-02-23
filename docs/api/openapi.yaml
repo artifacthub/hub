@@ -2860,6 +2860,9 @@ components:
             unkown:
               type: number
               nullable: false
+        offical:
+          type: boolean
+          nullable: false
     Repository:
       allOf:
         - $ref: "#/components/schemas/RepositorySummary"

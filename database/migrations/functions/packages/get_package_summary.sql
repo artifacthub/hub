@@ -8,6 +8,7 @@ returns setof json as $$
         'normalized_name', p.normalized_name,
         'logo_image_id', p.logo_image_id,
         'stars', p.stars,
+        'official', p.official,
         'display_name', s.display_name,
         'description', s.description,
         'version', s.version,

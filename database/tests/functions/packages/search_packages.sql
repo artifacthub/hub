@@ -49,6 +49,7 @@ insert into package (
     is_operator,
     stars,
     tsdoc,
+    official,
     repository_id
 ) values (
     :'package1ID',
@@ -58,6 +59,7 @@ insert into package (
     true,
     10,
     generate_package_tsdoc('package1', null, 'description', '{"kw1", "kw2"}', '{"repo1"}', '{"user1"}'),
+    false,
     :'repo1ID'
 );
 insert into snapshot (
@@ -117,6 +119,7 @@ insert into package (
     logo_image_id,
     stars,
     tsdoc,
+    official,
     repository_id
 ) values (
     :'package2ID',
@@ -125,6 +128,7 @@ insert into package (
     :'image2ID',
     11,
     generate_package_tsdoc('package2', null, 'description', '{"kw1", "kw2"}', '{"repo2"}', '{"org1"}'),
+    true,
     :'repo2ID'
 );
 insert into snapshot (
@@ -226,6 +230,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -248,6 +253,7 @@ select is(
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "stars": 11,
+                "official": true,
                 "display_name": "Package 2",
                 "description": "description",
                 "version": "1.0.0",
@@ -373,6 +379,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -395,6 +402,7 @@ select is(
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "stars": 11,
+                "official": true,
                 "display_name": "Package 2",
                 "description": "description",
                 "version": "1.0.0",
@@ -458,6 +466,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -494,6 +503,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -520,44 +530,7 @@ select is(
 );
 select is(
     search_packages('{
-        "official": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "stars": 10,
-                "display_name": "Package 1",
-                "description": "description",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "created_at": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
-    'Official: true | Package 1 expected - No facets expected'
-);
-select is(
-    search_packages('{
-        "ts_query": "kw1",
-        "ts_query_web": "kw2",
+        "official": true,
         "deprecated": true
     }')::jsonb,
     '{
@@ -568,6 +541,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -590,6 +564,71 @@ select is(
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "stars": 11,
+                "official": true,
+                "display_name": "Package 2",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": true,
+                "signed": true,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
+                    "name": "repo2",
+                    "display_name": "Repo 2",
+                    "url": "https://repo2.com",
+                    "verified_publisher": false,
+                    "official": false,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
+            }]
+        },
+        "metadata": {
+            "total": 2
+        }
+    }'::jsonb,
+    'Official: true Deprecated: true | Packages 1 and 2 expected - No facets expected'
+);
+select is(
+    search_packages('{
+        "ts_query": "kw1",
+        "ts_query_web": "kw2",
+        "deprecated": true
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "official": false,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "license": "Apache-2.0",
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "user_alias": "user1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "name": "package2",
+                "normalized_name": "package2",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "stars": 11,
+                "official": true,
                 "display_name": "Package 2",
                 "description": "description",
                 "version": "1.0.0",
@@ -630,6 +669,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -652,6 +692,7 @@ select is(
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "stars": 11,
+                "official": true,
                 "display_name": "Package 2",
                 "description": "description",
                 "version": "1.0.0",
@@ -744,6 +785,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -843,6 +885,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -885,6 +928,7 @@ select is(
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "stars": 11,
+                "official": true,
                 "display_name": "Package 2",
                 "description": "description",
                 "version": "1.0.0",
@@ -1229,6 +1273,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -1270,6 +1315,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -1335,6 +1381,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -1375,6 +1422,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -1416,6 +1464,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -1438,6 +1487,7 @@ select is(
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "stars": 11,
+                "official": true,
                 "display_name": "Package 2",
                 "description": "description",
                 "version": "1.0.0",
@@ -1481,6 +1531,7 @@ select is(
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "stars": 10,
+                "official": false,
                 "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
@@ -1541,6 +1592,7 @@ select is(
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "stars": 11,
+                "official": true,
                 "display_name": "Package 2",
                 "description": "description",
                 "version": "1.0.0",

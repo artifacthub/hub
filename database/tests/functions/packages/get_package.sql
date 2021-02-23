@@ -43,6 +43,7 @@ insert into package (
     latest_version,
     logo_image_id,
     is_operator,
+    official,
     channels,
     default_channel,
     repository_id
@@ -51,6 +52,7 @@ insert into package (
     'Package 1',
     '1.0.0',
     :'image1ID',
+    true,
     true,
     '[
         {
@@ -213,6 +215,7 @@ select is(
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "is_operator": true,
+        "official": true,
         "channels": [
             {
                 "name": "stable",
@@ -331,6 +334,7 @@ select is(
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "is_operator": true,
+        "official": true,
         "channels": [
             {
                 "name": "stable",
@@ -450,6 +454,7 @@ select is(
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "is_operator": true,
+        "official": true,
         "channels": [
             {
                 "name": "stable",

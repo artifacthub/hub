@@ -243,7 +243,7 @@ const Filters = (props: Props) => {
           name="official"
           value="official"
           className={styles.checkbox}
-          label="Official repositories"
+          label="Official"
           checked={props.official || false}
           onChange={props.onOfficialChange}
         />
@@ -254,7 +254,7 @@ const Filters = (props: Props) => {
             tooltipClassName={styles.tooltipMessage}
             tooltipArrowClassName={styles.arrowTooltipMessage}
             element={<MdInfoOutline />}
-            tooltipMessage="The publisher owns the software deployed by the packages in this repository"
+            tooltipMessage="The publisher owns the software deployed by the packages"
             visibleTooltip
             active
           />

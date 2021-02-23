@@ -57,7 +57,7 @@ export interface Channel {
 export interface Package {
   packageId: string;
   name: string;
-  displayName: string | null;
+  displayName?: string;
   normalizedName: string;
   description: string;
   logoImageId?: string;
@@ -94,6 +94,7 @@ export interface Package {
   containsSecurityUpdates?: boolean;
   prerelease?: boolean;
   recommendations?: Recommendation[];
+  official?: boolean;
 }
 
 export interface ContainerImage {

@@ -5,7 +5,7 @@
       "linkTip": "home"
     },
     {
-      "body": "## Filters\nUsing the **filters** on the left column, you can narrow down search results. You can filter by *kind*, *category*, *publisher*, *repository* and *license*, as well as only showing packages from **official repositories** or **verified publishers**.",
+      "body": "## Filters\nUsing the **filters** on the left column, you can narrow down search results. You can filter by *kind*, *category*, *publisher*, *repository* and *license*, as well as only showing **official** packages or from **verified publishers**.",
       "linkTip": "search"
     },
     {
