@@ -325,14 +325,15 @@ Publishers can be verified through the [artifacthub-repo.yml](https://github.com
 
 ## Official status
 
-In Artifact Hub, the `official` status means that the publisher **owns the software deployed** by *all* the packages available in the repository. When this status is granted for a repository, all packages available on it will display a badge on the UI.
+In Artifact Hub, the `official` status means that the publisher **owns the software deployed** by a package. If we consider the *example* of a [chart used to install Consul](https://artifacthub.io/packages/helm/hashicorp/consul), to obtain the `official` status the publisher should be the owner of the Consul software (HashiCorp in this case), not just the chart.
+
+The `official` status can be granted at the repository or package level. When it is granted for a repository, all packages available on it will display the `official` badge, so all packages in the repository **must** be official. If only some of the packages in your repository are official, please list them in the `Official packages` field when submitting the official status request.
 
 **Before applying for this status, please make sure your repository complies with the following requirements:**
 
 - The repository has already obtained the [Verified Publisher](https://artifacthub.io/docs/topics/repositories/#verified-publisher) status.
-- The repository *only* contains `official` packages. A mix of official and non-official packages is not allowed at the moment, but we are considering to allow the `official` status to be set [at the package level](https://github.com/artifacthub/hub/issues/972) and this might change in the future.
 - The user requesting the status is the publisher of the repository in Artifact Hub, or belongs to the organization publishing it.
-- The packages available in the repository provide some documentation, usually in the form of a `README.md` file.
+- All official packages available in the repository provide a `README.md` file with some documentation that can be displayed on Artifact Hub.
 
 Once you have verified that the requirements are met, please file an issue [using this template](https://github.com/artifacthub/hub/issues/new?assignees=&labels=official+status+request&template=official-status-request.md&title=%5BOFFICIAL%5D+Your+repository+or+project+name) to apply.
 

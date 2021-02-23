@@ -73,11 +73,11 @@ exports[`UserNotificationsController creates snapshot 1`] = `
                 <em>
                   license
                 </em>
-                , as well as only showing packages from 
+                , as well as only showing 
                 <strong>
-                  official repositories
+                  official
                 </strong>
-                 or 
+                 packages or from 
                 <strong>
                   verified publishers
                 </strong>

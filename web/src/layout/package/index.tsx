@@ -24,6 +24,7 @@ import {
   SearchFiltersURL,
   Version,
 } from '../../types';
+import isPackageOfficial from '../../utils/isPackageOfficial';
 import prepareQueryString from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
@@ -267,7 +268,11 @@ const PackageView = (props: Props) => {
     <>
       {withRepoInfo && (
         <>
-          <OfficialBadge official={detail!.repository.official} className={`d-inline mr-3 ${extraStyle}`} />
+          <OfficialBadge
+            official={isPackageOfficial(detail)}
+            className={`d-inline mr-3 ${extraStyle}`}
+            type="package"
+          />
           <VerifiedPublisherBadge
             verifiedPublisher={detail!.repository.verifiedPublisher}
             className={`d-inline mr-3 ${extraStyle}`}
@@ -453,8 +458,7 @@ const PackageView = (props: Props) => {
                             )}
 
                             <RepositoryInfo
-                              repository={detail.repository}
-                              deprecated={detail.deprecated}
+                              package={detail}
                               className={`text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
                               repoLabelClassName={styles.repoLabel}
                               visibleInfoIcon

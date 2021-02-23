@@ -73,7 +73,7 @@ const QUERIES: SampleQuery[] = [
     },
   },
   {
-    label: 'Prometheus packages in official repositories',
+    label: 'Official Prometheus packages',
     filters: {
       pageNumber: 1,
       tsQueryWeb: 'prometheus',

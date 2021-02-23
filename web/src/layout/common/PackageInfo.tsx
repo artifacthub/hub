@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Package, RepositoryKind } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import cutString from '../../utils/cutString';
+import isPackageOfficial from '../../utils/isPackageOfficial';
 import prepareQueryString from '../../utils/prepareQueryString';
 import License from '../package/License';
 import Image from './Image';
@@ -109,8 +110,7 @@ const PackageInfo = (props: Props) => {
             <div className="d-block d-md-none">
               <div className={`card-subtitle align-items-baseline ${styles.subtitle}`}>
                 <RepositoryInfo
-                  repository={props.package.repository}
-                  deprecated={props.package.deprecated}
+                  package={props.package}
                   className="d-inline d-md-none text-truncate w-100"
                   repoLabelClassName="d-none"
                   withLabels={false}
@@ -157,8 +157,7 @@ const PackageInfo = (props: Props) => {
 
                 <div className={styles.mx50}>
                   <RepositoryInfo
-                    repository={props.package.repository}
-                    deprecated={props.package.deprecated}
+                    package={props.package}
                     className={`d-flex flex-row align-items-baseline ml-3 ${styles.truncateWrapper}`}
                     repoLabelClassName="d-none d-lg-inline"
                     withLabels={false}
@@ -235,7 +234,7 @@ const PackageInfo = (props: Props) => {
       </div>
 
       <div className={`d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto ${styles.labelsWrapper}`}>
-        <OfficialBadge official={props.package.repository.official} className="d-inline mt-3" />
+        <OfficialBadge official={isPackageOfficial(props.package)} className="d-inline mt-3" type="package" />
         <VerifiedPublisherBadge
           verifiedPublisher={props.package.repository.verifiedPublisher}
           className="d-inline mt-3"

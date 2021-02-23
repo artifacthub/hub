@@ -15,12 +15,12 @@ describe('OfficialBadge', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<OfficialBadge official />);
+    const { asFragment } = render(<OfficialBadge official type="package" />);
     expect(asFragment).toMatchSnapshot();
   });
 
   it('renders label', async () => {
-    const { getByTestId, getByText, getByRole } = render(<OfficialBadge official />);
+    const { getByTestId, getByText, getByRole } = render(<OfficialBadge official type="repo" />);
     expect(getByText('Official')).toBeInTheDocument();
 
     const badge = getByTestId('elementWithTooltip');
@@ -35,8 +35,22 @@ describe('OfficialBadge', () => {
     });
   });
 
+  it('renders label for package', async () => {
+    const { getByTestId, getByText, getByRole } = render(<OfficialBadge official type="package" />);
+    expect(getByText('Official')).toBeInTheDocument();
+
+    const badge = getByTestId('elementWithTooltip');
+    expect(badge).toBeInTheDocument();
+    fireEvent.mouseEnter(badge);
+
+    await waitFor(() => {
+      expect(getByText('The publisher owns the software deployed by this package')).toBeInTheDocument();
+      expect(getByRole('tooltip')).toBeInTheDocument();
+    });
+  });
+
   it('does not render label', () => {
-    const { container } = render(<OfficialBadge official={false} />);
+    const { container } = render(<OfficialBadge official={false} type="package" />);
     expect(container).toBeEmptyDOMElement();
   });
 });

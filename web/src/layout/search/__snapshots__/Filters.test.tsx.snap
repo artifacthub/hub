@@ -30,7 +30,7 @@ exports[`Filters creates snapshot 1`] = `
             <span
               class="d-inline-block text-truncate"
             >
-              Official repositories
+              Official
             </span>
           </div>
         </label>

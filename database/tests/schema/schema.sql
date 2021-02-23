@@ -123,6 +123,7 @@ select columns_are('package', array[
     'stars',
     'tsdoc',
     'is_operator',
+    'official',
     'channels',
     'default_channel',
     'repository_id'

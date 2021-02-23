@@ -36,6 +36,7 @@ begin
             p.logo_image_id,
             p.stars,
             p.tsdoc,
+            p.official as package_official,
             s.display_name,
             s.description,
             s.version,
@@ -53,7 +54,7 @@ begin
             r.url as repository_url,
             r.display_name as repository_display_name,
             r.verified_publisher,
-            r.official,
+            r.official as repository_official,
             u.alias as user_alias,
             o.name as organization_name,
             o.display_name as organization_display_name
@@ -80,7 +81,7 @@ begin
             end
         and
             case when p_input ? 'official' and (p_input->>'official')::boolean = true then
-                r.official = true
+                (r.official = true or p.official = true)
             else
                 true
             end
@@ -131,6 +132,7 @@ begin
                         'normalized_name', normalized_name,
                         'logo_image_id', logo_image_id,
                         'stars', stars,
+                        'official', package_official,
                         'display_name', display_name,
                         'description', description,
                         'version', version,
@@ -147,7 +149,7 @@ begin
                             'display_name', repository_display_name,
                             'url', repository_url,
                             'verified_publisher', verified_publisher,
-                            'official', official,
+                            'official', repository_official,
                             'user_alias', user_alias,
                             'organization_name', organization_name,
                             'organization_display_name', organization_display_name
@@ -163,7 +165,8 @@ begin
                         from packages_applying_all_filters paaf
                         order by
                             rank desc,
-                            official desc nulls last,
+                            repository_official desc nulls last,
+                            package_official desc nulls last,
                             verified_publisher desc nulls last,
                             stars desc,
                             name asc
