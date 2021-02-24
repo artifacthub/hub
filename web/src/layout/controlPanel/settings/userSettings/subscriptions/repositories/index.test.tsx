@@ -345,4 +345,69 @@ describe('RepositoriesSection', () => {
       expect(window.location.search).toBe('?page=1&repo=adfinis');
     });
   });
+
+  describe('renders component with different event kinds', () => {
+    it('renders properly', async () => {
+      const mockOptOut = getMockOptOut('10');
+      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+
+      const { getAllByTestId, getByTestId } = render(
+        <Router>
+          <RepositoriesSection {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(getAllByTestId('optOutRow')).toHaveLength(2);
+
+        const input1 = getByTestId(`subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_2_input`);
+        expect(input1).toBeInTheDocument();
+        expect(input1).toBeChecked();
+        const input2 = getByTestId(`subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4_input`);
+        expect(input2).toBeInTheDocument();
+        expect(input2).toBeChecked();
+        const input3 = getByTestId(`subs_38b8d828-27a9-42a2-81ce-19b24d3e2fad_2_input`);
+        expect(input3).toBeInTheDocument();
+        expect(input3).not.toBeChecked();
+        const input4 = getByTestId(`subs_38b8d828-27a9-42a2-81ce-19b24d3e2fad_4_input`);
+        expect(input4).toBeInTheDocument();
+        expect(input4).toBeChecked();
+      });
+    });
+
+    it('to activate opt-out for RepositoryScanningErrors', async () => {
+      const mockOptOut = getMockOptOut('11');
+      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).addOptOut.mockResolvedValue('');
+
+      const { getByTestId, getByRole } = render(
+        <Router>
+          <RepositoriesSection {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+      });
+
+      const input = getByTestId('subs_38b8d828-27a9-42a2-81ce-19b24d3e2fad_4_input');
+      expect(input).not.toBeChecked();
+
+      const label = getByTestId('subs_38b8d828-27a9-42a2-81ce-19b24d3e2fad_4_label');
+      fireEvent.click(label);
+
+      // Loading
+      await waitFor(() => {
+        expect(getByRole('status')).toBeInTheDocument();
+        expect(input).toBeDisabled();
+      });
+
+      expect(API.addOptOut).toHaveBeenCalledTimes(1);
+      expect(API.addOptOut).toHaveBeenCalledWith('38b8d828-27a9-42a2-81ce-19b24d3e2fad', 4);
+
+      await waitFor(() => {
+        expect(API.getOptOutList).toHaveBeenCalledTimes(2);
+      });
+    });
+  });
 });
