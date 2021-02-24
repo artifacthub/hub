@@ -328,7 +328,7 @@ export const API = {
 
   claimRepositoryOwnership: (repo: Repository, toOrgName?: string): Promise<null | string> => {
     return apiFetch(
-      `${API_BASE_URL}/repositories${getUrlContext(repo.organizationName || undefined)}/${repo.name}/claimOwnership${
+      `${API_BASE_URL}/repositories${getUrlContext(repo.organizationName || undefined)}/${repo.name}/claim-ownership${
         isUndefined(toOrgName) ? '' : `?org=${toOrgName}`
       }`,
       {
@@ -601,7 +601,7 @@ export const API = {
   },
 
   getAuthorizationPolicy: (orgName: string): Promise<OrganizationPolicy> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/authorizationPolicy`);
+    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/authorization-policy`);
   },
 
   updateAuthorizationPolicy: (orgName: string, policy: OrganizationPolicy): Promise<string | null> => {
@@ -615,7 +615,7 @@ export const API = {
       }
     );
 
-    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/authorizationPolicy`, {
+    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/authorization-policy`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -625,15 +625,15 @@ export const API = {
   },
 
   getUserAllowedActions: (orgName: string): Promise<AuthorizerAction[]> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/userAllowedActions`);
+    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/user-allowed-actions`);
   },
 
   getSnapshotSecurityReport: (packageId: string, version: string): Promise<SecurityReport> => {
-    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/securityReport`, undefined, true);
+    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/security-report`, undefined, true);
   },
 
   getValuesSchema: (packageId: string, version: string): Promise<JSONSchema> => {
-    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/valuesSchema`, undefined, true);
+    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/values-schema`, undefined, true);
   },
 
   getChangelog: (packageId: string): Promise<ChangeLog[]> => {

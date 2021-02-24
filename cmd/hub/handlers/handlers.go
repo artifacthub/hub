@@ -155,7 +155,7 @@ func (h *Handlers) setupRouter() {
 					r.Use(h.Users.RequireLogin)
 					r.Delete("/", h.Organizations.Delete)
 					r.Put("/", h.Organizations.Update)
-					r.Route("/authorizationPolicy", func(r chi.Router) {
+					r.Route("/authorization-policy", func(r chi.Router) {
 						r.Get("/", h.Organizations.GetAuthorizationPolicy)
 						r.Put("/", h.Organizations.UpdateAuthorizationPolicy)
 					})
@@ -165,7 +165,7 @@ func (h *Handlers) setupRouter() {
 						r.Post("/", h.Organizations.AddMember)
 						r.Delete("/", h.Organizations.DeleteMember)
 					})
-					r.Get("/userAllowedActions", h.Organizations.GetUserAllowedActions)
+					r.Get("/user-allowed-actions", h.Organizations.GetUserAllowedActions)
 				})
 			})
 		})
@@ -179,7 +179,7 @@ func (h *Handlers) setupRouter() {
 				r.Get("/", h.Repositories.GetOwnedByUser)
 				r.Post("/", h.Repositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
-					r.Put("/claimOwnership", h.Repositories.ClaimOwnership)
+					r.Put("/claim-ownership", h.Repositories.ClaimOwnership)
 					r.Put("/transfer", h.Repositories.Transfer)
 					r.Put("/", h.Repositories.Update)
 					r.Delete("/", h.Repositories.Delete)
@@ -189,7 +189,7 @@ func (h *Handlers) setupRouter() {
 				r.Get("/", h.Repositories.GetOwnedByOrg)
 				r.Post("/", h.Repositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
-					r.Put("/claimOwnership", h.Repositories.ClaimOwnership)
+					r.Put("/claim-ownership", h.Repositories.ClaimOwnership)
 					r.Put("/transfer", h.Repositories.Transfer)
 					r.Put("/", h.Repositories.Update)
 					r.Delete("/", h.Repositories.Delete)
@@ -212,8 +212,8 @@ func (h *Handlers) setupRouter() {
 				r.With(h.Users.InjectUserID).Get("/", h.Packages.GetStars)
 				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
-			r.Get("/{packageID}/{version}/securityReport", h.Packages.GetSnapshotSecurityReport)
-			r.Get("/{packageID}/{version}/valuesSchema", h.Packages.GetValuesSchema)
+			r.Get("/{packageID}/{version}/security-report", h.Packages.GetSnapshotSecurityReport)
+			r.Get("/{packageID}/{version}/values-schema", h.Packages.GetValuesSchema)
 			r.Get("/{packageID}/changelog", h.Packages.GetChangeLog)
 		})
 
@@ -284,7 +284,8 @@ func (h *Handlers) setupRouter() {
 		// available so that they can be synchronized in Harbor deployments. It
 		// will probably start being used in Harbor 2.2.0, so we need to be
 		// careful to not introduce breaking changes.
-		r.Get("/harborReplication", h.Packages.GetHarborReplicationDump)
+		r.Get("/harbor-replication", h.Packages.GetHarborReplicationDump)
+		r.Get("/harborReplication", h.Packages.GetHarborReplicationDump) // Deprecated
 	})
 
 	// Monocular compatible search API

@@ -1551,7 +1551,7 @@ describe('index API', () => {
         const response = await methods.API.claimRepositoryOwnership(mockRepo);
 
         expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claimOwnership');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claim-ownership');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
       });
@@ -1575,7 +1575,7 @@ describe('index API', () => {
         const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org2');
 
         expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claimOwnership?org=org2');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claim-ownership?org=org2');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
       });
@@ -1599,7 +1599,7 @@ describe('index API', () => {
         const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org1');
 
         expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claimOwnership?org=org1');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claim-ownership?org=org1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
       });
@@ -1623,7 +1623,7 @@ describe('index API', () => {
         const response = await methods.API.claimRepositoryOwnership(mockRepo);
 
         expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claimOwnership');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claim-ownership');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
       });
@@ -1642,7 +1642,7 @@ describe('index API', () => {
         const response = await methods.API.getAuthorizationPolicy('org1');
 
         expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorizationPolicy');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorization-policy');
         expect(response).toEqual(methods.toCamelCase(authz));
       });
     });
@@ -1665,7 +1665,7 @@ describe('index API', () => {
         const response = await methods.API.updateAuthorizationPolicy('org1', policy);
 
         expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorizationPolicy');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorization-policy');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
           JSON.stringify(
@@ -1697,7 +1697,7 @@ describe('index API', () => {
         const response = await methods.API.getUserAllowedActions('org1');
 
         expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/userAllowedActions');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/user-allowed-actions');
         expect(response).toEqual(methods.toCamelCase(actions));
       });
     });
@@ -1739,7 +1739,7 @@ describe('index API', () => {
         const response = await methods.API.getSnapshotSecurityReport('pkgID', '1.1.1');
 
         expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.1.1/securityReport');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.1.1/security-report');
         expect(response).toEqual(report);
       });
     });

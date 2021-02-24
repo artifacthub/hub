@@ -344,7 +344,7 @@ const PackageView = (props: Props) => {
                   verifiedPublisher: verifiedPublisher,
                   official: official,
                 }),
-                state: { fromDetail: true },
+                state: { 'from-detail': true },
               });
             }}
           >
@@ -371,7 +371,7 @@ const PackageView = (props: Props) => {
             onClick={() => {
               history.push({
                 pathname: '/packages/starred',
-                state: { fromDetail: true },
+                state: { 'from-detail': true },
               });
             }}
           >
