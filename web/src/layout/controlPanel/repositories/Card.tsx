@@ -267,28 +267,26 @@ const RepositoryCard = (props: Props) => {
               {props.repository.displayName || props.repository.name}
             </div>
 
-            <div className="d-none d-md-inline">
-              <OfficialBadge
-                official={props.repository.official}
-                className={`ml-3 ${styles.labelWrapper}`}
-                type="repo"
-              />
+            <OfficialBadge
+              official={props.repository.official}
+              className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+              type="repo"
+            />
 
-              <VerifiedPublisherBadge
-                verifiedPublisher={props.repository.verifiedPublisher}
-                className={`ml-3 ${styles.labelWrapper}`}
-              />
+            <VerifiedPublisherBadge
+              verifiedPublisher={props.repository.verifiedPublisher}
+              className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+            />
 
-              <DisabledRepositoryBadge
-                disabled={props.repository.disabled!}
-                className={`ml-3 ${styles.labelWrapper}`}
-              />
+            <DisabledRepositoryBadge
+              disabled={props.repository.disabled!}
+              className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+            />
 
-              <ScannerDisabledRepositoryBadge
-                scannerDisabled={props.repository.scannerDisabled!}
-                className={`ml-3 ${styles.labelWrapper}`}
-              />
-            </div>
+            <ScannerDisabledRepositoryBadge
+              scannerDisabled={props.repository.scannerDisabled!}
+              className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+            />
 
             {transferModalStatus && (
               <TransferRepositoryModal
