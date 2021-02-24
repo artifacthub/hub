@@ -1,6 +1,7 @@
 {
     "annotations": {
         "list": [{
+            "$$hashKey": "object:1017",
             "builtIn": 1,
             "datasource": "-- Grafana --",
             "enable": true,
@@ -14,7 +15,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": 3,
-    "iteration": 1600927601121,
+    "iteration": 1614151696179,
     "links": [],
     "panels": [{
             "collapsed": false,
@@ -35,15 +36,18 @@
             "datasource": null,
             "fieldConfig": {
                 "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "custom": {},
                     "mappings": [{
+                        "$$hashKey": "object:641",
                         "id": 0,
                         "op": "=",
                         "text": "N/A",
                         "type": 1,
                         "value": "null"
                     }],
-                    "nullValueMode": "connected",
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
@@ -76,9 +80,10 @@
                     "fields": "",
                     "values": false
                 },
+                "text": {},
                 "textMode": "auto"
             },
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "targets": [{
                 "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status=\"OK\"}[$__interval]))",
                 "interval": "",
@@ -95,6 +100,9 @@
             "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "custom": {},
                     "decimals": 0,
                     "displayName": "",
@@ -138,9 +146,10 @@
                     "values": false
                 },
                 "showThresholdLabels": false,
-                "showThresholdMarkers": true
+                "showThresholdMarkers": true,
+                "text": {}
             },
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "targets": [{
                 "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status!=\"Internal Server Error\"}[$__interval])) / sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\"}[$__interval])) * 100",
                 "instant": false,
@@ -159,15 +168,18 @@
             "datasource": null,
             "fieldConfig": {
                 "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "custom": {},
                     "mappings": [{
+                        "$$hashKey": "object:641",
                         "id": 0,
                         "op": "=",
                         "text": "0",
                         "type": 1,
                         "value": "null"
                     }],
-                    "nullValueMode": "connected",
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
@@ -200,9 +212,10 @@
                     "fields": "",
                     "values": false
                 },
+                "text": {},
                 "textMode": "auto"
             },
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "targets": [{
                 "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status=\"Internal Server Error\"}[$__interval]))",
                 "interval": "",
@@ -251,12 +264,16 @@
             "lines": true,
             "linewidth": 2,
             "nullPointMode": "null",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": true,
             "renderer": "flot",
             "seriesOverrides": [{
+                "$$hashKey": "object:279",
                 "alias": "Hour requests",
                 "color": "#F2CC0C"
             }],
@@ -290,6 +307,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:97",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -298,6 +316,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:98",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -333,6 +352,108 @@
                 "y": 7
             },
             "hiddenSeries": false,
+            "id": 28,
+            "interval": "15m",
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "null",
+            "options": {
+                "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.4.1",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [{
+                "$$hashKey": "object:279",
+                "alias": "Searches in 15m window",
+                "color": "#5794F2"
+            }],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [{
+                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path=\"/api/chartsvc/v1/charts/search\"}[$__interval]))",
+                "format": "time_series",
+                "instant": false,
+                "interval": "",
+                "legendFormat": "Searches in 15m window",
+                "refId": "A"
+            }],
+            "thresholds": [],
+            "timeFrom": "1d",
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Helm CLI searches",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [{
+                    "$$hashKey": "object:97",
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "$$hashKey": "object:98",
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
+            "fill": 3,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 5,
+                "w": 24,
+                "x": 0,
+                "y": 12
+            },
+            "hiddenSeries": false,
             "id": 27,
             "interval": "1d",
             "legend": {
@@ -347,12 +468,16 @@
             "lines": true,
             "linewidth": 2,
             "nullPointMode": "null",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": true,
             "renderer": "flot",
             "seriesOverrides": [{
+                "$$hashKey": "object:279",
                 "alias": "Daily requests",
                 "color": "#FFF899"
             }],
@@ -386,6 +511,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:97",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -394,6 +520,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:98",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -414,7 +541,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 12
+                "y": 17
             },
             "id": 22,
             "panels": [],
@@ -440,7 +567,7 @@
                 "h": 5,
                 "w": 24,
                 "x": 0,
-                "y": 13
+                "y": 18
             },
             "hiddenSeries": false,
             "id": 24,
@@ -457,12 +584,16 @@
             "lines": false,
             "linewidth": 2,
             "nullPointMode": "connected",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [{
+                "$$hashKey": "object:3222",
                 "alias": "API average latency",
                 "color": "#FA6400"
             }],
@@ -494,6 +625,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:2833",
                     "decimals": null,
                     "format": "s",
                     "label": "",
@@ -503,6 +635,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:2834",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -523,7 +656,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 18
+                "y": 23
             },
             "id": 12,
             "panels": [],
@@ -550,7 +683,7 @@
                 "h": 10,
                 "w": 18,
                 "x": 0,
-                "y": 19
+                "y": 24
             },
             "hiddenSeries": false,
             "id": 2,
@@ -574,8 +707,11 @@
             "lines": false,
             "linewidth": 1,
             "nullPointMode": "null as zero",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -610,6 +746,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:1068",
                     "decimals": null,
                     "format": "reqps",
                     "label": "",
@@ -619,6 +756,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:1069",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -651,7 +789,7 @@
                 "h": 10,
                 "w": 6,
                 "x": 18,
-                "y": 19
+                "y": 24
             },
             "hiddenSeries": false,
             "id": 4,
@@ -673,8 +811,11 @@
             "lines": false,
             "linewidth": 1,
             "nullPointMode": "null as zero",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -709,6 +850,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:1068",
                     "decimals": null,
                     "format": "reqps",
                     "label": "",
@@ -718,6 +860,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:1069",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -738,7 +881,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 29
+                "y": 34
             },
             "id": 16,
             "panels": [],
@@ -764,7 +907,7 @@
                 "h": 10,
                 "w": 18,
                 "x": 0,
-                "y": 30
+                "y": 35
             },
             "hiddenSeries": false,
             "id": 3,
@@ -786,12 +929,17 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
-            "seriesOverrides": [{}],
+            "seriesOverrides": [{
+                "$$hashKey": "object:2346"
+            }],
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
@@ -822,6 +970,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:1068",
                     "decimals": null,
                     "format": "s",
                     "label": "",
@@ -831,6 +980,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:1069",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -863,7 +1013,7 @@
                 "h": 10,
                 "w": 6,
                 "x": 18,
-                "y": 30
+                "y": 35
             },
             "hiddenSeries": false,
             "id": 5,
@@ -883,8 +1033,11 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -919,6 +1072,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:1068",
                     "decimals": null,
                     "format": "s",
                     "label": "",
@@ -928,6 +1082,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:1069",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -960,7 +1115,7 @@
                 "h": 10,
                 "w": 18,
                 "x": 0,
-                "y": 40
+                "y": 45
             },
             "hiddenSeries": false,
             "id": 17,
@@ -982,8 +1137,11 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1018,6 +1176,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:1068",
                     "decimals": null,
                     "format": "s",
                     "label": "",
@@ -1027,6 +1186,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:1069",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -1059,7 +1219,7 @@
                 "h": 10,
                 "w": 6,
                 "x": 18,
-                "y": 40
+                "y": 45
             },
             "hiddenSeries": false,
             "id": 18,
@@ -1079,8 +1239,11 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1115,6 +1278,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:1068",
                     "decimals": null,
                     "format": "s",
                     "label": "",
@@ -1124,6 +1288,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:1069",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -1156,7 +1321,7 @@
                 "h": 10,
                 "w": 18,
                 "x": 0,
-                "y": 50
+                "y": 55
             },
             "hiddenSeries": false,
             "id": 19,
@@ -1178,8 +1343,11 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1214,6 +1382,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:1068",
                     "decimals": null,
                     "format": "s",
                     "label": "",
@@ -1223,6 +1392,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:1069",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -1255,7 +1425,7 @@
                 "h": 10,
                 "w": 6,
                 "x": 18,
-                "y": 50
+                "y": 55
             },
             "hiddenSeries": false,
             "id": 20,
@@ -1275,8 +1445,11 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
+            "options": {
+                "alertThreshold": true
+            },
             "percentage": false,
-            "pluginVersion": "7.1.1",
+            "pluginVersion": "7.4.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1311,6 +1484,7 @@
                 "values": []
             },
             "yaxes": [{
+                    "$$hashKey": "object:1068",
                     "decimals": null,
                     "format": "s",
                     "label": "",
@@ -1320,6 +1494,7 @@
                     "show": true
                 },
                 {
+                    "$$hashKey": "object:1069",
                     "format": "short",
                     "label": null,
                     "logBase": 1,
@@ -1335,38 +1510,33 @@
         }
     ],
     "refresh": false,
-    "schemaVersion": 26,
+    "schemaVersion": 27,
     "style": "dark",
     "tags": [],
     "templating": {
         "list": [{
             "allValue": null,
             "current": {
-                "selected": true,
-                "text": "production",
-                "value": "production"
+                "selected": false,
+                "text": "artifacthub-production",
+                "value": "artifacthub-production"
             },
-            "datasource": "Prometheus",
+            "datasource": null,
             "definition": "label_values(kubernetes_namespace)",
+            "description": null,
+            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "",
             "multi": false,
             "name": "environment",
-            "options": [{
-                    "selected": true,
-                    "text": "production",
-                    "value": "production"
-                },
-                {
-                    "selected": false,
-                    "text": "staging",
-                    "value": "staging"
-                }
-            ],
-            "query": "label_values(kubernetes_namespace)",
-            "refresh": 0,
-            "regex": "production|staging",
+            "options": [],
+            "query": {
+                "query": "label_values(kubernetes_namespace)",
+                "refId": "StandardVariableQuery"
+            },
+            "refresh": 2,
+            "regex": "artifacthub-production|production|staging",
             "skipUrlSync": false,
             "sort": 0,
             "tagValuesQuery": "",
@@ -1382,6 +1552,7 @@
     },
     "timepicker": {
         "refresh_intervals": [
+            "5s",
             "10s",
             "30s",
             "1m",
@@ -1396,5 +1567,5 @@
     "timezone": "",
     "title": "ArtifactHub",
     "uid": "FBPhb4qWk",
-    "version": 51
+    "version": 61
 }
