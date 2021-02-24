@@ -161,12 +161,14 @@ func (s *TrackerSource) getCharts() (map[string][]*helmrepo.ChartVersion, error)
 
 // preparePackage prepares a package version using the chart version provided.
 func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hub.Package, error) {
+	// Check chart version metadata for known issues and sanitize some strings
+	if err := chartVersion.Validate(); err != nil {
+		return nil, fmt.Errorf("invalid metadata: %w", err)
+	}
+
 	// Parse package version
 	md := chartVersion.Metadata
-	sv, err := semver.NewVersion(md.Version)
-	if err != nil {
-		return nil, fmt.Errorf("invalid package version: %w", err)
-	}
+	sv, _ := semver.NewVersion(md.Version)
 	version := sv.String()
 
 	// Prepare chart archive url

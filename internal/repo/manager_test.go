@@ -1215,30 +1215,14 @@ func TestGetRemoteDigest(t *testing.T) {
 		assert.Equal(t, tests.ErrFake, err)
 	})
 
-	t.Run("helm-http: error reading index file", func(t *testing.T) {
-		t.Parallel()
-		l := &HelmIndexLoaderMock{}
-		l.On("LoadIndex", helmHTTP).Return(nil, "invalid-path", nil)
-		m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
-
-		digest, err := m.GetRemoteDigest(ctx, helmHTTP)
-		assert.Empty(t, digest)
-		assert.Error(t, err)
-	})
-
 	t.Run("helm-http: success", func(t *testing.T) {
 		t.Parallel()
-		f, err := ioutil.TempFile("", "")
-		require.NoError(t, err)
-		_, _ = f.Write([]byte("indexFileContent"))
-		require.NoError(t, err)
-
 		l := &HelmIndexLoaderMock{}
-		l.On("LoadIndex", helmHTTP).Return(nil, f.Name(), nil)
+		l.On("LoadIndex", helmHTTP).Return(nil, "digest", nil)
 		m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
 
 		digest, err := m.GetRemoteDigest(ctx, helmHTTP)
-		assert.Equal(t, "a1cbe8e02116f43084632fbf313c4ed02772f93af327bbc16989a30bc04ddc89", digest)
+		assert.Equal(t, "digest", digest)
 		assert.Nil(t, err)
 	})
 }
