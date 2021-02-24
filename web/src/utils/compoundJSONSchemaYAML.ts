@@ -1,6 +1,7 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isArray, isEmpty, isNull, isObject, isUndefined, repeat, set, trim } from 'lodash';
 
+import formatStringForYAML from './formatStringForYAML';
 import getJMESPathForValuesSchema from './getJMESPathForValuesSchema';
 
 interface FormattedValuesSchema {
@@ -130,7 +131,7 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
         if (isLongText) {
           return `|-\n\n${repeat(' ', (level + 1) * 2)}${value.default}`;
         } else {
-          return (value.default as string) || `""`;
+          return formatStringForYAML(value.default as string) || `""`;
         }
       default:
         return value.default ? value.default.toString() : undefined;
