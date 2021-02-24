@@ -2,8 +2,6 @@ package repo
 
 import (
 	"context"
-	"crypto/sha256"
-	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -474,16 +472,11 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 	switch {
 	case r.Kind == hub.Helm && SchemeIsHTTP(u):
 		// Digest is obtained hashing the repository index.yaml file
-		_, indexPath, err := m.helmIndexLoader.LoadIndex(r)
+		var err error
+		_, digest, err = m.helmIndexLoader.LoadIndex(r)
 		if err != nil {
 			return "", err
 		}
-		indexBytes, err := ioutil.ReadFile(indexPath)
-		if err != nil {
-			return "", err
-		}
-		hash := sha256.Sum256(indexBytes)
-		digest = hex.EncodeToString(hash[:])
 
 	case r.Kind == hub.OLM && u.Scheme == "oci":
 		// Digest is obtained from the index image digest

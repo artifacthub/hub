@@ -158,14 +158,15 @@ func TestTrackerSource(t *testing.T) {
 				"pkg1": []*helmrepo.ChartVersion{
 					{
 						Metadata: &chart.Metadata{
-							Name:    "pkg1",
-							Version: "invalid",
+							APIVersion: "v2",
+							Name:       "pkg1",
+							Version:    "invalid",
 						},
 					},
 				},
 			},
 		}, "", nil)
-		expectedErr := "error preparing package: invalid package version: Invalid Semantic Version (package: pkg1 version: invalid)"
+		expectedErr := `error preparing package: invalid metadata: validation: chart.metadata.version "invalid" is invalid (package: pkg1 version: invalid)`
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
@@ -192,8 +193,9 @@ func TestTrackerSource(t *testing.T) {
 				"pkg1": []*helmrepo.ChartVersion{
 					{
 						Metadata: &chart.Metadata{
-							Name:    "pkg1",
-							Version: "1.0.0",
+							APIVersion: "v2",
+							Name:       "pkg1",
+							Version:    "1.0.0",
 						},
 						URLs: []string{
 							"https://repo.url/pkg1-1.0.0.tgz",
@@ -231,9 +233,10 @@ func TestTrackerSource(t *testing.T) {
 				"pkg1": []*helmrepo.ChartVersion{
 					{
 						Metadata: &chart.Metadata{
-							Name:    "pkg1",
-							Version: "1.0.0",
-							Icon:    logoImageURL,
+							APIVersion: "v2",
+							Name:       "pkg1",
+							Version:    "1.0.0",
+							Icon:       logoImageURL,
 						},
 						URLs: []string{
 							"https://repo.url/pkg1-1.0.0.tgz",
@@ -285,9 +288,10 @@ func TestTrackerSource(t *testing.T) {
 				"pkg1": []*helmrepo.ChartVersion{
 					{
 						Metadata: &chart.Metadata{
-							Name:    "pkg1",
-							Version: "1.0.0",
-							Icon:    logoImageURL,
+							APIVersion: "v2",
+							Name:       "pkg1",
+							Version:    "1.0.0",
+							Icon:       logoImageURL,
 						},
 						URLs: []string{
 							"https://repo.url/pkg1-1.0.0.tgz",
