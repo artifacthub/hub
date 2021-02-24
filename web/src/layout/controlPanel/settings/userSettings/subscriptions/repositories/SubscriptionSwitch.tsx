@@ -46,13 +46,13 @@ const SubscriptionSwitch = (props: Props) => {
             callback: () => setIsLoading(false),
           });
         }}
-        checked={!isUndefined(props.optOutItem)}
+        checked={isUndefined(props.optOutItem) ? false : true}
       />
       <label data-testid={`${id}_label`} className="custom-control-label" htmlFor={id} />
 
       {isLoading && (
         <div className={`position-absolute text-secondary ${styles.switchLoading}`}>
-          <span className="spinner-border spinner-border-sm" />
+          <span className="spinner-border spinner-border-sm" role="status" />
         </div>
       )}
     </div>

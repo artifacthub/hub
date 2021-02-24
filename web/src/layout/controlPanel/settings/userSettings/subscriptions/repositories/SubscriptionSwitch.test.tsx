@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { EventKind } from '../../../../../../types';
@@ -62,6 +62,20 @@ describe('SubscriptionSwitch', () => {
       const checkbox = getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`);
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
+    });
+
+    it('calls change subscription', () => {
+      const { getByTestId, getByRole } = render(<SubscriptionSwitch {...defaultProps} />);
+
+      const label = getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_label`);
+      expect(label).toBeInTheDocument();
+      fireEvent.click(label);
+
+      waitFor(() => {
+        expect(getByRole('status')).toBeInTheDocument();
+        expect(getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`)).toBeEnabled();
+        expect(changeSubscriptionMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

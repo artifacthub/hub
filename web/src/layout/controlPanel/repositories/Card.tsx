@@ -263,30 +263,30 @@ const RepositoryCard = (props: Props) => {
       <div className="card h-100">
         <div className="card-body d-flex flex-column h-100">
           <div className="d-flex flex-row w-100 justify-content-between">
-            <div className="d-flex flex-row align-items-center mb-1 text-truncate">
-              <div className={`h5 mb-0 text-truncate ${styles.titleCard}`}>
-                {props.repository.displayName || props.repository.name}
-              </div>
+            <div className={`text-truncate h5 mb-0 ${styles.titleCard}`}>
+              {props.repository.displayName || props.repository.name}
+            </div>
 
+            <div className="d-none d-md-inline">
               <OfficialBadge
                 official={props.repository.official}
-                className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+                className={`ml-3 ${styles.labelWrapper}`}
                 type="repo"
               />
 
               <VerifiedPublisherBadge
                 verifiedPublisher={props.repository.verifiedPublisher}
-                className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+                className={`ml-3 ${styles.labelWrapper}`}
               />
 
               <DisabledRepositoryBadge
                 disabled={props.repository.disabled!}
-                className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+                className={`ml-3 ${styles.labelWrapper}`}
               />
 
               <ScannerDisabledRepositoryBadge
                 scannerDisabled={props.repository.scannerDisabled!}
-                className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+                className={`ml-3 ${styles.labelWrapper}`}
               />
             </div>
 
