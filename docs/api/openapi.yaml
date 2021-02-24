@@ -377,7 +377,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/orgs/{orgName}/authorizationPolicy":
+  "/orgs/{orgName}/authorization-policy":
     get:
       tags:
         - Organizations
@@ -520,7 +520,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/orgs/{orgName}/userAllowedActions":
+  "/orgs/{orgName}/user-allowed-actions":
     get:
       tags:
         - Organizations
@@ -715,7 +715,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/repositories/user/{repoName}/claimOwnership":
+  "/repositories/user/{repoName}/claim-ownership":
     put:
       tags:
         - Repositories
@@ -864,7 +864,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/repositories/org/{orgName}/{repoName}/claimOwnership":
+  "/repositories/org/{orgName}/{repoName}/claim-ownership":
     put:
       tags:
         - Repositories
@@ -1509,7 +1509,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/{packageID}/{version}/securityReport":
+  "/packages/{packageID}/{version}/security-report":
     get:
       tags:
         - Packages
@@ -1532,7 +1532,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/{packageID}/{version}/valuesSchema":
+  "/packages/{packageID}/{version}/values-schema":
     get:
       tags:
         - Packages
@@ -2071,7 +2071,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /harborReplication:
+  /harbor-replication:
     get:
       tags:
         - Integrations

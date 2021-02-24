@@ -169,7 +169,7 @@ describe('Package index', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring(searchUrlReferer),
-        state: { fromDetail: true },
+        state: { 'from-detail': true },
       });
     });
   });
