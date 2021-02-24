@@ -4,6 +4,7 @@ import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
 import { ActiveJSONSchemaValue } from '../../../types';
+import formatStringForYAML from '../../../utils/formatStringForYAML';
 import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchema';
 import SchemaDefinition from './SchemaDefinition';
 import styles from './SchemaLine.module.css';
@@ -101,7 +102,7 @@ const getValue = (newValue: any): ValueProp => {
         };
       } else {
         return {
-          content: <span>{valueToCheck.default === '' ? `""` : valueToCheck.default}</span>,
+          content: <span>{valueToCheck.default === '' ? `""` : formatStringForYAML(valueToCheck.default)}</span>,
           className: 'text-warning',
         };
       }

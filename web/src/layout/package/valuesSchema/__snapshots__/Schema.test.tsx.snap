@@ -4454,7 +4454,7 @@ exports[`Schema creates snapshot 1`] = `
           data-testid="defaultValue"
         >
           <span>
-            default-unsafe-key
+            "default-unsafe-key"
           </span>
         </span>
       </div>
@@ -4537,7 +4537,7 @@ exports[`Schema creates snapshot 1`] = `
                           class="ml-1"
                         >
                           <span>
-                            default-unsafe-key
+                            "default-unsafe-key"
                           </span>
                         </span>
                       </span>
@@ -7190,7 +7190,7 @@ exports[`Schema creates snapshot 1`] = `
           data-testid="defaultValue"
         >
           <span>
-            aquasec/trivy:0.12.0
+            "aquasec/trivy:0.12.0"
           </span>
         </span>
       </div>
@@ -7268,7 +7268,7 @@ exports[`Schema creates snapshot 1`] = `
                           class="ml-1"
                         >
                           <span>
-                            aquasec/trivy:0.12.0
+                            "aquasec/trivy:0.12.0"
                           </span>
                         </span>
                       </span>
@@ -8873,7 +8873,7 @@ exports[`Schema creates snapshot 1`] = `
           data-testid="defaultValue"
         >
           <span>
-            http://trivy:8081
+            "http://trivy:8081"
           </span>
         </span>
       </div>
@@ -8956,7 +8956,7 @@ exports[`Schema creates snapshot 1`] = `
                           class="ml-1"
                         >
                           <span>
-                            http://trivy:8081
+                            "http://trivy:8081"
                           </span>
                         </span>
                       </span>
@@ -11030,7 +11030,7 @@ exports[`Schema creates snapshot 1`] = `
           data-testid="defaultValue"
         >
           <span>
-            artifacthub/db-migrator
+            "artifacthub/db-migrator"
           </span>
         </span>
       </div>
@@ -11113,7 +11113,7 @@ exports[`Schema creates snapshot 1`] = `
                           class="ml-1"
                         >
                           <span>
-                            artifacthub/db-migrator
+                            "artifacthub/db-migrator"
                           </span>
                         </span>
                       </span>
