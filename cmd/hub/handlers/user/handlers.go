@@ -706,7 +706,7 @@ func (h *Handlers) ResetPassword(w http.ResponseWriter, r *http.Request) {
 	)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "ResetPassword").Send()
-		if err == user.ErrInvalidPasswordResetCode {
+		if errors.Is(err, user.ErrInvalidPasswordResetCode) {
 			helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
 		} else {
 			helpers.RenderErrorJSON(w, err)
@@ -789,7 +789,7 @@ func (h *Handlers) VerifyPasswordResetCode(w http.ResponseWriter, r *http.Reques
 	err := h.userManager.VerifyPasswordResetCode(r.Context(), input["code"])
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "VerifyPasswordResetCode").Send()
-		if err == user.ErrInvalidPasswordResetCode {
+		if errors.Is(err, user.ErrInvalidPasswordResetCode) {
 			helpers.RenderErrorWithCodeJSON(w, err, http.StatusGone)
 		} else {
 			helpers.RenderErrorJSON(w, err)

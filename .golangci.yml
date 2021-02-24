@@ -5,6 +5,7 @@ linters:
     - bodyclose
     - deadcode
     - errcheck
+    - errorlint
     - exportloopref
     - goconst
     - gocritic

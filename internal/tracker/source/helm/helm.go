@@ -338,7 +338,7 @@ func (s *TrackerSource) chartHasProvenanceFile(u string) (bool, error) {
 // warn is a helper that sends the error provided to the errors collector and
 // logs it as a warning.
 func (s *TrackerSource) warn(md *chart.Metadata, err error) {
-	err = fmt.Errorf("%s (package: %s version: %s)", err.Error(), md.Name, md.Version)
+	err = fmt.Errorf("%w (package: %s version: %s)", err, md.Name, md.Version)
 	s.i.Svc.Logger.Warn().Err(err).Send()
 	if !md.Deprecated {
 		s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
