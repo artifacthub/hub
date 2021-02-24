@@ -152,7 +152,7 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
-				"error loading index file",
+				"the url provided does not point to a valid Helm repository",
 				"org1",
 				&hub.Repository{
 					Kind: hub.Helm,
@@ -1533,7 +1533,7 @@ func TestUpdate(t *testing.T) {
 				nil,
 			},
 			{
-				"error loading index file",
+				"the url provided does not point to a valid Helm repository",
 				&hub.Repository{
 					Name: "repo1",
 					URL:  "https://repo1.com",
@@ -1567,6 +1567,7 @@ func TestUpdate(t *testing.T) {
 
 				err := m.Update(ctx, tc.r)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
 				l.AssertExpectations(t)
 			})
 		}
