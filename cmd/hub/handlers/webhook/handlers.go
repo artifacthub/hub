@@ -136,7 +136,7 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("X-ArtifactHub-Secret", wh.Secret)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		err = fmt.Errorf("error doing request: %s", err.Error())
+		err = fmt.Errorf("error doing request: %w", err)
 		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
 		return
 	}
