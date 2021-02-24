@@ -679,7 +679,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 	case hub.Helm:
 		if SchemeIsHTTP(u) {
 			if _, _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
-				return err
+				return errors.New("the url provided does not point to a valid Helm repository")
 			}
 		}
 	case hub.Falco, hub.HelmPlugin, hub.Krew, hub.OLM, hub.OPA, hub.TBAction, hub.TektonTask:
