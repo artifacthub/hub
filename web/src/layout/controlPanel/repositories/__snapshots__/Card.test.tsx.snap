@@ -21,9 +21,6 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
             Repo test
           </div>
           <div
-            class="d-none d-md-inline"
-          />
-          <div
             class="ml-auto pl-3"
           >
             <span
