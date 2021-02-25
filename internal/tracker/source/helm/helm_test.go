@@ -166,7 +166,7 @@ func TestTrackerSource(t *testing.T) {
 				},
 			},
 		}, "", nil)
-		expectedErr := `error preparing package: invalid metadata: validation: chart.metadata.version "invalid" is invalid (package: pkg1 version: invalid)`
+		expectedErr := "error preparing package: invalid package version: Invalid Semantic Version (package: pkg1 version: invalid)"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
