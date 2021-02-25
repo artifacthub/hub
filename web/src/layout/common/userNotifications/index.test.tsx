@@ -1,8 +1,18 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { AppCtx } from '../../../context/AppCtx';
+import { UserNotification } from '../../../types';
+import userNotificationsDispatcher from '../../../utils/userNotificationsDispatcher';
 import UserNotificationsController from './index';
+jest.mock('../../../utils/userNotificationsDispatcher', () => ({
+  subscribe: jest.fn(),
+  close: jest.fn(),
+  start: jest.fn(),
+  updateSettings: jest.fn(),
+}));
+
+const updateUserNotificationMock = jest.fn();
 
 const mockCtx = {
   user: { alias: 'test', email: 'test@test.com' },
@@ -37,6 +47,11 @@ describe('UserNotificationsController', () => {
       },
       writable: true,
     });
+
+    userNotificationsDispatcher.subscribe({
+      updateUserNotificationsWrapper: (notification: UserNotification | null) =>
+        updateUserNotificationMock(notification),
+    });
   });
 
   afterEach(() => {
@@ -46,31 +61,21 @@ describe('UserNotificationsController', () => {
   });
 
   it('creates snapshot', async () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <UserNotificationsController />
       </AppCtx.Provider>
     );
 
-    const component = result.getByRole('alert');
-
     await waitFor(() => {
-      expect(component).toHaveClass('show isVisible');
+      expect(userNotificationsDispatcher.start).toHaveBeenCalledTimes(1);
     });
 
-    expect(result.asFragment()).toMatchSnapshot();
-
-    await waitFor(() => {
-      expect(result.queryByTestId('notificationContent')).toBeNull();
-    });
-
-    await waitFor(() => {
-      expect(component).not.toHaveClass('show isVisible');
-    });
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', async () => {
-    const { getByRole, getByTestId, getByText, queryByTestId } = render(
+    const { getByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <UserNotificationsController />
       </AppCtx.Provider>
@@ -80,56 +85,29 @@ describe('UserNotificationsController', () => {
     expect(component).toBeInTheDocument();
     expect(component).not.toHaveClass('show');
     expect(component).toHaveClass('toast');
-    expect(component).toBeEmptyDOMElement();
 
     await waitFor(() => {
-      expect(component).toHaveClass('show isVisible');
-      expect(getByTestId('disableNotificationsBtn')).toBeInTheDocument();
-      expect(getByText("Don't show me more again")).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(queryByTestId('notificationContent')).toBeNull();
-    });
-
-    await waitFor(() => {
-      expect(component).not.toHaveClass('show isVisible');
-    });
-  });
-
-  it('disabled notifications', async () => {
-    const { getByRole, getByTestId, queryByTestId } = render(
-      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-        <UserNotificationsController />
-      </AppCtx.Provider>
-    );
-
-    const component = getByRole('alert');
-
-    await waitFor(() => {
-      expect(component).toHaveClass('show isVisible');
-    });
-
-    const disableBtn = getByTestId('disableNotificationsBtn');
-    fireEvent.click(disableBtn);
-
-    await waitFor(() => {
-      expect(queryByTestId('notificationContent')).toBeNull();
-    });
-
-    await waitFor(() => {
-      expect(component).not.toHaveClass('show isVisible');
+      expect(userNotificationsDispatcher.start).toHaveBeenCalledTimes(1);
+      expect(userNotificationsDispatcher.start).toHaveBeenCalledWith(
+        {
+          displayed: [],
+          enabled: true,
+          lastDisplayedTime: null,
+        },
+        'lg'
+      );
     });
   });
 
   it('does not call userNotificationsDispatcher.start when user is undefined', () => {
-    const { getByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: { ...mockCtx, user: undefined }, dispatch: jest.fn() }}>
         <UserNotificationsController />
       </AppCtx.Provider>
     );
 
-    const component = getByRole('alert');
-    expect(component).not.toHaveClass('show isVisible');
+    waitFor(() => {
+      expect(userNotificationsDispatcher.start).toHaveBeenCalledTimes(0);
+    });
   });
 });

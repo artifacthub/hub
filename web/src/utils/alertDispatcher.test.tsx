@@ -21,7 +21,7 @@ describe('alertDispatcher', () => {
     jest.resetAllMocks();
   });
 
-  it('receives alert after subscription', () => {
+  it('receives alert after subscription', async () => {
     alertDispatcher.subscribe({
       updateAlertWrapper: (alert: Alert | null) => subscriptionMock(alert),
     });
@@ -35,8 +35,10 @@ describe('alertDispatcher', () => {
     alertDispatcher.postAlert(null);
 
     expect(clearTimeout).toHaveBeenCalledTimes(1);
-    expect(subscriptionMock).toHaveBeenCalledTimes(2);
-    expect(subscriptionMock).toHaveBeenCalledWith(null);
+    await waitFor(() => {
+      expect(subscriptionMock).toHaveBeenCalledTimes(2);
+      expect(subscriptionMock).toHaveBeenCalledWith(null);
+    });
   });
 
   it('dismiss alert when default time has finished', async () => {
@@ -57,14 +59,16 @@ describe('alertDispatcher', () => {
     });
   });
 
-  it('dismiss alert with custom time', () => {
+  it('dismiss alert with custom time', async () => {
     alertDispatcher.subscribe({
       updateAlertWrapper: (alert: Alert | null) => subscriptionMock(alert),
     });
 
     alertDispatcher.postAlert({ ...alertSample, dismissOn: 3000 });
 
-    expect(setTimeout).toHaveBeenCalledTimes(1);
-    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 3000);
+    await waitFor(() => {
+      expect(setTimeout).toHaveBeenCalledTimes(1);
+      expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 3000);
+    });
   });
 });
