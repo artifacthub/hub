@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react';
 
 import { UserNotification } from '../types';
-import notificationsDispatcher from './userNotificationsDispatcher';
+import userNotificationsDispatcher from './userNotificationsDispatcher';
 
 const updateUserNotificationMock = jest.fn();
 
@@ -10,13 +10,18 @@ const notificationSample = {
   body: 'Lorem ipsum',
 };
 
-describe('notificationsDispatcher', () => {
+describe('userNotificationsDispatcher', () => {
   beforeEach(() => {
     jest.useFakeTimers();
 
     const mockMath = Object.create(global.Math);
     mockMath.random = () => 0;
     global.Math = mockMath;
+
+    userNotificationsDispatcher.subscribe({
+      updateUserNotificationsWrapper: (notification: UserNotification | null) =>
+        updateUserNotificationMock(notification),
+    });
   });
 
   afterEach(() => {
@@ -26,12 +31,7 @@ describe('notificationsDispatcher', () => {
   });
 
   it('starts dispatcher', async () => {
-    notificationsDispatcher.subscribe({
-      updateUserNotificationsWrapper: (notification: UserNotification | null) =>
-        updateUserNotificationMock(notification),
-    });
-
-    notificationsDispatcher.start({
+    userNotificationsDispatcher.start({
       lastDisplayedTime: null,
       enabled: true,
       displayed: [],
@@ -44,19 +44,14 @@ describe('notificationsDispatcher', () => {
   });
 
   it('dismiss notification', async () => {
-    notificationsDispatcher.subscribe({
-      updateUserNotificationsWrapper: (notification: UserNotification | null) =>
-        updateUserNotificationMock(notification),
-    });
-
-    notificationsDispatcher.updateSettings({
+    userNotificationsDispatcher.updateSettings({
       lastDisplayedTime: null,
       enabled: true,
       displayed: [],
     });
 
-    notificationsDispatcher.postNotification(notificationSample);
-    notificationsDispatcher.dismissNotification();
+    userNotificationsDispatcher.postNotification(notificationSample);
+    userNotificationsDispatcher.dismissNotification();
 
     await waitFor(() => {
       expect(updateUserNotificationMock).toHaveBeenCalledTimes(2);
