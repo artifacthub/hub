@@ -266,18 +266,12 @@ const PackageView = (props: Props) => {
 
   const getBadges = (withRepoInfo: boolean, extraStyle?: string): JSX.Element => (
     <>
+      <OfficialBadge official={isPackageOfficial(detail)} className={`d-inline mr-3 ${extraStyle}`} type="package" />
       {withRepoInfo && (
-        <>
-          <OfficialBadge
-            official={isPackageOfficial(detail)}
-            className={`d-inline mr-3 ${extraStyle}`}
-            type="package"
-          />
-          <VerifiedPublisherBadge
-            verifiedPublisher={detail!.repository.verifiedPublisher}
-            className={`d-inline mr-3 ${extraStyle}`}
-          />
-        </>
+        <VerifiedPublisherBadge
+          verifiedPublisher={detail!.repository.verifiedPublisher}
+          className={`d-inline mr-3 ${extraStyle}`}
+        />
       )}
       {detail!.deprecated && (
         <Label
@@ -458,7 +452,8 @@ const PackageView = (props: Props) => {
                             )}
 
                             <RepositoryInfo
-                              package={detail}
+                              repository={detail.repository}
+                              deprecated={detail.deprecated}
                               className={`text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
                               repoLabelClassName={styles.repoLabel}
                               visibleInfoIcon

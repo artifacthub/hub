@@ -110,7 +110,8 @@ const PackageInfo = (props: Props) => {
             <div className="d-block d-md-none">
               <div className={`card-subtitle align-items-baseline ${styles.subtitle}`}>
                 <RepositoryInfo
-                  package={props.package}
+                  repository={props.package.repository}
+                  deprecated={props.package.deprecated}
                   className="d-inline d-md-none text-truncate w-100"
                   repoLabelClassName="d-none"
                   withLabels={false}
@@ -157,7 +158,8 @@ const PackageInfo = (props: Props) => {
 
                 <div className={styles.mx50}>
                   <RepositoryInfo
-                    package={props.package}
+                    repository={props.package.repository}
+                    deprecated={props.package.deprecated}
                     className={`d-flex flex-row align-items-baseline ml-3 ${styles.truncateWrapper}`}
                     repoLabelClassName="d-none d-lg-inline"
                     withLabels={false}
