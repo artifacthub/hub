@@ -407,6 +407,14 @@ const RepositoryModal = (props: Props) => {
               pattern="[a-z][a-z0-9-]*"
               autoComplete="off"
               disabled={!isUndefined(props.repository)}
+              additionalInfo={
+                <small className="text-muted text-break mt-1">
+                  <p className="mb-0">
+                    This name will appear in your packages' urls and{' '}
+                    <span className="font-weight-bold">cannot be updated</span> once is saved.
+                  </p>
+                </small>
+              }
               required
             />
 

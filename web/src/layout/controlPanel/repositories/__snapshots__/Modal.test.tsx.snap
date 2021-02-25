@@ -182,6 +182,25 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   >
                     This field is required
                   </div>
+                  <div
+                    class="alert p-0 mt-4"
+                  >
+                    <small
+                      class="text-muted text-break mt-1"
+                    >
+                      <p
+                        class="mb-0"
+                      >
+                        This name will appear in your packages' urls and 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          cannot be updated
+                        </span>
+                         once is saved.
+                      </p>
+                    </small>
+                  </div>
                 </div>
                 <div
                   class="form-group mb-4 position-relative undefined"
