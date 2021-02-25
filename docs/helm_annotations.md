@@ -18,8 +18,6 @@ Use this annotation to indicate that this chart version contains security update
 
 Use this annotation to provide a list of the images used by this chart. Images listed will be scanned for security vulnerabilities. The security report generated will be available in the package detail view. It is possible to whitelist images so that they are not scanned by setting the `whitelisted` flag to true.
 
-Please note that images using the *latest* tag won't be scanned.
-
 - **artifacthub.io/crds** *(yaml string, see example below)*
 
 This annotation can be used to list the operator's CRDs. They will be visible in the package's detail view as cards.

@@ -10,8 +10,6 @@ The security report may contain multiple images sections, one for each of the im
 
 To generate a security report of your package, it needs to include the containers images it uses. The location of this information varies from one package kind to another.
 
-**NOTE**: *images using the `latest` tag won't be scanned. Trivy recommends not to use this tag as it [causes problems with the cache](https://github.com/aquasecurity/trivy#image)*.
-
 ### Helm charts
 
 Images used by a Helm chart can be listed including a special annotation called `artifacthub.io/images` in the `Chart.yaml` file. You can find an example of how this is done in the Artifact Hub Helm chart [here](https://github.com/artifacthub/hub/blob/a3ffcb7cee0aa3923c3e4cf9bcf8ac0f2f437a2b/charts/artifact-hub/Chart.yaml#L25-L34). For more information please see the Artifact Hub [Helm annotations](https://github.com/artifacthub/hub/blob/master/docs/helm_annotations.md) documentation. The way this works may change when [Helm defines an official way to list the images](https://github.com/helm/helm/issues/7754).
@@ -53,4 +51,4 @@ If you want your application dependencies scanned, please make sure the relevant
 
 - *I can't see the security report for my package*
 
-Please make sure your images are **publicly available** and **not using the latest tag**. If your repository has just been added to Artifact Hub, it may take up to *30 mins* for it to be indexed. Once it has been indexed, it may take up to *15 extra minutes* for the initial security report of your packages to be generated. If you don't see it after **an hour** and the images your package lists meet the requirements, please file an [issue](https://github.com/artifacthub/hub/issues).
+Please make sure your images are **publicly available**. If your repository has just been added to Artifact Hub, it may take up to *30 mins* for it to be indexed. Once it has been indexed, it may take up to *15 extra minutes* for the initial security report of your packages to be generated. If you don't see it after **an hour** and the images your package lists meet the requirements, please file an [issue](https://github.com/artifacthub/hub/issues).

@@ -45,35 +45,6 @@ func TestScanSnapshot(t *testing.T) {
 		ecMock.AssertExpectations(t)
 	})
 
-	t.Run("image using latest tag", func(t *testing.T) {
-		t.Parallel()
-		scannerMock := &Mock{}
-		ecMock := &repo.ErrorsCollectorMock{}
-		ecMock.On("Init", repositoryID)
-		ecMock.On("Append", repositoryID, "latest tag not supported: repo/image:latest")
-
-		snapshot := &hub.SnapshotToScan{
-			RepositoryID: repositoryID,
-			PackageID:    packageID,
-			Version:      version,
-			ContainersImages: []*hub.ContainerImage{
-				{
-					Image: "repo/image:latest",
-				},
-			},
-		}
-		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
-		require.Nil(t, err)
-		assert.Equal(t, &hub.SnapshotSecurityReport{
-			PackageID: packageID,
-			Version:   version,
-			Full:      nil,
-			Summary:   nil,
-		}, report)
-		scannerMock.AssertExpectations(t)
-		ecMock.AssertExpectations(t)
-	})
-
 	t.Run("image not found", func(t *testing.T) {
 		t.Parallel()
 		scannerMock := &Mock{}
