@@ -64,7 +64,9 @@ const ElementWithTooltip = (props: Props) => {
         >
           <div className={`tooltip bs-tooltip-bottom ${styles.tooltip} ${props.tooltipClassName}`} role="tooltip">
             <div className={`arrow ${styles.tooltipArrow} ${props.tooltipArrowClassName}`} />
-            <div className={`tooltip-inner ${styles.tooltipContent}`}>{props.tooltipMessage}</div>
+            <div className={`tooltip-inner ${styles.tooltipContent}`}>
+              <>{props.tooltipMessage}</>
+            </div>
           </div>
         </div>
       )}

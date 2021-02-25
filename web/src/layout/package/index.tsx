@@ -45,6 +45,7 @@ import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
 import ChangelogModal from './ChangelogModal';
+import ChartTemplatesModal from './chartTemplates';
 import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
 import InstallationModal from './installation/Modal';
@@ -70,6 +71,7 @@ interface Props {
   channel?: string;
   visibleModal?: string;
   visibleValuesSchemaPath?: string;
+  visibleTemplate?: string;
 }
 
 const PackageView = (props: Props) => {
@@ -545,6 +547,24 @@ const PackageView = (props: Props) => {
                         <div className="d-none d-md-block">
                           {getInstallationModal('mb-2')}
 
+                          <div className="d-none d-lg-block">
+                            <ChartTemplatesModal
+                              packageId={detail.packageId}
+                              version={detail.version!}
+                              repoKind={detail.repository.kind}
+                              visibleChartTemplates={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'template'
+                              }
+                              visibleTemplate={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'template'
+                                  ? props.visibleTemplate
+                                  : undefined
+                              }
+                              searchUrlReferer={props.searchUrlReferer}
+                              fromStarredPage={props.fromStarredPage}
+                            />
+                          </div>
+
                           {(() => {
                             switch (detail.repository.kind) {
                               case RepositoryKind.TektonTask:
@@ -581,7 +601,6 @@ const PackageView = (props: Props) => {
                                 return null;
                             }
                           })()}
-
                           <div className="mb-2">
                             <ChangelogModal
                               packageId={detail.packageId}

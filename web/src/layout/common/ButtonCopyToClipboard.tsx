@@ -13,6 +13,7 @@ interface Props {
   tooltipClassName?: string;
   visibleBtnText?: boolean;
   contentBtn?: string;
+  style?: { [key: string]: string };
   icon?: JSX.Element;
 }
 
@@ -72,6 +73,7 @@ const ButtonCopyToClipboard = (props: Props) => {
           { [`btn-primary rounded-circle ${styles.btn}`]: isUndefined(props.className) },
           props.className
         )}
+        style={props.style}
         onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
           e.preventDefault();
           e.stopPropagation();

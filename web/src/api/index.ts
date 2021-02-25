@@ -9,6 +9,7 @@ import {
   APIKeyCode,
   AuthorizerAction,
   ChangeLog,
+  ChartTemplatesData,
   CheckAvailabilityProps,
   Error,
   ErrorKind,
@@ -638,6 +639,10 @@ export const API = {
 
   getChangelog: (packageId: string): Promise<ChangeLog[]> => {
     return apiFetch(`${API_BASE_URL}/packages/${packageId}/changelog`);
+  },
+
+  getChartTemplates: (packageId: string, version: string): Promise<ChartTemplatesData | null> => {
+    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/templates`, undefined, true);
   },
 
   // Reset password

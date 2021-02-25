@@ -1,0 +1,22 @@
+{
+  ".Release.Name": "# Release.Name [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThe release name.",
+  ".Release.Namespace": "# Release.Namespace [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThe namespace to be released into (if the manifest doesn't override).",
+  ".Release.IsUpgrade": "# Release.IsUpgrade [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is set to true if the current operation is an upgrade or rollback.",
+  ".Release.IsInstall": "# Release.IsInstall [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is set to true if the current operation is an install.",
+  ".Release.Revision": "# Release.Revision [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThe revision number for this release. On install, this is 1, and it is incremented with each upgrade and rollback.",
+  ".Release.Service": "# Release.Service [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThe service that is rendering the present template. On Helm, this is always Helm.",
+  ".Files.Get": "# Files.Get [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is a function for getting a file by name (`.Files.Get config.ini`).",
+  ".Files.GetBytes": "# Files.GetBytes [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is a function for getting the contents of a file as an array of bytes instead of as a string. This is useful for things like images.",
+  ".Files.Glob": "# Files.Glob [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is a function that returns a list of files whose names match the given shell glob pattern.",
+  ".Files.Lines": "# Files.Lines [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is a function that reads a file line-by-line. This is useful for iterating over each line in a file.",
+  ".Files.AsSecrets": "# Files.AsSecrets [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is a function that returns the file bodies as Base 64 encoded strings.",
+  ".Files.AsConfig": "# Files.AsConfig [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is a function that returns file bodies as a YAML map.",
+  ".Capabilities.APIVersions": "# Capabilities.APIVersions [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is a set of versions.",
+  ".Capabilities.APIVersions.Has": "# Capabilities.APIVersions.Has [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\n**$version** indicates whether a version (e.g., `batch/v1`) or resource (e.g., `apps/v1/Deployment`) is available on the cluster.",
+  ".Capabilities.KubeVersion": "# Capabilities.KubeVersion [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is the Kubernetes version.",
+  ".Capabilities.KubeVersion.Version": "# Capabilities.KubeVersion.Version [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is the Kubernetes version.",
+  ".Capabilities.KubeVersion.Major": "# Capabilities.KubeVersion.Major [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is the Kubernetes major version.",
+  ".Capabilities.KubeVersion.Minor": "# Capabilities.KubeVersion.Minor [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThis is the Kubernetes minor version.",
+  ".Template.Name": "# Template.Name [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nA namespaced file path to the current template (e.g. `mychart/templates/mytemplate.yaml`).",
+  ".Template.BasePath": "# Template.BasePath [iconLink](https://helm.sh/docs/chart_template_guide/builtin_objects/)\nThe namespaced path to the templates directory of the current chart (e.g. `mychart/templates`)."
+}

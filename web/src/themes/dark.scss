@@ -40,6 +40,7 @@
   --body-bg: #222529;
 
   --hightlighted: #1164a3;
+  --extra-light-gray: var(--color-2-500);
   --light-gray: var(--body-bg);
   --mid-gray: #495057;
 
@@ -238,6 +239,10 @@
     & > span {
       color: var(--hightlighted);
     }
+  }
+
+  .activeTemplate {
+    background-color: #090a0c;
   }
 
   @media (hover: hover) {

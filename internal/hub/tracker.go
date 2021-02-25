@@ -2,18 +2,12 @@ package hub
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"golang.org/x/time/rate"
 )
-
-// HTTPClient defines the methods an HTTPClient implementation must provide.
-type HTTPClient interface {
-	Do(req *http.Request) (*http.Response, error)
-}
 
 // TrackerServices represents a set of services that must be provided to a
 // Tracker instance so that it can perform its tasks.

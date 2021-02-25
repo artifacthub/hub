@@ -82,7 +82,7 @@ func Setup(ctx context.Context, cfg *viper.Viper, svc *Services) (*Handlers, err
 		Organizations: org.NewHandlers(svc.OrganizationManager, svc.Authorizer, cfg),
 		Users:         userHandlers,
 		Repositories:  repo.NewHandlers(svc.RepositoryManager),
-		Packages:      pkg.NewHandlers(svc.PackageManager, cfg),
+		Packages:      pkg.NewHandlers(svc.PackageManager, cfg, &http.Client{}),
 		Subscriptions: subscription.NewHandlers(svc.SubscriptionManager),
 		Webhooks:      webhook.NewHandlers(svc.WebhookManager),
 		APIKeys:       apikey.NewHandlers(svc.APIKeyManager),
@@ -214,6 +214,7 @@ func (h *Handlers) setupRouter() {
 			})
 			r.Get("/{packageID}/{version}/security-report", h.Packages.GetSnapshotSecurityReport)
 			r.Get("/{packageID}/{version}/values-schema", h.Packages.GetValuesSchema)
+			r.Get("/{packageID}/{version}/templates", h.Packages.GetChartTemplates)
 			r.Get("/{packageID}/changelog", h.Packages.GetChangeLog)
 		})
 

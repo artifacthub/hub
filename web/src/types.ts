@@ -577,3 +577,29 @@ export enum PathTips {
   Search = 'search',
   ControlPanel = 'control-panel',
 }
+
+export interface ChartTemplatesData {
+  templates: ChartTemplate[];
+  values: any;
+}
+
+export interface ChartTemplate {
+  name: string;
+  fileName?: string;
+  resourceKinds?: string[];
+  type: ChartTmplTypeFile;
+  data: string;
+}
+
+export enum ChartTmplTypeFile {
+  Template,
+  Helper,
+}
+
+export enum ChartTemplateSpecialType {
+  BuiltInObject,
+  ValuesBuiltInObject,
+  Function,
+  FlowControl,
+  Variable,
+}

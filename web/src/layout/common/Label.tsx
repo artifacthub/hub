@@ -10,6 +10,7 @@ interface Props {
   text: string;
   labelStyle?: string;
   className?: string;
+  labelClassName?: string;
 }
 
 const Label = (props: Props) => (
@@ -35,7 +36,12 @@ const Label = (props: Props) => (
         </div>
       )}
       <div
-        className={classnames('text-nowrap', styles.labelText, { [styles.labelTextNoIcon]: isUndefined(props.icon) })}
+        className={classnames(
+          'text-nowrap',
+          styles.labelText,
+          { [styles.labelTextNoIcon]: isUndefined(props.icon) },
+          props.labelClassName
+        )}
       >
         {props.text}
       </div>
