@@ -5,19 +5,18 @@ import { MdInfoOutline } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { Package } from '../../types';
-import isPackageOfficial from '../../utils/isPackageOfficial';
+import { Repository } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import AttachedIconToText from './AttachedIconToText';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
-import OfficialBadge from './OfficialBadge';
 import RepositoryIcon from './RepositoryIcon';
 import RepositoryIconLabel from './RepositoryIconLabel';
 import styles from './RepositoryInfo.module.css';
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 interface Props {
-  package: Package;
+  repository: Repository;
+  deprecated?: boolean | null;
   className?: string;
   repoLabelClassName?: string;
   visibleInfoIcon?: boolean;
@@ -70,22 +69,22 @@ const RepositoryInfo = (props: Props) => {
               <div className="d-flex flex-column">
                 <div className="d-flex flex-row align-items-center">
                   <small className="text-muted text-uppercase mr-1">Repo: </small>
-                  <RepositoryIcon kind={props.package.repository.kind} className={`mr-1 ${styles.repoIconMini}`} />
+                  <RepositoryIcon kind={props.repository.kind} className={`mr-1 ${styles.repoIconMini}`} />
                   <div className={`text-reset text-truncate ${styles.labelContent}`}>
-                    {props.package.repository.displayName || props.package.repository.name}
+                    {props.repository.displayName || props.repository.name}
                   </div>
                 </div>
 
-                {!isUndefined(props.package.repository.url) && (
+                {!isUndefined(props.repository.url) && (
                   <div className="mt-2 d-flex flex-row align-items-baseline">
                     <small className="text-muted text-uppercase mr-1">Url: </small>
                     <div data-testid="repoUrl" className={`text-reset ${styles.urlContent} ${styles.labelContent}`}>
                       <AttachedIconToText
-                        text={props.package.repository.url}
+                        text={props.repository.url}
                         isVisible={openStatus}
                         icon={
                           <ButtonCopyToClipboard
-                            text={props.package.repository.url}
+                            text={props.repository.url}
                             className={styles.miniBtn}
                             wrapperClassName="d-inline"
                             arrowClassName={styles.arrow}
@@ -104,7 +103,7 @@ const RepositoryInfo = (props: Props) => {
         <div className="d-flex flex-row aling-items-baseline text-truncate">
           <div className="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase">
             <small>Repo:</small>
-            {props.visibleIcon && <RepositoryIconLabel kind={props.package.repository.kind} className="ml-1" />}
+            {props.visibleIcon && <RepositoryIconLabel kind={props.repository.kind} className="ml-1" />}
           </div>
 
           <button
@@ -117,9 +116,9 @@ const RepositoryInfo = (props: Props) => {
                 search: prepareQueryString({
                   pageNumber: 1,
                   filters: {
-                    repo: [props.package.repository.name],
+                    repo: [props.repository.name],
                   },
-                  deprecated: props.package.deprecated,
+                  deprecated: props.deprecated,
                 }),
               });
             }}
@@ -132,11 +131,9 @@ const RepositoryInfo = (props: Props) => {
             }}
           >
             <>
-              <div className="text-truncate">
-                {props.package.repository.displayName || props.package.repository.name}
-              </div>
+              <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
 
-              {props.package.repository.url && props.visibleInfoIcon && (
+              {props.repository.url && props.visibleInfoIcon && (
                 <MdInfoOutline className={`d-none d-sm-inline-block ml-1 ${styles.infoIcon}`} />
               )}
             </>
@@ -144,17 +141,10 @@ const RepositoryInfo = (props: Props) => {
         </div>
       </div>
       {props.withLabels && (
-        <>
-          <OfficialBadge
-            official={isPackageOfficial(props.package)}
-            className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
-            type="package"
-          />
-          <VerifiedPublisherBadge
-            verifiedPublisher={props.package.repository.verifiedPublisher}
-            className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
-          />
-        </>
+        <VerifiedPublisherBadge
+          verifiedPublisher={props.repository.verifiedPublisher}
+          className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
+        />
       )}
     </>
   );
