@@ -233,5 +233,22 @@ describe('SchemaDefinition', () => {
 
       expect(queryByText('Constraints')).toBeNull();
     });
+
+    it('renders link in description', () => {
+      const props = getProps('11');
+      const { getByText } = render(<SchemaDefinition {...props} {...defaultProps} />);
+
+      const link = getByText(
+        'https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core'
+      );
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveClass('d-inline text-secondary');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute(
+        'href',
+        'https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core'
+      );
+    });
   });
 });

@@ -8,6 +8,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { ActiveJSONSchemaValue } from '../../../types';
+import detectLinksInText from '../../../utils/detectLinksInText';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import styles from './SchemaDefinition.module.css';
 
@@ -225,7 +226,7 @@ const SchemaDefinition = (props: Props) => {
   const getArrayDesc = (value?: any): JSX.Element => {
     if (isUndefined(value)) return <span className="ml-1">-</span>;
     const desc = isArray(value) ? value.map((item: any) => item.description) : [value.description];
-    return <span>{desc.join('. ') || '-'}</span>;
+    return <span>{detectLinksInText(desc.join('. '), styles.descriptionLink) || '-'}</span>;
   };
 
   const getTypeSpecificKeyword = (item: KeywordProp, className?: string): JSX.Element | null => {
@@ -390,7 +391,9 @@ const SchemaDefinition = (props: Props) => {
                     <small className="text-muted text-uppercase">Description</small>:{' '}
                     <span className="ml-1">
                       {def.description ? (
-                        <span className={styles.wordBreak}>{def.description}</span>
+                        <span className={styles.wordBreak}>
+                          {detectLinksInText(def.description, styles.descriptionLink)}
+                        </span>
                       ) : (
                         <>
                           {def.type === 'array' && def.items ? (
