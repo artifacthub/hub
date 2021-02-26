@@ -24,8 +24,8 @@ const getNotifications = (): UserNotification[] => {
   });
 };
 
-const getCurrentLocationPath = (): PathTips | undefined => {
-  const currentLocation = window.location.pathname;
+const getCurrentLocationPath = (location?: string): PathTips | undefined => {
+  const currentLocation = location || window.location.pathname;
   if (currentLocation.startsWith('/control-panel')) {
     return PathTips.ControlPanel;
   } else if (detailPkgPath.test(currentLocation)) {
@@ -50,6 +50,7 @@ export class UserNotificationsDispatcher {
   private settings: NotificationsPrefs | null = null;
   private notifications: UserNotification[] = getNotifications();
   private breakpoint: string | undefined;
+  private locationPathTip: PathTips | undefined;
 
   public start(prefs: NotificationsPrefs, breakpoint?: string) {
     this.settings = prefs;
@@ -88,8 +89,13 @@ export class UserNotificationsDispatcher {
     }
   }
 
-  public dismissNotification() {
-    this.postNotification(null);
+  public dismissNotification(currentLocation?: string) {
+    if (this.activeNotification) {
+      this.postNotification(null);
+    }
+    if (currentLocation) {
+      this.updateCurrentLocation(currentLocation);
+    }
   }
 
   private cleanTimeouts() {
@@ -109,6 +115,16 @@ export class UserNotificationsDispatcher {
     this.settings = settings;
   }
 
+  private updateCurrentLocation(location: string) {
+    const currentLocationPathTip = getCurrentLocationPath(location);
+    if (!isNull(this.settings) && currentLocationPathTip !== this.locationPathTip) {
+      this.locationPathTip = currentLocationPathTip;
+      if (hasToBeDisplayedNewNotification(true, this.settings.lastDisplayedTime)) {
+        this.get(true);
+      }
+    }
+  }
+
   private getRandomNotification(dateLimit: boolean): UserNotification | null {
     if (!isNull(this.settings)) {
       if (
@@ -122,7 +138,7 @@ export class UserNotificationsDispatcher {
           'linkTip'
         );
 
-        const currentLocationTip = getCurrentLocationPath();
+        const currentLocationTip = this.locationPathTip || getCurrentLocationPath();
         const getCommonTip = (): UserNotification | null => {
           return notDisplayedNotifications.hasOwnProperty('undefined')
             ? (notDisplayedNotifications.undefined[
