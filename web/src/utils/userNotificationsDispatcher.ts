@@ -1,8 +1,8 @@
 import md5 from 'crypto-js/md5';
 import { groupBy, isNull, isUndefined } from 'lodash';
-import moment from 'moment';
 
 import { NotificationsPrefs, PathTips, UserNotification } from '../types';
+import hasToBeDisplayedNewNotification from './hasToBeDisplayedNewNotification';
 
 const DEFAULT_START_TIME = 3 * 1000; //3s
 const DEFAULT_DISMISS_TIME = 20 * 1000; //20s
@@ -115,9 +115,7 @@ export class UserNotificationsDispatcher {
         this.settings.enabled &&
         this.settings.displayed.length < this.notifications.length &&
         // Only display a maximun of 1 notification per day when dateLimit is true
-        (!dateLimit ||
-          isNull(this.settings.lastDisplayedTime) ||
-          moment(this.settings.lastDisplayedTime).diff(Date.now(), 'day') > 0)
+        hasToBeDisplayedNewNotification(dateLimit, this.settings.lastDisplayedTime)
       ) {
         let notDisplayedNotifications = groupBy(
           this.notifications.filter((notif: UserNotification) => !this.settings!.displayed.includes(notif.id)),
