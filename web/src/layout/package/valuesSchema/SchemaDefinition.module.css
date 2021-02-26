@@ -58,3 +58,7 @@
 .errorMsg {
   line-height: 1.15rem;
 }
+
+.descriptionLink {
+  word-break: break-all;
+}
