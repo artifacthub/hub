@@ -5,6 +5,7 @@ returns setof json as $$
     select coalesce(json_agg(json_build_object(
         'repository_id', repository_id,
         'package_id', package_id,
+        'package_name', package_name,
         'version', version,
         'containers_images', jsonb_path_query_array(
             containers_images,
@@ -12,7 +13,12 @@ returns setof json as $$
         )
     )), '[]')
     from (
-        select p.repository_id, s.package_id, s.version, s.containers_images
+        select
+            p.repository_id,
+            s.package_id,
+            p.name as package_name,
+            s.version,
+            s.containers_images
         from snapshot s
         join package p using (package_id)
         join repository r using (repository_id)

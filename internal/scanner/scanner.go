@@ -19,21 +19,22 @@ type Scanner interface {
 func ScanSnapshot(
 	ctx context.Context,
 	scanner Scanner,
-	snapshot *hub.SnapshotToScan,
+	s *hub.SnapshotToScan,
 	ec hub.ErrorsCollector,
 ) (*hub.SnapshotSecurityReport, error) {
 	full := make(map[string][]interface{})
-	ec.Init(snapshot.RepositoryID)
+	ec.Init(s.RepositoryID)
 
-	for _, image := range snapshot.ContainersImages {
+	for _, image := range s.ContainersImages {
 		reportData, err := scanner.Scan(image.Image)
 		if err != nil {
 			if errors.Is(err, ErrImageNotFound) {
-				ec.Append(snapshot.RepositoryID, fmt.Sprintf("%s: %s", err.Error(), image.Image))
+				err := fmt.Sprintf("%s: %s (package %s:%s)", err.Error(), image.Image, s.PackageName, s.Version)
+				ec.Append(s.RepositoryID, err)
 				continue
 			}
-			err := fmt.Errorf("error scanning image %s: %w", image.Image, err)
-			ec.Append(snapshot.RepositoryID, err.Error())
+			err := fmt.Errorf("error scanning image %s: %w (package %s:%s)", image.Image, err, s.PackageName, s.Version)
+			ec.Append(s.RepositoryID, err.Error())
 			return nil, err
 		}
 		var imageFullReport []interface{}
@@ -52,8 +53,8 @@ func ScanSnapshot(
 	}
 
 	return &hub.SnapshotSecurityReport{
-		PackageID: snapshot.PackageID,
-		Version:   snapshot.Version,
+		PackageID: s.PackageID,
+		Version:   s.Version,
 		Full:      full,
 		Summary:   summary,
 	}, nil
