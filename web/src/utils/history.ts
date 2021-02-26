@@ -14,7 +14,7 @@ history.listen((location) => {
   }
   analytics.page();
   // Clean notifications to change location
-  notificationsDispatcher.dismissNotification();
+  notificationsDispatcher.dismissNotification(location.pathname);
 });
 
 export default history;

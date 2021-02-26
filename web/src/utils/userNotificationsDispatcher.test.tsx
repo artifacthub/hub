@@ -10,6 +10,18 @@ const notificationSample = {
   body: 'Lorem ipsum',
 };
 
+jest.mock('./notifications.json', () => {
+  return {
+    notifications: [
+      { body: 'Lorem ipsum' },
+      {
+        body: 'package usage tip',
+        linkTip: 'package',
+      },
+    ],
+  };
+});
+
 describe('userNotificationsDispatcher', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -38,7 +50,7 @@ describe('userNotificationsDispatcher', () => {
     });
 
     await waitFor(() => {
-      expect(updateUserNotificationMock).toHaveBeenCalledTimes(3);
+      expect(updateUserNotificationMock).toHaveBeenCalledTimes(2);
       expect(updateUserNotificationMock).toHaveBeenLastCalledWith(null);
     });
   });
@@ -57,6 +69,29 @@ describe('userNotificationsDispatcher', () => {
       expect(updateUserNotificationMock).toHaveBeenCalledTimes(2);
       expect(updateUserNotificationMock).toHaveBeenCalledWith(notificationSample);
       expect(updateUserNotificationMock).toHaveBeenLastCalledWith(null);
+    });
+  });
+
+  it('update location', async () => {
+    userNotificationsDispatcher.updateSettings({
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
+    });
+
+    userNotificationsDispatcher.postNotification(notificationSample);
+    userNotificationsDispatcher.dismissNotification('/packages/helm/hub/artifact-hub');
+
+    await waitFor(() => {
+      expect(updateUserNotificationMock).toHaveBeenCalledTimes(4);
+      expect(updateUserNotificationMock).toHaveBeenNthCalledWith(1, notificationSample);
+      expect(updateUserNotificationMock).toHaveBeenNthCalledWith(2, null);
+      expect(updateUserNotificationMock).toHaveBeenNthCalledWith(3, {
+        body: 'package usage tip',
+        id: 'b02cbb3332116753bb068e462f8a310e',
+        linkTip: 'package',
+      });
+      expect(updateUserNotificationMock).toHaveBeenNthCalledWith(4, null);
     });
   });
 });
