@@ -173,6 +173,7 @@ type SecurityReportSummary struct {
 type SnapshotToScan struct {
 	RepositoryID     string            `json:"repository_id"`
 	PackageID        string            `json:"package_id"`
+	PackageName      string            `json:"package_name"`
 	Version          string            `json:"version"`
 	ContainersImages []*ContainerImage `json:"containers_images"`
 }

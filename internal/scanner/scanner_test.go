@@ -17,6 +17,7 @@ func TestScanSnapshot(t *testing.T) {
 	ctx := context.Background()
 	repositoryID := "00000000-0000-0000-0000-000000000001"
 	packageID := "00000000-0000-0000-0000-000000000001"
+	packageName := "pkg1"
 	version := "1.0.0"
 	image := "repo/image:tag"
 
@@ -26,11 +27,12 @@ func TestScanSnapshot(t *testing.T) {
 		scannerMock.On("Scan", image).Return(nil, tests.ErrFake)
 		ecMock := &repo.ErrorsCollectorMock{}
 		ecMock.On("Init", repositoryID)
-		ecMock.On("Append", repositoryID, "error scanning image repo/image:tag: fake error for tests")
+		ecMock.On("Append", repositoryID, "error scanning image repo/image:tag: fake error for tests (package pkg1:1.0.0)")
 
 		snapshot := &hub.SnapshotToScan{
 			RepositoryID: repositoryID,
 			PackageID:    packageID,
+			PackageName:  packageName,
 			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
@@ -51,11 +53,12 @@ func TestScanSnapshot(t *testing.T) {
 		scannerMock.On("Scan", image).Return(nil, ErrImageNotFound)
 		ecMock := &repo.ErrorsCollectorMock{}
 		ecMock.On("Init", repositoryID)
-		ecMock.On("Append", repositoryID, "image not found: repo/image:tag")
+		ecMock.On("Append", repositoryID, "image not found: repo/image:tag (package pkg1:1.0.0)")
 
 		snapshot := &hub.SnapshotToScan{
 			RepositoryID: repositoryID,
 			PackageID:    packageID,
+			PackageName:  packageName,
 			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
@@ -85,6 +88,7 @@ func TestScanSnapshot(t *testing.T) {
 		snapshot := &hub.SnapshotToScan{
 			RepositoryID: repositoryID,
 			PackageID:    packageID,
+			PackageName:  packageName,
 			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
@@ -109,6 +113,7 @@ func TestScanSnapshot(t *testing.T) {
 		snapshot := &hub.SnapshotToScan{
 			RepositoryID: repositoryID,
 			PackageID:    packageID,
+			PackageName:  packageName,
 			Version:      version,
 			ContainersImages: []*hub.ContainerImage{
 				{
