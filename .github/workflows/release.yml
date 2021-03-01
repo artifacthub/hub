@@ -21,7 +21,7 @@ jobs:
             -t artifacthub/hub:${{steps.extract_tag_name.outputs.tag}} \
             -t artifacthub/hub:latest .
       - name: Push hub image
-        run: docker push artifacthub/hub
+        run: docker push --all-tags artifacthub/hub
       - name: Build db-migrator image
         run: |
           docker build \
@@ -29,7 +29,7 @@ jobs:
             -t artifacthub/db-migrator:${{steps.extract_tag_name.outputs.tag}} \
             -t artifacthub/db-migrator:latest .
       - name: Push db-migrator image
-        run: docker push artifacthub/db-migrator
+        run: docker push --all-tags artifacthub/db-migrator
       - name: Build scanner image
         run: |
           docker build \
@@ -37,7 +37,7 @@ jobs:
             -t artifacthub/scanner:${{steps.extract_tag_name.outputs.tag}} \
             -t artifacthub/scanner:latest .
       - name: Push scanner image
-        run: docker push artifacthub/scanner
+        run: docker push --all-tags artifacthub/scanner
       - name: Build tracker image
         run: |
           docker build \
@@ -45,4 +45,4 @@ jobs:
             -t artifacthub/tracker:${{steps.extract_tag_name.outputs.tag}} \
             -t artifacthub/tracker:latest .
       - name: Push tracker image
-        run: docker push artifacthub/tracker
+        run: docker push --all-tags artifacthub/tracker
