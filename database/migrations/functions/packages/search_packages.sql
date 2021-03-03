@@ -161,13 +161,16 @@ begin
                             (case when v_tsquery_web is not null then
                                 ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1) +
                                 ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)
-                            else 1 end) as rank
+                            else 1 end) as rank,
+                            (case
+                                when repository_official = true or package_official = true
+                                then true else false
+                            end) as official
                         from packages_applying_all_filters paaf
                         order by
                             rank desc,
-                            repository_official desc nulls last,
-                            package_official desc nulls last,
-                            verified_publisher desc nulls last,
+                            official desc,
+                            verified_publisher desc,
                             stars desc,
                             name asc
                         limit (p_input->>'limit')::int

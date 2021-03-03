@@ -260,7 +260,7 @@ export const TS_QUERY: TsQuery[] = [
   {
     name: 'Security',
     label: 'security',
-    value: '(security | falco)',
+    value: '(security)',
   },
   {
     name: 'Storage',
