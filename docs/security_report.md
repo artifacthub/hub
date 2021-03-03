@@ -2,7 +2,7 @@
 
 Artifact Hub scans containers' images used by packages for security vulnerabilities. The scanner uses [Trivy](https://github.com/aquasecurity/trivy) to generate security reports for each of the package's versions. These reports are accessible from the package's detail view.
 
-Security reports are generated *periodically*. The scanner runs *twice an hour* and scans packages' versions **that haven't been scanned yet**. After a **week**, already scanned packages' versions are revisited and **scanned again**, just in case new vulnerabilities have been discovered since the previous scan. This happens even if nothing has changed in the package.
+Security reports are generated *periodically*. The scanner runs *twice an hour* and scans packages' versions **that haven't been scanned yet**. Packages' versions already scanned are revisited and **scanned again**, just in case new vulnerabilities have been discovered since the previous scan. The latest package version available is scanned **daily**, whereas previous versions are scanned **weekly**. This happens even if nothing has changed in the package version.
 
 The security report may contain multiple images sections, one for each of the images your package is listing. Within each image section, multiple targets can be listed as well. A common one is the OS used by the image, including the packages installed. But more targets can be scanned and displayed if files describing your [application dependencies](#application-dependencies) are found in the image.
 

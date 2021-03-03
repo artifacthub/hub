@@ -104,12 +104,14 @@ insert into snapshot (
     version,
     containers_images,
     security_report,
+    security_report_created_at,
     created_at
 ) values (
     :'package3ID',
     '1.0.0',
     '[{"image": "quay.io/org/pkg3:1.0.0"}]',
     '{"k": "v"}',
+    current_timestamp - '2 days'::interval,
     '2020-06-16 11:20:35+02'
 );
 insert into snapshot (
@@ -124,8 +126,23 @@ insert into snapshot (
     '0.0.9',
     '[{"image": "quay.io/org/pkg3:0.0.9"}]',
     '{"k": "v"}',
-    '2010-05-29 13:55:00',
+    current_timestamp - '2 days'::interval,
     '2020-06-16 11:20:34+02'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_report,
+    security_report_created_at,
+    created_at
+) values (
+    :'package3ID',
+    '0.0.8',
+    '[{"image": "quay.io/org/pkg3:0.0.8"}]',
+    '{"k": "v"}',
+    current_timestamp - '2 weeks'::interval,
+    '2020-06-16 11:20:33+02'
 );
 insert into package (
     package_id,
@@ -192,10 +209,21 @@ select is(
             "repository_id": "00000000-0000-0000-0000-000000000002",
             "package_id": "00000000-0000-0000-0000-000000000003",
             "package_name": "package3",
-            "version": "0.0.9",
+            "version": "1.0.0",
             "containers_images": [
                 {
-                    "image": "quay.io/org/pkg3:0.0.9"
+                    "image": "quay.io/org/pkg3:1.0.0"
+                }
+            ]
+        },
+        {
+            "repository_id": "00000000-0000-0000-0000-000000000002",
+            "package_id": "00000000-0000-0000-0000-000000000003",
+            "package_name": "package3",
+            "version": "0.0.8",
+            "containers_images": [
+                {
+                    "image": "quay.io/org/pkg3:0.0.8"
                 }
             ]
         }

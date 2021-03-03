@@ -22,8 +22,13 @@ returns setof json as $$
         from snapshot s
         join package p using (package_id)
         join repository r using (repository_id)
-        where (security_report is null or security_report_created_at < (current_timestamp - '1 week'::interval))
+        where containers_images is not null
         and r.scanner_disabled = false
+        and (
+            security_report is null
+            or (security_report_created_at < (current_timestamp - '1 day'::interval) and s.version = p.latest_version )
+            or security_report_created_at < (current_timestamp - '1 week'::interval)
+        )
         order by s.created_at desc
     ) s;
 $$ language sql;
