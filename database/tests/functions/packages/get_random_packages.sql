@@ -33,14 +33,12 @@ insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     stars,
     repository_id
 ) values (
     :'package1ID',
     'package1',
     '1.0.0',
-    :'image1ID',
     10,
     :'repo2ID'
 );
@@ -49,6 +47,7 @@ insert into snapshot (
     version,
     display_name,
     description,
+    logo_image_id,
     keywords,
     home_url,
     readme,
@@ -60,6 +59,7 @@ insert into snapshot (
     '1.0.0',
     'Package 1',
     'description',
+    :'image1ID',
     '{"kw1", "kw2"}',
     'home_url',
     'readme',
@@ -107,13 +107,11 @@ insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     repository_id
 ) values (
     :'package3ID',
     'package3',
     '1.0.0',
-    :'image3ID',
     :'repo3ID'
 );
 insert into snapshot (
@@ -121,6 +119,7 @@ insert into snapshot (
     version,
     display_name,
     description,
+    logo_image_id,
     keywords,
     home_url,
     app_version,
@@ -134,6 +133,7 @@ insert into snapshot (
     '1.0.0',
     'Package 3',
     'description',
+    :'image3ID',
     '{"kw1", "kw2"}',
     'home_url',
     '12.1.0',
@@ -147,13 +147,11 @@ insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     repository_id
 ) values (
     :'package4ID',
     'package4',
     '1.0.0',
-    :'image4ID',
     :'repo2ID'
 );
 insert into snapshot (
@@ -161,6 +159,7 @@ insert into snapshot (
     version,
     display_name,
     description,
+    logo_image_id,
     keywords,
     home_url,
     readme,
@@ -171,6 +170,7 @@ insert into snapshot (
     '1.0.0',
     'Package 4',
     'description',
+    :'image4ID',
     '{"kw1", "kw2"}',
     'home_url',
     'readme',
@@ -187,10 +187,10 @@ select jsonb_set('[
         "package_id": "00000000-0000-0000-0000-000000000001",
         "name": "package1",
         "normalized_name": "package1",
-        "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "stars": 10,
         "display_name": "Package 1",
         "description": "description",
+        "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "version": "1.0.0",
         "deprecated": false,
         "signed": false,

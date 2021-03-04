@@ -24,10 +24,14 @@ insert into repository (repository_id, name, display_name, url, repository_kind_
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
-insert into package (package_id, name, latest_version, logo_image_id, repository_id)
-values (:'package1ID', 'Package 1', '1.0.0', :'image1ID', :'repo1ID');
-insert into package (package_id, name, latest_version, logo_image_id, repository_id)
-values (:'package2ID', 'Package 2', '1.0.0', :'image2ID', :'repo2ID');
+insert into package (package_id, name, latest_version, repository_id)
+values (:'package1ID', 'Package 1', '1.0.0', :'repo1ID');
+insert into snapshot (package_id, version, logo_image_id)
+values (:'package1ID', '1.0.0', :'image1ID');
+insert into package (package_id, name, latest_version, repository_id)
+values (:'package2ID', 'Package 2', '1.0.0', :'repo2ID');
+insert into snapshot (package_id, version, logo_image_id)
+values (:'package2ID', '1.0.0', :'image2ID');
 insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package1ID', 0);
 insert into subscription (user_id, package_id, event_kind_id)

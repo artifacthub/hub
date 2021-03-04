@@ -47,8 +47,6 @@ begin
     -- Package
     insert into package (
         name,
-        logo_url,
-        logo_image_id,
         latest_version,
         tsdoc,
         is_operator,
@@ -57,8 +55,6 @@ begin
         repository_id
     ) values (
         v_name,
-        nullif(p_pkg->>'logo_url', ''),
-        nullif(p_pkg->>'logo_image_id', '')::uuid,
         v_version,
         generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
         (p_pkg->>'is_operator')::boolean,
@@ -69,8 +65,6 @@ begin
     on conflict (repository_id, name) do update
     set
         name = excluded.name,
-        logo_url = excluded.logo_url,
-        logo_image_id = excluded.logo_image_id,
         latest_version = excluded.latest_version,
         tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
         is_operator = excluded.is_operator,
@@ -137,6 +131,8 @@ begin
         version,
         display_name,
         description,
+        logo_url,
+        logo_image_id,
         keywords,
         home_url,
         app_version,
@@ -165,6 +161,8 @@ begin
         v_version,
         v_display_name,
         v_description,
+        nullif(p_pkg->>'logo_url', ''),
+        nullif(p_pkg->>'logo_image_id', '')::uuid,
         v_keywords,
         nullif(p_pkg->>'home_url', ''),
         nullif(p_pkg->>'app_version', ''),
@@ -193,6 +191,8 @@ begin
     set
         display_name = excluded.display_name,
         description = excluded.description,
+        logo_url = excluded.logo_url,
+        logo_image_id = excluded.logo_image_id,
         keywords = excluded.keywords,
         home_url = excluded.home_url,
         app_version = excluded.app_version,

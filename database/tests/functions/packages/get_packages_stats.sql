@@ -7,8 +7,6 @@ select plan(2);
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
-\set image1ID '00000000-0000-0000-0000-000000000001'
-\set image2ID '00000000-0000-0000-0000-000000000002'
 
 -- No packages at this point
 select is(
@@ -29,13 +27,11 @@ insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     repository_id
 ) values (
     :'package1ID',
     'package1',
     '1.0.0',
-    :'image1ID',
     :'repo1ID'
 );
 insert into snapshot (
@@ -80,13 +76,11 @@ insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     repository_id
 ) values (
     :'package2ID',
     'package2',
     '1.0.0',
-    :'image2ID',
     :'repo1ID'
 );
 insert into snapshot (

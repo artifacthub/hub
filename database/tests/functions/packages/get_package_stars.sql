@@ -8,7 +8,6 @@ select plan(4);
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
-\set image1ID '00000000-0000-0000-0000-000000000001'
 
 
 -- Seed some data
@@ -20,14 +19,12 @@ insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     stars,
     repository_id
 ) values (
     :'package1ID',
     'Package 1',
     '1.0.0',
-    :'image1ID',
     10,
     :'repo1ID'
 );
