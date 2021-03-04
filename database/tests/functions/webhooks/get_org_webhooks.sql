@@ -22,22 +22,22 @@ insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     repository_id
 ) values (
     :'package1ID',
     'Package 1',
     '1.0.0',
-    :'image1ID',
     :'repo1ID'
 );
 insert into snapshot (
     package_id,
     version,
+    logo_image_id,
     created_at
 ) values (
     :'package1ID',
     '1.0.0',
+    :'image1ID',
     '2020-06-16 11:20:34+02'
 );
 insert into webhook (
@@ -83,9 +83,9 @@ select is(
                     "package_id": "00000000-0000-0000-0000-000000000001",
                     "name": "Package 1",
                     "normalized_name": "package-1",
-                    "logo_image_id": "00000000-0000-0000-0000-000000000001",
                     "stars": 0,
                     "version": "1.0.0",
+                    "logo_image_id": "00000000-0000-0000-0000-000000000001",
                     "created_at": 1592299234,
                     "repository": {
                         "repository_id": "00000000-0000-0000-0000-000000000001",

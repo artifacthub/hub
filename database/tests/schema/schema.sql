@@ -118,8 +118,6 @@ select columns_are('package', array[
     'name',
     'normalized_name',
     'latest_version',
-    'logo_url',
-    'logo_image_id',
     'stars',
     'tsdoc',
     'is_operator',
@@ -174,6 +172,8 @@ select columns_are('snapshot', array[
     'version',
     'display_name',
     'description',
+    'logo_url',
+    'logo_image_id',
     'keywords',
     'home_url',
     'app_version',
@@ -298,8 +298,7 @@ select indexes_are('package', array[
     'package_pkey',
     'package_tsdoc_idx',
     'package_repository_id_idx',
-    'package_repository_id_name_key',
-    'package_has_logo_image_id_idx'
+    'package_repository_id_name_key'
 ]);
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'

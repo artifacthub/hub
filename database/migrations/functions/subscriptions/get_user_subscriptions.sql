@@ -20,10 +20,11 @@ returns setof json as $$
             p.package_id,
             p.name,
             p.normalized_name,
-            p.logo_image_id,
+            s.logo_image_id,
             r.repository_id
         from package p
         join repository r using (repository_id)
+        join snapshot s on s.package_id = p.package_id and s.version = p.latest_version
         where p.package_id in (
             select distinct(package_id) from subscription where user_id = p_user_id
         )

@@ -106,8 +106,6 @@ select results_eq(
         select
             name,
             latest_version,
-            logo_url,
-            logo_image_id,
             is_operator,
             channels,
             default_channel,
@@ -119,8 +117,6 @@ select results_eq(
         values (
             'package1',
             '1.0.0',
-            'logo_url',
-            '00000000-0000-0000-0000-000000000001'::uuid,
             true,
             '[
                 {
@@ -144,6 +140,8 @@ select results_eq(
             s.version,
             s.display_name,
             s.description,
+            s.logo_url,
+            s.logo_image_id,
             s.keywords,
             s.home_url,
             s.app_version,
@@ -177,6 +175,8 @@ select results_eq(
             '1.0.0',
             'Package 1',
             'description',
+            'logo_url',
+            '00000000-0000-0000-0000-000000000001'::uuid,
             '{kw1,kw2}'::text[],
             'home_url',
             '12.1.0',
@@ -239,7 +239,7 @@ select is_empty(
 select register_package('
 {
     "name": "package1",
-    "logo_url": "logo_url updated",
+    "logo_url": "logo_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "display_name": "Package 1 v2",
     "description": "description v2",
@@ -275,12 +275,12 @@ select register_package('
 ');
 select results_eq(
     $$
-        select logo_url, is_operator from package where name = 'package1'
+        select is_operator from package where name = 'package1'
     $$,
     $$
-        values ('logo_url updated', false)
+        values (false)
     $$,
-    'Package logo url should have been updated'
+    'is_operator flag should have been updated'
 );
 select results_eq(
     $$
@@ -288,6 +288,8 @@ select results_eq(
             s.version,
             s.display_name,
             s.description,
+            s.logo_url,
+            s.logo_image_id,
             s.keywords,
             s.home_url,
             s.app_version,
@@ -315,6 +317,8 @@ select results_eq(
             '2.0.0',
             'Package 1 v2',
             'description v2',
+            'logo_url',
+            '00000000-0000-0000-0000-000000000001'::uuid,
             '{kw1,kw2}'::text[],
             'home_url',
             '13.0.0',
@@ -415,12 +419,12 @@ select register_package('
 ');
 select results_eq(
     $$
-        select logo_url, is_operator from package where name = 'package1'
+        select is_operator from package where name = 'package1'
     $$,
     $$
-        values ('logo_url updated', false)
+        values (false)
     $$,
-    'Package logo url should not have been updated'
+    'is_operator flag should not have been updated'
 );
 select results_eq(
     $$
@@ -428,6 +432,8 @@ select results_eq(
             s.version,
             s.display_name,
             s.description,
+            s.logo_url,
+            s.logo_image_id,
             s.keywords,
             s.home_url,
             s.app_version,
@@ -453,6 +459,8 @@ select results_eq(
             '0.0.9',
             'Package 1',
             'description',
+            'logo_url',
+            '00000000-0000-0000-0000-000000000001'::uuid,
             null::text[],
             'home_url',
             '11.0.0',
