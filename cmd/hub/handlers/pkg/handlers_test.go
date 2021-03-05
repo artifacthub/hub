@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -28,6 +29,17 @@ func TestMain(m *testing.M) {
 }
 
 func TestGet(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"packageName", "version"},
+			Values: []string{"pkg1", "1.0.0"},
+		},
+	}
+	getPkgInput := &hub.GetPackageInput{
+		PackageName: "pkg1",
+		Version:     "1.0.0",
+	}
+
 	t.Run("get package failed", func(t *testing.T) {
 		testCases := []struct {
 			pmErr              error
@@ -53,15 +65,16 @@ func TestGet(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.pm.On("GetJSON", r.Context(), mock.Anything).Return(nil, tc.pmErr)
+				hw.pm.On("GetJSON", r.Context(), getPkgInput).Return(nil, tc.pmErr)
 				hw.h.Get(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.pm.AssertExpectations(t)
+				hw.assertExpectations(t)
 			})
 		}
 	})
@@ -71,9 +84,10 @@ func TestGet(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.pm.On("GetJSON", r.Context(), getPkgInput).Return([]byte("dataJSON"), nil)
 		hw.h.Get(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -84,7 +98,7 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -114,7 +128,7 @@ func TestGetChangeLog(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error getting changelog", func(t *testing.T) {
@@ -130,7 +144,178 @@ func TestGetChangeLog(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
+	})
+}
+
+func TestGetChartTemplates(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"packageID", "version"},
+			Values: []string{"pkg1", "1.0.0"},
+		},
+	}
+	getPkgInput := &hub.GetPackageInput{
+		PackageID: "pkg1",
+		Version:   "1.0.0",
+	}
+	contentURL := "https://content.url"
+	p1 := &hub.Package{
+		ContentURL: contentURL,
+		Repository: &hub.Repository{
+			Kind: hub.Helm,
+			URL:  "https://repo.url",
+		},
+	}
+
+	t.Run("error getting package", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), getPkgInput).Return(nil, tests.ErrFakeDB)
+		hw.h.GetChartTemplates(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("bad request", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			pkg         *hub.Package
+		}{
+			{
+				"repository kind not supported",
+				&hub.Package{
+					Repository: &hub.Repository{
+						Kind: hub.OLM,
+					},
+				},
+			},
+			{
+				"helm oci repositories not supported",
+				&hub.Package{
+					Repository: &hub.Repository{
+						Kind: hub.Helm,
+						URL:  "oci://repo.url/chart",
+					},
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.pm.On("Get", r.Context(), getPkgInput).Return(tc.pkg, nil)
+				hw.h.GetChartTemplates(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.assertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("error downloading chart package", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			resp        *http.Response
+			err         error
+		}{
+			{
+				"server returned an error",
+				nil,
+				tests.ErrFake,
+			},
+			{
+				"server returned an unexpected status code",
+				&http.Response{
+					Body:       ioutil.NopCloser(strings.NewReader("")),
+					StatusCode: http.StatusNotFound,
+				},
+				nil,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
+				tgzReq, _ := http.NewRequest("GET", contentURL, nil)
+				tgzReq = tgzReq.WithContext(r.Context())
+				hw.hc.On("Do", tgzReq).Return(tc.resp, tc.err)
+				hw.h.GetChartTemplates(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+				hw.assertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("error loading chart archive", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
+		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
+		tgzReq = tgzReq.WithContext(r.Context())
+		hw.hc.On("Do", tgzReq).Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusOK,
+		}, nil)
+		hw.h.GetChartTemplates(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("package templates returned successfully", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
+		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
+		tgzReq = tgzReq.WithContext(r.Context())
+		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
+		hw.hc.On("Do", tgzReq).Return(&http.Response{
+			Body:       f,
+			StatusCode: http.StatusOK,
+		}, nil)
+		hw.h.GetChartTemplates(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		expectedData := []byte(`{"templates":[{"name":"templates/template.yaml","data":"a2V5OiB7eyAuVmFsdWVzLmtleSB9fQo="}],"values":{"key":"value"}}`)
+		assert.Equal(t, expectedData, data)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -152,7 +337,7 @@ func TestGetHarborReplicationDump(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(1*time.Hour), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error getting harbor replication dump", func(t *testing.T) {
@@ -167,7 +352,7 @@ func TestGetHarborReplicationDump(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -189,7 +374,7 @@ func TestGetRandom(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error getting random packages", func(t *testing.T) {
@@ -204,7 +389,7 @@ func TestGetRandom(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -234,7 +419,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(30*time.Minute), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error getting snapshot security report", func(t *testing.T) {
@@ -250,7 +435,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -273,7 +458,7 @@ func TestGetStarredByUser(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error getting packages starred by user", func(t *testing.T) {
@@ -289,7 +474,7 @@ func TestGetStarredByUser(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -331,7 +516,7 @@ func TestGetStars(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatus, resp.StatusCode)
-				hw.pm.AssertExpectations(t)
+				hw.assertExpectations(t)
 			})
 		}
 	})
@@ -355,7 +540,7 @@ func TestGetStars(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -377,7 +562,7 @@ func TestGetStats(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error getting stats", func(t *testing.T) {
@@ -392,7 +577,7 @@ func TestGetStats(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -422,7 +607,7 @@ func TestGetValuesSchema(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error getting values schema", func(t *testing.T) {
@@ -438,7 +623,7 @@ func TestGetValuesSchema(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -509,7 +694,7 @@ func TestInjectIndexMeta(t *testing.T) {
 			defer resp.Body.Close()
 
 			assert.Equal(t, http.StatusOK, resp.StatusCode)
-			hw.pm.AssertExpectations(t)
+			hw.assertExpectations(t)
 		})
 	}
 }
@@ -549,7 +734,7 @@ func TestRssFeed(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.pm.AssertExpectations(t)
+				hw.assertExpectations(t)
 			})
 		}
 	})
@@ -636,7 +821,7 @@ func TestRssFeed(t *testing.T) {
 				assert.Equal(t, "text/xml; charset=utf-8", h.Get("Content-Type"))
 				assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 				assert.Equal(t, tc.expectedRssFeedData, data)
-				hw.pm.AssertExpectations(t)
+				hw.assertExpectations(t)
 			})
 		}
 	})
@@ -706,7 +891,7 @@ func TestSearch(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error searching packages", func(t *testing.T) {
@@ -721,7 +906,7 @@ func TestSearch(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -743,7 +928,7 @@ func TestSearchMonocular(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("search failed", func(t *testing.T) {
@@ -758,7 +943,7 @@ func TestSearchMonocular(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
 }
 
@@ -800,7 +985,7 @@ func TestToggleStar(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatus, resp.StatusCode)
-				hw.pm.AssertExpectations(t)
+				hw.assertExpectations(t)
 			})
 		}
 	})
@@ -819,24 +1004,8 @@ func TestToggleStar(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+		hw.assertExpectations(t)
 	})
-}
-
-type handlersWrapper struct {
-	pm *pkg.ManagerMock
-	h  *Handlers
-}
-
-func newHandlersWrapper() *handlersWrapper {
-	cfg := viper.New()
-	cfg.Set("server.baseURL", "baseURL")
-	pm := &pkg.ManagerMock{}
-
-	return &handlersWrapper{
-		pm: pm,
-		h:  NewHandlers(pm, cfg),
-	}
 }
 
 func TestBuildPackageURL(t *testing.T) {
@@ -953,4 +1122,28 @@ func TestBuildPackageURL(t *testing.T) {
 			assert.Equal(t, tc.expectedPkgURL, pkgURL)
 		})
 	}
+}
+
+type handlersWrapper struct {
+	pm *pkg.ManagerMock
+	hc *tests.HTTPClientMock
+	h  *Handlers
+}
+
+func newHandlersWrapper() *handlersWrapper {
+	cfg := viper.New()
+	cfg.Set("server.baseURL", "baseURL")
+	pm := &pkg.ManagerMock{}
+	hc := &tests.HTTPClientMock{}
+
+	return &handlersWrapper{
+		pm: pm,
+		hc: hc,
+		h:  NewHandlers(pm, cfg, hc),
+	}
+}
+
+func (hw *handlersWrapper) assertExpectations(t *testing.T) {
+	hw.pm.AssertExpectations(t)
+	hw.hc.AssertExpectations(t)
 }

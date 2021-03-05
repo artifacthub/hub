@@ -1,0 +1,56 @@
+.tooltip {
+  width: 350px;
+}
+
+.codeWrapper {
+  padding: 10px 0;
+}
+
+.lineNumber {
+  min-width: 32px;
+  color: var(--color-black-25);
+}
+
+.badge {
+  border: 1px solid var(--color-black-15);
+  background-color: var(--white);
+  color: var(--color-font);
+  font-size: 85%;
+  padding-bottom: 0.2rem;
+  margin: 0 2px;
+}
+
+.tmplBuiltIn {
+  color: #81a2be;
+}
+
+.tmplComment {
+  color: #8e908c;
+  font-size: 90%;
+}
+
+.tmplFunction {
+  color: #8959a8;
+}
+
+.tmplFlowControl {
+  color: #718c00;
+}
+
+.tmplValue {
+  color: #f5871f;
+}
+
+.tmplVariable {
+  color: #cc6666;
+}
+
+.textarea :global(.form-control) {
+  font-size: 100%;
+  opacity: 1 !important;
+  background-color: var(--extra-light-gray);
+}
+
+.textarea textarea[disabled] {
+  color: var(--color-font) !important;
+}

@@ -22,6 +22,8 @@ interface Props {
   onChangeSelection?: () => void;
   displayItemsInValueLength?: number;
   autofocus?: boolean;
+  placeholder?: string;
+  additionalInfo?: string | JSX.Element;
 }
 
 const ITEM_HEIGHT = 37;
@@ -208,7 +210,7 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
           data-testid="typeaheadInput"
           ref={inputEl}
           type="text"
-          placeholder={`Search ${props.label}`}
+          placeholder={props.placeholder || `Search ${props.label}`}
           className={classnames(
             'flex-grow-1 form-control',
             styles.input,
@@ -224,6 +226,8 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
         />
 
         {props.searchIcon && <FaSearch className={`text-muted position-absolute ${styles.searchIcon}`} />}
+
+        {!isUndefined(props.additionalInfo) && <div className="alert p-0 mt-3">{props.additionalInfo}</div>}
       </div>
 
       {selectedItems.length > 0 && props.visibleClear && (

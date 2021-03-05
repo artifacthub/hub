@@ -10,6 +10,7 @@ interface Props {
   required?: boolean;
   invalidText?: string;
   minRows?: number;
+  maxRows?: number;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
@@ -25,9 +26,9 @@ const AutoresizeTextarea = (props: Props) => {
       const textLength = txtValue.split('\n').length;
       const minRows = props.minRows || DEFAULT_MIN_ROWS;
       const newRowsNumber = textLength < minRows ? minRows : textLength;
-      setRows(newRowsNumber);
+      setRows(props.maxRows ? (newRowsNumber > props.maxRows ? props.maxRows : newRowsNumber) : newRowsNumber);
     },
-    [props.minRows, props.value]
+    [props.maxRows, props.minRows, props.value]
   );
 
   useEffect(() => {

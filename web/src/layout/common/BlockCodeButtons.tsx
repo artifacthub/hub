@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash';
 import React from 'react';
 import { BiCloudDownload } from 'react-icons/bi';
 
@@ -8,6 +9,7 @@ interface Props {
   filename: string;
   content: string;
   className?: string;
+  boxShadowColor?: string;
 }
 
 const BlockCodeButtons = (props: Props) => {
@@ -25,13 +27,20 @@ const BlockCodeButtons = (props: Props) => {
     link.click();
   };
 
+  const btnStyle: undefined | { [key: string]: string } = !isUndefined(props.boxShadowColor)
+    ? {
+        boxShadow: `0px 0px 0px 8px ${props.boxShadowColor}`,
+      }
+    : {};
+
   return (
     <div className={`position-absolute d-flex flex-row ${styles.wrapper} ${props.className}`}>
-      <ButtonCopyToClipboard text={props.content} />
+      <ButtonCopyToClipboard text={props.content} style={btnStyle} />
 
       <button
         data-testid="downloadBtn"
         className={`btn btn-sm btn-primary rounded-circle ml-2 ${styles.btn}`}
+        style={btnStyle}
         onClick={downloadFile}
       >
         <BiCloudDownload />

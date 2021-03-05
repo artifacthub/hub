@@ -2,11 +2,13 @@ package pkg
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/Masterminds/semver/v3"
@@ -17,6 +19,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"helm.sh/helm/v3/pkg/chart/loader"
 )
 
 // Handlers represents a group of http handlers in charge of handling packages
@@ -25,14 +28,16 @@ type Handlers struct {
 	pkgManager hub.PackageManager
 	cfg        *viper.Viper
 	logger     zerolog.Logger
+	hc         hub.HTTPClient
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(pkgManager hub.PackageManager, cfg *viper.Viper) *Handlers {
+func NewHandlers(pkgManager hub.PackageManager, cfg *viper.Viper, hc hub.HTTPClient) *Handlers {
 	return &Handlers{
 		pkgManager: pkgManager,
 		cfg:        cfg,
 		logger:     log.With().Str("handlers", "pkg").Logger(),
+		hc:         hc,
 	}
 }
 
@@ -65,6 +70,60 @@ func (h *Handlers) GetChangeLog(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
+}
+
+// GetChartTemplates is an http handler used to get the templates for a given
+// given Helm chart package snapshot.
+func (h *Handlers) GetChartTemplates(w http.ResponseWriter, r *http.Request) {
+	// Get package from database as we need the content url
+	input := &hub.GetPackageInput{
+		PackageID: chi.URLParam(r, "packageID"),
+		Version:   chi.URLParam(r, "version"),
+	}
+	p, err := h.pkgManager.Get(r.Context(), input)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+
+	// Only Helm charts packages can have templates
+	// NOTE: OCI based repositories are NOT supported yet
+	if p.Repository.Kind != hub.Helm || strings.HasPrefix(p.Repository.URL, hub.RepositoryOCIPrefix) {
+		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusBadRequest)
+		return
+	}
+
+	// Download chart package from remote source
+	req, _ := http.NewRequest("GET", p.ContentURL, nil)
+	req = req.WithContext(r.Context())
+	resp, err := h.hc.Do(req)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		err := fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	chart, err := loader.LoadArchive(resp.Body)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+
+	// Prepare json data with templates and values and return it
+	data := map[string]interface{}{
+		"templates": chart.Templates,
+		"values":    chart.Values,
+	}
+	dataJSON, _ := json.Marshal(data)
+	helpers.RenderJSON(w, dataJSON, 24*time.Hour, http.StatusOK)
 }
 
 // GetHarborReplicationDump is an http handler used to get a summary of all

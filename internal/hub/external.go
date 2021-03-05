@@ -2,6 +2,7 @@ package hub
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/jackc/pgconn"
@@ -20,4 +21,9 @@ type DB interface {
 // EmailSender defines the methods the email sender must provide.
 type EmailSender interface {
 	SendEmail(data *email.Data) error
+}
+
+// HTTPClient defines the methods an HTTPClient implementation must provide.
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
 }

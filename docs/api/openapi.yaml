@@ -1600,6 +1600,52 @@ paths:
           $ref: "#/components/responses/NotFoundResponse"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/{version}/templates":
+    get:
+      tags:
+        - Packages
+      summary: Get the templates for a Helm chart package
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - templates
+                  - values
+                properties:
+                  templates:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - name
+                        - data
+                      properties:
+                        name:
+                          type: string
+                          nullable: false
+                        data:
+                          type: string
+                          format: byte
+                          nullable: false
+                  values:
+                    type: object
+                    nullable: false
+                    additionalProperties: true
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /subscriptions:
     get:
       tags:

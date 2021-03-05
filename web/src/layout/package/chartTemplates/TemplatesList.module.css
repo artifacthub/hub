@@ -1,0 +1,34 @@
+.input[placeholder] {
+  text-overflow: ellipsis;
+}
+
+.input {
+  padding-right: 35px !important;
+}
+
+.btn {
+  font-size: 0.85rem;
+}
+
+.legend {
+  min-width: 70px;
+}
+
+.templateName {
+  font-size: 90%;
+}
+
+.active {
+  background-color: #e2e6ea;
+  border-color: #dae0e5;
+}
+
+.searchIcon {
+  font-size: 0.85rem;
+  right: 15px;
+  top: 9px;
+}
+
+.alert {
+  background-color: var(--color-black-5);
+}
