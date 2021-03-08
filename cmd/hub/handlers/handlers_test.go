@@ -104,7 +104,7 @@ func TestRealIP(t *testing.T) {
 					xForwardedFor: []string{tc.xForwardedFor},
 				},
 			}
-			RealIP(tc.xffIndex)(checkRemoteAddr(tc.expectedRemoteAddr)).ServeHTTP(w, r)
+			realIP(tc.xffIndex)(checkRemoteAddr(tc.expectedRemoteAddr)).ServeHTTP(w, r)
 		})
 	}
 }

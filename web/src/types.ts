@@ -437,6 +437,7 @@ export enum ErrorKind {
   Unauthorized,
   Forbidden,
   Gone,
+  InvalidCSRF,
 }
 
 export interface OptOutItem {

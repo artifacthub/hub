@@ -17,6 +17,7 @@ require (
 	github.com/go-openapi/swag v0.19.11 // indirect
 	github.com/google/go-containerregistry v0.4.0
 	github.com/google/go-github v17.0.0+incompatible
+	github.com/gorilla/csrf v1.7.0
 	github.com/gorilla/feeds v1.1.1
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
@@ -38,7 +39,7 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.7.0
 	github.com/tektoncd/pipeline v0.20.1
-	github.com/unrolled/secure v1.0.8 // indirect
+	github.com/unrolled/secure v1.0.8
 	github.com/vincent-petithory/dataurl v0.0.0-20191104211930-d1553a71de50
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
 	golang.org/x/image v0.0.0-20201208152932-35266b937fa6 // indirect

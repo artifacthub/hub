@@ -33,7 +33,20 @@ const getData = (fixtureId: string): any => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as any;
 };
 
+const getCSRFTokenMock = jest.fn();
+
 describe('index API', () => {
+  beforeEach(() => {
+    methods.API.getCSRFToken = () => {
+      getCSRFTokenMock();
+      return Promise.resolve('test');
+    };
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('Test toCamelCase method', () => {
     const tests = getData('1');
     for (let i = 0; i < tests.length; i++) {
@@ -68,7 +81,7 @@ describe('index API', () => {
         await expect(methods.API.getOrganization('org1')).rejects.toEqual({
           kind: ErrorKind.Unauthorized,
         });
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
       });
 
       it('NotFound', async () => {
@@ -79,7 +92,7 @@ describe('index API', () => {
         await expect(methods.API.getOrganization('org1')).rejects.toEqual({
           kind: ErrorKind.NotFound,
         });
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
       });
 
       it('Other with custom message', async () => {
@@ -94,7 +107,7 @@ describe('index API', () => {
           kind: ErrorKind.Other,
           message: 'custom error',
         });
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
       });
 
       it('Other without custom message', async () => {
@@ -108,7 +121,7 @@ describe('index API', () => {
         await expect(methods.API.getOrganization('org1')).rejects.toEqual({
           kind: ErrorKind.Other,
         });
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -129,7 +142,7 @@ describe('index API', () => {
           version: '1.2.1',
         });
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/helm/repoName/pkg1/1.2.1');
         expect(response).toEqual(methods.toCamelCase(packageItem));
       });
@@ -146,7 +159,7 @@ describe('index API', () => {
 
         const response = await methods.API.toggleStar('pkgID');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/stars');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
@@ -165,7 +178,7 @@ describe('index API', () => {
 
         const response = await methods.API.getStars('pkgID');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/stars');
         expect(response.stars).toEqual(stars.stars);
         expect(response.starredByUser).toBeFalsy();
@@ -194,7 +207,7 @@ describe('index API', () => {
           offset: 0,
         });
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(
           '/api/v1/packages/search?facets=true&limit=20&offset=0&kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database'
         );
@@ -214,7 +227,7 @@ describe('index API', () => {
 
         const response = await methods.API.getStats();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/stats');
         expect(response.packages).toEqual(stats.packages);
         expect(response.releases).toEqual(stats.releases);
@@ -233,7 +246,7 @@ describe('index API', () => {
 
         const response = await methods.API.getRandomPackages();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/random');
         expect(response).toEqual(methods.toCamelCase(packages));
       });
@@ -251,7 +264,7 @@ describe('index API', () => {
 
         const response = await methods.API.register(user);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -272,7 +285,7 @@ describe('index API', () => {
 
         const response = await methods.API.verifyEmail('123abc');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/verify-email');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(JSON.stringify({ code: '123abc' }));
@@ -292,7 +305,7 @@ describe('index API', () => {
 
         const response = await methods.API.login(user);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/login');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(JSON.stringify(user));
@@ -311,7 +324,7 @@ describe('index API', () => {
 
         const response = await methods.API.logout();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/logout');
         expect(response).toBe('');
       });
@@ -329,7 +342,7 @@ describe('index API', () => {
 
         const response = await methods.API.getUserProfile();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/profile');
         expect(response).toEqual(methods.toCamelCase(profile));
       });
@@ -347,7 +360,7 @@ describe('index API', () => {
 
         const response = await methods.API.getRepositories();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user');
         expect(response).toEqual(methods.toCamelCase(repositories));
       });
@@ -363,7 +376,7 @@ describe('index API', () => {
 
         const response = await methods.API.getRepositories('org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1');
         expect(response).toEqual(methods.toCamelCase(repositories));
       });
@@ -381,7 +394,7 @@ describe('index API', () => {
 
         const response = await methods.API.addRepository(repo);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -401,7 +414,7 @@ describe('index API', () => {
 
         const response = await methods.API.addRepository(repo, 'org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -422,7 +435,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteRepository('repo1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -438,7 +451,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteRepository('repo1', 'org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -457,7 +470,7 @@ describe('index API', () => {
 
         const response = await methods.API.updateRepository(repo);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(`/api/v1/repositories/user/${repo.name}`);
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -477,7 +490,7 @@ describe('index API', () => {
 
         const response = await methods.API.updateRepository(repo, 'org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(`/api/v1/repositories/org/org1/${repo.name}`);
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -501,7 +514,7 @@ describe('index API', () => {
           toOrgName: 'org1',
         });
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/transfer?org=org1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
@@ -521,7 +534,7 @@ describe('index API', () => {
           fromOrgName: 'org1',
         });
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/transfer?org=org2');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
@@ -540,7 +553,7 @@ describe('index API', () => {
           fromOrgName: 'org1',
         });
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/transfer');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
@@ -560,7 +573,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -578,7 +591,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -596,7 +609,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -616,7 +629,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -634,7 +647,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -652,7 +665,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -672,7 +685,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -690,7 +703,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -708,7 +721,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -728,7 +741,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -746,7 +759,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -764,7 +777,7 @@ describe('index API', () => {
 
           const response = await methods.API.checkAvailability(resource);
 
-          expect(fetchMock.mock.calls.length).toEqual(1);
+          expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
             `/api/v1/check-availability/${resource.resourceKind}?v=${encodeURIComponent(resource.value)}`
           );
@@ -785,7 +798,7 @@ describe('index API', () => {
 
         const response = await methods.API.getUserOrganizations();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/user');
         expect(response).toEqual(methods.toCamelCase(orgs));
       });
@@ -803,7 +816,7 @@ describe('index API', () => {
 
         const response = await methods.API.getOrganization('artifacthub');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub');
         expect(response).toEqual(methods.toCamelCase(org));
       });
@@ -821,7 +834,7 @@ describe('index API', () => {
 
         const response = await methods.API.addOrganization(org);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -845,7 +858,7 @@ describe('index API', () => {
 
         const response = await methods.API.updateOrganization(org, 'artifacthub');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -868,7 +881,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteOrganization('org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -887,7 +900,7 @@ describe('index API', () => {
 
         const response = await methods.API.getOrganizationMembers('artifacthub');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub/members');
         expect(response).toEqual(methods.toCamelCase(members));
       });
@@ -904,7 +917,7 @@ describe('index API', () => {
 
         const response = await methods.API.addOrganizationMember('artifacthub', 'user1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub/member/user1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(response).toBe('');
@@ -922,7 +935,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteOrganizationMember('artifacthub', 'user1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub/member/user1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -940,7 +953,7 @@ describe('index API', () => {
 
         const response = await methods.API.confirmOrganizationMembership('org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/accept-invitation');
         expect(response).toBe('');
       });
@@ -958,7 +971,7 @@ describe('index API', () => {
 
         const response = await methods.API.getStarredByUser();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/starred');
         expect(response).toEqual(methods.toCamelCase(packages));
       });
@@ -976,7 +989,7 @@ describe('index API', () => {
 
         const response = await methods.API.updateUserProfile(profile);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/profile');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -1003,7 +1016,7 @@ describe('index API', () => {
 
         const response = await methods.API.updatePassword('old', 'new');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/password');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -1029,7 +1042,7 @@ describe('index API', () => {
 
         const response = await methods.API.saveImage(img);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/images');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(img);
@@ -1049,7 +1062,7 @@ describe('index API', () => {
 
         const response = await methods.API.getPackageSubscriptions('pkgId');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/pkgId');
         expect(response).toEqual(methods.toCamelCase(subscriptions));
       });
@@ -1066,7 +1079,7 @@ describe('index API', () => {
 
         const response = await methods.API.addSubscription('pkgId', 0);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(JSON.stringify({ package_id: 'pkgId', event_kind: 0 }));
@@ -1085,7 +1098,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteSubscription('pkgId', 0);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions?package_id=pkgId&event_kind=0');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -1104,7 +1117,7 @@ describe('index API', () => {
 
         const response = await methods.API.getUserSubscriptions();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions');
         expect(response).toEqual(methods.toCamelCase(packages));
       });
@@ -1122,7 +1135,7 @@ describe('index API', () => {
 
         const response = await methods.API.getWebhooks();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user');
         expect(response).toEqual(methods.toCamelCase(webhooks));
       });
@@ -1138,7 +1151,7 @@ describe('index API', () => {
 
         const response = await methods.API.getWebhooks('org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1');
         expect(response).toEqual(methods.toCamelCase(webhooks));
       });
@@ -1156,7 +1169,7 @@ describe('index API', () => {
 
         const response = await methods.API.getWebhook('webhookId');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user/webhookId');
         expect(response).toEqual(methods.toCamelCase(webhook));
       });
@@ -1172,7 +1185,7 @@ describe('index API', () => {
 
         const response = await methods.API.getWebhook('webhookId', 'org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1/webhookId');
         expect(response).toEqual(methods.toCamelCase(webhooks));
       });
@@ -1190,7 +1203,7 @@ describe('index API', () => {
 
         const response = await methods.API.addWebhook(webhook);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
 
@@ -1221,7 +1234,7 @@ describe('index API', () => {
 
         const response = await methods.API.addWebhook(webhook, 'org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
 
@@ -1253,7 +1266,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteWebhook('webhook1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user/webhook1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -1269,7 +1282,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteWebhook('webhook1', 'org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1/webhook1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -1288,7 +1301,7 @@ describe('index API', () => {
 
         const response = await methods.API.updateWebhook(webhook);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(`/api/v1/webhooks/user/${webhook.webhookId}`);
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
 
@@ -1319,7 +1332,7 @@ describe('index API', () => {
 
         const response = await methods.API.updateWebhook(webhook, 'org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(`/api/v1/webhooks/org/org1/${webhook.webhookId}`);
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
 
@@ -1352,7 +1365,7 @@ describe('index API', () => {
 
         const response = await methods.API.triggerWebhookTest(webhook);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/test');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
 
@@ -1375,7 +1388,7 @@ describe('index API', () => {
 
         const response = await methods.API.getAPIKeys();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys');
         expect(response).toEqual(methods.toCamelCase(apiKeys));
       });
@@ -1393,7 +1406,7 @@ describe('index API', () => {
 
         const response = await methods.API.getAPIKey('apiKeyId');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys/apiKeyId');
         expect(response).toEqual(methods.toCamelCase(apiKey));
       });
@@ -1410,7 +1423,7 @@ describe('index API', () => {
 
         const response = await methods.API.addAPIKey('test');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(response.key).toEqual('123abc');
@@ -1428,7 +1441,7 @@ describe('index API', () => {
 
         const response = await methods.API.updateAPIKey('apiKeyId', 'newName');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys/apiKeyId');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -1451,7 +1464,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteAPIKey('apiKeyId');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys/apiKeyId');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -1470,7 +1483,7 @@ describe('index API', () => {
 
         const response = await methods.API.getOptOutList();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out');
         expect(response).toEqual(methods.toCamelCase(optOutList));
       });
@@ -1487,7 +1500,7 @@ describe('index API', () => {
 
         const response = await methods.API.addOptOut('repoId', 2);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(JSON.stringify({ repository_id: 'repoId', event_kind: 2 }));
@@ -1506,7 +1519,7 @@ describe('index API', () => {
 
         const response = await methods.API.deleteOptOut('optOutId');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out/optOutId');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
@@ -1525,7 +1538,7 @@ describe('index API', () => {
 
         const response = await methods.API.getAllRepositories();
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories');
         expect(response).toEqual(methods.toCamelCase(repositories));
       });
@@ -1550,7 +1563,7 @@ describe('index API', () => {
 
         const response = await methods.API.claimRepositoryOwnership(mockRepo);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claim-ownership');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
@@ -1574,7 +1587,7 @@ describe('index API', () => {
 
         const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org2');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claim-ownership?org=org2');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
@@ -1598,7 +1611,7 @@ describe('index API', () => {
 
         const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claim-ownership?org=org1');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
@@ -1622,7 +1635,7 @@ describe('index API', () => {
 
         const response = await methods.API.claimRepositoryOwnership(mockRepo);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claim-ownership');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
@@ -1641,7 +1654,7 @@ describe('index API', () => {
 
         const response = await methods.API.getAuthorizationPolicy('org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorization-policy');
         expect(response).toEqual(methods.toCamelCase(authz));
       });
@@ -1664,7 +1677,7 @@ describe('index API', () => {
 
         const response = await methods.API.updateAuthorizationPolicy('org1', policy);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorization-policy');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(fetchMock.mock.calls[0][1]!.body).toBe(
@@ -1696,7 +1709,7 @@ describe('index API', () => {
 
         const response = await methods.API.getUserAllowedActions('org1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/user-allowed-actions');
         expect(response).toEqual(methods.toCamelCase(actions));
       });
@@ -1720,7 +1733,7 @@ describe('index API', () => {
 
         const response = await methods.API.triggerTestInRegoPlayground(data);
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('https://play.openpolicyagent.org/v1/share');
         expect(response).toEqual(methods.toCamelCase(playgroundPolicy));
       });
@@ -1738,9 +1751,39 @@ describe('index API', () => {
 
         const response = await methods.API.getSnapshotSecurityReport('pkgID', '1.1.1');
 
-        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.1.1/security-report');
         expect(response).toEqual(report);
+      });
+    });
+
+    describe('getCSRFToken', () => {
+      it('calls function twice when invalidToken error only when PUT, POST or DELETE function', async () => {
+        fetchMock.mockResponses(
+          [
+            JSON.stringify({ message: 'CSRF token invalid' }),
+            {
+              headers: {
+                'content-type': 'application/json',
+              },
+              status: 403,
+            },
+          ],
+          [
+            '',
+            {
+              headers: {
+                'content-type': 'text/plain; charset=utf-8',
+              },
+              status: 201,
+            },
+          ]
+        );
+
+        await methods.API.addOrganizationMember('artifacthub', 'user1');
+
+        expect(getCSRFTokenMock).toHaveBeenCalled();
+        expect(fetchMock).toHaveBeenCalledTimes(2);
       });
     });
   });

@@ -34,11 +34,13 @@ import (
 )
 
 const (
+	// APIKeyHeader represents the header used to provide an API key.
+	APIKeyHeader = "X-API-KEY"
+
 	sessionCookieName    = "sid"
 	oauthStateCookieName = "oas"
 	sessionDuration      = 30 * 24 * time.Hour
 	oauthFailedURL       = "/oauth-failed"
-	apiKeyHeader         = "X-API-KEY"
 )
 
 // Handlers represents a group of http handlers in charge of handling
@@ -245,6 +247,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 		Expires:  time.Now().Add(sessionDuration),
 		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
 	}
 	if h.cfg.GetBool("server.cookie.secure") {
 		cookie.Secure = true
@@ -354,6 +357,7 @@ func (h *Handlers) OauthCallback(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 		Expires:  time.Now().Add(sessionDuration),
 		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
 	}
 	if h.cfg.GetBool("server.cookie.secure") {
 		sessionCookie.Secure = true
@@ -626,36 +630,10 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var userID string
 
-		// Try cookie based authentication
-		cookie, err := r.Cookie(sessionCookieName)
-		if err == nil {
-			// Extract and validate cookie from request
-			var sessionID []byte
-			if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
-				h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("sessionID decoding failed")
-				helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
-				return
-			}
-
-			// Check the session provided is valid
-			checkSessionOutput, err := h.userManager.CheckSession(r.Context(), sessionID, sessionDuration)
-			if err != nil {
-				h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("checkSession failed")
-				helpers.RenderErrorWithCodeJSON(w, nil, http.StatusInternalServerError)
-				return
-			}
-			if !checkSessionOutput.Valid {
-				helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
-				return
-			}
-
-			userID = checkSessionOutput.UserID
-		}
-
-		// Try API key based authentication
-		if userID == "" && r.Header.Get(apiKeyHeader) != "" {
+		// Use API key based authentication if API key is provided
+		if r.Header.Get(APIKeyHeader) != "" {
 			// Extract API key from header
-			keyB64 := r.Header.Get(apiKeyHeader)
+			keyB64 := r.Header.Get(APIKeyHeader)
 			key, err := base64.StdEncoding.DecodeString(keyB64)
 			if err != nil {
 				h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("key decoding failed")
@@ -676,6 +654,32 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 			}
 
 			userID = checkAPIKeyOutput.UserID
+		} else {
+			// Use cookie based authentication
+			cookie, err := r.Cookie(sessionCookieName)
+			if err == nil {
+				// Extract and validate cookie from request
+				var sessionID []byte
+				if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
+					h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("sessionID decoding failed")
+					helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
+					return
+				}
+
+				// Check the session provided is valid
+				checkSessionOutput, err := h.userManager.CheckSession(r.Context(), sessionID, sessionDuration)
+				if err != nil {
+					h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("checkSession failed")
+					helpers.RenderErrorWithCodeJSON(w, nil, http.StatusInternalServerError)
+					return
+				}
+				if !checkSessionOutput.Valid {
+					helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
+					return
+				}
+
+				userID = checkSessionOutput.UserID
+			}
 		}
 
 		// Return if no authentication method succeeded

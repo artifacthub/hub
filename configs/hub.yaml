@@ -28,3 +28,6 @@ server:
   cookie:
     hashKey: default-unsafe-key
     secure: false
+  csrf:
+    authKey: default-unsafe-key
+    secure: false

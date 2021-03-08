@@ -63,7 +63,9 @@ const StarButton = (props: Props) => {
       getPackageStars();
       setIsSending(false);
     } catch (err) {
-      let errMessage = `An error occurred ${notStarred ? 'staring' : 'unstaring'} the package, please try again later.`;
+      let errMessage = `An error occurred ${
+        notStarred ? 'starring' : 'unstarring'
+      } the package, please try again later.`;
       setIsSending(false);
 
       // On unauthorized, we force sign out
