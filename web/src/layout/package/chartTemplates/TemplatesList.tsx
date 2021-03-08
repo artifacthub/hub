@@ -26,9 +26,10 @@ const TemplatesList = (props: Props) => {
 
   useEffect(() => {
     const getVisibleTemplates = (): ChartTemplate[] => {
-      return props.templates.filter((tmpl: ChartTemplate) =>
-        `${tmpl.name} ${tmpl.resourceKinds ? tmpl.resourceKinds.join(' ') : ''}`.includes(inputValue)
-      );
+      return props.templates.filter((tmpl: ChartTemplate) => {
+        const term = `${tmpl.name} ${tmpl.resourceKinds ? tmpl.resourceKinds.join(' ') : ''}`.toLowerCase();
+        return term.includes(inputValue.toLowerCase());
+      });
     };
 
     const reviewActiveTemplate = (filteredTemplates: ChartTemplate[]) => {
@@ -109,11 +110,11 @@ const TemplatesList = (props: Props) => {
                       case ChartTmplTypeFile.Template:
                         return (
                           <>
-                            <div className="mb-1 text-truncate">
-                              <div className={`d-inline-block ${styles.legend}`}>
+                            <div className="d-flex flex-row align-items-baseline mb-1">
+                              <div className={styles.legend}>
                                 <small className="text-muted text-uppercase">Template:</small>
                               </div>
-                              <span className={styles.templateName}>{template.name}</span>
+                              <div className={`text-truncate ${styles.templateName}`}>{template.name}</div>
                             </div>
                             <div className="d-flex flex-row mb-1">
                               <div className={styles.legend}>

@@ -14,10 +14,10 @@ interface Props {
   values?: any;
 }
 
-const HIGHLIGHT_PATTERN = /\{\{(?!\{)((?:(?!\{\{).)*?)\}\}/gi;
+const HIGHLIGHT_PATTERN = /{{(?!\/\*)(.*?)([^{]|{})*}}/;
 const FUNCTIONS_DEFINITIONS = require('./functions.json');
 const BUILTIN_DEFINITIONS = require('./builtIn.json');
-const SPECIAL_CHARACTERS = /^[^)}]+/;
+const SPECIAL_CHARACTERS = /[^|({})-]+/;
 
 const Template = (props: Props) => {
   const [activeTemplate, setActiveTemplate] = useState<ChartTemplate>(props.template);
@@ -34,9 +34,17 @@ const Template = (props: Props) => {
 
   const processActiveTemplate = (tmpl: string): JSX.Element | null => {
     const rows = tmpl.split('\n');
-    const rowsContent = rows.map((line: string, index: number) => {
-      // Don't display last line if empty
-      if (index === rows.length - 1 && line === '') return null;
+    // Don't display last line if empty
+    let cleanRows = [...rows];
+    for (let i = rows.length - 1; i < rows.length; --i) {
+      if (rows[i].trim() === '') {
+        cleanRows.splice(i, 1);
+      } else {
+        break;
+      }
+    }
+
+    const rowsContent = cleanRows.map((line: string, index: number) => {
       return (
         <div className="d-flex flex-row my-1" key={`active-tmpl-${index}`}>
           <div className={`text-right mr-3 ${styles.lineNumber}`}>{index + 1}</div>
@@ -56,139 +64,104 @@ const Template = (props: Props) => {
   };
 
   const renderValue = (word: string) => {
-    return regexifyString({
-      pattern: SPECIAL_CHARACTERS,
-      decorator: (match, index) => {
-        const defaultValue = get(props.values, match.slice(1));
-        const isDefaultObject = isObject(defaultValue);
-        return (
-          <React.Fragment key={`value_${word}_${index}`}>
-            <ParamInfo
-              element={<span className={styles.tmplValue}>{match}</span>}
-              info={
-                <div className="p-2 text-truncate">
-                  <span className="text-muted mr-2">DEFAULT:</span>
+    const defaultValue = get(props.values, word.slice(1));
+    const isDefaultObject = isObject(defaultValue);
+    const formattedValue =
+      isDefaultObject && !isEmpty(defaultValue) ? JSON.stringify(defaultValue, null, 2) : JSON.stringify(defaultValue);
 
-                  {isDefaultObject ? (
-                    <>
-                      {isEmpty(defaultValue) ? (
-                        <span className="text-nowrap">{JSON.stringify(defaultValue)}</span>
-                      ) : (
-                        <div className={`mt-2 ${styles.textarea}`}>
-                          <AutoresizeTextarea
-                            name="template"
-                            value={JSON.stringify(defaultValue, null, 2)}
-                            minRows={1}
-                            maxRows={20}
-                            disabled
-                          />
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <span>{isString(defaultValue) ? defaultValue || `""` : JSON.stringify(defaultValue)}</span>
-                  )}
-                </div>
-              }
-              fixedWidth={isDefaultObject && !isEmpty(defaultValue)}
-            />
-          </React.Fragment>
-        );
-      },
-      input: word,
-    });
+    return (
+      <ParamInfo
+        element={<span className={styles.tmplValue}>{word}</span>}
+        info={
+          <div className="p-2 text-truncate">
+            <span className="text-muted mr-2 normalOpacityFont">DEFAULT:</span>
+
+            {isDefaultObject ? (
+              <>
+                {isEmpty(defaultValue) ? (
+                  <span className="text-nowrap">{formattedValue}</span>
+                ) : (
+                  <div className={`mt-2 ${styles.textarea}`}>
+                    <AutoresizeTextarea name="template" value={formattedValue} minRows={1} maxRows={20} disabled />
+                  </div>
+                )}
+              </>
+            ) : (
+              <span>{isString(defaultValue) ? defaultValue || `""` : formattedValue}</span>
+            )}
+          </div>
+        }
+        fixedWidth={isDefaultObject && !isEmpty(defaultValue)}
+      />
+    );
   };
 
   const renderTemplateFunction = (word: string) => {
-    return regexifyString({
-      pattern: SPECIAL_CHARACTERS,
-      decorator: (match, index) => {
-        const definition = FUNCTIONS_DEFINITIONS.hasOwnProperty(match);
-        if (definition) {
-          return (
-            <React.Fragment key={`func_${word}_${index}`}>
-              <ParamInfo
-                element={<span className={styles.tmplFunction}>{match}</span>}
-                info={FUNCTIONS_DEFINITIONS[word]}
-                isMarkdown
-                fixedWidth
-              />
-            </React.Fragment>
-          );
-        } else {
-          return (
-            <span key={`func_${word}_${index}`} className={styles.tmplFunction}>
-              {match}
-            </span>
-          );
-        }
-      },
-      input: word,
-    });
+    const definition = FUNCTIONS_DEFINITIONS.hasOwnProperty(word);
+    if (definition) {
+      return (
+        <ParamInfo
+          element={<span className={styles.tmplFunction}>{word}</span>}
+          info={FUNCTIONS_DEFINITIONS[word]}
+          isMarkdown
+          fixedWidth
+        />
+      );
+    } else {
+      return <span className={styles.tmplFunction}>{word}</span>;
+    }
   };
 
   const renderTemplateBuiltIn = (word: string) => {
-    return regexifyString({
-      pattern: SPECIAL_CHARACTERS,
-      decorator: (match, index) => {
-        const definition = BUILTIN_DEFINITIONS.hasOwnProperty(match);
-        if (definition) {
-          return (
-            <React.Fragment key={`builtIn_${word}_${index}`}>
-              <ParamInfo
-                element={<span className={styles.tmplFunction}>{match}</span>}
-                info={BUILTIN_DEFINITIONS[match]}
-                isMarkdown
-                fixedWidth
-              />
-            </React.Fragment>
-          );
-        } else {
-          return (
-            <span key={`builtIn_${word}_${index}`} className={styles.tmplBuiltIn}>
-              {match}
-            </span>
-          );
-        }
-      },
-      input: word,
-    });
+    const definition = BUILTIN_DEFINITIONS.hasOwnProperty(word);
+    if (definition) {
+      return (
+        <ParamInfo
+          element={<span className={styles.tmplFunction}>{word}</span>}
+          info={BUILTIN_DEFINITIONS[word]}
+          isMarkdown
+          fixedWidth
+        />
+      );
+    } else {
+      return <span className={styles.tmplBuiltIn}>{word}</span>;
+    }
   };
 
-  const processHelmTemplateContent = (str: string): JSX.Element => {
+  const processHelmTemplateContent = (str: string, lineNumber: number): JSX.Element => {
     const parts = str.split(' ');
     return (
       <span className={`badge font-weight-normal ${styles.badge}`}>
-        {parts.map((word: string, index: number) => {
+        {parts.map((word: string, idx: number) => {
           return (
-            <React.Fragment key={`helmTmpl_${index}`}>
-              {(() => {
-                switch (processHelmTemplate(word)) {
-                  case ChartTemplateSpecialType.BuiltInObject:
-                    return <>{renderTemplateBuiltIn(word)}</>;
-                  case ChartTemplateSpecialType.ValuesBuiltInObject:
-                    return <>{renderValue(word)}</>;
-                  case ChartTemplateSpecialType.Function:
-                    return <>{renderTemplateFunction(word)}</>;
-                  case ChartTemplateSpecialType.FlowControl:
-                    return <span className={styles.tmplFlowControl}>{word}</span>;
-                  case ChartTemplateSpecialType.Variable:
-                    return regexifyString({
-                      pattern: SPECIAL_CHARACTERS,
-                      decorator: (match, index) => {
-                        return (
-                          <span key={`var_${word}_${index}`} className={styles.tmplVariable}>
-                            {match}
-                          </span>
-                        );
-                      },
-                      input: word,
-                    });
-                  default:
-                    return <>{word}</>;
-                }
-              })()}
-              {index === parts.length - 1 ? '' : ' '}
+            <React.Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
+              {regexifyString({
+                pattern: SPECIAL_CHARACTERS,
+                decorator: (match, index) => {
+                  return (
+                    <React.Fragment key={`helmTmplReg_${lineNumber}_${index}`}>
+                      {(() => {
+                        switch (processHelmTemplate(match)) {
+                          case ChartTemplateSpecialType.BuiltInObject:
+                            return <>{renderTemplateBuiltIn(match)}</>;
+                          case ChartTemplateSpecialType.ValuesBuiltInObject:
+                            return <>{renderValue(match)}</>;
+                          case ChartTemplateSpecialType.Function:
+                            return <>{renderTemplateFunction(match)}</>;
+                          case ChartTemplateSpecialType.FlowControl:
+                            return <span className={styles.tmplFlowControl}>{match}</span>;
+                          case ChartTemplateSpecialType.Variable:
+                            return <span className={styles.tmplVariable}>{match}</span>;
+                          default:
+                            return <>{word}</>;
+                        }
+                      })()}
+                    </React.Fragment>
+                  );
+                },
+                input: word,
+              })}
+              {idx === parts.length - 1 ? '' : ' '}
             </React.Fragment>
           );
         })}
@@ -200,7 +173,7 @@ const Template = (props: Props) => {
     return regexifyString({
       pattern: HIGHLIGHT_PATTERN,
       decorator: (match, index) => {
-        return <React.Fragment key={`line_${index}`}>{processHelmTemplateContent(match)}</React.Fragment>;
+        return <React.Fragment key={`line_${index}`}>{processHelmTemplateContent(match, index)}</React.Fragment>;
       },
       input: line,
     });
