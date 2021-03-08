@@ -1,4 +1,4 @@
-import { compact, isNull, uniq } from 'lodash';
+import { compact, isNull, isUndefined, uniq } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { ImInsertTemplate } from 'react-icons/im';
 import { MdClose } from 'react-icons/md';
@@ -19,6 +19,7 @@ interface Props {
   packageId: string;
   version: string;
   repoKind: RepositoryKind;
+  private?: boolean;
   visibleChartTemplates: boolean;
   visibleTemplate?: string;
   searchUrlReferer?: SearchFiltersURL;
@@ -30,7 +31,7 @@ interface FileProps {
   extension: string;
 }
 
-const KIND = /(\nkind: \w*|^kind: \w*)/g;
+const KIND = /(\nkind: [A-Za-z0-9"]*|^kind: [A-Za-z0-9"]*)/g;
 
 const getFileNameAndExt = (str: string): FileProps => {
   const file = str.split('/').pop() || str;
@@ -45,7 +46,7 @@ const getResourceKinds = (data: string): string[] => {
   if (kinds) {
     const cleanKinds = kinds.map((kind: string) => {
       const parts = kind.split(':');
-      return parts[1].trim();
+      return parts[1].replaceAll('"', '').trim();
     });
     return uniq(compact(cleanKinds));
   }
@@ -91,6 +92,8 @@ const ChartTemplatesModal = (props: Props) => {
 
   const onTemplateChange = (template: ChartTemplate | null) => {
     setIsChangingTemplate(true);
+    setActiveTemplate(template);
+    updateUrl(template ? template.name : undefined);
     if (!isNull(template)) {
       if (anchor && anchor.current) {
         anchor.current.scrollIntoView({
@@ -100,8 +103,6 @@ const ChartTemplatesModal = (props: Props) => {
         });
       }
     }
-    setActiveTemplate(template);
-    updateUrl(template ? template.name : undefined);
   };
 
   const updateUrl = (templateName?: string) => {
@@ -112,7 +113,7 @@ const ChartTemplatesModal = (props: Props) => {
   };
 
   useEffect(() => {
-    if (props.visibleChartTemplates && !openStatus) {
+    if (props.visibleChartTemplates && !openStatus && (isUndefined(props.private) || !props.private)) {
       onOpenModal();
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
@@ -185,7 +186,11 @@ const ChartTemplatesModal = (props: Props) => {
 
   return (
     <div className="mb-2">
-      <button className="btn btn-secondary btn-block btn-sm text-nowrap" onClick={onOpenModal}>
+      <button
+        className="btn btn-secondary btn-block btn-sm text-nowrap"
+        onClick={onOpenModal}
+        disabled={!isUndefined(props.private) && props.private}
+      >
         <div className="d-flex flex-row align-items-center justify-content-center">
           {isLoading ? (
             <>

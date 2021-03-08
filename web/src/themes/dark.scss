@@ -421,14 +421,6 @@
     }
   }
 
-  .progressLine {
-    background-color: var(--color-black-25);
-  }
-
-  .progressLine:after {
-    background-color: var(--color-black-90);
-  }
-
   .sectionItem {
     &.isActive {
       color: var(--color-font) !important;
@@ -485,6 +477,10 @@
     &::before {
       background-color: var(--color-font);
     }
+  }
+
+  .normalOpacityFont {
+    opacity: 1;
   }
 
   footer,

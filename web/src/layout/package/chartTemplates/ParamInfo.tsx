@@ -79,7 +79,7 @@ const ParamInfo = (props: Props) => {
         <div
           ref={ref}
           className={classnames(
-            'dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 text-truncate',
+            'dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1',
             styles.dropdown,
             {
               [styles.visible]: openStatus,
