@@ -40,7 +40,7 @@
   color: var(--color-1-700);
 }
 
-.content *:is(h1, h2, h3, h4, h5, h6) {
+.content .header {
   font-weight: bold;
   font-size: 0.75rem;
   line-height: 1rem;
