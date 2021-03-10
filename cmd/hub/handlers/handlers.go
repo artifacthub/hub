@@ -26,6 +26,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"github.com/unrolled/secure"
 )
 
 var xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
@@ -118,6 +119,12 @@ func (h *Handlers) setupRouter() {
 	r.Use(RealIP(h.cfg.GetInt("server.xffIndex")))
 	r.Use(Logger)
 	r.Use(h.MetricsCollector)
+	r.Use(secure.New(secure.Options{
+		SSLProxyHeaders:      map[string]string{"X-Forwarded-Proto": "https"},
+		STSSeconds:           31536000,
+		STSIncludeSubdomains: true,
+		STSPreload:           true,
+	}).Handler)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.Users.BasicAuth)
 	}
