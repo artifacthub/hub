@@ -415,12 +415,6 @@ export interface APIKeyCode {
   key: string;
 }
 
-export interface OptionWithIcon {
-  value: string;
-  label: string;
-  icon: JSX.Element;
-}
-
 export interface TsQuery {
   name: string;
   label: string;

@@ -50,103 +50,61 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                 novalidate=""
               >
                 <div
-                  class="form-group w-75 mb-2"
+                  class="form-group w-75 mb-4"
                 >
-                  <div
-                    class="mb-4"
+                  <label
+                    class="font-weight-bold label"
+                    for="repoKind"
                   >
-                    <label
-                      class="font-weight-bold label"
-                      for="description"
+                    Kind
+                  </label>
+                  <select
+                    aria-label="kind-select"
+                    class="custom-select"
+                    name="repoKind"
+                    required=""
+                  >
+                    <option
+                      value="0"
                     >
-                      Kind
-                    </label>
-                    <div
-                      class=" css-2b097c-container"
+                      Helm charts
+                    </option>
+                    <option
+                      value="6"
                     >
-                      <div
-                        class=" css-unbbyq-control"
-                      >
-                        <div
-                          class=" css-g1d714-ValueContainer"
-                        >
-                          <div
-                            class="d-flex flex-row align-items-center option"
-                          >
-                            <span
-                              class="mr-2"
-                            >
-                              <div
-                                class="kindIcon"
-                              >
-                                <img
-                                  alt="Icon"
-                                  class="mw-100 mh-100 iconLight"
-                                  src="/static/media/helm-chart.svg"
-                                />
-                                <img
-                                  alt="Icon"
-                                  class="mw-100 mh-100 iconDark"
-                                  src="/static/media/helm-chart-light.svg"
-                                />
-                              </div>
-                            </span>
-                            <div>
-                              Helm charts
-                            </div>
-                          </div>
-                          <div
-                            class="css-b8ldur-Input"
-                          >
-                            <div
-                              class=""
-                              style="display: inline-block;"
-                            >
-                              <input
-                                aria-autocomplete="list"
-                                autocapitalize="none"
-                                autocomplete="off"
-                                autocorrect="off"
-                                id="react-select-2-input"
-                                spellcheck="false"
-                                style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
-                                tabindex="0"
-                                type="text"
-                                value=""
-                              />
-                              <div
-                                style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: -webkit-small-control; letter-spacing: normal; text-transform: none;"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class=" css-1hb7zxy-IndicatorsContainer"
-                        >
-                          <span
-                            class=" css-1okebmr-indicatorSeparator"
-                          />
-                          <div
-                            aria-hidden="true"
-                            class=" css-tlfecz-indicatorContainer"
-                          >
-                            <svg
-                              aria-hidden="true"
-                              class="css-6q0nyr-Svg"
-                              focusable="false"
-                              height="20"
-                              viewBox="0 0 20 20"
-                              width="20"
-                            >
-                              <path
-                                d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                              />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      Helm plugins
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      Falco rules
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      OPA policies
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      OLM operators
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Tinkerbell actions
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      Krew kubectl plugins
+                    </option>
+                    <option
+                      value="7"
+                    >
+                      Tekton tasks
+                    </option>
+                  </select>
                 </div>
                 <div
                   class="form-group mb-4 position-relative undefined"

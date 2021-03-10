@@ -11,15 +11,14 @@ const defaultProps = {
   setOpenSignUp: setOpenSignUpMock,
 };
 
-describe('SignUp', () => {
-  beforeEach(() => {
-    (window as any).config = {
-      githubAuth: 'true',
-      googleAuth: 'true',
-      oidcAuth: 'true',
-    };
-  });
+Object.defineProperty(document, 'querySelector', {
+  value: () => ({
+    getAttribute: () => 'true',
+  }),
+  writable: true,
+});
 
+describe('SignUp', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
