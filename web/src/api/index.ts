@@ -1,4 +1,5 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import { isNull } from 'lodash';
 import camelCase from 'lodash/camelCase';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
@@ -66,6 +67,8 @@ interface FetchOptions {
 }
 
 const EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples'];
+const CSRF_HEADER = 'X-Csrf-Token';
+let csrfToken: string | null = null;
 
 export const toCamelCase = (r: any): Result => {
   if (isArray(r)) {
@@ -97,9 +100,23 @@ const handleErrors = async (res: any) => {
         };
         break;
       case 403:
-        error = {
-          kind: ErrorKind.Forbidden,
-        };
+        try {
+          const er = await res.text();
+          if (er.includes('CSRF token invalid')) {
+            csrfToken = null;
+            error = {
+              kind: ErrorKind.InvalidCSRF,
+            };
+          } else {
+            error = {
+              kind: ErrorKind.Forbidden,
+            };
+          }
+        } catch {
+          error = {
+            kind: ErrorKind.Forbidden,
+          };
+        }
         break;
       case 410:
         error = {
@@ -137,12 +154,49 @@ const handleContent = async (res: any, skipCamelConversion?: boolean) => {
   }
 };
 
-export const apiFetch = (url: string, opts?: FetchOptions, skipCamelConversion?: boolean): any => {
-  const options = opts || {};
-  return fetch(url, options)
-    .then(handleErrors)
-    .then((res) => handleContent(res, skipCamelConversion))
-    .catch((error) => Promise.reject(error));
+const processFetchOptions = async (opts?: FetchOptions): Promise<FetchOptions | any> => {
+  let options: FetchOptions | any = opts || {};
+  // Use CSRF token only when methods are DELETE, POST and PUT
+  if (opts && ['DELETE', 'POST', 'PUT'].includes(opts.method)) {
+    if (isNull(csrfToken)) {
+      // Get CSRF token first time we use one of these methods
+      csrfToken = await API.getCSRFToken();
+      if (isNull(csrfToken)) {
+        const error = { kind: ErrorKind.Other };
+        throw error;
+      }
+    }
+
+    return {
+      ...options,
+      headers: {
+        ...options.headers,
+        [CSRF_HEADER]: csrfToken,
+      },
+    };
+  }
+  return options;
+};
+
+export const apiFetch = async (url: string, opts?: FetchOptions, skipCamelConversion?: boolean): Promise<any> => {
+  const csrfRetry = (func: () => Promise<any>) => {
+    return func().catch((error: Error) => {
+      if (error.kind === ErrorKind.InvalidCSRF) {
+        return func().catch((error) => Promise.reject(error));
+      } else {
+        return Promise.reject(error);
+      }
+    });
+  };
+
+  return csrfRetry(async () => {
+    let options: FetchOptions | any = await processFetchOptions(opts);
+
+    return fetch(url, options)
+      .then(handleErrors)
+      .then((res) => handleContent(res, skipCamelConversion))
+      .catch((error) => Promise.reject(error));
+  });
 };
 
 export const getUrlContext = (fromOrgName?: string): string => {
@@ -224,6 +278,22 @@ export const API = {
 
   getRandomPackages: (): Promise<Package[]> => {
     return apiFetch(`${API_BASE_URL}/packages/random`);
+  },
+
+  getCSRFToken: (): Promise<string | null> => {
+    const tokenError = { kind: ErrorKind.Other };
+    return fetch(`${API_BASE_URL}/csrf`).then((res) => {
+      if (!res.ok) {
+        throw tokenError;
+      } else {
+        if (res.headers.has(CSRF_HEADER)) {
+          const token = res.headers.get(CSRF_HEADER);
+          return token === '' ? null : token;
+        } else {
+          throw tokenError;
+        }
+      }
+    });
   },
 
   register: (user: User): Promise<null | string> => {

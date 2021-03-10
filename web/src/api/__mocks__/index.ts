@@ -5,6 +5,7 @@ export const API = {
   searchPackages: jest.fn(),
   getStats: jest.fn(),
   getRandomPackages: jest.fn(),
+  getCSRFToken: jest.fn(),
   register: jest.fn(),
   verifyEmail: jest.fn(),
   login: jest.fn(),

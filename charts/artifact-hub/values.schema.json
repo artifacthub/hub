@@ -292,6 +292,22 @@
                             },
                             "required": ["secure"]
                         },
+                        "csrf": {
+                            "type": "object",
+                            "properties": {
+                                "authKey": {
+                                    "title": "CSRF authentication key",
+                                    "type": "string",
+                                    "default": "default-unsafe-key"
+                                },
+                                "secure": {
+                                    "title": "CSRF secure cookie",
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            },
+                            "required": ["authKey", "secure"]
+                        },
                         "motd": {
                             "title": "Message of the day",
                             "description": "The message of the day will be displayed in a banner on the top of the Artifact Hub UI.",
@@ -438,7 +454,7 @@
                             "default": 0
                         }
                     },
-                    "required": ["allowPrivateRepositories", "configDir", "baseURL", "shutdownTimeout", "basicAuth", "cookie", "xffIndex"]
+                    "required": ["allowPrivateRepositories", "baseURL", "basicAuth", "configDir", "cookie", "csrf", "shutdownTimeout", "xffIndex"]
                 },
                 "service": {
                     "type": "object",

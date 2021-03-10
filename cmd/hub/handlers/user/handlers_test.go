@@ -658,6 +658,75 @@ func TestRegisterUser(t *testing.T) {
 func TestRequireLogin(t *testing.T) {
 	sessionID := []byte("sessionID")
 
+	t.Run("api key based authentication", func(t *testing.T) {
+		key := []byte("key")
+		keyB64 := base64.StdEncoding.EncodeToString(key)
+
+		t.Run("invalid api key provided", func(t *testing.T) {
+			t.Parallel()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.Header.Add(APIKeyHeader, "invalidB64")
+
+			hw := newHandlersWrapper()
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		})
+
+		t.Run("error checking api key", func(t *testing.T) {
+			t.Parallel()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.Header.Add(APIKeyHeader, keyB64)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckAPIKey", r.Context(), key).Return(nil, tests.ErrFakeDB)
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+
+		t.Run("invalid api key provided", func(t *testing.T) {
+			t.Parallel()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.Header.Add(APIKeyHeader, keyB64)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckAPIKey", r.Context(), key).
+				Return(&hub.CheckAPIKeyOutput{UserID: "", Valid: false}, nil)
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+
+		t.Run("api key based authentication succeeded", func(t *testing.T) {
+			t.Parallel()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.Header.Add(APIKeyHeader, keyB64)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckAPIKey", r.Context(), key).
+				Return(&hub.CheckAPIKeyOutput{UserID: "userID", Valid: true}, nil)
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusOK, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+	})
+
 	t.Run("session cookie based authentication", func(t *testing.T) {
 		t.Run("invalid session cookie provided", func(t *testing.T) {
 			t.Parallel()
@@ -731,75 +800,6 @@ func TestRequireLogin(t *testing.T) {
 				Name:  sessionCookieName,
 				Value: encodedSessionID,
 			})
-			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-			resp := w.Result()
-			defer resp.Body.Close()
-
-			assert.Equal(t, http.StatusOK, resp.StatusCode)
-			hw.um.AssertExpectations(t)
-		})
-	})
-
-	t.Run("api key based authentication", func(t *testing.T) {
-		key := []byte("key")
-		keyB64 := base64.StdEncoding.EncodeToString(key)
-
-		t.Run("invalid api key provided", func(t *testing.T) {
-			t.Parallel()
-			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/", nil)
-			r.Header.Add(apiKeyHeader, "invalidB64")
-
-			hw := newHandlersWrapper()
-			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-			resp := w.Result()
-			defer resp.Body.Close()
-
-			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
-		})
-
-		t.Run("error checking api key", func(t *testing.T) {
-			t.Parallel()
-			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/", nil)
-			r.Header.Add(apiKeyHeader, keyB64)
-
-			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), key).Return(nil, tests.ErrFakeDB)
-			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-			resp := w.Result()
-			defer resp.Body.Close()
-
-			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-			hw.um.AssertExpectations(t)
-		})
-
-		t.Run("invalid api key provided", func(t *testing.T) {
-			t.Parallel()
-			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/", nil)
-			r.Header.Add(apiKeyHeader, keyB64)
-
-			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), key).
-				Return(&hub.CheckAPIKeyOutput{UserID: "", Valid: false}, nil)
-			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-			resp := w.Result()
-			defer resp.Body.Close()
-
-			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
-			hw.um.AssertExpectations(t)
-		})
-
-		t.Run("api key based authentication succeeded", func(t *testing.T) {
-			t.Parallel()
-			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/", nil)
-			r.Header.Add(apiKeyHeader, keyB64)
-
-			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), key).
-				Return(&hub.CheckAPIKeyOutput{UserID: "userID", Valid: true}, nil)
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()

@@ -85,6 +85,8 @@ helm install \
   --set hub.ingress.annotations."alb\.ingress\.kubernetes\.io/wafv2-acl-arn"=<ACL_ARN> \
   --set hub.server.cookie.hashKey=<COOKIE_HASHKEY> \
   --set hub.server.cookie.secure=true \
+  --set hub.server.csrf.authKey=<CSRF_AUTHKEY> \
+  --set hub.server.csrf.secure=true \
   --set hub.server.xffIndex=-2 \
   --set hub.email.fromName="Artifact Hub" \
   --set hub.email.from=hub@artifacthub.io \

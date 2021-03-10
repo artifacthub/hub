@@ -22,12 +22,15 @@ import (
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/gorilla/csrf"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"github.com/unrolled/secure"
 )
+
+const csrfHeader = "X-CSRF-Token"
 
 var xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
 
@@ -116,8 +119,8 @@ func (h *Handlers) setupRouter() {
 
 	// Setup middleware and special handlers
 	r.Use(middleware.Recoverer)
-	r.Use(RealIP(h.cfg.GetInt("server.xffIndex")))
-	r.Use(Logger)
+	r.Use(realIP(h.cfg.GetInt("server.xffIndex")))
+	r.Use(logger)
 	r.Use(h.MetricsCollector)
 	r.Use(secure.New(secure.Options{
 		SSLProxyHeaders:      map[string]string{"X-Forwarded-Proto": "https"},
@@ -132,6 +135,19 @@ func (h *Handlers) setupRouter() {
 
 	// API
 	r.Route("/api/v1", func(r chi.Router) {
+		// CSRF
+		r.Use(csrfSkipper)
+		r.Use(csrf.Protect(
+			[]byte(h.cfg.GetString("server.csrf.authKey")),
+			csrf.Secure(h.cfg.GetBool("server.csrf.secure")),
+			csrf.Path("/api/v1"),
+			csrf.CookieName("csrf"),
+		))
+		r.Get("/csrf", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Cache-Control", "no-store")
+			w.Header().Set(csrfHeader, csrf.Token(r))
+		})
+
 		// Users
 		r.Route("/users", func(r chi.Router) {
 			r.Post("/", h.Users.RegisterUser)
@@ -388,30 +404,27 @@ func (h *Handlers) MetricsCollector(next http.Handler) http.Handler {
 	})
 }
 
-// RealIP is an http middleware that sets the request remote addr to the result
-// of extracting the IP in the requested index from the X-Forwarded-For header.
-// Positives indexes start by 0 and work like usual slice indexes. Negative
-// indexes are allowed being -1 the last entry in the slice, -2 the next, etc.
-func RealIP(i int) func(next http.Handler) http.Handler {
-	return func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if xff := r.Header.Get(xForwardedFor); xff != "" {
-				ips := strings.Split(xff, ",")
-				if i >= 0 && len(ips) > i {
-					r.RemoteAddr = strings.TrimSpace(ips[i]) + ":"
-				}
-				if i < 0 && len(ips)+i >= 0 {
-					r.RemoteAddr = strings.TrimSpace(ips[len(ips)+i]) + ":"
-				}
-			}
-			next.ServeHTTP(w, r)
-		})
-	}
+// csrfSkipper is an http middleware that skips CSRF checks for requests that
+// match certain criteria.
+func csrfSkipper(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Skip checks for requests authenticated using API keys
+		if r.Header.Get(user.APIKeyHeader) != "" {
+			r = csrf.UnsafeSkipCheck(r)
+		}
+		// Skip checks for requests using GET or HEAD methods, except requests
+		// to /api/v1/csrf, which is the endpoint used to get the token that
+		// should be provided on subsequent POST, PUT or DELETE API requests.
+		if (r.Method == "GET" && r.URL.Path != "/api/v1/csrf") || r.Method == "HEAD" {
+			r = csrf.UnsafeSkipCheck(r)
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
-// Logger is an http middleware that logs some information about requests
+// logger is an http middleware that logs some information about requests
 // processed using zerolog.
-func Logger(next http.Handler) http.Handler {
+func logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
@@ -442,4 +455,25 @@ func Logger(next http.Handler) http.Handler {
 		}()
 		next.ServeHTTP(ww, r)
 	})
+}
+
+// realIP is an http middleware that sets the request remote addr to the result
+// of extracting the IP in the requested index from the X-Forwarded-For header.
+// Positives indexes start by 0 and work like usual slice indexes. Negative
+// indexes are allowed being -1 the last entry in the slice, -2 the next, etc.
+func realIP(i int) func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if xff := r.Header.Get(xForwardedFor); xff != "" {
+				ips := strings.Split(xff, ",")
+				if i >= 0 && len(ips) > i {
+					r.RemoteAddr = strings.TrimSpace(ips[i]) + ":"
+				}
+				if i < 0 && len(ips)+i >= 0 {
+					r.RemoteAddr = strings.TrimSpace(ips[len(ips)+i]) + ":"
+				}
+			}
+			next.ServeHTTP(w, r)
+		})
+	}
 }
