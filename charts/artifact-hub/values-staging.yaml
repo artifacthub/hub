@@ -1,6 +1,6 @@
 log:
   level: debug
-  pretty: true
+  pretty: false
 
 dbMigrator:
   loadSampleData: false
