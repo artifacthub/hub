@@ -30,7 +30,7 @@ interface LinkProps {
 
 const Heading: React.ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className="text-secondary">{data.title || data.children}</Tag>;
+  return <Tag className={`text-secondary ${styles.header}`}>{data.title || data.children}</Tag>;
 };
 
 const Link: React.ElementType = (data: LinkProps) => {
