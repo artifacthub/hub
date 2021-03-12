@@ -12,23 +12,17 @@ const SEVERITIES: MOTDSeverity = { warning: 'warning', info: 'info', error: 'dan
 
 const BannerMOTD = () => {
   const [openStatus, setOpenStatus] = useState(true);
-  const motd: string | null =
-    (window as any).config &&
-    (window as any).config.hasOwnProperty('motd') &&
-    (window as any).config.motd !== '' &&
-    (window as any).config.motd !== '{{ .motd }}'
-      ? (window as any).config.motd
-      : null;
+
+  const motdTag: string | null = document.querySelector(`meta[name='artifacthub:motd']`)
+    ? document.querySelector(`meta[name='artifacthub:motd']`)!.getAttribute('content')
+    : null;
+  const motd = !isNull(motdTag) && motdTag !== '' && motdTag !== '{{ .motd }}' ? motdTag : null;
 
   if (isNull(motd) || !openStatus) return null;
 
-  const motdSeverity: string | null =
-    (window as any).config &&
-    (window as any).config.hasOwnProperty('motdSeverity') &&
-    Object.keys(SEVERITIES).includes((window as any).config.motdSeverity)
-      ? (window as any).config.motdSeverity
-      : null;
-
+  const motdSeverity: string | null = document.querySelector(`meta[name='artifacthub:motdSeverity']`)
+    ? document.querySelector(`meta[name='artifacthub:motdSeverity']`)!.getAttribute('content')
+    : null;
   const severityType = motdSeverity ? SEVERITIES[motdSeverity] : 'info';
 
   return (

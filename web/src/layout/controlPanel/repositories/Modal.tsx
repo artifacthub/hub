@@ -8,13 +8,12 @@ import { MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, OptionWithIcon, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
+import { ErrorKind, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import { OCI_PREFIX, RepoKindDef, REPOSITORY_KINDS } from '../../../utils/data';
 import ExternalLink from '../../common/ExternalLink';
 import InputField from '../../common/InputField';
 import Modal from '../../common/Modal';
-import SelectWithIcon from '../../common/SelectWithIcon';
 import styles from './Modal.module.css';
 
 interface FormValidation {
@@ -54,10 +53,9 @@ const RepositoryModal = (props: Props) => {
     setIsValidInput(e.target.value === props.repository!.name);
   };
 
-  const allowPrivateRepositories =
-    (window as any).config &&
-    (window as any).config.hasOwnProperty('allowPrivateRepositories') &&
-    (window as any).config.allowPrivateRepositories === 'true';
+  const allowPrivateRepositories: boolean = document.querySelector(`meta[name='artifacthub:allowPrivateRepositories']`)
+    ? document.querySelector(`meta[name='artifacthub:allowPrivateRepositories']`)!.getAttribute('content') === 'true'
+    : false;
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
@@ -152,20 +150,8 @@ const RepositoryModal = (props: Props) => {
     }
   };
 
-  const getActiveRepositoryKinds = (): OptionWithIcon[] => {
-    const active = REPOSITORY_KINDS.filter((repoKind: RepoKindDef) => repoKind.active);
-
-    return active.map((repoKind: RepoKindDef) => {
-      return {
-        value: repoKind.kind.toString(),
-        label: repoKind.name,
-        icon: <div className={styles.kindIcon}>{repoKind.icon}</div>,
-      };
-    });
-  };
-
-  const handleKindChange = (kind: string) => {
-    setSelectedKind(parseInt(kind));
+  const handleKindChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedKind(parseInt(event.target.value));
     // URL is validated when value has been entered previously
     if (urlInput.current!.getValue() !== '') {
       urlInput.current!.checkIsValid();
@@ -374,15 +360,27 @@ const RepositoryModal = (props: Props) => {
             autoComplete="on"
             noValidate
           >
-            <div className="form-group w-75 mb-2">
-              <SelectWithIcon
-                label="Kind"
-                options={getActiveRepositoryKinds()}
+            <div className="form-group w-75 mb-4">
+              <label className={`font-weight-bold ${styles.label}`} htmlFor="repoKind">
+                Kind
+              </label>
+              <select
+                className="custom-select"
+                aria-label="kind-select"
+                name="repoKind"
+                value={selectedKind.toString()}
                 onChange={handleKindChange}
-                selected={selectedKind.toString()}
                 disabled={!isUndefined(props.repository)}
                 required
-              />
+              >
+                {REPOSITORY_KINDS.map((repoKind: RepoKindDef) => {
+                  return (
+                    <option key={`kind_${repoKind.label}`} value={repoKind.kind}>
+                      {repoKind.name}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
 
             <InputField

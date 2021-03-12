@@ -87,9 +87,12 @@ describe('Repository Modal - repositories section', () => {
     });
 
     it('renders private not Helm charts repo', () => {
-      (window as any).config = {
-        allowPrivateRepositories: 'true',
-      };
+      Object.defineProperty(document, 'querySelector', {
+        value: () => ({
+          getAttribute: () => 'true',
+        }),
+        writable: true,
+      });
 
       const { getByText, queryByTestId } = render(
         <Modal {...defaultProps} repository={{ ...repoMock, kind: RepositoryKind.HelmPlugin, authPass: 'pass123' }} />
@@ -103,6 +106,11 @@ describe('Repository Modal - repositories section', () => {
 
     describe('Add repo', () => {
       it('calls add repo', async () => {
+        Object.defineProperty(document, 'querySelector', {
+          value: () => false,
+          writable: true,
+        });
+
         mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
@@ -137,6 +145,11 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('calls add repo for org', async () => {
+        Object.defineProperty(document, 'querySelector', {
+          value: () => false,
+          writable: true,
+        });
+
         mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
@@ -534,9 +547,12 @@ describe('Repository Modal - repositories section', () => {
 
     describe('When allowPrivateRepositories is true', () => {
       it('renders Add repo for Helm charts', () => {
-        (window as any).config = {
-          allowPrivateRepositories: 'true',
-        };
+        Object.defineProperty(document, 'querySelector', {
+          value: () => ({
+            getAttribute: () => 'true',
+          }),
+          writable: true,
+        });
 
         const { getByTestId } = render(<Modal {...defaultProps} />);
 
@@ -547,9 +563,12 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('calls add repo for Helm charts', async () => {
-        (window as any).config = {
-          allowPrivateRepositories: 'true',
-        };
+        Object.defineProperty(document, 'querySelector', {
+          value: () => ({
+            getAttribute: () => 'true',
+          }),
+          writable: true,
+        });
 
         mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
@@ -587,9 +606,12 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('calls update repository for Helm charts', async () => {
-        (window as any).config = {
-          allowPrivateRepositories: 'true',
-        };
+        Object.defineProperty(document, 'querySelector', {
+          value: () => ({
+            getAttribute: () => 'true',
+          }),
+          writable: true,
+        });
 
         mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });

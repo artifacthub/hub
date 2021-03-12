@@ -18,21 +18,14 @@
     <meta name="twitter:title" content="{{ .title }}" />
     <meta name="twitter:description" content="{{ .description }}" />
     <meta name="twitter:image:src" content="{{ .baseURL }}/static/media/artifactHub.png" />
-    <script type="text/javascript">
-      window.config = {
-        allowPrivateRepositories: '{{ .allowPrivateRepositories }}',
-        githubAuth: '{{ .githubAuth }}',
-        googleAuth: '{{ .googleAuth }}',
-        oidcAuth: '{{ .oidcAuth }}',
-        motd: '{{ .motd }}',
-        motdSeverity: '{{ .motdSeverity }}',
-      };
-      window.analyticsConfig = {
-        gaTrackingID: '{{ .gaTrackingID }}',
-      };
-      // Issue: https://github.com/mozilla-mobile/firefox-ios/issues/5772
-      if (window.__firefox__) { window.__firefox__.NightMode.setEnabled(false); }
-    </script>
+    <meta name="artifacthub:allowPrivateRepositories" content="{{ .allowPrivateRepositories }}" />
+    <meta name="artifacthub:githubAuth" content="{{ .githubAuth }}" />
+    <meta name="artifacthub:googleAuth" content="{{ .googleAuth }}" />
+    <meta name="artifacthub:oidcAuth" content="{{ .oidcAuth }}" />
+    <meta name="artifacthub:motd" content="{{ .motd }}" />
+    <meta name="artifacthub:motdSeverity" content="{{ .motdSeverity }}" />
+    <meta name="artifacthub:gaTrackingID" content="{{ .gaTrackingID }}" />
+    <script type="text/javascript" src="{{ .baseURL }}/static/js/fixFirefoxNightMode.js" async></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

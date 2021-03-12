@@ -11,6 +11,12 @@ const defaultProps = {
   setIsLoading: setIsLoadingMock,
 };
 
+Object.defineProperty(document, 'querySelector', {
+  value: () => ({
+    getAttribute: () => 'true',
+  }),
+});
+
 describe('OAuth', () => {
   beforeEach(() => {
     /* eslint-disable no-native-reassign */
@@ -22,12 +28,6 @@ describe('OAuth', () => {
       },
       writable: true,
     });
-    /* eslint-enable no-native-reassign */
-    (window as any).config = {
-      githubAuth: 'true',
-      googleAuth: 'true',
-      oidcAuth: 'true',
-    };
   });
 
   afterEach(() => {

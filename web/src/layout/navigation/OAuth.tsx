@@ -25,20 +25,17 @@ const OAuth = (props: Props) => {
     return;
   };
 
-  const isGithubAuth =
-    (window as any).config &&
-    (window as any).config.hasOwnProperty('githubAuth') &&
-    (window as any).config.githubAuth === 'true';
+  const isGithubAuth = document.querySelector(`meta[name='artifacthub:githubAuth']`)
+    ? document.querySelector(`meta[name='artifacthub:githubAuth']`)!.getAttribute('content') === 'true'
+    : false;
 
-  const isGoogleAuth =
-    (window as any).config &&
-    (window as any).config.hasOwnProperty('googleAuth') &&
-    (window as any).config.googleAuth === 'true';
+  const isGoogleAuth = document.querySelector(`meta[name='artifacthub:googleAuth']`)
+    ? document.querySelector(`meta[name='artifacthub:googleAuth']`)!.getAttribute('content') === 'true'
+    : false;
 
-  const isOidcAuth =
-    (window as any).config &&
-    (window as any).config.hasOwnProperty('oidcAuth') &&
-    (window as any).config.oidcAuth === 'true';
+  const isOidcAuth = document.querySelector(`meta[name='artifacthub:oidcAuth']`)
+    ? document.querySelector(`meta[name='artifacthub:oidcAuth']`)!.getAttribute('content') === 'true'
+    : false;
 
   if (!isGithubAuth && !isGoogleAuth && !isOidcAuth) return null;
 

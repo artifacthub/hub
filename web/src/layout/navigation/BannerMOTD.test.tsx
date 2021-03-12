@@ -10,9 +10,19 @@ describe('BannerMOTD', () => {
   });
 
   it('creates snapshot', () => {
-    (window as any).config = {
-      motd: 'this is a sample',
-    };
+    Object.defineProperty(document, 'querySelector', {
+      value: (selector: any) => {
+        switch (selector) {
+          case `meta[name='artifacthub:motd']`:
+            return {
+              getAttribute: () => 'this is a sample',
+            };
+          default:
+            return false;
+        }
+      },
+      writable: true,
+    });
 
     const result = render(<BannerMOTD />);
     expect(result.asFragment()).toMatchSnapshot();
@@ -20,9 +30,19 @@ describe('BannerMOTD', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      (window as any).config = {
-        motd: 'this is a sample',
-      };
+      Object.defineProperty(document, 'querySelector', {
+        value: (selector: any) => {
+          switch (selector) {
+            case `meta[name='artifacthub:motd']`:
+              return {
+                getAttribute: () => 'this is a sample',
+              };
+            default:
+              return false;
+          }
+        },
+        writable: true,
+      });
 
       const { getByRole, getByText, getByTestId } = render(<BannerMOTD />);
 
@@ -39,6 +59,24 @@ describe('BannerMOTD', () => {
         motdSeverity: 'error',
       };
 
+      Object.defineProperty(document, 'querySelector', {
+        value: (selector: any) => {
+          switch (selector) {
+            case `meta[name='artifacthub:motd']`:
+              return {
+                getAttribute: () => 'this is a sample',
+              };
+            case `meta[name='artifacthub:motdSeverity']`:
+              return {
+                getAttribute: () => 'error',
+              };
+            default:
+              return false;
+          }
+        },
+        writable: true,
+      });
+
       const { getByRole } = render(<BannerMOTD />);
 
       const alert = getByRole('alert');
@@ -46,9 +84,19 @@ describe('BannerMOTD', () => {
     });
 
     it('closes alert', () => {
-      (window as any).config = {
-        motd: 'this is a sample',
-      };
+      Object.defineProperty(document, 'querySelector', {
+        value: (selector: any) => {
+          switch (selector) {
+            case `meta[name='artifacthub:motd']`:
+              return {
+                getAttribute: () => 'this is a sample',
+              };
+            default:
+              return false;
+          }
+        },
+        writable: true,
+      });
 
       const { getByRole, getByTestId, container } = render(<BannerMOTD />);
 
@@ -65,24 +113,48 @@ describe('BannerMOTD', () => {
 
     describe('does not render component', () => {
       it('when motd is undefined', () => {
+        Object.defineProperty(document, 'querySelector', {
+          value: () => false,
+          writable: true,
+        });
         const { container } = render(<BannerMOTD />);
         expect(container).toBeEmptyDOMElement();
       });
 
       it('when motd is a empty string', () => {
-        (window as any).config = {
-          motd: '',
-        };
+        Object.defineProperty(document, 'querySelector', {
+          value: (selector: any) => {
+            switch (selector) {
+              case `meta[name='artifacthub:motd']`:
+                return {
+                  getAttribute: () => '',
+                };
+              default:
+                return false;
+            }
+          },
+          writable: true,
+        });
 
         const { container } = render(<BannerMOTD />);
         expect(container).toBeEmptyDOMElement();
       });
 
       it('when motd is a {{ .motd }}', () => {
-        // This is important for dev
-        (window as any).config = {
-          motd: '{{ .motd }}',
-        };
+        Object.defineProperty(document, 'querySelector', {
+          value: (selector: any) => {
+            switch (selector) {
+              case `meta[name='artifacthub:motd']`:
+                return {
+                  // This is important for dev
+                  getAttribute: () => '{{ .motd }}',
+                };
+              default:
+                return false;
+            }
+          },
+          writable: true,
+        });
 
         const { container } = render(<BannerMOTD />);
         expect(container).toBeEmptyDOMElement();

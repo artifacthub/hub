@@ -38,14 +38,6 @@ $container-max-widths: (
   padding-right: 0.75rem !important;
 }
 
-.was-validated .custom-select:valid,
-.custom-select.is-valid,
-.was-validated .custom-select:valid:focus,
-.custom-select.is-valid:focus {
-  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e")
-    no-repeat right 0.75rem center/8px 10px;
-}
-
 .was-validated .custom-control-input:valid ~ .custom-control-label::before {
   border-color: inherit;
 }
@@ -162,4 +154,29 @@ button {
   .level#{$i} {
     margin-left: $i * 20px;
   }
+}
+
+// CSP - image inline - update embed svg from bootstrap
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  background-image: url('/static/media/bootstrap/bt_input_error.svg');
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label:after {
+  background-image: url('/static/media/bootstrap/bt_check.svg');
+}
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label:after {
+  background-image: url('/static/media/bootstrap/bt_dot.svg');
+}
+
+.was-validated .custom-select:valid,
+.custom-select.is-valid,
+.was-validated .custom-select:valid:focus,
+.custom-select.is-valid:focus {
+  background: url('/static/media/bootstrap/bt_input_success.svg') no-repeat right 0.75rem center/8px 10px;
+}
+
+.custom-select {
+  background: #fff url('/static/media/bootstrap/bt_select.svg') right 0.75rem center/8px 10px no-repeat;
 }

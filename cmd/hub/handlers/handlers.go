@@ -123,10 +123,11 @@ func (h *Handlers) setupRouter() {
 	r.Use(logger)
 	r.Use(h.MetricsCollector)
 	r.Use(secure.New(secure.Options{
-		SSLProxyHeaders:      map[string]string{"X-Forwarded-Proto": "https"},
-		STSSeconds:           31536000,
-		STSIncludeSubdomains: true,
-		STSPreload:           true,
+		SSLProxyHeaders:       map[string]string{"X-Forwarded-Proto": "https"},
+		STSSeconds:            31536000,
+		STSIncludeSubdomains:  true,
+		STSPreload:            true,
+		ContentSecurityPolicy: "default-src 'none'; connect-src 'self' https://www.google-analytics.com; font-src 'self'; img-src 'self' https:; script-src 'self' https://www.google-analytics.com; style-src 'self'; manifest-src 'self'",
 	}).Handler)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.Users.BasicAuth)
