@@ -88,7 +88,7 @@ type Package struct {
 	Maintainers             []*Maintainer          `json:"maintainers"`
 	Recommendations         []*Recommendation      `json:"recommendations"`
 	Repository              *Repository            `json:"repository"`
-	CreatedAt               int64                  `json:"created_at,omitempty"`
+	TS                      int64                  `json:"ts,omitempty"`
 }
 
 // PackageManager describes the methods a PackageManager implementation must
@@ -204,6 +204,6 @@ type SearchPackageInput struct {
 
 // Version represents a package's version.
 type Version struct {
-	Version   string `json:"version"`
-	CreatedAt int64  `json:"created_at"`
+	Version string `json:"version"`
+	TS      int64  `json:"ts"`
 }

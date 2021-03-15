@@ -30,7 +30,7 @@
   "availableVersions": [
     {
       "version": "0.1.0",
-      "createdAt": 1595872800
+      "ts": 1595872800
     }
   ],
   "deprecated": false,
@@ -42,7 +42,7 @@
     }
   ],
   "provider": "Provider name",
-  "createdAt": 1595872800,
+  "ts": 1595872800,
   "maintainers": [
     {
       "name": "Maintainer 1",

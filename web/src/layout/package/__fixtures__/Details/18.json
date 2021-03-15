@@ -23,13 +23,13 @@
       "version": "0.2.0",
       "containsSecurityUpdates": false,
       "prerelease": false,
-      "createdAt": 1611593453
+      "ts": 1611593453
     },
     {
       "version": "0.1.0",
       "containsSecurityUpdates": false,
       "prerelease": false,
-      "createdAt": 1611593453
+      "ts": 1611593453
     }
   ],
   "deprecated": false,
@@ -39,7 +39,7 @@
   "contentUrl": "https://github.com/tektoncd/catalog/raw/master/task/tkn/0.2/tkn.yaml",
   "hasValuesSchema": false,
   "hasChangelog": false,
-  "createdAt": 1611593453,
+  "ts": 1611593453,
   "repository": {
     "repositoryId": "3dda1751-304e-48c3-b4c8-454320881ed0",
     "name": "tekton-test",

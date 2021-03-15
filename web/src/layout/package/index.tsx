@@ -314,12 +314,6 @@ const PackageView = (props: Props) => {
     [history, props.hash]
   );
 
-  const createdAt = () => (
-    <span className={`d-block d-md-none text-muted text-nowrap ${styles.date}`}>
-      Updated {moment(detail!.createdAt * 1000).fromNow()}
-    </span>
-  );
-
   return (
     <>
       {!isUndefined(props.searchUrlReferer) && (
@@ -472,7 +466,9 @@ const PackageView = (props: Props) => {
                     <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
 
                     <div className={`position-absolute d-flex flex-row align-items-center ${styles.optsWrapper}`}>
-                      {createdAt()}
+                      <span className={`d-block d-md-none text-muted text-nowrap ${styles.date}`}>
+                        Updated {moment(detail!.ts * 1000).fromNow()}
+                      </span>
                       <StarButton packageId={detail.packageId} />
                       <SubscriptionsButton packageId={detail.packageId} />
                     </div>

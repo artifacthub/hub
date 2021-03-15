@@ -9,7 +9,7 @@
   "deprecated": false,
   "keywords": ["key1", "key2"],
   "license": "MIT",
-  "createdAt": 0,
+  "ts": 0,
   "signed": false,
   "repository": {
     "kind": 1,

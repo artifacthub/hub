@@ -86,12 +86,12 @@ func TestGet(t *testing.T) {
 			Version: "1.0.0",
 			AvailableVersions: []*hub.Version{
 				{
-					Version:   "0.0.9",
-					CreatedAt: 1592299233,
+					Version: "0.0.9",
+					TS:      1592299233,
 				},
 				{
-					Version:   "1.0.0",
-					CreatedAt: 1592299234,
+					Version: "1.0.0",
+					TS:      1592299234,
 				},
 			},
 			AppVersion: "12.1.0",
@@ -179,11 +179,11 @@ func TestGet(t *testing.T) {
 			"available_versions": [
 				{
 					"version": "0.0.9",
-					"created_at": 1592299233
+					"ts": 1592299233
 				},
 				{
 					"version": "1.0.0",
-					"created_at": 1592299234
+					"ts": 1592299234
 				}
 			],
 			"app_version": "12.1.0",

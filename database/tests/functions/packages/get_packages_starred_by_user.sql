@@ -41,7 +41,7 @@ insert into snapshot (
     app_version,
     digest,
     readme,
-    created_at
+    ts
 ) values (
     :'package1ID',
     '1.0.0',
@@ -62,7 +62,7 @@ insert into snapshot (
     app_version,
     digest,
     readme,
-    created_at
+    ts
 ) values (
     :'package1ID',
     '0.0.9',
@@ -98,7 +98,7 @@ insert into snapshot (
     readme,
     deprecated,
     signed,
-    created_at
+    ts
 ) values (
     :'package2ID',
     '1.0.0',
@@ -127,7 +127,7 @@ select is(
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "version": "1.0.0",
         "app_version": "12.1.0",
-        "created_at": 1592299234,
+        "ts": 1592299234,
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
             "kind": 0,

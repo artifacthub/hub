@@ -99,7 +99,7 @@ insert into snapshot (
     contains_security_updates,
     prerelease,
     recommendations,
-    created_at
+    ts
 ) values (
     :'package1ID',
     '1.0.0',
@@ -150,7 +150,7 @@ insert into snapshot (
     values_schema,
     contains_security_updates,
     prerelease,
-    created_at
+    ts
 ) values (
     :'package1ID',
     '0.0.9',
@@ -192,7 +192,7 @@ insert into snapshot (
     readme,
     install,
     data,
-    created_at
+    ts
 ) values (
     :'package2ID',
     '1.0.0',
@@ -266,13 +266,13 @@ select is(
                 "version": "0.0.9",
                 "contains_security_updates": false,
                 "prerelease": false,
-                "created_at": 1592299233
+                "ts": 1592299233
             },
             {
                 "version": "1.0.0",
                 "contains_security_updates": true,
                 "prerelease": true,
-                "created_at": 1592299234
+                "ts": 1592299234
             }
         ],
         "app_version": "12.1.0",
@@ -295,7 +295,7 @@ select is(
             "feature 1",
             "fix 1"
         ],
-        "created_at": 1592299234,
+        "ts": 1592299234,
         "maintainers": [
             {
                 "name": "name1",
@@ -385,13 +385,13 @@ select is(
                 "version": "0.0.9",
                 "contains_security_updates": false,
                 "prerelease": false,
-                "created_at": 1592299233
+                "ts": 1592299233
             },
             {
                 "version": "1.0.0",
                 "contains_security_updates": true,
                 "prerelease": true,
-                "created_at": 1592299234
+                "ts": 1592299234
             }
         ],
         "app_version": "12.1.0",
@@ -414,7 +414,7 @@ select is(
             "feature 1",
             "fix 1"
         ],
-        "created_at": 1592299234,
+        "ts": 1592299234,
         "maintainers": [
             {
                 "name": "name1",
@@ -494,13 +494,13 @@ select is(
                 "version": "0.0.9",
                 "contains_security_updates": false,
                 "prerelease": false,
-                "created_at": 1592299233
+                "ts": 1592299233
             },
             {
                 "version": "1.0.0",
                 "contains_security_updates": true,
                 "prerelease": true,
-                "created_at": 1592299234
+                "ts": 1592299234
             }
         ],
         "app_version": "12.0.0",
@@ -509,7 +509,7 @@ select is(
         "prerelease": false,
         "has_values_schema": false,
         "has_changelog": true,
-        "created_at": 1592299233,
+        "ts": 1592299233,
         "maintainers": [
             {
                 "name": "name1",
@@ -554,12 +554,12 @@ select is(
         },
         "has_values_schema": false,
         "has_changelog": false,
-        "created_at": 1592299234,
+        "ts": 1592299234,
         "version": "1.0.0",
         "available_versions": [
             {
                 "version": "1.0.0",
-                "created_at": 1592299234
+                "ts": 1592299234
             }
         ],
         "repository": {

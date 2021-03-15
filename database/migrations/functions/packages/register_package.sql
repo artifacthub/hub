@@ -17,7 +17,7 @@ declare
     v_repository_id uuid := ((p_pkg->'repository')->>'repository_id')::uuid;
     v_maintainer jsonb;
     v_maintainer_id uuid;
-    v_created_at timestamptz;
+    v_ts timestamptz;
     v_provider text := nullif(p_pkg->>'provider', '');
     v_ts_repository text[];
     v_ts_publisher text[];
@@ -122,9 +122,9 @@ begin
     end if;
 
     -- Package snapshot
-    v_created_at := to_timestamp((p_pkg->>'created_at')::int);
-    if v_created_at is null then
-        v_created_at = current_timestamp;
+    v_ts := to_timestamp((p_pkg->>'ts')::int);
+    if v_ts is null then
+        v_ts = current_timestamp;
     end if;
     insert into snapshot (
         package_id,
@@ -155,7 +155,7 @@ begin
         contains_security_updates,
         prerelease,
         recommendations,
-        created_at
+        ts
     ) values (
         v_package_id,
         v_version,
@@ -185,7 +185,7 @@ begin
         (p_pkg->>'contains_security_updates')::boolean,
         (p_pkg->>'prerelease')::boolean,
         nullif(p_pkg->'recommendations', 'null'),
-        v_created_at
+        v_ts
     )
     on conflict (package_id, version) do update
     set
@@ -215,7 +215,7 @@ begin
         contains_security_updates = excluded.contains_security_updates,
         prerelease = excluded.prerelease,
         recommendations = excluded.recommendations,
-        created_at = v_created_at;
+        ts = v_ts;
 
     -- Register new release event if package's latest version has been updated
     if semver_gt(v_version, v_previous_latest_version) then

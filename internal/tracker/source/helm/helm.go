@@ -192,7 +192,7 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		Repository: s.i.Repository,
 	}
 	if !chartVersion.Created.IsZero() {
-		p.CreatedAt = chartVersion.Created.Unix()
+		p.TS = chartVersion.Created.Unix()
 	}
 
 	// If the package version is not registered yet or if it needs to be

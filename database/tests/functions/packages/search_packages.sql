@@ -73,7 +73,7 @@ insert into snapshot (
     digest,
     readme,
     capabilities,
-    created_at
+    ts
 ) values (
     :'package1ID',
     '1.0.0',
@@ -100,7 +100,7 @@ insert into snapshot (
     app_version,
     digest,
     readme,
-    created_at
+    ts
 ) values (
     :'package1ID',
     '0.0.9',
@@ -144,7 +144,7 @@ insert into snapshot (
     readme,
     deprecated,
     signed,
-    created_at
+    ts
 ) values (
     :'package2ID',
     '1.0.0',
@@ -171,7 +171,7 @@ insert into snapshot (
     app_version,
     digest,
     readme,
-    created_at
+    ts
 ) values (
     :'package2ID',
     '0.0.9',
@@ -207,7 +207,7 @@ insert into snapshot (
     keywords,
     readme,
     security_report_summary,
-    created_at
+    ts
 ) values (
     :'package3ID',
     '1.0.0',
@@ -240,7 +240,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -264,7 +264,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
                     "kind": 0,
@@ -289,7 +289,7 @@ select is(
                     "high": 2,
                     "medium": 1
                 },
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
                     "kind": 1,
@@ -389,7 +389,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -413,7 +413,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
                     "kind": 0,
@@ -438,7 +438,7 @@ select is(
                     "high": 2,
                     "medium": 1
                 },
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
                     "kind": 1,
@@ -476,7 +476,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -513,7 +513,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -551,7 +551,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -575,7 +575,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
                     "kind": 0,
@@ -615,7 +615,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -639,7 +639,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
                     "kind": 0,
@@ -679,7 +679,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -703,7 +703,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
                     "kind": 0,
@@ -795,7 +795,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -895,7 +895,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -939,7 +939,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
                     "kind": 0,
@@ -1243,7 +1243,7 @@ select is(
                     "high": 2,
                     "medium": 1
                 },
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
                     "kind": 1,
@@ -1283,7 +1283,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -1325,7 +1325,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -1349,7 +1349,7 @@ select is(
                     "high": 2,
                     "medium": 1
                 },
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
                     "kind": 1,
@@ -1391,7 +1391,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -1432,7 +1432,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -1474,7 +1474,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -1498,7 +1498,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
                     "kind": 0,
@@ -1541,7 +1541,7 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
@@ -1603,7 +1603,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
-                "created_at": 1592299234,
+                "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
                     "kind": 0,

@@ -155,7 +155,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 						URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
 					},
 				},
-				CreatedAt: 1136214245,
+				TS: 1136214245,
 			},
 			nil,
 		},

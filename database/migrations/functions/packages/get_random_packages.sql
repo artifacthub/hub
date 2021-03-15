@@ -9,7 +9,7 @@ returns setof json as $$
         where s.version = p.latest_version
         and (s.deprecated is null or s.deprecated = false)
         and s.readme is not null
-        and s.created_at between current_timestamp - '6 months'::interval and current_timestamp
+        and s.ts between current_timestamp - '6 months'::interval and current_timestamp
         order by random() limit 10
     ) rp
     cross join get_package_summary(rp.package_id) as pkgJSON;

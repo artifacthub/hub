@@ -1573,14 +1573,14 @@ paths:
                   type: object
                   required:
                     - version
-                    - created_at
+                    - ts
                     - contains_security_updates
                     - prerelease
                   properties:
                     version:
                       type: string
                       nullable: false
-                    created_at:
+                    ts:
                       type: integer
                       nullable: false
                     changes:
@@ -2667,7 +2667,7 @@ components:
             - repository
             - latest_version
             - available_versions
-            - created_at
+            - ts
             - has_values_schema
             - has_changelog
             - contains_security_updates
@@ -2723,7 +2723,7 @@ components:
                   - version
                   - contains_security_updates
                   - prerelease
-                  - created_at
+                  - ts
                 properties:
                   version:
                     type: string
@@ -2735,7 +2735,7 @@ components:
                   prerelease:
                     type: boolean
                     nullable: false
-                  created_at:
+                  ts:
                     type: integer
                     nullable: false
                     example: 1552082346
@@ -2780,7 +2780,7 @@ components:
                 name:
                   type: string
                   nullable: false
-            created_at:
+            ts:
               type: integer
               nullable: false
               example: 1552082346
@@ -2831,7 +2831,7 @@ components:
         - normalized_name
         - stars
         - version
-        - created_at
+        - ts
         - repository
       properties:
         package_id:
@@ -2881,7 +2881,7 @@ components:
         signed:
           type: boolean
           nullable: false
-        created_at:
+        ts:
           type: integer
           nullable: false
         repository:

@@ -10,7 +10,7 @@
     "app_version": "1.0",
     "deprecated": false,
     "signed": false,
-    "created_at": 1592053209,
+    "ts": 1592053209,
     "repository": {
       "kind": 0,
       "name": "billimek-charts",
@@ -30,7 +30,7 @@
     "app_version": "0.18.1",
     "deprecated": false,
     "signed": false,
-    "created_at": 1594805441,
+    "ts": 1594805441,
     "repository": {
       "kind": 0,
       "name": "helm-incubator",
@@ -51,7 +51,7 @@
     "app_version": "8.10.0",
     "deprecated": false,
     "signed": false,
-    "created_at": 1594331208,
+    "ts": 1594331208,
     "repository": {
       "kind": 0,
       "name": "mox",
@@ -70,7 +70,7 @@
     "app_version": "5.1.0",
     "deprecated": false,
     "signed": false,
-    "created_at": 1594801730,
+    "ts": 1594801730,
     "repository": {
       "kind": 0,
       "name": "helm-stable",
@@ -91,7 +91,7 @@
     "app_version": "9.1.2",
     "deprecated": false,
     "signed": false,
-    "created_at": 1594769376,
+    "ts": 1594769376,
     "repository": {
       "kind": 0,
       "name": "helm-stable",

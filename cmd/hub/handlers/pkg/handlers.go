@@ -294,7 +294,7 @@ func (h *Handlers) RssFeed(w http.ResponseWriter, r *http.Request) {
 			Id:          fmt.Sprintf("%s#%s", p.PackageID, s.Version),
 			Title:       s.Version,
 			Description: fmt.Sprintf("%s %s", p.NormalizedName, s.Version),
-			Created:     time.Unix(s.CreatedAt, 0),
+			Created:     time.Unix(s.TS, 0),
 			Link:        &feeds.Link{Href: BuildURL(baseURL, p, s.Version)},
 		})
 	}

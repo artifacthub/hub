@@ -46,7 +46,7 @@ begin
                 'version', version,
                 'contains_security_updates', contains_security_updates,
                 'prerelease', prerelease,
-                'created_at', floor(extract(epoch from created_at))
+                'ts', floor(extract(epoch from ts))
             ))
             from snapshot
             where package_id = v_package_id
@@ -66,7 +66,7 @@ begin
             select 1 from snapshot where package_id = v_package_id and changes is not null
         )),
         'changes', s.changes,
-        'created_at', floor(extract(epoch from s.created_at)),
+        'ts', floor(extract(epoch from s.ts)),
         'maintainers', (
             select json_agg(json_build_object(
                 'name', m.name,

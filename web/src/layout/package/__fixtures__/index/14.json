@@ -17,7 +17,7 @@
       "version": "2.0.0",
       "containsSecurityUpdates": false,
       "prerelease": false,
-      "createdAt": 1612516630
+      "ts": 1612516630
     }
   ],
   "deprecated": false,
@@ -26,7 +26,7 @@
   "signed": false,
   "hasValuesSchema": false,
   "hasChangelog": false,
-  "createdAt": 1612516630,
+  "ts": 1612516630,
   "repository": {
     "repositoryId": "cf584636-59ee-4164-88a3-4fa2148bced9",
     "name": "kr",

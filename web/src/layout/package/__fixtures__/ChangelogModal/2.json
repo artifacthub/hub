@@ -1,7 +1,7 @@
 [
   {
     "version": "0.5.0",
-    "createdAt": 1604048487,
+    "ts": 1604048487,
     "changes": [
       "Introduce verified publisher concept",
       "Add dark mode support",
@@ -16,7 +16,7 @@
   },
   {
     "version": "0.8.0",
-    "createdAt": 1604048487,
+    "ts": 1604048487,
     "changes": [
       "Add JSON schema for Artifact Hub Helm chart",
       "Some improvements in Artifact Hub Helm chart",
@@ -32,7 +32,7 @@
   },
   {
     "version": "0.3.0",
-    "createdAt": 1604048487,
+    "ts": 1604048487,
     "changes": [
       "Added support for OLM operators repositories",
       "Added support for Falco rules repositories",
@@ -48,7 +48,7 @@
   },
   {
     "version": "0.6.0",
-    "createdAt": 1604048487,
+    "ts": 1604048487,
     "changes": [
       "Introduce fine grained authorization mechanism based on OPA policies",
       "Allow enriching package information using Helm annotations",
@@ -64,7 +64,7 @@
   },
   {
     "version": "0.4.0",
-    "createdAt": 1604048487,
+    "ts": 1604048487,
     "changes": [
       "Added support for OPA policies repositories (uses Artifact Hub metadata new spec draft)",
       "Trackers have been improved and consolidated into one",
@@ -78,7 +78,7 @@
   },
   {
     "version": "0.7.0",
-    "createdAt": 1604048487,
+    "ts": 1604048487,
     "changes": [
       "Introduce packages security report",
       "Display packages' license in cards",
@@ -93,7 +93,7 @@
   },
   {
     "version": "0.2.0",
-    "createdAt": 1604048487,
+    "ts": 1604048487,
     "changes": [
       "API docs",
       "Reorganize API routes",
