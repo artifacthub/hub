@@ -46,7 +46,7 @@ begin
             s.deprecated,
             s.signed,
             s.security_report_summary,
-            s.created_at,
+            s.ts,
             r.repository_id,
             r.repository_kind_id,
             rk.name as repository_kind_name,
@@ -141,7 +141,7 @@ begin
                         'deprecated', deprecated,
                         'signed', signed,
                         'security_report_summary', security_report_summary,
-                        'created_at', floor(extract(epoch from created_at)),
+                        'ts', floor(extract(epoch from ts)),
                         'repository', jsonb_build_object(
                             'repository_id', repository_id,
                             'kind', repository_kind_id,

@@ -39,7 +39,7 @@ insert into snapshot (
     deprecated,
     signed,
     security_report_summary,
-    created_at
+    ts
 ) values (
     :'package1ID',
     '1.0.0',
@@ -75,7 +75,7 @@ select is(
             "high": 2,
             "medium": 1
         },
-        "created_at": 1592299234,
+        "ts": 1592299234,
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
             "kind": 0,

@@ -80,7 +80,7 @@ select register_package('
     ],
     "contains_security_updates": true,
     "prerelease": true,
-    "created_at": 1592299234,
+    "ts": 1592299234,
     "maintainers": [
         {
             "name": "name1",
@@ -164,7 +164,7 @@ select results_eq(
             s.contains_security_updates,
             s.prerelease,
             s.recommendations,
-            s.created_at
+            s.ts
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -261,7 +261,7 @@ select register_package('
     ],
     "provider": "Org Inc 2",
     "values_schema": null,
-    "created_at": 1592299235,
+    "ts": 1592299235,
     "maintainers": [
         {
             "name": "name1 updated",
@@ -306,7 +306,7 @@ select results_eq(
             s.changes,
             s.contains_security_updates,
             s.prerelease,
-            s.created_at
+            s.ts
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -401,7 +401,7 @@ select register_package('
     "provider": "Org Inc",
     "contains_security_updates": false,
     "prerelease": false,
-    "created_at": 1592299233,
+    "ts": 1592299233,
     "maintainers": [
         {
             "name": "name1",
@@ -448,7 +448,7 @@ select results_eq(
             s.provider,
             s.contains_security_updates,
             s.prerelease,
-            s.created_at
+            s.ts
         from snapshot s
         join package p using (package_id)
         where name='package1'

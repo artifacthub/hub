@@ -17,7 +17,7 @@ returns setof json as $$
         'deprecated', s.deprecated,
         'signed', s.signed,
         'security_report_summary', s.security_report_summary,
-        'created_at', floor(extract(epoch from s.created_at)),
+        'ts', floor(extract(epoch from s.ts)),
         'repository', (select get_repository_summary(r.repository_id))
     ))
     from package p

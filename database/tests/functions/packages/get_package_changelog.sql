@@ -25,7 +25,7 @@ insert into package (
 insert into snapshot (
     package_id,
     version,
-    created_at,
+    ts,
     changes,
     contains_security_updates,
     prerelease
@@ -40,7 +40,7 @@ insert into snapshot (
 insert into snapshot (
     package_id,
     version,
-    created_at,
+    ts,
     changes,
     contains_security_updates,
     prerelease
@@ -55,7 +55,7 @@ insert into snapshot (
 insert into snapshot (
     package_id,
     version,
-    created_at,
+    ts,
     changes
 ) values (
     :'package1ID',
@@ -70,21 +70,21 @@ select is(
     '[
         {
             "version": "1.0.0",
-            "created_at": 1592299234,
+            "ts": 1592299234,
             "changes": ["feature 3", "fix 3"],
             "contains_security_updates": true,
             "prerelease": true
         },
         {
             "version": "0.0.9",
-            "created_at": 1592299233,
+            "ts": 1592299233,
             "changes": ["feature 2", "fix 2"],
             "contains_security_updates": false,
             "prerelease": false
         },
         {
             "version": "0.0.8",
-            "created_at": 1592299232,
+            "ts": 1592299232,
             "changes": ["feature 1", "fix 1"]
         }
     ]'::jsonb,

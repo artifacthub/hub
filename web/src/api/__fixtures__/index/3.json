@@ -11,17 +11,17 @@
   "available_versions": [
     {
       "version": "0.2.4",
-      "created_at": 1521222098
+      "ts": 1521222098
     },
     {
       "version": "0.2.0",
-      "created_at": 1518086080
+      "ts": 1518086080
     }
   ],
   "app_version": "3.11.6",
   "deprecated": false,
   "signed": false,
-  "created_at": 1592382697,
+  "ts": 1592382697,
   "maintainers": [],
   "repository": {
     "url": "https://kubernetes-charts-incubator.storage.googleapis.com",

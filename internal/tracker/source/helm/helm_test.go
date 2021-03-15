@@ -95,7 +95,7 @@ func TestTrackerSource(t *testing.T) {
 		},
 		ContainsSecurityUpdates: true,
 		Prerelease:              true,
-		CreatedAt:               0,
+		TS:                      0,
 	}
 	logoImageURL := "http://icon.url"
 

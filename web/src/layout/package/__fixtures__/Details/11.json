@@ -10,7 +10,7 @@
     "organizationDisplayName": "Helm"
   },
   "availableVersions": [
-    { "version": "0.1.0", "createdAt": 1 },
-    { "version": "0.1.1", "createdAt": 1 }
+    { "version": "0.1.0", "ts": 1 },
+    { "version": "0.1.1", "ts": 1 }
   ]
 }

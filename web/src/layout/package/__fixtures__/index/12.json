@@ -25,14 +25,14 @@
   "availableVersions": [
     {
       "version": "1.0.0",
-      "createdAt": 1607079152
+      "ts": 1607079152
     }
   ],
   "deprecated": false,
   "signed": false,
   "hasValuesSchema": false,
   "hasChangelog": false,
-  "createdAt": 1607079152,
+  "ts": 1607079152,
   "repository": {
     "repositoryId": "973ca9f8-45bd-48e3-8c7e-7ea433325467",
     "name": "falco",

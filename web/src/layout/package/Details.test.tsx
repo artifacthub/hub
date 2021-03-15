@@ -26,7 +26,7 @@ const defaultProps = {
   sortedVersions: [
     {
       version: '1.0.0',
-      createdAt: 0,
+      ts: 0,
       containsSecurityUpdates: false,
       prerelease: false,
     },
@@ -234,12 +234,12 @@ describe('Details', () => {
           sortedVersions={[
             {
               version: '1.0.0',
-              createdAt: 0,
+              ts: 0,
               containsSecurityUpdates: false,
               prerelease: false,
             },
-            { version: '0.2.0', createdAt: 0, containsSecurityUpdates: false, prerelease: false },
-            { version: '0.2.3', createdAt: 0, containsSecurityUpdates: false, prerelease: false },
+            { version: '0.2.0', ts: 0, containsSecurityUpdates: false, prerelease: false },
+            { version: '0.2.3', ts: 0, containsSecurityUpdates: false, prerelease: false },
           ]}
         />
       );

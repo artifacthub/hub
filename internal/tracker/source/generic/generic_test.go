@@ -16,7 +16,7 @@ func TestTrackerSource(t *testing.T) {
 		Version:     "1.0.0",
 		Name:        "pkg1",
 		DisplayName: "Package 1",
-		CreatedAt:   1561735380,
+		TS:          1561735380,
 		Description: "Description",
 		Digest:      "0123456789",
 		License:     "Apache-2.0",

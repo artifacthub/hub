@@ -180,7 +180,7 @@ const ChangelogModal = (props: Props) => {
                     )}
 
                     <div className="ml-auto pl-0 pl-md-2 text-nowrap">
-                      <small className="text-muted">Released {moment(item.createdAt * 1000).fromNow()}</small>
+                      <small className="text-muted">Released {moment(item.ts * 1000).fromNow()}</small>
                     </div>
                   </div>
 

@@ -47,11 +47,11 @@
   "availableVersions": [
     {
       "version": "1.0.1",
-      "createdAt": 1556813520
+      "ts": 1556813520
     },
     {
       "version": "1.0.0",
-      "createdAt": 1556813520
+      "ts": 1556813520
     }
   ],
   "deprecated": false,
@@ -63,7 +63,7 @@
     }
   ],
   "provider": "Lightbend, Inc.",
-  "createdAt": 1561735380,
+  "ts": 1561735380,
   "maintainers": [{ "name": "Maintainer1", "email": "maintainer@email.com" }],
   "repository": {
     "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",

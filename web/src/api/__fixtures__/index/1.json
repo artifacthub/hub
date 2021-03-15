@@ -28,7 +28,7 @@
         "app_version": "1.0.2",
         "deprecated": false,
         "signed": false,
-        "created_at": 1583881020,
+        "ts": 1583881020,
         "repository": {
           "kind": 0,
           "name": "ibm-charts",
@@ -48,7 +48,7 @@
         "version": "1.0.0",
         "deprecated": false,
         "signed": false,
-        "created_at": 1592469454,
+        "ts": 1592469454,
         "repository": {
           "kind": 1,
           "name": "test",
@@ -71,7 +71,7 @@
         "appVersion": "1.0.2",
         "deprecated": false,
         "signed": false,
-        "createdAt": 1583881020,
+        "ts": 1583881020,
         "repository": {
           "kind": 0,
           "name": "ibm-charts",
@@ -91,7 +91,7 @@
         "version": "1.0.0",
         "deprecated": false,
         "signed": false,
-        "createdAt": 1592469454,
+        "ts": 1592469454,
         "repository": {
           "kind": 1,
           "name": "test",

@@ -124,6 +124,7 @@ select columns_are('package', array[
     'official',
     'channels',
     'default_channel',
+    'created_at',
     'repository_id'
 ]);
 select columns_are('package__maintainer', array[
@@ -152,6 +153,7 @@ select columns_are('repository', array[
     'disabled',
     'scanner_disabled',
     'digest',
+    'created_at',
     'repository_kind_id',
     'user_id',
     'organization_id'
@@ -198,6 +200,7 @@ select columns_are('snapshot', array[
     'changes',
     'contains_security_updates',
     'prerelease',
+    'ts',
     'created_at',
     'recommendations'
 ]);

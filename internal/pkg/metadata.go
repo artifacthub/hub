@@ -74,8 +74,8 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 	if md.Provider != nil {
 		p.Provider = md.Provider.Name
 	}
-	createdAt, _ := time.Parse(time.RFC3339, md.CreatedAt)
-	p.CreatedAt = createdAt.Unix()
+	ts, _ := time.Parse(time.RFC3339, md.CreatedAt)
+	p.TS = ts.Unix()
 	return p, nil
 }
 

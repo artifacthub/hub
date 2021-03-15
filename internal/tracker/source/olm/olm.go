@@ -152,15 +152,15 @@ func (s *TrackerSource) preparePackage(
 		Repository:       r,
 	}
 
-	// Created at
-	createdAt, err := time.Parse(time.RFC3339, csv.Annotations["createdAt"])
+	// TS
+	ts, err := time.Parse(time.RFC3339, csv.Annotations["createdAt"])
 	if err == nil {
-		p.CreatedAt = createdAt.Unix()
+		p.TS = ts.Unix()
 	} else {
 		// Try alternative layout
-		createdAt, err = time.Parse("2006-01-02 15:04:05", csv.Annotations["createdAt"])
+		ts, err = time.Parse("2006-01-02 15:04:05", csv.Annotations["createdAt"])
 		if err == nil {
-			p.CreatedAt = createdAt.Unix()
+			p.TS = ts.Unix()
 		}
 	}
 

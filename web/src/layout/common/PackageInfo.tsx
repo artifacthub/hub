@@ -30,9 +30,9 @@ interface Props {
 const PackageInfo = (props: Props) => {
   const history = useHistory();
 
-  const createdAt = (
+  const pkgTS = (
     <small className={`text-muted text-nowrap ${styles.date}`}>
-      Updated {moment(props.package.createdAt * 1000).fromNow()}
+      Updated {moment(props.package.ts * 1000).fromNow()}
     </small>
   );
 
@@ -216,7 +216,7 @@ const PackageInfo = (props: Props) => {
             }-flex flex-column align-items-end mb-auto ml-2`}
           >
             {starsAndKindInfo}
-            <div className="mt-1">{createdAt}</div>
+            <div className="mt-1">{pkgTS}</div>
           </div>
         </div>
       </div>
@@ -231,7 +231,7 @@ const PackageInfo = (props: Props) => {
           props.breakpointForInfoSection || 'md'
         }-0`}
       >
-        {createdAt}
+        {pkgTS}
         <span className="mt-1">{starsAndKindInfo}</span>
       </div>
 

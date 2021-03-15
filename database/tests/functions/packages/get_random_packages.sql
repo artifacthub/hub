@@ -53,7 +53,7 @@ insert into snapshot (
     readme,
     deprecated,
     signed,
-    created_at
+    ts
 ) values (
     :'package1ID',
     '1.0.0',
@@ -90,7 +90,7 @@ insert into snapshot (
     app_version,
     digest,
     readme,
-    created_at
+    ts
 ) values (
     :'package2ID',
     '1.0.0',
@@ -127,7 +127,7 @@ insert into snapshot (
     readme,
     deprecated,
     signed,
-    created_at
+    ts
 ) values (
     :'package3ID',
     '1.0.0',
@@ -164,7 +164,7 @@ insert into snapshot (
     home_url,
     readme,
     deprecated,
-    created_at
+    ts
 ) values (
     :'package4ID',
     '1.0.0',
@@ -179,7 +179,7 @@ insert into snapshot (
 );
 
 -- Run some tests
-select floor(extract(epoch from created_at)) as p1v1_created_at
+select floor(extract(epoch from ts)) as p1v1_ts
 from snapshot
 where package_id = :'package1ID' and version = '1.0.0' \gset
 select jsonb_set('[
@@ -207,7 +207,7 @@ select jsonb_set('[
             "organization_display_name": "Organization 1"
         }
     }
-]', '{0, created_at}', :'p1v1_created_at') as expected_random_packages \gset
+]', '{0, ts}', :'p1v1_ts') as expected_random_packages \gset
 select is(
     get_random_packages()::jsonb,
     :'expected_random_packages',

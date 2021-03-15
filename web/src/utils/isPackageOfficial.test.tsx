@@ -19,7 +19,7 @@ const defaultPackage: Package = {
   license: 'Apache-2.0',
   deprecated: false,
   signed: false,
-  createdAt: 1613115038,
+  ts: 1613115038,
   repository: {
     url: 'https://artifacthub.github.io/hub/chart',
     kind: 0,

@@ -11,7 +11,7 @@ interface Props {
   version: string;
   containsSecurityUpdates: boolean;
   prerelease: boolean;
-  createdAt: number;
+  ts: number;
   normalizedName: string;
   repository: Repository;
   searchUrlReferer?: SearchFiltersURL;
@@ -28,7 +28,7 @@ const VersionInRow = (props: Props) => {
     });
   };
 
-  const formattedDate = moment(props.createdAt! * 1000).format('D MMM, YYYY');
+  const formattedDate = moment(props.ts! * 1000).format('D MMM, YYYY');
 
   return (
     <tr>

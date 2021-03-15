@@ -78,7 +78,7 @@ export interface Package {
   stars?: number | null;
   eventKinds?: EventKind[];
   license?: string | null;
-  createdAt: number;
+  ts: number;
   defaultChannel?: string | null;
   channels?: Channel[] | null;
   provider?: string | null;
@@ -106,7 +106,7 @@ export interface Version {
   version: string;
   containsSecurityUpdates: boolean;
   prerelease: boolean;
-  createdAt: number;
+  ts: number;
 }
 
 export interface OLMExtraData {
@@ -547,7 +547,7 @@ export interface CVSSVectorOpt {
 
 export interface ChangeLog {
   version: string;
-  createdAt: number;
+  ts: number;
   prerelease: boolean;
   containsSecurityUpdates: boolean;
   changes?: string[] | null;

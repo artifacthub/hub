@@ -18,7 +18,7 @@ const defaultProps = {
   version: '1.0.1',
   containsSecurityUpdates: false,
   prerelease: false,
-  createdAt: 0,
+  ts: 0,
   normalizedName: 'pr',
   repository: {
     kind: 0,

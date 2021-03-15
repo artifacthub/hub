@@ -751,15 +751,15 @@ func TestRssFeed(t *testing.T) {
 					Description:    "description",
 					Version:        "1.0.0",
 					LogoImageID:    "0001",
-					CreatedAt:      1592299234,
+					TS:             1592299234,
 					AvailableVersions: []*hub.Version{
 						{
-							Version:   "1.0.0",
-							CreatedAt: 1592299234,
+							Version: "1.0.0",
+							TS:      1592299234,
 						},
 						{
-							Version:   "0.0.9",
-							CreatedAt: 1592299233,
+							Version: "0.0.9",
+							TS:      1592299233,
 						},
 					},
 					Maintainers: []*hub.Maintainer{

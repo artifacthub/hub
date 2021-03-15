@@ -35,8 +35,8 @@ func TestTrackerSource(t *testing.T) {
 				Whitelisted: true,
 			},
 		},
-		Provider:  "Test",
-		CreatedAt: 1561735380,
+		Provider: "Test",
+		TS:       1561735380,
 		Channels: []*hub.Channel{
 			{
 				Name:    "alpha",
