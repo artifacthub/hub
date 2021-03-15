@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Artifact Hub
   description: "Find, install and publish Kubernetes packages"
-  version: 0.16.0
+  version: 0.17.0
 servers:
   - url: "https://artifacthub.io/api/v1"
     description: Main production server

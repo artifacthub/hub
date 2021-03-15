@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 0.16.3
-appVersion: 0.16.0
+version: 0.17.0
+appVersion: 0.17.0
 kubeVersion: ">= 1.14.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/hub/chart/logo.png
@@ -28,26 +28,22 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
-    - Display usage tips and promote features available on UI
-    - Store and expose security scanner errors
-    - Add support for user password reset
-    - Allow setting official status at the package level
-    - Images using the latest tag are now scanned
-    - Add architecture and infrastructure documentation
-    - Improve charts metadata validation and errors tracking
-    - Update some API endpoints for consistency reasons
-    - Bump Go to 1.16
-    - Bump Alpine to 3.13.2 (openssl security update)
+    - Add Helm charts templates explorer
+    - Scan packages latest version images daily
+    - Enable strict transport security
+    - Add some CSRF protection
+    - Add content security policy
+    - Detect links in values schema descriptions
     - Some bugs fixes and other improvements
-  artifacthub.io/containsSecurityUpdates: "true"
+  artifacthub.io/containsSecurityUpdates: "false"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v0.16.0
+      image: artifacthub/db-migrator:v0.17.0
     - name: hub
-      image: artifacthub/hub:v0.16.0
+      image: artifacthub/hub:v0.17.0
     - name: tracker
-      image: artifacthub/tracker:v0.16.0
+      image: artifacthub/tracker:v0.17.0
     - name: scanner
-      image: artifacthub/scanner:v0.16.0
+      image: artifacthub/scanner:v0.17.0
     - name: trivy
       image: aquasec/trivy:0.16.0
