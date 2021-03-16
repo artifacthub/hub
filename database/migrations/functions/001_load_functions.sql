@@ -63,6 +63,8 @@
 {{ template "repositories/transfer_repository.sql" }}
 {{ template "repositories/update_repository.sql" }}
 
+{{ template "stats/get_stats.sql" }}
+
 {{ template "subscriptions/add_opt_out.sql" }}
 {{ template "subscriptions/add_subscription.sql" }}
 {{ template "subscriptions/delete_opt_out.sql" }}

@@ -15,6 +15,7 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers/pkg"
 	"github.com/artifacthub/hub/cmd/hub/handlers/repo"
 	"github.com/artifacthub/hub/cmd/hub/handlers/static"
+	"github.com/artifacthub/hub/cmd/hub/handlers/stats"
 	"github.com/artifacthub/hub/cmd/hub/handlers/subscription"
 	"github.com/artifacthub/hub/cmd/hub/handlers/user"
 	"github.com/artifacthub/hub/cmd/hub/handlers/webhook"
@@ -43,6 +44,7 @@ type Services struct {
 	SubscriptionManager hub.SubscriptionManager
 	WebhookManager      hub.WebhookManager
 	APIKeyManager       hub.APIKeyManager
+	StatsManager        hub.StatsManager
 	ImageStore          img.Store
 	Authorizer          hub.Authorizer
 }
@@ -69,6 +71,7 @@ type Handlers struct {
 	Webhooks      *webhook.Handlers
 	APIKeys       *apikey.Handlers
 	Static        *static.Handlers
+	Stats         *stats.Handlers
 }
 
 // Setup creates a new Handlers instance.
@@ -91,6 +94,7 @@ func Setup(ctx context.Context, cfg *viper.Viper, svc *Services) (*Handlers, err
 		Webhooks:      webhook.NewHandlers(svc.WebhookManager),
 		APIKeys:       apikey.NewHandlers(svc.APIKeyManager),
 		Static:        static.NewHandlers(cfg, svc.ImageStore),
+		Stats:         stats.NewHandlers(svc.StatsManager),
 	}
 	h.setupRouter()
 	return h, nil
@@ -127,7 +131,7 @@ func (h *Handlers) setupRouter() {
 		STSSeconds:            31536000,
 		STSIncludeSubdomains:  true,
 		STSPreload:            true,
-		ContentSecurityPolicy: "default-src 'none'; connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com; font-src 'self'; img-src 'self' https:; manifest-src 'self'; script-src 'self' https://www.google-analytics.com; style-src 'self'",
+		ContentSecurityPolicy: "default-src 'none'; connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com; font-src 'self'; img-src 'self' https:; manifest-src 'self'; script-src 'self' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'",
 	}).Handler)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.Users.BasicAuth)
@@ -301,6 +305,9 @@ func (h *Handlers) setupRouter() {
 
 		// Images
 		r.With(h.Users.RequireLogin).Post("/images", h.Static.SaveImage)
+
+		// Stats
+		r.Get("/stats", h.Stats.Get)
 
 		// Harbor replication
 		//

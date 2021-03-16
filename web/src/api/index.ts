@@ -6,6 +6,7 @@ import isObject from 'lodash/isObject';
 import isUndefined from 'lodash/isUndefined';
 
 import {
+  AHStats,
   APIKey,
   APIKeyCode,
   AuthorizerAction,
@@ -751,6 +752,10 @@ export const API = {
         password: password,
       }),
     });
+  },
+
+  getAHStats: (): Promise<AHStats | null> => {
+    return apiFetch(`${API_BASE_URL}/stats`);
   },
 
   // External API call

@@ -65,6 +65,12 @@ exports[`Navbar creates snapshot 1`] = `
         <ul
           class="navbar-nav align-items-center ml-auto"
         >
+          <a
+            class="btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap button"
+            href="/stats"
+          >
+            Stats
+          </a>
           <li
             class="nav-item ml-4 position-relative"
           >
