@@ -22,6 +22,7 @@ import NotFound from './notFound';
 import PackageView from './package';
 import SearchView from './search';
 import StarredPackagesView from './starredPackages';
+import StatsView from './stats';
 
 const ScrollMemory = require('react-router-scroll-memory');
 
@@ -162,6 +163,20 @@ export default function App() {
                   <Navbar isSearching={isSearching} privateRoute />
                   <div className="d-flex flex-column flex-grow-1">
                     <StarredPackagesView />
+                  </div>
+                  <Footer />
+                </>
+              )}
+            />
+
+            <Route
+              path="/stats"
+              exact
+              render={() => (
+                <>
+                  <Navbar isSearching={isSearching} />
+                  <div className="d-flex flex-column flex-grow-1">
+                    <StatsView />
                   </div>
                   <Footer />
                 </>

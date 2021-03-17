@@ -25,6 +25,8 @@ tags:
     description: ""
   - name: Availability checks
     description: ""
+  - name: Stats
+    description: ""
   - name: Integrations
     description: ""
 paths:
@@ -2113,6 +2115,216 @@ paths:
           description: "Found, the value is not available"
         "404":
           description: "Not found, the value is available"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /stats:
+    get:
+      tags:
+        - Stats
+      summary: Get Artifact Hub stats
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - generated_at
+                  - packages
+                  - snapshots
+                  - repositories
+                  - organizations
+                  - users
+                properties:
+                  generated_at:
+                    type: integer
+                    nullable: false
+                  packages:
+                    type: object
+                    required:
+                      - total
+                    properties:
+                      total:
+                        type: integer
+                        nullable: false
+                      running_total:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
+                      created_monthly:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
+                  repositories:
+                    type: object
+                    required:
+                      - total
+                    properties:
+                      total:
+                        type: integer
+                        nullable: false
+                      running_total:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
+                      created_monthly:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
+                  snapshots:
+                    type: object
+                    required:
+                      - total
+                    properties:
+                      total:
+                        type: integer
+                        nullable: false
+                      running_total:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
+                      created_monthly:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
+                  organizations:
+                    type: object
+                    required:
+                      - total
+                    properties:
+                      total:
+                        type: integer
+                        nullable: false
+                      running_total:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
+                  users:
+                    type: object
+                    required:
+                      - total
+                    properties:
+                      total:
+                        type: integer
+                        nullable: false
+                      running_total:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
+                example:
+                  generated_at: 1615980004171
+                  packages:
+                    total: 969
+                    running_total:
+                      - - 1585612800000
+                        - 917
+                      - - 1585872000000
+                        - 918
+                      - - 1586736000000
+                        - 937
+                      - - 1586908800000
+                        - 938
+                      - - 1586995200000
+                        - 949
+                      - - 1587340800000
+                        - 953
+                      - - 1587427200000
+                        - 955
+                      - - 1587513600000
+                        - 969
+                    created_monthly:
+                      - - 1583020800000
+                        - 917
+                      - - 1585699200000
+                        - 52
+                  snapshots:
+                    total: 3998
+                    running_total:
+                      - - 1585612800000
+                        - 3906
+                      - - 1585699200000
+                        - 3922
+                      - - 1585785600000
+                        - 3935
+                      - - 1585872000000
+                        - 3948
+                      - - 1586044800000
+                        - 3951
+                      - - 1586131200000
+                        - 3959
+                      - - 1586217600000
+                        - 3981
+                      - - 1586304000000
+                        - 3998
+                    created_monthly:
+                      - - 1583020800000
+                        - 3906
+                      - - 1585699200000
+                        - 92
+                  repositories:
+                    total: 181
+                    running_total:
+                      - - 1585612800000
+                        - 172
+                      - - 1585872000000
+                        - 173
+                      - - 1586736000000
+                        - 176
+                      - - 1586908800000
+                        - 177
+                      - - 1586995200000
+                        - 181
+                  organizations:
+                    total: 8
+                    running_total:
+                      - - 1585612800000
+                        - 3
+                      - - 1585785600000
+                        - 6
+                      - - 1585872000000
+                        - 7
+                      - - 1586217600000
+                        - 8
+                  users:
+                    total: 9
+                    running_total:
+                      - - 1584403200000
+                        - 3
+                      - - 1584489600000
+                        - 5
+                      - - 1584576000000
+                        - 6
+                      - - 1584662400000
+                        - 8
+                      - - 1584921600000
+                        - 9
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":

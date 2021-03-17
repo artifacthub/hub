@@ -21,6 +21,7 @@ import (
 	"github.com/artifacthub/hub/internal/org"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/stats"
 	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/artifacthub/hub/internal/user"
 	"github.com/artifacthub/hub/internal/util"
@@ -65,6 +66,7 @@ func main() {
 		SubscriptionManager: subscription.NewManager(db),
 		WebhookManager:      webhook.NewManager(db),
 		APIKeyManager:       apikey.NewManager(db),
+		StatsManager:        stats.NewManager(db),
 		ImageStore:          pg.NewImageStore(cfg, db, hc, nil),
 		Authorizer:          az,
 	}

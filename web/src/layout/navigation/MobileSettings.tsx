@@ -124,6 +124,18 @@ const MobileSettings = (props: Props) => {
 
                     <div className="dropdown-divider my-3" />
 
+                    <Link
+                      className="dropdown-item my-2"
+                      onClick={() => {
+                        setOpenSideBarStatus(false);
+                      }}
+                      to={{
+                        pathname: '/stats',
+                      }}
+                    >
+                      Stats
+                    </Link>
+
                     <button
                       className="dropdown-item my-2"
                       onClick={() => {

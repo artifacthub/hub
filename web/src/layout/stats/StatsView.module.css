@@ -1,0 +1,49 @@
+.wrapper {
+  min-height: 1000px;
+}
+
+.chartWrapper {
+  background-color: var(--white) !important;
+  box-shadow: 0px 0px 5px 0px var(--light);
+  padding: 1rem;
+  padding-bottom: calc(1rem - 15px);
+}
+
+[data-theme='dark'] :global(.card).chartWrapper {
+  background-color: var(--color-black-5) !important;
+}
+
+:global(.apexcharts-tooltip) {
+  background-color: var(--white) !important;
+  border-color: var(--color-1-900) !important;
+  color: var(--font-color) !important;
+}
+
+:global(.apexcharts-tooltip-title) {
+  background-color: var(--color-black-5) !important;
+  border-color: var(--color-1-900) !important;
+}
+
+:global(.apexcharts-xaxistooltip) {
+  background-color: var(--white) !important;
+  color: var(--font-color) !important;
+  border-color: var(--color-1-900) !important;
+}
+
+:global(.apexcharts-xaxistooltip)::before,
+:global(.apexcharts-xaxistooltip)::after {
+  border-bottom-color: var(--color-1-900) !important;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  .chartWrapper {
+    padding: 2rem;
+    padding-bottom: calc(2rem - 15px);
+  }
+}

@@ -598,3 +598,30 @@ export enum ChartTemplateSpecialType {
   FlowControl,
   Variable,
 }
+
+export interface AHStats {
+  generatedAt: number;
+  packages: {
+    total: number;
+    runningTotal?: any[];
+    createdMonthly?: any[];
+  };
+  repositories: {
+    total: number;
+    runningTotal?: any[];
+    createdMonthly?: any[];
+  };
+  snapshots: {
+    total: number;
+    createdMonthly?: any[];
+    runningTotal?: any[];
+  };
+  organizations: {
+    total: number;
+    runningTotal?: any[];
+  };
+  users: {
+    total: number;
+    runningTotal?: any[];
+  };
+}

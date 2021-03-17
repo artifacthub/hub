@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(139);
+select plan(140);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -422,6 +422,8 @@ select has_function('set_last_tracking_results');
 select has_function('set_verified_publisher');
 select has_function('transfer_repository');
 select has_function('update_repository');
+-- Stats
+select has_function('get_stats');
 -- Subscriptions
 select has_function('add_opt_out');
 select has_function('add_subscription');

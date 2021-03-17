@@ -83,6 +83,7 @@ internal
 ├── pkg
 ├── repo
 ├── scanner
+├── stats
 ├── subscription
 ├── tests
 ├── tracker
