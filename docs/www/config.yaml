@@ -10,3 +10,4 @@ build:
 params:
   AuthorName: Artifact Hub Team
   geekdocSearch: false
+  geekdocAnchorCopy: false
