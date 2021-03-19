@@ -46,11 +46,11 @@
 }
 
 .default .iconWrapper {
-  background-color: var(--hightlighted);
+  background-color: var(--highlighted);
 }
 
 .default .iconWrapper::before {
-  background-color: var(--hightlighted);
+  background-color: var(--highlighted);
 }
 
 .warning .iconWrapper {
@@ -82,7 +82,7 @@
 }
 
 .iconRightWrapper {
-  background-color: var(--hightlighted);
+  background-color: var(--highlighted);
   position: relative;
   border: 1px solid var(--color-black-15);
   border-radius: 3px;

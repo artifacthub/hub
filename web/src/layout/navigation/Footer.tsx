@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { FiExternalLink, FiHexagon } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 import ExternalLink from '../common/ExternalLink';
 import styles from './Footer.module.css';
@@ -23,14 +24,19 @@ const Footer = (props: Props) => (
           <div className="h6 font-weight-bold text-uppercase">Project</div>
           <div className="d-flex flex-column text-left">
             <ExternalLink className="text-muted mb-1" href="/docs">
-              Getting started
-            </ExternalLink>
-            <ExternalLink className="text-muted mb-1" href="https://artifacthub.github.io/hub/api/">
-              API docs
+              Documentation
             </ExternalLink>
             <ExternalLink className="text-muted mb-1" href="https://blog.artifacthub.io/blog/">
               Blog
             </ExternalLink>
+            <Link
+              className="text-muted mb-1"
+              to={{
+                pathname: '/stats',
+              }}
+            >
+              Stats
+            </Link>
             <ExternalLink
               className="text-muted mb-1"
               href="https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
@@ -90,7 +96,7 @@ const Footer = (props: Props) => (
             <div className={styles.hexagon}>
               <FiHexagon />
             </div>
-            <div className="mt-2 mt-lg-auto">
+            <div className="mt-2 mt-lg-4">
               <small>
                 <span className="d-none d-sm-inline mr-1">Copyright</span>© The Artifact Hub Authors
               </small>

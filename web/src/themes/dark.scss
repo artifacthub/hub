@@ -39,7 +39,7 @@
   --color-font: #a3a3a6;
   --body-bg: #222529;
 
-  --hightlighted: #1164a3;
+  --highlighted: #1164a3;
   --extra-light-gray: var(--color-2-500);
   --light-gray: var(--body-bg);
   --mid-gray: #495057;
@@ -68,8 +68,8 @@
 
   .was-validated .custom-control-input:valid:checked ~ .custom-control-label::before,
   .custom-control-input.is-valid:checked ~ .custom-control-label::before {
-    border-color: var(--hightlighted);
-    background-color: var(--hightlighted);
+    border-color: var(--highlighted);
+    background-color: var(--highlighted);
   }
 
   .table {
@@ -172,8 +172,8 @@
   }
 
   .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: var(--hightlighted);
-    border-color: var(--hightlighted);
+    background-color: var(--highlighted);
+    border-color: var(--highlighted);
   }
 
   .custom-select:focus {
@@ -237,7 +237,7 @@
 
   .activeVersion {
     & > span {
-      color: var(--hightlighted);
+      color: var(--highlighted);
     }
   }
 
@@ -283,7 +283,7 @@
   }
 
   .hightlighted {
-    color: var(--hightlighted);
+    color: var(--highlighted);
   }
 
   .card a.text-primary {
@@ -320,7 +320,7 @@
     }
 
     &.active .page-link {
-      background-color: var(--hightlighted);
+      background-color: var(--highlighted);
       border-color: #a3a3a6;
     }
   }
@@ -435,7 +435,7 @@
       }
 
       &::before {
-        background-color: var(--hightlighted);
+        background-color: var(--highlighted);
       }
     }
   }
@@ -553,7 +553,7 @@
       border-color: $border-solid;
 
       &.activeStep {
-        background-color: var(--hightlighted) !important;
+        background-color: var(--highlighted) !important;
       }
     }
   }

@@ -28,16 +28,7 @@ exports[`Footer creates snapshot 1`] = `
               role="button"
               target="_blank"
             >
-              Getting started
-            </a>
-            <a
-              class="link text-muted mb-1"
-              href="https://artifacthub.github.io/hub/api/"
-              rel="noopener noreferrer"
-              role="button"
-              target="_blank"
-            >
-              API docs
+              Documentation
             </a>
             <a
               class="link text-muted mb-1"
@@ -47,6 +38,12 @@ exports[`Footer creates snapshot 1`] = `
               target="_blank"
             >
               Blog
+            </a>
+            <a
+              class="text-muted mb-1"
+              href="/stats"
+            >
+              Stats
             </a>
             <a
               class="link text-muted mb-1"
@@ -248,7 +245,7 @@ exports[`Footer creates snapshot 1`] = `
               </svg>
             </div>
             <div
-              class="mt-2 mt-lg-auto"
+              class="mt-2 mt-lg-4"
             >
               <small>
                 <span

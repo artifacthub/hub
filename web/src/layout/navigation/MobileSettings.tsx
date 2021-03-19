@@ -2,8 +2,9 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useState } from 'react';
-import { FaCog, FaStar, FaUserCircle } from 'react-icons/fa';
+import { FaCog, FaEdit, FaSignInAlt, FaStar, FaUserCircle } from 'react-icons/fa';
 import { GoThreeBars } from 'react-icons/go';
+import { HiChartSquareBar } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -85,6 +86,21 @@ const MobileSettings = (props: Props) => {
                     <div className="dropdown-divider my-3" />
 
                     <Link
+                      className="dropdown-item my-2"
+                      onClick={() => {
+                        setOpenSideBarStatus(false);
+                      }}
+                      to={{
+                        pathname: '/stats',
+                      }}
+                    >
+                      <div className="d-flex align-items-center">
+                        <HiChartSquareBar className="mr-2" />
+                        <div>Stats</div>
+                      </div>
+                    </Link>
+
+                    <Link
                       data-testid="starredPackagesLink"
                       className="dropdown-item my-2"
                       to={{
@@ -133,7 +149,10 @@ const MobileSettings = (props: Props) => {
                         pathname: '/stats',
                       }}
                     >
-                      Stats
+                      <div className="d-flex align-items-center">
+                        <HiChartSquareBar className="mr-2" />
+                        <div>Stats</div>
+                      </div>
                     </Link>
 
                     <button
@@ -143,7 +162,10 @@ const MobileSettings = (props: Props) => {
                         props.setOpenLogIn(true);
                       }}
                     >
-                      Sign in
+                      <div className="d-flex align-items-center">
+                        <FaSignInAlt className="mr-2" />
+                        <div>Sign in</div>
+                      </div>
                     </button>
 
                     <button
@@ -153,7 +175,10 @@ const MobileSettings = (props: Props) => {
                         props.setOpenSignUp(true);
                       }}
                     >
-                      Sign up
+                      <div className="d-flex align-items-center">
+                        <FaEdit className="mr-2" />
+                        <div>Sign up</div>
+                      </div>
                     </button>
                   </>
                 )}
