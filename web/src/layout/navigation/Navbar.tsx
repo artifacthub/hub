@@ -97,7 +97,7 @@ const Navbar = (props: Props) => {
             </Link>
 
             {isUndefined(ctx) || isUndefined(ctx.user) ? (
-              <div className="spinner-grow spinner-grow-sm textLight pt-1" role="status">
+              <div className="spinner-grow spinner-grow-sm textLight pt-1 ml-4" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             ) : (
