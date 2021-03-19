@@ -11,7 +11,4 @@ tracker:
   concurrency: 10
   repositoriesNames: []
   repositoriesKinds: []
-  imageStore: pg
   bypassDigestCheck: false
-  events:
-    trackingErrors: false

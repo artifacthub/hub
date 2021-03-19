@@ -3,6 +3,26 @@
     "title": "Artifact Hub Chart JSON Schema",
     "type": "object",
     "properties": {
+        "creds": {
+            "type": "object",
+            "properties": {
+                "dockerPassword": {
+                    "title": "Docker registry password",
+                    "type": "string",
+                    "default": ""
+                },
+                "dockerUsername": {
+                    "title": "Docker registry username",
+                    "type": "string",
+                    "default": ""
+                },
+                "githubToken": {
+                    "title": "Authentication token used in Github requests (increases rate limit)",
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        },
         "db": {
             "title": "Database configuration",
             "type": "object",
@@ -74,6 +94,54 @@
             },
             "required": ["job", "loadSampleData", "configDir"]
         },
+        "email": {
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From address used in emails",
+                    "description": "This field is required if you want to enable email sending in Artifact Hub.",
+                    "type": "string",
+                    "default": ""
+                },
+                "fromName": {
+                    "title": "From name used in emails",
+                    "type": "string",
+                    "default": ""
+                },
+                "replyTo": {
+                    "title": "Reply-to address used in emails",
+                    "type": "string",
+                    "default": ""
+                },
+                "smtp": {
+                    "type": "object",
+                    "properties": {
+                        "host": {
+                            "title": "SMTP host",
+                            "description": "This field is required if you want to enable email sending in Artifact Hub.",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "password": {
+                            "title": "SMTP password",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "port": {
+                            "title": "SMTP port",
+                            "description": "This field is required if you want to enable email sending in Artifact Hub.",
+                            "type": "integer",
+                            "default": 587
+                        },
+                        "username": {
+                            "title": "SMTP username",
+                            "type": "string",
+                            "default": ""
+                        }
+                    }
+                }
+            }
+        },
         "fullnameOverride": {
             "type": "string",
             "title": "Fullname override",
@@ -85,6 +153,22 @@
             "title": "Enable dynamic resource name prefix",
             "description": "Enabling the dynamic resource name prefix ensures that the resources are named dynamically based on the Helm installation's name. This allows multiple installations of this chart in a single Kubernetes namespace. The prefix can be defined by using the `fullnameOverride`.",
             "default": false
+        },
+        "events": {
+            "type": "object",
+            "properties": {
+                "scanningErrors": {
+                    "title": "Enable repository scanning errors events",
+                    "type": "boolean",
+                    "default": false
+                },
+                "trackingErrors": {
+                    "title": "Enable repository tracking errors events",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": ["scanningErrors", "trackingErrors"]
         },
         "hub": {
             "title": "Hub configuration",
@@ -136,54 +220,6 @@
                         }
                     },
                     "required": ["image", "replicaCount", "resources"]
-                },
-                "email": {
-                    "type": "object",
-                    "properties": {
-                        "from": {
-                            "title": "From address used in emails",
-                            "description": "This field is required if you want to enable email sending in Artifact Hub.",
-                            "type": "string",
-                            "default": ""
-                        },
-                        "fromName": {
-                            "title": "From name used in emails",
-                            "type": "string",
-                            "default": ""
-                        },
-                        "replyTo": {
-                            "title": "Reply-to address used in emails",
-                            "type": "string",
-                            "default": ""
-                        },
-                        "smtp": {
-                            "type": "object",
-                            "properties": {
-                                "host": {
-                                    "title": "SMTP host",
-                                    "description": "This field is required if you want to enable email sending in Artifact Hub.",
-                                    "type": "string",
-                                    "default": ""
-                                },
-                                "password": {
-                                    "title": "SMTP password",
-                                    "type": "string",
-                                    "default": ""
-                                },
-                                "port": {
-                                    "title": "SMTP port",
-                                    "description": "This field is required if you want to enable email sending in Artifact Hub.",
-                                    "type": "integer",
-                                    "default": 587
-                                },
-                                "username": {
-                                    "title": "SMTP username",
-                                    "type": "string",
-                                    "default": ""
-                                }
-                            }
-                        }
-                    }
                 },
                 "ingress": {
                     "type": "object",
@@ -485,6 +521,18 @@
             "type": "string",
             "default": ""
         },
+        "images": {
+            "type": "object",
+            "properties": {
+                "store": {
+                    "title": "Store for images",
+                    "type": "string",
+                    "default": "pg",
+                    "enum": ["pg"]
+                }
+            },
+            "required": ["store"]
+        },
         "log": {
             "type": "object",
             "properties": {
@@ -559,26 +607,6 @@
                     },
                     "required": ["image", "resources"]
                 },
-                "dockerPassword": {
-                    "title": "Docker registry password",
-                    "type": "string",
-                    "default": ""
-                },
-                "dockerUsername": {
-                    "title": "Docker registry username",
-                    "type": "string",
-                    "default": ""
-                },
-                "events": {
-                    "type": "object",
-                    "properties": {
-                        "scanningErrors": {
-                            "title": "Enable repository scanning errors events",
-                            "type": "boolean",
-                            "default": false
-                        }
-                    }
-                },
                 "trivyURL": {
                     "title": "Trivy server url",
                     "type": "string",
@@ -586,7 +614,7 @@
                     "default": ""
                 }
             },
-            "required": ["concurrency", "configDir", "cronjob", "events", "trivyURL"]
+            "required": ["concurrency", "configDir", "cronjob", "trivyURL"]
         },
         "tracker": {
             "title": "Tracker configuration",
@@ -642,27 +670,6 @@
                     },
                     "required": ["image", "resources"]
                 },
-                "events": {
-                    "type": "object",
-                    "properties": {
-                        "trackingErrors": {
-                            "title": "Enable repository tracking errors events",
-                            "type": "boolean",
-                            "default": false
-                        }
-                    }
-                },
-                "githubToken": {
-                    "title": "Authentication token used in Github requests (increases rate limit)",
-                    "type": "string",
-                    "default": ""
-                },
-                "imageStore": {
-                    "title": "Store for images",
-                    "type": "string",
-                    "default": "pg",
-                    "enum": ["pg"]
-                },
                 "repositoriesKinds": {
                     "title": "Repositories kinds to process ([] = all)",
                     "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task",
@@ -683,7 +690,7 @@
                     "uniqueItems": true
                 }
             },
-            "required": ["bypassDigestCheck", "configDir", "concurrency", "cronjob", "events", "imageStore", "repositoriesKinds", "repositoriesNames"]
+            "required": ["bypassDigestCheck", "configDir", "concurrency", "cronjob", "repositoriesKinds", "repositoriesNames"]
         },
         "trivy": {
             "title": "Trivy configuration",
@@ -731,5 +738,5 @@
             "required": ["deploy", "persistence"]
         }
     },
-    "required": ["pullPolicy", "log", "db", "dbMigrator", "hub", "scanner", "tracker", "trivy", "postgresql"]
+    "required": ["db", "dbMigrator", "hub", "images", "log", "postgresql", "pullPolicy", "tracker", "trivy", "scanner"]
 }

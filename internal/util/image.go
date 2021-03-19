@@ -16,7 +16,7 @@ func SetupImageStore(
 	hc img.HTTPClient,
 	githubRL *rate.Limiter,
 ) (img.Store, error) {
-	imageStore := cfg.GetString("tracker.imageStore")
+	imageStore := cfg.GetString("images.store")
 	switch imageStore {
 	case "pg":
 		return pg.NewImageStore(cfg, db, hc, githubRL), nil

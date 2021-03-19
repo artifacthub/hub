@@ -2,6 +2,10 @@ log:
   level: debug
   pretty: false
 
+events:
+  scanningErrors: true
+  trackingErrors: true
+
 dbMigrator:
   loadSampleData: false
 
@@ -58,8 +62,6 @@ scanner:
       requests:
         cpu: 2
         memory: 4000Mi
-  events:
-    scanningErrors: true
 
 tracker:
   cronjob:
@@ -67,8 +69,6 @@ tracker:
       requests:
         cpu: 2
         memory: 4000Mi
-  events:
-    trackingErrors: true
 
 trivy:
   deploy:

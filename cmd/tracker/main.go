@@ -72,7 +72,7 @@ func main() {
 	pm := pkg.NewManager(db)
 	hc := &http.Client{Timeout: 10 * time.Second}
 	githubMaxRequestsPerHour := githubMaxRequestsPerHourUnauthenticated
-	if cfg.GetString("tracker.githubToken") != "" {
+	if cfg.GetString("creds.githubToken") != "" {
 		githubMaxRequestsPerHour = githubMaxRequestsPerHourAuthenticated
 	}
 	githubRL := rate.NewLimiter(rate.Every(1*time.Hour), githubMaxRequestsPerHour)

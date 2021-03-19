@@ -147,10 +147,7 @@ tracker:
   concurrency: 1
   repositoriesNames: []
   repositoriesKinds: []
-  imageStore: pg
   bypassDigestCheck: false
-  events:
-    trackingErrors: false
 ```
 
 Once the configuration file is ready, it's time to launch the `tracker` for the first time:
