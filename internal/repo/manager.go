@@ -23,10 +23,8 @@ import (
 	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
-	"github.com/google/go-github/github"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
-	"golang.org/x/oauth2"
 	"gopkg.in/yaml.v2"
 )
 
@@ -81,7 +79,6 @@ type Manager struct {
 	rc              hub.RepositoryCloner
 	helmIndexLoader hub.HelmIndexLoader
 	az              hub.Authorizer
-	gh              *github.Client
 }
 
 // NewManager creates a new Manager instance.
@@ -95,17 +92,6 @@ func NewManager(cfg *viper.Viper, db hub.DB, az hub.Authorizer, opts ...func(m *
 	}
 	for _, o := range opts {
 		o(m)
-	}
-
-	// Setup Github token
-	githubToken := cfg.GetString("tracker.githubToken")
-	if githubToken != "" {
-		ts := oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: githubToken},
-		)
-		m.gh = github.NewClient(oauth2.NewClient(context.TODO(), ts))
-	} else {
-		m.gh = github.NewClient(http.DefaultClient)
 	}
 
 	// Setup HTTP getter
@@ -529,7 +515,7 @@ func (m *Manager) SetLastScanningResults(ctx context.Context, repositoryID, errs
 	}
 
 	// Update last scanning results in database
-	scanningErrorsEventsEnabled := m.cfg.GetBool("scanner.events.scanningErrors")
+	scanningErrorsEventsEnabled := m.cfg.GetBool("events.scanningErrors")
 	_, err := m.db.Exec(ctx, setLastScanningResultsDBQ, repositoryID, errs, scanningErrorsEventsEnabled)
 	return err
 }
@@ -543,7 +529,7 @@ func (m *Manager) SetLastTrackingResults(ctx context.Context, repositoryID, errs
 	}
 
 	// Update last tracking results in database
-	trackingErrorsEventsEnabled := m.cfg.GetBool("tracker.events.trackingErrors")
+	trackingErrorsEventsEnabled := m.cfg.GetBool("events.trackingErrors")
 	_, err := m.db.Exec(ctx, setLastTrackingResultsDBQ, repositoryID, errs, trackingErrorsEventsEnabled)
 	return err
 }

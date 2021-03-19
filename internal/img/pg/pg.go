@@ -84,7 +84,7 @@ func (s *ImageStore) DownloadAndSaveImage(ctx context.Context, imageURL string) 
 		}
 
 		// Download it from source and store it in the cache.
-		githubToken := s.cfg.GetString("tracker.githubToken")
+		githubToken := s.cfg.GetString("creds.githubToken")
 		data, err = img.Download(ctx, s.hc, githubToken, s.githubRL, imageURL)
 		if err != nil {
 			s.errorsCache.Add(imageURL, err)

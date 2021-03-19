@@ -16,6 +16,28 @@ db:
   user: postgres
   password: postgres
 
+email:
+  fromName: ""
+  from: ""
+  replyTo: ""
+  smtp:
+    host: ""
+    port: 587
+    username: ""
+    password: ""
+
+creds:
+  dockerUsername: ""
+  dockerPassword: ""
+  githubToken: ""
+
+images:
+  store: pg
+
+events:
+  scanningErrors: false
+  trackingErrors: false
+
 dbMigrator:
   job:
     image:
@@ -85,15 +107,6 @@ hub:
           - profile
           - email
     xffIndex: 0
-  email:
-    fromName: ""
-    from: ""
-    replyTo: ""
-    smtp:
-      host: ""
-      port: 587
-      username: ""
-      password: ""
   analytics:
     gaTrackingID: ""
 
@@ -106,10 +119,6 @@ scanner:
   trivyURL: ""
   cacheDir: ""
   configDir: "/home/scanner/.cfg"
-  dockerUsername: ""
-  dockerPassword: ""
-  events:
-    scanningErrors: false
 
 tracker:
   cronjob:
@@ -121,11 +130,7 @@ tracker:
   concurrency: 10
   repositoriesNames: []
   repositoriesKinds: []
-  imageStore: pg
   bypassDigestCheck: false
-  events:
-    trackingErrors: false
-  githubToken: ""
 
 trivy:
   deploy:

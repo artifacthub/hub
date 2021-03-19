@@ -7,8 +7,9 @@ db:
   port: "5432"
   database: hub
   user: postgres
+creds:
+  dockerUsername: ""
+  dockerPassword: ""
 scanner:
   concurrency: 10
   trivyURL: http://trivy:8081
-  dockerUsername: ""
-  dockerPassword: ""

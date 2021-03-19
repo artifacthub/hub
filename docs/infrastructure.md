@@ -71,16 +71,21 @@ helm install \
   --values values-<ENVIRONMENT>.yaml \
   --namespace <NAMESPACE_NAME> \
   --set imageTag=<GIT_SHA> \
-  --set hub.deploy.image.repository=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/hub \
-  --set dbMigrator.job.image.repository=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/db-migrator \
-  --set tracker.cronjob.image.repository=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/tracker \
-  --set tracker.githubToken=<GITHUB_TOKEN> \
-  --set scanner.cronjob.image.repository=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/scanner \
-  --set scanner.dockerUsername=<DOCKER_USERNAME> \
-  --set scanner.dockerPassword=<DOCKER_PASSWORD> \
+  --set creds.dockerUsername=<DOCKER_USERNAME> \
+  --set creds.dockerPassword=<DOCKER_PASSWORD> \
+  --set creds.githubToken=<GITHUB_TOKEN> \
   --set db.user=<DB_USER> \
   --set db.host=<DB_HOST> \
   --set db.password=<DB_PASSWORD> \
+  --set email.fromName="Artifact Hub" \
+  --set email.from=hub@artifacthub.io \
+  --set email.replyTo=no-reply@artifacthub.io \
+  --set email.smtp.host=<SMTP_HOST> \
+  --set email.smtp.port=<SMTP_PORT> \
+  --set email.smtp.username=<SMTP_USERNAME> \
+  --set email.smtp.password=<SMTP_PASSWORD> \
+  --set dbMigrator.job.image.repository=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/db-migrator \
+  --set hub.deploy.image.repository=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/hub \
   --set hub.ingress.annotations."alb\.ingress\.kubernetes\.io/certificate-arn"=<CERTIFICATE_ARN> \
   --set hub.ingress.annotations."alb\.ingress\.kubernetes\.io/wafv2-acl-arn"=<ACL_ARN> \
   --set hub.server.cookie.hashKey=<COOKIE_HASHKEY> \
@@ -88,18 +93,13 @@ helm install \
   --set hub.server.csrf.authKey=<CSRF_AUTHKEY> \
   --set hub.server.csrf.secure=true \
   --set hub.server.xffIndex=-2 \
-  --set hub.email.fromName="Artifact Hub" \
-  --set hub.email.from=hub@artifacthub.io \
-  --set hub.email.replyTo=no-reply@artifacthub.io \
-  --set hub.email.smtp.host=<SMTP_HOST> \
-  --set hub.email.smtp.port=<SMTP_PORT> \
-  --set hub.email.smtp.username=<SMTP_USERNAME> \
-  --set hub.email.smtp.password=<SMTP_PASSWORD> \
   --set hub.server.oauth.github.clientID=<GITHUB_CLIENT_ID> \
   --set hub.server.oauth.github.clientSecret=<GITHUB_CLIENT_SECRET> \
   --set hub.server.oauth.google.clientID=<GOOGLE_CLIENT_ID> \
   --set hub.server.oauth.google.clientSecret=<GOOGLE_CLIENT_SECRET> \
   --set hub.analytics.gaTrackingID=<GA_TRACKING_ID> \
+  --set tracker.cronjob.image.repository=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/tracker \
+  --set scanner.cronjob.image.repository=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/scanner \
 <RELEASE_NAME> .
 ```
 

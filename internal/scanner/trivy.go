@@ -48,8 +48,8 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 	}
 	if strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
 		cmd.Env = append(cmd.Env,
-			"TRIVY_USERNAME="+s.Cfg.GetString("scanner.dockerUsername"),
-			"TRIVY_PASSWORD="+s.Cfg.GetString("scanner.dockerPassword"),
+			"TRIVY_USERNAME="+s.Cfg.GetString("creds.dockerUsername"),
+			"TRIVY_PASSWORD="+s.Cfg.GetString("creds.dockerPassword"),
 		)
 	}
 

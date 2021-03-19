@@ -253,7 +253,7 @@ func (s *TrackerSource) loadChartArchive(u *url.URL) (*chart.Chart, error) {
 		req, _ := http.NewRequest("GET", u.String(), nil)
 		if u.Host == "github.com" || u.Host == "raw.githubusercontent.com" {
 			// Authenticate and rate limit requests to Github
-			githubToken := s.i.Svc.Cfg.GetString("tracker.githubToken")
+			githubToken := s.i.Svc.Cfg.GetString("creds.githubToken")
 			if githubToken != "" {
 				req.Header.Set("Authorization", fmt.Sprintf("token %s", githubToken))
 			}
