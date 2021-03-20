@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatsView creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex flex-column flex-grow-1 position-relative"
+  >
+    <div
+      class="position-absolute p-5 wrapper undefined"
+    >
+      <div
+        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+      >
+        <div
+          class="spinner-border text-primary spinner undefined"
+          role="status"
+        >
+          <span
+            class="sr-only"
+          >
+            Loading...
+          </span>
+        </div>
+      </div>
+    </div>
+    <main
+      class="container-lg px-sm-4 px-lg-0 py-5"
+      role="main"
+    >
+      <div
+        class="flex-grow-1 position-relative"
+      >
+        <div
+          class="h2 text-secondary text-center title"
+        >
+          Artifact Hub Stats
+        </div>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;

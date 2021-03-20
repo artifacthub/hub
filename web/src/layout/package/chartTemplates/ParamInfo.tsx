@@ -10,7 +10,7 @@ import styles from './ParamInfo.module.css';
 
 interface Props {
   element: JSX.Element;
-  info?: string | JSX.Element;
+  info: string | JSX.Element;
   isMarkdown?: boolean;
   className?: string;
   fixedWidth?: boolean;
@@ -78,6 +78,7 @@ const ParamInfo = (props: Props) => {
       <div className="position-absolute">
         <div
           ref={ref}
+          data-testid="infoDropdown"
           className={classnames(
             'dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1',
             styles.dropdown,
@@ -109,6 +110,7 @@ const ParamInfo = (props: Props) => {
       </div>
 
       <div
+        data-testid="infoText"
         onMouseEnter={(e) => {
           e.preventDefault();
           setOnParamHover(true);

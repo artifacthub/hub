@@ -131,15 +131,6 @@ exports[`Search index creates snapshot 1`] = `
             >
               Code of conduct
             </a>
-            <a
-              class="link text-muted mb-1"
-              href="https://github.com/artifacthub/hub/blob/master/CONTRIBUTING.md"
-              rel="noopener noreferrer"
-              role="button"
-              target="_blank"
-            >
-              Contributing
-            </a>
           </div>
         </div>
         <div>

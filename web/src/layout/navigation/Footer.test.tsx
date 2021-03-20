@@ -29,15 +29,14 @@ describe('Footer', () => {
       expect(getByRole('contentinfo')).toBeInTheDocument();
 
       const links = getAllByRole('button');
-      expect(links).toHaveLength(8);
+      expect(links).toHaveLength(7);
       expect(links[0]).toHaveTextContent('Documentation');
       expect(links[1]).toHaveTextContent('Blog');
       expect(links[2]).toHaveTextContent('Code of conduct');
-      expect(links[3]).toHaveTextContent('Contributing');
-      expect(links[4]).toHaveTextContent('GitHub');
-      expect(links[5]).toHaveTextContent('Slack');
-      expect(links[6]).toHaveTextContent('Twitter');
-      expect(links[7]).toHaveTextContent('Apache License 2.0');
+      expect(links[3]).toHaveTextContent('GitHub');
+      expect(links[4]).toHaveTextContent('Slack');
+      expect(links[5]).toHaveTextContent('Twitter');
+      expect(links[6]).toHaveTextContent('Apache License 2.0');
 
       const statsLink = getByText('Stats');
       expect(statsLink).toBeInTheDocument();

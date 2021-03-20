@@ -44,7 +44,7 @@ export default function App() {
     const activeProfile = lsPreferences.getActiveProfile();
     const theme = activeProfile.theme.automatic
       ? detectActiveThemeMode()
-      : activeProfile.theme.efective || activeProfile.theme.configured;
+      : activeProfile.theme.effective || activeProfile.theme.configured;
     if (!isUndefined(theme)) {
       updateActiveStyleSheet(theme);
       setActiveInitialTheme(theme);

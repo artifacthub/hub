@@ -22,7 +22,7 @@ interface Props {
 
 const CodeEditor: React.ElementType = (props: Props) => {
   const { ctx } = useContext(AppCtx);
-  const { efective } = ctx.prefs.theme;
+  const { effective } = ctx.prefs.theme;
 
   const isDisabled = !isUndefined(props.disabled) && props.disabled;
 
@@ -36,7 +36,7 @@ const CodeEditor: React.ElementType = (props: Props) => {
           json: true,
           statementIndent: 2,
         },
-        theme: efective === 'dark' ? 'material-darker' : 'elegant',
+        theme: effective === 'dark' ? 'material-darker' : 'elegant',
         lineNumbers: true,
         inputStyle: 'contenteditable',
         viewportMargin: Infinity,

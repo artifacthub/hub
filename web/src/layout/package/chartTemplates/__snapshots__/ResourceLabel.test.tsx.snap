@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResourceLabel creates snapshot 1`] = `
+<DocumentFragment>
+  <span
+    class="text-truncate label"
+  >
+    Scanner
+  </span>
+</DocumentFragment>
+`;

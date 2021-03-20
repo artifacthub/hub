@@ -56,8 +56,10 @@ export const API = {
   getSnapshotSecurityReport: jest.fn(),
   getValuesSchema: jest.fn(),
   getChangelog: jest.fn(),
+  getChartTemplates: jest.fn(),
   triggerTestInRegoPlayground: jest.fn(),
   requestPasswordResetCode: jest.fn(),
   verifyPasswordResetCode: jest.fn(),
   resetPassword: jest.fn(),
+  getAHStats: jest.fn(),
 };

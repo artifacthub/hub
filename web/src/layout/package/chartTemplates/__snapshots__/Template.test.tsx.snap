@@ -1,0 +1,1174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Template creates snapshot 1`] = `
+<DocumentFragment>
+  <span
+    data-testid="activeTmpl"
+  >
+    <code>
+      <div
+        class="codeWrapper"
+      >
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            1
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  if
+                </span>
+                 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted mr-2 normalOpacityFont"
+                          >
+                            DEFAULT:
+                          </span>
+                          <span>
+                            true
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplValue"
+                    >
+                      .Values.hub.ingress.enabled
+                    </span>
+                  </div>
+                </div>
+                 -}}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            2
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+            apiVersion: networking.k8s.io/v1beta1
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            3
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+            kind: Ingress
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            4
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+            metadata:
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            5
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              name: 
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{ 
+                <span
+                  class="tmplFlowControl"
+                >
+                  include
+                </span>
+                 "chart.resourceNamePrefix" . }}
+              </span>
+            </span>
+            hub
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            6
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              labels:
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            7
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+                app.kubernetes.io/component: hub
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            8
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+                
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  include
+                </span>
+                 "chart.labels" . | 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2"
+                        >
+                          <h1
+                            class="text-secondary header"
+                          >
+                            nindent function 
+                            <a
+                              class="d-inline-block text-secondary"
+                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <svg
+                                class="position-relative linkIcon"
+                                fill="none"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                />
+                                <polyline
+                                  points="15 3 21 3 21 9"
+                                />
+                                <line
+                                  x1="10"
+                                  x2="21"
+                                  y1="14"
+                                  y2="3"
+                                />
+                              </svg>
+                            </a>
+                          </h1>
+                          <p>
+                            The 
+                            <strong>
+                              nindent
+                            </strong>
+                             function is the same as the indent function, but prepends a new line to the beginning of the string.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplFunction"
+                    >
+                      nindent
+                    </span>
+                  </div>
+                </div>
+                 4 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            9
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  with
+                </span>
+                 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted mr-2 normalOpacityFont"
+                          >
+                            DEFAULT:
+                          </span>
+                          <div
+                            class="mt-2 textarea"
+                          >
+                            <textarea
+                              class="form-control textarea"
+                              data-testid="templateTextarea"
+                              disabled=""
+                              id="template"
+                              name="template"
+                              rows="3"
+                              spellcheck="false"
+                              wrap="off"
+                            >
+                              {
+  "kubernetes.io/ingress.class": "nginx"
+}
+                            </textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplValue"
+                    >
+                      .Values.hub.ingress.annotations
+                    </span>
+                  </div>
+                </div>
+                 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            10
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              annotations:
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            11
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+                
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  toYaml
+                </span>
+                 . | 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2"
+                        >
+                          <h1
+                            class="text-secondary header"
+                          >
+                            nindent function 
+                            <a
+                              class="d-inline-block text-secondary"
+                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <svg
+                                class="position-relative linkIcon"
+                                fill="none"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                />
+                                <polyline
+                                  points="15 3 21 3 21 9"
+                                />
+                                <line
+                                  x1="10"
+                                  x2="21"
+                                  y1="14"
+                                  y2="3"
+                                />
+                              </svg>
+                            </a>
+                          </h1>
+                          <p>
+                            The 
+                            <strong>
+                              nindent
+                            </strong>
+                             function is the same as the indent function, but prepends a new line to the beginning of the string.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplFunction"
+                    >
+                      nindent
+                    </span>
+                  </div>
+                </div>
+                 4 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            12
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  end
+                </span>
+                 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            13
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+            spec:
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            14
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              backend:
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            15
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+                serviceName: 
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{ 
+                <span
+                  class="tmplFlowControl"
+                >
+                  include
+                </span>
+                 "chart.resourceNamePrefix" . }}
+              </span>
+            </span>
+            hub
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            16
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+                servicePort: 
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{ 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted mr-2 normalOpacityFont"
+                          >
+                            DEFAULT:
+                          </span>
+                          <span>
+                            80
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplValue"
+                    >
+                      .Values.hub.service.port
+                    </span>
+                  </div>
+                </div>
+                 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            17
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  with
+                </span>
+                 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted mr-2 normalOpacityFont"
+                          >
+                            DEFAULT:
+                          </span>
+                          <span
+                            class="text-nowrap"
+                          >
+                            []
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplValue"
+                    >
+                      .Values.hub.ingress.rules
+                    </span>
+                  </div>
+                </div>
+                 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            18
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              rules:
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            19
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+                
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  toYaml
+                </span>
+                 . | 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2"
+                        >
+                          <h1
+                            class="text-secondary header"
+                          >
+                            nindent function 
+                            <a
+                              class="d-inline-block text-secondary"
+                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <svg
+                                class="position-relative linkIcon"
+                                fill="none"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                />
+                                <polyline
+                                  points="15 3 21 3 21 9"
+                                />
+                                <line
+                                  x1="10"
+                                  x2="21"
+                                  y1="14"
+                                  y2="3"
+                                />
+                              </svg>
+                            </a>
+                          </h1>
+                          <p>
+                            The 
+                            <strong>
+                              nindent
+                            </strong>
+                             function is the same as the indent function, but prepends a new line to the beginning of the string.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplFunction"
+                    >
+                      nindent
+                    </span>
+                  </div>
+                </div>
+                 4 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            20
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  end
+                </span>
+                 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            21
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  with
+                </span>
+                 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted mr-2 normalOpacityFont"
+                          >
+                            DEFAULT:
+                          </span>
+                          <span
+                            class="text-nowrap"
+                          >
+                            []
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplValue"
+                    >
+                      .Values.hub.ingress.tls
+                    </span>
+                  </div>
+                </div>
+                 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            22
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              tls:
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            23
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+                
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  toYaml
+                </span>
+                 . | 
+                <div
+                  class="position-relative d-inline-block undefined"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      data-testid="infoDropdown"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="p-2"
+                        >
+                          <h1
+                            class="text-secondary header"
+                          >
+                            nindent function 
+                            <a
+                              class="d-inline-block text-secondary"
+                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <svg
+                                class="position-relative linkIcon"
+                                fill="none"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                />
+                                <polyline
+                                  points="15 3 21 3 21 9"
+                                />
+                                <line
+                                  x1="10"
+                                  x2="21"
+                                  y1="14"
+                                  y2="3"
+                                />
+                              </svg>
+                            </a>
+                          </h1>
+                          <p>
+                            The 
+                            <strong>
+                              nindent
+                            </strong>
+                             function is the same as the indent function, but prepends a new line to the beginning of the string.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid="infoText"
+                  >
+                    <span
+                      class="tmplFunction"
+                    >
+                      nindent
+                    </span>
+                  </div>
+                </div>
+                 4 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            24
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+              
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  end
+                </span>
+                 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+        <div
+          class="d-flex flex-row my-1"
+        >
+          <div
+            class="text-right mr-3 lineNumber"
+          >
+            25
+          </div>
+          <div
+            class="flex-grow-1"
+          >
+            <span
+              data-testid="betweenBracketsContent"
+            >
+              <span
+                class="badge font-weight-normal badge"
+              >
+                {{- 
+                <span
+                  class="tmplFlowControl"
+                >
+                  end
+                </span>
+                 }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="pl-2"
+          />
+        </div>
+      </div>
+    </code>
+  </span>
+</DocumentFragment>
+`;

@@ -1,0 +1,785 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TemplatesList creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="h-100 d-flex flex-column overflow-auto pr-2"
+  >
+    <div
+      class="position-relative w-100"
+    >
+      <div
+        class="form-group input-group-sm"
+      >
+        <input
+          class="flex-grow-1 form-control pl-3 pr-4 input"
+          name="chartTemplateInput"
+          placeholder="Search by template or resource kind"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+        <svg
+          class="text-muted position-absolute searchIcon"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+          />
+        </svg>
+        <div
+          class="alert p-0 mt-3"
+        >
+          <small
+            class="text-muted text-break font-italic"
+          >
+            This chart version contains 
+            <span
+              class="font-weight-bold"
+            >
+              16
+            </span>
+             templates
+          </small>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              db_migrator_install_job.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Job
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              db_migrator_secret.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Secret
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              db_migrator_upgrade_job.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Job
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              hub_deployment.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Deployment
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              hub_ingress.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Ingress
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              hub_secret.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Secret
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              hub_service.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Service
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              hub_serviceaccount.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Multiple kinds
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              scanner_cronjob.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              CronJob
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              scanner_secret.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Secret
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              tracker_cronjob.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              CronJob
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              tracker_secret.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Secret
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              trivy_deployment.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Deployment
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              trivy_pvc.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              PersistentVolumeClaim
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate templateName"
+            >
+              trivy_service.yaml
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate label"
+            >
+              Service
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        data-testid="tmplBtn"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="mb-1 text-truncate"
+          >
+            <div
+              class="d-inline-block legend"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Helper:
+              </small>
+            </div>
+            _helpers.tpl
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

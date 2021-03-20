@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChartTemplatesModal creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-2"
+  >
+    <button
+      class="btn btn-secondary btn-block btn-sm text-nowrap"
+      data-testid="tmplModalBtn"
+    >
+      <div
+        class="d-flex flex-row align-items-center justify-content-center"
+      >
+        <span
+          aria-hidden="true"
+          class="spinner-grow spinner-grow-sm"
+          role="status"
+        />
+        <span
+          class="d-none d-md-inline ml-2 font-weight-bold"
+        >
+          Loading templates...
+        </span>
+      </div>
+    </button>
+  </div>
+</DocumentFragment>
+`;
