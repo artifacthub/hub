@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { isNull } from 'lodash';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
@@ -46,6 +47,9 @@ const Modal = (props: Props) => {
       setOpenStatus(false);
       if (!isUndefined(props.onClose)) {
         props.onClose();
+      }
+      if (props.error && !isNull(props.error) && props.cleanError) {
+        props.cleanError();
       }
     }
   };
