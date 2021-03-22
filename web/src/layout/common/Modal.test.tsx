@@ -68,4 +68,13 @@ describe('Modal', () => {
       expect(modal).toHaveClass('active d-block');
     });
   });
+
+  it('calls cleanErrorMock to click close button when error is not null', () => {
+    const { getByTestId, getByRole } = render(<Modal {...defaultProps} error="Error" />);
+    expect(getByRole('dialog')).toHaveClass('d-block');
+
+    fireEvent.click(getByTestId('closeModalFooterBtn'));
+
+    expect(cleanErrorMock).toHaveBeenCalledTimes(1);
+  });
 });
