@@ -24,7 +24,7 @@ const Template = (props: Props) => {
 
   useEffect(() => {
     props.setIsChangingTemplate(false);
-  }, [activeTemplate, props]);
+  }, [activeTemplate]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (props.template !== activeTemplate) {
@@ -117,7 +117,7 @@ const Template = (props: Props) => {
     if (definition) {
       return (
         <ParamInfo
-          element={<span className={styles.tmplFunction}>{word}</span>}
+          element={<span className={styles.tmplBuiltIn}>{word}</span>}
           info={BUILTIN_DEFINITIONS[word]}
           isMarkdown
           fixedWidth
@@ -173,13 +173,17 @@ const Template = (props: Props) => {
     return regexifyString({
       pattern: HIGHLIGHT_PATTERN,
       decorator: (match, index) => {
-        return <React.Fragment key={`line_${index}`}>{processHelmTemplateContent(match, index)}</React.Fragment>;
+        return (
+          <span data-testid="betweenBracketsContent" key={`line_${index}`}>
+            {processHelmTemplateContent(match, index)}
+          </span>
+        );
       },
       input: line,
     });
   };
 
-  return <>{processActiveTemplate(activeTemplate.data)}</>;
+  return <span data-testid="activeTmpl">{processActiveTemplate(activeTemplate.data)}</span>;
 };
 
 export default React.memo(Template);

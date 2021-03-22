@@ -53,6 +53,14 @@ const getResourceKinds = (data: string): string[] => {
   return [];
 };
 
+const decodeData = (data: string): string => {
+  try {
+    return atob(data);
+  } catch {
+    return Buffer.from(data, 'base64').toString('binary');
+  }
+};
+
 const formatTemplates = (templates: ChartTemplate[]): ChartTemplate[] => {
   let finalTemplates: ChartTemplate[] = [];
   let finalHelpers: ChartTemplate[] = [];
@@ -60,7 +68,7 @@ const formatTemplates = (templates: ChartTemplate[]): ChartTemplate[] => {
     const templateName = template.name.replace('templates/', '');
     const { name, extension } = getFileNameAndExt(templateName);
     if (['yaml', 'tpl'].includes(extension)) {
-      const decodedData = atob(template.data);
+      const decodedData = decodeData(template.data);
       const tmpl = {
         name: templateName,
         fileName: name,
@@ -134,6 +142,9 @@ const ChartTemplatesModal = (props: Props) => {
           let activeTmpl;
           if (props.visibleTemplate) {
             activeTmpl = formattedTemplates.find((tmpl: ChartTemplate) => tmpl.name === props.visibleTemplate);
+            if (!activeTmpl) {
+              updateUrl(formattedTemplates[0].name);
+            }
           } else {
             updateUrl(formattedTemplates[0].name);
           }
@@ -172,7 +183,6 @@ const ChartTemplatesModal = (props: Props) => {
     } else {
       getChartTemplates();
     }
-    updateUrl(props.visibleTemplate);
   };
 
   const onCloseModal = () => {
@@ -187,6 +197,7 @@ const ChartTemplatesModal = (props: Props) => {
   return (
     <div className="mb-2">
       <button
+        data-testid="tmplModalBtn"
         className="btn btn-secondary btn-block btn-sm text-nowrap"
         onClick={onOpenModal}
         disabled={!isUndefined(props.private) && props.private}

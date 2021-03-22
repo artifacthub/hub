@@ -2,8 +2,10 @@ import { enableFetchMocks } from 'jest-fetch-mock';
 import fetchMock from 'jest-fetch-mock';
 
 import {
+  AHStats,
   APIKey,
   AuthorizationPolicy,
+  ChartTemplatesData,
   CheckAvailabilityProps,
   ErrorKind,
   OptOutItem,
@@ -1784,6 +1786,42 @@ describe('index API', () => {
 
         expect(getCSRFTokenMock).toHaveBeenCalled();
         expect(fetchMock).toHaveBeenCalledTimes(2);
+      });
+    });
+
+    describe('getChartTemplates', () => {
+      it('success', async () => {
+        const templateData: ChartTemplatesData = getData('37') as ChartTemplatesData;
+        fetchMock.mockResponse(JSON.stringify(templateData), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await methods.API.getChartTemplates('id', '1.1.0');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/1.1.0/templates');
+        expect(response).toEqual(templateData);
+      });
+    });
+
+    describe('getAHStats', () => {
+      it('success', async () => {
+        const stats: AHStats = getData('38') as AHStats;
+        fetchMock.mockResponse(JSON.stringify(stats), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await methods.API.getAHStats();
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/stats');
+        expect(response).toEqual(stats);
       });
     });
   });

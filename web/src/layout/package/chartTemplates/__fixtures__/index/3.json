@@ -1,0 +1,242 @@
+{
+  "templates": [
+    {
+      "name": "templates/_helpers.tpl",
+      "data": "{{/* vim: set filetype=mustache: */}}\n{{/*\nExpand the name of the chart.\n*/}}\n{{- define \"chart.name\" -}}\n{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix \"-\" -}}\n{{- end -}}\n\n{{/*\nCreate a default fully qualified app name.\nWe truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).\nIf release name contains chart name it will be used as a full name.\n*/}}\n{{- define \"chart.fullname\" -}}\n{{- if .Values.fullnameOverride -}}\n{{- .Values.fullnameOverride | trunc 63 | trimSuffix \"-\" -}}\n{{- else -}}\n{{- $name := default .Chart.Name .Values.nameOverride -}}\n{{- if contains $name .Release.Name -}}\n{{- .Release.Name | trunc 63 | trimSuffix \"-\" -}}\n{{- else -}}\n{{- printf \"%s-%s\" .Release.Name $name | trunc 63 | trimSuffix \"-\" -}}\n{{- end -}}\n{{- end -}}\n{{- end -}}\n\n{{/*\nCreate chart name and version as used by the chart label.\n*/}}\n{{- define \"chart.chart\" -}}\n{{- printf \"%s-%s\" .Chart.Name .Chart.Version | replace \"+\" \"_\" | trunc 63 | trimSuffix \"-\" -}}\n{{- end -}}\n\n{{/*\nCommon labels\n*/}}\n{{- define \"chart.labels\" -}}\nhelm.sh/chart: {{ include \"chart.chart\" . }}\n{{ include \"chart.selectorLabels\" . }}\n{{- if .Chart.AppVersion }}\napp.kubernetes.io/version: {{ .Chart.AppVersion | quote }}\n{{- end }}\napp.kubernetes.io/managed-by: {{ .Release.Service }}\n{{- end -}}\n\n{{/*\nSelector labels\n*/}}\n{{- define \"chart.selectorLabels\" -}}\napp.kubernetes.io/name: {{ include \"chart.name\" . }}\napp.kubernetes.io/instance: {{ .Release.Name }}\n{{- end -}}\n\n{{/*\nKubernetes version\nBuilt-in object .Capabilities.KubeVersion.Minor can provide non-number output\nFor example on GKE it returns \"15+\" instead of \"15\"\n*/}}\n{{- define \"chart.KubernetesVersion\" -}}\n{{- $minorVersion := .Capabilities.KubeVersion.Minor | regexFind \"[0-9]+\" -}}\n{{- printf \"%s.%s\" .Capabilities.KubeVersion.Major $minorVersion -}}\n{{- end -}}\n\n{{/*\nKubernetes resource name prefix\nUsing the prefix allows deploying multiple instances of the Chart in a single Kubernetes namespace.\nIf the dynamic resource name prefix is disabled, this template results in an empty string.\nAs described in `chart.fullname`, the length limit for some resource names is 63.\nTherefore, we truncate the prefix to have a max-length of 44 to respect this limit considering the\nlongest resource name (\"db-migrator-install\" = 19 chars).\n*/}}\n{{- define \"chart.resourceNamePrefix\" -}}\n{{- if .Values.dynamicResourceNamePrefixEnabled -}}\n{{- (include \"chart.fullname\" .) | trunc 43 | trimSuffix \"-\" | printf \"%s-\" -}}\n{{- end -}}\n{{- end -}}\n\n"
+    },
+    {
+      "name": "templates/db_migrator_install_job.yaml",
+      "data": "{{- if .Release.IsInstall -}}\napiVersion: batch/v1\nkind: Job\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}db-migrator-install\nspec:\n  template:\n    spec:\n    {{- with .Values.imagePullSecrets }}\n      imagePullSecrets:\n        {{- toYaml . | nindent 8 }}\n    {{- end }}\n      restartPolicy: Never\n      initContainers:\n      - name: check-db-ready\n        image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}\n        imagePullPolicy: {{ .Values.pullPolicy }}\n        env:\n          - name: PGHOST\n            value: {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n          - name: PGPORT\n            value: \"{{ .Values.db.port }}\"\n        command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']\n      containers:\n      - name: db-migrator\n        image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf \"v%s\" .Chart.AppVersion) }}\n        imagePullPolicy: {{ .Values.pullPolicy }}\n        env:\n          - name: TERN_CONF\n            value: {{ .Values.dbMigrator.configDir }}/tern.conf\n        volumeMounts:\n          - name: db-migrator-config\n            mountPath: {{ .Values.dbMigrator.configDir }}\n            readOnly: true\n        command: [\"./migrate.sh\"]\n      volumes:\n      - name: db-migrator-config\n        secret:\n          secretName: {{ include \"chart.resourceNamePrefix\" . }}db-migrator-config\n{{- end }}\n"
+    },
+    {
+      "name": "templates/db_migrator_secret.yaml",
+      "data": "apiVersion: v1\nkind: Secret\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}db-migrator-config\ntype: Opaque\nstringData:\n  tern.conf: |-\n    [database]\n    host = {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n    port = {{ .Values.db.port }}\n    database = {{ .Values.db.database }}\n    user = {{ .Values.db.user }}\n    password = {{ .Values.db.password }}\n\n    [data]\n    loadSampleData = {{ .Values.dbMigrator.loadSampleData }}\n"
+    },
+    {
+      "name": "templates/db_migrator_upgrade_job.yaml",
+      "data": "apiVersion: batch/v1\nkind: Job\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}db-migrator-upgrade\n  annotations:\n    \"helm.sh/hook\": pre-upgrade\n    \"helm.sh/hook-weight\": \"0\"\n    \"helm.sh/hook-delete-policy\": before-hook-creation\nspec:\n  template:\n    spec:\n    {{- with .Values.imagePullSecrets }}\n      imagePullSecrets:\n        {{- toYaml . | nindent 8 }}\n    {{- end }}\n      restartPolicy: Never\n      initContainers:\n      - name: check-db-ready\n        image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}\n        imagePullPolicy: {{ .Values.pullPolicy }}\n        env:\n          - name: PGHOST\n            value: {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n          - name: PGPORT\n            value: \"{{ .Values.db.port }}\"\n        command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']\n      containers:\n      - name: db-migrator\n        image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf \"v%s\" .Chart.AppVersion) }}\n        imagePullPolicy: {{ .Values.pullPolicy }}\n        env:\n          - name: TERN_CONF\n            value: {{ .Values.dbMigrator.configDir }}/tern.conf\n        volumeMounts:\n          - name: db-migrator-config\n            mountPath: {{ .Values.dbMigrator.configDir }}\n            readOnly: true\n        command: [\"./migrate.sh\"]\n      volumes:\n      - name: db-migrator-config\n        secret:\n          secretName: {{ include \"chart.resourceNamePrefix\" . }}db-migrator-config\n"
+    },
+    {
+      "name": "templates/hub_deployment.yaml",
+      "data": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}hub\n  labels:\n    app.kubernetes.io/component: hub\n    {{- include \"chart.labels\" . | nindent 4 }}\nspec:\n  replicas: {{ .Values.hub.deploy.replicaCount }}\n  selector:\n    matchLabels:\n      app.kubernetes.io/component: hub\n      {{- include \"chart.selectorLabels\" . | nindent 6 }}\n  template:\n    metadata:\n      annotations:\n        prometheus.io/scrape: \"true\"\n        prometheus.io/path: \"/metrics\"\n        prometheus.io/port: \"8001\"\n      labels:\n        app.kubernetes.io/component: hub\n        {{- include \"chart.selectorLabels\" . | nindent 8 }}\n    spec:\n    {{- with .Values.hub.deploy.readinessGates }}\n      readinessGates:\n        {{- toYaml . | nindent 8 }}\n    {{- end }}\n    {{- with .Values.imagePullSecrets }}\n      imagePullSecrets:\n        {{- toYaml . | nindent 8 }}\n    {{- end }}\n      {{- if .Release.IsInstall }}\n      serviceAccountName: {{ include \"chart.resourceNamePrefix\" . }}hub\n      {{- end }}\n      initContainers:\n      - name: check-db-ready\n        image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}\n        imagePullPolicy: {{ .Values.pullPolicy }}\n        env:\n          - name: PGHOST\n            value: {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n          - name: PGPORT\n            value: \"{{ .Values.db.port }}\"\n        command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']\n      {{- if .Release.IsInstall }}\n      - name: check-db-migrator-run\n        image: \"bitnami/kubectl:{{ template \"chart.KubernetesVersion\" . }}\"\n        imagePullPolicy: IfNotPresent\n        command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/{{ include \"chart.resourceNamePrefix\" . }}db-migrator-install', '--timeout=60s']\n      {{- end }}\n      containers:\n        - name: hub\n          image: {{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag | default (printf \"v%s\" .Chart.AppVersion) }}\n          imagePullPolicy: {{ .Values.pullPolicy }}\n          {{- if .Values.hub.server.cacheDir }}\n          env:\n            - name: XDG_CACHE_HOME\n              value: {{ .Values.hub.server.cacheDir | quote }}\n          {{- end }}\n          volumeMounts:\n          - name: hub-config\n            mountPath: {{ .Values.hub.server.configDir | quote }}\n            readOnly: true\n          {{- if .Values.hub.server.cacheDir }}\n          - name: cache-dir\n            mountPath: {{ .Values.hub.server.cacheDir | quote }}\n          {{- end }}\n          ports:\n            - name: http\n              containerPort: 8000\n              protocol: TCP\n          resources:\n            {{- toYaml .Values.hub.deploy.resources | nindent 12 }}\n      volumes:\n      - name: hub-config\n        secret:\n          secretName: {{ include \"chart.resourceNamePrefix\" . }}hub-config\n      {{- if .Values.hub.server.cacheDir }}\n      - name: cache-dir\n        emptyDir: {}\n      {{- end }}\n"
+    },
+    {
+      "name": "templates/hub_ingress.yaml",
+      "data": "{{- if .Values.hub.ingress.enabled -}}\napiVersion: networking.k8s.io/v1beta1\nkind: Ingress\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}hub\n  labels:\n    app.kubernetes.io/component: hub\n    {{- include \"chart.labels\" . | nindent 4 }}\n  {{- with .Values.hub.ingress.annotations }}\n  annotations:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\nspec:\n  backend:\n    serviceName: {{ include \"chart.resourceNamePrefix\" . }}hub\n    servicePort: {{ .Values.hub.service.port }}\n  {{- with .Values.hub.ingress.rules }}\n  rules:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n  {{- with .Values.hub.ingress.tls }}\n  tls:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n{{- end }}\n"
+    },
+    {
+      "name": "templates/hub_secret.yaml",
+      "data": "apiVersion: v1\nkind: Secret\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}hub-config\ntype: Opaque\nstringData:\n  hub.yaml: |-\n    log:\n      level: {{ .Values.log.level }}\n      pretty: {{ .Values.log.pretty }}\n    db:\n      host: {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n      port: {{ .Values.db.port }}\n      database: {{ .Values.db.database }}\n      user: {{ .Values.db.user }}\n      password: {{ .Values.db.password }}\n    server:\n      allowPrivateRepositories: {{ .Values.hub.server.allowPrivateRepositories }}\n      baseURL: {{ .Values.hub.server.baseURL }}\n      shutdownTimeout: {{ .Values.hub.server.shutdownTimeout }}\n      addr: 0.0.0.0:8000\n      metricsAddr: 0.0.0.0:8001\n      shutdownTimeout: 30s\n      webBuildPath: ./web\n      motd: {{ .Values.hub.server.motd }}\n      motdSeverity: {{ .Values.hub.server.motdSeverity }}\n      basicAuth:\n        enabled: {{ .Values.hub.server.basicAuth.enabled }}\n        username: {{ .Values.hub.server.basicAuth.username }}\n        password: {{ .Values.hub.server.basicAuth.password }}\n      cookie:\n        hashKey: {{ .Values.hub.server.cookie.hashKey }}\n        secure: {{ .Values.hub.server.cookie.secure }}\n      csrf:\n        authKey: {{ .Values.hub.server.csrf.authKey }}\n        secure: {{ .Values.hub.server.csrf.secure }}\n      oauth:\n        {{- if .Values.hub.server.oauth.github.enabled }}\n        github:\n          clientID: {{ .Values.hub.server.oauth.github.clientID }}\n          clientSecret: {{ .Values.hub.server.oauth.github.clientSecret }}\n          redirectURL: {{ .Values.hub.server.oauth.github.redirectURL }}\n          scopes: {{ .Values.hub.server.oauth.github.scopes }}\n        {{- end }}\n        {{- if .Values.hub.server.oauth.google.enabled }}\n        google:\n          clientID: {{ .Values.hub.server.oauth.google.clientID }}\n          clientSecret: {{ .Values.hub.server.oauth.google.clientSecret }}\n          redirectURL: {{ .Values.hub.server.oauth.google.redirectURL }}\n          scopes: {{ .Values.hub.server.oauth.google.scopes }}\n        {{- end }}\n        {{- if .Values.hub.server.oauth.oidc.enabled }}\n        oidc:\n          clientID: {{ .Values.hub.server.oauth.oidc.clientID }}\n          issuerURL: {{ .Values.hub.server.oauth.oidc.issuerURL }}\n          clientSecret: {{ .Values.hub.server.oauth.oidc.clientSecret }}\n          redirectURL: {{ .Values.hub.server.oauth.oidc.redirectURL }}\n          scopes: {{ .Values.hub.server.oauth.oidc.scopes }}\n        {{- end }}\n      xffIndex: {{ .Values.hub.server.xffIndex }}\n    email:\n      fromName: {{ .Values.hub.email.fromName }}\n      from: {{ .Values.hub.email.from }}\n      replyTo: {{ .Values.hub.email.replyTo }}\n      smtp:\n        host: {{ .Values.hub.email.smtp.host }}\n        port: {{ .Values.hub.email.smtp.port }}\n        username: {{ .Values.hub.email.smtp.username }}\n        password: {{ .Values.hub.email.smtp.password }}\n    analytics:\n      gaTrackingID: {{ .Values.hub.analytics.gaTrackingID }}\n"
+    },
+    {
+      "name": "templates/hub_service.yaml",
+      "data": "apiVersion: v1\nkind: Service\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}hub\n  labels:\n    app.kubernetes.io/component: hub\n    {{- include \"chart.labels\" . | nindent 4 }}\nspec:\n  type: {{ .Values.hub.service.type }}\n  ports:\n    - port: {{ .Values.hub.service.port }}\n      targetPort: http\n      protocol: TCP\n      name: http\n  selector:\n    app.kubernetes.io/component: hub\n    {{- include \"chart.selectorLabels\" . | nindent 4 }}\n"
+    },
+    {
+      "name": "templates/hub_serviceaccount.yaml",
+      "data": "apiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}hub\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: Role\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}job-reader\nrules:\n  - apiGroups: [\"batch\"]\n    resources: [\"jobs\"]\n    verbs: [\"get\", \"list\"]\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: RoleBinding\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}hub-job-reader\nsubjects:\n  - kind: ServiceAccount\n    name: {{ include \"chart.resourceNamePrefix\" . }}hub\nroleRef:\n  kind: Role\n  name: {{ include \"chart.resourceNamePrefix\" . }}job-reader\n  apiGroup: rbac.authorization.k8s.io\n"
+    },
+    {
+      "name": "templates/scanner_cronjob.yaml",
+      "data": "apiVersion: batch/v1beta1\nkind: CronJob\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}scanner\nspec:\n  schedule: \"15,45 * * * *\"\n  successfulJobsHistoryLimit: 1\n  failedJobsHistoryLimit: 1\n  concurrencyPolicy: Forbid\n  jobTemplate:\n    spec:\n      template:\n        spec:\n        {{- with .Values.imagePullSecrets }}\n          imagePullSecrets:\n            {{- toYaml . | nindent 8 }}\n        {{- end }}\n          restartPolicy: Never\n          initContainers:\n          - name: check-db-ready\n            image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}\n            imagePullPolicy: {{ .Values.pullPolicy }}\n            resources:\n              {{- toYaml .Values.scanner.cronjob.resources | nindent 14 }}\n            env:\n              - name: PGHOST\n                value: {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n              - name: PGPORT\n                value: \"{{ .Values.db.port }}\"\n            command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']\n          containers:\n          - name: scanner\n            image: {{ .Values.scanner.cronjob.image.repository }}:{{ .Values.imageTag | default (printf \"v%s\" .Chart.AppVersion) }}\n            imagePullPolicy: {{ .Values.pullPolicy }}\n            {{- if .Values.scanner.cacheDir }}\n            env:\n              - name: TRIVY_CACHE_DIR\n                value: {{ .Values.scanner.cacheDir | quote }}\n            {{- end }}\n            volumeMounts:\n            - name: scanner-config\n              mountPath: {{ .Values.scanner.configDir | quote }}\n              readOnly: true\n            {{- if .Values.scanner.cacheDir }}\n            - name: cache-dir\n              mountPath: {{ .Values.scanner.cacheDir | quote }}\n            {{- end }}\n          volumes:\n          - name: scanner-config\n            secret:\n              secretName: {{ include \"chart.resourceNamePrefix\" . }}scanner-config\n          {{- if .Values.scanner.cacheDir }}\n          - name: cache-dir\n            emptyDir: {}\n          {{- end }}"
+    },
+    {
+      "name": "templates/scanner_secret.yaml",
+      "data": "apiVersion: v1\nkind: Secret\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}scanner-config\ntype: Opaque\nstringData:\n  scanner.yaml: |-\n    log:\n      level: {{ .Values.log.level }}\n      pretty: {{ .Values.log.pretty }}\n    db:\n      host: {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n      port: {{ .Values.db.port }}\n      database: {{ .Values.db.database }}\n      user: {{ .Values.db.user }}\n      password: {{ .Values.db.password }}\n    scanner:\n      concurrency: {{ .Values.scanner.concurrency }}\n      trivyURL: {{ .Values.scanner.trivyURL | default (printf \"http://%s%s:8081\" (include \"chart.resourceNamePrefix\" .) \"trivy\") }}\n      dockerUsername: {{ .Values.scanner.dockerUsername }}\n      dockerPassword: {{ .Values.scanner.dockerPassword }}\n      events:\n        scanningErrors: {{ .Values.scanner.events.scanningErrors }}\n"
+    },
+    {
+      "name": "templates/tracker_cronjob.yaml",
+      "data": "apiVersion: batch/v1beta1\nkind: CronJob\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}tracker\nspec:\n  schedule: \"0,30 * * * *\"\n  successfulJobsHistoryLimit: 1\n  failedJobsHistoryLimit: 1\n  concurrencyPolicy: Forbid\n  jobTemplate:\n    spec:\n      template:\n        spec:\n        {{- with .Values.imagePullSecrets }}\n          imagePullSecrets:\n            {{- toYaml . | nindent 8 }}\n        {{- end }}\n          restartPolicy: Never\n          initContainers:\n          - name: check-db-ready\n            image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}\n            imagePullPolicy: {{ .Values.pullPolicy }}\n            resources:\n              {{- toYaml .Values.tracker.cronjob.resources | nindent 14 }}\n            env:\n              - name: PGHOST\n                value: {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n              - name: PGPORT\n                value: \"{{ .Values.db.port }}\"\n            command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']\n          containers:\n          - name: tracker\n            image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf \"v%s\" .Chart.AppVersion) }}\n            imagePullPolicy: {{ .Values.pullPolicy }}\n            {{- if .Values.tracker.cacheDir }}\n            env:\n              - name: XDG_CACHE_HOME\n                value: {{ .Values.tracker.cacheDir | quote }}\n            {{- end }}\n            volumeMounts:\n            - name: tracker-config\n              mountPath: {{ .Values.tracker.configDir | quote }}\n              readOnly: true\n            {{- if .Values.tracker.cacheDir }}\n            - name: cache-dir\n              mountPath: {{ .Values.tracker.cacheDir | quote }}\n            {{- end }}\n          volumes:\n          - name: tracker-config\n            secret:\n              secretName: {{ include \"chart.resourceNamePrefix\" . }}tracker-config\n          {{- if .Values.tracker.cacheDir }}\n          - name: cache-dir\n            emptyDir: {}\n          {{- end }}\n"
+    },
+    {
+      "name": "templates/tracker_secret.yaml",
+      "data": "apiVersion: v1\nkind: Secret\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}tracker-config\ntype: Opaque\nstringData:\n  tracker.yaml: |-\n    log:\n      level: {{ .Values.log.level }}\n      pretty: {{ .Values.log.pretty }}\n    db:\n      host: {{ default (printf \"%s-postgresql.%s\" .Release.Name .Release.Namespace) .Values.db.host }}\n      port: {{ .Values.db.port }}\n      database: {{ .Values.db.database }}\n      user: {{ .Values.db.user }}\n      password: {{ .Values.db.password }}\n    tracker:\n      concurrency: {{ .Values.tracker.concurrency }}\n      repositoriesNames: {{ .Values.tracker.repositoriesNames }}\n      repositoriesKinds: {{ .Values.tracker.repositoriesKinds }}\n      imageStore: {{ .Values.tracker.imageStore }}\n      bypassDigestCheck: {{ .Values.tracker.bypassDigestCheck }}\n      events:\n        trackingErrors: {{ .Values.tracker.events.trackingErrors }}\n      githubToken: {{ .Values.tracker.githubToken }}\n"
+    },
+    {
+      "name": "templates/trivy_deployment.yaml",
+      "data": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}trivy\n  labels:\n    app.kubernetes.io/component: trivy\n    {{- include \"chart.labels\" . | nindent 4 }}\nspec:\n  replicas: 1\n  strategy:\n    type: Recreate\n  selector:\n    matchLabels:\n      app.kubernetes.io/component: trivy\n      {{- include \"chart.selectorLabels\" . | nindent 6 }}\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/component: trivy\n        {{- include \"chart.selectorLabels\" . | nindent 8 }}\n    spec:\n      containers:\n        - name: trivy\n          image: {{ .Values.trivy.deploy.image }}\n          command: ['trivy', '--debug', '--cache-dir', '/trivy', 'server', '--listen', '0.0.0.0:8081']\n          volumeMounts:\n          - name: trivy\n            mountPath: \"/trivy\"\n          ports:\n          - name: http\n            containerPort: 8081\n            protocol: TCP\n          resources:\n            {{- toYaml .Values.trivy.deploy.resources | nindent 12 }}\n      volumes:\n      - name: trivy\n      {{- if .Values.trivy.persistence.enabled }}\n        persistentVolumeClaim:\n          claimName: {{ include \"chart.resourceNamePrefix\" . }}trivy\n      {{- else }}\n        emptyDir: {}\n      {{- end -}}\n"
+    },
+    {
+      "name": "templates/trivy_pvc.yaml",
+      "data": "{{- if .Values.trivy.persistence.enabled }}\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}trivy\nspec:\n  accessModes:\n    - ReadWriteOnce\n  resources:\n    requests:\n      storage: {{ .Values.trivy.persistence.size | quote }}\n  {{- if .Values.trivy.persistence.storageClassName }}\n  storageClassName: {{ .Values.trivy.persistence.storageClassName }}\n  {{- end -}}\n{{- end -}}\n"
+    },
+    {
+      "name": "templates/trivy_service.yaml",
+      "data": "apiVersion: v1\nkind: Service\nmetadata:\n  name: {{ include \"chart.resourceNamePrefix\" . }}trivy\n  labels:\n    app.kubernetes.io/component: trivy\n    {{- include \"chart.labels\" . | nindent 4 }}\nspec:\n  type: ClusterIP\n  ports:\n    - port: 8081\n      targetPort: http\n      protocol: TCP\n      name: http\n  selector:\n    app.kubernetes.io/component: trivy\n    {{- include \"chart.selectorLabels\" . | nindent 4 }}\n"
+    }
+  ],
+  "values": {
+    "db": {
+      "database": "hub",
+      "host": "",
+      "password": "postgres",
+      "port": "5432",
+      "user": "postgres"
+    },
+    "dbMigrator": {
+      "configDir": "/home/db-migrator/.cfg",
+      "job": {
+        "image": {
+          "repository": "artifacthub/db-migrator"
+        }
+      },
+      "loadSampleData": true
+    },
+    "dynamicResourceNamePrefixEnabled": false,
+    "fullnameOverride": "",
+    "hub": {
+      "analytics": {
+        "gaTrackingID": ""
+      },
+      "deploy": {
+        "image": {
+          "repository": "artifacthub/hub"
+        },
+        "readinessGates": [],
+        "replicaCount": 1,
+        "resources": {}
+      },
+      "email": {
+        "from": "",
+        "fromName": "",
+        "replyTo": "",
+        "smtp": {
+          "host": "",
+          "password": "",
+          "port": 587,
+          "username": ""
+        }
+      },
+      "ingress": {
+        "annotations": {
+          "kubernetes.io/ingress.class": "nginx"
+        },
+        "enabled": true,
+        "rules": [],
+        "tls": []
+      },
+      "server": {
+        "allowPrivateRepositories": false,
+        "baseURL": "",
+        "basicAuth": {
+          "enabled": false,
+          "password": "changeme",
+          "username": "hub"
+        },
+        "cacheDir": "",
+        "configDir": "/home/hub/.cfg",
+        "cookie": {
+          "hashKey": "default-unsafe-key",
+          "secure": false
+        },
+        "csrf": {
+          "authKey": "default-unsafe-key",
+          "secure": false
+        },
+        "motd": "",
+        "motdSeverity": "info",
+        "oauth": {
+          "github": {
+            "clientID": "",
+            "clientSecret": "",
+            "enabled": false,
+            "redirectURL": "",
+            "scopes": ["read:user", "user:email"]
+          },
+          "google": {
+            "clientID": "",
+            "clientSecret": "",
+            "enabled": false,
+            "redirectURL": "",
+            "scopes": [
+              "https://www.googleapis.com/auth/userinfo.email",
+              "https://www.googleapis.com/auth/userinfo.profile"
+            ]
+          },
+          "oidc": {
+            "clientID": "",
+            "clientSecret": "",
+            "enabled": false,
+            "issuerURL": "",
+            "redirectURL": "",
+            "scopes": ["openid", "profile", "email"]
+          }
+        },
+        "shutdownTimeout": "10s",
+        "xffIndex": 0
+      },
+      "service": {
+        "port": 80,
+        "type": "NodePort"
+      }
+    },
+    "imagePullSecrets": [],
+    "imageTag": "",
+    "log": {
+      "level": "info",
+      "pretty": false
+    },
+    "nameOverride": "",
+    "postgresql": {
+      "enabled": true,
+      "image": {
+        "repository": "postgres",
+        "tag": 12
+      },
+      "persistence": {
+        "mountPath": "/data"
+      },
+      "postgresqlDataDir": "/data/pgdata",
+      "postgresqlDatabase": "hub",
+      "postgresqlPassword": "postgres",
+      "postgresqlUsername": "postgres"
+    },
+    "pullPolicy": "IfNotPresent",
+    "scanner": {
+      "cacheDir": "",
+      "concurrency": 10,
+      "configDir": "/home/scanner/.cfg",
+      "cronjob": {
+        "image": {
+          "repository": "artifacthub/scanner"
+        },
+        "resources": {}
+      },
+      "dockerPassword": "",
+      "dockerUsername": "",
+      "events": {
+        "scanningErrors": false
+      },
+      "trivyURL": ""
+    },
+    "tracker": {
+      "bypassDigestCheck": false,
+      "cacheDir": "",
+      "concurrency": 10,
+      "configDir": "/home/tracker/.cfg",
+      "cronjob": {
+        "image": {
+          "repository": "artifacthub/tracker"
+        },
+        "resources": {}
+      },
+      "events": {
+        "trackingErrors": false
+      },
+      "githubToken": "",
+      "imageStore": "pg",
+      "repositoriesKinds": [],
+      "repositoriesNames": []
+    },
+    "trivy": {
+      "deploy": {
+        "image": "aquasec/trivy:0.16.0",
+        "resources": {}
+      },
+      "persistence": {
+        "enabled": false,
+        "size": "10Gi"
+      }
+    }
+  }
+}

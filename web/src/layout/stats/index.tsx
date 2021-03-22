@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { isUndefined } from 'lodash';
 import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
@@ -14,7 +15,7 @@ import styles from './StatsView.module.css';
 
 const StatsView = () => {
   const { ctx } = useContext(AppCtx);
-  const { efective } = ctx.prefs.theme;
+  const { effective, configured } = ctx.prefs.theme;
   const [isLoading, setIsLoading] = useState(false);
   const [stats, setStats] = useState<AHStats | null | undefined>(undefined);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -108,7 +109,7 @@ const StatsView = () => {
         opacity: 0.5,
         colors: [
           () => {
-            return efective === 'light' ? '#659dbd' : '#222529';
+            return effective || configured === 'dark' ? '#222529' : '#659dbd';
           },
         ],
       },
@@ -274,81 +275,93 @@ const StatsView = () => {
                   {moment(stats.generatedAt).format('YYYY/MM/DD HH:mm:ss (Z)')}
                 </small>
               </div>
-              <div className={`h3 mb-4 font-weight-bold ${styles.title}`}>Packages and releases</div>
 
-              <div className="row my-4 pb-0 pb-lg-4">
-                {stats.packages.runningTotal && (
-                  <div className="col-12 col-lg-6">
-                    <div className="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0">
-                      <div className={`card ${styles.chartWrapper}`}>
-                        <ReactApexChart
-                          options={getAreaChartConfig('Packages available')}
-                          series={[{ name: 'Packages', data: stats.packages.runningTotal }]}
-                          type="area"
-                          height={300}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
+              {(stats.packages.runningTotal ||
+                stats.snapshots.runningTotal ||
+                stats.packages.createdMonthly ||
+                stats.snapshots.createdMonthly) && (
+                <>
+                  <div className={`h3 mb-4 font-weight-bold ${styles.title}`}>Packages and releases</div>
 
-                {stats.snapshots.runningTotal && (
-                  <div className="col-12 col-lg-6">
-                    <div className="pl-0 pl-lg-3 pl-xxl-4 mt-4">
-                      <div className={`card ${styles.chartWrapper}`}>
-                        <ReactApexChart
-                          options={getAreaChartConfig('Releases available')}
-                          series={[{ name: 'Releases', data: stats.snapshots.runningTotal }]}
-                          type="area"
-                          height={300}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+                  {(stats.packages.runningTotal || stats.snapshots.runningTotal) && (
+                    <div className="row my-4 pb-0 pb-lg-4">
+                      {stats.packages.runningTotal && (
+                        <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.runningTotal })}>
+                          <div className="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0">
+                            <div className={`card ${styles.chartWrapper}`}>
+                              <ReactApexChart
+                                options={getAreaChartConfig('Packages available')}
+                                series={[{ name: 'Packages', data: stats.packages.runningTotal }]}
+                                type="area"
+                                height={300}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
-              <div className="row my-4 pb-4">
-                {stats.packages.createdMonthly && (
-                  <div className="col-12 col-lg-6">
-                    <div className="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0">
-                      <div className={`card ${styles.chartWrapper}`}>
-                        <ReactApexChart
-                          options={getBarChartConfig('New packages added monthly')}
-                          series={[
-                            {
-                              name: 'Packages',
-                              data: stats.packages.createdMonthly,
-                            },
-                          ]}
-                          type="bar"
-                          height={300}
-                        />
-                      </div>
+                      {stats.snapshots.runningTotal && (
+                        <div className={classnames('col-12', { 'col-lg-6': stats.packages.runningTotal })}>
+                          <div className="pl-0 pl-lg-3 pl-xxl-4 mt-4">
+                            <div className={`card ${styles.chartWrapper}`}>
+                              <ReactApexChart
+                                options={getAreaChartConfig('Releases available')}
+                                series={[{ name: 'Releases', data: stats.snapshots.runningTotal }]}
+                                type="area"
+                                height={300}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {stats.snapshots.createdMonthly && (
-                  <div className="col-12 col-lg-6">
-                    <div className="pl-0 pl-lg-3 pl-xxl-4 mt-4">
-                      <div className={`card ${styles.chartWrapper}`}>
-                        <ReactApexChart
-                          options={getBarChartConfig('New releases added monthly')}
-                          series={[
-                            {
-                              name: 'Releases',
-                              data: stats.snapshots.createdMonthly,
-                            },
-                          ]}
-                          type="bar"
-                          height={300}
-                        />
-                      </div>
+                  {(stats.packages.createdMonthly || stats.snapshots.createdMonthly) && (
+                    <div className="row my-4 pb-4">
+                      {stats.packages.createdMonthly && (
+                        <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.createdMonthly })}>
+                          <div className="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0">
+                            <div className={`card ${styles.chartWrapper}`}>
+                              <ReactApexChart
+                                options={getBarChartConfig('New packages added monthly')}
+                                series={[
+                                  {
+                                    name: 'Packages',
+                                    data: stats.packages.createdMonthly,
+                                  },
+                                ]}
+                                type="bar"
+                                height={300}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {stats.snapshots.createdMonthly && (
+                        <div className={classnames('col-12', { 'col-lg-6': stats.packages.createdMonthly })}>
+                          <div className="pl-0 pl-lg-3 pl-xxl-4 mt-4">
+                            <div className={`card ${styles.chartWrapper}`}>
+                              <ReactApexChart
+                                options={getBarChartConfig('New releases added monthly')}
+                                series={[
+                                  {
+                                    name: 'Releases',
+                                    data: stats.snapshots.createdMonthly,
+                                  },
+                                ]}
+                                type="bar"
+                                height={300}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </>
+              )}
 
               {stats.repositories.runningTotal && (
                 <>
@@ -369,49 +382,52 @@ const StatsView = () => {
                 </>
               )}
 
-              <div className={`h3 mt-4 font-weight-bold ${styles.title}`}>Organizations and users</div>
-
-              <div className="row my-4">
-                {stats.organizations.runningTotal && (
-                  <div className="col-12 col-lg-6 pt-4">
-                    <div className="pr-0 pr-lg-3 pr-xxl-4">
-                      <div className={`card ${styles.chartWrapper}`}>
-                        <ReactApexChart
-                          options={getAreaChartConfig('Registered organizations', true)}
-                          series={[
-                            {
-                              name: 'Organizations',
-                              data: stats.organizations.runningTotal,
-                            },
-                          ]}
-                          type="area"
-                          height={300}
-                        />
+              {(stats.organizations.runningTotal || stats.users.runningTotal) && (
+                <>
+                  <div className={`h3 mt-4 font-weight-bold ${styles.title}`}>Organizations and users</div>
+                  <div className="row my-4">
+                    {stats.organizations.runningTotal && (
+                      <div className={classnames('col-12', { 'col-lg-6': stats.users.runningTotal })}>
+                        <div className="pr-0 pr-lg-3 pr-xxl-4 pt-4">
+                          <div className={`card ${styles.chartWrapper}`}>
+                            <ReactApexChart
+                              options={getAreaChartConfig('Registered organizations', true)}
+                              series={[
+                                {
+                                  name: 'Organizations',
+                                  data: stats.organizations.runningTotal,
+                                },
+                              ]}
+                              type="area"
+                              height={300}
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                )}
+                    )}
 
-                {stats.users.runningTotal && (
-                  <div className="col-12 col-lg-6 pt-4">
-                    <div className="pl-0 pl-lg-3 pl-xxl-4">
-                      <div className={`card ${styles.chartWrapper}`}>
-                        <ReactApexChart
-                          options={getAreaChartConfig('Registered users', true)}
-                          series={[
-                            {
-                              name: 'Users',
-                              data: stats.users.runningTotal,
-                            },
-                          ]}
-                          type="area"
-                          height={300}
-                        />
+                    {stats.users.runningTotal && (
+                      <div className={classnames('col-12', { 'col-lg-6': stats.organizations.runningTotal })}>
+                        <div className="pl-0 pl-lg-3 pl-xxl-4 pt-4">
+                          <div className={`card ${styles.chartWrapper}`}>
+                            <ReactApexChart
+                              options={getAreaChartConfig('Registered users', true)}
+                              series={[
+                                {
+                                  name: 'Users',
+                                  data: stats.users.runningTotal,
+                                },
+                              ]}
+                              type="area"
+                              height={300}
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
-                )}
-              </div>
+                </>
+              )}
             </>
           )}
         </div>

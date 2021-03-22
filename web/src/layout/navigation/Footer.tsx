@@ -43,12 +43,6 @@ const Footer = (props: Props) => (
             >
               Code of conduct
             </ExternalLink>
-            <ExternalLink
-              className="text-muted mb-1"
-              href="https://github.com/artifacthub/hub/blob/master/CONTRIBUTING.md"
-            >
-              Contributing
-            </ExternalLink>
           </div>
         </div>
 
