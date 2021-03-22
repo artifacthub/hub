@@ -495,6 +495,100 @@ func TestLogout(t *testing.T) {
 	})
 }
 
+func TestOauthCallback(t *testing.T) {
+	t.Run("invalid oauth code or state", func(t *testing.T) {
+		state := &OauthState{
+			Random:      "abcd",
+			RedirectURL: "/",
+		}
+
+		testCases := []struct {
+			description string
+			url         string
+			cookie      *http.Cookie
+		}{
+			{
+				"oauth code not provided",
+				"/",
+				nil,
+			},
+			{
+				"oauth state not provided",
+				"/?code=1234",
+				nil,
+			},
+			{
+				"state cookie not provided",
+				"/?code=1234&state=" + state.String(),
+				nil,
+			},
+			{
+				"invalid state cookie",
+				"/?code=1234&state=" + state.String(),
+				&http.Cookie{
+					Name:  oauthStateCookieName,
+					Value: "something not expected",
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", tc.url, nil)
+				if tc.cookie != nil {
+					r.AddCookie(tc.cookie)
+				}
+
+				hw := newHandlersWrapper()
+				hw.h.OauthCallback(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusSeeOther, resp.StatusCode)
+				redirectURL, err := resp.Location()
+				require.NoError(t, err)
+				assert.Equal(t, oauthFailedURL, redirectURL.String())
+			})
+		}
+	})
+}
+
+func TestOauthRedirect(t *testing.T) {
+	t.Parallel()
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/", nil)
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"provider"},
+			Values: []string{"github"},
+		},
+	}
+	r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+	hw := newHandlersWrapper()
+	hw.h.OauthRedirect(w, r)
+	resp := w.Result()
+	defer resp.Body.Close()
+
+	require.Len(t, resp.Cookies(), 1)
+	assert.Equal(t, oauthStateCookieName, resp.Cookies()[0].Name)
+	assert.NotEmpty(t, resp.Cookies()[0].Value)
+	assert.Equal(t, "/", resp.Cookies()[0].Path)
+	assert.True(t, resp.Cookies()[0].HttpOnly)
+	assert.False(t, resp.Cookies()[0].Secure)
+	assert.Equal(t, http.StatusSeeOther, resp.StatusCode)
+	state := &OauthState{
+		Random:      resp.Cookies()[0].Value,
+		RedirectURL: "/",
+	}
+	expectedRedirectURL := hw.h.oauthConfig["github"].AuthCodeURL(state.String())
+	redirectURL, err := resp.Location()
+	require.NoError(t, err)
+	assert.Equal(t, expectedRedirectURL, redirectURL.String())
+}
+
 func TestRegisterPasswordResetCode(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
@@ -1173,6 +1267,7 @@ type handlersWrapper struct {
 func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.baseURL", "baseURL")
+	cfg.Set("server.oauth.github", map[string]string{})
 	um := &user.ManagerMock{}
 	h, _ := NewHandlers(context.Background(), um, cfg)
 
