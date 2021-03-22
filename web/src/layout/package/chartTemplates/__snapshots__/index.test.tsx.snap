@@ -5,25 +5,29 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
   <div
     class="mb-2"
   >
-    <button
-      class="btn btn-secondary btn-block btn-sm text-nowrap"
-      data-testid="tmplModalBtn"
+    <div
+      class="text-center"
     >
-      <div
-        class="d-flex flex-row align-items-center justify-content-center"
+      <button
+        class="btn btn-secondary btn-sm text-nowrap undefined"
+        data-testid="tmplModalBtn"
       >
-        <span
-          aria-hidden="true"
-          class="spinner-grow spinner-grow-sm"
-          role="status"
-        />
-        <span
-          class="d-none d-md-inline ml-2 font-weight-bold"
+        <div
+          class="d-flex flex-row align-items-center justify-content-center"
         >
-          Loading templates...
-        </span>
-      </div>
-    </button>
+          <span
+            aria-hidden="true"
+            class="spinner-grow spinner-grow-sm"
+            role="status"
+          />
+          <span
+            class="d-none d-md-inline ml-2 font-weight-bold"
+          >
+            Loading templates...
+          </span>
+        </div>
+      </button>
+    </div>
   </div>
 </DocumentFragment>
 `;

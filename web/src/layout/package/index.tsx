@@ -545,6 +545,7 @@ const PackageView = (props: Props) => {
 
                           <div className="d-none d-lg-block">
                             <ChartTemplatesModal
+                              btnClassName="btn-block"
                               packageId={detail.packageId}
                               version={detail.version!}
                               repoKind={detail.repository.kind}

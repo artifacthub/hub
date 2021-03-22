@@ -213,6 +213,8 @@ export const isBuiltInObject = (code: string): boolean => {
 export default (code: string): ChartTemplateSpecialType | null => {
   if (code.startsWith('.Values')) {
     return ChartTemplateSpecialType.ValuesBuiltInObject;
+  } else if (code.startsWith('"')) {
+    return ChartTemplateSpecialType.String;
   } else if (code.startsWith('$')) {
     return ChartTemplateSpecialType.Variable;
   } else if (FUNCTIONS.includes(code)) {

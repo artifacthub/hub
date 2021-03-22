@@ -24,6 +24,7 @@ interface Props {
   visibleTemplate?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
+  btnClassName?: string;
 }
 
 interface FileProps {
@@ -120,6 +121,13 @@ const ChartTemplatesModal = (props: Props) => {
     });
   };
 
+  const cleanUrl = () => {
+    history.replace({
+      search: '',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
+  };
+
   useEffect(() => {
     if (props.visibleChartTemplates && !openStatus && (isUndefined(props.private) || !props.private)) {
       onOpenModal();
@@ -157,6 +165,7 @@ const ChartTemplatesModal = (props: Props) => {
             type: 'warning',
             message: 'This Helm chart does not contain any template.',
           });
+          cleanUrl();
         }
       } else {
         setTemplates(null);
@@ -164,6 +173,7 @@ const ChartTemplatesModal = (props: Props) => {
           type: 'warning',
           message: 'This Helm chart does not contain any template.',
         });
+        cleanUrl();
       }
       setIsLoading(false);
     } catch {
@@ -173,6 +183,7 @@ const ChartTemplatesModal = (props: Props) => {
         type: 'danger',
         message: 'An error occurred getting chart templates, please try again later.',
       });
+      cleanUrl();
       setIsLoading(false);
     }
   }
@@ -196,26 +207,28 @@ const ChartTemplatesModal = (props: Props) => {
 
   return (
     <div className="mb-2">
-      <button
-        data-testid="tmplModalBtn"
-        className="btn btn-secondary btn-block btn-sm text-nowrap"
-        onClick={onOpenModal}
-        disabled={!isUndefined(props.private) && props.private}
-      >
-        <div className="d-flex flex-row align-items-center justify-content-center">
-          {isLoading ? (
-            <>
-              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="d-none d-md-inline ml-2 font-weight-bold">Loading templates...</span>
-            </>
-          ) : (
-            <>
-              <ImInsertTemplate />
-              <span className="ml-2 font-weight-bold text-uppercase">Templates</span>
-            </>
-          )}
-        </div>
-      </button>
+      <div className="text-center">
+        <button
+          data-testid="tmplModalBtn"
+          className={`btn btn-secondary btn-sm text-nowrap ${props.btnClassName}`}
+          onClick={onOpenModal}
+          disabled={!isUndefined(props.private) && props.private}
+        >
+          <div className="d-flex flex-row align-items-center justify-content-center">
+            {isLoading ? (
+              <>
+                <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                <span className="d-none d-md-inline ml-2 font-weight-bold">Loading templates...</span>
+              </>
+            ) : (
+              <>
+                <ImInsertTemplate />
+                <span className="ml-2 font-weight-bold text-uppercase">Templates</span>
+              </>
+            )}
+          </div>
+        </button>
+      </div>
 
       {openStatus && templates && (
         <Modal
