@@ -1,6 +1,7 @@
 package util
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -25,7 +26,7 @@ func TestSetupConfig(t *testing.T) {
 	f, err := os.Create(name)
 	require.NoError(t, err)
 	defer os.Remove(name)
-	_, err = f.Write([]byte(`key1: value1`))
+	_, err = io.WriteString(f, `key1: value1`)
 	require.NoError(t, err)
 
 	// Check SetupConfig now succeeds

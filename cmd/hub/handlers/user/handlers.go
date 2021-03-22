@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"math/big"
 	"net"
 	"net/http"
@@ -122,7 +123,7 @@ func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 		if !ok || !areCredentialsValid([]byte(user), []byte(pass)) {
 			w.Header().Set("WWW-Authenticate", "Basic realm="+realm+`"`)
 			w.WriteHeader(http.StatusUnauthorized)
-			_, _ = w.Write([]byte("Unauthorized\n"))
+			_, _ = io.WriteString(w, "Unauthorized\n")
 			return
 		}
 		next.ServeHTTP(w, r)
@@ -461,6 +462,8 @@ func (h *Handlers) registerUserWithOauth(
 		u, err = h.newUserFromGoogleProfile(ctx, providerConfig, oauthToken)
 	case "oidc":
 		u, err = h.newUserFromOIDProfile(ctx, oauthToken)
+	default:
+		err = fmt.Errorf("invalid provider: %s", provider)
 	}
 	if err != nil {
 		return "", err
