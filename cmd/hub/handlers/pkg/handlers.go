@@ -25,19 +25,26 @@ import (
 // Handlers represents a group of http handlers in charge of handling packages
 // operations.
 type Handlers struct {
-	pkgManager hub.PackageManager
-	cfg        *viper.Viper
-	logger     zerolog.Logger
-	hc         hub.HTTPClient
+	pkgManager  hub.PackageManager
+	repoManager hub.RepositoryManager
+	cfg         *viper.Viper
+	logger      zerolog.Logger
+	hc          hub.HTTPClient
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(pkgManager hub.PackageManager, cfg *viper.Viper, hc hub.HTTPClient) *Handlers {
+func NewHandlers(
+	pkgManager hub.PackageManager,
+	repoManager hub.RepositoryManager,
+	cfg *viper.Viper,
+	hc hub.HTTPClient,
+) *Handlers {
 	return &Handlers{
-		pkgManager: pkgManager,
-		cfg:        cfg,
-		logger:     log.With().Str("handlers", "pkg").Logger(),
-		hc:         hc,
+		pkgManager:  pkgManager,
+		repoManager: repoManager,
+		cfg:         cfg,
+		logger:      log.With().Str("handlers", "pkg").Logger(),
+		hc:          hc,
 	}
 }
 
@@ -97,6 +104,16 @@ func (h *Handlers) GetChartTemplates(w http.ResponseWriter, r *http.Request) {
 	// Download chart package from remote source
 	req, _ := http.NewRequest("GET", p.ContentURL, nil)
 	req = req.WithContext(r.Context())
+	if p.Repository.Private {
+		// Get credentials and set them in request if the repository is private
+		repo, err := h.repoManager.GetByID(r.Context(), p.Repository.RepositoryID, true)
+		if err != nil {
+			h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
+			helpers.RenderErrorJSON(w, err)
+			return
+		}
+		req.SetBasicAuth(repo.AuthUser, repo.AuthPass)
+	}
 	resp, err := h.hc.Do(req)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()

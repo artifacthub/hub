@@ -15,6 +15,7 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
@@ -167,6 +168,15 @@ func TestGetChartTemplates(t *testing.T) {
 			URL:  "https://repo.url",
 		},
 	}
+	p2 := &hub.Package{
+		ContentURL: contentURL,
+		Repository: &hub.Repository{
+			RepositoryID: "repo2",
+			Kind:         hub.Helm,
+			URL:          "https://repo2.url",
+			Private:      true,
+		},
+	}
 
 	t.Run("error getting package", func(t *testing.T) {
 		t.Parallel()
@@ -225,6 +235,23 @@ func TestGetChartTemplates(t *testing.T) {
 				hw.assertExpectations(t)
 			})
 		}
+	})
+
+	t.Run("error downloading repository", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), getPkgInput).Return(p2, nil)
+		hw.rm.On("GetByID", r.Context(), p2.Repository.RepositoryID, true).Return(nil, tests.ErrFake)
+		hw.h.GetChartTemplates(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error downloading chart package", func(t *testing.T) {
@@ -302,6 +329,37 @@ func TestGetChartTemplates(t *testing.T) {
 		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
 		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
+		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
+		hw.hc.On("Do", tgzReq).Return(&http.Response{
+			Body:       f,
+			StatusCode: http.StatusOK,
+		}, nil)
+		hw.h.GetChartTemplates(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		expectedData := []byte(`{"templates":[{"name":"templates/template.yaml","data":"a2V5OiB7eyAuVmFsdWVzLmtleSB9fQo="}],"values":{"key":"value"}}`)
+		assert.Equal(t, expectedData, data)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("package templates returned successfully (private repository)", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), getPkgInput).Return(p2, nil)
+		hw.rm.On("GetByID", r.Context(), p2.Repository.RepositoryID, true).Return(&hub.Repository{
+			AuthUser: "user",
+			AuthPass: "pass",
+		}, nil)
+		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
+		tgzReq = tgzReq.WithContext(r.Context())
+		tgzReq.SetBasicAuth("user", "pass")
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
 		hw.hc.On("Do", tgzReq).Return(&http.Response{
 			Body:       f,
@@ -1126,6 +1184,7 @@ func TestBuildPackageURL(t *testing.T) {
 
 type handlersWrapper struct {
 	pm *pkg.ManagerMock
+	rm *repo.ManagerMock
 	hc *tests.HTTPClientMock
 	h  *Handlers
 }
@@ -1134,16 +1193,19 @@ func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.baseURL", "baseURL")
 	pm := &pkg.ManagerMock{}
+	rm := &repo.ManagerMock{}
 	hc := &tests.HTTPClientMock{}
 
 	return &handlersWrapper{
 		pm: pm,
+		rm: rm,
 		hc: hc,
-		h:  NewHandlers(pm, cfg, hc),
+		h:  NewHandlers(pm, rm, cfg, hc),
 	}
 }
 
 func (hw *handlersWrapper) assertExpectations(t *testing.T) {
 	hw.pm.AssertExpectations(t)
+	hw.rm.AssertExpectations(t)
 	hw.hc.AssertExpectations(t)
 }

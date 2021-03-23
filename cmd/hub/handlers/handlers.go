@@ -89,7 +89,7 @@ func Setup(ctx context.Context, cfg *viper.Viper, svc *Services) (*Handlers, err
 		Organizations: org.NewHandlers(svc.OrganizationManager, svc.Authorizer, cfg),
 		Users:         userHandlers,
 		Repositories:  repo.NewHandlers(svc.RepositoryManager),
-		Packages:      pkg.NewHandlers(svc.PackageManager, cfg, &http.Client{}),
+		Packages:      pkg.NewHandlers(svc.PackageManager, svc.RepositoryManager, cfg, &http.Client{}),
 		Subscriptions: subscription.NewHandlers(svc.SubscriptionManager),
 		Webhooks:      webhook.NewHandlers(svc.WebhookManager),
 		APIKeys:       apikey.NewHandlers(svc.APIKeyManager),
