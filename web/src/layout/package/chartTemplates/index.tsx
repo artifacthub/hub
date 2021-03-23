@@ -1,4 +1,4 @@
-import { compact, isNull, isUndefined, uniq } from 'lodash';
+import { compact, isNull, uniq } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { ImInsertTemplate } from 'react-icons/im';
 import { MdClose } from 'react-icons/md';
@@ -19,7 +19,6 @@ interface Props {
   packageId: string;
   version: string;
   repoKind: RepositoryKind;
-  private?: boolean;
   visibleChartTemplates: boolean;
   visibleTemplate?: string;
   searchUrlReferer?: SearchFiltersURL;
@@ -129,8 +128,10 @@ const ChartTemplatesModal = (props: Props) => {
   };
 
   useEffect(() => {
-    if (props.visibleChartTemplates && !openStatus && (isUndefined(props.private) || !props.private)) {
+    if (props.visibleChartTemplates && !openStatus && props.repoKind === RepositoryKind.Helm) {
       onOpenModal();
+    } else {
+      cleanUrl();
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
@@ -212,7 +213,6 @@ const ChartTemplatesModal = (props: Props) => {
           data-testid="tmplModalBtn"
           className={`btn btn-secondary btn-sm text-nowrap ${props.btnClassName}`}
           onClick={onOpenModal}
-          disabled={!isUndefined(props.private) && props.private}
         >
           <div className="d-flex flex-row align-items-center justify-content-center">
             {isLoading ? (

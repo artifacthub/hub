@@ -549,7 +549,6 @@ const PackageView = (props: Props) => {
                               packageId={detail.packageId}
                               version={detail.version!}
                               repoKind={detail.repository.kind}
-                              private={detail.repository.private}
                               visibleChartTemplates={
                                 !isUndefined(props.visibleModal) && props.visibleModal === 'template'
                               }

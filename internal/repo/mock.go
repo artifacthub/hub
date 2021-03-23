@@ -101,7 +101,7 @@ func (m *ManagerMock) GetByID(
 	repositoryID string,
 	includeCredentials bool,
 ) (*hub.Repository, error) {
-	args := m.Called(ctx, repositoryID)
+	args := m.Called(ctx, repositoryID, includeCredentials)
 	data, _ := args.Get(0).(*hub.Repository)
 	return data, args.Error(1)
 }

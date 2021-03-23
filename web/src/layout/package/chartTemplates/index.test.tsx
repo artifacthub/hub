@@ -243,4 +243,24 @@ describe('ChartTemplatesModal', () => {
       });
     });
   });
+
+  describe('does not render component', () => {
+    it('when repo is not Helm kind', () => {
+      const { container } = render(
+        <Router>
+          <ChartTemplatesModal {...defaultProps} repoKind={RepositoryKind.Krew} visibleChartTemplates />
+        </Router>
+      );
+
+      expect(container).toBeEmptyDOMElement();
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({
+        search: '',
+        state: {
+          fromStarredPage: undefined,
+          searchUrlReferer: undefined,
+        },
+      });
+    });
+  });
 });
