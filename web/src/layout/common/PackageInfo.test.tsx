@@ -140,6 +140,29 @@ describe('PackageInfo', () => {
         }),
       });
     });
+
+    it('renders repo kind link', () => {
+      const mockPackage = getMockPackage('8');
+
+      const { getAllByTestId } = render(
+        <Router>
+          <PackageInfo {...defaultProps} package={mockPackage} />
+        </Router>
+      );
+      const buttons = getAllByTestId('repoIconLabelLink');
+      expect(buttons).toHaveLength(2);
+      fireEvent.click(buttons[0]);
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          pageNumber: 1,
+          filters: {
+            kind: ['1'],
+          },
+        }),
+      });
+    });
   });
 
   describe('when withPackageLinks is false', () => {

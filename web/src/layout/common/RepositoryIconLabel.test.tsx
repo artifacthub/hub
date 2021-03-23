@@ -1,8 +1,18 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
 import { RepositoryKind } from '../../types';
+import prepareQueryString from '../../utils/prepareQueryString';
 import RepositoryIconLabel from './RepositoryIconLabel';
+
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as {}),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
 
 describe('RepositoryIconLabel', () => {
   it('creates snapshot', () => {
@@ -25,5 +35,23 @@ describe('RepositoryIconLabel', () => {
   it('renders proper content with isPlural', () => {
     const { getByText } = render(<RepositoryIconLabel kind={RepositoryKind.Helm} isPlural />);
     expect(getByText('Helm charts')).toBeInTheDocument();
+  });
+
+  it('renders button', () => {
+    const { getByTestId } = render(<RepositoryIconLabel kind={RepositoryKind.Helm} clickable />);
+    const btn = getByTestId('repoIconLabelLink');
+    expect(btn).toBeInTheDocument();
+
+    fireEvent.click(btn);
+    expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+    expect(mockHistoryPush).toHaveBeenCalledWith({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        pageNumber: 1,
+        filters: {
+          kind: ['0'],
+        },
+      }),
+    });
   });
 });

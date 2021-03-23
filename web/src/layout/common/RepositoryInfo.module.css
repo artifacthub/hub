@@ -5,6 +5,10 @@
   top: -1px;
 }
 
+.moreMarginTop {
+  top: 2px;
+}
+
 .dropdown {
   width: 350px;
   white-space: normal;
