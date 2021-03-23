@@ -154,7 +154,13 @@ exports[`Template creates snapshot 1`] = `
                 >
                   include
                 </span>
-                 "chart.resourceNamePrefix" . }}
+                 
+                <span
+                  class="d-inline-flex prevSpace"
+                >
+                  "chart.resourceNamePrefix"
+                </span>
+                 . }}
               </span>
             </span>
             hub
@@ -221,7 +227,19 @@ exports[`Template creates snapshot 1`] = `
                 >
                   include
                 </span>
-                 "chart.labels" . | 
+                 
+                <span
+                  class="d-inline-flex prevSpace"
+                >
+                  "chart.labels"
+                </span>
+                 . 
+                <span
+                  class="d-inline-flex prevSpace"
+                >
+                  |
+                </span>
+                 
                 <div
                   class="position-relative d-inline-block undefined"
                 >
@@ -431,7 +449,13 @@ exports[`Template creates snapshot 1`] = `
                 >
                   toYaml
                 </span>
-                 . | 
+                 . 
+                <span
+                  class="d-inline-flex prevSpace"
+                >
+                  |
+                </span>
+                 
                 <div
                   class="position-relative d-inline-block undefined"
                 >
@@ -604,7 +628,13 @@ exports[`Template creates snapshot 1`] = `
                 >
                   include
                 </span>
-                 "chart.resourceNamePrefix" . }}
+                 
+                <span
+                  class="d-inline-flex prevSpace"
+                >
+                  "chart.resourceNamePrefix"
+                </span>
+                 . }}
               </span>
             </span>
             hub
@@ -792,7 +822,13 @@ exports[`Template creates snapshot 1`] = `
                 >
                   toYaml
                 </span>
-                 . | 
+                 . 
+                <span
+                  class="d-inline-flex prevSpace"
+                >
+                  |
+                </span>
+                 
                 <div
                   class="position-relative d-inline-block undefined"
                 >
@@ -1021,7 +1057,13 @@ exports[`Template creates snapshot 1`] = `
                 >
                   toYaml
                 </span>
-                 . | 
+                 . 
+                <span
+                  class="d-inline-flex prevSpace"
+                >
+                  |
+                </span>
+                 
                 <div
                   class="position-relative d-inline-block undefined"
                 >

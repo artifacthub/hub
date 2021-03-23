@@ -597,6 +597,7 @@ export enum ChartTemplateSpecialType {
   Function,
   FlowControl,
   Variable,
+  String,
 }
 
 export interface AHStats {

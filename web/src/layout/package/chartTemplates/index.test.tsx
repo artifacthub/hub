@@ -123,6 +123,30 @@ describe('ChartTemplatesModal', () => {
       });
     });
 
+    it('cleans url when templates list is empty', async () => {
+      const mockChartTemplates = getMockChartTemplates('8');
+      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+
+      render(
+        <Router>
+          <ChartTemplatesModal {...defaultProps} visibleChartTemplates />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
+        expect(API.getChartTemplates).toHaveBeenCalledWith('id', '1.1.1');
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+        expect(mockHistoryReplace).toHaveBeenCalledWith({
+          search: '',
+          state: {
+            fromStarredPage: undefined,
+            searchUrlReferer: undefined,
+          },
+        });
+      });
+    });
+
     it('does not call again to getChartTemplates to open modal when package is the same', async () => {
       const mockChartTemplates = getMockChartTemplates('5');
       mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);

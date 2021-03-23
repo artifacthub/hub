@@ -20,6 +20,14 @@
   margin: 0 2px;
 }
 
+.specialCharacter {
+  margin-left: -6px;
+}
+
+.prevSpace::before {
+  content: ' ';
+}
+
 .tmplBuiltIn {
   color: #81a2be;
 }

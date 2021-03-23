@@ -1,4 +1,5 @@
-import { get, isEmpty, isObject, isString } from 'lodash';
+import classnames from 'classnames';
+import { get, isEmpty, isNull, isObject, isString } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import regexifyString from 'regexify-string';
 
@@ -18,6 +19,7 @@ const HIGHLIGHT_PATTERN = /{{(?!\/\*)(.*?)([^{]|{})*}}/;
 const FUNCTIONS_DEFINITIONS = require('./functions.json');
 const BUILTIN_DEFINITIONS = require('./builtIn.json');
 const SPECIAL_CHARACTERS = /[^|({})-]+/;
+const TOKENIZE_RE = /[^\s"']+|"([^"]*)"|'([^']*)/g;
 
 const Template = (props: Props) => {
   const [activeTemplate, setActiveTemplate] = useState<ChartTemplate>(props.template);
@@ -128,11 +130,26 @@ const Template = (props: Props) => {
     }
   };
 
-  const processHelmTemplateContent = (str: string, lineNumber: number): JSX.Element => {
-    const parts = str.split(' ');
+  const tokenizeContent = (str: string, lineNumber: number): JSX.Element | null => {
+    const parts = str.match(TOKENIZE_RE);
+    if (isNull(parts)) return null;
     return (
       <span className={`badge font-weight-normal ${styles.badge}`}>
         {parts.map((word: string, idx: number) => {
+          if (word === ')' || word === '|' || word.startsWith(`"`))
+            return (
+              <React.Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
+                <span
+                  className={classnames(
+                    'd-inline-flex',
+                    { [styles.specialCharacter]: word === ')' },
+                    { [styles.prevSpace]: word !== ')' }
+                  )}
+                >
+                  {word}
+                </span>{' '}
+              </React.Fragment>
+            );
           return (
             <React.Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
               {regexifyString({
@@ -175,7 +192,7 @@ const Template = (props: Props) => {
       decorator: (match, index) => {
         return (
           <span data-testid="betweenBracketsContent" key={`line_${index}`}>
-            {processHelmTemplateContent(match, index)}
+            {tokenizeContent(match, index)}
           </span>
         );
       },
