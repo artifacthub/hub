@@ -9,7 +9,6 @@ import { AppCtx, signOut } from '../../context/AppCtx';
 import { ErrorKind, PackageStars } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import prettifyNumber from '../../utils/prettifyNumber';
-import StarBadge from '../common/StarBadge';
 import styles from './StarButton.module.css';
 
 interface Props {
@@ -85,18 +84,16 @@ const StarButton = (props: Props) => {
 
   return (
     <>
-      <StarBadge className="d-inline d-md-none" starsNumber={packageStars.stars} />
-
-      <div className={`d-none d-md-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
+      <div className={`d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
         <button
           data-testid="toggleStarBtn"
-          className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
+          className={`btn btn-sm btn-primary px-1 px-md-3 ${styles.starBtn}`}
           type="button"
           disabled={isUndefined(ctx.user) || isNull(ctx.user) || isGettingIfStarred}
           onClick={handleToggleStar}
         >
           <div className="d-flex align-items-center">
-            {notStarred ? <FaRegStar /> : <FaStar />}
+            {notStarred ? <FaRegStar className={styles.icon} /> : <FaStar className={styles.icon} />}
             <span className="ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
           </div>
         </button>
