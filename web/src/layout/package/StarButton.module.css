@@ -53,4 +53,21 @@
     left: auto;
     right: 13px;
   }
+
+  .starBtn {
+    height: 25px;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem !important;
+    line-height: 1rem;
+  }
+
+  .starBadge {
+    height: 25px;
+    line-height: 1rem !important;
+  }
+
+  .icon {
+    position: relative;
+    top: -1px;
+  }
 }

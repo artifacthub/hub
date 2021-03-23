@@ -75,7 +75,7 @@ describe('StarButton', () => {
         });
 
         expect(getByText('Star')).toBeInTheDocument();
-        expect(getAllByText('4')).toHaveLength(2);
+        expect(getAllByText('4')).toHaveLength(1);
         expect(queryByRole('status')).toBeNull();
 
         const btn = getByTestId('toggleStarBtn');
