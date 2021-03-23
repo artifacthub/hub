@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
+	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/artifacthub/hub/internal/tests"

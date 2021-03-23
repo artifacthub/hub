@@ -11,8 +11,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/authz"
+	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/org"
 	"github.com/artifacthub/hub/internal/tests"
