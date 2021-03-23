@@ -11,8 +11,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/artifacthub/hub/cmd/hub/handlers/pkg"
 	"github.com/artifacthub/hub/internal/email"
+	"github.com/artifacthub/hub/internal/handlers/pkg"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/jackc/pgx/v4"

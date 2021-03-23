@@ -10,11 +10,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/artifacthub/hub/cmd/hub/handlers"
 	"github.com/artifacthub/hub/internal/apikey"
 	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/event"
+	"github.com/artifacthub/hub/internal/handlers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/artifacthub/hub/internal/notification"
