@@ -103,12 +103,14 @@ const RepositoryInfo = (props: Props) => {
         <div className="d-flex flex-row aling-items-baseline text-truncate">
           <div className="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase">
             <small>Repo:</small>
-            {props.visibleIcon && <RepositoryIconLabel kind={props.repository.kind} className="ml-1" />}
+            {props.visibleIcon && <RepositoryIconLabel kind={props.repository.kind} className="ml-1" clickable />}
           </div>
 
           <button
             data-testid="repoLink"
-            className={`d-flex flex-row p-0 border-0 text-dark text-truncate ${styles.link}`}
+            className={classnames('d-flex flex-row p-0 border-0 text-dark text-truncate', styles.link, {
+              [styles.moreMarginTop]: props.visibleIcon,
+            })}
             onClick={(e) => {
               e.preventDefault();
               history.push({

@@ -39,7 +39,7 @@ const PackageInfo = (props: Props) => {
   const starsAndKindInfo = (
     <div className={`align-self-start d-flex align-items-center text-uppercase ml-auto ${styles.kind}`}>
       <StarBadge className="mr-2" starsNumber={props.package.stars} />
-      <RepositoryIconLabel kind={props.package.repository.kind} />
+      <RepositoryIconLabel kind={props.package.repository.kind} clickable />
     </div>
   );
 
