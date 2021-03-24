@@ -11,7 +11,8 @@
 }
 
 .starBtn.disabled,
-.starBtn:disabled {
+.starBtn:disabled,
+.disabled {
   opacity: 1 !important;
   cursor: default;
 }
@@ -36,6 +37,10 @@
 
 .wrapper {
   z-index: 1;
+}
+
+.visibleTooltip {
+  opacity: 1;
 }
 
 @media (hover: hover) {

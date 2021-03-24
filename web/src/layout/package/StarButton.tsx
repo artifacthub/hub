@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { isNumber } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
@@ -6,6 +7,7 @@ import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import { API } from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
+import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import { ErrorKind, PackageStars } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import prettifyNumber from '../../utils/prettifyNumber';
@@ -21,6 +23,9 @@ const StarButton = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [isGettingIfStarred, setIsGettingIfStarred] = useState<boolean | undefined>(undefined);
   const [pkgId, setPkgId] = useState<string>(props.packageId);
+  const point = useBreakpointDetect();
+  const notLoginUser = isUndefined(ctx.user) || isNull(ctx.user);
+  const [enabledTooltip, setEnabledTooltip] = useState<boolean>(false);
 
   async function getPackageStars() {
     try {
@@ -80,6 +85,20 @@ const StarButton = (props: Props) => {
     }
   }
 
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (enabledTooltip) {
+      // Hide tooltip after 2s
+      timeout = setTimeout(() => setEnabledTooltip(false), 2 * 1000);
+    }
+
+    return () => {
+      if (!isUndefined(timeout)) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [enabledTooltip]);
+
   if (isUndefined(ctx.user) || isUndefined(packageStars) || isNull(packageStars)) return null;
 
   return (
@@ -87,10 +106,20 @@ const StarButton = (props: Props) => {
       <div className={`d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
         <button
           data-testid="toggleStarBtn"
-          className={`btn btn-sm btn-primary px-1 px-md-3 ${styles.starBtn}`}
+          className={classnames('btn btn-sm btn-primary px-1 px-md-3', styles.starBtn, {
+            [`disabled ${styles.disabled}`]: notLoginUser,
+          })}
           type="button"
-          disabled={isUndefined(ctx.user) || isNull(ctx.user) || isGettingIfStarred}
-          onClick={handleToggleStar}
+          disabled={isGettingIfStarred}
+          onClick={() => {
+            if (notLoginUser) {
+              if ([point && 'xs', 'sm'].includes(point)) {
+                setEnabledTooltip(true);
+              }
+            } else {
+              handleToggleStar();
+            }
+          }}
         >
           <div className="d-flex align-items-center">
             {notStarred ? <FaRegStar className={styles.icon} /> : <FaStar className={styles.icon} />}
@@ -103,7 +132,12 @@ const StarButton = (props: Props) => {
         </span>
 
         {isNull(ctx.user) && (
-          <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
+          <div
+            className={classnames('tooltip bs-tooltip-bottom', styles.tooltip, {
+              [styles.visibleTooltip]: enabledTooltip,
+            })}
+            role="tooltip"
+          >
             <div className={`arrow ${styles.tooltipArrow}`}></div>
             <div className="tooltip-inner">You must be signed in to star a package</div>
           </div>
