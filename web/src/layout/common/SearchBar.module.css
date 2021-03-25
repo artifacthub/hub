@@ -43,6 +43,63 @@
   top: 12px;
 }
 
+/* Dropdown */
+.dropdown {
+  min-width: 450px;
+  margin-top: 0.5rem;
+}
+
+.imageWrapper {
+  position: relative;
+  min-width: 50px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--white);
+  border: 2px solid var(--color-1-10);
+  box-shadow: 0px 0px 3px 0px var(--color-1-20);
+}
+
+.image {
+  max-width: calc(100% - 3px);
+  max-height: calc(100% - 3px);
+}
+
+.dropdownItem {
+  padding: 1rem;
+}
+
+.activeDropdownItem {
+  background-color: var(--color-black-5);
+}
+
+.truncateWrapper {
+  min-width: 0;
+}
+
+.mx50 {
+  max-width: 50%;
+  text-align: left;
+  width: auto;
+}
+
+.title {
+  font-size: 0.95rem;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.smallText {
+  font-size: 0.8rem;
+}
+
+.midText {
+  font-size: 0.9rem;
+}
+
+.labelsWrapper > div:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
 @media only screen and (max-width: 767.98px) {
   .searchBar {
     height: 30px;

@@ -13,6 +13,8 @@ interface Props {
   className?: string;
   onlyBadge: boolean;
   withLink?: string;
+  withoutTooltip?: boolean;
+  onlyIcon?: boolean;
 }
 
 const SecurityRating = (props: Props) => {
@@ -57,6 +59,7 @@ const SecurityRating = (props: Props) => {
             bgLeftIcon={severity.color}
             labelStyle="custom"
             icon={<span className={`position-relative ${styles.ratingLetter}`}>{severity.level}</span>}
+            onlyIcon={props.onlyIcon}
           />
         )
       }
@@ -143,7 +146,7 @@ const SecurityRating = (props: Props) => {
           </div>
         </div>
       }
-      visibleTooltip
+      visibleTooltip={isUndefined(props.withoutTooltip) || !props.withoutTooltip}
       active
     />
   );
