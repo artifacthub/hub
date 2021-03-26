@@ -11,6 +11,7 @@ interface Props {
   labelStyle?: string;
   className?: string;
   labelClassName?: string;
+  onlyIcon?: boolean;
 }
 
 const Label = (props: Props) => (
@@ -27,7 +28,9 @@ const Label = (props: Props) => (
     >
       {!isUndefined(props.icon) && (
         <div
-          className={`text-center labelIconWrapper ${styles.iconWrapper}`}
+          className={classnames('text-center labelIconWrapper', styles.iconWrapper, {
+            [styles.onlyIcon]: props.onlyIcon,
+          })}
           style={{
             backgroundColor: props.bgLeftIcon,
           }}
@@ -35,16 +38,19 @@ const Label = (props: Props) => (
           {props.icon}
         </div>
       )}
-      <div
-        className={classnames(
-          'text-nowrap',
-          styles.labelText,
-          { [styles.labelTextNoIcon]: isUndefined(props.icon) },
-          props.labelClassName
-        )}
-      >
-        {props.text}
-      </div>
+
+      {(isUndefined(props.onlyIcon) || !props.onlyIcon) && (
+        <div
+          className={classnames(
+            'text-nowrap',
+            styles.labelText,
+            { [styles.labelTextNoIcon]: isUndefined(props.icon) },
+            props.labelClassName
+          )}
+        >
+          {props.text}
+        </div>
+      )}
     </div>
   </div>
 );
