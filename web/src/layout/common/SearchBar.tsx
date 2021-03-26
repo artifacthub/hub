@@ -71,9 +71,7 @@ const SearchBar = (props: Props) => {
   const goToSearch = () => {
     cleanTimeout();
     forceBlur();
-    if (window.location.pathname === '/packages/search') {
-      cleanSearch();
-    }
+    cleanSearch();
 
     history.push({
       pathname: '/packages/search',
