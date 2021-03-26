@@ -42,9 +42,8 @@ export default function App() {
 
   useEffect(() => {
     const activeProfile = lsPreferences.getActiveProfile();
-    const theme = activeProfile.theme.automatic
-      ? detectActiveThemeMode()
-      : activeProfile.theme.effective || activeProfile.theme.configured;
+    const theme =
+      activeProfile.theme.configured === 'automatic' ? detectActiveThemeMode() : activeProfile.theme.configured;
     if (!isUndefined(theme)) {
       updateActiveStyleSheet(theme);
       setActiveInitialTheme(theme);

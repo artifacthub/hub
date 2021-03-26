@@ -35,7 +35,7 @@ const mockUserCtx = {
     search: { limit: 60 },
     theme: {
       configured: 'light',
-      automatic: false,
+      effective: 'light',
     },
     notifications: {
       lastDisplayedTime: null,
@@ -52,7 +52,7 @@ const mockOrgCtx = {
     search: { limit: 60 },
     theme: {
       configured: 'light',
-      automatic: false,
+      effective: 'light',
     },
     notifications: {
       lastDisplayedTime: null,

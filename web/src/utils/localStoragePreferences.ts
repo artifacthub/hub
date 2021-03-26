@@ -1,7 +1,14 @@
-import { Prefs } from '../types';
+import { Prefs, ThemePrefs } from '../types';
+import detectActiveThemeMode from './detectActiveThemeMode';
 
-interface PreferencesList {
+export interface PreferencesList {
   [key: string]: Prefs;
+}
+
+export interface OldThemePrefs extends ThemePrefs {
+  // Legacy
+  automatic?: boolean;
+  efective?: string;
 }
 
 const LS_ITEM = 'prefs';
@@ -12,12 +19,34 @@ const LS_ACTIVE_PROFILE = 'activeProfile';
 const DEFAULT_PREFS: Prefs = {
   search: { limit: DEFAULT_SEARCH_LIMIT },
   controlPanel: {},
-  theme: { configured: DEFAULT_THEME, automatic: false },
+  theme: { configured: DEFAULT_THEME, effective: DEFAULT_THEME },
   notifications: {
     lastDisplayedTime: null,
     enabled: true,
     displayed: [],
   },
+};
+
+export const fixTheme = (prefsList: PreferencesList): PreferencesList => {
+  let formattedList: PreferencesList = {};
+  Object.keys(prefsList).forEach((user: string) => {
+    const oldThemePrefs = { ...prefsList[user].theme } as OldThemePrefs;
+    let themePrefs: ThemePrefs = {
+      configured: oldThemePrefs.configured,
+      effective: oldThemePrefs.configured,
+    };
+    if (oldThemePrefs.automatic === true) {
+      themePrefs.configured = 'automatic';
+    }
+    themePrefs.effective = themePrefs.configured === 'automatic' ? detectActiveThemeMode() : themePrefs.effective;
+
+    const currentPrefs = { ...prefsList[user] };
+    currentPrefs.theme = themePrefs;
+    formattedList[user] = currentPrefs;
+  });
+  // Save fixed prefs to ls
+  window.localStorage.setItem(LS_ITEM, JSON.stringify(formattedList));
+  return formattedList;
 };
 
 export class LocalStoragePreferences {
@@ -27,7 +56,7 @@ export class LocalStoragePreferences {
     try {
       const preferences = window.localStorage.getItem(LS_ITEM);
       if (preferences) {
-        this.savedPreferences = JSON.parse(preferences);
+        this.savedPreferences = fixTheme(JSON.parse(preferences));
       } else {
         this.setPrefs(DEFAULT_PREFS);
       }
