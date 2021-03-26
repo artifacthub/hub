@@ -11,6 +11,7 @@ declare
     v_capabilities text[];
     v_facets boolean := (p_input->>'facets')::boolean;
     v_tsquery_web tsquery := websearch_to_tsquery(p_input->>'ts_query_web');
+    v_tsquery_web_with_prefix_matching tsquery;
     v_tsquery tsquery := to_tsquery(p_input->>'ts_query');
 begin
     -- Prepare filters for later use
@@ -26,6 +27,20 @@ begin
     from jsonb_array_elements_text(p_input->'licenses') e;
     select array_agg(e::text) into v_capabilities
     from jsonb_array_elements_text(p_input->'capabilities') e;
+
+    -- Prepare v_tsquery_web_with_prefix_matching
+    if v_tsquery_web is not null then
+        select ts_rewrite(
+            v_tsquery_web,
+            format('
+                select
+                    to_tsquery(lexeme),
+                    to_tsquery(lexeme || '':*'')
+                from unnest(tsvector_to_array(to_tsvector(%L))) as lexeme
+                ', p_input->>'ts_query_web'
+            )
+        ) into v_tsquery_web_with_prefix_matching;
+    end if;
 
     return query
     with packages_applying_minimum_filters as (
@@ -67,7 +82,7 @@ begin
         where s.version = p.latest_version
         and
             case when v_tsquery_web is not null then
-                v_tsquery_web @@ p.tsdoc
+                v_tsquery_web_with_prefix_matching @@ p.tsdoc
             else true end
         and
             case when v_tsquery is not null then
