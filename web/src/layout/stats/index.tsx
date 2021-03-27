@@ -15,10 +15,17 @@ import styles from './StatsView.module.css';
 
 const StatsView = () => {
   const { ctx } = useContext(AppCtx);
-  const { effective, configured } = ctx.prefs.theme;
+  const { effective } = ctx.prefs.theme;
+  const [activeTheme, setActiveTheme] = useState(effective);
   const [isLoading, setIsLoading] = useState(false);
   const [stats, setStats] = useState<AHStats | null | undefined>(undefined);
   const [apiError, setApiError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (effective !== activeTheme) {
+      setActiveTheme(effective);
+    }
+  }, [effective, activeTheme]);
 
   const getAreaChartConfig = (title: string, withAnnotations?: boolean) => {
     const annotations: any[] = withAnnotations
@@ -109,7 +116,7 @@ const StatsView = () => {
         opacity: 0.5,
         colors: [
           () => {
-            return effective || configured === 'dark' ? '#222529' : '#659dbd';
+            return activeTheme === 'dark' ? '#222529' : '#659dbd';
           },
         ],
       },
