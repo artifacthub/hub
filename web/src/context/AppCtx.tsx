@@ -32,7 +32,6 @@ type Action =
   | { type: 'updateLimit'; limit: number }
   | { type: 'updateTheme'; theme: string }
   | { type: 'updateEffectiveTheme'; theme: string }
-  | { type: 'enableAutomaticTheme'; enabled: boolean }
   | { type: 'enabledDisplayedNotifications'; enabled: boolean }
   | { type: 'addNewDisplayedNotification'; id: string };
 
@@ -70,10 +69,6 @@ export function updateTheme(theme: string) {
 
 export function updateEffectiveTheme(theme: string) {
   return { type: 'updateTheme', theme };
-}
-
-export function enableAutomaticTheme(enabled: boolean) {
-  return { type: 'enableAutomaticTheme', enabled };
 }
 
 export function enabledDisplayedNotifications(enabled: boolean) {
@@ -116,23 +111,15 @@ function updateSelectedOrg(currentPrefs: Prefs, name?: string): Prefs {
   };
 }
 
-function updateAutomaticTheme(currentPrefs: Prefs, enabled: boolean): Prefs {
-  return {
-    ...currentPrefs,
-    theme: {
-      ...currentPrefs.theme,
-      automatic: enabled,
-      effective: enabled ? detectActiveThemeMode() : currentPrefs.theme.configured,
-    },
-  };
-}
-
 export function updateActiveStyleSheet(current: string) {
   document.getElementsByTagName('html')[0].setAttribute('data-theme', current);
 }
 
 function getCurrentSystemActiveTheme(prefs: ThemePrefs): ThemePrefs {
-  if (prefs.automatic && (isUndefined(prefs.effective) || detectActiveThemeMode() !== prefs.effective)) {
+  if (
+    prefs.configured === 'automatic' &&
+    (isUndefined(prefs.effective) || detectActiveThemeMode() !== prefs.effective)
+  ) {
     return {
       ...prefs,
       effective: detectActiveThemeMode(),
@@ -148,7 +135,7 @@ export function appReducer(state: AppState, action: Action) {
     case 'signIn':
       prefs = lsStorage.getPrefs(action.profile.alias);
       const userPrefs = { ...prefs, theme: getCurrentSystemActiveTheme(prefs.theme) };
-      updateActiveStyleSheet(userPrefs.theme.effective || userPrefs.theme.configured);
+      updateActiveStyleSheet(userPrefs.theme.effective);
       lsStorage.setPrefs(userPrefs, action.profile.alias);
       lsStorage.setActiveProfile(action.profile.alias);
       return {
@@ -170,7 +157,7 @@ export function appReducer(state: AppState, action: Action) {
       const guestPrefs = { ...prefs, theme: getCurrentSystemActiveTheme(prefs.theme) };
       lsStorage.setPrefs(guestPrefs);
       lsStorage.setActiveProfile();
-      updateActiveStyleSheet(guestPrefs.theme.effective || guestPrefs.theme.configured);
+      updateActiveStyleSheet(guestPrefs.theme.effective);
       return { user: null, prefs: guestPrefs };
 
     case 'updateOrg':
@@ -199,16 +186,17 @@ export function appReducer(state: AppState, action: Action) {
       };
 
     case 'updateTheme':
+      const effective = action.theme === 'automatic' ? detectActiveThemeMode() : action.theme;
       prefs = {
         ...state.prefs,
         theme: {
           configured: action.theme,
-          effective: action.theme,
-          automatic: false,
+          effective: effective,
         },
       };
+
       lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
-      updateActiveStyleSheet(action.theme);
+      updateActiveStyleSheet(effective);
       return {
         ...state,
         prefs: prefs,
@@ -224,15 +212,6 @@ export function appReducer(state: AppState, action: Action) {
       };
       lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
       updateActiveStyleSheet(action.theme);
-      return {
-        ...state,
-        prefs: prefs,
-      };
-
-    case 'enableAutomaticTheme':
-      prefs = updateAutomaticTheme(state.prefs, action.enabled);
-      lsStorage.setPrefs(prefs, state.user ? state.user.alias : undefined);
-      updateActiveStyleSheet(prefs.theme.effective || prefs.theme.configured);
       return {
         ...state,
         prefs: prefs,
@@ -290,7 +269,7 @@ function AppCtxProvider(props: Props) {
     refreshUserProfile(dispatch);
   }, []);
 
-  useSystemThemeMode(ctx.prefs.theme.automatic, dispatch);
+  useSystemThemeMode(ctx.prefs.theme.configured === 'automatic', dispatch);
 
   return <AppCtx.Provider value={{ ctx, dispatch }}>{props.children}</AppCtx.Provider>;
 }

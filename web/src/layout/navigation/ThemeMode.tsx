@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { GoBrowser } from 'react-icons/go';
 
-import { AppCtx, enableAutomaticTheme, updateTheme } from '../../context/AppCtx';
+import { AppCtx, updateTheme } from '../../context/AppCtx';
 import SmallTitle from '../common/SmallTitle';
 import styles from './ThemeMode.module.css';
 
@@ -13,14 +13,10 @@ interface Props {
 
 const ThemeMode = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
-  const { configured, automatic } = ctx.prefs.theme;
+  const { configured } = ctx.prefs.theme;
 
   const onHandleChange = (value: string) => {
-    if (value === 'automatic') {
-      dispatch(enableAutomaticTheme(true));
-    } else {
-      dispatch(updateTheme(value));
-    }
+    dispatch(updateTheme(value));
     if (!isUndefined(props.onSelection)) {
       props.onSelection();
     }
@@ -39,7 +35,7 @@ const ThemeMode = (props: Props) => {
               name="theme"
               id="automatic"
               value="automatic"
-              checked={automatic}
+              checked={configured === 'automatic'}
               readOnly
             />
             <label
@@ -62,7 +58,7 @@ const ThemeMode = (props: Props) => {
               name="theme"
               id="light"
               value="light"
-              checked={!automatic && configured === 'light'}
+              checked={configured === 'light'}
               readOnly
             />
             <label
@@ -84,7 +80,7 @@ const ThemeMode = (props: Props) => {
               name="theme"
               id="dark"
               value="dark"
-              checked={!automatic && configured === 'dark'}
+              checked={configured === 'dark'}
               readOnly
             />
             <label

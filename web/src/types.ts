@@ -339,8 +339,7 @@ export interface Prefs {
 
 export interface ThemePrefs {
   configured: string;
-  effective?: string;
-  automatic: boolean;
+  effective: string;
 }
 
 export interface PackageStars {

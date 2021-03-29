@@ -21,7 +21,7 @@ const mockCtxLoggedIn = {
     search: { limit: 60 },
     theme: {
       configured: 'light',
-      automatic: false,
+      effective: 'light',
     },
     notifications: {
       lastDisplayedTime: null,
@@ -38,7 +38,7 @@ const mockCtxNotLoggedIn = {
     search: { limit: 60 },
     theme: {
       configured: 'light',
-      automatic: false,
+      effective: 'light',
     },
     notifications: {
       lastDisplayedTime: null,
@@ -55,7 +55,7 @@ const mockUndefinedUser = {
     search: { limit: 60 },
     theme: {
       configured: 'light',
-      automatic: false,
+      effective: 'light',
     },
     notifications: {
       lastDisplayedTime: null,

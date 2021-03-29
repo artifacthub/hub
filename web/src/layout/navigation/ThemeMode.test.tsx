@@ -12,7 +12,7 @@ const mockCtx = {
     search: { limit: 60 },
     theme: {
       configured: 'light',
-      automatic: false,
+      effective: 'light',
     },
     notifications: {
       lastDisplayedTime: null,
@@ -79,7 +79,7 @@ describe('ThemeMode', () => {
               ...mockCtx.prefs,
               theme: {
                 configured: 'dark',
-                automatic: false,
+                effective: 'dark',
               },
             },
           },
@@ -105,8 +105,8 @@ describe('ThemeMode', () => {
             prefs: {
               ...mockCtx.prefs,
               theme: {
-                configured: 'dark',
-                automatic: true,
+                configured: 'automatic',
+                effective: 'light',
               },
             },
           },
