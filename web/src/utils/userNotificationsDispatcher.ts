@@ -118,10 +118,13 @@ export class UserNotificationsDispatcher {
   private updateCurrentLocation(location: string) {
     const currentLocationPathTip = getCurrentLocationPath(location);
     if (!isNull(this.settings) && currentLocationPathTip !== this.locationPathTip) {
-      this.locationPathTip = currentLocationPathTip;
-      if (hasToBeDisplayedNewNotification(true, this.settings.lastDisplayedTime)) {
+      if (
+        !isUndefined(this.locationPathTip) &&
+        hasToBeDisplayedNewNotification(true, this.settings.lastDisplayedTime)
+      ) {
         this.get(true);
       }
+      this.locationPathTip = currentLocationPathTip;
     }
   }
 

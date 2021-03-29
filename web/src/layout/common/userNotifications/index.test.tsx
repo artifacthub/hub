@@ -110,4 +110,16 @@ describe('UserNotificationsController', () => {
       expect(userNotificationsDispatcher.start).toHaveBeenCalledTimes(0);
     });
   });
+
+  it('does not call userNotificationsDispatcher.updateSettings when user is undefined', () => {
+    render(
+      <AppCtx.Provider value={{ ctx: { ...mockCtx, user: undefined }, dispatch: jest.fn() }}>
+        <UserNotificationsController />
+      </AppCtx.Provider>
+    );
+
+    waitFor(() => {
+      expect(userNotificationsDispatcher.updateSettings).toHaveBeenCalledTimes(0);
+    });
+  });
 });
