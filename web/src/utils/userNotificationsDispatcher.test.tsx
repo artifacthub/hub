@@ -83,15 +83,9 @@ describe('userNotificationsDispatcher', () => {
     userNotificationsDispatcher.dismissNotification('/packages/helm/hub/artifact-hub');
 
     await waitFor(() => {
-      expect(updateUserNotificationMock).toHaveBeenCalledTimes(4);
-      expect(updateUserNotificationMock).toHaveBeenNthCalledWith(1, notificationSample);
+      expect(updateUserNotificationMock).toHaveBeenCalledTimes(2);
+      expect(updateUserNotificationMock).toHaveBeenNthCalledWith(1, { body: 'Lorem ipsum', id: 'id' });
       expect(updateUserNotificationMock).toHaveBeenNthCalledWith(2, null);
-      expect(updateUserNotificationMock).toHaveBeenNthCalledWith(3, {
-        body: 'package usage tip',
-        id: 'b02cbb3332116753bb068e462f8a310e',
-        linkTip: 'package',
-      });
-      expect(updateUserNotificationMock).toHaveBeenNthCalledWith(4, null);
     });
   });
 });

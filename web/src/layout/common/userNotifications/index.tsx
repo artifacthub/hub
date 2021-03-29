@@ -73,8 +73,10 @@ const UserNotificationsController: React.ElementType = () => {
   }, [ctx.user]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    notificationsDispatcher.updateSettings(ctx.prefs.notifications);
-  }, [ctx.prefs.notifications]);
+    if (!isUndefined(ctx.user)) {
+      notificationsDispatcher.updateSettings(ctx.prefs.notifications);
+    }
+  }, [ctx.prefs.notifications]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     return () => {

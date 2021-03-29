@@ -226,6 +226,28 @@ describe('localStoragePreferences', () => {
     expect(lsPreferences.getPrefs('user1')).toStrictEqual(userPrefs);
   });
 
+  it('updates user notifications prefs', () => {
+    expect(lsPreferences.getPrefs('user1')).toStrictEqual({
+      ...initialUserPrefs,
+      controlPanel: { selectedOrg: 'testorg' },
+    });
+    const userPrefs: Prefs = {
+      controlPanel: { selectedOrg: 'testorg' },
+      search: { limit: 60 },
+      theme: {
+        configured: 'light',
+        effective: 'light',
+      },
+      notifications: {
+        lastDisplayedTime: 1617021994512,
+        enabled: true,
+        displayed: ['789ca4669063535df55ccff943ed09b3'],
+      },
+    };
+    lsPreferences.setPrefs(userPrefs, 'user1');
+    expect(lsPreferences.getPrefs('user1')).toStrictEqual(userPrefs);
+  });
+
   it('gets default user prefs', () => {
     expect(lsPreferences.getPrefs('user2')).toStrictEqual(defaultPrefs);
   });
