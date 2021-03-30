@@ -3,6 +3,60 @@ entries:
   artifact-hub:
     - annotations:
         artifacthub.io/changes: |
+          - Add stats page
+          - Search bar now includes typeahead functionality
+          - Packages search now supports prefix matching
+          - Allow exploring templates in private Helm repos
+          - Allow starring packages from mobile devices
+          - Reorganize some configuration values (breaking changes, please see PR#1189)
+          - Upgrade backend dependencies
+          - Some bugs fixes and other improvements
+        artifacthub.io/containsSecurityUpdates: "false"
+        artifacthub.io/images: |
+          - name: db-migrator
+            image: artifacthub/db-migrator:v0.18.0
+          - name: hub
+            image: artifacthub/hub:v0.18.0
+          - name: tracker
+            image: artifacthub/tracker:v0.18.0
+          - name: scanner
+            image: artifacthub/scanner:v0.18.0
+          - name: trivy
+            image: aquasec/trivy:0.16.0
+      apiVersion: v2
+      appVersion: 0.18.0
+      created: "2021-03-30T11:57:48.525391+02:00"
+      dependencies:
+        - condition: postgresql.enabled
+          name: postgresql
+          repository: https://charts.helm.sh/stable
+          version: 8.2.1
+      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
+      digest: 9a8244d9f3851750526a950396fb55ef2d5d2588eac413aa9bb07ecc6ff17b3e
+      home: https://artifacthub.io
+      icon: https://artifacthub.github.io/hub/chart/logo.png
+      keywords:
+        - kubernetes
+        - helm
+        - falco
+        - opa
+        - olm
+        - tinkerbell actions
+        - krew
+        - tekton
+      kubeVersion: ">= 1.14.0-0"
+      maintainers:
+        - email: tegioz@icloud.com
+          name: Sergio
+        - email: cynthiasg@icloud.com
+          name: Cintia
+      name: artifact-hub
+      type: application
+      urls:
+        - https://artifacthub.github.io/hub/chart/artifact-hub-0.18.0.tgz
+      version: 0.18.0
+    - annotations:
+        artifacthub.io/changes: |
           - Add Helm charts templates explorer
           - Scan packages latest version images daily
           - Enable strict transport security
@@ -790,4 +844,4 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.2.0.tgz
       version: 0.2.0
-generated: "2021-03-15T18:19:15.97986+01:00"
+generated: "2021-03-30T11:57:48.49081+02:00"
