@@ -6,14 +6,12 @@ import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import useBreakpointDetect from '../../hooks/useBreakpointDetect';
-import AnchorHeader from '../common/AnchorHeader';
-import ErrorBoundary from '../common/ErrorBoundary';
+import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
+import AnchorHeader from '../../common/AnchorHeader';
 import styles from './Readme.module.css';
 
 interface Props {
-  packageName: string;
-  markdownContent: string;
+  readme: string;
   scrollIntoView: (id?: string) => void;
 }
 
@@ -133,7 +131,7 @@ const Readme = (props: Props) => {
     return <blockquote className={`text-muted ${styles.quote}`}>{data.children}</blockquote>;
   };
 
-  const Heading: React.ElementType = (data) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
+  const Heading: React.ElementType = (data: any) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
 
   const isElementInView = (id: string) => {
     try {
@@ -144,56 +142,31 @@ const Readme = (props: Props) => {
     }
   };
 
-  const checkReadme = (): string => {
-    let title = '';
-
-    const hasTitle = (): boolean => {
-      if (props.markdownContent.startsWith('#')) return true;
-
-      let hasTitle = false;
-      const mdContent = props.markdownContent.split('\n');
-      if (mdContent.length > 1) {
-        const secondLine = mdContent[1];
-        if (secondLine.includes('===') || secondLine.includes('---')) {
-          hasTitle = true;
-        }
-      }
-      return hasTitle;
-    };
-    if (!hasTitle()) {
-      title = `# ${props.packageName}\n`;
-    }
-    return `${title}${props.markdownContent}`;
-  };
-
-  let readme = checkReadme();
-
   return (
-    <ErrorBoundary
-      className="d-table-cell overflow-hidden"
-      message="Something went wrong rendering the README file of this package."
-    >
-      <span data-testid="readme">
-        <ReactMarkdown
-          className={`mt-3 mb-5 position-relative ${styles.md}`}
-          children={readme}
-          linkTarget="_blank"
-          skipHtml
-          renderers={{
-            code: Code,
-            image: Image,
-            link: Link,
-            imageReference: Image,
-            linkReference: Link,
-            table: Table,
-            heading: Heading,
-            paragraph: Paragraph,
-            blockquote: Blockquote,
-          }}
-        />
-      </span>
-    </ErrorBoundary>
+    <ReactMarkdown
+      className={`mt-3 mb-5 position-relative ${styles.md}`}
+      children={props.readme}
+      linkTarget="_blank"
+      skipHtml
+      renderers={{
+        code: Code,
+        image: Image,
+        link: Link,
+        imageReference: Image,
+        linkReference: Link,
+        table: Table,
+        heading: Heading,
+        paragraph: Paragraph,
+        blockquote: Blockquote,
+      }}
+    />
   );
 };
 
-export default React.memo(Readme);
+export default React.memo(Readme, (prevProps: Props, nextProps: Props) => {
+  // Only refreshes when readme changes
+  if (prevProps.readme !== nextProps.readme) {
+    return false;
+  }
+  return true;
+});

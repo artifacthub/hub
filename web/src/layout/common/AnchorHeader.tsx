@@ -2,6 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { GoLink } from 'react-icons/go';
 
+import getAnchorValue from '../../utils/getAnchorValue';
 import history from '../../utils/history';
 import styles from './AnchorHeader.module.css';
 
@@ -20,18 +21,13 @@ const AnchorHeader: React.ElementType = (props: Props) => {
     : undefined;
   if (isUndefined(value)) return null;
 
-  const anchor = value
-    .trim()
-    .toLowerCase()
-    .replace(/[^\w\- ]+/g, ' ')
-    .replace(/\s+/g, '-')
-    .replace(/-+$/, '');
-
+  const anchor = getAnchorValue(value);
   const Tag = `h${props.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
   return (
     <span className={styles.header}>
-      <Tag id={anchor} className={`position-relative anchorHeader ${styles.headingWrapper}`}>
+      <Tag className={`position-relative anchorHeader ${styles.headingWrapper}`}>
+        <div data-testid="anchor" className={`position-absolute ${styles.headerAnchor}`} id={anchor} />
         <a
           data-testid="anchorHeaderLink"
           href={`${history.location.pathname}#${anchor}`}

@@ -32,6 +32,10 @@
   font-size: 1rem;
 }
 
+.headerAnchor {
+  top: -10px;
+}
+
 .headingLink {
   float: left;
   margin-left: -35px;

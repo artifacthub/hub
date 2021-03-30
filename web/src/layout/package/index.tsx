@@ -51,7 +51,7 @@ import Details from './Details';
 import InstallationModal from './installation/Modal';
 import ModalHeader from './ModalHeader';
 import styles from './PackageView.module.css';
-import Readme from './Readme';
+import ReadmeWrapper from './readme';
 import RecommendedPackages from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
 import ResourcesList from './ResourcesList';
@@ -86,6 +86,7 @@ const PackageView = (props: Props) => {
     props.searchUrlReferer || {};
   const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
   const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
+  const [currentHash, setCurrentHash] = useState<string | undefined>(props.hash);
 
   useScrollRestorationFix();
 
@@ -111,6 +112,9 @@ const PackageView = (props: Props) => {
       }/${detailPkg.repository.name}`;
       updateMetaIndex(metaTitle, detailPkg.description);
       setDetail(detailPkg);
+      if (currentHash) {
+        setCurrentHash(undefined);
+      }
       if (isUndefined(activeChannel) && detailPkg.repository.kind === RepositoryKind.OLM) {
         if (detailPkg.defaultChannel) {
           setActiveChannel(detailPkg.defaultChannel);
@@ -291,19 +295,44 @@ const PackageView = (props: Props) => {
     </>
   );
 
+  useEffect(() => {
+    if (props.hash !== currentHash) {
+      setCurrentHash(props.hash);
+      if (isUndefined(props.hash) || props.hash === '') {
+        window.scrollTo(0, 0);
+      } else {
+        scrollIntoView();
+      }
+    }
+  }, [props.hash]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   const scrollIntoView = useCallback(
     (id?: string) => {
       const elId = id || props.hash;
-      if (!elId) return null;
+      if (isUndefined(elId) || elId === '') return;
 
       try {
         const element = document.querySelector(elId);
         if (element) {
           element.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
-          if (id) {
+
+          if (isUndefined(id)) {
             history.replace({
               pathname: history.location.pathname,
               hash: elId,
+              state: {
+                searchUrlReferer: props.searchUrlReferer,
+                fromStarredPage: props.fromStarredPage,
+              },
+            });
+          } else if (props.hash !== elId) {
+            history.push({
+              pathname: history.location.pathname,
+              hash: elId,
+              state: {
+                searchUrlReferer: props.searchUrlReferer,
+                fromStarredPage: props.fromStarredPage,
+              },
             });
           }
         }
@@ -311,8 +340,118 @@ const PackageView = (props: Props) => {
         return;
       }
     },
-    [history, props.hash]
+    [props.hash, props.searchUrlReferer, props.fromStarredPage, history]
   );
+
+  const getAdditionalPkgContent = (): { content: JSX.Element; titles: string } | null => {
+    if (isNull(detail) || isUndefined(detail)) return null;
+    let additionalTitles = '';
+    const additionalContent = (
+      <>
+        {(() => {
+          switch (detail.repository.kind) {
+            case RepositoryKind.Falco:
+              let rules: string | FalcoRules | undefined = getFalcoRules();
+              if (!isUndefined(rules)) {
+                additionalTitles += '# Rules\n';
+              }
+              return (
+                <>
+                  {!isUndefined(rules) && (
+                    <div className={`mb-5 ${styles.codeWrapper}`}>
+                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Rules" />
+
+                      {(() => {
+                        switch (typeof rules) {
+                          case 'string':
+                            return (
+                              <div className="d-flex d-xxl-inline-block mw-100 position-relative">
+                                <BlockCodeButtons content={rules} filename={`${detail.normalizedName}-rules.yaml`} />
+                                <SyntaxHighlighter
+                                  language="yaml"
+                                  style={tomorrowNight}
+                                  customStyle={{ padding: '1.5rem' }}
+                                >
+                                  {rules}
+                                </SyntaxHighlighter>
+                              </div>
+                            );
+                          default:
+                            return (
+                              <ResourcesList
+                                resources={rules}
+                                normalizedName={detail.normalizedName}
+                                kind={detail.repository.kind}
+                              />
+                            );
+                        }
+                      })()}
+                    </div>
+                  )}
+                </>
+              );
+
+            case RepositoryKind.OPA:
+              let policies: OPAPolicies | undefined = getOPAPolicies();
+              if (!isUndefined(policies)) {
+                additionalTitles += '# Policies files\n';
+              }
+              return (
+                <>
+                  {!isUndefined(policies) && (
+                    <div className={`mb-5 ${styles.codeWrapper}`}>
+                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Policies files" />
+                      <ResourcesList
+                        resources={policies}
+                        normalizedName={detail.normalizedName}
+                        kind={detail.repository.kind}
+                      />
+                    </div>
+                  )}
+                </>
+              );
+
+            case RepositoryKind.Krew:
+              let manifest: string | undefined = getManifestRaw();
+              if (!isUndefined(manifest)) {
+                additionalTitles += '# Manifest\n';
+              }
+              return (
+                <>
+                  {!isUndefined(manifest) && (
+                    <div className={`mb-5 ${styles.codeWrapper}`}>
+                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Manifest" />
+
+                      <div className="d-flex d-xxl-inline-block mw-100 position-relative">
+                        <BlockCodeButtons content={manifest} filename={`${detail.normalizedName}-rules.yaml`} />
+                        <SyntaxHighlighter language="yaml" style={tomorrowNight} customStyle={{ padding: '1.5rem' }}>
+                          {manifest}
+                        </SyntaxHighlighter>
+                      </div>
+                    </div>
+                  )}
+                </>
+              );
+
+            case RepositoryKind.Helm:
+            case RepositoryKind.OLM:
+              const crds = getCRDsCards();
+              if (!isNull(crds)) {
+                additionalTitles += '# Custom Resource Definitions\n';
+              }
+              return crds;
+
+            default:
+              return null;
+          }
+        })()}
+      </>
+    );
+
+    return { content: additionalContent, titles: additionalTitles };
+  };
+
+  const additionalInfo = getAdditionalPkgContent();
 
   return (
     <>
@@ -642,107 +781,15 @@ const PackageView = (props: Props) => {
                             <NoData>No README file available for this package</NoData>
                           </div>
                         ) : (
-                          <Readme
+                          <ReadmeWrapper
                             packageName={detail.displayName || detail.name}
                             markdownContent={detail.readme}
                             scrollIntoView={scrollIntoView}
+                            additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}
                           />
                         )}
 
-                        {(() => {
-                          switch (detail.repository.kind) {
-                            case RepositoryKind.Falco:
-                              let rules: string | FalcoRules | undefined = getFalcoRules();
-                              return (
-                                <>
-                                  {!isUndefined(rules) && (
-                                    <div className={`mb-5 ${styles.codeWrapper}`}>
-                                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Rules" />
-
-                                      {(() => {
-                                        switch (typeof rules) {
-                                          case 'string':
-                                            return (
-                                              <div className="d-flex d-xxl-inline-block mw-100 position-relative">
-                                                <BlockCodeButtons
-                                                  content={rules}
-                                                  filename={`${detail.normalizedName}-rules.yaml`}
-                                                />
-                                                <SyntaxHighlighter
-                                                  language="yaml"
-                                                  style={tomorrowNight}
-                                                  customStyle={{ padding: '1.5rem' }}
-                                                >
-                                                  {rules}
-                                                </SyntaxHighlighter>
-                                              </div>
-                                            );
-                                          default:
-                                            return (
-                                              <ResourcesList
-                                                resources={rules}
-                                                normalizedName={detail.normalizedName}
-                                                kind={detail.repository.kind}
-                                              />
-                                            );
-                                        }
-                                      })()}
-                                    </div>
-                                  )}
-                                </>
-                              );
-
-                            case RepositoryKind.OPA:
-                              let policies: OPAPolicies | undefined = getOPAPolicies();
-                              return (
-                                <>
-                                  {!isUndefined(policies) && (
-                                    <div className={`mb-5 ${styles.codeWrapper}`}>
-                                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Policies files" />
-                                      <ResourcesList
-                                        resources={policies}
-                                        normalizedName={detail.normalizedName}
-                                        kind={detail.repository.kind}
-                                      />
-                                    </div>
-                                  )}
-                                </>
-                              );
-
-                            case RepositoryKind.Krew:
-                              let manifest: string | undefined = getManifestRaw();
-                              return (
-                                <>
-                                  {!isUndefined(manifest) && (
-                                    <div className={`mb-5 ${styles.codeWrapper}`}>
-                                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Manifest" />
-
-                                      <div className="d-flex d-xxl-inline-block mw-100 position-relative">
-                                        <BlockCodeButtons
-                                          content={manifest}
-                                          filename={`${detail.normalizedName}-rules.yaml`}
-                                        />
-                                        <SyntaxHighlighter
-                                          language="yaml"
-                                          style={tomorrowNight}
-                                          customStyle={{ padding: '1.5rem' }}
-                                        >
-                                          {manifest}
-                                        </SyntaxHighlighter>
-                                      </div>
-                                    </div>
-                                  )}
-                                </>
-                              );
-
-                            case RepositoryKind.Helm:
-                            case RepositoryKind.OLM:
-                              return getCRDsCards();
-
-                            default:
-                              return null;
-                          }
-                        })()}
+                        {!isNull(additionalInfo) && <>{additionalInfo.content}</>}
                       </div>
                     </>
                   )}

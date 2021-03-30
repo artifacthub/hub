@@ -60,10 +60,11 @@ describe('AnchorHeader', () => {
   for (let i = 0; i < tests.length; i++) {
     it('renders proper id and href from title', () => {
       const { getByTestId, getByText } = render(<AnchorHeader {...defaultProps} title={tests[i].title} />);
-      const header = getByText(new RegExp(tests[i].title, 'i'));
+      expect(getByText(new RegExp(tests[i].title, 'i'))).toBeInTheDocument();
       const link = getByTestId('anchorHeaderLink');
-      expect(header).toHaveProperty('id', tests[i].id);
       expect(link).toHaveProperty('href', `http://localhost/#${tests[i].id}`);
+      const anchor = getByTestId('anchor');
+      expect(anchor).toHaveProperty('id', tests[i].id);
     });
   }
 });
