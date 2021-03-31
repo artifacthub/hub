@@ -32,8 +32,9 @@
   font-size: 1rem;
 }
 
+/* Solve issue with sticky nav in pkg detail page */
 .headerAnchor {
-  top: -10px;
+  top: -80px;
 }
 
 .headingLink {

@@ -42,6 +42,19 @@
   font-size: 0.5rem !important;
 }
 
+@media (min-width: 768px) {
+  .navbar:not(.homeNavbar) {
+    position: sticky !important;
+    top: 0;
+    z-index: 1071;
+  }
+
+  :global(.noScroll-modal) .navbar:not(.homeNavbar),
+  :global(.noScroll-sidebar) .navbar:not(.homeNavbar) {
+    z-index: 1;
+  }
+}
+
 @media (max-width: 767.98px) {
   .mobileWrapper {
     width: 100%;
