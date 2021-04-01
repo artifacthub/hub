@@ -58,9 +58,10 @@ describe('APIKeyModal - API keys section', () => {
   describe('Add API key', () => {
     it('calls add API key', async () => {
       mocked(API).addAPIKey.mockResolvedValue({
-        key: '1276576',
+        secret: '1276576',
+        apiKeyId: 'id',
       });
-      const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+      const { getByTestId, getByText, getAllByRole } = render(<Modal {...defaultProps} />);
 
       expect(getByText('Add API key')).toBeInTheDocument();
       expect(getByText('Add')).toBeInTheDocument();
@@ -74,16 +75,21 @@ describe('APIKeyModal - API keys section', () => {
 
       expect(onSuccessMock).toHaveBeenCalledTimes(1);
 
-      expect(getByText('Key')).toBeInTheDocument();
+      expect(getByText('API-KEY-ID')).toBeInTheDocument();
+      expect(getByText('API-KEY-SECRET')).toBeInTheDocument();
       expect(
         getByText(
-          /This is the key you will need to provide when making requests to the API. Please, copy and store it in a safe place./i
+          /These are the credentials you will need to provide when making requests to the API. Please, copy and store them in a safe place./i
         )
       ).toBeInTheDocument();
-      expect(getByText('You will not be able to see it again once you close this window.')).toBeInTheDocument();
+      expect(getByText('You will not be able to see the secret again when you close this window.')).toBeInTheDocument();
       expect(getByText('Important:')).toBeInTheDocument();
       expect(getByText(/the API key you've just generated can be used to perform/i)).toBeInTheDocument();
       expect(getByText('Close')).toBeInTheDocument();
+
+      const btns = getAllByRole('button');
+      expect(btns[3]).toHaveTextContent('API docs');
+      expect(btns[3]).toHaveAttribute('href', 'https://artifacthub.github.io/hub/api');
     });
 
     it('displays default Api error', async () => {

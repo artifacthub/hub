@@ -46,7 +46,7 @@ select tables_are(array[
 select columns_are('api_key', array[
     'api_key_id',
     'name',
-    'key',
+    'secret',
     'user_id',
     'created_at'
 ]);
@@ -260,8 +260,7 @@ select columns_are('webhook__package', array[
 
 -- Check tables have expected indexes
 select indexes_are('api_key', array[
-    'api_key_pkey',
-    'api_key_user_id_idx'
+    'api_key_pkey'
 ]);
 select indexes_are('email_verification_code', array[
     'email_verification_code_pkey',

@@ -21,7 +21,7 @@ const (
 	checkUserAliasAvailDBQ       = `select check_user_alias_availability($1::text)`
 	checkUserCredsDBQ            = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true`
 	deleteSessionDBQ             = `delete from session where session_id = $1`
-	getAPIKeyUserIDDBQ           = `select user_id from api_key where key = $1`
+	getAPIKeyInfoDBQ             = `select user_id, secret from api_key where api_key_id = $1`
 	getSessionDBQ                = `select user_id, floor(extract(epoch from created_at)) from session where session_id = $1`
 	getUserIDDBQ                 = `select user_id from "user" where email = $1`
 	getUserPasswordDBQ           = `select password from "user" where user_id = $1 and password is not null`
@@ -67,21 +67,28 @@ func NewManager(db hub.DB, es hub.EmailSender) *Manager {
 }
 
 // CheckAPIKey checks if the api key provided is valid.
-func (m *Manager) CheckAPIKey(ctx context.Context, key []byte) (*hub.CheckAPIKeyOutput, error) {
+func (m *Manager) CheckAPIKey(ctx context.Context, apiKeyID, apiKeySecret string) (*hub.CheckAPIKeyOutput, error) {
 	// Validate input
-	if len(key) == 0 {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "key not provided")
+	if apiKeyID == "" || apiKeySecret == "" {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "api key id or secret not provided")
 	}
 
-	// Get key's user id from database
-	var userID string
-	err := m.db.QueryRow(ctx, getAPIKeyUserIDDBQ, key).Scan(&userID)
+	// Get key's user id and secret from database
+	var userID, apiKeySecretHashed string
+	err := m.db.QueryRow(ctx, getAPIKeyInfoDBQ, apiKeyID).Scan(&userID, &apiKeySecretHashed)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return &hub.CheckAPIKeyOutput{Valid: false}, nil
 		}
 		return nil, err
 	}
+
+	// Check if the secret provided is valid
+	err = bcrypt.CompareHashAndPassword([]byte(apiKeySecretHashed), []byte(apiKeySecret))
+	if err != nil {
+		return &hub.CheckAPIKeyOutput{Valid: false}, nil
+	}
+
 	return &hub.CheckAPIKeyOutput{
 		Valid:  true,
 		UserID: userID,

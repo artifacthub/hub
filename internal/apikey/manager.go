@@ -42,9 +42,7 @@ func (m *Manager) Add(ctx context.Context, ak *hub.APIKey) ([]byte, error) {
 
 	// Add api key to the database
 	akJSON, _ := json.Marshal(ak)
-	var key []byte
-	err := m.db.QueryRow(ctx, addAPIKeyDBQ, akJSON).Scan(&key)
-	return key, err
+	return util.DBQueryJSON(ctx, m.db, addAPIKeyDBQ, akJSON)
 }
 
 // Delete deletes the provided api key from the database.

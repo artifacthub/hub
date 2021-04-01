@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(1);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -15,14 +15,9 @@ select add_api_key('
     "name": "apikey1",
     "user_id": "00000000-0000-0000-0000-000000000001"
 }
-'::jsonb) as apikey \gset
+'::jsonb);
 
 -- Check if api_key was added successfully
-select is(
-    octet_length(:'apikey'::bytea),
-    32,
-    'Key returned should have 32 bytes'
-);
 select results_eq(
     $$
         select

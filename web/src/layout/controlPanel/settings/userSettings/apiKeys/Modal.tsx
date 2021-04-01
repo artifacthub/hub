@@ -10,6 +10,7 @@ import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { API } from '../../../../../api';
 import { APIKey, APIKeyCode, ErrorKind, RefInputField } from '../../../../../types';
 import ButtonCopyToClipboard from '../../../../common/ButtonCopyToClipboard';
+import ExternalLink from '../../../../common/ExternalLink';
 import InputField from '../../../../common/InputField';
 import Modal from '../../../../common/Modal';
 import SmallTitle from '../../../../common/SmallTitle';
@@ -181,9 +182,9 @@ const APIKeyModal = (props: Props) => {
         {apiKeyCode ? (
           <>
             <div className="d-flex justify-content-between mb-2">
-              <SmallTitle text="Key" />
+              <SmallTitle text="API-KEY-ID" />
               <div>
-                <ButtonCopyToClipboard text={apiKeyCode.key} />
+                <ButtonCopyToClipboard text={apiKeyCode.apiKeyId} />
               </div>
             </div>
 
@@ -194,15 +195,37 @@ const APIKeyModal = (props: Props) => {
                 backgroundColor: 'var(--color-1-10)',
               }}
             >
-              {apiKeyCode.key}
+              {apiKeyCode.apiKeyId}
+            </SyntaxHighlighter>
+
+            <div className="d-flex justify-content-between mb-2">
+              <SmallTitle text="API-KEY-SECRET" />
+              <div>
+                <ButtonCopyToClipboard text={apiKeyCode.secret} />
+              </div>
+            </div>
+
+            <SyntaxHighlighter
+              language="bash"
+              style={docco}
+              customStyle={{
+                backgroundColor: 'var(--color-1-10)',
+              }}
+            >
+              {apiKeyCode.secret}
             </SyntaxHighlighter>
 
             <small className="text-muted">
-              This is the key you will need to provide when making requests to the API. Please, copy and store it in a
-              safe place.{' '}
+              These are the credentials you will need to provide when making requests to the API. Please, copy and store
+              them in a safe place.{' '}
               <b>
-                <u>You will not be able to see it again once you close this window.</u>
-              </b>
+                <u>You will not be able to see the secret again when you close this window.</u>
+              </b>{' '}
+              For more information please see the authorize section in the{' '}
+              <ExternalLink className="text-muted" href="https://artifacthub.github.io/hub/api">
+                <u>API docs</u>
+              </ExternalLink>
+              .
             </small>
 
             <div className={`alert alert-warning mt-4 mb-2 ${styles.alert}`}>

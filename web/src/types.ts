@@ -411,7 +411,8 @@ export interface APIKey {
 }
 
 export interface APIKeyCode {
-  key: string;
+  secret: string;
+  apiKeyId: string;
 }
 
 export interface TsQuery {

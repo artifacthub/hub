@@ -35,8 +35,12 @@ import (
 )
 
 const (
-	// APIKeyHeader represents the header used to provide an API key.
-	APIKeyHeader = "X-API-KEY"
+	// APIKeyIDHeader represents the header used to provide an API key ID.
+	APIKeyIDHeader = "X-API-KEY-ID"
+
+	// APIKeySecretHeader represents the header used to provide an API key
+	// secret.
+	APIKeySecretHeader = "X-API-KEY-SECRET" // #nosec
 
 	sessionCookieName    = "sid"
 	oauthStateCookieName = "oas"
@@ -633,19 +637,14 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var userID string
 
-		// Use API key based authentication if API key is provided
-		if r.Header.Get(APIKeyHeader) != "" {
-			// Extract API key from header
-			keyB64 := r.Header.Get(APIKeyHeader)
-			key, err := base64.StdEncoding.DecodeString(keyB64)
-			if err != nil {
-				h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("key decoding failed")
-				helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
-				return
-			}
+		// Extract API key id and secret from header
+		apiKeyID := r.Header.Get(APIKeyIDHeader)
+		apiKeySecret := r.Header.Get(APIKeySecretHeader)
 
+		// Use API key based authentication if API key is provided
+		if apiKeyID != "" && apiKeySecret != "" {
 			// Check the API key provided is valid
-			checkAPIKeyOutput, err := h.userManager.CheckAPIKey(r.Context(), key)
+			checkAPIKeyOutput, err := h.userManager.CheckAPIKey(r.Context(), apiKeyID, apiKeySecret)
 			if err != nil {
 				h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("checkAPIKey failed")
 				helpers.RenderErrorWithCodeJSON(w, nil, http.StatusInternalServerError)
