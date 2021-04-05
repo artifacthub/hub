@@ -1,9 +1,7 @@
 package apikey
 
 import (
-	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
@@ -36,14 +34,12 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	key, err := h.apiKeyManager.Add(r.Context(), ak)
+	dataJSON, err := h.apiKeyManager.Add(r.Context(), ak)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	keyB64 := base64.StdEncoding.EncodeToString(key)
-	dataJSON := []byte(fmt.Sprintf(`{"key": "%s"}`, keyB64))
 	helpers.RenderJSON(w, dataJSON, 0, http.StatusCreated)
 }
 

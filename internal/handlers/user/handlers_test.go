@@ -2,13 +2,13 @@ package user
 
 import (
 	"context"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -753,31 +753,51 @@ func TestRequireLogin(t *testing.T) {
 	sessionID := []byte("sessionID")
 
 	t.Run("api key based authentication", func(t *testing.T) {
-		key := []byte("key")
-		keyB64 := base64.StdEncoding.EncodeToString(key)
+		apiKeyID := "keyID"
+		apiKeySecret := "secret"
 
-		t.Run("invalid api key provided", func(t *testing.T) {
-			t.Parallel()
-			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/", nil)
-			r.Header.Add(APIKeyHeader, "invalidB64")
+		t.Run("no api key id or secret provided", func(t *testing.T) {
+			testCases := []struct {
+				apiKeyID     string
+				apiKeySecret string
+			}{
+				{
+					"",
+					"secret",
+				},
+				{
+					"key",
+					"",
+				},
+			}
+			for i, tc := range testCases {
+				tc := tc
+				t.Run(strconv.Itoa(i), func(t *testing.T) {
+					t.Parallel()
+					w := httptest.NewRecorder()
+					r, _ := http.NewRequest("GET", "/", nil)
+					r.Header.Add(APIKeyIDHeader, tc.apiKeyID)
+					r.Header.Add(APIKeySecretHeader, tc.apiKeySecret)
 
-			hw := newHandlersWrapper()
-			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-			resp := w.Result()
-			defer resp.Body.Close()
+					hw := newHandlersWrapper()
+					hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+					resp := w.Result()
+					defer resp.Body.Close()
 
-			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+					assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+				})
+			}
 		})
 
 		t.Run("error checking api key", func(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
-			r.Header.Add(APIKeyHeader, keyB64)
+			r.Header.Add(APIKeyIDHeader, apiKeyID)
+			r.Header.Add(APIKeySecretHeader, apiKeySecret)
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), key).Return(nil, tests.ErrFakeDB)
+			hw.um.On("CheckAPIKey", r.Context(), apiKeyID, apiKeySecret).Return(nil, tests.ErrFakeDB)
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -790,10 +810,11 @@ func TestRequireLogin(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
-			r.Header.Add(APIKeyHeader, keyB64)
+			r.Header.Add(APIKeyIDHeader, apiKeyID)
+			r.Header.Add(APIKeySecretHeader, apiKeySecret)
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), key).
+			hw.um.On("CheckAPIKey", r.Context(), apiKeyID, apiKeySecret).
 				Return(&hub.CheckAPIKeyOutput{UserID: "", Valid: false}, nil)
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
@@ -807,10 +828,11 @@ func TestRequireLogin(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
-			r.Header.Add(APIKeyHeader, keyB64)
+			r.Header.Add(APIKeyIDHeader, apiKeyID)
+			r.Header.Add(APIKeySecretHeader, apiKeySecret)
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), key).
+			hw.um.On("CheckAPIKey", r.Context(), apiKeyID, apiKeySecret).
 				Return(&hub.CheckAPIKeyOutput{UserID: "userID", Valid: true}, nil)
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()

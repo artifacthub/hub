@@ -14,8 +14,8 @@ type ManagerMock struct {
 }
 
 // CheckAPIKey implements the UserManager interface.
-func (m *ManagerMock) CheckAPIKey(ctx context.Context, key []byte) (*hub.CheckAPIKeyOutput, error) {
-	args := m.Called(ctx, key)
+func (m *ManagerMock) CheckAPIKey(ctx context.Context, apiKeyID, apiKeySecret string) (*hub.CheckAPIKeyOutput, error) {
+	args := m.Called(ctx, apiKeyID, apiKeySecret)
 	data, _ := args.Get(0).(*hub.CheckAPIKeyOutput)
 	return data, args.Error(1)
 }

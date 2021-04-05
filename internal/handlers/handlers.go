@@ -417,7 +417,7 @@ func (h *Handlers) MetricsCollector(next http.Handler) http.Handler {
 func csrfSkipper(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Skip checks for requests authenticated using API keys
-		if r.Header.Get(user.APIKeyHeader) != "" {
+		if r.Header.Get(user.APIKeyIDHeader) != "" && r.Header.Get(user.APIKeySecretHeader) != "" {
 			r = csrf.UnsafeSkipCheck(r)
 		}
 		// Skip checks for requests using GET or HEAD methods, except requests

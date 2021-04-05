@@ -3,9 +3,7 @@ package apikey
 import (
 	"bytes"
 	"context"
-	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -102,7 +100,7 @@ func TestAdd(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.am.On("Add", r.Context(), ak).Return([]byte("key"), nil)
+		hw.am.On("Add", r.Context(), ak).Return([]byte("keyInfoJSON"), nil)
 		hw.h.Add(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -112,9 +110,7 @@ func TestAdd(t *testing.T) {
 		assert.Equal(t, http.StatusCreated, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
-		keyB64 := base64.StdEncoding.EncodeToString([]byte("key"))
-		expectedData := []byte(fmt.Sprintf(`{"key": "%s"}`, keyB64))
-		assert.Equal(t, expectedData, data)
+		assert.Equal(t, []byte("keyInfoJSON"), data)
 		hw.am.AssertExpectations(t)
 	})
 }

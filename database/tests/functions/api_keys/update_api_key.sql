@@ -9,8 +9,8 @@ select plan(1);
 -- Seed some data
 insert into "user" (user_id, alias, email)
 values (:'user1ID', 'user1', 'user1@email.com');
-insert into api_key (api_key_id, name, user_id)
-values (:'apikey1ID', 'apikey1', :'user1ID');
+insert into api_key (api_key_id, name, secret, user_id)
+values (:'apikey1ID', 'apikey1', 'hashedSecret', :'user1ID');
 
 -- Update api key
 select update_api_key('

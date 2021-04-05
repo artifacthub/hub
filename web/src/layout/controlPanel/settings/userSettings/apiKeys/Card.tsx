@@ -9,6 +9,7 @@ import { API } from '../../../../../api';
 import useOutsideClick from '../../../../../hooks/useOutsideClick';
 import { APIKey, ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
+import ButtonCopyToClipboard from '../../../../common/ButtonCopyToClipboard';
 import Modal from '../../../../common/Modal';
 import styles from './Card.module.css';
 
@@ -163,7 +164,22 @@ const APIKeyCard = (props: Props) => {
               </button>
             </div>
           </div>
-          <div className="mt-2 text-truncate">
+
+          <div className="mt-2 d-flex flex-row align-items-baseline">
+            <div className="text-truncate">
+              <small className="text-muted text-uppercase mr-1">API-KEY-ID: </small>
+              <small>{props.apiKey.apiKeyId}</small>
+            </div>
+            <div className={`ml-1 ${styles.copyBtn}`}>
+              <div className={`position-absolute ${styles.copyBtnWrapper}`}>
+                <ButtonCopyToClipboard
+                  text={props.apiKey.apiKeyId!}
+                  className="btn-link border-0 text-secondary font-weight-bold"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="text-truncate">
             <small className="text-muted text-uppercase mr-1">Created at: </small>
             <small>{moment(props.apiKey.createdAt! * 1000).format('YYYY/MM/DD HH:mm:ss (Z)')}</small>
           </div>

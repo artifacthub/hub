@@ -46,10 +46,10 @@ func TestAdd(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
 
-				dataJSON, err := m.Add(ctx, tc.ak)
+				keyInfoJSON, err := m.Add(ctx, tc.ak)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
-				assert.Nil(t, dataJSON)
+				assert.Empty(t, keyInfoJSON)
 			})
 		}
 	})
@@ -65,9 +65,9 @@ func TestAdd(t *testing.T) {
 		db.On("QueryRow", ctx, addAPIKeyDBQ, akJSON).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.Add(ctx, ak)
+		keyInfoJSON, err := m.Add(ctx, ak)
 		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
+		assert.Nil(t, keyInfoJSON)
 		db.AssertExpectations(t)
 	})
 
@@ -79,12 +79,12 @@ func TestAdd(t *testing.T) {
 		}
 		akJSON, _ := json.Marshal(ak)
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, addAPIKeyDBQ, akJSON).Return([]byte("key"), nil)
+		db.On("QueryRow", ctx, addAPIKeyDBQ, akJSON).Return([]byte("keyInfoJSON"), nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.Add(ctx, ak)
+		keyInfoJSON, err := m.Add(ctx, ak)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("key"), dataJSON)
+		assert.Equal(t, []byte("keyInfoJSON"), keyInfoJSON)
 		db.AssertExpectations(t)
 	})
 }

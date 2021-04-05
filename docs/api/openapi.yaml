@@ -107,8 +107,8 @@ paths:
       tags:
         - Users
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get user's profile
       responses:
         "200":
@@ -127,7 +127,8 @@ paths:
       tags:
         - Users
       security:
-        - ApiKeyAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Update user's profile
       requestBody:
         description: ""
@@ -151,8 +152,8 @@ paths:
       tags:
         - Users
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Update user's password
       requestBody:
         description: ""
@@ -268,8 +269,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Register new organization
       requestBody:
         description: ""
@@ -294,8 +295,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get organizations the user belongs to
       responses:
         "200":
@@ -334,8 +335,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Updates organization profile
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -363,8 +364,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Delete organization
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -384,8 +385,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get organization's authorization policy
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -408,8 +409,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Update organization's authorization policy
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -438,8 +439,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get organization members
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -465,8 +466,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Add a new member to the organization
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -486,8 +487,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Delete a member from the organization
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -508,8 +509,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Confirm user's membership to an organization
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -527,8 +528,8 @@ paths:
       tags:
         - Organizations
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: >-
         Get actions which user is allowed to perform in the provided
         organization
@@ -556,8 +557,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get all repositories
       responses:
         "200":
@@ -579,8 +580,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get all available repositories of the provided kind
       parameters:
         - $ref: "#/components/parameters/RepoKindParam"
@@ -604,8 +605,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get user's repositories
       responses:
         "200":
@@ -626,8 +627,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Add user's repository
       requestBody:
         description: ""
@@ -651,8 +652,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Update user's repository
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
@@ -679,8 +680,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Delete user's repository
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
@@ -700,8 +701,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Transfer user's repository ownership to an organization
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
@@ -722,8 +723,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Claim the ownership of a given repository
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
@@ -744,8 +745,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get organization's repositories
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -768,8 +769,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Add organization's repository
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -797,8 +798,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Update organization's repository
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -826,8 +827,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Delete organization's repository
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -848,8 +849,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Transfer organization's repository to a different owner
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -871,8 +872,8 @@ paths:
       tags:
         - Repositories
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Claim the ownership of a given repository
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -1108,8 +1109,8 @@ paths:
       tags:
         - Packages
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get packages starred by user
       responses:
         "200":
@@ -1497,8 +1498,8 @@ paths:
       tags:
         - Packages
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Toggle package's star
       parameters:
         - $ref: "#/components/parameters/PackageIDParam"
@@ -1653,8 +1654,8 @@ paths:
       tags:
         - Subscriptions
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get user's subscriptions
       responses:
         "200":
@@ -1706,8 +1707,8 @@ paths:
       tags:
         - Subscriptions
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Add subscription
       requestBody:
         $ref: "#/components/requestBodies/SubscriptionBody"
@@ -1724,8 +1725,8 @@ paths:
       tags:
         - Subscriptions
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Delete subscription
       parameters:
         - $ref: "#/components/parameters/PackageIDParam"
@@ -1744,8 +1745,8 @@ paths:
       tags:
         - Subscriptions
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get user's subscriptions for the given package
       parameters:
         - $ref: "#/components/parameters/PackageIDParam"
@@ -1775,8 +1776,8 @@ paths:
       tags:
         - Subscriptions
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get user's opt-out entries
       responses:
         "200":
@@ -1813,8 +1814,8 @@ paths:
       tags:
         - Subscriptions
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Add opt-out entry
       requestBody:
         $ref: "#/components/requestBodies/OptOutBody"
@@ -1832,8 +1833,8 @@ paths:
       tags:
         - Subscriptions
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Delete opt-out entry
       parameters:
         - $ref: "#/components/parameters/OptOutIDParam"
@@ -1851,8 +1852,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get user's webhooks
       responses:
         "200":
@@ -1873,8 +1874,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Add user's webhook
       requestBody:
         $ref: "#/components/requestBodies/WebhookBody"
@@ -1894,8 +1895,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get user's webhook
       parameters:
         - $ref: "#/components/parameters/WebhookIDParam"
@@ -1916,8 +1917,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Update user's webhook
       parameters:
         - $ref: "#/components/parameters/WebhookIDParam"
@@ -1938,8 +1939,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Delete user's webhook
       parameters:
         - $ref: "#/components/parameters/WebhookIDParam"
@@ -1957,8 +1958,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get organization's webhooks
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -1981,8 +1982,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Add organization's webhook
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -2006,8 +2007,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Get organization's webhook
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -2031,8 +2032,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Update organization's webhook
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -2056,8 +2057,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Delete organization's webhook
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
@@ -2078,8 +2079,8 @@ paths:
       tags:
         - Webhooks
       security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
+        - ApiKeyId: []
+          ApiKeySecret: []
       summary: Trigger webhook test
       requestBody:
         content:
@@ -2409,14 +2410,14 @@ paths:
           $ref: "#/components/responses/InternalServerError"
 components:
   securitySchemes:
-    ApiKeyAuth:
+    ApiKeyId:
       type: apiKey
       in: header
-      name: X-API-KEY
-    CookieAuth:
+      name: X-API-KEY-ID
+    ApiKeySecret:
       type: apiKey
-      in: cookie
-      name: sid
+      in: header
+      name: X-API-KEY-SECRET
   schemas:
     AuthorizerAction:
       type: string

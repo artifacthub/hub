@@ -21,16 +21,19 @@ func TestCheckAPIKey(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			errMsg string
-			key    []byte
+			errMsg       string
+			apiKeyID     string
+			apiKeySecret string
 		}{
 			{
-				"key not provided",
-				nil,
+				"api key id or secret not provided",
+				"",
+				"secret",
 			},
 			{
-				"key not provided",
-				[]byte(""),
+				"api key id or secret not provided",
+				"key",
+				"",
 			},
 		}
 		for _, tc := range testCases {
@@ -38,33 +41,33 @@ func TestCheckAPIKey(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil, nil)
-				_, err := m.CheckAPIKey(ctx, tc.key)
+				_, err := m.CheckAPIKey(ctx, tc.apiKeyID, tc.apiKeySecret)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
 	})
 
-	t.Run("key not found in database", func(t *testing.T) {
+	t.Run("key info not found in database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, []byte("key")).Return(nil, pgx.ErrNoRows)
+		db.On("QueryRow", ctx, getAPIKeyInfoDBQ, "keyID").Return(nil, pgx.ErrNoRows)
 		m := NewManager(db, nil)
 
-		output, err := m.CheckAPIKey(ctx, []byte("key"))
+		output, err := m.CheckAPIKey(ctx, "keyID", "secret")
 		assert.NoError(t, err)
 		assert.False(t, output.Valid)
 		assert.Empty(t, output.UserID)
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error getting key from database", func(t *testing.T) {
+	t.Run("error getting key info from database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, []byte("key")).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getAPIKeyInfoDBQ, "keyID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
-		output, err := m.CheckAPIKey(ctx, []byte("key"))
+		output, err := m.CheckAPIKey(ctx, "keyID", "secret")
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, output)
 		db.AssertExpectations(t)
@@ -73,10 +76,11 @@ func TestCheckAPIKey(t *testing.T) {
 	t.Run("valid key", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, []byte("key")).Return("userID", nil)
+		secretHashed, _ := bcrypt.GenerateFromPassword([]byte("secret"), bcrypt.DefaultCost)
+		db.On("QueryRow", ctx, getAPIKeyInfoDBQ, "keyID").Return([]interface{}{"userID", string(secretHashed)}, nil)
 		m := NewManager(db, nil)
 
-		output, err := m.CheckAPIKey(ctx, []byte("key"))
+		output, err := m.CheckAPIKey(ctx, "keyID", "secret")
 		assert.NoError(t, err)
 		assert.True(t, output.Valid)
 		assert.Equal(t, "userID", output.UserID)
