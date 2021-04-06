@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TOCEntry creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="dropdownItem dropdownItem"
+  >
+    <a
+      class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level1"
+      href="/#installing-the-chart"
+    >
+      Installing the Chart
+    </a>
+  </div>
+</DocumentFragment>
+`;

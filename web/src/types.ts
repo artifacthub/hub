@@ -626,3 +626,10 @@ export interface AHStats {
     runningTotal?: any[];
   };
 }
+
+export interface TOCEntryItem {
+  level: number;
+  title: string;
+  link: string;
+  children?: TOCEntryItem[];
+}

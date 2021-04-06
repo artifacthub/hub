@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TOCList creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      <div
+        class="dropdownItem dropdownItem"
+      >
+        <a
+          class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level0"
+          href="/#title-1"
+        >
+          Title 1
+        </a>
+      </div>
+      <div>
+        <div>
+          <div
+            class="dropdownItem dropdownItem"
+          >
+            <a
+              class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level1"
+              href="/#subtitle-1a"
+            >
+              Subtitle 1a
+            </a>
+          </div>
+          <div>
+            <div>
+              <div
+                class="dropdownItem dropdownItem"
+              >
+                <a
+                  class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level2"
+                  href="/#opt-1"
+                >
+                  Opt 1
+                </a>
+              </div>
+            </div>
+            <div>
+              <div
+                class="dropdownItem dropdownItem"
+              >
+                <a
+                  class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level2"
+                  href="/#opt-2"
+                >
+                  Opt 2
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="dropdownItem dropdownItem"
+          >
+            <a
+              class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level1"
+              href="/#subtitle-1b"
+            >
+              Subtitle 1b
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdownItem dropdownItem"
+      >
+        <a
+          class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level0"
+          href="/#title-2"
+        >
+          Title 2
+        </a>
+      </div>
+      <div>
+        <div>
+          <div
+            class="dropdownItem dropdownItem"
+          >
+            <a
+              class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level1"
+              href="/#subtitle-2"
+            >
+              Subtitle 2
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

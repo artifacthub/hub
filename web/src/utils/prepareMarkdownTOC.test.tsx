@@ -1,0 +1,336 @@
+import { TOCEntryItem } from '../types';
+import prepareMarkdownTOC from './prepareMarkdownTOC';
+
+interface Test {
+  input: string;
+  output: TOCEntryItem[];
+}
+
+const tests: Test[] = [
+  {
+    input: '',
+    output: [],
+  },
+  {
+    input: '\n# Title 1\n## Subtitle 1',
+    output: [
+      {
+        level: 1,
+        link: 'title-1',
+        title: 'Title 1',
+        children: [
+          {
+            level: 2,
+            link: 'subtitle-1',
+            title: 'Subtitle 1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    input: '\n# Title 1\n## Subtitle 1\n# Title 2',
+    output: [
+      {
+        level: 1,
+        link: 'title-1',
+        title: 'Title 1',
+        children: [
+          {
+            level: 2,
+            link: 'subtitle-1',
+            title: 'Subtitle 1',
+          },
+        ],
+      },
+      {
+        level: 1,
+        link: 'title-2',
+        title: 'Title 2',
+      },
+    ],
+  },
+  {
+    input: '\n# Title 1\n## Subtitle 1\n# Title 2\n## Subtitle 2',
+    output: [
+      {
+        level: 1,
+        link: 'title-1',
+        title: 'Title 1',
+        children: [
+          {
+            level: 2,
+            link: 'subtitle-1',
+            title: 'Subtitle 1',
+          },
+        ],
+      },
+      {
+        level: 1,
+        link: 'title-2',
+        title: 'Title 2',
+        children: [
+          {
+            level: 2,
+            link: 'subtitle-2',
+            title: 'Subtitle 2',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    input: '\n# Title 1\n### Subtitle 1\n### Subtitle 2',
+    output: [
+      {
+        level: 1,
+        link: 'title-1',
+        title: 'Title 1',
+        children: [
+          {
+            level: 3,
+            link: 'subtitle-1',
+            title: 'Subtitle 1',
+          },
+          {
+            level: 3,
+            link: 'subtitle-2',
+            title: 'Subtitle 2',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    input: '\n# Title 1\n### Opt 1\n## Subtitle 1',
+    output: [
+      {
+        level: 1,
+        link: 'title-1',
+        title: 'Title 1',
+        children: [
+          {
+            level: 3,
+            link: 'opt-1',
+            title: 'Opt 1',
+          },
+          {
+            level: 2,
+            link: 'subtitle-1',
+            title: 'Subtitle 1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    input: '\n# Title 1\n## Subtitle 1a\n### Opt 1\n### Opt 2\n## Subtitle 1b\n# Title 2\n## Subtitle 2',
+    output: [
+      {
+        level: 1,
+        link: 'title-1',
+        title: 'Title 1',
+        children: [
+          {
+            level: 2,
+            link: 'subtitle-1a',
+            title: 'Subtitle 1a',
+            children: [
+              {
+                level: 3,
+                link: 'opt-1',
+                title: 'Opt 1',
+              },
+              {
+                level: 3,
+                link: 'opt-2',
+                title: 'Opt 2',
+              },
+            ],
+          },
+          {
+            level: 2,
+            link: 'subtitle-1b',
+            title: 'Subtitle 1b',
+          },
+        ],
+      },
+      {
+        level: 1,
+        link: 'title-2',
+        title: 'Title 2',
+        children: [
+          {
+            level: 2,
+            link: 'subtitle-2',
+            title: 'Subtitle 2',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    input: 'Title 1\n====\nSubtitle 1\n----\n',
+    output: [
+      {
+        level: 1,
+        link: 'title-1',
+        title: 'Title 1',
+        children: [
+          {
+            level: 2,
+            link: 'subtitle-1',
+            title: 'Subtitle 1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    input: '\n# Title 1\n## `Subtitle 1`',
+    output: [
+      {
+        level: 1,
+        link: 'title-1',
+        title: 'Title 1',
+        children: [
+          {
+            level: 2,
+            link: '-subtitle-1',
+            title: 'Subtitle 1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    input:
+      '![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.0](https://img.shields.io/badge/AppVersion-2.2.0-informational?style=flat-square)\n\nA Helm chart for loki Mixin\n\n**Homepage:** <https://charts.portefaix.xyz>\n\n## Maintainers\n\n| Name | Email | Url |\n| ---- | ------ | --- |\n| nlamirault | nicolas.lamirault@gmail.com |  |\n\n## Source Code\n\n* <https://github.com/nlamirault/portefaix-hub/tree/master/charts/loki-mixin>\n\n## Values\n\n| Key | Type | Default | Description |\n|-----|------|---------|-------------|\n| additionalAnnotations | object | `{}` | Additional annotations to add to the Prometheus rules |\n| additionalLabels | object | `{}` | Additional labels to add to the Prometheus rules |\n| fullnameOverride | string | `""` | Provide a name to substitute for the full names of resources |\n\n----------------------------------------------\nAutogenerated from chart metadata using [helm-docs v1.4.0](https://github.com/norwoodj/helm-docs/releases/v1.4.0)\n',
+    output: [
+      {
+        level: 2,
+        link: 'maintainers',
+        title: 'Maintainers',
+      },
+      {
+        level: 2,
+        link: 'source-code',
+        title: 'Source Code',
+      },
+      {
+        level: 2,
+        link: 'values',
+        title: 'Values',
+      },
+    ],
+  },
+  {
+    input:
+      '\n\nApp Mesh Gateway Helm chart for Kubernetes. \n\n## Prerequisites\n\n* App Mesh CRDs\n* App Mesh Manager >= 1.0.0\n\n**Note** App Mesh Gateway is a release candidate and can be used by\nenabling App Mesh preview features (available only in us-west-2 region).\n\nTo enable the preview features:\n\n* When configuring IAM policies, use `appmesh-preview` as the service name instead of `appmesh`\n* Install the App Mesh CRDs with:\n```sh\nkubectl apply -k github.com/aws/eks-charts/stable/appmesh-controller//crds?ref=preview\n```\n* Install the App Mesh Controller chart from the preview branch\n* When configuring pods, add the following annotation so Envoy sidecars point to the preview as well:\n```yaml\nannotations:\n  appmesh.k8s.aws/preview: enabled\n```\n\n## Installing the Chart\n\nAdd the EKS repository to Helm:\n\n```sh\nhelm repo add eks https://aws.github.io/eks-charts\n```\n\nCreate a namespace with injection enabled:\n\n```sh\nkubectl create ns appmesh-ingress\nkubectl label namespace appmesh-ingress appmesh.k8s.aws/sidecarInjectorWebhook=enabled\n```\n\nDeploy the App Mesh Gateway in the `appmesh-ingress` namespace:\n\n```sh\nhelm upgrade -i appmesh-gateway eks/appmesh-gateway \\\n--namespace appmesh-ingress\n```\n\nFind the NLB address:\n\n```sh\nkubectl get svc appmesh-gateway -n appmesh-ingress\n```\n\nThe [configuration](#configuration) section lists the parameters that can be configured during installation.\n\n## Configure auto-scaling\n\nInstall the Horizontal Pod Autoscaler (HPA) metrics server:\n\n```sh\nhelm upgrade -i metrics-server stable/metrics-server \\\n--namespace kube-system \\\n--set args[0]=--kubelet-preferred-address-types=InternalIP\n```\n\nConfigure CPU requests for the gateway pods and enable HPA by setting an average CPU utilization per pod:\n\n```sh\nhelm upgrade -i appmesh-gateway eks/appmesh-gateway \\\n--namespace appmesh-ingress \\\n--set hpa.enabled=true \\\n--set hap.minReplicas=2 \\\n--set hap.maxReplicas=5 \\\n--set hap.averageUtilization=90 \\\n--set resources.requests.cpu=1000m\n```\n\n## Uninstalling the Chart\n\nTo uninstall/delete the `appmesh-gateway` deployment:\n\n```console\n$ helm delete appmesh-gateway -n appmesh-ingress\n```\n\nThe command removes all the Kubernetes components associated with the chart and deletes the release.\n\n## Configuration\n\nThe following tables lists the configurable parameters of the chart and their default values.\n\nParameter | Description | Default\n--- | --- | ---\n`image.repository` | image repository | `840364872350.dkr.ecr.us-west-2.amazonaws.com/aws-appmesh-envoy`\n`image.tag` | image tag | `<VERSION>`\n`image.pullPolicy` | image pull policy | `IfNotPresent`\n`skipImageOverride` | when enabled the App Mesh injector will not override the Envoy image | `false`\n`service.type` | service type  | `LoadBalancer`\n`service.port` | service port  | `80`\n`service.annotations` | service annotations | NLB load balancer type\n`service.externalTrafficPolicy` | when set to `Local` it preserves the client source IP  | `Cluster`\n`appmesh.gateway` | create a `VirtualGateway` object  | `true`\n`appmesh.preview` | enable App Mesh Preview (us-west-2 only)  | `false`\n`resources.requests/cpu` | pod CPU request | `100m`\n`resources.requests/memory` | pod memory request | `64Mi`\n`hpa.enabled` | enabled CPU based auto-scaling | `false`\n`hpa.minReplicas` | minimum number of replicas | `2`\n`hpa.maxReplicas` | maximum number of replicas | `5`\n`hpa.averageUtilization` | CPU average utilization percentage | `90`\n`hpa.enabled` | enabled CPU based auto-scaling | `false`\n`podAntiAffinity` | soft pod anti-affinity, one replica per node | `true`\n`podAnnotations` | annotations to add to each pod | `{}`\n`nodeSelector` | node labels for pod assignment | `{}`\n`tolerations` | list of node taints to tolerate | `[]`\n`rbac.pspEnabled` | If `true`, create and use a restricted pod security policy | `false`\n`serviceAccount.create` | If `true`, create a new service account | `true`\n`serviceAccount.name` | Service account to be used | None\n',
+    output: [
+      {
+        level: 2,
+        link: 'prerequisites',
+        title: 'Prerequisites',
+      },
+      {
+        level: 2,
+        link: 'installing-the-chart',
+        title: 'Installing the Chart',
+      },
+      {
+        level: 2,
+        link: 'configure-auto-scaling',
+        title: 'Configure auto-scaling',
+      },
+      {
+        level: 2,
+        link: 'uninstalling-the-chart',
+        title: 'Uninstalling the Chart',
+      },
+      {
+        level: 2,
+        link: 'configuration',
+        title: 'Configuration',
+      },
+    ],
+  },
+  {
+    input:
+      "\n\n[![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/minddocdev)](https://artifacthub.io/packages/search?repo=minddocdev)\n\nSingle sign-on for your Kubernetes services using Google OAuth (more providers are welcomed)\n\n- [Blogpost](https://tech.buzzfeed.com/unleashing-the-a6a1a5da39d6?gi=e6db395406ae)\n- [Quickstart guide](https://github.com/buzzfeed/sso/blob/master/docs/quickstart.md)\n- [SSO in Kubernetes with Google Auth](https://medium.com/@while1eq1/single-sign-on-for-internal-apps-in-kubernetes-using-google-oauth-sso-2386a34bc433)\n- [Repo](https://github.com/buzzfeed/sso)\n\nThis helm chart is heavily inspired in [Buzzfeed's example](https://github.com/buzzfeed/sso/tree/master/quickstart/kubernetes), and provides a way of protecting Kubernetes services that have no authentication layer globally from a single OAuth proxy.\n\nMany of the Kubernetes OAuth solutions require to run an extra container within the pod using [oauth2_proxy](https://github.com/bitly/oauth2_proxy), but the project seems to not be maintained anymore. The approach presented on this chart allows to have a global OAuth2 Proxy that can protect services even in different namespaces, thanks to [Kube DNS](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/).\n\nWe use this chart in production at [MindDoc](https://minddoc.de) for protecting endpoints that have no built-in authentication (or that would require to run inner containers), like `Kibana`, `Prometheus`, etc...\n\n## Introduction\n\nThis chart creates a SSO deployment on a [Kubernetes](http://kubernetes.io)\ncluster using the [Helm](https://helm.sh) package manager.\n\n## Prerequisites\n\n- Kubernetes 1.8with Beta APIs enabled\n- Kube DNS\n\n## Installing the Chart\n\nTo install the chart with the release name `my-release`:\n\n```bash\nhelm repo add minddoc https://minddocdev.github.io/charts\nhelm install --name my-release minddoc/buzzfeed-sso\n```\n\nThe command deploys SSO on the Kubernetes cluster using the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.\n\nThis chart has required variables, see [Configuration](#configuration).\n\n## Uninstalling the Chart\n\nTo uninstall/delete the `my-release` deployment:\n\n```bash\nhelm delete --purge my-release\n```\n\nThe command removes all the Kubernetes components associated with the chart and deletes the release.\n\n## Configuration\n\nThe following table lists the configurable parameters of the SSO chart and their default/required values.\n\nParameter | Description | Default\n--- | --- | ---\n`namespace` | namespace to use | `default`\n`emailDomain` | the sso email domain for authentication | REQUIRED\n`rootDomain` | the parent domain used for protecting your backends | REQUIRED\n`whitelistedEmails` | comma-seperated list of emails which should be whitelisted | OPTIONAL\n`cluster` | the cluster name for SSO | `dev`\n`auth.enabled` | enable auth component | `true`\n`auth.annotations` | extra annotations for auth pods | `{}`\n`auth.domain` | the auth domain used for OAuth callbacks | REQUIRED\n`auth.extraEnv` | extra auth env vars | `[]`\n`auth.replicaCount` | desired number of auth pods | `1`\n`auth.resources` | resource limits and requests for auth pods | `{ limits: { memory: \"256Mi\", cpu: \"200m\" }}`\n`auth.nodeSelector` | node selector logic for auth pods | `{}`\n`auth.tolerations` | resource tolerations for auth pods | `{}`\n`auth.affinity` | node affinity for auth pods | `{}`\n`auth.service.type` | type of auth service to create | `ClusterIP`\n`auth.service.port` | port for the http auth service | `80`\n`auth.secret` | secrets to be generated randomly with `openssl rand -base64 32 | head -c 32`. | REQUIRED if `auth.customSecret` is not set\n`auth.ingressEnabled` | enable auth ingress. | `true`\n`auth.ingressPath` | auth ingress path. | `/`\n`auth.tls` | tls configuration for central sso auth ingress. | `{}`\n`auth.customSecret` | the secret key to reuse (avoids secret creation via helm) | REQUIRED if `auth.secret` is not set\n`proxy.enabled` | enable proxy component | `true`\n`proxy.annotations` | extra annotations for proxy pods | `{}`\n`proxy.providerUrlInternal` | url for split dns deployments |\n`proxy.extraEnv` | extra proxy env vars | `[]`\n`proxy.replicaCount` | desired number of proxy pods | `1`\n`proxy.resources` | resource limits and requests for proxy pods | `{ limits: { memory: \"256Mi\", cpu: \"200m\" }}`\n`proxy.nodeSelector` | node selector logic for proxy pods | `{}`\n`proxy.tolerations` | resource tolerations for proxy pods | `{}`\n`proxy.affinity` | node affinity for proxy pods | `{}`\n`proxy.service.type` | type of proxy service to create | `ClusterIP`\n`proxy.service.port` | port for the http proxy service | `80`\n`proxy.secret` | secrets to be generated randomly with `openssl rand -base64 32 | head -c 32 | base64`. | REQUIRED if `proxy.customSecret` is not set\n`proxy.customSecret` | the secret key to reuse (avoids secret creation via helm) | REQUIRED if `proxy.secret` is not set\n`proxy.defaultAllowedEmailDomains` | the default allowed domains for upstreams | ``\n`provider.google` | the Oauth provider to use (only Google support for now) | REQUIRED\n`provider.google.adminEmail` | the Google admin email | `undefined`\n`provider.google.slug` | the Google provider slug | `oauth2`\n`provider.google.secret` | the Google OAuth secrets | REQUIRED if `provider.google.customSecret` is not set\n`provider.google.customSecret` | the secret key to reuse instead of creating it via helm | REQUIRED if `provider.google.secret` is not set\n`image.repository` | container image repository | `buzzfeed/sso`\n`image.tag` | container image tag | `v2.1.0`\n`image.pullPolicy` | container image pull policy | `IfNotPresent`\n`ingress.enabled` | set to true to enable the ingress | `true`\n`ingress.annotations` | ingress load balancer annotations | `{}`\n`ingress.extraLabels` | extra ingress labels | `{}`\n`ingress.hosts` | proxied hosts | `[]`\n`ingress.tls` | tls certificates for the proxied hosts | `[]`\n`ingress.gcpBackendConfig` | GCP LB backend service configuration | `{}`\n`upstreams` | configuration of services that use sso | `[]`\n\nSpecify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,\n\n```bash\nhelm install --name my-release \\\n  --set key_1=value_1,key_2=value_2 \\\n  minddoc/buzzfeed-sso\n```\n\nAlternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,\n\n```bash\nhelm install --name my-release -f values.yaml minddoc/buzzfeed-sso\n```\n\n> **Tip**: This will merge parameters with [values.yaml](values.yaml), which does not specify all the required values\n\n### Example\n\n**NEVER expose your `auth.secret`, `proxy.secret`, `provider.google.clientId`, `provider.google.clientSecret` and `provider.google.serviceAccount`.** Always keep them in a safe place and do not push them to any repository. As values are merged, you can always generate a different `.yaml` file. For instance:\n\n```yaml\n# values.yaml\nemailDomain: 'email.coolcompany.foo'\n\nrootDomain: 'coolcompany.foo'\n\nauth:\n  domain: sso-auth.coolcompany.foo\n\nproxy:\n  cluster: dev\n\ngoogle:\n  adminEmail: iamtheadmin@email.coolcompany.foo\n```\n\n```yaml\n# secrets.yaml\nauth:\n secret:\n    codeSecret: 'randomSecret1'\n    cookieSecret: 'randomSecret2'\n\nproxy:\n  secret:\n    clientId: 'randomSecret3'\n    clientSecret: 'randomSecret4'\n    cookieSecret: 'randomSecret6'\n\ngoogle:\n  secret:\n    clientId: 'googleSecret!'\n    clientSecret: 'evenMoreSecret'\n    serviceAccount: '{ <json content super secret> }'\n```\n\nTherefore, you could push your own `values.yaml` to a repo and keep `secrets.yaml` locally safe, and then install/update the chart:\n\n```bash\nhelm install --name my-release -f values.yaml -f secrets.yaml minddoc/buzzfeed-sso\n```\n\nAlternatively, you can specify your own secret key, if you have already created it in the cluster. The secret should follow the data format defined in `secret.yaml` (auth and proxy) and `google-secret.yaml` (google provider).\n\n```yaml\n# values.yaml\nemailDomain: 'email.coolcompany.foo'\n\nrootDomain: 'coolcompany.foo'\n\nauth:\n  domain: sso-auth.coolcompany.foo\n  customSecret: my-sso-auth-secret\n\nproxy:\n  cluster: dev\n  customSecret: my-sso-proxy-secret\n\nprovider:\n  google:\n    adminEmail: iamtheadmin@email.coolcompany.foo\n    customSecret: my-sso-google-secret\n```\n\n## Updating the Chart\n\nYou can update the chart values and trigger a pod reload. If the configmap changes, it will automatically retrieve the new values.\n\n```bash\nhelm upgrade -f values.yaml my-release minddoc/buzzfeed-sso\n```\n\n## Contributors\n\nThis is the list of contributors to the original [incubator/buzfeed-sso](https://github.com/helm/charts/tree/master/incubator/buzzfeed-sso) chart:\n\n- @anas-aso\n- @cameronattard\n- @darioblanco\n- @dpeckett\n- @komljen\n- @nicolaspearson\n- @namm2\n- @omerlh\n- @StiviiK\n- @tuanahnguyen-ct\n- @willejs\n\nNew contributors are always welcomed!\n",
+    output: [
+      {
+        level: 2,
+        link: 'introduction',
+        title: 'Introduction',
+      },
+      {
+        level: 2,
+        link: 'prerequisites',
+        title: 'Prerequisites',
+      },
+      {
+        level: 2,
+        link: 'installing-the-chart',
+        title: 'Installing the Chart',
+      },
+      {
+        level: 2,
+        link: 'uninstalling-the-chart',
+        title: 'Uninstalling the Chart',
+      },
+      {
+        children: [
+          {
+            level: 3,
+            link: 'example',
+            title: 'Example',
+          },
+        ],
+        level: 2,
+        link: 'configuration',
+        title: 'Configuration',
+      },
+      {
+        level: 2,
+        link: 'updating-the-chart',
+        title: 'Updating the Chart',
+      },
+      {
+        level: 2,
+        link: 'contributors',
+        title: 'Contributors',
+      },
+    ],
+  },
+  {
+    input:
+      '\n\nA set of rules to detect SSH connections\n\n## Inbound SSH Connection\nDetects inbound SSH connection\n## Outbound SSH Connection\nDetects outbound SSH connection\n# Rules\n',
+    output: [
+      {
+        level: 2,
+        link: 'inbound-ssh-connection',
+        title: 'Inbound SSH Connection',
+      },
+      {
+        level: 2,
+        link: 'outbound-ssh-connection',
+        title: 'Outbound SSH Connection',
+      },
+      {
+        level: 1,
+        link: 'rules',
+        title: 'Rules',
+      },
+    ],
+  },
+];
+
+describe('prepareMarkdownTOC', () => {
+  for (let i = 0; i < tests.length; i++) {
+    it('get TOC', () => {
+      const actual = prepareMarkdownTOC(tests[i].input);
+      expect(actual).toStrictEqual(tests[i].output);
+    });
+  }
+});
