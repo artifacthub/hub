@@ -3,10 +3,12 @@ package user
 import (
 	"bytes"
 	"context"
+	"crypto/sha512"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/artifacthub/hub/internal/email"
@@ -84,9 +86,18 @@ func (m *Manager) CheckAPIKey(ctx context.Context, apiKeyID, apiKeySecret string
 	}
 
 	// Check if the secret provided is valid
-	err = bcrypt.CompareHashAndPassword([]byte(apiKeySecretHashed), []byte(apiKeySecret))
-	if err != nil {
-		return &hub.CheckAPIKeyOutput{Valid: false}, nil
+	switch {
+	case strings.HasPrefix(apiKeySecretHashed, "$2a$"):
+		// Bcrypt hash, will be deprecated soon
+		err = bcrypt.CompareHashAndPassword([]byte(apiKeySecretHashed), []byte(apiKeySecret))
+		if err != nil {
+			return &hub.CheckAPIKeyOutput{Valid: false}, nil
+		}
+	default:
+		// SHA512 hash
+		if fmt.Sprintf("%x", sha512.Sum512([]byte(apiKeySecret))) != apiKeySecretHashed {
+			return &hub.CheckAPIKeyOutput{Valid: false}, nil
+		}
 	}
 
 	return &hub.CheckAPIKeyOutput{
