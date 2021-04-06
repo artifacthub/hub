@@ -13,12 +13,22 @@ interface Props {
 }
 
 const AnchorHeader: React.ElementType = (props: Props) => {
-  const value = !isUndefined(props.title)
+  let value = !isUndefined(props.title)
     ? props.title
     : props.children && props.children.length > 0
     ? props.children![0].props.value
     : undefined;
   if (isUndefined(value)) return null;
+
+  // Get proper value when header is wrapped into html tag
+  if (value.startsWith('<')) {
+    props.children!.forEach((child: any) => {
+      if (!child.props.value.startsWith('<')) {
+        value = child.props.value;
+        return;
+      }
+    });
+  }
 
   const Tag = `h${props.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   const anchor = getAnchorValue(value);

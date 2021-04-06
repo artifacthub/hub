@@ -42,19 +42,6 @@ describe('userNotificationsDispatcher', () => {
     jest.resetAllMocks();
   });
 
-  it('starts dispatcher', async () => {
-    userNotificationsDispatcher.start({
-      lastDisplayedTime: null,
-      enabled: true,
-      displayed: [],
-    });
-
-    await waitFor(() => {
-      expect(updateUserNotificationMock).toHaveBeenCalledTimes(2);
-      expect(updateUserNotificationMock).toHaveBeenLastCalledWith(null);
-    });
-  });
-
   it('dismiss notification', async () => {
     userNotificationsDispatcher.updateSettings({
       lastDisplayedTime: null,
