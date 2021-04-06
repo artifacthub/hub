@@ -324,6 +324,64 @@ const tests: Test[] = [
       },
     ],
   },
+  {
+    input:
+      '## Atlassian Confluence Server\n\n[Confluence](https://www.atlassian.com/software/confluence) is a collaboration software program developed and published by the australian software company **Atlassian**.\n\n## TL;DR;\n\nAll commands below are Helm v3\n\n```console\n$ helm repo add mox https://helm.mox.sh\n$ helm repo update\n$ helm install my-release mox/confluence-server\n```\n\n## Introduction\n\nThis chart bootstraps a [Confluence server](https://hub.docker.com/r/atlassian/confluence-server/) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.\n\nIt is available on:\n * [helm.mox.sh](https://helm.mox.sh)\n * [hub.helm.sh](https://hub.helm.sh/charts/mox/confluence-server)\n * [artifacthub.io](https://artifacthub.io/packages/helm/mox/confluence-server)\n * [hub.kubeapps.com](https://hub.kubeapps.com/charts/mox/confluence-server)\n\n## Prerequisites\n\n- Kubernetes 1.12+\n- Helm 2.11or Helm 3.0-beta3+\n- PV provisioner support in the underlying infrastructure (Only when persisting data)\n- At least 1GB Memory\n\n## Installing the Chart\n\nThis chart is not available in the Helm repositories. To install the chart first you need to add this Helm repository:\n\n```console\n$ helm repo add mox https://helm.mox.sh\n$ helm repo update\n```\n\nTo deploy it with the release name `my-release` run:\n\n```console\n$ helm install my-release mox/confluence-server\n```\n\nThe command deploys **Confluence server** on the Kubernetes cluster in the default configuration. The [configuration parameters](#parameters) section lists the parameters that can be configured during installation.\n\n## Uninstalling the Chart\n\nTo uninstall/delete the `my-release` deployment:\n\n```console\n$ helm uninstall my-release\n```\n\nThe command removes (almost) all the Kubernetes components associated with the chart and deletes the release. See [PostgreSQL enabled](#uninstall-with-postgres-enabled) for more details.\n\n## Upgrading the Chart\n\nTo upgrade the `my-release` deployment when there was **no** PostgreSQL deployed just run:\n\n```console\n$ helm upgrade my-release\n```\n\nOtherwise, see [Upgrade Confluence server with PostgreSQL enabled](#upgrade-with-postgres-enabled) for more details.\n\n## <a name="postgres-enabled"></a> PostgreSQL enabled\n\nThis chart deploys **by default** a [bitnami PostgreSQL](https://github.com/bitnami/charts/tree/master/bitnami/postgresql) instance.\n\n### <a name="install-with-postgres-enabled"></a>Install Confluence server with PostgreSQL enabled\n\nPostgreSQL Chart from **bitnami** generates a random password if we do not specify one. Random or not, keep the password safe because it will be needed when upgrading Confluence.\n\nTo specify a password:\n```console\n$ helm install my-release \\\n     --set postgresql.postgresqlPassword=[POSTGRESQL_PASSWORD] \\\n     --set postgresql.replication.password=[REPLICATION_PASSWORD] # in case Replication is enabled \\\n     mox/confluence-server\n```\n\n### <a name="uninstall-with-postgres-enabled"></a>Uninstall Confluence server with PostgreSQL enabled\n\nThe Persistent Volume Claim (PVC) of postgres will **NOT** be automatically deleted. It needs to be removed manually:\n\n```console\n$ kubectl delete pvc -l app.kubernetes.io/instance=my-release\n```\n\n### <a name="upgrade-with-postgres-enabled"></a>Upgrade Confluence server with PostgreSQL enabled\n\nFrom [bitnami/postgresql](https://github.com/bitnami/charts/tree/master/bitnami/postgresql#upgrade):\n> It\'s necessary to specify the existing passwords while performing an upgrade to ensure the secrets are not updated with invalid randomly generated passwords.\n\nWe upgrade the `my-release` deployment by running:\n\n```console\n$ helm upgrade my-release \\\n     --set postgresql.postgresqlPassword=[POSTGRESQL_PASSWORD] \\\n     --set postgresql.replication.password=[REPLICATION_PASSWORD] # in case Replication is enabled\n```\n',
+    output: [
+      {
+        level: 2,
+        link: 'tl-dr',
+        title: 'TL;DR;',
+      },
+      {
+        level: 2,
+        link: 'introduction',
+        title: 'Introduction',
+      },
+      {
+        level: 2,
+        link: 'prerequisites',
+        title: 'Prerequisites',
+      },
+      {
+        level: 2,
+        link: 'installing-the-chart',
+        title: 'Installing the Chart',
+      },
+      {
+        level: 2,
+        link: 'uninstalling-the-chart',
+        title: 'Uninstalling the Chart',
+      },
+      {
+        level: 2,
+        link: 'upgrading-the-chart',
+        title: 'Upgrading the Chart',
+      },
+      {
+        children: [
+          {
+            level: 3,
+            link: 'install-confluence-server-with-postgresql-enabled',
+            title: 'Install Confluence server with PostgreSQL enabled',
+          },
+          {
+            level: 3,
+            link: 'uninstall-confluence-server-with-postgresql-enabled',
+            title: 'Uninstall Confluence server with PostgreSQL enabled',
+          },
+          {
+            level: 3,
+            link: 'upgrade-confluence-server-with-postgresql-enabled',
+            title: 'Upgrade Confluence server with PostgreSQL enabled',
+          },
+        ],
+        level: 2,
+        link: 'postgresql-enabled',
+        title: 'PostgreSQL enabled',
+      },
+    ],
+  },
 ];
 
 describe('prepareMarkdownTOC', () => {

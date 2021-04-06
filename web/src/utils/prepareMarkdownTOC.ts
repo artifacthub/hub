@@ -9,6 +9,7 @@ export const HEADING_REGEX = new RegExp('\n(#+) (.*)', 'g'); /* eslint-disable-l
 const CODE_REGEX = new RegExp('^```(?:[^`]+|`(?!``))*```', 'igm');
 const SETEXT_HEADER = new RegExp('^(.*)$\n[=-]{3,}\n', 'igm'); /* eslint-disable-line no-control-regex */
 const TABLE_REGEX = new RegExp('^(|[^\n]+)', 'gm'); /* eslint-disable-line no-control-regex */
+const HTML_REGEX = new RegExp('</?[^>]*>', 'gi');
 
 const cleanTitle = (title: string): string => {
   // Remove backticks
@@ -31,7 +32,9 @@ const convertSetextHeadersToAtx = (md: string): string => {
 };
 
 export default (md: string): TOCEntryItem[] => {
-  const cleanMD = convertSetextHeadersToAtx(md.replace(CODE_REGEX, '').replace(TABLE_REGEX, ''));
+  const cleanMD = convertSetextHeadersToAtx(
+    md.replace(HTML_REGEX, '').replace(CODE_REGEX, '').replace(TABLE_REGEX, '')
+  );
   let titles: TOCEntryItem[] = [];
   let entries: TOCEntryItem[] = [];
   let processed: TOCEntryItem[] = [];
