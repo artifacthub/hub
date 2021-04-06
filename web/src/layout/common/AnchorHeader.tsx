@@ -5,7 +5,6 @@ import { GoLink } from 'react-icons/go';
 import getAnchorValue from '../../utils/getAnchorValue';
 import history from '../../utils/history';
 import styles from './AnchorHeader.module.css';
-
 interface Props {
   level: number;
   title?: string;
@@ -21,8 +20,8 @@ const AnchorHeader: React.ElementType = (props: Props) => {
     : undefined;
   if (isUndefined(value)) return null;
 
-  const anchor = getAnchorValue(value);
   const Tag = `h${props.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  const anchor = getAnchorValue(value);
 
   return (
     <span className={styles.header}>
