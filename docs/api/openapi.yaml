@@ -575,7 +575,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  ? "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task$}"
+  ? "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler$}"
   : get:
       tags:
         - Repositories
@@ -1190,6 +1190,27 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/keda-scaler/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KedaScalerPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/krew/{repoName}/{packageName}":
     get:
       tags:
@@ -1355,6 +1376,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FalcoPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/keda-scaler/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KedaScalerPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -2675,6 +2718,8 @@ components:
                       example: "http://repo.url"
     HelmPluginPackage:
       $ref: "#/components/schemas/Package"
+    KedaScalerPackage:
+      $ref: "#/components/schemas/Package"
     KrewPluginsPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -3179,6 +3224,7 @@ components:
           * `5` - Krew kubectl plugins
           * `6` - Helm plugins
           * `7` - Tekton tasks
+          * `8` - KEDA scalers
     RepositoryKindParam:
       type: string
       enum:
@@ -3190,6 +3236,7 @@ components:
         - krew
         - helm-plugin
         - tekton-task
+        - keda-scaler
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -3200,6 +3247,7 @@ components:
         * `krew` - Krew kubectl plugins
         * `helm-plugin` - Helm plugins
         * `tekton` - Tekton tasks
+        * `keda-scaler` - KEDA scalers
     RepositorySummary:
       type: object
       required:
@@ -3642,7 +3690,7 @@ components:
       description: Package name
     RepoKindParam:
       in: path
-      name: ^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task$
+      name: ^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler$
       schema:
         $ref: "#/components/schemas/RepositoryKindParam"
       required: true

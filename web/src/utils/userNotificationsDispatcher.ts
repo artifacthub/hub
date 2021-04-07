@@ -11,7 +11,7 @@ export interface UserNotificationsUpdatesHandler {
   updateUserNotificationsWrapper(notification: UserNotification | null): void;
 }
 
-const detailPkgPath = /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task)\//;
+const detailPkgPath = /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler)\//;
 
 const getNotifications = (): UserNotification[] => {
   const list = require('./notifications.json').notifications;

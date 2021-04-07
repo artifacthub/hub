@@ -324,7 +324,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins and Tekton tasks.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and KEDA scalers.
           <div
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
           >
@@ -428,10 +428,10 @@ exports[`Home index creates snapshot 1`] = `
             </a>
           </div>
           <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 align-items-strecht row justify-content-center"
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
           >
             <a
-              class="link col-3 iconLink"
+              class="link col iconLink"
               href="https://tinkerbell.org"
               rel="noopener noreferrer"
               role="button"
@@ -455,7 +455,7 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
-              class="link col-3 iconLink"
+              class="link col iconLink"
               href="https://krew.sigs.k8s.io"
               rel="noopener noreferrer"
               role="button"
@@ -479,7 +479,7 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
-              class="link col-3 iconLink"
+              class="link col iconLink"
               href="https://tekton.dev"
               rel="noopener noreferrer"
               role="button"
@@ -502,6 +502,30 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
+            <a
+              class="link col iconLink"
+              href="https://keda.sh"
+              rel="noopener noreferrer"
+              role="button"
+              target="_blank"
+            >
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon"
+                  src="/static/media/keda-scaler-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light legendIcon"
+                >
+                  <small>
+                    KEDA scalers
+                  </small>
+                </div>
+              </div>
+            </a>
           </div>
           Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
         </div>
@@ -518,7 +542,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           <img
             alt="Logo CNCF sandbox project"
-            class="logo"
+            class="logo homeLogo"
             src="/static/media/cncf-sandbox-horizontal-color.png"
           />
           <div

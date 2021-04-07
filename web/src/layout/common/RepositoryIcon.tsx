@@ -42,6 +42,10 @@ const ICONS = {
     default: '/static/media/tekton-pkg.svg',
     white: '/static/media/tekton-pkg-light.svg',
   },
+  [RepositoryKind.KedaScaler]: {
+    default: '/static/media/keda-scaler.svg',
+    white: '/static/media/keda-scaler-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

@@ -672,7 +672,7 @@
                 },
                 "repositoriesKinds": {
                     "title": "Repositories kinds to process ([] = all)",
-                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task",
+                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task, keda-scaler",
                     "type": "array",
                     "items": {
                         "type": "string"

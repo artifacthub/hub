@@ -151,6 +151,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     icon: <RepositoryIcon kind={RepositoryKind.TektonTask} className="mw-100 mh-100" />,
     active: true,
   },
+  {
+    kind: RepositoryKind.KedaScaler,
+    label: 'keda-scaler',
+    name: 'KEDA scalers',
+    singular: 'KEDA scaler',
+    plural: 'KEDA scalers',
+    icon: <RepositoryIcon kind={RepositoryKind.KedaScaler} className="mw-100 mh-100" />,
+    active: true,
+  },
 ];
 
 export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [

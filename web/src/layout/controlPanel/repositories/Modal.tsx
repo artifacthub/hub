@@ -218,6 +218,13 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.KedaScaler:
+        link = (
+          <ExternalLink href="/docs/topics/repositories#keda-scalers-repositories" className="text-reset">
+            <u>KEDA scalers</u>
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -461,6 +468,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Krew,
               RepositoryKind.HelmPlugin,
               RepositoryKind.TektonTask,
+              RepositoryKind.KedaScaler,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -568,6 +576,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.OPA,
               RepositoryKind.TBAction,
               RepositoryKind.TektonTask,
+              RepositoryKind.KedaScaler,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="custom-control custom-switch pl-0">
