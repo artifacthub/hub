@@ -783,8 +783,12 @@ func TestRequireLogin(t *testing.T) {
 					hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 					resp := w.Result()
 					defer resp.Body.Close()
+					h := resp.Header
+					data, _ := ioutil.ReadAll(resp.Body)
 
 					assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+					assert.Equal(t, "application/json", h.Get("Content-Type"))
+					assert.Equal(t, buildError(""), data)
 				})
 			}
 		})
@@ -801,8 +805,12 @@ func TestRequireLogin(t *testing.T) {
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
+			h := resp.Header
+			data, _ := ioutil.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+			assert.Equal(t, "application/json", h.Get("Content-Type"))
+			assert.Equal(t, buildError(""), data)
 			hw.um.AssertExpectations(t)
 		})
 
@@ -819,8 +827,12 @@ func TestRequireLogin(t *testing.T) {
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
+			h := resp.Header
+			data, _ := ioutil.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+			assert.Equal(t, "application/json", h.Get("Content-Type"))
+			assert.Equal(t, buildError(errInvalidAPIKey.Error()), data)
 			hw.um.AssertExpectations(t)
 		})
 
@@ -857,8 +869,12 @@ func TestRequireLogin(t *testing.T) {
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
+			h := resp.Header
+			data, _ := ioutil.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+			assert.Equal(t, "application/json", h.Get("Content-Type"))
+			assert.Equal(t, buildError(errInvalidSession.Error()), data)
 		})
 
 		t.Run("error checking session", func(t *testing.T) {
@@ -877,8 +893,12 @@ func TestRequireLogin(t *testing.T) {
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
+			h := resp.Header
+			data, _ := ioutil.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+			assert.Equal(t, "application/json", h.Get("Content-Type"))
+			assert.Equal(t, buildError(""), data)
 			hw.um.AssertExpectations(t)
 		})
 
@@ -898,8 +918,12 @@ func TestRequireLogin(t *testing.T) {
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
+			h := resp.Header
+			data, _ := ioutil.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+			assert.Equal(t, "application/json", h.Get("Content-Type"))
+			assert.Equal(t, buildError(errInvalidSession.Error()), data)
 			hw.um.AssertExpectations(t)
 		})
 
@@ -934,8 +958,12 @@ func TestRequireLogin(t *testing.T) {
 		hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildError(""), data)
 	})
 }
 
@@ -1298,4 +1326,12 @@ func newHandlersWrapper() *handlersWrapper {
 		um:  um,
 		h:   h,
 	}
+}
+
+func buildError(msg string) []byte {
+	data := map[string]interface{}{
+		"message": msg,
+	}
+	dataJSON, _ := json.Marshal(data)
+	return append(dataJSON, '\n')
 }
