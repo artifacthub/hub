@@ -127,7 +127,6 @@ const SchemaDefinition = (props: Props) => {
         currentType = 'object';
       }
     }
-
     return currentType;
   };
 
@@ -142,12 +141,12 @@ const SchemaDefinition = (props: Props) => {
 
   useEffect(() => {
     setActiveType(getInitialType());
-  }, [props.def.active]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.def.active, props.def.combinationType]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const typeDef = activeType ? SCHEMA_PROPS_PER_TYPE[activeType] : null;
 
   const formatPropValue = (value?: any, required?: string[]): JSX.Element => {
-    if (isUndefined(value)) {
+    if (isUndefined(value) || isNull(value)) {
       return <span className="ml-1">-</span>;
     }
 
@@ -170,7 +169,11 @@ const SchemaDefinition = (props: Props) => {
                 <div key={`it_${el}`} className={`${styles.listItem} position-relative`} data-testid="listItem">
                   {el}:{' '}
                   <span className="text-muted">
-                    {value[el].type ? (isArray(value[el].type) ? value[el].type.join(' | ') : value[el].type) : '-'}
+                    {value[el] && value[el].type
+                      ? isArray(value[el].type)
+                        ? value[el].type.join(' | ')
+                        : value[el].type
+                      : '-'}
                   </span>{' '}
                   {((def.required && def.required.includes(el)) || (required && required.includes(el))) && (
                     <span

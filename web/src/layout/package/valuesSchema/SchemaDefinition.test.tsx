@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import SchemaDefinition from './SchemaDefinition';
@@ -249,6 +249,20 @@ describe('SchemaDefinition', () => {
         'href',
         'https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core'
       );
+    });
+
+    it('updates combinationType', () => {
+      const props = getProps('12a');
+      const { getByText, queryByText, rerender } = render(<SchemaDefinition {...props} {...defaultProps} />);
+
+      expect(getByText('Raw')).toBeInTheDocument();
+
+      const updatedProps = getProps('12b');
+      rerender(<SchemaDefinition {...updatedProps} {...defaultProps} />);
+
+      waitFor(() => {
+        expect(queryByText('Raw')).toBeNull();
+      });
     });
   });
 });

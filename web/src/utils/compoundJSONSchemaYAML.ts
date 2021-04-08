@@ -144,7 +144,13 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
     Object.keys(props).forEach((propName: string, index: number) => {
       let value: JSONSchema | undefined = props[propName] as JSONSchema;
       let isCurrentArrayParent = false;
-      if (value.type === 'array' && value.items && (value.items as JSONSchema).hasOwnProperty('properties')) {
+      if (
+        value &&
+        !isNull(value.type) &&
+        value.type === 'array' &&
+        value.items &&
+        (value.items as JSONSchema).hasOwnProperty('properties')
+      ) {
         isCurrentArrayParent = true;
       }
 
@@ -160,13 +166,15 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
         }
       };
 
-      if (isUndefined(value.$ref)) {
-        checkCombinations(value);
-      } else {
-        value = undefined;
+      if (value) {
+        if (isUndefined(value.$ref)) {
+          checkCombinations(value);
+        } else {
+          value = undefined;
+        }
       }
 
-      if (isUndefined(value)) return;
+      if (isUndefined(value) || isNull(value)) return;
 
       const defaultValue = getValue(value, level);
 

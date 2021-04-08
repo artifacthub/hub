@@ -114,27 +114,36 @@ const getValue = (newValue: any): ValueProp => {
 };
 
 const SchemaLine = (props: Props) => {
+  const [value, setValue] = useState<ActiveJSONSchemaValue | null>({
+    active: 0,
+    combinationType: null,
+    options: [props.value],
+    error: false,
+  });
+
   async function getCurrentJSON() {
     let currentValue = props.value;
     let error = false;
 
     let options = [currentValue];
-    let comb = null;
+    let comb: string | null = null;
 
-    const checkCombinations = (valueToCheck: JSONSchema) => {
-      if (valueToCheck.oneOf) {
-        options = valueToCheck.oneOf as JSONSchema[];
-        comb = 'anyOf';
-      } else if (valueToCheck.anyOf) {
-        options = valueToCheck.anyOf as JSONSchema[];
-        comb = 'oneOf';
+    if (!isNull(currentValue)) {
+      const checkCombinations = (valueToCheck: JSONSchema) => {
+        if (valueToCheck.oneOf) {
+          options = valueToCheck.oneOf as JSONSchema[];
+          comb = 'oneOf';
+        } else if (valueToCheck.anyOf) {
+          options = valueToCheck.anyOf as JSONSchema[];
+          comb = 'anyOf';
+        }
+      };
+
+      if (currentValue.$ref) {
+        error = true;
+      } else {
+        checkCombinations(currentValue);
       }
-    };
-
-    if (currentValue.$ref) {
-      error = true;
-    } else {
-      checkCombinations(currentValue);
     }
 
     setValue({
@@ -145,17 +154,10 @@ const SchemaLine = (props: Props) => {
     });
   }
 
-  const [value, setValue] = useState<ActiveJSONSchemaValue | null>({
-    active: 0,
-    combinationType: null,
-    options: [props.value],
-    error: false,
-  });
   const activeValue = value ? value.options[value.active] : null;
-
   useEffect(() => {
     getCurrentJSON();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.value]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (isNull(value) || isNull(activeValue)) return null;
 
