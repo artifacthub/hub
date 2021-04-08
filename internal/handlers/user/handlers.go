@@ -48,6 +48,14 @@ const (
 	oauthFailedURL       = "/oauth-failed"
 )
 
+var (
+	// errInvalidAPIKey error indicates that the API key provided is not valid.
+	errInvalidAPIKey = errors.New("invalid api key")
+
+	// errInvalidSession error indicates that the session provided is not valid.
+	errInvalidSession = errors.New("invalid session")
+)
+
 // Handlers represents a group of http handlers in charge of handling
 // users operations.
 type Handlers struct {
@@ -651,7 +659,7 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 				return
 			}
 			if !checkAPIKeyOutput.Valid {
-				helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
+				helpers.RenderErrorWithCodeJSON(w, errInvalidAPIKey, http.StatusUnauthorized)
 				return
 			}
 
@@ -664,7 +672,7 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 				var sessionID []byte
 				if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
 					h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("sessionID decoding failed")
-					helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
+					helpers.RenderErrorWithCodeJSON(w, errInvalidSession, http.StatusUnauthorized)
 					return
 				}
 
@@ -676,7 +684,7 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 					return
 				}
 				if !checkSessionOutput.Valid {
-					helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
+					helpers.RenderErrorWithCodeJSON(w, errInvalidSession, http.StatusUnauthorized)
 					return
 				}
 
