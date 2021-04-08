@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha512"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -31,11 +32,11 @@ const (
 	registerPasswordResetCodeDBQ = `select register_password_reset_code($1::text)`
 	registerSessionDBQ           = `select register_session($1::jsonb)`
 	registerUserDBQ              = `select register_user($1::jsonb)`
-	resetUserPasswordDBQ         = `select reset_user_password($1::uuid, $2::text)`
+	resetUserPasswordDBQ         = `select reset_user_password($1::bytea, $2::text)`
 	updateUserPasswordDBQ        = `select update_user_password($1::uuid, $2::text, $3::text)`
 	updateUserProfileDBQ         = `select update_user_profile($1::uuid, $2::jsonb)`
 	verifyEmailDBQ               = `select verify_email($1::uuid)`
-	verifyPasswordResetCodeDBQ   = `select verify_password_reset_code($1::uuid)`
+	verifyPasswordResetCodeDBQ   = `select verify_password_reset_code($1::bytea)`
 )
 
 var (
@@ -282,7 +283,7 @@ func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail, base
 	}
 
 	// Register password reset code in database
-	var code *string
+	var code []byte
 	err := m.db.QueryRow(ctx, registerPasswordResetCodeDBQ, userEmail).Scan(&code)
 	if err != nil {
 		return err
@@ -290,8 +291,9 @@ func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail, base
 
 	// Send password reset email
 	if code != nil && m.es != nil {
+		codeB64 := base64.URLEncoding.EncodeToString(code)
 		templateData := map[string]string{
-			"link": fmt.Sprintf("%s/reset-password?code=%s", baseURL, *code),
+			"link": fmt.Sprintf("%s/reset-password?code=%s", baseURL, codeB64),
 		}
 		var emailBody bytes.Buffer
 		if err := passwordResetTmpl.Execute(&emailBody, templateData); err != nil {
@@ -392,9 +394,9 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 }
 
 // ResetPassword resets the user password in the database.
-func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL string) error {
+func (m *Manager) ResetPassword(ctx context.Context, codeB64, newPassword, baseURL string) error {
 	// Validate input
-	if code == "" {
+	if codeB64 == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
 	}
 	if newPassword == "" {
@@ -414,6 +416,10 @@ func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL 
 	}
 
 	// Reset user password in database
+	code, err := base64.URLEncoding.DecodeString(codeB64)
+	if err != nil {
+		return ErrInvalidPasswordResetCode
+	}
 	var userEmail string
 	err = m.db.QueryRow(ctx, resetUserPasswordDBQ, code, string(newHashed)).Scan(&userEmail)
 	if err != nil {
@@ -515,14 +521,18 @@ func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {
 }
 
 // VerifyPasswordResetCode verifies if the provided code is valid.
-func (m *Manager) VerifyPasswordResetCode(ctx context.Context, code string) error {
+func (m *Manager) VerifyPasswordResetCode(ctx context.Context, codeB64 string) error {
 	// Validate input
-	if code == "" {
+	if codeB64 == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
 	}
 
 	// Verify password reset code in database
-	_, err := m.db.Exec(ctx, verifyPasswordResetCodeDBQ, code)
+	code, err := base64.URLEncoding.DecodeString(codeB64)
+	if err != nil {
+		return ErrInvalidPasswordResetCode
+	}
+	_, err = m.db.Exec(ctx, verifyPasswordResetCodeDBQ, code)
 	if err != nil && err.Error() == errInvalidPasswordResetCodeDB.Error() {
 		return ErrInvalidPasswordResetCode
 	}

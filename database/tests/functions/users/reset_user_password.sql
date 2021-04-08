@@ -14,9 +14,9 @@ values (:'user1ID', 'user1', 'user1@email.com');
 insert into "user" (user_id, alias, email)
 values (:'user2ID', 'user2', 'user2@email.com');
 insert into password_reset_code (password_reset_code_id, user_id, created_at)
-values (:'code1ID', :'user1ID', current_timestamp);
+values (sha512(:'code1ID'), :'user1ID', current_timestamp);
 insert into password_reset_code (password_reset_code_id, user_id, created_at)
-values (:'code2ID', :'user2ID', current_timestamp - '30 minute'::interval);
+values (sha512(:'code2ID'), :'user2ID', current_timestamp - '30 minute'::interval);
 insert into session (user_id) values (:'user1ID');
 
 -- Password reset should fail in the following cases
