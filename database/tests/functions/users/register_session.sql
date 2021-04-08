@@ -36,7 +36,7 @@ select results_eq(
 );
 select is(
     session_id,
-    :'session_id',
+    sha512(:'session_id'),
     'Returned session_id returned should be registered'
 )
 from session where user_id = '00000000-0000-0000-0000-000000000001';

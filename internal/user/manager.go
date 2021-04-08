@@ -195,7 +195,7 @@ func (m *Manager) CheckSession(
 	// Get session details from database
 	var userID string
 	var createdAt int64
-	err := m.db.QueryRow(ctx, getSessionDBQ, sessionID).Scan(&userID, &createdAt)
+	err := m.db.QueryRow(ctx, getSessionDBQ, hashSessionID(sessionID)).Scan(&userID, &createdAt)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return &hub.CheckSessionOutput{Valid: false}, nil
@@ -222,7 +222,7 @@ func (m *Manager) DeleteSession(ctx context.Context, sessionID []byte) error {
 	}
 
 	// Delete session from database
-	_, err := m.db.Exec(ctx, deleteSessionDBQ, sessionID)
+	_, err := m.db.Exec(ctx, deleteSessionDBQ, hashSessionID(sessionID))
 	return err
 }
 
@@ -537,4 +537,10 @@ func (m *Manager) VerifyPasswordResetCode(ctx context.Context, codeB64 string) e
 		return ErrInvalidPasswordResetCode
 	}
 	return err
+}
+
+// hashSessionID is a helper function that creates a sha512 hash of the
+// sessionID provided.
+func hashSessionID(sessionID []byte) string {
+	return fmt.Sprintf("\\x%x", sha512.Sum512(sessionID))
 }
