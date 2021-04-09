@@ -1,5 +1,6 @@
 import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
+import merger from 'json-schema-merge-allof';
 import React, { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
@@ -43,12 +44,14 @@ const ValuesSchema = (props: Props) => {
       setCurrentVersion(props.version);
 
       try {
-        const values = await $RefParser.dereference(schema, {
-          continueOnError: true,
-          dereference: {
-            circular: 'ignore',
-          },
-        });
+        const values = merger(
+          await $RefParser.dereference(schema, {
+            continueOnError: true,
+            dereference: {
+              circular: true,
+            },
+          })
+        );
         setValuesSchema(values);
       } catch (err) {
         setValuesSchema(schema);

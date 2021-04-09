@@ -166,12 +166,10 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
         }
       };
 
-      if (value) {
-        if (isUndefined(value.$ref)) {
-          checkCombinations(value);
-        } else {
-          value = undefined;
-        }
+      if (value && isUndefined(value.$ref)) {
+        checkCombinations(value);
+      } else {
+        value = undefined;
       }
 
       if (isUndefined(value) || isNull(value)) return;

@@ -43,16 +43,7 @@ exports[`Footer creates snapshot 1`] = `
               class="text-muted mb-1"
               href="/stats"
             >
-              Stats
-            </a>
-            <a
-              class="link text-muted mb-1"
-              href="https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
-              rel="noopener noreferrer"
-              role="button"
-              target="_blank"
-            >
-              Code of conduct
+              Statistics
             </a>
           </div>
         </div>

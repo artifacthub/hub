@@ -8,6 +8,13 @@
   width: 390px;
 }
 
+.btn {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.25rem;
+  line-height: 1rem;
+  margin-top: -11px;
+}
+
 .btn path {
   stroke: inherit;
 }
@@ -43,5 +50,9 @@
 
   .toc {
     margin-left: 15px;
+  }
+
+  .btn {
+    margin-top: -5px;
   }
 }
