@@ -287,6 +287,7 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 	// Request browser to delete session cookie
 	cookie = &http.Cookie{
 		Name:    sessionCookieName,
+		Path:    "/",
 		Expires: time.Now().Add(-24 * time.Hour),
 	}
 	http.SetCookie(w, cookie)
