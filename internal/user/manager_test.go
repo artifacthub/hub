@@ -267,6 +267,7 @@ func TestCheckCredentials(t *testing.T) {
 
 func TestCheckSession(t *testing.T) {
 	ctx := context.Background()
+	hashedSessionID := hashSessionID([]byte("sessionID"))
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -305,7 +306,7 @@ func TestCheckSession(t *testing.T) {
 	t.Run("session not found in database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getSessionDBQ, []byte("sessionID")).Return(nil, pgx.ErrNoRows)
+		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return(nil, pgx.ErrNoRows)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
@@ -318,7 +319,7 @@ func TestCheckSession(t *testing.T) {
 	t.Run("error getting session from database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getSessionDBQ, []byte("sessionID")).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
@@ -330,7 +331,7 @@ func TestCheckSession(t *testing.T) {
 	t.Run("session has expired", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getSessionDBQ, []byte("sessionID")).Return([]interface{}{"userID", int64(1)}, nil)
+		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return([]interface{}{"userID", int64(1)}, nil)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
@@ -343,7 +344,7 @@ func TestCheckSession(t *testing.T) {
 	t.Run("valid session", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getSessionDBQ, []byte("sessionID")).Return([]interface{}{
+		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return([]interface{}{
 			"userID",
 			time.Now().Unix(),
 		}, nil)
@@ -359,6 +360,7 @@ func TestCheckSession(t *testing.T) {
 
 func TestDeleteSession(t *testing.T) {
 	ctx := context.Background()
+	hashedSessionID := hashSessionID([]byte("sessionID"))
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -408,7 +410,7 @@ func TestDeleteSession(t *testing.T) {
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, deleteSessionDBQ, []byte("sessionID")).Return(tc.dbResponse)
+				db.On("Exec", ctx, deleteSessionDBQ, hashedSessionID).Return(tc.dbResponse)
 				m := NewManager(db, nil)
 
 				err := m.DeleteSession(ctx, []byte("sessionID"))
