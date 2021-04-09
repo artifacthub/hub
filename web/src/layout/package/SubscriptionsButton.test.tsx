@@ -1,5 +1,6 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
@@ -75,7 +76,9 @@ describe('SubscriptionsButton', () => {
 
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-        <SubscriptionsButton {...defaultProps} />
+        <Router>
+          <SubscriptionsButton {...defaultProps} />
+        </Router>
       </AppCtx.Provider>
     );
 
@@ -93,7 +96,9 @@ describe('SubscriptionsButton', () => {
 
         const { getByText, getByTestId, queryByRole } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <SubscriptionsButton {...defaultProps} />
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -135,7 +140,9 @@ describe('SubscriptionsButton', () => {
 
         const { getByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <SubscriptionsButton {...defaultProps} />
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -160,7 +167,9 @@ describe('SubscriptionsButton', () => {
 
         const { rerender } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <SubscriptionsButton {...defaultProps} />
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -188,7 +197,9 @@ describe('SubscriptionsButton', () => {
 
         const { container } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <SubscriptionsButton {...defaultProps} />
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -207,7 +218,9 @@ describe('SubscriptionsButton', () => {
       it('when user is not signed in', async () => {
         const { container } = render(
           <AppCtx.Provider value={{ ctx: mockNotSignedInCtx, dispatch: jest.fn() }}>
-            <SubscriptionsButton {...defaultProps} />
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -221,7 +234,9 @@ describe('SubscriptionsButton', () => {
       it('when ctx.user is not initialized', async () => {
         const { container } = render(
           <AppCtx.Provider value={{ ctx: mockUndefinedUserCtx, dispatch: jest.fn() }}>
-            <SubscriptionsButton {...defaultProps} />
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -240,7 +255,9 @@ describe('SubscriptionsButton', () => {
 
         const { getByTestId, getByRole } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <SubscriptionsButton {...defaultProps} />
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -279,7 +296,9 @@ describe('SubscriptionsButton', () => {
 
       const { getByText, getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <SubscriptionsButton {...defaultProps} />
+          <Router>
+            <SubscriptionsButton {...defaultProps} />
+          </Router>
         </AppCtx.Provider>
       );
 

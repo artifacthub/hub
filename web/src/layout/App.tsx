@@ -97,7 +97,12 @@ export default function App() {
                 const searchParams = buildSearchParams(location.search);
                 return (
                   <>
-                    <Navbar isSearching={isSearching} searchText={searchParams.tsQueryWeb} />
+                    <Navbar
+                      redirect={getQueryParam(location.search, 'redirect') || undefined}
+                      visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                      isSearching={isSearching}
+                      searchText={searchParams.tsQueryWeb}
+                    />
                     <div className="d-flex flex-column flex-grow-1">
                       <SearchView
                         {...searchParams}
@@ -118,7 +123,11 @@ export default function App() {
               exact
               render={({ location, match }) => (
                 <>
-                  <Navbar isSearching={isSearching} />
+                  <Navbar
+                    isSearching={isSearching}
+                    redirect={getQueryParam(location.search, 'redirect') || undefined}
+                    visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                  />
                   <div className="d-flex flex-column flex-grow-1">
                     <PackageView
                       hash={location.hash}
@@ -171,9 +180,13 @@ export default function App() {
             <Route
               path="/stats"
               exact
-              render={() => (
+              render={({ location }) => (
                 <>
-                  <Navbar isSearching={isSearching} />
+                  <Navbar
+                    isSearching={isSearching}
+                    redirect={getQueryParam(location.search, 'redirect') || undefined}
+                    visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                  />
                   <div className="d-flex flex-column flex-grow-1">
                     <StatsView />
                   </div>

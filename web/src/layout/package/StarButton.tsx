@@ -4,6 +4,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
+import { useHistory } from 'react-router';
 
 import { API } from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
@@ -19,6 +20,7 @@ interface Props {
 
 const StarButton = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
+  const history = useHistory();
   const [packageStars, setPackageStars] = useState<PackageStars | undefined | null>(undefined);
   const [isSending, setIsSending] = useState(false);
   const [isGettingIfStarred, setIsGettingIfStarred] = useState<boolean | undefined>(undefined);
@@ -67,21 +69,21 @@ const StarButton = (props: Props) => {
       getPackageStars();
       setIsSending(false);
     } catch (err) {
-      let errMessage = `An error occurred ${
-        notStarred ? 'starring' : 'unstarring'
-      } the package, please try again later.`;
       setIsSending(false);
 
       // On unauthorized, we force sign out
       if (err.kind === ErrorKind.Unauthorized) {
-        errMessage = `You must be signed in to ${notStarred ? 'star' : 'unstar'} a package`;
         dispatch(signOut());
+        history.push(`${window.location.pathname}?modal=login&redirect=${window.location.pathname}`);
+      } else {
+        let errMessage = `An error occurred ${
+          notStarred ? 'starring' : 'unstarring'
+        } the package, please try again later.`;
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: errMessage,
+        });
       }
-
-      alertDispatcher.postAlert({
-        type: 'danger',
-        message: errMessage,
-      });
     }
   }
 

@@ -1,5 +1,6 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
@@ -33,6 +34,15 @@ const mockCtx = {
 
 const mockDispatch = jest.fn();
 
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as {}),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
+
 describe('StarButton', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -43,7 +53,9 @@ describe('StarButton', () => {
 
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-        <StarButton {...defaultProps} />
+        <Router>
+          <StarButton {...defaultProps} />
+        </Router>
       </AppCtx.Provider>
     );
 
@@ -61,7 +73,9 @@ describe('StarButton', () => {
 
         const { getByText, getByTestId, getByRole, queryByRole, getAllByText } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} />
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -95,7 +109,9 @@ describe('StarButton', () => {
 
         const { getByText, getByTestId, getByRole } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} />
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -123,7 +139,9 @@ describe('StarButton', () => {
 
         const { getByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} />
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -150,7 +168,9 @@ describe('StarButton', () => {
 
         const { getByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} />
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -170,35 +190,6 @@ describe('StarButton', () => {
           });
         });
       });
-
-      it('when user is not logged in', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4 });
-        mocked(API).toggleStar.mockRejectedValue({ kind: ErrorKind.Unauthorized });
-
-        const { getByTestId } = render(
-          <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
-            <StarButton {...defaultProps} />
-          </AppCtx.Provider>
-        );
-
-        await waitFor(() => {
-          expect(API.getStars).toHaveBeenCalledTimes(1);
-        });
-
-        const btn = getByTestId('toggleStarBtn');
-        expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
-
-        await waitFor(() => {
-          expect(mockDispatch).toHaveBeenCalledTimes(1);
-          expect(mockDispatch).toHaveBeenCalledWith({ type: 'signOut' });
-          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-            type: 'danger',
-            message: 'You must be signed in to unstar a package',
-          });
-        });
-      });
     });
 
     describe('when user is not signed in', () => {
@@ -206,7 +197,9 @@ describe('StarButton', () => {
         mocked(API).getStars.mockResolvedValue({ stars: 4 });
         const { getByRole } = render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: null }, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} />
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -226,7 +219,9 @@ describe('StarButton', () => {
 
         const component = (
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} />
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
@@ -249,12 +244,42 @@ describe('StarButton', () => {
 
         render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: undefined }, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} />
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
           </AppCtx.Provider>
         );
 
         await waitFor(() => {
           expect(API.getStars).toHaveBeenCalledTimes(0);
+        });
+      });
+    });
+
+    describe('calls to sign out', () => {
+      it('when user is not logged in to star/unstar pkg', async () => {
+        mocked(API).getStars.mockResolvedValue({ stars: 4 });
+        mocked(API).toggleStar.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+
+        const { getByTestId } = render(
+          <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
+          </AppCtx.Provider>
+        );
+
+        await waitFor(() => {
+          expect(API.getStars).toHaveBeenCalledTimes(1);
+        });
+
+        const btn = getByTestId('toggleStarBtn');
+        expect(btn).toBeInTheDocument();
+        fireEvent.click(btn);
+
+        await waitFor(() => {
+          expect(mockDispatch).toHaveBeenCalledTimes(1);
+          expect(mockDispatch).toHaveBeenCalledWith({ type: 'signOut' });
         });
       });
     });

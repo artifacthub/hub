@@ -4,9 +4,10 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaCaretDown, FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md';
+import { useHistory } from 'react-router';
 
 import { API } from '../../api';
-import { AppCtx } from '../../context/AppCtx';
+import { AppCtx, signOut } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, EventKind, Subscription } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
@@ -18,7 +19,8 @@ interface Props {
 }
 
 const SubscriptionsButton = (props: Props) => {
-  const { ctx } = useContext(AppCtx);
+  const { ctx, dispatch } = useContext(AppCtx);
+  const history = useHistory();
   const [openStatus, setOpenStatus] = useState(false);
   const [activeSubscriptions, setActiveSubscriptions] = useState<Subscription[] | undefined | null>(undefined);
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
@@ -70,6 +72,8 @@ const SubscriptionsButton = (props: Props) => {
           setIsLoading(false);
         }
       } catch (err) {
+        setActiveSubscriptions(null);
+
         if (visibleLoading) {
           setIsLoading(false);
           if (err.kind !== ErrorKind.Unauthorized) {
@@ -78,8 +82,10 @@ const SubscriptionsButton = (props: Props) => {
               message: 'An error occurred getting your subscriptions, please try again later.',
             });
           }
+        } else {
+          dispatch(signOut());
+          history.push(`${window.location.pathname}?modal=login&redirect=${window.location.pathname}`);
         }
-        setActiveSubscriptions(null);
       }
     }
   }
