@@ -146,6 +146,25 @@ describe('ChangelogModal', () => {
       });
     });
 
+    it('closes modal when a new pkg is open', async () => {
+      const mockChangelog = getMockChangelog('10');
+      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+
+      const { getByRole, queryByRole, rerender } = render(<ChangelogModal {...defaultProps} visibleChangelog />);
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+      });
+
+      expect(getByRole('dialog')).toBeInTheDocument();
+
+      rerender(<ChangelogModal {...defaultProps} packageId="id2" />);
+
+      waitFor(() => {
+        expect(queryByRole('dialog')).toBeNull();
+      });
+    });
+
     it('renders changelog blocks in correct order', async () => {
       const mockChangelog = getMockChangelog('5');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);

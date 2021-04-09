@@ -64,6 +64,9 @@ const InstallationModal = (props: Props) => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
+    if (openStatus) {
+      setOpenStatus(false);
+    }
     setInstallMethods(
       getInstallMethods({
         pkg: props.package,
