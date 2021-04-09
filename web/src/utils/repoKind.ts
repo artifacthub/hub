@@ -18,6 +18,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.Krew;
     case 'tekton-task':
       return RepositoryKind.TektonTask;
+    case 'keda-scaler':
+      return RepositoryKind.KedaScaler;
     default:
       return null;
   }
@@ -41,6 +43,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'krew';
     case RepositoryKind.TektonTask:
       return 'tekton-task';
+    case RepositoryKind.KedaScaler:
+      return 'keda-scaler';
     default:
       return null;
   }

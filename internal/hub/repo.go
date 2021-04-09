@@ -45,6 +45,9 @@ const (
 
 	// TektonTask represents a repository with Tekton tasks.
 	TektonTask RepositoryKind = 7
+
+	// KedaScaler represents a repository with KEDA scalers.
+	KedaScaler RepositoryKind = 8
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -56,6 +59,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "helm"
 	case HelmPlugin:
 		return "helm-plugin"
+	case KedaScaler:
+		return "keda-scaler"
 	case Krew:
 		return "krew"
 	case OLM:
@@ -81,6 +86,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Helm, nil
 	case "helm-plugin":
 		return HelmPlugin, nil
+	case "keda-scaler":
+		return KedaScaler, nil
 	case "krew":
 		return Krew, nil
 	case "olm":

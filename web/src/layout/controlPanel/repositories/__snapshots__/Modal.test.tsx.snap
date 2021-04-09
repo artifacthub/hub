@@ -104,6 +104,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     >
                       Tekton tasks
                     </option>
+                    <option
+                      value="8"
+                    >
+                      KEDA scalers
+                    </option>
                   </select>
                 </div>
                 <div

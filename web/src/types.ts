@@ -9,6 +9,7 @@ export enum RepositoryKind {
   Krew,
   HelmPlugin,
   TektonTask,
+  KedaScaler,
 }
 
 export enum HelmChartType {
