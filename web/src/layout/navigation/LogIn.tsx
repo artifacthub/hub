@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { API } from '../../api';
 import { AppCtx, refreshUserProfile, signOut } from '../../context/AppCtx';
 import { ErrorKind, RefInputField, UserLogin } from '../../types';
+import cleanLoginUrlParams from '../../utils/cleanLoginUrlParams';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
@@ -59,9 +60,10 @@ const LogIn = (props: Props) => {
   const onCloseModal = () => {
     if (!isUndefined(props.redirect) || !isUndefined(props.visibleModal)) {
       // If redirect option is defined and user closes login modal,
-      // querystring is cleaned to avoid open modal again on refresh
+      // querystring with login parameters is cleaned to avoid open modal again on refresh
       history.replace({
-        pathname: '/',
+        pathname: window.location.pathname,
+        search: cleanLoginUrlParams(window.location.search),
       });
     }
     setVisibleResetPassword(false);

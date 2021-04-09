@@ -119,7 +119,7 @@ var passwordResetSuccessTmpl = template.Must(template.New("").Parse(`
                                 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
                                   <tbody>
                                     <tr>
-                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top; text-align: center;"> <a href="{{ .baseURL }}/login?modal=login" target="_blank" style="display: inline-block; color: #ffffff; background-color: #39596C; border: solid 1px #39596C; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #39596C;">Login</a> </td>
+                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top; text-align: center;"> <a href="{{ .baseURL }}/?modal=login" target="_blank" style="display: inline-block; color: #ffffff; background-color: #39596C; border: solid 1px #39596C; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #39596C;">Login</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -131,7 +131,7 @@ var passwordResetSuccessTmpl = template.Must(template.New("").Parse(`
                           <tbody>
                             <tr>
                               <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; color: #545454; padding-bottom: 30px; padding-top: 10px;">
-                                <p style="color: #545454; font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span style="color: #545454; background-color: #ffffff;">{{ .baseURL }}/login?modal=login</span></p>
+                                <p style="color: #545454; font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span style="color: #545454; background-color: #ffffff;">{{ .baseURL }}/?modal=login</span></p>
                               </td>
                             </tr>
                           </tbody>

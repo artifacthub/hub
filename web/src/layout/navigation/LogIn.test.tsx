@@ -190,7 +190,7 @@ describe('LogIn', () => {
 
       await waitFor(() => {
         expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({ pathname: '/' });
+        expect(mockHistoryReplace).toHaveBeenCalledWith({ pathname: '/', search: '' });
       });
     });
 

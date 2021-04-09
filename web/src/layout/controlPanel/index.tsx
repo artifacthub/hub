@@ -39,14 +39,14 @@ const ControlPanelView = (props: Props) => {
   const [lastSelectedOrg, setLastSelectedOrg] = useState<string | undefined>(ctx.prefs.controlPanel.selectedOrg);
 
   const onAuthError = (): void => {
-    dispatch(signOut());
-    history.push(
-      `/login?redirect=/control-panel/${activeSection}${!isNull(activeSubsection) ? `/${activeSubsection}` : ''}`
-    );
     alertDispatcher.postAlert({
       type: 'danger',
       message: 'Sorry, you are not authorized to complete this action, please make sure you are signed in',
     });
+    dispatch(signOut());
+    history.push(
+      `/?modal=login&redirect=/control-panel/${activeSection}${!isNull(activeSubsection) ? `/${activeSubsection}` : ''}`
+    );
   };
 
   const checkIfAuthorizationIsActive = (newCtx: string): boolean => {

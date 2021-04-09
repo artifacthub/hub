@@ -117,7 +117,7 @@ describe('StarredPackagesView', () => {
 
       await waitFor(() => {
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/packages/starred');
+        expect(mockHistoryPush).toHaveBeenCalledWith('/?modal=login&redirect=/packages/starred');
       });
     });
   });

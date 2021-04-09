@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { API } from '../api';
 import useSystemThemeMode from '../hooks/useSystemThemeMode';
 import { Prefs, Profile, ThemePrefs, UserFullName } from '../types';
+import cleanLoginUrlParams from '../utils/cleanLoginUrlParams';
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import history from '../utils/history';
 import isControlPanelSectionAvailable from '../utils/isControlPanelSectionAvailable';
@@ -83,12 +84,26 @@ export async function refreshUserProfile(dispatch: React.Dispatch<any>, redirect
   try {
     const profile: Profile = await API.getUserProfile();
     dispatch({ type: 'signIn', profile });
+    const currentUrl = `${window.location.pathname}${
+      window.location.search !== '' ? `?${cleanLoginUrlParams(window.location.search)}` : ''
+    }`;
     if (!isUndefined(redirectUrl)) {
-      // Redirect to correct route when neccessary
-      history.push({ pathname: redirectUrl });
+      if (redirectUrl === currentUrl) {
+        history.replace(redirectUrl);
+      } else {
+        // Redirect to correct route when neccessary
+        history.push(redirectUrl);
+      }
     }
-  } catch {
+  } catch (err) {
     dispatch({ type: 'signOut' });
+    if (err.message === 'invalid session') {
+      history.push(
+        `${window.location.pathname}${
+          window.location.search === '' ? '?' : `${window.location.search}&`
+        }modal=login&redirect=${encodeURIComponent(`${window.location.pathname}${window.location.search}`)}`
+      );
+    }
   }
 }
 

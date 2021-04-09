@@ -91,9 +91,18 @@ const handleErrors = async (res: any) => {
     let error: Error;
     switch (res.status) {
       case 401:
-        error = {
-          kind: ErrorKind.Unauthorized,
-        };
+        try {
+          let text = await res.json();
+          error = {
+            kind: ErrorKind.Unauthorized,
+            message: text.message !== '' ? text.message : undefined,
+          };
+        } catch {
+          error = {
+            kind: ErrorKind.Unauthorized,
+          };
+        }
+
         break;
       case 404:
         error = {
