@@ -6,7 +6,7 @@ exports[`TOC creates snapshot 1`] = `
     class="position-relative toc"
   >
     <div
-      class="d-flex flex-row align-items-center titleWrapper"
+      class="d-flex flex-row align-items-top titleWrapper"
     >
       <div
         class="mt-0 mt-sm-2"

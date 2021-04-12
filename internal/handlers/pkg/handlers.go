@@ -51,12 +51,9 @@ func NewHandlers(
 // Get is an http handler used to get a package details.
 func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	input := &hub.GetPackageInput{
-		PackageName: chi.URLParam(r, "packageName"),
-		Version:     chi.URLParam(r, "version"),
-	}
-	repoName := chi.URLParam(r, "repoName")
-	if repoName != "" {
-		input.RepositoryName = repoName
+		RepositoryName: chi.URLParam(r, "repoName"),
+		PackageName:    chi.URLParam(r, "packageName"),
+		Version:        chi.URLParam(r, "version"),
 	}
 	dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
 	if err != nil {
@@ -213,6 +210,21 @@ func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetStatsJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStats").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
+}
+
+// GetSummary is an http handler used to get a package summary.
+func (h *Handlers) GetSummary(w http.ResponseWriter, r *http.Request) {
+	input := &hub.GetPackageInput{
+		RepositoryName: chi.URLParam(r, "repoName"),
+		PackageName:    chi.URLParam(r, "packageName"),
+	}
+	dataJSON, err := h.pkgManager.GetSummaryJSON(r.Context(), input)
+	if err != nil {
+		h.logger.Error().Err(err).Interface("input", input).Str("method", "GetSummary").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}

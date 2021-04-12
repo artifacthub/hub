@@ -19,6 +19,7 @@ const (
 	getPkgDBQ                       = `select get_package($1::jsonb)`
 	getPkgChangeLogDBQ              = `select get_package_changelog($1::uuid)`
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
+	getPkgSummaryDBQ                = `select get_package_summary($1::jsonb)`
 	getPkgsStarredByUserDBQ         = `select get_packages_starred_by_user($1::uuid)`
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
 	getSnapshotSecurityReportDBQ    = `select security_report from snapshot where package_id = $1 and version = $2`
@@ -84,7 +85,7 @@ func (m *Manager) GetHarborReplicationDumpJSON(ctx context.Context) ([]byte, err
 // object. The json object is built by the database.
 func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
 	// Validate input
-	if input.PackageID == "" && input.PackageName == "" {
+	if input.PackageID == "" && (input.PackageName == "" || input.RepositoryName == "") {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "package name not provided")
 	}
 
@@ -140,6 +141,19 @@ func (m *Manager) GetStarsJSON(ctx context.Context, packageID string) ([]byte, e
 // releases available in the database. The json object is built by the database.
 func (m *Manager) GetStatsJSON(ctx context.Context) ([]byte, error) {
 	return util.DBQueryJSON(ctx, m.db, getPkgsStatsDBQ)
+}
+
+// GetSummaryJSON returns a summary of the package identified by the input
+// provided as a json object. The json object is built by the database.
+func (m *Manager) GetSummaryJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
+	// Validate input
+	if input.PackageID == "" && (input.PackageName == "" || input.RepositoryName == "") {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "package name not provided")
+	}
+
+	// Get package from database
+	inputJSON, _ := json.Marshal(input)
+	return util.DBQueryJSON(ctx, m.db, getPkgSummaryDBQ, inputJSON)
 }
 
 // GetValuesSchemaJSON returns the values schema of the package's snapshot

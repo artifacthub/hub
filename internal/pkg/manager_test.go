@@ -15,6 +15,11 @@ import (
 
 func TestGet(t *testing.T) {
 	ctx := context.Background()
+	input := &hub.GetPackageInput{
+		RepositoryName: "repo1",
+		PackageName:    "pkg1",
+	}
+	inputJSON, _ := json.Marshal(input)
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
@@ -26,10 +31,10 @@ func TestGet(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getPkgDBQ, inputJSON).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		p, err := m.Get(ctx, &hub.GetPackageInput{PackageName: "pkg1"})
+		p, err := m.Get(ctx, input)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, p)
 		db.AssertExpectations(t)
@@ -132,7 +137,7 @@ func TestGet(t *testing.T) {
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return([]byte(`
+		db.On("QueryRow", ctx, getPkgDBQ, inputJSON).Return([]byte(`
 		{
 			"package_id": "00000000-0000-0000-0000-000000000001",
 			"name": "Package 1",
@@ -225,7 +230,7 @@ func TestGet(t *testing.T) {
 		`), nil)
 		m := NewManager(db)
 
-		p, err := m.Get(ctx, &hub.GetPackageInput{PackageName: "package-1"})
+		p, err := m.Get(ctx, input)
 		assert.NoError(t, err)
 		assert.Equal(t, expectedPackage, p)
 		db.AssertExpectations(t)
@@ -290,6 +295,11 @@ func TestGetHarborReplicationDumpJSON(t *testing.T) {
 
 func TestGetJSON(t *testing.T) {
 	ctx := context.Background()
+	input := &hub.GetPackageInput{
+		RepositoryName: "repo1",
+		PackageName:    "pkg1",
+	}
+	inputJSON, _ := json.Marshal(input)
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
@@ -301,10 +311,10 @@ func TestGetJSON(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getPkgDBQ, inputJSON).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetJSON(ctx, &hub.GetPackageInput{PackageName: "pkg1"})
+		dataJSON, err := m.GetJSON(ctx, input)
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -313,10 +323,10 @@ func TestGetJSON(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getPkgDBQ, inputJSON).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetJSON(ctx, &hub.GetPackageInput{PackageName: "pkg1"})
+		dataJSON, err := m.GetJSON(ctx, input)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -531,6 +541,46 @@ func TestGetStatsJSON(t *testing.T) {
 		m := NewManager(db)
 
 		dataJSON, err := m.GetStatsJSON(ctx)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestGetSummaryJSON(t *testing.T) {
+	ctx := context.Background()
+	input := &hub.GetPackageInput{
+		RepositoryName: "repo1",
+		PackageName:    "pkg1",
+	}
+	inputJSON, _ := json.Marshal(input)
+
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil)
+		_, err := m.GetJSON(ctx, &hub.GetPackageInput{})
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getPkgSummaryDBQ, inputJSON).Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetSummaryJSON(ctx, input)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getPkgSummaryDBQ, inputJSON).Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetSummaryJSON(ctx, input)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)

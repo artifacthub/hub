@@ -25,7 +25,7 @@ const TOC = (props: Props) => {
 
   return (
     <div className={`position-relative ${styles.toc}`}>
-      <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
+      <div className={`d-flex flex-row align-items-top ${styles.titleWrapper}`}>
         <div className="mt-0 mt-sm-2">
           <button
             ref={buttonRef}

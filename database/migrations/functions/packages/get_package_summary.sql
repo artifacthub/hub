@@ -1,7 +1,23 @@
 -- get_package_summary returns some details for the provided package as a json
 -- object.
-create or replace function get_package_summary(p_package_id uuid)
+create or replace function get_package_summary(p_input jsonb)
 returns setof json as $$
+declare
+    v_package_id uuid;
+    v_package_name text := p_input->>'package_name';
+    v_repository_name text := p_input->>'repository_name';
+begin
+    if p_input->>'package_id' <> '' then
+        v_package_id = p_input->>'package_id';
+    else
+        select p.package_id into v_package_id
+        from package p
+        join repository r using (repository_id)
+        where p.normalized_name = v_package_name
+        and r.name = v_repository_name;
+    end if;
+
+    return query
     select json_strip_nulls(json_build_object(
         'package_id', p.package_id,
         'name', p.name,
@@ -23,6 +39,7 @@ returns setof json as $$
     from package p
     join snapshot s using (package_id)
     join repository r using (repository_id)
-    where p.package_id = p_package_id
+    where p.package_id = v_package_id
     and s.version = p.latest_version;
-$$ language sql;
+end
+$$ language plpgsql;

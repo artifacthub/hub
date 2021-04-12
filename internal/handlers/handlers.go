@@ -127,11 +127,19 @@ func (h *Handlers) setupRouter() {
 	r.Use(logger)
 	r.Use(h.MetricsCollector)
 	r.Use(secure.New(secure.Options{
-		SSLProxyHeaders:       map[string]string{"X-Forwarded-Proto": "https"},
-		STSSeconds:            31536000,
-		STSIncludeSubdomains:  true,
-		STSPreload:            true,
-		ContentSecurityPolicy: "default-src 'none'; connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev; font-src 'self'; img-src 'self' https:; manifest-src 'self'; script-src 'self' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'",
+		SSLProxyHeaders:      map[string]string{"X-Forwarded-Proto": "https"},
+		STSSeconds:           31536000,
+		STSIncludeSubdomains: true,
+		STSPreload:           true,
+		ContentSecurityPolicy: `
+			default-src 'none';
+			connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev;
+			font-src 'self';
+			img-src 'self' https:;
+			manifest-src 'self';
+			script-src 'self' https://www.google-analytics.com;
+			style-src 'self' 'unsafe-inline'
+		`,
 	}).Handler)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.Users.BasicAuth)
@@ -233,6 +241,7 @@ func (h *Handlers) setupRouter() {
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
 			r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler$}/{repoName}/{packageName}", func(r chi.Router) {
 				r.Get("/feed/rss", h.Packages.RssFeed)
+				r.Get("/summary", h.Packages.GetSummary)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})

@@ -10,5 +10,5 @@ returns setof json as $$
         where usp.user_id = p_user_id
         order by p.name asc
     ) ps
-    cross join get_package_summary(ps.package_id) as pkgJSON;
+    cross join get_package_summary(jsonb_build_object('package_id', ps.package_id)) as pkgJSON;
 $$ language sql;

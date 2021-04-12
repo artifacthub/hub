@@ -11,8 +11,10 @@
 .btn {
   font-size: 0.75rem;
   padding: 0.15rem 0.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
   line-height: 1rem;
-  margin-top: -11px;
+  margin-top: 1px;
 }
 
 .btn path {
@@ -53,6 +55,6 @@
   }
 
   .btn {
-    margin-top: -5px;
+    margin-top: 3px;
   }
 }

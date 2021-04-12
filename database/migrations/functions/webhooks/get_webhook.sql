@@ -30,7 +30,7 @@ begin
                 where wp.webhook_id = wh.webhook_id
                 order by p.name asc
             ) wp
-            cross join get_package_summary(wp.package_id) as pkgJSON
+            cross join get_package_summary(jsonb_build_object('package_id', wp.package_id)) as pkgJSON
         ),
         'last_notifications', (
             select json_agg(json_build_object(
