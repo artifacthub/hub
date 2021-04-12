@@ -249,5 +249,124 @@ describe('ValuesSchema', () => {
       expect(getByText('(unique)')).toBeInTheDocument();
       expect(getAllByText(/\[\]/g)).toHaveLength(2);
     });
+
+    it('renders complex full JSON', async () => {
+      const mockValuesSchema = getMockValuesSchema('9');
+      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+
+      const { getByText, getAllByText, getByTestId, getAllByTestId } = render(<ValuesSchema {...defaultProps} />);
+
+      const btn = getByTestId('valuesSchemaBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+        expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      await waitFor(() => {
+        expect(getByText('Values schema reference')).toBeInTheDocument();
+      });
+
+      expect(getByText('# CMAK operator Helm values')).toBeInTheDocument();
+      expect(getByText('# ui container k8s settings')).toBeInTheDocument();
+      expect(getByText('ui:')).toBeInTheDocument();
+      expect(getByText('# extra cmd line arguments')).toBeInTheDocument();
+      expect(getByText('extraArgs:')).toBeInTheDocument();
+      expect(getAllByText('[]')).toHaveLength(2);
+      expect(getAllByText('# resource requests and limits')).toHaveLength(2);
+      expect(getAllByText('resources:')).toHaveLength(2);
+      expect(getAllByText('# resource limits')).toHaveLength(2);
+      expect(getAllByText('limits:')).toHaveLength(2);
+      expect(getAllByText('{}')).toHaveLength(14);
+      expect(getAllByText('# resource requests')).toHaveLength(2);
+      expect(getAllByText('requests:')).toHaveLength(2);
+      expect(
+        getByText('# provide key value base pairs for consumer properties according to java docs')
+      ).toBeInTheDocument();
+      expect(getByText('consumerProperties:')).toBeInTheDocument();
+      expect(getByText('# Consumer SSL configuration')).toBeInTheDocument();
+      expect(getByText('consumerPropertiesSsl:')).toBeInTheDocument();
+      expect(getAllByText('null')).toHaveLength(26);
+      expect(getByText('# keystore configuration')).toBeInTheDocument();
+      expect(getByText('keystore:')).toBeInTheDocument();
+      expect(getAllByText('type:')).toHaveLength(2);
+      expect(getAllByText('value:')).toHaveLength(2);
+      expect(getAllByText('password:')).toHaveLength(2);
+      expect(getByText('# truststore configuration')).toBeInTheDocument();
+      expect(getByText('truststore:')).toBeInTheDocument();
+      expect(getByText('# zk container k8s settings')).toBeInTheDocument();
+      expect(getByText('zk:')).toBeInTheDocument();
+      expect(getByText('# zk version')).toBeInTheDocument();
+      expect(getByText('version:')).toBeInTheDocument();
+      expect(getAllByText('3.6.1')).toHaveLength(2);
+      expect(getAllByText('# resource requests and limits')).toHaveLength(2);
+      expect(getAllByText('resources:')).toHaveLength(2);
+      expect(getByText('# cmak instance settings')).toBeInTheDocument();
+      expect(getByText('cmak:')).toBeInTheDocument();
+      expect(getAllByText('jmxSsl:')).toHaveLength(2);
+      expect(getAllByText('false')).toHaveLength(20);
+      expect(getAllByText('# either cluster enabled')).toHaveLength(2);
+      expect(getAllByText('enabled:')).toHaveLength(2);
+      expect(getAllByText('true')).toHaveLength(14);
+      expect(getAllByText('jmxPass:')).toHaveLength(2);
+      expect(getAllByText('jmxUser:')).toHaveLength(2);
+      expect(getAllByText('jmxEnabled:')).toHaveLength(2);
+      expect(getAllByText('kafkaVersion:')).toHaveLength(2);
+      expect(getAllByText('2.2.0')).toHaveLength(4);
+      expect(getAllByText('pollConsumers:')).toHaveLength(2);
+      expect(getAllByText('filterConsumers:')).toHaveLength(2);
+      expect(getAllByText('logkafkaEnabled:')).toHaveLength(2);
+      expect(getAllByText('displaySizeEnabled:')).toHaveLength(2);
+      expect(getAllByText('activeOffsetCacheEnabled:')).toHaveLength(2);
+      expect(getByText('# display name for the cluster')).toBeInTheDocument();
+      expect(getByText('name:')).toBeInTheDocument();
+      expect(getAllByText('# curator framework settings for zookeeper')).toHaveLength(2);
+      expect(getAllByText('curatorConfig:')).toHaveLength(2);
+      expect(getAllByText('zkMaxRetry:')).toHaveLength(2);
+      expect(getAllByText('100')).toHaveLength(8);
+      expect(getAllByText('maxSleepTimeMs:')).toHaveLength(2);
+      expect(getAllByText('1000')).toHaveLength(4);
+      expect(getAllByText('baseSleepTimeMs:')).toHaveLength(2);
+      expect(getByText('# zookeeper connection string')).toBeInTheDocument();
+      expect(getByText('zkConnect:')).toBeInTheDocument();
+      expect(getByText('# common config for all declared clusters')).toBeInTheDocument();
+      expect(getAllByText('curatorConfig:')).toHaveLength(2);
+      expect(getByText('# ingress configuration')).toBeInTheDocument();
+      expect(getByText('ingress:')).toBeInTheDocument();
+      expect(getByText('# use TLS secret')).toBeInTheDocument();
+      expect(getByText('tls:')).toBeInTheDocument();
+      expect(getByText('# Secret name to attach to the ingress object')).toBeInTheDocument();
+      expect(getByText('secret:')).toBeInTheDocument();
+      expect(getByText('# ingress host')).toBeInTheDocument();
+      expect(getByText('host:')).toBeInTheDocument();
+      expect(getByText('# ingress path')).toBeInTheDocument();
+      expect(getByText('path:')).toBeInTheDocument();
+      expect(getByText('# optional ingress labels')).toBeInTheDocument();
+      expect(getByText('labels:')).toBeInTheDocument();
+      expect(getByText('# optional ingress annotations')).toBeInTheDocument();
+      expect(getByText('annotations:')).toBeInTheDocument();
+      expect(getByText('# reconciliation job config')).toBeInTheDocument();
+      expect(getByText('reconcile:')).toBeInTheDocument();
+      expect(getByText('# cron expression for periodic reconciliation')).toBeInTheDocument();
+      expect(getByText('schedule:')).toBeInTheDocument();
+      expect(getAllByText('"*/3 * * * *"')).toHaveLength(2);
+      expect(getByText('# allow overwrite Zookeeper settings of CMAK')).toBeInTheDocument();
+      expect(getByText('overwriteZk:')).toBeInTheDocument();
+      expect(getByText('# number of failed jobs to keep')).toBeInTheDocument();
+      expect(getByText('failedJobsHistoryLimit:')).toBeInTheDocument();
+      expect(getByText('# number of completed jobs to keep')).toBeInTheDocument();
+      expect(getByText('successfulJobsHistoryLimit:')).toBeInTheDocument();
+      expect(getByText('# docker registry for all images of the chart')).toBeInTheDocument();
+      expect(getByText('imageRegistry:')).toBeInTheDocument();
+      expect(getAllByText('docker.io')).toHaveLength(2);
+      expect(getAllByText('Required')).toHaveLength(18);
+      expect(getAllByText('object')).toHaveLength(21);
+      expect(getAllByText('array')).toHaveLength(2);
+      expect(getByText('[string]')).toBeInTheDocument();
+      expect(getAllByText('boolean')).toHaveLength(17);
+      expect(getAllByText('integer')).toHaveLength(8);
+      expect(getAllByTestId('schemaCombSelect')).toHaveLength(8);
+    });
   });
 });

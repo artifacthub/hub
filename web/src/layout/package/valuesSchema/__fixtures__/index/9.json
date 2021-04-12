@@ -1,0 +1,328 @@
+{
+  "$id": "https://github.com/eshepelyuk/cmak-operator/",
+  "type": "object",
+  "title": "CMAK operator Helm values",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "required": ["cmak", "reconcile", "ui", "zk"],
+  "properties": {
+    "ui": {
+      "type": "object",
+      "title": "ui container k8s settings",
+      "properties": {
+        "extraArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "extra cmd line arguments",
+          "default": []
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        },
+        "consumerProperties": {
+          "type": "object",
+          "title": "provide key value base pairs for consumer properties according to java docs",
+          "default": {}
+        },
+        "consumerPropertiesSsl": {
+          "$ref": "#/definitions/consumerSsl"
+        }
+      }
+    },
+    "zk": {
+      "type": "object",
+      "title": "zk container k8s settings",
+      "required": ["version"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "zk version",
+          "default": "3.6.1"
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "additionalProperties": false
+    },
+    "cmak": {
+      "type": "object",
+      "title": "cmak instance settings",
+      "required": ["clustersCommon", "clusters"],
+      "properties": {
+        "clusters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/clusterConfig"
+          },
+          "title": "list of configured clusters"
+        },
+        "clustersCommon": {
+          "$ref": "#/definitions/clusterConfigCommon"
+        }
+      },
+      "description": "Those settings are mirroring CMAK UI preferences.",
+      "additionalProperties": false
+    },
+    "ingress": {
+      "type": ["null", "object"],
+      "title": "ingress configuration",
+      "default": null,
+      "required": ["host", "path"],
+      "properties": {
+        "tls": {
+          "$ref": "#/definitions/tls"
+        },
+        "host": {
+          "type": "string",
+          "title": "ingress host"
+        },
+        "path": {
+          "type": "string",
+          "title": "ingress path"
+        },
+        "labels": {
+          "type": "object",
+          "title": "optional ingress labels",
+          "default": {}
+        },
+        "annotations": {
+          "type": "object",
+          "title": "optional ingress annotations",
+          "default": {}
+        }
+      },
+      "description": "If object not null, then Ingress resources will be created.",
+      "additionalProperties": false
+    },
+    "reconcile": {
+      "type": "object",
+      "title": "reconciliation job config",
+      "required": ["schedule"],
+      "properties": {
+        "schedule": {
+          "type": "string",
+          "title": "cron expression for periodic reconciliation",
+          "default": "*/3 * * * *"
+        },
+        "overwriteZk": {
+          "type": "boolean",
+          "title": "allow overwrite Zookeeper settings of CMAK",
+          "default": true
+        },
+        "failedJobsHistoryLimit": {
+          "type": ["null", "integer"],
+          "title": "number of failed jobs to keep",
+          "default": null
+        },
+        "successfulJobsHistoryLimit": {
+          "type": ["null", "integer"],
+          "title": "number of completed jobs to keep",
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "imageRegistry": {
+      "type": "string",
+      "title": "docker registry for all images of the chart",
+      "default": "docker.io"
+    }
+  },
+  "definitions": {
+    "tls": {
+      "type": ["null", "object"],
+      "title": "use TLS secret",
+      "default": null,
+      "properties": {
+        "secret": {
+          "type": "string",
+          "title": "Secret name to attach to the ingress object"
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "title": "resource requests and limits",
+      "required": ["limits", "requests"],
+      "properties": {
+        "limits": {
+          "type": "object",
+          "title": "resource limits",
+          "default": {}
+        },
+        "requests": {
+          "type": "object",
+          "title": "resource requests",
+          "default": {}
+        }
+      },
+      "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+      "additionalProperties": false
+    },
+    "consumerSsl": {
+      "type": "object",
+      "title": "Consumer SSL configuration",
+      "default": null,
+      "properties": {
+        "keystore": {
+          "type": "object",
+          "title": "keystore configuration",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string",
+              "description": "base64 encoded keystore"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
+        "truststore": {
+          "type": "object",
+          "title": "truststore configuration",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string",
+              "description": "base64 encoded truststore"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "clusterConfig": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/clusterConfigShared"
+        },
+        {
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "display name for the cluster"
+            },
+            "curatorConfig": {
+              "$ref": "#/definitions/curatorConfig"
+            }
+          }
+        }
+      ],
+      "title": "config for particular cluster",
+      "required": ["name", "curatorConfig"]
+    },
+    "curatorConfig": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/curatorConfigCommon"
+        },
+        {
+          "properties": {
+            "zkConnect": {
+              "type": "string",
+              "title": "zookeeper connection string",
+              "description": "Zookeeper addresses joined by , host1:port,host2:port,host3:port"
+            }
+          }
+        }
+      ],
+      "required": ["zkConnect"]
+    },
+    "clusterConfigCommon": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/clusterConfigShared"
+        },
+        {
+          "properties": {
+            "curatorConfig": {
+              "$ref": "#/definitions/curatorConfigCommon"
+            }
+          }
+        }
+      ],
+      "title": "common config for all declared clusters",
+      "required": ["curatorConfig"]
+    },
+    "clusterConfigShared": {
+      "type": "object",
+      "properties": {
+        "jmxSsl": {
+          "type": "boolean",
+          "default": false
+        },
+        "enabled": {
+          "type": "boolean",
+          "title": "either cluster enabled",
+          "default": true
+        },
+        "jmxPass": {
+          "type": ["null", "string"],
+          "default": null
+        },
+        "jmxUser": {
+          "type": ["null", "string"],
+          "default": null
+        },
+        "jmxEnabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "kafkaVersion": {
+          "type": "string",
+          "default": "2.2.0"
+        },
+        "pollConsumers": {
+          "type": "boolean",
+          "default": true
+        },
+        "filterConsumers": {
+          "type": "boolean",
+          "default": false
+        },
+        "logkafkaEnabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "displaySizeEnabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "activeOffsetCacheEnabled": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "curatorConfigCommon": {
+      "type": "object",
+      "title": "curator framework settings for zookeeper",
+      "properties": {
+        "zkMaxRetry": {
+          "type": "integer",
+          "default": 100
+        },
+        "maxSleepTimeMs": {
+          "type": "integer",
+          "default": 1000
+        },
+        "baseSleepTimeMs": {
+          "type": "integer",
+          "default": 100
+        }
+      }
+    }
+  }
+}

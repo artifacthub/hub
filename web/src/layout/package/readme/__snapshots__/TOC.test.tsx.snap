@@ -6,13 +6,13 @@ exports[`TOC creates snapshot 1`] = `
     class="position-relative toc"
   >
     <div
-      class="d-flex flex-row align-items-top titleWrapper"
+      class="d-flex flex-row align-items-center titleWrapper"
     >
       <div
         class="mt-0 mt-sm-2"
       >
         <button
-          class="btn btn-sm mr-3 btn-outline-dark btn"
+          class="btn btn-sm mr-2 btn-outline-dark btn"
           data-testid="btnTOC"
         >
           <svg

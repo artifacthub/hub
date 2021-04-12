@@ -323,6 +323,7 @@ const SchemaDefinition = (props: Props) => {
                         <small className="text-muted text-uppercase">Type</small>:{' '}
                         {isArray(def.type) ? (
                           <select
+                            data-testid="schemaCombSelect"
                             value={activeType}
                             onClick={(e: React.MouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {

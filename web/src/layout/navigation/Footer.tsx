@@ -35,14 +35,8 @@ const Footer = (props: Props) => (
                 pathname: '/stats',
               }}
             >
-              Stats
+              Statistics
             </Link>
-            <ExternalLink
-              className="text-muted mb-1"
-              href="https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
-            >
-              Code of conduct
-            </ExternalLink>
           </div>
         </div>
 

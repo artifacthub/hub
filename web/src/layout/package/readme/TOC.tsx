@@ -25,12 +25,12 @@ const TOC = (props: Props) => {
 
   return (
     <div className={`position-relative ${styles.toc}`}>
-      <div className={`d-flex flex-row align-items-top ${styles.titleWrapper}`}>
+      <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
         <div className="mt-0 mt-sm-2">
           <button
             ref={buttonRef}
             data-testid="btnTOC"
-            className={`btn btn-sm mr-3 btn-outline-dark ${styles.btn}`}
+            className={`btn btn-sm mr-2 btn-outline-dark ${styles.btn}`}
             onClick={() => setVisibleTOC(!visibleTOC)}
           >
             <FaListUl className={`position-relative ${styles.icon}`} />

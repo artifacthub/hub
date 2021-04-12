@@ -222,12 +222,15 @@ describe('SchemaDefinition', () => {
 
     it('renders 2 different types', () => {
       const props = getProps('10');
-      const { getByDisplayValue, getByText, queryByText } = render(<SchemaDefinition {...props} {...defaultProps} />);
+      const { getByDisplayValue, getByText, queryByText, getByTestId } = render(
+        <SchemaDefinition {...props} {...defaultProps} />
+      );
 
       const select = getByDisplayValue('string');
 
       expect(select).toBeInTheDocument();
       expect(getByText('Constraints')).toBeInTheDocument();
+      expect(getByTestId('schemaCombSelect')).toBeInTheDocument();
 
       fireEvent.change(select, { target: { value: 'null' } });
 
