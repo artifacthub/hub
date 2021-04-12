@@ -32,13 +32,14 @@ func TestMain(m *testing.M) {
 func TestGet(t *testing.T) {
 	rctx := &chi.Context{
 		URLParams: chi.RouteParams{
-			Keys:   []string{"packageName", "version"},
-			Values: []string{"pkg1", "1.0.0"},
+			Keys:   []string{"repoName", "packageName", "version"},
+			Values: []string{"repo1", "pkg1", "1.0.0"},
 		},
 	}
 	getPkgInput := &hub.GetPackageInput{
-		PackageName: "pkg1",
-		Version:     "1.0.0",
+		RepositoryName: "repo1",
+		PackageName:    "pkg1",
+		Version:        "1.0.0",
 	}
 
 	t.Run("get package failed", func(t *testing.T) {
@@ -65,7 +66,6 @@ func TestGet(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
-				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
@@ -84,7 +84,6 @@ func TestGet(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -635,6 +634,78 @@ func TestGetStats(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+}
+
+func TestGetSummary(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"repoName", "packageName"},
+			Values: []string{"repo1", "pkg1"},
+		},
+	}
+	input := &hub.GetPackageInput{
+		RepositoryName: "repo1",
+		PackageName:    "pkg1",
+	}
+
+	t.Run("get package summary failed", func(t *testing.T) {
+		testCases := []struct {
+			pmErr              error
+			expectedStatusCode int
+		}{
+			{
+				hub.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				hub.ErrNotFound,
+				http.StatusNotFound,
+			},
+			{
+				tests.ErrFakeDB,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.pmErr.Error(), func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.pm.On("GetSummaryJSON", r.Context(), input).Return(nil, tc.pmErr)
+				hw.h.GetSummary(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.assertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("get package summary succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetSummaryJSON", r.Context(), input).Return([]byte("dataJSON"), nil)
+		hw.h.GetSummary(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
 		hw.assertExpectations(t)
 	})
 }

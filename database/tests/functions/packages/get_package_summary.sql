@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(3);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -56,7 +56,48 @@ insert into snapshot (
 
 -- Run some tests
 select is(
-    get_package_summary(:'package1ID')::jsonb,
+    get_package_summary('{
+        "package_id": "00000000-0000-0000-0000-000000000001"
+    }')::jsonb,
+    '{
+        "package_id": "00000000-0000-0000-0000-000000000001",
+        "name": "package1",
+        "normalized_name": "package1",
+        "stars": 10,
+        "official": true,
+        "display_name": "Package 1",
+        "description": "description",
+        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+        "version": "1.0.0",
+        "app_version": "12.0.0",
+        "license": "Apache-2.0",
+        "deprecated": false,
+        "signed": false,
+        "security_report_summary": {
+            "high": 2,
+            "medium": 1
+        },
+        "ts": 1592299234,
+        "repository": {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
+            "kind": 0,
+            "name": "repo1",
+            "display_name": "Repo 1",
+            "url": "https://repo1.com",
+            "private": false,
+            "verified_publisher": false,
+            "official": false,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1"
+        }
+    }'::jsonb,
+    'Package1 details should be returned as a json object'
+);
+select is(
+    get_package_summary('{
+        "repository_name": "repo1",
+        "package_name": "package1"
+    }')::jsonb,
     '{
         "package_id": "00000000-0000-0000-0000-000000000001",
         "name": "package1",
@@ -93,7 +134,9 @@ select is(
 );
 select is_empty(
     $$
-        select get_package_summary('00000000-0000-0000-0000-000000000002')::jsonb
+        select get_package_summary('{
+            "package_id": "00000000-0000-0000-0000-000000000002"
+        }')::jsonb
     $$,
     'No results expected for inexisting package'
 );

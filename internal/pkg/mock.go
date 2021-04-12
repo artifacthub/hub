@@ -82,6 +82,13 @@ func (m *ManagerMock) GetStatsJSON(ctx context.Context) ([]byte, error) {
 	return data, args.Error(1)
 }
 
+// GetSummaryJSON implements the PackageManager interface.
+func (m *ManagerMock) GetSummaryJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
+	args := m.Called(ctx, input)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // GetValuesSchemaJSON implements the PackageManager interface.
 func (m *ManagerMock) GetValuesSchemaJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
 	args := m.Called(ctx, pkgID, version)

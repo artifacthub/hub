@@ -12,5 +12,5 @@ returns setof json as $$
         and s.ts between current_timestamp - '6 months'::interval and current_timestamp
         order by random() limit 10
     ) rp
-    cross join get_package_summary(rp.package_id) as pkgJSON;
+    cross join get_package_summary(jsonb_build_object('package_id', rp.package_id)) as pkgJSON;
 $$ language sql;

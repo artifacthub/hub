@@ -104,6 +104,7 @@ type PackageManager interface {
 	GetStarredByUserJSON(ctx context.Context) ([]byte, error)
 	GetStarsJSON(ctx context.Context, packageID string) ([]byte, error)
 	GetStatsJSON(ctx context.Context) ([]byte, error)
+	GetSummaryJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
 	GetValuesSchemaJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	Register(ctx context.Context, pkg *Package) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error)
