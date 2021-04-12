@@ -135,6 +135,12 @@ const ChartTemplatesModal = (props: Props) => {
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  useEffect(() => {
+    if (props.packageId !== currentPkgId && openStatus) {
+      setOpenStatus(false);
+    }
+  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   if (props.repoKind !== RepositoryKind.Helm) return null;
 
   async function getChartTemplates() {

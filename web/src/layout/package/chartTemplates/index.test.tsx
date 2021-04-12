@@ -263,4 +263,28 @@ describe('ChartTemplatesModal', () => {
       });
     });
   });
+
+  describe('closes modal', () => {
+    it('when a new pkg is open', async () => {
+      const mockChartTemplates = getMockChartTemplates('9');
+      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+
+      const { rerender, getByRole, queryByRole } = render(
+        <Router>
+          <ChartTemplatesModal {...defaultProps} visibleChartTemplates />
+        </Router>
+      );
+
+      await waitFor(() => expect(API.getChartTemplates).toHaveBeenCalledTimes(1));
+
+      expect(getByRole('dialog')).toBeInTheDocument();
+
+      rerender(
+        <Router>
+          <ChartTemplatesModal {...defaultProps} packageId="id2" />
+        </Router>
+      );
+      expect(queryByRole('dialog')).toBeNull();
+    });
+  });
 });

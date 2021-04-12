@@ -44,6 +44,12 @@ const ChangelogModal = (props: Props) => {
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  useEffect(() => {
+    if (props.packageId !== currentPkgId && openStatus) {
+      setOpenStatus(false);
+    }
+  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   if ([RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(props.repository.kind))
     return null;
 

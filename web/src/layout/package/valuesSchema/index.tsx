@@ -111,6 +111,12 @@ const ValuesSchema = (props: Props) => {
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  useEffect(() => {
+    if (props.packageId !== currentPkgId && openStatus) {
+      setOpenStatus(false);
+    }
+  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   return (
     <>
       <ElementWithTooltip

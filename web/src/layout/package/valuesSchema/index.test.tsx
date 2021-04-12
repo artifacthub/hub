@@ -368,5 +368,26 @@ describe('ValuesSchema', () => {
       expect(getAllByText('integer')).toHaveLength(8);
       expect(getAllByTestId('schemaCombSelect')).toHaveLength(8);
     });
+
+    it('closes modal when a new pkg is open', async () => {
+      const mockValuesSchema = getMockValuesSchema('10');
+      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+
+      const { getByRole, getByTestId, queryByRole, rerender } = render(<ValuesSchema {...defaultProps} />);
+
+      const btn = getByTestId('valuesSchemaBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+        expect(getByRole('dialog')).toBeInTheDocument();
+      });
+
+      rerender(<ValuesSchema {...defaultProps} packageId="id2" />);
+
+      waitFor(() => {
+        expect(queryByRole('dialog')).toBeNull();
+      });
+    });
   });
 });
