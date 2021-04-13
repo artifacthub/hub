@@ -25,6 +25,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/gorilla/csrf"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/rs/cors"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -241,7 +242,12 @@ func (h *Handlers) setupRouter() {
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
 			r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler$}/{repoName}/{packageName}", func(r chi.Router) {
 				r.Get("/feed/rss", h.Packages.RssFeed)
-				r.Get("/summary", h.Packages.GetSummary)
+				corsHandler := cors.New(cors.Options{
+					AllowedOrigins:   []string{"*"},
+					AllowedMethods:   []string{"GET"},
+					AllowCredentials: false,
+				}).Handler
+				r.With(corsHandler).Get("/summary", h.Packages.GetSummary)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
