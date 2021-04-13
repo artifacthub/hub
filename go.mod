@@ -29,6 +29,7 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/prometheus/client_golang v1.10.0
+	github.com/rs/cors v1.7.0
 	github.com/rs/zerolog v1.20.0
 	github.com/sabhiram/go-gitignore v0.0.0-20201211210132-54b8a0bf510f
 	github.com/satori/uuid v1.2.0
