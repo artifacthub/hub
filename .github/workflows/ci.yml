@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@master
-      - name: Lint Code Base
+      - name: Lint OpenAPI specs
         uses: github/super-linter@v3
         env:
           VALIDATE_ALL_CODEBASE: true
