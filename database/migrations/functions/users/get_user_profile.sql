@@ -6,7 +6,9 @@ returns setof json as $$
         'first_name', u.first_name,
         'last_name', u.last_name,
         'email', u.email,
-        'profile_image_id', u.profile_image_id
+        'profile_image_id', u.profile_image_id,
+        'password_set', (select u.password is not null),
+        'tfa_enabled', u.tfa_enabled
     ))
     from "user" u
     where u.user_id = p_user_id;

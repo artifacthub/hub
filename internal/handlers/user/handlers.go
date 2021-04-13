@@ -43,6 +43,12 @@ const (
 	// secret.
 	APIKeySecretHeader = "X-API-KEY-SECRET" // #nosec
 
+	// SessionApprovedHeader represents the header used to indicate a client if
+	// a session is approved or not. When a user has enabled TFA, sessions need
+	// be approved by providing a TFA passcode to the session validation
+	// endpoint. If TFA is not enabled, sessions will be approved on creation.
+	SessionApprovedHeader = "X-SESSION-APPROVED"
+
 	sessionCookieName    = "sid"
 	oauthStateCookieName = "oas"
 	sessionDuration      = 30 * 24 * time.Hour
@@ -115,6 +121,45 @@ func NewHandlers(ctx context.Context, userManager hub.UserManager, cfg *viper.Vi
 	}, nil
 }
 
+// ApproveSession is an http handler used to approve a session. When a user has
+// enabled TFA, sessions created after users identify themselves with their
+// credentials need to be approved to make them valid by providing a valid TFA
+// passcode.
+func (h *Handlers) ApproveSession(w http.ResponseWriter, r *http.Request) {
+	// Get passcode from input
+	var input map[string]string
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil || input["passcode"] == "" {
+		h.logger.Error().Err(err).Str("method", "ApproveSession").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	passcode := input["passcode"]
+
+	// Extract sessionID from cookie
+	var sessionID []byte
+	cookie, err := r.Cookie(sessionCookieName)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "ApproveSession").Msg("session cookie not found")
+		helpers.RenderErrorWithCodeJSON(w, errInvalidSession, http.StatusUnauthorized)
+		return
+	}
+	if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
+		h.logger.Error().Err(err).Str("method", "ApproveSession").Msg("sessionID decoding failed")
+		helpers.RenderErrorWithCodeJSON(w, errInvalidSession, http.StatusUnauthorized)
+		return
+	}
+
+	// Approve session using the passcode provided
+	if err := h.userManager.ApproveSession(r.Context(), sessionID, passcode); err != nil {
+		h.logger.Error().Err(err).Str("method", "ApproveSession").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // BasicAuth is a middleware that provides basic auth support.
 func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 	validUser := []byte(h.cfg.GetString("server.basicAuth.username"))
@@ -174,6 +219,40 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	}
 	if available {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// DisableTFA is an http handler used to disable two-factor authentication.
+func (h *Handlers) DisableTFA(w http.ResponseWriter, r *http.Request) {
+	var input map[string]string
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil || input["passcode"] == "" {
+		h.logger.Error().Err(err).Str("method", "DisableTFA").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	if err := h.userManager.DisableTFA(r.Context(), input["passcode"]); err != nil {
+		h.logger.Error().Err(err).Str("method", "DisableTFA").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// EnableTFA is an http handler used to enable two-factor authentication.
+func (h *Handlers) EnableTFA(w http.ResponseWriter, r *http.Request) {
+	var input map[string]string
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil || input["passcode"] == "" {
+		h.logger.Error().Err(err).Str("method", "EnableTFA").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	if err := h.userManager.EnableTFA(r.Context(), input["passcode"]); err != nil {
+		h.logger.Error().Err(err).Str("method", "EnableTFA").Send()
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
@@ -253,12 +332,11 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 
 	// Register user session
 	ip, _, _ := net.SplitHostPort(r.RemoteAddr)
-	session := &hub.Session{
+	session, err := h.userManager.RegisterSession(r.Context(), &hub.Session{
 		UserID:    checkCredentialsOutput.UserID,
 		IP:        ip,
 		UserAgent: r.UserAgent(),
-	}
-	sessionID, err := h.userManager.RegisterSession(r.Context(), session)
+	})
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("registerSession failed")
 		helpers.RenderErrorJSON(w, err)
@@ -266,7 +344,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate and set session cookie
-	encodedSessionID, err := h.sc.Encode(sessionCookieName, sessionID)
+	encodedSessionID, err := h.sc.Encode(sessionCookieName, session.SessionID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("sessionID encoding failed")
 		helpers.RenderErrorJSON(w, err)
@@ -284,6 +362,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 		cookie.Secure = true
 	}
 	http.SetCookie(w, cookie)
+	w.Header().Set(SessionApprovedHeader, strconv.FormatBool(session.Approved))
 	w.WriteHeader(http.StatusNoContent)
 }
 
@@ -366,18 +445,17 @@ func (h *Handlers) OauthCallback(w http.ResponseWriter, r *http.Request) {
 
 	// Register user session and set session cookie
 	ip, _, _ := net.SplitHostPort(r.RemoteAddr)
-	session := &hub.Session{
+	session, err := h.userManager.RegisterSession(r.Context(), &hub.Session{
 		UserID:    userID,
 		IP:        ip,
 		UserAgent: r.UserAgent(),
-	}
-	sessionID, err := h.userManager.RegisterSession(r.Context(), session)
+	})
 	if err != nil {
 		logger.Error().Err(err).Msg("registerSession failed")
 		http.Redirect(w, r, oauthFailedURL, http.StatusSeeOther)
 		return
 	}
-	encodedSessionID, err := h.sc.Encode(sessionCookieName, sessionID)
+	encodedSessionID, err := h.sc.Encode(sessionCookieName, session.SessionID)
 	if err != nil {
 		logger.Error().Err(err).Msg("sessionID encoding failed")
 		http.Redirect(w, r, oauthFailedURL, http.StatusSeeOther)
@@ -747,6 +825,17 @@ func (h *Handlers) ResetPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// SetupTFA is an http handler used to setup two-factor authentication.
+func (h *Handlers) SetupTFA(w http.ResponseWriter, r *http.Request) {
+	dataJSON, err := h.userManager.SetupTFA(r.Context())
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "SetupTFA").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusCreated)
 }
 
 // UpdatePassword is an http handler used to update the password in the hub

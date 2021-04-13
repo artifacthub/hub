@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha512"
 	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"testing"
@@ -13,10 +14,127 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/jackc/pgx/v4"
+	"github.com/pquerna/otp/totp"
+	"github.com/satori/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 	"golang.org/x/crypto/bcrypt"
 )
+
+func TestApproveSession(t *testing.T) {
+	ctx := context.Background()
+	sessionID := []byte("sessionID")
+	hashedSessionID := hashSessionID([]byte("sessionID"))
+	opts := totp.GenerateOpts{
+		Issuer:      "Artifact Hub",
+		AccountName: "test@email.com",
+	}
+	key, _ := totp.Generate(opts)
+	code1 := "code1"
+	tfaConfig := &hub.TFAConfig{
+		Enabled:       true,
+		URL:           key.URL(),
+		RecoveryCodes: []string{code1},
+	}
+	tfaConfigJSON, _ := json.Marshal(tfaConfig)
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg    string
+			sessionID []byte
+			passcode  string
+		}{
+			{
+				"sessionID not provided",
+				nil,
+				"123456",
+			},
+			{
+				"sessionID not provided",
+				[]byte(""),
+				"123456",
+			},
+			{
+				"passcode not provided",
+				[]byte("sessionID"),
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				m := NewManager(nil, nil)
+				err := m.ApproveSession(ctx, tc.sessionID, tc.passcode)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("error getting user id from session", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashedSessionID).Return("", tests.ErrFakeDB)
+		m := NewManager(db, nil)
+
+		err := m.ApproveSession(ctx, sessionID, "123456")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error getting tfa config from database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Return("userID", nil)
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(nil, tests.ErrFakeDB)
+		m := NewManager(db, nil)
+
+		err := m.ApproveSession(ctx, sessionID, "123456")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("invalid passcode provided", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Return("userID", nil)
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		m := NewManager(db, nil)
+
+		err := m.ApproveSession(ctx, sessionID, "123456")
+		assert.Equal(t, errInvalidTFAPasscode, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("session approved successfully", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Return("userID", nil)
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, approveSessionDBQ, hashedSessionID, "").Return(nil)
+		m := NewManager(db, nil)
+
+		passcode, _ := totp.GenerateCode(key.Secret(), time.Now())
+		err := m.ApproveSession(ctx, sessionID, passcode)
+		assert.Nil(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("session approved successfully (using valid recovery code)", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Return("userID", nil)
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, approveSessionDBQ, hashedSessionID, code1).Return(nil)
+		m := NewManager(db, nil)
+
+		err := m.ApproveSession(ctx, sessionID, code1)
+		assert.Nil(t, err)
+		db.AssertExpectations(t)
+	})
+}
 
 func TestCheckAPIKey(t *testing.T) {
 	ctx := context.Background()
@@ -331,7 +449,28 @@ func TestCheckSession(t *testing.T) {
 	t.Run("session has expired", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return([]interface{}{"userID", int64(1)}, nil)
+		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return([]interface{}{
+			"userID",
+			int64(1),
+			true,
+		}, nil)
+		m := NewManager(db, nil)
+
+		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
+		assert.NoError(t, err)
+		assert.False(t, output.Valid)
+		assert.Empty(t, output.UserID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("session is not approved", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return([]interface{}{
+			"userID",
+			time.Now().Unix(),
+			false,
+		}, nil)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
@@ -347,6 +486,7 @@ func TestCheckSession(t *testing.T) {
 		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return([]interface{}{
 			"userID",
 			time.Now().Unix(),
+			true,
 		}, nil)
 		m := NewManager(db, nil)
 
@@ -421,6 +561,195 @@ func TestDeleteSession(t *testing.T) {
 	})
 }
 
+func TestDisableTFA(t *testing.T) {
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	opts := totp.GenerateOpts{
+		Issuer:      "Artifact Hub",
+		AccountName: "test@email.com",
+	}
+	key, _ := totp.Generate(opts)
+	code1 := "code1"
+	tfaConfig := &hub.TFAConfig{
+		Enabled:       true,
+		URL:           key.URL(),
+		RecoveryCodes: []string{code1},
+	}
+	tfaConfigJSON, _ := json.Marshal(tfaConfig)
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil, nil)
+		assert.Panics(t, func() {
+			_ = m.DisableTFA(ctx, "123456")
+		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil, nil)
+		err := m.DisableTFA(ctx, "")
+
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+	})
+
+	t.Run("error getting tfa config from database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(nil, tests.ErrFakeDB)
+		m := NewManager(db, nil)
+
+		err := m.DisableTFA(ctx, "123456")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("invalid passcode provided", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		m := NewManager(db, nil)
+
+		err := m.DisableTFA(ctx, "123456")
+		assert.Equal(t, errInvalidTFAPasscode, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error setting tfa as disabled in the database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, disableTFADBQ, "userID").Return(tests.ErrFakeDB)
+		m := NewManager(db, nil)
+
+		passcode, _ := totp.GenerateCode(key.Secret(), time.Now())
+		err := m.DisableTFA(ctx, passcode)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("tfa disabled successfully", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, disableTFADBQ, "userID").Return(nil)
+		m := NewManager(db, nil)
+
+		passcode, _ := totp.GenerateCode(key.Secret(), time.Now())
+		err := m.DisableTFA(ctx, passcode)
+		assert.Nil(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("tfa disabled successfully (using valid recovery code)", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, disableTFADBQ, "userID").Return(nil)
+		m := NewManager(db, nil)
+
+		err := m.DisableTFA(ctx, code1)
+		assert.Nil(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestEnableTFA(t *testing.T) {
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	opts := totp.GenerateOpts{
+		Issuer:      "Artifact Hub",
+		AccountName: "test@email.com",
+	}
+	key, _ := totp.Generate(opts)
+	tfaConfig := &hub.TFAConfig{
+		Enabled: true,
+		URL:     key.URL(),
+	}
+	tfaConfigJSON, _ := json.Marshal(tfaConfig)
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil, nil)
+		assert.Panics(t, func() {
+			_ = m.EnableTFA(ctx, "123456")
+		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil, nil)
+		err := m.EnableTFA(ctx, "")
+
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+	})
+
+	t.Run("error getting tfa config from database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(nil, tests.ErrFakeDB)
+		m := NewManager(db, nil)
+
+		err := m.EnableTFA(ctx, "123456")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("invalid passcode provided", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		m := NewManager(db, nil)
+
+		err := m.EnableTFA(ctx, "123456")
+		assert.Equal(t, errInvalidTFAPasscode, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error setting tfa as enabled in the database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, enableTFADBQ, "userID").Return(tests.ErrFakeDB)
+		m := NewManager(db, nil)
+
+		passcode, _ := totp.GenerateCode(key.Secret(), time.Now())
+		err := m.EnableTFA(ctx, passcode)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error sending tfa enabled email nofication", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, enableTFADBQ, "userID").Return(nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
+		es := &email.SenderMock{}
+		es.On("SendEmail", mock.Anything).Return(email.ErrFakeSenderFailure)
+		m := NewManager(db, es)
+
+		passcode, _ := totp.GenerateCode(key.Secret(), time.Now())
+		err := m.EnableTFA(ctx, passcode)
+		assert.Equal(t, email.ErrFakeSenderFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("tfa enabled successfully", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, enableTFADBQ, "userID").Return(nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
+		es := &email.SenderMock{}
+		es.On("SendEmail", mock.Anything).Return(nil)
+		m := NewManager(db, es)
+
+		passcode, _ := totp.GenerateCode(key.Secret(), time.Now())
+		err := m.EnableTFA(ctx, passcode)
+		assert.Nil(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetProfile(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
@@ -452,6 +781,8 @@ func TestGetProfile(t *testing.T) {
 			LastName:       "last_name",
 			Email:          "email",
 			ProfileImageID: "profile_image_id",
+			PasswordSet:    true,
+			TFAEnabled:     true,
 		}
 
 		db := &tests.DBMock{}
@@ -461,7 +792,9 @@ func TestGetProfile(t *testing.T) {
 			"first_name": "first_name",
 			"last_name": "last_name",
 			"email": "email",
-			"profile_image_id": "profile_image_id"
+			"profile_image_id": "profile_image_id",
+			"password_set": true,
+			"tfa_enabled": true
 		}
 		`), nil)
 		m := NewManager(db, nil)
@@ -522,7 +855,7 @@ func TestGetUserID(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserIDDBQ, "email").Return("userID", nil)
+		db.On("QueryRow", ctx, getUserIDFromEmailDBQ, "email").Return("userID", nil)
 		m := NewManager(db, nil)
 
 		userID, err := m.GetUserID(ctx, "email")
@@ -534,7 +867,7 @@ func TestGetUserID(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserIDDBQ, "email").Return("", tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getUserIDFromEmailDBQ, "email").Return("", tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		userID, err := m.GetUserID(ctx, "email")
@@ -580,18 +913,6 @@ func TestRegisterSession(t *testing.T) {
 		}
 	})
 
-	t.Run("successful session registration", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return([]byte("sessionID"), nil)
-		m := NewManager(db, nil)
-
-		sessionID, err := m.RegisterSession(ctx, s)
-		assert.NoError(t, err)
-		assert.Equal(t, []byte("sessionID"), sessionID)
-		db.AssertExpectations(t)
-	})
-
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
@@ -601,6 +922,22 @@ func TestRegisterSession(t *testing.T) {
 		sessionID, err := m.RegisterSession(ctx, s)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, sessionID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("successful session registration", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return([]interface{}{
+			[]byte("sessionID"),
+			true,
+		}, nil)
+		m := NewManager(db, nil)
+
+		session, err := m.RegisterSession(ctx, s)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("sessionID"), session.SessionID)
+		assert.True(t, session.Approved)
 		db.AssertExpectations(t)
 	})
 }
@@ -903,6 +1240,65 @@ func TestResetPassword(t *testing.T) {
 				es.AssertExpectations(t)
 			})
 		}
+	})
+}
+
+func TestSetupTFA(t *testing.T) {
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil, nil)
+		assert.Panics(t, func() {
+			_, _ = m.SetupTFA(context.Background())
+		})
+	})
+
+	t.Run("error getting requesting user email", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("", tests.ErrFakeDB)
+		m := NewManager(db, nil)
+
+		dataJSON, err := m.SetupTFA(ctx)
+		assert.Nil(t, dataJSON)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error storing tfa info in database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
+		db.On("Exec", ctx, updateTFAInfoDBQ, "userID", mock.Anything, mock.Anything).Return(tests.ErrFake)
+		m := NewManager(db, nil)
+
+		dataJSON, err := m.SetupTFA(ctx)
+		assert.Nil(t, dataJSON)
+		assert.Equal(t, tests.ErrFake, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("setup tfa succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
+		db.On("Exec", ctx, updateTFAInfoDBQ, "userID", mock.Anything, mock.Anything).Return(nil)
+		m := NewManager(db, nil)
+
+		dataJSON, err := m.SetupTFA(ctx)
+		assert.NotNil(t, dataJSON)
+		assert.Nil(t, err)
+		var output *hub.SetupTFAOutput
+		err = json.Unmarshal(dataJSON, &output)
+		require.NoError(t, err)
+		assert.NotEmpty(t, output.QRCode)
+		assert.NotEmpty(t, output.Secret)
+		for _, code := range output.RecoveryCodes {
+			_, err := uuid.FromString(code)
+			assert.NoError(t, err, code)
+		}
+		db.AssertExpectations(t)
 	})
 }
 

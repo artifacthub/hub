@@ -33,6 +33,7 @@ import {
   Subscription,
   TestWebhook,
   TsQuery,
+  TwoFactorAuth,
   User,
   UserFullName,
   UserLogin,
@@ -69,6 +70,7 @@ interface FetchOptions {
 
 const EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples'];
 const CSRF_HEADER = 'X-Csrf-Token';
+const SESSION_APPROVED_HEADER = 'X-Session-Approved';
 let csrfToken: string | null = null;
 
 export const toCamelCase = (r: any): Result => {
@@ -151,16 +153,37 @@ const handleErrors = async (res: any) => {
   return res;
 };
 
-const handleContent = async (res: any, skipCamelConversion?: boolean) => {
-  switch (res.headers.get('Content-Type')) {
+const checkIfApprovedSession = (res: any) => {
+  if (res.headers.has(SESSION_APPROVED_HEADER)) {
+    const isApproved = res.headers.get(SESSION_APPROVED_HEADER);
+    if (isApproved === 'false') {
+      const err = {
+        kind: ErrorKind.NotApprovedSession,
+      };
+      throw err;
+    } else {
+      return res;
+    }
+  } else {
+    return res;
+  }
+};
+
+const handleContent = async (res: any, skipCamelConversion?: boolean, checkApprovedSession?: boolean) => {
+  let response = res;
+  if (!isUndefined(checkApprovedSession) && checkApprovedSession) {
+    response = checkIfApprovedSession(res);
+  }
+
+  switch (response.headers.get('Content-Type')) {
     case 'text/plain; charset=utf-8':
-      const text = await res.text();
+      const text = await response.text();
       return text;
     case 'application/json':
-      const json = await res.json();
+      const json = await response.json();
       return skipCamelConversion ? json : toCamelCase(json);
     default:
-      return res;
+      return response;
   }
 };
 
@@ -188,7 +211,12 @@ const processFetchOptions = async (opts?: FetchOptions): Promise<FetchOptions | 
   return options;
 };
 
-export const apiFetch = async (url: string, opts?: FetchOptions, skipCamelConversion?: boolean): Promise<any> => {
+export const apiFetch = async (
+  url: string,
+  opts?: FetchOptions,
+  skipCamelConversion?: boolean,
+  checkApprovedSession?: boolean
+): Promise<any> => {
   const csrfRetry = (func: () => Promise<any>) => {
     return func().catch((error: Error) => {
       if (error.kind === ErrorKind.InvalidCSRF) {
@@ -204,7 +232,7 @@ export const apiFetch = async (url: string, opts?: FetchOptions, skipCamelConver
 
     return fetch(url, options)
       .then(handleErrors)
-      .then((res) => handleContent(res, skipCamelConversion))
+      .then((res) => handleContent(res, skipCamelConversion, checkApprovedSession))
       .catch((error) => Promise.reject(error));
   });
 };
@@ -330,16 +358,21 @@ export const API = {
   },
 
   login: (user: UserLogin): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/users/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    return apiFetch(
+      `${API_BASE_URL}/users/login`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+        }),
       },
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-      }),
-    });
+      false,
+      true
+    );
   },
 
   logout: (): Promise<null | string> => {
@@ -777,6 +810,47 @@ export const API = {
 
   getAHStats: (): Promise<AHStats | null> => {
     return apiFetch(`${API_BASE_URL}/stats`);
+  },
+
+  // 2FA
+  setUpTFA: (): Promise<TwoFactorAuth> => {
+    return apiFetch(`${API_BASE_URL}/users/tfa`, { method: 'POST' });
+  },
+
+  enableTFA: (passcode: string): Promise<null> => {
+    return apiFetch(`${API_BASE_URL}/users/tfa/enable`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        passcode: passcode,
+      }),
+    });
+  },
+
+  disableTFA: (passcode: string): Promise<null> => {
+    return apiFetch(`${API_BASE_URL}/users/tfa/disable`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        passcode: passcode,
+      }),
+    });
+  },
+
+  approveSession: (passcode: string): Promise<null> => {
+    return apiFetch(`${API_BASE_URL}/users/approve-session`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        passcode: passcode,
+      }),
+    });
   },
 
   // External API call

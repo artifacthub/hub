@@ -1,0 +1,54 @@
+.btnLight {
+  background-color: var(--color-1-20) !important;
+  border-color: var(--color-1-20) !important;
+}
+
+.modal {
+  max-width: 90%;
+  width: 620px !important;
+  height: 775px;
+}
+
+.label {
+  font-size: 0.875rem;
+}
+
+.codesWrapper {
+  background-color: var(--color-black-5);
+}
+
+.code {
+  font-size: 80%;
+}
+
+.qrCode {
+  max-width: 200px;
+  height: auto;
+}
+
+.copyBtn {
+  font-size: 0.875rem;
+  margin-top: -3px;
+  margin-right: -0.25rem;
+  text-decoration: underline;
+}
+
+.inputWrapper {
+  width: 50%;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .code {
+    font-size: 60%;
+  }
+
+  .inputWrapper {
+    width: 100%;
+  }
+}

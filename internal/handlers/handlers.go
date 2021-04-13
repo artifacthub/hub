@@ -142,7 +142,7 @@ func (h *Handlers) setupRouter() {
 			default-src 'none';
 			connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev;
 			font-src 'self';
-			img-src 'self' https:;
+			img-src 'self' data: https:;
 			manifest-src 'self';
 			script-src 'self' https://www.google-analytics.com;
 			style-src 'self' 'unsafe-inline'
@@ -173,12 +173,18 @@ func (h *Handlers) setupRouter() {
 			r.Post("/", h.Users.RegisterUser)
 			r.Post("/check-password-strength", h.Users.CheckPasswordStrength)
 			r.Post("/login", h.Users.Login)
+			r.Put("/approve-session", h.Users.ApproveSession)
 			r.Post("/password-reset-code", h.Users.RegisterPasswordResetCode)
 			r.Put("/reset-password", h.Users.ResetPassword)
 			r.Post("/verify-email", h.Users.VerifyEmail)
 			r.Post("/verify-password-reset-code", h.Users.VerifyPasswordResetCode)
 			r.Group(func(r chi.Router) {
 				r.Use(h.Users.RequireLogin)
+				r.Route("/tfa", func(r chi.Router) {
+					r.Put("/disable", h.Users.DisableTFA)
+					r.Put("/enable", h.Users.EnableTFA)
+					r.Post("/", h.Users.SetupTFA)
+				})
 				r.Get("/logout", h.Users.Logout)
 				r.Get("/profile", h.Users.GetProfile)
 				r.Put("/profile", h.Users.UpdateProfile)

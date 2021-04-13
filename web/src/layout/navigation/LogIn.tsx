@@ -42,9 +42,16 @@ const LogIn = (props: Props) => {
   const passwordInput = useRef<RefInputField>(null);
   const [isLoading, setIsLoading] = useState<Loading>({ status: false });
   const [isValidated, setIsValidated] = useState(false);
+  const [visible2FACode, setVisible2FACode] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [visibleResetPassword, setVisibleResetPassword] = useState(false);
+  const [passcode, setPasscode] = useState<string>('');
+  const [isApprovingSession, setIsApprovingSession] = useState<boolean>(false);
+
+  const onPasscodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasscode(e.target.value);
+  };
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
@@ -70,20 +77,44 @@ const LogIn = (props: Props) => {
     props.setOpenLogIn(false);
   };
 
+  const onLoginError = (err: any) => {
+    let error = compoundErrorMessage(err, 'An error occurred signing in');
+    if (err.kind === ErrorKind.Unauthorized) {
+      error = 'Authentication failed. Please check your credentials.';
+    }
+    setApiError(error);
+    setIsLoading({ status: false });
+    setIsApprovingSession(false);
+    dispatch(signOut());
+  };
+
+  const onLoginSuccess = () => {
+    setIsApprovingSession(false);
+    setIsLoading({ status: false });
+    dispatch(refreshUserProfile(dispatch, props.redirect));
+    props.setOpenLogIn(false);
+  };
+
   async function loginUser(user: UserLogin) {
     try {
       await API.login(user);
-      setIsLoading({ status: false });
-      dispatch(refreshUserProfile(dispatch, props.redirect));
-      props.setOpenLogIn(false);
+      onLoginSuccess();
     } catch (err) {
-      let error = compoundErrorMessage(err, 'An error occurred signing in');
-      if (err.kind === ErrorKind.Unauthorized) {
-        error = 'Authentication failed. Please check your credentials.';
+      if (err.kind === ErrorKind.NotApprovedSession) {
+        setVisible2FACode(true);
+      } else {
+        onLoginError(err);
       }
-      setApiError(error);
-      setIsLoading({ status: false });
-      dispatch(signOut());
+    }
+  }
+
+  async function approveSession() {
+    try {
+      setIsApprovingSession(true);
+      await API.approveSession(passcode);
+      onLoginSuccess();
+    } catch (err) {
+      onLoginError(err);
     }
   }
 
@@ -161,77 +192,130 @@ const LogIn = (props: Props) => {
           </div>
         </div>
       ) : (
-        <div className="my-auto">
-          <form
-            ref={loginForm}
-            data-testid="loginForm"
-            className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
-            onFocus={cleanApiError}
-            autoComplete="on"
-            noValidate
-          >
-            <InputField
-              ref={emailInput}
-              type="email"
-              label="Email"
-              name="email"
-              value=""
-              invalidText={{
-                default: 'This field is required',
-                typeMismatch: 'Please enter a valid email address',
-              }}
-              autoComplete="email"
-              onChange={onEmailChange}
-              validateOnBlur={email !== ''}
-              required
-            />
+        <>
+          {visible2FACode ? (
+            <div className="h-100 d-flex flex-column">
+              <div>
+                <button
+                  data-testid="resetPasswordBackBtn"
+                  className="btn btn-sm btn-link pl-0 mb-2 text-no-decoration"
+                  type="button"
+                  onClick={() => setVisible2FACode(false)}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    <IoIosArrowBack className="mr-2" />
+                    Back to Sign in
+                  </div>
+                </button>
+              </div>
 
-            <InputField
-              ref={passwordInput}
-              type="password"
-              label="Password"
-              name="password"
-              value=""
-              invalidText={{
-                default: 'This field is required',
-              }}
-              validateOnBlur
-              onKeyDown={handleOnReturnKeyDown}
-              autoComplete="current-password"
-              required
-            />
+              <div className="flex-grow-1 w-100 d-flex align-items-center">
+                <div className="w-100">
+                  <InputField
+                    type="text"
+                    label="Authentication code"
+                    name="passcode"
+                    autoComplete="off"
+                    value={passcode}
+                    onChange={onPasscodeChange}
+                    invalidText={{
+                      default: 'This field is required',
+                    }}
+                    validateOnBlur
+                    required
+                  />
 
-            <div className="d-flex flex-row align-items-row justify-content-between">
-              <button
-                data-testid="resetPasswordTabBtn"
-                className="btn btn-sm btn-link pl-0 text-no-decoration"
-                type="button"
-                onClick={() => setVisibleResetPassword(true)}
-              >
-                Forgot password?
-              </button>
-
-              <button
-                data-testid="logInBtn"
-                className="btn btn-secondary"
-                type="button"
-                disabled={isLoading.status}
-                onClick={submitForm}
-              >
-                {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
-                  <>
-                    <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                    <span className="ml-2">Singing in...</span>
-                  </>
-                ) : (
-                  <>Sign in</>
-                )}
-              </button>
+                  <button
+                    onClick={approveSession}
+                    className="btn btn-success btn-sm text-uppercase mt-3"
+                    disabled={passcode === '' || isApprovingSession}
+                  >
+                    {isApprovingSession ? (
+                      <>
+                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                        <span className="ml-2">Verifying...</span>
+                      </>
+                    ) : (
+                      <>Verify</>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
-          </form>
+          ) : (
+            <div className="my-auto">
+              <form
+                ref={loginForm}
+                data-testid="loginForm"
+                className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
+                onFocus={cleanApiError}
+                autoComplete="on"
+                noValidate
+              >
+                <InputField
+                  ref={emailInput}
+                  type="email"
+                  label="Email"
+                  name="email"
+                  value=""
+                  invalidText={{
+                    default: 'This field is required',
+                    typeMismatch: 'Please enter a valid email address',
+                  }}
+                  autoComplete="email"
+                  onChange={onEmailChange}
+                  validateOnBlur={email !== ''}
+                  required
+                />
 
-          <OAuth isLoading={isLoading} setIsLoading={setIsLoading} />
-        </div>
+                <InputField
+                  ref={passwordInput}
+                  type="password"
+                  label="Password"
+                  name="password"
+                  value=""
+                  invalidText={{
+                    default: 'This field is required',
+                  }}
+                  validateOnBlur
+                  onKeyDown={handleOnReturnKeyDown}
+                  autoComplete="current-password"
+                  required
+                />
+
+                <div className="d-flex flex-row align-items-row justify-content-between">
+                  <button
+                    data-testid="resetPasswordTabBtn"
+                    className="btn btn-sm btn-link pl-0 text-no-decoration"
+                    type="button"
+                    onClick={() => setVisibleResetPassword(true)}
+                  >
+                    Forgot password?
+                  </button>
+
+                  <button
+                    data-testid="logInBtn"
+                    className="btn btn-secondary"
+                    type="button"
+                    disabled={isLoading.status}
+                    onClick={submitForm}
+                  >
+                    {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
+                      <>
+                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                        <span className="ml-2">Singing in...</span>
+                      </>
+                    ) : (
+                      <>Sign in</>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {!visible2FACode && <OAuth isLoading={isLoading} setIsLoading={setIsLoading} />}
+        </>
       )}
     </Modal>
   );

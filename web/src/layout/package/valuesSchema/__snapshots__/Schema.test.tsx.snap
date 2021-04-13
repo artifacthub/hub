@@ -52,7 +52,7 @@ exports[`Schema creates snapshot 1`] = `
         class="position-absolute d-flex flex-row wrapper btns"
       >
         <div
-          class="position-relative undefined"
+          class="position-relative mr-2"
         >
           <button
             class="btn btn-sm btn-primary rounded-circle btn"
@@ -89,7 +89,7 @@ exports[`Schema creates snapshot 1`] = `
           </button>
         </div>
         <button
-          class="btn btn-sm btn-primary rounded-circle ml-2 btn"
+          class="btn btn-sm btn-primary rounded-circle btn"
           data-testid="downloadBtn"
         >
           <svg

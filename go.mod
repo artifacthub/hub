@@ -27,7 +27,8 @@ require (
 	github.com/open-policy-agent/opa v0.27.1
 	github.com/operator-framework/api v0.8.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/pelletier/go-toml v1.9.0 // indirect
+	github.com/pelletier/go-toml v1.8.1 // indirect
+	github.com/pquerna/otp v1.3.0
 	github.com/prometheus/client_golang v1.10.0
 	github.com/rs/cors v1.7.0
 	github.com/rs/zerolog v1.21.0

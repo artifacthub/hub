@@ -75,8 +75,10 @@
 {{ template "subscriptions/get_user_package_subscriptions.sql" }}
 {{ template "subscriptions/get_user_subscriptions.sql" }}
 
+{{ template "users/approve_session.sql" }}
 {{ template "users/check_user_alias_availability.sql" }}
 {{ template "users/get_user_profile.sql" }}
+{{ template "users/get_user_tfa_config.sql" }}
 {{ template "users/register_password_reset_code.sql" }}
 {{ template "users/register_session.sql" }}
 {{ template "users/register_user.sql" }}

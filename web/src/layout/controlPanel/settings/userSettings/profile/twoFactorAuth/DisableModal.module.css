@@ -1,0 +1,20 @@
+.btnLight {
+  background-color: var(--color-1-20) !important;
+  border-color: var(--color-1-20) !important;
+}
+
+.modal {
+  max-width: 90%;
+  width: 620px !important;
+  height: 435px;
+}
+
+.label {
+  font-size: 0.875rem;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}

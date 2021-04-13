@@ -85,7 +85,7 @@ describe('User settings index', () => {
     it('does not render profile information section if error is different to UnauthorizedError', async () => {
       mocked(API).getUserProfile.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
-      const { queryByText, queryByTestId, getByText } = render(
+      const { queryByText, queryByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <UserSettings {...defaultProps} />
@@ -99,7 +99,7 @@ describe('User settings index', () => {
 
       expect(queryByText('Profile information')).toBeNull();
       expect(queryByTestId('updateProfileForm')).toBeNull();
-      expect(getByText('Change password')).toBeInTheDocument();
+      expect(queryByText('Change password')).toBeNull();
     });
 
     it('calls onAuthError if error is UnauthorizedError', async () => {

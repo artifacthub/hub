@@ -251,6 +251,8 @@ export interface UserFullName {
 
 export interface Profile extends UserFullName {
   email: string;
+  passwordSet: boolean;
+  tfaEnabled?: boolean;
 }
 
 export interface User extends UserLogin {
@@ -269,6 +271,12 @@ export interface Member {
 export interface UserAuth {
   alias?: string;
   status: boolean;
+}
+
+export interface TwoFactorAuth {
+  qrCode: string;
+  recoveryCodes: string[];
+  secret: string;
 }
 
 export interface CheckAvailabilityProps {
@@ -440,6 +448,7 @@ export enum ErrorKind {
   Forbidden,
   Gone,
   InvalidCSRF,
+  NotApprovedSession,
 }
 
 export interface OptOutItem {

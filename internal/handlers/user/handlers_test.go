@@ -30,6 +30,113 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+func TestApproveSession(t *testing.T) {
+	sessionID := []byte("sessionID")
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			desc      string
+			inputJSON string
+		}{
+			{
+				"invalid input",
+				`{"passcode": "123456" ...`,
+			},
+			{
+				"no passcode provided",
+				`{"passcode": ""}`,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.desc, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.inputJSON))
+
+				hw := newHandlersWrapper()
+				hw.h.ApproveSession(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("session cookie not provided", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.h.ApproveSession(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+	})
+
+	t.Run("invalid session cookie", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: "invalidValue",
+		})
+
+		hw := newHandlersWrapper()
+		hw.h.ApproveSession(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+	})
+
+	t.Run("error approving session", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("ApproveSession", r.Context(), sessionID, "123456").Return(tests.ErrFake)
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: encodedSessionID,
+		})
+		hw.h.ApproveSession(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+	})
+
+	t.Run("session approval succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("ApproveSession", r.Context(), sessionID, "123456").Return(nil)
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: encodedSessionID,
+		})
+		hw.h.ApproveSession(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+	})
+}
+
 func TestBasicAuth(t *testing.T) {
 	hw := newHandlersWrapper()
 	hw.cfg.Set("server.basicAuth.enabled", true)
@@ -215,6 +322,136 @@ func TestCheckAvailability(t *testing.T) {
 			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
 			hw.um.AssertExpectations(t)
 		})
+	})
+}
+
+func TestDisableTFA(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			desc      string
+			inputJSON string
+		}{
+			{
+				"invalid input",
+				`{"passcode": "123456" ...`,
+			},
+			{
+				"no passcode provided",
+				`{"passcode": ""}`,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.desc, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.inputJSON))
+
+				hw := newHandlersWrapper()
+				hw.h.DisableTFA(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("disable tfa failed", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("DisableTFA", r.Context(), "123456").Return(tests.ErrFake)
+		hw.h.DisableTFA(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("disable tfa succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("DisableTFA", r.Context(), "123456").Return(nil)
+		hw.h.DisableTFA(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+}
+
+func TestEnableTFA(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			desc      string
+			inputJSON string
+		}{
+			{
+				"invalid input",
+				`{"passcode": "123456" ...`,
+			},
+			{
+				"no passcode provided",
+				`{"passcode": ""}`,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.desc, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.inputJSON))
+
+				hw := newHandlersWrapper()
+				hw.h.EnableTFA(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("enable tfa failed", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("EnableTFA", r.Context(), "123456").Return(tests.ErrFake)
+		hw.h.EnableTFA(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("enble tfa succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("EnableTFA", r.Context(), "123456").Return(nil)
+		hw.h.EnableTFA(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		hw.um.AssertExpectations(t)
 	})
 }
 
@@ -455,10 +692,14 @@ func TestLogin(t *testing.T) {
 		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
 			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
 		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
-			Return([]byte("sessionID"), nil)
+			Return(&hub.Session{
+				SessionID: []byte("sessionID"),
+				Approved:  true,
+			}, nil)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
+		h := resp.Header
 
 		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 		require.Len(t, resp.Cookies(), 1)
@@ -471,6 +712,41 @@ func TestLogin(t *testing.T) {
 		err := hw.h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
 		require.NoError(t, err)
 		assert.Equal(t, []byte("sessionID"), sessionID)
+		assert.Equal(t, "true", h.Get(SessionApprovedHeader))
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("login succeeded (tfa enabled)", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
+		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
+			Return(&hub.Session{
+				SessionID: []byte("sessionID"),
+				Approved:  false,
+			}, nil)
+		hw.h.Login(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		require.Len(t, resp.Cookies(), 1)
+		cookie := resp.Cookies()[0]
+		assert.Equal(t, sessionCookieName, cookie.Name)
+		assert.Equal(t, "/", cookie.Path)
+		assert.True(t, cookie.HttpOnly)
+		assert.False(t, cookie.Secure)
+		var sessionID []byte
+		err := hw.h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
+		require.NoError(t, err)
+		assert.Equal(t, []byte("sessionID"), sessionID)
+		assert.Equal(t, "false", h.Get(SessionApprovedHeader))
 		hw.um.AssertExpectations(t)
 	})
 }
@@ -1096,6 +1372,42 @@ func TestResetPassword(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+}
+
+func TestSetupTFA(t *testing.T) {
+	t.Run("tfa setup failed", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.um.On("SetupTFA", r.Context()).Return(nil, tests.ErrFake)
+		hw.h.SetupTFA(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("tfa setup succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.um.On("SetupTFA", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.h.SetupTFA(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusCreated, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, []byte("dataJSON"), data)
 		hw.um.AssertExpectations(t)
 	})
 }
