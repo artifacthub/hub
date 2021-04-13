@@ -197,6 +197,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     needs:
       - linter-backend
+      - linter-openapi
       - tests-database
       - tests-backend
       - tests-frontend
