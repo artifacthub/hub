@@ -13,6 +13,19 @@ jobs:
           version: v1.37
           args: --timeout 5m
 
+  linter-openapi:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@master
+      - name: Lint Code Base
+        uses: github/super-linter@v3
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_OPENAPI: true
+          FILTER_REGEX_INCLUDE: docs/api/.*
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   tests-database:
     runs-on: ubuntu-20.04
     container:
