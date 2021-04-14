@@ -9,6 +9,7 @@ node_modules/
 web/build
 web/public/docs
 web/coverage
+widget/build
 charts/artifact-hub/charts
 Chart.lock
 docs/www/content/topics/*
