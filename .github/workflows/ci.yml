@@ -85,6 +85,33 @@ jobs:
         working-directory: ./web
         run: yarn test --watchAll=false --passWithNoTests --verbose
 
+  tests-widget:
+    runs-on: ubuntu-20.04
+    env:
+      NODE_OPTIONS: --max_old_space_size=4096
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./widget/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        working-directory: ./widget
+        run: yarn install
+      - name: Run prettier
+        working-directory: ./widget
+        run: yarn format:diff
+      - name: Run eslint
+        working-directory: ./widget
+        run: yarn lint
+      - name: Run widget tests
+        working-directory: ./widget
+        run: yarn test --watchAll=false --passWithNoTests --verbose
+
   build-backend:
     runs-on: ubuntu-20.04
     steps:
@@ -132,6 +159,27 @@ jobs:
         working-directory: ./web
         run: yarn build
 
+  build-widget:
+    runs-on: ubuntu-20.04
+    env:
+      NODE_OPTIONS: --max_old_space_size=4096
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./widget/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        working-directory: ./widget
+        run: yarn install
+      - name: Build widget
+        working-directory: ./widget
+        run: yarn build
+
   build-docker-images:
     if: github.ref == 'refs/heads/master'
     needs:
@@ -139,8 +187,10 @@ jobs:
       - tests-database
       - tests-backend
       - tests-frontend
+      - tests-widget
       - build-backend
       - build-frontend
+      - build-widget
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code

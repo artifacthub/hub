@@ -104,6 +104,7 @@ server:
   metricsAddr: localhost:8001
   shutdownTimeout: 10s
   webBuildPath: ../../web/build
+  widgetBuildPath: ../../widget/build
   basicAuth:
     enabled: false
     username: hub
