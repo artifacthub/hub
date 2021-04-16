@@ -50,6 +50,7 @@ import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
 import InstallationModal from './installation/Modal';
 import ModalHeader from './ModalHeader';
+import MoreActionsButton from './MoreActionsButton';
 import styles from './PackageView.module.css';
 import ReadmeWrapper from './readme';
 import RecommendedPackages from './RecommendedPackages';
@@ -610,6 +611,14 @@ const PackageView = (props: Props) => {
                       </span>
                       <StarButton packageId={detail.packageId} />
                       <SubscriptionsButton packageId={detail.packageId} />
+                      <MoreActionsButton
+                        packageId={detail.packageId}
+                        packageName={detail.displayName || detail.name}
+                        packageDescription={detail.description}
+                        visibleWidget={!isUndefined(props.visibleModal) && props.visibleModal === 'widget'}
+                        searchUrlReferer={props.searchUrlReferer}
+                        fromStarredPage={props.fromStarredPage}
+                      />
                     </div>
 
                     <div className="row align-items-baseline d-md-none">

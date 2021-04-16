@@ -10,7 +10,7 @@
 }
 
 .dropdown {
-  width: 21rem;
+  min-width: 10rem;
   top: 120% !important;
 }
 
@@ -24,6 +24,10 @@
 
 .dropdownItem + .dropdownItem {
   border-top: 1px solid var(--border-md);
+}
+
+.dropdownItem:hover {
+  text-decoration: none;
 }
 
 .isDisabled {

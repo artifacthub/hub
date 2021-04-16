@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FaCaretDown, FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
+import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md';
 import { useHistory } from 'react-router';
 
@@ -134,7 +134,7 @@ const SubscriptionsButton = (props: Props) => {
   }
 
   return (
-    <div className="d-none d-md-block position-relative ml-3">
+    <div className="d-none d-md-block position-relative ml-2">
       <button
         data-testid="subscriptionsBtn"
         className="btn p-0 position-relative"
@@ -144,26 +144,21 @@ const SubscriptionsButton = (props: Props) => {
           setOpenStatus(true);
         }}
       >
-        <div className="d-flex flex-row align-items-center justify-content-center">
-          <div
-            className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
-          >
-            {isLoading && (
-              <div className={styles.loading}>
-                <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
-                  <span className="sr-only">Loading...</span>
-                </div>
+        <div
+          className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
+        >
+          {isLoading && (
+            <div className={styles.loading}>
+              <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
+                <span className="sr-only">Loading...</span>
               </div>
-            )}
-            {!isUndefined(activeSubscriptions) && activeSubscriptions.length > 0 ? (
-              <MdNotificationsActive className="rounded-circle" />
-            ) : (
-              <MdNotificationsOff className="rounded-circle text-muted" />
-            )}
-          </div>
-          <small className="ml-1 text-primary">
-            <FaCaretDown />
-          </small>
+            </div>
+          )}
+          {!isUndefined(activeSubscriptions) && activeSubscriptions.length > 0 ? (
+            <MdNotificationsActive className="rounded-circle" />
+          ) : (
+            <MdNotificationsOff className="rounded-circle text-muted" />
+          )}
         </div>
       </button>
 

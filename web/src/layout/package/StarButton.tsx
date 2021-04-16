@@ -105,7 +105,7 @@ const StarButton = (props: Props) => {
 
   return (
     <>
-      <div className={`d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
+      <div className={`ml-auto d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
         <button
           data-testid="toggleStarBtn"
           className={classnames('btn btn-sm btn-primary px-1 px-md-3', styles.starBtn, {
