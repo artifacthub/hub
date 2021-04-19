@@ -123,6 +123,11 @@ func (h *Handlers) setupRouter() {
 	r := chi.NewRouter()
 
 	// Setup middleware and special handlers
+	corsMW := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET"},
+		AllowCredentials: false,
+	}).Handler
 	r.Use(middleware.Recoverer)
 	r.Use(realIP(h.cfg.GetInt("server.xffIndex")))
 	r.Use(logger)
@@ -238,16 +243,11 @@ func (h *Handlers) setupRouter() {
 		r.Route("/packages", func(r chi.Router) {
 			r.Get("/random", h.Packages.GetRandom)
 			r.Get("/stats", h.Packages.GetStats)
-			r.Get("/search", h.Packages.Search)
+			r.With(corsMW).Get("/search", h.Packages.Search)
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
 			r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler$}/{repoName}/{packageName}", func(r chi.Router) {
 				r.Get("/feed/rss", h.Packages.RssFeed)
-				corsHandler := cors.New(cors.Options{
-					AllowedOrigins:   []string{"*"},
-					AllowedMethods:   []string{"GET"},
-					AllowCredentials: false,
-				}).Handler
-				r.With(corsHandler).Get("/summary", h.Packages.GetSummary)
+				r.With(corsMW).Get("/summary", h.Packages.GetSummary)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
