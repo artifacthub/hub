@@ -13,6 +13,18 @@ jobs:
           version: v1.37
           args: --timeout 5m
 
+  linter-openapi:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@master
+      - name: Lint OpenAPI specs
+        uses: github/super-linter@v3
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_OPENAPI: true
+          FILTER_REGEX_INCLUDE: docs/api/openapi.yaml
+
   tests-database:
     runs-on: ubuntu-20.04
     container:
@@ -184,6 +196,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     needs:
       - linter-backend
+      - linter-openapi
       - tests-database
       - tests-backend
       - tests-frontend
