@@ -50,9 +50,7 @@ func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, str
 	if err != nil {
 		return nil, "", err
 	}
-	hash := sha256.Sum256(indexBytes)
-	digest := hex.EncodeToString(hash[:])
-	return indexFile, digest, nil
+	return indexFile, getDigest(indexBytes), nil
 }
 
 // downloadIndexFile downloads a Helm repository's index file.
@@ -88,4 +86,15 @@ func loadIndexFile(indexBytes []byte) (*helmrepo.IndexFile, error) {
 	}
 	indexFile.SortEntries()
 	return indexFile, nil
+}
+
+// getDigest returns the digest of a Helm repository's index file.
+func getDigest(indexBytes []byte) string {
+	indexFile := &helmrepo.IndexFile{}
+	_ = yaml.UnmarshalStrict(indexBytes, indexFile)
+	indexFile.Generated = time.Time{}
+	indexBytes, _ = yaml.Marshal(indexFile)
+	hash := sha256.Sum256(indexBytes)
+	digest := hex.EncodeToString(hash[:])
+	return digest
 }
