@@ -111,6 +111,7 @@ export default function App() {
                         scrollPosition={scrollPosition}
                         setScrollPosition={setScrollPosition}
                         fromDetail={location.state ? location.state.hasOwnProperty('from-detail') : false}
+                        visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       />
                     </div>
                   </>

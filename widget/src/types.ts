@@ -1,4 +1,4 @@
-export interface Package {
+export interface PackageSummary {
   packageId: string;
   name: string;
   displayName?: string;
@@ -14,6 +14,7 @@ export interface Package {
 
 export interface Repository {
   kind: RepositoryKind;
+  name: string;
   verifiedPublisher?: boolean;
   official?: boolean;
   organizationName?: string;
@@ -31,4 +32,16 @@ export enum RepositoryKind {
   HelmPlugin,
   TektonTask,
   KedaScaler,
+}
+
+export interface SearchResults {
+  data: {
+    packages: PackageSummary[] | null;
+    facets: null;
+  };
+  metadata: {
+    limit: number;
+    offset: number;
+    total: number;
+  };
 }

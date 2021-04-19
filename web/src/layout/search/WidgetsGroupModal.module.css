@@ -1,3 +1,7 @@
+.modalDialog {
+  font-size: 1rem;
+}
+
 .iconWrapper {
   width: 2rem;
   height: 2rem;
@@ -21,6 +25,26 @@
 .customControlRightLabel::after {
   right: -1.38rem;
   left: auto !important;
+}
+
+.colorInputWrapper {
+  padding: 0.25rem;
+  border: 1px solid var(--border-md);
+  margin-left: 0.5rem;
+}
+
+.colorInput {
+  width: 36px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+.colorPickerWrapper {
+  width: 220px;
+}
+
+.input {
+  height: 30px;
 }
 
 .copyBtn {

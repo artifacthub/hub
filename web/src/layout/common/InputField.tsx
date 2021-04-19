@@ -9,7 +9,7 @@ import { AvailabilityInfo, RefInputField } from '../../types';
 import styles from './InputField.module.css';
 
 export interface Props {
-  type: 'text' | 'password' | 'email' | 'url';
+  type: 'text' | 'password' | 'email' | 'url' | 'number';
   label?: string;
   name: string;
   value?: string;
@@ -21,8 +21,11 @@ export interface Props {
   placeholder?: string;
   required?: boolean;
   className?: string;
+  inputClassName?: string;
   minLength?: number;
   maxLength?: number;
+  min?: number;
+  max?: number;
   pattern?: string;
   labelLegend?: JSX.Element;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -79,6 +82,10 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
           errorTxt = props.invalidText.patternMismatch;
         } else if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
           errorTxt = props.invalidText.typeMismatch;
+        } else if (validityState.rangeUnderflow && !isUndefined(props.invalidText.rangeUnderflow)) {
+          errorTxt = props.invalidText.rangeUnderflow;
+        } else if (validityState.rangeOverflow && !isUndefined(props.invalidText.rangeOverflow)) {
+          errorTxt = props.invalidText.rangeOverflow;
         } else if (validityState.customError && !isUndefined(props.invalidText.customError)) {
           if (!isUndefined(props.excludedValues) && props.excludedValues.includes(input.current!.value)) {
             errorTxt = props.invalidText.excluded;
@@ -159,11 +166,13 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         type={activeType}
         name={props.name}
         value={inputValue}
-        className={classnames('form-control', { 'is-invalid': !isNull(isValid) && !isValid })}
+        className={classnames('form-control', props.inputClassName, { 'is-invalid': !isNull(isValid) && !isValid })}
         placeholder={props.placeholder}
         required={props.required}
         minLength={props.minLength}
         maxLength={props.maxLength}
+        min={props.min}
+        max={props.max}
         pattern={props.pattern}
         autoComplete={props.autoComplete}
         readOnly={props.readOnly || false}
