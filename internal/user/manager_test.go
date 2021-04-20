@@ -685,6 +685,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 
 func TestRegisterUser(t *testing.T) {
 	ctx := context.Background()
+	password := "a66bV.Xp2" // #nosec
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -710,6 +711,11 @@ func TestRegisterUser(t *testing.T) {
 			{
 				"invalid profile image id",
 				&hub.User{Alias: "user1", Email: "email", ProfileImageID: "invalid"},
+				"http://baseurl.com",
+			},
+			{
+				"insecure password",
+				&hub.User{Alias: "user1", Email: "email", Password: "hello"},
 				"http://baseurl.com",
 			},
 		}
@@ -757,12 +763,11 @@ func TestRegisterUser(t *testing.T) {
 					FirstName:      "first_name",
 					LastName:       "last_name",
 					Email:          "email@email.com",
-					Password:       "password",
+					Password:       password,
 					ProfileImageID: "00000000-0000-0000-0000-000000000001",
 				}
 				err := m.RegisterUser(ctx, u, "http://baseurl.com")
 				assert.Equal(t, tc.emailSenderResponse, err)
-				assert.NoError(t, bcrypt.CompareHashAndPassword([]byte(u.Password), []byte("password")))
 				db.AssertExpectations(t)
 				es.AssertExpectations(t)
 			})
@@ -777,8 +782,9 @@ func TestRegisterUser(t *testing.T) {
 		m := NewManager(db, nil)
 
 		u := &hub.User{
-			Alias: "alias",
-			Email: "email@email.com",
+			Alias:    "alias",
+			Email:    "email@email.com",
+			Password: password,
 		}
 		err := m.RegisterUser(ctx, u, "http://baseurl.com")
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -790,6 +796,8 @@ func TestResetPassword(t *testing.T) {
 	ctx := context.Background()
 	code := []byte("code")
 	codeB64 := base64.URLEncoding.EncodeToString(code)
+	newPassword := "a66bV.Xp2" // #nosec
+	baseURL := "http://baseurl.com"
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -801,20 +809,26 @@ func TestResetPassword(t *testing.T) {
 			{
 				"code not provided",
 				"",
-				"newPassword",
-				"http://baseurl.com",
+				newPassword,
+				baseURL,
 			},
 			{
 				"new password not provided",
 				"code",
 				"",
-				"http://baseurl.com",
+				baseURL,
 			},
 			{
 				"invalid base url",
 				"code",
-				"newPassword",
+				newPassword,
 				"invalid",
+			},
+			{
+				"insecure password",
+				"code",
+				"password",
+				baseURL,
 			},
 		}
 		for _, tc := range testCases {
@@ -852,7 +866,7 @@ func TestResetPassword(t *testing.T) {
 				db.On("QueryRow", ctx, resetUserPasswordDBQ, code, mock.Anything).Return("", tc.dbErr)
 				m := NewManager(db, nil)
 
-				err := m.ResetPassword(ctx, codeB64, "newPassword", "http://baseurl.com")
+				err := m.ResetPassword(ctx, codeB64, newPassword, baseURL)
 				assert.Equal(t, tc.expectedErr, err)
 				db.AssertExpectations(t)
 			})
@@ -883,7 +897,7 @@ func TestResetPassword(t *testing.T) {
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
 
-				err := m.ResetPassword(ctx, codeB64, "newPassword", "http://baseurl.com")
+				err := m.ResetPassword(ctx, codeB64, newPassword, baseURL)
 				assert.Equal(t, tc.emailSenderResponse, err)
 				db.AssertExpectations(t)
 				es.AssertExpectations(t)
@@ -895,6 +909,7 @@ func TestResetPassword(t *testing.T) {
 func TestUpdatePassword(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	oldHashed, _ := bcrypt.GenerateFromPassword([]byte("old"), bcrypt.DefaultCost)
+	new := "a66bV.Xp2"
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
@@ -920,6 +935,11 @@ func TestUpdatePassword(t *testing.T) {
 				"old",
 				"",
 			},
+			{
+				"insecure password",
+				"old",
+				"new",
+			},
 		}
 		for _, tc := range testCases {
 			tc := tc
@@ -939,7 +959,7 @@ func TestUpdatePassword(t *testing.T) {
 		db.On("QueryRow", ctx, getUserPasswordDBQ, "userID").Return("", tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
-		err := m.UpdatePassword(ctx, "old", "new")
+		err := m.UpdatePassword(ctx, "old", new)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
@@ -950,7 +970,7 @@ func TestUpdatePassword(t *testing.T) {
 		db.On("QueryRow", ctx, getUserPasswordDBQ, "userID").Return(string(oldHashed), nil)
 		m := NewManager(db, nil)
 
-		err := m.UpdatePassword(ctx, "old2", "new")
+		err := m.UpdatePassword(ctx, "old2", new)
 		assert.Error(t, err)
 		db.AssertExpectations(t)
 	})
@@ -963,7 +983,7 @@ func TestUpdatePassword(t *testing.T) {
 			Return(tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
-		err := m.UpdatePassword(ctx, "old", "new")
+		err := m.UpdatePassword(ctx, "old", new)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
@@ -975,7 +995,7 @@ func TestUpdatePassword(t *testing.T) {
 		db.On("Exec", ctx, updateUserPasswordDBQ, "userID", mock.Anything, mock.Anything).Return(nil)
 		m := NewManager(db, nil)
 
-		err := m.UpdatePassword(ctx, "old", "new")
+		err := m.UpdatePassword(ctx, "old", new)
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})

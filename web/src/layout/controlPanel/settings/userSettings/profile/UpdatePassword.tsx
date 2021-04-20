@@ -128,15 +128,16 @@ const UpdatePassword = () => {
         ref={passwordInput}
         type="password"
         label="New password"
-        labelLegend={<small className="ml-1 font-italic">(6 characters min.)</small>}
         name="password"
         minLength={6}
         invalidText={{
           default: 'This field is required',
-          tooShort: 'Passwords must be at least 6 characters long',
+          customError: 'Insecure password',
         }}
         onChange={onPasswordChange}
         autoComplete="new-password"
+        checkPasswordStrength
+        validateOnChange
         validateOnBlur
         required
       />

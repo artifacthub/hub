@@ -28,7 +28,7 @@ interface Props {
   isSearching: boolean;
 }
 
-const SEARCH_DELAY = 5 * 100; // 300ms
+const SEARCH_DELAY = 5 * 100; // 500ms
 const MIN_CHARACTERS_SEARCH = 3;
 
 const SearchBar = (props: Props) => {

@@ -11,6 +11,7 @@ export const API = {
   login: jest.fn(),
   logout: jest.fn(),
   getUserProfile: jest.fn(),
+  checkPasswordStrength: jest.fn(),
   getAllRepositories: jest.fn(),
   getRepositories: jest.fn(),
   addRepository: jest.fn(),

@@ -1,11 +1,12 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import { API } from '../../api';
 import { AvailabilityInfo, RefInputField } from '../../types';
+import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 import styles from './InputField.module.css';
 
 export interface Props {
@@ -31,7 +32,9 @@ export interface Props {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   validateOnBlur?: boolean;
+  validateOnChange?: boolean;
   checkAvailability?: AvailabilityInfo;
+  checkPasswordStrength?: boolean;
   autoComplete?: string;
   readOnly?: boolean;
   additionalInfo?: string | JSX.Element;
@@ -42,13 +45,18 @@ export interface Props {
   excludedValues?: string[];
 }
 
+const VALIDATION_DELAY = 3 * 100; // 300ms
+
 const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   const input = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [inputValue, setInputValue] = useState(props.value || '');
   const [invalidText, setInvalidText] = useState(!isUndefined(props.invalidText) ? props.invalidText.default : '');
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
+  const [isCheckingPwdStrength, setIsCheckingPwdStrength] = useState(false);
+  const [pwdStrengthError, setPwdStrengthError] = useState<string | null>(null);
   const [activeType, setActiveType] = useState<string>(props.type);
+  const [validateTimeout, setValidateTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useImperativeHandle(ref, () => ({
     checkIsValid(): Promise<boolean> {
@@ -61,7 +69,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
       return inputValue;
     },
     checkValidity(): boolean {
-      return input.current!.checkValidity();
+      return input.current ? input.current!.checkValidity() : true;
     },
     updateValue(newValue: string): void {
       setInputValue(newValue);
@@ -69,77 +77,97 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   }));
 
   const checkValidity = (): boolean => {
-    const isValid = input.current!.checkValidity();
-    if (!isValid && !isUndefined(props.invalidText)) {
-      let errorTxt = props.invalidText.default;
-      const validityState: ValidityState | undefined = input.current?.validity;
-      if (!isUndefined(validityState)) {
-        if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
-          errorTxt = props.invalidText.typeMismatch;
-        } else if (validityState.tooShort && !isUndefined(props.invalidText.tooShort)) {
-          errorTxt = props.invalidText.tooShort;
-        } else if (validityState.patternMismatch && !isUndefined(props.invalidText.patternMismatch)) {
-          errorTxt = props.invalidText.patternMismatch;
-        } else if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
-          errorTxt = props.invalidText.typeMismatch;
-        } else if (validityState.rangeUnderflow && !isUndefined(props.invalidText.rangeUnderflow)) {
-          errorTxt = props.invalidText.rangeUnderflow;
-        } else if (validityState.rangeOverflow && !isUndefined(props.invalidText.rangeOverflow)) {
-          errorTxt = props.invalidText.rangeOverflow;
-        } else if (validityState.customError && !isUndefined(props.invalidText.customError)) {
-          if (!isUndefined(props.excludedValues) && props.excludedValues.includes(input.current!.value)) {
-            errorTxt = props.invalidText.excluded;
-          } else {
-            errorTxt = props.invalidText.customError;
+    let isValid = true;
+    if (input.current) {
+      isValid = input.current!.checkValidity();
+      if (!isValid && !isUndefined(props.invalidText)) {
+        let errorTxt = props.invalidText.default;
+        const validityState: ValidityState | undefined = input.current.validity;
+        if (!isUndefined(validityState)) {
+          if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
+            errorTxt = props.invalidText.typeMismatch;
+          } else if (validityState.tooShort && !isUndefined(props.invalidText.tooShort)) {
+            errorTxt = props.invalidText.tooShort;
+          } else if (validityState.patternMismatch && !isUndefined(props.invalidText.patternMismatch)) {
+            errorTxt = props.invalidText.patternMismatch;
+          } else if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
+            errorTxt = props.invalidText.typeMismatch;
+          } else if (validityState.rangeUnderflow && !isUndefined(props.invalidText.rangeUnderflow)) {
+            errorTxt = props.invalidText.rangeUnderflow;
+          } else if (validityState.rangeOverflow && !isUndefined(props.invalidText.rangeOverflow)) {
+            errorTxt = props.invalidText.rangeOverflow;
+          } else if (validityState.customError && !isUndefined(props.invalidText.customError)) {
+            if (!isUndefined(props.excludedValues) && props.excludedValues.includes(input.current.value)) {
+              errorTxt = props.invalidText.excluded;
+            } else {
+              errorTxt = props.invalidText.customError;
+            }
           }
         }
+        setInvalidText(errorTxt);
       }
-      setInvalidText(errorTxt);
-    }
-    setIsValid(isValid);
-    if (!isUndefined(props.setValidationStatus)) {
-      props.setValidationStatus(false);
+      setIsValid(isValid);
+      if (!isUndefined(props.setValidationStatus)) {
+        props.setValidationStatus(false);
+      }
     }
     return isValid;
   };
 
   const isValidField = async (): Promise<boolean> => {
-    const value = input.current!.value;
-    if (value !== '') {
-      if (!isUndefined(props.excludedValues) && props.excludedValues.includes(value)) {
-        input.current!.setCustomValidity('Value is excluded');
-      } else if (!isUndefined(props.checkAvailability) && !props.checkAvailability.excluded.includes(value)) {
-        setIsCheckingAvailability(true);
-        try {
-          const isAvailable = await API.checkAvailability({
-            resourceKind: props.checkAvailability.resourceKind,
-            value: value,
-          });
-          if (!isNull(input.current)) {
-            if (isAvailable) {
+    if (input.current) {
+      const value = input.current!.value;
+      if (value !== '') {
+        if (!isUndefined(props.excludedValues) && props.excludedValues.includes(value)) {
+          input.current!.setCustomValidity('Value is excluded');
+        } else if (!isUndefined(props.checkAvailability) && !props.checkAvailability.excluded.includes(value)) {
+          setIsCheckingAvailability(true);
+          try {
+            const isAvailable = await API.checkAvailability({
+              resourceKind: props.checkAvailability.resourceKind,
+              value: value,
+            });
+            if (!isNull(input.current)) {
+              if (isAvailable) {
+                input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
+              } else {
+                input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
+              }
+            }
+          } catch {
+            if (!isNull(input.current)) {
               input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
-            } else {
-              input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
             }
           }
-        } catch {
-          if (!isNull(input.current)) {
-            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
+          setIsCheckingAvailability(false);
+        } else if (props.checkPasswordStrength) {
+          setIsCheckingPwdStrength(true);
+          try {
+            await API.checkPasswordStrength(value);
+            if (!isNull(input.current)) {
+              input.current!.setCustomValidity('');
+              setPwdStrengthError(null);
+            }
+          } catch (e) {
+            if (!isNull(input.current) && e.message) {
+              setPwdStrengthError(e.message);
+              input.current!.setCustomValidity(e.message);
+            }
           }
-        }
-        setIsCheckingAvailability(false);
-      } else {
-        if (!isNull(input.current)) {
-          input.current!.setCustomValidity('');
+          setIsCheckingPwdStrength(false);
+        } else {
+          if (!isNull(input.current)) {
+            input.current!.setCustomValidity('');
+          }
         }
       }
     }
-
     return checkValidity();
   };
 
   const handleOnBlur = (): void => {
-    if (!isUndefined(props.validateOnBlur) && props.validateOnBlur) {
+    if (!isUndefined(props.validateOnBlur) && props.validateOnBlur && input.current) {
+      cleanTimeout(); // On blur we clean timeout if it's necessary
       isValidField();
     }
   };
@@ -150,6 +178,31 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
       props.onChange(e);
     }
   };
+
+  const cleanTimeout = () => {
+    if (!isNull(validateTimeout)) {
+      clearTimeout(validateTimeout);
+      setValidateTimeout(null);
+    }
+  };
+
+  useEffect(() => {
+    const isInputFocused = input.current === document.activeElement;
+    if (isInputFocused && !isUndefined(props.validateOnChange) && props.validateOnChange) {
+      cleanTimeout();
+      setValidateTimeout(
+        setTimeout(() => {
+          isValidField();
+        }, VALIDATION_DELAY)
+      );
+    }
+
+    return () => {
+      if (validateTimeout) {
+        clearTimeout(validateTimeout);
+      }
+    };
+  }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div className={`form-group mb-4 position-relative ${props.className}`}>
@@ -197,7 +250,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         </button>
       )}
 
-      {isCheckingAvailability && (
+      {(isCheckingAvailability || isCheckingPwdStrength) && (
         <div className={`position-absolute ${styles.spinner}`}>
           <span className="spinner-border spinner-border-sm text-primary" />
         </div>
@@ -207,8 +260,14 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         <div className={`valid-feedback mt-0 ${styles.inputFeedback}`}>{props.validText}</div>
       )}
 
-      {!isUndefined(invalidText) && (
+      {!isUndefined(invalidText) && isNull(pwdStrengthError) && (
         <div className={`invalid-feedback mt-0 ${styles.inputFeedback}`}>{invalidText}</div>
+      )}
+
+      {!isNull(pwdStrengthError) && (
+        <div className={`invalid-feedback mt-0 ${styles.inputPwdStrengthError}`}>
+          {capitalizeFirstLetter(pwdStrengthError)}
+        </div>
       )}
 
       {!isUndefined(props.additionalInfo) && <div className="alert p-0 mt-4">{props.additionalInfo}</div>}

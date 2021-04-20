@@ -170,6 +170,7 @@ func (h *Handlers) setupRouter() {
 		// Users
 		r.Route("/users", func(r chi.Router) {
 			r.Post("/", h.Users.RegisterUser)
+			r.Post("/check-password-strength", h.Users.CheckPasswordStrength)
 			r.Post("/login", h.Users.Login)
 			r.Post("/password-reset-code", h.Users.RegisterPasswordResetCode)
 			r.Put("/reset-password", h.Users.ResetPassword)
