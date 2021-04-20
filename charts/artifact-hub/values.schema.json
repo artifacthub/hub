@@ -202,8 +202,8 @@
                             "title": "Hub pod readiness gates",
                             "type": "array",
                             "items": {
-                                "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#podreadinessgate-v1-core",
-                                "type": "object"
+                                "type": "object",
+                                "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.PodReadinessGate"
                             },
                             "default": []
                         },
@@ -214,9 +214,9 @@
                         },
                         "resources": {
                             "title": "Hub pod resource requirements",
-                            "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core",
                             "type": "object",
-                            "default": {}
+                            "default": {},
+                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
                     "required": ["image", "replicaCount", "resources"]
@@ -245,8 +245,8 @@
                             "title": "Hub ingress rules",
                             "type": "array",
                             "items": {
-                                "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#ingressrule-v1-networking-k8s-io",
-                                "type": "object"
+                                "type": "object",
+                                "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.extensions.v1beta1.IngressRule"
                             },
                             "default": []
                         },
@@ -254,8 +254,8 @@
                             "title": "Hub ingress tls",
                             "type": "array",
                             "items": {
-                                "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#ingresstls-v1-networking-k8s-io",
-                                "type": "object"
+                                "type": "object",
+                                "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.extensions.v1beta1.IngressTLS"
                             },
                             "default": []
                         }
@@ -600,9 +600,9 @@
                         },
                         "resources": {
                             "title": "Scanner pod resource requirements",
-                            "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core",
                             "type": "object",
-                            "default": {}
+                            "default": {},
+                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
                     "required": ["image", "resources"]
@@ -663,9 +663,9 @@
                         },
                         "resources": {
                             "title": "Tracker pod resource requirements",
-                            "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core",
                             "type": "object",
-                            "default": {}
+                            "default": {},
+                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
                     "required": ["image", "resources"]
@@ -706,9 +706,9 @@
                         },
                         "resources": {
                             "title": "Trivy pod resource requirements",
-                            "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core",
                             "type": "object",
-                            "default": {}
+                            "default": {},
+                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
                     "required": ["image", "resources"]
