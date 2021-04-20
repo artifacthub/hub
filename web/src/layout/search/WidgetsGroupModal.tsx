@@ -7,7 +7,6 @@ import { IoIosClose } from 'react-icons/io';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import useOutsideClick from '../../hooks/useOutsideClick';
 import { RefInputField } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import InputField from '../common/InputField';
@@ -50,16 +49,12 @@ const WRAPPER_OPTIONS: RadioProps[] = [
 const WidgetsGroupModal = (props: Props) => {
   const widthInput = useRef<RefInputField>(null);
   const [theme, setTheme] = useState<string>(DEFAULT_THEME);
-  const [header, setHeader] = useState<boolean>(true);
+  const [header, setHeader] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [color, setColor] = useState<string>(DEFAULT_COLOR);
   const [fixedWidth, setFixedWidth] = useState<string | undefined>();
-  const [visibleColor, setVisibleColor] = useState<boolean>(false);
   const [groupWrapperWidthOpt, setGroupWrapperWidthOpt] = useState<string>(DEFAULT_WRAPPER_OPTION);
   const [isValidCode, setIsValidCode] = useState<boolean>(true);
-
-  const colorRef = useRef(null);
-  useOutsideClick([colorRef], visibleColor, () => setVisibleColor(false));
 
   const onFixedWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFixedWidth(e.target.value);
@@ -73,7 +68,7 @@ const WidgetsGroupModal = (props: Props) => {
       window.location.href
     }" data-theme="${theme}" data-header="${!header ? 'false' : 'true'}" data-color="${color}" data-responsive="${
       groupWrapperWidthOpt === 'responsive'
-    }" ${fixedWidth && `data-width="${fixedWidth}"`} data-loading-spinner="${
+    }" ${fixedWidth ? `data-width="${fixedWidth}"` : ''} data-loading="${
       loading ? 'true' : 'false'
     }"></div><script async src="${window.location.origin}/artifacthub-widget.js"></script>`;
 
@@ -88,8 +83,8 @@ const WidgetsGroupModal = (props: Props) => {
     setLoading(true);
     setFixedWidth(undefined);
     setColor(DEFAULT_COLOR);
-    setVisibleColor(false);
     setGroupWrapperWidthOpt(DEFAULT_WRAPPER_OPTION);
+    setWidgetCode(buildWidgetsGroupCode());
   };
 
   const onCloseModal = () => {
@@ -222,7 +217,7 @@ const WidgetsGroupModal = (props: Props) => {
                   })}
                 </div>
               </div>
-              <div className="position-relative w-25 mt-4">
+              <div className={`position-relative ${styles.inputWrapper}`}>
                 {groupWrapperWidthOpt === 'fixed' && (
                   <div className="position-absolute d-flex flex-row">
                     <InputField
@@ -274,38 +269,31 @@ const WidgetsGroupModal = (props: Props) => {
                 <label htmlFor="color" className={`font-weight-bold mb-0 ${styles.label}`}>
                   Color
                 </label>
-                <button
-                  className={`btn btn-sm btn-light ${styles.colorInputWrapper}`}
-                  onClick={() => setVisibleColor(!visibleColor)}
-                >
+                <div className={`btn btn-sm btn-light ${styles.colorInputWrapper}`}>
                   <div
                     className={styles.colorInput}
                     style={{
                       backgroundColor: color,
                     }}
                   />
-                </button>
+                </div>
                 {color !== DEFAULT_COLOR && (
                   <button className="btn btn-sm btn-link text-muted py-0" onClick={() => setColor(DEFAULT_COLOR)}>
                     <IoIosClose />
-                    <small>Reset</small>
+                    <small>Reset to default</small>
                   </button>
                 )}
               </div>
               <small className="form-text text-muted mt-3 mb-2">
                 Color used for widgets border, header and loading spinner.
               </small>
-              <div className={styles.colorPickerWrapper} ref={colorRef}>
-                {visibleColor && (
-                  <div className="pb-2">
-                    <SketchPicker
-                      color={color}
-                      presetColors={PRESET_COLORS}
-                      onChangeComplete={handleColorChange}
-                      disableAlpha
-                    />
-                  </div>
-                )}
+              <div className={`pb-2 ${styles.colorPickerWrapper}`}>
+                <SketchPicker
+                  color={color}
+                  presetColors={PRESET_COLORS}
+                  onChangeComplete={handleColorChange}
+                  disableAlpha
+                />
               </div>
             </div>
 

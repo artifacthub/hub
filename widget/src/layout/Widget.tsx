@@ -123,7 +123,10 @@ const Wrapper = styled.div<WrapperProps>`
         `}
   --color-ah-primary: ${(props) => (props.color && props.color !== DEFAULT_COLOR ? 'inherit' : props.color)};
   margin: 0.75rem;
-  width: calc(100% - 1.5rem);
+
+  @media (max-width: 380px) {
+    width: calc(100% - 1.5rem);
+  }
 
   & *,
   & *:after,

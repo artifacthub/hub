@@ -59,20 +59,18 @@ const MoreActionsButton = (props: Props) => {
         >
           <div className={`arrow ${styles.arrow}`} />
 
-          <div className={`${styles.dropdownItem} dropdownItem`}>
-            <button
-              className={`${styles.dropdownItem} dropdownItem btn btn-link text-dark w-100`}
-              onClick={() => {
-                setVisibleWidget(true);
-                setOpenStatus(false);
-              }}
-            >
-              <div className="d-flex flex-row align-items-center">
-                <BiCode className="mr-2" />
-                <div>Embed widget</div>
-              </div>
-            </button>
-          </div>
+          <button
+            className="dropdown-item btn btn-sm rounded-0 text-secondary"
+            onClick={() => {
+              setVisibleWidget(true);
+              setOpenStatus(false);
+            }}
+          >
+            <div className="d-flex flex-row align-items-center">
+              <BiCode className="mr-2" />
+              <div>Embed widget</div>
+            </div>
+          </button>
         </div>
       </div>
 
