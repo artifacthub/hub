@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ParamInfo from './ParamInfo';
@@ -10,13 +11,7 @@ const defaultProps = {
 };
 
 describe('ParamInfo', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -27,43 +22,67 @@ describe('ParamInfo', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(<ParamInfo {...defaultProps} />);
+      render(<ParamInfo {...defaultProps} />);
 
-      expect(getByText('element')).toBeInTheDocument();
-      expect(getByTestId('infoText')).toBeInTheDocument();
-      expect(getByText('this is a sample')).toBeInTheDocument();
+      expect(screen.getByText('element')).toBeInTheDocument();
+      expect(screen.getByTestId('infoText')).toBeInTheDocument();
+      expect(screen.getByText('this is a sample')).toBeInTheDocument();
     });
 
     it('displays info dropdown to enter on info text and hides on leave', async () => {
-      const { getByTestId } = render(<ParamInfo {...defaultProps} />);
+      jest.useFakeTimers();
 
-      expect(getByTestId('infoDropdown')).not.toHaveClass('visible');
+      render(<ParamInfo {...defaultProps} />);
 
-      fireEvent.mouseEnter(getByTestId('infoText'));
-      await waitFor(() => {
-        expect(getByTestId('infoDropdown')).toHaveClass('visible');
+      const infoDropdown = screen.getByTestId('infoDropdown');
+
+      expect(infoDropdown).not.toHaveClass('visible');
+
+      userEvent.hover(screen.getByTestId('infoText'));
+
+      act(() => {
+        jest.advanceTimersByTime(100);
       });
 
-      fireEvent.mouseLeave(getByTestId('infoText'));
-      await waitFor(() => {
-        expect(getByTestId('infoDropdown')).not.toHaveClass('visible');
+      expect(infoDropdown).toHaveClass('visible');
+
+      userEvent.unhover(screen.getByTestId('infoText'));
+
+      act(() => {
+        jest.advanceTimersByTime(50);
       });
+
+      expect(infoDropdown).not.toHaveClass('visible');
+
+      jest.useRealTimers();
     });
 
     it('hides info dropdown to leave it', async () => {
-      const { getByTestId } = render(<ParamInfo {...defaultProps} />);
-      fireEvent.mouseEnter(getByTestId('infoText'));
+      jest.useFakeTimers();
 
-      fireEvent.mouseEnter(getByTestId('infoDropdown'));
-      fireEvent.mouseLeave(getByTestId('infoText'));
-      await waitFor(() => {
-        expect(getByTestId('infoDropdown')).toHaveClass('visible');
+      render(<ParamInfo {...defaultProps} />);
+
+      const infoDropdown = screen.getByTestId('infoDropdown');
+
+      userEvent.hover(screen.getByTestId('infoText'));
+      userEvent.hover(screen.getByTestId('infoDropdown'));
+      userEvent.unhover(screen.getByTestId('infoText'));
+
+      act(() => {
+        jest.advanceTimersByTime(100);
       });
 
-      fireEvent.mouseLeave(getByTestId('infoDropdown'));
-      await waitFor(() => {
-        expect(getByTestId('infoDropdown')).not.toHaveClass('visible');
+      expect(infoDropdown).toHaveClass('visible');
+
+      userEvent.unhover(screen.getByTestId('infoDropdown'));
+
+      act(() => {
+        jest.advanceTimersByTime(50);
       });
+
+      expect(infoDropdown).not.toHaveClass('visible');
+
+      jest.useRealTimers();
     });
   });
 });

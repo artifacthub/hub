@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -27,13 +28,7 @@ const getMockOrganization = (fixtureId: string): Organization => {
 };
 
 describe('OrganizationInfo', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -43,16 +38,16 @@ describe('OrganizationInfo', () => {
   });
 
   it('renders proper content', () => {
-    const { getByText, getByTestId } = render(<OrganizationInfo {...defaultProps} />);
-    expect(getByText(defaultProps.organizationName)).toBeInTheDocument();
-    expect(getByTestId('orgLink')).toBeInTheDocument();
+    render(<OrganizationInfo {...defaultProps} />);
+    expect(screen.getByText(defaultProps.organizationName)).toBeInTheDocument();
+    expect(screen.getByTestId('orgLink')).toBeInTheDocument();
   });
 
-  it('calls history push to click org link', () => {
-    const { getByTestId } = render(<OrganizationInfo {...defaultProps} />);
-    fireEvent.click(getByTestId('orgLink'));
+  it('calls history push to click org link', async () => {
+    render(<OrganizationInfo {...defaultProps} />);
+    userEvent.click(screen.getByTestId('orgLink'));
 
-    expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
     expect(mockHistoryPush).toHaveBeenCalledWith({
       pathname: '/packages/search',
       search: prepareQuerystring({
@@ -65,71 +60,86 @@ describe('OrganizationInfo', () => {
   });
 
   it('displays org info to enter on link and hides on leave', async () => {
+    jest.useFakeTimers();
+
     const mockOrganization = getMockOrganization('1');
     mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
-    const { getByTestId, getByAltText, getByText } = render(<OrganizationInfo {...defaultProps} />);
-    fireEvent.mouseEnter(getByTestId('orgLink'));
+    render(<OrganizationInfo {...defaultProps} />);
+    userEvent.hover(screen.getByTestId('orgLink'));
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);
     });
 
-    expect(getByTestId('externalBtn')).toBeInTheDocument();
-    expect(getByAltText(mockOrganization.displayName!)).toBeInTheDocument();
-    expect(getByAltText(mockOrganization.displayName!)).toHaveProperty(
+    expect(screen.getByTestId('externalBtn')).toBeInTheDocument();
+    expect(screen.getByAltText(mockOrganization.displayName!)).toBeInTheDocument();
+    expect(screen.getByAltText(mockOrganization.displayName!)).toHaveProperty(
       'src',
       `http://localhost/image/${mockOrganization.logoImageId!}`
     );
-    expect(getByText(mockOrganization.description!)).toBeInTheDocument();
+    expect(screen.getByText(mockOrganization.description!)).toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
+    act(() => {
+      jest.advanceTimersByTime(100);
     });
 
-    fireEvent.mouseLeave(getByTestId('orgLink'));
+    expect(await screen.findByTestId('orgInfoDropdown')).toHaveClass('show');
 
-    await waitFor(() => {
-      expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
+    userEvent.unhover(screen.getByTestId('orgLink'));
+
+    act(() => {
+      jest.advanceTimersByTime(50);
     });
+
+    expect(await screen.findByTestId('orgInfoDropdown')).not.toHaveClass('show');
+
+    jest.useRealTimers();
   });
 
   it('hides org info to leave org dropdown', async () => {
+    jest.useFakeTimers();
+
     const mockOrganization = getMockOrganization('1');
     mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
-    const { getByTestId } = render(<OrganizationInfo {...defaultProps} />);
-    fireEvent.mouseEnter(getByTestId('orgLink'));
+    render(<OrganizationInfo {...defaultProps} />);
+    userEvent.hover(screen.getByTestId('orgLink'));
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);
     });
 
-    fireEvent.mouseEnter(getByTestId('orgInfoDropdown'));
-    fireEvent.mouseLeave(getByTestId('orgLink'));
+    userEvent.hover(screen.getByTestId('orgInfoDropdown'));
+    userEvent.unhover(screen.getByTestId('orgLink'));
 
-    await waitFor(() => {
-      expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
+    act(() => {
+      jest.advanceTimersByTime(100);
     });
 
-    fireEvent.mouseLeave(getByTestId('orgInfoDropdown'));
-    await waitFor(() => {
-      expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
+    expect(await screen.findByTestId('orgInfoDropdown')).toHaveClass('show');
+
+    userEvent.unhover(screen.getByTestId('orgInfoDropdown'));
+
+    act(() => {
+      jest.advanceTimersByTime(50);
     });
+
+    expect(await screen.findByTestId('orgInfoDropdown')).not.toHaveClass('show');
+
+    jest.useRealTimers();
   });
 
   it('does not render dropdown content when api call fails', async () => {
     mocked(API).getOrganization.mockRejectedValue('');
 
-    const { getByTestId } = render(<OrganizationInfo {...defaultProps} />);
-    fireEvent.mouseEnter(getByTestId('orgLink'));
+    render(<OrganizationInfo {...defaultProps} />);
+    userEvent.hover(screen.getByTestId('orgLink'));
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);
     });
 
-    await waitFor(() => {
-      expect(getByTestId('orgInfoDropdown')).toBeEmptyDOMElement();
-    });
+    expect(await screen.findByTestId('orgInfoDropdown')).toBeEmptyDOMElement();
   });
 });

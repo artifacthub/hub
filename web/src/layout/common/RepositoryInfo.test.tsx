@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import prepareQuerystring from '../../utils/prepareQueryString';
@@ -29,13 +30,7 @@ const defaultProps = {
 };
 
 describe('RepositoryInfo', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -45,16 +40,16 @@ describe('RepositoryInfo', () => {
   });
 
   it('renders proper content', () => {
-    const { getAllByText, getByTestId } = render(<RepositoryInfo {...defaultProps} />);
-    expect(getAllByText(defaultProps.repository.displayName)).toHaveLength(2);
-    expect(getByTestId('repoLink')).toBeInTheDocument();
+    render(<RepositoryInfo {...defaultProps} />);
+    expect(screen.getAllByText(defaultProps.repository.displayName)).toHaveLength(2);
+    expect(screen.getByTestId('repoLink')).toBeInTheDocument();
   });
 
-  it('calls history push to click repo link', () => {
-    const { getByTestId } = render(<RepositoryInfo {...defaultProps} />);
-    fireEvent.click(getByTestId('repoLink'));
+  it('calls history push to click repo link', async () => {
+    render(<RepositoryInfo {...defaultProps} />);
+    userEvent.click(screen.getByTestId('repoLink'));
 
-    expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
     expect(mockHistoryPush).toHaveBeenCalledWith({
       pathname: '/packages/search',
       search: prepareQuerystring({
@@ -68,38 +63,56 @@ describe('RepositoryInfo', () => {
   });
 
   it('displays repo info to enter on link and hides on leave', async () => {
-    const { getByTestId, getAllByText } = render(<RepositoryInfo {...defaultProps} />);
-    expect(getAllByText(defaultProps.repository.displayName!)).toHaveLength(2);
-    expect(getByTestId('repoUrl')).toBeInTheDocument();
-    expect(getByTestId('repoUrl')).toHaveTextContent(defaultProps.repository.url);
+    jest.useFakeTimers();
 
-    fireEvent.mouseEnter(getByTestId('repoLink'));
+    render(<RepositoryInfo {...defaultProps} />);
+    expect(screen.getAllByText(defaultProps.repository.displayName!)).toHaveLength(2);
+    expect(screen.getByTestId('repoUrl')).toBeInTheDocument();
+    expect(screen.getByTestId('repoUrl')).toHaveTextContent(defaultProps.repository.url);
 
-    await waitFor(() => {
-      expect(getByTestId('repoInfoDropdown')).toHaveClass('show');
+    userEvent.hover(screen.getByTestId('repoLink'));
+
+    act(() => {
+      jest.advanceTimersByTime(100);
     });
 
-    fireEvent.mouseLeave(getByTestId('repoLink'));
+    expect(await screen.findByTestId('repoInfoDropdown')).toHaveClass('show');
 
-    await waitFor(() => {
-      expect(getByTestId('repoInfoDropdown')).not.toHaveClass('show');
+    userEvent.unhover(screen.getByTestId('repoLink'));
+
+    act(() => {
+      jest.advanceTimersByTime(50);
     });
+
+    expect(await screen.findByTestId('repoInfoDropdown')).not.toHaveClass('show');
+
+    jest.useRealTimers();
   });
 
   it('hides repo info to leave dropdown', async () => {
-    const { getByTestId } = render(<RepositoryInfo {...defaultProps} />);
-    fireEvent.mouseEnter(getByTestId('repoLink'));
+    jest.useFakeTimers();
 
-    fireEvent.mouseEnter(getByTestId('repoInfoDropdown'));
-    fireEvent.mouseLeave(getByTestId('repoLink'));
-    await waitFor(() => {
-      expect(getByTestId('repoInfoDropdown')).toHaveClass('show');
+    render(<RepositoryInfo {...defaultProps} />);
+    userEvent.hover(screen.getByTestId('repoLink'));
+
+    userEvent.hover(screen.getByTestId('repoInfoDropdown'));
+    userEvent.unhover(screen.getByTestId('repoLink'));
+
+    act(() => {
+      jest.advanceTimersByTime(100);
     });
 
-    fireEvent.mouseLeave(getByTestId('repoInfoDropdown'));
-    await waitFor(() => {
-      expect(getByTestId('repoInfoDropdown')).not.toHaveClass('show');
+    expect(await screen.findByTestId('repoInfoDropdown')).toHaveClass('show');
+
+    userEvent.unhover(screen.getByTestId('repoInfoDropdown'));
+
+    act(() => {
+      jest.advanceTimersByTime(50);
     });
+
+    expect(await screen.findByTestId('repoInfoDropdown')).not.toHaveClass('show');
+
+    jest.useRealTimers();
   });
 
   it('renders Verified Publisher label', () => {
@@ -110,7 +123,7 @@ describe('RepositoryInfo', () => {
         verifiedPublisher: true,
       },
     };
-    const { getByText } = render(<RepositoryInfo {...props} />);
-    expect(getByText('Verified Publisher')).toBeInTheDocument();
+    render(<RepositoryInfo {...props} />);
+    expect(screen.getByText('Verified Publisher')).toBeInTheDocument();
   });
 });

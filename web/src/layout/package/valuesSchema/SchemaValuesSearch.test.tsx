@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import SchemaValuesSearch from './SchemaValuesSearch';
@@ -11,13 +12,7 @@ const defaultProps = {
 };
 
 describe('SchemaValuesSearch', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -27,49 +22,40 @@ describe('SchemaValuesSearch', () => {
   });
 
   it('renders component', () => {
-    const { getByTestId } = render(<SchemaValuesSearch {...defaultProps} />);
-    expect(getByTestId('typeaheadInput')).toBeInTheDocument();
+    render(<SchemaValuesSearch {...defaultProps} />);
+    expect(screen.getByTestId('typeaheadInput')).toBeInTheDocument();
   });
 
   it('displays options', () => {
-    const { getByTestId, getAllByTestId } = render(<SchemaValuesSearch {...defaultProps} />);
+    render(<SchemaValuesSearch {...defaultProps} />);
 
-    const input = getByTestId('typeaheadInput');
-    fireEvent.change(input, { target: { value: 'sub' } });
+    userEvent.type(screen.getByTestId('typeaheadInput'), 'sub');
 
-    expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
+    expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
   });
 
   it('calls onSearch with selected path', () => {
-    const { getByTestId, getAllByTestId } = render(<SchemaValuesSearch {...defaultProps} />);
+    render(<SchemaValuesSearch {...defaultProps} />);
 
-    const input = getByTestId('typeaheadInput');
-    fireEvent.change(input, { target: { value: 'sub' } });
+    userEvent.type(screen.getByTestId('typeaheadInput'), 'sub');
 
-    const opts = getAllByTestId('typeaheadDropdownBtn');
-    fireEvent.click(opts[0]);
+    const opts = screen.getAllByTestId('typeaheadDropdownBtn');
+    userEvent.click(opts[0]);
 
     expect(onSearchMock).toHaveBeenCalledTimes(1);
     expect(onSearchMock).toHaveBeenCalledWith('path1.subpath1');
   });
 
   it('calls onSearch twice', async () => {
-    const { getByTestId, getAllByTestId } = render(
-      <SchemaValuesSearch {...defaultProps} activePath="path1.subpath1" />
-    );
+    render(<SchemaValuesSearch {...defaultProps} activePath="path1.subpath1" />);
 
-    const input = getByTestId('typeaheadInput');
-    fireEvent.change(input, { target: { value: 'sub' } });
+    userEvent.type(screen.getByTestId('typeaheadInput'), 'sub');
 
-    const opts = getAllByTestId('typeaheadDropdownBtn');
-    fireEvent.click(opts[0]);
+    const opts = screen.getAllByTestId('typeaheadDropdownBtn');
+    userEvent.click(opts[0]);
 
-    await waitFor(() => {
-      expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 10);
-
-      expect(onSearchMock).toHaveBeenCalledTimes(2);
-      expect(onSearchMock).toHaveBeenNthCalledWith(1, undefined);
-      expect(onSearchMock).toHaveBeenNthCalledWith(2, 'path1.subpath1');
-    });
+    await waitFor(() => expect(onSearchMock).toHaveBeenCalledTimes(2));
+    expect(onSearchMock).toHaveBeenNthCalledWith(1, undefined);
+    expect(onSearchMock).toHaveBeenNthCalledWith(2, 'path1.subpath1');
   });
 });

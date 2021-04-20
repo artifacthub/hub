@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -40,13 +41,7 @@ const mockCtx = {
 };
 
 describe('ActionBtn', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -62,7 +57,7 @@ describe('ActionBtn', () => {
   });
 
   it('renders enabled button', () => {
-    const { getByTestId, getByText } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <ActionBtn {...defaultProps}>
           <div>button content</div>
@@ -70,18 +65,18 @@ describe('ActionBtn', () => {
       </AppCtx.Provider>
     );
 
-    const btn = getByTestId(defaultProps.testId);
+    const btn = screen.getByTestId(defaultProps.testId);
     expect(btn).toBeInTheDocument();
     expect(btn).not.toHaveClass('disabled');
 
-    fireEvent.click(btn);
+    userEvent.click(btn);
     expect(onClickMock).toHaveBeenCalledTimes(1);
 
-    expect(getByText('button content')).toBeInTheDocument();
+    expect(screen.getByText('button content')).toBeInTheDocument();
   });
 
   it('renders disabled button', () => {
-    const { getByTestId, getByText } = render(
+    render(
       <AppCtx.Provider
         value={{
           ctx: {
@@ -97,18 +92,20 @@ describe('ActionBtn', () => {
       </AppCtx.Provider>
     );
 
-    const btn = getByTestId(defaultProps.testId);
+    const btn = screen.getByTestId(defaultProps.testId);
     expect(btn).toBeInTheDocument();
     expect(btn).toHaveClass('disabled');
 
-    fireEvent.click(btn);
+    userEvent.click(btn);
     expect(onClickMock).toHaveBeenCalledTimes(0);
 
-    expect(getByText('button content')).toBeInTheDocument();
+    expect(screen.getByText('button content')).toBeInTheDocument();
   });
 
   it('displays tooltip', async () => {
-    const { getByTestId, getByRole, getByText } = render(
+    jest.useFakeTimers();
+
+    render(
       <AppCtx.Provider
         value={{
           ctx: {
@@ -124,12 +121,12 @@ describe('ActionBtn', () => {
       </AppCtx.Provider>
     );
 
-    const btn = getByTestId(defaultProps.testId);
-    fireEvent.mouseEnter(btn);
+    const btn = screen.getByTestId(defaultProps.testId);
+    userEvent.hover(btn);
 
-    await waitFor(() => {
-      expect(getByRole('tooltip')).toBeInTheDocument();
-      expect(getByText('You are not allowed to perform this action')).toBeInTheDocument();
-    });
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(screen.getByText('You are not allowed to perform this action')).toBeInTheDocument();
+
+    jest.useRealTimers();
   });
 });

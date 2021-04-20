@@ -13,21 +13,25 @@ interface Props {
 const DEFAULT_ALERT_TYPE = 'warning';
 
 const Alert: React.ElementType = (props: Props) => {
-  const [errorMessage, setErrorMessage] = useState<string | null>(props.message);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const errorWrapper = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     if (isNull(props.message)) {
-      setIsVisible(false);
-      timeout = setTimeout(() => {
-        setErrorMessage(null);
-      }, 1000);
+      if (!isNull(errorMessage)) {
+        setIsVisible(false);
+        timeout = setTimeout(() => {
+          setErrorMessage(null);
+        }, 1000);
+      }
     } else {
-      setErrorMessage(props.message);
-      setIsVisible(true);
-      errorWrapper.current!.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      if (props.message !== errorMessage) {
+        setErrorMessage(props.message);
+        setIsVisible(true);
+        errorWrapper.current!.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      }
     }
 
     return () => {
@@ -35,7 +39,7 @@ const Alert: React.ElementType = (props: Props) => {
         clearTimeout(timeout);
       }
     };
-  }, [props.message]);
+  }, [props.message]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div

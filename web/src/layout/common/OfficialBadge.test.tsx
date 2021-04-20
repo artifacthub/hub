@@ -1,16 +1,11 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import OfficialBadge from './OfficialBadge';
 
 describe('OfficialBadge', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -20,33 +15,31 @@ describe('OfficialBadge', () => {
   });
 
   it('renders label', async () => {
-    const { getByTestId, getByText, getByRole } = render(<OfficialBadge official type="repo" />);
-    expect(getByText('Official')).toBeInTheDocument();
+    render(<OfficialBadge official type="repo" />);
+    expect(screen.getByText('Official')).toBeInTheDocument();
 
-    const badge = getByTestId('elementWithTooltip');
+    const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    fireEvent.mouseEnter(badge);
+    userEvent.hover(badge);
 
-    await waitFor(() => {
-      expect(
-        getByText('The publisher owns the software deployed by the packages in this repository')
-      ).toBeInTheDocument();
-      expect(getByRole('tooltip')).toBeInTheDocument();
-    });
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+
+    expect(
+      screen.getByText('The publisher owns the software deployed by the packages in this repository')
+    ).toBeInTheDocument();
   });
 
   it('renders label for package', async () => {
-    const { getByTestId, getByText, getByRole } = render(<OfficialBadge official type="package" />);
-    expect(getByText('Official')).toBeInTheDocument();
+    render(<OfficialBadge official type="package" />);
+    expect(screen.getByText('Official')).toBeInTheDocument();
 
-    const badge = getByTestId('elementWithTooltip');
+    const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    fireEvent.mouseEnter(badge);
+    userEvent.hover(badge);
 
-    await waitFor(() => {
-      expect(getByText('The publisher owns the software deployed by this package')).toBeInTheDocument();
-      expect(getByRole('tooltip')).toBeInTheDocument();
-    });
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+
+    expect(screen.getByText('The publisher owns the software deployed by this package')).toBeInTheDocument();
   });
 
   it('does not render label', () => {

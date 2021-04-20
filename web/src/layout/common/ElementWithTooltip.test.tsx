@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ElementWithTooltip from './ElementWithTooltip';
@@ -11,13 +12,7 @@ const defaultProps = {
 };
 
 describe('ElementWithTooltip', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -37,48 +32,52 @@ describe('ElementWithTooltip', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('displays tootltip', async () => {
-    const { getByTestId, getByText, getByRole } = render(<ElementWithTooltip {...defaultProps} />);
+  it('displays tooltip', async () => {
+    jest.useFakeTimers();
 
-    const badge = getByTestId('elementWithTooltip');
-    fireEvent.mouseEnter(badge);
+    render(<ElementWithTooltip {...defaultProps} />);
 
-    await waitFor(() => {
-      expect(getByText(defaultProps.tooltipMessage)).toBeInTheDocument();
-      expect(getByRole('tooltip')).toBeInTheDocument();
-    });
+    const badge = screen.getByTestId('elementWithTooltip');
+    userEvent.hover(badge);
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(screen.getByText(defaultProps.tooltipMessage)).toBeInTheDocument();
+
+    jest.useRealTimers();
   });
 
-  it('hides tootltip on mouse leave', async () => {
-    const { getByTestId, getByText, getByRole, queryByRole } = render(<ElementWithTooltip {...defaultProps} />);
+  it('hides tooltip on mouse leave', async () => {
+    jest.useFakeTimers();
 
-    const badge = getByTestId('elementWithTooltip');
-    fireEvent.mouseEnter(badge);
+    render(<ElementWithTooltip {...defaultProps} />);
 
-    await waitFor(() => {
-      expect(getByText(defaultProps.tooltipMessage)).toBeInTheDocument();
-      expect(getByRole('tooltip')).toBeInTheDocument();
+    const badge = screen.getByTestId('elementWithTooltip');
+    userEvent.hover(badge);
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(screen.getByText(defaultProps.tooltipMessage)).toBeInTheDocument();
+
+    userEvent.unhover(badge);
+
+    act(() => {
+      jest.advanceTimersByTime(50);
     });
 
-    fireEvent.mouseLeave(badge);
+    expect(screen.queryByRole('tooltip')).toBeNull();
 
-    await waitFor(() => {
-      expect(queryByRole('tooltip')).toBeNull();
-    });
+    jest.useRealTimers();
   });
 
-  it('does not display tootltip when visibleTooltip is false', () => {
+  it('does not display tooltip when visibleTooltip is false', () => {
     const props = {
       ...defaultProps,
       visibleTooltip: false,
     };
-    const { getByTestId, queryByRole } = render(<ElementWithTooltip {...props} />);
+    render(<ElementWithTooltip {...props} />);
 
-    const badge = getByTestId('elementWithTooltip');
-    fireEvent.mouseEnter(badge);
+    const badge = screen.getByTestId('elementWithTooltip');
+    userEvent.hover(badge);
 
-    waitFor(() => {
-      expect(queryByRole('tooltip')).toBeNull();
-    });
+    expect(screen.queryByRole('tooltip')).toBeNull();
   });
 });
