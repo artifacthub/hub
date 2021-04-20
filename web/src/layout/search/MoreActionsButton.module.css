@@ -1,12 +1,12 @@
 .iconWrapper {
-  width: 2rem;
-  height: 2rem;
+  width: 1.65rem;
+  height: 1.65rem;
   background-color: var(--white);
   border: 1px solid var(--color-1-500);
   padding: 2px;
   overflow: hidden;
   line-height: 1;
-  font-size: 1.25rem !important;
+  font-size: 1.15rem !important;
 }
 
 .dropdown {
@@ -16,22 +16,6 @@
 
 .arrow {
   right: 0.3rem !important;
-}
-
-.dropdownItem:not(.isDisabled):hover {
-  background-color: var(--color-1-10);
-}
-
-.dropdownItem + .dropdownItem {
-  border-top: 1px solid var(--border-md);
-}
-
-.dropdownItem:hover {
-  text-decoration: none;
-}
-
-.isDisabled {
-  cursor: auto;
 }
 
 @media only screen and (max-width: 767.98px) {

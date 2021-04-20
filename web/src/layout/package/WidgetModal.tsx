@@ -60,6 +60,7 @@ const WidgetModal = (props: Props) => {
     setTheme(DEFAULT_THEME);
     setHeader(true);
     setRepsonsive(false);
+    setWidgetCode(buildWidgetCode());
   };
 
   const onCloseModal = () => {

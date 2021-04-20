@@ -102,8 +102,10 @@ const Group = (props: Props) => {
 
   if (isNull(packagesList) || (packagesList && packagesList.length === 0)) return null;
 
+  const mainColor = getMainColor();
+
   return (
-    <Wrapper mainColor={getMainColor()}>
+    <Wrapper mainColor={mainColor}>
       {visibleLoading && (isUndefined(packagesList) || isLoading) ? (
         <Loading />
       ) : (
@@ -116,7 +118,7 @@ const Group = (props: Props) => {
                     url={props.url}
                     theme={props.theme}
                     header={props.header}
-                    color={props.color}
+                    color={mainColor}
                     responsive={false}
                     packageSummary={packageSummary}
                     withBadges={pkgsWithBadges}

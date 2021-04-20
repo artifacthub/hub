@@ -18,22 +18,6 @@
   right: 0.3rem !important;
 }
 
-.dropdownItem:not(.isDisabled):hover {
-  background-color: var(--color-1-10);
-}
-
-.dropdownItem + .dropdownItem {
-  border-top: 1px solid var(--border-md);
-}
-
-.dropdownItem:hover {
-  text-decoration: none;
-}
-
-.isDisabled {
-  cursor: auto;
-}
-
 @media only screen and (max-width: 767.98px) {
   .dropdown {
     width: 18rem;

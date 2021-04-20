@@ -43,8 +43,13 @@
   width: 220px;
 }
 
+.inputWrapper {
+  width: 9rem;
+  margin-top: 1.75rem;
+}
+
 .input {
-  height: 30px;
+  height: 28px;
 }
 
 .copyBtn {
