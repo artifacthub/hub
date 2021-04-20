@@ -22,6 +22,7 @@ import Sidebar from '../common/Sidebar';
 import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
 import Filters from './Filters';
+import MoreActionsButton from './MoreActionsButton';
 import PaginationLimit from './PaginationLimit';
 import styles from './SearchView.module.css';
 
@@ -43,6 +44,7 @@ interface Props {
   verifiedPublisher?: boolean | null;
   official?: boolean | null;
   fromDetail: boolean;
+  visibleModal?: string;
 }
 
 const SearchView = (props: Props) => {
@@ -398,11 +400,14 @@ const SearchView = (props: Props) => {
         </div>
 
         <div className="ml-3">
-          <PaginationLimit
-            limit={ctx.prefs.search.limit}
-            updateLimit={onPaginationLimitChange}
-            disabled={isNull(searchResults.data.packages) || searchResults.data.packages.length === 0}
-          />
+          <div className="d-flex flex-row">
+            <PaginationLimit
+              limit={ctx.prefs.search.limit}
+              updateLimit={onPaginationLimitChange}
+              disabled={isNull(searchResults.data.packages) || searchResults.data.packages.length === 0}
+            />
+            <MoreActionsButton />
+          </div>
         </div>
       </SubNavbar>
 

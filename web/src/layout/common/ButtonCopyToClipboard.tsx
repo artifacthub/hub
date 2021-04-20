@@ -15,6 +15,7 @@ interface Props {
   contentBtn?: string;
   style?: { [key: string]: string };
   icon?: JSX.Element;
+  disabled?: boolean;
 }
 
 const ButtonCopyToClipboard = (props: Props) => {
@@ -79,6 +80,7 @@ const ButtonCopyToClipboard = (props: Props) => {
           e.stopPropagation();
           copyToClipboard(props.text);
         }}
+        disabled={props.disabled}
       >
         <div className="d-flex flex-row align-items-center">
           {!isUndefined(props.visibleBtnText) && props.visibleBtnText && props.contentBtn && (

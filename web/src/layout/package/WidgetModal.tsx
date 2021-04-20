@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { SearchFiltersURL } from '../../types';
+import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import Modal from '../common/Modal';
-import CommandBlock from './installation/CommandBlock';
 import styles from './WidgetModal.module.css';
 
 interface Props {
@@ -37,7 +39,7 @@ const WidgetModal = (props: Props) => {
   const [header, setHeader] = useState<boolean>(true);
   const [responsive, setRepsonsive] = useState<boolean>(false);
 
-  const compoundWidgetSource = (): string => {
+  const buildWidgetCode = (): string => {
     const url = `${window.location.origin}${window.location.pathname}`;
     const code = `<div class="artifacthub-widget" data-url="${url}" data-theme="${theme}" data-header="${
       !header ? 'false' : 'true'
@@ -52,10 +54,17 @@ const WidgetModal = (props: Props) => {
     return code;
   };
 
-  const [widgetSource, setWidgetSource] = useState<string>(compoundWidgetSource());
+  const [widgetCode, setWidgetCode] = useState<string>(buildWidgetCode());
+
+  const resetValues = () => {
+    setTheme(DEFAULT_THEME);
+    setHeader(true);
+    setRepsonsive(false);
+  };
 
   const onCloseModal = () => {
     props.setOpenStatus(false);
+    resetValues();
     history.replace({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
@@ -63,8 +72,10 @@ const WidgetModal = (props: Props) => {
   };
 
   useEffect(() => {
-    setWidgetSource(compoundWidgetSource());
-  }, [theme, header, responsive, props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+    setWidgetCode(buildWidgetCode());
+    /* eslint-disable react-hooks/exhaustive-deps */
+  }, [theme, header, responsive, props.packageId, props.visibleWidget]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (props.visibleWidget) {
@@ -165,10 +176,29 @@ const WidgetModal = (props: Props) => {
               </small>
             </div>
 
-            <div className="mt-5">
+            <div className="mt-3 mb-2">
               <label className={`font-weight-bold ${styles.label}`}>Code</label>
 
-              <CommandBlock command={widgetSource} language="javascript" />
+              <div className={`flex-grow-1 mr-3 user-select-none ${styles.blockWrapper}`}>
+                <SyntaxHighlighter
+                  language="html"
+                  style={docco}
+                  customStyle={{
+                    backgroundColor: 'var(--color-1-10)',
+                  }}
+                >
+                  {widgetCode}
+                </SyntaxHighlighter>
+              </div>
+
+              <ButtonCopyToClipboard
+                text={widgetCode}
+                tooltipClassName={`bs-tooltip-right ${styles.copyBtnTooltip}`}
+                arrowClassName={styles.copyBtnArrow}
+                visibleBtnText
+                contentBtn="Copy code to clipboard"
+                className={`btn-secondary ${styles.copyBtn}`}
+              />
             </div>
           </div>
         </Modal>

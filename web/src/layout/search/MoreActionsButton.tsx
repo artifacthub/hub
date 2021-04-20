@@ -1,36 +1,18 @@
 import classnames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { BiCode } from 'react-icons/bi';
 import { HiDotsVertical } from 'react-icons/hi';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { SearchFiltersURL } from '../../types';
 import styles from './MoreActionsButton.module.css';
-import WidgetModal from './WidgetModal';
+import WidgetsGroupModal from './WidgetsGroupModal';
 
-interface Props {
-  packageId: string;
-  packageName: string;
-  packageDescription: string;
-  visibleWidget: boolean;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
-}
-
-const MoreActionsButton = (props: Props) => {
+const MoreActionsButton = () => {
   const [openStatus, setOpenStatus] = useState(false);
-  const [visibleWidget, setVisibleWidget] = useState<boolean>(props.visibleWidget);
-  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
+  const [visibleWidget, setVisibleWidget] = useState<boolean>(false);
 
   const ref = useRef(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
-
-  useEffect(() => {
-    if (props.packageId !== currentPkgId && openStatus) {
-      setVisibleWidget(false);
-      setCurrentPkgId(props.packageId);
-    }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <>
@@ -69,14 +51,14 @@ const MoreActionsButton = (props: Props) => {
             >
               <div className="d-flex flex-row align-items-center">
                 <BiCode className="mr-2" />
-                <div>Embed widget</div>
+                <div>Embed results</div>
               </div>
             </button>
           </div>
         </div>
       </div>
 
-      <WidgetModal {...props} visibleWidget={visibleWidget} setOpenStatus={setVisibleWidget} />
+      <WidgetsGroupModal visibleWidget={visibleWidget} setOpenStatus={setVisibleWidget} />
     </>
   );
 };

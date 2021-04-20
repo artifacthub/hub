@@ -1,11 +1,56 @@
+import { isUndefined } from 'lodash';
 import camelCase from 'lodash/camelCase';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 
-import { Package } from '../types';
+import { PackageSummary, SearchResults } from '../types';
+
+const SEARCH_LIMIT = 50;
 
 class API {
   private API_BASE_URL = `/api/v1`;
+  private TS_QUERY = [
+    {
+      label: 'database',
+      value: '(database)',
+    },
+    {
+      label: 'integration-and-delivery',
+      value: '(integration | delivery)',
+    },
+    {
+      label: 'logging-and-tracing',
+      value: '(logging | tracing)',
+    },
+    {
+      label: 'machine-learning',
+      value: '(machine <-> learning)',
+    },
+    {
+      label: 'monitoring',
+      value: '(monitoring)',
+    },
+    {
+      label: 'networking',
+      value: '(networking)',
+    },
+    {
+      label: 'security',
+      value: '(security)',
+    },
+    {
+      label: 'storage',
+      value: '(storage | (big <-> data))',
+    },
+    {
+      label: 'streaming-messaging',
+      value: '(streaming | messaging)',
+    },
+    {
+      label: 'web-applications',
+      value: '(web <-> application)',
+    },
+  ];
 
   private toCamelCase(r: any): any {
     if (isArray(r)) {
@@ -45,8 +90,31 @@ class API {
       .catch((error) => Promise.reject(error));
   }
 
-  public getPackageInfo(baseUrl: string, pathname: string): Promise<Package> {
+  public getPackageInfo(baseUrl: string, pathname: string): Promise<PackageSummary> {
     return this.apiFetch(`${baseUrl}${this.API_BASE_URL}${pathname}/summary`);
+  }
+
+  public searchPackages(baseUrl: string, query: string): Promise<SearchResults> {
+    const q = new URLSearchParams(query);
+    q.set('facets', 'false');
+    q.set('limit', SEARCH_LIMIT.toString());
+    q.set('offset', '0');
+    const tsQuery = q.get('ts_query');
+    if (tsQuery) {
+      const formattedTsQuery = tsQuery.split(' | ');
+      let values: string[] = [];
+      formattedTsQuery.forEach((value: string) => {
+        if (value !== '') {
+          const activeTsQuery = this.TS_QUERY.find((ts) => ts.label === value);
+          if (!isUndefined(activeTsQuery)) {
+            values.push(activeTsQuery.value);
+          }
+        }
+      });
+      q.set('ts_query', values.join(' | '));
+    }
+    q.delete('page');
+    return this.apiFetch(`${baseUrl}${this.API_BASE_URL}/packages/search?${q.toString()}`);
   }
 }
 
