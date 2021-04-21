@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components';
 const SpinnerWrapper = styled('div')`
   padding: 2rem 3rem;
   text-align: center;
+  width: 100%;
 `;
 
 const spinnerBorder = keyframes`
@@ -22,11 +23,21 @@ const Spinner = styled('div')`
   border-radius: 50%;
   -webkit-animation: ${spinnerBorder} 0.75s linear infinite;
   animation: ${spinnerBorder} 0.75s linear infinite;
+
+  &.size-lg {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-width: 0.35em;
+  }
 `;
 
-const Loading = () => (
+interface Props {
+  size?: string;
+}
+
+const Loading = (props: Props) => (
   <SpinnerWrapper>
-    <Spinner />
+    <Spinner className={props.size ? `size-${props.size}` : ''} />
   </SpinnerWrapper>
 );
 
