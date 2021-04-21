@@ -19,25 +19,29 @@ interface Props {
 
 interface WrapperProps {
   mainColor?: string;
-}
-
-interface ListProps {
   width?: string;
   className: string;
 }
 
 const Wrapper = styled.div<WrapperProps>`
   --color-ah-primary: ${(props) => props.mainColor};
+  position: relative;
+
+  &.fixedWidth {
+    width: ${(p: WrapperProps) => p.width};
+  }
+
+  & *,
+  & *:after,
+  & *:before {
+    box-sizing: border-box;
+  }
 `;
 
-const List = styled.div<ListProps>`
+const List = styled('div')`
   display: flex;
   max-width: 100%;
   flex-wrap: wrap;
-
-  &.fixedWidth {
-    width: ${(p: ListProps) => p.width};
-  }
 `;
 
 const DEFAULT_COLOR = '#659dbd';
@@ -105,13 +109,13 @@ const Group = (props: Props) => {
   const mainColor = getMainColor();
 
   return (
-    <Wrapper mainColor={mainColor}>
+    <Wrapper mainColor={mainColor} className={fixedWidthValue ? 'fixedWidth' : ''} width={fixedWidthValue}>
       {visibleLoading && (isUndefined(packagesList) || isLoading) ? (
-        <Loading />
+        <Loading size="lg" />
       ) : (
         <>
           {packagesList && (
-            <List className={fixedWidthValue ? 'fixedWidth' : ''} width={fixedWidthValue}>
+            <List>
               {packagesList.map((packageSummary: PackageSummary) => (
                 <React.Fragment key={`pkg_${packageSummary.packageId}`}>
                   <Widget
