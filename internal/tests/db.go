@@ -63,6 +63,12 @@ func (m *TXMock) Begin(ctx context.Context) (pgx.Tx, error) {
 	return nil, nil
 }
 
+// BeginFunc implements the pgx.Tx interface.
+func (m *TXMock) BeginFunc(ctx context.Context, f func(pgx.Tx) error) error {
+	// NOTE: not used
+	return nil
+}
+
 // Commit implements the pgx.Tx interface.
 func (m *TXMock) Commit(ctx context.Context) error {
 	args := m.Called(ctx)
