@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { AppCtx } from '../../../context/AppCtx';
@@ -33,8 +33,6 @@ const mockCtx = {
 
 describe('UserNotificationsController', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
-
     const mockMath = Object.create(global.Math);
     mockMath.random = () => 0;
     global.Math = mockMath;
@@ -55,8 +53,6 @@ describe('UserNotificationsController', () => {
   });
 
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -75,19 +71,18 @@ describe('UserNotificationsController', () => {
   });
 
   it('renders component', async () => {
-    const { getByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <UserNotificationsController />
       </AppCtx.Provider>
     );
 
-    const component = getByRole('alert');
+    const component = screen.getByRole('alert');
     expect(component).toBeInTheDocument();
     expect(component).not.toHaveClass('show');
     expect(component).toHaveClass('toast');
 
     await waitFor(() => {
-      expect(userNotificationsDispatcher.start).toHaveBeenCalledTimes(1);
       expect(userNotificationsDispatcher.start).toHaveBeenCalledWith(
         {
           displayed: [],
@@ -97,6 +92,7 @@ describe('UserNotificationsController', () => {
         'lg'
       );
     });
+    expect(userNotificationsDispatcher.start).toHaveBeenCalledTimes(1);
   });
 
   it('does not call userNotificationsDispatcher.start when user is undefined', () => {

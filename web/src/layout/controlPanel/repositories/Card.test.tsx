@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import moment from 'moment';
 import React from 'react';
 
@@ -58,13 +59,7 @@ const mockCtx = {
 };
 
 describe('Repository Card - packages section', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -79,19 +74,21 @@ describe('Repository Card - packages section', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      expect(getByText(repoMock.displayName!)).toBeInTheDocument();
-      expect(getByTestId('getBadgeBtn')).toBeInTheDocument();
-      expect(getByTestId('updateRepoBtn')).toBeInTheDocument();
-      expect(getByTestId('transferRepoBtn')).toBeInTheDocument();
-      expect(getByTestId('deleteRepoDropdownBtn')).toBeInTheDocument();
-      expect(getByText(repoMock.url!)).toBeInTheDocument();
-      expect(getByText('Not processed yet, it will be processed automatically in ~ 3 minutes')).toBeInTheDocument();
+      expect(screen.getByText(repoMock.displayName!)).toBeInTheDocument();
+      expect(screen.getByTestId('getBadgeBtn')).toBeInTheDocument();
+      expect(screen.getByTestId('updateRepoBtn')).toBeInTheDocument();
+      expect(screen.getByTestId('transferRepoBtn')).toBeInTheDocument();
+      expect(screen.getByTestId('deleteRepoDropdownBtn')).toBeInTheDocument();
+      expect(screen.getByText(repoMock.url!)).toBeInTheDocument();
+      expect(
+        screen.getByText('Not processed yet, it will be processed automatically in ~ 3 minutes')
+      ).toBeInTheDocument();
     });
 
     it('renders component with last tracking and scanning info', () => {
@@ -105,15 +102,15 @@ describe('Repository Card - packages section', () => {
           lastScanningErrors: 'errors scanning',
         },
       };
-      const { getByText, getAllByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...props} />
         </AppCtx.Provider>
       );
 
-      expect(getAllByText('a few seconds ago')).toHaveLength(2);
-      expect(getByText('Show tracking errors log')).toBeInTheDocument();
-      expect(getByText('Show scanning errors log')).toBeInTheDocument();
+      expect(screen.getAllByText('a few seconds ago')).toHaveLength(2);
+      expect(screen.getByText('Show tracking errors log')).toBeInTheDocument();
+      expect(screen.getByText('Show scanning errors log')).toBeInTheDocument();
     });
 
     it('renders verified publisher badge', () => {
@@ -124,13 +121,13 @@ describe('Repository Card - packages section', () => {
           verifiedPublisher: true,
         },
       };
-      const { getAllByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...props} />
         </AppCtx.Provider>
       );
 
-      expect(getAllByText('Verified Publisher')).toHaveLength(2);
+      expect(screen.getAllByText('Verified Publisher')).toHaveLength(2);
     });
 
     it('renders Official badge', () => {
@@ -141,80 +138,72 @@ describe('Repository Card - packages section', () => {
           official: true,
         },
       };
-      const { getAllByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...props} />
         </AppCtx.Provider>
       );
 
-      expect(getAllByText('Official')).toHaveLength(2);
+      expect(screen.getAllByText('Official')).toHaveLength(2);
     });
 
-    it('renders deletion modal when delete button in dropdown is clicked', () => {
-      const { getByTestId } = render(
+    it('renders deletion modal when delete button in dropdown is clicked', async () => {
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('deleteRepoDropdownBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByTestId('deleteRepoDropdownBtn');
+      userEvent.click(btn);
 
-      waitFor(() => {
-        expect(getByTestId('deleteRepoBtn')).toBeInTheDocument();
-      });
+      expect(await screen.findByTestId('deleteRepoBtn')).toBeInTheDocument();
     });
 
     it('opens Get Badge Modal when Get badge button is clicked', async () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('getBadgeBtn');
+      const btn = screen.getByTestId('getBadgeBtn');
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
-      await waitFor(() => {
-        expect(getByTestId('badgeModalContent')).toBeInTheDocument();
-      });
+      expect(await screen.findByTestId('badgeModalContent')).toBeInTheDocument();
     });
 
     it('calls setModalStatus when Edit button is clicked', async () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('updateRepoBtn');
+      const btn = screen.getByTestId('updateRepoBtn');
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
-      await waitFor(() => {
-        expect(setModalStatusMock).toHaveBeenCalledTimes(1);
-        expect(setModalStatusMock).toHaveBeenCalledWith({
-          open: true,
-          repository: repoMock,
-        });
+      await waitFor(() => expect(setModalStatusMock).toHaveBeenCalledTimes(1));
+      expect(setModalStatusMock).toHaveBeenCalledWith({
+        open: true,
+        repository: repoMock,
       });
     });
 
     it('opens Transfer Repo when Transfer button is clicked', async () => {
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('transferRepoBtn');
+      const btn = screen.getByTestId('transferRepoBtn');
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
-      await waitFor(() => {
-        expect(getByText('Transfer repository')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Transfer repository')).toBeInTheDocument();
     });
 
     it('opens logs modal when visibleModal is tracking and repo has errors', () => {
@@ -233,12 +222,12 @@ describe('Repository Card - packages section', () => {
           <Card {...props} />
         </AppCtx.Provider>
       );
-      const { getByText, getByRole, rerender } = render(component);
-      expect(getByText('Show tracking errors log')).toBeInTheDocument();
+      const { rerender } = render(component);
+      expect(screen.getByText('Show tracking errors log')).toBeInTheDocument();
 
       rerender(component);
 
-      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
     });
@@ -260,12 +249,12 @@ describe('Repository Card - packages section', () => {
           <Card {...props} />
         </AppCtx.Provider>
       );
-      const { getByText, getByRole, rerender } = render(component);
-      expect(getByText('Show scanning errors log')).toBeInTheDocument();
+      const { rerender } = render(component);
+      expect(screen.getByText('Show scanning errors log')).toBeInTheDocument();
 
       rerender(component);
 
-      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
     });
@@ -284,17 +273,17 @@ describe('Repository Card - packages section', () => {
           <Card {...props} />
         </AppCtx.Provider>
       );
-      const { queryByText, getByText, getByRole, rerender } = render(component);
-      expect(queryByText('Show tracking errors log')).toBeNull();
+      const { rerender } = render(component);
+      expect(screen.queryByText('Show tracking errors log')).toBeNull();
 
       rerender(component);
 
-      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
-        getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./g)
+        screen.getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./g)
       ).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./g
         )
       ).toBeInTheDocument();
@@ -318,19 +307,19 @@ describe('Repository Card - packages section', () => {
           <Card {...props} />
         </AppCtx.Provider>
       );
-      const { queryByText, getByText, getByRole, rerender } = render(component);
-      expect(queryByText('Show scanning errors log')).toBeNull();
+      const { rerender } = render(component);
+      expect(screen.queryByText('Show scanning errors log')).toBeNull();
 
       rerender(component);
 
-      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           /It looks like the last security vulnerabilities scan of this repository worked fine and no errors were produced./g
         )
       ).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./g
         )
       ).toBeInTheDocument();

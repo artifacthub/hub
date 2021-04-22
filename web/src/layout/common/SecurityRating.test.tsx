@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import SecurityRating from './SecutityRating';
@@ -15,13 +16,7 @@ const defaultProps = {
 };
 
 describe('SecurityRating', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -31,23 +26,21 @@ describe('SecurityRating', () => {
   });
 
   it('renders label', async () => {
-    const { getByTestId, getByText, getByRole, getAllByText } = render(<SecurityRating {...defaultProps} />);
-    expect(getByText('Images Security Rating')).toBeInTheDocument();
-    expect(getByText('F')).toBeInTheDocument();
+    render(<SecurityRating {...defaultProps} />);
+    expect(screen.getByText('Images Security Rating')).toBeInTheDocument();
+    expect(screen.getByText('F')).toBeInTheDocument();
 
-    const badge = getByTestId('elementWithTooltip');
+    const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    fireEvent.mouseEnter(badge);
+    userEvent.hover(badge);
 
-    await waitFor(() => {
-      expect(getByRole('tooltip')).toBeInTheDocument();
-      expect(getByText('No vulnerabilities found')).toBeInTheDocument();
-      expect(getAllByText(/Vulnerabilities of severity/g)).toHaveLength(5);
-    });
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(screen.getByText('No vulnerabilities found')).toBeInTheDocument();
+    expect(screen.getAllByText(/Vulnerabilities of severity/g)).toHaveLength(5);
   });
 
   it('renders A label', () => {
-    const { getByText } = render(
+    render(
       <SecurityRating
         summary={{
           low: 0,
@@ -59,11 +52,11 @@ describe('SecurityRating', () => {
         onlyBadge
       />
     );
-    expect(getByText('A')).toBeInTheDocument();
+    expect(screen.getByText('A')).toBeInTheDocument();
   });
 
   it('renders B label', () => {
-    const { getByText } = render(
+    render(
       <SecurityRating
         summary={{
           low: 8,
@@ -75,11 +68,11 @@ describe('SecurityRating', () => {
         onlyBadge
       />
     );
-    expect(getByText('B')).toBeInTheDocument();
+    expect(screen.getByText('B')).toBeInTheDocument();
   });
 
   it('renders C label', () => {
-    const { getByText } = render(
+    render(
       <SecurityRating
         summary={{
           low: 8,
@@ -91,11 +84,11 @@ describe('SecurityRating', () => {
         onlyBadge
       />
     );
-    expect(getByText('C')).toBeInTheDocument();
+    expect(screen.getByText('C')).toBeInTheDocument();
   });
 
   it('renders D label', () => {
-    const { getByText } = render(
+    render(
       <SecurityRating
         summary={{
           low: 8,
@@ -107,11 +100,11 @@ describe('SecurityRating', () => {
         onlyBadge
       />
     );
-    expect(getByText('D')).toBeInTheDocument();
+    expect(screen.getByText('D')).toBeInTheDocument();
   });
 
   it('renders F label', () => {
-    const { getByText } = render(
+    render(
       <SecurityRating
         summary={{
           low: 8,
@@ -123,11 +116,11 @@ describe('SecurityRating', () => {
         onlyBadge
       />
     );
-    expect(getByText('F')).toBeInTheDocument();
+    expect(screen.getByText('F')).toBeInTheDocument();
   });
 
   it('renders - label', () => {
-    const { getByText } = render(
+    render(
       <SecurityRating
         summary={{
           low: 0,
@@ -139,12 +132,12 @@ describe('SecurityRating', () => {
         onlyBadge
       />
     );
-    expect(getByText('-')).toBeInTheDocument();
+    expect(screen.getByText('-')).toBeInTheDocument();
   });
 
   it('does not full label when onlyBadge is true', () => {
-    const { queryByText } = render(<SecurityRating {...defaultProps} onlyBadge />);
-    expect(queryByText('Images Security Rating')).toBeNull();
+    render(<SecurityRating {...defaultProps} onlyBadge />);
+    expect(screen.queryByText('Images Security Rating')).toBeNull();
   });
 
   it('does not render label', () => {

@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
@@ -16,13 +17,7 @@ Object.defineProperty(navigator, 'clipboard', {
 });
 
 describe('ButtonCopyToClipboard', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -32,52 +27,49 @@ describe('ButtonCopyToClipboard', () => {
   });
 
   it('renders tooltip after clicking button', async () => {
-    const { getByTestId, getByRole, queryByRole } = render(<ButtonCopyToClipboard text="Text to copy" />);
-    expect(queryByRole('tooltip')).toBeNull();
+    render(<ButtonCopyToClipboard text="Text to copy" />);
+    expect(screen.queryByRole('tooltip')).toBeNull();
 
-    const btn = getByTestId('ctcBtn');
-    fireEvent.click(btn);
+    const btn = screen.getByTestId('ctcBtn');
+    userEvent.click(btn);
 
-    await waitFor(() => {
-      expect(clipboardWriteTextMock).toHaveBeenCalledTimes(1);
-      expect(clipboardWriteTextMock).toHaveBeenCalledWith('Text to copy');
-    });
+    expect(clipboardWriteTextMock).toHaveBeenCalledTimes(1);
+    expect(clipboardWriteTextMock).toHaveBeenCalledWith('Text to copy');
 
-    waitFor(() => {
-      expect(getByRole('tooltip')).toBeInTheDocument();
-    });
-  });
-
-  it('hides tooltip after 2 seconds', async () => {
-    const { getByTestId, getByRole, queryByRole } = render(<ButtonCopyToClipboard text="Text to copy" />);
-    expect(queryByRole('tooltip')).toBeNull();
-
-    const btn = getByTestId('ctcBtn');
-    fireEvent.click(btn);
-
-    await waitFor(() => {
-      expect(getByRole('tooltip')).toBeInTheDocument();
-    });
-
-    waitFor(() => {
-      expect(setTimeout).toHaveBeenCalledTimes(2);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 2000);
-    });
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
   });
 
   it('renders tooltip after clicking button when navidator.clipboard is undefined', async () => {
     (navigator as any).clipboard = null;
-    const { getByTestId, getByRole, queryByRole } = render(<ButtonCopyToClipboard text="Text to copy" />);
-    expect(queryByRole('tooltip')).toBeNull();
+    render(<ButtonCopyToClipboard text="Text to copy" />);
+    expect(screen.queryByRole('tooltip')).toBeNull();
 
-    const btn = getByTestId('ctcBtn');
-    fireEvent.click(btn);
+    const btn = screen.getByTestId('ctcBtn');
+    userEvent.click(btn);
 
-    await waitFor(() => {
-      expect(copyToClipboardMock).toHaveBeenCalledTimes(1);
-      expect(copyToClipboardMock).toHaveBeenCalledWith('copy');
+    await waitFor(() => expect(copyToClipboardMock).toHaveBeenCalledWith('copy'));
+    expect(copyToClipboardMock).toHaveBeenCalledTimes(1);
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+  });
+
+  it('hides tooltip after 2 seconds', async () => {
+    jest.useFakeTimers();
+
+    render(<ButtonCopyToClipboard text="Text to copy" />);
+    expect(screen.queryByRole('tooltip')).toBeNull();
+
+    const btn = screen.getByTestId('ctcBtn');
+    userEvent.click(btn);
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
     });
 
-    expect(getByRole('tooltip')).toBeInTheDocument();
+    expect(screen.queryByRole('tooltip')).toBeNull();
+
+    jest.useRealTimers();
   });
 });

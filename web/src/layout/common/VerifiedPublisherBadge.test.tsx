@@ -1,16 +1,11 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 describe('VerifiedPublisherBadge', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -20,17 +15,16 @@ describe('VerifiedPublisherBadge', () => {
   });
 
   it('renders label', async () => {
-    const { getByTestId, getByText, getByRole } = render(<VerifiedPublisherBadge verifiedPublisher />);
-    expect(getByText('Verified Publisher')).toBeInTheDocument();
+    render(<VerifiedPublisherBadge verifiedPublisher />);
+    expect(screen.getByText('Verified Publisher')).toBeInTheDocument();
 
-    const badge = getByTestId('elementWithTooltip');
+    const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    fireEvent.mouseEnter(badge);
+    userEvent.hover(badge);
 
-    await waitFor(() => {
-      expect(getByText('The publisher owns the repository')).toBeInTheDocument();
-      expect(getByRole('tooltip')).toBeInTheDocument();
-    });
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+
+    expect(screen.getByText('The publisher owns the repository')).toBeInTheDocument();
   });
 
   it('does not render label', () => {

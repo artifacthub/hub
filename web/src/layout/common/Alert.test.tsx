@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Alert from './Alert';
@@ -15,13 +16,7 @@ const defaultProps = {
 };
 
 describe('Alert', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
     jest.resetAllMocks();
   });
 
@@ -30,33 +25,38 @@ describe('Alert', () => {
     expect(asFragment).toMatchSnapshot();
   });
 
-  it('renders proper content', () => {
-    const { rerender, getByTestId, getByRole, queryByRole, getByText } = render(<Alert {...defaultProps} />);
+  it('renders alert', async () => {
+    render(<Alert {...defaultProps} message="errorMessage" />);
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+  });
 
-    const alertWrapper = getByTestId('alertWrapper');
+  it('renders proper content', async () => {
+    const { rerender } = render(<Alert {...defaultProps} />);
+
+    const alertWrapper = screen.getByTestId('alertWrapper');
     expect(alertWrapper).toBeInTheDocument();
     expect(alertWrapper).not.toHaveClass('isAlertActive');
-    expect(queryByRole('alert')).toBeNull();
+    expect(screen.queryByRole('alert')).toBeNull();
 
     rerender(<Alert {...defaultProps} message="errorMessage" />);
 
-    expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+    expect(await scrollIntoViewMock).toHaveBeenCalledTimes(1);
     expect(alertWrapper).toHaveClass('isAlertActive');
 
-    const alert = getByRole('alert');
+    const alert = screen.getByRole('alert');
     expect(alert).toBeInTheDocument();
-    expect(getByText('errorMessage')).toBeInTheDocument();
-    expect(getByTestId('closeAlertBtn')).toBeInTheDocument();
+    expect(screen.getByText('errorMessage')).toBeInTheDocument();
+    expect(screen.getByTestId('closeAlertBtn')).toBeInTheDocument();
   });
 
   it('calls close alert', () => {
-    const { getByTestId } = render(<Alert {...defaultProps} message="errorMessage" />);
+    render(<Alert {...defaultProps} message="errorMessage" />);
 
-    const alertWrapper = getByTestId('alertWrapper');
+    const alertWrapper = screen.getByTestId('alertWrapper');
     expect(alertWrapper).toHaveClass('isAlertActive');
 
-    const closeBtn = getByTestId('closeAlertBtn');
-    fireEvent.click(closeBtn);
+    const closeBtn = screen.getByTestId('closeAlertBtn');
+    userEvent.click(closeBtn);
 
     expect(onCloseMock).toHaveBeenCalledTimes(1);
   });
