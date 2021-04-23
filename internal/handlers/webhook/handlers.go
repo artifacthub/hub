@@ -20,13 +20,15 @@ import (
 type Handlers struct {
 	webhookManager hub.WebhookManager
 	logger         zerolog.Logger
+	hc             hub.HTTPClient
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(webhookManager hub.WebhookManager) *Handlers {
+func NewHandlers(webhookManager hub.WebhookManager, hc hub.HTTPClient) *Handlers {
 	return &Handlers{
 		webhookManager: webhookManager,
 		logger:         log.With().Str("handlers", "webhook").Logger(),
+		hc:             hc,
 	}
 }
 
@@ -134,7 +136,7 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 	}
 	req.Header.Set("Content-Type", contentType)
 	req.Header.Set("X-ArtifactHub-Secret", wh.Secret)
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := h.hc.Do(req)
 	if err != nil {
 		err = fmt.Errorf("error doing request: %w", err)
 		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)

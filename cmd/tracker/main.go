@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"errors"
-	"net/http"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -68,9 +67,9 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("authorizer setup failed")
 	}
-	rm := repo.NewManager(cfg, db, az)
+	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"))
+	rm := repo.NewManager(cfg, db, az, hc)
 	pm := pkg.NewManager(db)
-	hc := &http.Client{Timeout: 10 * time.Second}
 	githubMaxRequestsPerHour := githubMaxRequestsPerHourUnauthenticated
 	if cfg.GetString("creds.githubToken") != "" {
 		githubMaxRequestsPerHour = githubMaxRequestsPerHourAuthenticated

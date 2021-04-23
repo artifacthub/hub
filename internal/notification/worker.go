@@ -35,17 +35,11 @@ var (
 	ErrRetryable = errors.New("retryable error")
 )
 
-// HTTPClient defines the methods an HTTPClient implementation must provide.
-type HTTPClient interface {
-	Do(req *http.Request) (*http.Response, error)
-}
-
 // Worker is in charge of delivering notifications to their intended recipients.
 type Worker struct {
-	svc        *Services
-	cache      *cache.Cache
-	baseURL    string
-	httpClient HTTPClient
+	svc     *Services
+	cache   *cache.Cache
+	baseURL string
 }
 
 // NewWorker creates a new Worker instance.
@@ -53,13 +47,11 @@ func NewWorker(
 	svc *Services,
 	c *cache.Cache,
 	baseURL string,
-	httpClient HTTPClient,
 ) *Worker {
 	return &Worker{
-		svc:        svc,
-		cache:      c,
-		baseURL:    baseURL,
-		httpClient: httpClient,
+		svc:     svc,
+		cache:   c,
+		baseURL: baseURL,
 	}
 }
 
@@ -185,7 +177,7 @@ func (w *Worker) deliverWebhookNotification(ctx context.Context, n *hub.Notifica
 	req, _ := http.NewRequest("POST", n.Webhook.URL, &payload)
 	req.Header.Set("Content-Type", contentType)
 	req.Header.Set("X-ArtifactHub-Secret", n.Webhook.Secret)
-	resp, err := w.httpClient.Do(req)
+	resp, err := w.svc.HTTPClient.Do(req)
 	if err != nil {
 		return err
 	}

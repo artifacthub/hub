@@ -54,14 +54,14 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("authorizer setup failed")
 	}
-	hc := &http.Client{Timeout: 10 * time.Second}
+	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"))
 
 	// Setup and launch http server
 	ctx, stop := context.WithCancel(context.Background())
 	hSvc := &handlers.Services{
 		OrganizationManager: org.NewManager(db, es, az),
 		UserManager:         user.NewManager(db, es),
-		RepositoryManager:   repo.NewManager(cfg, db, az),
+		RepositoryManager:   repo.NewManager(cfg, db, az, hc),
 		PackageManager:      pkg.NewManager(db),
 		SubscriptionManager: subscription.NewManager(db),
 		WebhookManager:      webhook.NewManager(db),
@@ -69,6 +69,7 @@ func main() {
 		StatsManager:        stats.NewManager(db),
 		ImageStore:          pg.NewImageStore(cfg, db, hc, nil),
 		Authorizer:          az,
+		HTTPClient:          hc,
 	}
 	h, err := handlers.Setup(ctx, cfg, hSvc)
 	if err != nil {
@@ -117,8 +118,9 @@ func main() {
 		ES:                  es,
 		NotificationManager: notification.NewManager(),
 		SubscriptionManager: subscription.NewManager(db),
-		RepositoryManager:   repo.NewManager(cfg, db, az),
+		RepositoryManager:   repo.NewManager(cfg, db, az, hc),
 		PackageManager:      pkg.NewManager(db),
+		HTTPClient:          hc,
 	}
 	notificationsDispatcher := notification.NewDispatcher(cfg, nSvc)
 	wg.Add(1)

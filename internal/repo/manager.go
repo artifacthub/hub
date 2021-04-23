@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
-	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
@@ -66,37 +65,34 @@ var (
 	GitRepoURLRE = regexp.MustCompile(`^(https:\/\/(github|gitlab)\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)\/?(.*)$`)
 )
 
-// HTTPGetter defines the methods an HTTPGetter implementation must provide.
-type HTTPGetter interface {
-	Get(url string) (*http.Response, error)
-}
-
 // Manager provides an API to manage repositories.
 type Manager struct {
 	cfg             *viper.Viper
 	db              hub.DB
-	hg              HTTPGetter
+	hc              hub.HTTPClient
 	rc              hub.RepositoryCloner
 	helmIndexLoader hub.HelmIndexLoader
 	az              hub.Authorizer
 }
 
 // NewManager creates a new Manager instance.
-func NewManager(cfg *viper.Viper, db hub.DB, az hub.Authorizer, opts ...func(m *Manager)) *Manager {
+func NewManager(
+	cfg *viper.Viper,
+	db hub.DB,
+	az hub.Authorizer,
+	hc hub.HTTPClient,
+	opts ...func(m *Manager),
+) *Manager {
 	// Setup manager
 	m := &Manager{
 		cfg:             cfg,
 		db:              db,
 		helmIndexLoader: &HelmIndexLoader{},
 		az:              az,
+		hc:              hc,
 	}
 	for _, o := range opts {
 		o(m)
-	}
-
-	// Setup HTTP getter
-	if m.hg == nil {
-		m.hg = &http.Client{Timeout: 10 * time.Second}
 	}
 
 	// Setup repository cloner
@@ -392,7 +388,8 @@ func (m *Manager) readMetadataFile(mdFile string) ([]byte, error) {
 			return nil, fmt.Errorf("error reading repository metadata file: %w", err)
 		}
 	} else {
-		resp, err := m.hg.Get(mdFile)
+		req, _ := http.NewRequest("GET", mdFile, nil)
+		resp, err := m.hc.Do(req)
 		if err != nil {
 			return nil, fmt.Errorf("error downloading repository metadata file: %w", err)
 		}

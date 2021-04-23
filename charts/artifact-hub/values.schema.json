@@ -558,6 +558,12 @@
             "type": "string",
             "default": "IfNotPresent"
         },
+        "restrictedHTTPClient": {
+            "type": "boolean",
+            "title": "Enable restricted HTTP client",
+            "description": "Artifact Hub makes external HTTP requests for several purposes, like getting repositories metadata, dispatching webhooks, etc. When this option is enabled, requests to the private network space as well as to some other special addresses won't be allowed.",
+            "default": false
+        },
         "scanner": {
             "title": "Scanner configuration",
             "type": "object",
@@ -738,5 +744,5 @@
             "required": ["deploy", "persistence"]
         }
     },
-    "required": ["db", "dbMigrator", "hub", "images", "log", "postgresql", "pullPolicy", "tracker", "trivy", "scanner"]
+    "required": ["db", "dbMigrator", "hub", "images", "log", "postgresql", "pullPolicy", "restrictedHTTPClient", "tracker", "trivy", "scanner"]
 }

@@ -702,7 +702,7 @@ func newHandlersWrapper() *handlersWrapper {
 
 	return &handlersWrapper{
 		wm: wm,
-		h:  NewHandlers(wm),
+		h:  NewHandlers(wm, http.DefaultClient),
 	}
 }
 
