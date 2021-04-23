@@ -27,6 +27,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
+	pwvalidator "github.com/wagslane/go-password-validator"
 	"golang.org/x/oauth2"
 	oagithub "golang.org/x/oauth2/github"
 	"golang.org/x/oauth2/google"
@@ -140,6 +141,23 @@ func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
+}
+
+// CheckPasswordStrength is an http handler that checks the strength of the
+// password provided
+func (h *Handlers) CheckPasswordStrength(w http.ResponseWriter, r *http.Request) {
+	var input map[string]string
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		h.logger.Error().Err(err).Str("method", "CheckPasswordStrength").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	if err := pwvalidator.Validate(input["password"], user.PasswordMinEntropyBits); err != nil {
+		h.logger.Error().Err(err).Str("method", "CheckPasswordStrength").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // CheckAvailability is an http handler that checks the availability of a given

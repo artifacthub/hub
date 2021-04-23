@@ -60,6 +60,71 @@ func TestBasicAuth(t *testing.T) {
 	})
 }
 
+func TestCheckPasswordStrength(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{..`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.h.CheckPasswordStrength(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid passwords", func(t *testing.T) {
+		passwords := []string{
+			"invalid",
+			"123",
+			"weak12",
+		}
+		for _, pw := range passwords {
+			pw := pw
+			t.Run(pw, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				body := strings.NewReader(fmt.Sprintf(`{"password": "%s"}`, pw))
+				r, _ := http.NewRequest("POST", "/", body)
+
+				hw := newHandlersWrapper()
+				hw.h.CheckPasswordStrength(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("valid passwords", func(t *testing.T) {
+		passwords := []string{
+			"12uuYbaT.",
+			"this password should be valid too",
+			"19s-8*s.Y",
+			"yet123-another-ONE",
+		}
+		for _, pw := range passwords {
+			pw := pw
+			t.Run(pw, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				body := strings.NewReader(fmt.Sprintf(`{"password": "%s"}`, pw))
+				r, _ := http.NewRequest("POST", "/", body)
+
+				hw := newHandlersWrapper()
+				hw.h.CheckPasswordStrength(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+			})
+		}
+	})
+}
+
 func TestCheckAvailability(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()

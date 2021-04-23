@@ -129,77 +129,67 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-row"
+      class="form-group mb-4 position-relative undefined"
     >
-      <div
-        class="form-group mb-4 position-relative col-sm-12 col-md-6"
+      <label
+        class="font-weight-bold label"
+        for="password"
       >
-        <label
-          class="font-weight-bold label"
-          for="password"
+        <span
+          class="font-weight-bold"
         >
-          <span
-            class="font-weight-bold"
-          >
-            Password
-          </span>
-          <small
-            class="ml-1 font-italic"
-          >
-            (6 characters min.)
-          </small>
-        </label>
-        <input
-          autocomplete="new-password"
-          class="form-control"
-          data-testid="passwordInput"
-          minlength="6"
-          name="password"
-          required=""
-          spellcheck="false"
-          type="password"
-          value=""
-        />
-        <div
-          class="invalid-feedback mt-0 inputFeedback"
-        >
-          This field is required
-        </div>
+          Password
+        </span>
+      </label>
+      <input
+        autocomplete="new-password"
+        class="form-control"
+        data-testid="passwordInput"
+        name="password"
+        required=""
+        spellcheck="false"
+        type="password"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      >
+        This field is required
       </div>
-      <div
-        class="form-group mb-4 position-relative col-sm-12 col-md-6"
+    </div>
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        class="font-weight-bold label"
+        for="confirmPassword"
       >
-        <label
-          class="font-weight-bold label"
-          for="confirmPassword"
+        <span
+          class="font-weight-bold"
         >
-          <span
-            class="font-weight-bold"
-          >
-            Confirm password
-          </span>
-          <small
-            class="ml-1 font-italic"
-          >
-            (Required)
-          </small>
-        </label>
-        <input
-          autocomplete="new-password"
-          class="form-control"
-          data-testid="confirmPasswordInput"
-          name="confirmPassword"
-          pattern=""
-          required=""
-          spellcheck="false"
-          type="password"
-          value=""
-        />
-        <div
-          class="invalid-feedback mt-0 inputFeedback"
+          Confirm password
+        </span>
+        <small
+          class="ml-1 font-italic"
         >
-          This field is required
-        </div>
+          (Required)
+        </small>
+      </label>
+      <input
+        autocomplete="new-password"
+        class="form-control"
+        data-testid="confirmPasswordInput"
+        name="confirmPassword"
+        pattern=""
+        required=""
+        spellcheck="false"
+        type="password"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      >
+        This field is required
       </div>
     </div>
   </form>

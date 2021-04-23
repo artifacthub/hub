@@ -1,9 +1,9 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
-import { ResourceKind } from '../../types';
+import { ErrorKind, ResourceKind } from '../../types';
 import InputField from './InputField';
 jest.mock('../../api');
 
@@ -78,6 +78,47 @@ describe('InputField', () => {
       expect(input).toBeRequired();
       input.blur();
       expect(input).toBeInvalid();
+    });
+  });
+
+  describe('validates input on change', () => {
+    it('valid field', () => {
+      jest.useFakeTimers();
+
+      const { getByTestId } = render(
+        <InputField {...defaultProps} type="password" validateOnChange minLength={6} value="" autoFocus />
+      );
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      expect(input.minLength).toBe(6);
+      fireEvent.change(input, { target: { value: '1qa2ws' } });
+
+      act(() => {
+        jest.runTimersToTime(300);
+      });
+
+      expect(onSetValidationStatusMock).toHaveBeenCalledTimes(1);
+      expect(input).toBeValid();
+
+      jest.useRealTimers();
+    });
+
+    it('invalid field', () => {
+      jest.useFakeTimers();
+
+      const { getByTestId } = render(
+        <InputField {...defaultProps} type="text" value="" validateOnChange excludedValues={['user1']} autoFocus />
+      );
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      fireEvent.change(input, { target: { value: 'user1' } });
+
+      act(() => {
+        jest.runTimersToTime(300);
+      });
+
+      expect(onSetValidationStatusMock).toHaveBeenCalledTimes(1);
+      expect(input).toBeInvalid();
+
+      jest.useRealTimers();
     });
   });
 
@@ -226,6 +267,45 @@ describe('InputField', () => {
       input.blur();
 
       const invalidText = getByText(defaultProps.invalidText.excluded);
+      expect(invalidText).toBeInTheDocument();
+      expect(input).toBeInvalid();
+    });
+  });
+
+  describe('calls checkPasswordStrength', () => {
+    it('Password is strength', async () => {
+      mocked(API).checkPasswordStrength.mockResolvedValue(true);
+
+      const { getByTestId } = render(
+        <InputField {...defaultProps} type="password" value="abc123" checkPasswordStrength validateOnBlur autoFocus />
+      );
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      input.blur();
+
+      expect(API.checkPasswordStrength).toBeCalledTimes(1);
+      expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
+
+      await waitFor(() => {
+        expect(input).toBeValid();
+      });
+    });
+
+    it('Password is weak', async () => {
+      mocked(API).checkPasswordStrength.mockRejectedValue({
+        kind: ErrorKind.Other,
+        message: 'Insecure password...',
+      });
+
+      const { getByTestId, getByText } = render(
+        <InputField {...defaultProps} type="password" value="abc123" checkPasswordStrength validateOnBlur autoFocus />
+      );
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      input.blur();
+
+      expect(API.checkPasswordStrength).toBeCalledTimes(1);
+      expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
+
+      const invalidText = await waitFor(() => getByText('Insecure password...'));
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });

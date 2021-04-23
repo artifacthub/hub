@@ -350,6 +350,18 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/users/profile`);
   },
 
+  checkPasswordStrength: (pwd: string): Promise<boolean> => {
+    return apiFetch(`${API_BASE_URL}/users/check-password-strength`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        password: pwd,
+      }),
+    });
+  },
+
   getAllRepositories: (): Promise<Repository[]> => {
     return apiFetch(`${API_BASE_URL}/repositories`);
   },

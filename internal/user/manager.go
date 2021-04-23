@@ -16,6 +16,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/jackc/pgx/v4"
 	"github.com/satori/uuid"
+	pwvalidator "github.com/wagslane/go-password-validator"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -37,6 +38,12 @@ const (
 	updateUserProfileDBQ         = `select update_user_profile($1::uuid, $2::jsonb)`
 	verifyEmailDBQ               = `select verify_email($1::uuid)`
 	verifyPasswordResetCodeDBQ   = `select verify_password_reset_code($1::bytea)`
+)
+
+const (
+	// PasswordMinEntropyBits represents the minimum amount of entropy bits
+	// required for a password.
+	PasswordMinEntropyBits = 50
 )
 
 var (
@@ -353,6 +360,11 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid profile image id")
 		}
 	}
+	if !user.EmailVerified {
+		if err := pwvalidator.Validate(user.Password, PasswordMinEntropyBits); err != nil {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		}
+	}
 
 	// Hash password
 	if user.Password != "" {
@@ -401,6 +413,9 @@ func (m *Manager) ResetPassword(ctx context.Context, codeB64, newPassword, baseU
 	}
 	if newPassword == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "new password not provided")
+	}
+	if err := pwvalidator.Validate(newPassword, PasswordMinEntropyBits); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 	}
 	if m.es != nil {
 		u, err := url.Parse(baseURL)
@@ -461,6 +476,9 @@ func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 	}
 	if new == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "new password not provided")
+	}
+	if err := pwvalidator.Validate(new, PasswordMinEntropyBits); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 	}
 
 	// Validate old password

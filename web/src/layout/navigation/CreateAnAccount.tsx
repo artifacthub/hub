@@ -193,42 +193,38 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
 
             <InputField type="text" label="Last Name" name="lastName" autoComplete="family-name" />
 
-            <div className="form-row">
-              <InputField
-                ref={passwordInput}
-                className="col-sm-12 col-md-6"
-                type="password"
-                label="Password"
-                labelLegend={<small className="ml-1 font-italic">(6 characters min.)</small>}
-                name="password"
-                minLength={6}
-                invalidText={{
-                  default: 'This field is required',
-                  tooShort: 'Passwords must be at least 6 characters long',
-                }}
-                onChange={onPasswordChange}
-                autoComplete="new-password"
-                validateOnBlur
-                required
-              />
+            <InputField
+              ref={passwordInput}
+              type="password"
+              label="Password"
+              name="password"
+              invalidText={{
+                default: 'This field is required',
+                customError: 'Insecure password',
+              }}
+              onChange={onPasswordChange}
+              autoComplete="new-password"
+              checkPasswordStrength
+              validateOnChange
+              validateOnBlur
+              required
+            />
 
-              <InputField
-                ref={repeatPasswordInput}
-                className="col-sm-12 col-md-6"
-                type="password"
-                label="Confirm password"
-                labelLegend={<small className="ml-1 font-italic">(Required)</small>}
-                name="confirmPassword"
-                pattern={password.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}
-                invalidText={{
-                  default: 'This field is required',
-                  patternMismatch: "Passwords don't match",
-                }}
-                autoComplete="new-password"
-                validateOnBlur={password.isValid}
-                required
-              />
-            </div>
+            <InputField
+              ref={repeatPasswordInput}
+              type="password"
+              label="Confirm password"
+              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              name="confirmPassword"
+              pattern={password.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}
+              invalidText={{
+                default: 'This field is required',
+                patternMismatch: "Passwords don't match",
+              }}
+              autoComplete="new-password"
+              validateOnBlur={password.isValid}
+              required
+            />
           </form>
         </>
       )}

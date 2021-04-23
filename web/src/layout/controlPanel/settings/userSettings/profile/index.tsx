@@ -28,7 +28,7 @@ const ProfileSection = (props: Props) => {
       }
     }
     fetchProfile();
-  }, [props]);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <main role="main" className="p-0">

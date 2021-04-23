@@ -16,4 +16,8 @@
   .inputFeedback {
     position: absolute;
   }
+
+  .inputPwdStrengthError {
+    margin-bottom: -1rem;
+  }
 }

@@ -39,6 +39,7 @@ require (
 	github.com/tektoncd/pipeline v0.23.0
 	github.com/unrolled/secure v1.0.8
 	github.com/vincent-petithory/dataurl v0.0.0-20191104211930-d1553a71de50
+	github.com/wagslane/go-password-validator v0.3.0
 	golang.org/x/crypto v0.0.0-20210421170649-83a5a9bb288b
 	golang.org/x/image v0.0.0-20210220032944-ac19c3e999fb // indirect
 	golang.org/x/oauth2 v0.0.0-20210413134643-5e61552d6c78

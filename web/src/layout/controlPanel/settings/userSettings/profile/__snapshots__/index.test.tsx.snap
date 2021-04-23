@@ -279,11 +279,6 @@ exports[`User settings index creates snapshot 1`] = `
               >
                 New password
               </span>
-              <small
-                class="ml-1 font-italic"
-              >
-                (6 characters min.)
-              </small>
             </label>
             <input
               autocomplete="new-password"

@@ -350,6 +350,23 @@ describe('index API', () => {
       });
     });
 
+    describe('checkPasswordStrength', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await methods.API.checkPasswordStrength('testTest.12');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/check-password-strength');
+        expect(response).toBe('');
+      });
+    });
+
     describe('getRepositories', () => {
       it('success from user', async () => {
         const repositories: Repository[] = getData('11') as Repository[];
