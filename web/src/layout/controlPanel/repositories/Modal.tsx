@@ -444,7 +444,7 @@ const RepositoryModal = (props: Props) => {
               invalidText={{
                 default: 'This field is required',
                 typeMismatch: 'Please enter a valid url',
-                patternMismatch: 'Please enter a valid reposiroty url for this repository kind',
+                patternMismatch: 'Please enter a valid repository url for this repository kind',
                 customError: 'There is another repository using this url',
               }}
               onKeyDown={handleOnReturnKeyDown}
