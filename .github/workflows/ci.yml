@@ -95,7 +95,7 @@ jobs:
         run: yarn lint
       - name: Run frontend tests
         working-directory: ./web
-        run: yarn test --watchAll=false --passWithNoTests --verbose
+        run: yarn test --watchAll=false --passWithNoTests --verbose --maxWorkers=4
 
   tests-widget:
     runs-on: ubuntu-20.04
