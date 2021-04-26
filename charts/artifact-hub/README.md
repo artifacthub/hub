@@ -8,6 +8,8 @@ This chart bootstraps an Artifact Hub deployment on a [Kubernetes](http://kubern
 
 ## Installing the Chart
 
+**Security note**: please review carefully all the configuration options available before deploying Artifact Hub in a production environment. The default values are just intended to provide users with a quick and easy way to try the software.
+
 To install the chart with the release name `hub` run:
 
 ```bash
