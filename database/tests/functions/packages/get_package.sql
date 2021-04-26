@@ -13,6 +13,7 @@ select plan(5);
 \set maintainer2ID '00000000-0000-0000-0000-000000000002'
 \set image1ID '00000000-0000-0000-0000-000000000001'
 \set image2ID '00000000-0000-0000-0000-000000000002'
+\set webhook1ID '00000000-0000-0000-0000-000000000001'
 
 -- No packages at this point
 select is_empty(
@@ -205,6 +206,12 @@ insert into snapshot (
     '{"key": "value"}',
     '2020-06-16 11:20:34+02'
 );
+insert into subscription (user_id, package_id, event_kind_id)
+values (:'user1ID', :'package1ID', 0);
+insert into webhook (webhook_id, name, url, user_id)
+values (:'webhook1ID', 'webhook1', 'http://webhook1.url', :'user1ID');
+insert into webhook__event_kind (webhook_id, event_kind_id) values (:'webhook1ID', 0);
+insert into webhook__package (webhook_id, package_id) values (:'webhook1ID', :'package2ID');
 
 -- Run some tests
 select is(
@@ -321,6 +328,10 @@ select is(
             "verified_publisher": false,
             "official": false,
             "user_alias": "user1"
+        },
+        "stats": {
+            "subscriptions": 1,
+            "webhooks": 0
         }
     }'::jsonb,
     'Last package1 version is returned as a json object'
@@ -440,6 +451,10 @@ select is(
             "verified_publisher": false,
             "official": false,
             "user_alias": "user1"
+        },
+        "stats": {
+            "subscriptions": 1,
+            "webhooks": 0
         }
     }'::jsonb,
     'Last package1 version is returned as a json object'
@@ -530,6 +545,10 @@ select is(
             "verified_publisher": false,
             "official": false,
             "user_alias": "user1"
+        },
+        "stats": {
+            "subscriptions": 1,
+            "webhooks": 0
         }
     }'::jsonb,
     'Requested package version is returned as a json object'
@@ -573,6 +592,10 @@ select is(
             "official": false,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"
+        },
+        "stats": {
+            "subscriptions": 0,
+            "webhooks": 1
         }
     }'::jsonb,
     'Last package2 version is returned as a json object'

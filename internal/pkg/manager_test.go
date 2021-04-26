@@ -134,6 +134,10 @@ func TestGet(t *testing.T) {
 				OrganizationName:        "org1",
 				OrganizationDisplayName: "Organization 1",
 			},
+			Stats: &hub.PackageStats{
+				Subscriptions: 1,
+				Webhooks:      1,
+			},
 		}
 
 		db := &tests.DBMock{}
@@ -225,6 +229,10 @@ func TestGet(t *testing.T) {
 				"user_alias": "user1",
 				"organization_name": "org1",
 				"organization_display_name": "Organization 1"
+			},
+			"stats": {
+				"subscriptions": 1,
+				"webhooks": 1
 			}
 		}
 		`), nil)

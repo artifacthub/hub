@@ -77,7 +77,11 @@ begin
             where pm.package_id = v_package_id
         ),
         'recommendations', s.recommendations,
-        'repository', (select get_repository_summary(r.repository_id))
+        'repository', (select get_repository_summary(r.repository_id)),
+        'stats', json_build_object(
+            'subscriptions', (select count(*) from subscription where package_id = v_package_id),
+            'webhooks', (select count(*) from webhook__package where package_id = v_package_id)
+        )
     ))
     from package p
     join snapshot s using (package_id)

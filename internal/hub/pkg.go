@@ -89,6 +89,7 @@ type Package struct {
 	Recommendations         []*Recommendation      `json:"recommendations"`
 	Repository              *Repository            `json:"repository"`
 	TS                      int64                  `json:"ts,omitempty"`
+	Stats                   *PackageStats          `json:"stats"`
 }
 
 // PackageManager describes the methods a PackageManager implementation must
@@ -144,6 +145,12 @@ type PackageMetadata struct {
 	Provider                *Provider         `yaml:"provider"`
 	Ignore                  []string          `yaml:"ignore"`
 	Recommendations         []*Recommendation `yaml:"recommendations"`
+}
+
+// PackageStats represents some statistics about a package.
+type PackageStats struct {
+	Subscriptions int `json:"subscriptions"`
+	Webhooks      int `json:"webhooks"`
 }
 
 // Recommendation represents some information about a recommended package.
