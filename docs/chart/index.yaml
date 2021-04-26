@@ -3,6 +3,61 @@ entries:
   artifact-hub:
     - annotations:
         artifacthub.io/changes: |
+          - Add support for KEDA scalers
+          - Allow embedding Artifact Hub items on other sites
+          - Add navigation view for packages' readme content
+          - Make navigation bar sticky in desktop browsers
+          - Enforce password strength
+          - Add OpenAPI spec linter
+          - Upgrade backend dependencies
+          - Some bugs fixes and other improvements
+        artifacthub.io/containsSecurityUpdates: "true"
+        artifacthub.io/images: |
+          - name: db-migrator
+            image: artifacthub/db-migrator:v0.19.0
+          - name: hub
+            image: artifacthub/hub:v0.19.0
+          - name: tracker
+            image: artifacthub/tracker:v0.19.0
+          - name: scanner
+            image: artifacthub/scanner:v0.19.0
+          - name: trivy
+            image: aquasec/trivy:0.16.0
+      apiVersion: v2
+      appVersion: 0.19.0
+      created: "2021-04-26T12:09:41.558613+02:00"
+      dependencies:
+        - condition: postgresql.enabled
+          name: postgresql
+          repository: https://charts.helm.sh/stable
+          version: 8.2.1
+      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
+      digest: 14ef0f99c2a6173ac1c79ee7d3b6b2fad3e056384f046e1fa8ba6a8a7fe17a16
+      home: https://artifacthub.io
+      icon: https://artifacthub.github.io/hub/chart/logo.png
+      keywords:
+        - kubernetes
+        - helm
+        - falco
+        - opa
+        - olm
+        - tinkerbell actions
+        - krew
+        - tekton
+        - keda scalers
+      kubeVersion: ">= 1.14.0-0"
+      maintainers:
+        - email: tegioz@icloud.com
+          name: Sergio
+        - email: cynthiasg@icloud.com
+          name: Cintia
+      name: artifact-hub
+      type: application
+      urls:
+        - https://artifacthub.github.io/hub/chart/artifact-hub-0.19.0.tgz
+      version: 0.19.0
+    - annotations:
+        artifacthub.io/changes: |
           - Add stats page
           - Search bar now includes typeahead functionality
           - Packages search now supports prefix matching
@@ -844,4 +899,4 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.2.0.tgz
       version: 0.2.0
-generated: "2021-03-30T11:57:48.49081+02:00"
+generated: "2021-04-26T12:09:41.520196+02:00"
