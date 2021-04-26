@@ -367,7 +367,7 @@ Publishers can be verified through the [artifacthub-repo.yml](https://github.com
 
 *Please note that the **artifacthub-repo.yml** metadata file must be located at the repository URL's path. In Helm repositories, for example, this means it must be located at the same level of the chart repository **index.yaml** file, and it must be served from the chart repository HTTP server as well.*
 
-*The verified publisher flag won't be set until the next time the repository is processed. Please keep in mind that repository won't be processed if it hasn't changed since the last time it was processed. Depending on the repository kind, this is checked in a different way. For Helm http based repositories, we consider it has changed if the `index.yaml` file changes. For git based repositories, it does when the hash of the last commit in the branch you set up changes.*
+*The verified publisher flag won't be set until the next time the repository is processed. Please keep in mind that repository won't be processed if it hasn't changed since the last time it was processed. Depending on the repository kind, this is checked in a different way. For Helm http based repositories, we consider it has changed if the `index.yaml` file changes (the `generated` field is ignored when performing this check). For git based repositories, it does when the hash of the last commit in the branch you set up changes.*
 
 ## Official status
 
