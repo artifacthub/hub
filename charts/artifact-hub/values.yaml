@@ -4,6 +4,7 @@ imagePullSecrets: []
 imageTag: ""
 dynamicResourceNamePrefixEnabled: false
 pullPolicy: IfNotPresent
+restrictedHTTPClient: false
 
 log:
   level: info

@@ -2,7 +2,6 @@ package notification
 
 import (
 	"context"
-	"net/http"
 	"sync"
 	"time"
 
@@ -26,6 +25,7 @@ type Services struct {
 	SubscriptionManager hub.SubscriptionManager
 	RepositoryManager   hub.RepositoryManager
 	PackageManager      hub.PackageManager
+	HTTPClient          hub.HTTPClient
 }
 
 // Dispatcher handles a group of workers in charge of delivering notifications.
@@ -47,10 +47,9 @@ func NewDispatcher(cfg *viper.Viper, svc *Services, opts ...func(d *Dispatcher))
 	// Setup and launch workers
 	c := cache.New(cacheDefaultExpiration, cacheCleanupInterval)
 	baseURL := cfg.GetString("server.baseURL")
-	httpClient := &http.Client{Timeout: 10 * time.Second}
 	d.workers = make([]*Worker, 0, d.numWorkers)
 	for i := 0; i < d.numWorkers; i++ {
-		d.workers = append(d.workers, NewWorker(svc, c, baseURL, httpClient))
+		d.workers = append(d.workers, NewWorker(svc, c, baseURL))
 	}
 
 	return d

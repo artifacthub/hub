@@ -53,7 +53,8 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("authorizer setup failed")
 	}
-	rm := repo.NewManager(cfg, db, az)
+	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"))
+	rm := repo.NewManager(cfg, db, az, hc)
 	pm := pkg.NewManager(db)
 	ec := repo.NewErrorsCollector(rm, repo.Scanner)
 

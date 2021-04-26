@@ -88,7 +88,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -101,7 +101,7 @@ func TestWorker(t *testing.T) {
 		sw.pm.On("Get", sw.ctx, gpi).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -114,7 +114,7 @@ func TestWorker(t *testing.T) {
 		sw.rm.On("GetByID", sw.ctx, "repositoryID", false).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -129,7 +129,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -144,7 +144,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -159,7 +159,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -174,7 +174,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -187,7 +187,7 @@ func TestWorker(t *testing.T) {
 		sw.pm.On("Get", sw.ctx, gpi).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -202,7 +202,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -220,7 +220,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, mock.Anything).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -238,7 +238,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		w := NewWorker(sw.svc, sw.cache, "")
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -307,6 +307,7 @@ func TestWorker(t *testing.T) {
 				defer ts.Close()
 
 				sw := newServicesWrapper()
+				sw.svc.HTTPClient = &http.Client{}
 				sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 				sw.nm.On("GetPending", sw.ctx, sw.tx).Return(&hub.Notification{
 					NotificationID: "notificationID",
@@ -322,7 +323,7 @@ func TestWorker(t *testing.T) {
 				sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, nil).Return(nil)
 				sw.tx.On("Commit", sw.ctx).Return(nil)
 
-				w := NewWorker(sw.svc, sw.cache, "http://baseURL", http.DefaultClient)
+				w := NewWorker(sw.svc, sw.cache, "http://baseURL")
 				go w.Run(sw.ctx, sw.wg)
 				sw.assertExpectations(t)
 			})
@@ -342,7 +343,7 @@ type servicesWrapper struct {
 	rm         *repo.ManagerMock
 	pm         *pkg.ManagerMock
 	cache      *cache.Cache
-	hc         *httpClientMock
+	hc         *tests.HTTPClientMock
 	svc        *Services
 }
 
@@ -360,7 +361,7 @@ func newServicesWrapper() *servicesWrapper {
 	rm := &repo.ManagerMock{}
 	pm := &pkg.ManagerMock{}
 	cache := cache.New(1*time.Minute, 5*time.Minute)
-	hc := &httpClientMock{}
+	hc := &tests.HTTPClientMock{}
 
 	return &servicesWrapper{
 		ctx:        ctx,
@@ -382,6 +383,7 @@ func newServicesWrapper() *servicesWrapper {
 			SubscriptionManager: sm,
 			RepositoryManager:   rm,
 			PackageManager:      pm,
+			HTTPClient:          hc,
 		},
 	}
 }
@@ -401,14 +403,4 @@ func (sw *servicesWrapper) assertExpectations(t *testing.T) {
 	sw.rm.AssertExpectations(t)
 	sw.pm.AssertExpectations(t)
 	sw.hc.AssertExpectations(t)
-}
-
-type httpClientMock struct {
-	mock.Mock
-}
-
-func (m *httpClientMock) Do(req *http.Request) (*http.Response, error) {
-	args := m.Called(req)
-	resp, _ := args.Get(0).(*http.Response)
-	return resp, args.Error(1)
 }
