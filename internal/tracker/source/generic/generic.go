@@ -80,6 +80,15 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *hub.PackageMetadat
 	}
 	p.Repository = r
 
+	// If the readme content hasn't been provided in the metadata file, try to
+	// get it from the README.md file.
+	if p.Readme == "" {
+		readme, err := ioutil.ReadFile(filepath.Join(pkgPath, "README.md"))
+		if err == nil {
+			p.Readme = string(readme)
+		}
+	}
+
 	// Include kind specific data into package
 	ignorer := ignore.CompileIgnoreLines(md.Ignore...)
 	var data map[string]interface{}

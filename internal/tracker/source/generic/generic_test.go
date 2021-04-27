@@ -292,4 +292,36 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+
+	t.Run("opa package returned (README.md file), no errors", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				Kind: hub.OPA,
+			},
+			BasePath: "testdata/path9",
+			Svc:      sw.Svc,
+		}
+		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("logoImageID", nil)
+
+		// Run test and check expectations
+		p := source.ClonePackage(basePkg)
+		p.Repository = i.Repository
+		p.LogoImageID = "logoImageID"
+		p.Data = map[string]interface{}{
+			"policies": map[string]string{
+				"policy1.rego": "policy content\n",
+			},
+		}
+		p.Readme = "# Package documentation in markdown format\n"
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{
+			pkg.BuildKey(p): p,
+		}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
 }
