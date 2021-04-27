@@ -57,6 +57,7 @@ import RecommendedPackages from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
 import ResourcesList from './ResourcesList';
 import StarButton from './StarButton';
+import Stats from './Stats';
 import SubscriptionsButton from './SubscriptionsButton';
 import TektonManifestModal from './TektonManifestModal';
 import ValuesSchema from './valuesSchema';
@@ -602,6 +603,8 @@ const PackageView = (props: Props) => {
                     </div>
 
                     <p className={`mb-0 ${styles.description}`}>{detail.description}</p>
+
+                    <Stats packageStats={detail.stats} />
 
                     <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
 

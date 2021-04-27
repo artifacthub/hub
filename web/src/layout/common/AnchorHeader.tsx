@@ -45,7 +45,7 @@ const AnchorHeader: React.ElementType = (props: Props) => {
             e.stopPropagation();
             props.scrollIntoView(`#${anchor}`);
           }}
-          className={`text-reset text-center ${styles.headingLink}`}
+          className={`text-reset text-center d-none d-md-block ${styles.headingLink}`}
         >
           <GoLink />
         </a>

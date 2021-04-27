@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stats creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex flex-row align-items-baseline mt-2"
+  >
+    <div
+      class="d-flex flex-row align-items-baseline mr-3"
+    >
+      <svg
+        class="icon"
+        fill="currentColor"
+        height="1em"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 448 512"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+        />
+      </svg>
+      <small
+        class="text-muted text-uppercase mx-1"
+      >
+        Subscriptions:
+      </small>
+      <span
+        class="font-weight-bold"
+      >
+        12
+      </span>
+    </div>
+    <div
+      class="d-flex flex-row align-items-baseline"
+    >
+      <svg
+        class="icon"
+        fill="currentColor"
+        height="1em"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10,21 C7.50000053,23.5 5.00000002,23 3,21 C0.999999977,19 0.500000114,16.5 3.00000004,14 C5.49999997,11.5 5.99999998,11 5.99999998,11 L13.0000005,18 C13.0000005,18 12.4999995,18.5 10,21 Z M14.0003207,3 C16.5,0.499999776 19,0.999999776 21.001068,3 C23.002136,5.00000022 23.5,7.49999978 21.001068,10 C18.5021359,12.5000002 18.0007478,13 18.0007478,13 L11,6 C11,6 11.5006414,5.50000022 14.0003207,3 Z M11,9.9999 L8.5,12.4999999 L11,9.9999 Z M14,13 L11.5,15.5 L14,13 Z"
+          fill="none"
+          stroke="#000"
+          stroke-width="2"
+        />
+      </svg>
+      <small
+        class="text-muted text-uppercase mx-1"
+      >
+        Webhooks:
+      </small>
+      <span
+        class="font-weight-bold"
+      >
+        8
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
