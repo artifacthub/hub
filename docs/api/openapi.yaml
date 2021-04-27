@@ -3235,6 +3235,19 @@ components:
                     example: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
                     nullable: false
               nullable: false
+            stats:
+              type: object
+              nullable: false
+              required:
+                - subscriptions
+                - webhooks
+              properties:
+                subscriptions:
+                  type: integer
+                  nullable: false
+                webhooks:
+                  type: integer
+                  nullable: false
     PackageSummary:
       type: object
       required:

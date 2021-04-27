@@ -96,6 +96,12 @@ export interface Package {
   prerelease?: boolean;
   recommendations?: Recommendation[];
   official?: boolean;
+  stats?: PackageStats;
+}
+
+export interface PackageStats {
+  subscriptions: number;
+  webhooks: number;
 }
 
 export interface ContainerImage {

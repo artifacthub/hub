@@ -116,9 +116,9 @@
 }
 
 @media only screen and (max-width: 575.98px) {
-  .md {
+  /* .md {
     margin-left: 15px;
-  }
+  } */
 
   .md code {
     font-size: 0.8rem;

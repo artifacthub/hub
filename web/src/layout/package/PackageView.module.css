@@ -201,6 +201,10 @@
 }
 
 @media only screen and (max-width: 575.98px) {
+  .mainContent {
+    margin-top: 0;
+  }
+
   .jumbotron {
     padding: 2rem 0 !important;
   }
