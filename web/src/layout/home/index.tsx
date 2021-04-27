@@ -152,7 +152,7 @@ const HomeView = (props: Props) => {
             Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
             configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
             configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton
-            tasks and KEDA scalers.
+            tasks, KEDA scalers and CoreDNS plugins.
             <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
               <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`}>
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
@@ -178,6 +178,8 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
+            </div>
+            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
               <ExternalLink href="https://github.com/operator-framework" className={`col ${styles.iconLink}`}>
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
@@ -186,8 +188,6 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-            </div>
-            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
               <ExternalLink href="https://tinkerbell.org" className={`col ${styles.iconLink}`}>
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
@@ -204,6 +204,8 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
+            </div>
+            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
               <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`}>
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
@@ -217,6 +219,14 @@ const HomeView = (props: Props) => {
                   <RepositoryIcon kind={RepositoryKind.KedaScaler} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
                     <small>KEDA scalers</small>
+                  </div>
+                </div>
+              </ExternalLink>
+              <ExternalLink href="https://coredns.io" className={`col ${styles.iconLink}`}>
+                <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                  <RepositoryIcon kind={RepositoryKind.CoreDNS} type="white" className={styles.aboutIcon} />
+                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                    <small>CoreDNS plugins</small>
                   </div>
                 </div>
               </ExternalLink>

@@ -46,6 +46,10 @@ const ICONS = {
     default: '/static/media/keda-scaler.svg',
     white: '/static/media/keda-scaler-light.svg',
   },
+  [RepositoryKind.CoreDNS]: {
+    default: '/static/media/coredns-plugin.svg',
+    white: '/static/media/coredns-plugin-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

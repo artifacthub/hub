@@ -48,7 +48,7 @@ func TestAdd(t *testing.T) {
 				"invalid kind",
 				"org1",
 				&hub.Repository{
-					Kind: hub.RepositoryKind(9),
+					Kind: hub.RepositoryKind(100),
 				},
 				nil,
 			},

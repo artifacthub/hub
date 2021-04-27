@@ -109,6 +109,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     >
                       KEDA scalers
                     </option>
+                    <option
+                      value="9"
+                    >
+                      CoreDNS plugins
+                    </option>
                   </select>
                 </div>
                 <div

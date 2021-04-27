@@ -324,7 +324,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and KEDA scalers.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks, KEDA scalers and CoreDNS plugins.
           <div
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
           >
@@ -402,6 +402,10 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
+          </div>
+          <div
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
+          >
             <a
               class="link col iconLink"
               href="https://github.com/operator-framework"
@@ -426,10 +430,6 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
-          </div>
-          <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
-          >
             <a
               class="link col iconLink"
               href="https://tinkerbell.org"
@@ -478,6 +478,10 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
+          </div>
+          <div
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
+          >
             <a
               class="link col iconLink"
               href="https://tekton.dev"
@@ -522,6 +526,30 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <small>
                     KEDA scalers
+                  </small>
+                </div>
+              </div>
+            </a>
+            <a
+              class="link col iconLink"
+              href="https://coredns.io"
+              rel="noopener noreferrer"
+              role="button"
+              target="_blank"
+            >
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon"
+                  src="/static/media/coredns-plugin-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light legendIcon"
+                >
+                  <small>
+                    CoreDNS plugins
                   </small>
                 </div>
               </div>

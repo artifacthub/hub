@@ -20,6 +20,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.TektonTask;
     case 'keda-scaler':
       return RepositoryKind.KedaScaler;
+    case 'coredns':
+      return RepositoryKind.CoreDNS;
     default:
       return null;
   }
@@ -45,6 +47,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'tekton-task';
     case RepositoryKind.KedaScaler:
       return 'keda-scaler';
+    case RepositoryKind.CoreDNS:
+      return 'coredns';
     default:
       return null;
   }

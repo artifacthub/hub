@@ -160,6 +160,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     icon: <RepositoryIcon kind={RepositoryKind.KedaScaler} className="mw-100 mh-100" />,
     active: true,
   },
+  {
+    kind: RepositoryKind.CoreDNS,
+    label: 'coredns',
+    name: 'CoreDNS plugins',
+    singular: 'CoreDNS plugin',
+    plural: 'CoreDNS plugins',
+    icon: <RepositoryIcon kind={RepositoryKind.CoreDNS} className="mw-100 mh-100" />,
+    active: true,
+  },
 ];
 
 export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [
