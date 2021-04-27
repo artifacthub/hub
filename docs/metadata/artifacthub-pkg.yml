@@ -24,7 +24,7 @@ keywords: # (optional)
 links: # (optional)
   - name: Title of the link (required for each link)
     url: URL of the link (required for each link)
-readme: | # (optional)
+readme: | # (optional, can be provided from a README.md file as well)
   Package documentation in markdown format
 
   Content added here will be rendered on Artifact Hub
