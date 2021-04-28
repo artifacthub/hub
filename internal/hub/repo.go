@@ -48,11 +48,16 @@ const (
 
 	// KedaScaler represents a repository with KEDA scalers.
 	KedaScaler RepositoryKind = 8
+
+	// CoreDNS represents a repository with CoreDNS plugins.
+	CoreDNS RepositoryKind = 9
 )
 
 // GetKindName returns the name of the provided repository kind.
 func GetKindName(kind RepositoryKind) string {
 	switch kind {
+	case CoreDNS:
+		return "coredns"
 	case Falco:
 		return "falco"
 	case Helm:
@@ -80,6 +85,8 @@ func GetKindName(kind RepositoryKind) string {
 // provided.
 func GetKindFromName(kind string) (RepositoryKind, error) {
 	switch kind {
+	case "coredns":
+		return CoreDNS, nil
 	case "falco":
 		return Falco, nil
 	case "helm":

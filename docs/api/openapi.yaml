@@ -1180,6 +1180,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/coredns/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getCoreDNSPluginDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoreDNSPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/helm/{repoName}/{packageName}":
     get:
       tags:
@@ -1381,6 +1404,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TektonTaskPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/coredns/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getCoreDNSPluginVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoreDNSPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -2780,6 +2827,8 @@ components:
           - id: b771c9a8-0076-444c-ad5e-927abe14173d
             name: Artifact Hub
             total: 1
+    CoreDNSPackage:
+      $ref: "#/components/schemas/Package"
     FalcoPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -3380,6 +3429,9 @@ components:
         - 4
         - 5
         - 6
+        - 7
+        - 8
+        - 9
       description: |
         Repository kind:
           * `0` - Helm charts
@@ -3391,6 +3443,7 @@ components:
           * `6` - Helm plugins
           * `7` - Tekton tasks
           * `8` - KEDA scalers
+          * `9` - Core DNS plugins
     RepositoryKindParam:
       type: string
       enum:
@@ -3403,6 +3456,7 @@ components:
         - helm-plugin
         - tekton-task
         - keda-scaler
+        - coredns
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -3414,6 +3468,7 @@ components:
         * `helm-plugin` - Helm plugins
         * `tekton` - Tekton tasks
         * `keda-scaler` - KEDA scalers
+        * `coredns` - Core DNS plugins
     RepositorySummary:
       type: object
       required:

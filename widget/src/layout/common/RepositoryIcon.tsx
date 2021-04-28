@@ -23,6 +23,7 @@ const ICONS: IconsList = {
   [RepositoryKind.TBAction]: <SVGIcons name="tinkerbell" />,
   [RepositoryKind.Krew]: <SVGIcons name="krew" />,
   [RepositoryKind.KedaScaler]: <SVGIcons name="keda" />,
+  [RepositoryKind.CoreDNS]: <SVGIcons name="coredns" />,
 };
 
 const RepositoryIcon = (props: Props) => <div className={props.className}>{ICONS[props.kind]}</div>;

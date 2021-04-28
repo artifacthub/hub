@@ -10,6 +10,7 @@ export enum RepositoryKind {
   HelmPlugin,
   TektonTask,
   KedaScaler,
+  CoreDNS,
 }
 
 export enum HelmChartType {

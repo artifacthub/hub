@@ -53,6 +53,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.KedaScaler,
     name: 'KEDA scaler',
   },
+  {
+    kind: RepositoryKind.CoreDNS,
+    name: 'CoreDNS plugin',
+  },
 ];
 
 const Wrapper = styled('span')`

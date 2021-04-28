@@ -225,6 +225,13 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.CoreDNS:
+        link = (
+          <ExternalLink href="/docs/topics/repositories#coredns-plugins-repositories" className="text-reset">
+            <u>CoreDNS plugins</u>
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -469,6 +476,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.HelmPlugin,
               RepositoryKind.TektonTask,
               RepositoryKind.KedaScaler,
+              RepositoryKind.CoreDNS,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -577,6 +585,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TBAction,
               RepositoryKind.TektonTask,
               RepositoryKind.KedaScaler,
+              RepositoryKind.CoreDNS,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="custom-control custom-switch pl-0">
