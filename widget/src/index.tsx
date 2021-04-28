@@ -1,6 +1,7 @@
 import { isUndefined } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import root from 'react-shadow/styled-components';
 
 import Group from './layout/Group';
 import Widget from './layout/Widget';
@@ -10,13 +11,15 @@ Widgets.forEach((div: Element) => {
   const { url, theme, responsive, header } = (div as HTMLElement).dataset;
   ReactDOM.render(
     <React.StrictMode>
-      <Widget
-        url={url}
-        theme={theme}
-        responsive={responsive === 'true'}
-        header={isUndefined(header) || header === 'true'}
-        inGroup={false}
-      />
+      <root.section>
+        <Widget
+          url={url}
+          theme={theme}
+          responsive={responsive === 'true'}
+          header={isUndefined(header) || header === 'true'}
+          inGroup={false}
+        />
+      </root.section>
     </React.StrictMode>,
     div
   );
@@ -27,15 +30,17 @@ WidgetsGroups.forEach((div: Element) => {
   const { url, loading, theme, color, responsive, width, header } = (div as HTMLElement).dataset;
   ReactDOM.render(
     <React.StrictMode>
-      <Group
-        url={url}
-        loading={isUndefined(loading) || loading === 'true'}
-        header={isUndefined(header) || header === 'true'}
-        theme={theme}
-        color={color}
-        responsive={isUndefined(responsive) || responsive === 'true'}
-        width={width}
-      />
+      <root.section>
+        <Group
+          url={url}
+          loading={isUndefined(loading) || loading === 'true'}
+          header={isUndefined(header) || header === 'true'}
+          theme={theme}
+          color={color}
+          responsive={isUndefined(responsive) || responsive === 'true'}
+          width={width}
+        />
+      </root.section>
     </React.StrictMode>,
     div
   );

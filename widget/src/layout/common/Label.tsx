@@ -21,7 +21,6 @@ const IconWrapper = styled('div')`
   border: 1px solid var(--color-ah-primary-10);
   border-radius: 3px;
   height: 20px;
-  line-height: 21px;
   color: var(--icon-color);
   border-right: none;
   border-top-right-radius: 0px;

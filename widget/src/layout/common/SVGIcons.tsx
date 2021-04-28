@@ -1,12 +1,24 @@
 import React from 'react';
+import styled from 'styled-components';
 
 interface Props {
   className?: string;
   name: string;
 }
 
+const IconWrapper = styled('div')`
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  & svg {
+    height: auto;
+    margin: 0;
+  }
+`;
+
 const SVGIcons = (props: Props) => (
-  <span className={props.className}>
+  <IconWrapper className={props.className}>
     {(() => {
       switch (props.name) {
         case 'logo':
@@ -804,7 +816,7 @@ const SVGIcons = (props: Props) => (
           return null;
       }
     })()}
-  </span>
+  </IconWrapper>
 );
 
 export default SVGIcons;

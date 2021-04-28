@@ -26,6 +26,7 @@ interface WrapperProps {
 const Wrapper = styled.div<WrapperProps>`
   --color-ah-primary: ${(props) => props.mainColor};
   position: relative;
+  max-width: 100%;
 
   &.fixedWidth {
     width: ${(p: WrapperProps) => p.width};
