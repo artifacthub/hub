@@ -13,7 +13,8 @@ insert into "user" (
     last_name,
     email,
     password,
-    profile_image_id
+    profile_image_id,
+    tfa_enabled
 ) values (
     :'user1ID',
     'user1',
@@ -21,7 +22,8 @@ insert into "user" (
     'lastname',
     'user1@email.com',
     'password',
-    '00000000-0000-0000-0000-000000000001'
+    '00000000-0000-0000-0000-000000000001',
+    true
 );
 
 -- Run some tests
@@ -32,7 +34,9 @@ select is(
         "first_name": "firstname",
         "last_name": "lastname",
         "email": "user1@email.com",
-        "profile_image_id": "00000000-0000-0000-0000-000000000001"
+        "profile_image_id": "00000000-0000-0000-0000-000000000001",
+        "password_set": true,
+        "tfa_enabled": true
     }
     '::jsonb,
     'User1 should exist'

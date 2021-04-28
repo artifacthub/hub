@@ -3577,6 +3577,7 @@ components:
       required:
         - alias
         - email
+        - password_set
       properties:
         alias:
           type: string
@@ -3599,6 +3600,12 @@ components:
           type: string
           nullable: false
           example: 12345abcde
+        password_set:
+          type: boolean
+          nullable: false
+        tfa_enabled:
+          type: boolean
+          nullable: false
     Webhook:
       allOf:
         - $ref: "#/components/schemas/WebhookSummary"

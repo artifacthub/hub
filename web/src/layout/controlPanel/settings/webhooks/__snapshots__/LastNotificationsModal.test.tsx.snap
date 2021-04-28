@@ -47,7 +47,7 @@ exports[`Repository LastNotificationsModal - packages section creates snapshot 1
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
       >
         <div
-          class="modal-content content undefined"
+          class="modal-content content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"

@@ -63,4 +63,8 @@ export const API = {
   verifyPasswordResetCode: jest.fn(),
   resetPassword: jest.fn(),
   getAHStats: jest.fn(),
+  setUpTFA: jest.fn(),
+  enableTFA: jest.fn(),
+  disableTFA: jest.fn(),
+  approveSession: jest.fn(),
 };

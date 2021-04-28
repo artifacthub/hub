@@ -13,6 +13,12 @@ type ManagerMock struct {
 	mock.Mock
 }
 
+// ApproveSession implements the UserManager interface.
+func (m *ManagerMock) ApproveSession(ctx context.Context, sessionID []byte, passcode string) error {
+	args := m.Called(ctx, sessionID, passcode)
+	return args.Error(0)
+}
+
 // CheckAPIKey implements the UserManager interface.
 func (m *ManagerMock) CheckAPIKey(ctx context.Context, apiKeyID, apiKeySecret string) (*hub.CheckAPIKeyOutput, error) {
 	args := m.Called(ctx, apiKeyID, apiKeySecret)
@@ -54,6 +60,18 @@ func (m *ManagerMock) DeleteSession(ctx context.Context, sessionID []byte) error
 	return args.Error(0)
 }
 
+// DisableTFA implements the UserManager interface.
+func (m *ManagerMock) DisableTFA(ctx context.Context, passcode string) error {
+	args := m.Called(ctx, passcode)
+	return args.Error(0)
+}
+
+// EnableTFA implements the UserManager interface.
+func (m *ManagerMock) EnableTFA(ctx context.Context, passcode string) error {
+	args := m.Called(ctx, passcode)
+	return args.Error(0)
+}
+
 // GetProfile implements the UserManager interface.
 func (m *ManagerMock) GetProfile(ctx context.Context) (*hub.User, error) {
 	args := m.Called(ctx)
@@ -81,9 +99,9 @@ func (m *ManagerMock) RegisterPasswordResetCode(ctx context.Context, userEmail, 
 }
 
 // RegisterSession implements the UserManager interface.
-func (m *ManagerMock) RegisterSession(ctx context.Context, session *hub.Session) ([]byte, error) {
+func (m *ManagerMock) RegisterSession(ctx context.Context, session *hub.Session) (*hub.Session, error) {
 	args := m.Called(ctx, session)
-	data, _ := args.Get(0).([]byte)
+	data, _ := args.Get(0).(*hub.Session)
 	return data, args.Error(1)
 }
 
@@ -97,6 +115,13 @@ func (m *ManagerMock) RegisterUser(ctx context.Context, user *hub.User, baseURL 
 func (m *ManagerMock) ResetPassword(ctx context.Context, code, newPassword, baseURL string) error {
 	args := m.Called(ctx, code, newPassword, baseURL)
 	return args.Error(0)
+}
+
+// SetupTFA implements the UserManager interface.
+func (m *ManagerMock) SetupTFA(ctx context.Context) ([]byte, error) {
+	args := m.Called(ctx)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
 }
 
 // UpdatePassword implements the UserManager interface.

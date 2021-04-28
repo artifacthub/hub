@@ -32,14 +32,21 @@ interface Props {
   excludedRefs?: React.MutableRefObject<HTMLDivElement | null>[];
   breakPoint?: string;
   size?: string;
+  unclosable?: boolean;
+  visibleContentBackdrop?: boolean;
 }
 
 const Modal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(props.open || false);
   const ref = useRef<HTMLDivElement>(null);
-  useOutsideClick([ref, ...(!isUndefined(props.excludedRefs) ? [...props.excludedRefs] : [])], openStatus, () => {
-    closeModal();
-  });
+  const unclosable = !isUndefined(props.unclosable) && props.unclosable;
+  useOutsideClick(
+    [ref, ...(!isUndefined(props.excludedRefs) ? [...props.excludedRefs] : [])],
+    openStatus && !unclosable,
+    () => {
+      closeModal();
+    }
+  );
   useBodyScroll(openStatus, 'modal', props.breakPoint);
 
   const closeModal = () => {
@@ -103,25 +110,32 @@ const Modal = (props: Props) => {
           )}
           ref={ref}
         >
-          <div className={`modal-content ${styles.content} ${props.modalClassName}`}>
+          <div
+            className={classnames('modal-content', styles.content, props.modalClassName, {
+              [`position-relative ${styles.visibleContentBackdrop}`]:
+                !isUndefined(props.visibleContentBackdrop) && props.visibleContentBackdrop,
+            })}
+          >
             {!isUndefined(props.header) && (
               <div
                 className={`modal-header d-flex flex-row align-items-center ${styles.header} ${props.headerClassName}`}
               >
                 {isString(props.header) ? <div className="modal-title h5">{props.header}</div> : <>{props.header}</>}
 
-                <button
-                  data-testid="closeModalBtn"
-                  type="button"
-                  className="close"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    e.preventDefault();
-                    closeModal();
-                  }}
-                  disabled={props.disabledClose}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
+                {!unclosable && (
+                  <button
+                    data-testid="closeModalBtn"
+                    type="button"
+                    className="close"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
+                      closeModal();
+                    }}
+                    disabled={props.disabledClose}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                )}
               </div>
             )}
 

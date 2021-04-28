@@ -10,6 +10,7 @@ interface Props {
   content: string;
   className?: string;
   boxShadowColor?: string;
+  hiddenCopyBtn?: boolean;
 }
 
 const BlockCodeButtons = (props: Props) => {
@@ -35,11 +36,13 @@ const BlockCodeButtons = (props: Props) => {
 
   return (
     <div className={`position-absolute d-flex flex-row ${styles.wrapper} ${props.className}`}>
-      <ButtonCopyToClipboard text={props.content} style={btnStyle} />
+      {(isUndefined(props.hiddenCopyBtn) || !props.hiddenCopyBtn) && (
+        <ButtonCopyToClipboard wrapperClassName="mr-2" text={props.content} style={btnStyle} />
+      )}
 
       <button
         data-testid="downloadBtn"
-        className={`btn btn-sm btn-primary rounded-circle ml-2 ${styles.btn}`}
+        className={`btn btn-sm btn-primary rounded-circle ${styles.btn}`}
         style={btnStyle}
         onClick={downloadFile}
       >

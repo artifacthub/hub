@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(140);
+select plan(142);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -167,6 +167,7 @@ select columns_are('session', array[
     'user_id',
     'ip',
     'user_agent',
+    'approved',
     'created_at'
 ]);
 select columns_are('snapshot', array[
@@ -218,7 +219,10 @@ select columns_are('user', array[
     'email_verified',
     'password',
     'profile_image_id',
-    'created_at'
+    'created_at',
+    'tfa_enabled',
+    'tfa_recovery_codes',
+    'tfa_url'
 ]);
 select columns_are('user_starred_package', array[
     'user_id',
@@ -434,8 +438,10 @@ select has_function('get_user_opt_out_entries');
 select has_function('get_user_package_subscriptions');
 select has_function('get_user_subscriptions');
 -- Users
+select has_function('approve_session');
 select has_function('check_user_alias_availability');
 select has_function('get_user_profile');
+select has_function('get_user_tfa_config');
 select has_function('register_password_reset_code');
 select has_function('register_session');
 select has_function('register_user');
