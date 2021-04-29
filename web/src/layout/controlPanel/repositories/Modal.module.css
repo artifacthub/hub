@@ -1,11 +1,11 @@
 .modal {
   max-width: 90%;
   width: 620px !important;
-  height: 967px;
+  height: 1013px;
 }
 
 .allowPrivateModal {
-  height: 1105px;
+  height: 1151px;
 }
 
 .inputAdditionalInfoURL {
@@ -29,6 +29,56 @@
 .customControlRightLabel::after {
   right: -1.38rem;
   left: auto !important;
+}
+
+.repoInfo {
+  opacity: 1;
+}
+
+.animatedWarning {
+  color: var(--orange);
+  font-weight: 700;
+  animation: bounce 1s both;
+  transform-origin: center bottom;
+}
+
+@keyframes bounce {
+  from,
+  20%,
+  53%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -20px, 0) scaleY(1.1);
+    transform: translate3d(0, -20px, 0) scaleY(1.1);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -10px, 0) scaleY(1.05);
+    transform: translate3d(0, -10px, 0) scaleY(1.05);
+  }
+
+  80% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0) scaleY(0.95);
+    transform: translate3d(0, 0, 0) scaleY(0.95);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0) scaleY(1.02);
+    transform: translate3d(0, -4px, 0) scaleY(1.02);
+  }
 }
 
 @media only screen and (max-width: 767.98px) {
