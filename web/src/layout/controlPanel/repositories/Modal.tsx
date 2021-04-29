@@ -48,9 +48,14 @@ const RepositoryModal = (props: Props) => {
     isUndefined(props.repository) ? DEFAULT_SELECTED_REPOSITORY_KIND : props.repository.kind
   );
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
+  const [urlContainsTreeTxt, setUrlContainsTreeTxt] = useState<boolean>(false);
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsValidInput(e.target.value === props.repository!.name);
+  };
+
+  const onUrlInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUrlContainsTreeTxt(e.target.value.includes('/tree/'));
   };
 
   const allowPrivateRepositories: boolean = document.querySelector(`meta[name='artifacthub:allowPrivateRepositories']`)
@@ -237,15 +242,28 @@ const RepositoryModal = (props: Props) => {
     if (isUndefined(link)) return;
 
     return (
-      <small className="text-muted text-break mt-1">
-        <p className="mb-4">
-          For more information about the url format and the repository structure, please see the {link} section in the{' '}
-          <ExternalLink href="/docs/repositories" className="text-reset">
-            <u>repositories guide</u>
-          </ExternalLink>
-          .
-        </p>
-      </small>
+      <div className="text-muted text-break mt-1 mb-4">
+        <small>
+          {selectedKind !== RepositoryKind.Helm && (
+            <p
+              className={classnames('mb-2', styles.repoInfo, {
+                [styles.animatedWarning]: urlContainsTreeTxt,
+              })}
+            >
+              Please DO NOT include the git hosting platform specific parts, like 
+              <span className="font-weight-bold">tree/branch</span>, just the path to your packages like it would show
+              in the filesystem.
+            </p>
+          )}
+          <p className="mb-0">
+            For more information about the url format and the repository structure, please see the {link} section in the{' '}
+            <ExternalLink href="/docs/repositories" className="text-reset">
+              <u>repositories guide</u>
+            </ExternalLink>
+            .
+          </p>
+        </small>
+      </div>
     );
   };
 
@@ -462,6 +480,7 @@ const RepositoryModal = (props: Props) => {
                 excluded: props.repository ? [props.repository.url] : [],
               }}
               pattern={getURLPattern()}
+              onChange={onUrlInputChange}
               required
             />
 

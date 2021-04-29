@@ -228,39 +228,41 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     This field is required
                   </div>
                 </div>
-                <small
-                  class="text-muted text-break mt-1"
+                <div
+                  class="text-muted text-break mt-1 mb-4"
                 >
-                  <p
-                    class="mb-4"
-                  >
-                    For more information about the url format and the repository structure, please see the 
-                    <a
-                      class="link text-reset"
-                      href="/docs/topics/repositories#helm-charts-repositories"
-                      rel="noopener noreferrer"
-                      role="button"
-                      target="_blank"
+                  <small>
+                    <p
+                      class="mb-0"
                     >
-                      <u>
-                        Helm charts repositories
-                      </u>
-                    </a>
-                     section in the 
-                    <a
-                      class="link text-reset"
-                      href="/docs/repositories"
-                      rel="noopener noreferrer"
-                      role="button"
-                      target="_blank"
-                    >
-                      <u>
-                        repositories guide
-                      </u>
-                    </a>
-                    .
-                  </p>
-                </small>
+                      For more information about the url format and the repository structure, please see the 
+                      <a
+                        class="link text-reset"
+                        href="/docs/topics/repositories#helm-charts-repositories"
+                        rel="noopener noreferrer"
+                        role="button"
+                        target="_blank"
+                      >
+                        <u>
+                          Helm charts repositories
+                        </u>
+                      </a>
+                       section in the 
+                      <a
+                        class="link text-reset"
+                        href="/docs/repositories"
+                        rel="noopener noreferrer"
+                        role="button"
+                        target="_blank"
+                      >
+                        <u>
+                          repositories guide
+                        </u>
+                      </a>
+                      .
+                    </p>
+                  </small>
+                </div>
                 <div
                   class="mb-4"
                 >

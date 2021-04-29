@@ -104,6 +104,21 @@ describe('Repository Modal - repositories section', () => {
       expect(queryByTestId('authUserInput')).toBeNull();
     });
 
+    it('displays warning about repo url', () => {
+      const { getByText, getByTestId } = render(
+        <Modal {...defaultProps} repository={{ ...repoMock, kind: RepositoryKind.OLM }} />
+      );
+
+      expect(getByText(/Please DO NOT include the git hosting platform specific parts/g)).toBeInTheDocument();
+      expect(getByText('tree/branch')).toBeInTheDocument();
+
+      fireEvent.change(getByTestId('urlInput'), { target: { value: 'https://github.com/test/tree/test' } });
+
+      expect(getByText(/Please DO NOT include the git hosting platform specific parts/g)).toHaveClass(
+        'animatedWarning'
+      );
+    });
+
     describe('Add repo', () => {
       it('calls add repo', async () => {
         Object.defineProperty(document, 'querySelector', {
