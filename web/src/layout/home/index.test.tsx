@@ -126,24 +126,27 @@ describe('Home index', () => {
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
 
       const links = getAllByRole('button');
-      expect(links).toHaveLength(15);
+      expect(links).toHaveLength(16);
 
       expect(links[2]).toHaveProperty('href', 'https://github.com/cncf/hub');
       expect(links[3]).toHaveProperty('href', 'https://cloud-native.slack.com/channels/artifact-hub');
       expect(links[4]).toHaveProperty('href', 'https://twitter.com/cncfartifacthub');
 
-      // Packages
-      expect(links[5]).toHaveProperty('href', 'https://helm.sh/');
-      expect(links[6]).toHaveProperty('href', 'https://falco.org/');
-      expect(links[7]).toHaveProperty('href', 'https://www.openpolicyagent.org/');
-      expect(links[8]).toHaveProperty('href', 'https://github.com/operator-framework');
-      expect(links[9]).toHaveProperty('href', 'https://tinkerbell.org/');
-      expect(links[10]).toHaveProperty('href', 'https://krew.sigs.k8s.io/');
-      expect(links[11]).toHaveProperty('href', 'https://tekton.dev/');
-      expect(links[12]).toHaveProperty('href', 'https://keda.sh/');
-      expect(links[13]).toHaveProperty('href', 'https://coredns.io/');
+      // Docs link
+      expect(links[5]).toHaveProperty('href', 'http://localhost/docs/topics/repositories');
 
-      expect(links[14]).toHaveProperty('href', 'https://www.cncf.io/sandbox-projects/');
+      // Packages
+      expect(links[6]).toHaveProperty('href', 'https://helm.sh/');
+      expect(links[7]).toHaveProperty('href', 'https://falco.org/');
+      expect(links[8]).toHaveProperty('href', 'https://www.openpolicyagent.org/');
+      expect(links[9]).toHaveProperty('href', 'https://github.com/operator-framework');
+      expect(links[10]).toHaveProperty('href', 'https://tinkerbell.org/');
+      expect(links[11]).toHaveProperty('href', 'https://krew.sigs.k8s.io/');
+      expect(links[12]).toHaveProperty('href', 'https://tekton.dev/');
+      expect(links[13]).toHaveProperty('href', 'https://keda.sh/');
+      expect(links[14]).toHaveProperty('href', 'https://coredns.io/');
+
+      expect(links[15]).toHaveProperty('href', 'https://www.cncf.io/sandbox-projects/');
     });
   });
 });

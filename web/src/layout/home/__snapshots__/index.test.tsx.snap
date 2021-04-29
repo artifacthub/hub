@@ -229,10 +229,10 @@ exports[`Home index creates snapshot 1`] = `
          project
       </div>
       <div
-        class="mb-4 mb-md-2 text-center"
+        class="d-flex flex-row align-items-center justify-content-center flex-wrap"
       >
         <a
-          class="link btn btn-secondary socialBtn"
+          class="link btn btn-secondary mb-4 mb-md-2 socialBtn"
           href="https://github.com/cncf/hub"
           rel="noopener noreferrer"
           role="button"
@@ -259,7 +259,7 @@ exports[`Home index creates snapshot 1`] = `
           </div>
         </a>
         <a
-          class="link btn btn-secondary ml-2 ml-md-3 socialBtn"
+          class="link btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 socialBtn"
           href="https://cloud-native.slack.com/channels/artifact-hub"
           rel="noopener noreferrer"
           role="button"
@@ -286,7 +286,7 @@ exports[`Home index creates snapshot 1`] = `
           </div>
         </a>
         <a
-          class="link btn btn-secondary ml-2 ml-md-3 socialBtn"
+          class="link btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 socialBtn"
           href="https://twitter.com/cncfartifacthub"
           rel="noopener noreferrer"
           role="button"
@@ -312,6 +312,21 @@ exports[`Home index creates snapshot 1`] = `
             Twitter
           </div>
         </a>
+      </div>
+      <div
+        class="text-center mx-3 mt-md-4 mb-4 repoGuideText"
+      >
+        Please see the 
+        <a
+          class="link btn btn-link text-light font-weight-bold textLight p-0 inlineLink"
+          href="/docs/topics/repositories"
+          rel="noopener noreferrer"
+          role="button"
+          target="_blank"
+        >
+          repositories guide
+        </a>
+         for more information about how to list your content on Artifact Hub.
       </div>
     </div>
     <div />
