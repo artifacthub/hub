@@ -53,6 +53,18 @@
   width: 110px;
 }
 
+.repoGuideText {
+  font-size: 80%;
+  font-weight: 300;
+}
+
+.inlineLink {
+  font-size: inherit;
+  vertical-align: baseline;
+  text-decoration: underline;
+  line-height: 1.15rem;
+}
+
 .iconLink:hover {
   text-decoration: none;
 }
@@ -103,5 +115,9 @@
 
   .search {
     max-width: 750px;
+  }
+
+  .repoGuideText {
+    font-size: 90%;
   }
 }

@@ -114,8 +114,11 @@ const HomeView = (props: Props) => {
           Artifact Hub is an <b>Open Source</b> project
         </div>
 
-        <div className="mb-4 mb-md-2 text-center">
-          <ExternalLink className={`btn btn-secondary ${styles.socialBtn}`} href="https://github.com/cncf/hub">
+        <div className="d-flex flex-row align-items-center justify-content-center flex-wrap">
+          <ExternalLink
+            className={`btn btn-secondary mb-4 mb-md-2 ${styles.socialBtn}`}
+            href="https://github.com/cncf/hub"
+          >
             <div className="d-flex align-items-center justify-content-center">
               <FaGithub className="mr-2" />
               GitHub
@@ -123,7 +126,7 @@ const HomeView = (props: Props) => {
           </ExternalLink>
 
           <ExternalLink
-            className={`btn btn-secondary ml-2 ml-md-3 ${styles.socialBtn}`}
+            className={`btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 ${styles.socialBtn}`}
             href="https://cloud-native.slack.com/channels/artifact-hub"
           >
             <div className="d-flex align-items-center justify-content-center">
@@ -133,7 +136,7 @@ const HomeView = (props: Props) => {
           </ExternalLink>
 
           <ExternalLink
-            className={`btn btn-secondary ml-2 ml-md-3 ${styles.socialBtn}`}
+            className={`btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 ${styles.socialBtn}`}
             href="https://twitter.com/cncfartifacthub"
           >
             <div className="d-flex align-items-center justify-content-center">
@@ -141,6 +144,17 @@ const HomeView = (props: Props) => {
               Twitter
             </div>
           </ExternalLink>
+        </div>
+
+        <div className={`text-center mx-3 mt-md-4 mb-4 ${styles.repoGuideText}`}>
+          Please see the{' '}
+          <ExternalLink
+            className={`btn btn-link text-light font-weight-bold textLight p-0 ${styles.inlineLink}`}
+            href="/docs/topics/repositories"
+          >
+            repositories guide
+          </ExternalLink>{' '}
+          for more information about how to list your content on Artifact Hub.
         </div>
       </div>
 
