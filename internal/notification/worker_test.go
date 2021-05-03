@@ -63,9 +63,15 @@ func TestWorker(t *testing.T) {
 		Name:           "package1",
 		NormalizedName: "package1",
 		Version:        "1.0.0",
-		Changes: []string{
-			"Cool feature",
-			"Bug fixed",
+		Changes: []*hub.Change{
+			{
+				Kind:        "added",
+				Description: "feature 1",
+			},
+			{
+				Kind:        "fixed",
+				Description: "bug 1",
+			},
 		},
 		ContainsSecurityUpdates: true,
 		Prerelease:              true,
@@ -268,7 +274,7 @@ func TestWorker(t *testing.T) {
 			"name": "package1",
 			"version": "1.0.0",
 			"url": "http://baseURL/packages/helm/repo1/package1/1.0.0",
-			"changes": ["Cool feature", "Bug fixed"],
+			"changes": ["feature 1", "bug 1"],
 			"containsSecurityUpdates": true,
 			"prerelease": true,
 			"repository": {
@@ -284,7 +290,7 @@ func TestWorker(t *testing.T) {
 			{
 				"2",
 				"custom/type",
-				"Package {{ .Package.name }} {{ .Package.version}} updated!",
+				"Package {{ .Package.Name }} {{ .Package.Version}} updated!",
 				"very",
 				[]byte("Package package1 1.0.0 updated!"),
 			},

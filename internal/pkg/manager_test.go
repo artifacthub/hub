@@ -108,9 +108,17 @@ func TestGet(t *testing.T) {
 				},
 			},
 			Provider: "Org Inc",
-			Changes: []string{
-				"feature 1",
-				"fix 1",
+			Changes: []*hub.Change{
+				{
+					Kind:        "added",
+					Description: "feature 1",
+					Links: []*hub.Link{
+						{
+							Name: "github issue",
+							URL:  "https://issue.url",
+						},
+					},
+				},
 			},
 			Maintainers: []*hub.Maintainer{
 				{
@@ -205,8 +213,16 @@ func TestGet(t *testing.T) {
 			],
 			"provider": "Org Inc",
 			"changes": [
-				"feature 1",
-				"fix 1"
+				{
+					"kind": "added",
+					"description": "feature 1",
+					"links": [
+						{
+							"name": "github issue",
+							"url": "https://issue.url"
+						}
+					]
+				}
 			],
 			"maintainers": [
 				{

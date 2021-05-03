@@ -8,7 +8,7 @@ var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
   <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{ .Repository.name }} scanning errors</title>
+    <title>{{ .Repository.Name }} scanning errors</title>
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark">
 
@@ -173,7 +173,7 @@ var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
           <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; padding: 10px;">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Repository.name }} security vulnerabilities scan errors</span>
+            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Repository.Name }} security vulnerabilities scan errors</span>
             <table class="main line-danger" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; border-radius: 3px;">
 
               <!-- START MAIN CONTENT AREA -->
@@ -183,7 +183,7 @@ var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-                          We encountered some errors while scanning the packages in repository <strong>{{ .Repository.name }}</strong> for security vulnerabilities.
+                          We encountered some errors while scanning the packages in repository <strong>{{ .Repository.Name }}</strong> for security vulnerabilities.
                         </p>
 
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">
@@ -197,7 +197,7 @@ var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
                             <tr>
                               <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding: 16px;">
                                 <code style="overflow-x: auto;">
-                                  {{ range $index, $scanningError := .Repository.lastScanningErrors }}
+                                  {{ range $index, $scanningError := .Repository.LastScanningErrors }}
                                     {{ if $index }}
                                       <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important; border-top: 1px solid #333; padding-top: 15px; font-size: 13px; ">{{ $scanningError }}</p>
                                     {{ else }}
@@ -217,7 +217,7 @@ var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
                                 <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                   <tbody>
                                     <tr>
-                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .BaseURL }}/control-panel/repositories?modal=scanning&user-alias={{ .Repository.userAlias }}&org-name={{ .Repository.organizationName }}&repo-name={{ .Repository.name }}" class="AHbtn" target="_blank" style="display: inline-block; color: #ffffff; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">View in Artifact Hub</a> </div></td>
+                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .BaseURL }}/control-panel/repositories?modal=scanning&user-alias={{ .Repository.UserAlias }}&org-name={{ .Repository.OrganizationName }}&repo-name={{ .Repository.Name }}" class="AHbtn" target="_blank" style="display: inline-block; color: #ffffff; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">View in Artifact Hub</a> </div></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -230,7 +230,7 @@ var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
                           <tbody>
                             <tr>
                               <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; padding-bottom: 10px; padding-top: 10px; text-align: center;">
-                                <p class="text-muted" style="font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span class="copy-link" style="text-align: center;">{{ .BaseURL }}/control-panel/repositories?modal=scanning&user-alias={{ .Repository.userAlias }}&org-name={{ .Repository.organizationName }}&repo-name={{ .Repository.name }}</span></p>
+                                <p class="text-muted" style="font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span class="copy-link" style="text-align: center;">{{ .BaseURL }}/control-panel/repositories?modal=scanning&user-alias={{ .Repository.UserAlias }}&org-name={{ .Repository.OrganizationName }}&repo-name={{ .Repository.Name }}</span></p>
                               </td>
                             </tr>
                           </tbody>

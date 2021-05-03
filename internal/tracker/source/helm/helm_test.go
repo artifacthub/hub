@@ -84,9 +84,13 @@ func TestTrackerSource(t *testing.T) {
 				Whitelisted: true,
 			},
 		},
-		Changes: []string{
-			"Added cool feature",
-			"Fixed minor bug",
+		Changes: []*hub.Change{
+			{
+				Description: "Added cool feature",
+			},
+			{
+				Description: "Fixed minor bug",
+			},
 		},
 		Recommendations: []*hub.Recommendation{
 			{
@@ -344,9 +348,37 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 `,
 			},
 			&hub.Package{
-				Changes: []string{
-					"Added cool feature",
-					"Fixed minor bug",
+				Changes: []*hub.Change{
+					{
+						Description: "Added cool feature",
+					},
+					{
+						Description: "Fixed minor bug",
+					},
+				},
+			},
+			"",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				changesAnnotation: `
+- kind: added
+  description: Cool feature
+- kind: fixed
+  description: Minor bug
+`,
+			},
+			&hub.Package{
+				Changes: []*hub.Change{
+					{
+						Kind:        "added",
+						Description: "Cool feature",
+					},
+					{
+						Kind:        "fixed",
+						Description: "Minor bug",
+					},
 				},
 			},
 			"",

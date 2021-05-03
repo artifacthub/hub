@@ -8,7 +8,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
   <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{ .Package.name }} new release</title>
+    <title>{{ .Package.Name }} new release</title>
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark">
 
@@ -145,6 +145,39 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
       border: 1px solid #856404;
     }
 
+    .badge {
+      padding: 0 10px;
+      border-radius: 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #ffffff;
+      width: 75px;
+    }
+
+    .badge-added {
+      background-color: #0594cb;
+    }
+
+    .badge-changed {
+      background-color: #e0ae0b;
+    }
+
+    .badge-deprecated {
+      background-color: #6c757d;
+    }
+
+    .badge-removed {
+      background-color: #f7860f;
+    }
+
+    .badge-fixed {
+      background-color: #28a745;
+    }
+
+    .badge-security {
+      background-color: #df2a29;
+    }
+
     @media (prefers-color-scheme: dark ) {
       .body {
         background-color: #222529 !important;
@@ -195,7 +228,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
           <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Package.name }} version {{ .Package.version }} released</span>
+            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Package.Name }} version {{ .Package.Version }} released</span>
             <table class="main line" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; border-radius: 3px;">
 
               <!-- START MAIN CONTENT AREA -->
@@ -204,8 +237,8 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
                   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;">
-                        <img style="margin: 30px;" height="40px" src="{{ .BaseURL }}{{ if .Package.logoImageID }}/image/{{ .Package.logoImageID }}@3x{{ else }}/static/media/placeholder_pkg_{{ .Package.repository.kind }}.png{{ end }}">
-                        <h2 class="title" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;"><img style="margin-right: 5px; margin-bottom: -2px;" height="18px" src="{{ .BaseURL }}/static/media/{{ .Package.repository.kind }}_icon.png">{{ .Package.name }}</h2>
+                        <img style="margin: 30px;" height="40px" src="{{ .BaseURL }}{{ if .Package.LogoImageID }}/image/{{ .Package.LogoImageID }}@3x{{ else }}/static/media/placeholder_pkg_{{ .Package.Repository.Kind }}.png{{ end }}">
+                        <h2 class="title" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;"><img style="margin-right: 5px; margin-bottom: -2px;" height="18px" src="{{ .BaseURL }}/static/media/{{ .Package.Repository.Kind }}_icon.png">{{ .Package.Name }}</h2>
 												<h4 class="subtitle" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;">{{ .Package.repository.publisher }} </h4>
 
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Version <b>{{ .Package.version }}</b> has been released</p>
@@ -214,11 +247,11 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
 
                     <tr>
                       <td>
-                        {{ if .Package.prerelease }}
+                        {{ if .Package.Prerelease }}
                           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                             <tbody>
                               <tr>
-                                <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: {{ if .Package.containsSecurityUpdates }} 15px; {{ else }} 30px;{{ end }}">
+                                <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: {{ if .Package.ContainsSecurityUpdates }} 15px; {{ else }} 30px;{{ end }}">
                                   <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version is a <b>pre-release</b> and it is not ready for production use.</div>
                                 </td>
                               </tr>
@@ -230,7 +263,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
 
                     <tr>
                       <td>
-                        {{ if .Package.containsSecurityUpdates }}
+                        {{ if .Package.ContainsSecurityUpdates }}
                           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                             <tbody>
                               <tr>
@@ -246,14 +279,37 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
 
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px;">
-                        {{ if .Package.changes }}
+                        {{ if .Package.Changes }}
                           <hr class="hr" style="border-bottom: none;" />
                           <h4 class="subtitle" style="font-family: sans-serif; font-size: 12px; Margin-top: 20px;">CHANGES:</h4>
-                          <ul style="Margin-bottom: 20px;">
-                            {{range $change := .Package.changes}}
-                              <li>{{$change}}</li>
-                            {{end}}
-                          </ul>
+                          <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                              {{range $change := .Package.Changes}}
+                                <tr>
+                                  <td style="vertical-align: top; padding-top: 2px; padding-right: 10px;">
+                                    {{ if $change.Kind}}
+                                      <div class="badge badge-{{ $change.Kind }}" style="text-align: center;">{{ $change.Kind }}</div>
+                                    {{ else }}
+                                      <p style="margin: 0;">&bull;</p>
+                                    {{ end }}
+                                  </td>
+                                  <td>
+                                    <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 10px;">
+                                      {{ $change.Description }}
+
+                                      {{if $change.Links}}
+                                        <br />
+                                        {{range $i, $link := $change.Links}}
+                                          {{if $i}} &bull; {{end}}
+                                          <a href="{{ $link.URL }}" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">{{ $link.Name }}</a>
+                                        {{end}}
+                                      {{ end }}
+                                    </p>
+                                  </td>
+                                </tr>
+                              {{ end }}
+                            </tbody>
+                          </table>
                           <hr class="hr" style="border-bottom: none;" />
                           <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 45px;"></p>
                         {{ end }}
@@ -269,7 +325,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
                                 <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                   <tbody>
                                     <tr>
-                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .Package.url }}" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">View in Artifact Hub</a> </div></td>
+                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .Package.URL }}" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">View in Artifact Hub</a> </div></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -282,7 +338,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
                           <tbody>
                             <tr>
                               <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; padding-bottom: 30px; padding-top: 10px;">
-                                <p class="text-muted" style="font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span class="copy-link">{{ .Package.url }}</span></p>
+                                <p class="text-muted" style="font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span class="copy-link">{{ .Package.URL }}</span></p>
                               </td>
                             </tr>
                           </tbody>
@@ -301,7 +357,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
               <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 10px; text-align: center;">
-                    <p class="text-muted" style="font-size: 10px; text-align: center; text-decoration: none;">Didn't subscribe to Artifact Hub notifications for {{ .Package.name }} package? You can unsubscribe <a href="{{ .BaseURL }}/control-panel/settings/subscriptions" target="_blank" class="text-muted" style="text-decoration: underline;">here</a>.</p>
+                    <p class="text-muted" style="font-size: 10px; text-align: center; text-decoration: none;">Didn't subscribe to Artifact Hub notifications for {{ .Package.Name }} package? You can unsubscribe <a href="{{ .BaseURL }}/control-panel/settings/subscriptions" target="_blank" class="text-muted" style="text-decoration: underline;">here</a>.</p>
                   </td>
                 </tr>
                 <tr>

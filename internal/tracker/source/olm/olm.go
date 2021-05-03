@@ -16,6 +16,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/ghodss/yaml"
 	"github.com/operator-framework/api/pkg/manifests"
 	operatorsv1alpha1 "github.com/operator-framework/api/pkg/operators/v1alpha1"
@@ -255,8 +256,8 @@ func (s *TrackerSource) preparePackage(
 			isGlobalOperator = true
 		}
 	}
-	var changes []string
-	if err := yaml.Unmarshal([]byte(csv.Annotations[changesAnnotation]), &changes); err == nil {
+	changes, err := source.ParseChangesAnnotation(csv.Annotations[changesAnnotation])
+	if err == nil {
 		p.Changes = changes
 	}
 	containsSecurityUpdates, err := strconv.ParseBool(csv.Annotations[securityUpdatesAnnotation])

@@ -11,6 +11,13 @@ const (
 	PackageMetadataFile = "artifacthub-pkg"
 )
 
+// Change represents a change introduced in a package version.
+type Change struct {
+	Kind        string  `json:"kind,omitempty"`
+	Description string  `json:"description"`
+	Links       []*Link `json:"links,omitempty"`
+}
+
 // Channel represents a package's channel.
 type Channel struct {
 	Name    string `json:"name"`
@@ -82,7 +89,7 @@ type Package struct {
 	HasValuesSchema         bool                   `json:"has_values_schema"`
 	ValuesSchema            json.RawMessage        `json:"values_schema,omitempty"`
 	HasChangeLog            bool                   `json:"has_changelog"`
-	Changes                 []string               `json:"changes"`
+	Changes                 []*Change              `json:"changes"`
 	ContainsSecurityUpdates bool                   `json:"contains_security_updates"`
 	Prerelease              bool                   `json:"prerelease"`
 	Maintainers             []*Maintainer          `json:"maintainers"`
@@ -138,9 +145,9 @@ type PackageMetadata struct {
 	Links                   []*Link           `yaml:"links"`
 	Readme                  string            `yaml:"readme"`
 	Install                 string            `yaml:"install"`
-	Changes                 []string          `yaml:"changes"`
+	Changes                 []*Change         `yaml:"changes"`
 	ContainsSecurityUpdates bool              `yaml:"containsSecurityUpdates"`
-	Prerelease              bool              `json:"prerelease"`
+	Prerelease              bool              `yaml:"prerelease"`
 	Maintainers             []*Maintainer     `yaml:"maintainers"`
 	Provider                *Provider         `yaml:"provider"`
 	Ignore                  []string          `yaml:"ignore"`

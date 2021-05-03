@@ -23,8 +23,10 @@ links:
 readme: Package documentation in markdown format
 install: Brief install instructions in markdown format
 changes:
-  - feature 1
-  - fix 1
+  - kind: added
+    description: feature 1
+  - kind: fixed
+    description: issue 1
 maintainers:
   - name: Maintainer
     email: test@email.com

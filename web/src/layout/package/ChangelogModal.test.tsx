@@ -51,6 +51,8 @@ describe('ChangelogModal', () => {
       expect(API.getChangelog).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
+
+    expect(result.getByRole('dialog')).toBeInTheDocument();
   });
 
   describe('Render', () => {
@@ -58,7 +60,7 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('2');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { getByTestId } = render(<ChangelogModal {...defaultProps} />);
+      const { getByTestId, getByRole } = render(<ChangelogModal {...defaultProps} />);
 
       const btn = getByTestId('changelogBtn');
       expect(btn).toBeInTheDocument();
@@ -68,6 +70,8 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
         expect(API.getChangelog).toHaveBeenCalledWith('id');
       });
+
+      expect(getByRole('dialog')).toBeInTheDocument();
     });
 
     it('does not render component when repo kind is Krew, Falco or Helm plugin', async () => {
@@ -79,7 +83,6 @@ describe('ChangelogModal', () => {
         },
       };
       const { container } = render(<ChangelogModal {...props} />);
-
       expect(container).toBeEmptyDOMElement();
     });
 
@@ -88,8 +91,6 @@ describe('ChangelogModal', () => {
 
       const btn = getByTestId('changelogBtn');
       expect(btn).toHaveClass('disabled');
-
-      expect(API.getChangelog).toHaveBeenCalledTimes(0);
     });
 
     it('opens modal', async () => {
@@ -103,14 +104,15 @@ describe('ChangelogModal', () => {
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
-          search: '?modal=changelog',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+      });
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({
+        search: '?modal=changelog',
+        state: {
+          fromStarredPage: undefined,
+          searchUrlReferer: undefined,
+        },
       });
 
       expect(getByRole('dialog')).toBeInTheDocument();
@@ -133,16 +135,17 @@ describe('ChangelogModal', () => {
       const close = getByText('Close');
       fireEvent.click(close);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(queryByRole('dialog')).toBeNull();
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
-          search: '',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+      });
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
+      expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+        search: '',
+        state: {
+          fromStarredPage: undefined,
+          searchUrlReferer: undefined,
+        },
       });
     });
 

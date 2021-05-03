@@ -539,7 +539,7 @@ func TestTriggerTest(t *testing.T) {
 			{
 				"2",
 				"custom/type",
-				"Package {{ .Package.name }} {{ .Package.version}} updated!",
+				"Package {{ .Package.Name }} {{ .Package.Version}} updated!",
 				"very",
 				[]byte("Package sample-package 1.0.0 updated!"),
 			},

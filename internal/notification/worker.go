@@ -199,7 +199,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 		if err != nil {
 			return email.Data{}, err
 		}
-		subject = fmt.Sprintf("%s version %s released", tmplData.Package["name"], tmplData.Package["version"])
+		subject = fmt.Sprintf("%s version %s released", tmplData.Package["Name"], tmplData.Package["Version"])
 		if err := newReleaseEmailTmpl.Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
@@ -208,7 +208,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 		if err != nil {
 			return email.Data{}, err
 		}
-		subject = fmt.Sprintf("Something went wrong scanning repository %s", tmplData.Repository["name"])
+		subject = fmt.Sprintf("Something went wrong scanning repository %s", tmplData.Repository["Name"])
 		if err := scanningErrorsEmailTmpl.Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
@@ -217,7 +217,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 		if err != nil {
 			return email.Data{}, err
 		}
-		subject = fmt.Sprintf("Something went wrong tracking repository %s", tmplData.Repository["name"])
+		subject = fmt.Sprintf("Something went wrong tracking repository %s", tmplData.Repository["Name"])
 		if err := trackingErrorsEmailTmpl.Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
@@ -226,7 +226,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 		if err != nil {
 			return email.Data{}, err
 		}
-		subject = fmt.Sprintf("%s repository ownership has been claimed", tmplData.Repository["name"])
+		subject = fmt.Sprintf("%s repository ownership has been claimed", tmplData.Repository["Name"])
 		if err := ownershipClaimEmailTmpl.Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
@@ -276,21 +276,21 @@ func (w *Worker) preparePkgNotificationTemplateData(
 	return &hub.PackageNotificationTemplateData{
 		BaseURL: w.baseURL,
 		Event: map[string]interface{}{
-			"id":   e.EventID,
-			"kind": eventKindStr,
+			"ID":   e.EventID,
+			"Kind": eventKindStr,
 		},
 		Package: map[string]interface{}{
-			"name":                    p.Name,
-			"version":                 p.Version,
-			"logoImageID":             p.LogoImageID,
-			"url":                     pkg.BuildURL(w.baseURL, p, e.PackageVersion),
-			"changes":                 p.Changes,
-			"containsSecurityUpdates": p.ContainsSecurityUpdates,
-			"prerelease":              p.Prerelease,
-			"repository": map[string]interface{}{
-				"kind":      hub.GetKindName(p.Repository.Kind),
-				"name":      p.Repository.Name,
-				"publisher": publisher,
+			"Name":                    p.Name,
+			"Version":                 p.Version,
+			"LogoImageID":             p.LogoImageID,
+			"URL":                     pkg.BuildURL(w.baseURL, p, e.PackageVersion),
+			"Changes":                 p.Changes,
+			"ContainsSecurityUpdates": p.ContainsSecurityUpdates,
+			"Prerelease":              p.Prerelease,
+			"Repository": map[string]interface{}{
+				"Kind":      hub.GetKindName(p.Repository.Kind),
+				"Name":      p.Repository.Name,
+				"Publisher": publisher,
 			},
 		},
 	}, nil
@@ -331,16 +331,16 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 	return &hub.RepositoryNotificationTemplateData{
 		BaseURL: w.baseURL,
 		Event: map[string]interface{}{
-			"id":   e.EventID,
-			"kind": eventKindStr,
+			"ID":   e.EventID,
+			"Kind": eventKindStr,
 		},
 		Repository: map[string]interface{}{
-			"kind":               hub.GetKindName(r.Kind),
-			"name":               r.Name,
-			"userAlias":          r.UserAlias,
-			"organizationName":   r.OrganizationName,
-			"lastScanningErrors": strings.Split(r.LastScanningErrors, "\n"),
-			"lastTrackingErrors": strings.Split(r.LastTrackingErrors, "\n"),
+			"Kind":               hub.GetKindName(r.Kind),
+			"Name":               r.Name,
+			"UserAlias":          r.UserAlias,
+			"OrganizationName":   r.OrganizationName,
+			"LastScanningErrors": strings.Split(r.LastScanningErrors, "\n"),
+			"LastTrackingErrors": strings.Split(r.LastTrackingErrors, "\n"),
 		},
 	}, nil
 }
@@ -350,22 +350,22 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 var DefaultWebhookPayloadTmpl = template.Must(template.New("").Parse(`
 {
 	"specversion" : "1.0",
-	"id" : "{{ .Event.id }}",
+	"id" : "{{ .Event.ID }}",
 	"source" : "https://artifacthub.io/cloudevents",
-	"type" : "io.artifacthub.{{ .Event.kind }}",
+	"type" : "io.artifacthub.{{ .Event.Kind }}",
 	"datacontenttype" : "application/json",
 	"data" : {
 		"package": {
-			"name": "{{ .Package.name }}",
-			"version": "{{ .Package.version }}",
-			"url": "{{ .Package.url }}",
-			"changes": [{{range $i, $e := .Package.changes}}{{if $i}}, {{end}}"{{.}}"{{end}}],
-			"containsSecurityUpdates": {{ .Package.containsSecurityUpdates }},
-			"prerelease": {{ .Package.prerelease }},
+			"name": "{{ .Package.Name }}",
+			"version": "{{ .Package.Version }}",
+			"url": "{{ .Package.URL }}",
+			"changes": [{{range $i, $e := .Package.Changes}}{{if $i}}, {{end}}"{{.Description}}"{{end}}],
+			"containsSecurityUpdates": {{ .Package.ContainsSecurityUpdates }},
+			"prerelease": {{ .Package.Prerelease }},
 			"repository": {
-				"kind": "{{ .Package.repository.kind }}",
-				"name": "{{ .Package.repository.name }}",
-				"publisher": "{{ .Package.repository.publisher }}"
+				"kind": "{{ .Package.Repository.Kind }}",
+				"name": "{{ .Package.Repository.Name }}",
+				"publisher": "{{ .Package.Repository.Publisher }}"
 			}
 		}
 	}

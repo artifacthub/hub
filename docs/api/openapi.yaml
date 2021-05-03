@@ -1802,7 +1802,31 @@ paths:
                     changes:
                       type: array
                       items:
-                        type: string
+                        type: object
+                        required:
+                          - description
+                        properties:
+                          description:
+                            type: string
+                            nullable: false
+                          kind:
+                            $ref: "#/components/schemas/ChangeKind"
+                          links:
+                            type: array
+                            items:
+                              type: object
+                              required:
+                                - name
+                                - url
+                              properties:
+                                name:
+                                  type: string
+                                  nullable: false
+                                url:
+                                  type: string
+                                  format: uri
+                                  nullable: false
+                            nullable: false
                       nullable: false
                     contains_security_updates:
                       type: boolean
@@ -2768,6 +2792,24 @@ components:
                 allowed_actions:
                   - addOrganizationMember
                   - addOrganizationRepository
+    ChangeKind:
+      type: string
+      enum:
+        - added
+        - changed
+        - deprecated
+        - removed
+        - fixed
+        - security
+      nullable: false
+      description: |
+        Types of changes:
+          * `added` - New features
+          * `changed` - Changes in existing functionality
+          * `deprecated` - Soon-to-be removed features
+          * `removed` - Removed features
+          * `fixed` - Any bug fixed
+          * `security` - In case of vulnerabilities
     Error:
       type: object
       properties:

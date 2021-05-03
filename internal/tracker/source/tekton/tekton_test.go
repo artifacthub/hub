@@ -99,9 +99,13 @@ func TestTrackerSource(t *testing.T) {
 					Email: "user2@email.com",
 				},
 			},
-			Changes: []string{
-				"Added cool feature",
-				"Fixed minor bug",
+			Changes: []*hub.Change{
+				{
+					Description: "Added cool feature",
+				},
+				{
+					Description: "Fixed minor bug",
+				},
 			},
 			Recommendations: []*hub.Recommendation{
 				{

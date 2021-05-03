@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"strings"
 	"time"
 
 	"github.com/Masterminds/semver/v3"
@@ -14,6 +15,16 @@ import (
 var (
 	// ErrInvalidMetadata indicates that the metadata provided is not valid.
 	ErrInvalidMetadata = errors.New("invalid metadata")
+
+	// validChangeKinds is the list of valid kinds that a pkg change can use.
+	validChangeKinds = []string{
+		"added",
+		"changed",
+		"deprecated",
+		"removed",
+		"fixed",
+		"security",
+	}
 )
 
 // GetPackageMetadata reads, parses and validates the package metadata file provided.
@@ -47,6 +58,9 @@ func GetPackageMetadata(mdFile string) (*hub.PackageMetadata, error) {
 func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 	if err := ValidatePackageMetadata(md); err != nil {
 		return nil, err
+	}
+	for _, change := range md.Changes {
+		NormalizeChange(change)
 	}
 	sv, _ := semver.NewVersion(md.Version)
 	p := &hub.Package{
@@ -102,5 +116,44 @@ func ValidatePackageMetadata(md *hub.PackageMetadata) error {
 	if md.Description == "" {
 		return fmt.Errorf("%w: %s", ErrInvalidMetadata, "description not provided")
 	}
+	for _, change := range md.Changes {
+		if err := ValidateChange(change); err != nil {
+			return fmt.Errorf("%w: %v", ErrInvalidMetadata, err)
+		}
+	}
 	return nil
+}
+
+// ValidateChange validates if the provided change is valid.
+func ValidateChange(change *hub.Change) error {
+	if change.Kind != "" && !isValidChangeKind(change.Kind) {
+		return fmt.Errorf("invalid change: invalid kind: %s", change.Kind)
+	}
+	if change.Description == "" {
+		return errors.New("invalid change: description not provided")
+	}
+	for _, link := range change.Links {
+		if link.Name == "" {
+			return errors.New("invalid change: link name not provided")
+		}
+		if link.URL == "" {
+			return errors.New("invalid change: link url not provided")
+		}
+	}
+	return nil
+}
+
+// NormalizeChange normalizes some values of the change provided when needed.
+func NormalizeChange(change *hub.Change) {
+	change.Kind = strings.ToLower(change.Kind)
+}
+
+// isValidChange checks if the provided change is valid.
+func isValidChangeKind(kind string) bool {
+	for _, validKind := range validChangeKinds {
+		if strings.ToLower(kind) == validKind {
+			return true
+		}
+	}
+	return false
 }

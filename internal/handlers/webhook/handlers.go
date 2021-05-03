@@ -174,23 +174,27 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 var webhookTestTemplateData = &hub.PackageNotificationTemplateData{
 	BaseURL: "https://artifacthub.io",
 	Event: map[string]interface{}{
-		"id":   "00000000-0000-0000-0000-000000000001",
-		"kind": "package.new-release",
+		"ID":   "00000000-0000-0000-0000-000000000001",
+		"Kind": "package.new-release",
 	},
 	Package: map[string]interface{}{
-		"name":    "sample-package",
-		"version": "1.0.0",
-		"url":     "https://artifacthub.io/packages/helm/artifacthub/sample-package/1.0.0",
-		"changes": []string{
-			"Cool feature",
-			"Bug fixed",
+		"Name":    "sample-package",
+		"Version": "1.0.0",
+		"URL":     "https://artifacthub.io/packages/helm/artifacthub/sample-package/1.0.0",
+		"Changes": []*hub.Change{
+			{
+				Description: "Cool feature",
+			},
+			{
+				Description: "Bug fixed",
+			},
 		},
-		"containsSecurityUpdates": true,
-		"prerelease":              true,
-		"repository": map[string]interface{}{
-			"kind":      "helm",
-			"name":      "repo1",
-			"publisher": "org1",
+		"ContainsSecurityUpdates": true,
+		"Prerelease":              true,
+		"Repository": map[string]interface{}{
+			"Kind":      "helm",
+			"Name":      "repo1",
+			"Publisher": "org1",
 		},
 	},
 }

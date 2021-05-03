@@ -562,12 +562,27 @@ export interface CVSSVectorOpt {
   level: number;
 }
 
+export enum ChangeKind {
+  added = 'added',
+  changed = 'changed',
+  deprecated = 'deprecated',
+  removed = 'removed',
+  fixed = 'fixed',
+  security = 'security',
+}
+
+export interface Change {
+  kind?: ChangeKind;
+  description: string;
+  links?: PackageLink[];
+}
+
 export interface ChangeLog {
   version: string;
   ts: number;
   prerelease: boolean;
   containsSecurityUpdates: boolean;
-  changes?: string[] | null;
+  changes?: Change[];
 }
 
 export interface ActiveJSONSchemaValue {

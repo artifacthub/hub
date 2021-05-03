@@ -164,7 +164,7 @@ describe('WebhookForm', () => {
       expect(getByTestId('templateTextarea')).toHaveValue(mockWebhook.template!);
 
       expect(getByText('Variables reference')).toBeInTheDocument();
-      expect(getByText(`{{ .Event.kind }}`)).toBeInTheDocument();
+      expect(getByText(`{{ .Event.Kind }}`)).toBeInTheDocument();
       expect(getByText('Version of the new release.')).toBeInTheDocument();
 
       expect(getByTestId('testWebhookBtn')).toBeInTheDocument();
@@ -256,29 +256,29 @@ describe('WebhookForm', () => {
       expect(getByTestId('templateTextarea')).toBeDisabled();
       expect(getByTestId('templateTextarea')).toHaveValue(`{
     "specversion" : "1.0",
-    "id" : "{{ .Event.id }}",
+    "id" : "{{ .Event.ID }}",
     "source" : "https://artifacthub.io/cloudevents",
-    "type" : "io.artifacthub.{{ .Event.kind }}",
+    "type" : "io.artifacthub.{{ .Event.Kind }}",
     "datacontenttype" : "application/json",
     "data" : {
         "package": {
-            "name": "{{ .Package.name }}",
-            "version": "{{ .Package.version }}",
-            "url": "{{ .Package.url }}",
-            "changes": [{{range $i, $e := .Package.changes}}{{if $i}}, {{end}}"{{.}}"{{end}}],
-            "containsSecurityUpdates": {{ .Package.containsSecurityUpdates }},
-            "prerelease": {{ .Package.prerelease }},
+            "name": "{{ .Package.Name }}",
+            "version": "{{ .Package.Version }}",
+            "url": "{{ .Package.URL }}",
+            "changes": [{{range $i, $e := .Package.Changes}}{{if $i}}, {{end}}"{{.Description}}"{{end}}],
+            "containsSecurityUpdates": {{ .Package.ContainsSecurityUpdates }},
+            "prerelease": {{ .Package.Prerelease }},
             "repository": {
-                "kind": "{{ .Package.repository.kind }}",
-                "name": "{{ .Package.repository.name }}",
-                "publisher": "{{ .Package.repository.publisher }}"
+                "kind": "{{ .Package.Repository.Kind }}",
+                "name": "{{ .Package.Repository.Name }}",
+                "publisher": "{{ .Package.Repository.Publisher }}"
             }
         }
     }
 }`);
 
       expect(getByText('Variables reference')).toBeInTheDocument();
-      expect(getByText(`{{ .Event.kind }}`)).toBeInTheDocument();
+      expect(getByText(`{{ .Event.Kind }}`)).toBeInTheDocument();
       expect(getByText('Version of the new release.')).toBeInTheDocument();
 
       expect(getByTestId('testWebhookBtn')).toBeInTheDocument();
