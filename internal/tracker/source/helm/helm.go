@@ -17,6 +17,7 @@ import (
 	"github.com/artifacthub/hub/internal/license"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/containerd/containerd/remotes/docker"
 	"github.com/deislabs/oras/pkg/content"
 	ctxo "github.com/deislabs/oras/pkg/context"
@@ -440,9 +441,9 @@ func enrichPackageFromArchive(p *hub.Package, chart *chart.Chart) error {
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {
-		var changes []string
-		if err := yaml.Unmarshal([]byte(v), &changes); err != nil {
-			return fmt.Errorf("invalid changes value: %s", v)
+		changes, err := source.ParseChangesAnnotation(v)
+		if err != nil {
+			return err
 		}
 		p.Changes = changes
 	}

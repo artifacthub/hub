@@ -11,6 +11,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/ghodss/yaml"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
 )
@@ -212,8 +213,8 @@ func getManifest(pkgPath string) (*v1beta1.Task, []byte, error) {
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {
-		var changes []string
-		if err := yaml.Unmarshal([]byte(v), &changes); err == nil {
+		changes, err := source.ParseChangesAnnotation(v)
+		if err == nil {
 			p.Changes = changes
 		}
 	}

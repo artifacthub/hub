@@ -32,9 +32,19 @@ install: | # (optional)
   Brief install instructions in markdown format
 
   Content added here will be displayed when the INSTALL button on the package details page is clicked.
-changes: # (optional)
-  - A list of changes introduced in this package version
-  - Use one entry for each of them
+changes: # (optional - it is also possible to provide a list of strings with just the descriptions instead of using objects)
+  - kind: added # Supported kinds are: added, changed, deprecated, removed, fixed and security
+    description: cool feature
+    links:
+      - name: Github Issue
+        url: https://github.com/issue-url
+      - name: Github PR
+        url: https://github.com/pr-url
+  - kind: fixed
+    description: minor bug
+    links:
+      - name: Github Issue
+        url: https://github.com/issue-url
 maintainers: # (optional)
   - name: The maintainer name (required for each maintainer)
     email: The maintainer email (required for each maintainer)

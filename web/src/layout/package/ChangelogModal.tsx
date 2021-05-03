@@ -2,16 +2,21 @@ import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { BsDot } from 'react-icons/bs';
 import { CgFileDocument } from 'react-icons/cg';
-import { FaLink } from 'react-icons/fa';
+import { FaLink, FaTrash, FaWrench } from 'react-icons/fa';
+import { MdSecurity } from 'react-icons/md';
+import { RiTimerFill } from 'react-icons/ri';
+import { TiArrowSync, TiPlus } from 'react-icons/ti';
 import { useHistory } from 'react-router-dom';
 import semver from 'semver';
 
 import { API } from '../../api';
-import { ChangeLog, Repository, RepositoryKind, SearchFiltersURL } from '../../types';
+import { Change, ChangeKind, ChangeLog, PackageLink, Repository, RepositoryKind, SearchFiltersURL } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import buildPackageURL from '../../utils/buildPackageURL';
 import ElementWithTooltip from '../common/ElementWithTooltip';
+import ExternalLink from '../common/ExternalLink';
 import Modal from '../common/Modal';
 import styles from './ChangelogModal.module.css';
 
@@ -155,6 +160,12 @@ const ChangelogModal = (props: Props) => {
           <div className="mx-0 mx-md-3 my-1 mw-100">
             {changelog.map((item: ChangeLog) => {
               if (isNull(item.changes) || isUndefined(item.changes)) return null;
+
+              const hasBadge = item.changes.some(
+                (change: Change) =>
+                  change.hasOwnProperty('kind') && !isUndefined(change.kind) && change.kind.toString() !== ''
+              );
+
               return (
                 <div key={`v_${item.version}`} data-testid="changelogBlock">
                   <div className="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2">
@@ -190,11 +201,83 @@ const ChangelogModal = (props: Props) => {
                     </div>
                   </div>
 
-                  <ul className={`mb-4 ${styles.list}`}>
-                    {item.changes.map((change: string, index: number) => (
-                      <li key={`change_${item.version}_${index}`}>{change}</li>
+                  <div className={`d-flex flex-column mb-4 ${styles.list}`}>
+                    {item.changes.map((change: Change, index: number) => (
+                      <div key={`change_${item.version}_${index}`} className="mb-1 w-100 d-flex flex-row">
+                        <div className="d-flex align-items-start flex-row w-100">
+                          {change.kind ? (
+                            <div className={`position-relative ${styles.changeBadgeWrapper}`}>
+                              <div
+                                className={classnames(
+                                  'd-flex flex-row align-items-center justify-content-center text-uppercase badge badge-pill mr-2',
+                                  styles.changeBadge,
+                                  styles[`${change.kind.toString()}ChangeBadge`]
+                                )}
+                              >
+                                <span className={`position-relative ${styles.badgeIcon}`}>
+                                  {(() => {
+                                    switch (change.kind) {
+                                      case ChangeKind.added:
+                                        return <TiPlus />;
+                                      case ChangeKind.changed:
+                                        return <TiArrowSync />;
+                                      case ChangeKind.removed:
+                                        return <FaTrash />;
+                                      case ChangeKind.fixed:
+                                        return <FaWrench />;
+                                      case ChangeKind.security:
+                                        return <MdSecurity />;
+                                      case ChangeKind.deprecated:
+                                        return <RiTimerFill />;
+                                      default:
+                                        return <>-</>;
+                                    }
+                                  })()}
+                                </span>
+                                <span className="d-none d-md-block ml-1">{change.kind.toString()}</span>
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              {hasBadge ? (
+                                <div className={`position-relative ${styles.changeBadgeWrapper}`}>
+                                  <div
+                                    className={classnames(
+                                      'd-flex flex-row align-items-center justify-content-center text-uppercase badge badge-pill mr-2',
+                                      styles.changeBadge
+                                    )}
+                                  >
+                                    -
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="mr-1 mr-md-2">
+                                  <BsDot />
+                                </div>
+                              )}
+                            </>
+                          )}
+                          <div className="flex-grow-1">
+                            <div>{change.description}</div>
+                            {!isUndefined(change.links) && (
+                              <div className={`d-flex flex-row ${styles.linksWrapper}`}>
+                                {change.links.map((link: PackageLink, idx: number) => {
+                                  return (
+                                    <div key={`change_${index}_link${idx}`}>
+                                      <ExternalLink className={`text-muted ${styles.link}`} href={link.url}>
+                                        {link.name}
+                                      </ExternalLink>
+                                      {idx !== change.links!.length - 1 && <BsDot className="text-muted" />}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               );
             })}

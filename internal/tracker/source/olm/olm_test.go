@@ -55,9 +55,13 @@ func TestTrackerSource(t *testing.T) {
 				URL:  "https://github.com/test/test-operator",
 			},
 		},
-		Changes: []string{
-			"feature 1",
-			"fix 1",
+		Changes: []*hub.Change{
+			{
+				Description: "feature 1",
+			},
+			{
+				Description: "fix 1",
+			},
 		},
 		ContainsSecurityUpdates: true,
 		Prerelease:              true,

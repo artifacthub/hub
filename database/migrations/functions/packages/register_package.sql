@@ -12,7 +12,6 @@ declare
     v_display_name text := nullif(p_pkg->>'display_name', '');
     v_description text := nullif(p_pkg->>'description', '');
     v_keywords text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))), '{}'));
-    v_changes text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'changes', 'null'::jsonb))), '{}'));
     v_version text := p_pkg->>'version';
     v_repository_id uuid := ((p_pkg->'repository')->>'repository_id')::uuid;
     v_maintainer jsonb;
@@ -181,7 +180,7 @@ begin
         nullif(p_pkg->'containers_images', 'null'),
         v_provider,
         nullif(p_pkg->'values_schema', 'null'),
-        v_changes,
+        nullif(p_pkg->'changes', 'null'),
         (p_pkg->>'contains_security_updates')::boolean,
         (p_pkg->>'prerelease')::boolean,
         nullif(p_pkg->'recommendations', 'null'),

@@ -8,7 +8,7 @@ var ownershipClaimEmailTmpl = template.Must(template.New("").Parse(`
   <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{ .Repository.name }} repository ownership has been claimed</title>
+    <title>{{ .Repository.Name }} repository ownership has been claimed</title>
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark">
 
@@ -173,7 +173,7 @@ var ownershipClaimEmailTmpl = template.Must(template.New("").Parse(`
           <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Repository.name }} repository ownership has been claimed</span>
+            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Repository.Name }} repository ownership has been claimed</span>
             <table class="main line" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; border-radius: 3px;">
 
               <!-- START MAIN CONTENT AREA -->
@@ -182,8 +182,8 @@ var ownershipClaimEmailTmpl = template.Must(template.New("").Parse(`
                   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                        <h4 style="font-family: sans-serif; margin: 0; Margin-bottom: 30px;"><span class="AHlink">{{ .Repository.name }}</span> repository has been transferred to {{ if .Repository.userAlias }} user <span class="AHlink">{{ .Repository.userAlias }}</span> {{ else }} organization <span class="AHlink">{{ .Repository.organizationName }}</span> {{ end }}</h4>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">{{ if .Repository.userAlias }} User <b>{{ .Repository.userAlias }}</b> {{ else }} Organization <b>{{ .Repository.organizationName }}</b> {{ end }} claimed the ownership of the <b>{{ .Repository.name }}</b> repository. After successfully verifying that the claiming entity owns it, we have proceeded with the transfer.</p>
+                        <h4 style="font-family: sans-serif; margin: 0; Margin-bottom: 30px;"><span class="AHlink">{{ .Repository.Name }}</span> repository has been transferred to {{ if .Repository.UserAlias }} user <span class="AHlink">{{ .Repository.UserAlias }}</span> {{ else }} organization <span class="AHlink">{{ .Repository.OrganizationName }}</span> {{ end }}</h4>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">{{ if .Repository.UserAlias }} User <b>{{ .Repository.UserAlias }}</b> {{ else }} Organization <b>{{ .Repository.OrganizationName }}</b> {{ end }} claimed the ownership of the <b>{{ .Repository.Name }}</b> repository. After successfully verifying that the claiming entity owns it, we have proceeded with the transfer.</p>
                       </td>
                     </tr>
                   </table>

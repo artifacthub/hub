@@ -38,9 +38,15 @@ func TestTrackerSource(t *testing.T) {
 		},
 		Readme:  "Package documentation in markdown format",
 		Install: "Brief install instructions in markdown format",
-		Changes: []string{
-			"feature 1",
-			"fix 1",
+		Changes: []*hub.Change{
+			{
+				Kind:        "added",
+				Description: "feature 1",
+			},
+			{
+				Kind:        "fixed",
+				Description: "issue 1",
+			},
 		},
 		Recommendations: []*hub.Recommendation{
 			{

@@ -63,6 +63,20 @@ var (
 	// GitRepoURLRE is a regexp used to validate and parse a git based
 	// repository URL.
 	GitRepoURLRE = regexp.MustCompile(`^(https:\/\/(github|gitlab)\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)\/?(.*)$`)
+
+	// validRepositoryKinds contains the repository kinds supported.
+	validRepositoryKinds = []hub.RepositoryKind{
+		hub.Falco,
+		hub.Helm,
+		hub.HelmPlugin,
+		hub.Krew,
+		hub.OLM,
+		hub.OPA,
+		hub.TBAction,
+		hub.TektonTask,
+		hub.KedaScaler,
+		hub.CoreDNS,
+	}
 )
 
 // Manager provides an API to manage repositories.
@@ -710,18 +724,7 @@ func isSchemeSupported(u *url.URL) bool {
 
 // isValidKind checks if the provided repository kind is valid.
 func isValidKind(kind hub.RepositoryKind) bool {
-	for _, validKind := range []hub.RepositoryKind{
-		hub.Falco,
-		hub.Helm,
-		hub.HelmPlugin,
-		hub.Krew,
-		hub.OLM,
-		hub.OPA,
-		hub.TBAction,
-		hub.TektonTask,
-		hub.KedaScaler,
-		hub.CoreDNS,
-	} {
+	for _, validKind := range validRepositoryKinds {
 		if kind == validKind {
 			return true
 		}

@@ -4,7 +4,7 @@
   "description": "this is a test description",
   "url": "http://jksdhfkjfds",
   "contentType": "application/json",
-  "template": "{\n    \"event\": {\n        \"id\": \"{{ .Event.id }}\",\n        \"kind\": {{ .Event.kind }}\n    },\n    \"package\": {\n        \"kind\": {{ .Package.kind }},\n        \"name\": \"{{ .Package.name }}\",\n        \"version\": \"{{ .Package.version }}\",\n        \"publisher\": \"{{ .Package.publisher }}\",\n        \"url\": \"{{ .Package.url }}\"\n    }\n}",
+  "template": "{\n    \"event\": {\n        \"id\": \"{{ .Event.ID }}\",\n        \"kind\": {{ .Event.Kind }}\n    },\n    \"package\": {\n        \"kind\": {{ .Package.Kind }},\n        \"name\": \"{{ .Package.Name }}\",\n        \"version\": \"{{ .Package.Version }}\",\n        \"publisher\": \"{{ .Package.Publisher }}\",\n        \"url\": \"{{ .Package.URL }}\"\n    }\n}",
   "active": false,
   "eventKinds": [0],
   "packages": [

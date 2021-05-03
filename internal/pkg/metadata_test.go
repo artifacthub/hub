@@ -88,9 +88,15 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 				},
 				Readme:  "Package readme",
 				Install: "Package install",
-				Changes: []string{
-					"feature 1",
-					"fix 1",
+				Changes: []*hub.Change{
+					{
+						Kind:        "Added",
+						Description: "feature 1",
+					},
+					{
+						Kind:        "Fixed",
+						Description: "issue 1",
+					},
 				},
 				ContainsSecurityUpdates: true,
 				Prerelease:              true,
@@ -138,9 +144,15 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 					},
 				},
 				Provider: "Package provider",
-				Changes: []string{
-					"feature 1",
-					"fix 1",
+				Changes: []*hub.Change{
+					{
+						Kind:        "added",
+						Description: "feature 1",
+					},
+					{
+						Kind:        "fixed",
+						Description: "issue 1",
+					},
 				},
 				ContainsSecurityUpdates: true,
 				Prerelease:              true,
@@ -230,6 +242,79 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 				"description not provided",
 			},
+			{
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Changes: []*hub.Change{
+						{
+							Kind:        "test",
+							Description: "description",
+						},
+					},
+				},
+				"invalid change: invalid kind: test",
+			},
+			{
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Changes: []*hub.Change{
+						{
+							Kind: "added",
+						},
+					},
+				},
+				"invalid change: description not provided",
+			},
+			{
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Changes: []*hub.Change{
+						{
+							Kind:        "added",
+							Description: "feature 1",
+							Links: []*hub.Link{
+								{
+									URL: "https://link1.url",
+								},
+							},
+						},
+					},
+				},
+				"invalid change: link name not provided",
+			},
+			{
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Changes: []*hub.Change{
+						{
+							Kind:        "added",
+							Description: "feature 1",
+							Links: []*hub.Link{
+								{
+									Name: "link1",
+								},
+							},
+						},
+					},
+				},
+				"invalid change: link url not provided",
+			},
 		}
 		for _, tc := range testCases {
 			tc := tc
@@ -250,6 +335,18 @@ func TestValidatePackageMetadata(t *testing.T) {
 			DisplayName: "Package 1",
 			CreatedAt:   "2006-01-02T15:04:05Z",
 			Description: "Package description",
+			Changes: []*hub.Change{
+				{
+					Kind:        "Added",
+					Description: "feature 1",
+					Links: []*hub.Link{
+						{
+							Name: "link1",
+							URL:  "https://link1.url",
+						},
+					},
+				},
+			},
 		}
 		err := ValidatePackageMetadata(md)
 		assert.Nil(t, err)

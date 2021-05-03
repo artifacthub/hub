@@ -75,8 +75,16 @@ select register_package('
         "key": "value"
     },
     "changes": [
-        "Added cool feature",
-        "Fixed minor bug"
+        {
+            "kind": "added",
+            "description": "feature 1",
+            "links": [
+                {
+                    "name": "github issue",
+                    "url": "https://issue.url"
+                }
+            ]
+        }
     ],
     "contains_security_updates": true,
     "prerelease": true,
@@ -195,10 +203,13 @@ select results_eq(
             '[{"image": "quay.io/org/img:1.0.0"}]'::jsonb,
             'Org Inc',
             '{"key": "value"}'::jsonb,
-            '{
-                "Added cool feature",
-                "Fixed minor bug"
-            }'::text[],
+            '[
+                {
+                    "kind": "added",
+                    "description": "feature 1",
+                    "links": [{"name": "github issue", "url": "https://issue.url"}]
+                }
+            ]'::jsonb,
             true,
             true,
             '[{"url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"}]'::jsonb,
@@ -332,7 +343,7 @@ select results_eq(
             '[{"image": "quay.io/org/img:2.0.0"}]'::jsonb,
             'Org Inc 2',
             null::jsonb,
-            null::text[],
+            null::jsonb,
             null::boolean,
             null::boolean,
             '2020-06-16 11:20:35+02'::timestamptz

@@ -5,15 +5,15 @@
     "containsSecurityUpdates": false,
     "prerelease": true,
     "changes": [
-      "Introduce verified publisher concept",
-      "Add dark mode support",
-      "Improve search facets filtering",
-      "Notify repository owners of tracking errors",
-      "Track and list Helm charts dependencies",
-      "Display links to source in Helm packages",
-      "Add repositories kind filter to tracker",
-      "Add Monocular compatible search API",
-      "Some bugs fixes and improvements"
+      { "description": "Introduce verified publisher concept" },
+      { "description": "Add dark mode support" },
+      { "description": "Improve search facets filtering" },
+      { "description": "Notify repository owners of tracking errors" },
+      { "description": "Track and list Helm charts dependencies" },
+      { "description": "Display links to source in Helm packages" },
+      { "description": "Add repositories kind filter to tracker" },
+      { "description": "Add Monocular compatible search API" },
+      { "description": "Some bugs fixes and improvements" }
     ]
   },
   {

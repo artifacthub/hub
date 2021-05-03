@@ -33,7 +33,18 @@ insert into snapshot (
     :'package1ID',
     '1.0.0',
     '2020-06-16 11:20:34+02',
-    '{"feature 3", "fix 3"}',
+    '[
+        {
+            "kind": "added",
+            "description": "feature 3",
+            "links": [{"name": "github issue", "url": "https://issue.url"}]
+        },
+        {
+            "kind": "fixed",
+            "description": "fix 3",
+            "links": [{"name": "github issue", "url": "https://issue.url"}]
+        }
+    ]',
     true,
     true
 );
@@ -48,7 +59,18 @@ insert into snapshot (
     :'package1ID',
     '0.0.9',
     '2020-06-16 11:20:33+02',
-    '{"feature 2", "fix 2"}',
+    '[
+        {
+            "kind": "added",
+            "description": "feature 2",
+            "links": [{"name": "github issue", "url": "https://issue.url"}]
+        },
+        {
+            "kind": "fixed",
+            "description": "fix 2",
+            "links": [{"name": "github issue", "url": "https://issue.url"}]
+        }
+    ]',
     false,
     false
 );
@@ -61,7 +83,18 @@ insert into snapshot (
     :'package1ID',
     '0.0.8',
     '2020-06-16 11:20:32+02',
-    '{"feature 1", "fix 1"}'
+    '[
+        {
+            "kind": "added",
+            "description": "feature 1",
+            "links": [{"name": "github issue", "url": "https://issue.url"}]
+        },
+        {
+            "kind": "fixed",
+            "description": "fix 1",
+            "links": [{"name": "github issue", "url": "https://issue.url"}]
+        }
+    ]'
 );
 
 -- Run some tests
@@ -71,21 +104,54 @@ select is(
         {
             "version": "1.0.0",
             "ts": 1592299234,
-            "changes": ["feature 3", "fix 3"],
+            "changes": [
+                {
+                    "kind": "added",
+                    "description": "feature 3",
+                    "links": [{"name": "github issue", "url": "https://issue.url"}]
+                },
+                {
+                    "kind": "fixed",
+                    "description": "fix 3",
+                    "links": [{"name": "github issue", "url": "https://issue.url"}]
+                }
+            ],
             "contains_security_updates": true,
             "prerelease": true
         },
         {
             "version": "0.0.9",
             "ts": 1592299233,
-            "changes": ["feature 2", "fix 2"],
+            "changes": [
+                {
+                    "kind": "added",
+                    "description": "feature 2",
+                    "links": [{"name": "github issue", "url": "https://issue.url"}]
+                },
+                {
+                    "kind": "fixed",
+                    "description": "fix 2",
+                    "links": [{"name": "github issue", "url": "https://issue.url"}]
+                }
+            ],
             "contains_security_updates": false,
             "prerelease": false
         },
         {
             "version": "0.0.8",
             "ts": 1592299232,
-            "changes": ["feature 1", "fix 1"]
+            "changes": [
+                {
+                    "kind": "added",
+                    "description": "feature 1",
+                    "links": [{"name": "github issue", "url": "https://issue.url"}]
+                },
+                {
+                    "kind": "fixed",
+                    "description": "fix 1",
+                    "links": [{"name": "github issue", "url": "https://issue.url"}]
+                }
+            ]
         }
     ]'::jsonb,
     'Package changelog should be returned'

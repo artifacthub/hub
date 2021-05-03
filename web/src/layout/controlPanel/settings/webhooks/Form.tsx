@@ -43,22 +43,22 @@ const DEAFULT_PAYLOAD_KIND: PayloadKind = PayloadKind.default;
 
 export const DEFAULT_PAYLOAD_TEMPLATE = `{
     "specversion" : "1.0",
-    "id" : "{{ .Event.id }}",
+    "id" : "{{ .Event.ID }}",
     "source" : "https://artifacthub.io/cloudevents",
-    "type" : "io.artifacthub.{{ .Event.kind }}",
+    "type" : "io.artifacthub.{{ .Event.Kind }}",
     "datacontenttype" : "application/json",
     "data" : {
         "package": {
-            "name": "{{ .Package.name }}",
-            "version": "{{ .Package.version }}",
-            "url": "{{ .Package.url }}",
-            "changes": [{{range $i, $e := .Package.changes}}{{if $i}}, {{end}}"{{.}}"{{end}}],
-            "containsSecurityUpdates": {{ .Package.containsSecurityUpdates }},
-            "prerelease": {{ .Package.prerelease }},
+            "name": "{{ .Package.Name }}",
+            "version": "{{ .Package.Version }}",
+            "url": "{{ .Package.URL }}",
+            "changes": [{{range $i, $e := .Package.Changes}}{{if $i}}, {{end}}"{{.Description}}"{{end}}],
+            "containsSecurityUpdates": {{ .Package.ContainsSecurityUpdates }},
+            "prerelease": {{ .Package.Prerelease }},
             "repository": {
-                "kind": "{{ .Package.repository.kind }}",
-                "name": "{{ .Package.repository.name }}",
-                "publisher": "{{ .Package.repository.publisher }}"
+                "kind": "{{ .Package.Repository.Kind }}",
+                "name": "{{ .Package.Repository.Name }}",
+                "publisher": "{{ .Package.Repository.Publisher }}"
             }
         }
     }
@@ -556,9 +556,9 @@ const WebhookForm = (props: Props) => {
                   {'{'}
                   <br />
                   <span className="ml-3">
-                    {`"text": "Package`} <span className="font-weight-bold">{`{{ .Package.name }}`}</span> {`version`}{' '}
-                    <span className="font-weight-bold">{`{{ .Package.version }}`}</span> released!{' '}
-                    <span className="font-weight-bold">{`{{ .Package.url }}`}</span>
+                    {`"text": "Package`} <span className="font-weight-bold">{`{{ .Package.Name }}`}</span> {`version`}{' '}
+                    <span className="font-weight-bold">{`{{ .Package.Version }}`}</span> released!{' '}
+                    <span className="font-weight-bold">{`{{ .Package.URL }}`}</span>
                     {`"`}
                     <br />
                     {'}'}
@@ -633,13 +633,13 @@ const WebhookForm = (props: Props) => {
                     <tbody>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Event.id }}`}</span>
+                          <span className="text-nowrap">{`{{ .Event.ID }}`}</span>
                         </th>
                         <td>Id of the event triggering the notification.</td>
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Event.kind }}`}</span>
+                          <span className="text-nowrap">{`{{ .Event.Kind }}`}</span>
                         </th>
                         <td>
                           Kind of the event triggering notification. At the moment the only possible value is{' '}
@@ -648,43 +648,81 @@ const WebhookForm = (props: Props) => {
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.name }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.Name }}`}</span>
                         </th>
                         <td>Name of the package.</td>
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.version }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.Version }}`}</span>
                         </th>
                         <td>Version of the new release.</td>
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.url }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.URL }}`}</span>
                         </th>
                         <td>ArtifactHub URL of the package.</td>
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.changes }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.Changes }}`}</span>
                         </th>
-                        <td>List of strings describing the changes this package version introduces.</td>
+                        <td>List of changes this package version introduces.</td>
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.containsSecurityUpdates }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.Changes[i].Kind }}`}</span>
+                        </th>
+                        <td>
+                          Kind of the change. Possible values are <span className="font-weight-bold">added</span>,{' '}
+                          <span className="font-weight-bold">changed</span>,{' '}
+                          <span className="font-weight-bold">deprecated</span>,{' '}
+                          <span className="font-weight-bold">removed</span>,{' '}
+                          <span className="font-weight-bold">fixed</span> and{' '}
+                          <span className="font-weight-bold">security</span>. When the change kind is not provided, the
+                          value will be empty.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.Changes[i].Description }}`}</span>
+                        </th>
+                        <td>Brief text explaining the change.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.Changes[i].Links }}`}</span>
+                        </th>
+                        <td>List of links related to the change.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.Changes[i].Links[i].Name }}`}</span>
+                        </th>
+                        <td>Name of the link.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.Changes[i].Links[i].URL }}`}</span>
+                        </th>
+                        <td>Url of the link.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.ContainsSecurityUpdates }}`}</span>
                         </th>
                         <td>Boolean flag that indicates whether this package contains security updates or not.</td>
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.prerelease }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.Prerelease }}`}</span>
                         </th>
                         <td>Boolean flag that indicates whether this package version is a pre-release or not.</td>
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.repository.kind }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.Repository.Kind }}`}</span>
                         </th>
                         <td>
                           Kind of the repository associated with the notification. Possible values are{' '}
@@ -695,13 +733,13 @@ const WebhookForm = (props: Props) => {
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.repository.name }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.Repository.Name }}`}</span>
                         </th>
                         <td>Name of the repository.</td>
                       </tr>
                       <tr>
                         <th scope="row">
-                          <span className="text-nowrap">{`{{ .Package.repository.publisher }}`}</span>
+                          <span className="text-nowrap">{`{{ .Package.Repository.Publisher }}`}</span>
                         </th>
                         <td>
                           Publisher of the repository. If the owner is a user it'll be the user alias. If it's an

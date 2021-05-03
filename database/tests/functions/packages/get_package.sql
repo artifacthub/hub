@@ -127,7 +127,13 @@ insert into snapshot (
     '[{"image": "quay.io/org/img:1.0.0"}]',
     'Org Inc',
     '{"key": "value"}',
-    '{"feature 1", "fix 1"}',
+    '[
+        {
+            "kind": "added",
+            "description": "feature 1",
+            "links": [{"name": "github issue", "url": "https://issue.url"}]
+        }
+    ]',
     true,
     true,
     '[{"url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"}]',
@@ -299,8 +305,16 @@ select is(
         "has_values_schema": true,
         "has_changelog": true,
         "changes": [
-            "feature 1",
-            "fix 1"
+            {
+                "kind": "added",
+                "description": "feature 1",
+                "links": [
+                    {
+                        "name": "github issue",
+                        "url": "https://issue.url"
+                    }
+                ]
+            }
         ],
         "ts": 1592299234,
         "maintainers": [
@@ -422,8 +436,16 @@ select is(
         "has_values_schema": true,
         "has_changelog": true,
         "changes": [
-            "feature 1",
-            "fix 1"
+            {
+                "kind": "added",
+                "description": "feature 1",
+                "links": [
+                    {
+                        "name": "github issue",
+                        "url": "https://issue.url"
+                    }
+                ]
+            }
         ],
         "ts": 1592299234,
         "maintainers": [
