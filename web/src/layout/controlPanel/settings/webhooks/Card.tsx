@@ -1,14 +1,17 @@
 import classnames from 'classnames';
+import { isUndefined } from 'lodash';
 import React, { useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
+import { TiWarningOutline } from 'react-icons/ti';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
 import { ErrorKind, Webhook } from '../../../../types';
 import alertDispatcher from '../../../../utils/alertDispatcher';
+import ElementWithTooltip from '../../../common/ElementWithTooltip';
 import Modal from '../../../common/Modal';
 import styles from './Card.module.css';
 import LastNotificationsModal from './LastNotificationsModal';
@@ -185,11 +188,31 @@ const WebhookCard = (props: Props) => {
               <small>{props.webhook.url}</small>
             </div>
 
-            {props.webhook.lastNotifications && (
-              <div className="d-none d-md-inline mt-2">
-                <LastNotificationsModal notifications={props.webhook.lastNotifications} />
-              </div>
-            )}
+            <div className="d-flex flex-row justify-content-between align-items-baseline">
+              {props.webhook.lastNotifications && (
+                <div className="d-none d-md-inline mt-2">
+                  <LastNotificationsModal notifications={props.webhook.lastNotifications} />
+                </div>
+              )}
+
+              {(isUndefined(props.webhook.packages) || props.webhook.packages.length === 0) && (
+                <div className="ml-auto mt-2">
+                  <ElementWithTooltip
+                    element={
+                      <span
+                        className={`d-flex flex-row align-items-center badge badge-warning badge-pill ${styles.badgeNoPackages}`}
+                      >
+                        <TiWarningOutline />
+                        <span className="ml-1">No packages</span>
+                      </span>
+                    }
+                    tooltipMessage="This webhook is not associated to any packages."
+                    active
+                    visibleTooltip
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

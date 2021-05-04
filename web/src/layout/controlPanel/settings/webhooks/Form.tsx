@@ -73,7 +73,7 @@ const WebhookForm = (props: Props) => {
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [selectedPackages, setSelectedPackages] = useState<Package[]>(
-    !isUndefined(props.webhook) ? props.webhook.packages : []
+    !isUndefined(props.webhook) && props.webhook.packages ? props.webhook.packages : []
   );
   const [eventKinds, setEventKinds] = useState<EventKind[]>(
     !isUndefined(props.webhook) ? props.webhook.eventKinds : [EventKind.NewPackageRelease]

@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -304,6 +305,29 @@ describe('WebhookCard', () => {
 
       expect(queryByText('Show last notifications')).toBeNull();
       expect(queryByTestId('lastNotifAlert')).toBeNull();
+    });
+  });
+
+  describe('no packages', () => {
+    it('renders label', async () => {
+      const mockWebhook = getmockWebhook('12');
+
+      render(
+        <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhookCard {...defaultProps} webhook={mockWebhook} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      expect(screen.getByText('No packages')).toBeInTheDocument();
+
+      const badge = screen.getByTestId('elementWithTooltip');
+      expect(badge).toBeInTheDocument();
+      userEvent.hover(badge);
+
+      expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+      expect(screen.getByText('This webhook is not associated to any packages.')).toBeInTheDocument();
     });
   });
 });
