@@ -115,7 +115,11 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			}
 
 			// Prepare and store package version
-			p := s.preparePackage(s.i.Repository, manifest, csv, csvData)
+			p, err := s.preparePackage(s.i.Repository, manifest, csv, csvData)
+			if err != nil {
+				s.warn(fmt.Errorf("error preparing package %s version %s: %w", pkgName, version, err))
+				continue
+			}
 			packagesAvailable[pkg.BuildKey(p)] = p
 		}
 
@@ -134,24 +138,30 @@ func (s *TrackerSource) preparePackage(
 	manifest *manifests.PackageManifest,
 	csv *operatorsv1alpha1.ClusterServiceVersion,
 	csvData []byte,
-) *hub.Package {
+) (*hub.Package, error) {
 	// Prepare package from manifest and csv
 	p := &hub.Package{
-		Name:             manifest.PackageName,
-		DisplayName:      csv.Spec.DisplayName,
-		Description:      csv.Annotations["description"],
-		Keywords:         csv.Spec.Keywords,
-		Readme:           csv.Spec.Description,
-		Version:          csv.Spec.Version.String(),
-		IsOperator:       true,
-		Capabilities:     csv.Annotations["capabilities"],
-		DefaultChannel:   manifest.DefaultChannelName,
-		License:          csv.Annotations[licenseAnnotation],
-		Provider:         csv.Spec.Provider.Name,
-		ContainersImages: getContainersImages(csv, csvData),
-		Install:          csv.Annotations[installAnnotation],
-		Repository:       r,
+		Name:           manifest.PackageName,
+		DisplayName:    csv.Spec.DisplayName,
+		Description:    csv.Annotations["description"],
+		Keywords:       csv.Spec.Keywords,
+		Readme:         csv.Spec.Description,
+		Version:        csv.Spec.Version.String(),
+		IsOperator:     true,
+		Capabilities:   csv.Annotations["capabilities"],
+		DefaultChannel: manifest.DefaultChannelName,
+		License:        csv.Annotations[licenseAnnotation],
+		Provider:       csv.Spec.Provider.Name,
+		Install:        csv.Annotations[installAnnotation],
+		Repository:     r,
 	}
+
+	// Containers images
+	containersImages, err := getContainersImages(csv, csvData)
+	if err != nil {
+		return nil, err
+	}
+	p.ContainersImages = containersImages
 
 	// TS
 	ts, err := time.Parse(time.RFC3339, csv.Annotations["createdAt"])
@@ -241,38 +251,54 @@ func (s *TrackerSource) preparePackage(
 		p.CRDsExamples = crdsExamples
 	}
 
+	// Changes
+	if v, ok := csv.Annotations[changesAnnotation]; ok {
+		changes, err := source.ParseChangesAnnotation(v)
+		if err != nil {
+			return nil, err
+		}
+		p.Changes = changes
+	}
+
+	// Prerelease
+	if v, ok := csv.Annotations[prereleaseAnnotation]; ok {
+		prerelease, err := strconv.ParseBool(v)
+		if err != nil {
+			return nil, fmt.Errorf("invalid prerelease value: %s", v)
+		}
+		p.Prerelease = prerelease
+	}
+
 	// Recommendations
 	if v, ok := csv.Annotations[recommendationsAnnotation]; ok {
 		var recommendations []*hub.Recommendation
-		if err := yaml.Unmarshal([]byte(v), &recommendations); err == nil {
-			p.Recommendations = recommendations
+		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
+			return nil, fmt.Errorf("invalid recommendations value: %s", v)
 		}
+		p.Recommendations = recommendations
 	}
 
-	// Misc
+	// Security updates
+	if v, ok := csv.Annotations[securityUpdatesAnnotation]; ok {
+		containsSecurityUpdates, err := strconv.ParseBool(v)
+		if err != nil {
+			return nil, fmt.Errorf("invalid containsSecurityUpdates value: %s", v)
+		}
+		p.ContainsSecurityUpdates = containsSecurityUpdates
+	}
+
+	// Prepare data specific to the package kind
 	var isGlobalOperator bool
 	for _, e := range csv.Spec.InstallModes {
 		if e.Type == operatorsv1alpha1.InstallModeTypeAllNamespaces && e.Supported {
 			isGlobalOperator = true
 		}
 	}
-	changes, err := source.ParseChangesAnnotation(csv.Annotations[changesAnnotation])
-	if err == nil {
-		p.Changes = changes
-	}
-	containsSecurityUpdates, err := strconv.ParseBool(csv.Annotations[securityUpdatesAnnotation])
-	if err == nil {
-		p.ContainsSecurityUpdates = containsSecurityUpdates
-	}
-	prerelease, err := strconv.ParseBool(csv.Annotations[prereleaseAnnotation])
-	if err == nil {
-		p.Prerelease = prerelease
-	}
 	p.Data = map[string]interface{}{
 		"isGlobalOperator": isGlobalOperator,
 	}
 
-	return p
+	return p, nil
 }
 
 // warn is a helper that sends the error provided to the errors collector and
@@ -335,7 +361,10 @@ func getCSV(path string) (*operatorsv1alpha1.ClusterServiceVersion, []byte, erro
 
 // getContainersImages returns all containers images declared in the csv data
 // provided.
-func getContainersImages(csv *operatorsv1alpha1.ClusterServiceVersion, csvData []byte) []*hub.ContainerImage {
+func getContainersImages(
+	csv *operatorsv1alpha1.ClusterServiceVersion,
+	csvData []byte,
+) ([]*hub.ContainerImage, error) {
 	var images []*hub.ContainerImage
 
 	// Container image annotation
@@ -354,8 +383,13 @@ func getContainersImages(csv *operatorsv1alpha1.ClusterServiceVersion, csvData [
 	if err := yaml.Unmarshal(csvData, &csvRI); err == nil {
 		images = append(images, csvRI.Spec.RelatedImages...)
 	}
-	var imagesWhitelist []string
-	if err := yaml.Unmarshal([]byte(csv.Annotations[imagesWhitelistAnnotation]), &imagesWhitelist); err == nil {
+
+	// Images whitelisting
+	if v, ok := csv.Annotations[imagesWhitelistAnnotation]; ok {
+		var imagesWhitelist []string
+		if err := yaml.Unmarshal([]byte(v), &imagesWhitelist); err != nil {
+			return nil, fmt.Errorf("invalid imagesWhitelist value: %s", v)
+		}
 		for _, image := range images {
 			if contains(imagesWhitelist, image.Image) {
 				image.Whitelisted = true
@@ -363,7 +397,7 @@ func getContainersImages(csv *operatorsv1alpha1.ClusterServiceVersion, csvData [
 		}
 	}
 
-	return images
+	return images, nil
 }
 
 // contains is a helper to check if a list contains the string provided.
