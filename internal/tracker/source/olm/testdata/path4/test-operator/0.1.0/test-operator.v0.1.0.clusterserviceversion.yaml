@@ -2,7 +2,25 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    artifacthub.io/changes: single string
+    artifacthub.io/changes: |
+      - feature 1
+      - fix 1
+    artifacthub.io/containsSecurityUpdates: "true"
+    artifacthub.io/imagesWhitelist: |
+      - registry.io/image2:1.0.0
+    artifacthub.io/install: |
+      Install instructions (markdown)
+    artifacthub.io/license: Apache-2.0
+    artifacthub.io/prerelease: "true"
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+    capabilities: Basic Install
+    categories: Application Runtime
+    containerImage: repo.url:latest
+    createdAt: "2019-06-28T15:23:00Z"
+    description: This is just a test
+    repository: https://github.com/test/test-operator
+    alm-examples: '[{"apiVersion": "crds.com/v1", "kind": "Test"}]'
   name: test-operator.v0.1.0
   namespace: placeholder
 spec:
@@ -15,6 +33,8 @@ spec:
         displayName: Test
   description: Test Operator README
   displayName: Test Operator
+  icon:
+    - base64data: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
   installModes:
     - supported: true
       type: OwnNamespace

@@ -136,7 +136,7 @@ func TestTrackerSource(t *testing.T) {
 		sw.AssertExpectations(t)
 	})
 
-	t.Run("error saving logo image, package returned anyway", func(t *testing.T) {
+	t.Run("invalid changes annotation", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup services and expectations
@@ -144,6 +144,26 @@ func TestTrackerSource(t *testing.T) {
 		i := &hub.TrackerSourceInput{
 			Repository: &hub.Repository{},
 			BasePath:   "testdata/path3",
+			Svc:        sw.Svc,
+		}
+		expectedErr := "error preparing package test-operator version 0.1.0: invalid changes annotation: single string"
+		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("error saving logo image, package returned anyway", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{},
+			BasePath:   "testdata/path4",
 			Svc:        sw.Svc,
 		}
 		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("", tests.ErrFake)
@@ -168,7 +188,7 @@ func TestTrackerSource(t *testing.T) {
 		sw := source.NewTestsServicesWrapper()
 		i := &hub.TrackerSourceInput{
 			Repository: &hub.Repository{},
-			BasePath:   "testdata/path3",
+			BasePath:   "testdata/path4",
 			Svc:        sw.Svc,
 		}
 		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("logoImageID", nil)

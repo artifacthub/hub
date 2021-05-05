@@ -1,0 +1,5 @@
+channels:
+  - currentCSV: test-operator.v0.1.0
+    name: alpha
+defaultChannel: alpha
+packageName: test-operator

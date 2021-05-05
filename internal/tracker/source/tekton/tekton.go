@@ -214,9 +214,10 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {
 		changes, err := source.ParseChangesAnnotation(v)
-		if err == nil {
-			p.Changes = changes
+		if err != nil {
+			return err
 		}
+		p.Changes = changes
 	}
 
 	// License
