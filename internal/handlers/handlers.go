@@ -78,7 +78,7 @@ type Handlers struct {
 
 // Setup creates a new Handlers instance.
 func Setup(ctx context.Context, cfg *viper.Viper, svc *Services) (*Handlers, error) {
-	userHandlers, err := user.NewHandlers(ctx, svc.UserManager, cfg)
+	userHandlers, err := user.NewHandlers(ctx, svc.UserManager, svc.APIKeyManager, cfg)
 	if err != nil {
 		return nil, err
 	}

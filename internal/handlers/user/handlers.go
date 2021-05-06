@@ -66,16 +66,22 @@ var (
 // Handlers represents a group of http handlers in charge of handling
 // users operations.
 type Handlers struct {
-	userManager  hub.UserManager
-	cfg          *viper.Viper
-	sc           *securecookie.SecureCookie
-	oauthConfig  map[string]*oauth2.Config
-	oidcProvider *oidc.Provider
-	logger       zerolog.Logger
+	userManager   hub.UserManager
+	apiKeyManager hub.APIKeyManager
+	cfg           *viper.Viper
+	sc            *securecookie.SecureCookie
+	oauthConfig   map[string]*oauth2.Config
+	oidcProvider  *oidc.Provider
+	logger        zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(ctx context.Context, userManager hub.UserManager, cfg *viper.Viper) (*Handlers, error) {
+func NewHandlers(
+	ctx context.Context,
+	userManager hub.UserManager,
+	apiKeyManager hub.APIKeyManager,
+	cfg *viper.Viper,
+) (*Handlers, error) {
 	// Setup secure cookie instance
 	sc := securecookie.New([]byte(cfg.GetString("server.cookie.hashKey")), nil)
 	sc.MaxAge(int(sessionDuration.Seconds()))
@@ -112,12 +118,13 @@ func NewHandlers(ctx context.Context, userManager hub.UserManager, cfg *viper.Vi
 	}
 
 	return &Handlers{
-		userManager:  userManager,
-		cfg:          cfg,
-		sc:           sc,
-		oauthConfig:  oauthConfig,
-		oidcProvider: oidcProvider,
-		logger:       log.With().Str("handlers", "user").Logger(),
+		userManager:   userManager,
+		apiKeyManager: apiKeyManager,
+		cfg:           cfg,
+		sc:            sc,
+		oauthConfig:   oauthConfig,
+		oidcProvider:  oidcProvider,
+		logger:        log.With().Str("handlers", "user").Logger(),
 	}, nil
 }
 
@@ -137,7 +144,7 @@ func (h *Handlers) ApproveSession(w http.ResponseWriter, r *http.Request) {
 	passcode := input["passcode"]
 
 	// Extract sessionID from cookie
-	var sessionID []byte
+	var sessionID string
 	cookie, err := r.Cookie(sessionCookieName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "ApproveSession").Msg("session cookie not found")
@@ -290,7 +297,7 @@ func (h *Handlers) InjectUserID(next http.Handler) http.Handler {
 		if err != nil {
 			return
 		}
-		var sessionID []byte
+		var sessionID string
 		if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
 			return
 		}
@@ -371,7 +378,7 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 	// Delete user session
 	cookie, err := r.Cookie(sessionCookieName)
 	if err == nil {
-		var sessionID []byte
+		var sessionID string
 		err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
 		if err == nil {
 			err = h.userManager.DeleteSession(r.Context(), sessionID)
@@ -749,7 +756,7 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 		// Use API key based authentication if API key is provided
 		if apiKeyID != "" && apiKeySecret != "" {
 			// Check the API key provided is valid
-			checkAPIKeyOutput, err := h.userManager.CheckAPIKey(r.Context(), apiKeyID, apiKeySecret)
+			checkAPIKeyOutput, err := h.apiKeyManager.Check(r.Context(), apiKeyID, apiKeySecret)
 			if err != nil {
 				h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("checkAPIKey failed")
 				helpers.RenderErrorWithCodeJSON(w, nil, http.StatusInternalServerError)
@@ -766,7 +773,7 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 			cookie, err := r.Cookie(sessionCookieName)
 			if err == nil {
 				// Extract and validate cookie from request
-				var sessionID []byte
+				var sessionID string
 				if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
 					h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("sessionID decoding failed")
 					helpers.RenderErrorWithCodeJSON(w, errInvalidSession, http.StatusUnauthorized)

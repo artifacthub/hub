@@ -2,13 +2,18 @@ package apikey
 
 import (
 	"context"
+	"crypto/sha512"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const apiKeyID = "00000000-0000-0000-0000-000000000001"
@@ -60,14 +65,13 @@ func TestAdd(t *testing.T) {
 			Name:   "apikey1",
 			UserID: "userID",
 		}
-		akJSON, _ := json.Marshal(ak)
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, addAPIKeyDBQ, akJSON).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, addAPIKeyDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		keyInfoJSON, err := m.Add(ctx, ak)
+		output, err := m.Add(ctx, ak)
 		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, keyInfoJSON)
+		assert.Nil(t, output)
 		db.AssertExpectations(t)
 	})
 
@@ -77,14 +81,100 @@ func TestAdd(t *testing.T) {
 			Name:   "apikey1",
 			UserID: "userID",
 		}
-		akJSON, _ := json.Marshal(ak)
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, addAPIKeyDBQ, akJSON).Return([]byte("keyInfoJSON"), nil)
+		db.On("QueryRow", ctx, addAPIKeyDBQ, mock.Anything).Return("apiKeyID", nil)
 		m := NewManager(db)
 
-		keyInfoJSON, err := m.Add(ctx, ak)
+		output, err := m.Add(ctx, ak)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("keyInfoJSON"), keyInfoJSON)
+		assert.Equal(t, "apiKeyID", output.APIKeyID)
+		assert.NotEmpty(t, output.Secret)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestCheck(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg       string
+			apiKeyID     string
+			apiKeySecret string
+		}{
+			{
+				"api key id or secret not provided",
+				"",
+				"secret",
+			},
+			{
+				"api key id or secret not provided",
+				"key",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				m := NewManager(nil)
+				_, err := m.Check(ctx, tc.apiKeyID, tc.apiKeySecret)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("key info not found in database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, "keyID").Return(nil, pgx.ErrNoRows)
+		m := NewManager(db)
+
+		output, err := m.Check(ctx, "keyID", "secret")
+		assert.NoError(t, err)
+		assert.False(t, output.Valid)
+		assert.Empty(t, output.UserID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error getting key info from database", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, "keyID").Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		output, err := m.Check(ctx, "keyID", "secret")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, output)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("valid key (secret hashed with bcrypt)", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		secretHashed, _ := bcrypt.GenerateFromPassword([]byte("secret"), bcrypt.DefaultCost)
+		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, "keyID").Return([]interface{}{"userID", string(secretHashed)}, nil)
+		m := NewManager(db)
+
+		output, err := m.Check(ctx, "keyID", "secret")
+		assert.NoError(t, err)
+		assert.True(t, output.Valid)
+		assert.Equal(t, "userID", output.UserID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("valid key (secret hashed with sha512)", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		secretHashed := fmt.Sprintf("%x", sha512.Sum512([]byte("secret")))
+		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, "keyID").Return([]interface{}{"userID", secretHashed}, nil)
+		m := NewManager(db)
+
+		output, err := m.Check(ctx, "keyID", "secret")
+		assert.NoError(t, err)
+		assert.True(t, output.Valid)
+		assert.Equal(t, "userID", output.UserID)
 		db.AssertExpectations(t)
 	})
 }

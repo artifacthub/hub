@@ -1,5 +1,5 @@
 -- approvee_session approves the provided session in the database.
-create or replace function approve_session(p_session_id bytea, p_recovery_code text)
+create or replace function approve_session(p_session_id text, p_recovery_code text)
 returns void as $$
 begin
     -- Mark session as approved

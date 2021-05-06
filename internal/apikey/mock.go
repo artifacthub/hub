@@ -13,9 +13,16 @@ type ManagerMock struct {
 }
 
 // Add implements the APIKeyManager interface.
-func (m *ManagerMock) Add(ctx context.Context, ak *hub.APIKey) ([]byte, error) {
+func (m *ManagerMock) Add(ctx context.Context, ak *hub.APIKey) (*hub.APIKey, error) {
 	args := m.Called(ctx, ak)
-	data, _ := args.Get(0).([]byte)
+	data, _ := args.Get(0).(*hub.APIKey)
+	return data, args.Error(1)
+}
+
+// Check implements the UserManager interface.
+func (m *ManagerMock) Check(ctx context.Context, apiKeyID, apiKeySecret string) (*hub.CheckAPIKeyOutput, error) {
+	args := m.Called(ctx, apiKeyID, apiKeySecret)
+	data, _ := args.Get(0).(*hub.CheckAPIKeyOutput)
 	return data, args.Error(1)
 }
 

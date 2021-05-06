@@ -2,21 +2,29 @@ package apikey
 
 import (
 	"context"
+	"crypto/rand"
+	"crypto/sha512"
+	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/jackc/pgx/v4"
 	"github.com/satori/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const (
 	// Database queries
-	addAPIKeyDBQ      = `select add_api_key($1::jsonb)`
-	deleteAPIKeyDBQ   = `select delete_api_key($1::uuid, $2::uuid)`
-	getAPIKeyDBQ      = `select get_api_key($1::uuid, $2::uuid)`
-	getUserAPIKeysDBQ = `select get_user_api_keys($1::uuid)`
-	updateAPIKeyDBQ   = `select update_api_key($1::jsonb)`
+	addAPIKeyDBQ       = `select add_api_key($1::jsonb)`
+	deleteAPIKeyDBQ    = `select delete_api_key($1::uuid, $2::uuid)`
+	getAPIKeyDBQ       = `select get_api_key($1::uuid, $2::uuid)`
+	getAPIKeyUserIDDBQ = `select user_id, secret from api_key where api_key_id = $1`
+	getUserAPIKeysDBQ  = `select get_user_api_keys($1::uuid)`
+	updateAPIKeyDBQ    = `select update_api_key($1::jsonb)`
 )
 
 // Manager provides an API to manage api keys.
@@ -32,7 +40,7 @@ func NewManager(db hub.DB) *Manager {
 }
 
 // Add adds the provided api key to the database.
-func (m *Manager) Add(ctx context.Context, ak *hub.APIKey) ([]byte, error) {
+func (m *Manager) Add(ctx context.Context, ak *hub.APIKey) (*hub.APIKey, error) {
 	ak.UserID = ctx.Value(hub.UserIDKey).(string)
 
 	// Validate input
@@ -40,9 +48,64 @@ func (m *Manager) Add(ctx context.Context, ak *hub.APIKey) ([]byte, error) {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 
+	// Generate API key secret
+	randomBytes := make([]byte, 32)
+	if _, err := rand.Read(randomBytes); err != nil {
+		return nil, err
+	}
+	apiKeySecret := base64.StdEncoding.EncodeToString(randomBytes)
+	apiKeySecretHashed := fmt.Sprintf("%x", sha512.Sum512([]byte(apiKeySecret)))
+
 	// Add api key to the database
+	var apiKeyID string
+	ak.Secret = apiKeySecretHashed
 	akJSON, _ := json.Marshal(ak)
-	return util.DBQueryJSON(ctx, m.db, addAPIKeyDBQ, akJSON)
+	if err := m.db.QueryRow(ctx, addAPIKeyDBQ, akJSON).Scan(&apiKeyID); err != nil {
+		return nil, err
+	}
+
+	return &hub.APIKey{
+		APIKeyID: apiKeyID,
+		Secret:   apiKeySecret,
+	}, nil
+}
+
+// Check checks if the api key provided is valid.
+func (m *Manager) Check(ctx context.Context, apiKeyID, apiKeySecret string) (*hub.CheckAPIKeyOutput, error) {
+	// Validate input
+	if apiKeyID == "" || apiKeySecret == "" {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "api key id or secret not provided")
+	}
+
+	// Get key's user id and secret from database
+	var userID, apiKeySecretHashed string
+	err := m.db.QueryRow(ctx, getAPIKeyUserIDDBQ, apiKeyID).Scan(&userID, &apiKeySecretHashed)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return &hub.CheckAPIKeyOutput{Valid: false}, nil
+		}
+		return nil, err
+	}
+
+	// Check if the secret provided is valid
+	switch {
+	case strings.HasPrefix(apiKeySecretHashed, "$2a$"):
+		// Bcrypt hash, will be deprecated soon
+		err = bcrypt.CompareHashAndPassword([]byte(apiKeySecretHashed), []byte(apiKeySecret))
+		if err != nil {
+			return &hub.CheckAPIKeyOutput{Valid: false}, nil
+		}
+	default:
+		// SHA512 hash
+		if fmt.Sprintf("%x", sha512.Sum512([]byte(apiKeySecret))) != apiKeySecretHashed {
+			return &hub.CheckAPIKeyOutput{Valid: false}, nil
+		}
+	}
+
+	return &hub.CheckAPIKeyOutput{
+		Valid:  true,
+		UserID: userID,
+	}, nil
 }
 
 // Delete deletes the provided api key from the database.

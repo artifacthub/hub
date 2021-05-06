@@ -100,7 +100,11 @@ func TestAdd(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.am.On("Add", r.Context(), ak).Return([]byte("keyInfoJSON"), nil)
+		akOUT := &hub.APIKey{
+			APIKeyID: "apiKeyID",
+			Secret:   "secret",
+		}
+		hw.am.On("Add", r.Context(), ak).Return(akOUT, nil)
 		hw.h.Add(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -110,7 +114,8 @@ func TestAdd(t *testing.T) {
 		assert.Equal(t, http.StatusCreated, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("keyInfoJSON"), data)
+		outputAKJSON, _ := json.Marshal(akOUT)
+		assert.Equal(t, outputAKJSON, data)
 		hw.am.AssertExpectations(t)
 	})
 }
