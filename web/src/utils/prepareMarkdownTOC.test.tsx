@@ -456,6 +456,62 @@ const tests: Test[] = [
       },
     ],
   },
+  {
+    input: `\n# prowlarr\n\n\n\n### [2.3.2](/#2.3.2)\n\n#### Added\n\n- Added icon url\n\n#### Changed\n\n- N/A\n\n#### Removed\n\n- N/A\n\n### [1.0.0]\n\n#### Added\n\n- N/A\n\n#### Changed\n\n- N/A\n\n#### Removed\n\n- N/A\n\n[2.3.2]: #2.3.2\n[1.0.0]: #1.0.0`,
+    output: [
+      {
+        level: 1,
+        link: 'prowlarr',
+        title: 'prowlarr',
+        children: [
+          {
+            children: [
+              {
+                level: 4,
+                link: 'added',
+                title: 'Added',
+              },
+              {
+                level: 4,
+                link: 'changed',
+                title: 'Changed',
+              },
+              {
+                level: 4,
+                link: 'removed',
+                title: 'Removed',
+              },
+            ],
+            level: 3,
+            link: 'X-3-2',
+            title: '2.3.2',
+          },
+          {
+            children: [
+              {
+                level: 4,
+                link: 'added',
+                title: 'Added',
+              },
+              {
+                level: 4,
+                link: 'changed',
+                title: 'Changed',
+              },
+              {
+                level: 4,
+                link: 'removed',
+                title: 'Removed',
+              },
+            ],
+            level: 3,
+            link: 'X-0-0',
+            title: '1.0.0',
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 describe('prepareMarkdownTOC', () => {

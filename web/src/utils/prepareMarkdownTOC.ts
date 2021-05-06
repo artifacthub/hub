@@ -11,6 +11,7 @@ const CODE_REGEX = new RegExp('^```(?:[^`]+|`(?!``))*```', 'igm');
 const SETEXT_HEADER = new RegExp('^(.*)$\n[=-]{3,}\n', 'igm');
 const TABLE_REGEX = new RegExp('^(|[^\n]+)', 'gm');
 const HTML_REGEX = new RegExp('</?[^>]*>', 'gi');
+const LINK_REGEX = /[^[\]]+(?=])/gm;
 /* eslint-enable no-control-regex */
 
 const cleanTitle = (title: string): string => {
@@ -63,6 +64,17 @@ export default (md: string): TOCEntryItem[] => {
         title: cleanTitle(match[2]),
         link: getAnchorValue(match[2]),
       });
+    } else {
+      const link = match[2];
+      const linkMatch = link.match(LINK_REGEX);
+      if (!isNull(linkMatch)) {
+        const link = linkMatch[0];
+        titles.push({
+          level: match[1].length,
+          title: cleanTitle(link),
+          link: getAnchorValue(link),
+        });
+      }
     }
     match = HEADING_REGEX.exec(cleanMD);
   }

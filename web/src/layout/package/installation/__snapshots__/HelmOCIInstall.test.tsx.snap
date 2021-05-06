@@ -22,6 +22,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span
             style="color: rgb(0, 134, 179);"
@@ -94,6 +95,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             helm chart pull ghcr.io/artifacthub/artifact-hub:1.0.0
@@ -161,6 +163,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             helm chart 
@@ -236,6 +239,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             helm install my-packageName ./packageName

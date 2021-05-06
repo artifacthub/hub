@@ -22,6 +22,7 @@ exports[`HelmInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             helm repo add repo http://repo.test
@@ -89,6 +90,7 @@ exports[`HelmInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             helm install my-packageName repo/packageName --version 1.0.0

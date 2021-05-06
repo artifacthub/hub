@@ -22,6 +22,7 @@ exports[`OLMInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             kubectl create -f https://operatorhub.io/install/stable/packageName.yaml
@@ -98,6 +99,7 @@ exports[`OLMInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             kubectl get csv -n my-packageName

@@ -16,8 +16,9 @@ const AnchorHeader: React.ElementType = (props: Props) => {
   let value = !isUndefined(props.title)
     ? props.title
     : props.children && props.children.length > 0
-    ? props.children![0].props.value
+    ? props.children![0].props.value || props.children![0].props.href
     : undefined;
+
   if (isUndefined(value)) return null;
 
   // Get proper value when header is wrapped into html tag
