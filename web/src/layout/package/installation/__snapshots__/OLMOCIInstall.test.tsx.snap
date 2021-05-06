@@ -36,6 +36,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
       >
         <code
           class="language-yaml"
+          style="white-space: pre;"
         >
           <span
             class="hljs-attr"
@@ -262,6 +263,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             kubectl apply -f repo-catalog.yaml
@@ -343,6 +345,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
       >
         <code
           class="language-yaml"
+          style="white-space: pre;"
         >
           <span
             class="hljs-attr"
@@ -569,6 +572,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             kubectl apply -f packageName-subscription.yaml

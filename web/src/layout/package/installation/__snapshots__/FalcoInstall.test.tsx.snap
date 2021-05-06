@@ -16,6 +16,7 @@ exports[`FalcoInstall creates snapshot 1`] = `
         >
           <code
             class="language-bash"
+            style="white-space: pre;"
           >
             <span>
               helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco

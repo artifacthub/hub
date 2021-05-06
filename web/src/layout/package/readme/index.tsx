@@ -49,7 +49,11 @@ const ReadmeWrapper = (props: Props) => {
     const readmeWithMainTitle = `# ${title}\n${readme}`;
     const toc: TOCEntryItem[] = prepareMarkdownTOC(`\n${readme}${props.additionalTitles || ''}`);
 
-    return { readme: toc.length > 0 ? readme : readmeWithMainTitle, mainTitle: title, toc: toc };
+    return {
+      readme: toc.length > 0 ? readme : readmeWithMainTitle,
+      mainTitle: title,
+      toc: toc,
+    };
   };
 
   let { readme, mainTitle, toc } = checkReadme();

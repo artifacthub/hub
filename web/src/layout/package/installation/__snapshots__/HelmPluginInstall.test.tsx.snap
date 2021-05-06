@@ -22,6 +22,7 @@ exports[`HelmPluginInstall creates snapshot 1`] = `
       >
         <code
           class="language-bash"
+          style="white-space: pre;"
         >
           <span>
             helm plugin install http://repo.test
