@@ -2,8 +2,6 @@ package user
 
 import (
 	"context"
-	"crypto/sha512"
-	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -24,8 +22,8 @@ import (
 
 func TestApproveSession(t *testing.T) {
 	ctx := context.Background()
-	sessionID := []byte("sessionID")
-	hashedSessionID := hashSessionID([]byte("sessionID"))
+	sessionID := "sessionID"
+	hashedSessionID := hash(sessionID)
 	opts := totp.GenerateOpts{
 		Issuer:      "Artifact Hub",
 		AccountName: "test@email.com",
@@ -42,22 +40,17 @@ func TestApproveSession(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			errMsg    string
-			sessionID []byte
+			sessionID string
 			passcode  string
 		}{
 			{
 				"sessionID not provided",
-				nil,
-				"123456",
-			},
-			{
-				"sessionID not provided",
-				[]byte(""),
+				"",
 				"123456",
 			},
 			{
 				"passcode not provided",
-				[]byte("sessionID"),
+				"sessionID",
 				"",
 			},
 		}
@@ -87,7 +80,7 @@ func TestApproveSession(t *testing.T) {
 	t.Run("error getting tfa config from database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Return("userID", nil)
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hash(sessionID)).Return("userID", nil)
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
@@ -99,7 +92,7 @@ func TestApproveSession(t *testing.T) {
 	t.Run("invalid passcode provided", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Return("userID", nil)
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hash(sessionID)).Return("userID", nil)
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
 		m := NewManager(db, nil)
 
@@ -111,7 +104,7 @@ func TestApproveSession(t *testing.T) {
 	t.Run("session approved successfully", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Return("userID", nil)
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hash(sessionID)).Return("userID", nil)
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
 		db.On("Exec", ctx, approveSessionDBQ, hashedSessionID, "").Return(nil)
 		m := NewManager(db, nil)
@@ -125,99 +118,13 @@ func TestApproveSession(t *testing.T) {
 	t.Run("session approved successfully (using valid recovery code)", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Return("userID", nil)
+		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hash(sessionID)).Return("userID", nil)
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
 		db.On("Exec", ctx, approveSessionDBQ, hashedSessionID, code1).Return(nil)
 		m := NewManager(db, nil)
 
 		err := m.ApproveSession(ctx, sessionID, code1)
 		assert.Nil(t, err)
-		db.AssertExpectations(t)
-	})
-}
-
-func TestCheckAPIKey(t *testing.T) {
-	ctx := context.Background()
-
-	t.Run("invalid input", func(t *testing.T) {
-		testCases := []struct {
-			errMsg       string
-			apiKeyID     string
-			apiKeySecret string
-		}{
-			{
-				"api key id or secret not provided",
-				"",
-				"secret",
-			},
-			{
-				"api key id or secret not provided",
-				"key",
-				"",
-			},
-		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.errMsg, func(t *testing.T) {
-				t.Parallel()
-				m := NewManager(nil, nil)
-				_, err := m.CheckAPIKey(ctx, tc.apiKeyID, tc.apiKeySecret)
-				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
-				assert.Contains(t, err.Error(), tc.errMsg)
-			})
-		}
-	})
-
-	t.Run("key info not found in database", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAPIKeyInfoDBQ, "keyID").Return(nil, pgx.ErrNoRows)
-		m := NewManager(db, nil)
-
-		output, err := m.CheckAPIKey(ctx, "keyID", "secret")
-		assert.NoError(t, err)
-		assert.False(t, output.Valid)
-		assert.Empty(t, output.UserID)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("error getting key info from database", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAPIKeyInfoDBQ, "keyID").Return(nil, tests.ErrFakeDB)
-		m := NewManager(db, nil)
-
-		output, err := m.CheckAPIKey(ctx, "keyID", "secret")
-		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, output)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("valid key (secret hashed with bcrypt)", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		secretHashed, _ := bcrypt.GenerateFromPassword([]byte("secret"), bcrypt.DefaultCost)
-		db.On("QueryRow", ctx, getAPIKeyInfoDBQ, "keyID").Return([]interface{}{"userID", string(secretHashed)}, nil)
-		m := NewManager(db, nil)
-
-		output, err := m.CheckAPIKey(ctx, "keyID", "secret")
-		assert.NoError(t, err)
-		assert.True(t, output.Valid)
-		assert.Equal(t, "userID", output.UserID)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("valid key (secret hashed with sha512)", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		secretHashed := fmt.Sprintf("%x", sha512.Sum512([]byte("secret")))
-		db.On("QueryRow", ctx, getAPIKeyInfoDBQ, "keyID").Return([]interface{}{"userID", secretHashed}, nil)
-		m := NewManager(db, nil)
-
-		output, err := m.CheckAPIKey(ctx, "keyID", "secret")
-		assert.NoError(t, err)
-		assert.True(t, output.Valid)
-		assert.Equal(t, "userID", output.UserID)
 		db.AssertExpectations(t)
 	})
 }
@@ -385,27 +292,23 @@ func TestCheckCredentials(t *testing.T) {
 
 func TestCheckSession(t *testing.T) {
 	ctx := context.Background()
-	hashedSessionID := hashSessionID([]byte("sessionID"))
+	sessionID := "sessionID"
+	hashedSessionID := hash(sessionID)
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			errMsg    string
-			sessionID []byte
+			sessionID string
 			duration  time.Duration
 		}{
 			{
 				"session id not provided",
-				nil,
-				10,
-			},
-			{
-				"session id not provided",
-				[]byte(""),
+				"",
 				10,
 			},
 			{
 				"duration not provided",
-				[]byte("sessionID"),
+				"sessionID",
 				0,
 			},
 		}
@@ -427,7 +330,7 @@ func TestCheckSession(t *testing.T) {
 		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return(nil, pgx.ErrNoRows)
 		m := NewManager(db, nil)
 
-		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
+		output, err := m.CheckSession(ctx, sessionID, 1*time.Hour)
 		assert.NoError(t, err)
 		assert.False(t, output.Valid)
 		assert.Empty(t, output.UserID)
@@ -440,7 +343,7 @@ func TestCheckSession(t *testing.T) {
 		db.On("QueryRow", ctx, getSessionDBQ, hashedSessionID).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
-		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
+		output, err := m.CheckSession(ctx, sessionID, 1*time.Hour)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, output)
 		db.AssertExpectations(t)
@@ -456,7 +359,7 @@ func TestCheckSession(t *testing.T) {
 		}, nil)
 		m := NewManager(db, nil)
 
-		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
+		output, err := m.CheckSession(ctx, sessionID, 1*time.Hour)
 		assert.NoError(t, err)
 		assert.False(t, output.Valid)
 		assert.Empty(t, output.UserID)
@@ -473,7 +376,7 @@ func TestCheckSession(t *testing.T) {
 		}, nil)
 		m := NewManager(db, nil)
 
-		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
+		output, err := m.CheckSession(ctx, sessionID, 1*time.Hour)
 		assert.NoError(t, err)
 		assert.False(t, output.Valid)
 		assert.Empty(t, output.UserID)
@@ -490,7 +393,7 @@ func TestCheckSession(t *testing.T) {
 		}, nil)
 		m := NewManager(db, nil)
 
-		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
+		output, err := m.CheckSession(ctx, sessionID, 1*time.Hour)
 		assert.NoError(t, err)
 		assert.True(t, output.Valid)
 		assert.Equal(t, "userID", output.UserID)
@@ -500,22 +403,18 @@ func TestCheckSession(t *testing.T) {
 
 func TestDeleteSession(t *testing.T) {
 	ctx := context.Background()
-	hashedSessionID := hashSessionID([]byte("sessionID"))
+	sessionID := "sessionID"
+	hashedSessionID := hash(sessionID)
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			errMsg    string
-			sessionID []byte
+			sessionID string
 			duration  time.Duration
 		}{
 			{
 				"session id not provided",
-				nil,
-				10,
-			},
-			{
-				"session id not provided",
-				[]byte(""),
+				"",
 				10,
 			},
 		}
@@ -553,7 +452,7 @@ func TestDeleteSession(t *testing.T) {
 				db.On("Exec", ctx, deleteSessionDBQ, hashedSessionID).Return(tc.dbResponse)
 				m := NewManager(db, nil)
 
-				err := m.DeleteSession(ctx, []byte("sessionID"))
+				err := m.DeleteSession(ctx, sessionID)
 				assert.Equal(t, tc.dbResponse, err)
 				db.AssertExpectations(t)
 			})
@@ -879,12 +778,7 @@ func TestGetUserID(t *testing.T) {
 
 func TestRegisterSession(t *testing.T) {
 	ctx := context.Background()
-
-	s := &hub.Session{
-		UserID:    "00000000-0000-0000-0000-000000000001",
-		IP:        "192.168.1.100",
-		UserAgent: "Safari 13.0.5",
-	}
+	userID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -919,25 +813,29 @@ func TestRegisterSession(t *testing.T) {
 		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
-		sessionID, err := m.RegisterSession(ctx, s)
+		sIN := &hub.Session{UserID: userID}
+		sOUT, err := m.RegisterSession(ctx, sIN)
 		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, sessionID)
+		assert.Nil(t, sOUT)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("successful session registration", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return([]interface{}{
-			[]byte("sessionID"),
-			true,
-		}, nil)
+		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return(true, nil)
 		m := NewManager(db, nil)
 
-		session, err := m.RegisterSession(ctx, s)
+		sIN := &hub.Session{
+			UserID:    userID,
+			IP:        "192.168.1.100",
+			UserAgent: "Safari 13.0.5",
+		}
+		sOUT, err := m.RegisterSession(ctx, sIN)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("sessionID"), session.SessionID)
-		assert.True(t, session.Approved)
+		assert.NotEmpty(t, sOUT.SessionID)
+		assert.Equal(t, userID, sOUT.UserID)
+		assert.True(t, sOUT.Approved)
 		db.AssertExpectations(t)
 	})
 }
@@ -995,7 +893,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, registerPasswordResetCodeDBQ, "email@email.com").Return([]byte("code"), nil)
+				db.On("Exec", ctx, registerPasswordResetCodeDBQ, "email@email.com", mock.Anything).Return(nil)
 				es := &email.SenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
@@ -1011,7 +909,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 	t.Run("database error registering password reset code", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, registerPasswordResetCodeDBQ, "email@email.com").Return(nil, tests.ErrFakeDB)
+		db.On("Exec", ctx, registerPasswordResetCodeDBQ, "email@email.com", mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		err := m.RegisterPasswordResetCode(ctx, "email@email.com", "http://baseurl.com")
@@ -1131,15 +1029,15 @@ func TestRegisterUser(t *testing.T) {
 
 func TestResetPassword(t *testing.T) {
 	ctx := context.Background()
-	code := []byte("code")
-	codeB64 := base64.URLEncoding.EncodeToString(code)
+	code := "code"
+	codeHashed := hash(code)
 	newPassword := "a66bV.Xp2" // #nosec
 	baseURL := "http://baseurl.com"
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			errMsg      string
-			codeB64     string
+			code        string
 			newPassword string
 			baseURL     string
 		}{
@@ -1151,19 +1049,19 @@ func TestResetPassword(t *testing.T) {
 			},
 			{
 				"new password not provided",
-				"code",
+				code,
 				"",
 				baseURL,
 			},
 			{
 				"invalid base url",
-				"code",
+				code,
 				newPassword,
 				"invalid",
 			},
 			{
 				"insecure password",
-				"code",
+				code,
 				"password",
 				baseURL,
 			},
@@ -1174,7 +1072,7 @@ func TestResetPassword(t *testing.T) {
 				t.Parallel()
 				es := &email.SenderMock{}
 				m := NewManager(nil, es)
-				err := m.ResetPassword(ctx, tc.codeB64, tc.newPassword, tc.baseURL)
+				err := m.ResetPassword(ctx, tc.code, tc.newPassword, tc.baseURL)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
@@ -1200,10 +1098,10 @@ func TestResetPassword(t *testing.T) {
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, resetUserPasswordDBQ, code, mock.Anything).Return("", tc.dbErr)
+				db.On("QueryRow", ctx, resetUserPasswordDBQ, codeHashed, mock.Anything).Return("", tc.dbErr)
 				m := NewManager(db, nil)
 
-				err := m.ResetPassword(ctx, codeB64, newPassword, baseURL)
+				err := m.ResetPassword(ctx, code, newPassword, baseURL)
 				assert.Equal(t, tc.expectedErr, err)
 				db.AssertExpectations(t)
 			})
@@ -1229,12 +1127,12 @@ func TestResetPassword(t *testing.T) {
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, resetUserPasswordDBQ, code, mock.Anything).Return("email", nil)
+				db.On("QueryRow", ctx, resetUserPasswordDBQ, codeHashed, mock.Anything).Return("email", nil)
 				es := &email.SenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
 
-				err := m.ResetPassword(ctx, codeB64, newPassword, baseURL)
+				err := m.ResetPassword(ctx, code, newPassword, baseURL)
 				assert.Equal(t, tc.emailSenderResponse, err)
 				db.AssertExpectations(t)
 				es.AssertExpectations(t)
@@ -1494,13 +1392,13 @@ func TestVerifyEmail(t *testing.T) {
 
 func TestVerifyPasswordResetCode(t *testing.T) {
 	ctx := context.Background()
-	code := []byte("code")
-	codeB64 := base64.URLEncoding.EncodeToString(code)
+	code := "code"
+	codeHashed := hash(code)
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			errMsg  string
-			codeB64 string
+			errMsg string
+			code   string
 		}{
 			{
 				"code not provided",
@@ -1512,7 +1410,7 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil, nil)
-				err := m.VerifyPasswordResetCode(ctx, tc.codeB64)
+				err := m.VerifyPasswordResetCode(ctx, tc.code)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
@@ -1538,10 +1436,10 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, verifyPasswordResetCodeDBQ, code).Return(tc.dbErr)
+				db.On("Exec", ctx, verifyPasswordResetCodeDBQ, codeHashed).Return(tc.dbErr)
 				m := NewManager(db, nil)
 
-				err := m.VerifyPasswordResetCode(ctx, codeB64)
+				err := m.VerifyPasswordResetCode(ctx, code)
 				assert.Equal(t, tc.expectedErr, err)
 				db.AssertExpectations(t)
 			})
@@ -1551,10 +1449,10 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 	t.Run("password code verified successfully in database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, verifyPasswordResetCodeDBQ, code).Return(nil)
+		db.On("Exec", ctx, verifyPasswordResetCodeDBQ, codeHashed).Return(nil)
 		m := NewManager(db, nil)
 
-		err := m.VerifyPasswordResetCode(ctx, codeB64)
+		err := m.VerifyPasswordResetCode(ctx, code)
 		assert.Equal(t, nil, err)
 		db.AssertExpectations(t)
 	})

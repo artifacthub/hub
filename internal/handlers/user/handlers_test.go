@@ -13,6 +13,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/artifacthub/hub/internal/apikey"
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
@@ -31,7 +32,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestApproveSession(t *testing.T) {
-	sessionID := []byte("sessionID")
+	sessionID := "sessionID"
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -495,6 +496,8 @@ func TestGetProfile(t *testing.T) {
 }
 
 func TestInjectUserID(t *testing.T) {
+	sessionID := "sessionID"
+
 	checkUserID := func(expectedUserID interface{}) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
 			if expectedUserID == nil {
@@ -541,7 +544,7 @@ func TestInjectUserID(t *testing.T) {
 		r, _ := http.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
-		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
 			Value: encodedSessionID,
@@ -565,7 +568,7 @@ func TestInjectUserID(t *testing.T) {
 		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
 			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
 
-		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
 			Value: encodedSessionID,
@@ -586,7 +589,7 @@ func TestInjectUserID(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
 			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
-		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
 			Value: encodedSessionID,
@@ -601,6 +604,8 @@ func TestInjectUserID(t *testing.T) {
 }
 
 func TestLogin(t *testing.T) {
+	sessionID := "sessionID"
+
 	t.Run("invalid", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
@@ -693,7 +698,7 @@ func TestLogin(t *testing.T) {
 			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
 		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
 			Return(&hub.Session{
-				SessionID: []byte("sessionID"),
+				SessionID: sessionID,
 				Approved:  true,
 			}, nil)
 		hw.h.Login(w, r)
@@ -708,10 +713,10 @@ func TestLogin(t *testing.T) {
 		assert.Equal(t, "/", cookie.Path)
 		assert.True(t, cookie.HttpOnly)
 		assert.False(t, cookie.Secure)
-		var sessionID []byte
-		err := hw.h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
+		var cookieSessionID string
+		err := hw.h.sc.Decode(sessionCookieName, cookie.Value, &cookieSessionID)
 		require.NoError(t, err)
-		assert.Equal(t, []byte("sessionID"), sessionID)
+		assert.Equal(t, sessionID, cookieSessionID)
 		assert.Equal(t, "true", h.Get(SessionApprovedHeader))
 		hw.um.AssertExpectations(t)
 	})
@@ -727,7 +732,7 @@ func TestLogin(t *testing.T) {
 			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
 		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
 			Return(&hub.Session{
-				SessionID: []byte("sessionID"),
+				SessionID: sessionID,
 				Approved:  false,
 			}, nil)
 		hw.h.Login(w, r)
@@ -742,10 +747,10 @@ func TestLogin(t *testing.T) {
 		assert.Equal(t, "/", cookie.Path)
 		assert.True(t, cookie.HttpOnly)
 		assert.False(t, cookie.Secure)
-		var sessionID []byte
-		err := hw.h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
+		var cookieSessionID string
+		err := hw.h.sc.Decode(sessionCookieName, cookie.Value, &cookieSessionID)
 		require.NoError(t, err)
-		assert.Equal(t, []byte("sessionID"), sessionID)
+		assert.Equal(t, sessionID, cookieSessionID)
 		assert.Equal(t, "false", h.Get(SessionApprovedHeader))
 		hw.um.AssertExpectations(t)
 	})
@@ -815,8 +820,8 @@ func TestLogout(t *testing.T) {
 				r, _ := http.NewRequest("GET", "/", nil)
 
 				hw := newHandlersWrapper()
-				hw.um.On("DeleteSession", r.Context(), []byte("sessionID")).Return(tc.err)
-				encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+				hw.um.On("DeleteSession", r.Context(), "sessionID").Return(tc.err)
+				encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, "sessionID")
 				r.AddCookie(&http.Cookie{
 					Name:  sessionCookieName,
 					Value: encodedSessionID,
@@ -1092,7 +1097,7 @@ func TestRegisterUser(t *testing.T) {
 }
 
 func TestRequireLogin(t *testing.T) {
-	sessionID := []byte("sessionID")
+	sessionID := "sessionID"
 
 	t.Run("api key based authentication", func(t *testing.T) {
 		apiKeyID := "keyID"
@@ -1143,7 +1148,7 @@ func TestRequireLogin(t *testing.T) {
 			r.Header.Add(APIKeySecretHeader, apiKeySecret)
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), apiKeyID, apiKeySecret).Return(nil, tests.ErrFakeDB)
+			hw.am.On("Check", r.Context(), apiKeyID, apiKeySecret).Return(nil, tests.ErrFakeDB)
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -1164,7 +1169,7 @@ func TestRequireLogin(t *testing.T) {
 			r.Header.Add(APIKeySecretHeader, apiKeySecret)
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), apiKeyID, apiKeySecret).
+			hw.am.On("Check", r.Context(), apiKeyID, apiKeySecret).
 				Return(&hub.CheckAPIKeyOutput{UserID: "", Valid: false}, nil)
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
@@ -1186,7 +1191,7 @@ func TestRequireLogin(t *testing.T) {
 			r.Header.Add(APIKeySecretHeader, apiKeySecret)
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), apiKeyID, apiKeySecret).
+			hw.am.On("Check", r.Context(), apiKeyID, apiKeySecret).
 				Return(&hub.CheckAPIKeyOutput{UserID: "userID", Valid: true}, nil)
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
@@ -1689,6 +1694,7 @@ func testsOK(w http.ResponseWriter, r *http.Request) {}
 type handlersWrapper struct {
 	cfg *viper.Viper
 	um  *user.ManagerMock
+	am  *apikey.ManagerMock
 	h   *Handlers
 }
 
@@ -1697,11 +1703,13 @@ func newHandlersWrapper() *handlersWrapper {
 	cfg.Set("server.baseURL", "baseURL")
 	cfg.Set("server.oauth.github", map[string]string{})
 	um := &user.ManagerMock{}
-	h, _ := NewHandlers(context.Background(), um, cfg)
+	am := &apikey.ManagerMock{}
+	h, _ := NewHandlers(context.Background(), um, am, cfg)
 
 	return &handlersWrapper{
 		cfg: cfg,
 		um:  um,
+		am:  am,
 		h:   h,
 	}
 }

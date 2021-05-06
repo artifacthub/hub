@@ -5,12 +5,6 @@ import (
 	"time"
 )
 
-// CheckAPIKeyOutput represents the output returned by the CheckApiKey method.
-type CheckAPIKeyOutput struct {
-	Valid  bool   `json:"valid"`
-	UserID string `json:"user_id"`
-}
-
 // CheckCredentialsOutput represents the output returned by the
 // CheckCredentials method.
 type CheckCredentialsOutput struct {
@@ -26,7 +20,7 @@ type CheckSessionOutput struct {
 
 // Session represents some information about a user session.
 type Session struct {
-	SessionID []byte `json:"session_id"`
+	SessionID string `json:"session_id"`
 	UserID    string `json:"user_id"`
 	IP        string `json:"ip"`
 	UserAgent string `json:"user_agent"`
@@ -68,12 +62,11 @@ var UserIDKey = userIDKey{}
 
 // UserManager describes the methods a UserManager implementation must provide.
 type UserManager interface {
-	ApproveSession(ctx context.Context, sessionID []byte, passcode string) error
-	CheckAPIKey(ctx context.Context, apiKeyID, apiKeySecret string) (*CheckAPIKeyOutput, error)
+	ApproveSession(ctx context.Context, sessionID, passcode string) error
 	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
 	CheckCredentials(ctx context.Context, email, password string) (*CheckCredentialsOutput, error)
-	CheckSession(ctx context.Context, sessionID []byte, duration time.Duration) (*CheckSessionOutput, error)
-	DeleteSession(ctx context.Context, sessionID []byte) error
+	CheckSession(ctx context.Context, sessionID string, duration time.Duration) (*CheckSessionOutput, error)
+	DeleteSession(ctx context.Context, sessionID string) error
 	DisableTFA(ctx context.Context, passcode string) error
 	EnableTFA(ctx context.Context, passcode string) error
 	GetProfile(ctx context.Context) (*User, error)

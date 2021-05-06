@@ -13,6 +13,7 @@ values (:'user1ID', 'user1', 'user1@email.com');
 select add_api_key('
 {
     "name": "apikey1",
+    "secret": "hashed-secret",
     "user_id": "00000000-0000-0000-0000-000000000001"
 }
 '::jsonb);
@@ -22,12 +23,14 @@ select results_eq(
     $$
         select
             name,
+            secret,
             user_id
         from api_key
     $$,
     $$
         values (
             'apikey1',
+            'hashed-secret',
             '00000000-0000-0000-0000-000000000001'::uuid
         )
     $$,

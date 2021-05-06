@@ -14,16 +14,9 @@ type ManagerMock struct {
 }
 
 // ApproveSession implements the UserManager interface.
-func (m *ManagerMock) ApproveSession(ctx context.Context, sessionID []byte, passcode string) error {
+func (m *ManagerMock) ApproveSession(ctx context.Context, sessionID, passcode string) error {
 	args := m.Called(ctx, sessionID, passcode)
 	return args.Error(0)
-}
-
-// CheckAPIKey implements the UserManager interface.
-func (m *ManagerMock) CheckAPIKey(ctx context.Context, apiKeyID, apiKeySecret string) (*hub.CheckAPIKeyOutput, error) {
-	args := m.Called(ctx, apiKeyID, apiKeySecret)
-	data, _ := args.Get(0).(*hub.CheckAPIKeyOutput)
-	return data, args.Error(1)
 }
 
 // CheckAvailability implements the UserManager interface.
@@ -46,7 +39,7 @@ func (m *ManagerMock) CheckCredentials(
 // CheckSession implements the UserManager interface.
 func (m *ManagerMock) CheckSession(
 	ctx context.Context,
-	sessionID []byte,
+	sessionID string,
 	duration time.Duration,
 ) (*hub.CheckSessionOutput, error) {
 	args := m.Called(ctx, sessionID, duration)
@@ -55,7 +48,7 @@ func (m *ManagerMock) CheckSession(
 }
 
 // DeleteSession implements the UserManager interface.
-func (m *ManagerMock) DeleteSession(ctx context.Context, sessionID []byte) error {
+func (m *ManagerMock) DeleteSession(ctx context.Context, sessionID string) error {
 	args := m.Called(ctx, sessionID)
 	return args.Error(0)
 }

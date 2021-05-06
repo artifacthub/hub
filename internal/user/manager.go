@@ -3,6 +3,7 @@ package user
 import (
 	"bytes"
 	"context"
+	"crypto/rand"
 	"crypto/sha512"
 	"encoding/base64"
 	"encoding/json"
@@ -10,7 +11,6 @@ import (
 	"fmt"
 	"image/png"
 	"net/url"
-	"strings"
 	"time"
 
 	"github.com/artifacthub/hub/internal/email"
@@ -26,13 +26,12 @@ import (
 
 const (
 	// Database queries
-	approveSessionDBQ            = `select approve_session($1::bytea, $2::text)`
+	approveSessionDBQ            = `select approve_session($1::text, $2::text)`
 	checkUserAliasAvailDBQ       = `select check_user_alias_availability($1::text)`
 	checkUserCredsDBQ            = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true`
 	deleteSessionDBQ             = `delete from session where session_id = $1`
 	disableTFADBQ                = `update "user" set tfa_enabled = false, tfa_url = null, tfa_recovery_codes = null where user_id = $1 and tfa_enabled = true`
 	enableTFADBQ                 = `update "user" set tfa_enabled = true where user_id = $1`
-	getAPIKeyInfoDBQ             = `select user_id, secret from api_key where api_key_id = $1`
 	getSessionDBQ                = `select user_id, floor(extract(epoch from created_at)), approved from session where session_id = $1`
 	getTFAConfigDBQ              = `select get_user_tfa_config($1::uuid)`
 	getUserEmailDBQ              = `select email from "user" where user_id = $1`
@@ -40,15 +39,15 @@ const (
 	getUserIDFromSessionIDDBQ    = `select user_id from session where session_id = $1`
 	getUserPasswordDBQ           = `select password from "user" where user_id = $1 and password is not null`
 	getUserProfileDBQ            = `select get_user_profile($1::uuid)`
-	registerPasswordResetCodeDBQ = `select register_password_reset_code($1::text)`
-	registerSessionDBQ           = `select session_id, approved from register_session($1::jsonb)`
+	registerPasswordResetCodeDBQ = `select register_password_reset_code($1::text, $2::text)`
+	registerSessionDBQ           = `select register_session($1::jsonb)`
 	registerUserDBQ              = `select register_user($1::jsonb)`
-	resetUserPasswordDBQ         = `select reset_user_password($1::bytea, $2::text)`
+	resetUserPasswordDBQ         = `select reset_user_password($1::text, $2::text)`
 	updateTFAInfoDBQ             = `update "user" set tfa_url = $2, tfa_recovery_codes = $3 where user_id = $1`
 	updateUserPasswordDBQ        = `select update_user_password($1::uuid, $2::text, $3::text)`
 	updateUserProfileDBQ         = `select update_user_profile($1::uuid, $2::jsonb)`
 	verifyEmailDBQ               = `select verify_email($1::uuid)`
-	verifyPasswordResetCodeDBQ   = `select verify_password_reset_code($1::bytea)`
+	verifyPasswordResetCodeDBQ   = `select verify_password_reset_code($1::text)`
 
 	numRecoveryCodes = 10
 )
@@ -94,7 +93,7 @@ func NewManager(db hub.DB, es hub.EmailSender) *Manager {
 }
 
 // ApproveSession approves a given session using the TFA passcode provided.
-func (m *Manager) ApproveSession(ctx context.Context, sessionID []byte, passcode string) error {
+func (m *Manager) ApproveSession(ctx context.Context, sessionID, passcode string) error {
 	// Validate input
 	if len(sessionID) == 0 {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "sessionID not provided")
@@ -105,7 +104,7 @@ func (m *Manager) ApproveSession(ctx context.Context, sessionID []byte, passcode
 
 	// Get id of the user the session belongs to
 	var userID string
-	err := m.db.QueryRow(ctx, getUserIDFromSessionIDDBQ, hashSessionID(sessionID)).Scan(&userID)
+	err := m.db.QueryRow(ctx, getUserIDFromSessionIDDBQ, hash(sessionID)).Scan(&userID)
 	if err != nil {
 		return err
 	}
@@ -131,46 +130,8 @@ func (m *Manager) ApproveSession(ctx context.Context, sessionID []byte, passcode
 	if validRecoveryCodeProvided {
 		recoveryCode = passcode
 	}
-	_, err = m.db.Exec(ctx, approveSessionDBQ, hashSessionID(sessionID), recoveryCode)
+	_, err = m.db.Exec(ctx, approveSessionDBQ, hash(sessionID), recoveryCode)
 	return err
-}
-
-// CheckAPIKey checks if the api key provided is valid.
-func (m *Manager) CheckAPIKey(ctx context.Context, apiKeyID, apiKeySecret string) (*hub.CheckAPIKeyOutput, error) {
-	// Validate input
-	if apiKeyID == "" || apiKeySecret == "" {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "api key id or secret not provided")
-	}
-
-	// Get key's user id and secret from database
-	var userID, apiKeySecretHashed string
-	err := m.db.QueryRow(ctx, getAPIKeyInfoDBQ, apiKeyID).Scan(&userID, &apiKeySecretHashed)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			return &hub.CheckAPIKeyOutput{Valid: false}, nil
-		}
-		return nil, err
-	}
-
-	// Check if the secret provided is valid
-	switch {
-	case strings.HasPrefix(apiKeySecretHashed, "$2a$"):
-		// Bcrypt hash, will be deprecated soon
-		err = bcrypt.CompareHashAndPassword([]byte(apiKeySecretHashed), []byte(apiKeySecret))
-		if err != nil {
-			return &hub.CheckAPIKeyOutput{Valid: false}, nil
-		}
-	default:
-		// SHA512 hash
-		if fmt.Sprintf("%x", sha512.Sum512([]byte(apiKeySecret))) != apiKeySecretHashed {
-			return &hub.CheckAPIKeyOutput{Valid: false}, nil
-		}
-	}
-
-	return &hub.CheckAPIKeyOutput{
-		Valid:  true,
-		UserID: userID,
-	}, nil
 }
 
 // CheckAvailability checks the availability of a given value for the provided
@@ -247,7 +208,7 @@ func (m *Manager) CheckCredentials(
 // CheckSession checks if the user session provided is valid.
 func (m *Manager) CheckSession(
 	ctx context.Context,
-	sessionID []byte,
+	sessionID string,
 	duration time.Duration,
 ) (*hub.CheckSessionOutput, error) {
 	// Validate input
@@ -262,7 +223,7 @@ func (m *Manager) CheckSession(
 	var userID string
 	var createdAt int64
 	var approved bool
-	err := m.db.QueryRow(ctx, getSessionDBQ, hashSessionID(sessionID)).Scan(&userID, &createdAt, &approved)
+	err := m.db.QueryRow(ctx, getSessionDBQ, hash(sessionID)).Scan(&userID, &createdAt, &approved)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return &hub.CheckSessionOutput{Valid: false}, nil
@@ -288,14 +249,14 @@ func (m *Manager) CheckSession(
 }
 
 // DeleteSession deletes a user session from the database.
-func (m *Manager) DeleteSession(ctx context.Context, sessionID []byte) error {
+func (m *Manager) DeleteSession(ctx context.Context, sessionID string) error {
 	// Validate input
 	if len(sessionID) == 0 {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "session id not provided")
 	}
 
 	// Delete session from database
-	_, err := m.db.Exec(ctx, deleteSessionDBQ, hashSessionID(sessionID))
+	_, err := m.db.Exec(ctx, deleteSessionDBQ, hash(sessionID))
 	return err
 }
 
@@ -461,17 +422,20 @@ func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail, base
 	}
 
 	// Register password reset code in database
-	var code []byte
-	err := m.db.QueryRow(ctx, registerPasswordResetCodeDBQ, userEmail).Scan(&code)
+	randomBytes := make([]byte, 32)
+	if _, err := rand.Read(randomBytes); err != nil {
+		return err
+	}
+	code := base64.URLEncoding.EncodeToString(randomBytes)
+	_, err := m.db.Exec(ctx, registerPasswordResetCodeDBQ, userEmail, hash(code))
 	if err != nil {
 		return err
 	}
 
 	// Send password reset email
-	if code != nil && m.es != nil {
-		codeB64 := base64.URLEncoding.EncodeToString(code)
+	if m.es != nil {
 		templateData := map[string]string{
-			"link": fmt.Sprintf("%s/reset-password?code=%s", baseURL, codeB64),
+			"link": fmt.Sprintf("%s/reset-password?code=%s", baseURL, code),
 		}
 		var emailBody bytes.Buffer
 		if err := passwordResetTmpl.Execute(&emailBody, templateData); err != nil {
@@ -500,14 +464,23 @@ func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) (*h
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid user id")
 	}
 
+	// Generate session id
+	randomBytes := make([]byte, 32)
+	if _, err := rand.Read(randomBytes); err != nil {
+		return nil, err
+	}
+	sessionID := base64.StdEncoding.EncodeToString(randomBytes)
+	sessionIDHashed := hash(sessionID)
+
 	// Register session in database
+	session.SessionID = sessionIDHashed
 	sessionJSON, _ := json.Marshal(session)
-	var sessionID []byte
 	var approved bool
-	err := m.db.QueryRow(ctx, registerSessionDBQ, sessionJSON).Scan(&sessionID, &approved)
+	err := m.db.QueryRow(ctx, registerSessionDBQ, sessionJSON).Scan(&approved)
 	if err != nil {
 		return nil, err
 	}
+
 	return &hub.Session{
 		SessionID: sessionID,
 		UserID:    session.UserID,
@@ -585,9 +558,9 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 }
 
 // ResetPassword resets the user password in the database.
-func (m *Manager) ResetPassword(ctx context.Context, codeB64, newPassword, baseURL string) error {
+func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL string) error {
 	// Validate input
-	if codeB64 == "" {
+	if code == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
 	}
 	if newPassword == "" {
@@ -610,12 +583,8 @@ func (m *Manager) ResetPassword(ctx context.Context, codeB64, newPassword, baseU
 	}
 
 	// Reset user password in database
-	code, err := base64.URLEncoding.DecodeString(codeB64)
-	if err != nil {
-		return ErrInvalidPasswordResetCode
-	}
 	var userEmail string
-	err = m.db.QueryRow(ctx, resetUserPasswordDBQ, code, string(newHashed)).Scan(&userEmail)
+	err = m.db.QueryRow(ctx, resetUserPasswordDBQ, hash(code), string(newHashed)).Scan(&userEmail)
 	if err != nil {
 		if err.Error() == errInvalidPasswordResetCodeDB.Error() {
 			return ErrInvalidPasswordResetCode
@@ -772,28 +741,23 @@ func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {
 }
 
 // VerifyPasswordResetCode verifies if the provided code is valid.
-func (m *Manager) VerifyPasswordResetCode(ctx context.Context, codeB64 string) error {
+func (m *Manager) VerifyPasswordResetCode(ctx context.Context, code string) error {
 	// Validate input
-	if codeB64 == "" {
+	if code == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
 	}
 
 	// Verify password reset code in database
-	code, err := base64.URLEncoding.DecodeString(codeB64)
-	if err != nil {
-		return ErrInvalidPasswordResetCode
-	}
-	_, err = m.db.Exec(ctx, verifyPasswordResetCodeDBQ, code)
+	_, err := m.db.Exec(ctx, verifyPasswordResetCodeDBQ, hash(code))
 	if err != nil && err.Error() == errInvalidPasswordResetCodeDB.Error() {
 		return ErrInvalidPasswordResetCode
 	}
 	return err
 }
 
-// hashSessionID is a helper function that creates a sha512 hash of the
-// sessionID provided.
-func hashSessionID(sessionID []byte) string {
-	return fmt.Sprintf("\\x%x", sha512.Sum512(sessionID))
+// hash is a helper function that creates a sha512 hash of the text provided.
+func hash(text string) string {
+	return fmt.Sprintf("%x", sha512.Sum512([]byte(text)))
 }
 
 // isValidRecoveryCode checks if the code provided is a valid recovery code.

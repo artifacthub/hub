@@ -28,19 +28,20 @@ func NewHandlers(apiKeyManager hub.APIKeyManager) *Handlers {
 
 // Add is an http handler that adds the provided api key to the database.
 func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
-	ak := &hub.APIKey{}
-	if err := json.NewDecoder(r.Body).Decode(&ak); err != nil {
+	akIN := &hub.APIKey{}
+	if err := json.NewDecoder(r.Body).Decode(&akIN); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Msg(hub.ErrInvalidInput.Error())
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	dataJSON, err := h.apiKeyManager.Add(r.Context(), ak)
+	akOUT, err := h.apiKeyManager.Add(r.Context(), akIN)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusCreated)
+	akOUTJSON, _ := json.Marshal(akOUT)
+	helpers.RenderJSON(w, akOUTJSON, 0, http.StatusCreated)
 }
 
 // Delete is an http handler that deletes the provided api key from the database.
