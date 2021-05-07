@@ -189,9 +189,10 @@ const SchemaLine = (props: Props) => {
           data-testid="lineContent"
           className={`col-7 bg-dark text-light position-relative py-1 user-select-none ${styles.content} ${props.className}`}
           onClick={() => props.onActivePathChange(!isExpanded ? currentPath : undefined)}
+          role="button"
         >
           <div className={`level${props.level} text-monospace`}>
-            {activeValue.title && <div className="text-muted text-truncate"># {activeValue.title}</div>}
+            {activeValue.title && <div className={`text-truncate ${styles.comment}`}># {activeValue.title}</div>}
             <span className={classnames({ [`position-relative ${styles.hasDecorator}`]: props.hasDecorator })}>
               {props.name}:{' '}
             </span>

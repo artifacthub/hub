@@ -12,7 +12,7 @@ interface Props {
 }
 
 const PackageCard = (props: Props) => (
-  <div className={`col-12 col-xxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative ${props.className}`}>
+  <div className={`col-12 col-xxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative ${props.className}`} role="listitem">
     <div className={`card cardWithHover h-100 ${styles.card}`}>
       <Link
         data-testid="link"
@@ -22,7 +22,7 @@ const PackageCard = (props: Props) => (
         }}
       >
         <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
-          <PackageInfo package={props.package} withPackageLinks={false} />
+          <PackageInfo package={props.package} />
         </div>
       </Link>
     </div>

@@ -137,8 +137,15 @@ const PackageView = (props: Props) => {
               NOTE: The official Helm <span className="font-weight-bold">stable</span> and{' '}
               <span className="font-weight-bold">incubator</span> repositories were removed from Artifact Hub on
               November 6th as part of the deprecation plan announced by the Helm project. For more information please
-              see <ExternalLink href="https://helm.sh/blog/charts-repo-deprecation/">this blog post</ExternalLink> and{' '}
-              <ExternalLink href="https://github.com/helm/charts/issues/23944">this Github issue</ExternalLink>.
+              see{' '}
+              <ExternalLink href="https://helm.sh/blog/charts-repo-deprecation/" label="Open Helm documentation">
+                this blog post
+              </ExternalLink>{' '}
+              and{' '}
+              <ExternalLink href="https://github.com/helm/charts/issues/23944" label="Open Github issue">
+                this Github issue
+              </ExternalLink>
+              .
             </p>
           </>
         );
@@ -460,6 +467,7 @@ const PackageView = (props: Props) => {
                 state: { 'from-detail': true },
               });
             }}
+            aria-label="Back to results"
           >
             <IoIosArrowBack className="mr-2" />
             {tsQueryWeb ? (
@@ -487,6 +495,7 @@ const PackageView = (props: Props) => {
                 state: { 'from-detail': true },
               });
             }}
+            aria-label="Back to starred packages"
           >
             <IoIosArrowBack className="mr-2" />
             <div>
@@ -767,7 +776,7 @@ const PackageView = (props: Props) => {
 
                   {!isNull(detail) && (
                     <>
-                      <div className={styles.mainContent}>
+                      <div className={styles.mainContent} id="content" aria-label="Package detail">
                         {isNull(detail.readme) || isUndefined(detail.readme) ? (
                           <div className={styles.noReadmeWrapper}>
                             <NoData>No README file available for this package</NoData>

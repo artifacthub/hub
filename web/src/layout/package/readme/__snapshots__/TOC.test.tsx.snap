@@ -12,6 +12,11 @@ exports[`TOC creates snapshot 1`] = `
         class="mt-0 mt-sm-2"
       >
         <button
+          aria-controls="TOC-list"
+          aria-expanded="false"
+          aria-label="Table of contents"
+          aria-owns="TOC-list"
+          aria-pressed="false"
           class="btn btn-sm mr-2 btn-outline-dark btn"
           data-testid="btnTOC"
         >

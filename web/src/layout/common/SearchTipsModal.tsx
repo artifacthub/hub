@@ -28,6 +28,7 @@ const SearchTipsModal = (props: Props) => {
         className={classnames('btn btn-link p-2 text-light', {
           'btn-lg': props.size === 'big',
         })}
+        aria-label="Open search tips modal"
       >
         <FaRegQuestionCircle />
       </button>
@@ -48,6 +49,7 @@ const SearchTipsModal = (props: Props) => {
                 onClick={() => {
                   setOpenStatus(false);
                 }}
+                aria-label="Close"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -70,6 +72,7 @@ const SearchTipsModal = (props: Props) => {
                       filters: {},
                     }),
                   }}
+                  aria-label={`Filter by ${tip.example}`}
                 >
                   <u>{tip.example}</u>
                 </Link>

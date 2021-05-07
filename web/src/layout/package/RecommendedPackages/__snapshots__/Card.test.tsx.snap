@@ -20,6 +20,7 @@ exports[`RecommendedPackageCard creates snapshot 1`] = `
             class="d-flex flex-row align-items-center"
           >
             <div
+              aria-hidden="true"
               class="position-relative icon undefined"
             >
               <img

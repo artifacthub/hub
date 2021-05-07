@@ -107,6 +107,7 @@ const OrganizationInfo = (props: Props) => {
                   <ExternalLink
                     href={organization.homeUrl}
                     className={`text-reset text-truncate ${styles.externalLink}`}
+                    label={`Open link ${organization.homeUrl}`}
                     btnType
                   >
                     <div className="text-truncate">{organization.homeUrl}</div>
@@ -153,6 +154,10 @@ const OrganizationInfo = (props: Props) => {
           onMouseLeave={() => {
             setOnLinkHover(false);
           }}
+          aria-label="Organization info"
+          aria-expanded={openStatus}
+          aria-hidden="true"
+          tabIndex={-1}
         >
           <div
             className={classnames({

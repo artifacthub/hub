@@ -43,7 +43,7 @@ const BadgeModal = (props: Props) => {
                     <div>
                       <img src={badgeImage} alt="Artifact HUB badge" />
                     </div>
-                    <ButtonCopyToClipboard text={markdownLink} />
+                    <ButtonCopyToClipboard text={markdownLink} label="Copy badge markdown link to clipboard" />
                   </div>
 
                   <SyntaxHighlighter
@@ -67,7 +67,7 @@ const BadgeModal = (props: Props) => {
                     <div>
                       <img src={badgeImage} alt="Artifact HUB badge" />
                     </div>
-                    <ButtonCopyToClipboard text={asciiLink} />
+                    <ButtonCopyToClipboard text={asciiLink} label="Copy badge Ascii link to clipboard" />
                   </div>
 
                   <SyntaxHighlighter

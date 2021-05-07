@@ -285,6 +285,7 @@ const WebhookForm = (props: Props) => {
           data-testid="goBack"
           className={`btn btn-link text-dark btn-sm pl-0 d-flex align-items-center ${styles.link}`}
           onClick={onCloseForm}
+          aria-label="Back to webhooks list"
         >
           <IoIosArrowBack className="mr-2" />
           Back to webhooks list
@@ -402,29 +403,32 @@ const WebhookForm = (props: Props) => {
           <div className="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom">Triggers</div>
 
           <div className="my-4">
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
+            <label className={`font-weight-bold ${styles.label}`} htmlFor="kind" id="events-group">
               Events
             </label>
 
-            {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-              return (
-                <CheckBox
-                  key={`check_${subs.kind}`}
-                  name="eventKind"
-                  value={subs.kind.toString()}
-                  label={subs.title}
-                  checked={eventKinds.includes(subs.kind)}
-                  onChange={() => {
-                    updateEventKindList(subs.kind);
-                    checkTestAvailability();
-                  }}
-                />
-              );
-            })}
+            <div role="group" aria-labelledby="events-group">
+              {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+                return (
+                  <CheckBox
+                    key={`check_${subs.kind}`}
+                    name="eventKind"
+                    value={subs.kind.toString()}
+                    device="all"
+                    label={subs.title}
+                    checked={eventKinds.includes(subs.kind)}
+                    onChange={() => {
+                      updateEventKindList(subs.kind);
+                      checkTestAvailability();
+                    }}
+                  />
+                );
+              })}
+            </div>
           </div>
 
           <div className="mb-4">
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="packages">
+            <label className={`font-weight-bold ${styles.label}`} htmlFor="packages" id="webhook-pkg-list">
               Packages<small className="ml-1 font-italic">(Required)</small>
             </label>
             <div>
@@ -435,7 +439,7 @@ const WebhookForm = (props: Props) => {
             </div>
             <div className="mb-3 row">
               <div className="col-12 col-xxl-8">
-                <SearchPackages disabledPackages={getPackagesIds()} onSelection={addPackage} />
+                <SearchPackages disabledPackages={getPackagesIds()} onSelection={addPackage} label="webhook-pkg-list" />
               </div>
             </div>
 
@@ -504,6 +508,7 @@ const WebhookForm = (props: Props) => {
                                 event.stopPropagation();
                                 deletePackage(item.packageId);
                               }}
+                              aria-label="Delete package from webhook"
                             >
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -551,7 +556,12 @@ const WebhookForm = (props: Props) => {
               webhooks with other services without requiring you to write any code. To integrate ArtifactHub webhooks
               with Slack, for example, you could use a custom payload using the following template:
               <div className="my-3 w-100">
-                <div className={`alert alert-light text-nowrap ${styles.codeWrapper}`} role="alert">
+                <div
+                  className={`alert alert-light text-nowrap ${styles.codeWrapper}`}
+                  role="alert"
+                  aria-live="off"
+                  aria-atomic="true"
+                >
                   {'{'}
                   <br />
                   <span className="ml-3">
@@ -598,7 +608,11 @@ const WebhookForm = (props: Props) => {
               <div>
                 <small className="form-text text-muted mb-4 mt-0">
                   Custom payloads are generated using{' '}
-                  <ExternalLink href="https://golang.org/pkg/text/template/" className="font-weight-bold text-dark">
+                  <ExternalLink
+                    href="https://golang.org/pkg/text/template/"
+                    className="font-weight-bold text-dark"
+                    label="Open Go templates documentation"
+                  >
                     Go templates
                   </ExternalLink>
                   . Below you will find a list of the variables available for use in your template.
@@ -762,6 +776,7 @@ const WebhookForm = (props: Props) => {
                   className="btn btn-sm btn-success"
                   onClick={triggerTest}
                   disabled={!isAvailableTest || isSendingTest}
+                  aria-label="Test webhook"
                 >
                   {isSendingTest ? (
                     <>
@@ -788,7 +803,12 @@ const WebhookForm = (props: Props) => {
               </div>
 
               <div className="ml-auto">
-                <button type="button" className={`btn btn-sm btn-light mr-3 ${styles.btnLight}`} onClick={onCloseForm}>
+                <button
+                  type="button"
+                  className={`btn btn-sm btn-light mr-3 ${styles.btnLight}`}
+                  onClick={onCloseForm}
+                  aria-label="Cancel"
+                >
                   <div className="d-flex flex-row align-items-center text-uppercase">
                     <MdClose className="mr-2" />
                     <div>Cancel</div>
@@ -801,6 +821,7 @@ const WebhookForm = (props: Props) => {
                   disabled={isSending}
                   onClick={submitForm}
                   data-testid="sendWebhookBtn"
+                  aria-label="Add webhook"
                 >
                   {isSending ? (
                     <>

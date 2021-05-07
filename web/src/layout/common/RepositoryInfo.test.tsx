@@ -41,7 +41,7 @@ describe('RepositoryInfo', () => {
 
   it('renders proper content', () => {
     render(<RepositoryInfo {...defaultProps} />);
-    expect(screen.getAllByText(defaultProps.repository.displayName)).toHaveLength(2);
+    expect(screen.getAllByText(defaultProps.repository.displayName)).toHaveLength(3);
     expect(screen.getByTestId('repoLink')).toBeInTheDocument();
   });
 
@@ -66,7 +66,7 @@ describe('RepositoryInfo', () => {
     jest.useFakeTimers();
 
     render(<RepositoryInfo {...defaultProps} />);
-    expect(screen.getAllByText(defaultProps.repository.displayName!)).toHaveLength(2);
+    expect(screen.getAllByText(defaultProps.repository.displayName!)).toHaveLength(3);
     expect(screen.getByTestId('repoUrl')).toBeInTheDocument();
     expect(screen.getByTestId('repoUrl')).toHaveTextContent(defaultProps.repository.url);
 

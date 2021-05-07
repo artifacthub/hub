@@ -20,6 +20,7 @@ exports[`Organizations section index creates snapshot 1`] = `
           </div>
           <div>
             <button
+              aria-label="Open modal"
               class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addOrgButton"
             >
@@ -85,8 +86,10 @@ exports[`Organizations section index creates snapshot 1`] = `
     </div>
     <div>
       <div
+        aria-modal="false"
         class="modal modal"
         role="dialog"
+        tabindex="-1"
       >
         <div
           class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
@@ -103,6 +106,7 @@ exports[`Organizations section index creates snapshot 1`] = `
                 Add organization
               </div>
               <button
+                aria-label="Close modal"
                 class="close"
                 data-testid="closeModalBtn"
                 type="button"
@@ -128,6 +132,7 @@ exports[`Organizations section index creates snapshot 1`] = `
               class="modal-footer p-3"
             >
               <button
+                aria-label="Add organization"
                 class="btn btn-sm btn-secondary"
                 type="button"
               >

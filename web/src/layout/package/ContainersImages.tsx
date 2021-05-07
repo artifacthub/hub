@@ -33,6 +33,7 @@ const ContainersImages = (props: Props) => {
             <ButtonCopyToClipboard
               text={containerImage.image}
               className={`btn-link text-secondary border-0 ${styles.copyBtn}`}
+              label={`Copy ${containerImage.name || containerImage.image} container image to clipboard`}
             />
           )}
         </>
@@ -43,6 +44,7 @@ const ContainersImages = (props: Props) => {
           data-testid="containerImageItem"
           className="py-1 py-sm-0"
           key={`container-${index}-${containerImage.image}`}
+          role="listitem"
         >
           <div className="d-flex flex-row align-items-start mw-100">
             <GoPackage className={`text-muted mr-2 ${styles.icon}`} />

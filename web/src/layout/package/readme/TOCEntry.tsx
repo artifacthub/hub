@@ -25,6 +25,10 @@ const TOCEntry = (props: Props) => {
           props.setVisibleTOC(false);
           props.scrollIntoView(`#${props.entry.link}`);
         }}
+        role="option"
+        aria-label={`Go to ${props.entry.title}`}
+        tabIndex={-1}
+        aria-selected={false}
       >
         {props.entry.title}
       </a>

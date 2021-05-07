@@ -8,8 +8,10 @@ exports[`SignUp creates snapshot 1`] = `
       data-testid="modalBackdrop"
     />
     <div
+      aria-modal="true"
       class="modal modal active d-block"
       role="dialog"
+      tabindex="-1"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
@@ -26,6 +28,7 @@ exports[`SignUp creates snapshot 1`] = `
               Sign up
             </div>
             <button
+              aria-label="Close modal"
               class="close"
               data-testid="closeModalBtn"
               type="button"
@@ -49,6 +52,7 @@ exports[`SignUp creates snapshot 1`] = `
                 Create your account using your email
               </div>
               <button
+                aria-label="Open sign up form"
                 class="btn btn-outline-secondary btn-block"
                 data-testid="signUpBtn"
                 type="button"
@@ -93,6 +97,7 @@ exports[`SignUp creates snapshot 1`] = `
                   class="d-flex flex-column mb-1"
                 >
                   <button
+                    aria-label="Sign in with Github"
                     class="btn btn-outline-secondary mb-3 btn-block btn"
                     type="button"
                   >
@@ -112,6 +117,7 @@ exports[`SignUp creates snapshot 1`] = `
                     </div>
                   </button>
                   <button
+                    aria-label="Sign in with Google"
                     class="btn btn-outline-secondary mb-3 btn-block btn"
                     type="button"
                   >
@@ -131,6 +137,7 @@ exports[`SignUp creates snapshot 1`] = `
                     </div>
                   </button>
                   <button
+                    aria-label="Sign in with OpenID Connect"
                     class="btn btn-outline-secondary mb-3 btn-block btn"
                     type="button"
                   >
@@ -163,6 +170,7 @@ exports[`SignUp creates snapshot 1`] = `
             class="modal-footer p-3"
           >
             <button
+              aria-label="Close modal"
               class="btn btn-sm btn-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"

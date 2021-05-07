@@ -203,7 +203,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       </div>
 
       {!isNull(apiError) && isUndefined(props.setApiError) && (
-        <div className="alert alert-danger mt-3" role="alert">
+        <div className="alert alert-danger mt-3" role="alert" aria-live="assertive" aria-atomic="true">
           {apiError}
         </div>
       )}

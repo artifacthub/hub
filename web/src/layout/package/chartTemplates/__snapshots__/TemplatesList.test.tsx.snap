@@ -52,6 +52,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template db_migrator_install_job.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -99,6 +101,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template db_migrator_secret.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -146,6 +150,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template db_migrator_upgrade_job.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -193,6 +199,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template hub_deployment.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -240,6 +248,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template hub_ingress.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -287,6 +297,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template hub_secret.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -334,6 +346,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template hub_service.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -381,6 +395,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template hub_serviceaccount.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -428,6 +444,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template scanner_cronjob.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -475,6 +493,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template scanner_secret.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -522,6 +542,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template tracker_cronjob.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -569,6 +591,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template tracker_secret.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -616,6 +640,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template trivy_deployment.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -663,6 +689,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template trivy_pvc.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -710,6 +738,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template trivy_service.yaml"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >
@@ -757,6 +787,8 @@ exports[`TemplatesList creates snapshot 1`] = `
     </div>
     <div>
       <button
+        aria-label="Show template _helpers.tpl"
+        aria-pressed="false"
         class="btn btn-light btn-sm mb-2 text-left w-100 btn"
         data-testid="tmplBtn"
       >

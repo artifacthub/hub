@@ -86,6 +86,7 @@ const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
           [`disabled ${styles.disabled}`]: !isAuthorized || (!isUndefined(props.disabled) && props.disabled),
         })}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => (isAuthorized ? props.onClick(e) : null)}
+        aria-label="Action"
       >
         <div className={`d-flex flex-row align-items-center ${props.contentClassName}`}>{props.children}</div>
       </button>

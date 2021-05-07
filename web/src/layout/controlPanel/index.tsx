@@ -129,7 +129,7 @@ const ControlPanelView = (props: Props) => {
   if (isNull(context)) return null;
 
   return (
-    <main role="main" className="d-flex flex-column flex-grow-1 position-relative">
+    <main role="main" className="d-flex flex-column flex-grow-1 position-relative" id="content">
       <div className={`pt-3 position-relative navWrapper ${styles.navWrapper}`}>
         <div className="container-lg px-sm-4 px-lg-0">
           <div className="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column-reverse flex-sm-row justify-content-between align-items-end">
@@ -147,6 +147,7 @@ const ControlPanelView = (props: Props) => {
                         { [`active activeSection ${styles.activeSection}`]: activeSection === section.name },
                         { disabled: section.disabled }
                       )}
+                      aria-label={`Open ${section.displayName} section`}
                     >
                       <div className="d-flex flex-row align-items-center">
                         <span className={styles.icon}>{section.icon}</span>

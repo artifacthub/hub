@@ -61,7 +61,11 @@ const Links = (props: Props) => {
       <div className="mb-3">
         {props.homeUrl && (
           <div className="py-1 py-sm-0">
-            <ExternalLink href={props.homeUrl} className="text-primary d-flex align-items-start mb-1 text-capitalize">
+            <ExternalLink
+              href={props.homeUrl}
+              className="text-primary d-flex align-items-start mb-1 text-capitalize"
+              label="Open Homepage"
+            >
               <div className="d-flex flex-row align-items-start mw-100">
                 {getIconLink('homepage')}
                 <div className={`flex-grow-1 ${styles.linkText}`}>Homepage</div>
@@ -72,7 +76,11 @@ const Links = (props: Props) => {
 
         {formattedLinks.map((link: PackageLink, index: number) => (
           <div className="py-1 py-sm-0" key={`link_${link.name}_${index}`}>
-            <ExternalLink href={link.url} className="text-primary d-flex align-items-center mb-1 text-capitalize">
+            <ExternalLink
+              href={link.url}
+              className="text-primary d-flex align-items-center mb-1 text-capitalize"
+              label={`Open ${link.name}`}
+            >
               <div className="d-flex flex-row align-items-start mw-100">
                 {getIconLink(link.name)}
                 <div className={`flex-grow-1 ${styles.linkText}`}>{link.name}</div>

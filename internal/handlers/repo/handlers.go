@@ -51,9 +51,9 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 // repository badge.
 func (h *Handlers) Badge(w http.ResponseWriter, r *http.Request) {
 	data := map[string]interface{}{
-		"color":         "39596c",
+		"color":         "2d4857",
 		"label":         "Artifact Hub",
-		"labelColor":    "659dbd",
+		"labelColor":    "417598",
 		"logoSvg":       logoSVG,
 		"logoWidth":     18,
 		"message":       chi.URLParam(r, "repoName"),

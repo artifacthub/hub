@@ -87,6 +87,7 @@ const WebhookCard = (props: Props) => {
                     <button
                       className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
                       onClick={() => setDeletionModalStatus(false)}
+                      aria-label="Close deletion modal"
                     >
                       <div className="d-flex flex-row align-items-center">
                         <IoMdCloseCircle className="mr-2" />
@@ -102,6 +103,7 @@ const WebhookCard = (props: Props) => {
                         deleteWebhook();
                       }}
                       disabled={isDeleting}
+                      aria-label="Delete webhook"
                     >
                       <div className="d-flex flex-row align-items-center text-uppercase">
                         {isDeleting ? (
@@ -146,6 +148,7 @@ const WebhookCard = (props: Props) => {
                     closeDropdown();
                     props.onEdition();
                   }}
+                  aria-label="Edit webhook"
                 >
                   <div className="d-flex flex-row align-items-center">
                     <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
@@ -161,6 +164,7 @@ const WebhookCard = (props: Props) => {
                     closeDropdown();
                     setDeletionModalStatus(true);
                   }}
+                  aria-label="Open deletion webhook modal"
                 >
                   <div className="d-flex flex-row align-items-center">
                     <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
@@ -172,6 +176,8 @@ const WebhookCard = (props: Props) => {
               <button
                 className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
                 onClick={() => setDropdownMenuStatus(true)}
+                aria-label="Open menu"
+                aria-expanded={dropdownMenuStatus}
               >
                 <BsThreeDotsVertical />
               </button>

@@ -64,6 +64,7 @@ const OrganizationsSection = (props: Props) => {
                 data-testid="addOrgButton"
                 className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalStatus({ open: true })}
+                aria-label="Open modal"
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <MdAdd className="d-inline d-md-none" />
@@ -89,6 +90,7 @@ const OrganizationsSection = (props: Props) => {
                         type="button"
                         className="btn btn-secondary"
                         onClick={() => setModalStatus({ open: true })}
+                        aria-label="Open modal"
                       >
                         <div className="d-flex flex-row align-items-center">
                           <MdAddCircle className="mr-2" />

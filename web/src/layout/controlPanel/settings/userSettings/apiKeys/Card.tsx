@@ -70,6 +70,7 @@ const APIKeyCard = (props: Props) => {
                     <button
                       className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
                       onClick={() => setDeletionModalStatus(false)}
+                      aria-label="Cancel"
                     >
                       <div className="d-flex flex-row align-items-center">
                         <IoMdCloseCircle className="mr-2" />
@@ -86,6 +87,7 @@ const APIKeyCard = (props: Props) => {
                         deleteAPIKey();
                       }}
                       disabled={isDeleting}
+                      aria-label="Delete API key"
                     >
                       <div className="d-flex flex-row align-items-center text-uppercase">
                         {isDeleting ? (
@@ -133,6 +135,7 @@ const APIKeyCard = (props: Props) => {
                       apiKey: props.apiKey,
                     });
                   }}
+                  aria-label="Open API key modal"
                 >
                   <div className="d-flex flex-row align-items-center">
                     <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
@@ -148,6 +151,7 @@ const APIKeyCard = (props: Props) => {
                     closeDropdown();
                     setDeletionModalStatus(true);
                   }}
+                  aria-label="Open deletion modal"
                 >
                   <div className="d-flex flex-row align-items-center">
                     <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
@@ -159,6 +163,8 @@ const APIKeyCard = (props: Props) => {
               <button
                 className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
                 onClick={() => setDropdownMenuStatus(true)}
+                aria-label="Open menu"
+                aria-expanded={dropdownMenuStatus}
               >
                 <BsThreeDotsVertical />
               </button>
@@ -175,6 +181,7 @@ const APIKeyCard = (props: Props) => {
                 <ButtonCopyToClipboard
                   text={props.apiKey.apiKeyId!}
                   className="btn-link border-0 text-secondary font-weight-bold"
+                  label="Copy API key ID to clipboard"
                 />
               </div>
             </div>

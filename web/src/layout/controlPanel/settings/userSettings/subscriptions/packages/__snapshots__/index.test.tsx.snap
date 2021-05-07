@@ -45,6 +45,7 @@ exports[`PackagesSection creates snapshot 1`] = `
           </div>
           <div>
             <button
+              aria-label="Open subscription modal"
               class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addSubscriptionsBtn"
             >
@@ -102,8 +103,10 @@ exports[`PackagesSection creates snapshot 1`] = `
         </div>
         <div>
           <div
+            aria-modal="false"
             class="modal modal"
             role="dialog"
+            tabindex="-1"
           >
             <div
               class="modal-dialog modal-lg modal"
@@ -120,6 +123,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                     Add subscription
                   </div>
                   <button
+                    aria-label="Close modal"
                     class="close"
                     data-testid="closeModalBtn"
                     type="button"
@@ -145,6 +149,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                   class="modal-footer p-3"
                 >
                   <button
+                    aria-label="Add subscription"
                     class="btn btn-sm btn-secondary"
                     data-testid="addSubsModalBtn"
                     disabled=""
@@ -208,6 +213,7 @@ exports[`PackagesSection creates snapshot 1`] = `
             </div>
             <div>
               <button
+                aria-label="Open opt-out modal"
                 class="btn btn-secondary btn-sm text-uppercase btnAction"
                 data-testid="addOptOut"
               >

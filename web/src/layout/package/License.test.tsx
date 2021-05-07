@@ -19,11 +19,11 @@ describe('License', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByRole } = render(<License {...defaultProps} />);
+      const { getAllByText, getByRole } = render(<License {...defaultProps} />);
 
-      expect(getByText(defaultProps.license)).toBeInTheDocument();
+      expect(getAllByText(defaultProps.license)).toHaveLength(2);
 
-      const link = getByRole('button');
+      const link = getByRole('button', { hidden: true });
       expect(link).toHaveProperty('href', `https://choosealicense.com/licenses/${defaultProps.license.toLowerCase()}/`);
     });
 
@@ -31,7 +31,7 @@ describe('License', () => {
       const { getByText, queryByRole } = render(<License license="xxx" />);
 
       expect(getByText('xxx')).toBeInTheDocument();
-      expect(queryByRole('button')).toBeNull();
+      expect(queryByRole('button', { hidden: true })).toBeNull();
     });
 
     it('does not render component when license is undefined', () => {

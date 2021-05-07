@@ -106,7 +106,7 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
     }
 
     .line {
-      border-top: 7px solid #659DBD;
+      border-top: 7px solid #417598;
     }
 
     .line-danger {
@@ -118,12 +118,12 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
     }
 
     .AHlink {
-      color: #39596C;
+      color: #2d4857;
     }
 
     .AHbtn {
-      background-color: #39596C;
-      border: solid 1px #39596C;
+      background-color: #2d4857;
+      border: solid 1px #2d4857;
       color: #ffffff;
     }
 
@@ -229,7 +229,7 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
                   </td>
                 </tr>
                 <tr>
-                  <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #39596C; text-align: center;">
+                  <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #2d4857; text-align: center;">
                     <a href="https://artifacthub.io" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">© Artifact Hub</a>
                   </td>
                 </tr>

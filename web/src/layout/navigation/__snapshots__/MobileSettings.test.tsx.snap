@@ -5,11 +5,13 @@ exports[`MobileSettings creates snapshot 1`] = `
   <div
     class="btn-group navbar-toggler pr-0 ml-auto navbarToggler"
   >
-    <div
+    <aside
+      aria-label="User settings"
       class="d-inline-block d-md-none"
-      role="complementary"
     >
       <button
+        aria-expanded="false"
+        aria-label="Open sidebar"
         class="font-weight-bold text-uppercase position-relative btn position-relative btn text-secondary pr-0 pl-3"
         data-testid="openSidebarBtn"
         type="button"
@@ -63,6 +65,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               </div>
               <div>
                 <button
+                  aria-label="Close sidebar"
                   class="close"
                   data-testid="closeSidebarBtn"
                   type="button"
@@ -90,7 +93,9 @@ exports[`MobileSettings creates snapshot 1`] = `
                   class="card-title text-muted text-uppercase"
                 >
                   <span
+                    aria-level="5"
                     class="px-4"
+                    role="heading"
                   >
                     Theme
                   </span>
@@ -106,17 +111,19 @@ exports[`MobileSettings creates snapshot 1`] = `
                     class="custom-control custom-radio"
                   >
                     <input
+                      aria-checked="false"
                       class="custom-control-input input"
                       data-testid="radio-automatic"
-                      id="automatic"
-                      name="theme"
+                      id="mobile-automatic"
+                      name="automatic"
                       readonly=""
+                      tabindex="0"
                       type="radio"
                       value="automatic"
                     />
                     <label
                       class="custom-control-label font-weight-bold label"
-                      for="automatic"
+                      for="mobile-automatic"
                     >
                       <svg
                         class="mx-1"
@@ -144,18 +151,20 @@ exports[`MobileSettings creates snapshot 1`] = `
                     class="custom-control custom-radio"
                   >
                     <input
+                      aria-checked="true"
                       checked=""
                       class="custom-control-input input"
                       data-testid="radio-light"
-                      id="light"
-                      name="theme"
+                      id="mobile-light"
+                      name="light"
                       readonly=""
+                      tabindex="-1"
                       type="radio"
                       value="light"
                     />
                     <label
                       class="custom-control-label font-weight-bold label"
-                      for="light"
+                      for="mobile-light"
                     >
                       <svg
                         class="mx-1"
@@ -234,17 +243,19 @@ exports[`MobileSettings creates snapshot 1`] = `
                     class="custom-control custom-radio"
                   >
                     <input
+                      aria-checked="false"
                       class="custom-control-input input"
                       data-testid="radio-dark"
-                      id="dark"
-                      name="theme"
+                      id="mobile-dark"
+                      name="dark"
                       readonly=""
+                      tabindex="-1"
                       type="radio"
                       value="dark"
                     />
                     <label
                       class="custom-control-label font-weight-bold label"
-                      for="dark"
+                      for="mobile-dark"
                     >
                       <svg
                         class="mx-1"
@@ -353,6 +364,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                 </div>
               </a>
               <button
+                aria-label="Sign out"
                 class="dropdown-item my-2"
                 data-testid="logOutBtn"
               >
@@ -387,6 +399,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               class="d-flex align-items-center justify-content-between"
             >
               <button
+                aria-label="Close"
                 class="ml-auto btn btn-sm btn-secondary"
                 data-testid="closeSidebarFooterBtn"
                 type="button"
@@ -397,7 +410,7 @@ exports[`MobileSettings creates snapshot 1`] = `
           </div>
         </div>
       </div>
-    </div>
+    </aside>
   </div>
 </DocumentFragment>
 `;

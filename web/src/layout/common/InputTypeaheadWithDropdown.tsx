@@ -57,6 +57,8 @@ const InputTypeaheadWithDropdown = (props: Props) => {
         onClick={() => {
           if (collapsed) setCollapsed(false);
         }}
+        aria-label={`Typeahead for ${props.label}`}
+        aria-expanded={!collapsed}
       >
         <div className="d-flex flex-row align-items-center justify-content-between">
           <SmallTitle text={props.label} className="text-secondary font-weight-bold pt-2" />
@@ -66,7 +68,7 @@ const InputTypeaheadWithDropdown = (props: Props) => {
 
         <div>
           {selectedItems.length === 0 ? (
-            <div className={`text-muted ${styles.option}`}>
+            <div className={`${styles.placeholder} ${styles.option}`}>
               <i>No {props.label} selected</i>
             </div>
           ) : (

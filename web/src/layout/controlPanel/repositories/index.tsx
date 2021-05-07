@@ -93,6 +93,7 @@ const RepositoriesSection = (props: Props) => {
                 data-testid="refreshRepoBtn"
                 className={`btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
                 onClick={fetchRepositories}
+                aria-label="Refresh repositories list"
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <IoMdRefresh className="d-inline d-md-none" />
@@ -105,6 +106,7 @@ const RepositoriesSection = (props: Props) => {
                 data-testid="claimRepoBtn"
                 className={`btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
                 onClick={() => setOpenClaimRepo(true)}
+                aria-label="Open claim repository modal"
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <RiArrowLeftRightLine className="mr-md-2" />
@@ -159,6 +161,7 @@ const RepositoriesSection = (props: Props) => {
           <ExternalLink
             href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
             className="text-reset"
+            label="Open documentation"
           >
             <u>metadata file</u>
           </ExternalLink>{' '}

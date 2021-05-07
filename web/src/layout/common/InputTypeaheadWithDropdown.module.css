@@ -11,6 +11,10 @@
   overflow-x: auto;
 }
 
+.placeholder {
+  opacity: 0.8;
+}
+
 @media only screen and (max-width: 575.98px) {
   .dropdown {
     max-width: 100%;

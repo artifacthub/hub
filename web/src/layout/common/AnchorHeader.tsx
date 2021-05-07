@@ -46,7 +46,9 @@ const AnchorHeader: React.ElementType = (props: Props) => {
             e.stopPropagation();
             props.scrollIntoView(`#${anchor}`);
           }}
+          role="button"
           className={`text-reset text-center d-none d-md-block ${styles.headingLink}`}
+          aria-label={value}
         >
           <GoLink />
         </a>

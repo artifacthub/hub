@@ -23,14 +23,14 @@ const Footer = (props: Props) => (
         <div>
           <div className="h6 font-weight-bold text-uppercase">Project</div>
           <div className="d-flex flex-column text-left">
-            <ExternalLink className="text-muted mb-1" href="/docs">
+            <ExternalLink className={`mb-1 ${styles.link}`} href="/docs" label="Open documentation">
               Documentation
             </ExternalLink>
-            <ExternalLink className="text-muted mb-1" href="https://blog.artifacthub.io/blog/">
+            <ExternalLink className={`mb-1 ${styles.link}`} href="https://blog.artifacthub.io/blog/" label="Open blog">
               Blog
             </ExternalLink>
             <Link
-              className="text-muted mb-1"
+              className={`mb-1 ${styles.link}`}
               to={{
                 pathname: '/stats',
               }}
@@ -43,19 +43,27 @@ const Footer = (props: Props) => (
         <div>
           <div className="h6 font-weight-bold text-uppercase">Community</div>
           <div className="d-flex flex-column text-left">
-            <ExternalLink className="text-muted mb-1" href="https://github.com/cncf/hub">
+            <ExternalLink className={`mb-1 ${styles.link}`} href="https://github.com/cncf/hub" label="Open Github">
               <div className="d-flex align-items-center">
                 <FaGithub className="mr-2" />
                 GitHub
               </div>
             </ExternalLink>
-            <ExternalLink className="text-muted mb-1" href="https://cloud-native.slack.com/channels/artifact-hub">
+            <ExternalLink
+              className={`mb-1 ${styles.link}`}
+              href="https://cloud-native.slack.com/channels/artifact-hub"
+              label="Open Slack channel"
+            >
               <div className="d-flex align-items-center">
                 <FaSlack className="mr-2" />
                 Slack
               </div>
             </ExternalLink>
-            <ExternalLink className="text-muted mb-1" href="https://twitter.com/cncfartifacthub">
+            <ExternalLink
+              className={`mb-1 ${styles.link}`}
+              href="https://twitter.com/cncfartifacthub"
+              label="Open Twitter"
+            >
               <div className="d-flex align-items-center">
                 <FaTwitter className="mr-2" />
                 Twitter
@@ -66,9 +74,13 @@ const Footer = (props: Props) => (
 
         <div className={styles.fullMobileSection}>
           <div className="h6 font-weight-bold text-uppercase">About</div>
-          <div className={`text-muted ${styles.copyrightContent}`}>
+          <div className={styles.copyrightContent}>
             Artifact Hub is an <b className="d-inline-block">Open Source</b> project licensed under the{' '}
-            <ExternalLink className="d-inline-block text-muted mb-1" href="https://www.apache.org/licenses/LICENSE-2.0">
+            <ExternalLink
+              className={`d-inline-block mb-1 ${styles.linkInText}`}
+              href="https://www.apache.org/licenses/LICENSE-2.0"
+              label="Open Apache License 2.0 documentation"
+            >
               <div className="d-flex align-items-center">
                 Apache License 2.0
                 <span className={styles.smallIcon}>

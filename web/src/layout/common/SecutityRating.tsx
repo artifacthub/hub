@@ -164,6 +164,9 @@ const SecurityRating = (props: Props) => {
                 search: '?modal=security-report',
               });
             }}
+            aria-label="Open security report"
+            aria-hidden="true"
+            tabIndex={-1}
           >
             {badge()}
           </button>

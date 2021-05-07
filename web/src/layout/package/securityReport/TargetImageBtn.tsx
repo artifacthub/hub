@@ -25,6 +25,7 @@ const TargetImageBtn = (props: Props) => {
       className="btn btn-link text-reset pl-0 btn-block position-relative"
       onClick={props.onClick}
       disabled={props.disabled}
+      aria-label="Open target image"
     >
       {props.children}
     </button>

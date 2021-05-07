@@ -71,6 +71,7 @@ const WebhooksSection = (props: Props) => {
                       className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
                       onClick={() => setVisibleForm({ visible: true })}
                       data-testid="addWebhookBtn"
+                      aria-label="Open form"
                     >
                       <div className="d-flex flex-row align-items-center justify-content-center">
                         <MdAdd className="d-inline d-md-none" />
@@ -103,6 +104,7 @@ const WebhooksSection = (props: Props) => {
                               className="btn btn-secondary"
                               onClick={() => setVisibleForm({ visible: true })}
                               data-testid="addFirstWebhookBtn"
+                              aria-label="Open form"
                             >
                               <div className="d-flex flex-row align-items-center">
                                 <MdAddCircle className="mr-2" />

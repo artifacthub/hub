@@ -45,8 +45,9 @@ const BlockCodeButtons = (props: Props) => {
         className={`btn btn-sm btn-primary rounded-circle ${styles.btn}`}
         style={btnStyle}
         onClick={downloadFile}
+        aria-label="Download"
       >
-        <BiCloudDownload />
+        <BiCloudDownload aria-hidden="true" />
       </button>
     </div>
   );

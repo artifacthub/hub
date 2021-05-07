@@ -41,7 +41,13 @@ const OrganizationModal = (props: Props) => {
       open={props.open}
       modalClassName={styles.modal}
       closeButton={
-        <button className="btn btn-sm btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
+        <button
+          className="btn btn-sm btn-secondary"
+          type="button"
+          disabled={isSending}
+          onClick={submitForm}
+          aria-label={`${isUndefined(props.organization) ? 'Add' : 'Update'} organization`}
+        >
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />

@@ -185,14 +185,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('8');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByLabelText } = render(
+      const { getAllByLabelText } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const opt = await waitFor(() => getByLabelText(/Chart/g));
-      fireEvent.click(opt);
+      const opts = await waitFor(() => getAllByLabelText(/Chart/g));
+      fireEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -348,14 +348,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('15');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByLabelText } = render(
+      const { getAllByLabelText } = render(
         <Router>
           <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
         </Router>
       );
 
-      const opt = await waitFor(() => getByLabelText(/Falco rules/g));
-      fireEvent.click(opt);
+      const opts = await waitFor(() => getAllByLabelText(/Falco rules/g));
+      fireEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -373,14 +373,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('16');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByLabelText } = render(
+      const { getAllByLabelText } = render(
         <Router>
           <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
         </Router>
       );
 
-      const opt = await waitFor(() => getByLabelText(/Helm charts/g));
-      fireEvent.click(opt);
+      const opts = await waitFor(() => getAllByLabelText(/Helm charts/g));
+      fireEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -398,14 +398,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('16');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByLabelText } = render(
+      const { getAllByLabelText } = render(
         <Router>
           <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
         </Router>
       );
 
-      const opt = await waitFor(() => getByLabelText(/Helm charts/g));
-      fireEvent.click(opt);
+      const opts = await waitFor(() => getAllByLabelText(/Helm charts/g));
+      fireEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({

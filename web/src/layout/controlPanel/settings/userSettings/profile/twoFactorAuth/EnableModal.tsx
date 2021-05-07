@@ -86,7 +86,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
 
   return (
     <>
-      <button className="btn btn-success btn-sm" onClick={setUpTFA} disabled={isLoading}>
+      <button className="btn btn-success btn-sm" onClick={setUpTFA} disabled={isLoading} aria-label="Open modal">
         <div className="d-flex flex-row align-items-center">
           {isLoading ? (
             <>
@@ -110,7 +110,11 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
         onClose={onClose}
         closeButton={
           <>
-            <button className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`} onClick={onClose}>
+            <button
+              className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+              onClick={onClose}
+              aria-label={activeStep === 3 ? 'Close' : 'Cancel'}
+            >
               <div className="d-flex flex-row align-items-center">
                 <IoMdCloseCircle className="mr-2" />
                 <span>{activeStep === 3 ? 'Close' : 'Cancel'}</span>
@@ -127,6 +131,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                         e.preventDefault();
                         setActiveStep(2);
                       }}
+                      aria-label="Open next step"
                     >
                       <div className="d-flex flex-row align-items-center text-uppercase">
                         <MdNavigateNext className="mr-2" />
@@ -143,6 +148,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                         enableTFA();
                       }}
                       disabled={passcode === '' || isProcessing}
+                      aria-label="Enable two-factor authentication"
                     >
                       <div className="d-flex flex-row align-items-center text-uppercase">
                         {isProcessing ? (
@@ -219,6 +225,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                             visibleBtnText
                             contentBtn="this text code"
                             className={`btn-link text-reset p-0 ${styles.copyBtn}`}
+                            label="Copy 2FA code to clipboard"
                           />
                           to set it up manually.
                         </div>

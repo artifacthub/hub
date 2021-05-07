@@ -87,6 +87,8 @@ const InstallationModal = (props: Props) => {
               { disabled: isDisabled }
             )}
             onClick={onOpenModal}
+            aria-label="Open installation modal"
+            aria-disabled={isDisabled}
           >
             <div className="d-flex align-items-center justify-content-center">
               <FiDownload className="mr-2" />

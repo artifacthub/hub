@@ -337,6 +337,7 @@ const RepositoryCard = (props: Props) => {
                     closeDropdown();
                     setBadgeModalStatus(true);
                   }}
+                  aria-label="Open modal"
                 >
                   <div className="d-flex flex-row align-items-center">
                     <MdLabel className={`mr-2 ${styles.btnIcon}`} />
@@ -399,6 +400,8 @@ const RepositoryCard = (props: Props) => {
               <button
                 className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
                 onClick={() => setDropdownMenuStatus(true)}
+                aria-label="Open menu"
+                aria-expanded={dropdownMenuStatus}
               >
                 <BsThreeDotsVertical />
               </button>
@@ -415,6 +418,7 @@ const RepositoryCard = (props: Props) => {
                   <ButtonCopyToClipboard
                     text={props.repository.repositoryId}
                     className="btn-link border-0 text-secondary font-weight-bold"
+                    label="Copy repository ID to clipboard"
                   />
                 </div>
               </div>

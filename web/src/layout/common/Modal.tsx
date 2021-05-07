@@ -87,6 +87,7 @@ const Modal = (props: Props) => {
                 setOpenStatus(true);
               }
             }}
+            aria-label="Open modal"
           >
             <div className="d-flex align-items-center justify-content-center">{props.buttonContent}</div>
           </button>
@@ -101,7 +102,12 @@ const Modal = (props: Props) => {
 
       {openStatus && <div className={`modal-backdrop ${styles.activeBackdrop}`} data-testid="modalBackdrop" />}
 
-      <div className={classnames('modal', styles.modal, { [`${styles.active} d-block`]: openStatus })} role="dialog">
+      <div
+        className={classnames('modal', styles.modal, { [`${styles.active} d-block`]: openStatus })}
+        role="dialog"
+        tabIndex={-1}
+        aria-modal={openStatus}
+      >
         <div
           className={classnames(
             `modal-dialog modal-${props.size || 'lg'}`,
@@ -132,6 +138,7 @@ const Modal = (props: Props) => {
                       closeModal();
                     }}
                     disabled={props.disabledClose}
+                    aria-label="Close modal"
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -158,6 +165,7 @@ const Modal = (props: Props) => {
                       closeModal();
                     }}
                     disabled={props.disabledClose}
+                    aria-label="Close modal"
                   >
                     <div className="d-flex flex-row align-items-center">
                       <MdClose className="mr-2" />

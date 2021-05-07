@@ -35,11 +35,13 @@ exports[`HelmInstall creates snapshot 1`] = `
         class="position-relative undefined"
       >
         <button
+          aria-label="Copy command to clipboard"
           class="btn btn-sm btn-primary rounded-circle copyBtn"
           data-testid="ctcBtn"
           type="button"
         >
           <div
+            aria-hidden="true"
             class="d-flex flex-row align-items-center"
           >
             <svg
@@ -103,11 +105,13 @@ exports[`HelmInstall creates snapshot 1`] = `
         class="position-relative undefined"
       >
         <button
+          aria-label="Copy command to clipboard"
           class="btn btn-sm btn-primary rounded-circle copyBtn"
           data-testid="ctcBtn"
           type="button"
         >
           <div
+            aria-hidden="true"
             class="d-flex flex-row align-items-center"
           >
             <svg
@@ -158,10 +162,12 @@ exports[`HelmInstall creates snapshot 1`] = `
     class="mt-2 d-flex flex-row justify-content-between align-items-baseline"
   >
     <a
+      aria-label="Download Helm"
       class="link btn btn-link pl-0"
       href="https://helm.sh/docs/intro/quickstart/"
       rel="noopener noreferrer"
       role="button"
+      tabindex="-1"
       target="_blank"
     >
       Need Helm?

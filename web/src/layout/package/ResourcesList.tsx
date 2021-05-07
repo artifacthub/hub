@@ -55,6 +55,7 @@ const ResourcesList = (props: Props) => {
                       onClick={() =>
                         setSelectedResource(isSelected ? null : { name: resource, filename: fileName as string })
                       }
+                      aria-label={`View ${props.kind === RepositoryKind.Falco ? 'rules file' : 'Policy'}`}
                     >
                       View {props.kind === RepositoryKind.Falco ? 'rules file' : 'Policy'}
                     </button>

@@ -280,6 +280,7 @@ const SchemaDefinition = (props: Props) => {
           data-testid="expandBtn"
           className={`btn btn-block text-reset text-left p-0 position-relative ${styles.btn}`}
           onClick={changeActivePath}
+          aria-label={`${props.isExpanded ? 'Hide' : 'Show'} detail`}
         >
           <div className="d-flex flex-column">
             <div className="d-flex flex-row align-items-start">
@@ -388,6 +389,7 @@ const SchemaDefinition = (props: Props) => {
                         contentBtn="Copy path to clipboard"
                         className={`btn-link text-muted p-0 ${styles.btnClip}`}
                         visibleBtnText
+                        label="Copy path to clipboard"
                       />
                     </div>
                   </div>

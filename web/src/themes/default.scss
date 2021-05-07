@@ -24,6 +24,10 @@ $container-max-widths: (
 @import './light.scss';
 @import './dark.scss';
 
+.text-muted {
+  color: #575e64 !important;
+}
+
 .form-control:disabled,
 .form-control[readonly] {
   opacity: 0.75;

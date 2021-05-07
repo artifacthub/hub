@@ -4,8 +4,7 @@
 
 .jumbotron {
   border-radius: 0 !important;
-  background-color: var(--color-1-900) !important;
-  background: linear-gradient(130deg, var(--color-1-500) 0%, var(--color-1-700) 100%);
+  background-color: var(--color-1-500);
   color: var(--white);
   padding-top: 7rem !important;
 }
@@ -31,7 +30,7 @@
 }
 
 .about {
-  background-color: var(--color-1-700);
+  background-color: var(--color-1-600);
   font-weight: 300;
   font-size: 1.5rem;
 }

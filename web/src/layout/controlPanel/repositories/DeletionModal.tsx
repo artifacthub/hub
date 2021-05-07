@@ -57,6 +57,7 @@ const DeletionModal = (props: Props) => {
           <button
             className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
             onClick={() => props.setDeletionModalStatus(false)}
+            aria-label="Cancel"
           >
             <div className="d-flex flex-row align-items-center">
               <IoMdCloseCircle className="mr-2" />
@@ -72,6 +73,7 @@ const DeletionModal = (props: Props) => {
               deleteRepository();
             }}
             disabled={isDeleting || !isValidInput}
+            aria-label="Delete repository"
           >
             <div className="d-flex flex-row align-items-center text-uppercase">
               {isDeleting ? (

@@ -9,6 +9,8 @@ exports[`HelmInstall creates snapshot 1`] = `
       data-testid="elementWithTooltip"
     >
       <button
+        aria-disabled="false"
+        aria-label="Open installation modal"
         class="btn font-weight-bold text-uppercase position-relative btn-block btn-secondary btn-sm text-nowrap"
         data-testid="openModalBtn"
         type="button"
@@ -54,8 +56,10 @@ exports[`HelmInstall creates snapshot 1`] = `
       data-testid="modalBackdrop"
     />
     <div
+      aria-modal="true"
       class="modal modal active d-block"
       role="dialog"
+      tabindex="-1"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
@@ -74,6 +78,7 @@ exports[`HelmInstall creates snapshot 1`] = `
               >
                 <img
                   alt="Pretty name"
+                  aria-hidden="true"
                   class="image"
                   src="/image/imageId"
                   srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
@@ -90,6 +95,7 @@ exports[`HelmInstall creates snapshot 1`] = `
               </div>
             </div>
             <button
+              aria-label="Close modal"
               class="close"
               data-testid="closeModalBtn"
               type="button"
@@ -124,6 +130,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                   class="nav-item"
                 >
                   <button
+                    aria-label="Open tab v3"
                     class="btn btn-link nav-item btn active btn-primary active"
                     data-testid="tabBtn"
                   >
@@ -143,6 +150,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                   class="nav-item"
                 >
                   <button
+                    aria-label="Open tab v2"
                     class="btn btn-link nav-item btn"
                     data-testid="tabBtn"
                   >
@@ -199,11 +207,13 @@ exports[`HelmInstall creates snapshot 1`] = `
                       class="position-relative undefined"
                     >
                       <button
+                        aria-label="Copy command to clipboard"
                         class="btn btn-sm btn-primary rounded-circle copyBtn"
                         data-testid="ctcBtn"
                         type="button"
                       >
                         <div
+                          aria-hidden="true"
                           class="d-flex flex-row align-items-center"
                         >
                           <svg
@@ -275,11 +285,13 @@ exports[`HelmInstall creates snapshot 1`] = `
                       class="position-relative undefined"
                     >
                       <button
+                        aria-label="Copy command to clipboard"
                         class="btn btn-sm btn-primary rounded-circle copyBtn"
                         data-testid="ctcBtn"
                         type="button"
                       >
                         <div
+                          aria-hidden="true"
                           class="d-flex flex-row align-items-center"
                         >
                           <svg
@@ -330,10 +342,12 @@ exports[`HelmInstall creates snapshot 1`] = `
                   class="mt-2 d-flex flex-row justify-content-between align-items-baseline"
                 >
                   <a
+                    aria-label="Download Helm"
                     class="link btn btn-link pl-0"
                     href="https://helm.sh/docs/intro/quickstart/"
                     rel="noopener noreferrer"
                     role="button"
+                    tabindex="-1"
                     target="_blank"
                   >
                     Need Helm?
@@ -352,6 +366,7 @@ exports[`HelmInstall creates snapshot 1`] = `
             class="modal-footer p-3"
           >
             <button
+              aria-label="Close modal"
               class="btn btn-sm btn-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"

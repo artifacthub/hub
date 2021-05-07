@@ -6,6 +6,7 @@ import Sidebar from './Sidebar';
 const defaultProps = {
   children: <span>Sidebar content</span>,
   header: 'title',
+  label: 'test',
 };
 
 describe('Sidebar', () => {

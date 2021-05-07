@@ -30,12 +30,3 @@
     url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff2') format('woff2'),
     url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff') format('woff');
 }
-
-@font-face {
-  font-family: 'Archivo Black';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Archivo Black Regular'), local('ArchivoBlack-Regular'),
-    url('/static/fonts/Archivo_Black/archivo-black-regular.woff2') format('woff2'),
-    url('/static/fonts/Archivo_Black/archivo-black-regular.woff') format('woff');
-}

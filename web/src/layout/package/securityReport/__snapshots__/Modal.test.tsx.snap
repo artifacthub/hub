@@ -4,6 +4,7 @@ exports[`SecurityModal creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <button
+      aria-label="Open full report modal"
       class="btn btn-secondary btn-sm"
     >
       <small

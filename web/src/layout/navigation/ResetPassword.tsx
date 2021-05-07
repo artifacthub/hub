@@ -117,6 +117,7 @@ const ResetPassword = (props: Props) => {
                 type="button"
                 disabled={isSending || resetPwdEmail === ''}
                 onClick={submitForm}
+                aria-label="Send password reset email"
               >
                 {isSending ? (
                   <>

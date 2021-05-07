@@ -2,7 +2,7 @@ import React from 'react';
 
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
-import styles from './ContentInstall.module.css';
+import PrivateRepoWarning from './PrivateRepoWarning';
 
 interface Props {
   normalizedName: string;
@@ -15,15 +15,10 @@ const FalcoInstall = (props: Props) => (
       command={`helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/${props.normalizedName}/custom-rules.yaml stable/falco`}
     />
 
-    {props.isPrivate && (
-      <div className={`alert alert-warning my-4 ${styles.alert}`} role="alert">
-        <span className="font-weight-bold text-uppercase">Important:</span> This repository is{' '}
-        <span className="font-weight-bold">private</span> and requires some credentials.
-      </div>
-    )}
+    {props.isPrivate && <PrivateRepoWarning />}
 
     <div className="mt-2">
-      <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">
+      <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0" label="Download Helm">
         Need Helm?
       </ExternalLink>
     </div>

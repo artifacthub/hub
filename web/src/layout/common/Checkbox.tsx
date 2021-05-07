@@ -13,6 +13,7 @@ interface Props {
   className?: string;
   icon?: JSX.Element;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  device: string;
 }
 
 const CheckBox = (props: Props) => {
@@ -22,7 +23,7 @@ const CheckBox = (props: Props) => {
     }
   };
 
-  const id = `${props.name}-${props.value}`;
+  const id = `${props.device}-${props.name}-${props.value}`;
 
   return (
     <div className={`custom-control custom-checkbox mr-sm-2 mb-2 ${props.className}`}>
@@ -35,7 +36,9 @@ const CheckBox = (props: Props) => {
         id={id}
         onChange={handleOnChange}
         checked={props.checked}
+        aria-checked={props.checked}
         disabled={props.disabled}
+        tabIndex={0}
       />
       <label className={`custom-control-label w-100 ${styles.label}`} htmlFor={id} data-testid="checkboxLabel">
         <div className="d-flex align-items-baseline mw-100">

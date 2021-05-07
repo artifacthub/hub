@@ -10,6 +10,7 @@ exports[`ModalHeader creates snapshot 1`] = `
     >
       <img
         alt="Pretty name"
+        aria-hidden="true"
         class="image"
         src="/image/imageId"
         srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"

@@ -76,6 +76,8 @@ const UserContext = () => {
               fetchOrganizations();
               setOpenStatus(true);
             }}
+            aria-label="Open context"
+            aria-expanded={openStatus}
           >
             <div className="d-flex flex-row align-items-center">
               {!isUndefined(ctx.prefs.controlPanel.selectedOrg) ? (
@@ -114,7 +116,12 @@ const UserContext = () => {
       >
         <div className={`arrow ${styles.arrow}`} />
 
-        <button data-testid="userCtxBtn" className="dropdown-item mw-100" onClick={() => handleChange(alias)}>
+        <button
+          data-testid="userCtxBtn"
+          className="dropdown-item mw-100"
+          onClick={() => handleChange(alias)}
+          aria-label="Activate user context"
+        >
           <div className="d-flex flex-row align-items-center text-truncate">
             <FaUser className={`mr-2 ${styles.icon}`} />
             <div className="flex-grow-1 text-truncate">{alias}</div>
@@ -131,6 +138,7 @@ const UserContext = () => {
                 key={`opt_${org.name}`}
                 className="dropdown-item"
                 onClick={() => handleChange(org)}
+                aria-label={`Activate org ${org.name} context`}
               >
                 <div className="d-flex flex-row align-items-center text-truncate">
                   <MdBusiness className={`mr-2 ${styles.icon}`} />

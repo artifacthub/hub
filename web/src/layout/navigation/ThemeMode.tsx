@@ -9,6 +9,7 @@ import styles from './ThemeMode.module.css';
 
 interface Props {
   onSelection?: () => void;
+  device: string;
 }
 
 const ThemeMode = (props: Props) => {
@@ -29,18 +30,20 @@ const ThemeMode = (props: Props) => {
         <div className="dropdown-item">
           <div className="custom-control custom-radio">
             <input
+              id={`${props.device}-automatic`}
+              name="automatic"
               data-testid="radio-automatic"
               className={`custom-control-input ${styles.input}`}
               type="radio"
-              name="theme"
-              id="automatic"
               value="automatic"
+              aria-checked={configured === 'automatic'}
+              tabIndex={0}
               checked={configured === 'automatic'}
               readOnly
             />
             <label
               className={`custom-control-label font-weight-bold ${styles.label}`}
-              htmlFor="automatic"
+              htmlFor={`${props.device}-automatic`}
               onClick={() => onHandleChange('automatic')}
             >
               <GoBrowser className="mx-1" />
@@ -52,18 +55,20 @@ const ThemeMode = (props: Props) => {
         <div className="dropdown-item">
           <div className="custom-control custom-radio">
             <input
+              id={`${props.device}-light`}
+              name="light"
               data-testid="radio-light"
               className={`custom-control-input ${styles.input}`}
               type="radio"
-              name="theme"
-              id="light"
               value="light"
+              aria-checked={configured === 'light'}
+              tabIndex={-1}
               checked={configured === 'light'}
               readOnly
             />
             <label
               className={`custom-control-label font-weight-bold ${styles.label}`}
-              htmlFor="light"
+              htmlFor={`${props.device}-light`}
               onClick={() => onHandleChange('light')}
             >
               <FiSun className="mx-1" /> Light
@@ -74,18 +79,20 @@ const ThemeMode = (props: Props) => {
         <div className="dropdown-item">
           <div className="custom-control custom-radio">
             <input
+              id={`${props.device}-dark`}
+              name="dark"
               data-testid="radio-dark"
               className={`custom-control-input ${styles.input}`}
               type="radio"
-              name="theme"
-              id="dark"
               value="dark"
+              aria-checked={configured === 'dark'}
+              tabIndex={-1}
               checked={configured === 'dark'}
               readOnly
             />
             <label
               className={`custom-control-label font-weight-bold ${styles.label}`}
-              htmlFor="dark"
+              htmlFor={`${props.device}-dark`}
               onClick={() => onHandleChange('dark')}
             >
               <FiMoon className="mx-1" /> Dark

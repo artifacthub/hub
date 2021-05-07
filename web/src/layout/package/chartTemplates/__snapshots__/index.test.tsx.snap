@@ -9,6 +9,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
       class="text-center"
     >
       <button
+        aria-label="Open templates modal"
         class="btn btn-secondary btn-sm text-nowrap undefined"
         data-testid="tmplModalBtn"
       >

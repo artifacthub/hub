@@ -8,8 +8,10 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
       data-testid="modalBackdrop"
     />
     <div
+      aria-modal="true"
       class="modal modal active d-block"
       role="dialog"
+      tabindex="-1"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
@@ -26,6 +28,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
               Get badge
             </div>
             <button
+              aria-label="Close modal"
               class="close"
               data-testid="closeModalBtn"
               type="button"
@@ -51,6 +54,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                     class="nav-item"
                   >
                     <button
+                      aria-label="Open tab markdown"
                       class="btn btn-link nav-item btn active btn-primary active"
                       data-testid="tabBtn"
                     >
@@ -70,6 +74,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                     class="nav-item"
                   >
                     <button
+                      aria-label="Open tab ascii"
                       class="btn btn-link nav-item btn"
                       data-testid="tabBtn"
                     >
@@ -106,11 +111,13 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                       class="position-relative undefined"
                     >
                       <button
+                        aria-label="Copy badge markdown link to clipboard"
                         class="btn btn-sm btn-primary rounded-circle btn"
                         data-testid="ctcBtn"
                         type="button"
                       >
                         <div
+                          aria-hidden="true"
                           class="d-flex flex-row align-items-center"
                         >
                           <svg
@@ -166,6 +173,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
             class="modal-footer p-3"
           >
             <button
+              aria-label="Close modal"
               class="btn btn-sm btn-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"

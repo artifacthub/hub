@@ -106,7 +106,7 @@ var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
     }
 
     .line {
-      border-top: 7px solid #659DBD;
+      border-top: 7px solid #417598;
     }
 
     .line-danger {
@@ -118,12 +118,12 @@ var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
     }
 
     .AHlink {
-      color: #39596C;
+      color: #2d4857;
     }
 
     .AHbtn {
-      background-color: #39596C;
-      border: solid 1px #39596C;
+      background-color: #2d4857;
+      border: solid 1px #2d4857;
       color: #ffffff;
     }
 
@@ -191,7 +191,7 @@ var trackingErrorsEmailTmpl = template.Must(template.New("").Parse(`
                         </p>
 
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">
-                          If you find something in them that doesn't make sense, or there is anything you need help with, please file an issue <a href="https://github.com/artifacthub/hub/issues" style="color: #39596C; text-decoration: none;">here</a>.
+                          If you find something in them that doesn't make sense, or there is anything you need help with, please file an issue <a href="https://github.com/artifacthub/hub/issues" style="color: #2d4857; text-decoration: none;">here</a>.
                         </p>
 
                         <h4 style="color: #921e12; font-family: sans-serif; margin: 0; Margin-bottom: 15px;">Errors log</h4>

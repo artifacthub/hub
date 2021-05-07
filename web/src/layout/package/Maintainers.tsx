@@ -20,7 +20,11 @@ const Maintainers = (props: Props) => {
       <div data-testid="maintainers" className="mb-3">
         {props.maintainers.map((maintainer: Maintainer) => (
           <div className="mb-1" key={maintainer.email}>
-            <ExternalLink href={`mailto:${maintainer.email}`} className="text-primary py-1 py-sm-0">
+            <ExternalLink
+              href={`mailto:${maintainer.email}`}
+              className="text-primary py-1 py-sm-0"
+              label={`Mail to: ${maintainer.email}`}
+            >
               <div className="d-flex align-items-center">
                 <GiEnvelope className="text-muted mr-2 h6 mb-0" />
                 <div className={`text-truncate ${styles.linkText}`}>{maintainer.name || maintainer.email}</div>

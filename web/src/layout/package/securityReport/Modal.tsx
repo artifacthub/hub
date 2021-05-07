@@ -105,7 +105,7 @@ const SecurityModal = (props: Props) => {
           </div>
         )}
 
-        <button className="btn btn-secondary btn-sm" onClick={onOpenModal}>
+        <button className="btn btn-secondary btn-sm" onClick={onOpenModal} aria-label="Open full report modal">
           <small className="d-flex flex-row align-items-center text-uppercase">
             {isLoading ? (
               <>

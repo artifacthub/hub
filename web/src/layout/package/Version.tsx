@@ -74,7 +74,7 @@ const Version = (props: Props) => {
   );
 
   return (
-    <div className="py-1 py-sm-0 w-100 text-truncate">
+    <div className="py-1 py-sm-0 w-100 text-truncate" role="listitem">
       {props.isActive ? (
         <>
           <div className="d-flex flex-row align-items-baseline activeVersion mw-100">
@@ -90,6 +90,7 @@ const Version = (props: Props) => {
               data-testid="version"
               onClick={() => openPackagePage()}
               className="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
+              aria-label={`Open version ${props.version}`}
             >
               {props.version}
             </button>

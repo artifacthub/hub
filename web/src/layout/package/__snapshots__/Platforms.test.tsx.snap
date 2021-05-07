@@ -9,7 +9,10 @@ exports[`Platforms creates snapshot 1`] = `
     <small
       class="card-title text-muted text-uppercase"
     >
-      <span>
+      <span
+        aria-level="5"
+        role="heading"
+      >
         Supported platforms
       </span>
     </small>

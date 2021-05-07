@@ -185,6 +185,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
           type="button"
           disabled={isSending || isNull(repoItem)}
           onClick={submitForm}
+          aria-label="Claim ownership"
         >
           {isSending ? (
             <>
@@ -212,6 +213,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
             <ExternalLink
               href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
               className="text-reset"
+              label="Open documentation"
             >
               <u>metadata file</u>
             </ExternalLink>{' '}
@@ -269,7 +271,11 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                     </div>
 
                     <div>
-                      <button className={`btn h-100 rounded-0 ${styles.closeButton}`} onClick={() => setRepoItem(null)}>
+                      <button
+                        className={`btn h-100 rounded-0 ${styles.closeButton}`}
+                        onClick={() => setRepoItem(null)}
+                        aria-label="Close"
+                      >
                         <MdClose />
                       </button>
                     </div>
@@ -290,9 +296,12 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
               )}
             </div>
 
-            <label className={`font-weight-bold ${styles.label}`}>Transfer to:</label>
+            <label id="claiming" className={`font-weight-bold ${styles.label}`}>
+              Transfer to:
+            </label>
             <div className="form-check mb-2">
               <input
+                aria-labelledby="claiming user"
                 data-testid="radio_claim_user"
                 className="form-check-input"
                 type="radio"
@@ -303,13 +312,14 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                 onChange={() => handleClaimingFromOpt('user')}
                 required
               />
-              <label className={`form-check-label ${styles.label}`} htmlFor="user">
+              <label id="user" className={`form-check-label ${styles.label}`} htmlFor="user">
                 My user
               </label>
             </div>
 
             <div className="form-check mb-3">
               <input
+                aria-labelledby="claiming org"
                 data-testid="radio_claim_org"
                 className="form-check-input"
                 type="radio"
@@ -320,7 +330,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                 onChange={() => handleClaimingFromOpt('org')}
                 required
               />
-              <label className={`form-check-label ${styles.label}`} htmlFor="org">
+              <label id="org" className={`form-check-label ${styles.label}`} htmlFor="org">
                 Organization
               </label>
             </div>

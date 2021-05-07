@@ -39,6 +39,7 @@ exports[`ResourcesList creates snapshot 1`] = `
                 class="separator separator"
               />
               <button
+                aria-label="View Policy"
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                 data-testid="resourceBtn"
               >
@@ -79,6 +80,7 @@ exports[`ResourcesList creates snapshot 1`] = `
                 class="separator separator"
               />
               <button
+                aria-label="View Policy"
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                 data-testid="resourceBtn"
               >
@@ -119,6 +121,7 @@ exports[`ResourcesList creates snapshot 1`] = `
                 class="separator separator"
               />
               <button
+                aria-label="View Policy"
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                 data-testid="resourceBtn"
               >
@@ -159,6 +162,7 @@ exports[`ResourcesList creates snapshot 1`] = `
                 class="separator separator"
               />
               <button
+                aria-label="View Policy"
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                 data-testid="resourceBtn"
               >
@@ -199,6 +203,7 @@ exports[`ResourcesList creates snapshot 1`] = `
                 class="separator separator"
               />
               <button
+                aria-label="View Policy"
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                 data-testid="resourceBtn"
               >
@@ -239,6 +244,7 @@ exports[`ResourcesList creates snapshot 1`] = `
                 class="separator separator"
               />
               <button
+                aria-label="View Policy"
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                 data-testid="resourceBtn"
               >
@@ -279,6 +285,7 @@ exports[`ResourcesList creates snapshot 1`] = `
                 class="separator separator"
               />
               <button
+                aria-label="View Policy"
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                 data-testid="resourceBtn"
               >
@@ -319,6 +326,7 @@ exports[`ResourcesList creates snapshot 1`] = `
                 class="separator separator"
               />
               <button
+                aria-label="View Policy"
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                 data-testid="resourceBtn"
               >

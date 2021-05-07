@@ -19,6 +19,7 @@ exports[`OAuth creates snapshot 1`] = `
       class="d-flex flex-column mb-1"
     >
       <button
+        aria-label="Sign in with Github"
         class="btn btn-outline-secondary mb-3 btn-block btn"
         type="button"
       >
@@ -38,6 +39,7 @@ exports[`OAuth creates snapshot 1`] = `
         </div>
       </button>
       <button
+        aria-label="Sign in with Google"
         class="btn btn-outline-secondary mb-3 btn-block btn"
         type="button"
       >
@@ -57,6 +59,7 @@ exports[`OAuth creates snapshot 1`] = `
         </div>
       </button>
       <button
+        aria-label="Sign in with OpenID Connect"
         class="btn btn-outline-secondary mb-3 btn-block btn"
         type="button"
       >

@@ -123,7 +123,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
     <>
       {props.success ? (
         <div className="d-flex h-100 w-100 align-items-center justify-content-center">
-          <div className="alert" role="alert">
+          <div className="alert" role="alert" aria-live="assertive" aria-atomic="true">
             <div className="d-flex flex-sm-column flex-md-row align-items-center">
               <div className="mr-3">
                 <MdDone className="h1 text-success mb-3 mb-md-0" />

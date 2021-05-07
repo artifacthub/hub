@@ -18,6 +18,8 @@ const GuestDropdown = () => {
         className={`btn p-0 position-relative ${styles.btn}`}
         type="button"
         onClick={() => setOpenStatus(true)}
+        aria-label="Guest dropdown button"
+        aria-expanded={openStatus}
       >
         <div className="d-flex flex-row align-items-center justify-content-center">
           <div
@@ -43,7 +45,7 @@ const GuestDropdown = () => {
         <div className={`arrow ${styles.arrow}`} />
 
         <div className="my-3">
-          <ThemeMode onSelection={() => setOpenStatus(false)} />
+          <ThemeMode device="desktop" onSelection={() => setOpenStatus(false)} />
         </div>
       </div>
     </div>

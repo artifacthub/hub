@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
 import AnchorHeader from '../../common/AnchorHeader';
@@ -39,7 +39,7 @@ const Readme = (props: Props) => {
   const Code: React.ElementType = (props: CodeProps) => {
     if (props.value) {
       return (
-        <SyntaxHighlighter language="bash" style={docco}>
+        <SyntaxHighlighter language="bash" style={github}>
           {props.value}
         </SyntaxHighlighter>
       );
@@ -69,7 +69,7 @@ const Readme = (props: Props) => {
         <img
           ref={img}
           src={data.src}
-          alt={data.alt}
+          alt={data.alt || ''}
           className={classnames({ 'd-none': error })}
           onError={() => setError(true)}
           onLoad={checkImageInBreakpoint}
@@ -106,6 +106,7 @@ const Readme = (props: Props) => {
         <button
           className={classnames('btn btn-link text-left border-0 p-0', styles.btnLink)}
           onClick={() => props.scrollIntoView(data.href)}
+          aria-label="Go to element"
         >
           {data.children}
         </button>

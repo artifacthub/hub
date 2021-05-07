@@ -3,7 +3,7 @@ import React from 'react';
 import { Repository } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
-import styles from './ContentInstall.module.css';
+import PrivateRepoWarning from './PrivateRepoWarning';
 
 interface Props {
   name: string;
@@ -30,15 +30,14 @@ const KrewInstall = (props: Props) => {
 
       <CommandBlock command={installCommand} title="Install plugin" />
 
-      {props.repository.private && (
-        <div className={`alert alert-warning my-4 ${styles.alert}`} role="alert">
-          <span className="font-weight-bold text-uppercase">Important:</span> This repository is{' '}
-          <span className="font-weight-bold">private</span> and requires some credentials.
-        </div>
-      )}
+      {props.repository.private && <PrivateRepoWarning />}
 
       <div className="mt-2 d-flex flex-row justify-content-between align-items-baseline">
-        <ExternalLink href="https://krew.sigs.k8s.io/docs/user-guide/setup/install/" className="btn btn-link pl-0">
+        <ExternalLink
+          href="https://krew.sigs.k8s.io/docs/user-guide/setup/install/"
+          className="btn btn-link pl-0"
+          label="Download Krew"
+        >
           Need Krew?
         </ExternalLink>
       </div>

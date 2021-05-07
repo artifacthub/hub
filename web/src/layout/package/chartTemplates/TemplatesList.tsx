@@ -86,72 +86,82 @@ const TemplatesList = (props: Props) => {
       </div>
 
       {visibleTemplates.length === 0 ? (
-        <div className={`alert alert-dark p-2 text-center ${styles.alert}`} role="alert">
+        <div
+          className={`alert alert-dark p-2 text-center ${styles.alert}`}
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
           <small className="text-muted">Sorry, no matches found</small>
         </div>
       ) : (
         <>
-          {visibleTemplates.map((template: ChartTemplate, index: number) => (
-            <div key={`template_${index}`}>
-              <button
-                data-testid="tmplBtn"
-                className={classnames('btn btn-light btn-sm mb-2 text-left w-100', styles.btn, {
-                  [`activeTemplate ${styles.active}`]:
-                    props.activeTemplateName && props.activeTemplateName === template.name,
-                })}
-                onClick={() => {
-                  if (props.activeTemplateName && props.activeTemplateName !== template.name) {
-                    props.onTemplateChange(template);
-                  }
-                }}
-              >
-                <div className="d-flex flex-column">
-                  {(() => {
-                    switch (template.type) {
-                      case ChartTmplTypeFile.Template:
-                        return (
-                          <>
-                            <div className="d-flex flex-row align-items-baseline mb-1">
-                              <div className={styles.legend}>
-                                <small className="text-muted text-uppercase">Template:</small>
-                              </div>
-                              <div className={`text-truncate ${styles.templateName}`}>{template.name}</div>
-                            </div>
-                            <div className="d-flex flex-row mb-1">
-                              <div className={styles.legend}>
-                                <small className="text-muted text-uppercase">Resource:</small>
-                              </div>
-                              {template.resourceKinds && template.resourceKinds.length > 0 ? (
-                                <>
-                                  {template.resourceKinds.length > 1 ? (
-                                    <>
-                                      <ResourceLabel text="Multiple kinds" />
-                                    </>
-                                  ) : (
-                                    <ResourceLabel text={template.resourceKinds[0]} />
-                                  )}
-                                </>
-                              ) : (
-                                <>-</>
-                              )}
-                            </div>
-                          </>
-                        );
-                      case ChartTmplTypeFile.Helper:
-                        return (
-                          <div className="mb-1 text-truncate">
-                            <div className={`d-inline-block ${styles.legend}`}>
-                              <small className="text-muted text-uppercase">Helper:</small>
-                            </div>
-                            {template.name}
-                          </div>
-                        );
+          {visibleTemplates.map((template: ChartTemplate, index: number) => {
+            const isActive: boolean =
+              !isUndefined(props.activeTemplateName) && props.activeTemplateName === template.name;
+            return (
+              <div key={`template_${index}`}>
+                <button
+                  data-testid="tmplBtn"
+                  className={classnames('btn btn-light btn-sm mb-2 text-left w-100', styles.btn, {
+                    [`activeTemplate ${styles.active}`]: isActive,
+                  })}
+                  onClick={() => {
+                    if (!isActive) {
+                      props.onTemplateChange(template);
                     }
-                  })()}
-                </div>
-              </button>
-            </div>
-          ))}
+                  }}
+                  aria-label={`Show template ${template.name}`}
+                  aria-pressed={isActive}
+                >
+                  <div className="d-flex flex-column">
+                    {(() => {
+                      switch (template.type) {
+                        case ChartTmplTypeFile.Template:
+                          return (
+                            <>
+                              <div className="d-flex flex-row align-items-baseline mb-1">
+                                <div className={styles.legend}>
+                                  <small className="text-muted text-uppercase">Template:</small>
+                                </div>
+                                <div className={`text-truncate ${styles.templateName}`}>{template.name}</div>
+                              </div>
+                              <div className="d-flex flex-row mb-1">
+                                <div className={styles.legend}>
+                                  <small className="text-muted text-uppercase">Resource:</small>
+                                </div>
+                                {template.resourceKinds && template.resourceKinds.length > 0 ? (
+                                  <>
+                                    {template.resourceKinds.length > 1 ? (
+                                      <>
+                                        <ResourceLabel text="Multiple kinds" />
+                                      </>
+                                    ) : (
+                                      <ResourceLabel text={template.resourceKinds[0]} />
+                                    )}
+                                  </>
+                                ) : (
+                                  <>-</>
+                                )}
+                              </div>
+                            </>
+                          );
+                        case ChartTmplTypeFile.Helper:
+                          return (
+                            <div className="mb-1 text-truncate">
+                              <div className={`d-inline-block ${styles.legend}`}>
+                                <small className="text-muted text-uppercase">Helper:</small>
+                              </div>
+                              {template.name}
+                            </div>
+                          );
+                      }
+                    })()}
+                  </div>
+                </button>
+              </div>
+            );
+          })}
         </>
       )}
     </div>

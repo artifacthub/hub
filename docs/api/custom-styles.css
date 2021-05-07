@@ -1,12 +1,19 @@
 .nav {
   padding: 1rem;
-  text-align: center;
+  text-align: left;
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.15);
-  background-color: #659dbd;
+  background-color: #417598;
+}
+
+.nav-content {
+  width: 100%;
+  max-width: 1460px;
+  padding: 0 20px;
+  margin: auto;
 }
 
 .nav img {
-  height: 50px;
+  height: 20px;
 }
 
 .topbar-wrapper img {
@@ -14,7 +21,7 @@
 }
 
 .swagger-ui .topbar .download-url-wrapper .select-label select {
-  border-color: #659dbd;
+  border-color: #417598;
 }
 
 .swagger-ui .opblock-tag {

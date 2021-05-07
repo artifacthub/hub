@@ -11,6 +11,7 @@ const defaultProps = {
   label: 'label',
   checked: false,
   onChange: onChangeMock,
+  device: 'all',
 };
 
 describe('Checkbox', () => {

@@ -6,8 +6,12 @@ exports[`TOCEntry creates snapshot 1`] = `
     class="dropdownItem dropdownItem"
   >
     <a
+      aria-label="Go to Installing the Chart"
+      aria-selected="false"
       class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level1"
       href="/#installing-the-chart"
+      role="option"
+      tabindex="-1"
     >
       Installing the Chart
     </a>

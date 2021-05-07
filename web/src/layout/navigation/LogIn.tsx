@@ -179,6 +179,7 @@ const LogIn = (props: Props) => {
               className="btn btn-sm btn-link pl-0 mb-2 text-no-decoration"
               type="button"
               onClick={() => setVisibleResetPassword(false)}
+              aria-label="Back to Sign in"
             >
               <div className="d-flex flex-row align-items-center">
                 <IoIosArrowBack className="mr-2" />
@@ -201,6 +202,7 @@ const LogIn = (props: Props) => {
                   className="btn btn-sm btn-link pl-0 mb-2 text-no-decoration"
                   type="button"
                   onClick={() => setVisible2FACode(false)}
+                  aria-label="Back to Sign in"
                 >
                   <div className="d-flex flex-row align-items-center">
                     <IoIosArrowBack className="mr-2" />
@@ -229,6 +231,7 @@ const LogIn = (props: Props) => {
                     onClick={approveSession}
                     className="btn btn-success btn-sm text-uppercase mt-3"
                     disabled={passcode === '' || isApprovingSession}
+                    aria-label="Verify passcode"
                   >
                     {isApprovingSession ? (
                       <>
@@ -289,6 +292,7 @@ const LogIn = (props: Props) => {
                     className="btn btn-sm btn-link pl-0 text-no-decoration"
                     type="button"
                     onClick={() => setVisibleResetPassword(true)}
+                    aria-label="Open reset password"
                   >
                     Forgot password?
                   </button>
@@ -299,6 +303,7 @@ const LogIn = (props: Props) => {
                     type="button"
                     disabled={isLoading.status}
                     onClick={submitForm}
+                    aria-label="Sign in"
                   >
                     {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
                       <>

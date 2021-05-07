@@ -16,6 +16,7 @@ interface Props {
   style?: { [key: string]: string };
   icon?: JSX.Element;
   disabled?: boolean;
+  label?: string;
 }
 
 const ButtonCopyToClipboard = (props: Props) => {
@@ -81,8 +82,9 @@ const ButtonCopyToClipboard = (props: Props) => {
           copyToClipboard(props.text);
         }}
         disabled={props.disabled}
+        aria-label={props.label || 'Copy to clipboard'}
       >
-        <div className="d-flex flex-row align-items-center">
+        <div className="d-flex flex-row align-items-center" aria-hidden="true">
           {!isUndefined(props.visibleBtnText) && props.visibleBtnText && props.contentBtn && (
             <div className="mr-2">{props.contentBtn}</div>
           )}

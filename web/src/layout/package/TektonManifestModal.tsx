@@ -24,6 +24,7 @@ const TektonManifestModal = (props: Props) => {
         data-testid="tektonManifestBtn"
         className="btn btn-secondary btn-block btn-sm text-nowrap"
         onClick={() => setOpenStatus(true)}
+        aria-label="Open Manifest YAML"
       >
         <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
           <GoFileCode />

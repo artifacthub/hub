@@ -29,6 +29,7 @@ const UserAuthDropdown = (props: Props) => {
         className={`btn p-0 position-relative ${styles.btn}`}
         type="button"
         onClick={() => setOpenStatus(true)}
+        aria-label="Open menu"
       >
         <div className="d-flex flex-row align-items-center justify-content-center">
           <div
@@ -59,7 +60,7 @@ const UserAuthDropdown = (props: Props) => {
 
         <div className="dropdown-divider my-3" />
 
-        <ThemeMode onSelection={() => setOpenStatus(false)} />
+        <ThemeMode device="desktop" onSelection={() => setOpenStatus(false)} />
 
         <div className="dropdown-divider my-3" />
 

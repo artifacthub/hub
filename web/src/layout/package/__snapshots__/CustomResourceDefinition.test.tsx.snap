@@ -18,11 +18,11 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
           <div
             class="card-body d-flex flex-column"
           >
-            <h6
+            <div
               class="card-title mb-3"
             >
               API
-            </h6>
+            </div>
             <small
               class="card-text text-muted overflow-hidden lineClamp"
             >
@@ -84,6 +84,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
                 class="text-right mt-1 example"
               >
                 <button
+                  aria-label="View YAML example"
                   class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                   data-testid="resourceDefinitionBtn"
                 >
@@ -104,11 +105,11 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
           <div
             class="card-body d-flex flex-column"
           >
-            <h6
+            <div
               class="card-title mb-3"
             >
               Security
-            </h6>
+            </div>
             <small
               class="card-text text-muted overflow-hidden lineClamp"
             >
@@ -170,6 +171,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
                 class="text-right mt-1 example"
               >
                 <button
+                  aria-label="View YAML example"
                   class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                   data-testid="resourceDefinitionBtn"
                 >
@@ -190,11 +192,11 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
           <div
             class="card-body d-flex flex-column"
           >
-            <h6
+            <div
               class="card-title mb-3"
             >
               RateLimiting
-            </h6>
+            </div>
             <small
               class="card-text text-muted overflow-hidden lineClamp"
             >
@@ -256,6 +258,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
                 class="text-right mt-1 example"
               >
                 <button
+                  aria-label="View YAML example"
                   class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                   data-testid="resourceDefinitionBtn"
                 >
@@ -276,11 +279,11 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
           <div
             class="card-body d-flex flex-column"
           >
-            <h6
+            <div
               class="card-title mb-3"
             >
               TargetEndpoint
-            </h6>
+            </div>
             <small
               class="card-text text-muted overflow-hidden lineClamp"
             >
@@ -351,6 +354,7 @@ In shared and private-jet mode, the backend can be running in separate PODs, but
                 class="text-right mt-1 example"
               >
                 <button
+                  aria-label="View YAML example"
                   class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                   data-testid="resourceDefinitionBtn"
                 >

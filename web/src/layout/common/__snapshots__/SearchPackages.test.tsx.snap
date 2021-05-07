@@ -21,6 +21,8 @@ exports[`SearchPackages creates snapshot 1`] = `
         />
       </div>
       <button
+        aria-expanded="false"
+        aria-label="Search by "
         class="btn btn-secondary ml-3 text-center p-0 searchBtn"
         data-testid="searchIconBtn"
         disabled=""

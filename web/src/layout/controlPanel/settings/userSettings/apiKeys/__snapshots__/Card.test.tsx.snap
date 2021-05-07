@@ -30,6 +30,7 @@ exports[`API key Card - API keys section creates snapshot 1`] = `
                 class="arrow arrow"
               />
               <button
+                aria-label="Open API key modal"
                 class="dropdown-item btn btn-sm rounded-0 text-secondary"
                 data-testid="updateAPIKeyBtn"
               >
@@ -56,6 +57,7 @@ exports[`API key Card - API keys section creates snapshot 1`] = `
                 </div>
               </button>
               <button
+                aria-label="Open deletion modal"
                 class="dropdown-item btn btn-sm rounded-0 text-secondary"
                 data-testid="deleteAPIKeyModalBtn"
               >
@@ -83,6 +85,8 @@ exports[`API key Card - API keys section creates snapshot 1`] = `
               </button>
             </div>
             <button
+              aria-expanded="false"
+              aria-label="Open menu"
               class="btn btn-light p-0 text-secondary text-center btnDropdown"
             >
               <svg
@@ -128,11 +132,13 @@ exports[`API key Card - API keys section creates snapshot 1`] = `
                 class="position-relative undefined"
               >
                 <button
+                  aria-label="Copy API key ID to clipboard"
                   class="btn btn-sm btn-link border-0 text-secondary font-weight-bold"
                   data-testid="ctcBtn"
                   type="button"
                 >
                   <div
+                    aria-hidden="true"
                     class="d-flex flex-row align-items-center"
                   >
                     <svg

@@ -6,6 +6,8 @@ exports[`UserNotificationsController creates snapshot 1`] = `
     class="d-none d-md-flex justify-content-center align-items-center w-100"
   >
     <div
+      aria-atomic="true"
+      aria-live="assertive"
       class="position-fixed toast fade toast notificationCard"
       role="alert"
     />

@@ -9,6 +9,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
       class="contentWrapper"
     >
       <button
+        aria-label="Hide detail"
         class="btn btn-block text-reset text-left p-0 position-relative btn"
         data-testid="expandBtn"
       >
@@ -118,11 +119,13 @@ exports[`SchemaDefinition creates snapshot 1`] = `
                 class="position-relative undefined"
               >
                 <button
+                  aria-label="Copy path to clipboard"
                   class="btn btn-sm btn-link text-muted p-0 btnClip"
                   data-testid="ctcBtn"
                   type="button"
                 >
                   <div
+                    aria-hidden="true"
                     class="d-flex flex-row align-items-center"
                   >
                     <div

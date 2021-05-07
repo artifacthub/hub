@@ -10,7 +10,9 @@ exports[`ThemeMode creates snapshot 1`] = `
       class="card-title text-muted text-uppercase"
     >
       <span
+        aria-level="5"
         class="px-4"
+        role="heading"
       >
         Theme
       </span>
@@ -26,17 +28,19 @@ exports[`ThemeMode creates snapshot 1`] = `
         class="custom-control custom-radio"
       >
         <input
+          aria-checked="false"
           class="custom-control-input input"
           data-testid="radio-automatic"
-          id="automatic"
-          name="theme"
+          id="undefined-automatic"
+          name="automatic"
           readonly=""
+          tabindex="0"
           type="radio"
           value="automatic"
         />
         <label
           class="custom-control-label font-weight-bold label"
-          for="automatic"
+          for="undefined-automatic"
         >
           <svg
             class="mx-1"
@@ -64,18 +68,20 @@ exports[`ThemeMode creates snapshot 1`] = `
         class="custom-control custom-radio"
       >
         <input
+          aria-checked="true"
           checked=""
           class="custom-control-input input"
           data-testid="radio-light"
-          id="light"
-          name="theme"
+          id="undefined-light"
+          name="light"
           readonly=""
+          tabindex="-1"
           type="radio"
           value="light"
         />
         <label
           class="custom-control-label font-weight-bold label"
-          for="light"
+          for="undefined-light"
         >
           <svg
             class="mx-1"
@@ -154,17 +160,19 @@ exports[`ThemeMode creates snapshot 1`] = `
         class="custom-control custom-radio"
       >
         <input
+          aria-checked="false"
           class="custom-control-input input"
           data-testid="radio-dark"
-          id="dark"
-          name="theme"
+          id="undefined-dark"
+          name="dark"
           readonly=""
+          tabindex="-1"
           type="radio"
           value="dark"
         />
         <label
           class="custom-control-label font-weight-bold label"
-          for="dark"
+          for="undefined-dark"
         >
           <svg
             class="mx-1"

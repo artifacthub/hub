@@ -40,6 +40,7 @@ exports[`SecurityTable creates snapshot 1`] = `
         class="ml-4 mb-3"
       >
         <button
+          aria-label="Open target image"
           class="btn btn-link text-reset pl-0 btn-block position-relative"
           data-testid="btnExpand"
         >
@@ -111,6 +112,7 @@ exports[`SecurityTable creates snapshot 1`] = `
         class="ml-4 mb-3"
       >
         <button
+          aria-label="Open target image"
           class="btn btn-link text-reset pl-0 btn-block position-relative"
           data-testid="btnExpand"
         >

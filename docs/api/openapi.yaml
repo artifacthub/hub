@@ -2820,11 +2820,14 @@ components:
       type: integer
       enum:
         - 0
+        - 1
         - 2
+        - 4
       nullable: false
       description: |
         Event kind:
           * `0` - New package release
+          * `1` - Security alerts
           * `2` - Repository tracking errors
           * `4` - Repository scanning errors
     Facets:

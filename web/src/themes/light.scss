@@ -5,18 +5,19 @@
 
   --color-1-100: #f1f6fa;
   --color-1-300: #b2cede;
-  --color-1-500: #659dbd;
-  --color-1-700: #39596c;
+  --color-1-500: #417598;
+  --color-1-600: #345d79;
+  --color-1-700: #2d4857;
   --color-1-900: #1c2c35;
 
-  --color-1-2: rgba(28, 44, 53, 0.02);
-  --color-1-5: rgba(28, 44, 53, 0.05);
-  --color-1-10: rgba(28, 44, 53, 0.1);
-  --color-1-20: rgba(28, 44, 53, 0.2);
-  --color-1-95: rgba(28, 44, 53, 0.95);
+  --color-1-2: rgba(65, 117, 152, 0.02);
+  --color-1-5: rgba(65, 117, 152, 0.05);
+  --color-1-10: rgba(65, 117, 152, 0.1);
+  --color-1-20: rgba(65, 117, 152, 0.2);
+  --color-1-95: rgba(65, 117, 152, 0.95);
   --color-2-500: #b0cee0;
 
-  --color-2-10: rgba(176, 206, 224, 0.1);
+  --color-2-10: rgba(45, 72, 87, 0.1);
 
   --color-3-10: rgba(101, 157, 189, 0.1);
   --color-3-50: rgba(101, 157, 189, 0.5);
@@ -31,8 +32,6 @@
   --color-white-50: rgba(256, 256, 256, 0.5);
   --color-white-95: rgba(256, 256, 256, 0.95);
 
-  --logo-font: 'Archivo Black', cursive;
-
   --color-font: #38383f;
   --body-bg: #f9f9f9;
   --light-gray: #e9ecef;
@@ -42,8 +41,8 @@
   --highlighted: var(--color-1-500);
 
   // $theme-colors for Bootstrap
-  $color1: #659dbd;
-  $color2: #39596c;
+  $color1: #417598;
+  $color2: #335061;
 
   body {
     background-color: var(--body-bg);

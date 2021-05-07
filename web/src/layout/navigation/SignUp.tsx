@@ -43,7 +43,13 @@ const SignUp = (props: Props) => {
   };
 
   const closeButton = (
-    <button className="btn btn-secondary" type="button" disabled={isLoading.status} onClick={submitForm}>
+    <button
+      className="btn btn-secondary"
+      type="button"
+      disabled={isLoading.status}
+      onClick={submitForm}
+      aria-label="Sign up"
+    >
       {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
         <>
           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
@@ -85,6 +91,7 @@ const SignUp = (props: Props) => {
             onClick={() => setActiveSignUp(true)}
             className="btn btn-outline-secondary btn-block"
             disabled={isLoading.status}
+            aria-label="Open sign up form"
           >
             <div className="d-flex align-items-center">
               <FaEnvelope />

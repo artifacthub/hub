@@ -9,12 +9,13 @@ exports[`SchemaLine creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database host
         </div>
@@ -43,6 +44,7 @@ exports[`SchemaLine creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >

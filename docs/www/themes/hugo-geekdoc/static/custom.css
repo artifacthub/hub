@@ -2,8 +2,8 @@
 html {
   --color-1-100: #f1f6fa;
   --color-1-300: #b2cede;
-  --color-1-500: #659dbd;
-  --color-1-700: #39596c;
+  --color-1-500: #417598;
+  --color-1-700: #2d4857;
   --color-1-900: #1c2c35;
 
   --color-font: #38383f;
@@ -44,15 +44,6 @@ html {
     url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff') format('woff');
 }
 
-@font-face {
-  font-family: 'Archivo Black';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Archivo Black Regular'), local('ArchivoBlack-Regular'),
-    url('/static/fonts/Archivo_Black/archivo-black-regular.woff2') format('woff2'),
-    url('/static/fonts/Archivo_Black/archivo-black-regular.woff') format('woff');
-}
-
 body {
   background-color: var(--body-bg);
   color: var(--color-font);
@@ -87,16 +78,10 @@ code {
   top: -1px;
 }
 
-.gdoc-brand__hub {
-  font-family: 'Archivo Black', cursive;
-  margin-left: .5rem;
-  letter-spacing: normal;
-}
-
 .gdoc-brand__badge {
   position: relative;
   top: -10px;
-  margin-left: 8px;
+  margin-left: 0;
   background-color: var(--color-1-700);
   font-size: .55rem;
   border-radius: 10rem;

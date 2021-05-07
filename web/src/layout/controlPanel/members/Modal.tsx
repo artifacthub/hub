@@ -120,6 +120,7 @@ const MemberModal = (props: Props) => {
           type="button"
           disabled={isSending}
           onClick={submitForm}
+          aria-label="Invite member"
         >
           {isSending ? (
             <>

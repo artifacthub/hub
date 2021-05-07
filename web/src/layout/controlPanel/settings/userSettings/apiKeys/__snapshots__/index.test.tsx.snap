@@ -40,6 +40,7 @@ exports[`API keys section index creates snapshot 1`] = `
           </div>
           <div>
             <button
+              aria-label="Open modal to add API key"
               class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addAPIKeyBtn"
             >
@@ -88,8 +89,10 @@ exports[`API keys section index creates snapshot 1`] = `
         />
         <div>
           <div
+            aria-modal="false"
             class="modal modal"
             role="dialog"
+            tabindex="-1"
           >
             <div
               class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
@@ -106,6 +109,7 @@ exports[`API keys section index creates snapshot 1`] = `
                     Add API key
                   </div>
                   <button
+                    aria-label="Close modal"
                     class="close"
                     data-testid="closeModalBtn"
                     type="button"
@@ -131,6 +135,7 @@ exports[`API keys section index creates snapshot 1`] = `
                   class="modal-footer p-3"
                 >
                   <button
+                    aria-label="Add API key"
                     class="btn btn-sm btn-secondary"
                     data-testid="apiKeyFormBtn"
                     type="button"

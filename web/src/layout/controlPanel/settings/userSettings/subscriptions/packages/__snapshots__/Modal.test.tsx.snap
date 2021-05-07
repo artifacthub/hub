@@ -8,8 +8,10 @@ exports[`SubscriptionModal creates snapshot 1`] = `
       data-testid="modalBackdrop"
     />
     <div
+      aria-modal="true"
       class="modal modal active d-block"
       role="dialog"
+      tabindex="-1"
     >
       <div
         class="modal-dialog modal-lg modal"
@@ -26,6 +28,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
               Add subscription
             </div>
             <button
+              aria-label="Close modal"
               class="close"
               data-testid="closeModalBtn"
               type="button"
@@ -46,104 +49,114 @@ exports[`SubscriptionModal creates snapshot 1`] = `
               <label
                 class="font-weight-bold label"
                 for="kind"
+                id="events-group"
               >
                 Events
               </label>
               <div
-                class="mb-3"
+                aria-labelledby="events-group"
+                role="group"
               >
                 <div
-                  class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                  class="mb-3"
                 >
-                  <input
-                    checked=""
-                    class="custom-control-input input"
-                    data-testid="checkbox"
-                    id="eventKind-0"
-                    name="eventKind"
-                    type="checkbox"
-                    value="0"
-                  />
-                  <label
-                    class="custom-control-label w-100 label"
-                    data-testid="checkboxLabel"
-                    for="eventKind-0"
+                  <div
+                    class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
                   >
-                    <div
-                      class="d-flex align-items-baseline mw-100"
+                    <input
+                      aria-checked="true"
+                      checked=""
+                      class="custom-control-input input"
+                      data-testid="checkbox"
+                      id="desktop-eventKind-0"
+                      name="eventKind"
+                      tabindex="0"
+                      type="checkbox"
+                      value="0"
+                    />
+                    <label
+                      class="custom-control-label w-100 label"
+                      data-testid="checkboxLabel"
+                      for="desktop-eventKind-0"
                     >
-                      <span
-                        class="mr-2 position-relative icon"
+                      <div
+                        class="d-flex align-items-baseline mw-100"
                       >
-                        <svg
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <span
+                          class="mr-2 position-relative icon"
                         >
-                          <path
-                            d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="d-inline-block text-truncate"
-                      >
-                        New releases
-                      </span>
-                    </div>
-                  </label>
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="d-inline-block text-truncate"
+                        >
+                          New releases
+                        </span>
+                      </div>
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="mb-3"
-              >
                 <div
-                  class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                  class="mb-3"
                 >
-                  <input
-                    class="custom-control-input input"
-                    data-testid="checkbox"
-                    id="eventKind-1"
-                    name="eventKind"
-                    type="checkbox"
-                    value="1"
-                  />
-                  <label
-                    class="custom-control-label w-100 label"
-                    data-testid="checkboxLabel"
-                    for="eventKind-1"
+                  <div
+                    class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
                   >
-                    <div
-                      class="d-flex align-items-baseline mw-100"
+                    <input
+                      aria-checked="false"
+                      class="custom-control-input input"
+                      data-testid="checkbox"
+                      id="desktop-eventKind-1"
+                      name="eventKind"
+                      tabindex="0"
+                      type="checkbox"
+                      value="1"
+                    />
+                    <label
+                      class="custom-control-label w-100 label"
+                      data-testid="checkboxLabel"
+                      for="desktop-eventKind-1"
                     >
-                      <span
-                        class="mr-2 position-relative icon"
+                      <div
+                        class="d-flex align-items-baseline mw-100"
                       >
-                        <svg
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <span
+                          class="mr-2 position-relative icon"
                         >
-                          <path
-                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="d-inline-block text-truncate"
-                      >
-                        Security alerts
-                      </span>
-                    </div>
-                  </label>
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="d-inline-block text-truncate"
+                        >
+                          Security alerts
+                        </span>
+                      </div>
+                    </label>
+                  </div>
                 </div>
               </div>
               <div
@@ -152,6 +165,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                 <label
                   class="font-weight-bold label"
                   for="description"
+                  id="subscriptions-pkg-list"
                 >
                   Package
                 </label>
@@ -182,6 +196,8 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                         />
                       </div>
                       <button
+                        aria-expanded="false"
+                        aria-label="Search by "
                         class="btn btn-secondary ml-3 text-center p-0 searchBtn"
                         data-testid="searchIconBtn"
                         disabled=""
@@ -217,6 +233,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
             class="modal-footer p-3"
           >
             <button
+              aria-label="Add subscription"
               class="btn btn-sm btn-secondary"
               data-testid="addSubsModalBtn"
               disabled=""

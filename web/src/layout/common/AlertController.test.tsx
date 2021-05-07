@@ -22,7 +22,6 @@ describe('AlertController', () => {
     expect(component).toBeInTheDocument();
     expect(component).not.toHaveClass('show');
     expect(component).toHaveClass('fade');
-    expect(component).toHaveTextContent('×');
   });
 
   it('closes alert to click close button', () => {

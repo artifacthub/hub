@@ -217,6 +217,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         data-testid={`${props.name}Input`}
         ref={input}
         type={activeType}
+        id={props.name}
         name={props.name}
         value={inputValue}
         className={classnames('form-control', props.inputClassName, { 'is-invalid': !isNull(isValid) && !isValid })}
@@ -245,6 +246,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
             'text-secondary': activeType !== 'password',
           })}
           onClick={() => setActiveType(activeType === 'password' ? 'text' : 'password')}
+          aria-label={`${activeType === 'password' ? 'Hide' : 'Show'} password`}
         >
           {activeType === 'password' ? <FaEyeSlash /> : <FaEye />}
         </button>

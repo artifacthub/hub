@@ -4,6 +4,7 @@ import { Repository } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
 import styles from './ContentInstall.module.css';
+import PrivateRepoWarning from './PrivateRepoWarning';
 
 interface Props {
   name: string;
@@ -22,12 +23,7 @@ const HelmInstall = (props: Props) => {
           title="Add repository"
         />
 
-        {props.repository.private && (
-          <div className={`alert alert-warning my-4 ${styles.alert}`} role="alert">
-            <span className="font-weight-bold text-uppercase">Important:</span> This repository is{' '}
-            <span className="font-weight-bold">private</span> and requires some credentials.
-          </div>
-        )}
+        {props.repository.private && <PrivateRepoWarning />}
 
         <CommandBlock command={installCmd} title="Install chart" />
 
@@ -38,7 +34,11 @@ const HelmInstall = (props: Props) => {
         </div>
 
         <div className="mt-2 d-flex flex-row justify-content-between align-items-baseline">
-          <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">
+          <ExternalLink
+            href="https://helm.sh/docs/intro/quickstart/"
+            className="btn btn-link pl-0"
+            label="Download Helm"
+          >
             Need Helm?
           </ExternalLink>
 
@@ -46,7 +46,12 @@ const HelmInstall = (props: Props) => {
             <div className="d-none d-lg-block">
               <small className="text-muted pl-2">
                 You can also download this package's content directly using{' '}
-                <ExternalLink href={props.contentUrl} className="text-reset" target="_self">
+                <ExternalLink
+                  href={props.contentUrl}
+                  className="text-reset"
+                  target="_self"
+                  label="Download package link"
+                >
                   <u>this link</u>
                 </ExternalLink>
                 .

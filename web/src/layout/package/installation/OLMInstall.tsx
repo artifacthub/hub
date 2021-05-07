@@ -79,6 +79,7 @@ const OLMInstall = (props: Props) => {
         <ExternalLink
           href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md"
           className="btn btn-link pl-0"
+          label="Download OLM"
         >
           Need OLM?
         </ExternalLink>

@@ -126,6 +126,7 @@ const TransferRepositoryModal = (props: Props) => {
           type="button"
           disabled={isSending}
           onClick={submitForm}
+          aria-label="Transfer repository"
         >
           {isSending ? (
             <>

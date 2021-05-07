@@ -106,6 +106,7 @@ const SubscriptionModal = (props: Props) => {
           type="button"
           disabled={isNull(packageItem) || isSending}
           onClick={submitForm}
+          aria-label="Add subscription"
         >
           {isSending ? (
             <>
@@ -127,29 +128,32 @@ const SubscriptionModal = (props: Props) => {
       noScrollable
     >
       <div className="w-100 position-relative">
-        <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
+        <label className={`font-weight-bold ${styles.label}`} htmlFor="kind" id="events-group">
           Events
         </label>
-        {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-          return (
-            <div className="mb-3" key={`radio_${subs.name}`}>
-              <CheckBox
-                key={`check_${subs.kind}`}
-                name="eventKind"
-                value={subs.kind.toString()}
-                icon={subs.icon}
-                label={subs.title}
-                checked={eventKinds.includes(subs.kind)}
-                onChange={() => {
-                  updateEventKindList(subs.kind);
-                }}
-              />
-            </div>
-          );
-        })}
+        <div role="group" aria-labelledby="events-group">
+          {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+            return (
+              <div className="mb-3" key={`radio_${subs.name}`}>
+                <CheckBox
+                  key={`check_${subs.kind}`}
+                  name="eventKind"
+                  value={subs.kind.toString()}
+                  icon={subs.icon}
+                  label={subs.title}
+                  checked={eventKinds.includes(subs.kind)}
+                  onChange={() => {
+                    updateEventKindList(subs.kind);
+                  }}
+                  device="desktop"
+                />
+              </div>
+            );
+          })}
+        </div>
 
         <div className="d-flex flex-column mb-3">
-          <label className={`font-weight-bold ${styles.label}`} htmlFor="description">
+          <label className={`font-weight-bold ${styles.label}`} htmlFor="description" id="subscriptions-pkg-list">
             Package
           </label>
 
@@ -198,7 +202,11 @@ const SubscriptionModal = (props: Props) => {
                 </div>
 
                 <div>
-                  <button className={`btn h-100 rounded-0 ${styles.closeButton}`} onClick={() => setPackageItem(null)}>
+                  <button
+                    className={`btn h-100 rounded-0 ${styles.closeButton}`}
+                    onClick={() => setPackageItem(null)}
+                    aria-label="Close"
+                  >
                     <MdClose />
                   </button>
                 </div>
@@ -206,7 +214,11 @@ const SubscriptionModal = (props: Props) => {
             </div>
           ) : (
             <div className={`mt-2 ${styles.searchWrapper}`} ref={searchWrapperRef}>
-              <SearchPackages disabledPackages={getSubscribedPackagesIds()} onSelection={onPackageSelection} />
+              <SearchPackages
+                disabledPackages={getSubscribedPackagesIds()}
+                onSelection={onPackageSelection}
+                label="subscriptions-pkg-list"
+              />
             </div>
           )}
         </div>

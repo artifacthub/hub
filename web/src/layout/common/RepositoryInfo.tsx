@@ -89,6 +89,7 @@ const RepositoryInfo = (props: Props) => {
                             wrapperClassName="d-inline"
                             arrowClassName={styles.arrow}
                             tooltipClassName="p-0"
+                            label="Copy reposiroty url to clipboard"
                           />
                         }
                       />
@@ -105,6 +106,7 @@ const RepositoryInfo = (props: Props) => {
             <small>Repo:</small>
             {props.visibleIcon && <RepositoryIconLabel kind={props.repository.kind} className="ml-1" clickable />}
           </div>
+          <span className="sr-only">{props.repository.displayName || props.repository.name}</span>
 
           <button
             data-testid="repoLink"
@@ -131,6 +133,10 @@ const RepositoryInfo = (props: Props) => {
             onMouseLeave={() => {
               setOnLinkHover(false);
             }}
+            aria-label={`Filter by repo ${props.repository.displayName || props.repository.name}`}
+            aria-expanded={openStatus}
+            aria-hidden="true"
+            tabIndex={-1}
           >
             <>
               <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>

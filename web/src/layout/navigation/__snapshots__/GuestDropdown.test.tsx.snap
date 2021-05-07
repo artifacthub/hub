@@ -6,6 +6,8 @@ exports[`GuestDropdown creates snapshot 1`] = `
     class="btn-group"
   >
     <button
+      aria-expanded="false"
+      aria-label="Guest dropdown button"
       class="btn p-0 position-relative btn"
       data-testid="guestDropdownBtn"
       type="button"
@@ -69,7 +71,9 @@ exports[`GuestDropdown creates snapshot 1`] = `
             class="card-title text-muted text-uppercase"
           >
             <span
+              aria-level="5"
               class="px-4"
+              role="heading"
             >
               Theme
             </span>
@@ -85,17 +89,19 @@ exports[`GuestDropdown creates snapshot 1`] = `
               class="custom-control custom-radio"
             >
               <input
+                aria-checked="false"
                 class="custom-control-input input"
                 data-testid="radio-automatic"
-                id="automatic"
-                name="theme"
+                id="desktop-automatic"
+                name="automatic"
                 readonly=""
+                tabindex="0"
                 type="radio"
                 value="automatic"
               />
               <label
                 class="custom-control-label font-weight-bold label"
-                for="automatic"
+                for="desktop-automatic"
               >
                 <svg
                   class="mx-1"
@@ -123,18 +129,20 @@ exports[`GuestDropdown creates snapshot 1`] = `
               class="custom-control custom-radio"
             >
               <input
+                aria-checked="true"
                 checked=""
                 class="custom-control-input input"
                 data-testid="radio-light"
-                id="light"
-                name="theme"
+                id="desktop-light"
+                name="light"
                 readonly=""
+                tabindex="-1"
                 type="radio"
                 value="light"
               />
               <label
                 class="custom-control-label font-weight-bold label"
-                for="light"
+                for="desktop-light"
               >
                 <svg
                   class="mx-1"
@@ -213,17 +221,19 @@ exports[`GuestDropdown creates snapshot 1`] = `
               class="custom-control custom-radio"
             >
               <input
+                aria-checked="false"
                 class="custom-control-input input"
                 data-testid="radio-dark"
-                id="dark"
-                name="theme"
+                id="desktop-dark"
+                name="dark"
                 readonly=""
+                tabindex="-1"
                 type="radio"
                 value="dark"
               />
               <label
                 class="custom-control-label font-weight-bold label"
-                for="dark"
+                for="desktop-dark"
               >
                 <svg
                   class="mx-1"

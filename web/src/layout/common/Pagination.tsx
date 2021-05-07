@@ -47,6 +47,7 @@ const Pagination = (props: Props) => {
           props.onChange(pageNumber);
         }
       }}
+      aria-label={`Open ${content ? content : `page ${pageNumber}`}`}
     >
       {content || pageNumber}
     </button>
