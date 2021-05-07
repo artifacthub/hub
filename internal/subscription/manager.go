@@ -22,6 +22,14 @@ const (
 	getUserSubscriptionsDBQ    = `select get_user_subscriptions($1::uuid)`
 )
 
+var (
+	// validEventKinds contains the event kinds supported.
+	validEventKinds = []hub.EventKind{
+		hub.NewRelease,
+		hub.SecurityAlert,
+	}
+)
+
 // Manager provides an API to manage subscriptions.
 type Manager struct {
 	db hub.DB
@@ -123,7 +131,7 @@ func (m *Manager) GetSubscriptors(ctx context.Context, e *hub.Event) ([]*hub.Use
 	var dataJSON []byte
 	var err error
 	switch e.EventKind {
-	case hub.NewRelease:
+	case hub.NewRelease, hub.SecurityAlert:
 		err = m.db.QueryRow(ctx, getPkgSubscriptorsDBQ, e.PackageID, e.EventKind).Scan(&dataJSON)
 	case hub.RepositoryScanningErrors, hub.RepositoryTrackingErrors:
 		err = m.db.QueryRow(ctx, getRepoSubscriptorsDBQ, e.RepositoryID, e.EventKind).Scan(&dataJSON)
@@ -148,7 +156,7 @@ func validateSubscription(s *hub.Subscription) error {
 	if _, err := uuid.FromString(s.PackageID); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
-	if s.EventKind != hub.NewRelease {
+	if !isValidEventKind(s.EventKind) {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
 	}
 	return nil
@@ -166,4 +174,14 @@ func validateOptOut(o *hub.OptOut) error {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
 	}
 	return nil
+}
+
+// isValidEventKind checks if the provided event kind is valid.
+func isValidEventKind(kind hub.EventKind) bool {
+	for _, validKind := range validEventKinds {
+		if kind == validKind {
+			return true
+		}
+	}
+	return false
 }

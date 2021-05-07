@@ -38,7 +38,7 @@ describe('SubscriptionModal', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(
+      const { getByText, getByTestId, getAllByTestId } = render(
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('2')} />
       );
 
@@ -49,9 +49,10 @@ describe('SubscriptionModal', () => {
       expect(btn).toBeInTheDocument();
       expect(btn).toBeDisabled();
 
-      const radio = getByTestId('radio_0');
-      expect(radio).toBeInTheDocument();
-      expect(radio).toBeChecked();
+      const checkboxes = getAllByTestId('checkbox');
+      expect(checkboxes).toHaveLength(2);
+      expect(checkboxes[0]).toBeChecked();
+      expect(checkboxes[1]).not.toBeChecked();
     });
   });
 

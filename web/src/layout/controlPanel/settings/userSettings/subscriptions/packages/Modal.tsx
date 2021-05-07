@@ -7,6 +7,7 @@ import { API } from '../../../../../../api';
 import { ErrorKind, EventKind, Package } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
+import CheckBox from '../../../../../common/Checkbox';
 import Image from '../../../../../common/Image';
 import Modal from '../../../../../common/Modal';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
@@ -24,18 +25,21 @@ interface Props {
 const SubscriptionModal = (props: Props) => {
   const searchWrapperRef = useRef<HTMLDivElement | null>(null);
   const [apiError, setApiError] = useState(null);
-  const [eventKind, setEventKind] = useState<EventKind>(EventKind.NewPackageRelease);
+  const [eventKinds, setEventKinds] = useState<EventKind[]>([EventKind.NewPackageRelease]);
   const [packageItem, setPackageItem] = useState<Package | null>(null);
   const [isSending, setIsSending] = useState<boolean>(false);
 
   const onCloseModal = () => {
     setPackageItem(null);
+    setEventKinds([EventKind.NewPackageRelease]);
     props.onClose();
   };
 
   const submitForm = () => {
     if (!isNull(packageItem)) {
-      addSubscription();
+      eventKinds.forEach((event: EventKind, index: number) => {
+        addSubscription(event, index === eventKinds.length - 1);
+      });
     }
   };
 
@@ -47,26 +51,42 @@ const SubscriptionModal = (props: Props) => {
     if (isUndefined(props.subscriptions)) return [];
 
     const selectedPackages = props.subscriptions.filter(
-      (item: Package) => !isUndefined(item.eventKinds) && item.eventKinds.includes(eventKind)
+      (item: Package) =>
+        !isUndefined(item.eventKinds) && eventKinds.every((el: EventKind) => item.eventKinds!.includes(el))
     );
 
     return selectedPackages.map((item: Package) => item.packageId);
   };
 
-  async function addSubscription() {
+  const updateEventKindList = (eventKind: EventKind) => {
+    let updatedEventKinds: EventKind[] = [...eventKinds];
+    if (eventKinds.includes(eventKind)) {
+      // At least event kind must be selected
+      if (updatedEventKinds.length > 1) {
+        updatedEventKinds = eventKinds.filter((kind: EventKind) => kind !== eventKind);
+      }
+    } else {
+      updatedEventKinds.push(eventKind);
+    }
+    setEventKinds(updatedEventKinds);
+  };
+
+  async function addSubscription(event: EventKind, onLastEvent?: boolean) {
     try {
       setIsSending(true);
-      await API.addSubscription(packageItem!.packageId, eventKind);
+      await API.addSubscription(packageItem!.packageId, event);
       setPackageItem(null);
       setIsSending(false);
-      props.onSuccess();
-      props.onClose();
+      if (onLastEvent) {
+        props.onSuccess();
+        props.onClose();
+      }
     } catch (err) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
-          message: `An error occurred subscribing to ${props.getNotificationTitle(eventKind)} notification for ${
+          message: `An error occurred subscribing to ${props.getNotificationTitle(event)} notification for ${
             packageItem!.displayName || packageItem!.name
           } package, please try again later.`,
         });
@@ -112,25 +132,18 @@ const SubscriptionModal = (props: Props) => {
         </label>
         {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
           return (
-            <div className="custom-control custom-radio mb-3" key={`radio_${subs.name}`}>
-              <input
-                data-testid={`radio_${subs.kind}`}
-                className="custom-control-input"
-                type="radio"
-                name="kind"
-                id={subs.name}
-                value={subs.kind}
-                disabled={!subs.enabled}
-                checked={subs.kind === eventKind}
-                onChange={() => setEventKind(subs.kind)}
-                required
+            <div className="mb-3" key={`radio_${subs.name}`}>
+              <CheckBox
+                key={`check_${subs.kind}`}
+                name="eventKind"
+                value={subs.kind.toString()}
+                icon={subs.icon}
+                label={subs.title}
+                checked={eventKinds.includes(subs.kind)}
+                onChange={() => {
+                  updateEventKindList(subs.kind);
+                }}
               />
-              <label className="custom-control-label" htmlFor={subs.name}>
-                <div className="d-flex flex-row align-items-center ml-2">
-                  {subs.icon}
-                  <div className="ml-1">{subs.title}</div>
-                </div>
-              </label>
             </div>
           );
         })}

@@ -418,7 +418,6 @@ const WebhookForm = (props: Props) => {
                     updateEventKindList(subs.kind);
                     checkTestAvailability();
                   }}
-                  disabled
                 />
               );
             })}
@@ -642,8 +641,9 @@ const WebhookForm = (props: Props) => {
                           <span className="text-nowrap">{`{{ .Event.Kind }}`}</span>
                         </th>
                         <td>
-                          Kind of the event triggering notification. At the moment the only possible value is{' '}
-                          <span className="font-weight-bold">package.new-release</span>.
+                          Kind of the event triggering notification. Possible values are{' '}
+                          <span className="font-weight-bold">package.new-release</span> and{' '}
+                          <span className="font-weight-bold">package.security-alert</span>.
                         </td>
                       </tr>
                       <tr>

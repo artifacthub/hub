@@ -203,6 +203,16 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 		if err := newReleaseEmailTmpl.Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
+	case hub.SecurityAlert:
+		tmplData, err := w.preparePkgNotificationTemplateData(ctx, e)
+		if err != nil {
+			return email.Data{}, err
+		}
+		subject = fmt.Sprintf("Security vulnerabilities found in %s version %s images",
+			tmplData.Package["Name"], tmplData.Package["Version"])
+		if err := securityAlertEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+			return email.Data{}, err
+		}
 	case hub.RepositoryScanningErrors:
 		tmplData, err := w.prepareRepoNotificationTemplateData(ctx, e)
 		if err != nil {
@@ -267,6 +277,8 @@ func (w *Worker) preparePkgNotificationTemplateData(
 	switch e.EventKind {
 	case hub.NewRelease:
 		eventKindStr = "package.new-release"
+	case hub.SecurityAlert:
+		eventKindStr = "package.security-alert"
 	}
 	publisher := p.Repository.OrganizationName
 	if publisher == "" {

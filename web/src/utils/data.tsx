@@ -2,7 +2,7 @@ import React from 'react';
 import { FaKey, FaScroll, FaUserFriends } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import { GrConnect } from 'react-icons/gr';
-import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSettings } from 'react-icons/md';
+import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSecurity, MdSettings } from 'react-icons/md';
 import { TiWarning } from 'react-icons/ti';
 
 import RepositoryIcon from '../layout/common/RepositoryIcon';
@@ -43,6 +43,15 @@ export const PACKAGE_SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
     name: 'newRelease',
     title: 'New releases',
     description: 'Receive a notification when a new version of this package is released.',
+    enabled: true,
+  },
+  {
+    kind: EventKind.SecurityAlert,
+    icon: <MdSecurity />,
+    name: 'securityAlert',
+    title: 'Security alerts',
+    description:
+      'Receive a notification when important security vulnerabilities are found in the latest version of this package.',
     enabled: true,
   },
 ];

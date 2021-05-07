@@ -54,7 +54,7 @@ func (m *Manager) Add(ctx context.Context, ak *hub.APIKey) (*hub.APIKey, error) 
 		return nil, err
 	}
 	apiKeySecret := base64.StdEncoding.EncodeToString(randomBytes)
-	apiKeySecretHashed := fmt.Sprintf("%x", sha512.Sum512([]byte(apiKeySecret)))
+	apiKeySecretHashed := hash(apiKeySecret)
 
 	// Add api key to the database
 	var apiKeyID string
@@ -97,7 +97,7 @@ func (m *Manager) Check(ctx context.Context, apiKeyID, apiKeySecret string) (*hu
 		}
 	default:
 		// SHA512 hash
-		if fmt.Sprintf("%x", sha512.Sum512([]byte(apiKeySecret))) != apiKeySecretHashed {
+		if hash(apiKeySecret) != apiKeySecretHashed {
 			return &hub.CheckAPIKeyOutput{Valid: false}, nil
 		}
 	}
@@ -160,4 +160,9 @@ func (m *Manager) Update(ctx context.Context, ak *hub.APIKey) error {
 	akJSON, _ := json.Marshal(ak)
 	_, err := m.db.Exec(ctx, updateAPIKeyDBQ, akJSON)
 	return err
+}
+
+// hash is a helper function that creates a sha512 hash of the text provided.
+func hash(text string) string {
+	return fmt.Sprintf("%x", sha512.Sum512([]byte(text)))
 }
