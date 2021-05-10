@@ -50,45 +50,101 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                 Events
               </label>
               <div
-                class="custom-control custom-radio mb-3"
+                class="mb-3"
               >
-                <input
-                  checked=""
-                  class="custom-control-input"
-                  data-testid="radio_0"
-                  id="newRelease"
-                  name="kind"
-                  required=""
-                  type="radio"
-                  value="0"
-                />
-                <label
-                  class="custom-control-label"
-                  for="newRelease"
+                <div
+                  class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
                 >
-                  <div
-                    class="d-flex flex-row align-items-center ml-2"
+                  <input
+                    checked=""
+                    class="custom-control-input input"
+                    data-testid="checkbox"
+                    id="eventKind-0"
+                    name="eventKind"
+                    type="checkbox"
+                    value="0"
+                  />
+                  <label
+                    class="custom-control-label w-100 label"
+                    data-testid="checkboxLabel"
+                    for="eventKind-0"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                      />
-                    </svg>
                     <div
-                      class="ml-1"
+                      class="d-flex align-items-baseline mw-100"
                     >
-                      New releases
+                      <span
+                        class="mr-2 position-relative icon"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="d-inline-block text-truncate"
+                      >
+                        New releases
+                      </span>
                     </div>
-                  </div>
-                </label>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="mb-3"
+              >
+                <div
+                  class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                >
+                  <input
+                    class="custom-control-input input"
+                    data-testid="checkbox"
+                    id="eventKind-1"
+                    name="eventKind"
+                    type="checkbox"
+                    value="1"
+                  />
+                  <label
+                    class="custom-control-label w-100 label"
+                    data-testid="checkboxLabel"
+                    for="eventKind-1"
+                  >
+                    <div
+                      class="d-flex align-items-baseline mw-100"
+                    >
+                      <span
+                        class="mr-2 position-relative icon"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="d-inline-block text-truncate"
+                      >
+                        Security alerts
+                      </span>
+                    </div>
+                  </label>
+                </div>
               </div>
               <div
                 class="d-flex flex-column mb-3"

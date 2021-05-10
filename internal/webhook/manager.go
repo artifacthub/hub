@@ -139,7 +139,7 @@ func (m *Manager) GetSubscribedTo(ctx context.Context, e *hub.Event) ([]*hub.Web
 	var dataJSON []byte
 	var err error
 	switch e.EventKind {
-	case hub.NewRelease:
+	case hub.NewRelease, hub.SecurityAlert:
 		if _, err := uuid.FromString(e.PackageID); err != nil {
 			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 		}

@@ -2,12 +2,10 @@
   "webhookId": "d1e1299b-c3ce-4618-b67b-f5e63f4b891f",
   "name": "Webhook name",
   "description": "this is a test description",
-  "url": "http://jksdhfkjfds",
+  "url": "http://hooks.com",
   "secret": "secret",
-  "contentType": "application/json",
-  "template": "{\n    \"event\": {\n        \"id\": \"{{ .Event.ID }}\",\n        \"kind\": {{ .Event.Kind }}\n    },\n    \"package\": {\n        \"kind\": {{ .Package.Kind }},\n        \"name\": \"{{ .Package.Name }}\",\n        \"version\": \"{{ .Package.Version }}\",\n        \"publisher\": \"{{ .Package.Publisher }}\",\n        \"url\": \"{{ .Package.URL }}\"\n    }\n}",
   "active": false,
-  "eventKinds": [0, 1],
+  "eventKinds": [0],
   "packages": [
     {
       "packageId": "701964f8-1730-45d2-bdfa-ae2b2d0ecac6",

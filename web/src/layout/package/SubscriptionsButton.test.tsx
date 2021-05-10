@@ -94,7 +94,7 @@ describe('SubscriptionsButton', () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
         mocked(API).deleteSubscription.mockResolvedValue('');
 
-        const { getByText, getByTestId, queryByRole } = render(
+        const { getByText, getByTestId, queryByRole, getAllByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -122,7 +122,7 @@ describe('SubscriptionsButton', () => {
         const btn = getByTestId('newReleaseBtn');
         expect(btn).toBeInTheDocument();
         fireEvent.click(btn);
-        expect(getByTestId('uncheckedSubsBtn')).toBeInTheDocument();
+        expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
 
         await waitFor(() => {
           expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
@@ -134,11 +134,11 @@ describe('SubscriptionsButton', () => {
         });
       });
 
-      it('renders component with inactive New releases notification', async () => {
+      it('renders component with inactive event notifications', async () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([]);
         mocked(API).addSubscription.mockResolvedValue('');
 
-        const { getByTestId } = render(
+        const { getByTestId, getAllByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -150,7 +150,7 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByTestId('uncheckedSubsBtn')).toBeInTheDocument();
+        expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
         const btn = getByTestId('newReleaseBtn');
         expect(btn).toBeInTheDocument();
         fireEvent.click(btn);
@@ -159,6 +159,34 @@ describe('SubscriptionsButton', () => {
         await waitFor(() => {
           expect(API.addSubscription).toHaveBeenCalledTimes(1);
           expect(API.addSubscription).toHaveBeenCalledWith(defaultProps.packageId, 0);
+        });
+      });
+
+      it('calls to addSubscription with securityAlert event', async () => {
+        mocked(API).getPackageSubscriptions.mockResolvedValue([]);
+        mocked(API).addSubscription.mockResolvedValue('');
+
+        const { getByTestId, getAllByTestId } = render(
+          <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
+          </AppCtx.Provider>
+        );
+
+        await waitFor(() => {
+          expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
+        });
+
+        expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
+        const btn = getByTestId('securityAlertBtn');
+        expect(btn).toBeInTheDocument();
+        fireEvent.click(btn);
+        expect(getByTestId('checkedSubsBtn')).toBeInTheDocument();
+
+        await waitFor(() => {
+          expect(API.addSubscription).toHaveBeenCalledTimes(1);
+          expect(API.addSubscription).toHaveBeenCalledWith(defaultProps.packageId, 1);
         });
       });
 
@@ -248,12 +276,12 @@ describe('SubscriptionsButton', () => {
       });
     });
 
-    describe('when change subscription fails', () => {
-      it('to activate New release notification', async () => {
+    describe('when change subscription fails, returns to previous state', () => {
+      it('with active event', async () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([]);
         mocked(API).addSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
-        const { getByTestId, getByRole } = render(
+        const { getByTestId, getByRole, getAllByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -265,7 +293,7 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByTestId('uncheckedSubsBtn')).toBeInTheDocument();
+        expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
         const btn = getByTestId('newReleaseBtn');
         expect(btn).toBeInTheDocument();
         fireEvent.click(btn);
@@ -285,16 +313,16 @@ describe('SubscriptionsButton', () => {
 
         await waitFor(() => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(2);
-          expect(getByTestId('uncheckedSubsBtn')).toBeInTheDocument();
+          expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
         });
       });
     });
 
-    it('to inactivate New release notification', async () => {
+    it('with inactive event', async () => {
       mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
       mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByText, getByTestId } = render(
+      const { getByText, getByTestId, getAllByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <SubscriptionsButton {...defaultProps} />
@@ -317,7 +345,7 @@ describe('SubscriptionsButton', () => {
       const btn = getByTestId('newReleaseBtn');
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
-      expect(getByTestId('uncheckedSubsBtn')).toBeInTheDocument();
+      expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
 
       await waitFor(() => {
         expect(API.deleteSubscription).toHaveBeenCalledTimes(1);

@@ -127,8 +127,9 @@ func TestScanSnapshot(t *testing.T) {
 		err = json.Unmarshal(sampleReportData, &expectedImageFullReport)
 		require.NoError(t, err)
 		assert.Equal(t, &hub.SnapshotSecurityReport{
-			PackageID: packageID,
-			Version:   version,
+			PackageID:   packageID,
+			Version:     version,
+			AlertDigest: "5ea0a25948df54fa6d0f48d2e82619c1b7e0e59711c2a20c2715aa180dd68c9f9a957bdebe0925b03f252df317cec3cba0167afb6ff7c6083c344d5e162f690f",
 			Full: map[string][]interface{}{
 				image: expectedImageFullReport,
 			},

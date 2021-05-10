@@ -129,8 +129,10 @@ describe('WebhookForm', () => {
       expect(getByText('Triggers')).toBeInTheDocument();
 
       expect(getByText('Events')).toBeInTheDocument();
-      expect(getByTestId('checkbox')).toBeInTheDocument();
-      expect(getByTestId('checkbox')).toBeChecked();
+      const checkboxes = getAllByTestId('checkbox');
+      expect(checkboxes).toHaveLength(2);
+      expect(checkboxes[0]).toBeChecked();
+      expect(checkboxes[1]).toBeChecked();
 
       expect(getByText('Packages')).toBeInTheDocument();
       expect(
@@ -175,7 +177,7 @@ describe('WebhookForm', () => {
     });
 
     it('when webhook addition', () => {
-      const { getByText, queryByText, getByTestId, getByPlaceholderText } = render(
+      const { getByText, queryByText, getByTestId, getByPlaceholderText, getAllByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} />
@@ -221,8 +223,11 @@ describe('WebhookForm', () => {
       expect(getByText('Triggers')).toBeInTheDocument();
 
       expect(getByText('Events')).toBeInTheDocument();
-      expect(getByTestId('checkbox')).toBeInTheDocument();
-      expect(getByTestId('checkbox')).toBeChecked();
+
+      const checkboxes = getAllByTestId('checkbox');
+      expect(checkboxes).toHaveLength(2);
+      expect(checkboxes[0]).toBeChecked();
+      expect(checkboxes[1]).not.toBeChecked();
 
       expect(getByText('Packages')).toBeInTheDocument();
       expect(
@@ -395,6 +400,42 @@ describe('WebhookForm', () => {
             name: 'test',
           },
           'test'
+        );
+      });
+
+      expect(mockOnSuccess).toHaveBeenCalledTimes(1);
+      expect(mockOnClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls updateWebhook with securityAlert event selected', async () => {
+      mocked(API).updateWebhook.mockResolvedValue(null);
+      const mockWebhook = getMockWebhook('14');
+
+      const { getAllByTestId, getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const checkboxes = getAllByTestId('checkbox');
+      expect(checkboxes).toHaveLength(2);
+      expect(checkboxes[1]).not.toBeChecked();
+      fireEvent.click(checkboxes[1]);
+      expect(checkboxes[1]).toBeChecked();
+
+      const btn = getByTestId('sendWebhookBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.updateWebhook).toHaveBeenCalledTimes(1);
+        expect(API.updateWebhook).toHaveBeenCalledWith(
+          {
+            ...mockWebhook,
+            eventKinds: [0, 1],
+          },
+          undefined
         );
       });
 

@@ -12,3 +12,7 @@
 .input:disabled + label {
   cursor: auto;
 }
+
+.icon {
+  top: -3px;
+}

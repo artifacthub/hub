@@ -11,6 +11,7 @@ interface Props {
   checked: boolean;
   disabled?: boolean;
   className?: string;
+  icon?: JSX.Element;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -38,6 +39,7 @@ const CheckBox = (props: Props) => {
       />
       <label className={`custom-control-label w-100 ${styles.label}`} htmlFor={id} data-testid="checkboxLabel">
         <div className="d-flex align-items-baseline mw-100">
+          {props.icon && <span className={`mr-2 position-relative ${styles.icon}`}>{props.icon}</span>}
           <span className="d-inline-block text-truncate">{props.label}</span>
           {!isUndefined(props.legend) && <small className="pl-1">({props.legend})</small>}
         </div>

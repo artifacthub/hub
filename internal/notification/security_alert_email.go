@@ -2,13 +2,13 @@ package notification
 
 import "html/template"
 
-var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
+var securityAlertEmailTmpl = template.Must(template.New("").Parse(`
 <!doctype html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{ .Package.Name }} new release</title>
+    <title>{{ .Package.Name }} security alert</title>
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark">
 
@@ -241,78 +241,9 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
                         <h2 class="title" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;"><img style="margin-right: 5px; margin-bottom: -2px;" height="18px" src="{{ .BaseURL }}/static/media/{{ .Package.Repository.Kind }}_icon.png">{{ .Package.Name }}</h2>
 												<h4 class="subtitle" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;">{{ .Package.repository.publisher }} </h4>
 
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Version <b>{{ .Package.Version }}</b> has been released</p>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        {{ if .Package.Prerelease }}
-                          <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
-                            <tbody>
-                              <tr>
-                                <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: {{ if .Package.ContainsSecurityUpdates }} 15px; {{ else }} 30px;{{ end }}">
-                                  <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version is a <b>pre-release</b> and it is not ready for production use.</div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        {{ end }}
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        {{ if .Package.ContainsSecurityUpdates }}
-                          <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
-                            <tbody>
-                              <tr>
-                                <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: 30px;">
-                                  <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version contains security updates.</div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        {{ end }}
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td style="font-family: sans-serif; font-size: 14px;">
-                        {{ if .Package.Changes }}
-                          <hr class="hr" style="border-bottom: none;" />
-                          <h4 class="subtitle" style="font-family: sans-serif; font-size: 12px; Margin-top: 20px;">CHANGES:</h4>
-                          <table border="0" cellpadding="0" cellspacing="0">
-                            <tbody>
-                              {{range $change := .Package.Changes}}
-                                <tr>
-                                  <td style="vertical-align: top; padding-top: 2px; padding-right: 10px;">
-                                    {{ if $change.Kind}}
-                                      <div class="badge badge-{{ $change.Kind }}" style="text-align: center;">{{ $change.Kind }}</div>
-                                    {{ else }}
-                                      <p style="margin: 0;">&bull;</p>
-                                    {{ end }}
-                                  </td>
-                                  <td>
-                                    <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 10px;">
-                                      {{ $change.Description }}
-
-                                      {{if $change.Links}}
-                                        <br />
-                                        {{range $i, $link := $change.Links}}
-                                          {{if $i}} &bull; {{end}}
-                                          <a href="{{ $link.URL }}" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">{{ $link.Name }}</a>
-                                        {{end}}
-                                      {{ end }}
-                                    </p>
-                                  </td>
-                                </tr>
-                              {{ end }}
-                            </tbody>
-                          </table>
-                          <hr class="hr" style="border-bottom: none;" />
-                          <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 45px;"></p>
-                        {{ end }}
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px; text-align: left;">
+                          We found one or more potential security vulnerabilities in the images of the <b>{{ .Package.Name }}</b> package version <b>{{ .Package.Version }}</b>. For more information, please see the package's security report in Artifact Hub.
+                        </p>
                       </td>
                     </tr>
 
@@ -325,7 +256,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
                                 <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                   <tbody>
                                     <tr>
-                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .Package.URL }}" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">View in Artifact Hub</a> </div></td>
+                                      <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .Package.URL }}?modal=security-report" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">Security report</a> </div></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -338,7 +269,11 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
                           <tbody>
                             <tr>
                               <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; padding-bottom: 30px; padding-top: 10px;">
-                                <p class="text-muted" style="font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span class="copy-link">{{ .Package.URL }}</span></p>
+                                <p class="text-muted" style="font-size: 11px; text-decoration: none; Margin-bottom: 30px;">Or you can copy-paste this link: <span class="copy-link">{{ .Package.URL }}?modal=security-report</span></p>
+
+                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px; text-align: left;">
+                                  Please note that security alerts only consider vulnerabilities of <b>high</b> and <b>critical</b> severity. Any time a new potential security vulnerability is detected you’ll be notified again.
+                                </p>
                               </td>
                             </tr>
                           </tbody>

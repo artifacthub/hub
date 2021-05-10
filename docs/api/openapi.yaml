@@ -3728,8 +3728,8 @@ components:
           type: string
           nullable: false
           example: >-
-            {"text": "Package {{ .Package.name }} version {{ .Package.version }}
-            released! {{ .Package.url }}"}
+            {"text": "Package {{ .Package.Name }} version {{ .Package.Version }}
+            released! {{ .Package.URL }}"}
         active:
           type: boolean
           nullable: false
@@ -3780,8 +3780,8 @@ components:
           type: string
           nullable: false
           example: >-
-            {"text": "Package {{ .Package.name }} version {{ .Package.version }}
-            released! {{ .Package.url }}"}
+            {"text": "Package {{ .Package.Name }} version {{ .Package.Version }}
+            released! {{ .Package.URL }}"}
         event_kinds:
           type: array
           items:

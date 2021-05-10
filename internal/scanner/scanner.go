@@ -2,9 +2,12 @@ package scanner
 
 import (
 	"context"
+	"crypto/sha512"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"sort"
+	"strings"
 
 	"github.com/artifacthub/hub/internal/hub"
 )
@@ -46,17 +49,20 @@ func ScanSnapshot(
 		}
 	}
 	var summary *hub.SecurityReportSummary
+	var alertDigest string
 	if len(full) > 0 {
 		summary = generateSummary(full)
+		alertDigest = generateAlertDigest(full)
 	} else {
 		full = nil
 	}
 
 	return &hub.SnapshotSecurityReport{
-		PackageID: s.PackageID,
-		Version:   s.Version,
-		Full:      full,
-		Summary:   summary,
+		PackageID:   s.PackageID,
+		Version:     s.Version,
+		AlertDigest: alertDigest,
+		Full:        full,
+		Summary:     summary,
 	}, nil
 }
 
@@ -93,6 +99,36 @@ func generateSummary(full map[string][]interface{}) *hub.SecurityReportSummary {
 	return summary
 }
 
+// generateAlertDigest generates an alert digest of the security report from
+// the full report. At the moment the digest is based on the vulnerabilities
+// with a severity of high or critical.
+func generateAlertDigest(full map[string][]interface{}) string {
+	var vs []string
+	for _, targets := range full {
+		for _, entry := range targets {
+			var target *Target
+			entryJSON, err := json.Marshal(entry)
+			if err != nil {
+				continue
+			}
+			if err := json.Unmarshal(entryJSON, &target); err != nil {
+				continue
+			}
+			for _, v := range target.Vulnerabilities {
+				if v.Severity == "HIGH" || v.Severity == "CRITICAL" {
+					vs = append(vs, fmt.Sprintf("[%s:%s]", v.Severity, v.VulnerabilityID))
+				}
+			}
+		}
+	}
+	var digest string
+	if len(vs) > 0 {
+		sort.Strings(vs)
+		digest = fmt.Sprintf("%x", sha512.Sum512([]byte(strings.Join(vs, ""))))
+	}
+	return digest
+}
+
 // Target represents a target in a security report.
 type Target struct {
 	Vulnerabilities []*Vulnerability `json:"Vulnerabilities"`
@@ -100,5 +136,6 @@ type Target struct {
 
 // Vulnerability represents a vulnerability in a security report target.
 type Vulnerability struct {
-	Severity string `json:"Severity"`
+	VulnerabilityID string `json:"VulnerabilityID"`
+	Severity        string `json:"Severity"`
 }

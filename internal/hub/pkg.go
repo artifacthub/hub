@@ -168,10 +168,11 @@ type Recommendation struct {
 // SnapshotSecurityReport represents some information about the security
 // vulnerabilities the images used by a given package's snapshot may have.
 type SnapshotSecurityReport struct {
-	PackageID string                   `json:"package_id"`
-	Version   string                   `json:"version"`
-	Summary   *SecurityReportSummary   `json:"summary"`
-	Full      map[string][]interface{} `json:"full"`
+	PackageID   string                   `json:"package_id"`
+	Version     string                   `json:"version"`
+	AlertDigest string                   `json:"alert_digest"`
+	Summary     *SecurityReportSummary   `json:"summary"`
+	Full        map[string][]interface{} `json:"full"`
 }
 
 // SecurityReportSummary represents a summary of the security report.
