@@ -93,6 +93,7 @@ func TestTrackerSource(t *testing.T) {
 			},
 		},
 		Data: map[string]interface{}{
+			"format":           "packageManifest",
 			"isGlobalOperator": true,
 		},
 	}
@@ -126,7 +127,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path2",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error getting package test-operator version 0.1.0 csv: csv file not found"
+		expectedErr := "error getting package metadata: error getting package test-operator csv (path: testdata/path2/test-operator/0.1.0): csv file not found"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
@@ -181,7 +182,7 @@ func TestTrackerSource(t *testing.T) {
 		sw.AssertExpectations(t)
 	})
 
-	t.Run("one package returned, no errors", func(t *testing.T) {
+	t.Run("one package returned (package manifest format), no errors", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup services and expectations
@@ -200,6 +201,48 @@ func TestTrackerSource(t *testing.T) {
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
 			pkg.BuildKey(p): p,
+		}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("two packages returned (bundle format), no errors", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{},
+			BasePath:   "testdata/path5",
+			Svc:        sw.Svc,
+		}
+		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("logoImageID", nil)
+
+		// Run test and check expectations
+		p1 := source.ClonePackage(basePkg)
+		p1.Repository = i.Repository
+		p1.LogoImageID = "logoImageID"
+		p1.Channels = []*hub.Channel{
+			{
+				Name:    "alpha",
+				Version: "0.2.0",
+			},
+			{
+				Name:    "stable",
+				Version: "0.1.0",
+			},
+		}
+		p1.DefaultChannel = "stable"
+		p1.Data = map[string]interface{}{
+			"format":           "bundle",
+			"isGlobalOperator": true,
+		}
+		p2 := source.ClonePackage(p1)
+		p2.Version = "0.2.0"
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{
+			pkg.BuildKey(p1): p1,
+			pkg.BuildKey(p2): p2,
 		}, packages)
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
