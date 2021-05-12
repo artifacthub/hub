@@ -126,7 +126,7 @@ const Details = (props: Props) => {
                 >
                   {props.package.channels!.map((channel: Channel) => (
                     <option key={`channel_${channel.name}`} value={channel.name}>
-                      {channel.name}
+                      {channel.name} &nbsp;({channel.version})
                     </option>
                   ))}
                 </select>

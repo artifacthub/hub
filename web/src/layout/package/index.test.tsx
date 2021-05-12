@@ -313,6 +313,32 @@ describe('Package index', () => {
       expect(getByText('Custom Resource Definitions')).toBeInTheDocument();
       expect(getAllByTestId('resourceDefinition')).toHaveLength(1);
     });
+
+    it('renders correct version to change channel', async () => {
+      const mockPackage = getMockPackage('15');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      const { getByText, getByLabelText } = render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      expect(getByText('Channel')).toBeInTheDocument();
+      const select = getByLabelText('channel-select');
+      expect(getByText('stable (0.9.1)')).toBeInTheDocument();
+      fireEvent.change(select, { target: { value: 'alpha' } });
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/olm/comm/flux/0.7.7',
+        search: '?channel=alpha',
+      });
+    });
   });
 
   describe('Falco rules', () => {

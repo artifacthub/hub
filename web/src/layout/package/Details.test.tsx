@@ -246,7 +246,7 @@ describe('Details', () => {
 
       expect(getByText('Channel')).toBeInTheDocument();
       expect(getByLabelText('channel-select')).toBeInTheDocument();
-      expect(getByText(mockPackage.channels![0].name));
+      expect(getByText('alpha (1.0.0)'));
 
       expect(getByText('Versions')).toBeInTheDocument();
       mockPackage.availableVersions!.forEach((vs: Version) => {
@@ -297,8 +297,8 @@ describe('Details', () => {
 
       expect(getByText('Channel')).toBeInTheDocument();
       const select = getByLabelText('channel-select');
-      expect(getByText('alpha')).toBeInTheDocument();
-      expect(getByText('original')).toBeInTheDocument();
+      expect(getByText('alpha (1.0.1)')).toBeInTheDocument();
+      expect(getByText('original (1.0.0)')).toBeInTheDocument();
       fireEvent.change(select, { target: { value: 'original' } });
 
       expect(mockOnChannelChange).toHaveBeenCalledTimes(1);

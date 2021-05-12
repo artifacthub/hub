@@ -14,6 +14,7 @@ import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { API } from '../../api';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import {
+  Channel,
   CustomResourcesDefinition,
   CustomResourcesDefinitionExample,
   ErrorKind,
@@ -24,6 +25,7 @@ import {
   SearchFiltersURL,
   Version,
 } from '../../types';
+import buildPackageURL from '../../utils/buildPackageURL';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import prepareQueryString from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
@@ -117,7 +119,10 @@ const PackageView = (props: Props) => {
       if (currentHash) {
         setCurrentHash(undefined);
       }
-      if (isUndefined(activeChannel) && detailPkg.repository.kind === RepositoryKind.OLM) {
+      if (
+        (isUndefined(activeChannel) || isUndefined(props.channel)) &&
+        detailPkg.repository.kind === RepositoryKind.OLM
+      ) {
         if (detailPkg.defaultChannel) {
           setActiveChannel(detailPkg.defaultChannel);
         } else if (detailPkg.channels && detailPkg.channels.length > 0) {
@@ -177,10 +182,31 @@ const PackageView = (props: Props) => {
     sortedVersions = sortPackageVersions(detail.availableVersions);
   }
 
+  const getVersionFromChannel = (channel: string): string | undefined => {
+    let version: string | undefined;
+    if (detail && detail.channels) {
+      const active: Channel | undefined = detail!.channels!.find((c: Channel) => {
+        return c.name === channel;
+      });
+      if (active) {
+        version = active.version;
+      }
+    }
+    return version;
+  };
+
   const onChannelChange = (channel: string) => {
-    history.replace({
-      search: `?channel=${channel}`,
-    });
+    const version = getVersionFromChannel(channel);
+    if (!isUndefined(version)) {
+      history.push({
+        pathname: buildPackageURL(detail!.normalizedName, detail!.repository, version, true),
+        search: `?channel=${channel}`,
+      });
+    } else {
+      history.replace({
+        search: `?channel=${channel}`,
+      });
+    }
     setActiveChannel(channel);
   };
 

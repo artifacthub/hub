@@ -1,0 +1,256 @@
+{
+  "packageId": "982d1333-d4d6-44d6-b578-3ff574240cc1",
+  "name": "flux",
+  "normalizedName": "flux",
+  "isOperator": true,
+  "channels": [
+    { "name": "alpha", "version": "0.7.7" },
+    { "name": "stable", "version": "0.9.1" }
+  ],
+  "defaultChannel": "stable",
+  "displayName": "Flux",
+  "description": "Open and extensible continuous delivery solution for Kubernetes. Powered by GitOps Toolkit.",
+  "logoImageId": "b0120c25-dc1d-4faf-b812-455e5fff732f",
+  "keywords": ["flux", "ci", "continuous delivery", "fluxcd", "helm", "kustomize", "Integration & Delivery"],
+  "readme": "Open and extensible continuous delivery solution for Kubernetes. Powered by GitOps Toolkit.\n\n[Learn more](https://fluxcd.io/)\n\nNOTE: If you're using a CNI that requires network policies, you may need to [add Flux's policies](https://github.com/fluxcd/flux2/tree/main/manifests/policies).",
+  "links": [
+    { "url": "https://fluxcd.io/", "name": "Homepage" },
+    { "url": "https://toolkit.fluxcd.io/", "name": "Documentation" },
+    { "url": "https://cloud-native.slack.com/messages/flux", "name": "Slack" },
+    { "url": "https://lists.cncf.io/g/cncf-flux-dev", "name": "Mailing List" },
+    { "url": "https://github.com/fluxcd/flux2", "name": "Source Code" }
+  ],
+  "crds": [
+    {
+      "kind": "Alert",
+      "name": "alerts.notification.toolkit.fluxcd.io",
+      "version": "v1beta1",
+      "description": "Alert",
+      "displayName": "Alert"
+    },
+    {
+      "kind": "Bucket",
+      "name": "buckets.source.toolkit.fluxcd.io",
+      "version": "v1beta1",
+      "description": "Bucket",
+      "displayName": "Bucket"
+    },
+    {
+      "kind": "GitRepository",
+      "name": "gitrepositories.source.toolkit.fluxcd.io",
+      "version": "v1beta1",
+      "description": "GitRepository",
+      "displayName": "GitRepository"
+    },
+    {
+      "kind": "HelmChart",
+      "name": "helmcharts.source.toolkit.fluxcd.io",
+      "version": "v1beta1",
+      "description": "HelmChart",
+      "displayName": "HelmChart"
+    },
+    {
+      "kind": "HelmRelease",
+      "name": "helmreleases.helm.toolkit.fluxcd.io",
+      "version": "v2beta1",
+      "description": "HelmRelease",
+      "displayName": "HelmRelease"
+    },
+    {
+      "kind": "HelmRepository",
+      "name": "helmrepositories.source.toolkit.fluxcd.io",
+      "version": "v1beta1",
+      "description": "HelmRepository",
+      "displayName": "HelmRepository"
+    },
+    {
+      "kind": "Kustomization",
+      "name": "kustomizations.kustomize.toolkit.fluxcd.io",
+      "version": "v1beta1",
+      "description": "Kustomization",
+      "displayName": "Kustomization"
+    },
+    {
+      "kind": "Provider",
+      "name": "providers.notification.toolkit.fluxcd.io",
+      "version": "v1beta1",
+      "description": "Provider",
+      "displayName": "Provider"
+    },
+    {
+      "kind": "Receiver",
+      "name": "receivers.notification.toolkit.fluxcd.io",
+      "version": "v1beta1",
+      "description": "Receiver",
+      "displayName": "Receiver"
+    }
+  ],
+  "crdsExamples": [
+    {
+      "kind": "HelmRelease",
+      "spec": {
+        "chart": {
+          "spec": {
+            "chart": "podinfo",
+            "version": "4.0.x",
+            "interval": "1m",
+            "sourceRef": { "kind": "HelmRepository", "name": "podinfo", "namespace": "flux-system" }
+          }
+        },
+        "values": { "replicaCount": 2 },
+        "interval": "5m"
+      },
+      "metadata": { "name": "podinfo", "namespace": "default" },
+      "apiVersion": "helm.toolkit.fluxcd.io/v2beta1"
+    },
+    {
+      "kind": "GitRepository",
+      "spec": { "url": "https://github.com/stefanprodan/podinfo", "interval": "1m" },
+      "metadata": { "name": "podinfo", "namespace": "default" },
+      "apiVersion": "source.toolkit.fluxcd.io/v1beta1"
+    },
+    {
+      "kind": "HelmRepository",
+      "spec": { "url": "https://kubernetes-charts.storage.googleapis.com/", "interval": "10m" },
+      "metadata": { "name": "stable", "namespace": "default" },
+      "apiVersion": "source.toolkit.fluxcd.io/v1beta1"
+    },
+    {
+      "kind": "HelmChart",
+      "spec": {
+        "chart": "redis",
+        "version": "10.5.7",
+        "interval": "5m",
+        "sourceRef": { "kind": "HelmRepository", "name": "stable" }
+      },
+      "metadata": { "name": "redis", "namespace": "default" },
+      "apiVersion": "source.toolkit.fluxcd.io/v1beta1"
+    },
+    {
+      "kind": "Bucket",
+      "spec": {
+        "endpoint": "minio.minio.svc.cluster.local:9000",
+        "insecure": true,
+        "interval": "1m",
+        "provider": "generic",
+        "secretRef": { "name": "minio-credentials" },
+        "bucketName": "podinfo"
+      },
+      "metadata": { "name": "podinfo", "namespace": "default" },
+      "apiVersion": "source.toolkit.fluxcd.io/v1beta1"
+    },
+    {
+      "kind": "Kustomization",
+      "spec": {
+        "path": "./profiles/default/",
+        "timeout": "2m",
+        "interval": "5m",
+        "sourceRef": { "kind": "GitRepository", "name": "istio" },
+        "healthChecks": [{ "kind": "Deployment", "name": "istiod", "namespace": "istio-system" }]
+      },
+      "metadata": { "name": "istio", "namespace": "istio-system" },
+      "apiVersion": "kustomize.toolkit.fluxcd.io/v1beta1"
+    },
+    {
+      "kind": "Provider",
+      "spec": {
+        "type": "github",
+        "address": "https://github.com/stefanprodan/podinfo",
+        "secretRef": { "name": "api-token" }
+      },
+      "metadata": { "name": "podinfo", "namespace": "default" },
+      "apiVersion": "notification.toolkit.fluxcd.io/v1beta1"
+    },
+    {
+      "kind": "Alert",
+      "spec": {
+        "providerRef": { "name": "on-call-slack" },
+        "eventSources": [
+          { "kind": "GitRepository", "name": "webapp" },
+          { "kind": "Bucket", "name": "secrets" },
+          { "kind": "Kustomization", "name": "webapp-backend" },
+          { "kind": "Kustomization", "name": "webapp-frontend" }
+        ],
+        "eventSeverity": "info"
+      },
+      "metadata": { "name": "webapp", "namespace": "default" },
+      "apiVersion": "notification.toolkit.fluxcd.io/v1beta1"
+    },
+    {
+      "kind": "Receiver",
+      "spec": {
+        "type": "github",
+        "events": ["ping", "push"],
+        "resources": [
+          { "kind": "GitRepository", "name": "webapp" },
+          { "kind": "HelmRepository", "name": "webapp" }
+        ],
+        "secretRef": { "name": "webhook-token" }
+      },
+      "metadata": { "name": "github-receiver", "namespace": "default" },
+      "apiVersion": "notification.toolkit.fluxcd.io/v1beta1"
+    }
+  ],
+  "capabilities": "seamless upgrades",
+  "data": { "format": "bundle", "isGlobalOperator": true },
+  "version": "0.9.1",
+  "availableVersions": [
+    { "version": "0.7.3", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831350 },
+    { "version": "0.8.0", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831350 },
+    { "version": "0.4.3", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831350 },
+    { "version": "0.4.1", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831350 },
+    { "version": "0.6.3", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831350 },
+    { "version": "0.5.5", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831350 },
+    { "version": "0.2.6", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.3.0", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.6", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.7.2", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.2", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.8.1", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.1", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.2.4", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.4.0", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.7.4", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.4.2", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.2.3", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.0", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.9.1", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.9", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.2.5", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.3", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.4", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.7.0", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.7.5", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.7.6", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.7", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.5.8", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.7.1", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.9.0", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.8.2", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.2.2", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.6.0", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.6.2", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831351 },
+    { "version": "0.6.1", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831352 },
+    { "version": "0.7.7", "containsSecurityUpdates": false, "prerelease": false, "ts": 1620831352 }
+  ],
+  "deprecated": false,
+  "containsSecurityUpdates": false,
+  "prerelease": false,
+  "signed": false,
+  "provider": "fluxcd",
+  "hasValuesSchema": false,
+  "hasChangelog": false,
+  "ts": 1620831352,
+  "maintainers": [{ "name": "fluxcd", "email": "cncf-flux-dev@lists.cncf.io" }],
+  "repository": {
+    "repositoryId": "16755903-2c29-4a80-b7e7-9f0bbaef9e50",
+    "name": "comm",
+    "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
+    "private": false,
+    "kind": 3,
+    "verifiedPublisher": false,
+    "official": false,
+    "userAlias": "cynthia-sg"
+  },
+  "stats": { "subscriptions": 0, "webhooks": 0 }
+}
