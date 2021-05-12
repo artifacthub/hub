@@ -21,12 +21,11 @@ import VersionInRow from './VersionInRow';
 
 interface Props {
   package: Package;
-  activeChannel?: string | null;
-  onChannelChange: (channel: string) => void;
   sortedVersions: VersionData[];
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
   visibleSecurityReport: boolean;
+  channels?: Channel[] | null;
 }
 
 interface VersionsProps {
@@ -39,12 +38,27 @@ const Details = (props: Props) => {
     let items: JSX.Element[] = [];
     let itemsForModal: JSX.Element[] = [];
 
+    const getLinkedChannelToVersion = (version: string): string | undefined => {
+      let channelName: string | undefined;
+      if (props.channels) {
+        const channel = props.channels.find((ch: Channel) => ch.version === version);
+        if (channel) {
+          channelName = channel.name;
+        }
+      }
+
+      return channelName;
+    };
+
     props.sortedVersions.forEach((av_version: VersionData, index: number) => {
+      const linkedChannel = getLinkedChannelToVersion(av_version.version);
+
       items.push(
         <Version
           key={`${av_version.version}_${index}`}
           isActive={av_version.version === props.package.version}
           {...av_version}
+          linkedChannel={linkedChannel}
           normalizedName={props.package.normalizedName}
           repository={props.package.repository}
           searchUrlReferer={props.searchUrlReferer}
@@ -57,6 +71,7 @@ const Details = (props: Props) => {
           key={`${av_version.version}_inline_${index}`}
           isActive={av_version.version === props.package.version}
           {...av_version}
+          linkedChannel={linkedChannel}
           normalizedName={props.package.normalizedName}
           repository={props.package.repository}
           searchUrlReferer={props.searchUrlReferer}
@@ -84,6 +99,7 @@ const Details = (props: Props) => {
       ),
     };
   }, [
+    props.channels,
     props.fromStarredPage,
     props.package.normalizedName,
     props.package.repository,
@@ -113,24 +129,6 @@ const Details = (props: Props) => {
                   </div>
                 )}
               </>
-            );
-          case RepositoryKind.OLM:
-            return (
-              <div>
-                <SmallTitle text="Channel" />
-                <select
-                  className={`custom-select custom-select-sm bg-light mb-3 ${styles.select}`}
-                  aria-label="channel-select"
-                  value={props.activeChannel!}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => props.onChannelChange(e.target.value)}
-                >
-                  {props.package.channels!.map((channel: Channel) => (
-                    <option key={`channel_${channel.name}`} value={channel.name}>
-                      {channel.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
             );
           default:
             return null;

@@ -1,18 +1,16 @@
-import { HelmChartType, Package, Version } from '../types';
+import { HelmChartType, Package } from '../types';
 import getInstallMethods, { InstallMethodOutput } from './getInstallMethods';
 
 interface Tests {
   title: string;
-  input: { pkg?: Package | null; sortedVersions: Version[]; activeChannel?: string };
+  input: { pkg?: Package | null };
   output: InstallMethodOutput;
 }
 
 const tests: Tests[] = [
   {
     title: 'Not package',
-    input: {
-      sortedVersions: [],
-    },
+    input: {},
     output: {
       methods: [],
     },
@@ -49,7 +47,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '0.11.0', ts: 1607006504, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [
@@ -128,7 +125,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '0.11.0', ts: 1607006504, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [
@@ -188,7 +184,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '0.11.0', ts: 1607006504, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [
@@ -270,7 +265,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '1.0.1', ts: 1607672795, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [
@@ -318,7 +312,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '1.0.0', ts: 1574121600, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [
@@ -368,7 +361,6 @@ const tests: Tests[] = [
             displayName: 'AI Manager',
           },
         ],
-
         capabilities: 'seamless upgrades',
         data: { isGlobalOperator: false },
         version: '1.0.0',
@@ -391,8 +383,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '1.0.0', ts: 1607672828, containsSecurityUpdates: false, prerelease: false }],
-      activeChannel: 'v1.0',
     },
     output: {
       methods: [
@@ -412,7 +402,8 @@ const tests: Tests[] = [
               official: false,
               userAlias: 'user',
             },
-            activeChannel: 'v1.0',
+            channels: [{ name: 'v1.0', version: '1.0.0' }],
+            defaultChannel: 'v1.0',
           },
         },
       ],
@@ -475,8 +466,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '1.0.0', ts: 1607672828, containsSecurityUpdates: false, prerelease: false }],
-      activeChannel: 'v1.0',
     },
     output: {
       methods: [
@@ -504,126 +493,11 @@ const tests: Tests[] = [
               official: false,
               userAlias: 'user',
             },
-            activeChannel: 'v1.0',
+            channels: [{ name: 'v1.0', version: '1.0.0' }],
+            defaultChannel: 'v1.0',
           },
         },
       ],
-    },
-  },
-  {
-    title: 'OLM operator without active channel',
-    input: {
-      pkg: {
-        packageId: '5623a8fc-4ef3-451a-b977-71e2fe53b7f9',
-        name: 'akka-cluster-operator',
-        normalizedName: 'akka-cluster-operator',
-        logoImageId: 'f973c8bb-4163-4e32-9090-610917169470',
-        isOperator: true,
-        channels: [{ name: 'alpha', version: '1.0.0' }],
-        defaultChannel: 'alpha',
-        displayName: 'Akka Cluster Operator',
-        description: 'Run Akka Cluster applications on Kubernetes.',
-        keywords: ['Akka', 'Akka Cluster', 'Lightbend', 'Application Runtime'],
-        readme:
-          'The Akka Cluster Operator allows you to manage applications designed for\n[Akka Cluster](https://doc.akka.io/docs/akka/current/common/cluster.html).\nClustering with [Akka](https://doc.akka.io/docs/akka/current/guide/introduction.html) provides a\nfault-tolerant, decentralized, peer-to-peer based cluster\nfor building stateful, distributed applications with no single point of failure.\nDevelopers should use Akka Management v1.x or newer, with both Bootstrap and HTTP modules enabled.\nWhen deploying using the Akka Cluster Operator, only the `management port` needs to be defined.\nDefaults are provided by the Operator for all other required configuration.\nThe Akka Cluster Operator provides scalability control and membership status information\nfor deployed applications using Akka Cluster. As part of supervising membership of running clusters,\nthis Operator creates a pod-listing ServiceAccount, Role, and RoleBinding suitable for\neach application. See the project [Readme](https://github.com/lightbend/akka-cluster-operator/blob/master/README.md)\nfor more information and details.\n',
-        links: [
-          { url: 'https://github.com/lightbend/akka-cluster-operator', name: 'source' },
-          { url: 'https://doc.akka.io/docs/akka/current/guide/introduction.html', name: 'Intro to Akka' },
-          { url: 'https://doc.akka.io/docs/akka/current/common/cluster.html', name: 'Intro to Akka Cluster' },
-          { url: 'https://github.com/lightbend/akka-java-cluster-openshift', name: 'Akka Cluster demo application' },
-          {
-            url: 'https://developer.lightbend.com/guides/openshift-deployment/lagom/index.html',
-            name: 'Deploying a Lagom application to OpenShift',
-          },
-        ],
-        crds: [
-          {
-            kind: 'AkkaCluster',
-            name: 'akkaclusters.app.lightbend.com',
-            version: 'v1alpha1',
-            description: 'An example Akka Cluster app that provides cluster visualization.',
-            displayName: 'Akka Cluster',
-          },
-        ],
-        crdsExamples: [
-          {
-            kind: 'AkkaCluster',
-            spec: {
-              replicas: 3,
-              template: {
-                spec: {
-                  containers: [
-                    {
-                      name: 'main',
-                      image: 'lightbend-docker-registry.bintray.io/lightbend/akka-cluster-demo:1.1.0',
-                      ports: [
-                        { name: 'http', containerPort: 8080 },
-                        { name: 'remoting', containerPort: 2552 },
-                        { name: 'management', containerPort: 8558 },
-                      ],
-                      livenessProbe: {
-                        httpGet: { path: '/alive', port: 'management' },
-                        periodSeconds: 10,
-                        failureThreshold: 10,
-                        initialDelaySeconds: 20,
-                      },
-                      readinessProbe: {
-                        httpGet: { path: '/ready', port: 'management' },
-                        periodSeconds: 10,
-                        failureThreshold: 10,
-                        initialDelaySeconds: 20,
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-            metadata: { name: 'akka-cluster-demo' },
-            apiVersion: 'app.lightbend.com/v1alpha1',
-          },
-        ],
-        capabilities: 'seamless upgrades',
-        data: { isGlobalOperator: true },
-        version: '1.0.0',
-        availableVersions: [
-          { version: '1.0.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-          { version: '0.2.3', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-          { version: '0.2.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-          { version: '0.0.1', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        ],
-        deprecated: false,
-        signed: false,
-        containersImages: [
-          {
-            name: '',
-            image: 'lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator:v1.0.0',
-          },
-        ],
-        provider: 'Lightbend, Inc.',
-        hasValuesSchema: false,
-        hasChangelog: false,
-        ts: 1561735380,
-        maintainers: [{ name: 'Lightbend, Inc.', email: 'info@lightbend.com' }],
-        repository: {
-          repositoryId: '693a42c8-70bd-49a3-81dc-a09153374d94',
-          name: 'community-operators',
-          url: 'https://github.com/operator-framework/community-operators/upstream-community-operators',
-          private: false,
-          kind: 3,
-          verifiedPublisher: false,
-          official: false,
-          userAlias: 'user',
-        },
-      },
-      sortedVersions: [
-        { version: '1.0.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.2.3', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.2.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.0.1', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-      ],
-    },
-    output: {
-      methods: [],
     },
   },
   {
@@ -692,12 +566,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [
-        { version: '0.2.0', ts: 1604681700, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.1.1', ts: 1595186100, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.1.0', ts: 1592590620, containsSecurityUpdates: false, prerelease: false },
-      ],
-      activeChannel: 'alpha',
     },
     output: {
       methods: [],
@@ -808,13 +676,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [
-        { version: '1.0.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.2.3', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.2.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.0.1', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-      ],
-      activeChannel: 'alpha',
     },
     output: {
       methods: [
@@ -823,128 +684,19 @@ const tests: Tests[] = [
           title: 'Operator Lifecycle Manager',
           shortTitle: 'OLM CLI',
           kind: 3,
-          props: { name: 'akka-cluster-operator', isGlobalOperator: true, activeChannel: 'alpha', isPrivate: false },
+          props: {
+            name: 'akka-cluster-operator',
+            isGlobalOperator: true,
+            defaultChannel: 'alpha',
+            channels: [{ name: 'alpha', version: '1.0.0' }],
+            isPrivate: false,
+          },
         },
       ],
     },
   },
   {
-    title: 'OLM operator with not selected latest version',
-    input: {
-      pkg: {
-        packageId: '5623a8fc-4ef3-451a-b977-71e2fe53b7f9',
-        name: 'akka-cluster-operator',
-        normalizedName: 'akka-cluster-operator',
-        logoImageId: 'f973c8bb-4163-4e32-9090-610917169470',
-        isOperator: true,
-        channels: [{ name: 'alpha', version: '1.0.0' }],
-        defaultChannel: 'alpha',
-        displayName: 'Akka Cluster Operator',
-        description: 'Run Akka Cluster applications on Kubernetes.',
-        keywords: ['Akka', 'Akka Cluster', 'Lightbend', 'Application Runtime'],
-        readme:
-          'The Akka Cluster Operator allows you to manage applications designed for\n[Akka Cluster](https://doc.akka.io/docs/akka/current/common/cluster.html).\nClustering with [Akka](https://doc.akka.io/docs/akka/current/guide/introduction.html) provides a\nfault-tolerant, decentralized, peer-to-peer based cluster\nfor building stateful, distributed applications with no single point of failure.\nDevelopers should use Akka Management v1.x or newer, with both Bootstrap and HTTP modules enabled.\nWhen deploying using the Akka Cluster Operator, only the `management port` needs to be defined.\nDefaults are provided by the Operator for all other required configuration.\nThe Akka Cluster Operator provides scalability control and membership status information\nfor deployed applications using Akka Cluster. As part of supervising membership of running clusters,\nthis Operator creates a pod-listing ServiceAccount, Role, and RoleBinding suitable for\neach application. See the project [Readme](https://github.com/lightbend/akka-cluster-operator/blob/master/README.md)\nfor more information and details.\n',
-        links: [
-          { url: 'https://github.com/lightbend/akka-cluster-operator', name: 'source' },
-          { url: 'https://doc.akka.io/docs/akka/current/guide/introduction.html', name: 'Intro to Akka' },
-          { url: 'https://doc.akka.io/docs/akka/current/common/cluster.html', name: 'Intro to Akka Cluster' },
-          { url: 'https://github.com/lightbend/akka-java-cluster-openshift', name: 'Akka Cluster demo application' },
-          {
-            url: 'https://developer.lightbend.com/guides/openshift-deployment/lagom/index.html',
-            name: 'Deploying a Lagom application to OpenShift',
-          },
-        ],
-        crds: [
-          {
-            kind: 'AkkaCluster',
-            name: 'akkaclusters.app.lightbend.com',
-            version: 'v1alpha1',
-            description: 'An example Akka Cluster app that provides cluster visualization.',
-            displayName: 'Akka Cluster',
-          },
-        ],
-        crdsExamples: [
-          {
-            kind: 'AkkaCluster',
-            spec: {
-              replicas: 3,
-              template: {
-                spec: {
-                  containers: [
-                    {
-                      name: 'main',
-                      image: 'lightbend-docker-registry.bintray.io/lightbend/akka-cluster-demo:1.1.0',
-                      ports: [
-                        { name: 'http', containerPort: 8080 },
-                        { name: 'remoting', containerPort: 2552 },
-                        { name: 'management', containerPort: 8558 },
-                      ],
-                      livenessProbe: {
-                        httpGet: { path: '/alive', port: 'management' },
-                        periodSeconds: 10,
-                        failureThreshold: 10,
-                        initialDelaySeconds: 20,
-                      },
-                      readinessProbe: {
-                        httpGet: { path: '/ready', port: 'management' },
-                        periodSeconds: 10,
-                        failureThreshold: 10,
-                        initialDelaySeconds: 20,
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-            metadata: { name: 'akka-cluster-demo' },
-            apiVersion: 'app.lightbend.com/v1alpha1',
-          },
-        ],
-        capabilities: 'seamless upgrades',
-        data: { isGlobalOperator: true },
-        version: '0.2.0',
-        availableVersions: [
-          { version: '1.0.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-          { version: '0.2.3', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-          { version: '0.2.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-          { version: '0.0.1', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        ],
-        deprecated: false,
-        signed: false,
-        containersImages: [
-          {
-            name: '',
-            image: 'lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator:v1.0.0',
-          },
-        ],
-        provider: 'Lightbend, Inc.',
-        hasValuesSchema: false,
-        hasChangelog: false,
-        ts: 1561735380,
-        maintainers: [{ name: 'Lightbend, Inc.', email: 'info@lightbend.com' }],
-        repository: {
-          repositoryId: '693a42c8-70bd-49a3-81dc-a09153374d94',
-          name: 'community-operators',
-          url: 'https://github.com/operator-framework/community-operators/upstream-community-operators',
-          private: false,
-          kind: 3,
-          verifiedPublisher: false,
-          official: false,
-          userAlias: 'user',
-        },
-      },
-      sortedVersions: [
-        { version: '1.0.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.2.3', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.2.0', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-        { version: '0.0.1', ts: 1561735380, containsSecurityUpdates: false, prerelease: false },
-      ],
-      activeChannel: 'alpha',
-    },
-    output: { methods: [], errorMessage: 'Only the current version can be installed' },
-  },
-  {
-    title: 'OLM operator with not default active channel',
+    title: 'OLM operator without channels',
     input: {
       pkg: {
         packageId: '8fee91bc-2fd7-448c-9b3a-102c0eac5cee',
@@ -952,11 +704,6 @@ const tests: Tests[] = [
         normalizedName: 'appranix',
         logoImageId: 'b54e1861-8cb0-46e1-842c-ceee6b4285e6',
         isOperator: true,
-        channels: [
-          { name: 'stable', version: '2.3.0' },
-          { name: 'deprecated', version: '1.0.0' },
-        ],
-        defaultChannel: 'stable',
         displayName: 'Appranix CPS Operator',
         description:
           'The Appranix CPS operator enables you to back up and restore your Kubernetes/OpenShift cluster resources and persistent volumes.',
@@ -1086,23 +833,8 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [
-        { version: '2.3.0', ts: 1581321470, containsSecurityUpdates: false, prerelease: false },
-        { version: '1.0.0', ts: 1580368555, containsSecurityUpdates: false, prerelease: false },
-      ],
-      activeChannel: 'deprecated',
     },
-    output: {
-      methods: [
-        {
-          label: 'cli',
-          title: 'Operator Lifecycle Manager',
-          shortTitle: 'OLM CLI',
-          kind: 3,
-          props: { name: 'appranix', isGlobalOperator: false, activeChannel: 'deprecated', isPrivate: false },
-        },
-      ],
-    },
+    output: { methods: [], errorMessage: 'Only packages with channels can be installed' },
   },
   {
     title: 'OPA policies with custom install',
@@ -1161,7 +893,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '0.1.0', ts: 1595872800, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [
@@ -1232,7 +963,6 @@ const tests: Tests[] = [
           userAlias: 'user',
         },
       },
-      sortedVersions: [{ version: '0.1.0', ts: 1595872800, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [],
@@ -1271,7 +1001,6 @@ const tests: Tests[] = [
         },
         data: { apiVersion: 'v2' },
       },
-      sortedVersions: [{ version: '0.11.0', ts: 1607006504, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [
@@ -1331,7 +1060,6 @@ const tests: Tests[] = [
         },
         data: { apiVersion: 'v1' },
       },
-      sortedVersions: [{ version: '0.11.0', ts: 1607006504, containsSecurityUpdates: false, prerelease: false }],
     },
     output: {
       methods: [
@@ -1411,7 +1139,6 @@ const tests: Tests[] = [
         },
         data: { apiVersion: 'v2', type: HelmChartType.Library },
       },
-      sortedVersions: [{ version: '0.11.0', ts: 1607006504, containsSecurityUpdates: false, prerelease: false }],
     },
     output: { methods: [], errorMessage: 'A library chart is not installable' },
   },

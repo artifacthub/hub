@@ -70,7 +70,6 @@ interface Props {
   repositoryKind: string;
   repositoryName: string;
   hash?: string;
-  channel?: string;
   visibleModal?: string;
   visibleValuesSchemaPath?: string;
   visibleTemplate?: string;
@@ -87,7 +86,6 @@ const PackageView = (props: Props) => {
   const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators, verifiedPublisher, official } =
     props.searchUrlReferer || {};
   const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
-  const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
   const [currentHash, setCurrentHash] = useState<string | undefined>(props.hash);
 
   useScrollRestorationFix();
@@ -116,13 +114,6 @@ const PackageView = (props: Props) => {
       setDetail(detailPkg);
       if (currentHash) {
         setCurrentHash(undefined);
-      }
-      if (isUndefined(activeChannel) && detailPkg.repository.kind === RepositoryKind.OLM) {
-        if (detailPkg.defaultChannel) {
-          setActiveChannel(detailPkg.defaultChannel);
-        } else if (detailPkg.channels && detailPkg.channels.length > 0) {
-          setActiveChannel(detailPkg.channels[0].name);
-        }
       }
       setApiError(null);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
@@ -177,19 +168,10 @@ const PackageView = (props: Props) => {
     sortedVersions = sortPackageVersions(detail.availableVersions);
   }
 
-  const onChannelChange = (channel: string) => {
-    history.replace({
-      search: `?channel=${channel}`,
-    });
-    setActiveChannel(channel);
-  };
-
   const getInstallationModal = (wrapperClassName?: string): JSX.Element | null => (
     <div className={wrapperClassName}>
       <InstallationModal
         package={detail}
-        sortedVersions={sortedVersions}
-        activeChannel={activeChannel}
         visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
         searchUrlReferer={props.searchUrlReferer}
         fromStarredPage={props.fromStarredPage}
@@ -645,9 +627,8 @@ const PackageView = (props: Props) => {
                       >
                         <Details
                           package={detail}
-                          activeChannel={activeChannel}
-                          onChannelChange={onChannelChange}
                           sortedVersions={sortedVersions}
+                          channels={detail.channels}
                           searchUrlReferer={props.searchUrlReferer}
                           fromStarredPage={props.fromStarredPage}
                           visibleSecurityReport={false}
@@ -765,9 +746,8 @@ const PackageView = (props: Props) => {
                             <div className={`card-body ${styles.detailsBody}`}>
                               <Details
                                 package={detail}
-                                activeChannel={activeChannel}
-                                onChannelChange={onChannelChange}
                                 sortedVersions={sortedVersions}
+                                channels={detail.channels}
                                 searchUrlReferer={props.searchUrlReferer}
                                 fromStarredPage={props.fromStarredPage}
                                 visibleSecurityReport={

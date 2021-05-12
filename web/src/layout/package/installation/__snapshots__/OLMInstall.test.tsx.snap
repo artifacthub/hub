@@ -8,6 +8,34 @@ exports[`OLMInstall creates snapshot 1`] = `
     <small
       class="text-muted mt-2 mb-1"
     >
+      Channel
+    </small>
+  </div>
+  <div
+    class="form-group w-50"
+  >
+    <select
+      aria-label="channel-select"
+      class="custom-select custom-select-sm"
+    >
+      <option
+        value="stable"
+      >
+        stable
+      </option>
+      <option
+        value="alpha"
+      >
+        alpha
+      </option>
+    </select>
+  </div>
+  <div
+    class="my-2"
+  >
+    <small
+      class="text-muted mt-2 mb-1"
+    >
       Install the operator by running the following command:
     </small>
   </div>

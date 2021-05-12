@@ -11,6 +11,7 @@ interface Props {
   version: string;
   containsSecurityUpdates: boolean;
   prerelease: boolean;
+  linkedChannel?: string;
   ts: number;
   normalizedName: string;
   repository: Repository;
@@ -44,6 +45,12 @@ const VersionInRow = (props: Props) => {
             >
               {props.version}
             </button>
+          )}
+          {props.linkedChannel && (
+            <span className={`badge badge-pill mr-2 ${styles.badge} ${styles.isHighlighted}`}>
+              <small className="text-uppercase mr-1">Channel:</small>
+              {props.linkedChannel}
+            </span>
           )}
           {props.prerelease && <span className={`badge badge-pill mr-2 ${styles.badge}`}>Pre-release</span>}
           {props.containsSecurityUpdates && (

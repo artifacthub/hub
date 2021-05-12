@@ -132,7 +132,6 @@ export default function App() {
                   <div className="d-flex flex-column flex-grow-1">
                     <PackageView
                       hash={location.hash}
-                      channel={getQueryParam(location.search, 'channel')}
                       visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       visibleTemplate={getQueryParam(location.search, 'template') || undefined}
                       visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
