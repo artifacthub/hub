@@ -128,7 +128,7 @@ The `hub_server` alias runs the `hub` cmd, one of the two processes of the Artif
 
 ### Tracker
 
-The other backend cmd is the `tracker`, which is in charge of indexing registered repositories metadata. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool. The tracker requires the [OPM cli tool](https://github.com/operator-framework/operator-registry/releases) to be installed and available in your PATH.
+The `tracker` is another backend cmd in charge of indexing registered repositories metadata. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool. The tracker requires the [OPM cli tool](https://github.com/operator-framework/operator-registry/releases) to be installed and available in your PATH.
 
 If you opened the url suggested before, you probably noticed there were no packages listed yet. This happened because no repositories had been indexed yet. If you used the configuration file suggested for Tern, some sample repositories should have been registered in the database owned by the `demo` user. To index them, we need to run the `tracker`.
 
@@ -161,9 +161,19 @@ Depending on the speed of your Internet connection and machine, this may take a 
 
 ### Scanner
 
-There is another backend cmd called `scanner`, which is in charge of scanning the packages images for security vulnerabilities, generating security reports for them. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool. The scanner requires [Trivy](https://github.com/aquasecurity/trivy#installation) to be installed and available in your PATH.
+There is another backend cmd called `scanner`, which is in charge of scanning the packages images for security vulnerabilities, generating security reports for them. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool.
+
+The scanner requires [Trivy](https://github.com/aquasecurity/trivy#installation) to be installed and available in your PATH. Before launching the scanner, you need to run `Trivy` in server mode:
+
+```sh
+hub_trivy_server
+```
 
 The `scanner` is setup and run in the same way as the `tracker`. There is also an alias for it named `hub_scanner`.
+
+```sh
+hub_scanner
+```
 
 ### Backend tests
 

@@ -16,15 +16,11 @@ Images used by a Helm chart can be listed including a special annotation called 
 
 ### OLM operators
 
-The image used by an OLM operator is extracted from the `containerImage` annotation in the [CSV file metadata section](https://github.com/operator-framework/community-operators/blob/master/docs/required-fields.md#required-fields-for-operatorhub). Most of the OLM operators currently listed in Artifact Hub provide that information already, so security reports for them are already available in Artifact Hub with no extra effort required.
+The images used by an OLM operator are extracted from the `containerImage` annotation in the [CSV file metadata section](https://github.com/operator-framework/community-operators/blob/master/docs/packaging-required-fields.md), as well as from the `related images` section in the CSV spec. Most of the OLM operators currently listed in Artifact Hub provide that information already, so security reports for them are already available in Artifact Hub with no extra effort required.
 
-### OPA policies
+### CoreDNS plugins, KEDA scalers, OPA policies and Tinkerbell actions
 
-Images used by a package containing OPA policies can be listed using the `containersImages` field in the package's `artifacthub-pkg.yml` [metadata file](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml).
-
-### Tinkerbell actions
-
-Images used by a package containing Tinkerbell actions can be listed using the `containersImages` field in the package's `artifacthub-pkg.yml` [metadata file](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml).
+Images used by these kinds of packages can be listed using the `containersImages` field in the package's `artifacthub-pkg.yml` [metadata file](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml).
 
 ## Application dependencies
 

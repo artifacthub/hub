@@ -18,7 +18,7 @@ Use this annotation to indicate that this chart version contains security update
 
 - **artifacthub.io/images** *(yaml string, see example below)*
 
-Use this annotation to provide a list of the images used by this chart. Images listed will be scanned for security vulnerabilities. The security report generated will be available in the package detail view. It is possible to whitelist images so that they are not scanned by setting the `whitelisted` flag to true.
+Use this annotation to provide a list of the containers images used by this chart. Images listed will be scanned for security vulnerabilities. The security report generated will be available in the package detail view. It is possible to whitelist images so that they are not scanned by setting the `whitelisted` flag to true.
 
 - **artifacthub.io/crds** *(yaml string, see example below)*
 
@@ -46,7 +46,7 @@ Use this annotation to indicate that your chart represents an operator. Artifact
 
 - **artifacthub.io/operatorCapabilities** *(string)*
 
-Use this annotation to indicate the capabilities of the operator your chart provides. It must be one of the following options: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights or Auto Pilot. For more information please see the [capability level diagram](https://artifacthub.io/static/media/capability-level-diagram.svg).
+Use this annotation to indicate the capabilities of the operator your chart provides. It must be one of the following options: *Basic Install*, *Seamless Upgrades*, *Full Lifecycle*, *Deep Insights* or *Auto Pilot*. For more information please see the [capability level diagram](https://artifacthub.io/static/media/capability-level-diagram.svg).
 
 - **artifacthub.io/prerelease** *(boolean string, see example below)*
 

@@ -1,6 +1,6 @@
 # Repositories guide
 
-Artifact Hub allows publishers to list their content in an automated way. Publishers can add their repositories from the control panel, accesible from the top right menu after signing in. It's possible to create an organization and add repositories to it instead of adding them to the user account. Repositories will be indexed periodically to always display the most up-to-date content.
+Artifact Hub allows publishers to list their content in an automated way. Publishers can add their repositories from the control panel, accesible from the top right menu after signing in. It's possible to create an organization and add repositories to it instead of adding them to the user's account. Repositories will be indexed periodically to always display the most up-to-date content.
 
 The following repositories kinds are supported at the moment:
 
@@ -92,6 +92,7 @@ path/to/packages
 ├── artifacthub-repo.yml
 ├── package1
 │   ├── 1.0.0
+│   │   ├── README.md
 │   │   ├── artifacthub-pkg.yml
 │   │   ├── more
 │   │   │   └── file3-rules.yaml
@@ -113,6 +114,7 @@ $ tree path/to/packages
 path/to/packages
 ├── artifacthub-repo.yml
 └── package1
+    ├── README.md
     ├── artifacthub-pkg.yml
     └── file1-rules.yaml
 ```
@@ -128,7 +130,7 @@ Once you have added your repository, you are all set up. As you add new versions
 ### Example repository: Security Hub fork
 
 - Rules source Github URL: [https://github.com/tegioz/cloud-native-security-hub/tree/master/artifact-hub/falco](https://github.com/tegioz/cloud-native-security-hub/tree/master/artifact-hub/falco)
-- Repository URL used in Artifact Hub: [https://github.com/tegioz/cloud-native-security-hub/artifact-hub/falco](https://github.com/tegioz/cloud-native-security-hub/artifact-hub/falco) (please note how the *tree/master* part is not used)
+- Repository URL used in Artifact Hub: `https://github.com/tegioz/cloud-native-security-hub/artifact-hub/falco` (please note how the *tree/master* part is not used)
 
 ## Helm charts repositories
 
@@ -136,7 +138,7 @@ Artifact Hub is able to process chart repositories as defined by the Helm projec
 
 Most of the metadata Artifact Hub needs is extracted from the `Chart.yaml` file and other files in the chart package, like the `README` or `LICENSE` files. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `Chart.yaml` file. For more information, please see the [Artifact Hub Helm annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/helm_annotations.md).
 
-There is an extra metadata file that you can add at the repository URL's path named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim).
+There is an extra metadata file that you can add at the repository URL's path named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). *Please note that the **artifacthub-repo.yml** metadata file must be located at the same level of the chart repository **index.yaml** file, and it must be served from the chart repository HTTP server as well.*
 
 Once you have added your repository, you are all set up. As you add new versions of your charts or even new charts to your repository, they'll be automatically indexed and listed in Artifact Hub.
 
@@ -148,7 +150,7 @@ To add a repository stored in a OCI registry, the url used **must** follow the f
 
 - `oci://ghcr.io/artifacthub/artifact-hub`
 
-The chart name is expected to match the OCI reference basename (`artifact-hub` in this case), and each of the chart versions are expected to match an OCI reference tag, which are expected to be valid *semver* versions. OCI specific installation instructions will be provided in the UI when appropriate (only for Helm v3).
+The chart name is expected to match the OCI reference basename (`artifact-hub` in this case), and each of the chart versions are expected to match an OCI reference tag, which are expected to be valid [semver](https://semver.org) versions. OCI specific installation instructions will be provided in the UI when appropriate (only for Helm v3).
 
 The sample URL shown above is actually valid, so you can give it a try yourself in your own Artifact Hub instance if you wish :)
 
@@ -203,11 +205,14 @@ path/to/packages
 ├── artifacthub-repo.yml
 ├── package1
 │   ├── 1.0.0
+│   │   ├── README.md
 │   │   └── artifacthub-pkg.yml
 │   └── 2.0.0
+│       ├── README.md
 │       └── artifacthub-pkg.yml
 └── package2
     └── 1.0.0
+        ├── README.md
         └── artifacthub-pkg.yml
 ```
 
@@ -218,6 +223,7 @@ $ tree path/to/packages
 path/to/packages
 ├── artifacthub-repo.yml
 └── package1
+    ├── README.md
     └── artifacthub-pkg.yml
 ```
 
@@ -226,6 +232,11 @@ In the previous case, even the `package1` directory could be omitted. The reason
 Each package version **needs** an `artifacthub-pkg.yml` metadata file. Please see the file [spec](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml) for more details. The [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml) repository metadata file shown above can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at `/path/to/packages`.
 
 Once you have added your repository, you are all set up. As you add new versions of your scalers packages or even new packages to your git repository, they'll be automatically indexed and listed in Artifact Hub.
+
+### Example repository: KEDA Official External Scalers
+
+- Scalers source Github URL: [https://github.com/kedacore/external-scalers/tree/master/artifacthub](https://github.com/kedacore/external-scalers/tree/master/artifacthub)
+- Repository URL used in Artifact Hub: `https://github.com/kedacore/external-scalers/artifacthub` (please note how the *tree/master* part is not used)
 
 ## Krew kubectl plugins repositories
 
@@ -242,12 +253,16 @@ Most of the metadata Artifact Hub needs is extracted from the [plugin's manifest
 
 There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at the root of the repository.
 
+### Example repository: Krew Index
+
+- [https://github.com/kubernetes-sigs/krew-index](https://github.com/kubernetes-sigs/krew-index)
+
 ## OLM operators repositories
 
 OLM operators repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
-- `https://github.com/user/repo[/path/to/operators]`
-- `https://gitlab.com/user/repo[/path/to/operators]`
+- `https://github.com/user/repo[/path/to/packages]`
+- `https://gitlab.com/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -255,9 +270,9 @@ By default the `master` branch is used, but it's possible to specify a different
 
 The *path to operators* provided can contain one or more operators, that **must** be packaged using the [format defined in the Operator Framework documentation](https://github.com/operator-framework/community-operators/blob/master/docs/packaging-operator.md). This is exactly the same format required to publish operators in [operatorhub.io](https://operatorhub.io). We've adopted this format for this repository kind because of its well thought structure and to make it easier for publishers to start listing their content in Artifact Hub. Both `PackageManifest` and `Bundle` formats are supported.
 
-Most of the metadata Artifact Hub needs is extracted from the `CSV` file and other files in the operator package. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `CSV` file. For more information, please see the [Artifact Hub OLM annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/olm_annotations.md).
+Most of the metadata Artifact Hub needs is extracted from the [CSV](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/design/building-your-csv.md) file and other files in the operator package. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `CSV` file. For more information, please see the [Artifact Hub OLM annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/olm_annotations.md).
 
-There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at `/path/to/operators`.
+There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at `/path/to/packages`.
 
 Once you have added your repository, you are all set up. As you add new versions of your operators or even new operators to your git repository, they'll be automatically indexed and listed in Artifact Hub. To delete a specific version or operator from Artifact Hub, you just need to delete the corresponding directory from your repository. This should make it easier to keep your content up-to-date in Artifact Hub without requiring any extra effort on your side.
 
@@ -279,7 +294,7 @@ Please note that there are some features that are not yet available for OLM repo
 ### Example repository: Ditto operator repository
 
 - Operators source Github URL: [https://github.com/ctron/ditto-operator/tree/master/olm](https://github.com/ctron/ditto-operator/tree/master/olm)
-- Repository URL used in Artifact Hub: [https://github.com/ctron/ditto-operator/olm](https://github.com/ctron/ditto-operator/olm) (please note how the *tree/master* part is not used)
+- Repository URL used in Artifact Hub: `https://github.com/ctron/ditto-operator/olm` (please note how the *tree/master* part is not used)
 - Operator displayed in Artifact Hub: [https://artifacthub.io/packages/olm/ditto-operator/ditto-operator](https://artifacthub.io/packages/olm/ditto-operator/ditto-operator)
 
 ## OPA policies repositories
@@ -303,16 +318,19 @@ path/to/packages
 ├── artifacthub-repo.yml
 ├── package1
 │   ├── 1.0.0
+│   │   ├── README.md
 │   │   ├── artifacthub-pkg.yml
 │   │   ├── more
 │   │   │   └── policies3.rego
 │   │   ├── policies1.rego
 │   │   └── policies2.rego
 │   └── 2.0.0
+│       ├── README.md
 │       ├── artifacthub-pkg.yml
 │       └── policies1.rego
 └── package2
     └── 1.0.0
+        ├── README.md
         ├── artifacthub-pkg.yml
         └── policies1.rego
 ```
@@ -326,6 +344,7 @@ $ tree path/to/packages
 path/to/packages
 ├── artifacthub-repo.yml
 └── package1
+    ├── README.md
     ├── artifacthub-pkg.yml
     ├── policies1.rego
     └── policies2.rego
@@ -344,7 +363,7 @@ Once you have added your repository, you are all set up. As you add new versions
 - Policies source Github URL: [https://github.com/swade1987/deprek8ion/tree/master/policies](https://github.com/swade1987/deprek8ion/tree/master/policies)
 - Repository metadata file: [https://github.com/swade1987/deprek8ion/blob/master/policies/artifacthub-repo.yml](https://github.com/swade1987/deprek8ion/blob/master/policies/artifacthub-repo.yml)
 - Package metadata file: [https://github.com/swade1987/deprek8ion/blob/master/policies/artifacthub-pkg.yml](https://github.com/swade1987/deprek8ion/blob/master/policies/artifacthub-pkg.yml)
-- Repository URL used in Artifact Hub: [https://github.com/swade1987/deprek8ion/policies](https://github.com/swade1987/deprek8ion/policies) (please note how the *tree/master* part is not used)
+- Repository URL used in Artifact Hub: `https://github.com/swade1987/deprek8ion/policies` (please note how the *tree/master* part is not used)
 - Policies displayed in Artifact Hub: [https://artifacthub.io/packages/opa/deprek8ion/deprek8ion](https://artifacthub.io/packages/opa/deprek8ion/deprek8ion)
 
 ## Tinkerbell actions repositories
@@ -368,11 +387,14 @@ path/to/packages
 ├── artifacthub-repo.yml
 ├── package1
 │   ├── 1.0.0
+│   │   ├── README.md
 │   │   └── artifacthub-pkg.yml
 │   └── 2.0.0
+│       ├── README.md
 │       └── artifacthub-pkg.yml
 └── package2
     └── 1.0.0
+        ├── README.md
         └── artifacthub-pkg.yml
 ```
 
@@ -392,6 +414,11 @@ Each package version **needs** an `artifacthub-pkg.yml` metadata file. Please se
 
 Once you have added your repository, you are all set up. As you add new versions of your actions packages or even new packages to your git repository, they'll be automatically indexed and listed in Artifact Hub.
 
+### Example repository: Tinkerbell Community
+
+- Actions source Github URL: [https://github.com/tinkerbell/hub/tree/artifacthub-manifests/actions](https://github.com/tinkerbell/hub/tree/artifacthub-manifests/actions)
+- Repository URL used in Artifact Hub: `https://github.com/tinkerbell/hub/actions` (please note how the *tree/artifacthub-manifests* part is not used)
+
 ## Tekton tasks repositories
 
 Artifact Hub is able to process Tekton tasks listed in [Tekton catalog repositories](https://github.com/tektoncd/catalog#catalog-structure). Repositories are expected to be hosted in Github or Gitlab. When adding your repository to Artifact Hub, the url used **must** follow the following format:
@@ -403,9 +430,14 @@ By default the `master` branch is used, but it's possible to specify a different
 
 For more information about the structure of the Tekton catalog repository, please see the [Tekton catalog](https://github.com/tektoncd/catalog#catalog-structure) official documentation.
 
-Most of the metadata Artifact Hub needs is extracted from the tasks's manifest file. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `task manifest` file. For more information, please see the [Artifact Hub Tekton annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/tekton_annotations.md).
+Most of the metadata Artifact Hub needs is extracted from the task's manifest file. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `task manifest` file. For more information, please see the [Artifact Hub Tekton annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/tekton_annotations.md).
 
 There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at the root of the repository.
+
+### Example repository: Tekton Catalog Tasks
+
+- Tasks source Github URL: [https://github.com/tektoncd/catalog/tree/main/task](https://github.com/tektoncd/catalog/tree/main/task)
+- Repository URL used in Artifact Hub: `https://github.com/tektoncd/catalog/task` (please note how the *tree/main* part is not used)
 
 ## Verified Publisher
 
@@ -417,7 +449,7 @@ Publishers can be verified through the [artifacthub-repo.yml](https://github.com
 
 *Please note that the **artifacthub-repo.yml** metadata file must be located at the repository URL's path. In Helm repositories, for example, this means it must be located at the same level of the chart repository **index.yaml** file, and it must be served from the chart repository HTTP server as well.*
 
-*The verified publisher flag won't be set until the next time the repository is processed. Please keep in mind that repository won't be processed if it hasn't changed since the last time it was processed. Depending on the repository kind, this is checked in a different way. For Helm http based repositories, we consider it has changed if the `index.yaml` file changes (the `generated` field is ignored when performing this check). For git based repositories, it does when the hash of the last commit in the branch you set up changes.*
+*The verified publisher flag won't be set until the next time the repository is processed. Please keep in mind that the repository won't be processed if it hasn't changed since the last time it was processed. Depending on the repository kind, this is checked in a different way. For Helm http based repositories, we consider it has changed if the `index.yaml` file changes (the `generated` field is ignored when performing this check). For git based repositories, it does when the hash of the last commit in the branch you set up changes.*
 
 ## Official status
 
@@ -435,9 +467,9 @@ Once you have verified that the requirements are met, please file an issue [usin
 
 ## Ownership claim
 
-Any user is free to add any repository they wish to Artifact Hub. In some situations, legit owners may want to claim its ownership to publish it themselves. This process can be easily done in an automated way from the Artifact Hub control panel.
+Any user is free to add any repository they wish to Artifact Hub. In some situations, legit owners may want to claim the ownership on an already published repository in order to publish it themselves. This process can be easily done in an automated way from the Artifact Hub control panel.
 
-First, an [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml) metadata file must be added to the repository you want to claim the ownership for. Only the `owners` section of the metadata file is required to be set up for this process. The `repositoryID` field can be omitted as the user claiming the ownership doesn't know it yet. The user requesting the ownership **must** appear in the list of owners in the metadata file, and the email listed **must** match with the one used to sign in in Artifact Hub. This information will be used during the process to verify that the requesting user actually owns the repository.
+First, an [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml) metadata file must be added to the repository you want to claim the ownership for. Only the `owners` section of the metadata file is required to be set up for this process. The `repositoryID` field can be omitted as the user claiming the ownership doesn't know it yet. The user requesting the ownership claim **must** appear in the list of owners in the metadata file, and the email listed **must** match with the one used to sign in in Artifact Hub. This information will be used during the process to verify that the requesting user actually owns the repository.
 
 Once the repository metadata file has been set up, you can proceed from the Artifact Hub control panel. In the repositories tab, click on `Claim Ownership`. You'll need to enter the repository you'd like to claim the ownership for, as well as the destination entity, which can be the user performing the request or an organization. If the metadata file was set up correctly, the process should complete successfully.
 
