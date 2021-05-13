@@ -268,7 +268,7 @@ const StatsView = () => {
     <div className="d-flex flex-column flex-grow-1 position-relative">
       {(isUndefined(stats) || isLoading) && <Loading />}
 
-      <main role="main" className="container-lg px-sm-4 px-lg-0 py-5" id="content">
+      <main role="main" className="container-lg px-sm-4 px-lg-0 py-5 noFocus" id="content" tabIndex={-1}>
         <div className="flex-grow-1 position-relative">
           <div className={`h2 text-secondary text-center ${styles.title}`}>Artifact Hub Stats</div>
 

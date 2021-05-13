@@ -6,8 +6,9 @@ import styles from './NotFound.module.css';
 
 const NotFound = () => (
   <div
-    className={`p-5 d-flex flex-column align-items-center justify-content-center flex-grow-1 ${styles.content}`}
+    className={`p-5 d-flex flex-column align-items-center justify-content-center flex-grow-1 noFocus ${styles.content}`}
     id="content"
+    tabIndex={-1}
   >
     <TiWarningOutline className={`m-3 ${styles.icon}`} />
     <div className="h1 text-center mb-4">Error 404 - Page Not Found</div>

@@ -3,9 +3,10 @@
 exports[`ControlPanelView renders correctly 1`] = `
 <DocumentFragment>
   <main
-    class="d-flex flex-column flex-grow-1 position-relative"
+    class="d-flex flex-column flex-grow-1 position-relative noFocus"
     id="content"
     role="main"
+    tabindex="-1"
   >
     <div
       class="pt-3 position-relative navWrapper navWrapper"

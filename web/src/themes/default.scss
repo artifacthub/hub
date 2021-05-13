@@ -25,7 +25,7 @@ $container-max-widths: (
 @import './dark.scss';
 
 .text-muted {
-  color: #575e64 !important;
+  color: #636a6e !important;
 }
 
 .form-control:disabled,
@@ -183,4 +183,8 @@ button {
 
 .custom-select {
   background: #fff url('/static/media/bootstrap/bt_select.svg') right 0.75rem center/8px 10px no-repeat;
+}
+
+.noFocus:focus {
+  outline: none !important;
 }

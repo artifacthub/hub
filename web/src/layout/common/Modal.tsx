@@ -105,7 +105,6 @@ const Modal = (props: Props) => {
       <div
         className={classnames('modal', styles.modal, { [`${styles.active} d-block`]: openStatus })}
         role="dialog"
-        tabIndex={-1}
         aria-modal={openStatus}
       >
         <div

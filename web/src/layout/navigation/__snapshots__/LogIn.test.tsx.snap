@@ -11,7 +11,6 @@ exports[`LogIn creates snapshot 1`] = `
       aria-modal="true"
       class="modal modal active d-block"
       role="dialog"
-      tabindex="-1"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"

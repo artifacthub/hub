@@ -512,7 +512,7 @@ const SearchView = (props: Props) => {
                   </NoData>
                 ) : (
                   <>
-                    <div className="mb-2" id="content" aria-label="Packages list">
+                    <div className="mb-2 noFocus" id="content" tabIndex={-1} aria-label="Packages list">
                       <div className="row" role="list">
                         {searchResults.data.packages.map((item: Package) => (
                           <PackageCard

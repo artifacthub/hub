@@ -24,9 +24,10 @@ exports[`StatsView creates snapshot 1`] = `
       </div>
     </div>
     <main
-      class="container-lg px-sm-4 px-lg-0 py-5"
+      class="container-lg px-sm-4 px-lg-0 py-5 noFocus"
       id="content"
       role="main"
+      tabindex="-1"
     >
       <div
         class="flex-grow-1 position-relative"

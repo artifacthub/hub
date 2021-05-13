@@ -29,7 +29,9 @@ const Keywords = (props: Props) => {
   return (
     <div className="mb-3" role="list" aria-describedby="keywords-list">
       {isUndefined(props.keywords) || isNull(props.keywords) || props.keywords.length === 0 ? (
-        <p data-testid="keywords">-</p>
+        <p data-testid="keywords" role="listitem">
+          -
+        </p>
       ) : (
         <span data-testid="keywords">
           {cleanKeywords().map((keyword: string) => (

@@ -776,7 +776,12 @@ const PackageView = (props: Props) => {
 
                   {!isNull(detail) && (
                     <>
-                      <div className={styles.mainContent} id="content" aria-label="Package detail">
+                      <div
+                        className={`noFocus ${styles.mainContent}`}
+                        id="content"
+                        tabIndex={-1}
+                        aria-label="Package detail"
+                      >
                         {isNull(detail.readme) || isUndefined(detail.readme) ? (
                           <div className={styles.noReadmeWrapper}>
                             <NoData>No README file available for this package</NoData>

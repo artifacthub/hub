@@ -60,7 +60,6 @@ exports[`DeleteOrg creates snapshot 1`] = `
       aria-modal="false"
       class="modal modal"
       role="dialog"
-      tabindex="-1"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
