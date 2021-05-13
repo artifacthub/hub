@@ -18,7 +18,7 @@ const AlertController = () => {
   };
 
   return (
-    <div className="position-relative">
+    <div className="position-relative" aria-hidden={isNull(alert)} tabIndex={-1}>
       <div
         data-testid="alertController"
         className={classnames(
@@ -29,12 +29,17 @@ const AlertController = () => {
           { fade: isNull(alert) }
         )}
         role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
       >
-        {!isNull(alert) && <>{alert.message}</>}
-
-        <button type="button" className="close" onClick={onClose}>
-          <span aria-hidden="true">&times;</span>
-        </button>
+        {!isNull(alert) && (
+          <>
+            {alert.message}
+            <button type="button" className="close" onClick={onClose} aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

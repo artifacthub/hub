@@ -19,10 +19,6 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const defaultProps = {
-  withPackageLinks: true,
-};
-
 describe('PackageInfo', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -32,7 +28,7 @@ describe('PackageInfo', () => {
     const mockPackage = getMockPackage('1');
     const { asFragment } = render(
       <Router>
-        <PackageInfo {...defaultProps} package={mockPackage} />
+        <PackageInfo package={mockPackage} />
       </Router>
     );
     expect(asFragment).toMatchSnapshot();
@@ -43,7 +39,7 @@ describe('PackageInfo', () => {
       const mockPackage = getMockPackage('2');
       const { queryByAltText } = render(
         <Router>
-          <PackageInfo {...defaultProps} package={mockPackage} />
+          <PackageInfo package={mockPackage} />
         </Router>
       );
       const image = queryByAltText(`Logo ${mockPackage.displayName}`);
@@ -55,7 +51,7 @@ describe('PackageInfo', () => {
 
       const { queryByAltText } = render(
         <Router>
-          <PackageInfo {...defaultProps} package={mockPackage} />
+          <PackageInfo package={mockPackage} />
         </Router>
       );
       const image = queryByAltText(`Logo ${mockPackage.displayName}`);
@@ -70,7 +66,7 @@ describe('PackageInfo', () => {
 
       const { queryByText } = render(
         <Router>
-          <PackageInfo {...defaultProps} package={mockPackage} />
+          <PackageInfo package={mockPackage} />
         </Router>
       );
       const title = queryByText(mockPackage.displayName!);
@@ -82,7 +78,7 @@ describe('PackageInfo', () => {
 
       const { queryByText } = render(
         <Router>
-          <PackageInfo {...defaultProps} package={mockPackage} />
+          <PackageInfo package={mockPackage} />
         </Router>
       );
       const title = queryByText(mockPackage.name!);
@@ -96,7 +92,7 @@ describe('PackageInfo', () => {
 
       const { queryAllByTestId, queryAllByAltText } = render(
         <Router>
-          <PackageInfo {...defaultProps} package={mockPackage} />
+          <PackageInfo package={mockPackage} />
         </Router>
       );
       const buttons = queryAllByTestId('repoLink');
@@ -123,7 +119,7 @@ describe('PackageInfo', () => {
 
       const { getByTestId } = render(
         <Router>
-          <PackageInfo {...defaultProps} package={mockPackage} />
+          <PackageInfo package={mockPackage} />
         </Router>
       );
       const button = getByTestId('userLink');
@@ -146,7 +142,7 @@ describe('PackageInfo', () => {
 
       const { getAllByTestId } = render(
         <Router>
-          <PackageInfo {...defaultProps} package={mockPackage} />
+          <PackageInfo package={mockPackage} />
         </Router>
       );
       const buttons = getAllByTestId('repoIconLabelLink');
@@ -165,28 +161,13 @@ describe('PackageInfo', () => {
     });
   });
 
-  describe('when withPackageLinks is false', () => {
-    it('does not render some links', () => {
-      const mockPackage = getMockPackage('9');
-
-      const { queryByTestId } = render(
-        <Router>
-          <PackageInfo withPackageLinks={false} package={mockPackage} />
-        </Router>
-      );
-
-      expect(queryByTestId('packageLink')).toBeNull();
-      expect(queryByTestId('imageLink')).toBeNull();
-    });
-  });
-
   describe('when repository has a verified publisher', () => {
     it('renders correct label', () => {
       const mockPackage = getMockPackage('10');
 
       const { getAllByText } = render(
         <Router>
-          <PackageInfo withPackageLinks={false} package={mockPackage} />
+          <PackageInfo package={mockPackage} />
         </Router>
       );
 

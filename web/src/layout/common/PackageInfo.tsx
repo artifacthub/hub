@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
@@ -23,7 +23,6 @@ import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 interface Props {
   package: Package;
-  withPackageLinks: boolean;
   breakpointForInfoSection?: string;
 }
 
@@ -60,50 +59,14 @@ const PackageInfo = (props: Props) => {
     <>
       <div className="d-flex align-items-start justify-content-between mw-100">
         <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
-          {props.withPackageLinks ? (
-            <Link
-              data-testid="imageLink"
-              className={`text-decoration-none text-reset ${styles.link}`}
-              to={{
-                pathname: buildPackageURL(
-                  props.package.normalizedName,
-                  props.package.repository,
-                  props.package.version!
-                ),
-              }}
-            >
-              {packageImage}
-            </Link>
-          ) : (
-            <>{packageImage}</>
-          )}
+          {packageImage}
 
           <div
             className={`d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 ${styles.truncateWrapper} ${styles.titleWrapper}`}
           >
             <div className="text-truncate card-title mb-0">
               <div className="d-flex flex-row align-items-center">
-                {props.withPackageLinks ? (
-                  <Link
-                    data-testid="packageLink"
-                    className={`${styles.link} text-reset text-truncate`}
-                    to={{
-                      pathname: buildPackageURL(
-                        props.package.normalizedName,
-                        props.package.repository,
-                        props.package.version!
-                      ),
-                    }}
-                  >
-                    <div className={`text-truncate ${styles.title}`}>
-                      {props.package.displayName || props.package.name}
-                    </div>
-                  </Link>
-                ) : (
-                  <div className={`text-truncate ${styles.title}`}>
-                    {props.package.displayName || props.package.name}
-                  </div>
-                )}
+                <div className={`text-truncate ${styles.title}`}>{props.package.displayName || props.package.name}</div>
               </div>
             </div>
 
@@ -135,6 +98,8 @@ const PackageInfo = (props: Props) => {
                 {props.package.repository.userAlias && (
                   <>
                     <span className="text-muted text-uppercase mr-1">User: </span>
+                    <span className="sr-only">{props.package.repository.userAlias}</span>
+
                     <button
                       data-testid="userLink"
                       className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link} ${styles.mx50}`}
@@ -150,6 +115,9 @@ const PackageInfo = (props: Props) => {
                           }),
                         });
                       }}
+                      aria-label={`Filter by ${props.package.repository.userAlias}`}
+                      aria-hidden="true"
+                      tabIndex={-1}
                     >
                       <div className="text-truncate">{props.package.repository.userAlias}</div>
                     </button>

@@ -44,7 +44,7 @@ exports[`Schema creates snapshot 1`] = `
       class="col-7 pt-3 bg-dark position-relative"
     >
       <div
-        class="text-muted text-truncate text-monospace comment"
+        class="text-truncate text-monospace comment"
       >
         # Artifact Hub Chart JSON Schema
       </div>
@@ -55,11 +55,13 @@ exports[`Schema creates snapshot 1`] = `
           class="position-relative mr-2"
         >
           <button
+            aria-label="Copy to clipboard"
             class="btn btn-sm btn-primary rounded-circle btn"
             data-testid="ctcBtn"
             type="button"
           >
             <div
+              aria-hidden="true"
               class="d-flex flex-row align-items-center"
             >
               <svg
@@ -89,10 +91,12 @@ exports[`Schema creates snapshot 1`] = `
           </button>
         </div>
         <button
+          aria-label="Download"
           class="btn btn-sm btn-primary rounded-circle btn"
           data-testid="downloadBtn"
         >
           <svg
+            aria-hidden="true"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -119,12 +123,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database configuration
         </div>
@@ -149,6 +154,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -226,12 +232,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database host
         </div>
@@ -260,6 +267,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -358,12 +366,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database port
         </div>
@@ -392,6 +401,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -490,12 +500,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database user
         </div>
@@ -524,6 +535,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -622,12 +634,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database name
         </div>
@@ -656,6 +669,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -754,12 +768,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database password
         </div>
@@ -788,6 +803,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -886,12 +902,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub configuration
         </div>
@@ -916,6 +933,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -993,6 +1011,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -1018,6 +1037,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -1084,12 +1104,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # From address used in emails
         </div>
@@ -1118,6 +1139,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -1210,6 +1232,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -1235,6 +1258,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -1301,12 +1325,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # SMTP host
         </div>
@@ -1335,6 +1360,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -1427,12 +1453,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # SMTP port
         </div>
@@ -1461,6 +1488,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -1553,12 +1581,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # SMTP password
         </div>
@@ -1587,6 +1616,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -1679,12 +1709,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # SMTP username
         </div>
@@ -1713,6 +1744,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -1805,12 +1837,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Reply-to address used in emails
         </div>
@@ -1839,6 +1872,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -1931,12 +1965,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # From name used in emails
         </div>
@@ -1965,6 +2000,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2057,6 +2093,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -2082,6 +2119,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2154,6 +2192,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -2179,6 +2218,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2251,12 +2291,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub image repository (without the tag)
         </div>
@@ -2285,6 +2326,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2383,12 +2425,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub pod resource requirements
         </div>
@@ -2417,6 +2460,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2515,12 +2559,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Number of Hub replicas
         </div>
@@ -2549,6 +2594,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2647,12 +2693,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub pod readiness gates
         </div>
@@ -2679,6 +2726,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2774,6 +2822,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -2799,6 +2848,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2871,6 +2921,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -2896,6 +2947,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -2962,6 +3014,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
@@ -2987,6 +3040,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -3053,12 +3107,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level4 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Github oauth scopes
         </div>
@@ -3094,6 +3149,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -3206,12 +3262,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level4 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Github oauth client id
         </div>
@@ -3240,6 +3297,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -3332,12 +3390,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level4 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Github oauth redirect url
         </div>
@@ -3366,6 +3425,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -3458,12 +3518,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level4 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Github oauth client secret
         </div>
@@ -3492,6 +3553,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -3584,6 +3646,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
@@ -3609,6 +3672,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -3675,12 +3739,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level4 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Google oauth scopes
         </div>
@@ -3716,6 +3781,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -3828,12 +3894,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level4 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Google oauth client id
         </div>
@@ -3862,6 +3929,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -3954,12 +4022,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level4 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Google oauth redirect url
         </div>
@@ -3988,6 +4057,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -4080,12 +4150,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level4 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Google oauth client secret
         </div>
@@ -4114,6 +4185,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -4206,6 +4278,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -4231,6 +4304,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -4303,12 +4377,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Enable Hub secure cookies
         </div>
@@ -4337,6 +4412,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -4435,12 +4511,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub cookie hash key
         </div>
@@ -4469,6 +4546,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -4561,12 +4639,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub server base url
         </div>
@@ -4595,6 +4674,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -4693,12 +4773,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # X-Forwarded-For IP index
         </div>
@@ -4727,6 +4808,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -4825,6 +4907,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -4850,6 +4933,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -4922,12 +5006,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Enable Hub basic auth
         </div>
@@ -4956,6 +5041,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -5054,12 +5140,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub basic auth password
         </div>
@@ -5088,6 +5175,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -5180,12 +5268,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub basic auth username
         </div>
@@ -5214,6 +5303,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -5306,12 +5396,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub server shutdown timeout
         </div>
@@ -5340,6 +5431,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -5438,6 +5530,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -5463,6 +5556,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -5535,12 +5629,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub ingress rules
         </div>
@@ -5567,6 +5662,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -5662,12 +5758,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Enable Hub ingress
         </div>
@@ -5696,6 +5793,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -5794,12 +5892,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub ingress annotations
         </div>
@@ -5824,6 +5923,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -5901,12 +6001,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub ingress class
         </div>
@@ -5935,6 +6036,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6033,6 +6135,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -6058,6 +6161,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6130,12 +6234,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub service port
         </div>
@@ -6164,6 +6269,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6262,12 +6368,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Hub service type
         </div>
@@ -6296,6 +6403,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6394,6 +6502,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -6419,6 +6528,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6485,12 +6595,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Google Analytics tracking id
         </div>
@@ -6519,6 +6630,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6611,6 +6723,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
@@ -6636,6 +6749,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6708,12 +6822,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Log level
         </div>
@@ -6742,6 +6857,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6840,12 +6956,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Enable pretty logging
         </div>
@@ -6874,6 +6991,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -6972,12 +7090,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Trivy configuration
         </div>
@@ -7002,6 +7121,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -7079,6 +7199,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -7104,6 +7225,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -7176,6 +7298,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -7205,6 +7328,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -7298,12 +7422,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Trivy pod resource requirements
         </div>
@@ -7332,6 +7457,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -7430,12 +7556,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Trivy authentication URL
         </div>
@@ -7464,6 +7591,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -7556,12 +7684,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Trivy authentication password
         </div>
@@ -7590,6 +7719,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -7682,12 +7812,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Trivy authentication username
         </div>
@@ -7716,6 +7847,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -7808,6 +7940,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -7833,6 +7966,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -7905,12 +8039,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Size of persistent volume claim
         </div>
@@ -7939,6 +8074,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8031,12 +8167,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Use persistent volume to store data
         </div>
@@ -8065,6 +8202,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8163,12 +8301,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Type of persistent volume claim
         </div>
@@ -8197,6 +8336,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8289,12 +8429,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Scanner configuration
         </div>
@@ -8319,6 +8460,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8396,6 +8538,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -8421,6 +8564,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8493,6 +8637,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -8518,6 +8663,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8590,12 +8736,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Scanner image repository (without the tag)
         </div>
@@ -8624,6 +8771,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8722,12 +8870,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Scanner pod resource requirements
         </div>
@@ -8756,6 +8905,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8854,12 +9004,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Trivy server url
         </div>
@@ -8888,6 +9039,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -8986,12 +9138,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Snapshots to process concurrently
         </div>
@@ -9020,6 +9173,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -9118,12 +9272,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Tracker configuration
         </div>
@@ -9148,6 +9303,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -9225,6 +9381,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -9250,6 +9407,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -9322,12 +9480,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Enable repository tracking errors events
         </div>
@@ -9356,6 +9515,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -9448,6 +9608,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -9473,6 +9634,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -9545,6 +9707,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -9570,6 +9733,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -9642,12 +9806,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Tracker image repository (without the tag)
         </div>
@@ -9676,6 +9841,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -9774,12 +9940,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Tracker pod resource requirements
         </div>
@@ -9808,6 +9975,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -9906,12 +10074,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Store for images
         </div>
@@ -9940,6 +10109,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -10038,12 +10208,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Repositories to process concurrently
         </div>
@@ -10072,6 +10243,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -10170,12 +10342,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Bypass digest check
         </div>
@@ -10204,6 +10377,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -10302,12 +10476,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Repositories kinds to process ([] = all)
         </div>
@@ -10334,6 +10509,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -10440,12 +10616,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Repositories names to process ([] = all)
         </div>
@@ -10472,6 +10649,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -10578,12 +10756,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Tag used when pulling images
         </div>
@@ -10612,6 +10791,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -10710,12 +10890,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database migrator configuration
         </div>
@@ -10740,6 +10921,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -10817,6 +10999,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
@@ -10842,6 +11025,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -10914,6 +11098,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level2 text-monospace"
@@ -10939,6 +11124,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -11011,12 +11197,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level3 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Database migrator image repository (without the tag)
         </div>
@@ -11045,6 +11232,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -11143,12 +11331,13 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level1 text-monospace"
       >
         <div
-          class="text-muted text-truncate"
+          class="text-truncate comment"
         >
           # Load demo user and sample repositories
         </div>
@@ -11177,6 +11366,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -11275,6 +11465,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
@@ -11304,6 +11495,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -11397,6 +11589,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
@@ -11426,6 +11619,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -11513,6 +11707,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
@@ -11542,6 +11737,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >
@@ -11629,6 +11825,7 @@ exports[`Schema creates snapshot 1`] = `
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
+      role="button"
     >
       <div
         class="level0 text-monospace"
@@ -11656,6 +11853,7 @@ exports[`Schema creates snapshot 1`] = `
           class="contentWrapper"
         >
           <button
+            aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
             data-testid="expandBtn"
           >

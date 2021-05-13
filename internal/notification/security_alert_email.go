@@ -106,7 +106,7 @@ var securityAlertEmailTmpl = template.Must(template.New("").Parse(`
     }
 
     .line {
-      border-top: 7px solid #659DBD;
+      border-top: 7px solid #417598;
     }
 
     .line-danger {
@@ -118,7 +118,7 @@ var securityAlertEmailTmpl = template.Must(template.New("").Parse(`
     }
 
     .title, .AHlink {
-      color: #39596C;
+      color: #2d4857;
     }
 
     .subtitle {
@@ -126,12 +126,12 @@ var securityAlertEmailTmpl = template.Must(template.New("").Parse(`
     }
 
     .hr {
-      border-top: 1px solid #659DBD;
+      border-top: 1px solid #417598;
     }
 
     .AHbtn {
-      background-color: #39596C;
-      border: solid 1px #39596C;
+      background-color: #2d4857;
+      border: solid 1px #2d4857;
       color: #ffffff;
     }
 

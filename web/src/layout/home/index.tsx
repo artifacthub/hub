@@ -63,11 +63,14 @@ const HomeView = (props: Props) => {
     <div className={`d-flex flex-column flex-grow-1 ${styles.home} home`}>
       <div className={`jumbotron mb-0 text-center ${styles.jumbotron}`}>
         <div
-          role="heading"
+          role="banner"
+          aria-label="Find, install and publisher Kubernetes packages"
           className={`display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center ${styles.mainTitle}`}
+          id="content"
         >
-          <div>Find, install and publish</div>
-          <div className={styles.secondLine}>Kubernetes packages</div>
+          Find, install and publish
+          <br />
+          <span className={styles.secondLine}>Kubernetes packages</span>
         </div>
 
         <div className="mt-5 text-center">
@@ -81,6 +84,7 @@ const HomeView = (props: Props) => {
               to={{
                 pathname: '/packages/search',
               }}
+              aria-label="Browse all packages"
             >
               <u>browse all packages</u>
             </Link>
@@ -93,6 +97,7 @@ const HomeView = (props: Props) => {
               to={{
                 pathname: '/packages/search',
               }}
+              aria-label="Browse all packages"
             >
               <u>browse all packages</u>
             </Link>{' '}
@@ -118,6 +123,7 @@ const HomeView = (props: Props) => {
           <ExternalLink
             className={`btn btn-secondary mb-4 mb-md-2 ${styles.socialBtn}`}
             href="https://github.com/cncf/hub"
+            label="Open Github link"
           >
             <div className="d-flex align-items-center justify-content-center">
               <FaGithub className="mr-2" />
@@ -128,6 +134,7 @@ const HomeView = (props: Props) => {
           <ExternalLink
             className={`btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 ${styles.socialBtn}`}
             href="https://cloud-native.slack.com/channels/artifact-hub"
+            label="Open Slack channel"
           >
             <div className="d-flex align-items-center justify-content-center">
               <FaSlack className="mr-2" />
@@ -138,6 +145,7 @@ const HomeView = (props: Props) => {
           <ExternalLink
             className={`btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 ${styles.socialBtn}`}
             href="https://twitter.com/cncfartifacthub"
+            label="Open Twitter link"
           >
             <div className="d-flex align-items-center justify-content-center">
               <FaTwitter className="mr-2" />
@@ -151,6 +159,7 @@ const HomeView = (props: Props) => {
           <ExternalLink
             className={`btn btn-link text-light font-weight-bold textLight p-0 ${styles.inlineLink}`}
             href="/docs/topics/repositories"
+            label="Open documentation"
           >
             repositories guide
           </ExternalLink>{' '}
@@ -168,7 +177,7 @@ const HomeView = (props: Props) => {
             configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton
             tasks, KEDA scalers and CoreDNS plugins.
             <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
-              <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`}>
+              <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -176,7 +185,7 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-              <ExternalLink href="https://falco.org" className={`col ${styles.iconLink}`}>
+              <ExternalLink href="https://falco.org" className={`col ${styles.iconLink}`} label="Open Falco site">
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -184,7 +193,11 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-              <ExternalLink href="https://www.openpolicyagent.org" className={`col ${styles.iconLink}`}>
+              <ExternalLink
+                href="https://www.openpolicyagent.org"
+                className={`col ${styles.iconLink}`}
+                label="Open Open Policy Agent site"
+              >
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -194,7 +207,11 @@ const HomeView = (props: Props) => {
               </ExternalLink>
             </div>
             <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
-              <ExternalLink href="https://github.com/operator-framework" className={`col ${styles.iconLink}`}>
+              <ExternalLink
+                href="https://github.com/operator-framework"
+                className={`col ${styles.iconLink}`}
+                label="Open Operator framework site"
+              >
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -202,7 +219,11 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-              <ExternalLink href="https://tinkerbell.org" className={`col ${styles.iconLink}`}>
+              <ExternalLink
+                href="https://tinkerbell.org"
+                className={`col ${styles.iconLink}`}
+                label="Open Tinkerbell site"
+              >
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -210,7 +231,7 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-              <ExternalLink href="https://krew.sigs.k8s.io" className={`col ${styles.iconLink}`}>
+              <ExternalLink href="https://krew.sigs.k8s.io" className={`col ${styles.iconLink}`} label="Open Krew site">
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -220,7 +241,7 @@ const HomeView = (props: Props) => {
               </ExternalLink>
             </div>
             <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
-              <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`}>
+              <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`} label="Open Tekton site">
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -228,7 +249,7 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-              <ExternalLink href="https://keda.sh" className={`col ${styles.iconLink}`}>
+              <ExternalLink href="https://keda.sh" className={`col ${styles.iconLink}`} label="Open KEDA site">
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.KedaScaler} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -236,7 +257,7 @@ const HomeView = (props: Props) => {
                   </div>
                 </div>
               </ExternalLink>
-              <ExternalLink href="https://coredns.io" className={`col ${styles.iconLink}`}>
+              <ExternalLink href="https://coredns.io" className={`col ${styles.iconLink}`} label="Open CoreDNS site">
                 <div className="d-flex flex-column justify-content-between align-items-center h-100">
                   <RepositoryIcon kind={RepositoryKind.CoreDNS} type="white" className={styles.aboutIcon} />
                   <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
@@ -263,7 +284,11 @@ const HomeView = (props: Props) => {
             />
             <div className="px-3 pt-4">
               Artifact Hub is a{' '}
-              <ExternalLink href="https://www.cncf.io/sandbox-projects/" className="font-weight-bold text-primary">
+              <ExternalLink
+                href="https://www.cncf.io/sandbox-projects/"
+                className="font-weight-bold text-secondary"
+                label="Open CNCF sandbox projects site"
+              >
                 Cloud Native Computing Foundation
               </ExternalLink>{' '}
               sandbox project.

@@ -142,6 +142,7 @@ const APIKeyModal = (props: Props) => {
       type="button"
       disabled={isSending}
       onClick={submitForm}
+      aria-label={`${props.apiKey ? 'Update' : 'Add'} API key`}
     >
       {isSending ? (
         <>
@@ -184,7 +185,7 @@ const APIKeyModal = (props: Props) => {
             <div className="d-flex justify-content-between mb-2">
               <SmallTitle text="API-KEY-ID" />
               <div>
-                <ButtonCopyToClipboard text={apiKeyCode.apiKeyId} />
+                <ButtonCopyToClipboard text={apiKeyCode.apiKeyId} label="Copy API key ID to clipboard" />
               </div>
             </div>
 
@@ -201,7 +202,7 @@ const APIKeyModal = (props: Props) => {
             <div className="d-flex justify-content-between mb-2">
               <SmallTitle text="API-KEY-SECRET" />
               <div>
-                <ButtonCopyToClipboard text={apiKeyCode.secret} />
+                <ButtonCopyToClipboard text={apiKeyCode.secret} label="Copy API key secret to clipboard" />
               </div>
             </div>
 
@@ -222,7 +223,11 @@ const APIKeyModal = (props: Props) => {
                 <u>You will not be able to see the secret again when you close this window.</u>
               </b>{' '}
               For more information please see the authorize section in the{' '}
-              <ExternalLink className="text-muted" href="https://artifacthub.github.io/hub/api">
+              <ExternalLink
+                className="text-muted"
+                href="https://artifacthub.github.io/hub/api"
+                label="Open documentation"
+              >
                 <u>API docs</u>
               </ExternalLink>
               .

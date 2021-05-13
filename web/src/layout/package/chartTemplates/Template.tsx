@@ -1,8 +1,9 @@
 import classnames from 'classnames';
 import { get, isEmpty, isNull, isObject, isString } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import regexifyString from 'regexify-string';
 
+import { AppCtx } from '../../../context/AppCtx';
 import { ChartTemplate, ChartTemplateSpecialType } from '../../../types';
 import processHelmTemplate from '../../../utils/processHelmTemplate';
 import AutoresizeTextarea from '../../common/AutoresizeTextarea';
@@ -22,7 +23,9 @@ const SPECIAL_CHARACTERS = /[^|({})-]+/;
 const TOKENIZE_RE = /[^\s"']+|"([^"]*)"|'([^']*)/g;
 
 const Template = (props: Props) => {
+  const { ctx } = useContext(AppCtx);
   const [activeTemplate, setActiveTemplate] = useState<ChartTemplate>(props.template);
+  const { effective } = ctx.prefs.theme;
 
   useEffect(() => {
     props.setIsChangingTemplate(false);
@@ -51,7 +54,11 @@ const Template = (props: Props) => {
         <div className="d-flex flex-row my-1" key={`active-tmpl-${index}`}>
           <div className={`text-right mr-3 ${styles.lineNumber}`}>{index + 1}</div>
           <div className="flex-grow-1">
-            {line.startsWith('#') ? <span className={styles.tmplComment}>{line}</span> : <>{processLine(line)}</>}
+            {line.startsWith('#') ? (
+              <span className={`${styles.tmplComment} ${styles[`${effective}Theme`]}`}>{line}</span>
+            ) : (
+              <>{processLine(line)}</>
+            )}
           </div>
           <div className="pl-2" />
         </div>
@@ -73,7 +80,7 @@ const Template = (props: Props) => {
 
     return (
       <ParamInfo
-        element={<span className={styles.tmplValue}>{word}</span>}
+        element={<span className={`${styles.tmplValue} ${styles[`${effective}Theme`]}`}>{word}</span>}
         info={
           <div className="p-2 text-truncate">
             <span className="text-muted mr-2 normalOpacityFont">DEFAULT:</span>
@@ -103,14 +110,14 @@ const Template = (props: Props) => {
     if (definition) {
       return (
         <ParamInfo
-          element={<span className={styles.tmplFunction}>{word}</span>}
+          element={<span className={`${styles.tmplFunction} ${styles[`${effective}Theme`]}`}>{word}</span>}
           info={FUNCTIONS_DEFINITIONS[word]}
           isMarkdown
           fixedWidth
         />
       );
     } else {
-      return <span className={styles.tmplFunction}>{word}</span>;
+      return <span className={`${styles.tmplFunction} ${styles[`${effective}Theme`]}`}>{word}</span>;
     }
   };
 
@@ -119,14 +126,14 @@ const Template = (props: Props) => {
     if (definition) {
       return (
         <ParamInfo
-          element={<span className={styles.tmplBuiltIn}>{word}</span>}
+          element={<span className={`${styles.tmplBuiltIn}  ${styles[`${effective}Theme`]}`}>{word}</span>}
           info={BUILTIN_DEFINITIONS[word]}
           isMarkdown
           fixedWidth
         />
       );
     } else {
-      return <span className={styles.tmplBuiltIn}>{word}</span>;
+      return <span className={`${styles.tmplBuiltIn} ${styles[`${effective}Theme`]}`}>{word}</span>;
     }
   };
 
@@ -166,9 +173,15 @@ const Template = (props: Props) => {
                           case ChartTemplateSpecialType.Function:
                             return <>{renderTemplateFunction(match)}</>;
                           case ChartTemplateSpecialType.FlowControl:
-                            return <span className={styles.tmplFlowControl}>{match}</span>;
+                            return (
+                              <span className={`${styles.tmplFlowControl} ${styles[`${effective}Theme`]}`}>
+                                {match}
+                              </span>
+                            );
                           case ChartTemplateSpecialType.Variable:
-                            return <span className={styles.tmplVariable}>{match}</span>;
+                            return (
+                              <span className={`${styles.tmplVariable} ${styles[`${effective}Theme`]}`}>{match}</span>
+                            );
                           default:
                             return <>{word}</>;
                         }

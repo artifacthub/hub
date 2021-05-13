@@ -239,6 +239,7 @@ const AuthorizationSection = (props: Props) => {
             <ExternalLink
               href="https://github.com/artifacthub/hub/blob/master/docs/authorization.md"
               className={`text-reset ${styles.link}`}
+              label="Open documentation"
             >
               documentation
             </ExternalLink>
@@ -400,16 +401,21 @@ const AuthorizationSection = (props: Props) => {
           <ExternalLink
             href="https://www.openpolicyagent.org/docs/latest/#rego"
             className={`text-reset ${styles.link}`}
+            label="Open rego documentation"
           >
             rego
           </ExternalLink>{' '}
           and they are evaluated using the{' '}
-          <ExternalLink href="https://www.openpolicyagent.org" className={`text-reset ${styles.link}`}>
+          <ExternalLink
+            href="https://www.openpolicyagent.org"
+            className={`text-reset ${styles.link}`}
+            label="Open Open Policy Agent documentation"
+          >
             Open Policy Agent
           </ExternalLink>
           . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can
           provide your custom policy for maximum flexibility. For more information please see the{' '}
-          <ExternalLink href="/docs/authorization" className={`text-reset ${styles.link}`}>
+          <ExternalLink href="/docs/authorization" className={`text-reset ${styles.link}`} label="Open documentation">
             documentation
           </ExternalLink>
           .
@@ -555,6 +561,7 @@ const AuthorizationSection = (props: Props) => {
                   type="button"
                   className="btn btn-sm btn-success"
                   onClick={triggerTestInRegoPlayground}
+                  aria-label="Test in playground"
                 >
                   {isTesting ? (
                     <>
@@ -612,6 +619,7 @@ const AuthorizationSection = (props: Props) => {
                 data-testid="modalCancelBtn"
                 className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
                 onClick={() => setConfirmationModal({ open: false })}
+                aria-label="Cancel"
               >
                 Cancel
               </button>
@@ -624,6 +632,7 @@ const AuthorizationSection = (props: Props) => {
                   confirmationModal.onConfirm!();
                   setConfirmationModal({ open: false });
                 }}
+                aria-label="Confirm"
               >
                 Ok
               </button>

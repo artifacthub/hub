@@ -35,30 +35,36 @@ exports[`Authorization settings index creates snapshot 1`] = `
       <p>
         Artifact Hub allows you to setup fine-grained access control based on authorization policies. Authorization polices are written in 
         <a
+          aria-label="Open rego documentation"
           class="link text-reset link"
           href="https://www.openpolicyagent.org/docs/latest/#rego"
           rel="noopener noreferrer"
           role="button"
+          tabindex="-1"
           target="_blank"
         >
           rego
         </a>
          and they are evaluated using the 
         <a
+          aria-label="Open Open Policy Agent documentation"
           class="link text-reset link"
           href="https://www.openpolicyagent.org"
           rel="noopener noreferrer"
           role="button"
+          tabindex="-1"
           target="_blank"
         >
           Open Policy Agent
         </a>
         . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can provide your custom policy for maximum flexibility. For more information please see the 
         <a
+          aria-label="Open documentation"
           class="link text-reset link"
           href="/docs/authorization"
           rel="noopener noreferrer"
           role="button"
+          tabindex="-1"
           target="_blank"
         >
           documentation

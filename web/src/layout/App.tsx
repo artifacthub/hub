@@ -56,6 +56,9 @@ export default function App() {
     <AppCtxProvider>
       <Router history={history}>
         <div className="d-flex flex-column min-vh-100 position-relative">
+          <div className="sr-only sr-only-focusable">
+            <a href="#content">Skip to Main Content</a>
+          </div>
           <ScrollMemory />
           <AlertController />
           <BannerMOTD />

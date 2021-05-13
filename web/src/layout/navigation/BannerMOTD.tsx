@@ -33,6 +33,8 @@ const BannerMOTD = () => {
         styles.wrapper
       )}
       role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
     >
       <div className="container-lg px-sm-4 px-lg-0">{motd}</div>
 
@@ -41,6 +43,7 @@ const BannerMOTD = () => {
         type="button"
         className={`close position-absolute ${styles.close}`}
         onClick={() => setOpenStatus(false)}
+        aria-label="Close"
       >
         <span aria-hidden="true">&times;</span>
       </button>

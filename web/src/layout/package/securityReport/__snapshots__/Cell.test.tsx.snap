@@ -30,10 +30,12 @@ exports[`SecuritySummary creates snapshot 1`] = `
         >
           CVE-2020-8492
           <a
+            aria-label="Link to CVE-2020-8492 vulnerability"
             class="link ml-2 text-dark position-relative link"
             href="http://linux.oracle.com/cve/CVE-2020-8492.html"
             rel="noopener noreferrer"
             role="button"
+            tabindex="-1"
             target="_blank"
           >
             <small>

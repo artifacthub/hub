@@ -55,7 +55,7 @@ const Schema = (props: Props) => {
       <div className="row">
         <div className="col-7 pt-3 bg-dark position-relative">
           {props.schema.title && (
-            <div className={`text-muted text-truncate text-monospace ${styles.comment}`}># {props.schema.title}</div>
+            <div className={`text-truncate text-monospace ${styles.comment}`}># {props.schema.title}</div>
           )}
           {valuesYAML && (
             <BlockCodeButtons

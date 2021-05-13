@@ -87,7 +87,7 @@ interface WrapperProps {
   color?: string;
 }
 
-const DEFAULT_COLOR = '#659dbd';
+const DEFAULT_COLOR = '#417598';
 
 const Wrapper = styled.div<WrapperProps>`
   ${(props) =>
@@ -108,17 +108,17 @@ const Wrapper = styled.div<WrapperProps>`
           --icon-color: #a3a3a6;
         `
       : css`
-          --color-ah-primary: #659dbd;
+          --color-ah-primary: #417598;
           --color-ah-font: #38383f;
           --white: #fff;
-          --color-ah-primary-5: rgba(28, 44, 53, 0.05);
-          --color-ah-primary-10: rgba(28, 44, 53, 0.1);
-          --color-ah-primary-20: rgba(28, 44, 53, 0.2);
-          --color-ah-secondary-10: rgba(176, 206, 224, 0.1);
+          --color-ah-primary-5: rgba(65, 117, 152, 0.05);
+          --color-ah-primary-10: rgba(65, 117, 152, 0.1);
+          --color-ah-primary-20: rgba(65, 117, 152, 0.2);
+          --color-ah-secondary-10: rgba(45, 72, 87, 0.1);
           --color-ah-black-25: rgba(0, 0, 0, 0.25);
           --color-ah-black-75: rgba(0, 0, 0, 0.75);
           --light-gray: #e9ecef;
-          --info: #659dbd;
+          --info: #417598;
           --success: #28a745;
           --icon-color: #fff;
           --color-ah-black-25: rgba(0, 0, 0, 0.25);

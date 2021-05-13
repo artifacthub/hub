@@ -38,9 +38,11 @@ const RandomPackages = () => {
             <>
               {packages.length > 0 && (
                 <div data-testid="randomPackagesList" className="w-100 my-2">
-                  <div className="h4 text-center text-secondary mt-3 mt-md-2 mb-4">Explore and discover packages</div>
+                  <div className="h4 text-center text-secondary mt-3 mt-md-2 mb-4" aria-level={4}>
+                    Explore and discover packages
+                  </div>
 
-                  <div className="pt-2 row no-gutters justify-content-center">
+                  <div className="pt-2 row no-gutters justify-content-center" role="list">
                     {packages.map((item: Package, index: number) => {
                       return (
                         <PackageCard

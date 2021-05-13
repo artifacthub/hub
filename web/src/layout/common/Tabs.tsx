@@ -43,6 +43,7 @@ const Tabs = (props: Props) => {
                   setActiveTab(tab.name);
                   setVisibleContent(tab.content);
                 }}
+                aria-label={`Open tab ${tab.name}`}
               >
                 <span className="d-none d-sm-block">{tab.title}</span>
                 <span className="d-block d-sm-none">{tab.shortTitle || tab.title}</span>

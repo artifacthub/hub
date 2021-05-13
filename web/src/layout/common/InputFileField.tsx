@@ -92,6 +92,7 @@ const InputFileField = (props: Props) => {
             className={classnames('btn p-0 overflow-hidden', styles.btn, { [styles.isLoading]: isSending })}
             type="button"
             onClick={onClick}
+            aria-label="Add image"
           >
             {props.value ? (
               <Image imageId={props.value} className={styles.image} alt="Logo" />

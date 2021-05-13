@@ -4,7 +4,7 @@ import { Repository } from '../../../types';
 import { OCI_PREFIX } from '../../../utils/data';
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
-import styles from './ContentInstall.module.css';
+import PrivateRepoWarning from './PrivateRepoWarning';
 
 interface Props {
   name: string;
@@ -25,15 +25,10 @@ const HelmOCIInstall = (props: Props) => {
 
       <CommandBlock command={`helm install my-${props.name} ./${props.name}`} title="Install chart" />
 
-      {props.repository.private && (
-        <div className={`alert alert-warning my-4 ${styles.alert}`} role="alert">
-          <span className="font-weight-bold text-uppercase">Important:</span> This repository is{' '}
-          <span className="font-weight-bold">private</span> and requires some credentials.
-        </div>
-      )}
+      {props.repository.private && <PrivateRepoWarning />}
 
       <div className="mt-2">
-        <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">
+        <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0" label="Download Helm">
           Need Helm?
         </ExternalLink>
       </div>

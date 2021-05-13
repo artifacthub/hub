@@ -199,6 +199,7 @@ const WidgetModal = (props: Props) => {
                 visibleBtnText
                 contentBtn="Copy code to clipboard"
                 className={`btn-secondary ${styles.copyBtn}`}
+                label="Copy code to clipboard"
               />
             </div>
           </div>

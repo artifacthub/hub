@@ -6,6 +6,7 @@
   --color-1-100: #222529;
   --color-1-300: #222529;
   --color-1-500: #131216;
+  --color-1-600: #131216;
   --color-1-700: #131216;
   --color-1-900: #0f0e11;
 
@@ -30,8 +31,6 @@
 
   --color-white-50: rgba(0, 0, 0, 0.5);
   --color-white-95: rgba(0, 0, 0, 0.95);
-
-  --logo-font: 'Archivo Black', cursive;
 
   --white: var(--body-bg);
   --black: var(--color-1-100);
@@ -257,8 +256,7 @@
   }
 
   .text-muted {
-    color: $font-color !important;
-    opacity: 0.65;
+    color: #a0a0a0 !important;
   }
 
   a.textLight,

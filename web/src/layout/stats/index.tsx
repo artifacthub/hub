@@ -116,7 +116,7 @@ const StatsView = () => {
         opacity: 0.5,
         colors: [
           () => {
-            return activeTheme === 'dark' ? '#222529' : '#659dbd';
+            return activeTheme === 'dark' ? '#222529' : '#417598';
           },
         ],
       },
@@ -268,7 +268,7 @@ const StatsView = () => {
     <div className="d-flex flex-column flex-grow-1 position-relative">
       {(isUndefined(stats) || isLoading) && <Loading />}
 
-      <main role="main" className="container-lg px-sm-4 px-lg-0 py-5">
+      <main role="main" className="container-lg px-sm-4 px-lg-0 py-5" id="content">
         <div className="flex-grow-1 position-relative">
           <div className={`h2 text-secondary text-center ${styles.title}`}>Artifact Hub Stats</div>
 

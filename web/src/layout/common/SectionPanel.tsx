@@ -89,6 +89,7 @@ const SectionPanel = (props: Props) => {
                             onClick={() => {
                               history.push(`${props.pathPrefix || ''}/${section.name}`);
                             }}
+                            aria-label={`Go to section ${section.name}`}
                           >
                             <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100">
                               {getBtnContent(section)}

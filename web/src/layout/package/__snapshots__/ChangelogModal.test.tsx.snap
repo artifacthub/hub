@@ -9,6 +9,8 @@ exports[`ChangelogModal creates snapshot 1`] = `
       data-testid="elementWithTooltip"
     >
       <button
+        aria-disabled="false"
+        aria-label="Open modal"
         class="btn btn-secondary btn-block btn-sm text-nowrap"
         data-testid="changelogBtn"
       >

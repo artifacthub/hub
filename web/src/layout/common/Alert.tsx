@@ -52,7 +52,13 @@ const Alert: React.ElementType = (props: Props) => {
           <div className="d-flex flex-row align-items-start justify-content-between">
             <div>{errorMessage || ''}</div>
             {!isUndefined(props.onClose) && (
-              <button data-testid="closeAlertBtn" type="button" className="close ml-3" onClick={props.onClose}>
+              <button
+                data-testid="closeAlertBtn"
+                type="button"
+                className="close ml-3"
+                onClick={props.onClose}
+                aria-label="Close alert"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             )}

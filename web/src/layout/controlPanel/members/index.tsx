@@ -101,6 +101,7 @@ const MembersSection = (props: Props) => {
                         className="btn btn-secondary"
                         onClick={() => setModalMemberOpen(true)}
                         data-testid="addFirstMemberBtn"
+                        aria-label="Open modal"
                       >
                         <div className="d-flex flex-row align-items-center">
                           <MdAddCircle className="mr-2" />

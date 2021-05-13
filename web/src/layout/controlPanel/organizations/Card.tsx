@@ -144,6 +144,7 @@ const OrganizationCard = (props: Props) => {
                             closeDropdown();
                             setLeaveModalStatus(true);
                           }}
+                          aria-label="Open modal"
                         >
                           <div className="d-flex flex-row align-items-center">
                             <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
@@ -163,6 +164,7 @@ const OrganizationCard = (props: Props) => {
                           closeDropdown();
                         }}
                         disabled={isAccepting}
+                        aria-label="Confirm membership"
                       >
                         <div className="d-flex flex-row align-items-center">
                           {isAccepting ? (
@@ -186,6 +188,8 @@ const OrganizationCard = (props: Props) => {
                   <button
                     className={`ml-3 btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
                     onClick={() => setDropdownMenuStatus(true)}
+                    aria-label="Open menu"
+                    aria-expanded={dropdownMenuStatus}
                   >
                     <BsThreeDotsVertical />
                   </button>
@@ -201,6 +205,7 @@ const OrganizationCard = (props: Props) => {
                     <button
                       className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
                       onClick={() => setLeaveModalStatus(false)}
+                      aria-label="Close modal"
                     >
                       <div className="d-flex flex-row align-items-center">
                         <IoMdCloseCircle className="mr-2" />
@@ -216,6 +221,7 @@ const OrganizationCard = (props: Props) => {
                         leaveOrganization();
                       }}
                       disabled={isLeaving}
+                      aria-label="Leave organization"
                     >
                       <div className="d-flex flex-row align-items-center text-uppercase">
                         {isLeaving ? (
@@ -247,7 +253,11 @@ const OrganizationCard = (props: Props) => {
           {props.organization.homeUrl && (
             <div className="mt-3 text-truncate">
               <small className="text-muted text-uppercase mr-1">Homepage: </small>
-              <ExternalLink href={props.organization.homeUrl} className={`text-reset ${styles.link}`}>
+              <ExternalLink
+                href={props.organization.homeUrl}
+                className={`text-reset ${styles.link}`}
+                label={`Open link ${props.organization.homeUrl}`}
+              >
                 {props.organization.homeUrl}
               </ExternalLink>
             </div>

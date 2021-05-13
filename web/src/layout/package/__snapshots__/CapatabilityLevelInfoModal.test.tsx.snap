@@ -9,6 +9,7 @@ exports[`CapatabilityLevelInfoModal creates snapshot 1`] = `
       class="position-relative buttonWrapper"
     >
       <button
+        aria-label="Open modal"
         class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-secondary btn"
         data-testid="openModalBtn"
         type="button"
@@ -33,8 +34,10 @@ exports[`CapatabilityLevelInfoModal creates snapshot 1`] = `
       </button>
     </div>
     <div
+      aria-modal="false"
       class="modal modal"
       role="dialog"
+      tabindex="-1"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
@@ -51,6 +54,7 @@ exports[`CapatabilityLevelInfoModal creates snapshot 1`] = `
               Capability level
             </div>
             <button
+              aria-label="Close modal"
               class="close"
               data-testid="closeModalBtn"
               type="button"
@@ -76,6 +80,7 @@ exports[`CapatabilityLevelInfoModal creates snapshot 1`] = `
             class="modal-footer p-3"
           >
             <button
+              aria-label="Close modal"
               class="btn btn-sm btn-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"

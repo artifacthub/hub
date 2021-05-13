@@ -66,23 +66,29 @@ const License = (props: Props) => {
   return (
     <div className={props.className}>
       {LICENSES_LIST.includes(props.license.toLowerCase()) ? (
-        <ExternalLink
-          href={`https://choosealicense.com/licenses/${props.license.toLowerCase()}/`}
-          className={props.linkClassName}
-          btnType={props.btnType}
-        >
-          <div className="d-flex align-items-center mw-100 text-truncate">
-            {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
-            <div className={`mw-100 text-truncate ${props.linkContentClassName}`}>{props.license}</div>
-            <span
-              className={classnames(styles.smallIcon, {
-                [styles.alignedSmallIcon]: isUndefined(props.visibleIcon) || !props.visibleIcon,
-              })}
-            >
-              <FiExternalLink className="ml-1" />
-            </span>
-          </div>
-        </ExternalLink>
+        <>
+          <span className="sr-only">{props.license}</span>
+
+          <ExternalLink
+            href={`https://choosealicense.com/licenses/${props.license.toLowerCase()}/`}
+            className={props.linkClassName}
+            btnType={props.btnType}
+            label={`Open ${props.license} documentation`}
+            ariaHidden
+          >
+            <div className="d-flex align-items-center mw-100 text-truncate">
+              {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
+              <div className={`mw-100 text-truncate ${props.linkContentClassName}`}>{props.license}</div>
+              <span
+                className={classnames(styles.smallIcon, {
+                  [styles.alignedSmallIcon]: isUndefined(props.visibleIcon) || !props.visibleIcon,
+                })}
+              >
+                <FiExternalLink className="ml-1" />
+              </span>
+            </div>
+          </ExternalLink>
+        </>
       ) : (
         <div className="d-flex align-items-center">
           {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}

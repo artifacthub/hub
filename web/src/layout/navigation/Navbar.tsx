@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
-import { FiHexagon } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -46,17 +45,13 @@ const Navbar = (props: Props) => {
         <div className="container-lg px-sm-4 px-lg-0">
           <div className={`d-flex flex-row ${styles.mobileWrapper}`}>
             <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
-              <FiHexagon className="mr-2" />
               <div className="d-flex align-items-start">
-                <div className="d-flex align-items-baseline">
-                  <span className="mr-1">Artifact</span>
-                  <span className={styles.brand}>HUB</span>
-                </div>
-                <span
-                  className={`text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}
+                <img src="/static/media/logo/artifacthub-brand-white.svg" alt="Logo Artifact Hub" />
+                <div
+                  className={`position-relative text-uppercase badge badge-pill badge-secondary d-flex align-items-center ml-1 ${styles.badge}`}
                 >
                   Beta
-                </span>
+                </div>
               </div>
             </Link>
 
@@ -78,17 +73,19 @@ const Navbar = (props: Props) => {
 
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav align-items-center ml-auto">
-              <Link
-                className={classnames(
-                  'btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
-                  styles.button
-                )}
-                to={{
-                  pathname: '/stats',
-                }}
-              >
-                Stats
-              </Link>
+              <li className="nav-item ml-4 position-relative">
+                <Link
+                  className={classnames(
+                    'btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
+                    styles.button
+                  )}
+                  to={{
+                    pathname: '/stats',
+                  }}
+                >
+                  Stats
+                </Link>
+              </li>
 
               {isUndefined(ctx) || isUndefined(ctx.user) ? (
                 <div className="spinner-grow spinner-grow-sm textLight pt-1 ml-4" role="status">
@@ -106,6 +103,7 @@ const Navbar = (props: Props) => {
                             styles.button
                           )}
                           onClick={() => setOpenSignUp(true)}
+                          aria-label="Open sign up modal"
                         >
                           Sign up
                         </button>
@@ -119,6 +117,7 @@ const Navbar = (props: Props) => {
                             styles.button
                           )}
                           onClick={() => setOpenLogIn(true)}
+                          aria-label="Open sign in modal"
                         >
                           Sign in
                         </button>

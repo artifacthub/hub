@@ -240,6 +240,7 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
                 props.onClear();
               }
             }}
+            aria-label="Clear all"
           >
             <div className="d-flex flex-row align-items-center text-muted">
               <IoIosClose />
@@ -284,6 +285,7 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
                         props.onChangeSelection();
                       }
                     }}
+                    aria-label={`${isSelected ? 'Unselect' : 'Select'} option`}
                   >
                     <div className="d-flex flex-row align-items-center position-relative">
                       {isSelected && (

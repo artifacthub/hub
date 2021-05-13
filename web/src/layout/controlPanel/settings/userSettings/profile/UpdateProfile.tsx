@@ -180,6 +180,7 @@ const UpdateProfile = (props: Props) => {
           disabled={isSending}
           onClick={submitForm}
           data-testid="updateProfileBtn"
+          aria-label="Update profile"
         >
           {isSending ? (
             <>

@@ -15,7 +15,6 @@
 }
 
 .brand {
-  font-family: var(--logo-font);
   margin-right: 0.5rem !important;
 }
 
@@ -39,6 +38,7 @@
 }
 
 .badge {
+  margin-top: -5px;
   font-size: 0.5rem !important;
 }
 

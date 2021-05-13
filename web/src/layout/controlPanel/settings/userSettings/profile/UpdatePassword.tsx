@@ -165,6 +165,7 @@ const UpdatePassword = () => {
           type="button"
           disabled={isSending}
           onClick={submitForm}
+          aria-label="Update password"
         >
           {isSending ? (
             <>

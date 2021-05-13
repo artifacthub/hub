@@ -127,6 +127,8 @@ const ChangelogModal = (props: Props) => {
               disabled: !props.hasChangelog,
             })}
             onClick={onOpenModal}
+            aria-label="Open modal"
+            aria-disabled={!props.hasChangelog}
           >
             <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
               {isLoading ? (
@@ -176,6 +178,7 @@ const ChangelogModal = (props: Props) => {
                       <button
                         className={`btn btn-link btn-sm text-secondary py-0 position-relative ${styles.btnLink}`}
                         onClick={() => openPackagePage(item.version)}
+                        aria-label={`Open version ${item.version}`}
                       >
                         <FaLink />
                       </button>
@@ -264,7 +267,11 @@ const ChangelogModal = (props: Props) => {
                                 {change.links.map((link: PackageLink, idx: number) => {
                                   return (
                                     <div key={`change_${index}_link${idx}`}>
-                                      <ExternalLink className={`text-muted ${styles.link}`} href={link.url}>
+                                      <ExternalLink
+                                        className={`text-muted ${styles.link}`}
+                                        href={link.url}
+                                        label={`Open link ${link.name}`}
+                                      >
                                         {link.name}
                                       </ExternalLink>
                                       {idx !== change.links!.length - 1 && <BsDot className="text-muted" />}

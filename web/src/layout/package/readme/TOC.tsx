@@ -32,6 +32,11 @@ const TOC = (props: Props) => {
             data-testid="btnTOC"
             className={`btn btn-sm mr-2 btn-outline-dark ${styles.btn}`}
             onClick={() => setVisibleTOC(!visibleTOC)}
+            aria-label="Table of contents"
+            aria-expanded={visibleTOC}
+            aria-pressed={visibleTOC}
+            aria-owns="TOC-list"
+            aria-controls="TOC-list"
           >
             <FaListUl className={`position-relative ${styles.icon}`} />
           </button>
@@ -45,7 +50,11 @@ const TOC = (props: Props) => {
         <div
           data-testid="dropdownTOC"
           ref={dropdownRef}
+          id="TOC-list"
           className={`dropdown-menu dropdown-menu-left shadow-sm show p-0 ${styles.dropdown}`}
+          tabIndex={0}
+          role="listbox"
+          aria-roledescription="Table of content links"
         >
           <div className={`overflow-auto py-3 ${styles.list}`}>
             <TOCList {...props} setVisibleTOC={setVisibleTOC} />

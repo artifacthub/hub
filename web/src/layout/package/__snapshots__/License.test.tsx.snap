@@ -3,11 +3,19 @@
 exports[`License creates snapshot 1`] = `
 <DocumentFragment>
   <div>
+    <span
+      class="sr-only"
+    >
+      MIT
+    </span>
     <a
+      aria-hidden="true"
+      aria-label="Open MIT documentation"
       class="link undefined"
       href="https://choosealicense.com/licenses/mit/"
       rel="noopener noreferrer"
       role="button"
+      tabindex="-1"
       target="_blank"
     >
       <div

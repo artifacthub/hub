@@ -9,6 +9,8 @@ interface Props {
   className?: string;
   btnType?: boolean;
   target?: string;
+  label?: string;
+  ariaHidden?: boolean;
 }
 
 const ExternalLink = (props: Props) => (
@@ -23,6 +25,9 @@ const ExternalLink = (props: Props) => (
           e.preventDefault();
           window.open(props.href, props.target || '_blank');
         }}
+        aria-label={props.label || 'Open external link'}
+        aria-hidden={props.ariaHidden}
+        tabIndex={-1}
       >
         {props.children}
       </button>
@@ -34,6 +39,9 @@ const ExternalLink = (props: Props) => (
         target={props.target || '_blank'}
         rel="noopener noreferrer"
         onClick={(e) => e.stopPropagation()}
+        aria-label={props.label || 'Open external link'}
+        aria-hidden={props.ariaHidden}
+        tabIndex={-1}
       >
         {props.children}
       </a>

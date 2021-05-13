@@ -27,7 +27,7 @@ const RelatedPackageCard = (props: Props) => {
   };
 
   return (
-    <div className={`card cardWithHover mt-2 w-100 relatedCard ${styles.card}`}>
+    <div className={`card cardWithHover mt-2 w-100 relatedCard ${styles.card}`} role="listitem">
       <Link
         data-testid="relatedPackageLink"
         className={`text-decoration-none text-reset ${styles.link}`}

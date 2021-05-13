@@ -147,6 +147,7 @@ const ResetPasswordModal = (props: Props) => {
       type="button"
       disabled={isSending}
       onClick={submitForm}
+      aria-label="Reset password"
     >
       {isSending ? (
         <>

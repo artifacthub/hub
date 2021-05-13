@@ -219,6 +219,7 @@ const ChartTemplatesModal = (props: Props) => {
           data-testid="tmplModalBtn"
           className={`btn btn-secondary btn-sm text-nowrap ${props.btnClassName}`}
           onClick={onOpenModal}
+          aria-label="Open templates modal"
         >
           <div className="d-flex flex-row align-items-center justify-content-center">
             {isLoading ? (
@@ -249,7 +250,11 @@ const ChartTemplatesModal = (props: Props) => {
                 <span className="font-weight-bold">values</span> entries and other{' '}
                 <span className="font-weight-bold">built-in objects and functions</span>.
               </small>
-              <button className="btn btn-sm btn-secondary text-uppercase" onClick={() => setOpenStatus(false)}>
+              <button
+                className="btn btn-sm btn-secondary text-uppercase"
+                onClick={() => setOpenStatus(false)}
+                aria-label="Close"
+              >
                 <div className="d-flex flex-row align-items-center">
                   <MdClose className="mr-2" />
                   <div>Close</div>

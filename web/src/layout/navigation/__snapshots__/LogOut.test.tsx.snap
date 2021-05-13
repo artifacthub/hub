@@ -3,6 +3,7 @@
 exports[`LogOut creates snapshot 1`] = `
 <DocumentFragment>
   <button
+    aria-label="Sign out"
     class="dropdown-item undefined"
     data-testid="logOutBtn"
   >

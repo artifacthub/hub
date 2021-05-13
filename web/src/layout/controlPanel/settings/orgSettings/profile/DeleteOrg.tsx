@@ -81,6 +81,7 @@ const DeleteOrganization = (props: Props) => {
             <button
               className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
               onClick={() => setOpenStatus(false)}
+              aria-label="Close"
             >
               <div className="d-flex flex-row align-items-center">
                 <IoMdCloseCircle className="mr-2" />
@@ -96,6 +97,7 @@ const DeleteOrganization = (props: Props) => {
                 deleteOrganization();
               }}
               disabled={isDeleting || !isValidInput}
+              aria-label="Delete organization"
             >
               <div className="d-flex flex-row align-items-center text-uppercase">
                 {isDeleting ? (

@@ -53,6 +53,8 @@ exports[`Search index creates snapshot 1`] = `
             class="d-none d-md-block position-relative ml-2"
           >
             <button
+              aria-expanded="false"
+              aria-label="Show menu"
               class="btn p-0 position-relative"
               data-testid="moreActionsBtn"
               type="button"
@@ -87,6 +89,7 @@ exports[`Search index creates snapshot 1`] = `
                 class="arrow arrow"
               />
               <button
+                aria-label="Open embed results modal"
                 class="dropdown-item btn btn-sm rounded-0 text-secondary"
               >
                 <div
@@ -167,25 +170,29 @@ exports[`Search index creates snapshot 1`] = `
             class="d-flex flex-column text-left"
           >
             <a
-              class="link text-muted mb-1"
+              aria-label="Open documentation"
+              class="link mb-1 link"
               href="/docs"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               Documentation
             </a>
             <a
-              class="link text-muted mb-1"
+              aria-label="Open blog"
+              class="link mb-1 link"
               href="https://blog.artifacthub.io/blog/"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               Blog
             </a>
             <a
-              class="text-muted mb-1"
+              class="mb-1 link"
               href="/stats"
             >
               Statistics
@@ -202,10 +209,12 @@ exports[`Search index creates snapshot 1`] = `
             class="d-flex flex-column text-left"
           >
             <a
-              class="link text-muted mb-1"
+              aria-label="Open Github"
+              class="link mb-1 link"
               href="https://github.com/cncf/hub"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -229,10 +238,12 @@ exports[`Search index creates snapshot 1`] = `
               </div>
             </a>
             <a
-              class="link text-muted mb-1"
+              aria-label="Open Slack channel"
+              class="link mb-1 link"
               href="https://cloud-native.slack.com/channels/artifact-hub"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -256,10 +267,12 @@ exports[`Search index creates snapshot 1`] = `
               </div>
             </a>
             <a
-              class="link text-muted mb-1"
+              aria-label="Open Twitter"
+              class="link mb-1 link"
               href="https://twitter.com/cncfartifacthub"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -293,7 +306,7 @@ exports[`Search index creates snapshot 1`] = `
             About
           </div>
           <div
-            class="text-muted copyrightContent"
+            class="copyrightContent"
           >
             Artifact Hub is an 
             <b
@@ -303,10 +316,12 @@ exports[`Search index creates snapshot 1`] = `
             </b>
              project licensed under the 
             <a
-              class="link d-inline-block text-muted mb-1"
+              aria-label="Open Apache License 2.0 documentation"
+              class="link d-inline-block mb-1 linkInText"
               href="https://www.apache.org/licenses/LICENSE-2.0"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div

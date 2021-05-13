@@ -83,7 +83,7 @@ describe('Details', () => {
 
       expect(getByText('1.0.0')).toBeInTheDocument();
       expect(getAllByText('-')).toHaveLength(2);
-      expect(getByText('MIT')).toBeInTheDocument();
+      expect(getAllByText('MIT')).toHaveLength(2);
     });
 
     describe('Application version', () => {
@@ -222,7 +222,7 @@ describe('Details', () => {
   describe('OLM operator', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('14');
-      const { getByText, getByTestId, getAllByTestId } = render(
+      const { getByText, getAllByText, getByTestId, getAllByTestId } = render(
         <Details
           package={mockPackage}
           {...defaultProps}
@@ -270,7 +270,7 @@ describe('Details', () => {
       expect(maintainer1.closest('a')).toHaveProperty('href', `mailto:${mockPackage.maintainers![0].email}`);
 
       expect(getByText('License')).toBeInTheDocument();
-      expect(getByText(mockPackage.license!)).toBeInTheDocument();
+      expect(getAllByText(mockPackage.license!)).toHaveLength(2);
 
       expect(getByText(/Containers Images/g)).toBeInTheDocument();
       expect(getByTestId('containerImage')).toBeInTheDocument();
@@ -284,7 +284,9 @@ describe('Details', () => {
   describe('OPA policy', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('16');
-      const { getByText, getByTestId, getAllByTestId } = render(<Details package={mockPackage} {...defaultProps} />);
+      const { getByText, getAllByText, getByTestId, getAllByTestId } = render(
+        <Details package={mockPackage} {...defaultProps} />
+      );
 
       expect(getByText('Versions')).toBeInTheDocument();
       expect(getByText('1.0.0')).toBeInTheDocument();
@@ -304,7 +306,7 @@ describe('Details', () => {
       expect(maintainer1.closest('a')).toHaveProperty('href', `mailto:${mockPackage.maintainers![0].email}`);
 
       expect(getByText('License')).toBeInTheDocument();
-      expect(getByText(mockPackage.license!)).toBeInTheDocument();
+      expect(getAllByText(mockPackage.license!)).toHaveLength(2);
 
       expect(getByText(/Containers Images/g)).toBeInTheDocument();
       expect(getByTestId('containerImage')).toBeInTheDocument();
@@ -326,7 +328,7 @@ describe('Details', () => {
 
       expect(getByText('key1')).toBeInTheDocument();
       expect(getByText('key2')).toBeInTheDocument();
-      expect(getByText('MIT')).toBeInTheDocument();
+      expect(getAllByText('MIT')).toHaveLength(2);
       expect(getAllByText('-')).toHaveLength(1);
     });
   });

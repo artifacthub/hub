@@ -245,11 +245,13 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
         class="position-relative undefined"
       >
         <button
+          aria-label="Copy command to clipboard"
           class="btn btn-sm btn-primary rounded-circle copyBtn"
           data-testid="ctcBtn"
           type="button"
         >
           <div
+            aria-hidden="true"
             class="d-flex flex-row align-items-center"
           >
             <svg
@@ -304,11 +306,13 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
         class="position-relative undefined"
       >
         <button
+          aria-label="Copy command to clipboard"
           class="btn btn-sm btn-primary rounded-circle copyBtn"
           data-testid="ctcBtn"
           type="button"
         >
           <div
+            aria-hidden="true"
             class="d-flex flex-row align-items-center"
           >
             <svg
@@ -554,11 +558,13 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
         class="position-relative undefined"
       >
         <button
+          aria-label="Copy command to clipboard"
           class="btn btn-sm btn-primary rounded-circle copyBtn"
           data-testid="ctcBtn"
           type="button"
         >
           <div
+            aria-hidden="true"
             class="d-flex flex-row align-items-center"
           >
             <svg
@@ -613,11 +619,13 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
         class="position-relative undefined"
       >
         <button
+          aria-label="Copy command to clipboard"
           class="btn btn-sm btn-primary rounded-circle copyBtn"
           data-testid="ctcBtn"
           type="button"
         >
           <div
+            aria-hidden="true"
             class="d-flex flex-row align-items-center"
           >
             <svg
@@ -652,10 +660,12 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
     class="mt-2"
   >
     <a
+      aria-label="Download OLM"
       class="link btn btn-link pl-0"
       href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md"
       rel="noopener noreferrer"
       role="button"
+      tabindex="-1"
       target="_blank"
     >
       Need OLM?

@@ -115,6 +115,7 @@ const RepositoriesSection = (props: Props) => {
             data-testid="addOptOut"
             className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
             onClick={() => setModalStatus(true)}
+            aria-label="Open opt-out modal"
           >
             <div className="d-flex flex-row align-items-center justify-content-center">
               <IoMdLogOut />

@@ -33,9 +33,13 @@
   line-height: 2rem;
 }
 
+.title {
+  word-break: break-word;
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
 
   .syntaxWrapper {

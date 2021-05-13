@@ -33,12 +33,14 @@ exports[`Organization settings index creates snapshot 1`] = `
           class="position-relative"
         >
           <button
+            aria-label="Add image"
             class="btn p-0 overflow-hidden btn"
             data-testid="inputFileBtn"
             type="button"
           >
             <img
               alt="Logo"
+              aria-hidden="true"
               class="image"
               src="/image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2"
               srcset="/image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@1x 1x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@2x 2x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@3x 3x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@4x 4x"
@@ -76,6 +78,7 @@ exports[`Organization settings index creates snapshot 1`] = `
         autocomplete="off"
         class="form-control"
         data-testid="nameInput"
+        id="name"
         name="name"
         pattern="[a-z0-9-]+"
         required=""
@@ -105,6 +108,7 @@ exports[`Organization settings index creates snapshot 1`] = `
       <input
         class="form-control"
         data-testid="displayNameInput"
+        id="displayName"
         name="displayName"
         spellcheck="false"
         type="text"
@@ -130,6 +134,7 @@ exports[`Organization settings index creates snapshot 1`] = `
       <input
         class="form-control"
         data-testid="homeUrlInput"
+        id="homeUrl"
         name="homeUrl"
         spellcheck="false"
         type="url"
@@ -167,6 +172,7 @@ exports[`Organization settings index creates snapshot 1`] = `
       class="position-relative"
     >
       <button
+        aria-label="Action"
         class="btn btn-sm btn-secondary"
         data-testid="updateOrgBtn"
         type="button"

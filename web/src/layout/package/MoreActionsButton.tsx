@@ -42,6 +42,8 @@ const MoreActionsButton = (props: Props) => {
           onClick={() => {
             setOpenStatus(true);
           }}
+          aria-label="Open menu"
+          aria-expanded={openStatus}
         >
           <div className="d-flex flex-row align-items-center justify-content-center">
             <div
@@ -65,6 +67,7 @@ const MoreActionsButton = (props: Props) => {
               setVisibleWidget(true);
               setOpenStatus(false);
             }}
+            aria-label="Open embed widget modal"
           >
             <div className="d-flex flex-row align-items-center">
               <BiCode className="mr-2" />

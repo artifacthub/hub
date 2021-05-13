@@ -4,6 +4,7 @@ exports[`ControlPanelView renders correctly 1`] = `
 <DocumentFragment>
   <main
     class="d-flex flex-column flex-grow-1 position-relative"
+    id="content"
     role="main"
   >
     <div
@@ -24,6 +25,7 @@ exports[`ControlPanelView renders correctly 1`] = `
               role="tab"
             >
               <a
+                aria-label="Open Repositories section"
                 class="btn btn-link rounded-0 text-reset nav-link position-relative section active activeSection activeSection"
                 href="/control-panel/repositories"
               >
@@ -61,6 +63,7 @@ exports[`ControlPanelView renders correctly 1`] = `
               role="tab"
             >
               <a
+                aria-label="Open Organizations section"
                 class="btn btn-link rounded-0 text-reset nav-link position-relative section"
                 href="/control-panel/organizations"
               >
@@ -97,6 +100,7 @@ exports[`ControlPanelView renders correctly 1`] = `
               role="tab"
             >
               <a
+                aria-label="Open Settings section"
                 class="btn btn-link rounded-0 text-reset nav-link position-relative section"
                 href="/control-panel/settings"
               >
@@ -144,6 +148,8 @@ exports[`ControlPanelView renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <button
+                  aria-expanded="false"
+                  aria-label="Open context"
                   class="btn btn-primary badge-pill btn-sm pr-3 position-relative ctxBtn"
                   data-testid="ctxBtn"
                   type="button"
@@ -210,6 +216,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                 class="arrow arrow"
               />
               <button
+                aria-label="Activate user context"
                 class="dropdown-item mw-100"
                 data-testid="userCtxBtn"
               >

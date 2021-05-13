@@ -47,10 +47,10 @@ const SeeAllModal = (props: Props) => {
   return (
     <>
       {props.items.length <= numVisibleItems ? (
-        <>{props.items}</>
+        <div role="list">{props.items}</div>
       ) : (
         <>
-          {visibleItems}
+          <div role="list">{visibleItems}</div>
 
           <div className={`d-block d-md-none ${styles.legend}`}>
             <small className="text-muted font-italic">Displaying only the first 5 entries</small>
@@ -60,6 +60,7 @@ const SeeAllModal = (props: Props) => {
             data-testid="seeAllModalBtn"
             className={`btn btn-link pl-0 d-none d-md-block position-relative ${styles.btn}`}
             onClick={() => setOpenStatus(true)}
+            aria-label="See all entries"
           >
             <div className="d-flex flex-row align-items-center">
               <HiPlusCircle className="mr-1" />
@@ -76,7 +77,9 @@ const SeeAllModal = (props: Props) => {
           >
             <div className="my-3 mw-100">
               <div className="d-none d-md-block">{props.itemsForModal || props.items}</div>
-              <div className="d-block d-md-none">{props.items}</div>
+              <div className="d-block d-md-none" role="list">
+                {props.items}
+              </div>
             </div>
           </Modal>
         </>

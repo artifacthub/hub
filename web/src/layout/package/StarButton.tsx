@@ -122,6 +122,7 @@ const StarButton = (props: Props) => {
               handleToggleStar();
             }
           }}
+          aria-label={`${notStarred ? 'Star' : 'Unstar'} package`}
         >
           <div className="d-flex align-items-center">
             {notStarred ? <FaRegStar className={styles.icon} /> : <FaStar className={styles.icon} />}

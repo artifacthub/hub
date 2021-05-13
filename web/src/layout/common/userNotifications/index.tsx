@@ -101,6 +101,8 @@ const UserNotificationsController: React.ElementType = () => {
           'notificationCard'
         )}
         role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
       >
         {!isNull(notification) && (
           <div className="toast-body" data-testid="notificationContent">
@@ -112,10 +114,16 @@ const UserNotificationsController: React.ElementType = () => {
                     type="button"
                     className={`btn btn-link text-dark py-0 position-relative ${styles.btn}`}
                     onClick={onChangeNotificationsPrefs}
+                    aria-label="Disable usage tips"
                   >
                     Don't show me more again
                   </button>
-                  <button type="button" className={`close position-relative ${styles.closeBtn}`} onClick={onClose}>
+                  <button
+                    type="button"
+                    className={`close position-relative ${styles.closeBtn}`}
+                    onClick={onClose}
+                    aria-label="Close"
+                  >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>

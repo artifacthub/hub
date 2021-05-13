@@ -20,6 +20,7 @@ exports[`ParamInfo creates snapshot 1`] = `
       </div>
     </div>
     <div
+      aria-expanded="false"
       data-testid="infoText"
     >
       <span>

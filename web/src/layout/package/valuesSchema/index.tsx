@@ -127,6 +127,8 @@ const ValuesSchema = (props: Props) => {
               disabled: !props.hasValuesSchema,
             })}
             onClick={onOpenModal}
+            aria-label="Open values schema modal"
+            aria-disabled={!props.hasValuesSchema}
           >
             <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
               {isLoading ? (

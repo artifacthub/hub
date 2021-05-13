@@ -212,6 +212,11 @@ const SearchBar = (props: Props) => {
       <div className={`position-relative ${props.formClassName}`}>
         <div
           className={`d-flex align-items-strecht overflow-hidden searchBar ${styles.searchBar} ${styles[props.size]}`}
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-owns="search-list"
+          aria-expanded={visibleDropdown && !isNull(packages)}
+          aria-controls="search-list"
         >
           <div
             data-testid="searchBarIcon"
@@ -230,12 +235,16 @@ const SearchBar = (props: Props) => {
             autoCapitalize="none"
             spellCheck="false"
             placeholder="Search packages"
-            aria-label="Search"
+            aria-label="Search packages"
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
             disabled={props.isSearching}
           />
+
+          <div className="d-none" tabIndex={0}>
+            <div aria-live="polite">{!isNull(packages) ? `${packages.length} results found` : ''}</div>
+          </div>
 
           {props.isSearching && (
             <div
@@ -264,6 +273,11 @@ const SearchBar = (props: Props) => {
           <div
             ref={dropdownRef}
             className={`dropdown-menu dropdown-menu-left p-0 shadow-sm w-100 show ${styles.dropdown}`}
+            role="listbox"
+            id="search-list"
+            tabIndex={0}
+            aria-activedescendant={highlightedItem ? `sl-opt${highlightedItem}` : ''}
+            aria-roledescription="Packages list"
           >
             <HoverableItem onLeave={() => setHighlightedItem(null)}>
               <>
@@ -284,6 +298,10 @@ const SearchBar = (props: Props) => {
                         onClick={() => {
                           goToPackage(pkg);
                         }}
+                        aria-label={`Open package ${pkg.displayName || pkg.name} detail`}
+                        role="option"
+                        aria-selected={index === highlightedItem}
+                        id={`sl-opt${index}`}
                       >
                         <div
                           className={`d-none d-md-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 ${styles.imageWrapper} imageWrapper`}
@@ -364,6 +382,10 @@ const SearchBar = (props: Props) => {
                       [styles.activeDropdownItem]: packages.length === highlightedItem,
                     })}
                     onClick={goToSearch}
+                    aria-label="See all results"
+                    role="option"
+                    aria-selected={packages.length === highlightedItem}
+                    id={`sl-opt${packages.length}`}
                   >
                     See all results ({totalPackagesNumber})
                   </button>

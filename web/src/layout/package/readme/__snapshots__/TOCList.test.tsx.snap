@@ -8,8 +8,12 @@ exports[`TOCList creates snapshot 1`] = `
         class="dropdownItem dropdownItem"
       >
         <a
+          aria-label="Go to Title 1"
+          aria-selected="false"
           class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level0"
           href="/#title-1"
+          role="option"
+          tabindex="-1"
         >
           Title 1
         </a>
@@ -20,8 +24,12 @@ exports[`TOCList creates snapshot 1`] = `
             class="dropdownItem dropdownItem"
           >
             <a
+              aria-label="Go to Subtitle 1a"
+              aria-selected="false"
               class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level1"
               href="/#subtitle-1a"
+              role="option"
+              tabindex="-1"
             >
               Subtitle 1a
             </a>
@@ -32,8 +40,12 @@ exports[`TOCList creates snapshot 1`] = `
                 class="dropdownItem dropdownItem"
               >
                 <a
+                  aria-label="Go to Opt 1"
+                  aria-selected="false"
                   class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level2"
                   href="/#opt-1"
+                  role="option"
+                  tabindex="-1"
                 >
                   Opt 1
                 </a>
@@ -44,8 +56,12 @@ exports[`TOCList creates snapshot 1`] = `
                 class="dropdownItem dropdownItem"
               >
                 <a
+                  aria-label="Go to Opt 2"
+                  aria-selected="false"
                   class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level2"
                   href="/#opt-2"
+                  role="option"
+                  tabindex="-1"
                 >
                   Opt 2
                 </a>
@@ -58,8 +74,12 @@ exports[`TOCList creates snapshot 1`] = `
             class="dropdownItem dropdownItem"
           >
             <a
+              aria-label="Go to Subtitle 1b"
+              aria-selected="false"
               class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level1"
               href="/#subtitle-1b"
+              role="option"
+              tabindex="-1"
             >
               Subtitle 1b
             </a>
@@ -72,8 +92,12 @@ exports[`TOCList creates snapshot 1`] = `
         class="dropdownItem dropdownItem"
       >
         <a
+          aria-label="Go to Title 2"
+          aria-selected="false"
           class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level0"
           href="/#title-2"
+          role="option"
+          tabindex="-1"
         >
           Title 2
         </a>
@@ -84,8 +108,12 @@ exports[`TOCList creates snapshot 1`] = `
             class="dropdownItem dropdownItem"
           >
             <a
+              aria-label="Go to Subtitle 2"
+              aria-selected="false"
               class="btn btn-link d-inline-block w-100 text-decoration-none ml-0 text-muted text-left btn level1"
               href="/#subtitle-2"
+              role="option"
+              tabindex="-1"
             >
               Subtitle 2
             </a>

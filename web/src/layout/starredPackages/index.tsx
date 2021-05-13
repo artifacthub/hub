@@ -55,7 +55,7 @@ const StarredPackagesView = () => {
             </div>
           </div>
 
-          <div className={`row mx-auto mt-4 ${styles.wrapper}`}>
+          <div className={`row mx-auto mt-4 ${styles.wrapper}`} role="list" id="content">
             {!isUndefined(packages) && (
               <>
                 {packages.length === 0 ? (

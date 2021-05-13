@@ -8,8 +8,10 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
       data-testid="modalBackdrop"
     />
     <div
+      aria-modal="true"
       class="modal modal active d-block"
       role="dialog"
+      tabindex="-1"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
@@ -26,6 +28,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
               Update organization
             </div>
             <button
+              aria-label="Close modal"
               class="close"
               data-testid="closeModalBtn"
               type="button"
@@ -74,12 +77,14 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                       class="position-relative"
                     >
                       <button
+                        aria-label="Add image"
                         class="btn p-0 overflow-hidden btn"
                         data-testid="inputFileBtn"
                         type="button"
                       >
                         <img
                           alt="Logo"
+                          aria-hidden="true"
                           class="image"
                           src="/image/1234"
                           srcset="/image/1234@1x 1x, /image/1234@2x 2x, /image/1234@3x 3x, /image/1234@4x 4x"
@@ -117,6 +122,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                     autocomplete="off"
                     class="form-control"
                     data-testid="nameInput"
+                    id="name"
                     name="name"
                     pattern="[a-z0-9-]+"
                     required=""
@@ -146,6 +152,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                   <input
                     class="form-control"
                     data-testid="displayNameInput"
+                    id="displayName"
                     name="displayName"
                     spellcheck="false"
                     type="text"
@@ -171,6 +178,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                   <input
                     class="form-control"
                     data-testid="homeUrlInput"
+                    id="homeUrl"
                     name="homeUrl"
                     spellcheck="false"
                     type="url"
@@ -213,6 +221,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
             class="modal-footer p-3"
           >
             <button
+              aria-label="Update organization"
               class="btn btn-sm btn-secondary"
               type="button"
             >

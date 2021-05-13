@@ -109,6 +109,7 @@ const MemberCard = (props: Props) => {
                         <button
                           className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
                           onClick={() => setModalStatus(false)}
+                          aria-label="Cancel"
                         >
                           <div className="d-flex flex-row align-items-center">
                             <IoMdCloseCircle className="mr-2" />
@@ -124,6 +125,7 @@ const MemberCard = (props: Props) => {
                             deleteMember();
                           }}
                           disabled={isDeletingMember}
+                          aria-label={`${isUser ? 'Leave' : 'Remove'} member`}
                         >
                           <div className="d-flex flex-row align-items-center text-uppercase">
                             {isDeletingMember ? (
@@ -181,6 +183,7 @@ const MemberCard = (props: Props) => {
                           closeDropdown();
                           setModalStatus(true);
                         }}
+                        aria-label="Leave organization"
                       >
                         <div className="d-flex flex-row align-items-center">
                           <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
@@ -209,6 +212,8 @@ const MemberCard = (props: Props) => {
                   <button
                     className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
                     onClick={() => setDropdownMenuStatus(true)}
+                    aria-label="Open menu"
+                    aria-expanded={dropdownMenuStatus}
                   >
                     <BsThreeDotsVertical />
                   </button>

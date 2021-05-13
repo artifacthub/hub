@@ -319,6 +319,7 @@ const SearchView = (props: Props) => {
               {/* Mobile filters */}
               {!isEmptyFacets() && (
                 <Sidebar
+                  label="Filters"
                   className="d-inline-block d-md-none mr-2"
                   wrapperClassName="px-4"
                   buttonType={classnames('btn-sm rounded-circle position-relative', styles.btnMobileFilters, {
@@ -345,6 +346,7 @@ const SearchView = (props: Props) => {
                           data-testid="resetBtn"
                           className="btn btn-link btn-sm p-0 pl-1 text-secondary"
                           onClick={onResetFilters}
+                          aria-label="Reset filters"
                         >
                           Reset
                         </button>
@@ -353,29 +355,32 @@ const SearchView = (props: Props) => {
                   }
                   header={<div className="h6 text-uppercase mb-0 flex-grow-1">Filters</div>}
                 >
-                  <Filters
-                    facets={searchResults.data.facets}
-                    activeFilters={props.filters}
-                    activeTsQuery={props.tsQuery}
-                    onChange={onFiltersChange}
-                    onResetSomeFilters={onResetSomeFilters}
-                    onTsQueryChange={onTsQueryChange}
-                    deprecated={props.deprecated}
-                    operators={props.operators}
-                    verifiedPublisher={props.verifiedPublisher}
-                    official={props.official}
-                    onDeprecatedChange={onDeprecatedChange}
-                    onOperatorsChange={onOperatorsChange}
-                    onVerifiedPublisherChange={onVerifiedPublisherChange}
-                    onOfficialChange={onOfficialChange}
-                    onResetFilters={onResetFilters}
-                    visibleTitle={false}
-                  />
+                  <div role="menu">
+                    <Filters
+                      facets={searchResults.data.facets}
+                      activeFilters={props.filters}
+                      activeTsQuery={props.tsQuery}
+                      onChange={onFiltersChange}
+                      onResetSomeFilters={onResetSomeFilters}
+                      onTsQueryChange={onTsQueryChange}
+                      deprecated={props.deprecated}
+                      operators={props.operators}
+                      verifiedPublisher={props.verifiedPublisher}
+                      official={props.official}
+                      onDeprecatedChange={onDeprecatedChange}
+                      onOperatorsChange={onOperatorsChange}
+                      onVerifiedPublisherChange={onVerifiedPublisherChange}
+                      onOfficialChange={onOfficialChange}
+                      onResetFilters={onResetFilters}
+                      visibleTitle={false}
+                      device="mobile"
+                    />
+                  </div>
                 </Sidebar>
               )}
 
               {!isSearching && (
-                <div data-testid="resultsText" className="text-truncate">
+                <div data-testid="resultsText" className="text-truncate" role="status">
                   {searchResults.metadata.total > 0 && (
                     <span className="pr-1">
                       {searchResults.metadata.offset + 1} -{' '}
@@ -418,8 +423,8 @@ const SearchView = (props: Props) => {
 
         <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between">
           {!isEmptyFacets() && (
-            <nav className={`px-xs-0 px-sm-3 px-lg-0 d-none d-md-block ${styles.sidebar}`}>
-              <div className="mr-5">
+            <aside className={`px-xs-0 px-sm-3 px-lg-0 d-none d-md-block ${styles.sidebar}`} aria-label="Filters">
+              <div className="mr-5" role="menu">
                 <Filters
                   facets={searchResults.data.facets}
                   activeFilters={props.filters}
@@ -437,9 +442,10 @@ const SearchView = (props: Props) => {
                   onOfficialChange={onOfficialChange}
                   onResetFilters={onResetFilters}
                   visibleTitle
+                  device="desktop"
                 />
               </div>
-            </nav>
+            </aside>
           )}
 
           <div
@@ -470,6 +476,7 @@ const SearchView = (props: Props) => {
                               data-testid="resetFiltersLink"
                               className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-0"
                               onClick={onResetFilters}
+                              aria-label="Reset filters"
                             >
                               <u>reset the filters</u>
                             </button>
@@ -488,6 +495,7 @@ const SearchView = (props: Props) => {
                                   }),
                                 });
                               }}
+                              aria-label="Browse all packages"
                             >
                               <u>browse all packages</u>
                             </button>
@@ -504,24 +512,26 @@ const SearchView = (props: Props) => {
                   </NoData>
                 ) : (
                   <>
-                    <div className="row mb-2">
-                      {searchResults.data.packages.map((item: Package) => (
-                        <PackageCard
-                          key={item.packageId}
-                          package={item}
-                          searchUrlReferer={{
-                            tsQueryWeb: props.tsQueryWeb,
-                            tsQuery: props.tsQuery,
-                            pageNumber: props.pageNumber,
-                            filters: props.filters,
-                            deprecated: props.deprecated,
-                            operators: props.operators,
-                            verifiedPublisher: props.verifiedPublisher,
-                            official: props.official,
-                          }}
-                          saveScrollPosition={saveScrollPosition}
-                        />
-                      ))}
+                    <div className="mb-2" id="content" aria-label="Packages list">
+                      <div className="row" role="list">
+                        {searchResults.data.packages.map((item: Package) => (
+                          <PackageCard
+                            key={item.packageId}
+                            package={item}
+                            searchUrlReferer={{
+                              tsQueryWeb: props.tsQueryWeb,
+                              tsQuery: props.tsQuery,
+                              pageNumber: props.pageNumber,
+                              filters: props.filters,
+                              deprecated: props.deprecated,
+                              operators: props.operators,
+                              verifiedPublisher: props.verifiedPublisher,
+                              official: props.official,
+                            }}
+                            saveScrollPosition={saveScrollPosition}
+                          />
+                        ))}
+                      </div>
                     </div>
 
                     <Pagination

@@ -20,6 +20,7 @@ exports[`Repository index creates snapshot 1`] = `
           </div>
           <div>
             <button
+              aria-label="Refresh repositories list"
               class="btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
               data-testid="refreshRepoBtn"
             >
@@ -62,6 +63,7 @@ exports[`Repository index creates snapshot 1`] = `
               </div>
             </button>
             <button
+              aria-label="Open claim repository modal"
               class="btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
               data-testid="claimRepoBtn"
             >
@@ -99,6 +101,7 @@ exports[`Repository index creates snapshot 1`] = `
               class="position-relative"
             >
               <button
+                aria-label="Action"
                 class="btn btn-secondary btn-sm text-uppercase btnAction"
                 data-testid="addRepoBtn"
                 type="button"
@@ -174,10 +177,12 @@ exports[`Repository index creates snapshot 1`] = `
         </span>
         , you can add a 
         <a
+          aria-label="Open documentation"
           class="link text-reset"
           href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
           rel="noopener noreferrer"
           role="button"
+          tabindex="-1"
           target="_blank"
         >
           <u>

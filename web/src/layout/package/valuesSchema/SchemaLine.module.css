@@ -47,6 +47,10 @@
   left: -20px;
 }
 
+.comment {
+  color: #8e908c;
+}
+
 @media (hover: hover) {
   .wrapper:hover .content::after {
     content: '';

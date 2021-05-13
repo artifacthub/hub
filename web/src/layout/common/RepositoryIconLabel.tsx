@@ -34,7 +34,9 @@ const RepositoryIconLabel = (props: Props) => {
       )}
     >
       <div className="d-flex flex-row align-items-center">
-        <div className={`position-relative ${styles.icon} ${props.iconClassName}`}>{repo.icon}</div>
+        <div className={`position-relative ${styles.icon} ${props.iconClassName}`} aria-hidden="true">
+          {repo.icon}
+        </div>
         <div className="ml-1">{props.isPlural ? repo.plural : repo.singular}</div>
       </div>
     </span>
@@ -43,24 +45,31 @@ const RepositoryIconLabel = (props: Props) => {
   return (
     <>
       {!isUndefined(props.clickable) && props.clickable ? (
-        <button
-          data-testid="repoIconLabelLink"
-          className="btn btn-link m-0 p-0"
-          onClick={(e) => {
-            e.preventDefault();
-            history.push({
-              pathname: '/packages/search',
-              search: prepareQueryString({
-                pageNumber: 1,
-                filters: {
-                  kind: [props.kind.toString()],
-                },
-              }),
-            });
-          }}
-        >
-          {label}
-        </button>
+        <>
+          <span className="sr-only">{props.isPlural ? repo.plural : repo.singular}</span>
+
+          <button
+            data-testid="repoIconLabelLink"
+            className="btn btn-link m-0 p-0"
+            onClick={(e) => {
+              e.preventDefault();
+              history.push({
+                pathname: '/packages/search',
+                search: prepareQueryString({
+                  pageNumber: 1,
+                  filters: {
+                    kind: [props.kind.toString()],
+                  },
+                }),
+              });
+            }}
+            aria-label={`Filter by ${props.isPlural ? repo.plural : repo.singular} repository kind`}
+            aria-hidden="true"
+            tabIndex={-1}
+          >
+            {label}
+          </button>
+        </>
       ) : (
         <>{label}</>
       )}

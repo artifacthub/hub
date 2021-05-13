@@ -89,8 +89,6 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByText('Artifact')).toBeInTheDocument();
-      expect(getByText('HUB')).toBeInTheDocument();
       expect(getByText('Beta')).toBeInTheDocument();
     });
 

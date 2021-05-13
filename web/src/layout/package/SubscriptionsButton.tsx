@@ -143,6 +143,8 @@ const SubscriptionsButton = (props: Props) => {
           getSubscriptions();
           setOpenStatus(true);
         }}
+        aria-label="Open subscriptions menu"
+        aria-expanded={openStatus}
       >
         <div
           className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
@@ -179,6 +181,7 @@ const SubscriptionsButton = (props: Props) => {
               })}
               onClick={() => changeSubscription(subs.kind, isActive)}
               key={`subs_${subs.kind}`}
+              aria-label="Change subscription"
             >
               <div className="d-flex flex-row align-items-center w-100 justify-content-between">
                 <div className="mr-3">

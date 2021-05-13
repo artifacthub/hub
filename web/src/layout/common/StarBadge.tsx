@@ -20,6 +20,7 @@ const StarBadge = (props: Props) => {
       className={classnames('badge badge-pill badge-light', styles.badge, props.className, {
         [styles[`size-${props.size}`]]: !isUndefined(props.size),
       })}
+      aria-label={`${props.starsNumber} stars`}
     >
       <div className="d-flex align-items-center">
         <FaStar className={`mr-1 ${styles.icon}`} />

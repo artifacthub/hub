@@ -166,6 +166,7 @@ const SampleQueries = (props: Props) => {
               pathname: '/packages/search',
               search: prepareQueryString(query.filters),
             }}
+            aria-label={`Filter by ${query.label}`}
           >
             {query.label}
           </Link>

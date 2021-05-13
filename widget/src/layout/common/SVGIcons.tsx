@@ -18,7 +18,7 @@ const IconWrapper = styled('div')`
 `;
 
 const SVGIcons = (props: Props) => (
-  <IconWrapper className={props.className}>
+  <IconWrapper className={props.className} aria-hidden="true">
     {(() => {
       switch (props.name) {
         case 'logo':
@@ -97,7 +97,8 @@ const SVGIcons = (props: Props) => (
                   strokeLinejoin="round"
                   strokeMiterlimit={2}
                   strokeLinecap="round"
-                  fill="none"
+                  fillRule="evenodd"
+                  fill="#417598"
                 />
               </g>
             </svg>

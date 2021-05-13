@@ -44,7 +44,7 @@ const CustomResourceDefinition = (props: Props) => {
             <div className="col-12 col-lg-6 col-xxl-4 mb-4" key={`resourceDef_${resourceDefinition.kind}_${index}`}>
               <div className="card h-100" data-testid="resourceDefinition">
                 <div className="card-body d-flex flex-column">
-                  <h6 className="card-title mb-3">{resourceDefinition.displayName || resourceDefinition.name}</h6>
+                  <div className="card-title mb-3">{resourceDefinition.displayName || resourceDefinition.name}</div>
                   <small className={`card-text text-muted overflow-hidden ${styles.lineClamp}`}>
                     {resourceDefinition.description.replace('\n', ' ')}
                   </small>
@@ -79,6 +79,7 @@ const CustomResourceDefinition = (props: Props) => {
                               resourceDefinition === selectedCustomResourceDef ? null : resourceDefinition
                             )
                           }
+                          aria-label="View YAML example"
                         >
                           View YAML example
                         </button>

@@ -9,6 +9,7 @@ import styles from './TsQuery.module.css';
 interface Props {
   active: string[];
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  device: string;
 }
 
 const TsQuery = (props: Props) => {
@@ -28,6 +29,7 @@ const TsQuery = (props: Props) => {
             key={`ts_${option.label}`}
             name="tsQuery"
             value={option.label}
+            device={props.device}
             className={styles.checkbox}
             label={option.name}
             checked={isChecked(option.label)}

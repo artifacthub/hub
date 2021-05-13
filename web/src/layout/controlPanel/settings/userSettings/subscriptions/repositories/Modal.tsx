@@ -135,6 +135,7 @@ const OptOutModal = (props: Props) => {
           type="button"
           disabled={isNull(repoItem) || isSending}
           onClick={submitForm}
+          aria-label="Add opt-out entry"
         >
           {isSending ? (
             <>
@@ -226,7 +227,11 @@ const OptOutModal = (props: Props) => {
                 </div>
 
                 <div>
-                  <button className={`btn h-100 rounded-0 ${styles.closeButton}`} onClick={() => setRepoItem(null)}>
+                  <button
+                    className={`btn h-100 rounded-0 ${styles.closeButton}`}
+                    onClick={() => setRepoItem(null)}
+                    aria-label="Close"
+                  >
                     <MdClose />
                   </button>
                 </div>

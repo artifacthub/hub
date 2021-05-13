@@ -106,7 +106,7 @@ var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
     }
 
     .line {
-      border-top: 7px solid #659DBD;
+      border-top: 7px solid #417598;
     }
 
     .line-danger {
@@ -118,12 +118,12 @@ var scanningErrorsEmailTmpl = template.Must(template.New("").Parse(`
     }
 
     .AHlink {
-      color: #39596C;
+      color: #2d4857;
     }
 
     .AHbtn {
-      background-color: #39596C;
-      border: solid 1px #39596C;
+      background-color: #2d4857;
+      border: solid 1px #2d4857;
       color: #ffffff;
     }
 

@@ -12,6 +12,7 @@ import RepositoryIcon from './RepositoryIcon';
 import styles from './SearchPackages.module.css';
 
 interface Props {
+  label: string;
   disabledPackages: string[];
   onSelection: (packageItem: Package) => void;
 }
@@ -108,6 +109,8 @@ const SearchPackages = (props: Props) => {
               searchPackages(searchQuery);
             }
           }}
+          aria-label={`Search by ${searchQuery}`}
+          aria-expanded={!isNull(packages)}
         >
           <FaSearch />
         </button>
@@ -122,7 +125,11 @@ const SearchPackages = (props: Props) => {
             </p>
           ) : (
             <div className={styles.tableWrapper}>
-              <table className={`table table-hover table-sm mb-0 ${styles.table}`}>
+              <table
+                className={`table table-hover table-sm mb-0 ${styles.table}`}
+                role="grid"
+                aria-labelledby={props.label}
+              >
                 <thead>
                   <tr>
                     <th scope="col" className={`${styles.fitCell} d-none d-sm-table-cell border-top-0`}></th>

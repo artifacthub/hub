@@ -33,12 +33,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
           class="position-relative"
         >
           <button
+            aria-label="Add image"
             class="btn p-0 overflow-hidden btn"
             data-testid="inputFileBtn"
             type="button"
           >
             <img
               alt="Logo"
+              aria-hidden="true"
               class="image"
               src="/image/123"
               srcset="/image/123@1x 1x, /image/123@2x 2x, /image/123@3x 3x, /image/123@4x 4x"
@@ -70,6 +72,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       <input
         class="form-control"
         data-testid="emailInput"
+        id="email"
         name="email"
         readonly=""
         spellcheck="false"
@@ -102,6 +105,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         autocomplete="username"
         class="form-control"
         data-testid="aliasInput"
+        id="alias"
         name="alias"
         required=""
         spellcheck="false"
@@ -131,6 +135,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         autocomplete="given-name"
         class="form-control"
         data-testid="firstNameInput"
+        id="firstName"
         name="firstName"
         spellcheck="false"
         type="text"
@@ -157,6 +162,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         autocomplete="family-name"
         class="form-control"
         data-testid="lastNameInput"
+        id="lastName"
         name="lastName"
         spellcheck="false"
         type="text"
@@ -170,6 +176,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="mt-4"
     >
       <button
+        aria-label="Update profile"
         class="btn btn-sm btn-secondary"
         data-testid="updateProfileBtn"
         type="button"

@@ -28,7 +28,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   if
                 </span>
@@ -62,10 +62,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue"
+                      class="tmplValue lightTheme"
                     >
                       .Values.hub.ingress.enabled
                     </span>
@@ -150,7 +151,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{ 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   include
                 </span>
@@ -223,7 +224,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   include
                 </span>
@@ -305,10 +306,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplFunction"
+                      class="tmplFunction lightTheme"
                     >
                       nindent
                     </span>
@@ -342,7 +344,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   with
                 </span>
@@ -391,10 +393,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue"
+                      class="tmplValue lightTheme"
                     >
                       .Values.hub.ingress.annotations
                     </span>
@@ -445,7 +448,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   toYaml
                 </span>
@@ -521,10 +524,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplFunction"
+                      class="tmplFunction lightTheme"
                     >
                       nindent
                     </span>
@@ -558,7 +562,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   end
                 </span>
@@ -624,7 +628,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{ 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   include
                 </span>
@@ -691,10 +695,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue"
+                      class="tmplValue lightTheme"
                     >
                       .Values.hub.service.port
                     </span>
@@ -728,7 +733,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   with
                 </span>
@@ -764,10 +769,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue"
+                      class="tmplValue lightTheme"
                     >
                       .Values.hub.ingress.rules
                     </span>
@@ -818,7 +824,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   toYaml
                 </span>
@@ -894,10 +900,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplFunction"
+                      class="tmplFunction lightTheme"
                     >
                       nindent
                     </span>
@@ -931,7 +938,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   end
                 </span>
@@ -963,7 +970,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   with
                 </span>
@@ -999,10 +1006,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue"
+                      class="tmplValue lightTheme"
                     >
                       .Values.hub.ingress.tls
                     </span>
@@ -1053,7 +1061,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   toYaml
                 </span>
@@ -1129,10 +1137,11 @@ exports[`Template creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
+                    aria-expanded="false"
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplFunction"
+                      class="tmplFunction lightTheme"
                     >
                       nindent
                     </span>
@@ -1166,7 +1175,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   end
                 </span>
@@ -1197,7 +1206,7 @@ exports[`Template creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="tmplFlowControl"
+                  class="tmplFlowControl lightTheme"
                 >
                   end
                 </span>

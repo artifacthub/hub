@@ -10,7 +10,10 @@ exports[`SecurityReport creates snapshot 1`] = `
       <small
         class="card-title text-muted text-uppercase"
       >
-        <span>
+        <span
+          aria-level="5"
+          role="heading"
+        >
           Security Report
         </span>
       </small>
@@ -183,6 +186,7 @@ exports[`SecurityReport creates snapshot 1`] = `
       >
         <div>
           <button
+            aria-label="Open full report modal"
             class="btn btn-secondary btn-sm"
           >
             <small

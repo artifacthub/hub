@@ -169,70 +169,110 @@ const RepositoryModal = (props: Props) => {
     switch (selectedKind) {
       case RepositoryKind.Helm:
         link = (
-          <ExternalLink href="/docs/topics/repositories#helm-charts-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#helm-charts-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>Helm charts repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.OLM:
         link = (
-          <ExternalLink href="/docs/topics/repositories#olm-operators-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#olm-operators-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>OLM operators repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.Falco:
         link = (
-          <ExternalLink href="/docs/topics/repositories#falco-rules-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#falco-rules-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>Falco rules repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.OPA:
         link = (
-          <ExternalLink href="/docs/topics/repositories#opa-policies-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#opa-policies-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>OPA policies repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.TBAction:
         link = (
-          <ExternalLink href="/docs/topics/repositories#tinkerbell-actions-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#tinkerbell-actions-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>Tinkerbell actions</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.Krew:
         link = (
-          <ExternalLink href="/docs/topics/repositories#krew-kubectl-plugins-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#krew-kubectl-plugins-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>Krew kubectl plugins</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.HelmPlugin:
         link = (
-          <ExternalLink href="/docs/topics/repositories#helm-plugins-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#helm-plugins-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>Helm plugins</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.TektonTask:
         link = (
-          <ExternalLink href="/docs/topics/repositories#tekton-tasks-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#tekton-tasks-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>Tekton tasks</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.KedaScaler:
         link = (
-          <ExternalLink href="/docs/topics/repositories#keda-scalers-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#keda-scalers-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>KEDA scalers</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.CoreDNS:
         link = (
-          <ExternalLink href="/docs/topics/repositories#coredns-plugins-repositories" className="text-reset">
+          <ExternalLink
+            href="/docs/topics/repositories#coredns-plugins-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
             <u>CoreDNS plugins</u>
           </ExternalLink>
         );
@@ -257,7 +297,7 @@ const RepositoryModal = (props: Props) => {
           )}
           <p className="mb-0">
             For more information about the url format and the repository structure, please see the {link} section in the{' '}
-            <ExternalLink href="/docs/repositories" className="text-reset">
+            <ExternalLink href="/docs/repositories" className="text-reset" label="Open documentation">
               <u>repositories guide</u>
             </ExternalLink>
             .
@@ -303,6 +343,7 @@ const RepositoryModal = (props: Props) => {
                   setVisibleDisabledConfirmation(false);
                   setIsValidInput(false);
                 }}
+                aria-label="Cancel"
               >
                 <span>I'll leave it enabled</span>
               </button>
@@ -317,6 +358,7 @@ const RepositoryModal = (props: Props) => {
                   setVisibleDisabledConfirmation(false);
                 }}
                 disabled={!isValidInput}
+                aria-label="Disable repository"
               >
                 <span>I understand, continue</span>
               </button>
@@ -328,6 +370,7 @@ const RepositoryModal = (props: Props) => {
               type="button"
               disabled={isSending || visibleDisabledConfirmation}
               onClick={submitForm}
+              aria-label={`${isUndefined(props.repository) ? 'Add' : 'Update'} repository`}
             >
               {isSending ? (
                 <>

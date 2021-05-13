@@ -7,6 +7,7 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 import styles from './Sidebar.module.css';
 
 interface Props {
+  label: string;
   children: JSX.Element | JSX.Element[];
   header: JSX.Element | JSX.Element[] | string;
   buttonType?: string;
@@ -44,7 +45,7 @@ const Sidebar = (props: Props) => {
   }, [props.open]);
 
   return (
-    <div role="complementary" className={props.className}>
+    <aside className={props.className} aria-label={props.label}>
       <button
         data-testid="openSidebarBtn"
         type="button"
@@ -54,6 +55,8 @@ const Sidebar = (props: Props) => {
           { 'btn-primary': isUndefined(props.buttonType) }
         )}
         onClick={() => openStatusChange(true)}
+        aria-label="Open sidebar"
+        aria-expanded={openStatus}
       >
         <div className="d-flex align-items-center justify-content-center">
           {props.buttonIcon && <>{props.buttonIcon}</>}
@@ -79,6 +82,7 @@ const Sidebar = (props: Props) => {
                   type="button"
                   className="close"
                   onClick={() => openStatusChange(false)}
+                  aria-label="Close sidebar"
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -98,6 +102,7 @@ const Sidebar = (props: Props) => {
                 type="button"
                 className="ml-auto btn btn-sm btn-secondary"
                 onClick={() => openStatusChange(false)}
+                aria-label="Close"
               >
                 {isUndefined(props.closeButton) ? <>Close</> : <>{props.closeButton}</>}
               </button>
@@ -105,7 +110,7 @@ const Sidebar = (props: Props) => {
           </div>
         </div>
       </div>
-    </div>
+    </aside>
   );
 };
 

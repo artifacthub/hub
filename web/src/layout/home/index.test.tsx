@@ -104,10 +104,10 @@ describe('Home index', () => {
         </Router>
       );
 
-      const heading = await waitFor(() => getByRole('heading'));
+      const heading = await waitFor(() => getByRole('banner'));
 
       expect(heading).toBeInTheDocument();
-      expect(getByText('Find, install and publish')).toBeInTheDocument();
+      expect(getByText(/Find, install and publish/g)).toBeInTheDocument();
       expect(getByText('Kubernetes packages')).toBeInTheDocument();
     });
   });

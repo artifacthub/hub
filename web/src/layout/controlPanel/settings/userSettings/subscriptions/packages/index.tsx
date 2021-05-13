@@ -111,6 +111,7 @@ const PackagesSection = (props: Props) => {
             data-testid="addSubscriptionsBtn"
             className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
             onClick={() => setModalStatus(true)}
+            aria-label="Open subscription modal"
           >
             <div className="d-flex flex-row align-items-center justify-content-center">
               <MdAdd className="d-inline d-md-none" />
@@ -187,6 +188,7 @@ const PackagesSection = (props: Props) => {
                                   to={{
                                     pathname: buildPackageURL(item.normalizedName, item.repository, item.version!),
                                   }}
+                                  aria-label={`Open ${item.displayName || item.name} package`}
                                 >
                                   {item.displayName || item.name}
                                 </Link>
@@ -206,6 +208,7 @@ const PackagesSection = (props: Props) => {
                                       },
                                     }),
                                   }}
+                                  aria-label={`Filter by ${item.repository.userAlias} user`}
                                 >
                                   {item.repository.userAlias}
                                 </Link>
@@ -222,6 +225,9 @@ const PackagesSection = (props: Props) => {
                                       },
                                     }),
                                   }}
+                                  aria-label={`Filter by ${
+                                    item.repository.organizationDisplayName || item.repository.organizationName
+                                  } organization`}
                                 >
                                   {item.repository.organizationDisplayName || item.repository.organizationName}
                                 </Link>
@@ -241,6 +247,9 @@ const PackagesSection = (props: Props) => {
                                       },
                                     }),
                                   }}
+                                  aria-label={`Filter by ${
+                                    item.repository.displayName || item.repository.name
+                                  } repository`}
                                 >
                                   {item.repository.displayName || item.repository.name}
                                 </Link>

@@ -254,7 +254,7 @@ const Details = (props: Props) => {
         !isNull(props.package.data) &&
         !isUndefined(props.package.data.platforms) && <Platforms platforms={props.package.data.platforms} />}
 
-      <SmallTitle text="Keywords" />
+      <SmallTitle text="Keywords" id="keywords-list" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />
     </>
   );

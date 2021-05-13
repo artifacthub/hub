@@ -45,7 +45,7 @@ const List = styled('div')`
   flex-wrap: wrap;
 `;
 
-const DEFAULT_COLOR = '#659dbd';
+const DEFAULT_COLOR = '#417598';
 
 const hasBadges = (packages: PackageSummary[] | null): boolean => {
   if (packages) {

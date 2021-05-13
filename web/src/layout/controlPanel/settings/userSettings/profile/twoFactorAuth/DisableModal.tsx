@@ -46,7 +46,11 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
 
   return (
     <>
-      <button className="btn btn-danger btn-sm" onClick={() => setOpenStatus(true)}>
+      <button
+        className="btn btn-danger btn-sm"
+        onClick={() => setOpenStatus(true)}
+        aria-label="Open disable two-factor authentication modal"
+      >
         <div className="d-flex flex-row align-items-center">
           <FaUnlock className="mr-2" />
           <span>Disable two-factor authentication</span>
@@ -64,6 +68,7 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
             <button
               className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
               onClick={() => setOpenStatus(false)}
+              aria-label="Cancel"
             >
               <div className="d-flex flex-row align-items-center">
                 <IoMdCloseCircle className="mr-2" />
@@ -78,6 +83,7 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
                 disableTFA();
               }}
               disabled={passcode === '' || isProcessing}
+              aria-label="Disable two-factor authentication"
             >
               <div className="d-flex flex-row align-items-center text-uppercase">
                 {isProcessing ? (

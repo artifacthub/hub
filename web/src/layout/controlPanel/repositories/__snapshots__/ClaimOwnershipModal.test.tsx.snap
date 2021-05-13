@@ -8,8 +8,10 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
       data-testid="modalBackdrop"
     />
     <div
+      aria-modal="true"
       class="modal modal active d-block"
       role="dialog"
+      tabindex="-1"
     >
       <div
         class="modal-dialog modal-xl"
@@ -26,6 +28,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
               Claim repository ownership
             </div>
             <button
+              aria-label="Close modal"
               class="close"
               data-testid="closeModalBtn"
               type="button"
@@ -49,10 +52,12 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                 <p>
                   Before claiming a repository ownership, we need to verify that you actually own it. To prove that, you need to add a 
                   <a
+                    aria-label="Open documentation"
                     class="link text-reset"
                     href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
                     rel="noopener noreferrer"
                     role="button"
+                    tabindex="-1"
                     target="_blank"
                   >
                     <u>
@@ -114,6 +119,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                           </div>
                         </div>
                         <div
+                          aria-expanded="false"
                           class="dropdown-menu p-0 w-100 shadow-sm dropdown"
                           data-testid="searchTypeaheadRepositoryDropdown"
                         />
@@ -122,6 +128,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                   </div>
                   <label
                     class="font-weight-bold label"
+                    id="claiming"
                   >
                     Transfer to:
                   </label>
@@ -129,6 +136,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                     class="form-check mb-2"
                   >
                     <input
+                      aria-labelledby="claiming user"
                       class="form-check-input"
                       data-testid="radio_claim_user"
                       id="user"
@@ -140,6 +148,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                     <label
                       class="form-check-label label"
                       for="user"
+                      id="user"
                     >
                       My user
                     </label>
@@ -148,6 +157,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                     class="form-check mb-3"
                   >
                     <input
+                      aria-labelledby="claiming org"
                       checked=""
                       class="form-check-input"
                       data-testid="radio_claim_org"
@@ -160,6 +170,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                     <label
                       class="form-check-label label"
                       for="org"
+                      id="org"
                     >
                       Organization
                     </label>
@@ -211,6 +222,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
             class="modal-footer p-3"
           >
             <button
+              aria-label="Claim ownership"
               class="btn btn-sm btn-secondary"
               data-testid="claimRepoBtn"
               disabled=""

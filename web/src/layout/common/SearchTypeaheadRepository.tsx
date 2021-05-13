@@ -136,6 +136,7 @@ const SearchTypeaheadRepository = (props: Props) => {
         ref={dropdownRef}
         data-testid="searchTypeaheadRepositoryDropdown"
         className={classnames('dropdown-menu p-0 w-100 shadow-sm', styles.dropdown, { show: !collapsed })}
+        aria-expanded={!collapsed}
       >
         {!collapsed && (
           <>

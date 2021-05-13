@@ -64,6 +64,7 @@ exports[`Member Card - members section creates snapshot 1`] = `
                 class="position-relative"
               >
                 <button
+                  aria-label="Action"
                   class="dropdown-item btn btn-sm rounded-0 text-secondary"
                   data-testid="leaveOrRemoveModalBtn"
                   type="button"
@@ -93,6 +94,8 @@ exports[`Member Card - members section creates snapshot 1`] = `
               </span>
             </div>
             <button
+              aria-expanded="false"
+              aria-label="Open menu"
               class="btn btn-light p-0 text-secondary text-center btnDropdown"
             >
               <svg

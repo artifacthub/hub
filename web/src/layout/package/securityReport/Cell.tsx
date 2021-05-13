@@ -32,7 +32,11 @@ const SecurityCell = (props: Props) => {
     }
 
     return (
-      <ExternalLink href={reference} className={`ml-2 text-dark position-relative ${styles.link}`}>
+      <ExternalLink
+        href={reference}
+        className={`ml-2 text-dark position-relative ${styles.link}`}
+        label={`Link to ${props.vulnerability.VulnerabilityID} vulnerability`}
+      >
         <small>
           <FaLink />
         </small>

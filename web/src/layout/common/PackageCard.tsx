@@ -32,7 +32,7 @@ const PackageCard = (props: Props) => (
         }}
       >
         <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
-          <PackageInfo package={props.package} withPackageLinks={false} breakpointForInfoSection="lg" />
+          <PackageInfo package={props.package} breakpointForInfoSection="lg" />
         </div>
       </Link>
     </div>

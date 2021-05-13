@@ -118,6 +118,7 @@ const ParamInfo = (props: Props) => {
         onMouseLeave={() => {
           setOnParamHover(false);
         }}
+        aria-expanded={openStatus}
       >
         {props.element}
       </div>

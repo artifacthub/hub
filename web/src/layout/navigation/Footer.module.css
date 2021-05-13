@@ -18,12 +18,18 @@
   font-size: 5rem;
 }
 
-.hubFont {
-  font-family: var(--logo-font);
-}
-
 .smallIcon {
   font-size: 0.65rem;
+}
+
+.link,
+.copyrightContent {
+  color: var(--font-color) !important;
+  opacity: 0.8;
+}
+
+.linkInText {
+  color: var(--font-color) !important;
 }
 
 @media only screen and (min-width: 992px) {

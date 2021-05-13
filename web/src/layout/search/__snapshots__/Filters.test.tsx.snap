@@ -12,17 +12,19 @@ exports[`Filters creates snapshot 1`] = `
         class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
       >
         <input
+          aria-checked="false"
           class="custom-control-input input"
           data-testid="checkbox"
-          id="official-official"
+          id="undefined-official-official"
           name="official"
+          tabindex="0"
           type="checkbox"
           value="official"
         />
         <label
           class="custom-control-label w-100 label"
           data-testid="checkboxLabel"
-          for="official-official"
+          for="undefined-official-official"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -68,17 +70,19 @@ exports[`Filters creates snapshot 1`] = `
         class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
       >
         <input
+          aria-checked="false"
           class="custom-control-input input"
           data-testid="checkbox"
-          id="verifiedPublisher-verifiedPublisher"
+          id="undefined-verifiedPublisher-verifiedPublisher"
           name="verifiedPublisher"
+          tabindex="0"
           type="checkbox"
           value="verifiedPublisher"
         />
         <label
           class="custom-control-label w-100 label"
           data-testid="checkboxLabel"
-          for="verifiedPublisher-verifiedPublisher"
+          for="undefined-verifiedPublisher-verifiedPublisher"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -129,30 +133,37 @@ exports[`Filters creates snapshot 1`] = `
           class="card-title text-muted text-uppercase"
         >
           <span
+            aria-level="5"
             class="text-secondary font-weight-bold"
+            id="repo-kind-undefined"
+            role="heading"
           >
             Kind
           </span>
         </small>
       </div>
       <div
+        aria-labelledby="repo-kind-undefined"
         class="mt-3"
+        role="group"
       >
         <div
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="kind-0"
+            id="undefined-kind-0"
             name="kind"
+            tabindex="0"
             type="checkbox"
             value="0"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="kind-0"
+            for="undefined-kind-0"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -174,17 +185,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="kind-3"
+            id="undefined-kind-3"
             name="kind"
+            tabindex="0"
             type="checkbox"
             value="3"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="kind-3"
+            for="undefined-kind-3"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -206,17 +219,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="kind-1"
+            id="undefined-kind-1"
             name="kind"
+            tabindex="0"
             type="checkbox"
             value="1"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="kind-1"
+            for="undefined-kind-1"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -238,17 +253,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="kind-2"
+            id="undefined-kind-2"
             name="kind"
+            tabindex="0"
             type="checkbox"
             value="2"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="kind-2"
+            for="undefined-kind-2"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -280,7 +297,9 @@ exports[`Filters creates snapshot 1`] = `
           class="card-title text-muted text-uppercase"
         >
           <span
+            aria-level="5"
             class="text-secondary font-weight-bold"
+            role="heading"
           >
             Category
           </span>
@@ -293,17 +312,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-database"
+            id="undefined-tsQuery-database"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="database"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-database"
+            for="undefined-tsQuery-database"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -320,17 +341,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-integration-and-delivery"
+            id="undefined-tsQuery-integration-and-delivery"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="integration-and-delivery"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-integration-and-delivery"
+            for="undefined-tsQuery-integration-and-delivery"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -347,17 +370,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-logging-and-tracing"
+            id="undefined-tsQuery-logging-and-tracing"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="logging-and-tracing"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-logging-and-tracing"
+            for="undefined-tsQuery-logging-and-tracing"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -374,17 +399,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-machine-learning"
+            id="undefined-tsQuery-machine-learning"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="machine-learning"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-machine-learning"
+            for="undefined-tsQuery-machine-learning"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -401,17 +428,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-monitoring"
+            id="undefined-tsQuery-monitoring"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="monitoring"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-monitoring"
+            for="undefined-tsQuery-monitoring"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -428,17 +457,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-networking"
+            id="undefined-tsQuery-networking"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="networking"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-networking"
+            for="undefined-tsQuery-networking"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -455,17 +486,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-security"
+            id="undefined-tsQuery-security"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="security"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-security"
+            for="undefined-tsQuery-security"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -482,17 +515,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-storage"
+            id="undefined-tsQuery-storage"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="storage"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-storage"
+            for="undefined-tsQuery-storage"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -509,17 +544,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-streaming-messaging"
+            id="undefined-tsQuery-streaming-messaging"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="streaming-messaging"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-streaming-messaging"
+            for="undefined-tsQuery-streaming-messaging"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -536,17 +573,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="tsQuery-web-applications"
+            id="undefined-tsQuery-web-applications"
             name="tsQuery"
+            tabindex="0"
             type="checkbox"
             value="web-applications"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="tsQuery-web-applications"
+            for="undefined-tsQuery-web-applications"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -565,6 +604,8 @@ exports[`Filters creates snapshot 1`] = `
       class="position-relative mt-2 mt-sm-3 pt-1"
     >
       <button
+        aria-expanded="false"
+        aria-label="Typeahead for publisher"
         class="btn text-left p-0 btn-block"
         data-testid="typeaheadBtn"
       >
@@ -579,7 +620,9 @@ exports[`Filters creates snapshot 1`] = `
               class="card-title text-muted text-uppercase"
             >
               <span
+                aria-level="5"
                 class="text-secondary font-weight-bold pt-2"
+                role="heading"
               >
                 publisher
               </span>
@@ -602,7 +645,7 @@ exports[`Filters creates snapshot 1`] = `
         </div>
         <div>
           <div
-            class="text-muted option"
+            class="placeholder option"
           >
             <i>
               No publisher selected
@@ -615,6 +658,8 @@ exports[`Filters creates snapshot 1`] = `
       class="position-relative mt-2 mt-sm-3 pt-1"
     >
       <button
+        aria-expanded="false"
+        aria-label="Typeahead for repository"
         class="btn text-left p-0 btn-block"
         data-testid="typeaheadBtn"
       >
@@ -629,7 +674,9 @@ exports[`Filters creates snapshot 1`] = `
               class="card-title text-muted text-uppercase"
             >
               <span
+                aria-level="5"
                 class="text-secondary font-weight-bold pt-2"
+                role="heading"
               >
                 repository
               </span>
@@ -652,7 +699,7 @@ exports[`Filters creates snapshot 1`] = `
         </div>
         <div>
           <div
-            class="text-muted option"
+            class="placeholder option"
           >
             <i>
               No repository selected
@@ -665,6 +712,8 @@ exports[`Filters creates snapshot 1`] = `
       class="position-relative mt-2 mt-sm-3 pt-1"
     >
       <button
+        aria-expanded="false"
+        aria-label="Typeahead for license"
         class="btn text-left p-0 btn-block"
         data-testid="typeaheadBtn"
       >
@@ -679,7 +728,9 @@ exports[`Filters creates snapshot 1`] = `
               class="card-title text-muted text-uppercase"
             >
               <span
+                aria-level="5"
                 class="text-secondary font-weight-bold pt-2"
+                role="heading"
               >
                 license
               </span>
@@ -702,7 +753,7 @@ exports[`Filters creates snapshot 1`] = `
         </div>
         <div>
           <div
-            class="text-muted option"
+            class="placeholder option"
           >
             <i>
               No license selected
@@ -723,30 +774,37 @@ exports[`Filters creates snapshot 1`] = `
           class="card-title text-muted text-uppercase"
         >
           <span
+            aria-level="5"
             class="text-secondary font-weight-bold"
+            id="pkg-capabilities-undefined"
+            role="heading"
           >
             Operator capabilities
           </span>
         </small>
       </div>
       <div
+        aria-labelledby="pkg-capabilities-undefined"
         class="mt-3"
+        role="group"
       >
         <div
           class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="capabilities-basic install"
+            id="undefined-capabilities-basic install"
             name="capabilities"
+            tabindex="0"
             type="checkbox"
             value="basic install"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="capabilities-basic install"
+            for="undefined-capabilities-basic install"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -768,17 +826,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="capabilities-seamless upgrades"
+            id="undefined-capabilities-seamless upgrades"
             name="capabilities"
+            tabindex="0"
             type="checkbox"
             value="seamless upgrades"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="capabilities-seamless upgrades"
+            for="undefined-capabilities-seamless upgrades"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -800,17 +860,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="capabilities-full lifecycle"
+            id="undefined-capabilities-full lifecycle"
             name="capabilities"
+            tabindex="0"
             type="checkbox"
             value="full lifecycle"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="capabilities-full lifecycle"
+            for="undefined-capabilities-full lifecycle"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -832,17 +894,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="capabilities-deep insights"
+            id="undefined-capabilities-deep insights"
             name="capabilities"
+            tabindex="0"
             type="checkbox"
             value="deep insights"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="capabilities-deep insights"
+            for="undefined-capabilities-deep insights"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -864,17 +928,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="capabilities-auto pilot"
+            id="undefined-capabilities-auto pilot"
             name="capabilities"
+            tabindex="0"
             type="checkbox"
             value="auto pilot"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="capabilities-auto pilot"
+            for="undefined-capabilities-auto pilot"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -906,7 +972,9 @@ exports[`Filters creates snapshot 1`] = `
           class="card-title text-muted text-uppercase"
         >
           <span
+            aria-level="5"
             class="text-secondary font-weight-bold"
+            role="heading"
           >
             Others
           </span>
@@ -919,17 +987,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="operators-operators"
+            id="undefined-operators-operators"
             name="operators"
+            tabindex="0"
             type="checkbox"
             value="operators"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="operators-operators"
+            for="undefined-operators-operators"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -946,17 +1016,19 @@ exports[`Filters creates snapshot 1`] = `
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >
           <input
+            aria-checked="false"
             class="custom-control-input input"
             data-testid="checkbox"
-            id="deprecated-deprecated"
+            id="undefined-deprecated-deprecated"
             name="deprecated"
+            tabindex="0"
             type="checkbox"
             value="deprecated"
           />
           <label
             class="custom-control-label w-100 label"
             data-testid="checkboxLabel"
-            for="deprecated-deprecated"
+            for="undefined-deprecated-deprecated"
           >
             <div
               class="d-flex align-items-baseline mw-100"

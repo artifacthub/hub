@@ -25,6 +25,7 @@ exports[`StatsView creates snapshot 1`] = `
     </div>
     <main
       class="container-lg px-sm-4 px-lg-0 py-5"
+      id="content"
       role="main"
     >
       <div

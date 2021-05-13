@@ -9,17 +9,18 @@ exports[`Home index creates snapshot 1`] = `
       class="jumbotron mb-0 text-center jumbotron"
     >
       <div
+        aria-label="Find, install and publisher Kubernetes packages"
         class="display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center mainTitle"
-        role="heading"
+        id="content"
+        role="banner"
       >
-        <div>
-          Find, install and publish
-        </div>
-        <div
+        Find, install and publish
+        <br />
+        <span
           class="secondLine"
         >
           Kubernetes packages
-        </div>
+        </span>
       </div>
       <div
         class="mt-5 text-center"
@@ -28,7 +29,12 @@ exports[`Home index creates snapshot 1`] = `
           class="position-relative m-auto w-50 search"
         >
           <div
+            aria-controls="search-list"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-owns="search-list"
             class="d-flex align-items-strecht overflow-hidden searchBar searchBar big"
+            role="combobox"
           >
             <div
               class="d-none d-sm-flex align-items-center iconWrapper"
@@ -59,7 +65,7 @@ exports[`Home index creates snapshot 1`] = `
               </svg>
             </div>
             <input
-              aria-label="Search"
+              aria-label="Search packages"
               autocapitalize="none"
               autocomplete="off"
               autocorrect="off"
@@ -70,6 +76,14 @@ exports[`Home index creates snapshot 1`] = `
               type="text"
               value=""
             />
+            <div
+              class="d-none"
+              tabindex="0"
+            >
+              <div
+                aria-live="polite"
+              />
+            </div>
             <div
               class="position-absolute text-secondary loading bigLoading"
             >
@@ -94,6 +108,7 @@ exports[`Home index creates snapshot 1`] = `
               class="position-absolute text-dark tipIcon bigTipIcon"
             >
               <button
+                aria-label="Open search tips modal"
                 class="btn btn-link p-2 text-light btn-lg"
                 data-testid="openSearchTipsBtn"
               >
@@ -113,8 +128,10 @@ exports[`Home index creates snapshot 1`] = `
               </button>
               <div>
                 <div
+                  aria-modal="false"
                   class="modal modal"
                   role="dialog"
+                  tabindex="-1"
                 >
                   <div
                     class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
@@ -145,6 +162,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           - or -
           <a
+            aria-label="Browse all packages"
             class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
             href="/packages/search"
           >
@@ -158,6 +176,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           You can also 
           <a
+            aria-label="Browse all packages"
             class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
             href="/packages/search"
           >
@@ -232,10 +251,12 @@ exports[`Home index creates snapshot 1`] = `
         class="d-flex flex-row align-items-center justify-content-center flex-wrap"
       >
         <a
+          aria-label="Open Github link"
           class="link btn btn-secondary mb-4 mb-md-2 socialBtn"
           href="https://github.com/cncf/hub"
           rel="noopener noreferrer"
           role="button"
+          tabindex="-1"
           target="_blank"
         >
           <div
@@ -259,10 +280,12 @@ exports[`Home index creates snapshot 1`] = `
           </div>
         </a>
         <a
+          aria-label="Open Slack channel"
           class="link btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 socialBtn"
           href="https://cloud-native.slack.com/channels/artifact-hub"
           rel="noopener noreferrer"
           role="button"
+          tabindex="-1"
           target="_blank"
         >
           <div
@@ -286,10 +309,12 @@ exports[`Home index creates snapshot 1`] = `
           </div>
         </a>
         <a
+          aria-label="Open Twitter link"
           class="link btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 socialBtn"
           href="https://twitter.com/cncfartifacthub"
           rel="noopener noreferrer"
           role="button"
+          tabindex="-1"
           target="_blank"
         >
           <div
@@ -318,10 +343,12 @@ exports[`Home index creates snapshot 1`] = `
       >
         Please see the 
         <a
+          aria-label="Open documentation"
           class="link btn btn-link text-light font-weight-bold textLight p-0 inlineLink"
           href="/docs/topics/repositories"
           rel="noopener noreferrer"
           role="button"
+          tabindex="-1"
           target="_blank"
         >
           repositories guide
@@ -344,10 +371,12 @@ exports[`Home index creates snapshot 1`] = `
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
           >
             <a
+              aria-label="Open Helm site"
               class="link col iconLink"
               href="https://helm.sh"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -370,10 +399,12 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
+              aria-label="Open Falco site"
               class="link col iconLink"
               href="https://falco.org"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -394,10 +425,12 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
+              aria-label="Open Open Policy Agent site"
               class="link col iconLink"
               href="https://www.openpolicyagent.org"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -422,10 +455,12 @@ exports[`Home index creates snapshot 1`] = `
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
           >
             <a
+              aria-label="Open Operator framework site"
               class="link col iconLink"
               href="https://github.com/operator-framework"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -446,10 +481,12 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
+              aria-label="Open Tinkerbell site"
               class="link col iconLink"
               href="https://tinkerbell.org"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -470,10 +507,12 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
+              aria-label="Open Krew site"
               class="link col iconLink"
               href="https://krew.sigs.k8s.io"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -498,10 +537,12 @@ exports[`Home index creates snapshot 1`] = `
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
           >
             <a
+              aria-label="Open Tekton site"
               class="link col iconLink"
               href="https://tekton.dev"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -522,10 +563,12 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
+              aria-label="Open KEDA site"
               class="link col iconLink"
               href="https://keda.sh"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -546,10 +589,12 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
+              aria-label="Open CoreDNS site"
               class="link col iconLink"
               href="https://coredns.io"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               <div
@@ -593,10 +638,12 @@ exports[`Home index creates snapshot 1`] = `
           >
             Artifact Hub is a 
             <a
-              class="link font-weight-bold text-primary"
+              aria-label="Open CNCF sandbox projects site"
+              class="link font-weight-bold text-secondary"
               href="https://www.cncf.io/sandbox-projects/"
               rel="noopener noreferrer"
               role="button"
+              tabindex="-1"
               target="_blank"
             >
               Cloud Native Computing Foundation

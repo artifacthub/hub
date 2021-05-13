@@ -9,6 +9,8 @@ exports[`ValuesSchema creates snapshot 1`] = `
       data-testid="elementWithTooltip"
     >
       <button
+        aria-disabled="false"
+        aria-label="Open values schema modal"
         class="btn btn-secondary btn-block btn-sm"
         data-testid="valuesSchemaBtn"
       >

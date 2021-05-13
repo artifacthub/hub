@@ -41,6 +41,7 @@ interface Props {
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
   official?: boolean | null;
+  device: string;
 }
 
 const Filters = (props: Props) => {
@@ -100,12 +101,17 @@ const Filters = (props: Props) => {
 
       kindElement = (
         <div role="menuitem" className={`mt-1 mt-sm-2 pt-1 ${styles.facet}`}>
-          <SmallTitle text={kind.title} className="text-secondary font-weight-bold" />
-          <div className="mt-3">
+          <SmallTitle
+            text={kind.title}
+            className="text-secondary font-weight-bold"
+            id={`repo-${kind.filterKey}-${props.device}`}
+          />
+          <div className="mt-3" role="group" aria-labelledby={`repo-${kind.filterKey}-${props.device}`}>
             {kind.options.map((option: FacetOption) => (
               <CheckBox
                 key={`kind_${option.id.toString()}`}
                 name={kind.filterKey}
+                device={props.device}
                 value={option.id.toString()}
                 className={styles.checkbox}
                 legend={option.total}
@@ -143,12 +149,17 @@ const Filters = (props: Props) => {
 
       element = (
         <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
-          <SmallTitle text={capabilities.title} className="text-secondary font-weight-bold" />
-          <div className="mt-3">
+          <SmallTitle
+            text={capabilities.title}
+            className="text-secondary font-weight-bold"
+            id={`pkg-${capabilities.filterKey}-${props.device}`}
+          />
+          <div className="mt-3" role="group" aria-labelledby={`pkg-${capabilities.filterKey}-${props.device}`}>
             {sortedCapabililties.map((option: FacetOption) => (
               <CheckBox
                 key={`capabilities_${option.id.toString()}`}
                 name={capabilities.filterKey}
+                device={props.device}
                 value={option.id.toString()}
                 className={`text-capitalize ${styles.checkbox}`}
                 legend={option.total}
@@ -230,6 +241,7 @@ const Filters = (props: Props) => {
                 data-testid="resetFiltersBtn"
                 className={`btn btn-link btn-sm p-0 pl-1 text-secondary ${styles.resetBtn}`}
                 onClick={props.onResetFilters}
+                aria-label="Reset filters"
               >
                 Reset
               </button>
@@ -242,6 +254,7 @@ const Filters = (props: Props) => {
         <CheckBox
           name="official"
           value="official"
+          device={props.device}
           className={styles.checkbox}
           label="Official"
           checked={props.official || false}
@@ -265,6 +278,7 @@ const Filters = (props: Props) => {
         <CheckBox
           name="verifiedPublisher"
           value="verifiedPublisher"
+          device={props.device}
           className={styles.checkbox}
           label="Verified publishers"
           checked={props.verifiedPublisher || false}
@@ -285,7 +299,7 @@ const Filters = (props: Props) => {
       </div>
 
       {getKindFacets()}
-      <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
+      <TsQuery device={props.device} active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
       {getPublishers()}
       {getRepositoryFacets()}
       {getLicenseFacets()}
@@ -298,6 +312,7 @@ const Filters = (props: Props) => {
           <CheckBox
             name="operators"
             value="operators"
+            device={props.device}
             className={styles.checkbox}
             label="Only operators"
             checked={props.operators || false}
@@ -307,6 +322,7 @@ const Filters = (props: Props) => {
           <CheckBox
             name="deprecated"
             value="deprecated"
+            device={props.device}
             className={styles.checkbox}
             label="Include deprecated"
             checked={props.deprecated || false}

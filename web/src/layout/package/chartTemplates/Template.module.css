@@ -29,28 +29,52 @@
 }
 
 .tmplBuiltIn {
-  color: #81a2be;
+  color: #60788d;
+}
+
+.tmplBuiltIn.darkTheme {
+  color: #90b4d4;
 }
 
 .tmplComment {
-  color: #8e908c;
+  color: #727471;
   font-size: 90%;
+}
+
+.tmplComment.darkTheme {
+  color: #8e908c;
 }
 
 .tmplFunction {
   color: #8959a8;
 }
 
+.tmplFunction.darkTheme {
+  color: #d696ff;
+}
+
 .tmplFlowControl {
-  color: #718c00;
+  color: #667e00;
+}
+
+.tmplFlowControl.darkTheme {
+  color: #99be00;
 }
 
 .tmplValue {
+  color: #b06116;
+}
+
+.tmplValue.darkTheme {
   color: #f5871f;
 }
 
 .tmplVariable {
-  color: #cc6666;
+  color: #b45a5a;
+}
+
+.tmplVariable.darkTheme {
+  color: #ff9191;
 }
 
 .textarea :global(.form-control) {

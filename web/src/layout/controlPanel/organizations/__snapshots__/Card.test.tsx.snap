@@ -55,6 +55,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
                   class="arrow arrow"
                 />
                 <button
+                  aria-label="Open modal"
                   class="dropdown-item btn btn-sm rounded-0 text-secondary"
                   data-testid="leaveOrgModalBtn"
                 >
@@ -82,6 +83,8 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
                 </button>
               </div>
               <button
+                aria-expanded="false"
+                aria-label="Open menu"
                 class="ml-3 btn btn-light p-0 text-secondary text-center btnDropdown"
               >
                 <svg
@@ -112,10 +115,12 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
             Homepage: 
           </small>
           <a
+            aria-label="Open link https://test.org"
             class="link text-reset link"
             href="https://test.org"
             rel="noopener noreferrer"
             role="button"
+            tabindex="-1"
             target="_blank"
           >
             https://test.org

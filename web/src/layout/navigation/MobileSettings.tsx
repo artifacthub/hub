@@ -51,6 +51,7 @@ const MobileSettings = (props: Props) => {
         </div>
       ) : (
         <Sidebar
+          label="User settings"
           className="d-inline-block d-md-none"
           buttonType="position-relative btn text-secondary pr-0 pl-3"
           buttonIcon={
@@ -81,7 +82,7 @@ const MobileSettings = (props: Props) => {
               <>
                 {!isNull(ctx.user) ? (
                   <>
-                    <ThemeMode onSelection={() => setOpenSideBarStatus(false)} />
+                    <ThemeMode device="mobile" onSelection={() => setOpenSideBarStatus(false)} />
 
                     <div className="dropdown-divider my-3" />
 
@@ -136,7 +137,7 @@ const MobileSettings = (props: Props) => {
                   </>
                 ) : (
                   <>
-                    <ThemeMode onSelection={() => setOpenSideBarStatus(false)} />
+                    <ThemeMode device="mobile" onSelection={() => setOpenSideBarStatus(false)} />
 
                     <div className="dropdown-divider my-3" />
 
@@ -161,6 +162,7 @@ const MobileSettings = (props: Props) => {
                         setOpenSideBarStatus(false);
                         props.setOpenLogIn(true);
                       }}
+                      aria-label="Open sign in modal"
                     >
                       <div className="d-flex align-items-center">
                         <FaSignInAlt className="mr-2" />
@@ -174,6 +176,7 @@ const MobileSettings = (props: Props) => {
                         setOpenSideBarStatus(false);
                         props.setOpenSignUp(true);
                       }}
+                      aria-label="Open sign up modal"
                     >
                       <div className="d-flex align-items-center">
                         <FaEdit className="mr-2" />

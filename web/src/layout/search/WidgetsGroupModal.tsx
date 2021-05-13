@@ -23,7 +23,7 @@ interface RadioProps {
   icon: JSX.Element;
 }
 
-const DEFAULT_COLOR = '#659dbd';
+const DEFAULT_COLOR = '#417598';
 const WIDGET_WIDTH = 380;
 const DEFAULT_THEME = 'light';
 const THEMES: RadioProps[] = [
@@ -33,7 +33,7 @@ const THEMES: RadioProps[] = [
   },
   { name: 'dark', icon: <FiMoon /> },
 ];
-const PRESET_COLORS = ['#659dbd', '#ef6b3a', '#a6ca35', '#ee9595', '#2f4f95', '#ce2029', '#c17d00', '#726a95'];
+const PRESET_COLORS = [DEFAULT_COLOR, '#ef6b3a', '#a6ca35', '#ee9595', '#2f4f95', '#ce2029', '#c17d00', '#726a95'];
 const DEFAULT_WRAPPER_OPTION = 'responsive';
 const WRAPPER_OPTIONS: RadioProps[] = [
   {
@@ -278,7 +278,11 @@ const WidgetsGroupModal = (props: Props) => {
                   />
                 </div>
                 {color !== DEFAULT_COLOR && (
-                  <button className="btn btn-sm btn-link text-muted py-0" onClick={() => setColor(DEFAULT_COLOR)}>
+                  <button
+                    className="btn btn-sm btn-link text-muted py-0"
+                    onClick={() => setColor(DEFAULT_COLOR)}
+                    aria-label="Reset to default"
+                  >
                     <IoIosClose />
                     <small>Reset to default</small>
                   </button>
@@ -320,6 +324,7 @@ const WidgetsGroupModal = (props: Props) => {
                 contentBtn="Copy code to clipboard"
                 className={`btn-secondary ${styles.copyBtn}`}
                 disabled={!isValidCode}
+                label="Copy code to clipboard"
               />
             </div>
           </div>

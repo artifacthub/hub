@@ -28,11 +28,13 @@ exports[`CommandBlock creates snapshot 1`] = `
         class="position-relative undefined"
       >
         <button
+          aria-label="Copy command to clipboard"
           class="btn btn-sm btn-primary rounded-circle copyBtn"
           data-testid="ctcBtn"
           type="button"
         >
           <div
+            aria-hidden="true"
             class="d-flex flex-row align-items-center"
           >
             <svg

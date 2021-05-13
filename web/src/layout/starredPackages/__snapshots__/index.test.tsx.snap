@@ -43,6 +43,8 @@ exports[`StarredPackagesView creates snapshot 1`] = `
         </div>
         <div
           class="row mx-auto mt-4 wrapper"
+          id="content"
+          role="list"
         />
       </div>
     </main>

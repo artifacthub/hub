@@ -16,44 +16,18 @@ exports[`Navbar creates snapshot 1`] = `
           data-testid="brandLink"
           href="/"
         >
-          <svg
-            class="mr-2"
-            fill="none"
-            height="1em"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-            />
-          </svg>
           <div
             class="d-flex align-items-start"
           >
+            <img
+              alt="Logo Artifact Hub"
+              src="/static/media/logo/artifacthub-brand-white.svg"
+            />
             <div
-              class="d-flex align-items-baseline"
-            >
-              <span
-                class="mr-1"
-              >
-                Artifact
-              </span>
-              <span
-                class="brand"
-              >
-                HUB
-              </span>
-            </div>
-            <span
-              class="text-uppercase badge badge-pill badge-secondary d-flex align-items-center badge"
+              class="position-relative text-uppercase badge badge-pill badge-secondary d-flex align-items-center ml-1 badge"
             >
               Beta
-            </span>
+            </div>
           </div>
         </a>
         <div />
@@ -65,12 +39,16 @@ exports[`Navbar creates snapshot 1`] = `
         <ul
           class="navbar-nav align-items-center ml-auto"
         >
-          <a
-            class="btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap button"
-            href="/stats"
+          <li
+            class="nav-item ml-4 position-relative"
           >
-            Stats
-          </a>
+            <a
+              class="btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap button"
+              href="/stats"
+            >
+              Stats
+            </a>
+          </li>
           <li
             class="nav-item ml-4 position-relative"
           >
@@ -78,6 +56,7 @@ exports[`Navbar creates snapshot 1`] = `
               class="btn-group"
             >
               <button
+                aria-label="Open menu"
                 class="btn p-0 position-relative btn"
                 data-testid="userAuthBtn"
                 type="button"
@@ -150,7 +129,9 @@ exports[`Navbar creates snapshot 1`] = `
                     class="card-title text-muted text-uppercase"
                   >
                     <span
+                      aria-level="5"
                       class="px-4"
+                      role="heading"
                     >
                       Theme
                     </span>
@@ -166,17 +147,19 @@ exports[`Navbar creates snapshot 1`] = `
                       class="custom-control custom-radio"
                     >
                       <input
+                        aria-checked="false"
                         class="custom-control-input input"
                         data-testid="radio-automatic"
-                        id="automatic"
-                        name="theme"
+                        id="desktop-automatic"
+                        name="automatic"
                         readonly=""
+                        tabindex="0"
                         type="radio"
                         value="automatic"
                       />
                       <label
                         class="custom-control-label font-weight-bold label"
-                        for="automatic"
+                        for="desktop-automatic"
                       >
                         <svg
                           class="mx-1"
@@ -204,18 +187,20 @@ exports[`Navbar creates snapshot 1`] = `
                       class="custom-control custom-radio"
                     >
                       <input
+                        aria-checked="true"
                         checked=""
                         class="custom-control-input input"
                         data-testid="radio-light"
-                        id="light"
-                        name="theme"
+                        id="desktop-light"
+                        name="light"
                         readonly=""
+                        tabindex="-1"
                         type="radio"
                         value="light"
                       />
                       <label
                         class="custom-control-label font-weight-bold label"
-                        for="light"
+                        for="desktop-light"
                       >
                         <svg
                           class="mx-1"
@@ -294,17 +279,19 @@ exports[`Navbar creates snapshot 1`] = `
                       class="custom-control custom-radio"
                     >
                       <input
+                        aria-checked="false"
                         class="custom-control-input input"
                         data-testid="radio-dark"
-                        id="dark"
-                        name="theme"
+                        id="desktop-dark"
+                        name="dark"
                         readonly=""
+                        tabindex="-1"
                         type="radio"
                         value="dark"
                       />
                       <label
                         class="custom-control-label font-weight-bold label"
-                        for="dark"
+                        for="desktop-dark"
                       >
                         <svg
                           class="mx-1"
@@ -385,6 +372,7 @@ exports[`Navbar creates snapshot 1`] = `
                   </div>
                 </a>
                 <button
+                  aria-label="Sign out"
                   class="dropdown-item mb-2"
                   data-testid="logOutBtn"
                 >

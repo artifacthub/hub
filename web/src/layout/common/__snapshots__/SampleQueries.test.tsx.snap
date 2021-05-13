@@ -3,6 +3,7 @@
 exports[`SampleQueries creates snapshot 1`] = `
 <DocumentFragment>
   <a
+    aria-label="Filter by OLM operators for databases"
     class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
     data-testid="sampleQuery"
     href="/packages/search?page=1&ts_query_web=database&kind=3"
@@ -10,6 +11,7 @@ exports[`SampleQueries creates snapshot 1`] = `
     OLM operators for databases
   </a>
   <a
+    aria-label="Filter by Helm Charts provided by Bitnami"
     class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
     data-testid="sampleQuery"
     href="/packages/search?page=1&kind=0&org=bitnami"
@@ -17,6 +19,7 @@ exports[`SampleQueries creates snapshot 1`] = `
     Helm Charts provided by Bitnami
   </a>
   <a
+    aria-label="Filter by Packages of any kind related to etcd"
     class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
     data-testid="sampleQuery"
     href="/packages/search?page=1&ts_query_web=etcd"
@@ -24,6 +27,7 @@ exports[`SampleQueries creates snapshot 1`] = `
     Packages of any kind related to etcd
   </a>
   <a
+    aria-label="Filter by Falco rules for CVE"
     class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
     data-testid="sampleQuery"
     href="/packages/search?page=1&ts_query=monitoring&kind=3"
@@ -31,6 +35,7 @@ exports[`SampleQueries creates snapshot 1`] = `
     Falco rules for CVE
   </a>
   <a
+    aria-label="Filter by OLM operators in the monitoring category"
     class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
     data-testid="sampleQuery"
     href="/packages/search?page=1&ts_query=monitoring&kind=3"
