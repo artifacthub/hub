@@ -1,6 +1,7 @@
-import React from 'react';
+import { isUndefined } from 'lodash';
+import React, { useState } from 'react';
 
-import { Repository } from '../../../types';
+import { Channel, Repository } from '../../../types';
 import { OCI_PREFIX } from '../../../utils/data';
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
@@ -9,10 +10,23 @@ import styles from './ContentInstall.module.css';
 interface Props {
   name: string;
   repository: Repository;
-  activeChannel: string;
+  channels?: Channel[] | null;
+  defaultChannel?: string | null;
 }
 
 const OLMOCIInstall = (props: Props) => {
+  const getActiveChannel = (): string | undefined => {
+    let initialChannel: string | undefined = props.defaultChannel || undefined;
+    if (isUndefined(initialChannel) && props.channels) {
+      initialChannel = props.channels[0].name;
+    }
+    return initialChannel;
+  };
+
+  const [activeChannel, setActiveChannel] = useState<string | undefined>(getActiveChannel());
+
+  if (isUndefined(props.channels)) return null;
+
   const url = props.repository.url.replace(OCI_PREFIX, '');
   const catalog = `apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
@@ -33,13 +47,32 @@ metadata:
   name: ${props.name}-subscription
   namespace: default
 spec:
-  channel: ${props.activeChannel}
+  channel: ${activeChannel}
   name: ${props.name}
   source: ${props.repository.name}-catalog
   sourceNamespace: default`;
 
   return (
     <>
+      <div className="my-2">
+        <small className="text-muted mt-2 mb-1">Channel</small>
+      </div>
+
+      <div className="form-group w-50">
+        <select
+          className="custom-select custom-select-sm mb-1"
+          aria-label="channel-select"
+          value={activeChannel}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setActiveChannel(e.target.value)}
+        >
+          {props.channels!.map((channel: Channel) => (
+            <option key={`channel_${channel.name}`} value={channel.name}>
+              {channel.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <CommandBlock
         command={catalog}
         title="Install catalog"

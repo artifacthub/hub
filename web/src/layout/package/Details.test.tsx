@@ -19,8 +19,6 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const mockOnChannelChange = jest.fn();
-
 const defaultProps = {
   visibleSecurityReport: true,
   sortedVersions: [
@@ -31,8 +29,6 @@ const defaultProps = {
       prerelease: false,
     },
   ],
-  activeChannel: null,
-  onChannelChange: mockOnChannelChange,
 };
 
 describe('Details', () => {
@@ -226,11 +222,10 @@ describe('Details', () => {
   describe('OLM operator', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('14');
-      const { getByText, getByLabelText, getByTestId, getAllByTestId } = render(
+      const { getByText, getByTestId, getAllByTestId } = render(
         <Details
           package={mockPackage}
           {...defaultProps}
-          activeChannel="alpha"
           sortedVersions={[
             {
               version: '1.0.0',
@@ -243,10 +238,6 @@ describe('Details', () => {
           ]}
         />
       );
-
-      expect(getByText('Channel')).toBeInTheDocument();
-      expect(getByLabelText('channel-select')).toBeInTheDocument();
-      expect(getByText(mockPackage.channels![0].name));
 
       expect(getByText('Versions')).toBeInTheDocument();
       mockPackage.availableVersions!.forEach((vs: Version) => {
@@ -287,22 +278,6 @@ describe('Details', () => {
 
       expect(getByText('Keywords')).toBeInTheDocument();
       expect(getAllByTestId('keywordBtn')).toHaveLength(mockPackage.keywords!.length);
-    });
-
-    it('calls onChannelChange', () => {
-      const mockPackage = getMockPackage('15');
-      const { getByText, getByLabelText } = render(
-        <Details package={mockPackage} {...defaultProps} activeChannel="alpha" />
-      );
-
-      expect(getByText('Channel')).toBeInTheDocument();
-      const select = getByLabelText('channel-select');
-      expect(getByText('alpha')).toBeInTheDocument();
-      expect(getByText('original')).toBeInTheDocument();
-      fireEvent.change(select, { target: { value: 'original' } });
-
-      expect(mockOnChannelChange).toHaveBeenCalledTimes(1);
-      expect(mockOnChannelChange).toHaveBeenCalledWith('original');
     });
   });
 

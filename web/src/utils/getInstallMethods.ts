@@ -1,6 +1,6 @@
-import { isUndefined } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 
-import { HelmChartType, Package, Repository, RepositoryKind, Version } from '../types';
+import { Channel, HelmChartType, Package, Repository, RepositoryKind } from '../types';
 import { OCI_PREFIX } from './data';
 
 export interface InstallMethod {
@@ -14,8 +14,9 @@ export interface InstallMethod {
     version?: string;
     repository?: Repository;
     contentUrl?: string;
+    defaultChannel?: string | null;
+    channels?: Channel[] | null;
     install?: string;
-    activeChannel?: string;
     isGlobalOperator?: boolean;
     isPrivate?: boolean;
   };
@@ -28,8 +29,6 @@ export interface InstallMethodOutput {
 
 interface PackageInfo {
   pkg?: Package | null;
-  sortedVersions: Version[];
-  activeChannel?: string;
 }
 
 export enum InstallMethodKind {
@@ -47,7 +46,7 @@ export enum InstallMethodKind {
 const SPECIAL_OLM = 'community-operators';
 
 export default (props: PackageInfo): InstallMethodOutput => {
-  const { pkg, sortedVersions, activeChannel } = { ...props };
+  const { pkg } = { ...props };
 
   const output: InstallMethodOutput = {
     methods: [],
@@ -60,10 +59,9 @@ export default (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.OLM:
           if (
             pkg.repository.name === SPECIAL_OLM &&
-            sortedVersions.length > 0 &&
-            pkg.version !== sortedVersions[0].version
+            (isNull(pkg.channels) || isUndefined(pkg.channels) || pkg.channels.length === 0)
           ) {
-            output.errorMessage = 'Only the current version can be installed';
+            output.errorMessage = 'Only packages with channels can be installed';
             hasError = true;
           }
           break;
@@ -153,11 +151,12 @@ export default (props: PackageInfo): InstallMethodOutput => {
             props: {
               name: pkg.name,
               repository: pkg.repository,
-              activeChannel: activeChannel,
+              defaultChannel: pkg.defaultChannel,
+              channels: pkg.channels,
             },
           });
         } else {
-          if (pkg.repository.name === SPECIAL_OLM && props.activeChannel) {
+          if (pkg.repository.name === SPECIAL_OLM) {
             output.methods.push({
               label: 'cli',
               title: 'Operator Lifecycle Manager',
@@ -166,7 +165,8 @@ export default (props: PackageInfo): InstallMethodOutput => {
               props: {
                 name: pkg.name,
                 isGlobalOperator: pkg.data!.isGlobalOperator,
-                activeChannel: activeChannel,
+                defaultChannel: pkg.defaultChannel,
+                channels: pkg.channels,
                 isPrivate: pkg.repository.private,
               },
             });

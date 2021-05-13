@@ -5,7 +5,11 @@ import OLMInstall from './OLMInstall';
 
 const defaultProps = {
   name: 'packageName',
-  activeChannel: 'stable',
+  defaultChannel: 'stable',
+  channels: [
+    { name: 'stable', version: '1.0.0' },
+    { name: 'alpha', version: '1.1.0' },
+  ],
   isPrivate: false,
 };
 
@@ -26,7 +30,7 @@ describe('OLMInstall', () => {
       expect(getByText('Install the operator by running the following command:')).toBeInTheDocument();
       expect(
         getByText(
-          `kubectl create -f https://operatorhub.io/install/${defaultProps.activeChannel}/${defaultProps.name}.yaml`
+          `kubectl create -f https://operatorhub.io/install/${defaultProps.defaultChannel}/${defaultProps.name}.yaml`
         )
       ).toBeInTheDocument();
       expect(getByText('After install, watch your operator come up using next command:')).toBeInTheDocument();

@@ -83,6 +83,16 @@ describe('Version', () => {
       waitFor(() => expect(getByRole('status')).toBeInTheDocument());
     });
 
+    it('renders linked channel badge', () => {
+      const { getByText } = render(
+        <Router>
+          <Version {...defaultProps} linkedChannel="stable" />
+        </Router>
+      );
+
+      expect(getByText('stable')).toBeInTheDocument();
+    });
+
     it('renders security updates badge', () => {
       const { getByText } = render(
         <Router>

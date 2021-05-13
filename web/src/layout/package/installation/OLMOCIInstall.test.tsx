@@ -15,7 +15,11 @@ const repo: Repository = {
 const defaultProps = {
   name: 'packageName',
   repository: repo,
-  activeChannel: 'stable',
+  defaultChannel: 'stable',
+  channels: [
+    { name: 'stable', version: '1.0.0' },
+    { name: 'alpha', version: '1.1.0' },
+  ],
 };
 
 describe('OLMOCIInstall', () => {
@@ -30,7 +34,7 @@ describe('OLMOCIInstall', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<OLMOCIInstall {...defaultProps} />);
+      const { getByText, getAllByText } = render(<OLMOCIInstall {...defaultProps} />);
 
       expect(getByText('Install catalog')).toBeInTheDocument();
       expect(getByText('repo-catalog.yaml')).toBeInTheDocument();
@@ -40,7 +44,7 @@ describe('OLMOCIInstall', () => {
       expect(getByText('kubectl apply -f repo-catalog.yaml')).toBeInTheDocument();
       expect(getByText('Create subscription')).toBeInTheDocument();
       expect(getByText('packageName-subscription.yaml')).toBeInTheDocument();
-      expect(getByText(/stable/g)).toBeInTheDocument();
+      expect(getAllByText(/stable/g)).toHaveLength(2);
       expect(getByText('kubectl apply -f packageName-subscription.yaml')).toBeInTheDocument();
 
       const olmLink = getByText('Need OLM?');

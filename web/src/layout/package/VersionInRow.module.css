@@ -9,6 +9,11 @@
   color: var(--orange);
 }
 
+.badge.isHighlighted {
+  border-color: var(--highlighted);
+  color: var(--highlighted);
+}
+
 .activeVersion {
   padding-right: 0.75rem;
 }

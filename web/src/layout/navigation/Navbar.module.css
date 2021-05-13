@@ -49,10 +49,10 @@
     z-index: 1040;
   }
 
-  /* :global(.noScroll-modal) .navbar:not(.homeNavbar),
+  :global(.noScroll-modal) .navbar:not(.homeNavbar),
   :global(.noScroll-sidebar) .navbar:not(.homeNavbar) {
     z-index: 1;
-  } */
+  }
 }
 
 @media (max-width: 767.98px) {

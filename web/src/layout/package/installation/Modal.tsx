@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
-import { Package, SearchFiltersURL, Version } from '../../../types';
+import { Package, SearchFiltersURL } from '../../../types';
 import getInstallMethods, {
   InstallMethod,
   InstallMethodKind,
@@ -26,8 +26,6 @@ import TektonInstall from './TektonInstall';
 
 interface Props {
   package?: Package | null;
-  sortedVersions: Version[];
-  activeChannel?: string;
   visibleInstallationModal: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -70,11 +68,9 @@ const InstallationModal = (props: Props) => {
     setInstallMethods(
       getInstallMethods({
         pkg: props.package,
-        sortedVersions: props.sortedVersions,
-        activeChannel: props.activeChannel,
       })
     );
-  }, [props.package, props.activeChannel]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.package]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (isNull(installMethods) || (installMethods.methods.length === 0 && isUndefined(installMethods.errorMessage)))
     return null;
@@ -158,7 +154,8 @@ const InstallationModal = (props: Props) => {
                             return (
                               <OLMInstall
                                 name={method.props.name!}
-                                activeChannel={method.props.activeChannel!}
+                                defaultChannel={method.props.defaultChannel}
+                                channels={method.props.channels}
                                 isGlobalOperator={method.props.isGlobalOperator}
                                 isPrivate={method.props.isPrivate}
                               />
@@ -168,7 +165,8 @@ const InstallationModal = (props: Props) => {
                               <OLMOCIInstall
                                 name={method.props.name!}
                                 repository={method.props.repository!}
-                                activeChannel={method.props.activeChannel!}
+                                defaultChannel={method.props.defaultChannel}
+                                channels={method.props.channels}
                               />
                             );
                           case InstallMethodKind.Falco:
