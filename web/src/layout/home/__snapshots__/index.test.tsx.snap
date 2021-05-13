@@ -10,9 +10,10 @@ exports[`Home index creates snapshot 1`] = `
     >
       <div
         aria-label="Find, install and publisher Kubernetes packages"
-        class="display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center mainTitle"
+        class="display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center noFocus mainTitle"
         id="content"
         role="banner"
+        tabindex="-1"
       >
         Find, install and publish
         <br />
@@ -131,7 +132,6 @@ exports[`Home index creates snapshot 1`] = `
                   aria-modal="false"
                   class="modal modal"
                   role="dialog"
-                  tabindex="-1"
                 >
                   <div
                     class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"

@@ -65,8 +65,9 @@ const HomeView = (props: Props) => {
         <div
           role="banner"
           aria-label="Find, install and publisher Kubernetes packages"
-          className={`display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center ${styles.mainTitle}`}
+          className={`display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center noFocus ${styles.mainTitle}`}
           id="content"
+          tabIndex={-1}
         >
           Find, install and publish
           <br />

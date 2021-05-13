@@ -51,7 +51,7 @@ const TOC = (props: Props) => {
           data-testid="dropdownTOC"
           ref={dropdownRef}
           id="TOC-list"
-          className={`dropdown-menu dropdown-menu-left shadow-sm show p-0 ${styles.dropdown}`}
+          className={`dropdown-menu dropdown-menu-left shadow-sm noFocus show p-0 ${styles.dropdown}`}
           tabIndex={0}
           role="listbox"
           aria-roledescription="Table of content links"

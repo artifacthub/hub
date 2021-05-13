@@ -26,6 +26,7 @@ exports[`Dependencies creates snapshot 1`] = `
       <div
         class="dependency text-truncate pb-1"
         data-testid="dependencyItem"
+        role="listitem"
       >
         <svg
           class="text-muted mr-2 mb-0"
@@ -53,6 +54,7 @@ exports[`Dependencies creates snapshot 1`] = `
       <div
         class="dependency text-truncate pb-1"
         data-testid="dependencyItem"
+        role="listitem"
       >
         <svg
           class="text-muted mr-2 mb-0"

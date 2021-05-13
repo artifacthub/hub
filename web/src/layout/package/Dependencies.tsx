@@ -31,6 +31,7 @@ const Dependencies = (props: Props) => {
           key={`dependency_${index}`}
           className={`${styles.dependency} text-truncate pb-1`}
           data-testid="dependencyItem"
+          role="listitem"
         >
           <GoPackage className="text-muted mr-2 mb-0" />
           {dependency.name}

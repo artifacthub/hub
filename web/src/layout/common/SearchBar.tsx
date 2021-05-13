@@ -272,11 +272,11 @@ const SearchBar = (props: Props) => {
         {visibleDropdown && !isNull(packages) && (
           <div
             ref={dropdownRef}
-            className={`dropdown-menu dropdown-menu-left p-0 shadow-sm w-100 show ${styles.dropdown}`}
+            className={`dropdown-menu dropdown-menu-left p-0 shadow-sm w-100 show noFocus ${styles.dropdown}`}
             role="listbox"
             id="search-list"
-            tabIndex={0}
             aria-activedescendant={highlightedItem ? `sl-opt${highlightedItem}` : ''}
+            tabIndex={0}
             aria-roledescription="Packages list"
           >
             <HoverableItem onLeave={() => setHighlightedItem(null)}>
