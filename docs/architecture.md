@@ -14,7 +14,8 @@ hub
 ├── database
 ├── docs
 ├── internal
-└── web
+├── web
+└── widget
 ```
 
 - **.github:** contains the Github Actions workflows as well as the issue templates.
@@ -31,6 +32,8 @@ hub
 
 - **web:** contains the source code of the web application.
 
+- **widget:** contains the source code of the widget application.
+
 ## Layers
 
 Artifact Hub is structured in multiple layers, each of them providing a set of services to the adjacent layer.
@@ -41,7 +44,7 @@ Artifact Hub is structured in multiple layers, each of them providing a set of s
 
 - **Backend applications:** this layer represents the applications that form the backend: `hub`, `tracker` and `scanner`. These applications rely on the `Internal APIs` layer to perform their tasks. Please see the [backend applications](#backend-applications) section for more details.
 
-- **Web application:** this layer represents the Artifact Hub's web user interface. It uses the HTTP API exposed from the `hub` to interact with the backend. Please see the [web application](#web-application) section for more details.
+- **Web and widget applications:** this layer represents the Artifact Hub's web user interface. It uses the HTTP API exposed from the `hub` to interact with the backend. Please see the [web application](#web-application) section for more details.
 
 ## Database
 
@@ -92,7 +95,7 @@ internal
 └── webhook
 ```
 
-Each of the packages provides an API to perform certain operations. As an example, the `repo` package provides a `Manager` that implements the `RepositoryManager` interface, which details all operations that apply to repositories:
+Each of the packages provides an API to perform certain operations. As an example, the `repo` package provides a `Manager` that implements the `RepositoryManager` interface, which defines all operations that apply to repositories:
 
 ```go
 type RepositoryManager interface {
@@ -119,7 +122,7 @@ type RepositoryManager interface {
 }
 ```
 
-This package is imported by the applications in the upper layer, like the `hub` to expose some of this functionality in the HTTP API, or the `tracker` to process and index packages available in repositories.
+This package is imported by the applications in the upper layer, like the `hub`, to expose some of this functionality in the HTTP API, or the `tracker`, to process and index packages available in repositories.
 
 ## Backend applications
 

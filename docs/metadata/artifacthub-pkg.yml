@@ -49,8 +49,8 @@ maintainers: # (optional)
   - name: The maintainer name (required for each maintainer)
     email: The maintainer email (required for each maintainer)
 provider: # (optional)
-  name: The name of the individual, company, or service that provides this package (optional)
-ignore: # (optional, entries use .gitignore syntax)
-  - lib
+  name: The name of the individual, company, or service that provides this package
+ignore: # (optional, used to ignore some falco rules or opa policies files in a package)
+  - lib # Entries use .gitignore syntax)
 recommendations: # (optional, list of recommended packages)
   - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub

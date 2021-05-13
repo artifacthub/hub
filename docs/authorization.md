@@ -83,7 +83,7 @@ Custom policies **must** be able to process the [queries](#queries) defined in t
 
 ## Integration
 
-Artifact Hub HTTP API includes an endpoint that allows organizations to update their authorization policy. This can be used to automate the generation and synchronization of the data file for your authorization policy based on information available in an external system.
+The Artifact Hub HTTP API includes an endpoint that allows organizations to update their authorization policy. This can be used to automate the generation and synchronization of the data file for your authorization policy based on information available in an external system.
 
 ## Reference
 
