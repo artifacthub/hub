@@ -24,7 +24,7 @@ Images used by these kinds of packages can be listed using the `containersImages
 
 ## Application dependencies
 
-Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.17.2/vuln-detection/library/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used.
+Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.18.1/vuln-detection/library/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used.
 
 The following dependencies files are supported at the moment:
 
@@ -46,6 +46,7 @@ The following dependencies files are supported at the moment:
   - JAR/WAR/EAR files (.jar, .war, and *.ear)
 - Go
   - Binaries built by Go (UPX-compressed binaries don't work)
+  - go.sum
 
 If you want your application dependencies scanned, please make sure the relevant files are included in your final images. The security report will include a target for each of them. You can find an example of how this is done in one of the Artifact Hub images [here](https://github.com/artifacthub/hub/blob/a3ffcb7cee0aa3923c3e4cf9bcf8ac0f2f437a2b/cmd/hub/Dockerfile#L23).
 
