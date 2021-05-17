@@ -229,9 +229,11 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		if repo.SchemeIsHTTP(chartURL) {
 			hasProvenanceFile, err := s.chartHasProvenanceFile(chartURL.String())
 			if err != nil {
-				return nil, fmt.Errorf("error checking provenance file: %w", err)
+				s.warn(md, fmt.Errorf("error checking provenance file: %w", err))
 			}
-			p.Signed = hasProvenanceFile
+			if hasProvenanceFile {
+				p.Signed = hasProvenanceFile
+			}
 		}
 
 		// Enrich package from data available in chart archive
@@ -335,10 +337,17 @@ func (s *TrackerSource) chartHasProvenanceFile(u string) (bool, error) {
 		return false, err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode == http.StatusOK {
-		return true, nil
+	if resp.StatusCode != http.StatusOK {
+		return false, nil
 	}
-	return false, nil
+	data, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return false, fmt.Errorf("error reading provenance file: %w", err)
+	}
+	if !bytes.Contains(data, []byte("PGP SIGNATURE")) {
+		return false, errors.New("invalid provenance file")
+	}
+	return true, nil
 }
 
 // warn is a helper that sends the error provided to the errors collector and
