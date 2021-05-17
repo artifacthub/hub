@@ -138,15 +138,6 @@ func (h *Handlers) setupRouter() {
 		STSSeconds:           31536000,
 		STSIncludeSubdomains: true,
 		STSPreload:           true,
-		ContentSecurityPolicy: `
-			default-src 'none';
-			connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev;
-			font-src 'self';
-			img-src 'self' data: https:;
-			manifest-src 'self';
-			script-src 'self' https://www.google-analytics.com;
-			style-src 'self' 'unsafe-inline'
-		`,
 	}).Handler)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.Users.BasicAuth)
