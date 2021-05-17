@@ -134,6 +134,15 @@ func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
 // ServeIndex is an http handler that serves the index.html file.
 func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(indexCacheMaxAge))
+	w.Header().Set("Content-Security-Policy", `
+		default-src 'none';
+		connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev;
+		font-src 'self';
+		img-src 'self' data: https:;
+		manifest-src 'self';
+		script-src 'self' https://www.google-analytics.com;
+		style-src 'self' 'unsafe-inline'
+	`)
 
 	// Execute index template
 	title, _ := r.Context().Value(hub.IndexMetaTitleKey).(string)
