@@ -2,7 +2,6 @@ package helm
 
 import (
 	"bytes"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -383,18 +382,6 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 // manifest generated as a result of Helm dry-run install with the default
 // values.
 func extractContainersImages(chrt *chart.Chart) ([]string, error) {
-	// Clone chart and remove dependencies
-	tmp, err := json.Marshal(chrt)
-	if err != nil {
-		return nil, err
-	}
-	chrt = &chart.Chart{}
-	if err := json.Unmarshal(tmp, chrt); err != nil {
-		return nil, err
-	}
-	chrt.Metadata.Dependencies = nil
-	chrt.SetDependencies([]*chart.Chart{}...)
-
 	// Dry-run Helm install
 	install := action.NewInstall(&action.Configuration{
 		Log: func(string, ...interface{}) {},
