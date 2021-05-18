@@ -15,7 +15,9 @@ import (
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"helm.sh/helm/v3/pkg/chart"
+	"helm.sh/helm/v3/pkg/chart/loader"
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
 
@@ -329,6 +331,27 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+}
+
+func TestExtractContainersImages(t *testing.T) {
+	// Read test chart
+	f, err := os.Open("testdata/artifact-hub-0.19.0.tgz")
+	require.NoError(t, err)
+	chart, err := loader.LoadArchive(f)
+	require.NoError(t, err)
+
+	// Extract container images and check expectations
+	containersImages, err := extractContainersImages(chart)
+	require.NoError(t, err)
+	assert.Equal(t, []string{
+		"postgres:12",
+		"bitnami/kubectl:1.20",
+		"artifacthub/hub:v0.19.0",
+		"aquasec/trivy:0.16.0",
+		"artifacthub/db-migrator:v0.19.0",
+		"artifacthub/scanner:v0.19.0",
+		"artifacthub/tracker:v0.19.0",
+	}, containersImages)
 }
 
 func TestEnrichPackageFromAnnotations(t *testing.T) {
