@@ -2,12 +2,14 @@ package helm
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"path"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -23,8 +25,10 @@ import (
 	ctxo "github.com/deislabs/oras/pkg/context"
 	"github.com/deislabs/oras/pkg/oras"
 	"gopkg.in/yaml.v3"
+	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
+	"helm.sh/helm/v3/pkg/chartutil"
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
 
@@ -46,6 +50,12 @@ const (
 
 	helmChartConfigMediaType       = "application/vnd.cncf.helm.config.v1+json"
 	helmChartContentLayerMediaType = "application/tar+gzip"
+)
+
+var (
+	// containersImagesRE is a regexp used to extract containers images from
+	// kubernetes manifests files.
+	containersImagesRE = regexp.MustCompile(`\simage:\s(\S+)`)
 )
 
 // TrackerSource is a hub.TrackerSource implementation for Helm repositories.
@@ -236,6 +246,15 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 			}
 		}
 
+		// Extract containers images
+		images, err := extractContainersImages(chart)
+		if err == nil && len(images) > 0 {
+			p.ContainersImages = make([]*hub.ContainerImage, 0, len(images))
+			for _, image := range images {
+				p.ContainersImages = append(p.ContainersImages, &hub.ContainerImage{Image: image})
+			}
+		}
+
 		// Enrich package from data available in chart archive
 		if err := enrichPackageFromArchive(p, chart); err != nil {
 			return nil, fmt.Errorf("error enriching package from archive: %w", err)
@@ -358,6 +377,52 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 	if !md.Deprecated {
 		s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 	}
+}
+
+// extractContainersImages extracts the containers images found in the
+// manifest generated as a result of Helm dry-run install with the default
+// values.
+func extractContainersImages(c *chart.Chart) ([]string, error) {
+	// Clone chart and remove dependencies
+	tmp, err := json.Marshal(c)
+	if err != nil {
+		return nil, err
+	}
+	c = &chart.Chart{}
+	if err := json.Unmarshal(tmp, c); err != nil {
+		return nil, err
+	}
+	// Dependencies are actually deleted as part of the json marshall and
+	// unmarshall cycle, but we do it explicitly just in case this changes.
+	c.SetDependencies([]*chart.Chart{}...)
+
+	// Dry-run Helm install
+	install := action.NewInstall(&action.Configuration{
+		Log: func(string, ...interface{}) {},
+	})
+	install.ReleaseName = "release-name"
+	install.DryRun = true
+	install.DisableHooks = true
+	install.Replace = true
+	install.ClientOnly = true
+	install.IncludeCRDs = true
+	install.DependencyUpdate = false
+	release, err := install.Run(c, chartutil.Values{})
+	if err != nil {
+		return nil, err
+	}
+
+	// Extract containers images from release manifest
+	results := containersImagesRE.FindAllStringSubmatch(release.Manifest, -1)
+	images := make([]string, 0, len(results))
+	for _, result := range results {
+		image := strings.Trim(result[1], `"`)
+		if image != "" && !contains(images, image) {
+			images = append(images, image)
+		}
+	}
+
+	return images, nil
 }
 
 // enrichPackageFromArchive adds some extra information to the package from the
@@ -575,4 +640,14 @@ func getFile(chart *chart.Chart, name string) *chart.File {
 		}
 	}
 	return nil
+}
+
+// contains is a helper to check if a list contains the string provided.
+func contains(l []string, e string) bool {
+	for _, x := range l {
+		if x == e {
+			return true
+		}
+	}
+	return false
 }
