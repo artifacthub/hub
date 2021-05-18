@@ -214,13 +214,13 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 	digest, ok := s.i.PackagesRegistered[pkg.BuildKey(p)]
 	if !ok || chartVersion.Digest != digest || bypassDigestCheck {
 		// Load chart from remote archive
-		chart, err := s.loadChartArchive(chartURL)
+		chrt, err := s.loadChartArchive(chartURL)
 		if err != nil {
 			return nil, fmt.Errorf("error loading chart (%s): %w", chartURL.String(), err)
 		}
 
 		// Validate chart version metadata for known issues and sanitize some strings
-		if err := chart.Validate(); err != nil {
+		if err := chrt.Validate(); err != nil {
 			return nil, fmt.Errorf("invalid metadata: %w", err)
 		}
 
@@ -247,7 +247,7 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		}
 
 		// Extract containers images
-		images, err := extractContainersImages(chart)
+		images, err := extractContainersImages(chrt)
 		if err == nil && len(images) > 0 {
 			p.ContainersImages = make([]*hub.ContainerImage, 0, len(images))
 			for _, image := range images {
@@ -256,7 +256,7 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		}
 
 		// Enrich package from data available in chart archive
-		if err := enrichPackageFromArchive(p, chart); err != nil {
+		if err := enrichPackageFromArchive(p, chrt); err != nil {
 			return nil, fmt.Errorf("error enriching package from archive: %w", err)
 		}
 	}
@@ -382,19 +382,18 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 // extractContainersImages extracts the containers images found in the
 // manifest generated as a result of Helm dry-run install with the default
 // values.
-func extractContainersImages(c *chart.Chart) ([]string, error) {
+func extractContainersImages(chrt *chart.Chart) ([]string, error) {
 	// Clone chart and remove dependencies
-	tmp, err := json.Marshal(c)
+	tmp, err := json.Marshal(chrt)
 	if err != nil {
 		return nil, err
 	}
-	c = &chart.Chart{}
-	if err := json.Unmarshal(tmp, c); err != nil {
+	chrt = &chart.Chart{}
+	if err := json.Unmarshal(tmp, chrt); err != nil {
 		return nil, err
 	}
-	// Dependencies are actually deleted as part of the json marshall and
-	// unmarshall cycle, but we do it explicitly just in case this changes.
-	c.SetDependencies([]*chart.Chart{}...)
+	chrt.Metadata.Dependencies = nil
+	chrt.SetDependencies([]*chart.Chart{}...)
 
 	// Dry-run Helm install
 	install := action.NewInstall(&action.Configuration{
@@ -407,7 +406,7 @@ func extractContainersImages(c *chart.Chart) ([]string, error) {
 	install.ClientOnly = true
 	install.IncludeCRDs = true
 	install.DependencyUpdate = false
-	release, err := install.Run(c, chartutil.Values{})
+	release, err := install.Run(chrt, chartutil.Values{})
 	if err != nil {
 		return nil, err
 	}
@@ -427,18 +426,18 @@ func extractContainersImages(c *chart.Chart) ([]string, error) {
 
 // enrichPackageFromArchive adds some extra information to the package from the
 // chart archive.
-func enrichPackageFromArchive(p *hub.Package, chart *chart.Chart) error {
-	md := chart.Metadata
+func enrichPackageFromArchive(p *hub.Package, chrt *chart.Chart) error {
+	md := chrt.Metadata
 	p.Description = md.Description
 	p.Keywords = md.Keywords
 	p.HomeURL = md.Home
 	p.AppVersion = md.AppVersion
 	p.Deprecated = md.Deprecated
-	p.ValuesSchema = chart.Schema
+	p.ValuesSchema = chrt.Schema
 	p.Data = map[string]interface{}{}
 
 	// API version
-	p.Data["apiVersion"] = chart.Metadata.APIVersion
+	p.Data["apiVersion"] = chrt.Metadata.APIVersion
 
 	// Dependencies
 	dependencies := make([]map[string]string, 0, len(md.Dependencies))
@@ -454,10 +453,10 @@ func enrichPackageFromArchive(p *hub.Package, chart *chart.Chart) error {
 	}
 
 	// Kubernetes version
-	p.Data["kubeVersion"] = chart.Metadata.KubeVersion
+	p.Data["kubeVersion"] = chrt.Metadata.KubeVersion
 
 	// License
-	licenseFile := getFile(chart, "LICENSE")
+	licenseFile := getFile(chrt, "LICENSE")
 	if licenseFile != nil {
 		p.License = license.Detect(licenseFile.Data)
 	}
@@ -494,13 +493,13 @@ func enrichPackageFromArchive(p *hub.Package, chart *chart.Chart) error {
 	}
 
 	// Readme
-	readme := getFile(chart, "README.md")
+	readme := getFile(chrt, "README.md")
 	if readme != nil {
 		p.Readme = string(readme.Data)
 	}
 
 	// Type
-	p.Data["type"] = chart.Metadata.Type
+	p.Data["type"] = chrt.Metadata.Type
 
 	// Enrich package with information from annotations
 	if err := enrichPackageFromAnnotations(p, md.Annotations); err != nil {
@@ -633,8 +632,8 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 }
 
 // getFile returns the file requested from the provided chart.
-func getFile(chart *chart.Chart, name string) *chart.File {
-	for _, file := range chart.Files {
+func getFile(chrt *chart.Chart, name string) *chart.File {
+	for _, file := range chrt.Files {
 		if file.Name == name {
 			return file
 		}
