@@ -346,6 +346,8 @@ func TestExtractContainersImages(t *testing.T) {
 		"bitnami/kubectl:1.20",
 		"artifacthub/hub:v0.19.0",
 		"aquasec/trivy:0.16.0",
+		"docker.io/bitnami/minideb:stretch",
+		"docker.io/postgres:12",
 		"artifacthub/db-migrator:v0.19.0",
 		"artifacthub/scanner:v0.19.0",
 		"artifacthub/tracker:v0.19.0",
