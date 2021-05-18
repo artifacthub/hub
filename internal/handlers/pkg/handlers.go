@@ -100,6 +100,7 @@ func (h *Handlers) GetChartTemplates(w http.ResponseWriter, r *http.Request) {
 
 	// Download chart package from remote source
 	req, _ := http.NewRequest("GET", p.ContentURL, nil)
+	req.Header.Set("Accept-Encoding", "gzip")
 	req = req.WithContext(r.Context())
 	if p.Repository.Private {
 		// Get credentials and set them in request if the repository is private
