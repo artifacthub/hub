@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 import ErrorBoundary from '../../common/ErrorBoundary';
 import CommandBlock from './CommandBlock';
@@ -51,6 +52,7 @@ const CustomInstall = (props: Props) => {
           className={`mt-3 mb-5 ${styles.md}`}
           children={props.install}
           linkTarget="_blank"
+          plugins={[[gfm, { singleTilde: false }]]}
           skipHtml
           renderers={{
             code: Code,

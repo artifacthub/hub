@@ -106,8 +106,7 @@ describe('TemplatesList', () => {
 
       expect(onTemplateChangeMock).toHaveBeenCalledTimes(1);
       expect(onTemplateChangeMock).toHaveBeenCalledWith({
-        data:
-          '{{- if .Values.hub.ingress.enabled -}}\napiVersion: networking.k8s.io/v1beta1\nkind: Ingress\nmetadata:\n  name: {{ include "chart.resourceNamePrefix" . }}hub\n  labels:\n    app.kubernetes.io/component: hub\n    {{- include "chart.labels" . | nindent 4 }}\n  {{- with .Values.hub.ingress.annotations }}\n  annotations:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\nspec:\n  backend:\n    serviceName: {{ include "chart.resourceNamePrefix" . }}hub\n    servicePort: {{ .Values.hub.service.port }}\n  {{- with .Values.hub.ingress.rules }}\n  rules:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n  {{- with .Values.hub.ingress.tls }}\n  tls:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n{{- end }}\n',
+        data: '{{- if .Values.hub.ingress.enabled -}}\napiVersion: networking.k8s.io/v1beta1\nkind: Ingress\nmetadata:\n  name: {{ include "chart.resourceNamePrefix" . }}hub\n  labels:\n    app.kubernetes.io/component: hub\n    {{- include "chart.labels" . | nindent 4 }}\n  {{- with .Values.hub.ingress.annotations }}\n  annotations:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\nspec:\n  backend:\n    serviceName: {{ include "chart.resourceNamePrefix" . }}hub\n    servicePort: {{ .Values.hub.service.port }}\n  {{- with .Values.hub.ingress.rules }}\n  rules:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n  {{- with .Values.hub.ingress.tls }}\n  tls:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n{{- end }}\n',
         fileName: 'hub_ingress',
         name: 'hub_ingress.yaml',
         resourceKinds: ['Ingress'],

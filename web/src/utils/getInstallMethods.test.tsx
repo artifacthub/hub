@@ -241,8 +241,7 @@ const tests: Tests[] = [
         data: {
           rules: [
             {
-              Raw:
-                '- rule: Detect su or sudo\n  desc: detect sudo activities\n  condition:\n    spawned_process and proc.name in (sudo, su)\n  output: >\n    Detected sudo or su privilege escalation activity (user=%user.name command=%proc.cmdline)\n  priority: WARNING\n  tags: [process]\n- rule: Package Management Launched\n  desc: detect package management launched\n  condition: >\n    spawned_process and user.name != "_apt" and package_mgmt_procs and not package_mgmt_ancestor_procs\n  output: >\n    Package management process launched in container (user=%user.name\n    command=%proc.cmdline container_id=%container.id container_name=%container.name image=%container.image.repository:%container.image.tag)\n  priority: ERROR\n  tags: [process]\n',
+              Raw: '- rule: Detect su or sudo\n  desc: detect sudo activities\n  condition:\n    spawned_process and proc.name in (sudo, su)\n  output: >\n    Detected sudo or su privilege escalation activity (user=%user.name command=%proc.cmdline)\n  priority: WARNING\n  tags: [process]\n- rule: Package Management Launched\n  desc: detect package management launched\n  condition: >\n    spawned_process and user.name != "_apt" and package_mgmt_procs and not package_mgmt_ancestor_procs\n  output: >\n    Package management process launched in container (user=%user.name\n    command=%proc.cmdline container_id=%container.id container_name=%container.name image=%container.image.repository:%container.image.tag)\n  priority: ERROR\n  tags: [process]\n',
             },
           ],
         },
@@ -710,16 +709,14 @@ const tests: Tests[] = [
         keywords: ['appranix', 'container protection service', 'application resilience service', 'aps', 'Monitoring'],
         links: [
           {
-            url:
-              'https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators/appranix',
+            url: 'https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators/appranix',
             name: 'source',
           },
           { url: 'https://www.appranix.com/', name: 'Website' },
           { url: 'https://twitter.com/AppranixOne/', name: 'twitter' },
           { url: 'https://www.linkedin.com/company/appranix/', name: 'LinkedIn' },
           {
-            url:
-              'https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators/appranix',
+            url: 'https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators/appranix',
             name: 'GitHub Repository',
           },
         ],

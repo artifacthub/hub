@@ -46,7 +46,7 @@ const CustomResourceDefinition = (props: Props) => {
                 <div className="card-body d-flex flex-column">
                   <div className="card-title mb-3">{resourceDefinition.displayName || resourceDefinition.name}</div>
                   <small className={`card-text text-muted overflow-hidden ${styles.lineClamp}`}>
-                    {resourceDefinition.description.replace('\n', ' ')}
+                    {resourceDefinition.description.replace(/\n/g, ' ')}
                   </small>
 
                   <div className="mt-auto d-flex flex-column">

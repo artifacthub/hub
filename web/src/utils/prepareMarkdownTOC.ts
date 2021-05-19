@@ -7,7 +7,7 @@ import removeEmojis from './removeEmojis';
 
 /* eslint-disable no-control-regex */
 export const HEADING_REGEX = new RegExp('\n(#+) (.*)', 'g');
-const CODE_REGEX = new RegExp('^```(?:[^`]+|`(?!``))*```', 'igm');
+const CODE_REGEX = new RegExp('```([^`]*)```', 'gm');
 const SETEXT_HEADER = new RegExp('^(.*)$\n[=-]{3,}\n', 'igm');
 const TABLE_REGEX = new RegExp('^(|[^\n]+)', 'gm');
 const HTML_REGEX = new RegExp('</?[^>]*>', 'gi');
