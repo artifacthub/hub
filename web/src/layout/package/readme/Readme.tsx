@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import gfm from 'remark-gfm';
 
 import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
 import AnchorHeader from '../../common/AnchorHeader';
@@ -149,6 +150,7 @@ const Readme = (props: Props) => {
       children={props.readme}
       linkTarget="_blank"
       skipHtml
+      plugins={[[gfm, { singleTilde: false }]]}
       renderers={{
         code: Code,
         image: Image,

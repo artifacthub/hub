@@ -27,7 +27,7 @@ const StatsView = () => {
     }
   }, [effective, activeTheme]);
 
-  const getAreaChartConfig = (title: string, withAnnotations?: boolean) => {
+  const getAreaChartConfig = (title: string, withAnnotations?: boolean): ApexCharts.ApexOptions => {
     const annotations: any[] = withAnnotations
       ? [
           {
@@ -130,7 +130,6 @@ const StatsView = () => {
       xaxis: {
         type: 'datetime',
         tickPlacement: 'on',
-        hideOverlappingLabels: true,
         labels: {
           datetimeFormatter: {
             year: 'yyyy',
@@ -153,12 +152,11 @@ const StatsView = () => {
       },
       markers: {
         size: 0,
-        style: 'hollow',
       },
     };
   };
 
-  const getBarChartConfig = (title: string) => {
+  const getBarChartConfig = (title: string): ApexCharts.ApexOptions => {
     return {
       chart: {
         height: 300,

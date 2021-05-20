@@ -377,8 +377,7 @@ podSecurityContext: {}`,
         env: {
           type: 'array',
           items: {
-            $ref:
-              'https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.12.8-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.EnvVar',
+            $ref: 'https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.12.8-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.EnvVar',
           },
           minItems: 0,
           description: 'List of additional environment variables that may be specified in the container',

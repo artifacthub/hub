@@ -287,16 +287,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
             <small
               class="card-text text-muted overflow-hidden lineClamp"
             >
-              TargetEndpoint holds endpoint related information. You can see the API definition and data for TargetEndpoint here. 
-API gateway can be deployed in three patterns: shared, private-jet, and sidecar.
-
-If your backend is already running and you need to expose it via a microgateway, you can define the target URL in the Swagger itself.
-
-If your backend service is not running, but you plan to run it in the same Kubernetes cluster, you can use TargetEndpoint with its relevant Docker image.
-
-Then APIM Operator will spin-up the corresponding Kubernetes deployment for the defined backend service itself with the microgateway.
-
-In shared and private-jet mode, the backend can be running in separate PODs, but in sidecar mode, the gateway will run in the same POD adjacent to the backend service.
+              TargetEndpoint holds endpoint related information. You can see the API definition and data for TargetEndpoint here.  API gateway can be deployed in three patterns: shared, private-jet, and sidecar.  If your backend is already running and you need to expose it via a microgateway, you can define the target URL in the Swagger itself.  If your backend service is not running, but you plan to run it in the same Kubernetes cluster, you can use TargetEndpoint with its relevant Docker image.  Then APIM Operator will spin-up the corresponding Kubernetes deployment for the defined backend service itself with the microgateway.  In shared and private-jet mode, the backend can be running in separate PODs, but in sidecar mode, the gateway will run in the same POD adjacent to the backend service.
             </small>
             <div
               class="mt-auto d-flex flex-column"

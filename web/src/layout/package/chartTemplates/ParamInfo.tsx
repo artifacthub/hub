@@ -94,7 +94,7 @@ const ParamInfo = (props: Props) => {
             {!isUndefined(props.isMarkdown) && props.isMarkdown ? (
               <ReactMarkdown
                 className="p-2"
-                children={props.info}
+                children={props.info as string}
                 renderers={{
                   heading: Heading,
                   link: Link,

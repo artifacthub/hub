@@ -22,11 +22,11 @@ interface Props {
 const ButtonCopyToClipboard = (props: Props) => {
   const [copyStatus, setCopyStatus] = useState(false);
 
-  async function copyToClipboard(text: string) {
+  async function copyToClipboard(textToCopy: string) {
     if (!navigator.clipboard) {
       try {
         const textField = document.createElement('textarea');
-        textField.innerHTML = text;
+        textField.textContent = textToCopy;
         document.body.appendChild(textField);
         textField.select();
         document.execCommand('copy');
@@ -37,7 +37,7 @@ const ButtonCopyToClipboard = (props: Props) => {
       }
     } else {
       try {
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.writeText(textToCopy);
         setCopyStatus(true);
       } catch {
         setCopyStatus(false);

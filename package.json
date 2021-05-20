@@ -1,6 +1,0 @@
-{
-  "devDependencies": {
-    "@testing-library/dom": "^7.30.3",
-    "@testing-library/user-event": "^13.1.5"
-  }
-}
