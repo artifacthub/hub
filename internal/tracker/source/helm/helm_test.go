@@ -211,7 +211,7 @@ func TestTrackerSource(t *testing.T) {
 			},
 		}, "", nil)
 		req, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
-		req.Header.Set("Accept-Encoding", "gzip")
+		req.Header.Set("Accept-Encoding", "*")
 		sw.Hc.On("Do", req).Return(nil, tests.ErrFake)
 		expectedErr := "error preparing package: error loading chart (https://repo.url/pkg1-1.0.0.tgz): fake error for tests (package: pkg1 version: 1.0.0)"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
@@ -252,7 +252,7 @@ func TestTrackerSource(t *testing.T) {
 		}, "", nil)
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
 		reqChart, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
-		reqChart.Header.Set("Accept-Encoding", "gzip")
+		reqChart.Header.Set("Accept-Encoding", "*")
 		sw.Hc.On("Do", reqChart).Return(&http.Response{
 			Body:       f,
 			StatusCode: http.StatusOK,
@@ -306,7 +306,7 @@ func TestTrackerSource(t *testing.T) {
 		}, "", nil)
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
 		reqChart, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
-		reqChart.Header.Set("Accept-Encoding", "gzip")
+		reqChart.Header.Set("Accept-Encoding", "*")
 		sw.Hc.On("Do", reqChart).Return(&http.Response{
 			Body:       f,
 			StatusCode: http.StatusOK,
