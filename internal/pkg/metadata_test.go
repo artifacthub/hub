@@ -315,6 +315,21 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 				"invalid change: link url not provided",
 			},
+			{
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Image: ":",
+						},
+					},
+				},
+				"invalid container image: could not parse reference",
+			},
 		}
 		for _, tc := range testCases {
 			tc := tc

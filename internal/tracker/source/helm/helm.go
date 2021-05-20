@@ -246,11 +246,14 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		}
 
 		// Extract containers images
-		images, err := extractContainersImages(chrt)
-		if err == nil && len(images) > 0 {
-			p.ContainersImages = make([]*hub.ContainerImage, 0, len(images))
-			for _, image := range images {
-				p.ContainersImages = append(p.ContainersImages, &hub.ContainerImage{Image: image})
+		imagesRefs, err := extractContainersImages(chrt)
+		if err == nil && len(imagesRefs) > 0 {
+			containersImages := make([]*hub.ContainerImage, 0, len(imagesRefs))
+			for _, imageRef := range imagesRefs {
+				containersImages = append(containersImages, &hub.ContainerImage{Image: imageRef})
+			}
+			if err := pkg.ValidateContainersImages(containersImages); err == nil {
+				p.ContainersImages = containersImages
 			}
 		}
 
@@ -379,8 +382,8 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 	}
 }
 
-// extractContainersImages extracts the containers images found in the
-// manifest generated as a result of Helm dry-run install with the default
+// extractContainersImages extracts the containers images references found in
+// the manifest generated as a result of Helm dry-run install with the default
 // values.
 func extractContainersImages(chrt *chart.Chart) ([]string, error) {
 	// Dry-run Helm install
@@ -532,6 +535,9 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 		var images []*hub.ContainerImage
 		if err := yaml.Unmarshal([]byte(v), &images); err != nil {
 			return fmt.Errorf("invalid images value: %s", v)
+		}
+		if err := pkg.ValidateContainersImages(images); err != nil {
+			return err
 		}
 		p.ContainersImages = images
 	}

@@ -490,6 +490,17 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			},
 			"",
 		},
+		{
+			&hub.Package{},
+			map[string]string{
+				imagesAnnotation: `
+- name: img1
+  image: ":"
+`,
+			},
+			&hub.Package{},
+			"invalid container image: could not parse reference",
+		},
 		// License
 		{
 			&hub.Package{},
