@@ -24,7 +24,7 @@ Images used by these kinds of packages can be listed using the `containersImages
 
 ## Application dependencies
 
-Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.18.1/vuln-detection/library/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used.
+Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.18.2/vuln-detection/library/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used.
 
 The following dependencies files are supported at the moment:
 
