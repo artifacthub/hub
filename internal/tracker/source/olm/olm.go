@@ -132,6 +132,9 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *Metadata) (*hub.Pa
 	if err != nil {
 		return nil, err
 	}
+	if err := pkg.ValidateContainersImages(containersImages); err != nil {
+		return nil, err
+	}
 	p.ContainersImages = containersImages
 
 	// TS
@@ -442,7 +445,11 @@ func getContainersImages(
 	}
 	csvRI := &CSV{}
 	if err := yaml.Unmarshal(csvData, &csvRI); err == nil {
-		images = append(images, csvRI.Spec.RelatedImages...)
+		for _, image := range csvRI.Spec.RelatedImages {
+			if !imagesContain(images, image) {
+				images = append(images, image)
+			}
+		}
 	}
 
 	// Images whitelisting
@@ -522,6 +529,17 @@ func preparePackagesChannels(packages map[string]*hub.Package) {
 		}
 		p.Channels = preparedChannels[p.Name]
 	}
+}
+
+// imagesContain is a helper to check if the image provided is already in a
+// given list.
+func imagesContain(images []*hub.ContainerImage, imageToCheck *hub.ContainerImage) bool {
+	for _, image := range images {
+		if image.Image == imageToCheck.Image {
+			return true
+		}
+	}
+	return false
 }
 
 // contains is a helper to check if a list contains the string provided.

@@ -9,6 +9,7 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/google/go-containerregistry/pkg/name"
 	"gopkg.in/yaml.v2"
 )
 
@@ -121,6 +122,9 @@ func ValidatePackageMetadata(md *hub.PackageMetadata) error {
 			return fmt.Errorf("%w: %v", ErrInvalidMetadata, err)
 		}
 	}
+	if err := ValidateContainersImages(md.ContainersImages); err != nil {
+		return fmt.Errorf("%w: %v", ErrInvalidMetadata, err)
+	}
 	return nil
 }
 
@@ -156,4 +160,15 @@ func isValidChangeKind(kind string) bool {
 		}
 	}
 	return false
+}
+
+// ValidateContainersImages checks if the provided containers images are valid.
+func ValidateContainersImages(images []*hub.ContainerImage) error {
+	// Check if the image reference is valid
+	for _, image := range images {
+		if _, err := name.ParseReference(image.Image); err != nil {
+			return fmt.Errorf("invalid container image: %w", err)
+		}
+	}
+	return nil
 }
