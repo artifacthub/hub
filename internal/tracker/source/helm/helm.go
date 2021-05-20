@@ -403,7 +403,7 @@ func extractContainersImages(chrt *chart.Chart) ([]string, error) {
 	results := containersImagesRE.FindAllStringSubmatch(release.Manifest, -1)
 	images := make([]string, 0, len(results))
 	for _, result := range results {
-		image := strings.Trim(result[1], `"`)
+		image := strings.Trim(result[1], `"'`)
 		if image != "" && !contains(images, image) {
 			images = append(images, image)
 		}
