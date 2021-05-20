@@ -285,7 +285,7 @@ func TestGetChartTemplates(t *testing.T) {
 				hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
 				tgzReq, _ := http.NewRequest("GET", contentURL, nil)
 				tgzReq = tgzReq.WithContext(r.Context())
-				tgzReq.Header.Set("Accept-Encoding", "gzip")
+				tgzReq.Header.Set("Accept-Encoding", "*")
 				hw.hc.On("Do", tgzReq).Return(tc.resp, tc.err)
 				hw.h.GetChartTemplates(w, r)
 				resp := w.Result()
@@ -307,7 +307,7 @@ func TestGetChartTemplates(t *testing.T) {
 		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
 		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
-		tgzReq.Header.Set("Accept-Encoding", "gzip")
+		tgzReq.Header.Set("Accept-Encoding", "*")
 		hw.hc.On("Do", tgzReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusOK,
@@ -330,7 +330,7 @@ func TestGetChartTemplates(t *testing.T) {
 		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
 		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
-		tgzReq.Header.Set("Accept-Encoding", "gzip")
+		tgzReq.Header.Set("Accept-Encoding", "*")
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
 		hw.hc.On("Do", tgzReq).Return(&http.Response{
 			Body:       f,
@@ -362,7 +362,7 @@ func TestGetChartTemplates(t *testing.T) {
 		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
 		tgzReq.SetBasicAuth("user", "pass")
-		tgzReq.Header.Set("Accept-Encoding", "gzip")
+		tgzReq.Header.Set("Accept-Encoding", "*")
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
 		hw.hc.On("Do", tgzReq).Return(&http.Response{
 			Body:       f,

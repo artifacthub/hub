@@ -275,7 +275,7 @@ func (s *TrackerSource) loadChartArchive(u *url.URL) (*chart.Chart, error) {
 	case "http", "https":
 		// Get chart content
 		req, _ := http.NewRequest("GET", u.String(), nil)
-		req.Header.Set("Accept-Encoding", "gzip")
+		req.Header.Set("Accept-Encoding", "*")
 		if u.Host == "github.com" || u.Host == "raw.githubusercontent.com" {
 			// Authenticate and rate limit requests to Github
 			githubToken := s.i.Svc.Cfg.GetString("creds.githubToken")
