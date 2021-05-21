@@ -13,7 +13,7 @@ import styles from './SecurityReport.module.css';
 
 interface Props {
   disabledReport: boolean;
-  containers?: ContainerImage[] | null;
+  containers: ContainerImage[];
   className?: string;
   summary?: SecurityReportSummary | null;
   packageId: string;
@@ -25,33 +25,37 @@ interface Props {
 }
 
 const SecurityReport = (props: Props) => {
-  const checkIfWhitelistedContainers = useCallback((): boolean => {
-    if (props.containers) {
-      return props.containers.some((container: ContainerImage) => container.whitelisted);
-    }
-    return false;
+  const getWhitelistedContainersNumber = useCallback((): number => {
+    return props.containers.filter((container: ContainerImage) => container.whitelisted).length;
   }, [props.containers]);
 
   const [total, setTotal] = useState(props.summary ? sumObjectValues(props.summary) : 0);
-  const [hasWhitelistedContainers, setHasWhitelistedContainers] = useState<boolean>(checkIfWhitelistedContainers());
+  const [whitelistedContainers, setWhitelistedContainers] = useState<number>(getWhitelistedContainersNumber());
 
   useEffect(() => {
     setTotal(props.summary ? sumObjectValues(props.summary) : 0);
   }, [props.summary]);
 
   useEffect(() => {
-    setHasWhitelistedContainers(checkIfWhitelistedContainers());
-  }, [checkIfWhitelistedContainers, props.containers]);
+    setWhitelistedContainers(getWhitelistedContainersNumber());
+  }, [props.containers]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if ((isNull(props.summary) || isUndefined(props.summary) || isEmpty(props.summary)) && !props.disabledReport)
-    return null;
+  if (!props.disabledReport) {
+    if (isNull(props.summary) || isUndefined(props.summary) || isEmpty(props.summary)) {
+      if (props.containers.length === 0) {
+        return null;
+      } else if (props.containers.length !== whitelistedContainers) {
+        return null;
+      }
+    }
+  }
 
   return (
     <div className={props.className}>
       <SmallTitle text="Security Report" />
 
       <div className="mb-3">
-        {props.disabledReport ? (
+        {props.disabledReport || props.containers.length === whitelistedContainers ? (
           <div className={styles.disabledBadgeWrapper}>
             <ScannerDisabledRepositoryBadge scannerDisabled />
             <div className={`text-muted mt-2 ${styles.legend}`}>
@@ -66,7 +70,7 @@ const SecurityReport = (props: Props) => {
                   <small>No vulnerabilities found</small>
                 </div>
                 <SecurityRating summary={props.summary} className="position-relative ml-2" onlyBadge />
-                {hasWhitelistedContainers && <span className="font-weight-bold ml-1">*</span>}
+                {whitelistedContainers > 0 && <span className="font-weight-bold ml-1">*</span>}
               </div>
             ) : (
               <div className="d-flex flex-row align-items-center mb-2">
@@ -76,11 +80,11 @@ const SecurityReport = (props: Props) => {
                   </small>
                 </div>
                 <SecurityRating summary={props.summary} className="position-relative ml-1" onlyBadge />
-                {hasWhitelistedContainers && <span className="font-weight-bold ml-1">*</span>}
+                {whitelistedContainers > 0 && <span className="font-weight-bold ml-1">*</span>}
               </div>
             )}
 
-            {hasWhitelistedContainers && (
+            {whitelistedContainers > 0 && (
               <div className={`text-muted mb-3 ${styles.legend}`}>
                 * Some containers images used by this package have been whitelisted by the publisher, which may affect
                 the security rating.
@@ -124,7 +128,7 @@ const SecurityReport = (props: Props) => {
                 visibleSecurityReport={props.visibleSecurityReport}
                 searchUrlReferer={props.searchUrlReferer}
                 fromStarredPage={props.fromStarredPage}
-                hasWhitelistedContainers={hasWhitelistedContainers}
+                hasWhitelistedContainers={whitelistedContainers > 0}
               />
             </div>
           </>

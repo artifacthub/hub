@@ -212,7 +212,7 @@ const Details = (props: Props) => {
         visibleSecurityReport={props.visibleSecurityReport}
         searchUrlReferer={props.searchUrlReferer}
         fromStarredPage={props.fromStarredPage}
-        containers={props.package.containersImages}
+        containers={props.package.containersImages || []}
       />
 
       <CapabilityLevel capabilityLevel={props.package.capabilities} />
