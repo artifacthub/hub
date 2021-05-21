@@ -15,8 +15,8 @@ const LINK_REGEX = /[^[\]]+(?=])/gm;
 /* eslint-enable no-control-regex */
 
 const cleanTitle = (title: string): string => {
-  // Remove backticks
-  return removeEmojis(title.replace(/`/g, ''));
+  // Remove backticks and asteriks
+  return removeEmojis(title.replace(/`/g, '').replace(/\*\*/g, ''));
 };
 
 const convertSetextHeadersToAtx = (md: string): string => {

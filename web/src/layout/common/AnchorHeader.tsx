@@ -29,7 +29,7 @@ const AnchorHeader: React.ElementType = (props: Props) => {
   // Get proper value when header is wrapped into html tag
   if (value.startsWith('<')) {
     props.children!.forEach((child: any) => {
-      if (!child.props.value.startsWith('<')) {
+      if (child.props && child.props.value && !child.props.value.startsWith('<')) {
         value = child.props.value;
         return;
       }
