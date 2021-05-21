@@ -137,6 +137,7 @@ select is(
             "private": false,
             "verified_publisher": false,
             "official": false,
+            "scanner_disabled": false,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"
         }

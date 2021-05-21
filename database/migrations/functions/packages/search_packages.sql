@@ -70,6 +70,7 @@ begin
             r.display_name as repository_display_name,
             r.verified_publisher,
             r.official as repository_official,
+            r.scanner_disabled as repository_scanner_disabled,
             u.alias as user_alias,
             o.name as organization_name,
             o.display_name as organization_display_name
@@ -165,6 +166,7 @@ begin
                             'url', repository_url,
                             'verified_publisher', verified_publisher,
                             'official', repository_official,
+                            'scanner_disabled', repository_scanner_disabled,
                             'user_alias', user_alias,
                             'organization_name', organization_name,
                             'organization_display_name', organization_display_name

@@ -14,6 +14,7 @@ returns setof json as $$
         'kind', r.repository_kind_id,
         'verified_publisher', verified_publisher,
         'official', r.official,
+        'scanner_disabled', r.scanner_disabled,
         'user_alias', u.alias,
         'organization_name', o.name,
         'organization_display_name', o.display_name
