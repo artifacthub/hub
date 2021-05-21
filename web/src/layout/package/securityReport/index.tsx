@@ -12,7 +12,7 @@ import SecurityModal from './Modal';
 import styles from './SecurityReport.module.css';
 
 interface Props {
-  disabledReport?: boolean;
+  disabledReport: boolean;
   containers?: ContainerImage[] | null;
   className?: string;
   summary?: SecurityReportSummary | null;
@@ -43,10 +43,7 @@ const SecurityReport = (props: Props) => {
     setHasWhitelistedContainers(checkIfWhitelistedContainers());
   }, [checkIfWhitelistedContainers, props.containers]);
 
-  if (
-    (isNull(props.summary) || isUndefined(props.summary) || isEmpty(props.summary)) &&
-    isUndefined(props.disabledReport)
-  )
+  if ((isNull(props.summary) || isUndefined(props.summary) || isEmpty(props.summary)) && !props.disabledReport)
     return null;
 
   return (

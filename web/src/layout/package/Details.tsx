@@ -204,7 +204,7 @@ const Details = (props: Props) => {
       })()}
 
       <SecurityReport
-        disabledReport={props.package.repository.scannerDisabled}
+        disabledReport={props.package.repository.scannerDisabled || false}
         summary={props.package.securityReportSummary}
         packageId={props.package.packageId}
         version={props.package.version!}
