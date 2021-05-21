@@ -5,6 +5,7 @@ import { GoPackage } from 'react-icons/go';
 
 import { ContainerImage } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
+import ElementWithTooltip from '../common/ElementWithTooltip';
 import SeeAllModal from '../common/SeeAllModal';
 import SmallTitle from '../common/SmallTitle';
 import styles from './ContainersImages.module.css';
@@ -20,6 +21,16 @@ interface ContainersList {
 }
 
 const ContainersImages = (props: Props) => {
+  const getBadge = (): JSX.Element => (
+    <ElementWithTooltip
+      className={styles.tooltipIcon}
+      element={<span className={`badge badge-pill my-1 ${styles.badge}`}>Whitelisted</span>}
+      tooltipMessage="This image has been whitelisted by the publisher and it won’t be scanned for security vulnerabilities."
+      visibleTooltip
+      active
+    />
+  );
+
   const getAllContainers = useCallback((): ContainersList | null => {
     if (isUndefined(props.containers) || isNull(props.containers) || props.containers.length === 0) return null;
 
@@ -53,6 +64,14 @@ const ContainersImages = (props: Props) => {
             </div>
             {copyBtn}
           </div>
+          {containerImage.whitelisted && (
+            <div className={`d-flex flex-column mb-1 ${styles.badgesWrapper}`}>
+              <div className="d-flex flex-row align-items-center">
+                <div className={`${styles.badgeDecorator} position-relative mx-1`} />
+                {getBadge()}
+              </div>
+            </div>
+          )}
         </div>
       );
 
@@ -67,6 +86,7 @@ const ContainersImages = (props: Props) => {
                 {containerImage.name || containerImage.image}
               </div>
               {copyBtn}
+              {containerImage.whitelisted && <div className="ml-2 mr-1">{getBadge()}</div>}
             </div>
           </td>
         </tr>

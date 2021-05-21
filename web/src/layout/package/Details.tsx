@@ -204,6 +204,7 @@ const Details = (props: Props) => {
       })()}
 
       <SecurityReport
+        disabledReport={props.package.repository.scannerDisabled}
         summary={props.package.securityReportSummary}
         packageId={props.package.packageId}
         version={props.package.version!}
@@ -211,6 +212,7 @@ const Details = (props: Props) => {
         visibleSecurityReport={props.visibleSecurityReport}
         searchUrlReferer={props.searchUrlReferer}
         fromStarredPage={props.fromStarredPage}
+        containers={props.package.containersImages}
       />
 
       <CapabilityLevel capabilityLevel={props.package.capabilities} />

@@ -22,6 +22,7 @@ interface Props {
   visibleSecurityReport: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
+  hasWhitelistedContainers: boolean;
 }
 
 const SecurityModal = (props: Props) => {
@@ -133,7 +134,11 @@ const SecurityModal = (props: Props) => {
         >
           <div className="m-3">
             <div className="h5 mt-0 text-secondary text-uppercase font-weight-bold pb-2">Summary</div>
-            {props.totalVulnerabilities > 0 && <SummaryTable report={report} />}
+            {props.totalVulnerabilities > 0 && (
+              <>
+                <SummaryTable report={report} hasWhitelistedContainers={props.hasWhitelistedContainers} />
+              </>
+            )}
 
             <SecuritySummary summary={props.summary} totalVulnerabilities={props.totalVulnerabilities} />
 

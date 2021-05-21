@@ -3294,6 +3294,10 @@ components:
                 name:
                   type: string
                   nullable: false
+                whitelisted:
+                  type: boolean
+                  nullable: false
+                  example: false
             ts:
               type: integer
               nullable: false
@@ -3406,10 +3410,6 @@ components:
         official:
           type: boolean
           nullable: false
-        scanner_disabled:
-          type: boolean
-          nullable: false
-          example: false
         ts:
           type: integer
           nullable: false
@@ -3446,7 +3446,6 @@ components:
             - last_tracking_ts
             - last_scanning_ts
             - disabled
-            - scanner_disabled
           properties:
             digest:
               type: string
@@ -3468,10 +3467,6 @@ components:
             disabled:
               type: boolean
               nullable: false
-            scanner_disabled:
-              type: boolean
-              nullable: false
-              example: false
             branch:
               type: string
               nullable: false
@@ -3566,6 +3561,7 @@ components:
         scanner_disabled:
           type: boolean
           nullable: false
+          example: false
         user_alias:
           type: string
           nullable: false

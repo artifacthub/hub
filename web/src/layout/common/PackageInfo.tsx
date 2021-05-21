@@ -16,6 +16,7 @@ import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageInfo.module.css';
 import RepositoryIconLabel from './RepositoryIconLabel';
 import RepositoryInfo from './RepositoryInfo';
+import ScannerDisabledRepositoryBadge from './ScannerDisabledRepositoryBadge';
 import SecurityRating from './SecutityRating';
 import SignedBadge from './SignedBadge';
 import StarBadge from './StarBadge';
@@ -225,6 +226,9 @@ const PackageInfo = (props: Props) => {
           onlyBadge={false}
           withLink={buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!)}
         />
+        {props.package.repository.scannerDisabled && (
+          <ScannerDisabledRepositoryBadge scannerDisabled={props.package.repository.scannerDisabled} withTooltip />
+        )}
       </div>
     </>
   );
