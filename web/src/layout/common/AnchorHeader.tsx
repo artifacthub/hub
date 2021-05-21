@@ -1,3 +1,4 @@
+import { isArray } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { GoLink } from 'react-icons/go';
@@ -13,11 +14,15 @@ interface Props {
 }
 
 const AnchorHeader: React.ElementType = (props: Props) => {
-  let value = !isUndefined(props.title)
-    ? props.title
-    : props.children && props.children.length > 0
-    ? props.children![0].props.value || props.children![0].props.href
-    : undefined;
+  let value = props.title;
+  if (isUndefined(value) && props.children && props.children.length > 0) {
+    const el = props.children![0];
+    if (el.props.children && isArray(el.props.children)) {
+      value = el.props.children[0].props.value;
+    } else {
+      value = el.props.value || el.props.href;
+    }
+  }
 
   if (isUndefined(value)) return null;
 
