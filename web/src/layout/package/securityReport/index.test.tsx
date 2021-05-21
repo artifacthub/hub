@@ -15,6 +15,13 @@ const defaultProps = {
   version: '1.1.1',
   visibleSecurityReport: false,
   disabledReport: false,
+  containers: [
+    {
+      name: '',
+      image: 'test-container:0.0.1',
+      whitelisted: false,
+    },
+  ],
 };
 
 describe('SecurityReport', () => {
@@ -90,7 +97,41 @@ describe('SecurityReport', () => {
 
     it('renders scanner disabled repository security badge', () => {
       const { getByText } = render(
-        <SecurityReport summary={null} packageId="pkgID" version="1.1.1" visibleSecurityReport={false} disabledReport />
+        <SecurityReport
+          summary={null}
+          packageId="pkgID"
+          version="1.1.1"
+          visibleSecurityReport={false}
+          disabledReport
+          containers={defaultProps.containers}
+        />
+      );
+
+      expect(getByText('Security scanner disabled')).toBeInTheDocument();
+      expect(getByText('Security scanning of this package has been disabled by the publisher.')).toBeInTheDocument();
+    });
+
+    it('renders scanner disabled repository security badge when all containers are whitelisted', () => {
+      const { getByText } = render(
+        <SecurityReport
+          summary={{}}
+          packageId="pkgID"
+          version="1.1.1"
+          visibleSecurityReport={false}
+          disabledReport={false}
+          containers={[
+            {
+              name: '',
+              image: 'test-container:0.0.1',
+              whitelisted: true,
+            },
+            {
+              name: '',
+              image: 'test-container-2:0.0.1',
+              whitelisted: true,
+            },
+          ]}
+        />
       );
 
       expect(getByText('Security scanner disabled')).toBeInTheDocument();
@@ -101,7 +142,13 @@ describe('SecurityReport', () => {
   describe('Does not render component when not disabledReport and', () => {
     it('when summary is undefined', () => {
       const { container } = render(
-        <SecurityReport packageId="pkgID" version="1.1.1" visibleSecurityReport={false} disabledReport={false} />
+        <SecurityReport
+          packageId="pkgID"
+          version="1.1.1"
+          visibleSecurityReport={false}
+          disabledReport={false}
+          containers={defaultProps.containers}
+        />
       );
       expect(container).toBeEmptyDOMElement();
     });
@@ -114,6 +161,7 @@ describe('SecurityReport', () => {
           version="1.1.1"
           visibleSecurityReport={false}
           disabledReport={false}
+          containers={defaultProps.containers}
         />
       );
       expect(container).toBeEmptyDOMElement();
@@ -127,6 +175,7 @@ describe('SecurityReport', () => {
           version="1.1.1"
           visibleSecurityReport={false}
           disabledReport={false}
+          containers={defaultProps.containers}
         />
       );
       expect(container).toBeEmptyDOMElement();
