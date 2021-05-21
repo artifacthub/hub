@@ -14,6 +14,7 @@ const defaultProps = {
   packageId: 'pkgID',
   version: '1.1.1',
   visibleSecurityReport: false,
+  disabledReport: false,
 };
 
 describe('SecurityReport', () => {
@@ -86,19 +87,47 @@ describe('SecurityReport', () => {
       expect(getByText('24.5k')).toBeInTheDocument();
       expect(getByText(/vulnerabilities found/g)).toBeInTheDocument();
     });
+
+    it('renders scanner disabled repository security badge', () => {
+      const { getByText } = render(
+        <SecurityReport summary={null} packageId="pkgID" version="1.1.1" visibleSecurityReport={false} disabledReport />
+      );
+
+      expect(getByText('Security scanner disabled')).toBeInTheDocument();
+      expect(getByText('Security scanning of this package has been disabled by the publisher.')).toBeInTheDocument();
+    });
   });
 
-  describe('Does not render component', () => {
+  describe('Does not render component when not disabledReport and', () => {
+    it('when summary is undefined', () => {
+      const { container } = render(
+        <SecurityReport packageId="pkgID" version="1.1.1" visibleSecurityReport={false} disabledReport={false} />
+      );
+      expect(container).toBeEmptyDOMElement();
+    });
+
     it('when summary is null', () => {
       const { container } = render(
-        <SecurityReport summary={null} packageId="pkgID" version="1.1.1" visibleSecurityReport={false} />
+        <SecurityReport
+          summary={null}
+          packageId="pkgID"
+          version="1.1.1"
+          visibleSecurityReport={false}
+          disabledReport={false}
+        />
       );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when summary is empty', () => {
       const { container } = render(
-        <SecurityReport summary={{}} packageId="pkgID" version="1.1.1" visibleSecurityReport={false} />
+        <SecurityReport
+          summary={{}}
+          packageId="pkgID"
+          version="1.1.1"
+          visibleSecurityReport={false}
+          disabledReport={false}
+        />
       );
       expect(container).toBeEmptyDOMElement();
     });

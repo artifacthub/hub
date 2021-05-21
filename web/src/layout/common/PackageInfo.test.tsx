@@ -174,4 +174,18 @@ describe('PackageInfo', () => {
       expect(getAllByText('Verified Publisher')).toHaveLength(1);
     });
   });
+
+  describe('when repository has repository scanner disabled', () => {
+    it('renders correct label', () => {
+      const mockPackage = getMockPackage('11');
+
+      const { getAllByText } = render(
+        <Router>
+          <PackageInfo package={mockPackage} />
+        </Router>
+      );
+
+      expect(getAllByText('Security scanner disabled')).toHaveLength(1);
+    });
+  });
 });

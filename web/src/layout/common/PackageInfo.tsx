@@ -227,7 +227,11 @@ const PackageInfo = (props: Props) => {
           withLink={buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!)}
         />
         {props.package.repository.scannerDisabled && (
-          <ScannerDisabledRepositoryBadge scannerDisabled={props.package.repository.scannerDisabled} withTooltip />
+          <ScannerDisabledRepositoryBadge
+            className="d-inline mt-3"
+            scannerDisabled={props.package.repository.scannerDisabled}
+            withTooltip
+          />
         )}
       </div>
     </>
