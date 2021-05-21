@@ -3,7 +3,7 @@
 }
 
 .labelText {
-  background-color: var(--color-1-5);
+  background-color: var(--body-light-bg);
   line-height: 18px;
   padding: 0 5px 0 10px;
   font-weight: 700;
@@ -52,11 +52,12 @@
 }
 
 .default .iconWrapper {
-  background-color: var(--highlighted);
+  background-color: var(--light-gray);
+  color: var(--dark);
 }
 
 .default .iconWrapper::before {
-  background-color: var(--highlighted);
+  background-color: var(--light-gray);
 }
 
 .warning .iconWrapper {
@@ -83,12 +84,15 @@
   background-color: var(--danger);
 }
 
+.custom .iconWrapper {
+  color: var(--light-gray);
+}
+
 .custom .iconWrapper::before {
   background-color: inherit;
 }
 
 .iconRightWrapper {
-  background-color: var(--highlighted);
   position: relative;
   border: 1px solid var(--color-black-15);
   border-radius: 3px;
