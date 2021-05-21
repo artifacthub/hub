@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TOCEntryItem } from '../../../types';
 import prepareMarkdownTOC, { HEADING_REGEX } from '../../../utils/prepareMarkdownTOC';
@@ -13,50 +13,55 @@ interface Props {
   scrollIntoView: (id?: string) => void;
 }
 
+const INITIAL_HEADING = /^(#+) (.*)/;
+
 const ReadmeWrapper = (props: Props) => {
-  const checkReadme = (): { readme: string; mainTitle: string; toc: TOCEntryItem[] } => {
-    let title = '';
-    let readme = props.markdownContent;
+  const [mainTitle, setMainTitle] = useState<string>('');
+  const [toc, setToc] = useState<TOCEntryItem[]>([]);
+  const [readme, setReadme] = useState(props.markdownContent);
 
-    const hasTitle = (): boolean => {
-      if (props.markdownContent.startsWith('#')) {
-        const matches = HEADING_REGEX.exec(`\n${readme}`);
-        if (matches) {
-          title = matches[2];
-          readme = readme.replace(`${matches[1]} ${matches[2]}`, '');
+  useEffect(() => {
+    const checkReadme = () => {
+      let title = '';
+      let readmeTmp = props.markdownContent;
+
+      const hasTitle = (): boolean => {
+        if (INITIAL_HEADING.test(readmeTmp)) {
+          const matches = HEADING_REGEX.exec(`\n${readmeTmp}`);
+          if (matches) {
+            title = matches[2];
+            readmeTmp = readmeTmp.replace(`${matches[1]} ${matches[2]}`, '');
+          }
+          return true;
         }
-        return true;
+
+        let hasTitle = false;
+        const mdContent = props.markdownContent.split('\n');
+        if (mdContent.length > 1) {
+          const secondLine = mdContent[1];
+          if (secondLine.includes('===') || secondLine.includes('---')) {
+            hasTitle = true;
+            title = mdContent[0];
+            // Remove main title from readmeTmp
+            readmeTmp = mdContent.slice(2).join('\n');
+          }
+        }
+        return hasTitle;
+      };
+
+      if (!hasTitle()) {
+        title = props.packageName;
       }
 
-      let hasTitle = false;
-      const mdContent = props.markdownContent.split('\n');
-      if (mdContent.length > 1) {
-        const secondLine = mdContent[1];
-        if (secondLine.includes('===') || secondLine.includes('---')) {
-          hasTitle = true;
-          title = mdContent[0];
-          // Remove main title from readme
-          readme = mdContent.slice(2).join('\n');
-        }
-      }
-      return hasTitle;
+      const readmeWithMainTitle = `# ${title}\n${readmeTmp}`;
+      const toc: TOCEntryItem[] = prepareMarkdownTOC(`\n${readmeTmp}${props.additionalTitles || ''}`);
+
+      setReadme(toc.length > 0 ? readmeTmp : readmeWithMainTitle);
+      setMainTitle(title);
+      setToc(toc);
     };
-
-    if (!hasTitle()) {
-      title = props.packageName;
-    }
-
-    const readmeWithMainTitle = `# ${title}\n${readme}`;
-    const toc: TOCEntryItem[] = prepareMarkdownTOC(`\n${readme}${props.additionalTitles || ''}`);
-
-    return {
-      readme: toc.length > 0 ? readme : readmeWithMainTitle,
-      mainTitle: title,
-      toc: toc,
-    };
-  };
-
-  let { readme, mainTitle, toc } = checkReadme();
+    checkReadme();
+  }, [props.markdownContent, props.additionalTitles, props.packageName]);
 
   return (
     <ErrorBoundary
