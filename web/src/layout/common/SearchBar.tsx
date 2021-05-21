@@ -17,9 +17,7 @@ import OfficialBadge from './OfficialBadge';
 import RepositoryIconLabel from './RepositoryIconLabel';
 import styles from './SearchBar.module.css';
 import SearchTipsModal from './SearchTipsModal';
-import SecurityRating from './SecutityRating';
 import StarBadge from './StarBadge';
-import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 interface Props {
   formClassName?: string;
@@ -349,20 +347,6 @@ const SearchBar = (props: Props) => {
                                 className="d-inline"
                                 type="package"
                                 withoutTooltip
-                                onlyIcon
-                              />
-                              <VerifiedPublisherBadge
-                                verifiedPublisher={pkg.repository.verifiedPublisher}
-                                className="d-inline"
-                                withoutTooltip
-                                onlyIcon
-                              />
-                              <SecurityRating
-                                summary={pkg.securityReportSummary}
-                                className="d-inline"
-                                onlyBadge={false}
-                                withoutTooltip
-                                onlyIcon
                               />
                             </div>
                           </div>

@@ -16,7 +16,7 @@ const SignedBadge = (props: Props) => (
   <ElementWithTooltip
     active={props.signed}
     className={props.className}
-    element={<Label text="Signed" icon={<FaAward />} labelStyle="success" />}
+    element={<Label text="Signed" icon={<FaAward />} />}
     tooltipMessage="This chart has a provenance file"
     visibleTooltip={!isUndefined(props.repositoryKind) && props.repositoryKind === RepositoryKind.Helm}
   />
