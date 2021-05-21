@@ -51,6 +51,8 @@
 
   :global(.noScroll-modal) .navbar:not(.homeNavbar),
   :global(.noScroll-sidebar) .navbar:not(.homeNavbar) {
+    /* With different modals across the pages in different kevel to navbar, we cannot keep navbar sticky the navbar with open modals */
+    position: relative !important;
     z-index: 1;
   }
 }
