@@ -17,6 +17,10 @@
   width: auto;
 }
 
+.legend {
+  font-size: 75%;
+}
+
 @media only screen and (min-width: 1200px) {
   .table {
     font-size: 1rem;

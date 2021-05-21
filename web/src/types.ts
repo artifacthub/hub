@@ -108,6 +108,7 @@ export interface PackageStats {
 export interface ContainerImage {
   image: string;
   name?: string;
+  whitelisted?: boolean;
 }
 
 export interface Version {

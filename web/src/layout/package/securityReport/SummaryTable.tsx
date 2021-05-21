@@ -9,6 +9,7 @@ import styles from './SummaryTable.module.css';
 
 interface Props {
   report: SecurityReport;
+  hasWhitelistedContainers: boolean;
 }
 
 const SummaryTable = (props: Props) => {
@@ -65,6 +66,12 @@ const SummaryTable = (props: Props) => {
           })}
         </tbody>
       </table>
+      {props.hasWhitelistedContainers && (
+        <div className={`text-muted ${styles.legend}`}>
+          * Some containers images used by this package have been whitelisted by the publisher, which may affect the
+          security rating.
+        </div>
+      )}
     </div>
   );
 };

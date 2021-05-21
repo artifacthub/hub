@@ -26,3 +26,12 @@
 .badgeItems {
   background-color: var(--color-black-5);
 }
+
+.legend {
+  font-size: 75%;
+  line-height: 1rem;
+}
+
+.disabledBadgeWrapper {
+  margin-top: calc(0.5rem + 4px);
+}
