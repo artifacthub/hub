@@ -249,6 +249,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }, {
@@ -273,6 +274,7 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -298,6 +300,7 @@ select is(
                     "url": "https://repo3.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -398,6 +401,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }, {
@@ -422,6 +426,7 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -447,6 +452,7 @@ select is(
                     "url": "https://repo3.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -485,6 +491,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }]
@@ -522,6 +529,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }]
@@ -560,6 +568,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }, {
@@ -584,6 +593,7 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -624,6 +634,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }, {
@@ -648,6 +659,7 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -688,6 +700,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }, {
@@ -712,6 +725,7 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -804,6 +818,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }],
@@ -904,6 +919,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }]
@@ -948,6 +964,7 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -1252,6 +1269,7 @@ select is(
                     "url": "https://repo3.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -1292,6 +1310,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }]
@@ -1334,6 +1353,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }, {
@@ -1358,6 +1378,7 @@ select is(
                     "url": "https://repo3.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -1400,6 +1421,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }]
@@ -1441,6 +1463,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }]
@@ -1483,6 +1506,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }, {
@@ -1507,6 +1531,7 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -1550,6 +1575,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
+                    "scanner_disabled": false,
                     "user_alias": "user1"
                 }
             }]
@@ -1612,6 +1638,7 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
+                    "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }

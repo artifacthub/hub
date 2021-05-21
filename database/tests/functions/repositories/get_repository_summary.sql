@@ -39,6 +39,7 @@ insert into repository (
     url,
     auth_user,
     auth_pass,
+    scanner_disabled,
     repository_kind_id,
     user_id
 )
@@ -49,6 +50,7 @@ values (
     'https://repo2.com',
     'user',
     'pass',
+    true,
     0,
     :'user1ID'
 );
@@ -65,6 +67,7 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
+        "scanner_disabled": false,
         "user_alias": "user1"
     }'::jsonb,
     'Repository 1 is returned as a json object'
@@ -80,6 +83,7 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
+        "scanner_disabled": true,
         "user_alias": "user1"
     }'::jsonb,
     'Repository 2 is returned as a json object'

@@ -56,6 +56,7 @@ select is(
             "kind": 0,
             "verified_publisher": false,
             "official": false,
+            "scanner_disabled": false,
             "user_alias": "user1"
         },
         "event_kinds": [0, 1]
@@ -73,6 +74,7 @@ select is(
             "kind": 0,
             "verified_publisher": false,
             "official": false,
+            "scanner_disabled": false,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"
         },

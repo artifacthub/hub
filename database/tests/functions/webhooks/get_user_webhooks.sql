@@ -92,6 +92,7 @@ select is(
                         "private": false,
                         "verified_publisher": false,
                         "official": false,
+                        "scanner_disabled": false,
                         "user_alias": "user1"
                     }
                 }

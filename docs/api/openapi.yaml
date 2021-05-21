@@ -1077,6 +1077,7 @@ paths:
                             organization_display_name: Artifact Hub
                             verified_publisher: true
                             official: true
+                            scanner_disabled: false
                         - package_id: 3af7b6a1-adbd-41f1-ad96-e1eb3350b019
                           name: sentry-kubernetes
                           normalized_name: sentry-kubernetes
@@ -1097,6 +1098,7 @@ paths:
                             organization_display_name: Helm
                             verified_publisher: false
                             official: false
+                            scanner_disabled: false
                         - package_id: 0d38123f-fb60-41f0-bd00-76fb331bf7ed
                           name: etcd-operator
                           normalized_name: etcd-operator
@@ -1117,6 +1119,7 @@ paths:
                             organization_display_name: Helm
                             verified_publisher: false
                             official: false
+                            scanner_disabled: false
                       facets:
                         - title: Organization
                           filter_key: org
@@ -3400,6 +3403,13 @@ components:
         signed:
           type: boolean
           nullable: false
+        official:
+          type: boolean
+          nullable: false
+        scanner_disabled:
+          type: boolean
+          nullable: false
+          example: false
         ts:
           type: integer
           nullable: false
@@ -3461,6 +3471,7 @@ components:
             scanner_disabled:
               type: boolean
               nullable: false
+              example: false
             branch:
               type: string
               nullable: false
@@ -3523,6 +3534,7 @@ components:
         - url
         - verified_publisher
         - official
+        - scanner_disabled
       properties:
         repository_id:
           type: string
@@ -3549,6 +3561,9 @@ components:
           type: boolean
           nullable: false
         private:
+          type: boolean
+          nullable: false
+        scanner_disabled:
           type: boolean
           nullable: false
         user_alias:
