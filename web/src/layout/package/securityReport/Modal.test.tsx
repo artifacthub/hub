@@ -2,7 +2,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { SecurityReport, VulnerabilitySeverity } from '../../../types';
 import SecurityModal from './Modal';
 jest.mock('../../../api');

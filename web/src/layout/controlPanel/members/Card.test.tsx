@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { Member } from '../../../types';
 import Card from './Card';

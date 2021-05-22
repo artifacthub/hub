@@ -6,7 +6,7 @@ import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { TiWarningOutline } from 'react-icons/ti';
 
-import { API } from '../../../../api';
+import API from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
 import { ErrorKind, Webhook } from '../../../../types';

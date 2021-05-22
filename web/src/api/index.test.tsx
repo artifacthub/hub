@@ -28,7 +28,7 @@ import {
   Webhook,
 } from '../types';
 import renameKeysInObject from '../utils/renameKeysInObject';
-import * as methods from './index';
+import API from './index';
 enableFetchMocks();
 
 const getData = (fixtureId: string): any => {
@@ -37,9 +37,9 @@ const getData = (fixtureId: string): any => {
 
 const getCSRFTokenMock = jest.fn();
 
-describe('index API', () => {
+describe('API', () => {
   beforeEach(() => {
-    methods.API.getCSRFToken = () => {
+    API.getCSRFToken = () => {
       getCSRFTokenMock();
       return Promise.resolve('test');
     };
@@ -53,7 +53,7 @@ describe('index API', () => {
     const tests = getData('1');
     for (let i = 0; i < tests.length; i++) {
       it('renders proper content', () => {
-        const actual = methods.toCamelCase(tests[i].entry);
+        const actual = API.toCamelCase(tests[i].entry);
         expect(actual).toEqual(tests[i].result);
       });
     }
@@ -63,7 +63,7 @@ describe('index API', () => {
     const tests = getData('2');
     for (let i = 0; i < tests.length; i++) {
       it('renders proper content', () => {
-        const actual = methods.getUrlContext(tests[i].entry);
+        const actual = API.getUrlContext(tests[i].entry);
         expect(actual).toEqual(tests[i].output);
       });
     }
@@ -80,7 +80,7 @@ describe('index API', () => {
           status: 401,
         });
 
-        await expect(methods.API.getOrganization('org1')).rejects.toEqual({
+        await expect(API.getOrganization('org1')).rejects.toEqual({
           kind: ErrorKind.Unauthorized,
         });
         expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -91,7 +91,7 @@ describe('index API', () => {
           status: 404,
         });
 
-        await expect(methods.API.getOrganization('org1')).rejects.toEqual({
+        await expect(API.getOrganization('org1')).rejects.toEqual({
           kind: ErrorKind.NotFound,
         });
         expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -105,7 +105,7 @@ describe('index API', () => {
           status: 400,
         });
 
-        await expect(methods.API.getOrganization('org1')).rejects.toEqual({
+        await expect(API.getOrganization('org1')).rejects.toEqual({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -120,7 +120,7 @@ describe('index API', () => {
           status: 400,
         });
 
-        await expect(methods.API.getOrganization('org1')).rejects.toEqual({
+        await expect(API.getOrganization('org1')).rejects.toEqual({
           kind: ErrorKind.Other,
         });
         expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -137,7 +137,7 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getPackage({
+        const response = await API.getPackage({
           packageName: 'pkg1',
           repositoryKind: 'helm',
           repositoryName: 'repoName',
@@ -146,7 +146,7 @@ describe('index API', () => {
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/helm/repoName/pkg1/1.2.1');
-        expect(response).toEqual(methods.toCamelCase(packageItem));
+        expect(response).toEqual(API.toCamelCase(packageItem));
       });
     });
 
@@ -159,7 +159,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.toggleStar('pkgID');
+        const response = await API.toggleStar('pkgID');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/stars');
@@ -178,7 +178,7 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getStars('pkgID');
+        const response = await API.getStars('pkgID');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/stars');
@@ -197,7 +197,7 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.searchPackages({
+        const response = await API.searchPackages({
           tsQueryWeb: 'database',
           filters: {
             kind: [RepositoryKind.Helm.toString()],
@@ -213,7 +213,7 @@ describe('index API', () => {
         expect(fetchMock.mock.calls[0][0]).toEqual(
           '/api/v1/packages/search?facets=true&limit=20&offset=0&kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database'
         );
-        expect(response).toEqual(methods.toCamelCase(search));
+        expect(response).toEqual(API.toCamelCase(search));
       });
     });
 
@@ -227,7 +227,7 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getStats();
+        const response = await API.getStats();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/stats');
@@ -246,11 +246,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getRandomPackages();
+        const response = await API.getRandomPackages();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/random');
-        expect(response).toEqual(methods.toCamelCase(packages));
+        expect(response).toEqual(API.toCamelCase(packages));
       });
     });
 
@@ -264,7 +264,7 @@ describe('index API', () => {
           status: 201,
         });
 
-        const response = await methods.API.register(user);
+        const response = await API.register(user);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users');
@@ -285,7 +285,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.verifyEmail('123abc');
+        const response = await API.verifyEmail('123abc');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/verify-email');
@@ -305,7 +305,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.login(user);
+        const response = await API.login(user);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/login');
@@ -324,7 +324,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.logout();
+        const response = await API.logout();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/logout');
@@ -342,11 +342,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getUserProfile();
+        const response = await API.getUserProfile();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/profile');
-        expect(response).toEqual(methods.toCamelCase(profile));
+        expect(response).toEqual(API.toCamelCase(profile));
       });
     });
 
@@ -359,7 +359,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.checkPasswordStrength('testTest.12');
+        const response = await API.checkPasswordStrength('testTest.12');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/check-password-strength');
@@ -377,11 +377,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getRepositories();
+        const response = await API.getRepositories();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user');
-        expect(response).toEqual(methods.toCamelCase(repositories));
+        expect(response).toEqual(API.toCamelCase(repositories));
       });
 
       it('success from org', async () => {
@@ -393,11 +393,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getRepositories('org1');
+        const response = await API.getRepositories('org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1');
-        expect(response).toEqual(methods.toCamelCase(repositories));
+        expect(response).toEqual(API.toCamelCase(repositories));
       });
     });
 
@@ -411,7 +411,7 @@ describe('index API', () => {
           status: 201,
         });
 
-        const response = await methods.API.addRepository(repo);
+        const response = await API.addRepository(repo);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user');
@@ -431,7 +431,7 @@ describe('index API', () => {
           status: 201,
         });
 
-        const response = await methods.API.addRepository(repo, 'org1');
+        const response = await API.addRepository(repo, 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1');
@@ -452,7 +452,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteRepository('repo1');
+        const response = await API.deleteRepository('repo1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1');
@@ -468,7 +468,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteRepository('repo1', 'org1');
+        const response = await API.deleteRepository('repo1', 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1');
@@ -487,7 +487,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updateRepository(repo);
+        const response = await API.updateRepository(repo);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(`/api/v1/repositories/user/${repo.name}`);
@@ -507,7 +507,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updateRepository(repo, 'org1');
+        const response = await API.updateRepository(repo, 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(`/api/v1/repositories/org/org1/${repo.name}`);
@@ -528,7 +528,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.transferRepository({
+        const response = await API.transferRepository({
           repositoryName: 'repo1',
           toOrgName: 'org1',
         });
@@ -547,7 +547,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.transferRepository({
+        const response = await API.transferRepository({
           repositoryName: 'repo1',
           toOrgName: 'org2',
           fromOrgName: 'org1',
@@ -567,7 +567,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.transferRepository({
+        const response = await API.transferRepository({
           repositoryName: 'repo1',
           fromOrgName: 'org1',
         });
@@ -590,7 +590,7 @@ describe('index API', () => {
             status: 404,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -608,7 +608,7 @@ describe('index API', () => {
             status: 204,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -626,7 +626,7 @@ describe('index API', () => {
             status: 500,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -646,7 +646,7 @@ describe('index API', () => {
             status: 404,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -664,7 +664,7 @@ describe('index API', () => {
             status: 204,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -682,7 +682,7 @@ describe('index API', () => {
             status: 500,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -702,7 +702,7 @@ describe('index API', () => {
             status: 404,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -720,7 +720,7 @@ describe('index API', () => {
             status: 204,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -738,7 +738,7 @@ describe('index API', () => {
             status: 500,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -758,7 +758,7 @@ describe('index API', () => {
             status: 404,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -776,7 +776,7 @@ describe('index API', () => {
             status: 204,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -794,7 +794,7 @@ describe('index API', () => {
             status: 500,
           });
 
-          const response = await methods.API.checkAvailability(resource);
+          const response = await API.checkAvailability(resource);
 
           expect(fetchMock).toHaveBeenCalledTimes(1);
           expect(fetchMock.mock.calls[0][0]).toEqual(
@@ -815,11 +815,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getUserOrganizations();
+        const response = await API.getUserOrganizations();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/user');
-        expect(response).toEqual(methods.toCamelCase(orgs));
+        expect(response).toEqual(API.toCamelCase(orgs));
       });
     });
 
@@ -833,11 +833,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getOrganization('artifacthub');
+        const response = await API.getOrganization('artifacthub');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub');
-        expect(response).toEqual(methods.toCamelCase(org));
+        expect(response).toEqual(API.toCamelCase(org));
       });
     });
 
@@ -851,7 +851,7 @@ describe('index API', () => {
           status: 201,
         });
 
-        const response = await methods.API.addOrganization(org);
+        const response = await API.addOrganization(org);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs');
@@ -875,7 +875,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updateOrganization(org, 'artifacthub');
+        const response = await API.updateOrganization(org, 'artifacthub');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub');
@@ -898,7 +898,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteOrganization('org1');
+        const response = await API.deleteOrganization('org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1');
@@ -917,11 +917,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getOrganizationMembers('artifacthub');
+        const response = await API.getOrganizationMembers('artifacthub');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub/members');
-        expect(response).toEqual(methods.toCamelCase(members));
+        expect(response).toEqual(API.toCamelCase(members));
       });
     });
 
@@ -934,7 +934,7 @@ describe('index API', () => {
           status: 201,
         });
 
-        const response = await methods.API.addOrganizationMember('artifacthub', 'user1');
+        const response = await API.addOrganizationMember('artifacthub', 'user1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub/member/user1');
@@ -952,7 +952,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteOrganizationMember('artifacthub', 'user1');
+        const response = await API.deleteOrganizationMember('artifacthub', 'user1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub/member/user1');
@@ -970,7 +970,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.confirmOrganizationMembership('org1');
+        const response = await API.confirmOrganizationMembership('org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/accept-invitation');
@@ -988,11 +988,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getStarredByUser();
+        const response = await API.getStarredByUser();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/starred');
-        expect(response).toEqual(methods.toCamelCase(packages));
+        expect(response).toEqual(API.toCamelCase(packages));
       });
     });
 
@@ -1006,7 +1006,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updateUserProfile(profile);
+        const response = await API.updateUserProfile(profile);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/profile');
@@ -1033,7 +1033,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updatePassword('old', 'new');
+        const response = await API.updatePassword('old', 'new');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/password');
@@ -1059,7 +1059,7 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.saveImage(img);
+        const response = await API.saveImage(img);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/images');
@@ -1079,11 +1079,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getPackageSubscriptions('pkgId');
+        const response = await API.getPackageSubscriptions('pkgId');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/pkgId');
-        expect(response).toEqual(methods.toCamelCase(subscriptions));
+        expect(response).toEqual(API.toCamelCase(subscriptions));
       });
     });
 
@@ -1096,7 +1096,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.addSubscription('pkgId', 0);
+        const response = await API.addSubscription('pkgId', 0);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions');
@@ -1115,7 +1115,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteSubscription('pkgId', 0);
+        const response = await API.deleteSubscription('pkgId', 0);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions?package_id=pkgId&event_kind=0');
@@ -1134,11 +1134,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getUserSubscriptions();
+        const response = await API.getUserSubscriptions();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions');
-        expect(response).toEqual(methods.toCamelCase(packages));
+        expect(response).toEqual(API.toCamelCase(packages));
       });
     });
 
@@ -1152,11 +1152,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getWebhooks();
+        const response = await API.getWebhooks();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user');
-        expect(response).toEqual(methods.toCamelCase(webhooks));
+        expect(response).toEqual(API.toCamelCase(webhooks));
       });
 
       it('success from org', async () => {
@@ -1168,11 +1168,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getWebhooks('org1');
+        const response = await API.getWebhooks('org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1');
-        expect(response).toEqual(methods.toCamelCase(webhooks));
+        expect(response).toEqual(API.toCamelCase(webhooks));
       });
     });
 
@@ -1186,11 +1186,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getWebhook('webhookId');
+        const response = await API.getWebhook('webhookId');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user/webhookId');
-        expect(response).toEqual(methods.toCamelCase(webhook));
+        expect(response).toEqual(API.toCamelCase(webhook));
       });
 
       it('success from org', async () => {
@@ -1202,11 +1202,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getWebhook('webhookId', 'org1');
+        const response = await API.getWebhook('webhookId', 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1/webhookId');
-        expect(response).toEqual(methods.toCamelCase(webhooks));
+        expect(response).toEqual(API.toCamelCase(webhooks));
       });
     });
 
@@ -1220,7 +1220,7 @@ describe('index API', () => {
           status: 201,
         });
 
-        const response = await methods.API.addWebhook(webhook);
+        const response = await API.addWebhook(webhook);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user');
@@ -1251,7 +1251,7 @@ describe('index API', () => {
           status: 201,
         });
 
-        const response = await methods.API.addWebhook(webhook, 'org1');
+        const response = await API.addWebhook(webhook, 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1');
@@ -1283,7 +1283,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteWebhook('webhook1');
+        const response = await API.deleteWebhook('webhook1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user/webhook1');
@@ -1299,7 +1299,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteWebhook('webhook1', 'org1');
+        const response = await API.deleteWebhook('webhook1', 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1/webhook1');
@@ -1318,7 +1318,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updateWebhook(webhook);
+        const response = await API.updateWebhook(webhook);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(`/api/v1/webhooks/user/${webhook.webhookId}`);
@@ -1349,7 +1349,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updateWebhook(webhook, 'org1');
+        const response = await API.updateWebhook(webhook, 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(`/api/v1/webhooks/org/org1/${webhook.webhookId}`);
@@ -1382,7 +1382,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.triggerWebhookTest(webhook);
+        const response = await API.triggerWebhookTest(webhook);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/test');
@@ -1405,11 +1405,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getAPIKeys();
+        const response = await API.getAPIKeys();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys');
-        expect(response).toEqual(methods.toCamelCase(apiKeys));
+        expect(response).toEqual(API.toCamelCase(apiKeys));
       });
     });
 
@@ -1423,11 +1423,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getAPIKey('apiKeyId');
+        const response = await API.getAPIKey('apiKeyId');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys/apiKeyId');
-        expect(response).toEqual(methods.toCamelCase(apiKey));
+        expect(response).toEqual(API.toCamelCase(apiKey));
       });
     });
 
@@ -1440,7 +1440,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.addAPIKey('test');
+        const response = await API.addAPIKey('test');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys');
@@ -1458,7 +1458,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.updateAPIKey('apiKeyId', 'newName');
+        const response = await API.updateAPIKey('apiKeyId', 'newName');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys/apiKeyId');
@@ -1481,7 +1481,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteAPIKey('apiKeyId');
+        const response = await API.deleteAPIKey('apiKeyId');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys/apiKeyId');
@@ -1500,11 +1500,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getOptOutList();
+        const response = await API.getOptOutList();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out');
-        expect(response).toEqual(methods.toCamelCase(optOutList));
+        expect(response).toEqual(API.toCamelCase(optOutList));
       });
     });
 
@@ -1517,7 +1517,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.addOptOut('repoId', 2);
+        const response = await API.addOptOut('repoId', 2);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out');
@@ -1536,7 +1536,7 @@ describe('index API', () => {
           status: 204,
         });
 
-        const response = await methods.API.deleteOptOut('optOutId');
+        const response = await API.deleteOptOut('optOutId');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out/optOutId');
@@ -1555,11 +1555,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getAllRepositories();
+        const response = await API.getAllRepositories();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories');
-        expect(response).toEqual(methods.toCamelCase(repositories));
+        expect(response).toEqual(API.toCamelCase(repositories));
       });
     });
 
@@ -1580,7 +1580,7 @@ describe('index API', () => {
           organizationName: 'org1',
         };
 
-        const response = await methods.API.claimRepositoryOwnership(mockRepo);
+        const response = await API.claimRepositoryOwnership(mockRepo);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claim-ownership');
@@ -1604,7 +1604,7 @@ describe('index API', () => {
           organizationName: 'org1',
         };
 
-        const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org2');
+        const response = await API.claimRepositoryOwnership(mockRepo, 'org2');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claim-ownership?org=org2');
@@ -1628,7 +1628,7 @@ describe('index API', () => {
           userAlias: 'user1',
         };
 
-        const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org1');
+        const response = await API.claimRepositoryOwnership(mockRepo, 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claim-ownership?org=org1');
@@ -1652,7 +1652,7 @@ describe('index API', () => {
           userAlias: 'user1',
         };
 
-        const response = await methods.API.claimRepositoryOwnership(mockRepo);
+        const response = await API.claimRepositoryOwnership(mockRepo);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claim-ownership');
@@ -1671,11 +1671,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getAuthorizationPolicy('org1');
+        const response = await API.getAuthorizationPolicy('org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorization-policy');
-        expect(response).toEqual(methods.toCamelCase(authz));
+        expect(response).toEqual(API.toCamelCase(authz));
       });
     });
 
@@ -1694,7 +1694,7 @@ describe('index API', () => {
           policyData: '{}',
         };
 
-        const response = await methods.API.updateAuthorizationPolicy('org1', policy);
+        const response = await API.updateAuthorizationPolicy('org1', policy);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorization-policy');
@@ -1726,11 +1726,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getUserAllowedActions('org1');
+        const response = await API.getUserAllowedActions('org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/user-allowed-actions');
-        expect(response).toEqual(methods.toCamelCase(actions));
+        expect(response).toEqual(API.toCamelCase(actions));
       });
     });
 
@@ -1750,11 +1750,11 @@ describe('index API', () => {
           data: {},
         };
 
-        const response = await methods.API.triggerTestInRegoPlayground(data);
+        const response = await API.triggerTestInRegoPlayground(data);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('https://play.openpolicyagent.org/v1/share');
-        expect(response).toEqual(methods.toCamelCase(playgroundPolicy));
+        expect(response).toEqual(API.toCamelCase(playgroundPolicy));
       });
     });
 
@@ -1768,41 +1768,11 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getSnapshotSecurityReport('pkgID', '1.1.1');
+        const response = await API.getSnapshotSecurityReport('pkgID', '1.1.1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.1.1/security-report');
         expect(response).toEqual(report);
-      });
-    });
-
-    describe('getCSRFToken', () => {
-      it('calls function twice when invalidToken error only when PUT, POST or DELETE function', async () => {
-        fetchMock.mockResponses(
-          [
-            JSON.stringify({ message: 'CSRF token invalid' }),
-            {
-              headers: {
-                'content-type': 'application/json',
-              },
-              status: 403,
-            },
-          ],
-          [
-            '',
-            {
-              headers: {
-                'content-type': 'text/plain; charset=utf-8',
-              },
-              status: 201,
-            },
-          ]
-        );
-
-        await methods.API.addOrganizationMember('artifacthub', 'user1');
-
-        expect(getCSRFTokenMock).toHaveBeenCalled();
-        expect(fetchMock).toHaveBeenCalledTimes(2);
       });
     });
 
@@ -1816,7 +1786,7 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getChartTemplates('id', '1.1.0');
+        const response = await API.getChartTemplates('id', '1.1.0');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/1.1.0/templates');
@@ -1834,7 +1804,7 @@ describe('index API', () => {
           status: 200,
         });
 
-        const response = await methods.API.getAHStats();
+        const response = await API.getAHStats();
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/stats');

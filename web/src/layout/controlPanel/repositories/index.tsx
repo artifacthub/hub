@@ -6,7 +6,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import { AuthorizerAction, ErrorKind, Repository as Repo } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';

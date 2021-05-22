@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
-import { API } from '../../api';
+import API from '../../api';
 import { RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import ExternalLink from '../common/ExternalLink';

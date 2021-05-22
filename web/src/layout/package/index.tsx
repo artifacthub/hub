@@ -11,7 +11,7 @@ import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { API } from '../../api';
+import API from '../../api';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import {
   CustomResourcesDefinition,

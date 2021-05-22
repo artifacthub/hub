@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { API } from '../../../../../api';
+import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
 import { ErrorKind, Profile } from '../../../../../types';
 import styles from './ProfileSection.module.css';

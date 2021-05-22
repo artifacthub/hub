@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useRef, useState } from 'react';
 import { MdAddCircle, MdClose } from 'react-icons/md';
 
-import { API } from '../../../../../../api';
+import API from '../../../../../../api';
 import { ErrorKind, EventKind, Package } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';

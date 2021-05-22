@@ -5,7 +5,7 @@ import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness, MdClose } from 'react-icons/md';
 
-import { API } from '../../../../../../api';
+import API from '../../../../../../api';
 import { AppCtx } from '../../../../../../context/AppCtx';
 import { ErrorKind, EventKind, OptOutItem, Organization, Repository } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';

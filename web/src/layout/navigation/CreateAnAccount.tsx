@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 import React, { useRef, useState } from 'react';
 import { MdDone } from 'react-icons/md';
 
-import { API } from '../../api';
+import API from '../../api';
 import { RefInputField, ResourceKind, User } from '../../types';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import InputField from '../common/InputField';

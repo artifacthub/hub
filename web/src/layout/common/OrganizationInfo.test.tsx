@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../api';
+import API from '../../api';
 import { Organization } from '../../types';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import OrganizationInfo from './OrganizationInfo';

@@ -5,7 +5,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 
-import { API } from '../../../../../api';
+import API from '../../../../../api';
 import useOutsideClick from '../../../../../hooks/useOutsideClick';
 import { APIKey, ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';

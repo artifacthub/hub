@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MdClose, MdDone } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../api';
+import API from '../../api';
 import { ErrorKind, RefInputField } from '../../types';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import InputField from '../common/InputField';

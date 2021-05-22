@@ -3,7 +3,7 @@ import every from 'lodash/every';
 import React, { useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 
-import { API } from '../../../../../api';
+import API from '../../../../../api';
 import { ErrorKind, RefInputField } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import compoundErrorMessage from '../../../../../utils/compoundErrorMessage';

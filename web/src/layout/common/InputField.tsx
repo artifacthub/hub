@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-import { API } from '../../api';
+import API from '../../api';
 import { AvailabilityInfo, RefInputField } from '../../types';
 import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 import styles from './InputField.module.css';

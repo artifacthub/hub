@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../api';
+import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
 import alertDispatcher from '../../utils/alertDispatcher';
 

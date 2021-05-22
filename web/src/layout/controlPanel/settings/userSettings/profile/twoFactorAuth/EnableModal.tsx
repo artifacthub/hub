@@ -4,7 +4,7 @@ import { FaLock } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { MdDone, MdNavigateNext } from 'react-icons/md';
 
-import { API } from '../../../../../../api';
+import API from '../../../../../../api';
 import { ErrorKind, TwoFactorAuth } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import compoundErrorMessage from '../../../../../../utils/compoundErrorMessage';

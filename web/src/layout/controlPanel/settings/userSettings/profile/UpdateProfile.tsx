@@ -5,7 +5,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 
-import { API } from '../../../../../api';
+import API from '../../../../../api';
 import { AppCtx, updateUser } from '../../../../../context/AppCtx';
 import { ErrorKind, Profile, RefInputField, ResourceKind, UserFullName } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';

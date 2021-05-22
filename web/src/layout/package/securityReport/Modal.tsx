@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { SearchFiltersURL, SecurityReport, SecurityReportSummary } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Modal from '../../common/Modal';

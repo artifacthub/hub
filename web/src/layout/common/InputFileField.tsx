@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 
-import { API } from '../../api';
+import API from '../../api';
 import { ErrorKind, LogoImage } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import Image from './Image';

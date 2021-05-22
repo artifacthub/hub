@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-import { API } from '../../../../../../api';
+import API from '../../../../../../api';
 import { ErrorKind, EventKind, Package } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import buildPackageURL from '../../../../../../utils/buildPackageURL';

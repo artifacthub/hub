@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../../../api';
+import API from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, SearchResults, Webhook } from '../../../../types';
 import WebhookForm from './Form';

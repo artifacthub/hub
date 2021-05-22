@@ -6,7 +6,7 @@ import { FaUser } from 'react-icons/fa';
 import { MdBusiness, MdClose } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization, Repository } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';

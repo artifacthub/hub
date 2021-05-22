@@ -6,7 +6,7 @@ import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md';
 import { useHistory } from 'react-router';
 
-import { API } from '../../api';
+import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, EventKind, Subscription } from '../../types';

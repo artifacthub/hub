@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useRef, useState } from 'react';
 import { MdDone } from 'react-icons/md';
 
-import { API } from '../../api';
+import API from '../../api';
 import { RefInputField } from '../../types';
 import InputField from '../common/InputField';
 

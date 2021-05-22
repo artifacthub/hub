@@ -5,7 +5,7 @@ import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-import { API } from '../../../../../../api';
+import API from '../../../../../../api';
 import { ErrorKind, EventKind, OptOutItem, Repository } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';

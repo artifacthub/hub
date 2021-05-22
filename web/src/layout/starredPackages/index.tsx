@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../api';
+import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
 import { ErrorKind, Package } from '../../types';
 import Loading from '../common/Loading';

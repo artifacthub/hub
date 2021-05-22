@@ -3,7 +3,7 @@ import React from 'react';
 import { MdImage } from 'react-icons/md';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../api';
+import API from '../../api';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import InputFileField from './InputFileField';

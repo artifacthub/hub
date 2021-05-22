@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
 import { MdAddCircle } from 'react-icons/md';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Member, RefInputField, ResourceKind } from '../../../types';
 import InputField from '../../common/InputField';

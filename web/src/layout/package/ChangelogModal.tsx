@@ -11,7 +11,7 @@ import { TiArrowSync, TiPlus } from 'react-icons/ti';
 import { useHistory } from 'react-router-dom';
 import semver from 'semver';
 
-import { API } from '../../api';
+import API from '../../api';
 import { Change, ChangeKind, ChangeLog, PackageLink, Repository, RepositoryKind, SearchFiltersURL } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import buildPackageURL from '../../utils/buildPackageURL';
