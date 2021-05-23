@@ -1,3 +1,171 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubscriptionsButton creates snapshot 1`] = `<DocumentFragment />`;
+exports[`SubscriptionsButton creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-none d-md-block position-relative ml-2"
+  >
+    <div
+      class="position-relative undefined"
+    >
+      <div
+        data-testid="elementWithTooltip"
+      >
+        <button
+          aria-expanded="false"
+          aria-label="Open subscriptions menu"
+          class="btn p-0 position-relative"
+          data-testid="subscriptionsBtn"
+          disabled=""
+          type="button"
+        >
+          <div
+            class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper iconWrapper"
+          >
+            <svg
+              class="rounded-circle text-muted"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 18.69L7.84 6.14 5.27 3.49 4 4.76l2.8 2.8v.01c-.52.99-.8 2.16-.8 3.42v5l-2 2v1h13.73l2 2L21 19.72l-1-1.03zM12 22c1.11 0 2-.89 2-2h-4c0 1.11.89 2 2 2zm6-7.32V11c0-3.08-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68c-.15.03-.29.08-.42.12-.1.03-.2.07-.3.11h-.01c-.01 0-.01 0-.02.01-.23.09-.46.2-.68.31 0 0-.01 0-.01.01L18 14.68z"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="dropdown-menu dropdown-menu-right p-0 dropdown"
+      data-testid="subsBtnDropdown"
+    >
+      <div
+        class="arrow arrow"
+      />
+      <button
+        aria-label="Change subscription"
+        class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
+        data-testid="newReleaseBtn"
+      >
+        <div
+          class="d-flex flex-row align-items-center w-100 justify-content-between"
+        >
+          <div
+            class="mr-3"
+          >
+            <svg
+              data-testid="uncheckedSubsBtn"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"
+              />
+            </svg>
+          </div>
+          <div
+            class="d-flex flex-column flex-grow-1"
+          >
+            <div
+              class="h6 mb-2 d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                />
+              </svg>
+              <span
+                class="ml-2"
+              >
+                New releases
+              </span>
+            </div>
+            <small
+              class="text-muted text-left"
+            >
+              Receive a notification when a new version of this package is released.
+            </small>
+          </div>
+        </div>
+      </button>
+      <button
+        aria-label="Change subscription"
+        class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
+        data-testid="securityAlertBtn"
+      >
+        <div
+          class="d-flex flex-row align-items-center w-100 justify-content-between"
+        >
+          <div
+            class="mr-3"
+          >
+            <svg
+              data-testid="uncheckedSubsBtn"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"
+              />
+            </svg>
+          </div>
+          <div
+            class="d-flex flex-column flex-grow-1"
+          >
+            <div
+              class="h6 mb-2 d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                />
+              </svg>
+              <span
+                class="ml-2"
+              >
+                Security alerts
+              </span>
+            </div>
+            <small
+              class="text-muted text-left"
+            >
+              Receive a notification when important security vulnerabilities are found in the latest version of this package.
+            </small>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

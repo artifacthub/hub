@@ -12,6 +12,7 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, EventKind, Subscription } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../utils/data';
+import ElementWithTooltip from '../common/ElementWithTooltip';
 import styles from './SubscriptionsButton.module.css';
 
 interface Props {
@@ -129,40 +130,55 @@ const SubscriptionsButton = (props: Props) => {
     }
   }
 
-  if (isUndefined(ctx.user) || isNull(ctx.user) || isNull(activeSubscriptions) || isUndefined(activeSubscriptions)) {
+  if (isUndefined(ctx.user)) {
     return null;
   }
 
   return (
     <div className="d-none d-md-block position-relative ml-2">
-      <button
-        data-testid="subscriptionsBtn"
-        className="btn p-0 position-relative"
-        type="button"
-        onClick={() => {
-          getSubscriptions();
-          setOpenStatus(true);
-        }}
-        aria-label="Open subscriptions menu"
-        aria-expanded={openStatus}
-      >
-        <div
-          className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
-        >
-          {isLoading && (
-            <div className={styles.loading}>
-              <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
-                <span className="sr-only">Loading...</span>
-              </div>
+      <ElementWithTooltip
+        active
+        tooltipClassName={styles.tooltip}
+        tooltipArrowClassName={styles.tooltipArrow}
+        element={
+          <button
+            data-testid="subscriptionsBtn"
+            className="btn p-0 position-relative"
+            type="button"
+            onClick={() => {
+              getSubscriptions();
+              setOpenStatus(true);
+            }}
+            aria-label="Open subscriptions menu"
+            aria-expanded={openStatus}
+            disabled={
+              isUndefined(ctx.user) ||
+              isNull(ctx.user) ||
+              isNull(activeSubscriptions) ||
+              isUndefined(activeSubscriptions)
+            }
+          >
+            <div
+              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
+            >
+              {isLoading && (
+                <div className={styles.loading}>
+                  <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              )}
+              {activeSubscriptions && activeSubscriptions.length > 0 ? (
+                <MdNotificationsActive className="rounded-circle" />
+              ) : (
+                <MdNotificationsOff className="rounded-circle text-muted" />
+              )}
             </div>
-          )}
-          {!isUndefined(activeSubscriptions) && activeSubscriptions.length > 0 ? (
-            <MdNotificationsActive className="rounded-circle" />
-          ) : (
-            <MdNotificationsOff className="rounded-circle text-muted" />
-          )}
-        </div>
-      </button>
+          </button>
+        }
+        tooltipMessage="You must be signed in to subscribe to this package"
+        visibleTooltip={isNull(ctx.user)}
+      />
 
       <div
         ref={ref}
