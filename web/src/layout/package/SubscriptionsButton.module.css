@@ -30,6 +30,15 @@
   cursor: auto;
 }
 
+.tooltip {
+  left: -115px;
+}
+
+.tooltipArrow {
+  right: 12px;
+  left: auto;
+}
+
 @media only screen and (max-width: 767.98px) {
   .dropdown {
     width: 18rem;

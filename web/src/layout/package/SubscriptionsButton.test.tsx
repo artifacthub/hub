@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, getByTestId, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -219,11 +219,29 @@ describe('SubscriptionsButton', () => {
       });
     });
 
-    describe('does not render component', () => {
+    describe('displays disabled button', () => {
+      it('when user is not signed in', async () => {
+        const { getByTestId } = render(
+          <AppCtx.Provider value={{ ctx: mockNotSignedInCtx, dispatch: jest.fn() }}>
+            <Router>
+              <SubscriptionsButton {...defaultProps} />
+            </Router>
+          </AppCtx.Provider>
+        );
+
+        await waitFor(() => {
+          expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(0);
+        });
+
+        const btn = getByTestId('subscriptionsBtn');
+        expect(btn).toBeInTheDocument();
+        expect(btn).toBeDisabled();
+      });
+
       it('when getPackageSubscriptions fails', async () => {
         mocked(API).getPackageSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
 
-        const { container } = render(
+        const { getByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -240,25 +258,13 @@ describe('SubscriptionsButton', () => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(0);
         });
 
-        expect(container).toBeEmptyDOMElement();
+        const btn = getByTestId('subscriptionsBtn');
+        expect(btn).toBeInTheDocument();
+        expect(btn).toBeDisabled();
       });
+    });
 
-      it('when user is not signed in', async () => {
-        const { container } = render(
-          <AppCtx.Provider value={{ ctx: mockNotSignedInCtx, dispatch: jest.fn() }}>
-            <Router>
-              <SubscriptionsButton {...defaultProps} />
-            </Router>
-          </AppCtx.Provider>
-        );
-
-        await waitFor(() => {
-          expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(0);
-        });
-
-        expect(container).toBeEmptyDOMElement();
-      });
-
+    describe('does not render component', () => {
       it('when ctx.user is not initialized', async () => {
         const { container } = render(
           <AppCtx.Provider value={{ ctx: mockUndefinedUserCtx, dispatch: jest.fn() }}>
@@ -302,7 +308,6 @@ describe('SubscriptionsButton', () => {
         await waitFor(() => {
           expect(API.addSubscription).toHaveBeenCalledTimes(1);
           expect(API.addSubscription).toHaveBeenCalledWith(defaultProps.packageId, 0);
-          expect(getByRole('status')).toBeInTheDocument();
         });
 
         expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
