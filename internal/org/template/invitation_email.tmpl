@@ -1,0 +1,69 @@
+{{ define "title" }} Email confirmation {{ end }}
+{{ define "content" }}
+<div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
+<!-- START CENTERED WHITE CONTAINER -->
+	<span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Invitation to {{ .orgName }} organization on Artifact Hub</span>
+	<table class="main line" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; border-radius: 3px;">
+
+		<!-- START MAIN CONTENT AREA -->
+		<tr>
+			<td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
+				<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+					<tr>
+						<td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+							<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi!</p>
+							<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">You have been invited to join <b>{{ .orgName }}</b> organization on Artifact Hub.</p>
+							<table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+								<tbody>
+									<tr>
+										<td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+											<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
+												<tbody>
+													<tr>
+														<td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top; text-align: center;"> <a href="{{ .link }}" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize;">Accept invitation</a> </td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+								<tbody>
+									<tr>
+										<td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; padding-bottom: 30px; padding-top: 10px;">
+											<p class="text-muted" style="font-size: 11px; text-decoration: none;">You can also accept the invitation by visiting the page directly at <span class="copy-link">{{ .link }}</span></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Thanks.</p>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+	<!-- END MAIN CONTENT AREA -->
+	</table>
+
+	<!-- START FOOTER -->
+	<div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
+		<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+			<tr>
+				<td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 10px; text-align: center;">
+					<p class="text-muted" style="font-size: 10px; text-align: center; text-decoration: none;">If this email means nothing to you, then it is possible that somebody else has entered your user alias accidentally, so please ignore this email.</p>
+				</td>
+			</tr>
+			<tr>
+				<td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; text-align: center;">
+					<a href="https://artifacthub.io" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">© Artifact Hub</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- END FOOTER -->
+
+<!-- END CENTERED WHITE CONTAINER -->
+</div>
+{{ end }}

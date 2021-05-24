@@ -40,6 +40,7 @@ type Worker struct {
 	svc     *Services
 	cache   *cache.Cache
 	baseURL string
+	tmpl    map[templateID]*template.Template
 }
 
 // NewWorker creates a new Worker instance.
@@ -47,11 +48,13 @@ func NewWorker(
 	svc *Services,
 	c *cache.Cache,
 	baseURL string,
+	tmpl map[templateID]*template.Template,
 ) *Worker {
 	return &Worker{
 		svc:     svc,
 		cache:   c,
 		baseURL: baseURL,
+		tmpl:    tmpl,
 	}
 }
 
@@ -200,7 +203,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 			return email.Data{}, err
 		}
 		subject = fmt.Sprintf("%s version %s released", tmplData.Package["Name"], tmplData.Package["Version"])
-		if err := newReleaseEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+		if err := w.tmpl[newReleaseEmail].Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
 	case hub.SecurityAlert:
@@ -210,7 +213,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 		}
 		subject = fmt.Sprintf("Security vulnerabilities found in %s version %s images",
 			tmplData.Package["Name"], tmplData.Package["Version"])
-		if err := securityAlertEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+		if err := w.tmpl[securityAlertEmail].Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
 	case hub.RepositoryScanningErrors:
@@ -219,7 +222,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 			return email.Data{}, err
 		}
 		subject = fmt.Sprintf("Something went wrong scanning repository %s", tmplData.Repository["Name"])
-		if err := scanningErrorsEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+		if err := w.tmpl[scanningErrorsEmail].Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
 	case hub.RepositoryTrackingErrors:
@@ -228,7 +231,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 			return email.Data{}, err
 		}
 		subject = fmt.Sprintf("Something went wrong tracking repository %s", tmplData.Repository["Name"])
-		if err := trackingErrorsEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+		if err := w.tmpl[trackingErrorsEmail].Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
 	case hub.RepositoryOwnershipClaim:
@@ -237,7 +240,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 			return email.Data{}, err
 		}
 		subject = fmt.Sprintf("%s repository ownership has been claimed", tmplData.Repository["Name"])
-		if err := ownershipClaimEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+		if err := w.tmpl[ownershipClaimEmail].Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
 	}

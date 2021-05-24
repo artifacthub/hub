@@ -1,0 +1,81 @@
+{{ define "title" }} {{ .Repository.Name }} scanning errors {{ end }}
+{{ define "content" }}
+<div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; padding: 10px;">
+<!-- START CENTERED WHITE CONTAINER -->
+  <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Repository.Name }} security vulnerabilities scan errors</span>
+  <table class="main line-danger" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; border-radius: 3px;">
+    <!-- START MAIN CONTENT AREA -->
+    <tr>
+      <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
+        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+          <tr>
+            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+              <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+                We encountered some errors while scanning the packages in repository <strong>{{ .Repository.Name }}</strong> for security vulnerabilities.
+              </p>
+              <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">
+                If you find something in them that doesn't make sense, or there is anything you need help with, please file an issue <a href="https://github.com/artifacthub/hub/issues" class="AHlink" style="text-decoration: none;">here</a>.
+              </p>
+              <h4 style="color: #921e12; font-family: sans-serif; margin: 0; Margin-bottom: 15px;">Errors log</h4>
+              <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="Margin-bottom: 30px; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box; background: #1D1F21; border-radius: 3px;">
+                <tbody>
+                  <tr>
+                    <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding: 16px;">
+                      <code style="overflow-x: auto;">
+                        {{ range $index, $scanningError := .Repository.LastScanningErrors }}
+                          {{ if $index }}
+                            <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important; border-top: 1px solid #333; padding-top: 15px; font-size: 13px; ">{{ $scanningError }}</p>
+                          {{ else }}
+                            <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important;font-size: 13px;">{{ $scanningError }}</p>
+                          {{end}}
+                        {{ end }}
+                      </code>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                <tbody>
+                  <tr>
+                    <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+                      <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                        <tbody>
+                          <tr>
+                            <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .BaseURL }}/control-panel/repositories?modal=scanning&user-alias={{ .Repository.UserAlias }}&org-name={{ .Repository.OrganizationName }}&repo-name={{ .Repository.Name }}" class="AHbtn" target="_blank" style="display: inline-block; color: #ffffff; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">View in Artifact Hub</a> </div></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                <tbody>
+                  <tr>
+                    <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; padding-bottom: 10px; padding-top: 10px; text-align: center;">
+                      <p class="text-muted" style="font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span class="copy-link" style="text-align: center;">{{ .BaseURL }}/control-panel/repositories?modal=scanning&user-alias={{ .Repository.UserAlias }}&org-name={{ .Repository.OrganizationName }}&repo-name={{ .Repository.Name }}</span></p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  <!-- END MAIN CONTENT AREA -->
+  </table>
+  <!-- START FOOTER -->
+  <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+      <tr>
+        <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; text-align: center;">
+          <a href="{{ .BaseURL }}" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">© Artifact Hub</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- END FOOTER -->
+<!-- END CENTERED WHITE CONTAINER -->
+</div>
+{{ end }}
