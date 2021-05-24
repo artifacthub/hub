@@ -38,6 +38,7 @@ insert into snapshot (
     license,
     deprecated,
     signed,
+    containers_images,
     security_report_summary,
     ts
 ) values (
@@ -50,6 +51,7 @@ insert into snapshot (
     'Apache-2.0',
     false,
     false,
+    '[{"image": "quay.io/org/img:1.0.0", "whitelisted": true}]',
     '{"high": 2, "medium": 1}',
     '2020-06-16 11:20:34+02'
 );
@@ -77,6 +79,7 @@ select is(
             "high": 2,
             "medium": 1
         },
+        "all_containers_images_whitelisted": true,
         "ts": 1592299234,
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -117,6 +120,7 @@ select is(
             "high": 2,
             "medium": 1
         },
+        "all_containers_images_whitelisted": true,
         "ts": 1592299234,
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",

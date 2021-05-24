@@ -30,6 +30,7 @@
 {{ template "organizations/update_organization.sql" }}
 {{ template "organizations/user_belongs_to_organization.sql" }}
 
+{{ template "packages/are_all_containers_images_whitelisted.sql" }}
 {{ template "packages/generate_package_tsdoc.sql" }}
 {{ template "packages/get_harbor_replication_dump.sql" }}
 {{ template "packages/get_package.sql" }}

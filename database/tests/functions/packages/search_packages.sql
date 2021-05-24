@@ -144,6 +144,7 @@ insert into snapshot (
     readme,
     deprecated,
     signed,
+    containers_images,
     ts
 ) values (
     :'package2ID',
@@ -158,6 +159,7 @@ insert into snapshot (
     'readme',
     true,
     true,
+    '[{"image": "quay.io/org/img:1.0.0", "whitelisted": false}]',
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -207,6 +209,7 @@ insert into snapshot (
     keywords,
     readme,
     security_report_summary,
+    containers_images,
     ts
 ) values (
     :'package3ID',
@@ -217,6 +220,7 @@ insert into snapshot (
     '{"kw3"}',
     'readme',
     '{"high": 2, "medium": 1}',
+    '[{"image": "quay.io/org/img:1.0.0", "whitelisted": true}]',
     '2020-06-16 11:20:34+02'
 );
 
@@ -265,6 +269,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
+                "all_containers_images_whitelisted": false,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -291,6 +296,7 @@ select is(
                     "high": 2,
                     "medium": 1
                 },
+                "all_containers_images_whitelisted": true,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -417,6 +423,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
+                "all_containers_images_whitelisted": false,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -443,6 +450,7 @@ select is(
                     "high": 2,
                     "medium": 1
                 },
+                "all_containers_images_whitelisted": true,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -584,6 +592,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
+                "all_containers_images_whitelisted": false,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -650,6 +659,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
+                "all_containers_images_whitelisted": false,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -716,6 +726,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
+                "all_containers_images_whitelisted": false,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -955,6 +966,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
+                "all_containers_images_whitelisted": false,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1260,6 +1272,7 @@ select is(
                     "high": 2,
                     "medium": 1
                 },
+                "all_containers_images_whitelisted": true,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -1369,6 +1382,7 @@ select is(
                     "high": 2,
                     "medium": 1
                 },
+                "all_containers_images_whitelisted": true,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -1522,6 +1536,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
+                "all_containers_images_whitelisted": false,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1629,6 +1644,7 @@ select is(
                 "app_version": "12.1.0",
                 "deprecated": true,
                 "signed": true,
+                "all_containers_images_whitelisted": false,
                 "ts": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",

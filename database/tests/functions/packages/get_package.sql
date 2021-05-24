@@ -124,7 +124,7 @@ insert into snapshot (
     'Apache-2.0',
     true,
     'https://content.url/pkg1.tgz',
-    '[{"image": "quay.io/org/img:1.0.0"}]',
+    '[{"image": "quay.io/org/img:1.0.0", "whitelisted": true}]',
     'Org Inc',
     '{"key": "value"}',
     '[
@@ -298,9 +298,11 @@ select is(
         "content_url": "https://content.url/pkg1.tgz",
         "containers_images": [
             {
-                "image": "quay.io/org/img:1.0.0"
+                "image": "quay.io/org/img:1.0.0",
+                "whitelisted": true
             }
         ],
+        "all_containers_images_whitelisted": true,
         "provider": "Org Inc",
         "has_values_schema": true,
         "has_changelog": true,
@@ -430,9 +432,11 @@ select is(
         "content_url": "https://content.url/pkg1.tgz",
         "containers_images": [
             {
-                "image": "quay.io/org/img:1.0.0"
+                "image": "quay.io/org/img:1.0.0",
+                "whitelisted": true
             }
         ],
+        "all_containers_images_whitelisted": true,
         "provider": "Org Inc",
         "has_values_schema": true,
         "has_changelog": true,
