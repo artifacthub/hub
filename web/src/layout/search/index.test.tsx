@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../api';
+import API from '../../api';
 import { ErrorKind, SearchResults } from '../../types';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import SearchView from './index';

@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 import React, { useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-import { API } from '../../api';
+import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Package } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';

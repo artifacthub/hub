@@ -5,7 +5,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaSignOutAlt, FaUser, FaUserMinus } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { AuthorizerAction, ErrorKind, Member } from '../../../types';

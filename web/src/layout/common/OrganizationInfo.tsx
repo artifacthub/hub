@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MdBusiness } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../api';
+import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Organization } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';

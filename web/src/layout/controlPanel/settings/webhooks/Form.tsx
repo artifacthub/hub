@@ -7,7 +7,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { MdAddCircle, MdClose } from 'react-icons/md';
 import { RiTestTubeFill } from 'react-icons/ri';
 
-import { API } from '../../../../api';
+import API from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, EventKind, Package, PayloadKind, RefInputField, TestWebhook, Webhook } from '../../../../types';
 import compoundErrorMessage from '../../../../utils/compoundErrorMessage';

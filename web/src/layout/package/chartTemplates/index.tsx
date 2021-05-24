@@ -4,7 +4,7 @@ import { ImInsertTemplate } from 'react-icons/im';
 import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { ChartTemplate, ChartTmplTypeFile, RepositoryKind, SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import BlockCodeButtons from '../../common/BlockCodeButtons';

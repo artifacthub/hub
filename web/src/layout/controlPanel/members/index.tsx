@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { AuthorizerAction, ErrorKind, Member } from '../../../types';
 import Loading from '../../common/Loading';

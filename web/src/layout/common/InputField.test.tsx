@@ -2,7 +2,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../api';
+import API from '../../api';
 import { ErrorKind, ResourceKind } from '../../types';
 import InputField from './InputField';
 jest.mock('../../api');

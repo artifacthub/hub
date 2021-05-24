@@ -68,205 +68,204 @@ interface FetchOptions {
   body?: any;
 }
 
-const EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples'];
-const CSRF_HEADER = 'X-Csrf-Token';
-const SESSION_APPROVED_HEADER = 'X-Session-Approved';
-let csrfToken: string | null = null;
+class API_CLASS {
+  private EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples'];
+  private CSRF_HEADER = 'X-Csrf-Token';
+  private SESSION_APPROVED_HEADER = 'X-Session-Approved';
+  private csrfToken: string | null = null;
+  private API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
-export const toCamelCase = (r: any): Result => {
-  if (isArray(r)) {
-    return r.map((v) => toCamelCase(v));
-  } else if (isObject(r)) {
-    return Object.keys(r).reduce(
-      (result, key) => ({
-        ...result,
-        [camelCase(key)]: EXCEPTIONS.includes(key) ? (r as Result)[key] : toCamelCase((r as Result)[key]),
-      }),
-      {}
-    );
+  private toCamelCase(r: any): any {
+    if (isArray(r)) {
+      return r.map((v) => this.toCamelCase(v));
+    } else if (isObject(r)) {
+      return Object.keys(r).reduce(
+        (result, key) => ({
+          ...result,
+          [camelCase(key)]: this.EXCEPTIONS.includes(key) ? (r as Result)[key] : this.toCamelCase((r as Result)[key]),
+        }),
+        {}
+      );
+    }
+    return r;
   }
-  return r;
-};
 
-const handleErrors = async (res: any) => {
-  if (!res.ok) {
-    let error: Error;
-    switch (res.status) {
-      case 401:
-        try {
-          let text = await res.json();
-          error = {
-            kind: ErrorKind.Unauthorized,
-            message: text.message !== '' ? text.message : undefined,
-          };
-        } catch {
-          error = {
-            kind: ErrorKind.Unauthorized,
-          };
-        }
-
-        break;
-      case 404:
-        error = {
-          kind: ErrorKind.NotFound,
-        };
-        break;
-      case 403:
-        try {
-          const er = await res.text();
-          if (er.includes('CSRF token invalid')) {
-            csrfToken = null;
+  private async handleErrors(res: any) {
+    if (!res.ok) {
+      let error: Error;
+      switch (res.status) {
+        case 401:
+          try {
+            let text = await res.json();
             error = {
-              kind: ErrorKind.InvalidCSRF,
+              kind: ErrorKind.Unauthorized,
+              message: text.message !== '' ? text.message : undefined,
             };
-          } else {
+          } catch {
+            error = {
+              kind: ErrorKind.Unauthorized,
+            };
+          }
+
+          break;
+        case 404:
+          error = {
+            kind: ErrorKind.NotFound,
+          };
+          break;
+        case 403:
+          try {
+            const er = await res.text();
+            if (er.includes('CSRF token invalid')) {
+              this.csrfToken = null;
+              error = {
+                kind: ErrorKind.InvalidCSRF,
+              };
+            } else {
+              error = {
+                kind: ErrorKind.Forbidden,
+              };
+            }
+          } catch {
             error = {
               kind: ErrorKind.Forbidden,
             };
           }
-        } catch {
+          break;
+        case 410:
           error = {
-            kind: ErrorKind.Forbidden,
+            kind: ErrorKind.Gone,
           };
-        }
-        break;
-      case 410:
-        error = {
-          kind: ErrorKind.Gone,
-        };
-        break;
-      default:
-        try {
-          let text = await res.json();
-          error = {
-            kind: ErrorKind.Other,
-            message: text.message !== '' ? text.message : undefined,
-          };
-        } catch {
-          error = {
-            kind: ErrorKind.Other,
-          };
-        }
+          break;
+        default:
+          try {
+            let text = await res.json();
+            error = {
+              kind: ErrorKind.Other,
+              message: text.message !== '' ? text.message : undefined,
+            };
+          } catch {
+            error = {
+              kind: ErrorKind.Other,
+            };
+          }
+      }
+      throw error;
     }
-    throw error;
+    return res;
   }
-  return res;
-};
 
-const checkIfApprovedSession = (res: any) => {
-  if (res.headers.has(SESSION_APPROVED_HEADER)) {
-    const isApproved = res.headers.get(SESSION_APPROVED_HEADER);
-    if (isApproved === 'false') {
-      const err = {
-        kind: ErrorKind.NotApprovedSession,
-      };
-      throw err;
+  private checkIfApprovedSession(res: any) {
+    if (res.headers.has(this.SESSION_APPROVED_HEADER)) {
+      const isApproved = res.headers.get(this.SESSION_APPROVED_HEADER);
+      if (isApproved === 'false') {
+        const err = {
+          kind: ErrorKind.NotApprovedSession,
+        };
+        throw err;
+      } else {
+        return res;
+      }
     } else {
       return res;
     }
-  } else {
-    return res;
-  }
-};
-
-const handleContent = async (res: any, skipCamelConversion?: boolean, checkApprovedSession?: boolean) => {
-  let response = res;
-  if (!isUndefined(checkApprovedSession) && checkApprovedSession) {
-    response = checkIfApprovedSession(res);
   }
 
-  switch (response.headers.get('Content-Type')) {
-    case 'text/plain; charset=utf-8':
-      const text = await response.text();
-      return text;
-    case 'application/json':
-      const json = await response.json();
-      return skipCamelConversion ? json : toCamelCase(json);
-    default:
-      return response;
-  }
-};
-
-const processFetchOptions = async (opts?: FetchOptions): Promise<FetchOptions | any> => {
-  let options: FetchOptions | any = opts || {};
-  // Use CSRF token only when methods are DELETE, POST and PUT
-  if (opts && ['DELETE', 'POST', 'PUT'].includes(opts.method)) {
-    if (isNull(csrfToken)) {
-      // Get CSRF token first time we use one of these methods
-      csrfToken = await API.getCSRFToken();
-      if (isNull(csrfToken)) {
-        const error = { kind: ErrorKind.Other };
-        throw error;
-      }
+  private async handleContent(res: any, skipCamelConversion?: boolean, checkApprovedSession?: boolean) {
+    let response = res;
+    if (!isUndefined(checkApprovedSession) && checkApprovedSession) {
+      response = this.checkIfApprovedSession(res);
     }
 
-    return {
-      ...options,
-      headers: {
-        ...options.headers,
-        [CSRF_HEADER]: csrfToken,
-      },
-    };
+    switch (response.headers.get('Content-Type')) {
+      case 'text/plain; charset=utf-8':
+        const text = await response.text();
+        return text;
+      case 'application/json':
+        const json = await response.json();
+        return skipCamelConversion ? json : this.toCamelCase(json);
+      default:
+        return response;
+    }
   }
-  return options;
-};
 
-export const apiFetch = async (
-  url: string,
-  opts?: FetchOptions,
-  skipCamelConversion?: boolean,
-  checkApprovedSession?: boolean
-): Promise<any> => {
-  const csrfRetry = (func: () => Promise<any>) => {
-    return func().catch((error: Error) => {
-      if (error.kind === ErrorKind.InvalidCSRF) {
-        return func().catch((error) => Promise.reject(error));
-      } else {
-        return Promise.reject(error);
+  private async processFetchOptions(opts?: FetchOptions): Promise<FetchOptions | any> {
+    let options: FetchOptions | any = opts || {};
+    // Use CSRF token only when methods are DELETE, POST and PUT
+    if (opts && ['DELETE', 'POST', 'PUT'].includes(opts.method)) {
+      if (isNull(this.csrfToken)) {
+        // Get CSRF token first time we use one of these methods
+        this.csrfToken = await this.getCSRFToken();
+        if (isNull(this.csrfToken)) {
+          const error = { kind: ErrorKind.Other };
+          throw error;
+        }
       }
-    });
-  };
 
-  return csrfRetry(async () => {
-    let options: FetchOptions | any = await processFetchOptions(opts);
-
-    return fetch(url, options)
-      .then(handleErrors)
-      .then((res) => handleContent(res, skipCamelConversion, checkApprovedSession))
-      .catch((error) => Promise.reject(error));
-  });
-};
-
-export const getUrlContext = (fromOrgName?: string): string => {
-  let context = '/user';
-  if (!isUndefined(fromOrgName)) {
-    context = `/org/${fromOrgName}`;
+      return {
+        ...options,
+        headers: {
+          ...options.headers,
+          [this.CSRF_HEADER]: this.csrfToken,
+        },
+      };
+    }
+    return options;
   }
-  return context;
-};
 
-const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
+  private async apiFetch(
+    url: string,
+    opts?: FetchOptions,
+    skipCamelConversion?: boolean,
+    checkApprovedSession?: boolean
+  ): Promise<any> {
+    const csrfRetry = (func: () => Promise<any>) => {
+      return func().catch((error: Error) => {
+        if (error.kind === ErrorKind.InvalidCSRF) {
+          return func().catch((error) => Promise.reject(error));
+        } else {
+          return Promise.reject(error);
+        }
+      });
+    };
 
-export const API = {
-  getPackage: (request: PackageRequest): Promise<Package> => {
-    let url = `${API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}`;
+    return csrfRetry(async () => {
+      let options: FetchOptions | any = await this.processFetchOptions(opts);
+
+      return fetch(url, options)
+        .then(this.handleErrors)
+        .then((res) => this.handleContent(res, skipCamelConversion, checkApprovedSession))
+        .catch((error) => Promise.reject(error));
+    });
+  }
+
+  private getUrlContext(fromOrgName?: string): string {
+    let context = '/user';
+    if (!isUndefined(fromOrgName)) {
+      context = `/org/${fromOrgName}`;
+    }
+    return context;
+  }
+
+  public getPackage(request: PackageRequest): Promise<Package> {
+    let url = `${this.API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}`;
     if (!isUndefined(request.version)) {
       url += `/${request.version}`;
     }
-    return apiFetch(url);
-  },
+    return this.apiFetch(url);
+  }
 
-  toggleStar: (packageId: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/packages/${packageId}/stars`, {
+  public toggleStar(packageId: string): Promise<null | string> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/${packageId}/stars`, {
       method: 'PUT',
     });
-  },
+  }
 
-  getStars: (packageId: string): Promise<PackageStars> => {
-    return apiFetch(`${API_BASE_URL}/packages/${packageId}/stars`);
-  },
+  public getStars(packageId: string): Promise<PackageStars> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/${packageId}/stars`);
+  }
 
-  searchPackages: (query: SearchQuery, facets: boolean = true): Promise<SearchResults> => {
+  public searchPackages(query: SearchQuery, facets: boolean = true): Promise<SearchResults> {
     const q = new URLSearchParams();
     q.set('facets', facets ? 'true' : 'false');
     q.set('limit', query.limit.toString());
@@ -307,46 +306,46 @@ export const API = {
     if (!isUndefined(query.official) && query.official) {
       q.set('official', 'true');
     }
-    return apiFetch(`${API_BASE_URL}/packages/search?${q.toString()}`);
-  },
+    return this.apiFetch(`${this.API_BASE_URL}/packages/search?${q.toString()}`);
+  }
 
-  getStats: (): Promise<Stats> => {
-    return apiFetch(`${API_BASE_URL}/packages/stats`);
-  },
+  public getStats(): Promise<Stats> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/stats`);
+  }
 
-  getRandomPackages: (): Promise<Package[]> => {
-    return apiFetch(`${API_BASE_URL}/packages/random`);
-  },
+  public getRandomPackages(): Promise<Package[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/random`);
+  }
 
-  getCSRFToken: (): Promise<string | null> => {
+  public getCSRFToken(): Promise<string | null> {
     const tokenError = { kind: ErrorKind.Other };
-    return fetch(`${API_BASE_URL}/csrf`).then((res) => {
+    return fetch(`${this.API_BASE_URL}/csrf`).then((res) => {
       if (!res.ok) {
         throw tokenError;
       } else {
-        if (res.headers.has(CSRF_HEADER)) {
-          const token = res.headers.get(CSRF_HEADER);
+        if (res.headers.has(this.CSRF_HEADER)) {
+          const token = res.headers.get(this.CSRF_HEADER);
           return token === '' ? null : token;
         } else {
           throw tokenError;
         }
       }
     });
-  },
+  }
 
-  register: (user: User): Promise<null | string> => {
+  public register(user: User): Promise<null | string> {
     const newUser = renameKeysInObject(user, { firstName: 'first_name', lastName: 'last_name' });
-    return apiFetch(`${API_BASE_URL}/users`, {
+    return this.apiFetch(`${this.API_BASE_URL}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newUser),
     });
-  },
+  }
 
-  verifyEmail: (code: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/users/verify-email`, {
+  public verifyEmail(code: string): Promise<null> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/verify-email`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -355,11 +354,11 @@ export const API = {
         code: code,
       }),
     });
-  },
+  }
 
-  login: (user: UserLogin): Promise<null | string> => {
-    return apiFetch(
-      `${API_BASE_URL}/users/login`,
+  public login(user: UserLogin): Promise<null | string> {
+    return this.apiFetch(
+      `${this.API_BASE_URL}/users/login`,
       {
         method: 'POST',
         headers: {
@@ -373,18 +372,18 @@ export const API = {
       false,
       true
     );
-  },
+  }
 
-  logout: (): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/users/logout`);
-  },
+  public logout(): Promise<null | string> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/logout`);
+  }
 
-  getUserProfile: (): Promise<Profile> => {
-    return apiFetch(`${API_BASE_URL}/users/profile`);
-  },
+  public getUserProfile(): Promise<Profile> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/profile`);
+  }
 
-  checkPasswordStrength: (pwd: string): Promise<boolean> => {
-    return apiFetch(`${API_BASE_URL}/users/check-password-strength`, {
+  public checkPasswordStrength(pwd: string): Promise<boolean> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/check-password-strength`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -393,78 +392,78 @@ export const API = {
         password: pwd,
       }),
     });
-  },
+  }
 
-  getAllRepositories: (): Promise<Repository[]> => {
-    return apiFetch(`${API_BASE_URL}/repositories`);
-  },
+  public getAllRepositories(): Promise<Repository[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/repositories`);
+  }
 
-  getRepositories: (fromOrgName?: string): Promise<Repository[]> => {
-    return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}`);
-  },
+  public getRepositories(fromOrgName?: string): Promise<Repository[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/repositories${this.getUrlContext(fromOrgName)}`);
+  }
 
-  addRepository: (repository: Repository, fromOrgName?: string): Promise<null | string> => {
+  public addRepository(repository: Repository, fromOrgName?: string): Promise<null | string> {
     const repo = renameKeysInObject(repository, {
       displayName: 'display_name',
       authUser: 'auth_user',
       authPass: 'auth_pass',
       scannerDisabled: 'scanner_disabled',
     });
-    return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}`, {
+    return this.apiFetch(`${this.API_BASE_URL}/repositories${this.getUrlContext(fromOrgName)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(repo),
     });
-  },
+  }
 
-  deleteRepository: (repositoryName: string, fromOrgName?: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}/${repositoryName}`, {
+  public deleteRepository(repositoryName: string, fromOrgName?: string): Promise<null | string> {
+    return this.apiFetch(`${this.API_BASE_URL}/repositories${this.getUrlContext(fromOrgName)}/${repositoryName}`, {
       method: 'DELETE',
     });
-  },
+  }
 
-  updateRepository: (repository: Repository, fromOrgName?: string): Promise<null | string> => {
+  public updateRepository(repository: Repository, fromOrgName?: string): Promise<null | string> {
     const repo = renameKeysInObject(repository, {
       displayName: 'display_name',
       authUser: 'auth_user',
       authPass: 'auth_pass',
       scannerDisabled: 'scanner_disabled',
     });
-    return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}/${repository.name}`, {
+    return this.apiFetch(`${this.API_BASE_URL}/repositories${this.getUrlContext(fromOrgName)}/${repository.name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(repo),
     });
-  },
+  }
 
-  transferRepository: (params: TransferRepositoryRequest): Promise<null | string> => {
-    return apiFetch(
-      `${API_BASE_URL}/repositories${getUrlContext(params.fromOrgName)}/${params.repositoryName}/transfer${
+  public transferRepository(params: TransferRepositoryRequest): Promise<null | string> {
+    return this.apiFetch(
+      `${this.API_BASE_URL}/repositories${this.getUrlContext(params.fromOrgName)}/${params.repositoryName}/transfer${
         isUndefined(params.toOrgName) ? '' : `?org=${params.toOrgName}`
       }`,
       {
         method: 'PUT',
       }
     );
-  },
+  }
 
-  claimRepositoryOwnership: (repo: Repository, toOrgName?: string): Promise<null | string> => {
-    return apiFetch(
-      `${API_BASE_URL}/repositories${getUrlContext(repo.organizationName || undefined)}/${repo.name}/claim-ownership${
-        isUndefined(toOrgName) ? '' : `?org=${toOrgName}`
-      }`,
+  public claimRepositoryOwnership(repo: Repository, toOrgName?: string): Promise<null | string> {
+    return this.apiFetch(
+      `${this.API_BASE_URL}/repositories${this.getUrlContext(repo.organizationName || undefined)}/${
+        repo.name
+      }/claim-ownership${isUndefined(toOrgName) ? '' : `?org=${toOrgName}`}`,
       {
         method: 'PUT',
       }
     );
-  },
+  }
 
-  checkAvailability: async (props: CheckAvailabilityProps): Promise<boolean> => {
-    return fetch(`${API_BASE_URL}/check-availability/${props.resourceKind}?v=${encodeURIComponent(props.value)}`, {
+  public async checkAvailability(props: CheckAvailabilityProps): Promise<boolean> {
+    return fetch(`${this.API_BASE_URL}/check-availability/${props.resourceKind}?v=${encodeURIComponent(props.value)}`, {
       method: 'HEAD',
     })
       .then((res: any) => {
@@ -478,93 +477,93 @@ export const API = {
       .catch(() => {
         return Promise.resolve(true);
       });
-  },
+  }
 
-  getUserOrganizations: (): Promise<Organization[]> => {
-    return apiFetch(`${API_BASE_URL}/orgs/user`);
-  },
+  public getUserOrganizations(): Promise<Organization[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/user`);
+  }
 
-  getOrganization: (organizationName: string): Promise<Organization | null> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}`);
-  },
+  public getOrganization(organizationName: string): Promise<Organization | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${organizationName}`);
+  }
 
-  addOrganization: (organization: Organization): Promise<null | string> => {
+  public addOrganization(organization: Organization): Promise<null | string> {
     const org = renameKeysInObject(organization, {
       displayName: 'display_name',
       logoImageId: 'logo_image_id',
       homeUrl: 'home_url',
     });
-    return apiFetch(`${API_BASE_URL}/orgs`, {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(org),
     });
-  },
+  }
 
-  updateOrganization: (organization: Organization, name: string): Promise<null | string> => {
+  public updateOrganization(organization: Organization, name: string): Promise<null | string> {
     const org = renameKeysInObject(organization, {
       displayName: 'display_name',
       logoImageId: 'logo_image_id',
       homeUrl: 'home_url',
     });
-    return apiFetch(`${API_BASE_URL}/orgs/${name}`, {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(org),
     });
-  },
+  }
 
-  deleteOrganization: (orgName: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${orgName}`, {
+  public deleteOrganization(orgName: string): Promise<null | string> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${orgName}`, {
       method: 'DELETE',
     });
-  },
+  }
 
-  getOrganizationMembers: (organizationName: string): Promise<User[]> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/members`);
-  },
+  public getOrganizationMembers(organizationName: string): Promise<User[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${organizationName}/members`);
+  }
 
-  addOrganizationMember: (organizationName: string, alias: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/member/${encodeURI(alias)}`, {
+  public addOrganizationMember(organizationName: string, alias: string): Promise<null | string> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${organizationName}/member/${encodeURI(alias)}`, {
       method: 'POST',
     });
-  },
+  }
 
-  deleteOrganizationMember: (organizationName: string, alias: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/member/${encodeURI(alias)}`, {
+  public deleteOrganizationMember(organizationName: string, alias: string): Promise<null | string> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${organizationName}/member/${encodeURI(alias)}`, {
       method: 'DELETE',
     });
-  },
+  }
 
-  confirmOrganizationMembership: (organizationName: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/accept-invitation`);
-  },
+  public confirmOrganizationMembership(organizationName: string): Promise<null> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${organizationName}/accept-invitation`);
+  }
 
-  getStarredByUser: (): Promise<Package[]> => {
-    return apiFetch(`${API_BASE_URL}/packages/starred`);
-  },
+  public getStarredByUser(): Promise<Package[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/starred`);
+  }
 
-  updateUserProfile: (profile: UserFullName): Promise<null | string> => {
+  public updateUserProfile(profile: UserFullName): Promise<null | string> {
     const updatedProfile = renameKeysInObject(profile, {
       firstName: 'first_name',
       lastName: 'last_name',
       profileImageId: 'profile_image_id',
     });
-    return apiFetch(`${API_BASE_URL}/users/profile`, {
+    return this.apiFetch(`${this.API_BASE_URL}/users/profile`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedProfile),
     });
-  },
+  }
 
-  updatePassword: (oldPassword: string, newPassword: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/users/password`, {
+  public updatePassword(oldPassword: string, newPassword: string): Promise<null | string> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/password`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -574,21 +573,21 @@ export const API = {
         new: newPassword,
       }),
     });
-  },
+  }
 
-  saveImage: (data: string | ArrayBuffer): Promise<LogoImage> => {
-    return apiFetch(`${API_BASE_URL}/images`, {
+  public saveImage(data: string | ArrayBuffer): Promise<LogoImage> {
+    return this.apiFetch(`${this.API_BASE_URL}/images`, {
       method: 'POST',
       body: data,
     });
-  },
+  }
 
-  getPackageSubscriptions: (packageId: string): Promise<Subscription[]> => {
-    return apiFetch(`${API_BASE_URL}/subscriptions/${packageId}`);
-  },
+  public getPackageSubscriptions(packageId: string): Promise<Subscription[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions/${packageId}`);
+  }
 
-  addSubscription: (packageId: string, eventKind: EventKind): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/subscriptions`, {
+  public addSubscription(packageId: string, eventKind: EventKind): Promise<string | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -598,32 +597,32 @@ export const API = {
         event_kind: eventKind,
       }),
     });
-  },
+  }
 
-  deleteSubscription: (packageId: string, eventKind: EventKind): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/subscriptions?package_id=${packageId}&event_kind=${eventKind}`, {
+  public deleteSubscription(packageId: string, eventKind: EventKind): Promise<string | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions?package_id=${packageId}&event_kind=${eventKind}`, {
       method: 'DELETE',
     });
-  },
+  }
 
-  getUserSubscriptions: (): Promise<Package[]> => {
-    return apiFetch(`${API_BASE_URL}/subscriptions`);
-  },
+  public getUserSubscriptions(): Promise<Package[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions`);
+  }
 
-  getWebhooks: (fromOrgName?: string): Promise<Webhook[]> => {
-    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}`);
-  },
+  public getWebhooks(fromOrgName?: string): Promise<Webhook[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/webhooks${this.getUrlContext(fromOrgName)}`);
+  }
 
-  getWebhook: (webhookId: string, fromOrgName?: string): Promise<Webhook> => {
-    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}/${webhookId}`);
-  },
+  public getWebhook(webhookId: string, fromOrgName?: string): Promise<Webhook> {
+    return this.apiFetch(`${this.API_BASE_URL}/webhooks${this.getUrlContext(fromOrgName)}/${webhookId}`);
+  }
 
-  addWebhook: (webhook: Webhook, fromOrgName?: string): Promise<null | string> => {
+  public addWebhook(webhook: Webhook, fromOrgName?: string): Promise<null | string> {
     const formattedWebhook = renameKeysInObject(webhook, { contentType: 'content_type', eventKinds: 'event_kinds' });
     const formattedPackages = webhook.packages.map((packageItem: Package) => ({
       package_id: packageItem.packageId,
     }));
-    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}`, {
+    return this.apiFetch(`${this.API_BASE_URL}/webhooks${this.getUrlContext(fromOrgName)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -633,50 +632,50 @@ export const API = {
         packages: formattedPackages,
       }),
     });
-  },
+  }
 
-  deleteWebhook: (webhookId: string, fromOrgName?: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}/${webhookId}`, {
+  public deleteWebhook(webhookId: string, fromOrgName?: string): Promise<null | string> {
+    return this.apiFetch(`${this.API_BASE_URL}/webhooks${this.getUrlContext(fromOrgName)}/${webhookId}`, {
       method: 'DELETE',
     });
-  },
+  }
 
-  updateWebhook: (webhook: Webhook, fromOrgName?: string): Promise<null | string> => {
+  public updateWebhook(webhook: Webhook, fromOrgName?: string): Promise<null | string> {
     const formattedWebhook = renameKeysInObject(webhook, { contentType: 'content_type', eventKinds: 'event_kinds' });
     const formattedPackages = webhook.packages.map((packageItem: Package) => ({
       package_id: packageItem.packageId,
     }));
-    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}/${webhook.webhookId}`, {
+    return this.apiFetch(`${this.API_BASE_URL}/webhooks${this.getUrlContext(fromOrgName)}/${webhook.webhookId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ ...formattedWebhook, packages: formattedPackages }),
     });
-  },
+  }
 
-  triggerWebhookTest: (webhook: TestWebhook): Promise<string | null> => {
+  public triggerWebhookTest(webhook: TestWebhook): Promise<string | null> {
     const formattedWebhook = renameKeysInObject(webhook, { contentType: 'content_type', eventKinds: 'event_kinds' });
 
-    return apiFetch(`${API_BASE_URL}/webhooks/test`, {
+    return this.apiFetch(`${this.API_BASE_URL}/webhooks/test`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formattedWebhook),
     });
-  },
+  }
 
-  getAPIKeys: (): Promise<APIKey[]> => {
-    return apiFetch(`${API_BASE_URL}/api-keys`);
-  },
+  public getAPIKeys(): Promise<APIKey[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/api-keys`);
+  }
 
-  getAPIKey: (apiKeyId: string): Promise<APIKey> => {
-    return apiFetch(`${API_BASE_URL}/api-keys/${apiKeyId}`);
-  },
+  public getAPIKey(apiKeyId: string): Promise<APIKey> {
+    return this.apiFetch(`${this.API_BASE_URL}/api-keys/${apiKeyId}`);
+  }
 
-  addAPIKey: (name: string): Promise<APIKeyCode> => {
-    return apiFetch(`${API_BASE_URL}/api-keys`, {
+  public addAPIKey(name: string): Promise<APIKeyCode> {
+    return this.apiFetch(`${this.API_BASE_URL}/api-keys`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -685,30 +684,30 @@ export const API = {
         name: name,
       }),
     });
-  },
+  }
 
-  updateAPIKey: (apiKeyId: string, name: string): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/api-keys/${apiKeyId}`, {
+  public updateAPIKey(apiKeyId: string, name: string): Promise<string | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/api-keys/${apiKeyId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name: name }),
     });
-  },
+  }
 
-  deleteAPIKey: (apiKeyId: string): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/api-keys/${apiKeyId}`, {
+  public deleteAPIKey(apiKeyId: string): Promise<string | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/api-keys/${apiKeyId}`, {
       method: 'DELETE',
     });
-  },
+  }
 
-  getOptOutList: (): Promise<OptOutItem[]> => {
-    return apiFetch(`${API_BASE_URL}/subscriptions/opt-out`);
-  },
+  public getOptOutList(): Promise<OptOutItem[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions/opt-out`);
+  }
 
-  addOptOut: (repositoryId: string, eventKind: EventKind): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/subscriptions/opt-out`, {
+  public addOptOut(repositoryId: string, eventKind: EventKind): Promise<string | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions/opt-out`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -718,19 +717,19 @@ export const API = {
         event_kind: eventKind,
       }),
     });
-  },
+  }
 
-  deleteOptOut: (optOutId: string): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/subscriptions/opt-out/${optOutId}`, {
+  public deleteOptOut(optOutId: string): Promise<string | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions/opt-out/${optOutId}`, {
       method: 'DELETE',
     });
-  },
+  }
 
-  getAuthorizationPolicy: (orgName: string): Promise<OrganizationPolicy> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/authorization-policy`);
-  },
+  public getAuthorizationPolicy(orgName: string): Promise<OrganizationPolicy> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${orgName}/authorization-policy`);
+  }
 
-  updateAuthorizationPolicy: (orgName: string, policy: OrganizationPolicy): Promise<string | null> => {
+  public updateAuthorizationPolicy(orgName: string, policy: OrganizationPolicy): Promise<string | null> {
     const formattedPolicy = renameKeysInObject(
       { ...policy },
       {
@@ -741,38 +740,38 @@ export const API = {
       }
     );
 
-    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/authorization-policy`, {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${orgName}/authorization-policy`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formattedPolicy),
     });
-  },
+  }
 
-  getUserAllowedActions: (orgName: string): Promise<AuthorizerAction[]> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/user-allowed-actions`);
-  },
+  public getUserAllowedActions(orgName: string): Promise<AuthorizerAction[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/${orgName}/user-allowed-actions`);
+  }
 
-  getSnapshotSecurityReport: (packageId: string, version: string): Promise<SecurityReport> => {
-    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/security-report`, undefined, true);
-  },
+  public getSnapshotSecurityReport(packageId: string, version: string): Promise<SecurityReport> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/${packageId}/${version}/security-report`, undefined, true);
+  }
 
-  getValuesSchema: (packageId: string, version: string): Promise<JSONSchema> => {
-    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/values-schema`, undefined, true);
-  },
+  public getValuesSchema(packageId: string, version: string): Promise<JSONSchema> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/${packageId}/${version}/values-schema`, undefined, true);
+  }
 
-  getChangelog: (packageId: string): Promise<ChangeLog[]> => {
-    return apiFetch(`${API_BASE_URL}/packages/${packageId}/changelog`);
-  },
+  public getChangelog(packageId: string): Promise<ChangeLog[]> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/${packageId}/changelog`);
+  }
 
-  getChartTemplates: (packageId: string, version: string): Promise<ChartTemplatesData | null> => {
-    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/templates`, undefined, true);
-  },
+  public getChartTemplates(packageId: string, version: string): Promise<ChartTemplatesData | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/packages/${packageId}/${version}/templates`, undefined, true);
+  }
 
   // Reset password
-  requestPasswordResetCode: (email: string): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/users/password-reset-code`, {
+  public requestPasswordResetCode(email: string): Promise<string | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/password-reset-code`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -781,10 +780,10 @@ export const API = {
         email: email,
       }),
     });
-  },
+  }
 
-  verifyPasswordResetCode: (code: string): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/users/verify-password-reset-code`, {
+  public verifyPasswordResetCode(code: string): Promise<string | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/verify-password-reset-code`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -793,10 +792,10 @@ export const API = {
         code: code,
       }),
     });
-  },
+  }
 
-  resetPassword: (code: string, password: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/users/reset-password`, {
+  public resetPassword(code: string, password: string): Promise<null> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/reset-password`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -806,19 +805,19 @@ export const API = {
         password: password,
       }),
     });
-  },
+  }
 
-  getAHStats: (): Promise<AHStats | null> => {
-    return apiFetch(`${API_BASE_URL}/stats`);
-  },
+  public getAHStats(): Promise<AHStats | null> {
+    return this.apiFetch(`${this.API_BASE_URL}/stats`);
+  }
 
   // 2FA
-  setUpTFA: (): Promise<TwoFactorAuth> => {
-    return apiFetch(`${API_BASE_URL}/users/tfa`, { method: 'POST' });
-  },
+  public setUpTFA(): Promise<TwoFactorAuth> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/tfa`, { method: 'POST' });
+  }
 
-  enableTFA: (passcode: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/users/tfa/enable`, {
+  public enableTFA(passcode: string): Promise<null> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/tfa/enable`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -827,10 +826,10 @@ export const API = {
         passcode: passcode,
       }),
     });
-  },
+  }
 
-  disableTFA: (passcode: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/users/tfa/disable`, {
+  public disableTFA(passcode: string): Promise<null> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/tfa/disable`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -839,10 +838,10 @@ export const API = {
         passcode: passcode,
       }),
     });
-  },
+  }
 
-  approveSession: (passcode: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/users/approve-session`, {
+  public approveSession(passcode: string): Promise<null> {
+    return this.apiFetch(`${this.API_BASE_URL}/users/approve-session`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -851,16 +850,19 @@ export const API = {
         passcode: passcode,
       }),
     });
-  },
+  }
 
   // External API call
-  triggerTestInRegoPlayground: (data: RegoPlaygroundPolicy): Promise<RegoPlaygroundResult> => {
-    return apiFetch('https://play.openpolicyagent.org/v1/share', {
+  public triggerTestInRegoPlayground(data: RegoPlaygroundPolicy): Promise<RegoPlaygroundResult> {
+    return this.apiFetch('https://play.openpolicyagent.org/v1/share', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
-  },
-};
+  }
+}
+
+const API = new API_CLASS();
+export default API;

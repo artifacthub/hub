@@ -7,7 +7,7 @@ import { MdAddCircle } from 'react-icons/md';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { API } from '../../../../../api';
+import API from '../../../../../api';
 import { APIKey, APIKeyCode, ErrorKind, RefInputField } from '../../../../../types';
 import ButtonCopyToClipboard from '../../../../common/ButtonCopyToClipboard';
 import ExternalLink from '../../../../common/ExternalLink';

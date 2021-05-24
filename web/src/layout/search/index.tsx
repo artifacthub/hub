@@ -8,7 +8,7 @@ import { FaFilter } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../api';
+import API from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import { Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults } from '../../types';

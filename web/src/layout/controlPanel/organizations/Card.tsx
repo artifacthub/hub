@@ -7,7 +7,7 @@ import { FaEnvelopeOpenText, FaSignOutAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { MdBusiness } from 'react-icons/md';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { ErrorKind, Organization } from '../../../types';

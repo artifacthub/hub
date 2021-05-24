@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { MdClose, MdDone } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { ErrorKind } from '../../../types';
 import Loading from '../../common/Loading';
 import Modal from '../../common/Modal';

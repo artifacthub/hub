@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FaUnlock } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 
-import { API } from '../../../../../../api';
+import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import InputField from '../../../../../common/InputField';
 import Modal from '../../../../../common/Modal';

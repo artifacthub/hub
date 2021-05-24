@@ -2,7 +2,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 
-import { API } from '../../api';
+import API from '../../api';
 import { Package } from '../../types';
 import SmallTitle from '../common/SmallTitle';
 import RelatedPackageCard from './RelatedPackageCard';

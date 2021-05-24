@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ElementWithTooltip from '../../common/ElementWithTooltip';

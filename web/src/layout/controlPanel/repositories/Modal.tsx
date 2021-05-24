@@ -6,7 +6,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';

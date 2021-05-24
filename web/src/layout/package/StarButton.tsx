@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 
-import { API } from '../../api';
+import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import { ErrorKind, PackageStars } from '../../types';

@@ -1,7 +1,7 @@
 import isUndefined from 'lodash/isUndefined';
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
-import { API } from '../api';
+import API from '../api';
 import useSystemThemeMode from '../hooks/useSystemThemeMode';
 import { Prefs, Profile, ThemePrefs, UserFullName } from '../types';
 import cleanLoginUrlParams from '../utils/cleanLoginUrlParams';

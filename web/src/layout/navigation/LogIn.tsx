@@ -6,7 +6,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../api';
+import API from '../../api';
 import { AppCtx, refreshUserProfile, signOut } from '../../context/AppCtx';
 import { ErrorKind, RefInputField, UserLogin } from '../../types';
 import cleanLoginUrlParams from '../../utils/cleanLoginUrlParams';

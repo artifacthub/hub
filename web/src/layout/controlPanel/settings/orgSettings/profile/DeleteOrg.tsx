@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 
-import { API } from '../../../../../api';
+import API from '../../../../../api';
 import { AppCtx, unselectOrg } from '../../../../../context/AppCtx';
 import { AuthorizerAction, ErrorKind, Organization } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';

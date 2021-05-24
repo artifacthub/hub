@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash';
 
-import { API } from '../api';
+import API from '../api';
 import { AuthorizerAction, AuthorizerInput } from '../types';
 
 export class Authorizer {

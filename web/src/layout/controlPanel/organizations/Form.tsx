@@ -5,7 +5,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
 import { MdBusiness } from 'react-icons/md';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx, updateOrg } from '../../../context/AppCtx';
 import { ErrorKind, Organization, RefInputField, ResourceKind } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
@@ -54,10 +54,10 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
           props.onSuccess();
         }
       } else {
+        await API.updateOrganization(organization, props.organization.name);
         if (ctx.prefs.controlPanel.selectedOrg && ctx.prefs.controlPanel.selectedOrg === props.organization.name) {
           dispatch(updateOrg(organization.name));
         }
-        await API.updateOrganization(organization, props.organization.name);
       }
       props.setIsSending(false);
     } catch (err) {

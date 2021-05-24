@@ -4,7 +4,7 @@ import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-import { API } from '../../api';
+import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import { AHStats } from '../../types';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';

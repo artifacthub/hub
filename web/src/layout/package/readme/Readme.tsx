@@ -230,7 +230,7 @@ const AVAILABLE_LANGUAGES = [
 ];
 
 const checkCodeLanguage = (language: string | null): string => {
-  let lang = 'txt';
+  let lang = 'text';
   if (language) {
     if (AVAILABLE_LANGUAGES.includes(language)) {
       lang = language;

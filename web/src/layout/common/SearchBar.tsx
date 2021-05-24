@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
-import { API } from '../../api';
+import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Package } from '../../types';

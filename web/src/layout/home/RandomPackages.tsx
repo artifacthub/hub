@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 
-import { API } from '../../api';
+import API from '../../api';
 import { Package } from '../../types';
 import Loading from '../common/Loading';
 import PackageCard from './PackageCard';

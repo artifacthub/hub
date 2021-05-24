@@ -4,7 +4,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 import { RiTestTubeFill } from 'react-icons/ri';
 import { Prompt } from 'react-router-dom';
 
-import { API } from '../../../../../api';
+import API from '../../../../../api';
 import { AppCtx, updateOrg } from '../../../../../context/AppCtx';
 import {
   AuthorizationPolicy,

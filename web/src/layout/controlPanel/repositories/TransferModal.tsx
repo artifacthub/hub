@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 
-import { API } from '../../../api';
+import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization, Repository } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
