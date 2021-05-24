@@ -98,6 +98,7 @@ export interface Package {
   recommendations?: Recommendation[];
   official?: boolean;
   stats?: PackageStats;
+  allContainersImagesWhitelisted?: boolean;
 }
 
 export interface PackageStats {

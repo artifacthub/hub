@@ -226,10 +226,11 @@ const PackageInfo = (props: Props) => {
           onlyBadge={false}
           withLink={buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!)}
         />
-        {props.package.repository.scannerDisabled && (
+        {(props.package.repository.scannerDisabled || props.package.allContainersImagesWhitelisted) && (
           <ScannerDisabledRepositoryBadge
             className="d-inline mt-3"
-            scannerDisabled={props.package.repository.scannerDisabled}
+            scannerDisabled={props.package.repository.scannerDisabled || false}
+            allContainersImagesWhitelisted={props.package.allContainersImagesWhitelisted || false}
             withTooltip
           />
         )}

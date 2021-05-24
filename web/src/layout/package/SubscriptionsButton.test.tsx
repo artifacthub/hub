@@ -1,4 +1,4 @@
-import { fireEvent, getByTestId, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -287,7 +287,7 @@ describe('SubscriptionsButton', () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([]);
         mocked(API).addSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
-        const { getByTestId, getByRole, getAllByTestId } = render(
+        const { getByTestId, getAllByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
