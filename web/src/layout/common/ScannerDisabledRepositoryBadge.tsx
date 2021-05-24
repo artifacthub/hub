@@ -6,13 +6,14 @@ import ElementWithTooltip from './ElementWithTooltip';
 import Label from './Label';
 
 interface Props {
-  scannerDisabled: boolean;
+  scannerDisabled?: boolean;
+  allContainersImagesWhitelisted?: boolean;
   className?: string;
   withTooltip?: boolean;
 }
 
 const ScannerDisabledRepositoryBadge = (props: Props) => {
-  if (!props.scannerDisabled) return null;
+  if (!props.scannerDisabled && !props.allContainersImagesWhitelisted) return null;
   return (
     <ElementWithTooltip
       active

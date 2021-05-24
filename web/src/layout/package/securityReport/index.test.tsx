@@ -14,6 +14,7 @@ const defaultProps = {
   packageId: 'pkgID',
   version: '1.1.1',
   visibleSecurityReport: false,
+  allContainersImagesWhitelisted: false,
   disabledReport: false,
   containers: [
     {
@@ -104,6 +105,7 @@ describe('SecurityReport', () => {
           visibleSecurityReport={false}
           disabledReport
           containers={defaultProps.containers}
+          allContainersImagesWhitelisted={false}
         />
       );
 
@@ -119,6 +121,7 @@ describe('SecurityReport', () => {
           version="1.1.1"
           visibleSecurityReport={false}
           disabledReport={false}
+          allContainersImagesWhitelisted={true}
           containers={[
             {
               name: '',

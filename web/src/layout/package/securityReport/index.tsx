@@ -13,6 +13,7 @@ import styles from './SecurityReport.module.css';
 
 interface Props {
   disabledReport: boolean;
+  allContainersImagesWhitelisted: boolean;
   containers: ContainerImage[];
   className?: string;
   summary?: SecurityReportSummary | null;
@@ -25,26 +26,26 @@ interface Props {
 }
 
 const SecurityReport = (props: Props) => {
-  const getWhitelistedContainersNumber = useCallback((): number => {
-    return props.containers.filter((container: ContainerImage) => container.whitelisted).length;
+  const hasSomeWhitelistedContainers = useCallback((): boolean => {
+    return props.containers.some((container: ContainerImage) => container.whitelisted);
   }, [props.containers]);
 
   const [total, setTotal] = useState(props.summary ? sumObjectValues(props.summary) : 0);
-  const [whitelistedContainers, setWhitelistedContainers] = useState<number>(getWhitelistedContainersNumber());
+  const [hasWhitelistedContainers, setHasWhitelistedContainers] = useState<boolean>(hasSomeWhitelistedContainers());
 
   useEffect(() => {
     setTotal(props.summary ? sumObjectValues(props.summary) : 0);
   }, [props.summary]);
 
   useEffect(() => {
-    setWhitelistedContainers(getWhitelistedContainersNumber());
+    setHasWhitelistedContainers(hasSomeWhitelistedContainers());
   }, [props.containers]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (!props.disabledReport) {
     if (isNull(props.summary) || isUndefined(props.summary) || isEmpty(props.summary)) {
       if (props.containers.length === 0) {
         return null;
-      } else if (props.containers.length !== whitelistedContainers) {
+      } else if (!props.allContainersImagesWhitelisted) {
         return null;
       }
     }
@@ -55,9 +56,12 @@ const SecurityReport = (props: Props) => {
       <SmallTitle text="Security Report" />
 
       <div className="mb-3">
-        {props.disabledReport || props.containers.length === whitelistedContainers ? (
+        {props.disabledReport || props.allContainersImagesWhitelisted ? (
           <div className={styles.disabledBadgeWrapper}>
-            <ScannerDisabledRepositoryBadge scannerDisabled />
+            <ScannerDisabledRepositoryBadge
+              scannerDisabled={props.disabledReport}
+              allContainersImagesWhitelisted={props.allContainersImagesWhitelisted}
+            />
             <div className={`text-muted mt-2 ${styles.legend}`}>
               Security scanning of this package has been disabled by the publisher.
             </div>
@@ -70,7 +74,7 @@ const SecurityReport = (props: Props) => {
                   <small>No vulnerabilities found</small>
                 </div>
                 <SecurityRating summary={props.summary} className="position-relative ml-2" onlyBadge />
-                {whitelistedContainers > 0 && <span className="font-weight-bold ml-1">*</span>}
+                {hasWhitelistedContainers && <span className="font-weight-bold ml-1">*</span>}
               </div>
             ) : (
               <div className="d-flex flex-row align-items-center mb-2">
@@ -80,11 +84,11 @@ const SecurityReport = (props: Props) => {
                   </small>
                 </div>
                 <SecurityRating summary={props.summary} className="position-relative ml-1" onlyBadge />
-                {whitelistedContainers > 0 && <span className="font-weight-bold ml-1">*</span>}
+                {hasWhitelistedContainers && <span className="font-weight-bold ml-1">*</span>}
               </div>
             )}
 
-            {whitelistedContainers > 0 && (
+            {hasWhitelistedContainers && (
               <div className={`text-muted mb-3 ${styles.legend}`}>
                 * Some containers images used by this package have been whitelisted by the publisher, which may affect
                 the security rating.
@@ -128,7 +132,7 @@ const SecurityReport = (props: Props) => {
                 visibleSecurityReport={props.visibleSecurityReport}
                 searchUrlReferer={props.searchUrlReferer}
                 fromStarredPage={props.fromStarredPage}
-                hasWhitelistedContainers={whitelistedContainers > 0}
+                hasWhitelistedContainers={hasWhitelistedContainers}
               />
             </div>
           </>
