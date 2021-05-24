@@ -104,10 +104,12 @@ func TestGet(t *testing.T) {
 			Deprecated: true,
 			ContainersImages: []*hub.ContainerImage{
 				{
-					Image: "quay.io/org/img:1.0.0",
+					Image:       "quay.io/org/img:1.0.0",
+					Whitelisted: true,
 				},
 			},
-			Provider: "Org Inc",
+			AllContainersImagesWhitelisted: true,
+			Provider:                       "Org Inc",
 			Changes: []*hub.Change{
 				{
 					Kind:        "added",
@@ -208,9 +210,11 @@ func TestGet(t *testing.T) {
 			"deprecated": true,
 			"containers_images": [
 				{
-					"image": "quay.io/org/img:1.0.0"
+					"image": "quay.io/org/img:1.0.0",
+					"whitelisted": true
 				}
 			],
+			"all_containers_images_whitelisted": true,
 			"provider": "Org Inc",
 			"changes": [
 				{

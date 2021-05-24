@@ -60,6 +60,7 @@ begin
         'signed', s.signed,
         'content_url', s.content_url,
         'containers_images', s.containers_images,
+        'all_containers_images_whitelisted', are_all_containers_images_whitelisted(s.containers_images),
         'provider', s.provider,
         'has_values_schema', (s.values_schema is not null and s.values_schema <> '{}'),
         'has_changelog', (select exists (

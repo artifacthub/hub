@@ -3434,6 +3434,10 @@ components:
             unkown:
               type: number
               nullable: false
+        all_containers_images_whitelisted:
+          type: boolean
+          nullable: false
+          example: false
         offical:
           type: boolean
           nullable: false

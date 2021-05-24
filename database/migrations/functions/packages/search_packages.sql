@@ -61,6 +61,7 @@ begin
             s.deprecated,
             s.signed,
             s.security_report_summary,
+            s.containers_images,
             s.ts,
             r.repository_id,
             r.repository_kind_id,
@@ -157,6 +158,7 @@ begin
                         'deprecated', deprecated,
                         'signed', signed,
                         'security_report_summary', security_report_summary,
+                        'all_containers_images_whitelisted', are_all_containers_images_whitelisted(containers_images),
                         'ts', floor(extract(epoch from ts)),
                         'repository', jsonb_build_object(
                             'repository_id', repository_id,
