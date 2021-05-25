@@ -15,7 +15,9 @@ func ParseChangesAnnotation(annotation string) ([]*hub.Change, error) {
 	if err := yaml.Unmarshal([]byte(annotation), &changes); err != nil {
 		var changesDescriptions []string
 		if err := yaml.Unmarshal([]byte(annotation), &changesDescriptions); err != nil {
-			return nil, fmt.Errorf("invalid changes annotation: %s", annotation)
+			return nil, fmt.Errorf("invalid changes annotation: %s. %s",
+				annotation,
+				"Please use quotes on strings that include any of the following characters: {}:[],&*#?|-<>=!%@")
 		}
 		for _, description := range changesDescriptions {
 			changes = append(changes, &hub.Change{Description: description})
