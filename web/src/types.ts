@@ -156,7 +156,7 @@ export interface RecommendedPackage {
 
 export interface PackageData {
   policies?: OPAPolicies;
-  rules?: { Raw: string }[] | FalcoRules;
+  rules?: { Raw: string; Name: string }[] | FalcoRules;
   dependencies?: Dependency[];
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];
@@ -171,6 +171,11 @@ export interface PackageData {
 
 export interface OPAPolicies {
   [key: string]: string;
+}
+
+export interface FileModalItem {
+  name: string;
+  file: string;
 }
 
 export interface FalcoRules {
@@ -666,4 +671,10 @@ export interface TOCEntryItem {
   title: string;
   link: string;
   children?: TOCEntryItem[];
+}
+
+export enum FileModalKind {
+  CustomResourcesDefinition,
+  Policy,
+  Rules,
 }

@@ -24,7 +24,7 @@ describe('TektonManifestModal', () => {
       const { getByTestId, getByText } = render(<TektonManifestModal {...defaultProps} />);
 
       expect(getByTestId('tektonManifestBtn')).toBeInTheDocument();
-      expect(getByText('Manifest YAML')).toBeInTheDocument();
+      expect(getByText('Manifest')).toBeInTheDocument();
     });
 
     it('does not render component when manifest is undefined', () => {
@@ -43,7 +43,7 @@ describe('TektonManifestModal', () => {
 
       waitFor(() => {
         expect(modal).toBeInTheDocument();
-        expect(getAllByText('Manifest YAML')).toHaveLength(2);
+        expect(getAllByText('Manifest')).toHaveLength(2);
         expect(getByText(/apiVersion: tekton.dev\/11abetv/g)).toBeInTheDocument();
         expect(getByTestId('ctcBtn')).toBeInTheDocument();
         expect(getByTestId('downloadBtn')).toBeInTheDocument();

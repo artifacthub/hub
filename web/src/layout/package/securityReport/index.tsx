@@ -89,7 +89,7 @@ const SecurityReport = (props: Props) => {
             )}
 
             {hasWhitelistedContainers && (
-              <div className={`text-muted mb-3 ${styles.legend}`}>
+              <div className={`text-muted mb-2 ${styles.legend}`}>
                 * Some containers images used by this package have been whitelisted by the publisher, which may affect
                 the security rating.
               </div>

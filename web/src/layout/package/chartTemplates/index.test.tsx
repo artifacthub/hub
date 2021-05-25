@@ -24,6 +24,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const defaultProps = {
+  normalizedName: 'pkg',
   packageId: 'id',
   version: '1.1.1',
   repoKind: RepositoryKind.Helm,

@@ -7,6 +7,12 @@
   font-size: 90%;
 }
 
+.syntaxWrapper {
+  border-radius: 3px;
+  border: 1px solid var(--color-black-15);
+  background-color: var(--extra-light-gray);
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;

@@ -79,7 +79,8 @@ const TemplatesList = (props: Props) => {
 
           <div className="alert p-0 mt-3">
             <small className="text-muted text-break font-italic">
-              This chart version contains <span className="font-weight-bold">{props.templates.length}</span> templates
+              This chart version contains <span className="font-weight-bold">{props.templates.length}</span>{' '}
+              {props.templates.length === 1 ? 'template' : 'templates'}
             </small>
           </div>
         </div>

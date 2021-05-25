@@ -89,7 +89,7 @@ const RepositoryInfo = (props: Props) => {
                             wrapperClassName="d-inline"
                             arrowClassName={styles.arrow}
                             tooltipClassName="p-0"
-                            label="Copy reposiroty url to clipboard"
+                            label="Copy repository url to clipboard"
                           />
                         }
                       />

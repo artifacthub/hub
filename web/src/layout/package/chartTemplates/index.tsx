@@ -16,6 +16,7 @@ import Template from './Template';
 import TemplatesList from './TemplatesList';
 
 interface Props {
+  normalizedName: string;
   packageId: string;
   version: string;
   repoKind: RepositoryKind;
@@ -280,7 +281,7 @@ const ChartTemplatesModal = (props: Props) => {
                   {isChangingTemplate && activeTemplate && <Loading />}
                   {activeTemplate && (
                     <BlockCodeButtons
-                      filename={activeTemplate.name}
+                      filename={`${props.normalizedName}-${activeTemplate.name}`}
                       content={activeTemplate.data}
                       boxShadowColor="var(--extra-light-gray)"
                     />

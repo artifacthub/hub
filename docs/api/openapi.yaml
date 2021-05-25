@@ -2893,6 +2893,8 @@ components:
                         type: object
                         nullable: false
                         properties:
+                          Name:
+                            type: string
                           Raw:
                             type: string
                             example: |
