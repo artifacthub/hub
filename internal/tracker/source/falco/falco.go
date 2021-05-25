@@ -166,5 +166,6 @@ type RulesMetadata struct {
 
 // Rule represents some Falco rules in yaml format, used by RulesMetadata.
 type Rule struct {
-	Raw string `yaml:"raw"`
+	Name string `yaml:"name"`
+	Raw  string `yaml:"raw"`
 }
