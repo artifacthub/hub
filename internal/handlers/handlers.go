@@ -469,9 +469,6 @@ func logger(next http.Handler) http.Handler {
 		if r.URL.Path == "/api/v1/packages/search" || r.URL.Path == "/api/chartsvc/v1/charts/search" {
 			msg += "?" + r.URL.RawQuery
 		}
-		if r.URL.Path == "/api/chartsvc/v1/charts/search" {
-			fields["headers"] = r.Header
-		}
 		defer func() {
 			var event *zerolog.Event
 			if ww.Status() < 500 {
