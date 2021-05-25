@@ -9,9 +9,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
 	"image/png"
 	"net/url"
 	"time"
+
+	_ "embed" // Used by templates
 
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
@@ -58,6 +61,33 @@ const (
 	PasswordMinEntropyBits = 50
 )
 
+type templateID int
+
+const (
+	passwordResetEmail templateID = iota
+	passwordResetSuccessEmail
+	tfaDisabledEmail
+	tfaEnabledEmail
+	verificationEmail
+)
+
+var (
+	//go:embed template/password_reset_email.tmpl
+	passwordResetEmailTmpl string
+
+	//go:embed template/password_reset_success_email.tmpl
+	passwordResetSuccessEmailTmpl string
+
+	//go:embed template/tfa_disabled_email.tmpl
+	tfaDisabledEmailTmpl string
+
+	//go:embed template/tfa_enabled_email.tmpl
+	tfaEnabledEmailTmpl string
+
+	//go:embed template/verification_email.tmpl
+	verificationEmailTmpl string
+)
+
 var (
 	// ErrInvalidPassword indicates that the password provided is not valid.
 	ErrInvalidPassword = errors.New("invalid password")
@@ -80,8 +110,9 @@ var (
 
 // Manager provides an API to manage users.
 type Manager struct {
-	db hub.DB
-	es hub.EmailSender
+	db   hub.DB
+	es   hub.EmailSender
+	tmpl map[templateID]*template.Template
 }
 
 // NewManager creates a new Manager instance.
@@ -89,6 +120,13 @@ func NewManager(db hub.DB, es hub.EmailSender) *Manager {
 	return &Manager{
 		db: db,
 		es: es,
+		tmpl: map[templateID]*template.Template{
+			passwordResetEmail:        template.Must(template.New("").Parse(email.BaseTmpl + passwordResetEmailTmpl)),
+			passwordResetSuccessEmail: template.Must(template.New("").Parse(email.BaseTmpl + passwordResetSuccessEmailTmpl)),
+			tfaDisabledEmail:          template.Must(template.New("").Parse(email.BaseTmpl + tfaDisabledEmailTmpl)),
+			tfaEnabledEmail:           template.Must(template.New("").Parse(email.BaseTmpl + tfaEnabledEmailTmpl)),
+			verificationEmail:         template.Must(template.New("").Parse(email.BaseTmpl + verificationEmailTmpl)),
+		},
 	}
 }
 
@@ -296,7 +334,7 @@ func (m *Manager) DisableTFA(ctx context.Context, passcode string) error {
 			return err
 		}
 		var emailBody bytes.Buffer
-		if err := tfaDisabledTmpl.Execute(&emailBody, nil); err != nil {
+		if err := m.tmpl[tfaDisabledEmail].Execute(&emailBody, nil); err != nil {
 			return err
 		}
 		emailData := &email.Data{
@@ -349,7 +387,7 @@ func (m *Manager) EnableTFA(ctx context.Context, passcode string) error {
 			return err
 		}
 		var emailBody bytes.Buffer
-		if err := tfaEnabledTmpl.Execute(&emailBody, nil); err != nil {
+		if err := m.tmpl[tfaEnabledEmail].Execute(&emailBody, nil); err != nil {
 			return err
 		}
 		emailData := &email.Data{
@@ -438,7 +476,7 @@ func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail, base
 			"link": fmt.Sprintf("%s/reset-password?code=%s", baseURL, code),
 		}
 		var emailBody bytes.Buffer
-		if err := passwordResetTmpl.Execute(&emailBody, templateData); err != nil {
+		if err := m.tmpl[passwordResetEmail].Execute(&emailBody, templateData); err != nil {
 			return err
 		}
 		emailData := &email.Data{
@@ -541,7 +579,7 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 			"link": fmt.Sprintf("%s/verify-email?code=%s", baseURL, *code),
 		}
 		var emailBody bytes.Buffer
-		if err := emailVerificationTmpl.Execute(&emailBody, templateData); err != nil {
+		if err := m.tmpl[verificationEmail].Execute(&emailBody, templateData); err != nil {
 			return err
 		}
 		emailData := &email.Data{
@@ -598,7 +636,7 @@ func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL 
 			"baseURL": baseURL,
 		}
 		var emailBody bytes.Buffer
-		if err := passwordResetSuccessTmpl.Execute(&emailBody, templateData); err != nil {
+		if err := m.tmpl[passwordResetSuccessEmail].Execute(&emailBody, templateData); err != nil {
 			return err
 		}
 		emailData := &email.Data{

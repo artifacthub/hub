@@ -8,6 +8,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"text/template"
 	"time"
 
 	"github.com/artifacthub/hub/internal/email"
@@ -86,6 +87,13 @@ func TestWorker(t *testing.T) {
 		Name:             "repo1",
 		OrganizationName: "org1",
 	}
+	tmpl := map[templateID]*template.Template{
+		newReleaseEmail:     template.Must(template.New("").Parse(email.BaseTmpl + newReleaseEmailTmpl)),
+		ownershipClaimEmail: template.Must(template.New("").Parse(email.BaseTmpl + ownershipClaimEmailTmpl)),
+		scanningErrorsEmail: template.Must(template.New("").Parse(email.BaseTmpl + scanningErrorsEmailTmpl)),
+		securityAlertEmail:  template.Must(template.New("").Parse(email.BaseTmpl + securityAlertEmailTmpl)),
+		trackingErrorsEmail: template.Must(template.New("").Parse(email.BaseTmpl + trackingErrorsEmailTmpl)),
+	}
 
 	t.Run("error getting pending notification", func(t *testing.T) {
 		t.Parallel()
@@ -94,7 +102,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -107,7 +115,7 @@ func TestWorker(t *testing.T) {
 		sw.pm.On("Get", sw.ctx, gpi).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -120,7 +128,7 @@ func TestWorker(t *testing.T) {
 		sw.rm.On("GetByID", sw.ctx, "repositoryID", false).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -135,7 +143,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -150,7 +158,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -165,7 +173,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -180,7 +188,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -193,7 +201,7 @@ func TestWorker(t *testing.T) {
 		sw.pm.On("Get", sw.ctx, gpi).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -208,7 +216,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -226,7 +234,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, mock.Anything).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -244,7 +252,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "")
+		w := NewWorker(sw.svc, sw.cache, "", tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -329,7 +337,7 @@ func TestWorker(t *testing.T) {
 				sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, nil).Return(nil)
 				sw.tx.On("Commit", sw.ctx).Return(nil)
 
-				w := NewWorker(sw.svc, sw.cache, "http://baseURL")
+				w := NewWorker(sw.svc, sw.cache, "http://baseURL", tmpl)
 				go w.Run(sw.ctx, sw.wg)
 				sw.assertExpectations(t)
 			})

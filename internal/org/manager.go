@@ -5,9 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"net/url"
 	"regexp"
 	"strconv"
+
+	_ "embed" // Used by templates
 
 	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/email"
@@ -35,16 +38,24 @@ const (
 	updateOrgDBQ         = `select update_organization($1::uuid, $2::text, $3::jsonb)`
 )
 
-var (
-	// organizationNameRE is a regexp used to validate an organization name.
-	organizationNameRE = regexp.MustCompile(`^[a-z0-9-]+$`)
+type templateID int
+
+const (
+	invitationEmail templateID = iota
 )
+
+//go:embed template/invitation_email.tmpl
+var invitationEmailTmpl string
+
+// organizationNameRE is a regexp used to validate an organization name.
+var organizationNameRE = regexp.MustCompile(`^[a-z0-9-]+$`)
 
 // Manager provides an API to manage organizations.
 type Manager struct {
-	db hub.DB
-	es hub.EmailSender
-	az hub.Authorizer
+	db   hub.DB
+	es   hub.EmailSender
+	az   hub.Authorizer
+	tmpl map[templateID]*template.Template
 }
 
 // NewManager creates a new Manager instance.
@@ -53,6 +64,9 @@ func NewManager(db hub.DB, es hub.EmailSender, az hub.Authorizer) *Manager {
 		db: db,
 		es: es,
 		az: az,
+		tmpl: map[templateID]*template.Template{
+			invitationEmail: template.Must(template.New("").Parse(email.BaseTmpl + invitationEmailTmpl)),
+		},
 	}
 }
 
@@ -122,7 +136,7 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 			"orgName": orgName,
 		}
 		var emailBody bytes.Buffer
-		if err := invitationTmpl.Execute(&emailBody, templateData); err != nil {
+		if err := m.tmpl[invitationEmail].Execute(&emailBody, templateData); err != nil {
 			return err
 		}
 		emailData := &email.Data{

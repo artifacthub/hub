@@ -1,0 +1,138 @@
+{{ define "title" }} {{ .Package.Name }} new release {{ end }}
+{{ define "content" }}
+<div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
+<!-- START CENTERED WHITE CONTAINER -->
+  <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Package.Name }} version {{ .Package.Version }} released</span>
+  <table class="main line" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; border-radius: 3px;">
+    <!-- START MAIN CONTENT AREA -->
+    <tr>
+      <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
+        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+          <tr>
+            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;">
+              <img style="margin: 30px;" height="40px" src="{{ .BaseURL }}{{ if .Package.LogoImageID }}/image/{{ .Package.LogoImageID }}@3x{{ else }}/static/media/placeholder_pkg_{{ .Package.Repository.Kind }}.png{{ end }}">
+              <h2 class="title" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;"><img style="margin-right: 5px; margin-bottom: -2px;" height="18px" src="{{ .BaseURL }}/static/media/{{ .Package.Repository.Kind }}_icon.png">{{ .Package.Name }}</h2>
+              <h4 class="subtitle" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;">{{ .Package.repository.publisher }} </h4>
+              <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Version <b>{{ .Package.Version }}</b> has been released</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ if .Package.Prerelease }}
+                <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                  <tbody>
+                    <tr>
+                      <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: {{ if .Package.ContainsSecurityUpdates }} 15px; {{ else }} 30px;{{ end }}">
+                        <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version is a <b>pre-release</b> and it is not ready for production use.</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              {{ end }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ if .Package.ContainsSecurityUpdates }}
+                <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                  <tbody>
+                    <tr>
+                      <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: 30px;">
+                        <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version contains security updates.</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              {{ end }}
+            </td>
+          </tr>
+          <tr>
+            <td style="font-family: sans-serif; font-size: 14px;">
+              {{ if .Package.Changes }}
+                <hr class="hr" style="border-bottom: none;" />
+                <h4 class="subtitle" style="font-family: sans-serif; font-size: 12px; Margin-top: 20px;">CHANGES:</h4>
+                <table border="0" cellpadding="0" cellspacing="0">
+                  <tbody>
+                    {{range $change := .Package.Changes}}
+                      <tr>
+                        <td style="vertical-align: top; padding-top: 2px; padding-right: 10px;">
+                          {{ if $change.Kind}}
+                            <div class="badge badge-{{ $change.Kind }}" style="text-align: center;">{{ $change.Kind }}</div>
+                          {{ else }}
+                            <p style="margin: 0;">&bull;</p>
+                          {{ end }}
+                        </td>
+                        <td>
+                          <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 10px;">
+                            {{ $change.Description }}
+                            {{if $change.Links}}
+                              <br />
+                              {{range $i, $link := $change.Links}}
+                                {{if $i}} &bull; {{end}}
+                                <a href="{{ $link.URL }}" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">{{ $link.Name }}</a>
+                              {{end}}
+                            {{ end }}
+                          </p>
+                        </td>
+                      </tr>
+                    {{ end }}
+                  </tbody>
+                </table>
+                <hr class="hr" style="border-bottom: none;" />
+                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 45px;"></p>
+              {{ end }}
+            </td>
+          </tr>
+          <tr>
+            <td style="font-family: sans-serif; font-size: 14px; text-align: center;">
+              <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                <tbody>
+                  <tr>
+                    <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+                      <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                        <tbody>
+                          <tr>
+                            <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .Package.URL }}" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">View in Artifact Hub</a> </div></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                <tbody>
+                  <tr>
+                    <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; padding-bottom: 30px; padding-top: 10px;">
+                      <p class="text-muted" style="font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span class="copy-link">{{ .Package.URL }}</span></p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  <!-- END MAIN CONTENT AREA -->
+  </table>
+  <!-- START FOOTER -->
+  <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+      <tr>
+        <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 10px; text-align: center;">
+          <p class="text-muted" style="font-size: 10px; text-align: center; text-decoration: none;">Didn't subscribe to Artifact Hub notifications for {{ .Package.Name }} package? You can unsubscribe <a href="{{ .BaseURL }}/control-panel/settings/subscriptions" target="_blank" class="text-muted" style="text-decoration: underline;">here</a>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; text-align: center;">
+          <a href="{{ .BaseURL }}" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">© Artifact Hub</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- END FOOTER -->
+
+<!-- END CENTERED WHITE CONTAINER -->
+</div>
+{{ end }}

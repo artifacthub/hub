@@ -5,10 +5,16 @@ import (
 	"fmt"
 	"net/smtp"
 
+	_ "embed" // Used by templates
+
 	"github.com/domodwyer/mailyak"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
+
+// BaseTmpl represents the base template used by emails.
+//go:embed template/base.tmpl
+var BaseTmpl string
 
 // ErrSenderNotAvailable error indicates that there is not a mail sender
 // available. This usually happens when the email configuration hasn't been
