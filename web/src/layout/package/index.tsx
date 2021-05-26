@@ -8,7 +8,7 @@ import { FiCode, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import API from '../../api';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
@@ -355,9 +355,29 @@ const PackageView = (props: Props) => {
                     <div className={`mb-5 ${styles.codeWrapper}`}>
                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Manifest" />
 
-                      <div className="d-flex d-xxl-inline-block mw-100 position-relative">
+                      <div
+                        className={`d-flex d-xxl-inline-block mw-100 position-relative overflow-hidden ${styles.manifestWrapper}`}
+                      >
                         <BlockCodeButtons content={manifest} filename={`${detail.normalizedName}-rules.yaml`} />
-                        <SyntaxHighlighter language="yaml" style={tomorrowNight} customStyle={{ padding: '1.5rem' }}>
+                        <SyntaxHighlighter
+                          language="yaml"
+                          style={docco}
+                          customStyle={{
+                            backgroundColor: 'transparent',
+                            padding: '1.5rem',
+                            lineHeight: '1.25rem',
+                            marginBottom: '0',
+                            height: '100%',
+                            fontSize: '80%',
+                            color: '#636a6e',
+                          }}
+                          lineNumberStyle={{
+                            color: 'var(--color-black-25)',
+                            marginRight: '5px',
+                            fontSize: '0.8rem',
+                          }}
+                          showLineNumbers
+                        >
                           {manifest}
                         </SyntaxHighlighter>
                       </div>

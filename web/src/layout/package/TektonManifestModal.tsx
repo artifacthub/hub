@@ -48,13 +48,19 @@ const TektonManifestModal = (props: Props) => {
                   language="yaml"
                   style={docco}
                   customStyle={{
-                    backgroundColor: 'var(--color-1-5)',
+                    backgroundColor: 'transparent',
                     padding: '1.5rem',
+                    lineHeight: '1.25rem',
                     marginBottom: '0',
                     height: '100%',
-                    fontSize: '75%',
+                    fontSize: '80%',
+                    color: '#636a6e',
                   }}
-                  lineNumberStyle={{ color: 'gray', marginRight: '15px' }}
+                  lineNumberStyle={{
+                    color: 'var(--color-black-25)',
+                    marginRight: '5px',
+                    fontSize: '0.8rem',
+                  }}
                   showLineNumbers
                 >
                   {props.manifestRaw}
