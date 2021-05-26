@@ -12,6 +12,7 @@ import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import { ErrorKind, PackageStars } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import prettifyNumber from '../../utils/prettifyNumber';
+import ElementWithTooltip from '../common/ElementWithTooltip';
 import styles from './StarButton.module.css';
 
 interface Props {
@@ -106,45 +107,42 @@ const StarButton = (props: Props) => {
   return (
     <>
       <div className={`ml-auto d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
-        <button
-          data-testid="toggleStarBtn"
-          className={classnames('btn btn-sm btn-primary px-1 px-md-3', styles.starBtn, {
-            [`disabled ${styles.disabled}`]: notLoginUser,
-          })}
-          type="button"
-          disabled={isGettingIfStarred}
-          onClick={() => {
-            if (notLoginUser) {
-              if ([point && 'xs', 'sm'].includes(point)) {
-                setEnabledTooltip(true);
-              }
-            } else {
-              handleToggleStar();
-            }
-          }}
-          aria-label={`${notStarred ? 'Star' : 'Unstar'} package`}
-        >
-          <div className="d-flex align-items-center">
-            {notStarred ? <FaRegStar className={styles.icon} /> : <FaStar className={styles.icon} />}
-            <span className="ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
-          </div>
-        </button>
+        <ElementWithTooltip
+          active
+          className={styles.starBtnWrapper}
+          element={
+            <button
+              data-testid="toggleStarBtn"
+              className={classnames('btn btn-sm btn-primary px-1 px-md-3', styles.starBtn, {
+                [`disabled ${styles.disabled}`]: notLoginUser || isGettingIfStarred,
+              })}
+              type="button"
+              onClick={() => {
+                if (!isGettingIfStarred) {
+                  if (notLoginUser) {
+                    if ([point && 'xs', 'sm'].includes(point)) {
+                      setEnabledTooltip(true);
+                    }
+                  } else {
+                    handleToggleStar();
+                  }
+                }
+              }}
+              aria-label={`${notStarred ? 'Star' : 'Unstar'} package`}
+            >
+              <div className="d-flex align-items-center">
+                {notStarred ? <FaRegStar className={styles.icon} /> : <FaStar className={styles.icon} />}
+                <span className="ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
+              </div>
+            </button>
+          }
+          tooltipMessage="You must be signed in to star a package"
+          visibleTooltip={isNull(ctx.user)}
+        />
 
         <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>
           {isNumber(packageStars.stars) ? prettifyNumber(packageStars.stars) : '-'}
         </span>
-
-        {isNull(ctx.user) && (
-          <div
-            className={classnames('tooltip bs-tooltip-bottom', styles.tooltip, {
-              [styles.visibleTooltip]: enabledTooltip,
-            })}
-            role="tooltip"
-          >
-            <div className={`arrow ${styles.tooltipArrow}`}></div>
-            <div className="tooltip-inner">You must be signed in to star a package</div>
-          </div>
-        )}
 
         {(isSending || isGettingIfStarred) && (
           <div className={`position-absolute ${styles.spinner}`} role="status">

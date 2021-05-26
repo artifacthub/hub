@@ -235,7 +235,7 @@ describe('SubscriptionsButton', () => {
 
         const btn = getByTestId('subscriptionsBtn');
         expect(btn).toBeInTheDocument();
-        expect(btn).toBeDisabled();
+        expect(btn).toHaveClass('disabled');
       });
 
       it('when getPackageSubscriptions fails', async () => {
@@ -260,7 +260,7 @@ describe('SubscriptionsButton', () => {
 
         const btn = getByTestId('subscriptionsBtn');
         expect(btn).toBeInTheDocument();
-        expect(btn).toBeDisabled();
+        expect(btn).toHaveClass('disabled');
       });
     });
 
