@@ -1,9 +1,0 @@
-[
-  {
-    "kind": "API",
-    "name": "apis.wso2.com",
-    "version": "v1alpha1",
-    "description": "API holds API-related information. You can see the API definition and data structure for API here. API takes the Swagger definition as a configMap along with replica count and micro-gateway deployment mode.",
-    "displayName": "API test"
-  }
-]

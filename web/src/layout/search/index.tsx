@@ -423,7 +423,10 @@ const SearchView = (props: Props) => {
 
         <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between">
           {!isEmptyFacets() && (
-            <aside className={`px-xs-0 px-sm-3 px-lg-0 d-none d-md-block ${styles.sidebar}`} aria-label="Filters">
+            <aside
+              className={`px-xs-0 px-sm-3 px-lg-0 d-none d-md-block position-relative ${styles.sidebar}`}
+              aria-label="Filters"
+            >
               <div className="mr-5" role="menu">
                 <Filters
                   facets={searchResults.data.facets}

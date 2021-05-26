@@ -137,6 +137,7 @@ export default function App() {
                       hash={location.hash}
                       visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       visibleTemplate={getQueryParam(location.search, 'template') || undefined}
+                      visibleFile={getQueryParam(location.search, 'file') || undefined}
                       visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
                       {...location.state}
                       {...match.params}

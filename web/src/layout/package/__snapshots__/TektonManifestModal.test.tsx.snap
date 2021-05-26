@@ -6,7 +6,7 @@ exports[`TektonManifestModal creates snapshot 1`] = `
     class="mb-2"
   >
     <button
-      aria-label="Open Manifest YAML"
+      aria-label="Open Manifest"
       class="btn btn-secondary btn-block btn-sm text-nowrap"
       data-testid="tektonManifestBtn"
     >
@@ -30,7 +30,7 @@ exports[`TektonManifestModal creates snapshot 1`] = `
         <span
           class="ml-2 font-weight-bold"
         >
-          Manifest YAML
+          Manifest
         </span>
       </div>
     </button>
