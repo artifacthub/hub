@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -16,7 +16,7 @@ const defaultProps = {
 };
 
 const mockCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: false },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -192,27 +192,6 @@ describe('StarButton', () => {
       });
     });
 
-    describe('when user is not signed in', () => {
-      it('displays tooltip', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4 });
-        const { getByRole } = render(
-          <AppCtx.Provider value={{ ctx: { ...mockCtx, user: null }, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
-          </AppCtx.Provider>
-        );
-
-        await waitFor(() => {
-          expect(API.getStars).toHaveBeenCalledTimes(1);
-        });
-
-        const tooltip = getByRole('tooltip');
-        expect(tooltip).toBeInTheDocument();
-        expect(tooltip).toHaveTextContent('You must be signed in to star a package');
-      });
-    });
-
     describe('on getStars error', () => {
       it('does not render component', async () => {
         mocked(API).getStars.mockRejectedValue({ kind: ErrorKind.Other });
@@ -281,6 +260,25 @@ describe('StarButton', () => {
           expect(mockDispatch).toHaveBeenCalledTimes(1);
           expect(mockDispatch).toHaveBeenCalledWith({ type: 'signOut' });
         });
+      });
+    });
+
+    describe('when user is not signed in', () => {
+      it('btn is disabled', async () => {
+        mocked(API).getStars.mockResolvedValue({ stars: 4 });
+        render(
+          <AppCtx.Provider value={{ ctx: { ...mockCtx, user: null }, dispatch: jest.fn() }}>
+            <Router>
+              <StarButton {...defaultProps} />
+            </Router>
+          </AppCtx.Provider>
+        );
+
+        expect(await screen.findByText('4'));
+
+        const btn = screen.getByTestId('toggleStarBtn');
+        expect(btn).toBeInTheDocument();
+        expect(btn).toHaveClass('disabled');
       });
     });
   });

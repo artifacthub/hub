@@ -134,6 +134,8 @@ const SubscriptionsButton = (props: Props) => {
     return null;
   }
 
+  const isDisabled = isNull(ctx.user) || isNull(activeSubscriptions) || isUndefined(activeSubscriptions);
+
   return (
     <div className="d-none d-md-block position-relative ml-2">
       <ElementWithTooltip
@@ -143,20 +145,19 @@ const SubscriptionsButton = (props: Props) => {
         element={
           <button
             data-testid="subscriptionsBtn"
-            className="btn p-0 position-relative"
+            className={classnames('btn p-0 position-relative', styles.subsBtn, {
+              [`disabled ${styles.disabled}`]: isDisabled,
+            })}
             type="button"
             onClick={() => {
-              getSubscriptions();
-              setOpenStatus(true);
+              if (!isDisabled) {
+                getSubscriptions();
+                setOpenStatus(true);
+              }
             }}
             aria-label="Open subscriptions menu"
             aria-expanded={openStatus}
-            disabled={
-              isUndefined(ctx.user) ||
-              isNull(ctx.user) ||
-              isNull(activeSubscriptions) ||
-              isUndefined(activeSubscriptions)
-            }
+            // disabled={isNull(ctx.user) || isNull(activeSubscriptions) || isUndefined(activeSubscriptions)}
           >
             <div
               className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
