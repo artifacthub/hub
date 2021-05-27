@@ -109,7 +109,7 @@ const PackagesSection = (props: Props) => {
         <div>
           <button
             data-testid="addSubscriptionsBtn"
-            className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
+            className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
             onClick={() => setModalStatus(true)}
             aria-label="Open subscription modal"
           >
@@ -136,7 +136,7 @@ const PackagesSection = (props: Props) => {
                   <div className="col-12 col-xxl-10">
                     <table className={`table table-bordered table-hover ${styles.table}`}>
                       <thead>
-                        <tr className={`table-primary ${styles.tableTitle}`}>
+                        <tr className={styles.tableTitle}>
                           <th
                             scope="col"
                             className={`align-middle text-center d-none d-sm-table-cell ${styles.fitCell}`}

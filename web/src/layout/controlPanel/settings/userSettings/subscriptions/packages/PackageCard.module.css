@@ -6,8 +6,8 @@
 
 @media (hover: hover) {
   .card:hover {
-    border-color: var(--color-1-700);
-    box-shadow: 0px 0px 5px 0px var(--color-1-900);
+    border-color: var(--color-black-50);
+    box-shadow: 0px 0px 5px 0px var(--color-black-75);
   }
 }
 

@@ -3,11 +3,11 @@ import googleAnalytics from '@analytics/google-analytics';
 import Analytics from 'analytics';
 import { isNull } from 'lodash';
 
+import getMetaTag from '../utils/getMetaTag';
+
 const getPlugins = (): object[] => {
   let plugins: object[] = [];
-  const analyticsConfig: string | null = document.querySelector(`meta[name='artifacthub:gaTrackingID']`)
-    ? document.querySelector(`meta[name='artifacthub:gaTrackingID']`)!.getAttribute('content')
-    : null;
+  const analyticsConfig: string | null = getMetaTag('gaTrackingID');
 
   if (!isNull(analyticsConfig) && analyticsConfig !== '' && analyticsConfig !== '{{ .gaTrackingID }}') {
     plugins.push(

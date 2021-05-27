@@ -33,9 +33,9 @@ exports[`StatsView creates snapshot 1`] = `
         class="flex-grow-1 position-relative"
       >
         <div
-          class="h2 text-secondary text-center title"
+          class="h2 text-dark text-center title"
         >
-          Artifact Hub Stats
+           Stats
         </div>
       </div>
     </main>

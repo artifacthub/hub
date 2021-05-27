@@ -18,6 +18,7 @@ import (
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/open-policy-agent/opa/ast"
 	"github.com/satori/uuid"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -52,6 +53,7 @@ var organizationNameRE = regexp.MustCompile(`^[a-z0-9-]+$`)
 
 // Manager provides an API to manage organizations.
 type Manager struct {
+	cfg  *viper.Viper
 	db   hub.DB
 	es   hub.EmailSender
 	az   hub.Authorizer
@@ -59,11 +61,12 @@ type Manager struct {
 }
 
 // NewManager creates a new Manager instance.
-func NewManager(db hub.DB, es hub.EmailSender, az hub.Authorizer) *Manager {
+func NewManager(cfg *viper.Viper, db hub.DB, es hub.EmailSender, az hub.Authorizer) *Manager {
 	return &Manager{
-		db: db,
-		es: es,
-		az: az,
+		cfg: cfg,
+		db:  db,
+		es:  es,
+		az:  az,
 		tmpl: map[templateID]*template.Template{
 			invitationEmail: template.Must(template.New("").Parse(email.BaseTmpl + invitationEmailTmpl)),
 		},
@@ -131,9 +134,14 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 		if err := m.db.QueryRow(ctx, getUserEmailDBQ, userAlias).Scan(&userEmail); err != nil {
 			return err
 		}
-		templateData := map[string]string{
-			"link":    fmt.Sprintf("%s/accept-invitation?org=%s", baseURL, orgName),
-			"orgName": orgName,
+		templateData := map[string]interface{}{
+			"Link":    fmt.Sprintf("%s/accept-invitation?org=%s", baseURL, orgName),
+			"OrgName": orgName,
+			"Theme": map[string]string{
+				"PrimaryColor":   m.cfg.GetString("theme.colors.primary"),
+				"SecondaryColor": m.cfg.GetString("theme.colors.secondary"),
+				"SiteName":       m.cfg.GetString("theme.siteName"),
+			},
 		}
 		var emailBody bytes.Buffer
 		if err := m.tmpl[invitationEmail].Execute(&emailBody, templateData); err != nil {

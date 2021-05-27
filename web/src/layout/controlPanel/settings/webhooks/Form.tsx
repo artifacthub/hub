@@ -452,7 +452,7 @@ const WebhookForm = (props: Props) => {
                 <div className="col-12 col-xxl-8">
                   <table className={`table table-hover table-sm ${styles.table}`}>
                     <thead>
-                      <tr className={`table-primary ${styles.tableTitle}`}>
+                      <tr className={styles.tableTitle}>
                         <th scope="col" className={`align-middle d-none d-sm-table-cell ${styles.fitCell}`}></th>
                         <th scope="col" className="align-middle w-50">
                           Package
@@ -805,7 +805,7 @@ const WebhookForm = (props: Props) => {
               <div className="ml-auto">
                 <button
                   type="button"
-                  className={`btn btn-sm btn-light mr-3 ${styles.btnLight}`}
+                  className="btn btn-sm btn-outline-secondary mr-3"
                   onClick={onCloseForm}
                   aria-label="Cancel"
                 >
@@ -816,7 +816,7 @@ const WebhookForm = (props: Props) => {
                 </button>
 
                 <button
-                  className="btn btn-sm btn-secondary"
+                  className="btn btn-sm btn-outline-secondary"
                   type="button"
                   disabled={isSending}
                   onClick={submitForm}

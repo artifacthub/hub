@@ -63,7 +63,7 @@ const Links = (props: Props) => {
           <div className="py-1 py-sm-0">
             <ExternalLink
               href={props.homeUrl}
-              className="text-primary d-flex align-items-start mb-1 text-capitalize"
+              className="d-flex align-items-start mb-1 text-capitalize"
               label="Open Homepage"
             >
               <div className="d-flex flex-row align-items-start mw-100">
@@ -78,7 +78,7 @@ const Links = (props: Props) => {
           <div className="py-1 py-sm-0" key={`link_${link.name}_${index}`}>
             <ExternalLink
               href={link.url}
-              className="text-primary d-flex align-items-center mb-1 text-capitalize"
+              className="d-flex align-items-center mb-1 text-capitalize"
               label={`Open ${link.name}`}
             >
               <div className="d-flex flex-row align-items-start mw-100">

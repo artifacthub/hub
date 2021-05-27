@@ -7,7 +7,7 @@ exports[`TektonManifestModal creates snapshot 1`] = `
   >
     <button
       aria-label="Open Manifest"
-      class="btn btn-secondary btn-block btn-sm text-nowrap"
+      class="btn btn-outline-secondary btn-block btn-sm text-nowrap"
       data-testid="tektonManifestBtn"
     >
       <div

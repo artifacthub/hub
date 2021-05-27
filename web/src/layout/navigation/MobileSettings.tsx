@@ -52,7 +52,7 @@ const MobileSettings = (props: Props) => {
       ) : (
         <Sidebar
           label="User settings"
-          className="d-inline-block d-md-none"
+          className="d-inline-block d-lg-none"
           buttonType="position-relative btn text-secondary pr-0 pl-3"
           buttonIcon={
             <div

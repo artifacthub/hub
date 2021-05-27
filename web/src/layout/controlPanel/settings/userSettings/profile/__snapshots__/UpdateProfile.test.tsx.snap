@@ -177,7 +177,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
     >
       <button
         aria-label="Update profile"
-        class="btn btn-sm btn-secondary"
+        class="btn btn-sm btn-outline-secondary"
         data-testid="updateProfileBtn"
         type="button"
       >

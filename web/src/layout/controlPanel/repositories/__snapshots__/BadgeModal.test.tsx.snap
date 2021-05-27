@@ -154,7 +154,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                       style="white-space: pre;"
                     >
                       <span>
-                        [![Artifact HUB](https://img.shields.io/endpoint?url=http://localhost/badge/repository/repoTest)](http://localhost/packages/search?repo=repoTest)
+                        [![null](https://img.shields.io/endpoint?url=http://localhost/badge/repository/repoTest)](http://localhost/packages/search?repo=repoTest)
                       </span>
                     </code>
                   </pre>
@@ -173,7 +173,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
           >
             <button
               aria-label="Close modal"
-              class="btn btn-sm btn-secondary text-uppercase"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"
             >

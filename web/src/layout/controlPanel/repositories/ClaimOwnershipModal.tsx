@@ -11,6 +11,7 @@ import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization, Repository } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import { OCI_PREFIX } from '../../../utils/data';
+import getMetaTag from '../../../utils/getMetaTag';
 import ExternalLink from '../../common/ExternalLink';
 import Modal from '../../common/Modal';
 import RepositoryIcon from '../../common/RepositoryIcon';
@@ -26,6 +27,7 @@ interface Props {
 
 const ClaimRepositoryOwnerShipModal = (props: Props) => {
   const { ctx } = useContext(AppCtx);
+  const siteName = getMetaTag('siteName');
   const form = useRef<HTMLFormElement>(null);
   const [isFetchingOrgs, setIsFetchingOrgs] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -181,7 +183,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
       closeButton={
         <button
           data-testid="claimRepoBtn"
-          className="btn btn-sm btn-secondary"
+          className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isSending || isNull(repoItem)}
           onClick={submitForm}
@@ -219,7 +221,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
             </ExternalLink>{' '}
             to your repository and include yourself (or the person who will do the request) as an owner. This will be
             checked during the ownership claim process. Please make sure the email used in the metatata file matches
-            with the one you use in Artifact Hub.
+            with the one you use in {siteName}.
           </p>
         </div>
         <form
@@ -299,11 +301,11 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
             <label id="claiming" className={`font-weight-bold ${styles.label}`}>
               Transfer to:
             </label>
-            <div className="form-check mb-2">
+            <div className="custom-control custom-radio mb-2">
               <input
                 aria-labelledby="claiming user"
                 data-testid="radio_claim_user"
-                className="form-check-input"
+                className="custom-control-input"
                 type="radio"
                 name="claim"
                 id="user"
@@ -312,16 +314,16 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                 onChange={() => handleClaimingFromOpt('user')}
                 required
               />
-              <label id="user" className={`form-check-label ${styles.label}`} htmlFor="user">
+              <label id="user" className={`custom-control-label ${styles.label}`} htmlFor="user">
                 My user
               </label>
             </div>
 
-            <div className="form-check mb-3">
+            <div className="custom-control custom-radio mb-3">
               <input
                 aria-labelledby="claiming org"
                 data-testid="radio_claim_org"
-                className="form-check-input"
+                className="custom-control-input"
                 type="radio"
                 name="claim"
                 id="org"
@@ -330,7 +332,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                 onChange={() => handleClaimingFromOpt('org')}
                 required
               />
-              <label id="org" className={`form-check-label ${styles.label}`} htmlFor="org">
+              <label id="org" className={`custom-control-label ${styles.label}`} htmlFor="org">
                 Organization
               </label>
             </div>

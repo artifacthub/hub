@@ -2,30 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" type="image/png" href="{{ .baseURL }}/static/media/logo_v2.png" />
+    <link rel="shortcut icon" type="image/png" href="{{ .shortcutIcon }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <link rel="apple-touch-icon" href="{{ .baseURL }}/static/media/logo192_v2.png" />
-    <link rel="apple-touch-icon" sizes="512x512" href="{{ .baseURL }}/static/media/logo512_v2.png" />
-    <link rel="manifest" href="{{ .baseURL }}/manifest.json" />
+    <link rel="apple-touch-icon" href="{{ .appleTouchIcon192 }}" />
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ .appleTouchIcon512 }}" />
+    <link rel="manifest" href="/manifest.json" />
     <title>{{ .title }}</title>
     <meta name="description" content="{{ .description }}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ .title }}" />
     <meta property="og:description" content="{{ .description }}" />
-    <meta property="og:image" content="{{ .baseURL }}/static/media/artifactHub_v2.png" />
+    <meta property="og:image" content="{{ .openGraphImage }}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="{{ .title }}" />
     <meta name="twitter:description" content="{{ .description }}" />
-    <meta name="twitter:image:src" content="{{ .baseURL }}/static/media/artifactHub_v2.png" />
+    <meta name="twitter:image:src" content="{{ .openGraphImage }}" />
     <meta name="artifacthub:allowPrivateRepositories" content="{{ .allowPrivateRepositories }}" />
+    <meta name="artifacthub:gaTrackingID" content="{{ .gaTrackingID }}" />
     <meta name="artifacthub:githubAuth" content="{{ .githubAuth }}" />
     <meta name="artifacthub:googleAuth" content="{{ .googleAuth }}" />
     <meta name="artifacthub:oidcAuth" content="{{ .oidcAuth }}" />
     <meta name="artifacthub:motd" content="{{ .motd }}" />
     <meta name="artifacthub:motdSeverity" content="{{ .motdSeverity }}" />
-    <meta name="artifacthub:gaTrackingID" content="{{ .gaTrackingID }}" />
-    <script type="text/javascript" src="{{ .baseURL }}/static/js/fixFirefoxNightMode.js" async></script>
+    <meta name="artifacthub:primaryColor" content="{{ .primaryColor }}" />
+    <meta name="artifacthub:secondaryColor" content="{{ .secondaryColor }}" />
+    <meta name="artifacthub:siteName" content="{{ .siteName }}" />
+    <meta name="artifacthub:websiteLogo" content="{{ .websiteLogo }}" />
+    <script type="text/javascript" src="/static/js/fixFirefoxNightMode.js" async></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

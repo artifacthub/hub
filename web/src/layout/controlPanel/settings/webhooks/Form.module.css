@@ -4,13 +4,13 @@
 
 .table {
   background-color: var(--white);
-  border: 1px solid var(--color-1-300);
+  border: 1px solid var(--border-md);
   word-break: break-word;
 }
 
 .tableTitle th {
-  border-top: 2px solid var(--color-1-300) !important;
-  border-bottom-color: var(--color-1-300) !important;
+  border-top: 2px solid var(--border-md) !important;
+  border-bottom-color: var(--border-md) !important;
 }
 
 .tableTitle:hover {
@@ -63,11 +63,6 @@
 .variablesTable {
   background-color: var(--white);
   border: 1px solid var(--border-md);
-}
-
-.btnLight {
-  background-color: var(--color-1-20) !important;
-  border-color: var(--color-1-20) !important;
 }
 
 .closeBtn {

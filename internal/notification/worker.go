@@ -308,6 +308,11 @@ func (w *Worker) preparePkgNotificationTemplateData(
 				"Publisher": publisher,
 			},
 		},
+		Theme: map[string]string{
+			"PrimaryColor":   w.svc.Cfg.GetString("theme.colors.primary"),
+			"SecondaryColor": w.svc.Cfg.GetString("theme.colors.secondary"),
+			"SiteName":       w.svc.Cfg.GetString("theme.siteName"),
+		},
 	}, nil
 }
 
@@ -356,6 +361,11 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 			"OrganizationName":   r.OrganizationName,
 			"LastScanningErrors": strings.Split(r.LastScanningErrors, "\n"),
 			"LastTrackingErrors": strings.Split(r.LastTrackingErrors, "\n"),
+		},
+		Theme: map[string]string{
+			"PrimaryColor":   w.svc.Cfg.GetString("theme.colors.primary"),
+			"SecondaryColor": w.svc.Cfg.GetString("theme.colors.secondary"),
+			"SiteName":       w.svc.Cfg.GetString("theme.siteName"),
 		},
 	}, nil
 }

@@ -62,7 +62,7 @@ const OrganizationsSection = (props: Props) => {
             <div>
               <button
                 data-testid="addOrgButton"
-                className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
+                className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalStatus({ open: true })}
                 aria-label="Open modal"
               >
@@ -88,7 +88,7 @@ const OrganizationsSection = (props: Props) => {
                       <button
                         data-testid="addFirstOrgBtn"
                         type="button"
-                        className="btn btn-secondary"
+                        className="btn btn-outline-secondary"
                         onClick={() => setModalStatus({ open: true })}
                         aria-label="Open modal"
                       >

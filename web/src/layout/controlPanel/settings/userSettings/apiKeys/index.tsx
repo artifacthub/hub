@@ -60,7 +60,7 @@ const APIKeysSection = (props: Props) => {
             <div>
               <button
                 data-testid="addAPIKeyBtn"
-                className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
+                className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalStatus({ open: true })}
                 aria-label="Open modal to add API key"
               >
@@ -85,7 +85,7 @@ const APIKeysSection = (props: Props) => {
                         <button
                           data-testid="addFirstAPIKeyBtn"
                           type="button"
-                          className="btn btn-secondary"
+                          className="btn btn-outline-secondary"
                           onClick={() => setModalStatus({ open: true })}
                           aria-label="Add API key"
                         >

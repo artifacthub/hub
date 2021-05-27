@@ -40,6 +40,7 @@
     "regexify-string": "^1.0.5",
     "remark-gfm": "^1.0.0",
     "semver": "^7.3.2",
+    "tinycolor2": "^1.4.2",
     "yaml": "^1.10.0"
   },
   "devDependencies": {

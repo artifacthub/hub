@@ -1,5 +1,9 @@
+import getMetaTag from './getMetaTag';
+
+const siteName = getMetaTag('siteName');
+
 export default (
-  title: string = 'Artifact Hub',
+  title: string = siteName,
   description: string = 'Find, install and publish Kubernetes package'
 ): void => {
   document.title = title;

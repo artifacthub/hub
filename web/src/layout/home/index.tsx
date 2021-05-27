@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import API from '../../api';
 import { RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import isWhiteLabel from '../../utils/isWhiteLabel';
 import ExternalLink from '../common/ExternalLink';
 import RepositoryIcon from '../common/RepositoryIcon';
 import SampleQueries from '../common/SampleQueries';
@@ -30,6 +31,8 @@ const HomeView = (props: Props) => {
   const history = useHistory();
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
+
+  const whiteLabel = isWhiteLabel();
 
   useEffect(() => {
     setIsLoadingStats(true);
@@ -116,187 +119,203 @@ const HomeView = (props: Props) => {
           <Counter isLoading={isLoadingStats} value={isNull(stats) ? null : stats.releases} name="releases" />
         </div>
 
-        <div className={`text-center h5 my-4 mt-md-5 ${styles.legend}`}>
-          Artifact Hub is an <b>Open Source</b> project
-        </div>
-
-        <div className="d-flex flex-row align-items-center justify-content-center flex-wrap">
-          <ExternalLink
-            className={`btn btn-secondary mb-4 mb-md-2 ${styles.socialBtn}`}
-            href="https://github.com/cncf/hub"
-            label="Open Github link"
-          >
-            <div className="d-flex align-items-center justify-content-center">
-              <FaGithub className="mr-2" />
-              GitHub
+        {!whiteLabel && (
+          <>
+            <div className={`text-center h5 my-4 mt-md-5 ${styles.legend}`}>
+              Artifact Hub is an <b>Open Source</b> project
             </div>
-          </ExternalLink>
 
-          <ExternalLink
-            className={`btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 ${styles.socialBtn}`}
-            href="https://cloud-native.slack.com/channels/artifact-hub"
-            label="Open Slack channel"
-          >
-            <div className="d-flex align-items-center justify-content-center">
-              <FaSlack className="mr-2" />
-              Slack
+            <div className="d-flex flex-row align-items-center justify-content-center flex-wrap">
+              <ExternalLink
+                className={`btn btn-secondary mb-4 mb-md-2 ${styles.socialBtn}`}
+                href="https://github.com/cncf/hub"
+                label="Open Github link"
+              >
+                <div className="d-flex align-items-center justify-content-center">
+                  <FaGithub className="mr-2" />
+                  GitHub
+                </div>
+              </ExternalLink>
+
+              <ExternalLink
+                className={`btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 ${styles.socialBtn}`}
+                href="https://cloud-native.slack.com/channels/artifact-hub"
+                label="Open Slack channel"
+              >
+                <div className="d-flex align-items-center justify-content-center">
+                  <FaSlack className="mr-2" />
+                  Slack
+                </div>
+              </ExternalLink>
+
+              <ExternalLink
+                className={`btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 ${styles.socialBtn}`}
+                href="https://twitter.com/cncfartifacthub"
+                label="Open Twitter link"
+              >
+                <div className="d-flex align-items-center justify-content-center">
+                  <FaTwitter className="mr-2" />
+                  Twitter
+                </div>
+              </ExternalLink>
             </div>
-          </ExternalLink>
 
-          <ExternalLink
-            className={`btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 ${styles.socialBtn}`}
-            href="https://twitter.com/cncfartifacthub"
-            label="Open Twitter link"
-          >
-            <div className="d-flex align-items-center justify-content-center">
-              <FaTwitter className="mr-2" />
-              Twitter
+            <div className={`text-center mx-3 mt-md-4 mb-4 ${styles.repoGuideText}`}>
+              Please see the{' '}
+              <ExternalLink
+                className={`btn btn-link text-light font-weight-bold textLight p-0 ${styles.inlineLink}`}
+                href="/docs/topics/repositories"
+                label="Open documentation"
+              >
+                repositories guide
+              </ExternalLink>{' '}
+              for more information about how to list your content on Artifact Hub.
             </div>
-          </ExternalLink>
-        </div>
-
-        <div className={`text-center mx-3 mt-md-4 mb-4 ${styles.repoGuideText}`}>
-          Please see the{' '}
-          <ExternalLink
-            className={`btn btn-link text-light font-weight-bold textLight p-0 ${styles.inlineLink}`}
-            href="/docs/topics/repositories"
-            label="Open documentation"
-          >
-            repositories guide
-          </ExternalLink>{' '}
-          for more information about how to list your content on Artifact Hub.
-        </div>
+          </>
+        )}
       </div>
 
       <RandomPackages />
 
-      <div className={`py-5 textLight ${styles.about}`}>
-        <div className="container-lg px-4 px-sm-0 py-0 py-md-5">
-          <div className="text-center px-3 px-xs-0">
-            Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
-            configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
-            configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton
-            tasks, KEDA scalers and CoreDNS plugins.
-            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
-              <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small className="text-nowrap">Helm charts and plugins</small>
-                  </div>
+      {!whiteLabel && (
+        <>
+          <div className={`py-5 textLight ${styles.about}`}>
+            <div className="container-lg px-4 px-sm-0 py-0 py-md-5">
+              <div className="text-center px-3 px-xs-0">
+                Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
+                configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
+                configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins,
+                Tekton tasks, KEDA scalers and CoreDNS plugins.
+                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
+                  <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small className="text-nowrap">Helm charts and plugins</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
+                  <ExternalLink href="https://falco.org" className={`col ${styles.iconLink}`} label="Open Falco site">
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small>Falco rules</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://www.openpolicyagent.org"
+                    className={`col ${styles.iconLink}`}
+                    label="Open Open Policy Agent site"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small>OPA policies</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
                 </div>
-              </ExternalLink>
-              <ExternalLink href="https://falco.org" className={`col ${styles.iconLink}`} label="Open Falco site">
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>Falco rules</small>
-                  </div>
+                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
+                  <ExternalLink
+                    href="https://github.com/operator-framework"
+                    className={`col ${styles.iconLink}`}
+                    label="Open Operator framework site"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small>OLM operators</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://tinkerbell.org"
+                    className={`col ${styles.iconLink}`}
+                    label="Open Tinkerbell site"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small>Tinkerbell actions</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://krew.sigs.k8s.io"
+                    className={`col ${styles.iconLink}`}
+                    label="Open Krew site"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small>Kubectl plugins</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
                 </div>
-              </ExternalLink>
-              <ExternalLink
-                href="https://www.openpolicyagent.org"
-                className={`col ${styles.iconLink}`}
-                label="Open Open Policy Agent site"
-              >
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>OPA policies</small>
-                  </div>
+                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
+                  <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`} label="Open Tekton site">
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small>Tekton tasks</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
+                  <ExternalLink href="https://keda.sh" className={`col ${styles.iconLink}`} label="Open KEDA site">
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.KedaScaler} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small>KEDA scalers</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://coredns.io"
+                    className={`col ${styles.iconLink}`}
+                    label="Open CoreDNS site"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.CoreDNS} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                        <small>CoreDNS plugins</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
                 </div>
-              </ExternalLink>
+                Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to
+                share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a
+                fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to
+                solve that by providing a single experience for consumers that any CNCF project can leverage.
+              </div>
             </div>
-            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
-              <ExternalLink
-                href="https://github.com/operator-framework"
-                className={`col ${styles.iconLink}`}
-                label="Open Operator framework site"
-              >
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>OLM operators</small>
-                  </div>
-                </div>
-              </ExternalLink>
-              <ExternalLink
-                href="https://tinkerbell.org"
-                className={`col ${styles.iconLink}`}
-                label="Open Tinkerbell site"
-              >
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>Tinkerbell actions</small>
-                  </div>
-                </div>
-              </ExternalLink>
-              <ExternalLink href="https://krew.sigs.k8s.io" className={`col ${styles.iconLink}`} label="Open Krew site">
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>Kubectl plugins</small>
-                  </div>
-                </div>
-              </ExternalLink>
-            </div>
-            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
-              <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`} label="Open Tekton site">
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>Tekton tasks</small>
-                  </div>
-                </div>
-              </ExternalLink>
-              <ExternalLink href="https://keda.sh" className={`col ${styles.iconLink}`} label="Open KEDA site">
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.KedaScaler} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>KEDA scalers</small>
-                  </div>
-                </div>
-              </ExternalLink>
-              <ExternalLink href="https://coredns.io" className={`col ${styles.iconLink}`} label="Open CoreDNS site">
-                <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                  <RepositoryIcon kind={RepositoryKind.CoreDNS} type="white" className={styles.aboutIcon} />
-                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
-                    <small>CoreDNS plugins</small>
-                  </div>
-                </div>
-              </ExternalLink>
-            </div>
-            Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share
-            artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured
-            experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by
-            providing a single experience for consumers that any CNCF project can leverage.
           </div>
-        </div>
-      </div>
 
-      <div className={`py-5 text-secondary ${styles.extraInfo}`}>
-        <div className="container-lg px-sm-4 px-lg-0 py-0 py-md-5">
-          <div className="text-center px-4 px-xs-0">
-            <img
-              className={`${styles.logo} homeLogo`}
-              src="/static/media/cncf-sandbox-horizontal-color.png"
-              alt="Logo CNCF sandbox project"
-            />
-            <div className="px-3 pt-4">
-              Artifact Hub is a{' '}
-              <ExternalLink
-                href="https://www.cncf.io/sandbox-projects/"
-                className="font-weight-bold text-secondary"
-                label="Open CNCF sandbox projects site"
-              >
-                Cloud Native Computing Foundation
-              </ExternalLink>{' '}
-              sandbox project.
+          <div className={`py-5 text-dark ${styles.extraInfo}`}>
+            <div className="container-lg px-sm-4 px-lg-0 py-0 py-md-5">
+              <div className="text-center px-4 px-xs-0">
+                <img
+                  className={`${styles.logo} homeLogo`}
+                  src="/static/media/cncf-sandbox-horizontal-color.png"
+                  alt="Logo CNCF sandbox project"
+                />
+                <div className="px-3 pt-4">
+                  Artifact Hub is a{' '}
+                  <ExternalLink
+                    href="https://www.cncf.io/sandbox-projects/"
+                    className="font-weight-bold text-dark"
+                    label="Open CNCF sandbox projects site"
+                  >
+                    Cloud Native Computing Foundation
+                  </ExternalLink>{' '}
+                  sandbox project.
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
 
       <UserConfirmation emailCode={props.emailCode} />
       <UserInvitation orgToConfirm={props.orgToConfirm} />

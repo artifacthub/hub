@@ -10,7 +10,7 @@ exports[`CapatabilityLevelInfoModal creates snapshot 1`] = `
     >
       <button
         aria-label="Open modal"
-        class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-secondary btn"
+        class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-dark btn"
         data-testid="openModalBtn"
         type="button"
       >
@@ -80,7 +80,7 @@ exports[`CapatabilityLevelInfoModal creates snapshot 1`] = `
           >
             <button
               aria-label="Close modal"
-              class="btn btn-sm btn-secondary text-uppercase"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"
             >

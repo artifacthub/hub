@@ -30,7 +30,7 @@ interface LinkProps {
 
 const Heading: React.ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className={`text-secondary ${styles.header}`}>{data.title || data.children}</Tag>;
+  return <Tag className={`text-dark ${styles.header}`}>{data.title || data.children}</Tag>;
 };
 
 const Link: React.ElementType = (data: LinkProps) => {
@@ -40,7 +40,7 @@ const Link: React.ElementType = (data: LinkProps) => {
     ) : undefined;
 
   return (
-    <a href={data.href} target={data.target} rel="noopener noreferrer" className="d-inline-block text-secondary">
+    <a href={data.href} target={data.target} rel="noopener noreferrer" className="d-inline-block text-dark">
       {linkIcon || data.children}
     </a>
   );

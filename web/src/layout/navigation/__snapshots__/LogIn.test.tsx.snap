@@ -124,7 +124,7 @@ exports[`LogIn creates snapshot 1`] = `
                   </button>
                   <button
                     aria-label="Sign in"
-                    class="btn btn-secondary"
+                    class="btn btn-outline-secondary"
                     data-testid="logInBtn"
                     type="button"
                   >
@@ -145,7 +145,7 @@ exports[`LogIn creates snapshot 1`] = `
           >
             <button
               aria-label="Close modal"
-              class="btn btn-sm btn-secondary text-uppercase"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"
             >

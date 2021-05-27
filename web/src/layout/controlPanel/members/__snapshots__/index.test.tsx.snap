@@ -24,7 +24,7 @@ exports[`Members section index creates snapshot 1`] = `
             >
               <button
                 aria-label="Action"
-                class="btn btn-secondary btn-sm text-uppercase btnAction"
+                class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
                 data-testid="addMemberBtn"
                 type="button"
               >

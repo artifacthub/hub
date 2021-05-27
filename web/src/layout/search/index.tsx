@@ -341,10 +341,10 @@ const SearchView = (props: Props) => {
                   leftButton={
                     <>
                       <div className="d-flex align-items-center">
-                        <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
+                        <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
                         <button
                           data-testid="resetBtn"
-                          className="btn btn-link btn-sm p-0 pl-1 text-secondary"
+                          className="btn btn-link btn-sm p-0 pl-1 text-dark"
                           onClick={onResetFilters}
                           aria-label="Reset filters"
                         >
@@ -477,7 +477,7 @@ const SearchView = (props: Props) => {
                           {!isEmpty(props.filters) ? (
                             <button
                               data-testid="resetFiltersLink"
-                              className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-0"
+                              className="btn btn-link text-dark font-weight-bold py-0 pb-1 px-0"
                               onClick={onResetFilters}
                               aria-label="Reset filters"
                             >
@@ -486,7 +486,7 @@ const SearchView = (props: Props) => {
                           ) : (
                             <button
                               data-testid="resetLink"
-                              className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-0"
+                              className="btn btn-link text-dark font-weight-bold py-0 pb-1 px-0"
                               onClick={() => {
                                 history.push({
                                   pathname: '/packages/search',
@@ -506,7 +506,7 @@ const SearchView = (props: Props) => {
                           , try a new search or start with one of the sample queries:
                         </p>
                         <div className="h5 d-flex flex-row align-items-end justify-content-center flex-wrap">
-                          <SampleQueries className="badge-light border-secondary text-secondary" />
+                          <SampleQueries className="badge-light border-secondary text-dark" />
                         </div>
                       </>
                     ) : (

@@ -143,7 +143,7 @@ const ResetPasswordModal = (props: Props) => {
   const closeButton = (
     <button
       data-testid="resetPwdBtn"
-      className="btn btn-sm btn-secondary"
+      className="btn btn-sm btn-outline-secondary"
       type="button"
       disabled={isSending}
       onClick={submitForm}

@@ -85,7 +85,7 @@ const Details = (props: Props) => {
       itemsForModal: (
         <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
           <thead>
-            <tr className={`table-primary ${styles.tableTitle}`}>
+            <tr className={styles.tableTitle}>
               <th scope="col">
                 <span className="px-1">Version</span>
               </th>
@@ -237,7 +237,7 @@ const Details = (props: Props) => {
           <License
             license={props.package.license}
             className="mb-3"
-            linkClassName="text-primary py-1 py-sm-0"
+            linkClassName="py-1 py-sm-0"
             linkContentClassName={styles.text}
             visibleIcon
           />

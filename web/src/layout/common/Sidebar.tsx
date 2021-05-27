@@ -100,7 +100,7 @@ const Sidebar = (props: Props) => {
               <button
                 data-testid="closeSidebarFooterBtn"
                 type="button"
-                className="ml-auto btn btn-sm btn-secondary"
+                className="ml-auto btn btn-sm btn-outline-secondary"
                 onClick={() => openStatusChange(false)}
                 aria-label="Close"
               >

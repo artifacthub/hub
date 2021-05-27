@@ -63,7 +63,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
               />
               <button
                 aria-label="Open modal"
-                class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                class="dropdown-item btn btn-sm rounded-0 text-dark"
                 data-testid="getBadgeBtn"
               >
                 <div
@@ -93,7 +93,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
               >
                 <button
                   aria-label="Action"
-                  class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  class="dropdown-item btn btn-sm rounded-0 text-dark"
                   data-testid="transferRepoBtn"
                   type="button"
                 >
@@ -131,7 +131,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
               >
                 <button
                   aria-label="Action"
-                  class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  class="dropdown-item btn btn-sm rounded-0 text-dark"
                   data-testid="updateRepoBtn"
                   type="button"
                 >
@@ -163,7 +163,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
               >
                 <button
                   aria-label="Action"
-                  class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  class="dropdown-item btn btn-sm rounded-0 text-dark"
                   data-testid="deleteRepoDropdownBtn"
                   type="button"
                 >
@@ -194,7 +194,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
             <button
               aria-expanded="false"
               aria-label="Open menu"
-              class="btn btn-light p-0 text-secondary text-center btnDropdown"
+              class="btn p-0 text-primary text-center iconSubsWrapper btnDropdown"
             >
               <svg
                 fill="currentColor"

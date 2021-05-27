@@ -170,7 +170,7 @@ exports[`SignUp creates snapshot 1`] = `
           >
             <button
               aria-label="Close modal"
-              class="btn btn-sm btn-secondary text-uppercase"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"
             >

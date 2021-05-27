@@ -102,7 +102,7 @@ const SubscriptionModal = (props: Props) => {
       closeButton={
         <button
           data-testid="addSubsModalBtn"
-          className="btn btn-sm btn-secondary"
+          className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isNull(packageItem) || isSending}
           onClick={submitForm}

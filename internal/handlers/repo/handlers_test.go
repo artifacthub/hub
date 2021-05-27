@@ -17,6 +17,7 @@ import (
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -156,7 +157,7 @@ func TestBadge(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte(`{"color":"2d4857","label":"Artifact Hub","labelColor":"417598","logoSvg":"\u003csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-hexagon\"\u003e\u003cpath d=\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\"\u003e\u003c/path\u003e\u003c/svg\u003e","logoWidth":18,"message":"artifact-hub","schemaVersion":1,"style":"flat"}`), data)
+		assert.Equal(t, []byte(`{"color":"2D4857","label":"Artifact Hub","labelColor":"417598","logoSvg":"\u003csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-hexagon\"\u003e\u003cpath d=\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\"\u003e\u003c/path\u003e\u003c/svg\u003e","logoWidth":18,"message":"artifact-hub","schemaVersion":1,"style":"flat"}`), data)
 		hw.rm.AssertExpectations(t)
 	})
 }
@@ -763,15 +764,21 @@ func TestUpdate(t *testing.T) {
 }
 
 type handlersWrapper struct {
-	rm *repo.ManagerMock
-	h  *Handlers
+	cfg *viper.Viper
+	rm  *repo.ManagerMock
+	h   *Handlers
 }
 
 func newHandlersWrapper() *handlersWrapper {
+	cfg := viper.New()
+	cfg.Set("theme.colors.primary", "#417598")
+	cfg.Set("theme.colors.secondary", "#2D4857")
+	cfg.Set("theme.siteName", "Artifact Hub")
 	rm := &repo.ManagerMock{}
 
 	return &handlersWrapper{
-		rm: rm,
-		h:  NewHandlers(rm),
+		cfg: cfg,
+		rm:  rm,
+		h:   NewHandlers(cfg, rm),
 	}
 }

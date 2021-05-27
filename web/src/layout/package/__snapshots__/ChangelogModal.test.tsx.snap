@@ -11,7 +11,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
       <button
         aria-disabled="false"
         aria-label="Open modal"
-        class="btn btn-secondary btn-block btn-sm text-nowrap"
+        class="btn btn-outline-secondary btn-block btn-sm text-nowrap"
         data-testid="changelogBtn"
       >
         <div

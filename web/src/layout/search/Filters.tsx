@@ -103,7 +103,7 @@ const Filters = (props: Props) => {
         <div role="menuitem" className={`mt-1 mt-sm-2 pt-1 ${styles.facet}`}>
           <SmallTitle
             text={kind.title}
-            className="text-secondary font-weight-bold"
+            className="text-dark font-weight-bold"
             id={`repo-${kind.filterKey}-${props.device}`}
           />
           <div className="mt-3" role="group" aria-labelledby={`repo-${kind.filterKey}-${props.device}`}>
@@ -151,7 +151,7 @@ const Filters = (props: Props) => {
         <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
           <SmallTitle
             text={capabilities.title}
-            className="text-secondary font-weight-bold"
+            className="text-dark font-weight-bold"
             id={`pkg-${capabilities.filterKey}-${props.device}`}
           />
           <div className="mt-3" role="group" aria-labelledby={`pkg-${capabilities.filterKey}-${props.device}`}>
@@ -236,10 +236,10 @@ const Filters = (props: Props) => {
             props.official ||
             !isEmpty(props.activeTsQuery)) && (
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
-              <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
+              <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
               <button
                 data-testid="resetFiltersBtn"
-                className={`btn btn-link btn-sm p-0 pl-1 text-secondary ${styles.resetBtn}`}
+                className={`btn btn-link btn-sm p-0 pl-1 text-dark ${styles.resetBtn}`}
                 onClick={props.onResetFilters}
                 aria-label="Reset filters"
               >
@@ -306,7 +306,7 @@ const Filters = (props: Props) => {
       {getCapabilitiesFacets()}
 
       <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
-        <SmallTitle text="Others" className="text-secondary font-weight-bold" />
+        <SmallTitle text="Others" className="text-dark font-weight-bold" />
 
         <div className="mt-3">
           <CheckBox

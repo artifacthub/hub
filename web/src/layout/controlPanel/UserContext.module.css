@@ -3,6 +3,7 @@
   min-width: 18px;
   height: 18px;
   line-height: 1rem;
+  top: 0;
 }
 
 .ctxBtn {
@@ -34,7 +35,7 @@
 }
 
 .caret {
-  bottom: 5px;
+  bottom: 6px;
   right: 7px;
 }
 

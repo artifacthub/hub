@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { isNull } from 'lodash';
 import React, { useState } from 'react';
 
+import getMetaTag from '../../utils/getMetaTag';
 import styles from './BannerMOTD.module.css';
 
 interface MOTDSeverity {
@@ -13,16 +14,12 @@ const SEVERITIES: MOTDSeverity = { warning: 'warning', info: 'info', error: 'dan
 const BannerMOTD = () => {
   const [openStatus, setOpenStatus] = useState(true);
 
-  const motdTag: string | null = document.querySelector(`meta[name='artifacthub:motd']`)
-    ? document.querySelector(`meta[name='artifacthub:motd']`)!.getAttribute('content')
-    : null;
+  const motdTag: string | null = getMetaTag('motd');
   const motd = !isNull(motdTag) && motdTag !== '' && motdTag !== '{{ .motd }}' ? motdTag : null;
 
   if (isNull(motd) || !openStatus) return null;
 
-  const motdSeverity: string | null = document.querySelector(`meta[name='artifacthub:motdSeverity']`)
-    ? document.querySelector(`meta[name='artifacthub:motdSeverity']`)!.getAttribute('content')
-    : null;
+  const motdSeverity: string | null = getMetaTag('motdSeverity');
   const severityType = motdSeverity ? SEVERITIES[motdSeverity] : 'info';
 
   return (

@@ -44,7 +44,7 @@ const MoreActionsButton = () => {
           <div className={`arrow ${styles.arrow}`} />
 
           <button
-            className="dropdown-item btn btn-sm rounded-0 text-secondary"
+            className="dropdown-item btn btn-sm rounded-0 text-dark"
             onClick={() => {
               setVisibleWidget(true);
               setOpenStatus(false);

@@ -175,7 +175,7 @@ const UpdateProfile = (props: Props) => {
 
       <div className="mt-4">
         <button
-          className="btn btn-sm btn-secondary"
+          className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isSending}
           onClick={submitForm}

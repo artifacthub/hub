@@ -218,7 +218,7 @@ const ChartTemplatesModal = (props: Props) => {
       <div className="text-center">
         <button
           data-testid="tmplModalBtn"
-          className={`btn btn-secondary btn-sm text-nowrap ${props.btnClassName}`}
+          className={`btn btn-outline-secondary btn-sm text-nowrap ${props.btnClassName}`}
           onClick={onOpenModal}
           aria-label="Open templates modal"
         >
@@ -252,7 +252,7 @@ const ChartTemplatesModal = (props: Props) => {
                 <span className="font-weight-bold">built-in objects and functions</span>.
               </small>
               <button
-                className="btn btn-sm btn-secondary text-uppercase"
+                className="btn btn-sm btn-outline-secondary text-uppercase"
                 onClick={() => setOpenStatus(false)}
                 aria-label="Close"
               >

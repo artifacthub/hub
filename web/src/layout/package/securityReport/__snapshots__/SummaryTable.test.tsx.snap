@@ -10,7 +10,7 @@ exports[`SummaryTable creates snapshot 1`] = `
     >
       <thead>
         <tr
-          class="table-primary tableTitle"
+          class="tableTitle"
         >
           <th
             class="image"

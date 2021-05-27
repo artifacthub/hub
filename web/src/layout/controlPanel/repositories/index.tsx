@@ -91,7 +91,7 @@ const RepositoriesSection = (props: Props) => {
             <div>
               <button
                 data-testid="refreshRepoBtn"
-                className={`btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
+                className={`btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
                 onClick={fetchRepositories}
                 aria-label="Refresh repositories list"
               >
@@ -104,7 +104,7 @@ const RepositoriesSection = (props: Props) => {
 
               <button
                 data-testid="claimRepoBtn"
-                className={`btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
+                className={`btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
                 onClick={() => setOpenClaimRepo(true)}
                 aria-label="Open claim repository modal"
               >
@@ -116,7 +116,7 @@ const RepositoriesSection = (props: Props) => {
 
               <ActionBtn
                 testId="addRepoBtn"
-                className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
+                className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 contentClassName="justify-content-center"
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
@@ -180,7 +180,7 @@ const RepositoriesSection = (props: Props) => {
 
                     <ActionBtn
                       testId="addFirstRepoBtn"
-                      className="btn btn-secondary"
+                      className="btn btn-outline-secondary"
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                         e.preventDefault();
                         setModalStatus({ open: true });

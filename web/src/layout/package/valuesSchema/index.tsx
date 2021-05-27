@@ -123,7 +123,7 @@ const ValuesSchema = (props: Props) => {
         element={
           <button
             data-testid="valuesSchemaBtn"
-            className={classnames('btn btn-secondary btn-block btn-sm', {
+            className={classnames('btn btn-outline-secondary btn-block btn-sm', {
               disabled: !props.hasValuesSchema,
             })}
             onClick={onOpenModal}

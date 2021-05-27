@@ -32,6 +32,20 @@
   color: var(--font-color) !important;
 }
 
+.AHlink {
+  color: var(--white) !important;
+}
+
+.AHlogo {
+  height: 35px;
+}
+
+.AHlink:hover,
+.AHlink:focus {
+  color: inherit !important;
+  text-decoration: none;
+}
+
 @media only screen and (min-width: 992px) {
   .footerContent > div:not(:last-child) {
     padding-right: 5rem;

@@ -3,12 +3,14 @@ package repo
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -18,13 +20,15 @@ const (
 // Handlers represents a group of http handlers in charge of handling
 // repositories operations.
 type Handlers struct {
+	cfg         *viper.Viper
 	repoManager hub.RepositoryManager
 	logger      zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(repoManager hub.RepositoryManager) *Handlers {
+func NewHandlers(cfg *viper.Viper, repoManager hub.RepositoryManager) *Handlers {
 	return &Handlers{
+		cfg:         cfg,
 		repoManager: repoManager,
 		logger:      log.With().Str("handlers", "repo").Logger(),
 	}
@@ -51,9 +55,9 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 // repository badge.
 func (h *Handlers) Badge(w http.ResponseWriter, r *http.Request) {
 	data := map[string]interface{}{
-		"color":         "2d4857",
-		"label":         "Artifact Hub",
-		"labelColor":    "417598",
+		"color":         strings.TrimPrefix(h.cfg.GetString("theme.colors.secondary"), "#"),
+		"label":         h.cfg.GetString("theme.siteName"),
+		"labelColor":    strings.TrimPrefix(h.cfg.GetString("theme.colors.primary"), "#"),
 		"logoSvg":       logoSVG,
 		"logoWidth":     18,
 		"message":       chi.URLParam(r, "repoName"),

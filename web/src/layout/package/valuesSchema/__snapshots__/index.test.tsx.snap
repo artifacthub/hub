@@ -11,7 +11,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
       <button
         aria-disabled="false"
         aria-label="Open values schema modal"
-        class="btn btn-secondary btn-block btn-sm"
+        class="btn btn-outline-secondary btn-block btn-sm"
         data-testid="valuesSchemaBtn"
       >
         <div

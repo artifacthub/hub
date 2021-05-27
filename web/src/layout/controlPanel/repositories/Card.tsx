@@ -111,7 +111,7 @@ const RepositoryCard = (props: Props) => {
           <Modal
             modalDialogClassName={styles.modalDialog}
             className={`d-inline-block ${styles.modal}`}
-            buttonType={`ml-1 btn badge btn-secondary ${styles.btn}`}
+            buttonType={`ml-1 btn badge btn-outline-secondary ${styles.btn}`}
             buttonContent={
               <div className="d-flex flex-row align-items-center">
                 <HiExclamation className="mr-2" />
@@ -207,7 +207,7 @@ const RepositoryCard = (props: Props) => {
           <Modal
             modalDialogClassName={styles.modalDialog}
             className={`d-inline-block ${styles.modal}`}
-            buttonType={`ml-1 btn badge btn-secondary ${styles.btn}`}
+            buttonType={`ml-1 btn badge btn-outline-secondary ${styles.btn}`}
             buttonContent={
               <div className="d-flex flex-row align-items-center">
                 <HiExclamation className="mr-2" />
@@ -331,7 +331,7 @@ const RepositoryCard = (props: Props) => {
 
                 <button
                   data-testid="getBadgeBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
@@ -347,7 +347,7 @@ const RepositoryCard = (props: Props) => {
 
                 <ActionBtn
                   testId="transferRepoBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
@@ -363,7 +363,7 @@ const RepositoryCard = (props: Props) => {
 
                 <ActionBtn
                   testId="updateRepoBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
@@ -382,7 +382,7 @@ const RepositoryCard = (props: Props) => {
 
                 <ActionBtn
                   testId="deleteRepoDropdownBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
@@ -398,7 +398,7 @@ const RepositoryCard = (props: Props) => {
               </div>
 
               <button
-                className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                className={`btn p-0 text-primary text-center iconSubsWrapper ${styles.btnDropdown}`}
                 onClick={() => setDropdownMenuStatus(true)}
                 aria-label="Open menu"
                 aria-expanded={dropdownMenuStatus}
@@ -417,7 +417,7 @@ const RepositoryCard = (props: Props) => {
                 <div className={`position-absolute ${styles.copyBtnWrapper}`}>
                   <ButtonCopyToClipboard
                     text={props.repository.repositoryId}
-                    className="btn-link border-0 text-secondary font-weight-bold"
+                    className="btn-link border-0 text-dark font-weight-bold"
                     label="Copy repository ID to clipboard"
                   />
                 </div>

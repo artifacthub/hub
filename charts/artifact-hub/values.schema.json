@@ -507,9 +507,77 @@
                         }
                     },
                     "required": ["port", "type"]
+                },
+                "theme": {
+                    "type": "object",
+                    "properties": {
+                        "colors": {
+                            "title": "Colors used in the website",
+                            "type": "object",
+                            "properties": {
+                                "primary": {
+                                    "title": "Primary color",
+                                    "description": "Primary color used in the website. For an optimal experience, it's better to use colors that play well with white fonts.",
+                                    "type": "string",
+                                    "default": "#417598"
+                                },
+                                "secondary": {
+                                    "title": "Secondary color",
+                                    "description": "Secondary color used in the website, usually a darker version of the primary color. For an optimal experience, it's better to use colors that play well with white fonts.",
+                                    "type": "string",
+                                    "default": "#2D4857"
+                                }
+                            },
+                            "required": ["primary", "secondary"]
+                        },
+                        "images": {
+                            "title": "Images used in the website",
+                            "type": "object",
+                            "properties": {
+                                "appleTouchIcon192": {
+                                    "title": "Apple touch icon (192x192)",
+                                    "description": "URL of the image used for the Apple touch icon (192x192).",
+                                    "type": "string",
+                                    "default": "/static/media/logo192_v2.png"
+                                },
+                                "appleTouchIcon512": {
+                                    "title": "Apple touch icon (512x512)",
+                                    "description": "URL of the image used for the Apple touch icon (512x512).",
+                                    "type": "string",
+                                    "default": "/static/media/logo512_v2.png"
+                                },
+                                "openGraphImage": {
+                                    "title": "Open Graph image",
+                                    "description": "URL of the image used in the og:image tag. This image is displayed when an Artifact Hub link is shared in Twitter or Slack, for example. The URL must use `https`.",
+                                    "type": "string",
+                                    "default": "/static/media/artifactHub_v2.png"
+                                },
+                                "shortcutIcon": {
+                                    "title": "Shortcut icon",
+                                    "description": "URL of the image used for the shortcut icon (also known as favicon).",
+                                    "type": "string",
+                                    "default": "/static/media/logo_v2.png"
+                                },
+                                "websiteLogo": {
+                                    "title": "Website logo",
+                                    "description": "URL of the logo used in the website header. For an optimal experience, it's better to use a white logo with transparent background, with no margin around it. It'll be displayed using a maximum height of 20px and a maximum width of 185px.",
+                                    "type": "string",
+                                    "default": "/static/media/logo/artifacthub-brand-white.svg"
+                                }
+                            },
+                            "required": ["appleTouchIcon192", "appleTouchIcon512", "openGraphImage", "shortcutIcon", "websiteLogo"]
+                        },
+                        "siteName": {
+                            "title": "Name of the site",
+                            "description": "This name is displayed in some places in the website and email templates. When a different value than the default one (Artifact Hub) is provided, the site enters `white label` mode. In this mode, some sections of the website are displayed in a more generic way, omitting certain parts that are unique to Artifact Hub.",
+                            "type": "string",
+                            "default": "Artifact Hub"
+                        }
+                    },
+                    "required": ["colors", "images", "siteName"]
                 }
             },
-            "required": ["ingress", "service", "deploy", "server"]
+            "required": ["ingress", "service", "deploy", "server", "theme"]
         },
         "imagePullSecrets": {
             "type": "array",

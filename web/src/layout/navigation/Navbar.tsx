@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
+import getMetaTag from '../../utils/getMetaTag';
 import SearchBar from '../common/SearchBar';
 import GuestDropdown from './GuestDropdown';
 import LogIn from './LogIn';
@@ -35,10 +36,13 @@ const Navbar = (props: Props) => {
     }
   }, [props.redirect]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  const logo = getMetaTag('websiteLogo');
+  const siteName = getMetaTag('siteName');
+
   return (
     <>
       <nav
-        className={classnames('navbar navbar-top navbar-expand-md navbar-dark', styles.navbar, {
+        className={classnames('navbar navbar-top navbar-expand-lg navbar-dark', styles.navbar, {
           [styles.homeNavbar]: props.fromHome,
         })}
       >
@@ -46,7 +50,7 @@ const Navbar = (props: Props) => {
           <div className={`d-flex flex-row ${styles.mobileWrapper}`}>
             <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
               <div className="d-flex align-items-start">
-                <img src="/static/media/logo/artifacthub-brand-white.svg" alt="Logo Artifact Hub" />
+                <img className={styles.logo} src={logo} alt={`Logo ${siteName}`} />
                 <div
                   className={`position-relative text-uppercase badge badge-pill badge-secondary d-flex align-items-center ml-1 ${styles.badge}`}
                 >

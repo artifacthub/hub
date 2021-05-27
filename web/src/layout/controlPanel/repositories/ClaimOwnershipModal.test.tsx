@@ -120,7 +120,7 @@ describe('Claim Repository Modal - repositories section', () => {
       expect(getByTestId('select_claim_orgs')).toBeInTheDocument();
       expect(getByTestId('claimRepoBtn')).toBeInTheDocument();
       expect(
-        getByText(/Please make sure the email used in the metatata file matches with the one you use in Artifact Hub./g)
+        getByText(/Please make sure the email used in the metatata file matches with the one you use in/g)
       ).toBeInTheDocument();
       expect(getByText('It may take a few minutes for this change to be visible across the Hub.')).toBeInTheDocument();
 
@@ -157,7 +157,7 @@ describe('Claim Repository Modal - repositories section', () => {
       expect(getByTestId('select_claim_orgs')).toBeInTheDocument();
       expect(getByTestId('claimRepoBtn')).toBeInTheDocument();
       expect(
-        getByText(/Please make sure the email used in the metatata file matches with the one you use in Artifact Hub./g)
+        getByText(/Please make sure the email used in the metatata file matches with the one you use in/g)
       ).toBeInTheDocument();
       expect(getByText('It may take a few minutes for this change to be visible across the Hub.')).toBeInTheDocument();
 

@@ -173,7 +173,7 @@ exports[`Organization settings index creates snapshot 1`] = `
     >
       <button
         aria-label="Action"
-        class="btn btn-sm btn-secondary"
+        class="btn btn-sm btn-outline-secondary"
         data-testid="updateOrgBtn"
         type="button"
       >

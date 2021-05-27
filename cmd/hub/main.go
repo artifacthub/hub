@@ -59,8 +59,8 @@ func main() {
 	// Setup and launch http server
 	ctx, stop := context.WithCancel(context.Background())
 	hSvc := &handlers.Services{
-		OrganizationManager: org.NewManager(db, es, az),
-		UserManager:         user.NewManager(db, es),
+		OrganizationManager: org.NewManager(cfg, db, es, az),
+		UserManager:         user.NewManager(cfg, db, es),
 		RepositoryManager:   repo.NewManager(cfg, db, az, hc),
 		PackageManager:      pkg.NewManager(db),
 		SubscriptionManager: subscription.NewManager(db),
@@ -114,6 +114,7 @@ func main() {
 
 	// Setup and launch notifications dispatcher
 	nSvc := &notification.Services{
+		Cfg:                 cfg,
 		DB:                  db,
 		ES:                  es,
 		NotificationManager: notification.NewManager(),
@@ -122,7 +123,7 @@ func main() {
 		PackageManager:      pkg.NewManager(db),
 		HTTPClient:          hc,
 	}
-	notificationsDispatcher := notification.NewDispatcher(cfg, nSvc)
+	notificationsDispatcher := notification.NewDispatcher(nSvc)
 	wg.Add(1)
 	go notificationsDispatcher.Run(ctx, &wg)
 

@@ -11,6 +11,7 @@ import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import { OCI_PREFIX, RepoKindDef, REPOSITORY_KINDS } from '../../../utils/data';
+import getMetaTag from '../../../utils/getMetaTag';
 import ExternalLink from '../../common/ExternalLink';
 import InputField from '../../common/InputField';
 import Modal from '../../common/Modal';
@@ -58,9 +59,8 @@ const RepositoryModal = (props: Props) => {
     setUrlContainsTreeTxt(e.target.value.includes('/tree/'));
   };
 
-  const allowPrivateRepositories: boolean = document.querySelector(`meta[name='artifacthub:allowPrivateRepositories']`)
-    ? document.querySelector(`meta[name='artifacthub:allowPrivateRepositories']`)!.getAttribute('content') === 'true'
-    : false;
+  const allowPrivateRepositories: boolean = getMetaTag('allowPrivateRepositories', true);
+  const siteName = getMetaTag('siteName');
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
@@ -351,7 +351,11 @@ const RepositoryModal = (props: Props) => {
               <button
                 data-testid="confirmDisabledRepo"
                 type="button"
-                className={classnames('btn btn-sm ml-3', { 'btn-dark': !isValidInput }, { 'btn-danger': isValidInput })}
+                className={classnames(
+                  'btn btn-sm ml-3',
+                  { 'btn-outline-secondary': !isValidInput },
+                  { 'btn-danger': isValidInput }
+                )}
                 onClick={(e) => {
                   e.preventDefault();
                   setIsDisabled(!isDisabled);
@@ -366,7 +370,7 @@ const RepositoryModal = (props: Props) => {
           ) : (
             <button
               data-testid="repoBtn"
-              className="btn btn-sm btn-secondary"
+              className="btn btn-sm btn-outline-secondary"
               type="button"
               disabled={isSending || visibleDisabledConfirmation}
               onClick={submitForm}
@@ -417,7 +421,7 @@ const RepositoryModal = (props: Props) => {
 
             <p>
               You can enable back your repository at any time and the information available in the source repository
-              will be indexed and made available in Artifact Hub again.
+              will be indexed and made available in {siteName} again.
             </p>
 
             <p>

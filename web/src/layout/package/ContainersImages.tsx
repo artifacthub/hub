@@ -43,7 +43,7 @@ const ContainersImages = (props: Props) => {
           {!isUndefined(containerImage.image) && (
             <ButtonCopyToClipboard
               text={containerImage.image}
-              className={`btn-link text-secondary border-0 ${styles.copyBtn}`}
+              className={`btn-link text-dark border-0 ${styles.copyBtn}`}
               label={`Copy ${containerImage.name || containerImage.image} container image to clipboard`}
             />
           )}
@@ -98,7 +98,7 @@ const ContainersImages = (props: Props) => {
       itemsForModal: (
         <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
           <thead>
-            <tr className={`table-primary ${styles.tableTitle}`}>
+            <tr className={styles.tableTitle}>
               <th scope="col">
                 <span className="px-1">Image</span>
               </th>

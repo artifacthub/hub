@@ -23,6 +23,16 @@ import (
 )
 
 const (
+	cspPolicy = `
+	default-src 'none';
+	connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev;
+	font-src 'self';
+	img-src 'self' data: https:;
+	manifest-src 'self';
+	script-src 'self' https://www.google-analytics.com;
+	style-src 'self' 'unsafe-inline'
+	`
+
 	indexCacheMaxAge = 5 * time.Minute
 
 	// DocsCacheMaxAge is the cache max age used when serving the docs.
@@ -113,6 +123,50 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(data)
 }
 
+// Index is an http handler that serves the index.html file.
+func (h *Handlers) Index(w http.ResponseWriter, r *http.Request) {
+	// Set headers
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(indexCacheMaxAge))
+	w.Header().Set("Content-Security-Policy", cspPolicy)
+
+	// Execute index template
+	title, _ := r.Context().Value(hub.IndexMetaTitleKey).(string)
+	if title == "" {
+		title = h.cfg.GetString("theme.siteName")
+	}
+	description, _ := r.Context().Value(hub.IndexMetaDescriptionKey).(string)
+	if description == "" {
+		description = "Find, install and publish Kubernetes packages"
+	}
+	openGraphImage := h.cfg.GetString("theme.images.openGraphImage")
+	if !strings.HasPrefix(openGraphImage, "http") {
+		openGraphImage = h.cfg.GetString("server.baseURL") + openGraphImage
+	}
+	data := map[string]interface{}{
+		"allowPrivateRepositories": h.cfg.GetBool("server.allowPrivateRepositories"),
+		"appleTouchIcon192":        h.cfg.GetString("theme.images.appleTouchIcon192"),
+		"appleTouchIcon512":        h.cfg.GetString("theme.images.appleTouchIcon512"),
+		"description":              description,
+		"gaTrackingID":             h.cfg.GetString("analytics.gaTrackingID"),
+		"githubAuth":               h.cfg.IsSet("server.oauth.github"),
+		"googleAuth":               h.cfg.IsSet("server.oauth.google"),
+		"motd":                     h.cfg.GetString("server.motd"),
+		"motdSeverity":             h.cfg.GetString("server.motdSeverity"),
+		"oidcAuth":                 h.cfg.IsSet("server.oauth.oidc"),
+		"openGraphImage":           openGraphImage,
+		"primaryColor":             h.cfg.GetString("theme.colors.primary"),
+		"secondaryColor":           h.cfg.GetString("theme.colors.secondary"),
+		"shortcutIcon":             h.cfg.GetString("theme.images.shortcutIcon"),
+		"siteName":                 h.cfg.GetString("theme.siteName"),
+		"title":                    title,
+		"websiteLogo":              h.cfg.GetString("theme.images.websiteLogo"),
+	}
+	if err := h.indexTmpl.Execute(w, data); err != nil {
+		h.logger.Error().Err(err).Msg("error executing index template")
+		http.Error(w, "", http.StatusInternalServerError)
+	}
+}
+
 // SaveImage is an http handler that stores the provided image returning its id.
 func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
 	data, err := ioutil.ReadAll(r.Body)
@@ -129,45 +183,6 @@ func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
 	}
 	dataJSON := []byte(fmt.Sprintf(`{"image_id": "%s"}`, imageID))
 	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
-}
-
-// ServeIndex is an http handler that serves the index.html file.
-func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(indexCacheMaxAge))
-	w.Header().Set("Content-Security-Policy", `
-		default-src 'none';
-		connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev;
-		font-src 'self';
-		img-src 'self' data: https:;
-		manifest-src 'self';
-		script-src 'self' https://www.google-analytics.com;
-		style-src 'self' 'unsafe-inline'
-	`)
-
-	// Execute index template
-	title, _ := r.Context().Value(hub.IndexMetaTitleKey).(string)
-	if title == "" {
-		title = "Artifact Hub"
-	}
-	description, _ := r.Context().Value(hub.IndexMetaDescriptionKey).(string)
-	if description == "" {
-		description = "Find, install and publish Kubernetes packages"
-	}
-	data := map[string]interface{}{
-		"baseURL":                  h.cfg.GetString("server.baseURL"),
-		"title":                    title,
-		"description":              description,
-		"gaTrackingID":             h.cfg.GetString("analytics.gaTrackingID"),
-		"allowPrivateRepositories": h.cfg.GetBool("server.allowPrivateRepositories"),
-		"githubAuth":               h.cfg.IsSet("server.oauth.github"),
-		"googleAuth":               h.cfg.IsSet("server.oauth.google"),
-		"oidcAuth":                 h.cfg.IsSet("server.oauth.oidc"),
-		"motd":                     h.cfg.GetString("server.motd"),
-		"motdSeverity":             h.cfg.GetString("server.motdSeverity"),
-	}
-	if err := h.indexTmpl.Execute(w, data); err != nil {
-		h.logger.Error().Err(err).Msg("Error executing index template")
-	}
 }
 
 // FileServer sets up a http.FileServer handler to serve static files.

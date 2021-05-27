@@ -38,7 +38,7 @@ const UpdateOrganization = (props: Props) => {
       <div className="mt-4">
         <ActionBtn
           testId="updateOrgBtn"
-          className="btn btn-sm btn-secondary"
+          className="btn btn-sm btn-outline-secondary"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             submitForm();

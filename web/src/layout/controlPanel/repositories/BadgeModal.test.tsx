@@ -46,7 +46,7 @@ describe('Badge Modal - repositories section', () => {
       );
       expect(
         getByText(
-          `[![Artifact HUB](https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name})](http://localhost/packages/search?repo=${repoMock.name})`
+          `[![null](https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name})](http://localhost/packages/search?repo=${repoMock.name})`
         )
       ).toBeInTheDocument();
     });
@@ -67,7 +67,7 @@ describe('Badge Modal - repositories section', () => {
       );
       expect(
         getByText(
-          `http://localhost/packages/search?repo=${repoMock.name}[image:https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}[Artifact HUB]]`
+          `http://localhost/packages/search?repo=${repoMock.name}[image:https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}[null]]`
         )
       ).toBeInTheDocument();
     });

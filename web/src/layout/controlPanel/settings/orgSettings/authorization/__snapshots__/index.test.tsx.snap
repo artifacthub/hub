@@ -33,7 +33,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
       class="mt-4 mt-md-5"
     >
       <p>
-        Artifact Hub allows you to setup fine-grained access control based on authorization policies. Authorization polices are written in 
+         allows you to setup fine-grained access control based on authorization policies. Authorization polices are written in 
         <a
           aria-label="Open rego documentation"
           class="link text-reset link"

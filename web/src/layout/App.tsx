@@ -11,6 +11,7 @@ import buildSearchParams from '../utils/buildSearchParams';
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import history from '../utils/history';
 import lsPreferences from '../utils/localStoragePreferences';
+import themeBuilder from '../utils/themeBuilder';
 import AlertController from './common/AlertController';
 import UserNotificationsController from './common/userNotifications';
 import ControlPanelView from './controlPanel';
@@ -41,6 +42,7 @@ export default function App() {
   const [scrollPosition, setScrollPosition] = useState<undefined | number>(undefined);
 
   useEffect(() => {
+    themeBuilder.init();
     const activeProfile = lsPreferences.getActiveProfile();
     const theme =
       activeProfile.theme.configured === 'automatic' ? detectActiveThemeMode() : activeProfile.theme.configured;
@@ -55,7 +57,7 @@ export default function App() {
   return (
     <AppCtxProvider>
       <Router history={history}>
-        <div className="d-flex flex-column min-vh-100 position-relative">
+        <div className="d-flex flex-column min-vh-100 position-relative whiteBranded">
           <div className="sr-only sr-only-focusable">
             <a href="#content">Skip to Main Content</a>
           </div>

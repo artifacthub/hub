@@ -50,7 +50,7 @@ const RecommendedPackages = (props: Props) => {
     <div className={`d-none d-md-block ${styles.wrapper}`}>
       <div className="container-lg px-lg-0 py-2">
         <div className="mt-3 mb-2">
-          <small className="text-secondary font-weight-bold">Other packages recommended by the publisher:</small>
+          <small className="text-dark font-weight-bold">Other packages recommended by the publisher:</small>
         </div>
 
         <div className="flex flex-column pb-3 pt-2">

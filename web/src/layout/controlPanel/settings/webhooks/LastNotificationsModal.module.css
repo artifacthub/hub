@@ -10,10 +10,6 @@
   font-size: 0.8rem;
 }
 
-.tableTitle th {
-  border-bottom-color: var(--color-1-300) !important;
-}
-
 .icon {
   color: inherit;
 }

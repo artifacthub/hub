@@ -55,9 +55,6 @@ describe('updateMetaIndex', () => {
     );
 
     updateMetaIndex();
-    expect(document.title).toBe(placeholder.title);
-    expect(container.querySelector(`meta[property='og:title']`)).toHaveAttribute('content', placeholder.title);
-    expect(container.querySelector(`meta[name='twitter:title']`)).toHaveAttribute('content', placeholder.title);
     expect(container.querySelector(`meta[name='description']`)).toHaveAttribute('content', placeholder.description);
     expect(container.querySelector(`meta[property='og:description']`)).toHaveAttribute(
       'content',

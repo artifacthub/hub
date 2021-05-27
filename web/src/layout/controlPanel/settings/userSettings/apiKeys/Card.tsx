@@ -68,7 +68,7 @@ const APIKeyCard = (props: Props) => {
                 closeButton={
                   <>
                     <button
-                      className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                      className="btn btn-sm btn-outline-secondary text-uppercase"
                       onClick={() => setDeletionModalStatus(false)}
                       aria-label="Cancel"
                     >
@@ -126,7 +126,7 @@ const APIKeyCard = (props: Props) => {
 
                 <button
                   data-testid="updateAPIKeyBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
@@ -145,7 +145,7 @@ const APIKeyCard = (props: Props) => {
 
                 <button
                   data-testid="deleteAPIKeyModalBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
@@ -161,7 +161,7 @@ const APIKeyCard = (props: Props) => {
               </div>
 
               <button
-                className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                className={`btn p-0 text-primary text-center iconSubsWrapper ${styles.btnDropdown}`}
                 onClick={() => setDropdownMenuStatus(true)}
                 aria-label="Open menu"
                 aria-expanded={dropdownMenuStatus}
@@ -180,7 +180,7 @@ const APIKeyCard = (props: Props) => {
               <div className={`position-absolute ${styles.copyBtnWrapper}`}>
                 <ButtonCopyToClipboard
                   text={props.apiKey.apiKeyId!}
-                  className="btn-link border-0 text-secondary font-weight-bold"
+                  className="btn-link border-0 text-dark font-weight-bold"
                   label="Copy API key ID to clipboard"
                 />
               </div>

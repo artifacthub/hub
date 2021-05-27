@@ -83,7 +83,7 @@ const InstallationModal = (props: Props) => {
             data-testid="openModalBtn"
             type="button"
             className={classnames(
-              'btn font-weight-bold text-uppercase position-relative btn-block btn-secondary btn-sm text-nowrap',
+              'btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap',
               { disabled: isDisabled }
             )}
             onClick={onOpenModal}

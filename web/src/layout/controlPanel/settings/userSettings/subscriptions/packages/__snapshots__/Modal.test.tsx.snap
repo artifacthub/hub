@@ -197,7 +197,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Search by "
-                        class="btn btn-secondary ml-3 text-center p-0 searchBtn"
+                        class="btn btn-outline-secondary ml-3 text-center p-0 searchBtn"
                         data-testid="searchIconBtn"
                         disabled=""
                         type="button"
@@ -233,7 +233,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
           >
             <button
               aria-label="Add subscription"
-              class="btn btn-sm btn-secondary"
+              class="btn btn-sm btn-outline-secondary"
               data-testid="addSubsModalBtn"
               disabled=""
               type="button"

@@ -123,7 +123,7 @@ const ChangelogModal = (props: Props) => {
         element={
           <button
             data-testid="changelogBtn"
-            className={classnames('btn btn-secondary btn-block btn-sm text-nowrap', {
+            className={classnames('btn btn-outline-secondary btn-block btn-sm text-nowrap', {
               disabled: !props.hasChangelog,
             })}
             onClick={onOpenModal}
@@ -172,11 +172,11 @@ const ChangelogModal = (props: Props) => {
                 <div key={`v_${item.version}`} data-testid="changelogBlock">
                   <div className="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2">
                     <div className={`d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
-                      <div className="h5 text-secondary text-truncate mb-0" data-testid="changelogBlockTitle">
+                      <div className="h5 text-dark text-truncate mb-0" data-testid="changelogBlockTitle">
                         {item.version}
                       </div>
                       <button
-                        className={`btn btn-link btn-sm text-secondary py-0 position-relative ${styles.btnLink}`}
+                        className={`btn btn-link btn-sm text-dark py-0 position-relative ${styles.btnLink}`}
                         onClick={() => openPackagePage(item.version)}
                         aria-label={`Open version ${item.version}`}
                       >

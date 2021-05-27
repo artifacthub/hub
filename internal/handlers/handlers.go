@@ -90,7 +90,7 @@ func Setup(ctx context.Context, cfg *viper.Viper, svc *Services) (*Handlers, err
 
 		Organizations: org.NewHandlers(svc.OrganizationManager, svc.Authorizer, cfg),
 		Users:         userHandlers,
-		Repositories:  repo.NewHandlers(svc.RepositoryManager),
+		Repositories:  repo.NewHandlers(cfg, svc.RepositoryManager),
 		Packages:      pkg.NewHandlers(svc.PackageManager, svc.RepositoryManager, cfg, svc.HTTPClient),
 		Subscriptions: subscription.NewHandlers(svc.SubscriptionManager),
 		Webhooks:      webhook.NewHandlers(svc.WebhookManager, svc.HTTPClient),
@@ -142,7 +142,7 @@ func (h *Handlers) setupRouter() {
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.Users.BasicAuth)
 	}
-	r.NotFound(h.Static.ServeIndex)
+	r.NotFound(h.Static.Index)
 
 	// API
 	r.Route("/api/v1", func(r chi.Router) {
@@ -384,8 +384,8 @@ func (h *Handlers) setupRouter() {
 	// Index special entry points
 	r.Route("/packages", func(r chi.Router) {
 		r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler|^coredns$}/{repoName}/{packageName}", func(r chi.Router) {
-			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.ServeIndex)
-			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.ServeIndex)
+			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.Index)
+			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.Index)
 		})
 	})
 
@@ -408,7 +408,7 @@ func (h *Handlers) setupRouter() {
 		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(5*time.Minute))
 		http.ServeFile(w, r, path.Join(widgetBuildPath, "static/js/artifacthub-widget.js"))
 	})
-	r.Get("/", h.Static.ServeIndex)
+	r.Get("/", h.Static.Index)
 
 	h.Router = r
 }

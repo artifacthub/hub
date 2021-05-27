@@ -138,7 +138,7 @@ const APIKeyModal = (props: Props) => {
   const sendBtn = (
     <button
       data-testid="apiKeyFormBtn"
-      className="btn btn-sm btn-secondary"
+      className="btn btn-sm btn-outline-secondary"
       type="button"
       disabled={isSending}
       onClick={submitForm}

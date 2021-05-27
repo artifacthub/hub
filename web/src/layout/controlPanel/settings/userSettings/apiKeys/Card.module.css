@@ -6,8 +6,9 @@
   height: 1.75rem;
   width: 1.75rem;
   border-radius: 50% !important;
-  background-color: var(--color-1-10) !important;
-  line-height: 1rem;
+  background-color: var(--white) !important;
+  border-color: var(--color-1-500);
+  line-height: 0.85rem;
 }
 
 .dropdownMenu {

@@ -42,7 +42,7 @@ const OrganizationModal = (props: Props) => {
       modalClassName={styles.modal}
       closeButton={
         <button
-          className="btn btn-sm btn-secondary"
+          className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isSending}
           onClick={submitForm}

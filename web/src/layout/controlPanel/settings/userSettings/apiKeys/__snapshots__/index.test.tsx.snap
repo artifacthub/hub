@@ -41,7 +41,7 @@ exports[`API keys section index creates snapshot 1`] = `
           <div>
             <button
               aria-label="Open modal to add API key"
-              class="btn btn-secondary btn-sm text-uppercase btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
               data-testid="addAPIKeyBtn"
             >
               <div
@@ -135,7 +135,7 @@ exports[`API keys section index creates snapshot 1`] = `
                 >
                   <button
                     aria-label="Add API key"
-                    class="btn btn-sm btn-secondary"
+                    class="btn btn-sm btn-outline-secondary"
                     data-testid="apiKeyFormBtn"
                     type="button"
                   >

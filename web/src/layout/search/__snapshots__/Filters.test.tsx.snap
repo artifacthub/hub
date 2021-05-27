@@ -134,7 +134,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-secondary font-weight-bold"
+            class="text-dark font-weight-bold"
             id="repo-kind-undefined"
             role="heading"
           >
@@ -298,7 +298,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-secondary font-weight-bold"
+            class="text-dark font-weight-bold"
             role="heading"
           >
             Category
@@ -621,7 +621,7 @@ exports[`Filters creates snapshot 1`] = `
             >
               <span
                 aria-level="5"
-                class="text-secondary font-weight-bold pt-2"
+                class="text-dark font-weight-bold pt-2"
                 role="heading"
               >
                 publisher
@@ -629,7 +629,7 @@ exports[`Filters creates snapshot 1`] = `
             </small>
           </div>
           <svg
-            class="mt-2 mb-1 text-secondary"
+            class="mt-2 mb-1 text-dark"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -675,7 +675,7 @@ exports[`Filters creates snapshot 1`] = `
             >
               <span
                 aria-level="5"
-                class="text-secondary font-weight-bold pt-2"
+                class="text-dark font-weight-bold pt-2"
                 role="heading"
               >
                 repository
@@ -683,7 +683,7 @@ exports[`Filters creates snapshot 1`] = `
             </small>
           </div>
           <svg
-            class="mt-2 mb-1 text-secondary"
+            class="mt-2 mb-1 text-dark"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -729,7 +729,7 @@ exports[`Filters creates snapshot 1`] = `
             >
               <span
                 aria-level="5"
-                class="text-secondary font-weight-bold pt-2"
+                class="text-dark font-weight-bold pt-2"
                 role="heading"
               >
                 license
@@ -737,7 +737,7 @@ exports[`Filters creates snapshot 1`] = `
             </small>
           </div>
           <svg
-            class="mt-2 mb-1 text-secondary"
+            class="mt-2 mb-1 text-dark"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -775,7 +775,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-secondary font-weight-bold"
+            class="text-dark font-weight-bold"
             id="pkg-capabilities-undefined"
             role="heading"
           >
@@ -973,7 +973,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-secondary font-weight-bold"
+            class="text-dark font-weight-bold"
             role="heading"
           >
             Others

@@ -1,29 +1,12 @@
 [data-theme='light'] {
-  --border-md: #eaecef;
+  --border-md: #dee2e6;
   --code-bg-md: #f6f8fa;
   --body-light-bg: #f9f9f9;
-
-  --color-1-100: #f1f6fa;
-  --color-1-200: #d9e3ea;
-  --color-1-300: #b3c7d5;
-  --color-1-400: #7a9eb6;
-  --color-1-500: #417598;
-  --color-1-600: #345d79;
-  --color-1-700: #2d4857;
-  --color-1-800: #243945;
-  --color-1-900: #1c2c35;
 
   --color-1-2: rgba(65, 117, 152, 0.02);
   --color-1-5: rgba(65, 117, 152, 0.05);
   --color-1-10: rgba(65, 117, 152, 0.1);
   --color-1-20: rgba(65, 117, 152, 0.2);
-  --color-1-95: rgba(65, 117, 152, 0.95);
-  --color-2-500: #b0cee0;
-
-  --color-2-10: rgba(45, 72, 87, 0.1);
-
-  --color-3-10: rgba(101, 157, 189, 0.1);
-  --color-3-50: rgba(101, 157, 189, 0.5);
 
   --color-black-5: rgba(0, 0, 0, 0.05);
   --color-black-15: rgba(0, 0, 0, 0.15);
@@ -39,13 +22,12 @@
   --body-bg: #f9f9f9;
   --light-gray: #e9ecef;
   --extra-light-gray: #fcfcfc;
-  --mid-gray: #495057;
-
-  --highlighted: var(--color-1-500);
+  --mid-gray: #6c757d;
 
   // $theme-colors for Bootstrap
   $color1: #417598;
-  $color2: #335061;
+  $color2: #2d4857;
+  $color3: #6c757d;
 
   body {
     background-color: var(--body-bg);
@@ -58,7 +40,7 @@
 
   a.textLight:hover,
   a.textLight:focus {
-    color: #cbd3da !important;
+    color: var(--color-1-200) !important;
   }
 
   .dropdown-item {
@@ -93,91 +75,139 @@
 
   .page-item {
     &.active .page-link {
-      background-color: $color1;
-      border-color: #dee2e6;
+      background-color: var(--color-1-500);
+      border-color: var(--color-1-100);
     }
   }
 
   .page-link {
-    color: $color1;
-  }
-
-  .btn-primary {
-    @include button-variant($color1, $color1);
-  }
-
-  .btn-secondary,
-  .badge-secondary {
-    @include button-variant($color2, $color2);
-  }
-
-  .btn-outline-secondary {
-    @include button-outline-variant($color2);
+    color: var(--color-1-500);
   }
 
   .text-primary {
-    color: $color1 !important;
+    color: var(--color-1-500) !important;
 
     &:hover,
     &:focus {
-      color: darken($color1, $emphasized-link-hover-darken-percentage) !important;
+      color: var(--color-1-700) !important;
     }
   }
 
-  .table-primary,
-  .table-primary > td,
-  .table-primary > th {
-    background-color: #d4e4ed;
-    border-color: #d4e4ed;
-  }
-
-  .table-hover .table-primary:hover,
-  .table-hover .table-primary:hover > td,
-  .table-hover .table-primary:hover > th {
-    background-color: #c2d9e5;
-  }
-
   .alert-primary {
-    color: #355262;
-    background-color: #e0ebf2;
-    border-color: #d4e4ed;
+    color: var(--dark);
+    background-color: var(--color-1-5);
+    border-color: var(--color-black-25);
+  }
+
+  .table th {
+    background-color: var(--color-1-5);
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: var(--color-2-500);
   }
 
   .text-secondary {
-    color: $color2 !important;
+    color: var(--color-1-700) !important;
 
     &:hover,
     &:focus {
-      color: $color2 !important;
+      color: var(--color-1-700) !important;
     }
   }
 
   .btn-link,
-  a {
-    color: $color1;
+  a:not(.dropdown-item) {
+    color: var(--mid-gray);
 
     &:hover,
     &:focus {
-      color: darken($color1, $emphasized-link-hover-darken-percentage);
+      color: var(--mid-gray);
     }
   }
 
   .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--color-1-500);
+    border-color: var(--color-1-500);
+  }
+
+  .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
     background-color: $color1;
     border-color: $color1;
   }
 
-  .custom-select:focus {
-    border-color: #bed6e3;
+  .custom-select:focus,
+  .form-control:focus {
+    border-color: $color3;
   }
 
   .dropdown-item:hover,
   .dropdown-item:focus {
-    background-color: rgba(101, 157, 189, 0.5);
+    background-color: var(--color-2-500);
   }
 
   button.text-dark:hover,
   button.text-dark:focus {
     color: #121416 !important;
+  }
+
+  .btn-light {
+    &:not(.disabled):not(:disabled):hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: var(--color-2-500);
+    }
+  }
+
+  .btn-primary {
+    background-color: var(--color-1-500);
+    border-color: var(--color-1-500);
+    color: var(--white) !important;
+
+    &:not(.disabled):not(:disabled):hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: var(--color-1-600) !important;
+      border-color: var(--color-1-700) !important;
+      color: var(--white);
+    }
+  }
+
+  .btn-secondary,
+  .badge-secondary {
+    background-color: var(--color-1-700);
+    border-color: var(--color-1-700);
+    color: var(--white) !important;
+
+    &:not(.disabled):not(:disabled):hover,
+    &:focus,
+    &:active {
+      background-color: var(--color-1-800) !important;
+      border-color: var(--color-1-900);
+      color: var(--white);
+    }
+  }
+
+  // .btn-outline-secondary {
+  //   background-color: var(--white);
+  //   border-color: var(--color-1-700);
+  //   color: var(--color-1-700);
+  //   // @include button-variant($color3, $color3);
+  // }
+
+  .btn-outline-secondary {
+    background-color: var(--white);
+    border-color: var(--color-1-700);
+    color: var(--color-1-700);
+
+    &:not(.disabled):not(:disabled):hover,
+    &:focus,
+    &:active {
+      background-color: var(--color-1-700) !important;
+      border-color: var(--color-1-700) !important;
+      color: var(--white);
+    }
   }
 }

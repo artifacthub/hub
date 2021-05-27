@@ -39,7 +39,7 @@
 .md code {
   word-wrap: normal;
   white-space: pre;
-  color: var(--color-1-700);
+  color: var(--dark);
 }
 
 .md *:not(pre):not(td) > code {
@@ -116,10 +116,6 @@
 }
 
 @media only screen and (max-width: 575.98px) {
-  /* .md {
-    margin-left: 15px;
-  } */
-
   .md code {
     font-size: 0.8rem;
   }

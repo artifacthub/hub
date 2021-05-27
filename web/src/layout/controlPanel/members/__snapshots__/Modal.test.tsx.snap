@@ -111,7 +111,7 @@ exports[`Members Modal - members section creates snapshot 1`] = `
           >
             <button
               aria-label="Invite member"
-              class="btn btn-sm btn-secondary"
+              class="btn btn-sm btn-outline-secondary"
               data-testid="membersFormBtn"
               type="button"
             >

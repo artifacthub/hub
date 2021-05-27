@@ -52,11 +52,11 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                 novalidate=""
               >
                 <div
-                  class="form-check mb-3"
+                  class="custom-control custom-radio mb-3"
                 >
                   <input
                     checked=""
-                    class="form-check-input"
+                    class="custom-control-input"
                     data-testid="radio_user"
                     id="user"
                     name="transfer"
@@ -65,17 +65,17 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                     value="user"
                   />
                   <label
-                    class="form-check-label font-weight-bold label"
+                    class="custom-control-label font-weight-bold label"
                     for="user"
                   >
                     Transfer to my user
                   </label>
                 </div>
                 <div
-                  class="form-check mb-3"
+                  class="custom-control custom-radio mb-3"
                 >
                   <input
-                    class="form-check-input"
+                    class="custom-control-input"
                     data-testid="radio_org"
                     id="org"
                     name="transfer"
@@ -84,7 +84,7 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                     value="org"
                   />
                   <label
-                    class="form-check-label font-weight-bold label"
+                    class="custom-control-label font-weight-bold label"
                     for="org"
                   >
                     Transfer to organization
@@ -137,7 +137,7 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
           >
             <button
               aria-label="Transfer repository"
-              class="btn btn-sm btn-secondary"
+              class="btn btn-sm btn-outline-secondary"
               data-testid="transferRepoBtn"
               type="button"
             >

@@ -68,7 +68,7 @@ const WebhooksSection = (props: Props) => {
 
                   <div>
                     <button
-                      className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
+                      className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                       onClick={() => setVisibleForm({ visible: true })}
                       data-testid="addWebhookBtn"
                       aria-label="Open form"
@@ -101,7 +101,7 @@ const WebhooksSection = (props: Props) => {
 
                             <button
                               type="button"
-                              className="btn btn-secondary"
+                              className="btn btn-outline-secondary"
                               onClick={() => setVisibleForm({ visible: true })}
                               data-testid="addFirstWebhookBtn"
                               aria-label="Open form"
