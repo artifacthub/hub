@@ -180,6 +180,9 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 	version := sv.String()
 
 	// Prepare chart archive url
+	if len(chartVersion.URLs) == 0 {
+		return nil, errors.New("chart version does not contain any url")
+	}
 	chartURL, err := url.Parse(chartVersion.URLs[0])
 	if err != nil {
 		return nil, fmt.Errorf("invalid chart url %s: %w", chartVersion.URLs[0], err)

@@ -182,6 +182,41 @@ func TestTrackerSource(t *testing.T) {
 		sw.AssertExpectations(t)
 	})
 
+	t.Run("invalid package version (no urls)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				URL: "https://repo.url",
+			},
+			Svc: sw.Svc,
+		}
+		il := &repo.HelmIndexLoaderMock{}
+		il.On("LoadIndex", i.Repository).Return(&helmrepo.IndexFile{
+			Entries: map[string]helmrepo.ChartVersions{
+				"pkg1": []*helmrepo.ChartVersion{
+					{
+						Metadata: &chart.Metadata{
+							APIVersion: "v2",
+							Name:       "pkg1",
+							Version:    "1.0.0",
+						},
+					},
+				},
+			},
+		}, "", nil)
+		expectedErr := "error preparing package: chart version does not contain any url (package: pkg1 version: 1.0.0)"
+		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
+
 	t.Run("error loading chart archive", func(t *testing.T) {
 		t.Parallel()
 
