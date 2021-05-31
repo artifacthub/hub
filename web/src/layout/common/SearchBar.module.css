@@ -100,6 +100,15 @@
   margin-right: 0.5rem;
 }
 
+.tipIcon {
+  right: -12px;
+  top: -18px;
+}
+
+.bigTipIcon {
+  right: -40px;
+}
+
 @media only screen and (max-width: 767.98px) {
   .searchBar {
     height: 30px;
@@ -118,5 +127,11 @@
   .big + .loading {
     right: -45px;
     top: 5px;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .bigTipIcon {
+    right: -37px;
   }
 }

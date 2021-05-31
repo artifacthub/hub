@@ -169,8 +169,8 @@
     &:focus,
     &:active,
     &.active {
-      background-color: var(--color-1-600) !important;
-      border-color: var(--color-1-700) !important;
+      background-color: var(--color-1-600);
+      border-color: var(--color-1-700);
       color: var(--white);
     }
   }
@@ -184,18 +184,25 @@
     &:not(.disabled):not(:disabled):hover,
     &:focus,
     &:active {
-      background-color: var(--color-1-800) !important;
+      background-color: var(--color-1-800);
       border-color: var(--color-1-900);
       color: var(--white);
     }
   }
 
-  // .btn-outline-secondary {
-  //   background-color: var(--white);
-  //   border-color: var(--color-1-700);
-  //   color: var(--color-1-700);
-  //   // @include button-variant($color3, $color3);
-  // }
+  .btn-icon {
+    border-color: var(--color-1-500);
+    color: var(--color-1-500);
+    background-color: var(--white);
+
+    &:not(.disabled):not(:disabled):hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: var(--color-black-5);
+      color: var(--color-1-700);
+    }
+  }
 
   .btn-outline-secondary {
     background-color: var(--white);

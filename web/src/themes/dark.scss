@@ -119,6 +119,7 @@
   .btn-primary,
   .btn-secondary,
   .btn-light,
+  .btn-icon,
   a.badge-secondary {
     @include button-variant($color1, $border-solid);
 

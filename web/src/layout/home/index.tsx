@@ -11,6 +11,7 @@ import ExternalLink from '../common/ExternalLink';
 import RepositoryIcon from '../common/RepositoryIcon';
 import SampleQueries from '../common/SampleQueries';
 import SearchBar from '../common/SearchBar';
+import SearchTipsModal from '../common/SearchTipsModal';
 import UserInvitation from '../controlPanel/members/UserInvitation';
 import Counter from './Counter';
 import styles from './HomeView.module.css';
@@ -31,6 +32,7 @@ const HomeView = (props: Props) => {
   const history = useHistory();
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
+  const [openTips, setOpenTips] = useState<boolean>(false);
 
   const whiteLabel = isWhiteLabel();
 
@@ -78,7 +80,14 @@ const HomeView = (props: Props) => {
         </div>
 
         <div className="mt-5 text-center">
-          <SearchBar formClassName={`m-auto w-50 ${styles.search}`} size="big" isSearching={props.isSearching} />
+          <SearchBar
+            formClassName={`m-auto w-50 ${styles.search}`}
+            size="big"
+            isSearching={props.isSearching}
+            openTips={openTips}
+            setOpenTips={setOpenTips}
+          />
+          <SearchTipsModal size="big" openTips={openTips} setOpenTips={setOpenTips} />
           <SearchTip />
 
           <div className="d-inline-block d-md-none text-center mt-3">

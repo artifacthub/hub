@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import React, { useEffect, useRef, useState } from 'react';
+import { FaRegQuestionCircle } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
@@ -16,7 +17,6 @@ import Image from './Image';
 import OfficialBadge from './OfficialBadge';
 import RepositoryIconLabel from './RepositoryIconLabel';
 import styles from './SearchBar.module.css';
-import SearchTipsModal from './SearchTipsModal';
 import StarBadge from './StarBadge';
 
 interface Props {
@@ -24,6 +24,8 @@ interface Props {
   tsQueryWeb?: string;
   size: 'big' | 'normal';
   isSearching: boolean;
+  openTips: boolean;
+  setOpenTips: (status: boolean) => void;
 }
 
 const SEARCH_DELAY = 3 * 100; // 300ms
@@ -264,7 +266,23 @@ const SearchBar = (props: Props) => {
             <span aria-hidden="true">&times;</span>
           </button>
 
-          <SearchTipsModal size={props.size} />
+          {/* <SearchTipsModal size={props.size} /> */}
+          <div
+            className={classnames('position-absolute text-dark', styles.tipIcon, {
+              [styles.bigTipIcon]: props.size === 'big',
+            })}
+          >
+            <button
+              data-testid="openSearchTipsBtn"
+              onClick={() => props.setOpenTips(true)}
+              className={classnames('btn btn-link p-2 text-light', {
+                'btn-lg': props.size === 'big',
+              })}
+              aria-label="Open search tips modal"
+            >
+              <FaRegQuestionCircle />
+            </button>
+          </div>
         </div>
 
         {visibleDropdown && !isNull(packages) && (

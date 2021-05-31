@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { AppCtx } from '../../context/AppCtx';
 import getMetaTag from '../../utils/getMetaTag';
 import SearchBar from '../common/SearchBar';
+import SearchTipsModal from '../common/SearchTipsModal';
 import GuestDropdown from './GuestDropdown';
 import LogIn from './LogIn';
 import MobileSettings from './MobileSettings';
@@ -30,6 +31,7 @@ const Navbar = (props: Props) => {
     (!isUndefined(props.visibleModal) && props.visibleModal === 'login');
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const [openLogIn, setOpenLogIn] = useState<boolean>(openLogInModal);
+  const [openTips, setOpenTips] = useState<boolean>(false);
   useEffect(() => {
     if (!isUndefined(props.redirect) && isNull(ctx.user)) {
       setOpenLogIn(true);
@@ -72,6 +74,8 @@ const Navbar = (props: Props) => {
               formClassName={`mx-2 mr-md-auto my-3 my-md-0 flex-grow-1 pr-4 ${styles.search}`}
               isSearching={props.isSearching}
               tsQueryWeb={props.searchText}
+              openTips={openTips}
+              setOpenTips={setOpenTips}
             />
           )}
 
@@ -153,6 +157,8 @@ const Navbar = (props: Props) => {
           visibleModal={props.visibleModal}
         />
       )}
+
+      {isUndefined(props.fromHome) && <SearchTipsModal size="normal" openTips={openTips} setOpenTips={setOpenTips} />}
     </>
   );
 };

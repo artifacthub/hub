@@ -3,12 +3,19 @@
   min-width: 18px;
   height: 18px;
   line-height: 1rem;
-  top: 0;
 }
 
 .ctxBtn {
   width: 210px;
   line-height: 1rem;
+  border-color: var(--color-1-500);
+}
+
+.ctxBtn:not(.disabled):not(:disabled):hover,
+.ctxBtn:focus,
+.ctxBtn:active,
+.ctxBtn.active {
+  border-color: var(--color-1-500) !important;
 }
 
 .loading {
