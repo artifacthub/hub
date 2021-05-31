@@ -210,7 +210,7 @@ const MemberCard = (props: Props) => {
                   </div>
 
                   <button
-                    className={`btn p-0 text-primary text-center iconSubsWrapper ${styles.btnDropdown}`}
+                    className={`btn btn-icon p-0 text-primary text-center iconSubsWrapper ${styles.btnDropdown}`}
                     onClick={() => setDropdownMenuStatus(true)}
                     aria-label="Open menu"
                     aria-expanded={dropdownMenuStatus}

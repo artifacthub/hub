@@ -70,7 +70,7 @@ const UserContext = () => {
         <div className="d-flex flex-row align-items-center">
           <button
             data-testid="ctxBtn"
-            className={`btn btn-primary badge-pill border-0 btn-sm pr-3 position-relative ${styles.ctxBtn}`}
+            className={`btn btn-primary badge-pill btn-sm pr-3 position-relative ${styles.ctxBtn}`}
             type="button"
             onClick={() => {
               fetchOrganizations();

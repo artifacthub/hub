@@ -87,7 +87,7 @@ exports[`API key Card - API keys section creates snapshot 1`] = `
             <button
               aria-expanded="false"
               aria-label="Open menu"
-              class="btn p-0 text-primary text-center iconSubsWrapper btnDropdown"
+              class="btn btn-icon p-0 text-primary text-center iconSubsWrapper btnDropdown"
             >
               <svg
                 fill="currentColor"

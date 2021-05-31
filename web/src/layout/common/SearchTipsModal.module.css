@@ -5,15 +5,6 @@
   padding-bottom: 0;
 }
 
-.tipIcon {
-  right: -12px;
-  top: -18px;
-}
-
-.bigTipIcon {
-  right: -40px;
-}
-
 .closeModalBtn {
   margin: -1rem;
   padding: 1rem !important;
@@ -26,11 +17,5 @@
 
   .list {
     padding-inline-start: 20px;
-  }
-}
-
-@media only screen and (min-width: 576px) {
-  .bigTipIcon {
-    right: -37px;
   }
 }

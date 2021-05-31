@@ -1,6 +1,5 @@
-import classnames from 'classnames';
-import React, { useState } from 'react';
-import { FaRegLightbulb, FaRegQuestionCircle } from 'react-icons/fa';
+import React from 'react';
+import { FaRegLightbulb } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import { SearchTipItem } from '../../types';
@@ -11,77 +10,62 @@ import styles from './SearchTipsModal.module.css';
 
 interface Props {
   size: 'big' | 'normal';
+  openTips: boolean;
+  setOpenTips: (status: boolean) => void;
 }
 
 const SearchTipsModal = (props: Props) => {
-  const [openStatus, setOpenStatus] = useState<boolean>(false);
+  if (!props.openTips) return null;
 
   return (
-    <div
-      className={classnames('position-absolute text-dark', styles.tipIcon, {
-        [styles.bigTipIcon]: props.size === 'big',
-      })}
-    >
-      <button
-        data-testid="openSearchTipsBtn"
-        onClick={() => setOpenStatus(true)}
-        className={classnames('btn btn-link p-2 text-light', {
-          'btn-lg': props.size === 'big',
-        })}
-        aria-label="Open search tips modal"
-      >
-        <FaRegQuestionCircle />
-      </button>
-
-      <Modal noFooter onClose={() => setOpenStatus(false)} open={openStatus}>
-        <div className="mw-100 text-left">
-          <div className="d-flex flex-row justify-content-between mb-4">
-            <div className={`h3 d-flex flex-row align-items-baseline ${styles.title}`}>
-              Search tips
-              <FaRegLightbulb className="ml-2" />
-            </div>
-
-            <div>
-              <button
-                data-testid="closeModalBtn"
-                type="button"
-                className={`close ${styles.closeModalBtn}`}
-                onClick={() => {
-                  setOpenStatus(false);
-                }}
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+    <Modal noFooter onClose={() => props.setOpenTips(false)} open={props.openTips}>
+      <div className="mw-100 text-left">
+        <div className="d-flex flex-row justify-content-between mb-4">
+          <div className={`h3 d-flex flex-row align-items-baseline ${styles.title}`}>
+            Search tips
+            <FaRegLightbulb className="ml-2" />
           </div>
 
-          <ul className={`mb-0 ${styles.list}`}>
-            {SEARH_TIPS.map((tip: SearchTipItem, index: number) => (
-              <li data-testid="searchTip" className="my-1" key={`searchBarTip_${index}`}>
-                {tip.content} <small className="text-muted">Example:</small>{' '}
-                <Link
-                  data-testid="searchTipLink"
-                  className="font-weight-bold text-dark p-0"
-                  onClick={() => setOpenStatus(false)}
-                  to={{
-                    pathname: '/packages/search',
-                    search: prepareQueryString({
-                      pageNumber: 1,
-                      tsQueryWeb: tip.example,
-                      filters: {},
-                    }),
-                  }}
-                  aria-label={`Filter by ${tip.example}`}
-                >
-                  <u>{tip.example}</u>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <button
+              data-testid="closeModalBtn"
+              type="button"
+              className={`close ${styles.closeModalBtn}`}
+              onClick={() => {
+                props.setOpenTips(false);
+              }}
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
-      </Modal>
-    </div>
+
+        <ul className={`mb-0 ${styles.list}`}>
+          {SEARH_TIPS.map((tip: SearchTipItem, index: number) => (
+            <li data-testid="searchTip" className="my-1" key={`searchBarTip_${index}`}>
+              {tip.content} <small className="text-muted">Example:</small>{' '}
+              <Link
+                data-testid="searchTipLink"
+                className="font-weight-bold text-dark p-0"
+                onClick={() => props.setOpenTips(false)}
+                to={{
+                  pathname: '/packages/search',
+                  search: prepareQueryString({
+                    pageNumber: 1,
+                    tsQueryWeb: tip.example,
+                    filters: {},
+                  }),
+                }}
+                aria-label={`Filter by ${tip.example}`}
+              >
+                <u>{tip.example}</u>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Modal>
   );
 };
 
