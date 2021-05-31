@@ -55,7 +55,10 @@ export class ThemeBuilder {
       this.customColors.push({ name: '--color-1-600', color: tinycolor(this.primary).darken(10).toHexString() });
       this.customColors.push({ name: '--color-1-800', color: tinycolor(this.secondary).darken(5).toHexString() });
       this.customColors.push({ name: '--color-1-900', color: tinycolor(this.secondary).darken(10).toHexString() });
-      this.customColors.push({ name: '--color-2-300', color: tinycolor(this.primary).lighten(45).toHexString() });
+      this.customColors.push({
+        name: '--color-2-300',
+        color: tinycolor(this.primary).brighten(5).lighten(40).desaturate(20).toHexString(),
+      });
       this.customColors.push({ name: '--color-2-500', color: tinycolor(this.primary).lighten(35).toHexString() });
       this.customColors.push({ name: '--highlighted', color: this.primary });
     }
