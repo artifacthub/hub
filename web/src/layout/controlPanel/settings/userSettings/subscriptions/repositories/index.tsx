@@ -113,7 +113,7 @@ const RepositoriesSection = (props: Props) => {
         <div>
           <button
             data-testid="addOptOut"
-            className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
+            className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
             onClick={() => setModalStatus(true)}
             aria-label="Open opt-out modal"
           >
@@ -142,7 +142,7 @@ const RepositoriesSection = (props: Props) => {
               <div className="col-12 col-xxl-10">
                 <table className={`table table-bordered table-hover ${styles.table}`} data-testid="repositoriesList">
                   <thead>
-                    <tr className={`table-primary ${styles.tableTitle}`}>
+                    <tr className={styles.tableTitle}>
                       <th scope="col" className={`align-middle text-center d-none d-sm-table-cell ${styles.fitCell}`}>
                         Kind
                       </th>

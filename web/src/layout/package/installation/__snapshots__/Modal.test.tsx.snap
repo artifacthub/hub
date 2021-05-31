@@ -11,7 +11,7 @@ exports[`HelmInstall creates snapshot 1`] = `
       <button
         aria-disabled="false"
         aria-label="Open installation modal"
-        class="btn font-weight-bold text-uppercase position-relative btn-block btn-secondary btn-sm text-nowrap"
+        class="btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap"
         data-testid="openModalBtn"
         type="button"
       >
@@ -366,7 +366,7 @@ exports[`HelmInstall creates snapshot 1`] = `
           >
             <button
               aria-label="Close modal"
-              class="btn btn-sm btn-secondary text-uppercase"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
               data-testid="closeModalFooterBtn"
               type="button"
             >

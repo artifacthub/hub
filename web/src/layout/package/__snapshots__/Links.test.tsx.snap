@@ -25,7 +25,7 @@ exports[`Links creates snapshot 1`] = `
     >
       <a
         aria-label="Open Homepage"
-        class="link text-primary d-flex align-items-start mb-1 text-capitalize"
+        class="link d-flex align-items-start mb-1 text-capitalize"
         href="http://homelink/"
         rel="noopener noreferrer"
         role="button"
@@ -64,7 +64,7 @@ exports[`Links creates snapshot 1`] = `
     >
       <a
         aria-label="Open customLink"
-        class="link text-primary d-flex align-items-center mb-1 text-capitalize"
+        class="link d-flex align-items-center mb-1 text-capitalize"
         href="http://customlink.com/"
         rel="noopener noreferrer"
         role="button"
@@ -101,7 +101,7 @@ exports[`Links creates snapshot 1`] = `
     >
       <a
         aria-label="Open customLink1"
-        class="link text-primary d-flex align-items-center mb-1 text-capitalize"
+        class="link d-flex align-items-center mb-1 text-capitalize"
         href="http://customlink1.com/"
         rel="noopener noreferrer"
         role="button"

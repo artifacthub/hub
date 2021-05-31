@@ -66,7 +66,7 @@ const Dependencies = (props: Props) => {
       itemsForModal: (
         <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
           <thead>
-            <tr className={`table-primary ${styles.tableTitle}`}>
+            <tr className={styles.tableTitle}>
               <th scope="col" colSpan={2}>
                 <span className="px-1">Name</span>
               </th>

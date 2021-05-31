@@ -49,11 +49,11 @@ describe('RandomPackages', () => {
       });
     });
 
-    it('does not render component when packages list is empty', async () => {
+    it('renders default message when list is empty', async () => {
       const mockPackages = getMockRandomPackages('3');
       mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
 
-      const { queryByTestId, container } = render(
+      const { getByText } = render(
         <Router>
           <RandomPackages />
         </Router>
@@ -63,8 +63,11 @@ describe('RandomPackages', () => {
         expect(API.getRandomPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(queryByTestId('randomPackagesList')).toBeNull();
-      expect(container).toBeEmptyDOMElement();
+      expect(
+        getByText(
+          "It looks like you haven't added any content yet. You can add repositories from the control panel once you log in."
+        )
+      ).toBeInTheDocument();
     });
   });
 });

@@ -620,7 +620,7 @@ exports[`Home index creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="py-5 text-secondary extraInfo"
+      class="py-5 text-dark extraInfo"
     >
       <div
         class="container-lg px-sm-4 px-lg-0 py-0 py-md-5"
@@ -639,7 +639,7 @@ exports[`Home index creates snapshot 1`] = `
             Artifact Hub is a 
             <a
               aria-label="Open CNCF sandbox projects site"
-              class="link font-weight-bold text-secondary"
+              class="link font-weight-bold text-dark"
               href="https://www.cncf.io/sandbox-projects/"
               rel="noopener noreferrer"
               role="button"

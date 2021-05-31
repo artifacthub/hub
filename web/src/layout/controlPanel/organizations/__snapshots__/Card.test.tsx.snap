@@ -56,7 +56,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
                 />
                 <button
                   aria-label="Open modal"
-                  class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  class="dropdown-item btn btn-sm rounded-0 text-dark"
                   data-testid="leaveOrgModalBtn"
                 >
                   <div
@@ -85,7 +85,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
               <button
                 aria-expanded="false"
                 aria-label="Open menu"
-                class="ml-3 btn btn-light p-0 text-secondary text-center btnDropdown"
+                class="ml-3 mb-2 btn p-0 text-primary text-center iconSubsWrapper btnDropdown"
               >
                 <svg
                   fill="currentColor"

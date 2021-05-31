@@ -337,7 +337,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
           >
             <button
               aria-label="Add repository"
-              class="btn btn-sm btn-secondary"
+              class="btn btn-sm btn-outline-secondary"
               data-testid="repoBtn"
               type="button"
             >

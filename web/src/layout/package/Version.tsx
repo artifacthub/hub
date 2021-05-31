@@ -78,7 +78,7 @@ const Version = (props: Props) => {
       {props.isActive ? (
         <>
           <div className="d-flex flex-row align-items-baseline activeVersion mw-100">
-            <div className="text-truncate">{props.version}</div>
+            <div className="text-truncate font-weight-bold">{props.version}</div>
             <small className={`text-muted ${styles.activeVersionDate}`}>({formattedDate})</small>
           </div>
           {getBadges()}

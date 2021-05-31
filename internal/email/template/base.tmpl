@@ -101,7 +101,7 @@
     }
 
     .line {
-      border-top: 7px solid #417598;
+      border-top: 7px solid {{ .Theme.PrimaryColor }};
     }
 
     .line-danger {
@@ -113,17 +113,17 @@
     }
 
     .AHlink {
-      color: #2d4857;
+      color: {{ .Theme.SecondaryColor }};
     }
 
     .AHbtn {
-      background-color: #2d4857;
-      border: solid 1px #2d4857;
+      background-color: {{ .Theme.SecondaryColor }};
+      border: solid 1px {{ .Theme.SecondaryColor }};
       color: #ffffff;
     }
 
     .hr {
-      border-top: 1px solid #417598;
+      border-top: 1px solid {{ .Theme.PrimaryColor }};
     }
 
     .text-muted {

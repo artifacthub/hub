@@ -221,7 +221,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
           >
             <button
               aria-label="Update organization"
-              class="btn btn-sm btn-secondary"
+              class="btn btn-sm btn-outline-secondary"
               type="button"
             >
               <div

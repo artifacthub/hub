@@ -100,7 +100,7 @@ const SearchPackages = (props: Props) => {
         <button
           data-testid="searchIconBtn"
           type="button"
-          className={`btn btn-secondary ml-3 text-center p-0 ${styles.searchBtn}`}
+          className={`btn btn-outline-secondary ml-3 text-center p-0 ${styles.searchBtn}`}
           disabled={searchQuery === '' || isSearching}
           onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             e.preventDefault();

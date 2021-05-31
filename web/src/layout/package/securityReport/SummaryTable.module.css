@@ -10,7 +10,6 @@
 
 .tableTitle th {
   width: 100px;
-  border-bottom-color: var(--color-1-300) !important;
 }
 
 .tableTitle th.image {

@@ -171,7 +171,7 @@ func (h *Handlers) ApproveSession(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 	validUser := []byte(h.cfg.GetString("server.basicAuth.username"))
 	validPass := []byte(h.cfg.GetString("server.basicAuth.password"))
-	realm := "Artifact Hub"
+	realm := h.cfg.GetString("theme.siteName")
 
 	areCredentialsValid := func(user, pass []byte) bool {
 		if subtle.ConstantTimeCompare(user, validUser) != 1 {

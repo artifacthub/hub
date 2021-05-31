@@ -8,6 +8,8 @@ import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import { AHStats } from '../../types';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';
+import getMetaTag from '../../utils/getMetaTag';
+import isWhiteLabel from '../../utils/isWhiteLabel';
 import prettifyNumber from '../../utils/prettifyNumber';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
@@ -15,6 +17,9 @@ import styles from './StatsView.module.css';
 
 const StatsView = () => {
   const { ctx } = useContext(AppCtx);
+  const whiteLabel = isWhiteLabel();
+  const siteName = getMetaTag('siteName');
+  const primaryColor = getMetaTag('primaryColor');
   const { effective } = ctx.prefs.theme;
   const [activeTheme, setActiveTheme] = useState(effective);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,23 +33,24 @@ const StatsView = () => {
   }, [effective, activeTheme]);
 
   const getAreaChartConfig = (title: string, withAnnotations?: boolean): ApexCharts.ApexOptions => {
-    const annotations: any[] = withAnnotations
-      ? [
-          {
-            x: new Date('7 Oct 2020').getTime(),
-            strokeDashArray: 0,
-            borderColor: 'var(--color-1-700)',
-            label: {
+    const annotations: any[] =
+      withAnnotations && !whiteLabel
+        ? [
+            {
+              x: new Date('7 Oct 2020').getTime(),
+              strokeDashArray: 0,
               borderColor: 'var(--color-1-700)',
-              style: {
-                color: '#fff',
-                background: 'var(--color-1-700)',
+              label: {
+                borderColor: 'var(--color-1-700)',
+                style: {
+                  color: '#fff',
+                  background: 'var(--color-1-700)',
+                },
+                text: 'Helm Hub ⇒ Artifact Hub',
               },
-              text: 'Helm Hub ⇒ Artifact Hub',
             },
-          },
-        ]
-      : [];
+          ]
+        : [];
 
     return {
       chart: {
@@ -116,7 +122,7 @@ const StatsView = () => {
         opacity: 0.5,
         colors: [
           () => {
-            return activeTheme === 'dark' ? '#222529' : '#417598';
+            return activeTheme === 'dark' ? '#222529' : primaryColor;
           },
         ],
       },
@@ -254,7 +260,7 @@ const StatsView = () => {
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
-        let error = compoundErrorMessage(err, 'An error occurred getting Artifact Hub stats');
+        let error = compoundErrorMessage(err, `An error occurred getting ${siteName} stats`);
         setApiError(error);
         setStats(null);
       }
@@ -268,7 +274,7 @@ const StatsView = () => {
 
       <main role="main" className="container-lg px-sm-4 px-lg-0 py-5 noFocus" id="content" tabIndex={-1}>
         <div className="flex-grow-1 position-relative">
-          <div className={`h2 text-secondary text-center ${styles.title}`}>Artifact Hub Stats</div>
+          <div className={`h2 text-dark text-center ${styles.title}`}>{siteName} Stats</div>
 
           {apiError && <NoData issuesLinkVisible>{apiError}</NoData>}
 

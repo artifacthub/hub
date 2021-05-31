@@ -5,6 +5,8 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { SearchFiltersURL } from '../../types';
+import getMetaTag from '../../utils/getMetaTag';
+import isWhiteLabel from '../../utils/isWhiteLabel';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import Modal from '../common/Modal';
 import styles from './WidgetModal.module.css';
@@ -35,8 +37,10 @@ const THEMES: WidgetTheme[] = [
 
 const WidgetModal = (props: Props) => {
   const history = useHistory();
+  const whiteLabel = isWhiteLabel();
+  const siteName = getMetaTag('siteName');
   const [theme, setTheme] = useState<string>(DEFAULT_THEME);
-  const [header, setHeader] = useState<boolean>(true);
+  const [header, setHeader] = useState<boolean>(whiteLabel ? false : true);
   const [responsive, setRepsonsive] = useState<boolean>(false);
 
   const buildWidgetCode = (): string => {
@@ -47,7 +51,7 @@ const WidgetModal = (props: Props) => {
       props.packageName
     }</b>${
       props.packageDescription ? `: ${props.packageDescription}` : ''
-    }</p>&mdash; Open in <a href="${url}">Artifact Hub</a></blockquote></div><script async src="${
+    }</p>&mdash; Open in <a href="${url}">${siteName}</a></blockquote></div><script async src="${
       window.location.origin
     }/artifacthub-widget.js"></script>`;
 
@@ -131,28 +135,30 @@ const WidgetModal = (props: Props) => {
               })}
             </div>
 
-            <div className="mt-4 mb-3">
-              <div className="custom-control custom-switch pl-0">
-                <input
-                  id="header"
-                  type="checkbox"
-                  className="custom-control-input"
-                  value="true"
-                  onChange={() => setHeader(!header)}
-                  checked={header}
-                />
-                <label
-                  htmlFor="header"
-                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                >
-                  Header
-                </label>
-              </div>
+            {!whiteLabel && (
+              <div className="mt-4 mb-3">
+                <div className="custom-control custom-switch pl-0">
+                  <input
+                    id="header"
+                    type="checkbox"
+                    className="custom-control-input"
+                    value="true"
+                    onChange={() => setHeader(!header)}
+                    checked={header}
+                  />
+                  <label
+                    htmlFor="header"
+                    className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
+                  >
+                    Header
+                  </label>
+                </div>
 
-              <small className="form-text text-muted mt-2">
-                Displays Artifact Hub header at the top of the widget.
-              </small>
-            </div>
+                <small className="form-text text-muted mt-2">
+                  Displays Artifact Hub header at the top of the widget.
+                </small>
+              </div>
+            )}
 
             <div className="mt-4 mb-3">
               <div className="custom-control custom-switch pl-0">
@@ -198,7 +204,7 @@ const WidgetModal = (props: Props) => {
                 arrowClassName={styles.copyBtnArrow}
                 visibleBtnText
                 contentBtn="Copy code to clipboard"
-                className={`btn-secondary ${styles.copyBtn}`}
+                className={`btn-outline-secondary ${styles.copyBtn}`}
                 label="Copy code to clipboard"
               />
             </div>

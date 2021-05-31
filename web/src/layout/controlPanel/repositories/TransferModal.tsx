@@ -122,7 +122,7 @@ const TransferRepositoryModal = (props: Props) => {
       closeButton={
         <button
           data-testid="transferRepoBtn"
-          className="btn btn-sm btn-secondary"
+          className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isSending}
           onClick={submitForm}
@@ -156,10 +156,10 @@ const TransferRepositoryModal = (props: Props) => {
         >
           {!isUndefined(organizationName) ? (
             <>
-              <div className="form-check mb-3">
+              <div className="custom-control custom-radio mb-3">
                 <input
                   data-testid="radio_user"
-                  className="form-check-input"
+                  className="custom-control-input"
                   type="radio"
                   name="transfer"
                   id="user"
@@ -168,15 +168,15 @@ const TransferRepositoryModal = (props: Props) => {
                   onChange={() => setSelectedTransferOption('user')}
                   required
                 />
-                <label className={`form-check-label font-weight-bold ${styles.label}`} htmlFor="user">
+                <label className={`custom-control-label font-weight-bold ${styles.label}`} htmlFor="user">
                   Transfer to my user
                 </label>
               </div>
 
-              <div className="form-check mb-3">
+              <div className="custom-control custom-radio mb-3">
                 <input
                   data-testid="radio_org"
-                  className="form-check-input"
+                  className="custom-control-input"
                   type="radio"
                   name="transfer"
                   id="org"
@@ -185,7 +185,7 @@ const TransferRepositoryModal = (props: Props) => {
                   onChange={() => setSelectedTransferOption('org')}
                   required
                 />
-                <label className={`form-check-label font-weight-bold ${styles.label}`} htmlFor="org">
+                <label className={`custom-control-label font-weight-bold ${styles.label}`} htmlFor="org">
                   Transfer to organization
                 </label>
               </div>

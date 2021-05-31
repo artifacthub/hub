@@ -131,7 +131,7 @@ const OptOutModal = (props: Props) => {
       closeButton={
         <button
           data-testid="addOptOutModalBtn"
-          className="btn btn-sm btn-secondary"
+          className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isNull(repoItem) || isSending}
           onClick={submitForm}

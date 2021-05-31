@@ -138,7 +138,7 @@ const OrganizationCard = (props: Props) => {
                       {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
                         <button
                           data-testid="leaveOrgModalBtn"
-                          className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                          className="dropdown-item btn btn-sm rounded-0 text-dark"
                           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.preventDefault();
                             closeDropdown();
@@ -157,7 +157,7 @@ const OrganizationCard = (props: Props) => {
                     <div>
                       <button
                         data-testid="acceptInvitationBtn"
-                        className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                        className="dropdown-item btn btn-sm rounded-0 text-dark"
                         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                           e.preventDefault();
                           confirmOrganizationMembership();
@@ -186,7 +186,7 @@ const OrganizationCard = (props: Props) => {
 
                 {hasDropdownContent && (
                   <button
-                    className={`ml-3 btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                    className={`ml-3 mb-2 btn p-0 text-primary text-center iconSubsWrapper ${styles.btnDropdown}`}
                     onClick={() => setDropdownMenuStatus(true)}
                     aria-label="Open menu"
                     aria-expanded={dropdownMenuStatus}
@@ -203,7 +203,7 @@ const OrganizationCard = (props: Props) => {
                 closeButton={
                   <>
                     <button
-                      className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                      className="btn btn-sm btn-outline-secondary text-uppercase"
                       onClick={() => setLeaveModalStatus(false)}
                       aria-label="Close modal"
                     >

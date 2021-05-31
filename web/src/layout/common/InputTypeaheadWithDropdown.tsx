@@ -61,9 +61,9 @@ const InputTypeaheadWithDropdown = (props: Props) => {
         aria-expanded={!collapsed}
       >
         <div className="d-flex flex-row align-items-center justify-content-between">
-          <SmallTitle text={props.label} className="text-secondary font-weight-bold pt-2" />
+          <SmallTitle text={props.label} className="text-dark font-weight-bold pt-2" />
 
-          <MdFilterList className="mt-2 mb-1 text-secondary" />
+          <MdFilterList className="mt-2 mb-1 text-dark" />
         </div>
 
         <div>

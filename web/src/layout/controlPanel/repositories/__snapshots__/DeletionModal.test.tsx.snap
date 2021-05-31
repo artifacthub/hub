@@ -110,7 +110,7 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
           >
             <button
               aria-label="Cancel"
-              class="btn btn-sm btn-light text-uppercase btnLight"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
             >
               <div
                 class="d-flex flex-row align-items-center"

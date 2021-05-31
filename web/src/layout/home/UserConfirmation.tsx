@@ -4,6 +4,7 @@ import { MdClose, MdDone } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import API from '../../api';
+import getMetaTag from '../../utils/getMetaTag';
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
 import styles from './UserConfirmation.module.css';
@@ -18,6 +19,7 @@ const UserConfirmation = (props: Props) => {
   const [validEmail, setValidEmail] = useState<boolean | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const history = useHistory();
+  const siteName = getMetaTag('siteName');
 
   useEffect(() => {
     async function fetchEmailConfirmation() {
@@ -69,7 +71,7 @@ const UserConfirmation = (props: Props) => {
             {validEmail ? (
               <>
                 <MdDone className="display-4 text-success mb-4" />
-                You email has been verified! Please, login to Artifact Hub.
+                You email has been verified! Please, login to {siteName}.
               </>
             ) : (
               <>

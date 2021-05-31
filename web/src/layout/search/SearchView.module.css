@@ -1,7 +1,6 @@
 .sidebar {
   width: 250px;
   min-width: 250px;
-  z-index: 0;
 }
 
 .btnMobileFilters {

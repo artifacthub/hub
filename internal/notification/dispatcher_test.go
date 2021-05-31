@@ -16,7 +16,7 @@ func TestDispatcher(t *testing.T) {
 	// Setup dispatcher
 	cfg := viper.New()
 	cfg.Set("server.baseURL", "http://localhost:8000")
-	d := NewDispatcher(cfg, &Services{}, WithNumWorkers(0))
+	d := NewDispatcher(&Services{Cfg: cfg}, WithNumWorkers(0))
 
 	// Run it
 	ctx, stopDispatcher := context.WithCancel(context.Background())

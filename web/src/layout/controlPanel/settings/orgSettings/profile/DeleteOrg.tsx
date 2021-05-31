@@ -79,7 +79,7 @@ const DeleteOrganization = (props: Props) => {
         closeButton={
           <>
             <button
-              className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+              className="btn btn-sm btn-outline-secondary text-uppercase"
               onClick={() => setOpenStatus(false)}
               aria-label="Close"
             >

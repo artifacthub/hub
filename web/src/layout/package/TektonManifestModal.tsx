@@ -22,7 +22,7 @@ const TektonManifestModal = (props: Props) => {
     <div className="mb-2">
       <button
         data-testid="tektonManifestBtn"
-        className="btn btn-secondary btn-block btn-sm text-nowrap"
+        className="btn btn-outline-secondary btn-block btn-sm text-nowrap"
         onClick={() => setOpenStatus(true)}
         aria-label="Open Manifest"
       >

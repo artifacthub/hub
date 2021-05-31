@@ -22,7 +22,7 @@ const Maintainers = (props: Props) => {
           <div className="mb-1" key={maintainer.email}>
             <ExternalLink
               href={`mailto:${maintainer.email}`}
-              className="text-primary py-1 py-sm-0"
+              className="py-1 py-sm-0"
               label={`Mail to: ${maintainer.email}`}
             >
               <div className="d-flex align-items-center">

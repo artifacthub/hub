@@ -1,6 +1,7 @@
 import React from 'react';
 
 import getHubBaseURL from '../../utils/getHubBaseURL';
+import getMetaTag from '../../utils/getMetaTag';
 import styles from './OAuth.module.css';
 
 interface Loading {
@@ -25,17 +26,9 @@ const OAuth = (props: Props) => {
     return;
   };
 
-  const isGithubAuth = document.querySelector(`meta[name='artifacthub:githubAuth']`)
-    ? document.querySelector(`meta[name='artifacthub:githubAuth']`)!.getAttribute('content') === 'true'
-    : false;
-
-  const isGoogleAuth = document.querySelector(`meta[name='artifacthub:googleAuth']`)
-    ? document.querySelector(`meta[name='artifacthub:googleAuth']`)!.getAttribute('content') === 'true'
-    : false;
-
-  const isOidcAuth = document.querySelector(`meta[name='artifacthub:oidcAuth']`)
-    ? document.querySelector(`meta[name='artifacthub:oidcAuth']`)!.getAttribute('content') === 'true'
-    : false;
+  const isGithubAuth = getMetaTag('githubAuth', true);
+  const isGoogleAuth = getMetaTag('googleAuth', true);
+  const isOidcAuth = getMetaTag('oidcAuth', true);
 
   if (!isGithubAuth && !isGoogleAuth && !isOidcAuth) return null;
 

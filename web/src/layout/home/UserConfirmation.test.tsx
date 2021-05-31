@@ -44,7 +44,7 @@ describe('UserConfirmation', () => {
     await waitFor(() => {
       expect(API.verifyEmail).toHaveBeenCalledTimes(1);
     });
-    expect(getByText('You email has been verified! Please, login to Artifact Hub.')).toBeInTheDocument();
+    expect(getByText(/You email has been verified! Please, login to/g)).toBeInTheDocument();
   });
 
   it('does not render component when email code is undefined', () => {

@@ -571,7 +571,7 @@ const PackageView = (props: Props) => {
 
                     <div className="row align-items-baseline d-md-none">
                       <Modal
-                        buttonType="btn-secondary btn-sm text-nowrap"
+                        buttonType="btn-outline-secondary btn-sm text-nowrap"
                         buttonContent={
                           <>
                             <FiPlus className="mr-2" />

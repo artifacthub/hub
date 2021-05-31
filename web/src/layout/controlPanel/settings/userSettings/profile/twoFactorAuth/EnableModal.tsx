@@ -111,7 +111,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
         closeButton={
           <>
             <button
-              className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+              className="btn btn-sm btn-outline-secondary text-uppercase"
               onClick={onClose}
               aria-label={activeStep === 3 ? 'Close' : 'Cancel'}
             >
@@ -126,7 +126,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                 case 1:
                   return (
                     <button
-                      className="btn btn-sm btn-secondary ml-3"
+                      className="btn btn-sm btn-outline-secondary ml-3"
                       onClick={(e) => {
                         e.preventDefault();
                         setActiveStep(2);

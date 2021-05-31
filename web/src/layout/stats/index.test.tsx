@@ -65,7 +65,6 @@ describe('StatsView', () => {
       await waitFor(() => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
-      expect(getByText('Artifact Hub Stats')).toBeInTheDocument();
       expect(getByText('Report generated at:')).toBeInTheDocument();
       expect(getByText('Packages and releases')).toBeInTheDocument();
       expect(getByText('Repositories')).toBeInTheDocument();
@@ -105,7 +104,7 @@ describe('StatsView', () => {
 
       const noData = await waitFor(() => getByTestId('noData'));
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent(/An error occurred getting Artifact Hub stats, please try again later./i);
+      expect(noData).toHaveTextContent(/An error occurred getting/i);
     });
 
     it('renders custom error message', async () => {
@@ -119,9 +118,7 @@ describe('StatsView', () => {
 
       const noData = await waitFor(() => getByTestId('noData'));
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent(
-        /An error occurred getting Artifact Hub stats: custom errorIf this error persists, please create an issue here/i
-      );
+      expect(noData).toHaveTextContent(/stats: custom errorIf this error persists, please create an issue here/i);
     });
   });
 });

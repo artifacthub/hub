@@ -13,9 +13,6 @@
               <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
                 We encountered some errors while scanning the packages in repository <strong>{{ .Repository.Name }}</strong> for security vulnerabilities.
               </p>
-              <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">
-                If you find something in them that doesn't make sense, or there is anything you need help with, please file an issue <a href="https://github.com/artifacthub/hub/issues" class="AHlink" style="text-decoration: none;">here</a>.
-              </p>
               <h4 style="color: #921e12; font-family: sans-serif; margin: 0; Margin-bottom: 15px;">Errors log</h4>
               <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="Margin-bottom: 30px; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box; background: #1D1F21; border-radius: 3px;">
                 <tbody>
@@ -70,7 +67,7 @@
     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
       <tr>
         <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; text-align: center;">
-          <a href="{{ .BaseURL }}" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">© Artifact Hub</a>
+          <a href="{{ .BaseURL }}" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">© {{ .Theme.SiteName }}</a>
         </td>
       </tr>
     </table>

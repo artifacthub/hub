@@ -20,6 +20,7 @@ import authorizer from '../../../../../utils/authorizer';
 import { checkUnsavedPolicyChanges, PolicyChangeAction } from '../../../../../utils/checkUnsavedPolicyChanges';
 import compoundErrorMessage from '../../../../../utils/compoundErrorMessage';
 import { PREDEFINED_POLICIES } from '../../../../../utils/data';
+import getMetaTag from '../../../../../utils/getMetaTag';
 import isValidJSON from '../../../../../utils/isValidJSON';
 import prepareRegoPolicyForPlayground from '../../../../../utils/prepareRegoPolicyForPlayground';
 import stringifyPolicyData from '../../../../../utils/stringifyPolicyData';
@@ -62,6 +63,7 @@ const DEFAULT_POLICY_NAME = 'rbac.v1';
 
 const AuthorizationSection = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
+  const siteName = getMetaTag('siteName');
   const updateActionBtn = useRef<RefActionBtn>(null);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -396,7 +398,7 @@ const AuthorizationSection = (props: Props) => {
 
       <div className="mt-4 mt-md-5" onClick={() => setApiError(null)}>
         <p>
-          Artifact Hub allows you to setup fine-grained access control based on authorization policies. Authorization
+          {siteName} allows you to setup fine-grained access control based on authorization policies. Authorization
           polices are written in{' '}
           <ExternalLink
             href="https://www.openpolicyagent.org/docs/latest/#rego"
@@ -580,7 +582,7 @@ const AuthorizationSection = (props: Props) => {
                 <ActionBtn
                   ref={updateActionBtn}
                   testId="updateAuthorizationPolicyBtn"
-                  className="btn btn-sm btn-secondary"
+                  className="btn btn-sm btn-outline-secondary"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     onSaveAuthorizationPolicy();
@@ -617,7 +619,7 @@ const AuthorizationSection = (props: Props) => {
             <>
               <button
                 data-testid="modalCancelBtn"
-                className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                className="btn btn-sm btn-outline-secondary text-uppercase"
                 onClick={() => setConfirmationModal({ open: false })}
                 aria-label="Cancel"
               >
@@ -626,7 +628,7 @@ const AuthorizationSection = (props: Props) => {
 
               <button
                 data-testid="modalOKBtn"
-                className="btn btn-sm btn-primary text-uppercase ml-3"
+                className="btn btn-sm btn-outline-secondary text-uppercase ml-3"
                 onClick={(e) => {
                   e.preventDefault();
                   confirmationModal.onConfirm!();

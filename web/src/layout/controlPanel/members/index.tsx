@@ -67,7 +67,7 @@ const MembersSection = (props: Props) => {
             <div>
               <ActionBtn
                 testId="addMemberBtn"
-                className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
+                className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 contentClassName="justify-content-center"
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
@@ -98,7 +98,7 @@ const MembersSection = (props: Props) => {
 
                       <button
                         type="button"
-                        className="btn btn-secondary"
+                        className="btn btn-outline-secondary"
                         onClick={() => setModalMemberOpen(true)}
                         data-testid="addFirstMemberBtn"
                         aria-label="Open modal"

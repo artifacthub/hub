@@ -9,11 +9,11 @@
 }
 
 .tooltipArrow::before {
-  border-bottom-color: var(--color-1-900) !important;
+  border-bottom-color: var(--dark) !important;
 }
 
 .tooltipContent {
-  background-color: var(--color-1-900) !important;
+  background-color: var(--dark) !important;
 }
 
 .disabled {

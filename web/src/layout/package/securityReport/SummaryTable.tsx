@@ -17,7 +17,7 @@ const SummaryTable = (props: Props) => {
     <div className="my-4 d-none d-lg-block">
       <table className={`table table-bordered table-md ${styles.table}`}>
         <thead>
-          <tr className={`table-primary ${styles.tableTitle}`}>
+          <tr className={styles.tableTitle}>
             <th className={styles.image} scope="col">
               Image
             </th>

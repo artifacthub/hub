@@ -3,7 +3,7 @@
 exports[`Navbar creates snapshot 1`] = `
 <DocumentFragment>
   <nav
-    class="navbar navbar-top navbar-expand-md navbar-dark navbar homeNavbar"
+    class="navbar navbar-top navbar-expand-lg navbar-dark navbar homeNavbar"
   >
     <div
       class="container-lg px-sm-4 px-lg-0"
@@ -20,8 +20,8 @@ exports[`Navbar creates snapshot 1`] = `
             class="d-flex align-items-start"
           >
             <img
-              alt="Logo Artifact Hub"
-              src="/static/media/logo/artifacthub-brand-white.svg"
+              alt="Logo null"
+              class="logo"
             />
             <div
               class="position-relative text-uppercase badge badge-pill badge-secondary d-flex align-items-center ml-1 badge"

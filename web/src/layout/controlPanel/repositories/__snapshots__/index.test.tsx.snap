@@ -21,7 +21,7 @@ exports[`Repository index creates snapshot 1`] = `
           <div>
             <button
               aria-label="Refresh repositories list"
-              class="btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
               data-testid="refreshRepoBtn"
             >
               <div
@@ -64,7 +64,7 @@ exports[`Repository index creates snapshot 1`] = `
             </button>
             <button
               aria-label="Open claim repository modal"
-              class="btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
               data-testid="claimRepoBtn"
             >
               <div
@@ -102,7 +102,7 @@ exports[`Repository index creates snapshot 1`] = `
             >
               <button
                 aria-label="Action"
-                class="btn btn-secondary btn-sm text-uppercase btnAction"
+                class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
                 data-testid="addRepoBtn"
                 type="button"
               >

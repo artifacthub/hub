@@ -18,6 +18,7 @@ import (
 	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/patrickmn/go-cache"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -349,6 +350,7 @@ type servicesWrapper struct {
 	ctx        context.Context
 	stopWorker context.CancelFunc
 	wg         *sync.WaitGroup
+	cfg        *viper.Viper
 	db         *tests.DBMock
 	tx         *tests.TXMock
 	es         *email.SenderMock
@@ -367,6 +369,7 @@ func newServicesWrapper() *servicesWrapper {
 	var wg sync.WaitGroup
 	wg.Add(1)
 
+	cfg := viper.New()
 	db := &tests.DBMock{}
 	tx := &tests.TXMock{}
 	es := &email.SenderMock{}
@@ -381,6 +384,7 @@ func newServicesWrapper() *servicesWrapper {
 		ctx:        ctx,
 		stopWorker: stopWorker,
 		wg:         &wg,
+		cfg:        cfg,
 		db:         db,
 		tx:         tx,
 		es:         es,
@@ -391,6 +395,7 @@ func newServicesWrapper() *servicesWrapper {
 		cache:      cache,
 		hc:         hc,
 		svc: &Services{
+			Cfg:                 cfg,
 			DB:                  db,
 			ES:                  es,
 			NotificationManager: nm,

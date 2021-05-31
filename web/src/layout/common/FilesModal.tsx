@@ -207,7 +207,7 @@ const FilesModal = (props: Props) => {
       <div className="text-center">
         <button
           data-testid="filesModalBtn"
-          className="btn btn-secondary btn-sm text-nowrap btn-block"
+          className="btn btn-outline-secondary btn-sm text-nowrap btn-block"
           onClick={onOpenModal}
           aria-label={`Open ${props.title} modal`}
           disabled={isUndefined(props.files) || props.files.length === 0}

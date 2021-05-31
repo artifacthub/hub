@@ -106,7 +106,7 @@ const SecurityModal = (props: Props) => {
           </div>
         )}
 
-        <button className="btn btn-secondary btn-sm" onClick={onOpenModal} aria-label="Open full report modal">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onOpenModal} aria-label="Open full report modal">
           <small className="d-flex flex-row align-items-center text-uppercase">
             {isLoading ? (
               <>
@@ -133,7 +133,7 @@ const SecurityModal = (props: Props) => {
           breakPoint="md"
         >
           <div className="m-3">
-            <div className="h5 mt-0 text-secondary text-uppercase font-weight-bold pb-2">Summary</div>
+            <div className="h5 mt-0 text-dark text-uppercase font-weight-bold pb-2">Summary</div>
             {props.totalVulnerabilities > 0 && (
               <>
                 <SummaryTable report={report} hasWhitelistedContainers={props.hasWhitelistedContainers} />
@@ -144,9 +144,7 @@ const SecurityModal = (props: Props) => {
 
             {!isEmpty(report) && (
               <>
-                <div className="h5 pt-3 text-secondary text-uppercase font-weight-bold pb-3">
-                  Vulnerabilities details
-                </div>
+                <div className="h5 pt-3 text-dark text-uppercase font-weight-bold pb-3">Vulnerabilities details</div>
                 <div className="mt-3">
                   {Object.keys(report).map((image: string) => {
                     return (

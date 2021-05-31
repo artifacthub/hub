@@ -15,7 +15,7 @@ exports[`TsQuery creates snapshot 1`] = `
       >
         <span
           aria-level="5"
-          class="text-secondary font-weight-bold"
+          class="text-dark font-weight-bold"
           role="heading"
         >
           Category

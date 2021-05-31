@@ -17,7 +17,7 @@ interface HeadingProps {
 
 const Heading: React.ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className={`text-secondary ${styles.header}`}>{data.title || data.children}</Tag>;
+  return <Tag className={`text-dark ${styles.header}`}>{data.title || data.children}</Tag>;
 };
 
 const ANIMATION_TIME = 300; //300ms

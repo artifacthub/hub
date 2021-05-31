@@ -90,7 +90,7 @@ exports[`Search index creates snapshot 1`] = `
               />
               <button
                 aria-label="Open embed results modal"
-                class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                class="dropdown-item btn btn-sm rounded-0 text-dark"
               >
                 <div
                   class="d-flex flex-row align-items-center"

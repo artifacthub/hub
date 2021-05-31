@@ -14,12 +14,11 @@
   width: 100%;
 }
 
-.brand {
-  margin-right: 0.5rem !important;
-}
-
-.brand:focus {
-  outline: none;
+.logo {
+  max-height: 20px;
+  height: 20px;
+  width: auto;
+  max-width: 185px;
 }
 
 .search {
@@ -57,7 +56,7 @@
   }
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .mobileWrapper {
     width: 100%;
     min-height: 54px;

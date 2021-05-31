@@ -21,7 +21,7 @@ const LastNotificationsModal = (props: Props) => {
     <>
       <Modal
         className="d-inline-block"
-        buttonType="btn badge btn-secondary"
+        buttonType="btn badge btn-outline-secondary"
         buttonContent={
           <>
             <GrConnect className={`mr-2 ${styles.icon}`} />
@@ -34,7 +34,7 @@ const LastNotificationsModal = (props: Props) => {
         <div className="m-3">
           <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
             <thead>
-              <tr className={`table-primary ${styles.tableTitle}`}>
+              <tr className={styles.tableTitle}>
                 <th scope="col">Notification id</th>
                 <th scope="col">Created at</th>
                 <th scope="col">Processed</th>
@@ -75,7 +75,7 @@ const LastNotificationsModal = (props: Props) => {
 
               <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
                 <thead>
-                  <tr className={`table-primary ${styles.tableTitle}`}>
+                  <tr className={styles.tableTitle}>
                     <th scope="col">Notification id</th>
                     <th scope="col">Error</th>
                   </tr>

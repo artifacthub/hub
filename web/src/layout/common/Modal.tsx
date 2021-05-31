@@ -158,7 +158,7 @@ const Modal = (props: Props) => {
                   <button
                     data-testid="closeModalFooterBtn"
                     type="button"
-                    className="btn btn-sm btn-secondary text-uppercase"
+                    className="btn btn-sm btn-outline-secondary text-uppercase"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       e.preventDefault();
                       closeModal();

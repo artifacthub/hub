@@ -11,16 +11,19 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
+
+var cfg = viper.New()
 
 func TestAdd(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Add(context.Background(), &hub.Organization{})
 		})
@@ -61,7 +64,7 @@ func TestAdd(t *testing.T) {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
-				m := NewManager(nil, nil, nil)
+				m := NewManager(cfg, nil, nil, nil)
 				err := m.Add(ctx, tc.org)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -73,7 +76,7 @@ func TestAdd(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, addOrgDBQ, "userID", mock.Anything).Return(nil)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		err := m.Add(ctx, &hub.Organization{Name: "org1"})
 		assert.NoError(t, err)
@@ -84,7 +87,7 @@ func TestAdd(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, addOrgDBQ, "userID", mock.Anything).Return(tests.ErrFakeDB)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		err := m.Add(ctx, &hub.Organization{Name: "org1"})
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -97,7 +100,7 @@ func TestAddMember(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.AddMember(context.Background(), "orgName", "userAlias", "")
 		})
@@ -139,7 +142,7 @@ func TestAddMember(t *testing.T) {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
-				m := NewManager(nil, nil, nil)
+				m := NewManager(cfg, nil, nil, nil)
 				err := m.AddMember(ctx, tc.orgName, tc.userAlias, tc.baseURL)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -155,7 +158,7 @@ func TestAddMember(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.AddOrganizationMember,
 		}).Return(tests.ErrFake)
-		m := NewManager(nil, nil, az)
+		m := NewManager(cfg, nil, nil, az)
 
 		err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
 		assert.Equal(t, tests.ErrFake, err)
@@ -191,7 +194,7 @@ func TestAddMember(t *testing.T) {
 					UserID:           "userID",
 					Action:           hub.AddOrganizationMember,
 				}).Return(nil)
-				m := NewManager(db, es, az)
+				m := NewManager(cfg, db, es, az)
 
 				err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
 				assert.Equal(t, tc.emailSenderResponse, err)
@@ -228,7 +231,7 @@ func TestAddMember(t *testing.T) {
 					UserID:           "userID",
 					Action:           hub.AddOrganizationMember,
 				}).Return(nil)
-				m := NewManager(db, nil, az)
+				m := NewManager(cfg, db, nil, az)
 
 				err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
 				assert.Equal(t, tc.expectedError, err)
@@ -263,7 +266,7 @@ func TestCheckAvailability(t *testing.T) {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
-				m := NewManager(nil, nil, nil)
+				m := NewManager(cfg, nil, nil, nil)
 				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -290,7 +293,7 @@ func TestCheckAvailability(t *testing.T) {
 				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, tc.dbQuery, "value").Return(tc.available, nil)
-				m := NewManager(db, nil, nil)
+				m := NewManager(cfg, db, nil, nil)
 
 				available, err := m.CheckAvailability(ctx, tc.resourceKind, "value")
 				assert.NoError(t, err)
@@ -305,7 +308,7 @@ func TestCheckAvailability(t *testing.T) {
 		db := &tests.DBMock{}
 		dbQuery := fmt.Sprintf(`select not exists (%s)`, checkOrgNameAvailDBQ)
 		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDB)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		available, err := m.CheckAvailability(context.Background(), "organizationName", "value")
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -319,7 +322,7 @@ func TestConfirmMembership(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.ConfirmMembership(context.Background(), "orgName")
 		})
@@ -327,7 +330,7 @@ func TestConfirmMembership(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		err := m.ConfirmMembership(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
@@ -336,7 +339,7 @@ func TestConfirmMembership(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, confirmMembershipDBQ, "userID", "orgName").Return(nil)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		err := m.ConfirmMembership(ctx, "orgName")
 		assert.NoError(t, err)
@@ -347,7 +350,7 @@ func TestConfirmMembership(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, confirmMembershipDBQ, "userID", "orgName").Return(tests.ErrFakeDB)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		err := m.ConfirmMembership(ctx, "orgName")
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -360,7 +363,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Add(context.Background(), &hub.Organization{})
 		})
@@ -368,7 +371,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		err := m.Delete(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 		assert.Contains(t, err.Error(), "name not provided")
@@ -383,7 +386,7 @@ func TestDelete(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.DeleteOrganization,
 		}).Return(tests.ErrFake)
-		m := NewManager(db, nil, az)
+		m := NewManager(cfg, db, nil, az)
 
 		err := m.Delete(ctx, "org1")
 		assert.Equal(t, tests.ErrFake, err)
@@ -400,7 +403,7 @@ func TestDelete(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.DeleteOrganization,
 		}).Return(nil)
-		m := NewManager(db, nil, az)
+		m := NewManager(cfg, db, nil, az)
 
 		err := m.Delete(ctx, "org1")
 		assert.NoError(t, err)
@@ -417,7 +420,7 @@ func TestDelete(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.DeleteOrganization,
 		}).Return(nil)
-		m := NewManager(db, nil, az)
+		m := NewManager(cfg, db, nil, az)
 
 		err := m.Delete(ctx, "org1")
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -430,7 +433,7 @@ func TestDeleteMember(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.DeleteMember(context.Background(), "orgName", "userAlias")
 		})
@@ -457,7 +460,7 @@ func TestDeleteMember(t *testing.T) {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
-				m := NewManager(nil, nil, nil)
+				m := NewManager(cfg, nil, nil, nil)
 				err := m.DeleteMember(ctx, tc.orgName, tc.userAlias)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -469,7 +472,7 @@ func TestDeleteMember(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("", tests.ErrFakeDB)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
 		assert.Error(t, err)
@@ -486,7 +489,7 @@ func TestDeleteMember(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.DeleteOrganizationMember,
 		}).Return(tests.ErrFake)
-		m := NewManager(db, nil, az)
+		m := NewManager(cfg, db, nil, az)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
 		assert.Equal(t, tests.ErrFake, err)
@@ -504,7 +507,7 @@ func TestDeleteMember(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.DeleteOrganizationMember,
 		}).Return(nil)
-		m := NewManager(db, nil, az)
+		m := NewManager(cfg, db, nil, az)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
 		assert.NoError(t, err)
@@ -517,7 +520,7 @@ func TestDeleteMember(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("userAlias", nil)
 		db.On("Exec", ctx, deleteOrgMemberDBQ, "userID", "orgName", "userAlias").Return(nil)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
 		assert.NoError(t, err)
@@ -551,7 +554,7 @@ func TestDeleteMember(t *testing.T) {
 					UserID:           "userID",
 					Action:           hub.DeleteOrganizationMember,
 				}).Return(nil)
-				m := NewManager(db, nil, az)
+				m := NewManager(cfg, db, nil, az)
 
 				err := m.DeleteMember(ctx, "orgName", "userAlias")
 				assert.Equal(t, tc.expectedError, err)
@@ -567,7 +570,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetAuthorizationPolicyJSON(context.Background(), "org1")
 		})
@@ -575,7 +578,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		_, err := m.GetAuthorizationPolicyJSON(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
@@ -588,7 +591,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.GetAuthorizationPolicy,
 		}).Return(tests.ErrFake)
-		m := NewManager(nil, nil, az)
+		m := NewManager(cfg, nil, nil, az)
 
 		dataJSON, err := m.GetAuthorizationPolicyJSON(ctx, "org1")
 		assert.Equal(t, tests.ErrFake, err)
@@ -606,7 +609,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.GetAuthorizationPolicy,
 		}).Return(nil)
-		m := NewManager(db, nil, az)
+		m := NewManager(cfg, db, nil, az)
 
 		dataJSON, err := m.GetAuthorizationPolicyJSON(ctx, "org1")
 		assert.NoError(t, err)
@@ -641,7 +644,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 					UserID:           "userID",
 					Action:           hub.GetAuthorizationPolicy,
 				}).Return(nil)
-				m := NewManager(db, nil, az)
+				m := NewManager(cfg, db, nil, az)
 
 				dataJSON, err := m.GetAuthorizationPolicyJSON(ctx, "org1")
 				assert.Equal(t, tc.expectedError, err)
@@ -658,7 +661,7 @@ func TestGetByUserJSON(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetByUserJSON(context.Background())
 		})
@@ -668,7 +671,7 @@ func TestGetByUserJSON(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID").Return([]byte("dataJSON"), nil)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
 		assert.NoError(t, err)
@@ -680,7 +683,7 @@ func TestGetByUserJSON(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID").Return(nil, tests.ErrFakeDB)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -694,7 +697,7 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		_, err := m.GetJSON(context.Background(), "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
@@ -703,7 +706,7 @@ func TestGetJSON(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgDBQ, "orgName").Return([]byte("dataJSON"), nil)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		dataJSON, err := m.GetJSON(ctx, "orgName")
 		assert.NoError(t, err)
@@ -715,7 +718,7 @@ func TestGetJSON(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgDBQ, "orgName").Return(nil, tests.ErrFakeDB)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		dataJSON, err := m.GetJSON(ctx, "orgName")
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -729,7 +732,7 @@ func TestGetMembersJSON(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetMembersJSON(context.Background(), "orgName")
 		})
@@ -737,7 +740,7 @@ func TestGetMembersJSON(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		_, err := m.GetMembersJSON(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
@@ -746,7 +749,7 @@ func TestGetMembersJSON(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName").Return([]byte("dataJSON"), nil)
-		m := NewManager(db, nil, nil)
+		m := NewManager(cfg, db, nil, nil)
 
 		dataJSON, err := m.GetMembersJSON(ctx, "orgName")
 		assert.NoError(t, err)
@@ -774,7 +777,7 @@ func TestGetMembersJSON(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName").Return(nil, tc.dbErr)
-				m := NewManager(db, nil, nil)
+				m := NewManager(cfg, db, nil, nil)
 
 				dataJSON, err := m.GetMembersJSON(ctx, "orgName")
 				assert.Equal(t, tc.expectedError, err)
@@ -790,7 +793,7 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Update(context.Background(), "org1", &hub.Organization{})
 		})
@@ -831,7 +834,7 @@ func TestUpdate(t *testing.T) {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
-				m := NewManager(nil, nil, nil)
+				m := NewManager(cfg, nil, nil, nil)
 				err := m.Update(ctx, "org1", tc.org)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -847,7 +850,7 @@ func TestUpdate(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.UpdateOrganization,
 		}).Return(tests.ErrFake)
-		m := NewManager(nil, nil, az)
+		m := NewManager(cfg, nil, nil, az)
 
 		err := m.Update(ctx, "org1", &hub.Organization{
 			Name:        "org1",
@@ -867,7 +870,7 @@ func TestUpdate(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.UpdateOrganization,
 		}).Return(nil)
-		m := NewManager(db, nil, az)
+		m := NewManager(cfg, db, nil, az)
 
 		err := m.Update(ctx, "org1", &hub.Organization{
 			Name:        "org1",
@@ -904,7 +907,7 @@ func TestUpdate(t *testing.T) {
 					UserID:           "userID",
 					Action:           hub.UpdateOrganization,
 				}).Return(nil)
-				m := NewManager(db, nil, az)
+				m := NewManager(cfg, db, nil, az)
 
 				err := m.Update(ctx, "org1", &hub.Organization{
 					Name:        "org1",
@@ -928,7 +931,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.UpdateAuthorizationPolicy(context.Background(), "org1", &hub.AuthorizationPolicy{})
 		})
@@ -1032,7 +1035,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 				t.Parallel()
 				az := &authz.AuthorizerMock{}
 				az.On("WillUserBeLockedOut", ctx, tc.policy, "userID").Return(true, nil).Maybe()
-				m := NewManager(nil, nil, az)
+				m := NewManager(cfg, nil, nil, az)
 				err := m.UpdateAuthorizationPolicy(ctx, tc.orgName, tc.policy)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -1049,7 +1052,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.UpdateAuthorizationPolicy,
 		}).Return(tests.ErrFake)
-		m := NewManager(nil, nil, az)
+		m := NewManager(cfg, nil, nil, az)
 
 		err := m.UpdateAuthorizationPolicy(ctx, "org1", validPolicy)
 		assert.Equal(t, tests.ErrFake, err)
@@ -1067,7 +1070,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.UpdateAuthorizationPolicy,
 		}).Return(nil)
-		m := NewManager(db, nil, az)
+		m := NewManager(cfg, db, nil, az)
 
 		err := m.UpdateAuthorizationPolicy(ctx, "org1", validPolicy)
 		assert.NoError(t, err)
@@ -1102,7 +1105,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 					UserID:           "userID",
 					Action:           hub.UpdateAuthorizationPolicy,
 				}).Return(nil)
-				m := NewManager(db, nil, az)
+				m := NewManager(cfg, db, nil, az)
 
 				err := m.UpdateAuthorizationPolicy(ctx, "org1", validPolicy)
 				assert.Equal(t, tc.expectedError, err)

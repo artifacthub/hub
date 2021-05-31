@@ -34,6 +34,7 @@ type PackageNotificationTemplateData struct {
 	BaseURL string                 `json:"base_url"`
 	Event   map[string]interface{} `json:"event"`
 	Package map[string]interface{} `json:"package"`
+	Theme   map[string]string      `json:"theme"`
 }
 
 // RepositoryNotificationTemplateData represents some details of a notification
@@ -42,4 +43,5 @@ type RepositoryNotificationTemplateData struct {
 	BaseURL    string                 `json:"base_url"`
 	Event      map[string]interface{} `json:"event"`
 	Repository map[string]interface{} `json:"repository"`
+	Theme      map[string]string      `json:"theme"`
 }

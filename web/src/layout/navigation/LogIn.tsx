@@ -299,7 +299,7 @@ const LogIn = (props: Props) => {
 
                   <button
                     data-testid="logInBtn"
-                    className="btn btn-secondary"
+                    className="btn btn-outline-secondary"
                     type="button"
                     disabled={isLoading.status}
                     onClick={submitForm}

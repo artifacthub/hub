@@ -258,11 +258,11 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2"
                         >
                           <h1
-                            class="text-secondary header"
+                            class="text-dark header"
                           >
                             nindent function 
                             <a
-                              class="d-inline-block text-secondary"
+                              class="d-inline-block text-dark"
                               href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
                               rel="noopener noreferrer"
                               target="_blank"
@@ -476,11 +476,11 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2"
                         >
                           <h1
-                            class="text-secondary header"
+                            class="text-dark header"
                           >
                             nindent function 
                             <a
-                              class="d-inline-block text-secondary"
+                              class="d-inline-block text-dark"
                               href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
                               rel="noopener noreferrer"
                               target="_blank"
@@ -852,11 +852,11 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2"
                         >
                           <h1
-                            class="text-secondary header"
+                            class="text-dark header"
                           >
                             nindent function 
                             <a
-                              class="d-inline-block text-secondary"
+                              class="d-inline-block text-dark"
                               href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
                               rel="noopener noreferrer"
                               target="_blank"
@@ -1089,11 +1089,11 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2"
                         >
                           <h1
-                            class="text-secondary header"
+                            class="text-dark header"
                           >
                             nindent function 
                             <a
-                              class="d-inline-block text-secondary"
+                              class="d-inline-block text-dark"
                               href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
                               rel="noopener noreferrer"
                               target="_blank"

@@ -7,7 +7,7 @@ exports[`MobileSettings creates snapshot 1`] = `
   >
     <aside
       aria-label="User settings"
-      class="d-inline-block d-md-none"
+      class="d-inline-block d-lg-none"
     >
       <button
         aria-expanded="false"
@@ -400,7 +400,7 @@ exports[`MobileSettings creates snapshot 1`] = `
             >
               <button
                 aria-label="Close"
-                class="ml-auto btn btn-sm btn-secondary"
+                class="ml-auto btn btn-sm btn-outline-secondary"
                 data-testid="closeSidebarFooterBtn"
                 type="button"
               >

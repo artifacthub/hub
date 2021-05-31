@@ -2,12 +2,6 @@
   background-color: var(--white);
 }
 
-.table,
-.table th,
-.table td {
-  border-color: var(--color-1-300) !important;
-}
-
 .fitCell {
   width: 1%;
 }
@@ -15,10 +9,6 @@
 .table th {
   line-height: 1;
   height: 55px;
-}
-
-.tableTitle th {
-  border-bottom-color: var(--color-1-300) !important;
 }
 
 .tableTitle:hover {

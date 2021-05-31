@@ -104,6 +104,23 @@ func TestImage(t *testing.T) {
 	})
 }
 
+func TestIndex(t *testing.T) {
+	t.Parallel()
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/", nil)
+
+	hw := newHandlersWrapper()
+	hw.h.Index(w, r)
+	resp := w.Result()
+	defer resp.Body.Close()
+	h := resp.Header
+	data, _ := ioutil.ReadAll(resp.Body)
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, helpers.BuildCacheControlHeader(indexCacheMaxAge), h.Get("Cache-Control"))
+	assert.Equal(t, []byte("title:Artifact Hub\ndescription:Find, install and publish Kubernetes packages\ngaTrackingID:1234\n"), data)
+}
+
 func TestSaveImage(t *testing.T) {
 	fakeSaveImageError := errors.New("fake save image error")
 
@@ -141,23 +158,6 @@ func TestSaveImage(t *testing.T) {
 		assert.Equal(t, []byte(`{"image_id": "imageID"}`), data)
 		hw.is.AssertExpectations(t)
 	})
-}
-
-func TestServeIndex(t *testing.T) {
-	t.Parallel()
-	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/", nil)
-
-	hw := newHandlersWrapper()
-	hw.h.ServeIndex(w, r)
-	resp := w.Result()
-	defer resp.Body.Close()
-	h := resp.Header
-	data, _ := ioutil.ReadAll(resp.Body)
-
-	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.Equal(t, helpers.BuildCacheControlHeader(indexCacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("title:Artifact Hub\ndescription:Find, install and publish Kubernetes packages\ngaTrackingID:1234\n"), data)
 }
 
 func TestServeStaticFile(t *testing.T) {
@@ -201,6 +201,7 @@ func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.webBuildPath", "testdata")
 	cfg.Set("analytics.gaTrackingID", "1234")
+	cfg.Set("theme.siteName", "Artifact Hub")
 	is := &img.StoreMock{}
 
 	return &handlersWrapper{

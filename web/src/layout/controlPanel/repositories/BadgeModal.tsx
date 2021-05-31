@@ -3,6 +3,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { Repository } from '../../../types';
+import getMetaTag from '../../../utils/getMetaTag';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import Modal from '../../common/Modal';
 import Tabs from '../../common/Tabs';
@@ -15,10 +16,11 @@ interface Props {
 }
 
 const BadgeModal = (props: Props) => {
+  const siteName = getMetaTag('siteName');
   const origin = window.location.origin;
   const badgeImage = `https://img.shields.io/endpoint?url=${origin}/badge/repository/${props.repository.name}`;
-  const markdownLink = `[![Artifact HUB](${badgeImage})](${origin}/packages/search?repo=${props.repository.name})`;
-  const asciiLink = `${origin}/packages/search?repo=${props.repository.name}[image:${badgeImage}[Artifact HUB]]`;
+  const markdownLink = `[![${siteName}](${badgeImage})](${origin}/packages/search?repo=${props.repository.name})`;
+  const asciiLink = `${origin}/packages/search?repo=${props.repository.name}[image:${badgeImage}[${siteName}]]`;
 
   const onCloseModal = () => {
     props.onClose();

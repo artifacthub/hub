@@ -187,7 +187,7 @@ exports[`SecurityReport creates snapshot 1`] = `
         <div>
           <button
             aria-label="Open full report modal"
-            class="btn btn-secondary btn-sm"
+            class="btn btn-outline-secondary btn-sm"
           >
             <small
               class="d-flex flex-row align-items-center text-uppercase"

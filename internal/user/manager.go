@@ -23,6 +23,7 @@ import (
 	"github.com/pquerna/otp"
 	"github.com/pquerna/otp/totp"
 	"github.com/satori/uuid"
+	"github.com/spf13/viper"
 	pwvalidator "github.com/wagslane/go-password-validator"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -110,16 +111,18 @@ var (
 
 // Manager provides an API to manage users.
 type Manager struct {
+	cfg  *viper.Viper
 	db   hub.DB
 	es   hub.EmailSender
 	tmpl map[templateID]*template.Template
 }
 
 // NewManager creates a new Manager instance.
-func NewManager(db hub.DB, es hub.EmailSender) *Manager {
+func NewManager(cfg *viper.Viper, db hub.DB, es hub.EmailSender) *Manager {
 	return &Manager{
-		db: db,
-		es: es,
+		cfg: cfg,
+		db:  db,
+		es:  es,
 		tmpl: map[templateID]*template.Template{
 			passwordResetEmail:        template.Must(template.New("").Parse(email.BaseTmpl + passwordResetEmailTmpl)),
 			passwordResetSuccessEmail: template.Must(template.New("").Parse(email.BaseTmpl + passwordResetSuccessEmailTmpl)),
@@ -334,7 +337,7 @@ func (m *Manager) DisableTFA(ctx context.Context, passcode string) error {
 			return err
 		}
 		var emailBody bytes.Buffer
-		if err := m.tmpl[tfaDisabledEmail].Execute(&emailBody, nil); err != nil {
+		if err := m.tmpl[tfaDisabledEmail].Execute(&emailBody, baseTemplateData(m.cfg)); err != nil {
 			return err
 		}
 		emailData := &email.Data{
@@ -387,7 +390,7 @@ func (m *Manager) EnableTFA(ctx context.Context, passcode string) error {
 			return err
 		}
 		var emailBody bytes.Buffer
-		if err := m.tmpl[tfaEnabledEmail].Execute(&emailBody, nil); err != nil {
+		if err := m.tmpl[tfaEnabledEmail].Execute(&emailBody, baseTemplateData(m.cfg)); err != nil {
 			return err
 		}
 		emailData := &email.Data{
@@ -472,9 +475,8 @@ func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail, base
 
 	// Send password reset email
 	if m.es != nil {
-		templateData := map[string]string{
-			"link": fmt.Sprintf("%s/reset-password?code=%s", baseURL, code),
-		}
+		templateData := baseTemplateData(m.cfg)
+		templateData["Link"] = fmt.Sprintf("%s/reset-password?code=%s", baseURL, code)
 		var emailBody bytes.Buffer
 		if err := m.tmpl[passwordResetEmail].Execute(&emailBody, templateData); err != nil {
 			return err
@@ -575,9 +577,8 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 
 	// Send email verification code
 	if code != nil && m.es != nil {
-		templateData := map[string]string{
-			"link": fmt.Sprintf("%s/verify-email?code=%s", baseURL, *code),
-		}
+		templateData := baseTemplateData(m.cfg)
+		templateData["Link"] = fmt.Sprintf("%s/verify-email?code=%s", baseURL, *code)
 		var emailBody bytes.Buffer
 		if err := m.tmpl[verificationEmail].Execute(&emailBody, templateData); err != nil {
 			return err
@@ -632,9 +633,8 @@ func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL 
 
 	// Send password reset success email
 	if m.es != nil {
-		templateData := map[string]string{
-			"baseURL": baseURL,
-		}
+		templateData := baseTemplateData(m.cfg)
+		templateData["BaseURL"] = baseURL
 		var emailBody bytes.Buffer
 		if err := m.tmpl[passwordResetSuccessEmail].Execute(&emailBody, templateData); err != nil {
 			return err
@@ -667,7 +667,7 @@ func (m *Manager) SetupTFA(ctx context.Context) ([]byte, error) {
 
 	// Generate TOTP key
 	opts := totp.GenerateOpts{
-		Issuer:      "Artifact Hub",
+		Issuer:      m.cfg.GetString("theme.siteName"),
 		AccountName: userEmail,
 	}
 	key, err := totp.Generate(opts)
@@ -806,4 +806,16 @@ func isValidRecoveryCode(recoveryCodes []string, code string) bool {
 		}
 	}
 	return false
+}
+
+// baseTemplateData creates a new base template data from the configuration
+// provided.
+func baseTemplateData(cfg *viper.Viper) map[string]interface{} {
+	return map[string]interface{}{
+		"Theme": map[string]string{
+			"PrimaryColor":   cfg.GetString("theme.colors.primary"),
+			"SecondaryColor": cfg.GetString("theme.colors.secondary"),
+			"SiteName":       cfg.GetString("theme.siteName"),
+		},
+	}
 }

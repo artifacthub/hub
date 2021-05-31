@@ -10,7 +10,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
     >
       <button
         aria-label="Open templates modal"
-        class="btn btn-secondary btn-sm text-nowrap undefined"
+        class="btn btn-outline-secondary btn-sm text-nowrap undefined"
         data-testid="tmplModalBtn"
       >
         <div
