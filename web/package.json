@@ -6,7 +6,6 @@
     "@analytics/google-analytics": "^0.3.1",
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
     "@types/bootstrap": "^4.5.0",
-    "@types/classnames": "^2.2.10",
     "@types/crypto-js": "^4.0.1",
     "@types/json-schema": "^7.0.6",
     "@types/json-schema-merge-allof": "^0.6.0",
