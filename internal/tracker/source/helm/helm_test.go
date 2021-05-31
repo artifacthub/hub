@@ -259,6 +259,8 @@ func TestTrackerSource(t *testing.T) {
 	})
 
 	t.Run("error getting logo image, package returned anyway", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup services and expectations
 		sw := source.NewTestsServicesWrapper()
 		i := &hub.TrackerSourceInput{
@@ -313,6 +315,8 @@ func TestTrackerSource(t *testing.T) {
 	})
 
 	t.Run("one package returned, no errors", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup services and expectations
 		sw := source.NewTestsServicesWrapper()
 		i := &hub.TrackerSourceInput{
