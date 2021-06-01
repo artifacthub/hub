@@ -20,7 +20,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/user"
 	"github.com/coreos/go-oidc"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/google/go-github/github"
 	"github.com/gorilla/securecookie"
 	"github.com/rs/zerolog"

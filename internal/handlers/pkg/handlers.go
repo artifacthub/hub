@@ -14,7 +14,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/feeds"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
