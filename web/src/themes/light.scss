@@ -104,7 +104,7 @@
   }
 
   .table-hover tbody tr:hover {
-    background-color: var(--color-2-300);
+    background-color: var(--color-black-5);
   }
 
   .text-secondary {
@@ -143,7 +143,7 @@
 
   .dropdown-item:hover,
   .dropdown-item:focus {
-    background-color: var(--color-2-300);
+    background-color: var(--color-black-5);
   }
 
   button.text-dark:hover,
@@ -156,12 +156,12 @@
     &:focus,
     &:active,
     &.active {
-      background-color: var(--color-2-300);
+      background-color: var(--color-black-5);
     }
   }
 
   .btn-primary {
-    background-color: var(--color-1-500);
+    background-color: var(--color-1-500) !important;
     border-color: var(--color-1-500);
     color: var(--white) !important;
 
@@ -169,7 +169,7 @@
     &:focus,
     &:active,
     &.active {
-      background-color: var(--color-1-600);
+      background-color: var(--color-1-600) !important;
       border-color: var(--color-1-700);
       color: var(--white);
     }
@@ -177,30 +177,16 @@
 
   .btn-secondary,
   .badge-secondary {
-    background-color: var(--color-1-700);
+    background-color: var(--color-1-700) !important;
     border-color: var(--color-1-700);
     color: var(--white) !important;
 
     &:not(.disabled):not(:disabled):hover,
     &:focus,
     &:active {
-      background-color: var(--color-1-800);
+      background-color: var(--color-1-800) !important;
       border-color: var(--color-1-900);
       color: var(--white);
-    }
-  }
-
-  .btn-icon {
-    border-color: var(--color-1-500);
-    color: var(--color-1-500);
-    background-color: var(--white);
-
-    &:not(.disabled):not(:disabled):hover,
-    &:focus,
-    &:active,
-    &.active {
-      background-color: var(--color-black-5);
-      color: var(--color-1-700);
     }
   }
 

@@ -58,7 +58,7 @@ const SeeAllModal = (props: Props) => {
 
           <button
             data-testid="seeAllModalBtn"
-            className={`btn btn-link pl-0 d-none d-md-block position-relative ${styles.btn}`}
+            className={`btn btn-link pl-0 d-none d-md-block position-relative text-primary ${styles.btn}`}
             onClick={() => setOpenStatus(true)}
             aria-label="See all entries"
           >

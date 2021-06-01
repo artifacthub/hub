@@ -26,7 +26,7 @@ exports[`Maintainers creates snapshot 1`] = `
     >
       <a
         aria-label="Mail to: maintainer1@email.net"
-        class="link py-1 py-sm-0"
+        class="link py-1 py-sm-0 text-primary"
         href="mailto:maintainer1@email.net"
         rel="noopener noreferrer"
         role="button"
@@ -64,7 +64,7 @@ exports[`Maintainers creates snapshot 1`] = `
     >
       <a
         aria-label="Mail to: maintainer2@email.net"
-        class="link py-1 py-sm-0"
+        class="link py-1 py-sm-0 text-primary"
         href="mailto:maintainer2@email.net"
         rel="noopener noreferrer"
         role="button"
@@ -102,7 +102,7 @@ exports[`Maintainers creates snapshot 1`] = `
     >
       <a
         aria-label="Mail to: maintainer3@email.net"
-        class="link py-1 py-sm-0"
+        class="link py-1 py-sm-0 text-primary"
         href="mailto:maintainer3@email.net"
         rel="noopener noreferrer"
         role="button"

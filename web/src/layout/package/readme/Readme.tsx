@@ -301,7 +301,7 @@ const Readme = (props: Props) => {
           href={data.href}
           target={data.target}
           rel="noopener noreferrer"
-          className={classnames('font-weight-bold', { 'd-inline': !isContentImage })}
+          className={classnames('text-primary', { 'd-inline': !isContentImage })}
         >
           {data.children}
         </a>
@@ -310,7 +310,7 @@ const Readme = (props: Props) => {
     } else if (data.href.startsWith('#') && isElementInView(data.href)) {
       return (
         <button
-          className={classnames('btn btn-link text-dark font-weight-bold text-left border-0 p-0', styles.btnLink)}
+          className={classnames('btn btn-link text-primary text-left border-0 p-0', styles.btnLink)}
           onClick={() => props.scrollIntoView(data.href)}
           aria-label="Go to element"
         >

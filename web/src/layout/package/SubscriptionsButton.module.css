@@ -19,7 +19,7 @@
 }
 
 .dropdownItem:not(.isDisabled):hover {
-  background-color: var(--color-2-300);
+  background-color: var(--color-black-5);
 }
 
 .dropdownItem + .dropdownItem {

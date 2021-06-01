@@ -186,7 +186,7 @@ const OrganizationCard = (props: Props) => {
 
                 {hasDropdownContent && (
                   <button
-                    className={`ml-3 mb-2 btn btn-icon p-0 text-primary text-center iconSubsWrapper ${styles.btnDropdown}`}
+                    className={`ml-3 mb-2 btn btn-outline-secondary rounded-circle p-0 text-center iconSubsWrapper ${styles.btnDropdown}`}
                     onClick={() => setDropdownMenuStatus(true)}
                     aria-label="Open menu"
                     aria-expanded={dropdownMenuStatus}

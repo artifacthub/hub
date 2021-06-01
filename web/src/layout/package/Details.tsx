@@ -237,7 +237,7 @@ const Details = (props: Props) => {
           <License
             license={props.package.license}
             className="mb-3"
-            linkClassName="py-1 py-sm-0"
+            linkClassName="py-1 py-sm-0 text-primary"
             linkContentClassName={styles.text}
             visibleIcon
           />
