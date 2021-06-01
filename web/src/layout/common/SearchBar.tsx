@@ -172,9 +172,15 @@ const SearchBar = (props: Props) => {
         false
       );
       if (searchResults.metadata.total > 0) {
-        setPackages(searchResults.data.packages);
-        setTotalPackagesNumber(searchResults.metadata.total);
-        setVisibleDropdown(true);
+        const isInputFocused = inputEl.current === document.activeElement;
+        // We have to be sure that input has focus to display results
+        if (isInputFocused) {
+          setPackages(searchResults.data.packages);
+          setTotalPackagesNumber(searchResults.metadata.total);
+          setVisibleDropdown(true);
+        } else {
+          cleanSearch();
+        }
       } else {
         cleanSearch();
       }
