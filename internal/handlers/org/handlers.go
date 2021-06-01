@@ -6,7 +6,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"

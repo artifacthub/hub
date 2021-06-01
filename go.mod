@@ -10,7 +10,7 @@ require (
 	github.com/disintegration/imaging v1.6.2
 	github.com/domodwyer/mailyak v3.1.1+incompatible
 	github.com/ghodss/yaml v1.0.0
-	github.com/go-chi/chi v4.1.2+incompatible
+	github.com/go-chi/chi/v5 v5.0.3
 	github.com/go-git/go-git/v5 v5.4.1
 	github.com/google/go-containerregistry v0.5.1
 	github.com/google/go-github v17.0.0+incompatible
