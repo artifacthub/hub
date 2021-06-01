@@ -211,13 +211,6 @@ template {
   font-display: swap
 }
 @font-face {
-  font-family: "Liberation Mono";
-  src: url(fonts/LiberationMono.woff2) format("woff2"),url(fonts/LiberationMono.woff) format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap
-}
-@font-face {
   font-family: "Droid Sans";
   src: url(fonts/DroidSans.woff2) format("woff2"),url(fonts/DroidSans.woff) format("woff");
   font-weight: 400;
@@ -243,7 +236,7 @@ body {
 }
 .gdoc-error__title,
 code {
-  font-family: "Liberation Mono",monospace
+  font-family: "Roboto Mono",monospace
 }
 .gdoc-header {
   font-family: Metropolis,sans-serif

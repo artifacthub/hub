@@ -100,13 +100,13 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('4');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { getByText, queryByRole } = render(<ValuesSchema {...defaultProps} visibleValuesSchema />);
+      const { getByTestId, queryByRole } = render(<ValuesSchema {...defaultProps} visibleValuesSchema />);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
       });
 
-      const close = getByText('Close');
+      const close = getByTestId('closeModalFooterBtn');
       fireEvent.click(close);
 
       waitFor(() => {

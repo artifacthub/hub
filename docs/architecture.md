@@ -142,7 +142,7 @@ cmd
     └── main.go
 ```
 
-- **hub:** this component provides an HTTP API that exposes some of the functionality provided by the `Internal APIs` layer. The documentation for this API can be found [here](https://artifacthub.github.io/hub/api/). It is also in charge of serving the web application static assets, as well as handling notifications and events.
+- **hub:** this component provides an HTTP API that exposes some of the functionality provided by the `Internal APIs` layer. The documentation for this API can be found [here](https://artifacthub.io/docs/api/). It is also in charge of serving the web application static assets, as well as handling notifications and events.
 
 - **tracker:** this component is in charge of indexing all repositories registered in the database. It's launched periodically from a Kubernetes [cronjob](https://github.com/artifacthub/hub/blob/master/charts/artifact-hub/templates/tracker_cronjob.yaml).
 

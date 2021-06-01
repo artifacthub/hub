@@ -7,12 +7,7 @@ info:
     name: Artifact Hub support
     url: https://cloud-native.slack.com/channels/artifact-hub
 servers:
-  - url: "https://artifacthub.io/api/v1"
-    description: Main production server
-  - url: "https://staging.artifacthub.io/api/v1"
-    description: Staging server for testing
-  - url: "http://localhost:8000/api/v1"
-    description: Local server for development
+  - url: "/api/v1"
 tags:
   - name: Users
     description: ""

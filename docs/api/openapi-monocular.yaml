@@ -8,10 +8,7 @@ info:
     url: https://cloud-native.slack.com/channels/artifact-hub
 
 servers:
-  - url: "https://artifacthub.io"
-    description: Main production server
-  - url: "https://staging.artifacthub.io"
-    description: Staging server for testing
+  - url: "/"
 tags:
   - name: Monocular
     description: ""

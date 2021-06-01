@@ -46,15 +46,12 @@
     <script>
     window.onload = function() {
       const ui = SwaggerUIBundle({
-        urls: [
-          {url: "openapi.yaml", name: "Artifact Hub API"},
-          {url: "openapi-monocular.yaml", name: "Monocular compatible search API"},
-        ],
+        url: "openapi.yaml",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
           SwaggerUIBundle.presets.apis,
-          SwaggerUIStandalonePreset,
+          SwaggerUIStandalonePreset.slice(1), // Hides topbar
         ],
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl,
