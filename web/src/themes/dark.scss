@@ -17,7 +17,6 @@
   --color-1-5: rgba(15, 14, 17, 0.95);
   --color-1-10: rgba(15, 14, 17, 0.9);
   --color-1-20: rgba(15, 14, 17, 0.8);
-  --color-2-300: #0f0e11;
   --color-2-500: #0f0e11;
 
   --color-black-5: rgba(255, 255, 255, 0.05);
@@ -119,7 +118,6 @@
   .btn-primary,
   .btn-secondary,
   .btn-light,
-  .btn-icon,
   a.badge-secondary {
     @include button-variant($color1, $border-solid);
 

@@ -78,7 +78,7 @@ const Version = (props: Props) => {
       {props.isActive ? (
         <>
           <div className="d-flex flex-row align-items-baseline activeVersion mw-100">
-            <div className="text-truncate font-weight-bold">{props.version}</div>
+            <div className="text-truncate">{props.version}</div>
             <small className={`text-muted ${styles.activeVersionDate}`}>({formattedDate})</small>
           </div>
           {getBadges()}
@@ -89,7 +89,7 @@ const Version = (props: Props) => {
             <button
               data-testid="version"
               onClick={() => openPackagePage()}
-              className="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
+              className="btn btn-link text-primary pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
               aria-label={`Open version ${props.version}`}
             >
               {props.version}
