@@ -178,8 +178,8 @@ begin
                         select
                             paaf.*,
                             (case when v_tsquery_web is not null then
-                                ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1) +
-                                ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)
+                                trunc(ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1)::numeric, 2) +
+                                trunc(ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)::numeric, 2)
                             else 1 end) as rank,
                             (case
                                 when repository_official = true or package_official = true
@@ -189,8 +189,8 @@ begin
                         order by
                             rank desc,
                             official desc,
-                            verified_publisher desc,
                             stars desc,
+                            verified_publisher desc,
                             name asc
                         limit (p_input->>'limit')::int
                         offset (p_input->>'offset')::int
