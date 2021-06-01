@@ -233,30 +233,6 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "name": "package2",
                 "normalized_name": "package2",
@@ -282,6 +258,30 @@ select is(
                     "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "stars": 10,
+                "official": false,
+                "display_name": "Package 1",
+                "description": "description",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "license": "Apache-2.0",
+                "ts": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "scanner_disabled": false,
+                    "user_alias": "user1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000003",
@@ -387,30 +387,6 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "name": "package2",
                 "normalized_name": "package2",
@@ -436,6 +412,30 @@ select is(
                     "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "stars": 10,
+                "official": false,
+                "display_name": "Package 1",
+                "description": "description",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "license": "Apache-2.0",
+                "ts": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "scanner_disabled": false,
+                    "user_alias": "user1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000003",
@@ -556,30 +556,6 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "name": "package2",
                 "normalized_name": "package2",
@@ -605,6 +581,30 @@ select is(
                     "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "stars": 10,
+                "official": false,
+                "display_name": "Package 1",
+                "description": "description",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "license": "Apache-2.0",
+                "ts": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "scanner_disabled": false,
+                    "user_alias": "user1"
                 }
             }]
         },
@@ -623,30 +623,6 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "name": "package2",
                 "normalized_name": "package2",
@@ -672,6 +648,30 @@ select is(
                     "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "stars": 10,
+                "official": false,
+                "display_name": "Package 1",
+                "description": "description",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "license": "Apache-2.0",
+                "ts": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "scanner_disabled": false,
+                    "user_alias": "user1"
                 }
             }]
         },
@@ -690,30 +690,6 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "name": "package2",
                 "normalized_name": "package2",
@@ -739,6 +715,30 @@ select is(
                     "scanner_disabled": false,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "stars": 10,
+                "official": false,
+                "display_name": "Package 1",
+                "description": "description",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "license": "Apache-2.0",
+                "ts": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "scanner_disabled": false,
+                    "user_alias": "user1"
                 }
             }],
             "facets": [{
@@ -1500,6 +1500,33 @@ select is(
     '{
         "data": {
             "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "name": "package2",
+                "normalized_name": "package2",
+                "stars": 11,
+                "official": true,
+                "display_name": "Package 2",
+                "description": "description",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": true,
+                "signed": true,
+                "all_containers_images_whitelisted": false,
+                "ts": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
+                    "name": "repo2",
+                    "display_name": "Repo 2",
+                    "url": "https://repo2.com",
+                    "verified_publisher": false,
+                    "official": false,
+                    "scanner_disabled": false,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
+            }, {
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "name": "package1",
                 "normalized_name": "package1",
@@ -1523,7 +1550,26 @@ select is(
                     "scanner_disabled": false,
                     "user_alias": "user1"
                 }
-            }, {
+            }]
+        },
+        "metadata": {
+            "limit": 2,
+            "offset": 0,
+            "total": 2
+        }
+    }'::jsonb,
+    'Limit: 2 Offset: 0 TSQueryWeb: kw1 | Packages 1 and 2 expected'
+);
+select is(
+    search_packages('{
+        "limit": 1,
+        "offset": 0,
+        "ts_query_web": "kw1",
+        "deprecated": true
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "name": "package2",
                 "normalized_name": "package2",
@@ -1553,55 +1599,12 @@ select is(
             }]
         },
         "metadata": {
-            "limit": 2,
-            "offset": 0,
-            "total": 2
-        }
-    }'::jsonb,
-    'Limit: 2 Offset: 0 TSQueryWeb: kw1 | Packages 1 and 2 expected'
-);
-select is(
-    search_packages('{
-        "limit": 1,
-        "offset": 0,
-        "ts_query_web": "kw1",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
             "limit": 1,
             "offset": 0,
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 0 TSQueryWeb: kw1 | Package 1 expected'
+    'Limit: 1 Offset: 0 TSQueryWeb: kw1 | Package 2 expected'
 );
 select is(
     search_packages('{
@@ -1632,31 +1635,28 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "stars": 10,
+                "official": false,
+                "display_name": "Package 1",
                 "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
+                "license": "Apache-2.0",
                 "ts": 1592299234,
                 "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
                     "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
+                    "user_alias": "user1"
                 }
             }]
         },
@@ -1666,7 +1666,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 1 TSQueryWeb: kw1 | Package 2 expected'
+    'Limit: 1 Offset: 1 TSQueryWeb: kw1 | Package 1 expected'
 );
 select is(
     search_packages('{
