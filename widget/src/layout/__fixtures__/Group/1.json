@@ -1,0 +1,127 @@
+{
+  "packages": [
+    {
+      "packageId": "75ee6e00-b4d5-429e-9d82-33ab730081ff",
+      "name": "artifact-hub",
+      "normalizedName": "artifact-hub",
+      "logoImageId": "3cfb161e-2652-43b9-ada1-c1ced4b20111",
+      "stars": 26,
+      "description": "Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.",
+      "version": "0.20.0",
+      "appVersion": "0.20.0",
+      "license": "Apache-2.0",
+      "deprecated": false,
+      "signed": false,
+      "securityReportSummary": { "low": 0, "high": 2, "medium": 3, "unknown": 0, "critical": 0 },
+      "allContainersImagesWhitelisted": false,
+      "ts": 1622630689,
+      "repository": {
+        "url": "https://artifacthub.github.io/hub/chart/",
+        "kind": 0,
+        "name": "artifact-hub",
+        "official": true,
+        "displayName": "Artifact Hub",
+        "repositoryId": "a032a436-3568-4970-804a-2780f5e9d231",
+        "scannerDisabled": false,
+        "organizationName": "artifacthub",
+        "verifiedPublisher": true,
+        "organizationDisplayName": "Artifact Hub"
+      }
+    },
+    {
+      "packageId": "368c2e41-42b0-4850-8047-eac9d63a3698",
+      "name": "hub-scala-base",
+      "normalizedName": "hub-scala-base",
+      "stars": 0,
+      "description": "Toolkit for creating Helm Charts for Hub Services (Scala)",
+      "version": "2.0.0",
+      "deprecated": false,
+      "signed": false,
+      "ts": 1616525764,
+      "repository": {
+        "url": "https://s4nhub-helm-charts.storage.googleapis.com",
+        "kind": 0,
+        "name": "s4nhub-helm-charts",
+        "official": false,
+        "displayName": "S4N Hub Helm Charts",
+        "repositoryId": "21ad1154-f637-4ba5-a089-865afdbb242d",
+        "scannerDisabled": false,
+        "organizationName": "s4n-hub",
+        "verifiedPublisher": false,
+        "organizationDisplayName": "S4N Hub"
+      }
+    },
+    {
+      "packageId": "788d0aa0-cf70-4315-9520-12962519ef4a",
+      "name": "docker-hub-exporter",
+      "normalizedName": "docker-hub-exporter",
+      "logoImageId": "180db85c-51c6-4f33-b341-27ec236e6d87",
+      "stars": 0,
+      "description": "Docker Hub Exporter",
+      "version": "0.5.4",
+      "appVersion": "d05df48",
+      "deprecated": false,
+      "signed": false,
+      "ts": 1610832899,
+      "repository": {
+        "url": "https://helm.wyrihaximus.net/",
+        "kind": 0,
+        "name": "wyrihaximusnet",
+        "official": false,
+        "userAlias": "WyriHaximus",
+        "repositoryId": "6f1e3c82-9a97-454b-849e-f62eb85d94ce",
+        "scannerDisabled": false,
+        "verifiedPublisher": true
+      }
+    },
+    {
+      "packageId": "5c7c18df-f129-4f11-91df-a666cc5b8d33",
+      "name": "e2e-test-runner",
+      "normalizedName": "e2e-test-runner",
+      "stars": 0,
+      "description": "Helm Chart for running e2e tests from pipeline",
+      "version": "1.1.1",
+      "appVersion": "1.0.0",
+      "deprecated": false,
+      "signed": false,
+      "ts": 1615847958,
+      "repository": {
+        "url": "https://s4nhub-helm-charts.storage.googleapis.com",
+        "kind": 0,
+        "name": "s4nhub-helm-charts",
+        "official": false,
+        "displayName": "S4N Hub Helm Charts",
+        "repositoryId": "21ad1154-f637-4ba5-a089-865afdbb242d",
+        "scannerDisabled": false,
+        "organizationName": "s4n-hub",
+        "verifiedPublisher": false,
+        "organizationDisplayName": "S4N Hub"
+      }
+    },
+    {
+      "packageId": "490a6442-18cb-411b-9cd7-81c33516d4ab",
+      "name": "fluentd-elasticsearch",
+      "normalizedName": "fluentd-elasticsearch",
+      "stars": 0,
+      "description": "A Helm chart for fluentd-elasticsearch",
+      "version": "1.0.4",
+      "appVersion": "v1.11.1-debian-elasticsearch7-1.3",
+      "deprecated": false,
+      "signed": false,
+      "ts": 1615847983,
+      "repository": {
+        "url": "https://s4nhub-helm-charts.storage.googleapis.com",
+        "kind": 0,
+        "name": "s4nhub-helm-charts",
+        "official": false,
+        "displayName": "S4N Hub Helm Charts",
+        "repositoryId": "21ad1154-f637-4ba5-a089-865afdbb242d",
+        "scannerDisabled": false,
+        "organizationName": "s4n-hub",
+        "verifiedPublisher": false,
+        "organizationDisplayName": "S4N Hub"
+      }
+    }
+  ],
+  "facets": []
+}

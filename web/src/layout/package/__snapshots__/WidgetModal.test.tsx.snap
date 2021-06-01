@@ -1,0 +1,763 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WidgetModal creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+      >
+        <div
+          class="modal-content content"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center header undefined"
+          >
+            <div
+              class="h3 m-2 flex-grow-1 title"
+            >
+              Widget
+            </div>
+            <button
+              aria-label="Close modal"
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100 position-relative"
+            >
+              <label
+                class="font-weight-bold label"
+                for="theme"
+              >
+                Theme
+              </label>
+              <div
+                class="d-flex flex-row mb-3"
+              >
+                <div
+                  class="custom-control custom-radio mr-4"
+                >
+                  <input
+                    checked=""
+                    class="custom-control-input"
+                    data-testid="radio-theme-light"
+                    id="light"
+                    name="theme"
+                    readonly=""
+                    required=""
+                    type="radio"
+                    value="light"
+                  />
+                  <label
+                    class="text-capitalize custom-control-label"
+                    for="light"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="5"
+                        />
+                        <line
+                          x1="12"
+                          x2="12"
+                          y1="1"
+                          y2="3"
+                        />
+                        <line
+                          x1="12"
+                          x2="12"
+                          y1="21"
+                          y2="23"
+                        />
+                        <line
+                          x1="4.22"
+                          x2="5.64"
+                          y1="4.22"
+                          y2="5.64"
+                        />
+                        <line
+                          x1="18.36"
+                          x2="19.78"
+                          y1="18.36"
+                          y2="19.78"
+                        />
+                        <line
+                          x1="1"
+                          x2="3"
+                          y1="12"
+                          y2="12"
+                        />
+                        <line
+                          x1="21"
+                          x2="23"
+                          y1="12"
+                          y2="12"
+                        />
+                        <line
+                          x1="4.22"
+                          x2="5.64"
+                          y1="19.78"
+                          y2="18.36"
+                        />
+                        <line
+                          x1="18.36"
+                          x2="19.78"
+                          y1="5.64"
+                          y2="4.22"
+                        />
+                      </svg>
+                      <span
+                        class="ml-1"
+                      >
+                        light
+                      </span>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  class="custom-control custom-radio mr-4"
+                >
+                  <input
+                    class="custom-control-input"
+                    data-testid="radio-theme-dark"
+                    id="dark"
+                    name="theme"
+                    readonly=""
+                    required=""
+                    type="radio"
+                    value="dark"
+                  />
+                  <label
+                    class="text-capitalize custom-control-label"
+                    for="dark"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                        />
+                      </svg>
+                      <span
+                        class="ml-1"
+                      >
+                        dark
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="custom-control custom-switch pl-0"
+                >
+                  <input
+                    checked=""
+                    class="custom-control-input"
+                    data-testid="checkbox-header"
+                    id="header"
+                    type="checkbox"
+                    value="true"
+                  />
+                  <label
+                    class="custom-control-label font-weight-bold label customControlRightLabel"
+                    for="header"
+                  >
+                    Header
+                  </label>
+                </div>
+                <small
+                  class="form-text text-muted mt-2"
+                >
+                  Displays Artifact Hub header at the top of the widget.
+                </small>
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="custom-control custom-switch pl-0"
+                >
+                  <input
+                    class="custom-control-input"
+                    data-testid="checkbox-responsive"
+                    id="responsive"
+                    type="checkbox"
+                    value="true"
+                  />
+                  <label
+                    class="custom-control-label font-weight-bold label customControlRightLabel"
+                    for="responsive"
+                  >
+                    Responsive
+                  </label>
+                </div>
+                <small
+                  class="form-text text-muted mt-2"
+                >
+                  The widget will try to use the width available on the parent container (between 350px and 650px).
+                </small>
+              </div>
+              <div
+                class="mt-3 mb-2"
+              >
+                <label
+                  class="font-weight-bold label"
+                >
+                  Code
+                </label>
+                <div
+                  class="flex-grow-1 mr-3 user-select-none blockWrapper"
+                  data-testid="block-content"
+                >
+                  <pre
+                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+                  >
+                    <code
+                      class="language-html"
+                      style="white-space: pre;"
+                    >
+                      <span>
+                        &lt;div 
+                      </span>
+                      <span
+                        style="color: rgb(149, 65, 33);"
+                      >
+                        class
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        artifacthub
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        widget
+                      </span>
+                      <span>
+                        " 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        url
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        http:
+                      </span>
+                      <span>
+                        //
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        localhost
+                      </span>
+                      <span>
+                        /" 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        theme
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        light
+                      </span>
+                      <span>
+                        " 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        header
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        true
+                      </span>
+                      <span>
+                        " 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        responsive
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        false
+                      </span>
+                      <span>
+                        "&gt;&lt;
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        blockquote
+                      </span>
+                      <span>
+                        &gt;&lt;
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        p
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        lang
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        en
+                      </span>
+                      <span>
+                        " 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        dir
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        ltr
+                      </span>
+                      <span>
+                        "&gt;&lt;
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        b
+                      </span>
+                      <span>
+                        &gt;
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        pkg
+                      </span>
+                      <span>
+                        &lt;/
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        b
+                      </span>
+                      <span>
+                        &gt;: 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        this
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        is
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        the
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        description
+                      </span>
+                      <span>
+                        &lt;/
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        p
+                      </span>
+                      <span>
+                        &gt;&
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        mdash
+                      </span>
+                      <span>
+                        ; 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        Open
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        in
+                      </span>
+                      <span>
+                         &lt;
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        a
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        href
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        http:
+                      </span>
+                      <span>
+                        //
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        localhost
+                      </span>
+                      <span>
+                        /"&gt;
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        null
+                      </span>
+                      <span>
+                        &lt;/
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        a
+                      </span>
+                      <span>
+                        &gt;&lt;/
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        blockquote
+                      </span>
+                      <span>
+                        &gt;&lt;/
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        div
+                      </span>
+                      <span>
+                        &gt;&lt;
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        script
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        async
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        src
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        http:
+                      </span>
+                      <span>
+                        //
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        localhost
+                      </span>
+                      <span>
+                        /
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        artifacthub
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        widget
+                      </span>
+                      <span>
+                        .
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        js
+                      </span>
+                      <span>
+                        "&gt;&lt;/
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        script
+                      </span>
+                      <span>
+                        &gt;
+                      </span>
+                    </code>
+                  </pre>
+                </div>
+                <div
+                  class="position-relative undefined"
+                >
+                  <button
+                    aria-label="Copy code to clipboard"
+                    class="btn btn-sm btn-outline-secondary copyBtn"
+                    data-testid="ctcBtn"
+                    type="button"
+                  >
+                    <div
+                      aria-hidden="true"
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <div
+                        class="mr-2"
+                      >
+                        Copy code to clipboard
+                      </div>
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          height="13"
+                          rx="2"
+                          ry="2"
+                          width="13"
+                          x="9"
+                          y="9"
+                        />
+                        <path
+                          d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              aria-label="Close modal"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
+              data-testid="closeModalFooterBtn"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  class="mr-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <div>
+                  Close
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

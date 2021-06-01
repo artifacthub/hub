@@ -26,6 +26,10 @@ const ICONS: IconsList = {
   [RepositoryKind.CoreDNS]: <SVGIcons name="coredns" />,
 };
 
-const RepositoryIcon = (props: Props) => <div className={props.className}>{ICONS[props.kind]}</div>;
+const RepositoryIcon = (props: Props) => (
+  <div data-testid="repoIcon" className={props.className}>
+    {ICONS[props.kind]}
+  </div>
+);
 
 export default RepositoryIcon;

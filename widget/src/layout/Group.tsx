@@ -2,7 +2,7 @@ import { isNull, isUndefined, some } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import APIMethods from '../api';
+import API from '../api';
 import { PackageSummary } from '../types';
 import Loading from './common/Loading';
 import Widget from './Widget';
@@ -88,7 +88,7 @@ const Group = (props: Props) => {
           if (visibleLoading) {
             setIsLoading(true);
           }
-          const results = await APIMethods.searchPackages(urlParams.origin, urlParams.search);
+          const results = await API.searchPackages(urlParams.origin, urlParams.search);
           if (results.packages && results.packages.length > 0) {
             setPackagesList(results.packages);
             setPkgsWithBadges(hasBadges(results.packages));
@@ -114,7 +114,12 @@ const Group = (props: Props) => {
   const mainColor = getMainColor();
 
   return (
-    <Wrapper mainColor={mainColor} className={fixedWidthValue ? 'fixedWidth' : ''} width={fixedWidthValue}>
+    <Wrapper
+      data-testid="wrapper"
+      mainColor={mainColor}
+      className={fixedWidthValue ? 'fixedWidth' : ''}
+      width={fixedWidthValue}
+    >
       {visibleLoading && (isUndefined(packagesList) || isLoading) ? (
         <Loading size="lg" />
       ) : (

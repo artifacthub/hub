@@ -109,6 +109,7 @@ const WidgetModal = (props: Props) => {
                 return (
                   <div className="custom-control custom-radio mr-4" key={`radio_theme_${themeOpt.name}`}>
                     <input
+                      data-testid={`radio-theme-${themeOpt.name}`}
                       className="custom-control-input"
                       type="radio"
                       name="theme"
@@ -139,6 +140,7 @@ const WidgetModal = (props: Props) => {
               <div className="mt-4 mb-3">
                 <div className="custom-control custom-switch pl-0">
                   <input
+                    data-testid="checkbox-header"
                     id="header"
                     type="checkbox"
                     className="custom-control-input"
@@ -163,6 +165,7 @@ const WidgetModal = (props: Props) => {
             <div className="mt-4 mb-3">
               <div className="custom-control custom-switch pl-0">
                 <input
+                  data-testid="checkbox-responsive"
                   id="responsive"
                   type="checkbox"
                   className="custom-control-input"
@@ -186,7 +189,7 @@ const WidgetModal = (props: Props) => {
             <div className="mt-3 mb-2">
               <label className={`font-weight-bold ${styles.label}`}>Code</label>
 
-              <div className={`flex-grow-1 mr-3 user-select-none ${styles.blockWrapper}`}>
+              <div data-testid="block-content" className={`flex-grow-1 mr-3 user-select-none ${styles.blockWrapper}`}>
                 <SyntaxHighlighter
                   language="html"
                   style={docco}

@@ -56,12 +56,13 @@ const MoreActionsButton = (props: Props) => {
 
         <div
           ref={ref}
-          data-testid="subsBtnDropdown"
+          data-testid="moreActionsDropdown"
           className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, { show: openStatus })}
         >
           <div className={`arrow ${styles.arrow}`} />
 
           <button
+            data-testid="embedWidgetBtn"
             className="dropdown-item btn btn-sm rounded-0 text-dark"
             onClick={() => {
               setVisibleWidget(true);

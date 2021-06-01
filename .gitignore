@@ -10,6 +10,7 @@ web/build
 web/public/docs
 web/coverage
 widget/build
+widget/coverage
 charts/artifact-hub/charts
 Chart.lock
 docs/www/content/topics/*

@@ -37,7 +37,7 @@ interface Props {
 
 const Loading = (props: Props) => (
   <SpinnerWrapper>
-    <Spinner className={props.size ? `size-${props.size}` : ''} />
+    <Spinner className={props.size ? `size-${props.size}` : ''} role="status" />
   </SpinnerWrapper>
 );
 

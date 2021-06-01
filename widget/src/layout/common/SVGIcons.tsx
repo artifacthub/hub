@@ -18,12 +18,13 @@ const IconWrapper = styled('div')`
 `;
 
 const SVGIcons = (props: Props) => (
-  <IconWrapper className={props.className} aria-hidden="true">
+  <IconWrapper data-testid="iconWrapper" className={props.className} aria-hidden="true">
     {(() => {
       switch (props.name) {
         case 'logo':
           return (
             <svg xmlns="http://www.w3.org/2000/svg" width={147} height={20}>
+              <title>{props.name}</title>
               <path
                 d="M39.292 16.81h-1.48a.643.643 0 01-.427-.142.597.597 0 01-.227-.313L35.82 12.94h-6.375l-1.338 3.415a1.263 1.263 0 01-.228.313.7.7 0 01-.427.143h-1.48l5.692-14.203h1.964l5.664 14.203m-9.307-5.294h5.322l-2.22-5.778c-.17-.427-.313-.882-.426-1.338-.057.285-.143.513-.2.74-.056.228-.142.427-.199.598l-2.277 5.778z"
                 fillRule="evenodd"
@@ -115,6 +116,7 @@ const SVGIcons = (props: Props) => (
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>{props.name}</title>
               <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
             </svg>
           );
@@ -130,6 +132,7 @@ const SVGIcons = (props: Props) => (
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>{props.name}</title>
               <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path>
             </svg>
           );
@@ -145,6 +148,7 @@ const SVGIcons = (props: Props) => (
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>{props.name}</title>
               <path
                 fillRule="evenodd"
                 d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -171,6 +175,7 @@ const SVGIcons = (props: Props) => (
               fontSize={14}
               textAnchor="middle"
             >
+              <title>{props.name}</title>
               <defs>
                 <style />
               </defs>
@@ -188,6 +193,7 @@ const SVGIcons = (props: Props) => (
         case 'falco':
           return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="48.91 -1.09 472.18 576.68">
+              <title>{props.name}</title>
               <defs>
                 <style>{'.prefix__cls-2{fill:#00b4c8}'}</style>
               </defs>
@@ -209,6 +215,7 @@ const SVGIcons = (props: Props) => (
         case 'opa':
           return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="16.37 -1.63 395.51 435.76">
+              <title>{props.name}</title>
               <path
                 fill="#bfbfbf"
                 d="M71 214.5c7.5-26.7 20.9-50.1 38.4-68.8-5.9-4.4-29.3-22.6-30.4-36.9C77.3 85.4 100.7 6.7 100.7 6.7S30 92.8 25.1 127.6c-3.9 27.3 40.8 81.5 45.5 87v-.1h.4zm287.7-1.4v.2c0 .1.1.2.1.3 7.8-9.4 48.3-59.9 44.6-86-4.9-34.8-75.6-120.9-75.6-120.9s23.4 78.7 21.7 102.1c-1 13.7-22.3 30.8-29.4 36.2 17.5 18.4 31 41.6 38.6 68.1z"
@@ -231,6 +238,7 @@ const SVGIcons = (props: Props) => (
         case 'tinkerbell':
           return (
             <svg id="prefix__Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+              <title>{props.name}</title>
               <defs>
                 <style>{'.prefix__cls-1{fill:none}.prefix__cls-2{fill:#0087ac}'}</style>
               </defs>
@@ -256,6 +264,7 @@ const SVGIcons = (props: Props) => (
         case 'tekton':
           return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="14.9 -7.6 688.7 733.2">
+              <title>{props.name}</title>
               <defs>
                 <linearGradient
                   id="prefix__a"
@@ -282,6 +291,7 @@ const SVGIcons = (props: Props) => (
         case 'olm':
           return (
             <svg xmlns="http://www.w3.org/2000/svg" width={44.4} height={44.4} viewBox="0 0 44.4 44.4">
+              <title>{props.name}</title>
               <circle cx={22.2} cy={22.2} r={22.2} fill="#c00" />
               <path
                 d="M27.1 3.3L9 26.5h13.2a.7.7 0 01.6.9l-3.5 13.3c-.1.4.4.6.7.3l15.4-20.3a.3.3 0 00-.3-.5H22.6a.8.8 0 01-.8-1.1l5.4-14.7z"
@@ -293,6 +303,7 @@ const SVGIcons = (props: Props) => (
         case 'krew':
           return (
             <svg xmlns="http://www.w3.org/2000/svg" width={480} height={480} viewBox="0 0 480 480">
+              <title>{props.name}</title>
               <path
                 d="M467.709 233.933c-.867 12.705-6.003 23.349-15.351 31.982.05-16.819.089-33.647.141-50.464 6.727 4.789 11.614 11.111 15.21 18.482z"
                 fillRule="evenodd"
@@ -574,6 +585,7 @@ const SVGIcons = (props: Props) => (
               xmlnsXlink="http://www.w3.org/1999/xlink"
               viewBox="0 0 625 625"
             >
+              <title>{props.name}</title>
               <defs>
                 <linearGradient
                   id="prefix__Gradient_bez_nazwy"
@@ -650,6 +662,7 @@ const SVGIcons = (props: Props) => (
               xmlnsXlink="http://www.w3.org/1999/xlink"
               viewBox="-1.75 18.75 364 325.25"
             >
+              <title>{props.name}</title>
               <defs>
                 <linearGradient
                   id="prefix__linear-gradient"
