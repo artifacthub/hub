@@ -69,7 +69,7 @@
 }
 
 .activeDropdownItem {
-  background-color: var(--color-2-500);
+  background-color: var(--color-2-300);
 }
 
 .truncateWrapper {
