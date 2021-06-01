@@ -89,7 +89,7 @@ describe('APIKeyModal - API keys section', () => {
 
       const btns = getAllByRole('button');
       expect(btns[3]).toHaveTextContent('API docs');
-      expect(btns[3]).toHaveAttribute('href', 'https://artifacthub.github.io/hub/api');
+      expect(btns[3]).toHaveAttribute('href', '/docs/api');
     });
 
     it('displays default Api error', async () => {

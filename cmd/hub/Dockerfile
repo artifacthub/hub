@@ -45,5 +45,6 @@ COPY --from=frontend-builder /web/build ./web
 COPY --from=frontend-builder /tmp/yarn.lock ./web
 COPY --from=widget-builder /widget/build ./widget
 COPY --from=docs-builder /web/build/docs ./web/docs
+COPY --from=docs-builder /docs/api ./web/docs/api
 CMD ["./hub"]
 EXPOSE 8000

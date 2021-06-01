@@ -30,7 +30,7 @@ const Footer = (props: Props) => {
             <div>
               <div className="h6 font-weight-bold text-uppercase">Project</div>
               <div className="d-flex flex-column text-left">
-                <ExternalLink className={`mb-1 ${styles.link}`} href="/docs" label="Open documentation">
+                <ExternalLink className={`mb-1 ${styles.link}`} href="/docs" label="Open documentation" target="_self">
                   Documentation
                 </ExternalLink>
                 <ExternalLink

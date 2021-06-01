@@ -28,7 +28,7 @@ exports[`Footer creates snapshot 1`] = `
               rel="noopener noreferrer"
               role="button"
               tabindex="-1"
-              target="_blank"
+              target="_self"
             >
               Documentation
             </a>

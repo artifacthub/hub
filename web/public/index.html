@@ -30,25 +30,6 @@
     <meta name="artifacthub:siteName" content="{{ .siteName }}" />
     <meta name="artifacthub:websiteLogo" content="{{ .websiteLogo }}" />
     <script type="text/javascript" src="/static/js/fixFirefoxNightMode.js" async></script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "url": "https://artifacthub.io",
-        "potentialAction": [
-          {
-            "@type": "SearchAction",
-            "target": "https://artifacthub.io/packages/search?page=1&ts_query_web={search_term_string}",
-            "query-input": "required name=search_term_string"
-          },
-          {
-            "@type": "SearchAction",
-            "target": "android-app://artifacthub.io/packages/search?page=1&ts_query_web={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
-        ]
-      }
-    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

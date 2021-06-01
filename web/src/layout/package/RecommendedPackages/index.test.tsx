@@ -7,10 +7,10 @@ import RecommendedPackages from './index';
 const defaultProps = {
   recommendations: [
     {
-      url: 'https://artifacthub.io/packages/helm/artifact-hub/artifact-hub',
+      url: 'https://test.com/packages/helm/artifact-hub/artifact-hub',
     },
     {
-      url: 'https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack',
+      url: 'https://test.com/packages/helm/prometheus-community/kube-prometheus-stack',
     },
   ],
 };
@@ -50,7 +50,7 @@ describe('RecommendedPackages', () => {
         <Router>
           <RecommendedPackages
             recommendations={[
-              { url: 'https://artifacthub.io/packages/helm/artifact-hub/artifact-hub' },
+              { url: 'https://test.com/packages/helm/artifact-hub/artifact-hub' },
               { url: 'htpps://notvalidurl.com/packages/not/valid/pkg' },
             ]}
           />
