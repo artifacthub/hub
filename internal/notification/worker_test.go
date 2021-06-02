@@ -275,7 +275,7 @@ func TestWorker(t *testing.T) {
 {
 	"specversion" : "1.0",
 	"id" : "eventID",
-	"source" : "https://artifacthub.io/cloudevents",
+	"source" : "http://baseURL",
 	"type" : "io.artifacthub.package.new-release",
 	"datacontenttype" : "application/json",
 	"data" : {

@@ -515,7 +515,7 @@ func TestTriggerTest(t *testing.T) {
 {
 	"specversion" : "1.0",
 	"id" : "00000000-0000-0000-0000-000000000001",
-	"source" : "https://artifacthub.io/cloudevents",
+	"source" : "https://baseURL",
 	"type" : "io.artifacthub.package.new-release",
 	"datacontenttype" : "application/json",
 	"data" : {

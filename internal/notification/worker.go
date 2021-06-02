@@ -376,7 +376,7 @@ var DefaultWebhookPayloadTmpl = template.Must(template.New("").Parse(`
 {
 	"specversion" : "1.0",
 	"id" : "{{ .Event.ID }}",
-	"source" : "https://artifacthub.io/cloudevents",
+	"source" : "{{ .BaseURL }}",
 	"type" : "io.artifacthub.{{ .Event.Kind }}",
 	"datacontenttype" : "application/json",
 	"data" : {
