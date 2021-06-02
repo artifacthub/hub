@@ -1,902 +1,1013 @@
 apiVersion: v1
 entries:
   artifact-hub:
-    - annotations:
-        artifacthub.io/changes: |
-          - Add support for KEDA scalers
-          - Allow embedding Artifact Hub items on other sites
-          - Add navigation view for packages' readme content
-          - Make navigation bar sticky in desktop browsers
-          - Enforce password strength
-          - Add OpenAPI spec linter
-          - Upgrade backend dependencies
-          - Some bugs fixes and other improvements
-        artifacthub.io/containsSecurityUpdates: "true"
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.19.0
-          - name: hub
-            image: artifacthub/hub:v0.19.0
-          - name: tracker
-            image: artifacthub/tracker:v0.19.0
-          - name: scanner
-            image: artifacthub/scanner:v0.19.0
-          - name: trivy
-            image: aquasec/trivy:0.16.0
-      apiVersion: v2
-      appVersion: 0.19.0
-      created: "2021-04-26T12:09:41.558613+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://charts.helm.sh/stable
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 14ef0f99c2a6173ac1c79ee7d3b6b2fad3e056384f046e1fa8ba6a8a7fe17a16
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-        - tinkerbell actions
-        - krew
-        - tekton
-        - keda scalers
-      kubeVersion: ">= 1.14.0-0"
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.19.0.tgz
-      version: 0.19.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Add stats page
-          - Search bar now includes typeahead functionality
-          - Packages search now supports prefix matching
-          - Allow exploring templates in private Helm repos
-          - Allow starring packages from mobile devices
-          - Reorganize some configuration values (breaking changes, please see PR#1189)
-          - Upgrade backend dependencies
-          - Some bugs fixes and other improvements
-        artifacthub.io/containsSecurityUpdates: "false"
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.18.0
-          - name: hub
-            image: artifacthub/hub:v0.18.0
-          - name: tracker
-            image: artifacthub/tracker:v0.18.0
-          - name: scanner
-            image: artifacthub/scanner:v0.18.0
-          - name: trivy
-            image: aquasec/trivy:0.16.0
-      apiVersion: v2
-      appVersion: 0.18.0
-      created: "2021-03-30T11:57:48.525391+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://charts.helm.sh/stable
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 9a8244d9f3851750526a950396fb55ef2d5d2588eac413aa9bb07ecc6ff17b3e
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-        - tinkerbell actions
-        - krew
-        - tekton
-      kubeVersion: ">= 1.14.0-0"
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.18.0.tgz
-      version: 0.18.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Add Helm charts templates explorer
-          - Scan packages latest version images daily
-          - Enable strict transport security
-          - Add some CSRF protection
-          - Add content security policy
-          - Detect links in values schema descriptions
-          - Some bugs fixes and other improvements
-        artifacthub.io/containsSecurityUpdates: "false"
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.17.0
-          - name: hub
-            image: artifacthub/hub:v0.17.0
-          - name: tracker
-            image: artifacthub/tracker:v0.17.0
-          - name: scanner
-            image: artifacthub/scanner:v0.17.0
-          - name: trivy
-            image: aquasec/trivy:0.16.0
-      apiVersion: v2
-      appVersion: 0.17.0
-      created: "2021-03-15T18:19:16.015542+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://charts.helm.sh/stable
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: d059a7c77f85b62090ce9af495a4faf6bab3f8e0b49513d022a85f8f2ed52812
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-        - tinkerbell actions
-        - krew
-        - tekton
-      kubeVersion: ">= 1.14.0-0"
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.17.0.tgz
-      version: 0.17.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Display usage tips and promote features available on UI
-          - Store and expose security scanner errors
-          - Add support for user password reset
-          - Allow setting official status at the package level
-          - Images using the latest tag are now scanned
-          - Add architecture and infrastructure documentation
-          - Improve charts metadata validation and errors tracking
-          - Update some API endpoints for consistency reasons
-          - Bump Go to 1.16
-          - Bump Alpine to 3.13.2 (openssl security update)
-          - Some bugs fixes and other improvements
-        artifacthub.io/containsSecurityUpdates: "true"
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.16.0
-          - name: hub
-            image: artifacthub/hub:v0.16.0
-          - name: tracker
-            image: artifacthub/tracker:v0.16.0
-          - name: scanner
-            image: artifacthub/scanner:v0.16.0
-          - name: trivy
-            image: aquasec/trivy:0.16.0
-      apiVersion: v2
-      appVersion: 0.16.0
-      created: "2021-02-26T12:10:42.848503+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://charts.helm.sh/stable
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: a677b03fa54f91c6d171e2e5300c180b53cfcfaeb0a8ee2ee3416e815e48b8c9
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-        - tinkerbell actions
-        - krew
-        - tekton
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.16.0.tgz
-      version: 0.16.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Add support for publisher recommendations
-          - Add support for private git based repositories
-          - List supported platforms for krew kubectl plugins
-          - Display krew kubectl plugins manifest yaml
-          - Charts using API v2 now only display installation instructions for Helm v3
-          - Display stars in related packages cards
-          - Helm charts kubeVersion and type is now tracked and displayed on the UI
-          - Add banner to display message of the day
-          - Allow referencing external logo images in artifacthub-pkg.yaml file
-          - Allow dynamic resource names in Artifact Hub Helm chart
-          - Use chart's appVersion as default image tag
-          - Setup Gitlab rate limiter based on token presence
-          - Set timeout for each repository tracked
-          - Bump Alpine to 3.13
-          - Bump Trivy to 0.16.0
-          - Upgrade backend dependencies
-          - Some bugs fixes and other improvements
-        artifacthub.io/containsSecurityUpdates: "true"
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.15.0
-          - name: hub
-            image: artifacthub/hub:v0.15.0
-          - name: tracker
-            image: artifacthub/tracker:v0.15.0
-          - name: scanner
-            image: artifacthub/scanner:v0.15.0
-          - name: trivy
-            image: aquasec/trivy:0.16.0
-      apiVersion: v2
-      appVersion: 0.15.0
-      created: "2021-02-12T08:30:38.635795+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://charts.helm.sh/stable
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 60b3fdb32526ef04a0d46feb5eb56b6490626cb8ff420d56b4054e3baf6c38fc
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-        - tinkerbell actions
-        - krew
-        - tekton
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.15.0.tgz
-      version: 0.15.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Add support for Helm plugins repositories
-          - Add support for Tekton tasks repositories
-          - Improve how versions, images and dependencies are displayed in package view
-          - Refactor trackers
-          - Allow deleting organizations
-          - Allow updating organizations' name
-          - Helm charts' license can now be overriding using annotations
-          - Allow disabling oauth providers using new `enabled` flag
-          - Components config and cache paths can now be configured from the chart
-          - Some bugs fixes and other improvements
-        artifacthub.io/containsSecurityUpdates: "true"
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.14.0
-          - name: hub
-            image: artifacthub/hub:v0.14.0
-          - name: tracker
-            image: artifacthub/tracker:v0.14.0
-          - name: scanner
-            image: artifacthub/scanner:v0.14.0
-          - name: trivy
-            image: aquasec/trivy:0.15.0
-      apiVersion: v2
-      appVersion: 0.14.0
-      created: "2021-01-28T16:35:39.606639+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://charts.helm.sh/stable
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 8b340bd44071738848b731e9d1ed862d9df38e73b0176326c7937e682cbc75ac
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-        - tinkerbell actions
-        - krew
-        - tekton
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.14.0.tgz
-      version: 0.14.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Add support for Tinkerbell actions
-          - Add support for Krew index repositories
-          - Add experimental OpenID connect support
-          - Improve values schema view
-          - Add endpoint for Harbor replication adapter
-          - Allow setting the branch for git based repositories
-          - Bump Trivy to 0.15.0
-          - Some bugs fixes and other improvements
-        artifacthub.io/containsSecurityUpdates: "true"
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.13.0
-          - name: hub
-            image: artifacthub/hub:v0.13.0
-          - name: tracker
-            image: artifacthub/tracker:v0.13.0
-          - name: scanner
-            image: artifacthub/scanner:v0.13.0
-          - name: trivy
-            image: aquasec/trivy:0.15.0
-      apiVersion: v2
-      appVersion: 0.13.0
-      created: "2021-01-11T09:34:11.764364+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://charts.helm.sh/stable
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 6db6c8947a9de5d78584dc9386fee3684b9a23eaff1352d7b81f59f9c8cea5bf
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-        - tinkerbell actions
-        - krew
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.13.0.tgz
-      version: 0.13.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Display `contains security updates` status in UI and new release emails
-          - Display `pre-release` status in UI and new release emails
-          - Add buttons to download and copy configurations
-          - Trackers can now ignore selected packages or versions
-          - Add search capabilities to values schema modal
-          - Add support for combine keywords in values schema
-          - Enrich default webhook payload template with some extra fields
-          - Falco and OPA packages are now indexed by a generic tracker
-          - Add support for multiple rules files in Falco package UI view
-          - Add support for custom install section in UI
-          - Allow pkg metadata files to use either .yaml or .yml extension
-          - Improve repository URL uniqueness check
-          - Bump Trivy to 0.14.0
-          - Some bugs fixes and other improvements
-        artifacthub.io/containsSecurityUpdates: "true"
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.12.0
-          - name: hub
-            image: artifacthub/hub:v0.12.0
-          - name: tracker
-            image: artifacthub/tracker:v0.12.0
-          - name: scanner
-            image: artifacthub/scanner:v0.12.0
-          - name: trivy
-            image: aquasec/trivy:0.14.0
-      apiVersion: v2
-      appVersion: 0.12.0
-      created: "2020-12-18T08:22:45.574425+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 87d8b7beb035fd477ca4acf7ec5ff71f85dd272560675f54836ce8a2fec9efb0
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.12.0.tgz
-      version: 0.12.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Allow disabling repositories from control panel
-          - Allow disabling security scanner per repository
-          - Gitpodify Artifact Hub git repository
-          - Improve Github rate limiting handling
-          - Add some extra protection to avoid deleting a repository or packages accidentally
-          - Tracker now only exports or clones repos when they have changed
-          - Improve repository ownership claim modal
-          - Improve package not found view
-          - Some refactoring in trackers
-          - Add support for legacy Helm Hub chart version url
-          - Cache dependencies in CI workflow
-          - Bump Trivy to 0.13.0
-          - Some bugs fixes and other improvements
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.11.0
-          - name: hub
-            image: artifacthub/hub:v0.11.0
-          - name: tracker
-            image: artifacthub/tracker:v0.11.0
-          - name: scanner
-            image: artifacthub/scanner:v0.11.0
-          - name: trivy
-            image: aquasec/trivy:0.13.0
-      apiVersion: v2
-      appVersion: 0.11.0
-      created: "2020-12-03T15:41:44.242563+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 184cc30b67bbb49212a4d4dfc19d413198e4b084e71633946ed06516ba6b3ca0
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.11.0.tgz
-      version: 0.11.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Add experimental OCI support for Helm repositories
-          - Add experimental OCI support for OLM repositories
-          - Add support for private Helm OCI repositories
-          - Display available documentation nicely formatted in UI
-          - Display containers images security rating in packages cards
-          - Display CVSS v3 score and vector in security report
-          - Display containers images summary at the top of the security report
-          - Improve packages search results ordering
-          - Optimize UI for larger resolution screens
-          - Add support for $ref pointers in values JSON schema
-          - Add maintenance mode page
-          - Display package content link in install modal
-          - Add index page to Artifact Hub Helm charts repository
-          - Allow whitelisting containers images
-          - Track OLM packages related containers images
-          - Some bugs fixes and improvements
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.10.0
-          - name: hub
-            image: artifacthub/hub:v0.10.0
-          - name: tracker
-            image: artifacthub/tracker:v0.10.0
-          - name: scanner
-            image: artifacthub/scanner:v0.10.0
-          - name: trivy
-            image: aquasec/trivy:0.12.0
-      apiVersion: v2
-      appVersion: 0.10.0
-      created: "2020-11-19T08:02:03.861233+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: f8c61dc64e18a86e706237e634f75899571c8d243922380dfa015fb308887b77
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.10.0.tgz
-      version: 0.10.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Display Helm chart reference doc in package view
-          - Display changelog in package view
-          - Add support for private Helm repositories
-          - Add API endpoint to get package changelog
-          - Include package version changes in new release notification email
-          - Add new `changes` annotation for Helm, OLM and OPA packages
-          - Add direct links for modals in package view
-          - Display security report generation time
-          - Upgrade frontend dependencies
-          - Some bugs fixes and improvements
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.9.0
-          - name: hub
-            image: artifacthub/hub:v0.9.0
-          - name: tracker
-            image: artifacthub/tracker:v0.9.0
-          - name: scanner
-            image: artifacthub/scanner:v0.9.0
-          - name: trivy
-            image: aquasec/trivy:0.12.0
-      apiVersion: v2
-      appVersion: 0.9.0
-      created: "2020-11-02T09:40:38.515972+01:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: de9275c555fed5d152e847f42d8d83111c277f567f99f41577af6cdb88a57b50
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.9.0.tgz
-      version: 0.9.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Add JSON schema for Artifact Hub Helm chart
-          - Some improvements in Artifact Hub Helm chart
-          - Track Helm charts values schema
-          - Add endpoint to get Helm charts values schema
-          - Bump Trivy to 0.12.0
-          - Display containers images in Helm packages
-          - Remove internal requests limiter
-          - Upgrade frontend dependencies to fix some security vulnerabilities
-          - Add packages security report documentation
-          - Some bugs fixes and improvements
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.8.0
-          - name: hub
-            image: artifacthub/hub:v0.8.0
-          - name: tracker
-            image: artifacthub/tracker:v0.8.0
-          - name: scanner
-            image: artifacthub/scanner:v0.8.0
-          - name: trivy
-            image: aquasec/trivy:0.12.0
-      apiVersion: v2
-      appVersion: 0.8.0
-      created: "2020-10-22T15:14:46.305552+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 5b64baccdc1299e9a58567c6fb6f946e54d8563239aa84072a26f363b5a0d62e
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.8.0.tgz
-      version: 0.8.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Introduce packages security report
-          - Display packages' license in cards
-          - Allow filtering packages by license and operator capabilities
-          - Add support for some extra Helm and OLM annotations
-          - Add repositories guide
-          - Allow adding CRDs for operators in Helm packages
-          - Display search tips and add some extra sample searches
-          - Improve user experience in authorization configuration view
-          - Some bugs fixes and improvements
-        artifacthub.io/images: |
-          - name: db-migrator
-            image: artifacthub/db-migrator:v0.7.0
-          - name: hub
-            image: artifacthub/hub:v0.7.0
-          - name: tracker
-            image: artifacthub/tracker:v0.7.0
-          - name: scanner
-            image: artifacthub/scanner:v0.7.0
-      apiVersion: v2
-      appVersion: 0.7.0
-      created: "2020-10-14T14:03:47.425375+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: c00c5eb6a938a5da4ed8703958d96bc959cff0e9d864a4298ab65c17fce9a7f4
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.7.0.tgz
-      version: 0.7.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Introduce fine grained authorization mechanism based on OPA policies
-          - Allow enriching package information using Helm annotations
-          - Allow entities to claim repositories ownership
-          - Introduce official repository concept
-          - Add verified publisher and official repository search filters
-          - Artifact Hub repositories badges
-          - Test Artifact Hub Helm chart
-          - Improve package view on mobile devices
-          - Add API endpoint to get repositories by kind
-          - Some bugs fixes and improvements
-      apiVersion: v2
-      appVersion: 0.6.0
-      created: "2020-09-23T08:07:09.875145+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 682cda1fcd3901266ad5ab6d2c490598ab317eda9a3515707a413a9ebccfb330
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.6.0.tgz
-      version: 0.6.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Introduce verified publisher concept
-          - Add dark mode support
-          - Improve search facets filtering
-          - Notify repository owners of tracking errors
-          - Track and list Helm charts dependencies
-          - Display links to source in Helm packages
-          - Add repositories kind filter to tracker
-          - Add Monocular compatible search API
-          - Some bugs fixes and improvements
-      apiVersion: v2
-      appVersion: 0.5.0
-      created: "2020-09-03T11:27:53.611583+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 5af1c721359b8d2bbee7640d99853740201c7fd071e9f52dfd2c1a0c5099348c
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.5.0.tgz
-      version: 0.5.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Added support for OPA policies repositories (uses Artifact Hub metadata new spec draft)
-          - Trackers have been improved and consolidated into one
-          - Search filtering experience in UI has been improved
-          - Now it's possible to search by the name of the repository and the name of the owning organization or user
-          - Added support to allow filtering packages by category
-          - An operator flag has been added to the package entity, and it's possible to filter by it
-          - Repositories URL is now exposed to users in several places in the UI
-          - Some bugs fixes
-      apiVersion: v2
-      appVersion: 0.4.0
-      created: "2020-08-06T16:42:47.340102+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 87ce974eb3a6c0e891a6c4609b0d51d1b6d6c5dce58beef9df2e64a9a5b65b34
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.4.0.tgz
-      version: 0.4.0
-    - annotations:
-        artifacthub.io/changes: |
-          - Added support for OLM operators repositories
-          - Added support for Falco rules repositories
-          - Added RSS feed for packages' new version releases
-          - Packages now always belong to a repository
-          - Reorganized some API routes (breaking changes)
-          - Added a link to browse all packages and some sample searches to home page
-          - Added CNCF Sandbox logo to home page
-          - Some minor improvements in search page filters
-          - Package creation time is now tracked and displayed
-          - Some bugs fixes
-      apiVersion: v2
-      appVersion: 0.3.0
-      created: "2020-07-04T02:05:00.111694+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: 66fbcb93a54465728ceaeff8a5669e5bf92aeecdf986171f281d55b0cbf13661
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-        - olm
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.3.0.tgz
-      version: 0.3.0
-    - annotations:
-        artifacthub.io/changes: |
-          - API docs
-          - Reorganize API routes
-          - Some HTTP handlers improvements
-          - Support for API keys
-          - API rate limiting
-          - Signed packages label (Helm provenance file)
-          - Home page updated
-          - Bug fixes
-      apiVersion: v2
-      appVersion: 0.2.0
-      created: "2020-07-04T02:05:00.109185+02:00"
-      dependencies:
-        - condition: postgresql.enabled
-          name: postgresql
-          repository: https://kubernetes-charts.storage.googleapis.com/
-          version: 8.2.1
-      description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
-      digest: ff04187d9857649814767fc830d3aade1345b1f134b67f80bcb6354fe737d9be
-      home: https://artifacthub.io
-      icon: https://artifacthub.github.io/hub/chart/logo.png
-      keywords:
-        - kubernetes
-        - helm
-        - falco
-        - opa
-      maintainers:
-        - email: tegioz@icloud.com
-          name: Sergio
-        - email: cynthiasg@icloud.com
-          name: Cintia
-      name: artifact-hub
-      type: application
-      urls:
-        - https://artifacthub.github.io/hub/chart/artifact-hub-0.2.0.tgz
-      version: 0.2.0
-generated: "2021-04-26T12:09:41.520196+02:00"
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: support for CoreDNS plugins
+          links:
+            - name: Documentation
+              url: https://artifacthub.io/docs/topics/repositories/#coredns-plugins-repositories
+        - kind: added
+          description: Helm charts containers images are now extracted automatically
+        - kind: added
+          description: operators CRDs, Falco rules and OPA policies explorer
+        - kind: added
+          description: security vulnerabilities alerts
+        - kind: added
+          description: changelog entries can now include a kind and links
+        - kind: added
+          description: two-factor authentication support
+        - kind: added
+          description: colors, site name and logo can now be customized
+          links:
+            - name: Documentation
+              url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema&path=hub.theme
+        - kind: added
+          description: display subscriptions and webhooks stats on package view
+        - kind: added
+          description: email templates now support dark mode
+        - kind: added
+          description: generic tracker now supports README.md files
+        - kind: added
+          description: display security scanner disabled information on packages
+        - kind: added
+          description: support for OLM operators bundle format
+        - kind: changed
+          description: adjust search results ranking
+        - kind: changed
+          description: improve web application's accessibility
+        - kind: changed
+          description: API docs are now served from the Hub
+        - kind: changed
+          description: upgrade backend dependencies
+        - kind: changed
+          description: upgrade frontend dependencies
+        - kind: changed
+          description: bump Trivy to 0.18.3
+        - kind: fixed
+          description: some bugs and other improvements
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.20.0
+        - name: hub
+          image: artifacthub/hub:v0.20.0
+        - name: tracker
+          image: artifacthub/tracker:v0.20.0
+        - name: scanner
+          image: artifacthub/scanner:v0.20.0
+        - name: trivy
+          image: aquasec/trivy:0.18.3
+    apiVersion: v2
+    appVersion: 0.20.0
+    created: "2021-06-02T12:44:49.326754+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: d77e7077aaa5a6a18e7e5a52dde59145fa739d9008827d066537f1b74419d243
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    - tinkerbell actions
+    - krew
+    - tekton
+    - keda scalers
+    - coredns
+    kubeVersion: '>= 1.14.0-0'
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.20.0.tgz
+    version: 0.20.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Add support for KEDA scalers
+        - Allow embedding Artifact Hub items on other sites
+        - Add navigation view for packages' readme content
+        - Make navigation bar sticky in desktop browsers
+        - Enforce password strength
+        - Add OpenAPI spec linter
+        - Upgrade backend dependencies
+        - Some bugs fixes and other improvements
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.19.0
+        - name: hub
+          image: artifacthub/hub:v0.19.0
+        - name: tracker
+          image: artifacthub/tracker:v0.19.0
+        - name: scanner
+          image: artifacthub/scanner:v0.19.0
+        - name: trivy
+          image: aquasec/trivy:0.16.0
+    apiVersion: v2
+    appVersion: 0.19.0
+    created: "2021-04-26T12:09:41.558613+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 14ef0f99c2a6173ac1c79ee7d3b6b2fad3e056384f046e1fa8ba6a8a7fe17a16
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    - tinkerbell actions
+    - krew
+    - tekton
+    - keda scalers
+    kubeVersion: '>= 1.14.0-0'
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.19.0.tgz
+    version: 0.19.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Add stats page
+        - Search bar now includes typeahead functionality
+        - Packages search now supports prefix matching
+        - Allow exploring templates in private Helm repos
+        - Allow starring packages from mobile devices
+        - Reorganize some configuration values (breaking changes, please see PR#1189)
+        - Upgrade backend dependencies
+        - Some bugs fixes and other improvements
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.18.0
+        - name: hub
+          image: artifacthub/hub:v0.18.0
+        - name: tracker
+          image: artifacthub/tracker:v0.18.0
+        - name: scanner
+          image: artifacthub/scanner:v0.18.0
+        - name: trivy
+          image: aquasec/trivy:0.16.0
+    apiVersion: v2
+    appVersion: 0.18.0
+    created: "2021-03-30T11:57:48.525391+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 9a8244d9f3851750526a950396fb55ef2d5d2588eac413aa9bb07ecc6ff17b3e
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    - tinkerbell actions
+    - krew
+    - tekton
+    kubeVersion: '>= 1.14.0-0'
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.18.0.tgz
+    version: 0.18.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Add Helm charts templates explorer
+        - Scan packages latest version images daily
+        - Enable strict transport security
+        - Add some CSRF protection
+        - Add content security policy
+        - Detect links in values schema descriptions
+        - Some bugs fixes and other improvements
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.17.0
+        - name: hub
+          image: artifacthub/hub:v0.17.0
+        - name: tracker
+          image: artifacthub/tracker:v0.17.0
+        - name: scanner
+          image: artifacthub/scanner:v0.17.0
+        - name: trivy
+          image: aquasec/trivy:0.16.0
+    apiVersion: v2
+    appVersion: 0.17.0
+    created: "2021-03-15T18:19:16.015542+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: d059a7c77f85b62090ce9af495a4faf6bab3f8e0b49513d022a85f8f2ed52812
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    - tinkerbell actions
+    - krew
+    - tekton
+    kubeVersion: '>= 1.14.0-0'
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.17.0.tgz
+    version: 0.17.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Display usage tips and promote features available on UI
+        - Store and expose security scanner errors
+        - Add support for user password reset
+        - Allow setting official status at the package level
+        - Images using the latest tag are now scanned
+        - Add architecture and infrastructure documentation
+        - Improve charts metadata validation and errors tracking
+        - Update some API endpoints for consistency reasons
+        - Bump Go to 1.16
+        - Bump Alpine to 3.13.2 (openssl security update)
+        - Some bugs fixes and other improvements
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.16.0
+        - name: hub
+          image: artifacthub/hub:v0.16.0
+        - name: tracker
+          image: artifacthub/tracker:v0.16.0
+        - name: scanner
+          image: artifacthub/scanner:v0.16.0
+        - name: trivy
+          image: aquasec/trivy:0.16.0
+    apiVersion: v2
+    appVersion: 0.16.0
+    created: "2021-02-26T12:10:42.848503+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: a677b03fa54f91c6d171e2e5300c180b53cfcfaeb0a8ee2ee3416e815e48b8c9
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    - tinkerbell actions
+    - krew
+    - tekton
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.16.0.tgz
+    version: 0.16.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Add support for publisher recommendations
+        - Add support for private git based repositories
+        - List supported platforms for krew kubectl plugins
+        - Display krew kubectl plugins manifest yaml
+        - Charts using API v2 now only display installation instructions for Helm v3
+        - Display stars in related packages cards
+        - Helm charts kubeVersion and type is now tracked and displayed on the UI
+        - Add banner to display message of the day
+        - Allow referencing external logo images in artifacthub-pkg.yaml file
+        - Allow dynamic resource names in Artifact Hub Helm chart
+        - Use chart's appVersion as default image tag
+        - Setup Gitlab rate limiter based on token presence
+        - Set timeout for each repository tracked
+        - Bump Alpine to 3.13
+        - Bump Trivy to 0.16.0
+        - Upgrade backend dependencies
+        - Some bugs fixes and other improvements
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.15.0
+        - name: hub
+          image: artifacthub/hub:v0.15.0
+        - name: tracker
+          image: artifacthub/tracker:v0.15.0
+        - name: scanner
+          image: artifacthub/scanner:v0.15.0
+        - name: trivy
+          image: aquasec/trivy:0.16.0
+    apiVersion: v2
+    appVersion: 0.15.0
+    created: "2021-02-12T08:30:38.635795+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 60b3fdb32526ef04a0d46feb5eb56b6490626cb8ff420d56b4054e3baf6c38fc
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    - tinkerbell actions
+    - krew
+    - tekton
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.15.0.tgz
+    version: 0.15.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Add support for Helm plugins repositories
+        - Add support for Tekton tasks repositories
+        - Improve how versions, images and dependencies are displayed in package view
+        - Refactor trackers
+        - Allow deleting organizations
+        - Allow updating organizations' name
+        - Helm charts' license can now be overriding using annotations
+        - Allow disabling oauth providers using new `enabled` flag
+        - Components config and cache paths can now be configured from the chart
+        - Some bugs fixes and other improvements
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.14.0
+        - name: hub
+          image: artifacthub/hub:v0.14.0
+        - name: tracker
+          image: artifacthub/tracker:v0.14.0
+        - name: scanner
+          image: artifacthub/scanner:v0.14.0
+        - name: trivy
+          image: aquasec/trivy:0.15.0
+    apiVersion: v2
+    appVersion: 0.14.0
+    created: "2021-01-28T16:35:39.606639+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 8b340bd44071738848b731e9d1ed862d9df38e73b0176326c7937e682cbc75ac
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    - tinkerbell actions
+    - krew
+    - tekton
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.14.0.tgz
+    version: 0.14.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Add support for Tinkerbell actions
+        - Add support for Krew index repositories
+        - Add experimental OpenID connect support
+        - Improve values schema view
+        - Add endpoint for Harbor replication adapter
+        - Allow setting the branch for git based repositories
+        - Bump Trivy to 0.15.0
+        - Some bugs fixes and other improvements
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.13.0
+        - name: hub
+          image: artifacthub/hub:v0.13.0
+        - name: tracker
+          image: artifacthub/tracker:v0.13.0
+        - name: scanner
+          image: artifacthub/scanner:v0.13.0
+        - name: trivy
+          image: aquasec/trivy:0.15.0
+    apiVersion: v2
+    appVersion: 0.13.0
+    created: "2021-01-11T09:34:11.764364+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 6db6c8947a9de5d78584dc9386fee3684b9a23eaff1352d7b81f59f9c8cea5bf
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    - tinkerbell actions
+    - krew
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.13.0.tgz
+    version: 0.13.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Display `contains security updates` status in UI and new release emails
+        - Display `pre-release` status in UI and new release emails
+        - Add buttons to download and copy configurations
+        - Trackers can now ignore selected packages or versions
+        - Add search capabilities to values schema modal
+        - Add support for combine keywords in values schema
+        - Enrich default webhook payload template with some extra fields
+        - Falco and OPA packages are now indexed by a generic tracker
+        - Add support for multiple rules files in Falco package UI view
+        - Add support for custom install section in UI
+        - Allow pkg metadata files to use either .yaml or .yml extension
+        - Improve repository URL uniqueness check
+        - Bump Trivy to 0.14.0
+        - Some bugs fixes and other improvements
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.12.0
+        - name: hub
+          image: artifacthub/hub:v0.12.0
+        - name: tracker
+          image: artifacthub/tracker:v0.12.0
+        - name: scanner
+          image: artifacthub/scanner:v0.12.0
+        - name: trivy
+          image: aquasec/trivy:0.14.0
+    apiVersion: v2
+    appVersion: 0.12.0
+    created: "2020-12-18T08:22:45.574425+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 87d8b7beb035fd477ca4acf7ec5ff71f85dd272560675f54836ce8a2fec9efb0
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.12.0.tgz
+    version: 0.12.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Allow disabling repositories from control panel
+        - Allow disabling security scanner per repository
+        - Gitpodify Artifact Hub git repository
+        - Improve Github rate limiting handling
+        - Add some extra protection to avoid deleting a repository or packages accidentally
+        - Tracker now only exports or clones repos when they have changed
+        - Improve repository ownership claim modal
+        - Improve package not found view
+        - Some refactoring in trackers
+        - Add support for legacy Helm Hub chart version url
+        - Cache dependencies in CI workflow
+        - Bump Trivy to 0.13.0
+        - Some bugs fixes and other improvements
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.11.0
+        - name: hub
+          image: artifacthub/hub:v0.11.0
+        - name: tracker
+          image: artifacthub/tracker:v0.11.0
+        - name: scanner
+          image: artifacthub/scanner:v0.11.0
+        - name: trivy
+          image: aquasec/trivy:0.13.0
+    apiVersion: v2
+    appVersion: 0.11.0
+    created: "2020-12-03T15:41:44.242563+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 184cc30b67bbb49212a4d4dfc19d413198e4b084e71633946ed06516ba6b3ca0
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.11.0.tgz
+    version: 0.11.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Add experimental OCI support for Helm repositories
+        - Add experimental OCI support for OLM repositories
+        - Add support for private Helm OCI repositories
+        - Display available documentation nicely formatted in UI
+        - Display containers images security rating in packages cards
+        - Display CVSS v3 score and vector in security report
+        - Display containers images summary at the top of the security report
+        - Improve packages search results ordering
+        - Optimize UI for larger resolution screens
+        - Add support for $ref pointers in values JSON schema
+        - Add maintenance mode page
+        - Display package content link in install modal
+        - Add index page to Artifact Hub Helm charts repository
+        - Allow whitelisting containers images
+        - Track OLM packages related containers images
+        - Some bugs fixes and improvements
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.10.0
+        - name: hub
+          image: artifacthub/hub:v0.10.0
+        - name: tracker
+          image: artifacthub/tracker:v0.10.0
+        - name: scanner
+          image: artifacthub/scanner:v0.10.0
+        - name: trivy
+          image: aquasec/trivy:0.12.0
+    apiVersion: v2
+    appVersion: 0.10.0
+    created: "2020-11-19T08:02:03.861233+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: f8c61dc64e18a86e706237e634f75899571c8d243922380dfa015fb308887b77
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.10.0.tgz
+    version: 0.10.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Display Helm chart reference doc in package view
+        - Display changelog in package view
+        - Add support for private Helm repositories
+        - Add API endpoint to get package changelog
+        - Include package version changes in new release notification email
+        - Add new `changes` annotation for Helm, OLM and OPA packages
+        - Add direct links for modals in package view
+        - Display security report generation time
+        - Upgrade frontend dependencies
+        - Some bugs fixes and improvements
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.9.0
+        - name: hub
+          image: artifacthub/hub:v0.9.0
+        - name: tracker
+          image: artifacthub/tracker:v0.9.0
+        - name: scanner
+          image: artifacthub/scanner:v0.9.0
+        - name: trivy
+          image: aquasec/trivy:0.12.0
+    apiVersion: v2
+    appVersion: 0.9.0
+    created: "2020-11-02T09:40:38.515972+01:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: de9275c555fed5d152e847f42d8d83111c277f567f99f41577af6cdb88a57b50
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.9.0.tgz
+    version: 0.9.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Add JSON schema for Artifact Hub Helm chart
+        - Some improvements in Artifact Hub Helm chart
+        - Track Helm charts values schema
+        - Add endpoint to get Helm charts values schema
+        - Bump Trivy to 0.12.0
+        - Display containers images in Helm packages
+        - Remove internal requests limiter
+        - Upgrade frontend dependencies to fix some security vulnerabilities
+        - Add packages security report documentation
+        - Some bugs fixes and improvements
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.8.0
+        - name: hub
+          image: artifacthub/hub:v0.8.0
+        - name: tracker
+          image: artifacthub/tracker:v0.8.0
+        - name: scanner
+          image: artifacthub/scanner:v0.8.0
+        - name: trivy
+          image: aquasec/trivy:0.12.0
+    apiVersion: v2
+    appVersion: 0.8.0
+    created: "2020-10-22T15:14:46.305552+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 5b64baccdc1299e9a58567c6fb6f946e54d8563239aa84072a26f363b5a0d62e
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.8.0.tgz
+    version: 0.8.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Introduce packages security report
+        - Display packages' license in cards
+        - Allow filtering packages by license and operator capabilities
+        - Add support for some extra Helm and OLM annotations
+        - Add repositories guide
+        - Allow adding CRDs for operators in Helm packages
+        - Display search tips and add some extra sample searches
+        - Improve user experience in authorization configuration view
+        - Some bugs fixes and improvements
+      artifacthub.io/images: |
+        - name: db-migrator
+          image: artifacthub/db-migrator:v0.7.0
+        - name: hub
+          image: artifacthub/hub:v0.7.0
+        - name: tracker
+          image: artifacthub/tracker:v0.7.0
+        - name: scanner
+          image: artifacthub/scanner:v0.7.0
+    apiVersion: v2
+    appVersion: 0.7.0
+    created: "2020-10-14T14:03:47.425375+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: c00c5eb6a938a5da4ed8703958d96bc959cff0e9d864a4298ab65c17fce9a7f4
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.7.0.tgz
+    version: 0.7.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Introduce fine grained authorization mechanism based on OPA policies
+        - Allow enriching package information using Helm annotations
+        - Allow entities to claim repositories ownership
+        - Introduce official repository concept
+        - Add verified publisher and official repository search filters
+        - Artifact Hub repositories badges
+        - Test Artifact Hub Helm chart
+        - Improve package view on mobile devices
+        - Add API endpoint to get repositories by kind
+        - Some bugs fixes and improvements
+    apiVersion: v2
+    appVersion: 0.6.0
+    created: "2020-09-23T08:07:09.875145+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 682cda1fcd3901266ad5ab6d2c490598ab317eda9a3515707a413a9ebccfb330
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.6.0.tgz
+    version: 0.6.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Introduce verified publisher concept
+        - Add dark mode support
+        - Improve search facets filtering
+        - Notify repository owners of tracking errors
+        - Track and list Helm charts dependencies
+        - Display links to source in Helm packages
+        - Add repositories kind filter to tracker
+        - Add Monocular compatible search API
+        - Some bugs fixes and improvements
+    apiVersion: v2
+    appVersion: 0.5.0
+    created: "2020-09-03T11:27:53.611583+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 5af1c721359b8d2bbee7640d99853740201c7fd071e9f52dfd2c1a0c5099348c
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.5.0.tgz
+    version: 0.5.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Added support for OPA policies repositories (uses Artifact Hub metadata new spec draft)
+        - Trackers have been improved and consolidated into one
+        - Search filtering experience in UI has been improved
+        - Now it's possible to search by the name of the repository and the name of the owning organization or user
+        - Added support to allow filtering packages by category
+        - An operator flag has been added to the package entity, and it's possible to filter by it
+        - Repositories URL is now exposed to users in several places in the UI
+        - Some bugs fixes
+    apiVersion: v2
+    appVersion: 0.4.0
+    created: "2020-08-06T16:42:47.340102+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 87ce974eb3a6c0e891a6c4609b0d51d1b6d6c5dce58beef9df2e64a9a5b65b34
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.4.0.tgz
+    version: 0.4.0
+  - annotations:
+      artifacthub.io/changes: |
+        - Added support for OLM operators repositories
+        - Added support for Falco rules repositories
+        - Added RSS feed for packages' new version releases
+        - Packages now always belong to a repository
+        - Reorganized some API routes (breaking changes)
+        - Added a link to browse all packages and some sample searches to home page
+        - Added CNCF Sandbox logo to home page
+        - Some minor improvements in search page filters
+        - Package creation time is now tracked and displayed
+        - Some bugs fixes
+    apiVersion: v2
+    appVersion: 0.3.0
+    created: "2020-07-04T02:05:00.111694+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 66fbcb93a54465728ceaeff8a5669e5bf92aeecdf986171f281d55b0cbf13661
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    - olm
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.3.0.tgz
+    version: 0.3.0
+  - annotations:
+      artifacthub.io/changes: |
+        - API docs
+        - Reorganize API routes
+        - Some HTTP handlers improvements
+        - Support for API keys
+        - API rate limiting
+        - Signed packages label (Helm provenance file)
+        - Home page updated
+        - Bug fixes
+    apiVersion: v2
+    appVersion: 0.2.0
+    created: "2020-07-04T02:05:00.109185+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 8.2.1
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: ff04187d9857649814767fc830d3aade1345b1f134b67f80bcb6354fe737d9be
+    home: https://artifacthub.io
+    icon: https://artifacthub.github.io/hub/chart/logo.png
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
+    type: application
+    urls:
+    - https://artifacthub.github.io/hub/chart/artifact-hub-0.2.0.tgz
+    version: 0.2.0
+generated: "2021-06-02T12:44:49.323566+02:00"
