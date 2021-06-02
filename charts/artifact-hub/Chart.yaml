@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 0.19.7
-appVersion: 0.19.0
+version: 0.20.0
+appVersion: 0.20.0
 kubeVersion: ">= 1.14.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/hub/chart/logo.png
@@ -30,23 +30,59 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
-    - Add support for KEDA scalers
-    - Allow embedding Artifact Hub items on other sites
-    - Add navigation view for packages' readme content
-    - Make navigation bar sticky in desktop browsers
-    - Enforce password strength
-    - Add OpenAPI spec linter
-    - Upgrade backend dependencies
-    - Some bugs fixes and other improvements
+    - kind: added
+      description: support for CoreDNS plugins
+      links:
+        - name: Documentation
+          url: https://artifacthub.io/docs/topics/repositories/#coredns-plugins-repositories
+    - kind: added
+      description: Helm charts containers images are now extracted automatically
+    - kind: added
+      description: operators CRDs, Falco rules and OPA policies explorer
+    - kind: added
+      description: security vulnerabilities alerts
+    - kind: added
+      description: changelog entries can now include a kind and links
+    - kind: added
+      description: two-factor authentication support
+    - kind: added
+      description: colors, site name and logo can now be customized
+      links:
+        - name: Documentation
+          url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema&path=hub.theme
+    - kind: added
+      description: display subscriptions and webhooks stats on package view
+    - kind: added
+      description: email templates now support dark mode
+    - kind: added
+      description: generic tracker now supports README.md files
+    - kind: added
+      description: display security scanner disabled information on packages
+    - kind: added
+      description: support for OLM operators bundle format
+    - kind: changed
+      description: adjust search results ranking
+    - kind: changed
+      description: improve web application's accessibility
+    - kind: changed
+      description: API docs are now served from the Hub
+    - kind: changed
+      description: upgrade backend dependencies
+    - kind: changed
+      description: upgrade frontend dependencies
+    - kind: changed
+      description: bump Trivy to 0.18.3
+    - kind: fixed
+      description: some bugs and other improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v0.19.0
+      image: artifacthub/db-migrator:v0.20.0
     - name: hub
-      image: artifacthub/hub:v0.19.0
+      image: artifacthub/hub:v0.20.0
     - name: tracker
-      image: artifacthub/tracker:v0.19.0
+      image: artifacthub/tracker:v0.20.0
     - name: scanner
-      image: artifacthub/scanner:v0.19.0
+      image: artifacthub/scanner:v0.20.0
     - name: trivy
       image: aquasec/trivy:0.18.3
