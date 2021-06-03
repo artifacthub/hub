@@ -172,7 +172,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 // webhookTestTemplateData represents the notification template data used by
 // TriggerTest handler.
 var webhookTestTemplateData = &hub.PackageNotificationTemplateData{
-	BaseURL: "https://artifacthub.io",
+	BaseURL: "https://baseURL",
 	Event: map[string]interface{}{
 		"ID":   "00000000-0000-0000-0000-000000000001",
 		"Kind": "package.new-release",

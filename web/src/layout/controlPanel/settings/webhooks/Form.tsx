@@ -44,7 +44,7 @@ const DEAFULT_PAYLOAD_KIND: PayloadKind = PayloadKind.default;
 export const DEFAULT_PAYLOAD_TEMPLATE = `{
     "specversion" : "1.0",
     "id" : "{{ .Event.ID }}",
-    "source" : "https://artifacthub.io/cloudevents",
+    "source" : "{{ .BaseURL }}",
     "type" : "io.artifacthub.{{ .Event.Kind }}",
     "datacontenttype" : "application/json",
     "data" : {
@@ -644,6 +644,12 @@ const WebhookForm = (props: Props) => {
                 <small className="form-text text-muted">
                   <table className={`table table-sm ${styles.variablesTable}`}>
                     <tbody>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .BaseURL }}`}</span>
+                        </th>
+                        <td>Artifact Hub deployment base url.</td>
+                      </tr>
                       <tr>
                         <th scope="row">
                           <span className="text-nowrap">{`{{ .Event.ID }}`}</span>
