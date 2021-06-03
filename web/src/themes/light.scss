@@ -100,7 +100,8 @@
   }
 
   .table th {
-    background-color: var(--color-1-5);
+    // This color has to be solid (not opacity) due to scrollable tables
+    background-color: var(--code-bg-md);
   }
 
   .table-hover tbody tr:hover {

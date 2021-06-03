@@ -151,21 +151,16 @@ const SearchTypeaheadRepository = (props: Props) => {
                 >
                   <thead>
                     <tr>
-                      <th
-                        scope="col"
-                        className={`${styles.fitCell} ${styles.iconCell} d-none d-sm-table-cell border-top-0`}
-                      ></th>
-                      <th scope="col" className={`border-top-0 ${styles.repoCell}`}>
+                      <th scope="col" className={`${styles.fitCell} ${styles.iconCell} d-none d-sm-table-cell`}></th>
+                      <th scope="col" className={styles.repoCell}>
                         Repository
                       </th>
                       {props.searchInUrl && (
-                        <th scope="col" className={`border-top-0 d-none d-md-table-cell ${styles.urlCell}`}>
+                        <th scope="col" className={`d-none d-md-table-cell ${styles.urlCell}`}>
                           Url
                         </th>
                       )}
-                      <th scope="col" className="border-top-0">
-                        Publisher
-                      </th>
+                      <th scope="col">Publisher</th>
                     </tr>
                   </thead>
                   <tbody>

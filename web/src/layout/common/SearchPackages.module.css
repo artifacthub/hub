@@ -87,7 +87,6 @@
 }
 
 .tableWrapper thead th {
-  background: var(--white);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -99,17 +98,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -1px;
+  top: -1px;
   height: 2px;
-  background-color: var(--border-md);
-}
-
-.tableWrapper thead th:first-child {
-  border-top-left-radius: 2px;
-}
-
-.tableWrapper thead th:last-child {
-  border-top-right-radius: 2px;
+  background-color: var(--code-bg-md);
 }
 
 @media only screen and (max-width: 767.98px) {
