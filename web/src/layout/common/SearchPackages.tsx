@@ -117,7 +117,7 @@ const SearchPackages = (props: Props) => {
       </div>
 
       {!isNull(packages) && (
-        <div ref={dropdownRef} className={`dropdown-menu w-100 p-0 shadow-sm show ${styles.dropdown}`}>
+        <div ref={dropdownRef} className={`dropdown-menu w-100 p-0 shadow-sm show overflow-hidden ${styles.dropdown}`}>
           {packages.length === 0 ? (
             <p className="m-3 text-center">
               We can't seem to find any packages that match your search for{' '}
@@ -132,11 +132,11 @@ const SearchPackages = (props: Props) => {
               >
                 <thead>
                   <tr>
-                    <th scope="col" className={`${styles.fitCell} d-none d-sm-table-cell border-top-0`}></th>
-                    <th scope="col" className="w-50 border-top-0">
+                    <th scope="col" className={`${styles.fitCell} d-none d-sm-table-cell`}></th>
+                    <th scope="col" className="w-50">
                       Package
                     </th>
-                    <th scope="col" className="w-50 border-top-0">
+                    <th scope="col" className="w-50">
                       Publisher
                     </th>
                   </tr>
