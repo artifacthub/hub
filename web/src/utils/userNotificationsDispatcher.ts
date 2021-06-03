@@ -56,18 +56,19 @@ export class UserNotificationsDispatcher {
     this.settings = prefs;
     this.breakpoint = breakpoint;
     this.startTimeout = setTimeout(() => {
-      // We don't display notifications for small devices
-      if (isUndefined(this.breakpoint) || !['xs', 'sm'].includes(this.breakpoint)) {
-        this.get(true);
-      }
+      this.get(true);
+      this.startTimeout = undefined;
     }, DEFAULT_START_TIME);
   }
 
   public get(dateLimit: boolean) {
-    this.dismissNotification();
-    const notif = this.getRandomNotification(dateLimit);
-    if (!isNull(notif)) {
-      this.postNotification(notif);
+    // Doesn't display notifications for small devices
+    if (isUndefined(this.breakpoint) || !['xs', 'sm'].includes(this.breakpoint)) {
+      this.dismissNotification();
+      const notif = this.getRandomNotification(dateLimit);
+      if (!isNull(notif)) {
+        this.postNotification(notif);
+      }
     }
   }
 
@@ -118,13 +119,10 @@ export class UserNotificationsDispatcher {
   private updateCurrentLocation(location: string) {
     const currentLocationPathTip = getCurrentLocationPath(location);
     if (!isNull(this.settings) && currentLocationPathTip !== this.locationPathTip) {
-      if (
-        !isUndefined(this.locationPathTip) &&
-        hasToBeDisplayedNewNotification(true, this.settings.lastDisplayedTime)
-      ) {
+      this.locationPathTip = currentLocationPathTip;
+      if (isUndefined(this.startTimeout) && hasToBeDisplayedNewNotification(true, this.settings.lastDisplayedTime)) {
         this.get(true);
       }
-      this.locationPathTip = currentLocationPathTip;
     }
   }
 
@@ -143,7 +141,7 @@ export class UserNotificationsDispatcher {
 
         const currentLocationTip = this.locationPathTip || getCurrentLocationPath();
         const getCommonTip = (): UserNotification | null => {
-          return notDisplayedNotifications.hasOwnProperty('undefined')
+          return notDisplayedNotifications.hasOwnProperty('undefined') && notDisplayedNotifications.undefined.length > 0
             ? (notDisplayedNotifications.undefined[
                 Math.floor(Math.random() * notDisplayedNotifications.undefined.length)
               ] as UserNotification)
