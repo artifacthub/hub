@@ -1,24 +1,19 @@
 {
-  "data": {
-    "packages": [
-      {
-        "packageId": "efd6bafa-9313-499a-a4ea-aa16b819be91",
-        "name": "centrifugo",
-        "description": "Centrifugo is a real-time messaging server.",
-        "logoImageId": "cc7ac35f-abd3-4594-a375-aebfccbfe11e",
-        "appVersion": "2.1.0",
-        "repository": {
-          "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
-          "kind": 0,
-          "userAlias": "user",
-          "name": "stable",
-          "url": "url"
-        }
+  "packages": [
+    {
+      "packageId": "efd6bafa-9313-499a-a4ea-aa16b819be91",
+      "name": "centrifugo",
+      "description": "Centrifugo is a real-time messaging server.",
+      "logoImageId": "cc7ac35f-abd3-4594-a375-aebfccbfe11e",
+      "appVersion": "2.1.0",
+      "repository": {
+        "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+        "kind": 0,
+        "userAlias": "user",
+        "name": "stable",
+        "url": "url"
       }
-    ]
-  },
-  "metadata": {
-    "limit": 60,
-    "total": 7
-  }
+    }
+  ],
+  "paginationTotalCount": "7"
 }

@@ -1,40 +1,34 @@
 {
-  "data": {
-    "packages": [
-      {
-        "packageId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
-        "name": "airflow",
-        "normalizedName": "airflow",
-        "logoImageId": "f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc",
-        "repository": {
-          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
-          "kind": 0,
-          "name": "stable",
-          "displayName": "Stable",
-          "organizationName": "helm",
-          "organizationDisplayName": "Helm"
-        },
-        "eventKinds": [0]
+  "packages": [
+    {
+      "packageId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+      "name": "airflow",
+      "normalizedName": "airflow",
+      "logoImageId": "f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc",
+      "repository": {
+        "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+        "kind": 0,
+        "name": "stable",
+        "displayName": "Stable",
+        "organizationName": "helm",
+        "organizationDisplayName": "Helm"
       },
-      {
-        "packageId": "11d84cdc-e414-43c7-9be0-1f6b11912eb2",
-        "name": "cerebro",
-        "normalizedName": "cerebro",
-        "repository": {
-          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
-          "kind": 0,
-          "name": "stable",
-          "displayName": "Stable",
-          "organizationName": "helm",
-          "organizationDisplayName": "Helm"
-        },
-        "eventKinds": [0]
-      }
-    ],
-    "facets": []
-  },
-  "metadata": {
-    "limit": 60,
-    "total": 7
-  }
+      "eventKinds": [0]
+    },
+    {
+      "packageId": "11d84cdc-e414-43c7-9be0-1f6b11912eb2",
+      "name": "cerebro",
+      "normalizedName": "cerebro",
+      "repository": {
+        "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+        "kind": 0,
+        "name": "stable",
+        "displayName": "Stable",
+        "organizationName": "helm",
+        "organizationDisplayName": "Helm"
+      },
+      "eventKinds": [0]
+    }
+  ],
+  "facets": []
 }

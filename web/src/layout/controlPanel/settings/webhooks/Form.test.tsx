@@ -486,7 +486,7 @@ describe('WebhookForm', () => {
             description: '',
             secret: '',
             eventKinds: [0],
-            packages: [mockSearch.data.packages![0]],
+            packages: [mockSearch.packages![0]],
           },
           undefined
         );

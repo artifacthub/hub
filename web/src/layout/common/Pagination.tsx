@@ -39,7 +39,7 @@ const Pagination = (props: Props) => {
 
   if (totalPages <= 1) return null;
 
-  const getButton = (pageNumber: number, content?: JSX.Element | string): JSX.Element => (
+  const getButton = (pageNumber: number, disabled: boolean, content?: JSX.Element | string): JSX.Element => (
     <button
       className="page-link"
       onClick={() => {
@@ -48,6 +48,7 @@ const Pagination = (props: Props) => {
         }
       }}
       aria-label={`Open ${content ? content : `page ${pageNumber}`}`}
+      disabled={disabled}
     >
       {content || pageNumber}
     </button>
@@ -61,6 +62,7 @@ const Pagination = (props: Props) => {
         <li className={classnames('page-item', { disabled: props.active === 1 })}>
           {getButton(
             props.active - 1,
+            props.active === 1,
             <>
               <span className="d-none d-sm-block">Previous</span>
               <span className="d-block d-sm-none">
@@ -77,7 +79,7 @@ const Pagination = (props: Props) => {
                 key={`pag_${index}`}
                 className={classnames('page-item', { [`active ${styles.active}`]: props.active === value })}
               >
-                {getButton(value)}
+                {getButton(value, false)}
               </li>
             );
           } else {
@@ -92,6 +94,7 @@ const Pagination = (props: Props) => {
         <li className={classnames('page-item', { disabled: props.active === totalPages })}>
           {getButton(
             props.active + 1,
+            props.active === totalPages,
             <>
               <span className="d-none d-sm-block">Next</span>
               <span className="d-block d-sm-none">

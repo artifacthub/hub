@@ -1013,7 +1013,10 @@ func TestSearch(t *testing.T) {
 		r, _ := http.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
-		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
 		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -1021,8 +1024,9 @@ func TestSearch(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.assertExpectations(t)
 	})

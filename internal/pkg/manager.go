@@ -27,7 +27,7 @@ const (
 	getRandomPkgsDBQ                = `select get_random_packages()`
 	getValuesSchemaDBQ              = `select values_schema from snapshot where package_id = $1 and version = $2`
 	registerPkgDBQ                  = `select register_package($1::jsonb)`
-	searchPkgsDBQ                   = `select search_packages($1::jsonb)`
+	searchPkgsDBQ                   = `select * from search_packages($1::jsonb)`
 	searchPkgsMonocularDBQ          = `select search_packages_monocular($1::text, $2::text)`
 	togglePkgStarDBQ                = `select toggle_star($1::uuid, $2::uuid)`
 	updateSnapshotSecurityReportDBQ = `select update_snapshot_security_report($1::jsonb)`
@@ -231,7 +231,7 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 
 // SearchJSON returns a json object with the search results produced by the
 // input provided. The json object is built by the database.
-func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput) ([]byte, error) {
+func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput) (*hub.JSONQueryResult, error) {
 	// Validate input
 	if input.Limit <= 0 || input.Limit > 60 {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid limit (0 < l <= 60)")
@@ -257,7 +257,16 @@ func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput)
 
 	// Search packages in database
 	inputJSON, _ := json.Marshal(input)
-	return util.DBQueryJSON(ctx, m.db, searchPkgsDBQ, inputJSON)
+	var data []byte
+	var totalCount int
+	if err := m.db.QueryRow(ctx, searchPkgsDBQ, inputJSON).Scan(&data, &totalCount); err != nil {
+		return nil, err
+	}
+
+	return &hub.JSONQueryResult{
+		Data:       data,
+		TotalCount: totalCount,
+	}, nil
 }
 
 // SearchMonocularJSON returns a json object with the search results produced

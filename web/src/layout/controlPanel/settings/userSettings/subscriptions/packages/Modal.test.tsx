@@ -189,8 +189,8 @@ describe('SubscriptionModal', () => {
 
       expect(activePackage).toBeInTheDocument();
       expect(activePackage).toHaveTextContent(
-        `${mockSearch.data.packages![0].name}${mockSearch.data.packages![0].repository.organizationDisplayName}(Repo: ${
-          mockSearch.data.packages![0].repository.displayName
+        `${mockSearch.packages![0].name}${mockSearch.packages![0].repository.organizationDisplayName}(Repo: ${
+          mockSearch.packages![0].repository.displayName
         })`
       );
 
@@ -201,7 +201,7 @@ describe('SubscriptionModal', () => {
 
       await waitFor(() => {
         expect(API.addSubscription).toHaveBeenCalledTimes(1);
-        expect(API.addSubscription).toHaveBeenCalledWith(mockSearch.data.packages![0].packageId, 0);
+        expect(API.addSubscription).toHaveBeenCalledWith(mockSearch.packages![0].packageId, 0);
       });
 
       await waitFor(() => {
@@ -237,8 +237,8 @@ describe('SubscriptionModal', () => {
 
       expect(activePackage).toBeInTheDocument();
       expect(activePackage).toHaveTextContent(
-        `${mockSearch.data.packages![0].name}${mockSearch.data.packages![0].repository.organizationDisplayName}(Repo: ${
-          mockSearch.data.packages![0].repository.displayName
+        `${mockSearch.packages![0].name}${mockSearch.packages![0].repository.organizationDisplayName}(Repo: ${
+          mockSearch.packages![0].repository.displayName
         })`
       );
 
@@ -249,14 +249,14 @@ describe('SubscriptionModal', () => {
 
       await waitFor(() => {
         expect(API.addSubscription).toHaveBeenCalledTimes(1);
-        expect(API.addSubscription).toHaveBeenCalledWith(mockSearch.data.packages![0].packageId, 0);
+        expect(API.addSubscription).toHaveBeenCalledWith(mockSearch.packages![0].packageId, 0);
       });
 
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
         message: `An error occurred subscribing to new releases notification for ${
-          mockSearch.data.packages![0].name
+          mockSearch.packages![0].name
         } package, please try again later.`,
       });
     });

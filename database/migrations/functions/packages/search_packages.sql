@@ -1,7 +1,7 @@
 -- search_packages searchs packages in the database that match the criteria in
 -- the query provided.
 create or replace function search_packages(p_input jsonb)
-returns setof json as $$
+returns table(data json, total_count bigint) as $$
 declare
     v_repository_kinds int[];
     v_users text[];
@@ -139,242 +139,233 @@ begin
             case when cardinality(v_capabilities) > 0
             then capabilities = any(v_capabilities) else true end
     )
-    select json_strip_nulls(json_build_object(
-        'data', (
-            select json_build_object(
-                'packages', (
-                    select coalesce(json_agg(json_build_object(
-                        'package_id', package_id,
-                        'name', name,
-                        'normalized_name', normalized_name,
-                        'logo_image_id', logo_image_id,
-                        'stars', stars,
-                        'official', package_official,
-                        'display_name', display_name,
-                        'description', description,
-                        'version', version,
-                        'app_version', app_version,
-                        'license', license,
-                        'deprecated', deprecated,
-                        'signed', signed,
-                        'security_report_summary', security_report_summary,
-                        'all_containers_images_whitelisted', are_all_containers_images_whitelisted(containers_images),
-                        'ts', floor(extract(epoch from ts)),
-                        'repository', jsonb_build_object(
-                            'repository_id', repository_id,
-                            'kind', repository_kind_id,
-                            'name', repository_name,
-                            'display_name', repository_display_name,
-                            'url', repository_url,
-                            'verified_publisher', verified_publisher,
-                            'official', repository_official,
-                            'scanner_disabled', repository_scanner_disabled,
-                            'user_alias', user_alias,
-                            'organization_name', organization_name,
-                            'organization_display_name', organization_display_name
+    select
+        json_strip_nulls(json_build_object(
+            'packages', (
+                select coalesce(json_agg(json_build_object(
+                    'package_id', package_id,
+                    'name', name,
+                    'normalized_name', normalized_name,
+                    'logo_image_id', logo_image_id,
+                    'stars', stars,
+                    'official', package_official,
+                    'display_name', display_name,
+                    'description', description,
+                    'version', version,
+                    'app_version', app_version,
+                    'license', license,
+                    'deprecated', deprecated,
+                    'signed', signed,
+                    'security_report_summary', security_report_summary,
+                    'all_containers_images_whitelisted', are_all_containers_images_whitelisted(containers_images),
+                    'ts', floor(extract(epoch from ts)),
+                    'repository', jsonb_build_object(
+                        'repository_id', repository_id,
+                        'kind', repository_kind_id,
+                        'name', repository_name,
+                        'display_name', repository_display_name,
+                        'url', repository_url,
+                        'verified_publisher', verified_publisher,
+                        'official', repository_official,
+                        'scanner_disabled', repository_scanner_disabled,
+                        'user_alias', user_alias,
+                        'organization_name', organization_name,
+                        'organization_display_name', organization_display_name
+                    )
+                )), '[]')
+                from (
+                    select
+                        paaf.*,
+                        (case when v_tsquery_web is not null then
+                            trunc(ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1)::numeric, 2) +
+                            trunc(ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)::numeric, 2)
+                        else 1 end) as rank,
+                        (case
+                            when repository_official = true or package_official = true
+                            then true else false
+                        end) as official
+                    from packages_applying_all_filters paaf
+                    order by
+                        rank desc,
+                        official desc,
+                        stars desc,
+                        verified_publisher desc,
+                        name asc
+                    limit (p_input->>'limit')::int
+                    offset (p_input->>'offset')::int
+                ) packages_applying_all_filters_paginated
+            ),
+            'facets', case when v_facets then (
+                select json_build_array(
+                    (
+                        select json_build_object(
+                            'title', 'Organization',
+                            'filter_key', 'org',
+                            'options', (
+                                select coalesce(json_agg(json_build_object(
+                                    'id', organization_name,
+                                    'name', coalesce(organization_display_name, organization_name),
+                                    'total', total
+                                )), '[]')
+                                from (
+                                    select organization_name, organization_display_name, total
+                                    from (
+                                        select 1 as pri, organization_name, organization_display_name, count(*) as total
+                                        from packages_applying_minimum_filters
+                                        where organization_name = any(v_orgs)
+                                        group by organization_name, organization_display_name
+                                        union
+                                        select 2 as pri, organization_name, organization_display_name, count(*) as total
+                                        from packages_applying_minimum_filters
+                                        where organization_name is not null
+                                        and
+                                            case when cardinality(v_orgs) > 0
+                                            then organization_name <> all(v_orgs) else true end
+                                        group by organization_name, organization_display_name
+                                    ) as orgs
+                                    order by pri asc, total desc, organization_name asc
+                                ) as orgs_breakdown
+                            )
                         )
-                    )), '[]')
-                    from (
-                        select
-                            paaf.*,
-                            (case when v_tsquery_web is not null then
-                                trunc(ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1)::numeric, 2) +
-                                trunc(ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)::numeric, 2)
-                            else 1 end) as rank,
-                            (case
-                                when repository_official = true or package_official = true
-                                then true else false
-                            end) as official
-                        from packages_applying_all_filters paaf
-                        order by
-                            rank desc,
-                            official desc,
-                            stars desc,
-                            verified_publisher desc,
-                            name asc
-                        limit (p_input->>'limit')::int
-                        offset (p_input->>'offset')::int
-                    ) packages_applying_all_filters_paginated
-                ),
-                'facets', case when v_facets then (
-                    select json_build_array(
-                        (
-                            select json_build_object(
-                                'title', 'Organization',
-                                'filter_key', 'org',
-                                'options', (
-                                    select coalesce(json_agg(json_build_object(
-                                        'id', organization_name,
-                                        'name', coalesce(organization_display_name, organization_name),
-                                        'total', total
-                                    )), '[]')
+                    ),
+                    (
+                        select json_build_object(
+                            'title', 'User',
+                            'filter_key', 'user',
+                            'options', (
+                                select coalesce(json_agg(json_build_object(
+                                    'id', user_alias,
+                                    'name', user_alias,
+                                    'total', total
+                                )), '[]')
+                                from (
+                                    select user_alias, total
                                     from (
-                                        select organization_name, organization_display_name, total
-                                        from (
-                                            select 1 as pri, organization_name, organization_display_name, count(*) as total
-                                            from packages_applying_minimum_filters
-                                            where organization_name = any(v_orgs)
-                                            group by organization_name, organization_display_name
-                                            union
-                                            select 2 as pri, organization_name, organization_display_name, count(*) as total
-                                            from packages_applying_minimum_filters
-                                            where organization_name is not null
-                                            and
-                                                case when cardinality(v_orgs) > 0
-                                                then organization_name <> all(v_orgs) else true end
-                                            group by organization_name, organization_display_name
-                                        ) as orgs
-                                        order by pri asc, total desc, organization_name asc
-                                    ) as orgs_breakdown
-                                )
-                            )
-                        ),
-                        (
-                            select json_build_object(
-                                'title', 'User',
-                                'filter_key', 'user',
-                                'options', (
-                                    select coalesce(json_agg(json_build_object(
-                                        'id', user_alias,
-                                        'name', user_alias,
-                                        'total', total
-                                    )), '[]')
-                                    from (
-                                        select user_alias, total
-                                        from (
-                                            select 1 as pri, user_alias, count(*) as total
-                                            from packages_applying_minimum_filters
-                                            where user_alias = any(v_users)
-                                            group by user_alias
-                                            union
-                                            select 2 as pri, user_alias, count(*) as total
-                                            from packages_applying_minimum_filters
-                                            where user_alias is not null
-                                            and
-                                                case when cardinality(v_users) > 0
-                                                then user_alias <> all(v_users) else true end
-                                            group by user_alias
-                                        ) as users
-                                        order by pri asc, total desc, user_alias asc
-                                    ) as users_breakdown
-                                )
-                            )
-                        ),
-                        (
-                            select json_build_object(
-                                'title', 'Kind',
-                                'filter_key', 'kind',
-                                'options', (
-                                    select coalesce(json_agg(json_build_object(
-                                        'id', repository_kind_id,
-                                        'name', repository_kind_name,
-                                        'total', total
-                                    )), '[]')
-                                    from (
-                                        select
-                                            repository_kind_id,
-                                            repository_kind_name,
-                                            count(*) as total
+                                        select 1 as pri, user_alias, count(*) as total
                                         from packages_applying_minimum_filters
-                                        group by repository_kind_id, repository_kind_name
-                                        order by total desc, repository_kind_name asc
-                                    ) as kinds_breakdown
-                                )
-                            )
-                        ),
-                        (
-                            select json_build_object(
-                                'title', 'Repository',
-                                'filter_key', 'repo',
-                                'options', (
-                                    select coalesce(json_agg(json_build_object(
-                                        'id', repository_name,
-                                        'name', initcap(repository_name),
-                                        'total', total
-                                    )), '[]')
-                                    from (
-                                        select repository_name, total
-                                        from (
-                                            select 1 as pri, repository_name, count(*) as total
-                                            from packages_applying_minimum_filters
-                                            where repository_name = any(v_repositories)
-                                            group by repository_name
-                                            union
-                                            select 2 as pri, repository_name, count(*) as total
-                                            from packages_applying_minimum_filters
-                                            where repository_name is not null
-                                            and
-                                                case when cardinality(v_repositories) > 0
-                                                then repository_name <> all(v_repositories) else true end
-                                            group by repository_name
-                                        ) as repos
-                                        order by pri asc, total desc, repository_name asc
-                                    ) as repositories_breakdown
-                                )
-                            )
-                        ),
-                        (
-                            select json_build_object(
-                                'title', 'License',
-                                'filter_key', 'license',
-                                'options', (
-                                    select coalesce(json_agg(json_build_object(
-                                        'id', license,
-                                        'name', license,
-                                        'total', total
-                                    )), '[]')
-                                    from (
-                                        select license, total
-                                        from (
-                                            select 1 as pri, license, count(*) as total
-                                            from packages_applying_minimum_filters
-                                            where license = any(v_licenses)
-                                            group by license
-                                            union
-                                            select 2 as pri, license, count(*) as total
-                                            from packages_applying_minimum_filters
-                                            where license is not null
-                                            and
-                                                case when cardinality(v_licenses) > 0
-                                                then license <> all(v_licenses) else true end
-                                            group by license
-                                        ) as orgs
-                                        order by pri asc, total desc, license asc
-                                    ) as licenses_breakdown
-                                )
-                            )
-                        ),
-                        (
-                            select json_build_object(
-                                'title', 'Operator capabilities',
-                                'filter_key', 'capabilities',
-                                'options', (
-                                    select coalesce(json_agg(json_build_object(
-                                        'id', capabilities,
-                                        'name', capabilities,
-                                        'total', total
-                                    )), '[]')
-                                    from (
-                                        select capabilities, count(*) as total
+                                        where user_alias = any(v_users)
+                                        group by user_alias
+                                        union
+                                        select 2 as pri, user_alias, count(*) as total
                                         from packages_applying_minimum_filters
-                                        where capabilities is not null
-                                        group by capabilities
-                                        order by total desc, capabilities asc
-                                    ) as capabilities_breakdown
-                                )
+                                        where user_alias is not null
+                                        and
+                                            case when cardinality(v_users) > 0
+                                            then user_alias <> all(v_users) else true end
+                                        group by user_alias
+                                    ) as users
+                                    order by pri asc, total desc, user_alias asc
+                                ) as users_breakdown
+                            )
+                        )
+                    ),
+                    (
+                        select json_build_object(
+                            'title', 'Kind',
+                            'filter_key', 'kind',
+                            'options', (
+                                select coalesce(json_agg(json_build_object(
+                                    'id', repository_kind_id,
+                                    'name', repository_kind_name,
+                                    'total', total
+                                )), '[]')
+                                from (
+                                    select
+                                        repository_kind_id,
+                                        repository_kind_name,
+                                        count(*) as total
+                                    from packages_applying_minimum_filters
+                                    group by repository_kind_id, repository_kind_name
+                                    order by total desc, repository_kind_name asc
+                                ) as kinds_breakdown
+                            )
+                        )
+                    ),
+                    (
+                        select json_build_object(
+                            'title', 'Repository',
+                            'filter_key', 'repo',
+                            'options', (
+                                select coalesce(json_agg(json_build_object(
+                                    'id', repository_name,
+                                    'name', initcap(repository_name),
+                                    'total', total
+                                )), '[]')
+                                from (
+                                    select repository_name, total
+                                    from (
+                                        select 1 as pri, repository_name, count(*) as total
+                                        from packages_applying_minimum_filters
+                                        where repository_name = any(v_repositories)
+                                        group by repository_name
+                                        union
+                                        select 2 as pri, repository_name, count(*) as total
+                                        from packages_applying_minimum_filters
+                                        where repository_name is not null
+                                        and
+                                            case when cardinality(v_repositories) > 0
+                                            then repository_name <> all(v_repositories) else true end
+                                        group by repository_name
+                                    ) as repos
+                                    order by pri asc, total desc, repository_name asc
+                                ) as repositories_breakdown
+                            )
+                        )
+                    ),
+                    (
+                        select json_build_object(
+                            'title', 'License',
+                            'filter_key', 'license',
+                            'options', (
+                                select coalesce(json_agg(json_build_object(
+                                    'id', license,
+                                    'name', license,
+                                    'total', total
+                                )), '[]')
+                                from (
+                                    select license, total
+                                    from (
+                                        select 1 as pri, license, count(*) as total
+                                        from packages_applying_minimum_filters
+                                        where license = any(v_licenses)
+                                        group by license
+                                        union
+                                        select 2 as pri, license, count(*) as total
+                                        from packages_applying_minimum_filters
+                                        where license is not null
+                                        and
+                                            case when cardinality(v_licenses) > 0
+                                            then license <> all(v_licenses) else true end
+                                        group by license
+                                    ) as orgs
+                                    order by pri asc, total desc, license asc
+                                ) as licenses_breakdown
+                            )
+                        )
+                    ),
+                    (
+                        select json_build_object(
+                            'title', 'Operator capabilities',
+                            'filter_key', 'capabilities',
+                            'options', (
+                                select coalesce(json_agg(json_build_object(
+                                    'id', capabilities,
+                                    'name', capabilities,
+                                    'total', total
+                                )), '[]')
+                                from (
+                                    select capabilities, count(*) as total
+                                    from packages_applying_minimum_filters
+                                    where capabilities is not null
+                                    group by capabilities
+                                    order by total desc, capabilities asc
+                                ) as capabilities_breakdown
                             )
                         )
                     )
-                ) else null end
-            )
-        ),
-        'metadata', (
-            select json_build_object(
-                'limit', (p_input->>'limit')::int,
-                'offset', (p_input->>'offset')::int,
-                'total', (select count(*) from packages_applying_all_filters)
-            )
-        )
-    ));
+                )
+            ) else null end
+        )),
+        (select count(*) from packages_applying_all_filters);
 end
 $$ language plpgsql;

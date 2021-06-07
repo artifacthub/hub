@@ -103,9 +103,9 @@ func (m *ManagerMock) Register(ctx context.Context, pkg *hub.Package) error {
 }
 
 // SearchJSON implements the PackageManager interface.
-func (m *ManagerMock) SearchJSON(ctx context.Context, input *hub.SearchPackageInput) ([]byte, error) {
+func (m *ManagerMock) SearchJSON(ctx context.Context, input *hub.SearchPackageInput) (*hub.JSONQueryResult, error) {
 	args := m.Called(ctx, input)
-	data, _ := args.Get(0).([]byte)
+	data, _ := args.Get(0).(*hub.JSONQueryResult)
 	return data, args.Error(1)
 }
 

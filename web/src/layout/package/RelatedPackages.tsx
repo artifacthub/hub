@@ -34,8 +34,8 @@ const RelatedPackages = (props: Props) => {
           false
         );
         let filteredPackages: Package[] = [];
-        if (!isNull(searchResults.data.packages)) {
-          filteredPackages = searchResults.data.packages
+        if (!isNull(searchResults.packages)) {
+          filteredPackages = searchResults.packages
             .filter((item: Package) => item.packageId !== props.packageId)
             .slice(0, 8); // Only first 8 packages
         }

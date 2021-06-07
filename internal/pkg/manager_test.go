@@ -902,10 +902,10 @@ func TestSearchJSON(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
-				dataJSON, err := m.SearchJSON(ctx, tc.input)
+				result, err := m.SearchJSON(ctx, tc.input)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
-				assert.Nil(t, dataJSON)
+				assert.Nil(t, result)
 			})
 		}
 	})
@@ -913,12 +913,13 @@ func TestSearchJSON(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, searchPkgsDBQ, mock.Anything).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, searchPkgsDBQ, mock.Anything).Return([]interface{}{[]byte("dataJSON"), 1}, nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.SearchJSON(ctx, input)
+		result, err := m.SearchJSON(ctx, input)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		assert.Equal(t, []byte("dataJSON"), result.Data)
+		assert.Equal(t, 1, result.TotalCount)
 		db.AssertExpectations(t)
 	})
 
@@ -928,9 +929,9 @@ func TestSearchJSON(t *testing.T) {
 		db.On("QueryRow", ctx, searchPkgsDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.SearchJSON(ctx, input)
+		result, err := m.SearchJSON(ctx, input)
 		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
+		assert.Nil(t, result)
 		db.AssertExpectations(t)
 	})
 }

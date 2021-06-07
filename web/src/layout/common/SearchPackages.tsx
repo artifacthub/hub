@@ -37,7 +37,7 @@ const SearchPackages = (props: Props) => {
         },
         false
       );
-      setPackages(searchResults.data.packages);
+      setPackages(searchResults.packages);
       setIsSearching(false);
     } catch (err) {
       setPackages(null);

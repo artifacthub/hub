@@ -27,3 +27,10 @@ type EmailSender interface {
 type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
+
+// JSONQueryResult represents the result of a database query that returns json
+// data alongside some metadata.
+type JSONQueryResult struct {
+	Data       []byte `json:"data"`
+	TotalCount int    `json:"total_count"`
+}

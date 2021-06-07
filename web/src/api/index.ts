@@ -171,7 +171,26 @@ class API_CLASS {
     }
   }
 
-  private async handleContent(res: any, skipCamelConversion?: boolean, checkApprovedSession?: boolean) {
+  private getHeadersValue(res: any, params?: string[]): any {
+    if (!isUndefined(params) && params.length > 0) {
+      let headers: any = {};
+      params.forEach((param: string) => {
+        const value = res.headers.get(param);
+        if (value) {
+          headers[param] = value;
+        }
+      });
+      return headers;
+    }
+    return null;
+  }
+
+  private async handleContent(
+    res: any,
+    skipCamelConversion?: boolean,
+    checkApprovedSession?: boolean,
+    headers?: string[]
+  ) {
     let response = res;
     if (!isUndefined(checkApprovedSession) && checkApprovedSession) {
       response = this.checkIfApprovedSession(res);
@@ -182,7 +201,11 @@ class API_CLASS {
         const text = await response.text();
         return text;
       case 'application/json':
-        const json = await response.json();
+        let json = await response.json();
+        const tmpHeaders = this.getHeadersValue(res, headers);
+        if (!isNull(tmpHeaders)) {
+          json = { ...json, ...tmpHeaders };
+        }
         return skipCamelConversion ? json : this.toCamelCase(json);
       default:
         return response;
@@ -217,7 +240,8 @@ class API_CLASS {
     url: string,
     opts?: FetchOptions,
     skipCamelConversion?: boolean,
-    checkApprovedSession?: boolean
+    checkApprovedSession?: boolean,
+    headers?: string[]
   ): Promise<any> {
     const csrfRetry = (func: () => Promise<any>) => {
       return func().catch((error: Error) => {
@@ -234,7 +258,7 @@ class API_CLASS {
 
       return fetch(url, options)
         .then(this.handleErrors)
-        .then((res) => this.handleContent(res, skipCamelConversion, checkApprovedSession))
+        .then((res) => this.handleContent(res, skipCamelConversion, checkApprovedSession, headers))
         .catch((error) => Promise.reject(error));
     });
   }
@@ -306,7 +330,9 @@ class API_CLASS {
     if (!isUndefined(query.official) && query.official) {
       q.set('official', 'true');
     }
-    return this.apiFetch(`${this.API_BASE_URL}/packages/search?${q.toString()}`);
+    return this.apiFetch(`${this.API_BASE_URL}/packages/search?${q.toString()}`, undefined, false, false, [
+      'Pagination-Total-Count',
+    ]);
   }
 
   public getStats(): Promise<Stats> {

@@ -211,15 +211,9 @@ export interface SearchQuery {
 }
 
 export interface SearchResults {
-  data: {
-    packages: Package[] | null;
-    facets: Facets[] | null;
-  };
-  metadata: {
-    limit: number;
-    offset: number;
-    total: number;
-  };
+  packages: Package[] | null;
+  facets: Facets[] | null;
+  paginationTotalCount: string;
 }
 
 export interface Stats {
