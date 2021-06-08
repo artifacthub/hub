@@ -74,7 +74,7 @@ describe('SearchPackages', () => {
       fireEvent.click(packages[0]);
 
       expect(mockOnSelection).toHaveBeenCalledTimes(1);
-      expect(mockOnSelection).toHaveBeenCalledWith(mockSearch.data!.packages![0]);
+      expect(mockOnSelection).toHaveBeenCalledWith(mockSearch.packages![0]);
     });
 
     it('when searchPackage fails', async () => {
@@ -105,7 +105,7 @@ describe('SearchPackages', () => {
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       const { getByTestId, getAllByTestId } = render(
-        <SearchPackages {...defaultProps} disabledPackages={[mockSearch.data!.packages![0].packageId]} />
+        <SearchPackages {...defaultProps} disabledPackages={[mockSearch.packages![0].packageId]} />
       );
 
       const input = getByTestId('searchPackagesInput');

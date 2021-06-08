@@ -89,8 +89,12 @@ const Group = (props: Props) => {
             setIsLoading(true);
           }
           const results = await APIMethods.searchPackages(urlParams.origin, urlParams.search);
-          setPackagesList(results.data.packages);
-          setPkgsWithBadges(hasBadges(results.data.packages));
+          if (results.packages && results.packages.length > 0) {
+            setPackagesList(results.packages);
+            setPkgsWithBadges(hasBadges(results.packages));
+          } else {
+            setPackagesList(null);
+          }
           setIsLoading(false);
         } catch {
           setIsLoading(false);

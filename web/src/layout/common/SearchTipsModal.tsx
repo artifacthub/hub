@@ -19,7 +19,7 @@ const SearchTipsModal = (props: Props) => {
 
   return (
     <Modal noFooter onClose={() => props.setOpenTips(false)} open={props.openTips}>
-      <div className="mw-100 text-left">
+      <div className="mw-100 text-left text-dark">
         <div className="d-flex flex-row justify-content-between mb-4">
           <div className={`h3 d-flex flex-row align-items-baseline ${styles.title}`}>
             Search tips

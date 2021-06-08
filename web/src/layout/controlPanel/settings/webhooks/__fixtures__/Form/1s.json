@@ -1,68 +1,63 @@
 {
-  "data": {
-    "packages": [
-      {
-        "packageId": "e375216d-d876-45c2-a114-8e01651769f1",
-        "name": "centrifugo",
-        "description": "Centrifugo is a real-time messaging server.",
-        "logoImageId": "cc7ac35f-abd3-4594-a375-aebfccbfe11e",
-        "appVersion": "2.1.0",
-        "repository": {
-          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
-          "kind": 0,
-          "name": "stable",
-          "displayName": "Stable",
-          "organizationName": "helm",
-          "organizationDisplayName": "Helm"
-        }
-      },
-      {
-        "packageId": "e252a4f2-dc8a-429b-8e26-6d093d0a59ca",
-        "name": "kafka",
-        "description": "Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.",
-        "appVersion": "5.0.1",
-        "repository": {
-          "repositoryId": "d3908a69-2aae-4ff9-8fb3-ce3b070d0384",
-          "kind": 0,
-          "name": "incubator",
-          "displayName": "Incubator",
-          "organizationName": "helm",
-          "organizationDisplayName": "Helm"
-        }
+  "packages": [
+    {
+      "packageId": "e375216d-d876-45c2-a114-8e01651769f1",
+      "name": "centrifugo",
+      "description": "Centrifugo is a real-time messaging server.",
+      "logoImageId": "cc7ac35f-abd3-4594-a375-aebfccbfe11e",
+      "appVersion": "2.1.0",
+      "repository": {
+        "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+        "kind": 0,
+        "name": "stable",
+        "displayName": "Stable",
+        "organizationName": "helm",
+        "organizationDisplayName": "Helm"
       }
-    ],
-    "facets": [
-      {
-        "title": "Kind",
-        "filterKey": "kind",
-        "options": [
-          {
-            "id": 0,
-            "name": "Chart",
-            "total": 7
-          }
-        ]
-      },
-      {
-        "title": "Repository",
-        "filterKey": "repo",
-        "options": [
-          {
-            "id": "43898497-a9d0-41eb-9dc7-5c4de0cd0433",
-            "name": "Stable",
-            "total": 4
-          },
-          {
-            "id": "dd9337b4-300c-4b40-b4d4-78f47ede6fcf",
-            "name": "Incubator",
-            "total": 2
-          }
-        ]
+    },
+    {
+      "packageId": "e252a4f2-dc8a-429b-8e26-6d093d0a59ca",
+      "name": "kafka",
+      "description": "Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.",
+      "appVersion": "5.0.1",
+      "repository": {
+        "repositoryId": "d3908a69-2aae-4ff9-8fb3-ce3b070d0384",
+        "kind": 0,
+        "name": "incubator",
+        "displayName": "Incubator",
+        "organizationName": "helm",
+        "organizationDisplayName": "Helm"
       }
-    ]
-  },
-  "metadata": {
-    "limit": 60,
-    "total": 7
-  }
+    }
+  ],
+  "facets": [
+    {
+      "title": "Kind",
+      "filterKey": "kind",
+      "options": [
+        {
+          "id": 0,
+          "name": "Chart",
+          "total": 7
+        }
+      ]
+    },
+    {
+      "title": "Repository",
+      "filterKey": "repo",
+      "options": [
+        {
+          "id": "43898497-a9d0-41eb-9dc7-5c4de0cd0433",
+          "name": "Stable",
+          "total": 4
+        },
+        {
+          "id": "dd9337b4-300c-4b40-b4d4-78f47ede6fcf",
+          "name": "Incubator",
+          "total": 2
+        }
+      ]
+    }
+  ],
+  "paginationTotalCount": "7"
 }

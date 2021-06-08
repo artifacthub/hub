@@ -36,13 +36,6 @@ export enum RepositoryKind {
 }
 
 export interface SearchResults {
-  data: {
-    packages: PackageSummary[] | null;
-    facets: null;
-  };
-  metadata: {
-    limit: number;
-    offset: number;
-    total: number;
-  };
+  packages: PackageSummary[] | null;
+  facets: null;
 }

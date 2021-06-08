@@ -16,18 +16,20 @@ select plan(27);
 \set image3ID '00000000-0000-0000-0000-000000000003'
 
 -- No packages at this point
-select is(
-    search_packages('{
-        "ts_query_web": "package1"
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": []
-        },
-        "metadata": {
-            "total": 0
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "ts_query_web": "package1"
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": []
+            }'::jsonb,
+            0
+        )
+    $$,
     'TSQueryWeb: package1 | No packages in db yet | No packages or facets expected'
 );
 
@@ -225,1539 +227,1677 @@ insert into snapshot (
 );
 
 -- Some packages have just been seeded
-select is(
-    search_packages('{
-        "facets": true,
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
-                    "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000003",
-                "name": "package3",
-                "normalized_name": "package3",
-                "stars": 0,
-                "display_name": "Package 3",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000003",
-                "version": "1.0.0",
-                "security_report_summary": {
-                    "high": 2,
-                    "medium": 1
-                },
-                "all_containers_images_whitelisted": true,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000003",
-                    "kind": 1,
-                    "name": "repo3",
-                    "display_name": "Repo 3",
-                    "url": "https://repo3.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }],
-            "facets": [{
-                "title": "Organization",
-                "filter_key": "org",
-                "options": [{
-                    "id": "org1",
-                    "name": "Organization 1",
-                    "total": 2
-                }]
-            }, {
-                "title": "User",
-                "filter_key": "user",
-                "options": [{
-                    "id": "user1",
-                    "name": "user1",
-                    "total": 1
-                }]
-            }, {
-                "title": "Kind",
-                "filter_key": "kind",
-                "options": [{
-                    "id": 0,
-                    "name": "Helm charts",
-                    "total": 2
-                }, {
-                    "id": 1,
-                    "name": "Falco rules",
-                    "total": 1
-                }]
-            }, {
-                "title": "Repository",
-                "filter_key": "repo",
-                "options": [{
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }, {
-                    "id": "repo2",
-                    "name": "Repo2",
-                    "total": 1
-                }, {
-                    "id": "repo3",
-                    "name": "Repo3",
-                    "total": 1
-                }]
-            }, {
-                "title": "License",
-                "filter_key": "license",
-                "options": [{
-                    "id": "Apache-2.0",
-                    "name": "Apache-2.0",
-                    "total": 1
-                }]
-            }, {
-                "title": "Operator capabilities",
-                "filter_key": "capabilities",
-                "options": [{
-                    "id": "basic install",
-                    "name": "basic install",
-                    "total": 1
-                }]
-            }]
-        },
-        "metadata": {
-            "total": 3
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "facets": true,
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "all_containers_images_whitelisted": false,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000003",
+                        "name": "package3",
+                        "normalized_name": "package3",
+                        "stars": 0,
+                        "display_name": "Package 3",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                        "version": "1.0.0",
+                        "security_report_summary": {
+                            "high": 2,
+                            "medium": 1
+                        },
+                        "all_containers_images_whitelisted": true,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000003",
+                            "kind": 1,
+                            "name": "repo3",
+                            "display_name": "Repo 3",
+                            "url": "https://repo3.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    }
+                ],
+                "facets": [
+                    {
+                        "title": "Organization",
+                        "filter_key": "org",
+                        "options": [{
+                            "id": "org1",
+                            "name": "Organization 1",
+                            "total": 2
+                        }]
+                    },
+                    {
+                        "title": "User",
+                        "filter_key": "user",
+                        "options": [{
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Kind",
+                        "filter_key": "kind",
+                        "options": [{
+                            "id": 0,
+                            "name": "Helm charts",
+                            "total": 2
+                        }, {
+                            "id": 1,
+                            "name": "Falco rules",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Repository",
+                        "filter_key": "repo",
+                        "options": [{
+                            "id": "repo1",
+                            "name": "Repo1",
+                            "total": 1
+                        }, {
+                            "id": "repo2",
+                            "name": "Repo2",
+                            "total": 1
+                        }, {
+                            "id": "repo3",
+                            "name": "Repo3",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "License",
+                        "filter_key": "license",
+                        "options": [{
+                            "id": "Apache-2.0",
+                            "name": "Apache-2.0",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Operator capabilities",
+                        "filter_key": "capabilities",
+                        "options": [{
+                            "id": "basic install",
+                            "name": "basic install",
+                            "total": 1
+                        }]
+                    }
+                ]
+            }'::jsonb,
+            3
+        )
+    $$,
     'TSQueryWeb: - | Three packages expected (all) - Facets expected'
 );
-select is(
-    search_packages('{
-        "ts_query": "kw1 | kw3",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
-                    "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000003",
-                "name": "package3",
-                "normalized_name": "package3",
-                "stars": 0,
-                "display_name": "Package 3",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000003",
-                "version": "1.0.0",
-                "security_report_summary": {
-                    "high": 2,
-                    "medium": 1
-                },
-                "all_containers_images_whitelisted": true,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000003",
-                    "kind": 1,
-                    "name": "repo3",
-                    "display_name": "Repo 3",
-                    "url": "https://repo3.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 3
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "ts_query": "kw1 | kw3",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "all_containers_images_whitelisted": false,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000003",
+                        "name": "package3",
+                        "normalized_name": "package3",
+                        "stars": 0,
+                        "display_name": "Package 3",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                        "version": "1.0.0",
+                        "security_report_summary": {
+                            "high": 2,
+                            "medium": 1
+                        },
+                        "all_containers_images_whitelisted": true,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000003",
+                            "kind": 1,
+                            "name": "repo3",
+                            "display_name": "Repo 3",
+                            "url": "https://repo3.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            3
+        )
+    $$,
     'TSQuery: kw1 | kw3 | Three packages expected (all) - No facets expected'
 );
-select is(
-    search_packages('{
-        "operators": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "operators": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'Operators: true | Package 1 expected - No facets expected'
 );
-select is(
-    search_packages('{
-        "verified_publisher": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "verified_publisher": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'VerifiedPublisher: true | Package 1 expected - No facets expected'
 );
-select is(
-    search_packages('{
-        "official": true,
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
-                    "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 2
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "official": true,
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "all_containers_images_whitelisted": false,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
     'Official: true Deprecated: true | Packages 1 and 2 expected - No facets expected'
 );
-select is(
-    search_packages('{
-        "ts_query": "kw1",
-        "ts_query_web": "kw2",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
-                    "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 2
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "ts_query": "kw1",
+            "ts_query_web": "kw2",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "all_containers_images_whitelisted": false,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
     'TSQuery: kw1 | TSQueryWeb: kw2 | Two packages expected | No facets expected'
 );
-select is(
-    search_packages('{
-        "facets": true,
-        "ts_query_web": "kw1",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
-                    "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }],
-            "facets": [{
-                "title": "Organization",
-                "filter_key": "org",
-                "options": [{
-                    "id": "org1",
-                    "name": "Organization 1",
-                    "total": 1
-                }]
-            }, {
-                "title": "User",
-                "filter_key": "user",
-                "options": [{
-                    "id": "user1",
-                    "name": "user1",
-                    "total": 1
-                }]
-            }, {
-                "title": "Kind",
-                "filter_key": "kind",
-                "options": [{
-                    "id": 0,
-                    "name": "Helm charts",
-                    "total": 2
-                }]
-            }, {
-                "title": "Repository",
-                "filter_key": "repo",
-                "options": [{
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }, {
-                    "id": "repo2",
-                    "name": "Repo2",
-                    "total": 1
-                }]
-            }, {
-                "title": "License",
-                "filter_key": "license",
-                "options": [{
-                    "id": "Apache-2.0",
-                    "name": "Apache-2.0",
-                    "total": 1
-                }]
-            }, {
-                "title": "Operator capabilities",
-                "filter_key": "capabilities",
-                "options": [{
-                    "id": "basic install",
-                    "name": "basic install",
-                    "total": 1
-                }]
-            }]
-        },
-        "metadata": {
-            "total": 2
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "facets": true,
+            "ts_query_web": "kw1",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "all_containers_images_whitelisted": false,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ],
+                "facets": [
+                    {
+                        "title": "Organization",
+                        "filter_key": "org",
+                        "options": [{
+                            "id": "org1",
+                            "name": "Organization 1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "User",
+                        "filter_key": "user",
+                        "options": [{
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Kind",
+                        "filter_key": "kind",
+                        "options": [{
+                            "id": 0,
+                            "name": "Helm charts",
+                            "total": 2
+                        }]
+                    },
+                    {
+                        "title": "Repository",
+                        "filter_key": "repo",
+                        "options": [{
+                            "id": "repo1",
+                            "name": "Repo1",
+                            "total": 1
+                        }, {
+                            "id": "repo2",
+                            "name": "Repo2",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "License",
+                        "filter_key": "license",
+                        "options": [{
+                            "id": "Apache-2.0",
+                            "name": "Apache-2.0",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Operator capabilities",
+                        "filter_key": "capabilities",
+                        "options": [{
+                            "id": "basic install",
+                            "name": "basic install",
+                            "total": 1
+                        }]
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
     'Facets: true TSQueryWeb: kw1 | Two packages expected - Facets expected'
 );
-select is(
-    search_packages('{
-        "facets": true,
-        "ts_query_web": "package1"
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }],
-            "facets": [{
-                "title": "Organization",
-                "filter_key": "org",
-                "options": []
-            }, {
-                "title": "User",
-                "filter_key": "user",
-                "options": [{
-                    "id": "user1",
-                    "name": "user1",
-                    "total": 1
-                }]
-            }, {
-                "title": "Kind",
-                "filter_key": "kind",
-                "options": [{
-                    "id": 0,
-                    "name": "Helm charts",
-                    "total": 1
-                }]
-            }, {
-                "title": "Repository",
-                "filter_key": "repo",
-                "options": [{
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }]
-            }, {
-                "title": "License",
-                "filter_key": "license",
-                "options": [{
-                    "id": "Apache-2.0",
-                    "name": "Apache-2.0",
-                    "total": 1
-                }]
-            }, {
-                "title": "Operator capabilities",
-                "filter_key": "capabilities",
-                "options": [{
-                    "id": "basic install",
-                    "name": "basic install",
-                    "total": 1
-                }]
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "facets": true,
+            "ts_query_web": "package1"
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ],
+                "facets": [
+                    {
+                        "title": "Organization",
+                        "filter_key": "org",
+                        "options": []
+                    },
+                    {
+                        "title": "User",
+                        "filter_key": "user",
+                        "options": [{
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Kind",
+                        "filter_key": "kind",
+                        "options": [{
+                            "id": 0,
+                            "name": "Helm charts",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Repository",
+                        "filter_key": "repo",
+                        "options": [{
+                            "id": "repo1",
+                            "name": "Repo1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "License",
+                        "filter_key": "license",
+                        "options": [{
+                            "id": "Apache-2.0",
+                            "name": "Apache-2.0",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Operator capabilities",
+                        "filter_key": "capabilities",
+                        "options": [{
+                            "id": "basic install",
+                            "name": "basic install",
+                            "total": 1
+                        }]
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'Facets: true TSQueryWeb: package1 | Package 1 expected - Facets expected'
 );
-select is(
-    search_packages('{
-        "ts_query_web": "kw9"
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": []
-        },
-        "metadata": {
-            "total": 0
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "ts_query_web": "kw9"
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": []
+            }'::jsonb,
+            0
+        )
+    $$,
     'TSQueryWeb: kw9 (inexistent) | No packages or facets expected'
 );
 
 -- Tests with kind and repositories filters
-select is(
-    search_packages('{
-        "repositories": [
-            "repo1"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "repositories": [
+                "repo1"
+            ]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'TSQueryWeb: - Repo: repo1 | Package 1 expected - Facets not expected'
 );
-select is(
-    search_packages(
-    '{
-        "facets": true,
-        "ts_query_web": "kw1",
-        "repositories": [
-            "repo2"
-        ],
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
-                    "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }],
-            "facets": [{
-                "title": "Organization",
-                "filter_key": "org",
-                "options": [{
-                    "id": "org1",
-                    "name": "Organization 1",
-                    "total": 1
-                }]
-            }, {
-                "title": "User",
-                "filter_key": "user",
-                "options": [{
-                    "id": "user1",
-                    "name": "user1",
-                    "total": 1
-                }]
-            }, {
-                "title": "Kind",
-                "filter_key": "kind",
-                "options": [{
-                    "id": 0,
-                    "name": "Helm charts",
-                    "total": 2
-                }]
-            }, {
-                "title": "Repository",
-                "filter_key": "repo",
-                "options": [{
-                    "id": "repo2",
-                    "name": "Repo2",
-                    "total": 1
-                }, {
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }]
-            }, {
-                "title": "License",
-                "filter_key": "license",
-                "options": [{
-                    "id": "Apache-2.0",
-                    "name": "Apache-2.0",
-                    "total": 1
-                }]
-            }, {
-                "title": "Operator capabilities",
-                "filter_key": "capabilities",
-                "options": [{
-                    "id": "basic install",
-                    "name": "basic install",
-                    "total": 1
-                }]
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "facets": true,
+            "ts_query_web": "kw1",
+            "repositories": [
+                "repo2"
+            ],
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "all_containers_images_whitelisted": false,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    }
+                ],
+                "facets": [
+                    {
+                        "title": "Organization",
+                        "filter_key": "org",
+                        "options": [{
+                            "id": "org1",
+                            "name": "Organization 1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "User",
+                        "filter_key": "user",
+                        "options": [{
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Kind",
+                        "filter_key": "kind",
+                        "options": [{
+                            "id": 0,
+                            "name": "Helm charts",
+                            "total": 2
+                        }]
+                    },
+                    {
+                        "title": "Repository",
+                        "filter_key": "repo",
+                        "options": [{
+                            "id": "repo2",
+                            "name": "Repo2",
+                            "total": 1
+                        }, {
+                            "id": "repo1",
+                            "name": "Repo1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "License",
+                        "filter_key": "license",
+                        "options": [{
+                            "id": "Apache-2.0",
+                            "name": "Apache-2.0",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Operator capabilities",
+                        "filter_key": "capabilities",
+                        "options": [{
+                            "id": "basic install",
+                            "name": "basic install",
+                            "total": 1
+                        }]
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'Facets: true TSQueryWeb: kw1 Repo: repo2 | Package 2 expected - Facets expected'
 );
-select is(
-    search_packages(
-    '{
-        "facets": true,
-        "ts_query_web": "kw1",
-        "repositories": [
-            "repo2"
-        ],
-        "deprecated": false
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [],
-            "facets": [{
-                "title": "Organization",
-                "filter_key": "org",
-                "options": []
-            }, {
-                "title": "User",
-                "filter_key": "user",
-                "options": [{
-                    "id": "user1",
-                    "name": "user1",
-                    "total": 1
-                }]
-            }, {
-                "title": "Kind",
-                "filter_key": "kind",
-                "options": [{
-                    "id": 0,
-                    "name": "Helm charts",
-                    "total": 1
-                }]
-            }, {
-                "title": "Repository",
-                "filter_key": "repo",
-                "options": [{
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }]
-            }, {
-                "title": "License",
-                "filter_key": "license",
-                "options": [{
-                    "id": "Apache-2.0",
-                    "name": "Apache-2.0",
-                    "total": 1
-                }]
-            }, {
-                "title": "Operator capabilities",
-                "filter_key": "capabilities",
-                "options": [{
-                    "id": "basic install",
-                    "name": "basic install",
-                    "total": 1
-                }]
-            }]
-        },
-        "metadata": {
-            "total": 0
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "facets": true,
+            "ts_query_web": "kw1",
+            "repositories": [
+                "repo2"
+            ],
+            "deprecated": false
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [],
+                "facets": [
+                    {
+                        "title": "Organization",
+                        "filter_key": "org",
+                        "options": []
+                    },
+                    {
+                        "title": "User",
+                        "filter_key": "user",
+                        "options": [{
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Kind",
+                        "filter_key": "kind",
+                        "options": [{
+                            "id": 0,
+                            "name": "Helm charts",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Repository",
+                        "filter_key": "repo",
+                        "options": [{
+                            "id": "repo1",
+                            "name": "Repo1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "License",
+                        "filter_key": "license",
+                        "options": [{
+                            "id": "Apache-2.0",
+                            "name": "Apache-2.0",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Operator capabilities",
+                        "filter_key": "capabilities",
+                        "options": [{
+                            "id": "basic install",
+                            "name": "basic install",
+                            "total": 1
+                        }]
+                    }
+                ]
+            }'::jsonb,
+            0
+        )
+    $$,
     'Facets: true TSQueryWeb: kw1 Repo: repo2 Deprecated: false | No packages expected - Facets expected'
 );
-select is(
-    search_packages(
-    '{
-        "facets": true,
-        "ts_query_web": "kw1",
-        "repositories": [
-            "repo2"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [],
-            "facets": [{
-                "title": "Organization",
-                "filter_key": "org",
-                "options": []
-            }, {
-                "title": "User",
-                "filter_key": "user",
-                "options": [{
-                    "id": "user1",
-                    "name": "user1",
-                    "total": 1
-                }]
-            }, {
-                "title": "Kind",
-                "filter_key": "kind",
-                "options": [{
-                    "id": 0,
-                    "name": "Helm charts",
-                    "total": 1
-                }]
-            }, {
-                "title": "Repository",
-                "filter_key": "repo",
-                "options": [{
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }]
-            }, {
-                "title": "License",
-                "filter_key": "license",
-                "options": [{
-                    "id": "Apache-2.0",
-                    "name": "Apache-2.0",
-                    "total": 1
-                }]
-            }, {
-                "title": "Operator capabilities",
-                "filter_key": "capabilities",
-                "options": [{
-                    "id": "basic install",
-                    "name": "basic install",
-                    "total": 1
-                }]
-            }]
-        },
-        "metadata": {
-            "total": 0
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "facets": true,
+            "ts_query_web": "kw1",
+            "repositories": [
+                "repo2"
+            ]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [],
+                "facets": [
+                    {
+                        "title": "Organization",
+                        "filter_key": "org",
+                        "options": []
+                    },
+                    {
+                        "title": "User",
+                        "filter_key": "user",
+                        "options": [{
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Kind",
+                        "filter_key": "kind",
+                        "options": [{
+                            "id": 0,
+                            "name": "Helm charts",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Repository",
+                        "filter_key": "repo",
+                        "options": [{
+                            "id": "repo1",
+                            "name": "Repo1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "License",
+                        "filter_key": "license",
+                        "options": [{
+                            "id": "Apache-2.0",
+                            "name": "Apache-2.0",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Operator capabilities",
+                        "filter_key": "capabilities",
+                        "options": [{
+                            "id": "basic install",
+                            "name": "basic install",
+                            "total": 1
+                        }]
+                    }
+                ]
+            }'::jsonb,
+            0
+        )
+    $$,
     'Facets: true TSQueryWeb: kw1 Repo: repo2 Deprecated: not provided | No packages expected - Facets expected'
 );
-select is(
-    search_packages('{
-        "facets": true,
-        "ts_query_web": "kw1",
-        "repositories": [
-            "repo3"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [],
-            "facets": [{
-                "title": "Organization",
-                "filter_key": "org",
-                "options": []
-            }, {
-                "title": "User",
-                "filter_key": "user",
-                "options": [{
-                    "id": "user1",
-                    "name": "user1",
-                    "total": 1
-                }]
-            }, {
-                "title": "Kind",
-                "filter_key": "kind",
-                "options": [{
-                    "id": 0,
-                    "name": "Helm charts",
-                    "total": 1
-                }]
-            }, {
-                "title": "Repository",
-                "filter_key": "repo",
-                "options": [{
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }]
-            }, {
-                "title": "License",
-                "filter_key": "license",
-                "options": [{
-                    "id": "Apache-2.0",
-                    "name": "Apache-2.0",
-                    "total": 1
-                }]
-            }, {
-                "title": "Operator capabilities",
-                "filter_key": "capabilities",
-                "options": [{
-                    "id": "basic install",
-                    "name": "basic install",
-                    "total": 1
-                }]
-            }]
-        },
-        "metadata": {
-            "total": 0
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "facets": true,
+            "ts_query_web": "kw1",
+            "repositories": [
+                "repo3"
+            ]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [],
+                "facets": [
+                    {
+                        "title": "Organization",
+                        "filter_key": "org",
+                        "options": []
+                    },
+                    {
+                        "title": "User",
+                        "filter_key": "user",
+                        "options": [{
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Kind",
+                        "filter_key": "kind",
+                        "options": [{
+                            "id": 0,
+                            "name": "Helm charts",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Repository",
+                        "filter_key": "repo",
+                        "options": [{
+                            "id": "repo1",
+                            "name": "Repo1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "License",
+                        "filter_key": "license",
+                        "options": [{
+                            "id": "Apache-2.0",
+                            "name": "Apache-2.0",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Operator capabilities",
+                        "filter_key": "capabilities",
+                        "options": [{
+                            "id": "basic install",
+                            "name": "basic install",
+                            "total": 1
+                        }]
+                    }
+                ]
+            }'::jsonb,
+            0
+        )
+    $$,
     'Facets: true TSQueryWeb: kw1 Repo: inexistent | No packages expected - Facets expected'
 );
-select is(
-    search_packages('{
-        "facets": false,
-        "ts_query_web": "kw1",
-        "repository_kinds": [1, 2]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": []
-        },
-        "metadata": {
-            "total": 0
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "facets": false,
+            "ts_query_web": "kw1",
+            "repository_kinds": [1, 2]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": []
+            }'::jsonb,
+            0
+        )
+    $$,
     'Facets: false TSQueryWeb: kw1 Kinds: 1, 2 | No packages or facets expected'
 );
 
 -- Tests with with orgs and users filters
-select is(
-    search_packages('{
-        "orgs": [
-            "org1"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000003",
-                "name": "package3",
-                "normalized_name": "package3",
-                "stars": 0,
-                "display_name": "Package 3",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000003",
-                "version": "1.0.0",
-                "security_report_summary": {
-                    "high": 2,
-                    "medium": 1
-                },
-                "all_containers_images_whitelisted": true,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000003",
-                    "kind": 1,
-                    "name": "repo3",
-                    "display_name": "Repo 3",
-                    "url": "https://repo3.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "orgs": [
+                "org1"
+            ]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000003",
+                        "name": "package3",
+                        "normalized_name": "package3",
+                        "stars": 0,
+                        "display_name": "Package 3",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                        "version": "1.0.0",
+                        "security_report_summary": {
+                            "high": 2,
+                            "medium": 1
+                        },
+                        "all_containers_images_whitelisted": true,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000003",
+                            "kind": 1,
+                            "name": "repo3",
+                            "display_name": "Repo 3",
+                            "url": "https://repo3.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'TSQueryWeb: - Org: org1 | Package 3 expected - Facets not expected'
 );
-select is(
-    search_packages('{
-        "users": [
-            "user1"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "users": [
+                "user1"
+            ]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'TSQueryWeb: - User: user1 | Package 1 expected - Facets not expected'
 );
-select is(
-    search_packages('{
-        "orgs": [
-            "org1"
-        ],
-        "users": [
-            "user1"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000003",
-                "name": "package3",
-                "normalized_name": "package3",
-                "stars": 0,
-                "display_name": "Package 3",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000003",
-                "version": "1.0.0",
-                "security_report_summary": {
-                    "high": 2,
-                    "medium": 1
-                },
-                "all_containers_images_whitelisted": true,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000003",
-                    "kind": 1,
-                    "name": "repo3",
-                    "display_name": "Repo 3",
-                    "url": "https://repo3.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 2
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "orgs": [
+                "org1"
+            ],
+            "users": [
+                "user1"
+            ]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000003",
+                        "name": "package3",
+                        "normalized_name": "package3",
+                        "stars": 0,
+                        "display_name": "Package 3",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                        "version": "1.0.0",
+                        "security_report_summary": {
+                            "high": 2,
+                            "medium": 1
+                        },
+                        "all_containers_images_whitelisted": true,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000003",
+                            "kind": 1,
+                            "name": "repo3",
+                            "display_name": "Repo 3",
+                            "url": "https://repo3.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
     'TSQueryWeb: - Org: org1 User: user1 | Packages 1 and 3 expected - Facets not expected'
 );
 
 -- Tests with with license filter
-select is(
-    search_packages('{
-        "licenses": [
-            "Apache-2.0"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "licenses": [
+                "Apache-2.0"
+            ]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'TSQueryWeb: - License: Apache-2.0 | Package 1 expected - Facets not expected'
 );
 
 -- Tests with with capabilities filter
-select is(
-    search_packages('{
-        "capabilities": [
-            "basic install"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
-            "total": 1
-        }
-    }'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "capabilities": [
+                "basic install"
+            ]
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
     'TSQueryWeb: - Capabilities: basic install | Package 1 expected - Facets not expected'
 );
 
 -- Tests with limit and offset
-select is(
-    search_packages('{
-        "limit": 2,
-        "offset": 0,
-        "ts_query_web": "kw1",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
-                    "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }, {
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
             "limit": 2,
             "offset": 0,
-            "total": 2
-        }
-    }'::jsonb,
+            "ts_query_web": "kw1",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "all_containers_images_whitelisted": false,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
     'Limit: 2 Offset: 0 TSQueryWeb: kw1 | Packages 1 and 2 expected'
 );
-select is(
-    search_packages('{
-        "limit": 1,
-        "offset": 0,
-        "ts_query_web": "kw1",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "name": "package2",
-                "normalized_name": "package2",
-                "stars": 11,
-                "official": true,
-                "display_name": "Package 2",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "signed": true,
-                "all_containers_images_whitelisted": false,
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000002",
-                    "kind": 0,
-                    "name": "repo2",
-                    "display_name": "Repo 2",
-                    "url": "https://repo2.com",
-                    "verified_publisher": false,
-                    "official": false,
-                    "scanner_disabled": false,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }]
-        },
-        "metadata": {
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
             "limit": 1,
             "offset": 0,
-            "total": 2
-        }
-    }'::jsonb,
+            "ts_query_web": "kw1",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "all_containers_images_whitelisted": false,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
     'Limit: 1 Offset: 0 TSQueryWeb: kw1 | Package 2 expected'
 );
-select is(
-    search_packages('{
-        "limit": 1,
-        "offset": 2,
-        "ts_query_web": "kw1",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": []
-        },
-        "metadata": {
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
             "limit": 1,
             "offset": 2,
-            "total": 2
-        }
-    }'::jsonb,
+            "ts_query_web": "kw1",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": []
+            }'::jsonb,
+            2
+        )
+    $$,
     'Limit: 1 Offset: 2 TSQueryWeb: kw1 | No packages expected'
 );
-select is(
-    search_packages('{
-        "limit": 1,
-        "offset": 1,
-        "ts_query_web": "kw1",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "stars": 10,
-                "official": false,
-                "display_name": "Package 1",
-                "description": "description",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "license": "Apache-2.0",
-                "ts": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "verified_publisher": true,
-                    "official": true,
-                    "scanner_disabled": false,
-                    "user_alias": "user1"
-                }
-            }]
-        },
-        "metadata": {
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
             "limit": 1,
             "offset": 1,
-            "total": 2
-        }
-    }'::jsonb,
+            "ts_query_web": "kw1",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "stars": 10,
+                        "official": false,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
     'Limit: 1 Offset: 1 TSQueryWeb: kw1 | Package 1 expected'
 );
-select is(
-    search_packages('{
-        "limit": 0,
-        "offset": 0,
-        "ts_query_web": "kw1",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": []
-        },
-        "metadata": {
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
             "limit": 0,
             "offset": 0,
-            "total": 2
-        }
-    }'::jsonb,
+            "ts_query_web": "kw1",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": []
+            }'::jsonb,
+            2
+        )
+    $$,
     'Limit: 0 Offset: 0 TSQueryWeb: kw1 | No packages expected'
 );
-select is(
-    search_packages('{
-        "limit": 1,
-        "offset": 2,
-        "facets": true,
-        "ts_query_web": "kw1",
-        "deprecated": true
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [],
-            "facets": [{
-                "title": "Organization",
-                "filter_key": "org",
-                "options": [{
-                    "id": "org1",
-                    "name": "Organization 1",
-                    "total": 1
-                }]
-            }, {
-                "title": "User",
-                "filter_key": "user",
-                "options": [{
-                    "id": "user1",
-                    "name": "user1",
-                    "total": 1
-                }]
-            }, {
-                "title": "Kind",
-                "filter_key": "kind",
-                "options": [{
-                    "id": 0,
-                    "name": "Helm charts",
-                    "total": 2
-                }]
-            }, {
-                "title": "Repository",
-                "filter_key": "repo",
-                "options": [{
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }, {
-                    "id": "repo2",
-                    "name": "Repo2",
-                    "total": 1
-                }]
-            }, {
-                "title": "License",
-                "filter_key": "license",
-                "options": [{
-                    "id": "Apache-2.0",
-                    "name": "Apache-2.0",
-                    "total": 1
-                }]
-            }, {
-                "title": "Operator capabilities",
-                "filter_key": "capabilities",
-                "options": [{
-                    "id": "basic install",
-                    "name": "basic install",
-                    "total": 1
-                }]
-            }]
-        },
-        "metadata": {
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
             "limit": 1,
             "offset": 2,
-            "total": 2
-        }
-    }'::jsonb,
+            "facets": true,
+            "ts_query_web": "kw1",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [],
+                "facets": [
+                    {
+                        "title": "Organization",
+                        "filter_key": "org",
+                        "options": [{
+                            "id": "org1",
+                            "name": "Organization 1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "User",
+                        "filter_key": "user",
+                        "options": [{
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Kind",
+                        "filter_key": "kind",
+                        "options": [{
+                            "id": 0,
+                            "name": "Helm charts",
+                            "total": 2
+                        }]
+                    },
+                    {
+                        "title": "Repository",
+                        "filter_key": "repo",
+                        "options": [{
+                            "id": "repo1",
+                            "name": "Repo1",
+                            "total": 1
+                        }, {
+                            "id": "repo2",
+                            "name": "Repo2",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "License",
+                        "filter_key": "license",
+                        "options": [{
+                            "id": "Apache-2.0",
+                            "name": "Apache-2.0",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Operator capabilities",
+                        "filter_key": "capabilities",
+                        "options": [{
+                            "id": "basic install",
+                            "name": "basic install",
+                            "total": 1
+                        }]
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
     'Limit: 1 Offset: 2 TSQueryWeb: kw1 | No packages expected - Facets expected'
 );
 

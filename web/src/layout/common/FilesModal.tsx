@@ -264,11 +264,11 @@ const FilesModal = (props: Props) => {
                   </div>
                 ) : (
                   <div className="pr-2">
-                    {visibleFiles.map((file: any) => {
+                    {visibleFiles.map((file: any, index: number) => {
                       const isActive = selectedItem === file;
                       return (
                         <button
-                          key={`file_${file.name}`}
+                          key={`file_${file.name}_${index}`}
                           data-testid="fileBtn"
                           className={classnames('btn btn-light btn-sm mb-2 text-left w-100', styles.btn, {
                             [`activeTemplate ${styles.active}`]: isActive,

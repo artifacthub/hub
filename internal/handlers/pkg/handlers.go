@@ -347,13 +347,14 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	dataJSON, err := h.pkgManager.SearchJSON(r.Context(), input)
+	result, err := h.pkgManager.SearchJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
 // SearchMonocular is an http handler used to search for packages in the hub

@@ -1011,142 +1011,124 @@ paths:
       responses:
         "200":
           description: ""
+          headers:
+            Pagination-Total-Count:
+              schema:
+                type: string
+              description: Total number of packages for this search
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  data:
-                    type: object
-                    properties:
-                      packages:
-                        type: array
-                        nullable: false
-                        items:
-                          $ref: "#/components/schemas/PackageSummary"
-                      facets:
-                        type: array
-                        nullable: false
-                        items:
-                          $ref: "#/components/schemas/Facets"
-                  metadata:
-                    type: object
+                  packages:
+                    type: array
                     nullable: false
-                    required:
-                      - total
-                    properties:
-                      limit:
-                        type: integer
-                        nullable: false
-                      offset:
-                        type: integer
-                        nullable: false
-                      total:
-                        type: integer
-                        nullable: false
+                    items:
+                      $ref: "#/components/schemas/PackageSummary"
+                  facets:
+                    type: array
+                    nullable: false
+                    items:
+                      $ref: "#/components/schemas/Facets"
               examples:
                 s1:
                   value:
-                    data:
-                      packages:
-                        - package_id: a9c77b9a-2cd1-4a8f-b9e8-6b8f94e13407
+                    packages:
+                      - package_id: a9c77b9a-2cd1-4a8f-b9e8-6b8f94e13407
+                        name: artifact-hub
+                        normalized_name: artifact-hub
+                        logo_image_id: 0f5488e2-da57-486b-a20f-bfe746ed3e23
+                        stars: 2
+                        description: >-
+                          Artifact Hub is a web-based application that enables
+                          finding, installing, and publishing Kubernetes
+                          packages.
+                        version: 0.1.0
+                        app_version: 0.1.0
+                        deprecated: false
+                        ts: 1617098261617098268
+                        repository:
+                          url: "http://url.com"
+                          kind: 0
                           name: artifact-hub
-                          normalized_name: artifact-hub
-                          logo_image_id: 0f5488e2-da57-486b-a20f-bfe746ed3e23
-                          stars: 2
-                          description: >-
-                            Artifact Hub is a web-based application that enables
-                            finding, installing, and publishing Kubernetes
-                            packages.
-                          version: 0.1.0
-                          app_version: 0.1.0
-                          deprecated: false
-                          ts: 1617098261617098268
-                          repository:
-                            url: "http://url.com"
-                            kind: 0
-                            name: artifact-hub
-                            display_name: Artifact Hub
-                            repository_id: a032a436-3568-4970-804a-2780f5e9d231
-                            organization_name: artifacthub
-                            organization_display_name: Artifact Hub
-                            verified_publisher: true
-                            official: true
-                            scanner_disabled: false
-                        - package_id: 3af7b6a1-adbd-41f1-ad96-e1eb3350b019
-                          name: sentry-kubernetes
-                          normalized_name: sentry-kubernetes
-                          logo_image_id: 55f2ed75-015d-4edd-9990-11fb2ffcae9e
-                          stars: 0
-                          description: A Helm chart for sentry-kubernetes
-                          version: 0.2.3
-                          app_version: latest
-                          deprecated: false
-                          ts: 1617098268
-                          repository:
-                            url: "http://url.com"
-                            kind: 0
-                            name: incubator
-                            display_name: Incubator
-                            repository_id: dba459d0-6beb-451a-b15a-52d67cc93fa0
-                            organization_name: helm
-                            organization_display_name: Helm
-                            verified_publisher: false
-                            official: false
-                            scanner_disabled: false
-                        - package_id: 0d38123f-fb60-41f0-bd00-76fb331bf7ed
-                          name: etcd-operator
-                          normalized_name: etcd-operator
-                          logo_image_id: 5gt2ed75-015d-40dd-9990-11fb2tgcae9e
-                          stars: 0
-                          description: CoreOS etcd-operator Helm chart for Kubernetes
-                          version: 0.10.3
-                          app_version: 0.9.4
-                          deprecated: false
-                          ts: 1617098268
-                          repository:
-                            url: "http://url.com"
-                            kind: 0
-                            name: stable
-                            display_name: Stable
-                            repository_id: 486f6d4c-9f66-11eb-a8b3-0242ac130003
-                            organization_name: helm
-                            organization_display_name: Helm
-                            verified_publisher: false
-                            official: false
-                            scanner_disabled: false
-                      facets:
-                        - title: Organization
-                          filter_key: org
-                          options:
-                            - id: helm
-                              name: Helm
-                              total: 53
-                            - id: artifacthub
-                              name: Artifact Hub
-                              total: 1
-                        - title: kind
-                          filter_key: kind
-                          options:
-                            - id: "0"
-                              name: Helm charts
-                              total: 54
-                        - title: Repository
-                          filter_key: repo
-                          options:
-                            - id: stable
-                              name: Stable
-                              total: 16
-                            - id: incubator
-                              name: Incubator
-                              total: 36
-                            - id: artifact-hub
-                              name: Artifact Hub
-                              total: 1
-                    metadata:
-                      limit: 15
-                      offset: 3
-                      total: 54
+                          display_name: Artifact Hub
+                          repository_id: a032a436-3568-4970-804a-2780f5e9d231
+                          organization_name: artifacthub
+                          organization_display_name: Artifact Hub
+                          verified_publisher: true
+                          official: true
+                          scanner_disabled: false
+                      - package_id: 3af7b6a1-adbd-41f1-ad96-e1eb3350b019
+                        name: sentry-kubernetes
+                        normalized_name: sentry-kubernetes
+                        logo_image_id: 55f2ed75-015d-4edd-9990-11fb2ffcae9e
+                        stars: 0
+                        description: A Helm chart for sentry-kubernetes
+                        version: 0.2.3
+                        app_version: latest
+                        deprecated: false
+                        ts: 1617098268
+                        repository:
+                          url: "http://url.com"
+                          kind: 0
+                          name: incubator
+                          display_name: Incubator
+                          repository_id: dba459d0-6beb-451a-b15a-52d67cc93fa0
+                          organization_name: helm
+                          organization_display_name: Helm
+                          verified_publisher: false
+                          official: false
+                          scanner_disabled: false
+                      - package_id: 0d38123f-fb60-41f0-bd00-76fb331bf7ed
+                        name: etcd-operator
+                        normalized_name: etcd-operator
+                        logo_image_id: 5gt2ed75-015d-40dd-9990-11fb2tgcae9e
+                        stars: 0
+                        description: CoreOS etcd-operator Helm chart for Kubernetes
+                        version: 0.10.3
+                        app_version: 0.9.4
+                        deprecated: false
+                        ts: 1617098268
+                        repository:
+                          url: "http://url.com"
+                          kind: 0
+                          name: stable
+                          display_name: Stable
+                          repository_id: 486f6d4c-9f66-11eb-a8b3-0242ac130003
+                          organization_name: helm
+                          organization_display_name: Helm
+                          verified_publisher: false
+                          official: false
+                          scanner_disabled: false
+                    facets:
+                      - title: Organization
+                        filter_key: org
+                        options:
+                          - id: helm
+                            name: Helm
+                            total: 53
+                          - id: artifacthub
+                            name: Artifact Hub
+                            total: 1
+                      - title: kind
+                        filter_key: kind
+                        options:
+                          - id: "0"
+                            name: Helm charts
+                            total: 54
+                      - title: Repository
+                        filter_key: repo
+                        options:
+                          - id: stable
+                            name: Stable
+                            total: 16
+                          - id: incubator
+                            name: Incubator
+                            total: 36
+                          - id: artifact-hub
+                            name: Artifact Hub
+                            total: 1
         "400":
           $ref: "#/components/responses/BadRequest"
         "429":

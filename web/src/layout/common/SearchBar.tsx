@@ -171,12 +171,13 @@ const SearchBar = (props: Props) => {
         },
         false
       );
-      if (searchResults.metadata.total > 0) {
+      const total = parseInt(searchResults.paginationTotalCount);
+      if (total > 0) {
         const isInputFocused = inputEl.current === document.activeElement;
         // We have to be sure that input has focus to display results
         if (isInputFocused) {
-          setPackages(searchResults.data.packages);
-          setTotalPackagesNumber(searchResults.metadata.total);
+          setPackages(searchResults.packages);
+          setTotalPackagesNumber(total);
           setVisibleDropdown(true);
         } else {
           cleanSearch();
@@ -272,7 +273,6 @@ const SearchBar = (props: Props) => {
             <span aria-hidden="true">&times;</span>
           </button>
 
-          {/* <SearchTipsModal size={props.size} /> */}
           <div
             className={classnames('position-absolute text-dark', styles.tipIcon, {
               [styles.bigTipIcon]: props.size === 'big',

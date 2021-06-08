@@ -15,6 +15,10 @@ const (
 	// DefaultAPICacheMaxAge represents the default cache duration used by some
 	// API endpoints.
 	DefaultAPICacheMaxAge = 5 * time.Minute
+
+	// PaginationTotalCount represents a header used to indicate the number of
+	// entries available for pagination purposes.
+	PaginationTotalCount = "Pagination-Total-Count"
 )
 
 // BuildCacheControlHeader builds an http cache header using the max age

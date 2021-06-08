@@ -51,22 +51,22 @@ const SearchView = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const history = useHistory();
   const [searchResults, setSearchResults] = useState<SearchResults>({
-    data: {
-      facets: null,
-      packages: null,
-    },
-    metadata: {
-      offset: 0,
-      total: 0,
-      limit: ctx.prefs.search.limit,
-    },
+    facets: null,
+    packages: null,
+    paginationTotalCount: '0',
   });
   const { isSearching, setIsSearching, scrollPosition, setScrollPosition } = props;
   const [apiError, setApiError] = useState<string | null>(null);
 
+  const calculateOffset = (): number => {
+    return props.pageNumber && ctx.prefs.search.limit ? (props.pageNumber - 1) * ctx.prefs.search.limit : 0;
+  };
+
+  const [offset, setOffset] = useState<number>(calculateOffset());
+
   const isEmptyFacets = (): boolean => {
-    if (searchResults.data.facets) {
-      return every(searchResults.data.facets, (f: Facets) => {
+    if (searchResults.facets) {
+      return every(searchResults.facets, (f: Facets) => {
         return f.options.length === 0;
       });
     } else {
@@ -227,7 +227,7 @@ const SearchView = (props: Props) => {
         tsQueryWeb: props.tsQueryWeb,
         tsQuery: props.tsQuery,
         filters: props.filters,
-        offset: (props.pageNumber - 1) * ctx.prefs.search.limit,
+        offset: calculateOffset(),
         limit: ctx.prefs.search.limit,
         deprecated: props.deprecated,
         operators: props.operators,
@@ -237,35 +237,20 @@ const SearchView = (props: Props) => {
 
       try {
         let newSearchResults = await API.searchPackages(query);
-        if (newSearchResults.metadata.total === 0 && searchResults.data.facets && !isEmpty(searchResults.data.facets)) {
+        if (newSearchResults.paginationTotalCount === '0' && searchResults.facets && !isEmpty(searchResults.facets)) {
           newSearchResults = {
             ...newSearchResults,
-            data: {
-              ...newSearchResults.data,
-              facets: searchResults.data.facets,
-            },
+            facets: searchResults.facets,
           };
         }
-        setSearchResults({
-          ...newSearchResults,
-          metadata: {
-            offset: newSearchResults.metadata.offset || 0,
-            total: newSearchResults.metadata.total,
-            limit: ctx.prefs.search.limit,
-          },
-        });
+        setSearchResults(newSearchResults);
+        setOffset(query.offset);
         setApiError(null);
       } catch {
         setSearchResults({
-          data: {
-            facets: [],
-            packages: [],
-          },
-          metadata: {
-            total: 0,
-            offset: 0,
-            limit: 0,
-          },
+          facets: [],
+          packages: [],
+          paginationTotalCount: '0',
         });
         setApiError('An error occurred searching packages, please try again later.');
       } finally {
@@ -314,7 +299,7 @@ const SearchView = (props: Props) => {
     <>
       <SubNavbar>
         <div className="d-flex align-items-center text-truncate">
-          {!isNull(searchResults.data.packages) && (
+          {!isNull(searchResults.packages) && (
             <>
               {/* Mobile filters */}
               {!isEmptyFacets() && (
@@ -334,7 +319,7 @@ const SearchView = (props: Props) => {
                           <span className="ml-2">Loading...</span>
                         </>
                       ) : (
-                        <>See {searchResults.metadata.total} results</>
+                        <>See {searchResults.paginationTotalCount} results</>
                       )}
                     </>
                   }
@@ -357,7 +342,7 @@ const SearchView = (props: Props) => {
                 >
                   <div role="menu">
                     <Filters
-                      facets={searchResults.data.facets}
+                      facets={searchResults.facets}
                       activeFilters={props.filters}
                       activeTsQuery={props.tsQuery}
                       onChange={onFiltersChange}
@@ -381,16 +366,16 @@ const SearchView = (props: Props) => {
 
               {!isSearching && (
                 <div data-testid="resultsText" className="text-truncate" role="status">
-                  {searchResults.metadata.total > 0 && (
+                  {parseInt(searchResults.paginationTotalCount) > 0 && (
                     <span className="pr-1">
-                      {searchResults.metadata.offset + 1} -{' '}
-                      {searchResults.metadata.total < ctx.prefs.search.limit * props.pageNumber
-                        ? searchResults.metadata.total
+                      {offset + 1} -{' '}
+                      {parseInt(searchResults.paginationTotalCount) < ctx.prefs.search.limit * props.pageNumber
+                        ? searchResults.paginationTotalCount
                         : ctx.prefs.search.limit * props.pageNumber}{' '}
                       <span className="ml-1">of</span>{' '}
                     </span>
                   )}
-                  {searchResults.metadata.total}
+                  {searchResults.paginationTotalCount}
                   <span className="pl-1"> results </span>
                   {props.tsQueryWeb && props.tsQueryWeb !== '' && (
                     <span className="d-none d-sm-inline pl-1">
@@ -409,7 +394,7 @@ const SearchView = (props: Props) => {
             <PaginationLimit
               limit={ctx.prefs.search.limit}
               updateLimit={onPaginationLimitChange}
-              disabled={isNull(searchResults.data.packages) || searchResults.data.packages.length === 0}
+              disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
             />
             <MoreActionsButton />
           </div>
@@ -417,7 +402,7 @@ const SearchView = (props: Props) => {
       </SubNavbar>
 
       <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
-        {(isSearching || isNull(searchResults.data.packages)) && (
+        {(isSearching || isNull(searchResults.packages)) && (
           <Loading spinnerClassName={`position-fixed ${styles.spinner}`} />
         )}
 
@@ -429,7 +414,7 @@ const SearchView = (props: Props) => {
             >
               <div className="mr-5" role="menu">
                 <Filters
-                  facets={searchResults.data.facets}
+                  facets={searchResults.facets}
                   activeFilters={props.filters}
                   activeTsQuery={props.tsQuery}
                   onChange={onFiltersChange}
@@ -453,12 +438,12 @@ const SearchView = (props: Props) => {
 
           <div
             className={classnames('flex-grow-1 mt-3 px-xs-0 px-sm-3 px-lg-0', styles.list, {
-              [styles.emptyList]: isNull(searchResults.data.packages) || searchResults.data.packages.length === 0,
+              [styles.emptyList]: isNull(searchResults.packages) || searchResults.packages.length === 0,
             })}
           >
-            {!isNull(searchResults.data.packages) && (
+            {!isNull(searchResults.packages) && (
               <>
-                {searchResults.data.packages.length === 0 ? (
+                {searchResults.packages.length === 0 ? (
                   <NoData issuesLinkVisible={!isNull(apiError)}>
                     {isNull(apiError) ? (
                       <>
@@ -517,7 +502,7 @@ const SearchView = (props: Props) => {
                   <>
                     <div className="mb-2 noFocus" id="content" tabIndex={-1} aria-label="Packages list">
                       <div className="row" role="list">
-                        {searchResults.data.packages.map((item: Package) => (
+                        {searchResults.packages.map((item: Package) => (
                           <PackageCard
                             key={item.packageId}
                             package={item}
@@ -539,8 +524,8 @@ const SearchView = (props: Props) => {
 
                     <Pagination
                       limit={ctx.prefs.search.limit}
-                      offset={searchResults.metadata.offset}
-                      total={searchResults.metadata.total}
+                      offset={offset}
+                      total={parseInt(searchResults.paginationTotalCount)}
                       active={props.pageNumber}
                       onChange={onPageNumberChange}
                     />
@@ -552,7 +537,7 @@ const SearchView = (props: Props) => {
         </main>
       </div>
 
-      <Footer isHidden={isSearching || isNull(searchResults.data.packages)} />
+      <Footer isHidden={isSearching || isNull(searchResults.packages)} />
     </>
   );
 };

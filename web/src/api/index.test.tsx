@@ -193,6 +193,7 @@ describe('API', () => {
         fetchMock.mockResponse(JSON.stringify(search), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '7',
           },
           status: 200,
         });

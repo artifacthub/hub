@@ -1,38 +1,33 @@
 {
-  "data": {
-    "packages": [],
-    "facets": [
-      {
-        "title": "Kind",
-        "filterKey": "kind",
-        "options": [
-          {
-            "id": 0,
-            "name": "Chart",
-            "total": 7
-          }
-        ]
-      },
-      {
-        "title": "Repository",
-        "filterKey": "repo",
-        "options": [
-          {
-            "id": "stable",
-            "name": "Stable",
-            "total": 4
-          },
-          {
-            "id": "incubator",
-            "name": "Incubator",
-            "total": 2
-          }
-        ]
-      }
-    ]
-  },
-  "metadata": {
-    "limit": 60,
-    "total": 7
-  }
+  "packages": [],
+  "facets": [
+    {
+      "title": "Kind",
+      "filterKey": "kind",
+      "options": [
+        {
+          "id": 0,
+          "name": "Chart",
+          "total": 7
+        }
+      ]
+    },
+    {
+      "title": "Repository",
+      "filterKey": "repo",
+      "options": [
+        {
+          "id": "stable",
+          "name": "Stable",
+          "total": 4
+        },
+        {
+          "id": "incubator",
+          "name": "Incubator",
+          "total": 2
+        }
+      ]
+    }
+  ],
+  "paginationTotalCount": "7"
 }

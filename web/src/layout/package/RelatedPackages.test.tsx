@@ -78,7 +78,7 @@ describe('RelatedPackages', () => {
       );
       const packages = await waitFor(() => getAllByTestId('relatedPackageLink'));
 
-      expect(mockPackages.data.packages).toHaveLength(7);
+      expect(mockPackages.packages).toHaveLength(7);
       await waitFor(() => {
         expect(packages).toHaveLength(6);
       });
@@ -95,7 +95,7 @@ describe('RelatedPackages', () => {
       );
       const packages = await waitFor(() => getAllByTestId('relatedPackageLink'));
 
-      expect(mockPackages.data.packages).toHaveLength(25);
+      expect(mockPackages.packages).toHaveLength(25);
       await waitFor(() => {
         expect(packages).toHaveLength(8);
       });
@@ -112,7 +112,7 @@ describe('RelatedPackages', () => {
           </Router>
         );
 
-        expect(mockPackages.data.packages).toHaveLength(0);
+        expect(mockPackages.packages).toHaveLength(0);
         await waitFor(() => {
           expect(container).toBeEmptyDOMElement();
         });
@@ -128,7 +128,7 @@ describe('RelatedPackages', () => {
           </Router>
         );
 
-        expect(mockPackages.data.packages).toHaveLength(1);
+        expect(mockPackages.packages).toHaveLength(1);
         await waitFor(() => {
           expect(container).toBeEmptyDOMElement();
         });

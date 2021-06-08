@@ -174,6 +174,8 @@ func (m *RowMock) Scan(dest ...interface{}) error {
 				*v = e.(*string)
 			case *bool:
 				*v = e.(bool)
+			case *int:
+				*v = e.(int)
 			case *int64:
 				*v = e.(int64)
 			}
