@@ -83,7 +83,7 @@ exports[`Search index creates snapshot 1`] = `
             </button>
             <div
               class="dropdown-menu dropdown-menu-right p-0 dropdown"
-              data-testid="subsBtnDropdown"
+              data-testid="moreActionsDropdown"
             >
               <div
                 class="arrow arrow"
@@ -91,6 +91,7 @@ exports[`Search index creates snapshot 1`] = `
               <button
                 aria-label="Open embed results modal"
                 class="dropdown-item btn btn-sm rounded-0 text-dark"
+                data-testid="embedResultsWidget"
               >
                 <div
                   class="d-flex flex-row align-items-center"

@@ -201,7 +201,7 @@ const FLOW_CONTROL = [
   'tpl',
 ];
 
-export const isBuiltInObject = (code: string): boolean => {
+const isBuiltInObject = (code: string): boolean => {
   for (let i = 0; i < BUILT_IN.length; i++) {
     if (code.startsWith(BUILT_IN[i]) && code !== '.Capabilities.APIVersions.Has') {
       return true;

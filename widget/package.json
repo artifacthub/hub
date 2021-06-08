@@ -18,16 +18,19 @@
     "@craco/craco": "^6.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.2",
-    "@testing-library/user-event": "^12.1.4",
+    "@testing-library/react-hooks": "^7.0.0",
+    "@testing-library/user-event": "^13.1.9",
     "@types/jest": "^26.0.13",
     "@types/node": "^14.6.4",
     "babel-plugin-styled-components": "^1.12.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-simple-import-sort": "^5.0.2",
+    "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.1.1",
     "react-scripts": "^4.0.3",
     "rewire": "^5.0.0",
+    "ts-jest": "^27.0.3",
     "typescript": "^3.9.7",
     "webpack-cli": "^4.6.0"
   },
@@ -36,6 +39,7 @@
     "build": "craco build",
     "build:cra": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --fix",
@@ -45,8 +49,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {

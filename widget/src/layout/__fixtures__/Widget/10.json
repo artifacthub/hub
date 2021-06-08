@@ -1,0 +1,24 @@
+{
+  "packageId": "46edd42a-6dcf-448f-9953-7949950d5935",
+  "name": "2to3",
+  "normalizedName": "2to3",
+  "stars": 3,
+  "description": "migrate and cleanup Helm v2 configuration and releases in-place to Helm v3",
+  "version": "0.8.2",
+  "license": "Apache-2.0",
+  "deprecated": false,
+  "signed": false,
+  "ts": 1615197616,
+  "repository": {
+    "url": "https://github.com/helm/helm-2to3",
+    "kind": 6,
+    "name": "helm-2to3",
+    "official": false,
+    "displayName": "Helm 2to3",
+    "repositoryId": "af24f94d-0a96-461c-a903-0fedcc096d4d",
+    "scannerDisabled": false,
+    "organization_name": "helm",
+    "verifiedPublisher": false,
+    "organizationDisplayName": "Helm"
+  }
+}

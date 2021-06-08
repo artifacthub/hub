@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VersionInRow creates snapshot 1`] = `
+<DocumentFragment>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          class="versionCell"
+        >
+          <div
+            class="d-flex flex-row align-items-center px-1"
+          >
+            <button
+              aria-label="Open version 1.0.1"
+              class="btn btn-link text-primary pl-0 pt-0 pb-0 border-0 text-truncate d-block text-left"
+              data-testid="version"
+            >
+              1.0.1
+            </button>
+          </div>
+        </td>
+        <td
+          class="text-nowrap"
+        >
+          <span
+            class="text-muted px-1"
+          >
+            1 Jan, 1970
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;

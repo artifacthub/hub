@@ -1,0 +1,783 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WidgetsGroupModal creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+      >
+        <div
+          class="modal-content content"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center header undefined"
+          >
+            <div
+              class="h3 m-2 flex-grow-1 title"
+            >
+              Widgets group
+            </div>
+            <button
+              aria-label="Close modal"
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100 position-relative"
+            >
+              <label
+                class="font-weight-bold label"
+                for="theme"
+              >
+                Theme
+              </label>
+              <div
+                class="d-flex flex-row mb-3"
+              >
+                <div
+                  class="custom-control custom-radio mr-4"
+                >
+                  <input
+                    checked=""
+                    class="custom-control-input"
+                    data-testid="radio-theme-light"
+                    id="light"
+                    name="theme"
+                    readonly=""
+                    required=""
+                    type="radio"
+                    value="light"
+                  />
+                  <label
+                    class="text-capitalize custom-control-label"
+                    for="light"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="5"
+                        />
+                        <line
+                          x1="12"
+                          x2="12"
+                          y1="1"
+                          y2="3"
+                        />
+                        <line
+                          x1="12"
+                          x2="12"
+                          y1="21"
+                          y2="23"
+                        />
+                        <line
+                          x1="4.22"
+                          x2="5.64"
+                          y1="4.22"
+                          y2="5.64"
+                        />
+                        <line
+                          x1="18.36"
+                          x2="19.78"
+                          y1="18.36"
+                          y2="19.78"
+                        />
+                        <line
+                          x1="1"
+                          x2="3"
+                          y1="12"
+                          y2="12"
+                        />
+                        <line
+                          x1="21"
+                          x2="23"
+                          y1="12"
+                          y2="12"
+                        />
+                        <line
+                          x1="4.22"
+                          x2="5.64"
+                          y1="19.78"
+                          y2="18.36"
+                        />
+                        <line
+                          x1="18.36"
+                          x2="19.78"
+                          y1="5.64"
+                          y2="4.22"
+                        />
+                      </svg>
+                      <span
+                        class="ml-1"
+                      >
+                        light
+                      </span>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  class="custom-control custom-radio mr-4"
+                >
+                  <input
+                    class="custom-control-input"
+                    data-testid="radio-theme-dark"
+                    id="dark"
+                    name="theme"
+                    readonly=""
+                    required=""
+                    type="radio"
+                    value="dark"
+                  />
+                  <label
+                    class="text-capitalize custom-control-label"
+                    for="dark"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                        />
+                      </svg>
+                      <span
+                        class="ml-1"
+                      >
+                        dark
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="custom-control custom-switch pl-0"
+                >
+                  <input
+                    class="custom-control-input"
+                    data-testid="checkbox-header"
+                    id="header"
+                    type="checkbox"
+                    value="true"
+                  />
+                  <label
+                    class="custom-control-label font-weight-bold label customControlRightLabel"
+                    for="header"
+                  >
+                    Header
+                  </label>
+                </div>
+                <small
+                  class="form-text text-muted mt-2"
+                >
+                  Displays Artifact Hub header at the top of the widget.
+                </small>
+              </div>
+              <div
+                class="d-flex flex-row"
+              >
+                <div>
+                  <label
+                    class="font-weight-bold label"
+                    for="groupWrapperWidthOpt"
+                  >
+                    Container width
+                  </label>
+                  <div
+                    class="d-flex flex-row"
+                  >
+                    <div
+                      class="custom-control custom-radio mr-4"
+                    >
+                      <input
+                        checked=""
+                        class="custom-control-input"
+                        data-testid="radio-wrapper-width-responsive"
+                        id="responsive"
+                        name="groupWrapperWidthOpt"
+                        readonly=""
+                        required=""
+                        type="radio"
+                        value="responsive"
+                      />
+                      <label
+                        class="text-capitalize custom-control-label"
+                        for="responsive"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 16 16"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              clip-rule="evenodd"
+                              d="M1.464 10.536a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3.5a.5.5 0 01-.5-.5v-3.5a.5.5 0 01.5-.5z"
+                              fill-rule="evenodd"
+                            />
+                            <path
+                              clip-rule="evenodd"
+                              d="M5.964 10a.5.5 0 010 .707l-4.146 4.147a.5.5 0 01-.707-.708L5.257 10a.5.5 0 01.707 0zm8.854-8.854a.5.5 0 010 .708L10.672 6a.5.5 0 01-.708-.707l4.147-4.147a.5.5 0 01.707 0z"
+                              fill-rule="evenodd"
+                            />
+                            <path
+                              clip-rule="evenodd"
+                              d="M10.5 1.5A.5.5 0 0111 1h3.5a.5.5 0 01.5.5V5a.5.5 0 01-1 0V2h-3a.5.5 0 01-.5-.5zm4 9a.5.5 0 00-.5.5v3h-3a.5.5 0 000 1h3.5a.5.5 0 00.5-.5V11a.5.5 0 00-.5-.5z"
+                              fill-rule="evenodd"
+                            />
+                            <path
+                              clip-rule="evenodd"
+                              d="M10 9.964a.5.5 0 000 .708l4.146 4.146a.5.5 0 00.708-.707l-4.147-4.147a.5.5 0 00-.707 0zM1.182 1.146a.5.5 0 000 .708L5.328 6a.5.5 0 00.708-.707L1.889 1.146a.5.5 0 00-.707 0z"
+                              fill-rule="evenodd"
+                            />
+                            <path
+                              clip-rule="evenodd"
+                              d="M5.5 1.5A.5.5 0 005 1H1.5a.5.5 0 00-.5.5V5a.5.5 0 001 0V2h3a.5.5 0 00.5-.5z"
+                              fill-rule="evenodd"
+                            />
+                          </svg>
+                          <span
+                            class="ml-1"
+                          >
+                            responsive
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                    <div
+                      class="custom-control custom-radio mr-4"
+                    >
+                      <input
+                        class="custom-control-input"
+                        data-testid="radio-wrapper-width-fixed"
+                        id="fixed"
+                        name="groupWrapperWidthOpt"
+                        readonly=""
+                        required=""
+                        type="radio"
+                        value="fixed"
+                      />
+                      <label
+                        class="text-capitalize custom-control-label"
+                        for="fixed"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 1024 1024"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M180 176h-60c-4.4 0-8 3.6-8 8v656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V184c0-4.4-3.6-8-8-8zm724 0h-60c-4.4 0-8 3.6-8 8v656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V184c0-4.4-3.6-8-8-8zM785.3 504.3L657.7 403.6a7.23 7.23 0 0 0-11.7 5.7V476H378v-62.8c0-6-7-9.4-11.7-5.7L238.7 508.3a7.14 7.14 0 0 0 0 11.3l127.5 100.8c4.7 3.7 11.7.4 11.7-5.7V548h268v62.8c0 6 7 9.4 11.7 5.7l127.5-100.8c3.8-2.9 3.8-8.5.2-11.4z"
+                            />
+                          </svg>
+                          <span
+                            class="ml-1"
+                          >
+                            fixed
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="position-relative inputWrapper"
+                />
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="custom-control custom-switch pl-0"
+                >
+                  <input
+                    checked=""
+                    class="custom-control-input"
+                    data-testid="checkbox-loading"
+                    id="loading"
+                    type="checkbox"
+                    value="true"
+                  />
+                  <label
+                    class="custom-control-label font-weight-bold label customControlRightLabel"
+                    for="loading"
+                  >
+                    Loading spinner
+                  </label>
+                </div>
+                <small
+                  class="form-text text-muted mt-2"
+                >
+                  Displays loading spinner while waiting for search results.
+                </small>
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <label
+                    class="font-weight-bold mb-0 label"
+                    for="color"
+                  >
+                    Color
+                  </label>
+                  <div
+                    class="btn btn-sm btn-light colorInputWrapper"
+                  >
+                    <div
+                      class="colorInput"
+                      style="background-color: rgb(65, 117, 152);"
+                    />
+                  </div>
+                </div>
+                <small
+                  class="form-text text-muted mt-3 mb-2"
+                >
+                  Color used for widgets border, header and loading spinner.
+                </small>
+                <div
+                  class="pb-2 colorPickerWrapper"
+                >
+                  sketch
+                </div>
+              </div>
+              <div
+                class="mt-3 mb-2"
+              >
+                <label
+                  class="font-weight-bold label"
+                >
+                  Code
+                </label>
+                <div
+                  class="flex-grow-1 mr-3 user-select-none blockWrapper"
+                  data-testid="block-content"
+                >
+                  <pre
+                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+                  >
+                    <code
+                      class="language-html"
+                      style="white-space: pre;"
+                    >
+                      <span>
+                        &lt;div 
+                      </span>
+                      <span
+                        style="color: rgb(149, 65, 33);"
+                      >
+                        class
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        artifacthub
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        widget
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        group
+                      </span>
+                      <span>
+                        " 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        url
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        http:
+                      </span>
+                      <span>
+                        //
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        localhost
+                      </span>
+                      <span>
+                        /" 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        theme
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        light
+                      </span>
+                      <span>
+                        " 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        header
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        false
+                      </span>
+                      <span>
+                        " 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        color
+                      </span>
+                      <span>
+                        ="#
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        417598
+                      </span>
+                      <span>
+                        " 
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        responsive
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        true
+                      </span>
+                      <span>
+                        "  
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        data
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        loading
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        true
+                      </span>
+                      <span>
+                        "&gt;&lt;/
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        div
+                      </span>
+                      <span>
+                        &gt;&lt;
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        script
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        async
+                      </span>
+                      <span>
+                         
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        src
+                      </span>
+                      <span>
+                        ="
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        http:
+                      </span>
+                      <span>
+                        //
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        localhost
+                      </span>
+                      <span>
+                        /
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        artifacthub
+                      </span>
+                      <span>
+                        -
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        widget
+                      </span>
+                      <span>
+                        .
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        js
+                      </span>
+                      <span>
+                        "&gt;&lt;/
+                      </span>
+                      <span
+                        style="color: rgb(153, 0, 115);"
+                      >
+                        script
+                      </span>
+                      <span>
+                        &gt;
+                      </span>
+                    </code>
+                  </pre>
+                </div>
+                <div
+                  class="position-relative undefined"
+                >
+                  <button
+                    aria-label="Copy code to clipboard"
+                    class="btn btn-sm btn-outline-secondary copyBtn"
+                    data-testid="ctcBtn"
+                    type="button"
+                  >
+                    <div
+                      aria-hidden="true"
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <div
+                        class="mr-2"
+                      >
+                        Copy code to clipboard
+                      </div>
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          height="13"
+                          rx="2"
+                          ry="2"
+                          width="13"
+                          x="9"
+                          y="9"
+                        />
+                        <path
+                          d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              aria-label="Close modal"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
+              data-testid="closeModalFooterBtn"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  class="mr-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <div>
+                  Close
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -7,7 +7,7 @@ import { PackageSummary, SearchResults } from '../types';
 
 const SEARCH_LIMIT = 50;
 
-class API {
+class API_CLASS {
   private API_BASE_URL = `/api/v1`;
   private TS_QUERY = [
     {
@@ -118,5 +118,5 @@ class API {
   }
 }
 
-const APIMethods = new API();
-export default APIMethods;
+const API = new API_CLASS();
+export default API;

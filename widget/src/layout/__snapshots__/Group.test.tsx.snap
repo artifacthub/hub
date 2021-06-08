@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Group creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-giAqHp fNGaf"
+    data-testid="wrapper"
+  >
+    <div
+      class="sc-bdnxRM ivjzme"
+    >
+      <div
+        class="sc-gtsrHT gVsPlu size-lg"
+        role="status"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

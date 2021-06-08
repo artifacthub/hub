@@ -1,0 +1,32 @@
+{
+  "packages": [
+    {
+      "packageId": "e375216d-d876-45c2-a114-8e01651769f1",
+      "name": "centrifugo",
+      "description": "Centrifugo is a real-time messaging server.",
+      "logoImageId": "cc7ac35f-abd3-4594-a375-aebfccbfe11e",
+      "appVersion": "2.1.0",
+      "repository": {
+        "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+        "kind": 0,
+        "userAlias": "user",
+        "name": "stable",
+        "url": "url"
+      }
+    },
+    {
+      "packageId": "e252a4f2-dc8a-429b-8e26-6d093d0a59ca",
+      "name": "kafka",
+      "description": "Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.",
+      "appVersion": "5.0.1",
+      "repository": {
+        "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+        "kind": 0,
+        "userAlias": "user",
+        "name": "incubator",
+        "url": "url"
+      }
+    }
+  ],
+  "facets": []
+}

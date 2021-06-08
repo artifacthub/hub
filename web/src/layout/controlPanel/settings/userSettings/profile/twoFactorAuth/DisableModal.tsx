@@ -47,6 +47,7 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
   return (
     <>
       <button
+        data-testid="disable2FAModalBtn"
         className="btn btn-danger btn-sm"
         onClick={() => setOpenStatus(true)}
         aria-label="Open disable two-factor authentication modal"
@@ -77,6 +78,7 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
             </button>
 
             <button
+              data-testid="disable2FABtn"
               className="btn btn-sm btn-danger ml-3"
               onClick={(e) => {
                 e.preventDefault();

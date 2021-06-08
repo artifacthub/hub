@@ -3,7 +3,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import APIMethods from '../api';
+import API from '../api';
 import { PackageSummary, Repository, RepositoryKind } from '../types';
 import Image from './common/Image';
 import Label from './common/Label';
@@ -340,7 +340,7 @@ export default function Widget(props: Props) {
     async function fetchPackage() {
       try {
         setIsLoading(true);
-        setPackageSummary(await APIMethods.getPackageInfo(urlParams!.origin, urlParams!.pathname));
+        setPackageSummary(await API.getPackageInfo(urlParams!.origin, urlParams!.pathname));
         setIsLoading(false);
       } catch {
         setIsLoading(false);
@@ -360,8 +360,8 @@ export default function Widget(props: Props) {
   if (isNull(packageSummary) || isUndefined(props.url)) return null;
 
   return (
-    <Wrapper theme={currentTheme} color={props.color}>
-      <CardWrapper className={props.responsive ? 'responsive' : ''}>
+    <Wrapper data-testid="mainWrapper" theme={currentTheme} color={props.color}>
+      <CardWrapper data-testid="cardWrapper" className={props.responsive ? 'responsive' : ''}>
         <Link
           href={
             props.inGroup && packageSummary
@@ -377,7 +377,7 @@ export default function Widget(props: Props) {
             </CardHeader>
           )}
 
-          <CardBody className={props.inGroup ? 'groupedItem' : ''} withBadges={props.withBadges}>
+          <CardBody data-testid="cardBody" className={props.inGroup ? 'groupedItem' : ''} withBadges={props.withBadges}>
             {isLoading || isUndefined(packageSummary) ? (
               <Loading />
             ) : (

@@ -9,7 +9,7 @@ interface ColorItem {
   color: string;
 }
 
-export class ThemeBuilder {
+class ThemeBuilder {
   private primary: string | null = null;
   private secondary: string | null = null;
   private customColors: ColorItem[] = [];

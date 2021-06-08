@@ -469,6 +469,7 @@ export enum AuthorizerAction {
   UpdateAuthorizationPolicy = 'updateAuthorizationPolicy',
   UpdateOrganization = 'updateOrganization',
   UpdateOrganizationRepository = 'updateOrganizationRepository',
+  All = 'all',
 }
 
 export interface AuthorizerInput {
