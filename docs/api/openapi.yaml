@@ -592,46 +592,31 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /repositories:
+  /repositories/search:
     get:
       tags:
         - Repositories
       security:
         - ApiKeyId: []
           ApiKeySecret: []
-      summary: Get all repositories
-      description: Get all repositories
-      operationId: getRepositories
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Repository"
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-  "/repositories/{repoKindParam}":
-    get:
-      tags:
-        - Repositories
-      security:
-        - ApiKeyId: []
-          ApiKeySecret: []
-      summary: Get all available repositories of the provided kind
-      description: Get all available repositories of the provided kind
-      operationId: getRepositoriesByKind
+      summary: Search repositories that meet the provided criteria
+      description: Search repositories that meet the provided criteria
+      operationId: searchRepositories
       parameters:
-        - $ref: "#/components/parameters/RepoKindParam"
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/RepositoryKindsListParam"
+        - $ref: "#/components/parameters/UsersListParam"
+        - $ref: "#/components/parameters/OrgsListParam"
+        - $ref: "#/components/parameters/RepoNameQueryParam"
       responses:
         "200":
           description: ""
+          headers:
+            Pagination-Total-Count:
+              schema:
+                type: string
+              description: Total number of repositories
           content:
             application/json:
               schema:
@@ -645,30 +630,6 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
   /repositories/user:
-    get:
-      tags:
-        - Repositories
-      security:
-        - ApiKeyId: []
-          ApiKeySecret: []
-      summary: Get user's repositories
-      description: Get user's repositories
-      operationId: getUserReposirories
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Repository"
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
     post:
       tags:
         - Repositories
@@ -789,32 +750,6 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
   "/repositories/org/{orgName}":
-    get:
-      tags:
-        - Repositories
-      security:
-        - ApiKeyId: []
-          ApiKeySecret: []
-      summary: Get organization's repositories
-      description: Get organization's repositories
-      operationId: getOrganizationRepositories
-      parameters:
-        - $ref: "#/components/parameters/OrgNameParam"
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Repository"
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
     post:
       tags:
         - Repositories
@@ -3879,7 +3814,7 @@ components:
         minimum: 0
         maximum: 50
       required: false
-      description: The number of packages to return
+      description: The number of items to return
     OffsetParam:
       in: query
       name: offset
@@ -3888,7 +3823,7 @@ components:
         minimum: 0
         default: 0
       required: false
-      description: The number of packages to skip before starting to collect the result set
+      description: The number of items to skip before starting to collect the result set
     OrgNameParam:
       in: path
       name: orgName
@@ -3971,6 +3906,14 @@ components:
         $ref: "#/components/schemas/RepositoryKindParam"
       required: true
       description: Package kind name
+    RepoNameQueryParam:
+      in: query
+      name: name
+      schema:
+        type: string
+        example: repo-name
+      required: false
+      description: Repository name
     RepoNameParam:
       in: path
       name: repoName

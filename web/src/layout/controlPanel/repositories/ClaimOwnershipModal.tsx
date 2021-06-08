@@ -10,12 +10,11 @@ import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization, Repository } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
-import { OCI_PREFIX } from '../../../utils/data';
 import getMetaTag from '../../../utils/getMetaTag';
 import ExternalLink from '../../common/ExternalLink';
 import Modal from '../../common/Modal';
 import RepositoryIcon from '../../common/RepositoryIcon';
-import SearchTypeaheadRepository from '../../common/SearchTypeaheadRepository';
+import SearchRepositories from '../../common/SearchRepositories';
 import styles from './ClaimOwnershipModal.module.css';
 
 interface Props {
@@ -41,9 +40,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
   );
   const [claimingOrg, setClaimingOrg] = useState<string>(organizationName || '');
   const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
-  const [isFetchingRepositories, setIsFetchingRepositories] = useState(false);
   const [repoItem, setRepoItem] = useState<Repository | null>(null);
-  const [repositories, setRepositories] = useState<Repository[] | undefined>(undefined);
 
   const handleOrgChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setClaimingOrg(event.target.value);
@@ -112,24 +109,11 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
     return form.checkValidity();
   };
 
-  // Excludes repositories which belongs to user or any of his orgs
-  const getFilteredRepositories = (): Repository[] => {
-    let repositoriesList: Repository[] = [];
-    let disabledOrgs: string[] = [];
-    if (!isUndefined(organizations)) {
-      disabledOrgs = organizations.map((org: Organization) => org.name);
+  const getOrgsNames = (): string[] => {
+    if (organizations) {
+      return organizations.map((org: Organization) => org.name);
     }
-
-    if (!isUndefined(repositories)) {
-      repositoriesList = repositories.filter(
-        (repo: Repository) =>
-          ((repo.userAlias && repo.userAlias !== ctx.user!.alias) ||
-            (!isUndefined(organizations) && repo.organizationName && !disabledOrgs.includes(repo.organizationName))) &&
-          !repo.url.startsWith(OCI_PREFIX)
-      );
-    }
-
-    return repositoriesList;
+    return [];
   };
 
   useEffect(() => {
@@ -152,26 +136,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
       }
     }
 
-    async function fetchRepositories() {
-      try {
-        setIsFetchingRepositories(true);
-        let repos = await API.getAllRepositories();
-        setRepositories(repos);
-        setApiReposError(null);
-        setIsFetchingRepositories(false);
-      } catch (err) {
-        setIsFetchingRepositories(false);
-        if (err.kind !== ErrorKind.Unauthorized) {
-          setRepositories([]);
-          setApiReposError('An error occurred getting the repositories, please try again later.');
-        } else {
-          props.onAuthError();
-        }
-      }
-    }
-
     fetchOrganizations();
-    fetchRepositories();
   }, [organizationName, props]);
 
   return (
@@ -285,14 +250,15 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                 </div>
               ) : (
                 <div className={`mt-2 ${styles.searchWrapper}`}>
-                  <SearchTypeaheadRepository
-                    repositories={getFilteredRepositories()}
-                    disabledList={[]}
-                    isLoading={isFetchingRepositories}
-                    onSelect={onRepoSelect}
-                    placeholder="There aren't any repositories whose ownership you can claim at the moment."
-                    minCharacters={2}
-                    searchInUrl
+                  <SearchRepositories
+                    label="claim-repo-ownership"
+                    disabledRepositories={{
+                      users: ctx.user ? [ctx.user.alias] : [],
+                      organizations: getOrgsNames(),
+                    }}
+                    onSelection={onRepoSelect}
+                    onAuthError={props.onAuthError}
+                    visibleUrl
                   />
                 </div>
               )}

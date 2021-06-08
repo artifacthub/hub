@@ -1,4 +1,5 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -175,7 +176,7 @@ describe('SubscriptionModal', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      fireEvent.change(input, { target: { value: 'testing' } });
+      userEvent.type(input, 'testing');
       fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
 
       await waitFor(() => {

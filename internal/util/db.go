@@ -89,6 +89,32 @@ func DBQueryJSON(ctx context.Context, db hub.DB, query string, args ...interface
 	return dataJSON, nil
 }
 
+// DBQueryJSONWithPagination is a helper that executes the query provided and
+// returns a JSONQueryResult instance containing the json data returned from
+// the database.
+func DBQueryJSONWithPagination(
+	ctx context.Context,
+	db hub.DB,
+	query string,
+	args ...interface{},
+) (*hub.JSONQueryResult, error) {
+	var dataJSON []byte
+	var totalCount int
+	if err := db.QueryRow(ctx, query, args...).Scan(&dataJSON, &totalCount); err != nil {
+		if err.Error() == ErrDBInsufficientPrivilege.Error() {
+			return nil, hub.ErrInsufficientPrivilege
+		}
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, hub.ErrNotFound
+		}
+		return nil, err
+	}
+	return &hub.JSONQueryResult{
+		Data:       dataJSON,
+		TotalCount: totalCount,
+	}, nil
+}
+
 // DBQueryUnmarshal is a helper that executes the query provided and unmarshals
 // the json data returned from the database into the value (v) provided.
 func DBQueryUnmarshal(ctx context.Context, db hub.DB, v interface{}, query string, args ...interface{}) error {
@@ -96,8 +122,5 @@ func DBQueryUnmarshal(ctx context.Context, db hub.DB, v interface{}, query strin
 	if err != nil {
 		return err
 	}
-	if err := json.Unmarshal(dataJSON, &v); err != nil {
-		return err
-	}
-	return nil
+	return json.Unmarshal(dataJSON, &v)
 }

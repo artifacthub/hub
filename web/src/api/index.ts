@@ -16,6 +16,7 @@ import {
   Error,
   ErrorKind,
   EventKind,
+  ListableItems,
   LogoImage,
   OptOutItem,
   Organization,
@@ -26,7 +27,8 @@ import {
   RegoPlaygroundPolicy,
   RegoPlaygroundResult,
   Repository,
-  SearchQuery,
+  SearchPackagesQuery,
+  SearchRepositoriesQuery,
   SearchResults,
   SecurityReport,
   Stats,
@@ -70,8 +72,11 @@ interface FetchOptions {
 
 class API_CLASS {
   private EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples'];
-  private CSRF_HEADER = 'X-Csrf-Token';
-  private SESSION_APPROVED_HEADER = 'X-Session-Approved';
+  private HEADERS = {
+    csrf: 'X-Csrf-Token',
+    sessionApproved: 'X-Session-Approved',
+    pagination: 'Pagination-Total-Count',
+  };
   private csrfToken: string | null = null;
   private API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
@@ -156,8 +161,8 @@ class API_CLASS {
   }
 
   private checkIfApprovedSession(res: any) {
-    if (res.headers.has(this.SESSION_APPROVED_HEADER)) {
-      const isApproved = res.headers.get(this.SESSION_APPROVED_HEADER);
+    if (res.headers.has(this.HEADERS.sessionApproved)) {
+      const isApproved = res.headers.get(this.HEADERS.sessionApproved);
       if (isApproved === 'false') {
         const err = {
           kind: ErrorKind.NotApprovedSession,
@@ -175,9 +180,8 @@ class API_CLASS {
     if (!isUndefined(params) && params.length > 0) {
       let headers: any = {};
       params.forEach((param: string) => {
-        const value = res.headers.get(param);
-        if (value) {
-          headers[param] = value;
+        if (res.headers.has(param)) {
+          headers[param] = res.headers.get(param);
         }
       });
       return headers;
@@ -204,6 +208,9 @@ class API_CLASS {
         let json = await response.json();
         const tmpHeaders = this.getHeadersValue(res, headers);
         if (!isNull(tmpHeaders)) {
+          if (isArray(json)) {
+            json = { items: json };
+          }
           json = { ...json, ...tmpHeaders };
         }
         return skipCamelConversion ? json : this.toCamelCase(json);
@@ -229,7 +236,7 @@ class API_CLASS {
         ...options,
         headers: {
           ...options.headers,
-          [this.CSRF_HEADER]: this.csrfToken,
+          [this.HEADERS.csrf]: this.csrfToken,
         },
       };
     }
@@ -289,7 +296,7 @@ class API_CLASS {
     return this.apiFetch(`${this.API_BASE_URL}/packages/${packageId}/stars`);
   }
 
-  public searchPackages(query: SearchQuery, facets: boolean = true): Promise<SearchResults> {
+  public searchPackages(query: SearchPackagesQuery, facets: boolean = true): Promise<SearchResults> {
     const q = new URLSearchParams();
     q.set('facets', facets ? 'true' : 'false');
     q.set('limit', query.limit.toString());
@@ -331,7 +338,7 @@ class API_CLASS {
       q.set('official', 'true');
     }
     return this.apiFetch(`${this.API_BASE_URL}/packages/search?${q.toString()}`, undefined, false, false, [
-      'Pagination-Total-Count',
+      this.HEADERS.pagination,
     ]);
   }
 
@@ -349,8 +356,8 @@ class API_CLASS {
       if (!res.ok) {
         throw tokenError;
       } else {
-        if (res.headers.has(this.CSRF_HEADER)) {
-          const token = res.headers.get(this.CSRF_HEADER);
+        if (res.headers.has(this.HEADERS.csrf)) {
+          const token = res.headers.get(this.HEADERS.csrf);
           return token === '' ? null : token;
         } else {
           throw tokenError;
@@ -420,12 +427,29 @@ class API_CLASS {
     });
   }
 
-  public getAllRepositories(): Promise<Repository[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/repositories`);
-  }
+  public searchRepositories(query: SearchRepositoriesQuery): Promise<ListableItems> {
+    const q = new URLSearchParams();
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
+    if (!isUndefined(query.users)) {
+      query.users.forEach((user: string) => {
+        q.append('user', user);
+      });
+    }
 
-  public getRepositories(fromOrgName?: string): Promise<Repository[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/repositories${this.getUrlContext(fromOrgName)}`);
+    if (!isUndefined(query.organizations)) {
+      query.organizations.forEach((org: string) => {
+        q.append('org', org);
+      });
+    }
+
+    if (!isUndefined(query.name)) {
+      q.set('name', query.name);
+    }
+
+    return this.apiFetch(`${this.API_BASE_URL}/repositories/search?${q.toString()}`, undefined, false, false, [
+      this.HEADERS.pagination,
+    ]);
   }
 
   public addRepository(repository: Repository, fromOrgName?: string): Promise<null | string> {

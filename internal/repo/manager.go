@@ -33,14 +33,11 @@ const (
 	checkRepoNameAvailDBQ     = `select repository_id from repository where name = $1`
 	checkRepoURLAvailDBQ      = `select repository_id from repository where trim(trailing '/' from url) = $1`
 	deleteRepoDBQ             = `select delete_repository($1::uuid, $2::text)`
-	getAllReposDBQ            = `select get_all_repositories($1::boolean)`
-	getOrgReposDBQ            = `select get_org_repositories($1::uuid, $2::text, $3::boolean)`
 	getRepoByIDDBQ            = `select get_repository_by_id($1::uuid, $2::boolean)`
 	getRepoByNameDBQ          = `select get_repository_by_name($1::text, $2::boolean)`
 	getRepoPkgsDigestDBQ      = `select get_repository_packages_digest($1::uuid)`
-	getReposByKindDBQ         = `select get_repositories_by_kind($1::int, $2::boolean)`
-	getUserReposDBQ           = `select get_user_repositories($1::uuid, $2::boolean)`
 	getUserEmailDBQ           = `select email from "user" where user_id = $1`
+	searchRepositoriesDBQ     = `select * from search_repositories($1::jsonb)`
 	setLastScanningResultsDBQ = `select set_last_scanning_results($1::uuid, $2::text, $3::boolean)`
 	setLastTrackingResultsDBQ = `select set_last_tracking_results($1::uuid, $2::text, $3::boolean)`
 	setVerifiedPublisherDBQ   = `select set_verified_publisher($1::uuid, $2::boolean)`
@@ -299,19 +296,6 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 	return err
 }
 
-// GetAll returns all available repositories.
-func (m *Manager) GetAll(ctx context.Context, includeCredentials bool) ([]*hub.Repository, error) {
-	var r []*hub.Repository
-	err := util.DBQueryUnmarshal(ctx, m.db, &r, getAllReposDBQ, includeCredentials)
-	return r, err
-}
-
-// GetAllJSON returns all available repositories as a json array, which is
-// built by the database.
-func (m *Manager) GetAllJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
-	return util.DBQueryJSON(ctx, m.db, getAllReposDBQ, includeCredentials)
-}
-
 // GetByID returns the repository identified by the id provided.
 func (m *Manager) GetByID(
 	ctx context.Context,
@@ -330,27 +314,6 @@ func (m *Manager) GetByID(
 	var r *hub.Repository
 	err := util.DBQueryUnmarshal(ctx, m.db, &r, getRepoByIDDBQ, repositoryID, includeCredentials)
 	return r, err
-}
-
-// GetByKind returns all available repositories of the provided kind.
-func (m *Manager) GetByKind(
-	ctx context.Context,
-	kind hub.RepositoryKind,
-	includeCredentials bool,
-) ([]*hub.Repository, error) {
-	var r []*hub.Repository
-	err := util.DBQueryUnmarshal(ctx, m.db, &r, getReposByKindDBQ, kind, includeCredentials)
-	return r, err
-}
-
-// GetByKindJSON returns all available repositories of the provided kind as a
-// json array, which is built by the database.
-func (m *Manager) GetByKindJSON(
-	ctx context.Context,
-	kind hub.RepositoryKind,
-	includeCredentials bool,
-) ([]byte, error) {
-	return util.DBQueryJSON(ctx, m.db, getReposByKindDBQ, kind, includeCredentials)
 }
 
 // GetByName returns the repository identified by the name provided.
@@ -444,31 +407,6 @@ func (m *Manager) GetPackagesDigest(
 	return pd, err
 }
 
-// GetOwnedByOrgJSON returns all repositories that belong to the organization
-// provided.
-func (m *Manager) GetOwnedByOrgJSON(
-	ctx context.Context,
-	orgName string,
-	includeCredentials bool,
-) ([]byte, error) {
-	userID := ctx.Value(hub.UserIDKey).(string)
-
-	// Validate input
-	if orgName == "" {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
-	}
-
-	// Get org repositories from database
-	return util.DBQueryJSON(ctx, m.db, getOrgReposDBQ, userID, orgName, includeCredentials)
-}
-
-// GetOwnedByUserJSON returns all repositories that belong to the user making
-// the request.
-func (m *Manager) GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
-	userID := ctx.Value(hub.UserIDKey).(string)
-	return util.DBQueryJSON(ctx, m.db, getUserReposDBQ, userID, includeCredentials)
-}
-
 // GetRemoteDigest gets the repository's digest available in the remote.
 func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (string, error) {
 	var digest string
@@ -523,6 +461,50 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 	}
 
 	return digest, nil
+}
+
+// Search searches for repositories in the database that the criteria defined
+// in the input provided.
+func (m *Manager) Search(
+	ctx context.Context,
+	input *hub.SearchRepositoryInput,
+) (*hub.SearchRepositoryResult, error) {
+	// Validate input
+	if err := validateSearchInput(input); err != nil {
+		return nil, err
+	}
+
+	// Search repositories in database
+	inputJSON, _ := json.Marshal(input)
+	result, err := util.DBQueryJSONWithPagination(ctx, m.db, searchRepositoriesDBQ, inputJSON)
+	if err != nil {
+		return nil, err
+	}
+	var repositories []*hub.Repository
+	if err := json.Unmarshal(result.Data, &repositories); err != nil {
+		return nil, err
+	}
+
+	return &hub.SearchRepositoryResult{
+		Repositories: repositories,
+		TotalCount:   result.TotalCount,
+	}, nil
+}
+
+// SearchJSON returns a json object with the search results produced by the
+// input provided. The json object is built by the database.
+func (m *Manager) SearchJSON(
+	ctx context.Context,
+	input *hub.SearchRepositoryInput,
+) (*hub.JSONQueryResult, error) {
+	// Validate input
+	if err := validateSearchInput(input); err != nil {
+		return nil, err
+	}
+
+	// Search repositories in database
+	inputJSON, _ := json.Marshal(input)
+	return util.DBQueryJSONWithPagination(ctx, m.db, searchRepositoriesDBQ, inputJSON)
 }
 
 // SetLastScanningResults updates the timestamp and errors of the last scanning
@@ -701,6 +683,22 @@ func (m *Manager) validateCredentials(r *hub.Repository) error {
 	allowPrivateRepos := m.cfg.GetBool("server.allowPrivateRepositories")
 	if !allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") {
 		return errors.New("private repositories not allowed")
+	}
+	return nil
+}
+
+// validateSearchInput validates the search input provided, returning an error
+// in case it's invalid.
+func validateSearchInput(input *hub.SearchRepositoryInput) error {
+	for _, alias := range input.Users {
+		if alias == "" {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid user alias")
+		}
+	}
+	for _, name := range input.Orgs {
+		if name == "" {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid organization name")
+		}
 	}
 	return nil
 }

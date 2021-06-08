@@ -147,6 +147,7 @@ const SearchBar = (props: Props) => {
       }
     }
   };
+
   const goToPackage = (selectedPackage: Package) => {
     forceBlur();
     setValue('');

@@ -12,7 +12,7 @@ import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
 import Modal from '../../../../../common/Modal';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
-import SearchTypeaheadRepository from '../../../../../common/SearchTypeaheadRepository';
+import SearchRepositories from '../../../../../common/SearchRepositories';
 import styles from './Modal.module.css';
 
 interface Props {
@@ -30,8 +30,7 @@ const OptOutModal = (props: Props) => {
   const [repoItem, setRepoItem] = useState<Repository | null>(null);
   const [eventKind, setEventKind] = useState<EventKind>(EventKind.RepositoryTrackingErrors);
   const [isSending, setIsSending] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [repositories, setRepositories] = useState<Repository[] | undefined>(undefined);
+  const [userOrganizations, setUserOrganizations] = useState<string[] | undefined>(undefined);
 
   const onCloseModal = () => {
     setRepoItem(null);
@@ -55,51 +54,18 @@ const OptOutModal = (props: Props) => {
     return selectedRepos.map((item: OptOutItem) => item.repository.repositoryId!);
   };
 
-  async function getRepositories() {
+  async function getUserOrganizations() {
     try {
-      setIsLoading(true);
       const orgs = await API.getUserOrganizations();
-      const repositories = await Promise.all([
-        API.getRepositories(),
-        ...orgs.map((org: Organization) => API.getRepositories(org.name)),
-      ]);
-
-      const formattedRepos: Repository[] = [];
-      repositories.forEach((repoList: Repository[], index: number) => {
-        if (index === 0) {
-          repoList.forEach((repo: Repository) => {
-            formattedRepos.push({
-              ...repo,
-              userAlias: ctx.user!.alias,
-            });
-          });
-        } else {
-          repoList.forEach((repo: Repository) => {
-            formattedRepos.push({
-              ...repo,
-              organizationDisplayName: orgs[index - 1].displayName,
-              organizationName: orgs[index - 1].name,
-            });
-          });
-        }
-      });
-      setRepositories(formattedRepos);
-
-      setApiError(null);
-      setIsLoading(false);
+      const orgsList = orgs.map((org: Organization) => org.name);
+      setUserOrganizations(orgsList);
     } catch (err) {
-      setIsLoading(false);
-      if (err.kind !== ErrorKind.Unauthorized) {
-        setApiError('An error occurred getting your repositories, please try again later.');
-        setRepositories([]);
-      } else {
-        props.onAuthError();
-      }
+      setUserOrganizations([]);
     }
   }
 
   useEffect(() => {
-    getRepositories();
+    getUserOrganizations();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   async function addOptOut() {
@@ -159,10 +125,10 @@ const OptOutModal = (props: Props) => {
         <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
           Events
         </label>
-        <div className="d-flex flex-row flex-wrap mb-3">
+        <div className="d-flex flex-column flex-wrap pb-2">
           {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
             return (
-              <div className="mr-4" key={`radio_${subs.name}`}>
+              <div className="mb-2" key={`radio_${subs.name}`}>
                 <div className="custom-control custom-radio text-nowrap my-1 my-md-0">
                   <input
                     data-testid={`radio_${subs.kind}`}
@@ -239,12 +205,15 @@ const OptOutModal = (props: Props) => {
             </div>
           ) : (
             <div className={`mt-2 ${styles.searchWrapper}`}>
-              <SearchTypeaheadRepository
-                repositories={repositories || []}
-                disabledList={getSubscribedReposIds()}
-                isLoading={isLoading}
-                onSelect={onRepoSelect}
-                placeholder="There aren't any repositories you can manage at the moment."
+              <SearchRepositories
+                label="repo-subscriptions"
+                disabledRepositories={{
+                  ids: getSubscribedReposIds(),
+                }}
+                extraQueryParams={{ users: ctx.user ? [ctx.user.alias] : [], organizations: userOrganizations || [] }}
+                onSelection={onRepoSelect}
+                onAuthError={props.onAuthError}
+                visibleUrl={false}
               />
             </div>
           )}

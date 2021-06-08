@@ -81,20 +81,6 @@ func (m *ManagerMock) Delete(ctx context.Context, name string) error {
 	return args.Error(0)
 }
 
-// GetAll implements the RepositoryManager interface.
-func (m *ManagerMock) GetAll(ctx context.Context, includeCredentials bool) ([]*hub.Repository, error) {
-	args := m.Called(ctx, includeCredentials)
-	data, _ := args.Get(0).([]*hub.Repository)
-	return data, args.Error(1)
-}
-
-// GetAllJSON implements the RepositoryManager interface.
-func (m *ManagerMock) GetAllJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
-	args := m.Called(ctx, includeCredentials)
-	data, _ := args.Get(0).([]byte)
-	return data, args.Error(1)
-}
-
 // GetByID implements the RepositoryManager interface.
 func (m *ManagerMock) GetByID(
 	ctx context.Context,
@@ -103,28 +89,6 @@ func (m *ManagerMock) GetByID(
 ) (*hub.Repository, error) {
 	args := m.Called(ctx, repositoryID, includeCredentials)
 	data, _ := args.Get(0).(*hub.Repository)
-	return data, args.Error(1)
-}
-
-// GetByKind implements the RepositoryManager interface.
-func (m *ManagerMock) GetByKind(
-	ctx context.Context,
-	kind hub.RepositoryKind,
-	includeCredentials bool,
-) ([]*hub.Repository, error) {
-	args := m.Called(ctx, kind, includeCredentials)
-	data, _ := args.Get(0).([]*hub.Repository)
-	return data, args.Error(1)
-}
-
-// GetByKindJSON implements the RepositoryManager interface.
-func (m *ManagerMock) GetByKindJSON(
-	ctx context.Context,
-	kind hub.RepositoryKind,
-	includeCredentials bool,
-) ([]byte, error) {
-	args := m.Called(ctx, kind, includeCredentials)
-	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
 
@@ -156,27 +120,29 @@ func (m *ManagerMock) GetPackagesDigest(
 	return data, args.Error(1)
 }
 
-// GetOwnedByOrgJSON implements the RepositoryManager interface.
-func (m *ManagerMock) GetOwnedByOrgJSON(
-	ctx context.Context,
-	orgName string,
-	includeCredentials bool,
-) ([]byte, error) {
-	args := m.Called(ctx, orgName)
-	data, _ := args.Get(0).([]byte)
-	return data, args.Error(1)
-}
-
 // GetRemoteDigest implements the RepositoryManager interface.
 func (m *ManagerMock) GetRemoteDigest(ctx context.Context, r *hub.Repository) (string, error) {
 	args := m.Called(ctx, r)
 	return args.String(0), args.Error(1)
 }
 
-// GetOwnedByUserJSON implements the RepositoryManager interface.
-func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
-	args := m.Called(ctx)
-	data, _ := args.Get(0).([]byte)
+// Search implements the RepositoryManager interface.
+func (m *ManagerMock) Search(
+	ctx context.Context,
+	input *hub.SearchRepositoryInput,
+) (*hub.SearchRepositoryResult, error) {
+	args := m.Called(ctx, input)
+	data, _ := args.Get(0).(*hub.SearchRepositoryResult)
+	return data, args.Error(1)
+}
+
+// SearchJSON implements the RepositoryManager interface.
+func (m *ManagerMock) SearchJSON(
+	ctx context.Context,
+	input *hub.SearchRepositoryInput,
+) (*hub.JSONQueryResult, error) {
+	args := m.Called(ctx, input)
+	data, _ := args.Get(0).(*hub.JSONQueryResult)
 	return data, args.Error(1)
 }
 

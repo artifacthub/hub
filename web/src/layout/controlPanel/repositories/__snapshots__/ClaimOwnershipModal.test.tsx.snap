@@ -89,39 +89,50 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                         class="position-relative"
                       >
                         <div
-                          class="flex-grow-1 d-flex align-items-strecht position-relative inputWrapper"
+                          class="d-flex flex-row"
                         >
-                          <input
-                            autocomplete="new-input"
-                            class="flex-grow-1 px-3 input"
-                            data-testid="searchTypeaheadRepositoryInput"
-                            disabled=""
-                            name="searchRepo"
-                            placeholder=""
-                            required=""
-                            spellcheck="false"
-                            type="text"
-                            value=""
-                          />
                           <div
-                            class="position-absolute text-secondary loading"
+                            class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
                           >
-                            <span
-                              class="spinner-border spinner-border-sm"
-                              data-testid="searchBarSpinning"
+                            <div
+                              class="d-none d-sm-flex align-items-center iconWrapper"
+                              data-testid="searchBarIcon"
+                            >
+                              <svg
+                                fill="none"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle
+                                  cx="11"
+                                  cy="11"
+                                  r="8"
+                                />
+                                <line
+                                  x1="21"
+                                  x2="16.65"
+                                  y1="21"
+                                  y2="16.65"
+                                />
+                              </svg>
+                            </div>
+                            <input
+                              aria-label="Search repositories"
+                              autocomplete="new-input"
+                              class="flex-grow-1 pr-4 pl-2 pl-md-0 input"
+                              data-testid="searchRepositoriesInput"
+                              name="searchRepositoriesInput"
+                              spellcheck="false"
+                              type="text"
                             />
                           </div>
-                          <div
-                            class="position-absolute invalid-feedback fieldFeedback"
-                          >
-                            This field is required
-                          </div>
                         </div>
-                        <div
-                          aria-expanded="false"
-                          class="dropdown-menu p-0 w-100 shadow-sm dropdown"
-                          data-testid="searchTypeaheadRepositoryDropdown"
-                        />
                       </div>
                     </div>
                   </div>

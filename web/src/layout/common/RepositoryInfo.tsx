@@ -106,7 +106,7 @@ const RepositoryInfo = (props: Props) => {
             <small>Repo:</small>
             {props.visibleIcon && <RepositoryIconLabel kind={props.repository.kind} className="ml-1" clickable />}
           </div>
-          <span className="sr-only">{props.repository.displayName || props.repository.name}</span>
+          <span className="sr-only">{props.repository.name}</span>
 
           <button
             data-testid="repoLink"

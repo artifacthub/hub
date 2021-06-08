@@ -162,6 +162,7 @@ export default function App() {
                       userAlias={getQueryParam(location.search, 'user-alias') || undefined}
                       organizationName={getQueryParam(location.search, 'org-name') || undefined}
                       repoName={getQueryParam(location.search, 'repo-name') || undefined}
+                      activePage={getQueryParam(location.search, 'page') || undefined}
                     />
                   </div>
                   <Footer />

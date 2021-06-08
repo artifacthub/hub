@@ -39,7 +39,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="database"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-database"
         >
@@ -68,7 +68,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="integration-and-delivery"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-integration-and-delivery"
         >
@@ -97,7 +97,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="logging-and-tracing"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-logging-and-tracing"
         >
@@ -126,7 +126,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="machine-learning"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-machine-learning"
         >
@@ -155,7 +155,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="monitoring"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-monitoring"
         >
@@ -184,7 +184,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="networking"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-networking"
         >
@@ -213,7 +213,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="security"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-security"
         >
@@ -242,7 +242,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="storage"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-storage"
         >
@@ -271,7 +271,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="streaming-messaging"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-streaming-messaging"
         >
@@ -300,7 +300,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="web-applications"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-tsQuery-web-applications"
         >

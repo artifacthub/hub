@@ -49,23 +49,30 @@ func GetRepositories(
 			repos = append(repos, repo)
 		}
 	case len(reposKinds) > 0:
+		var kinds []hub.RepositoryKind
 		for _, kindName := range reposKinds {
 			kind, err := hub.GetKindFromName(kindName)
 			if err != nil {
 				return nil, fmt.Errorf("invalid repository kind found in config: %s", kindName)
 			}
-			kindRepos, err := rm.GetByKind(ctx, kind, true)
-			if err != nil {
-				return nil, fmt.Errorf("error getting repositories by kind (%s): %w", kindName, err)
-			}
-			repos = append(repos, kindRepos...)
+			kinds = append(kinds, kind)
 		}
+		result, err := rm.Search(ctx, &hub.SearchRepositoryInput{
+			Kinds:              kinds,
+			IncludeCredentials: true,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("error getting repositories for kinds (%#v): %w", kinds, err)
+		}
+		repos = result.Repositories
 	default:
-		var err error
-		repos, err = rm.GetAll(ctx, true)
+		result, err := rm.Search(ctx, &hub.SearchRepositoryInput{
+			IncludeCredentials: true,
+		})
 		if err != nil {
 			return nil, fmt.Errorf("error getting all repositories: %w", err)
 		}
+		repos = result.Repositories
 	}
 
 	// Filter out disabled repositories

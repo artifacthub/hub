@@ -23,6 +23,7 @@ interface Props {
   organizationName?: string;
   repoName?: string;
   visibleModal?: string;
+  activePage?: string;
 }
 
 const DEFAULT_SECTION = 'repositories';
