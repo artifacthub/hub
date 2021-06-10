@@ -31,6 +31,7 @@ const TsQuery = (props: Props) => {
             value={option.label}
             device={props.device}
             className={styles.checkbox}
+            labelClassName="w-100"
             label={option.name}
             checked={isChecked(option.label)}
             onChange={props.onChange}

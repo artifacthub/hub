@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { isString } from 'lodash';
 import isNumber from 'lodash/isNumber';
 import React, { useEffect, useState } from 'react';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
@@ -9,6 +10,14 @@ interface Props {
   limit: number;
   total: number;
   offset: number;
+  active: number;
+  onChange: (pageNumber: number) => void;
+}
+
+interface ButtonProps {
+  pageNumber: number;
+  disabled: boolean;
+  content?: JSX.Element | string;
   active: number;
   onChange: (pageNumber: number) => void;
 }
@@ -30,46 +39,58 @@ const getPaginationOptions = (currentPage: number, pageCount: number): (string |
   return range;
 };
 
+const PaginationBtn = (btnProps: ButtonProps) => (
+  <button
+    className={classnames('page-link', {
+      'text-primary': !btnProps.disabled && btnProps.active !== btnProps.pageNumber,
+    })}
+    onClick={() => {
+      if (btnProps.active !== btnProps.pageNumber) {
+        btnProps.onChange(btnProps.pageNumber);
+      }
+    }}
+    aria-label={`Open ${isString(btnProps.content) ? btnProps.content : `page ${btnProps.pageNumber}`}`}
+    disabled={btnProps.disabled}
+    tabIndex={btnProps.disabled ? -1 : 0}
+  >
+    {btnProps.content || btnProps.pageNumber}
+  </button>
+);
+
 const Pagination = (props: Props) => {
   const [totalPages, setTotalPages] = useState(Math.ceil(props.total / props.limit));
+  const [active, setActive] = useState<number>(props.active);
 
   useEffect(() => {
     setTotalPages(Math.ceil(props.total / props.limit));
-  }, [props]);
+  }, [props.total, props.limit]);
+
+  useEffect(() => {
+    setActive(props.active);
+  }, [props.active]);
 
   if (totalPages <= 1) return null;
 
-  const getButton = (pageNumber: number, disabled: boolean, content?: JSX.Element | string): JSX.Element => (
-    <button
-      className="page-link"
-      onClick={() => {
-        if (props.active !== pageNumber) {
-          props.onChange(pageNumber);
-        }
-      }}
-      aria-label={`Open ${content ? content : `page ${pageNumber}`}`}
-      disabled={disabled}
-    >
-      {content || pageNumber}
-    </button>
-  );
-
-  const visiblePages = getPaginationOptions(props.active, totalPages);
+  const visiblePages = getPaginationOptions(active, totalPages);
 
   return (
     <nav role="navigation" aria-label="pagination">
       <ul className={`pagination justify-content-center mt-5 mb-5 ${styles.pagination}`}>
-        <li className={classnames('page-item', { disabled: props.active === 1 })}>
-          {getButton(
-            props.active - 1,
-            props.active === 1,
-            <>
-              <span className="d-none d-sm-block">Previous</span>
-              <span className="d-block d-sm-none">
-                <FaCaretLeft />
-              </span>
-            </>
-          )}
+        <li className={classnames('page-item', { disabled: active === 1 })}>
+          <PaginationBtn
+            pageNumber={active - 1}
+            disabled={active === 1}
+            content={
+              <>
+                <span className="d-none d-sm-block">Previous</span>
+                <span className="d-block d-sm-none">
+                  <FaCaretLeft />
+                </span>
+              </>
+            }
+            active={active}
+            onChange={props.onChange}
+          />
         </li>
 
         {visiblePages.map((value: number | string, index: number) => {
@@ -77,9 +98,9 @@ const Pagination = (props: Props) => {
             return (
               <li
                 key={`pag_${index}`}
-                className={classnames('page-item', { [`active ${styles.active}`]: props.active === value })}
+                className={classnames('page-item', { [`active text-light ${styles.active}`]: active === value })}
               >
-                {getButton(value, false)}
+                <PaginationBtn pageNumber={value} disabled={false} active={active} onChange={props.onChange} />
               </li>
             );
           } else {
@@ -91,17 +112,21 @@ const Pagination = (props: Props) => {
           }
         })}
 
-        <li className={classnames('page-item', { disabled: props.active === totalPages })}>
-          {getButton(
-            props.active + 1,
-            props.active === totalPages,
-            <>
-              <span className="d-none d-sm-block">Next</span>
-              <span className="d-block d-sm-none">
-                <FaCaretRight />
-              </span>
-            </>
-          )}
+        <li className={classnames('page-item', { disabled: active === totalPages })}>
+          <PaginationBtn
+            pageNumber={active + 1}
+            disabled={active === totalPages}
+            content={
+              <>
+                <span className="d-none d-sm-block">Next</span>
+                <span className="d-block d-sm-none">
+                  <FaCaretRight />
+                </span>
+              </>
+            }
+            active={active}
+            onChange={props.onChange}
+          />
         </li>
       </ul>
     </nav>

@@ -52,12 +52,9 @@
 
 {{ template "repositories/add_repository.sql" }}
 {{ template "repositories/delete_repository.sql" }}
-{{ template "repositories/get_all_repositories.sql" }}
-{{ template "repositories/get_repositories_by_kind.sql" }}
 {{ template "repositories/get_repository_by_name.sql" }}
 {{ template "repositories/get_repository_packages_digest.sql" }}
-{{ template "repositories/get_org_repositories.sql" }}
-{{ template "repositories/get_user_repositories.sql" }}
+{{ template "repositories/search_repositories.sql" }}
 {{ template "repositories/set_last_scanning_results.sql" }}
 {{ template "repositories/set_last_tracking_results.sql" }}
 {{ template "repositories/set_verified_publisher.sql" }}

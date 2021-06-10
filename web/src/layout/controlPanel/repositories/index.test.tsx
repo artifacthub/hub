@@ -5,13 +5,13 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, Repository as Repo } from '../../../types';
+import { ErrorKind, ListableItems } from '../../../types';
 import Repository from './index';
 jest.mock('../../../api');
 jest.mock('../../../utils/minutesToNearestInterval', () => () => 3);
 
-const getMockRepository = (fixtureId: string): Repo[] => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as Repo[];
+const getMockRepository = (fixtureId: string): ListableItems => {
+  return require(`./__fixtures__/index/${fixtureId}.json`) as ListableItems;
 };
 
 const onAuthErrorMock = jest.fn();
@@ -53,7 +53,7 @@ describe('Repository index', () => {
 
   it('creates snapshot', async () => {
     const mockRepository = getMockRepository('1');
-    mocked(API).getRepositories.mockResolvedValue(mockRepository);
+    mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -64,7 +64,7 @@ describe('Repository index', () => {
     );
 
     await waitFor(() => {
-      expect(API.getRepositories).toHaveBeenCalledTimes(1);
+      expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -72,7 +72,7 @@ describe('Repository index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockRepository = getMockRepository('2');
-      mocked(API).getRepositories.mockResolvedValue(mockRepository);
+      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -83,7 +83,7 @@ describe('Repository index', () => {
       );
 
       await waitFor(() => {
-        expect(API.getRepositories).toHaveBeenCalledTimes(1);
+        expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
       expect(getByTestId('refreshRepoBtn')).toBeInTheDocument();
@@ -93,7 +93,7 @@ describe('Repository index', () => {
 
     it('displays no data component when no repositories', async () => {
       const mockRepository = getMockRepository('4');
-      mocked(API).getRepositories.mockResolvedValue(mockRepository);
+      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -113,7 +113,7 @@ describe('Repository index', () => {
 
     it('renders list with 3 repositories', async () => {
       const mockRepository = getMockRepository('5');
-      mocked(API).getRepositories.mockResolvedValue(mockRepository);
+      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId, getAllByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -131,7 +131,7 @@ describe('Repository index', () => {
 
     it('calls getRepositories to click Refresh button', async () => {
       const mockRepository = getMockRepository('6');
-      mocked(API).getRepositories.mockResolvedValue(mockRepository);
+      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -145,15 +145,16 @@ describe('Repository index', () => {
       expect(refreshBtn).toBeInTheDocument();
       fireEvent.click(refreshBtn);
 
-      await waitFor(() => expect(API.getRepositories).toHaveBeenCalledTimes(2));
+      await waitFor(() => expect(API.searchRepositories).toHaveBeenCalledTimes(2));
     });
 
-    it('calls history replace when repo name is defined and is not into repositories list', async () => {
+    it('calls unselectOrg when repo name is defined and is not into repositories list', async () => {
+      const dispatchMock = jest.fn();
       const mockRepository = getMockRepository('7');
-      mocked(API).getRepositories.mockResolvedValue(mockRepository);
+      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       render(
-        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: dispatchMock }}>
           <Router>
             <Repository {...defaultProps} repoName="repo" />
           </Router>
@@ -161,15 +162,14 @@ describe('Repository index', () => {
       );
 
       await waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+        expect(dispatchMock).toHaveBeenCalledTimes(1);
       });
     });
   });
 
-  describe('when getRepositories fails', () => {
+  describe('when searchRepositories fails', () => {
     it('on UnauthorizedError', async () => {
-      mocked(API).getRepositories.mockRejectedValue({
+      mocked(API).searchRepositories.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -182,14 +182,14 @@ describe('Repository index', () => {
       );
 
       await waitFor(() => {
-        expect(API.getRepositories).toHaveBeenCalledTimes(1);
+        expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
       expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
 
     it('on error different to UnauthorizedError', async () => {
-      mocked(API).getRepositories.mockRejectedValue({ kind: ErrorKind.Other });
+      mocked(API).searchRepositories.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -200,7 +200,7 @@ describe('Repository index', () => {
       );
 
       await waitFor(() => {
-        expect(API.getRepositories).toHaveBeenCalledTimes(1);
+        expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
       const noData = getByTestId('noData');

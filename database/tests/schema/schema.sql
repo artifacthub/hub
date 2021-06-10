@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(143);
+select plan(140);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -316,6 +316,7 @@ select indexes_are('password_reset_code', array[
 ]);
 select indexes_are('repository', array[
     'repository_pkey',
+    'repository_name_idx',
     'repository_name_key',
     'repository_url_idx',
     'repository_repository_kind_id_idx',
@@ -414,14 +415,11 @@ select has_function('unregister_package');
 -- Repositories
 select has_function('add_repository');
 select has_function('delete_repository');
-select has_function('get_all_repositories');
-select has_function('get_repositories_by_kind');
 select has_function('get_repository_by_id');
 select has_function('get_repository_by_name');
 select has_function('get_repository_packages_digest');
 select has_function('get_repository_summary');
-select has_function('get_org_repositories');
-select has_function('get_user_repositories');
+select has_function('search_repositories');
 select has_function('set_last_scanning_results');
 select has_function('set_last_tracking_results');
 select has_function('set_verified_publisher');

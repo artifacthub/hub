@@ -2,7 +2,10 @@ package repo
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"net/url"
+	"strconv"
 	"strings"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
@@ -14,7 +17,9 @@ import (
 )
 
 const (
-	logoSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-hexagon"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>`
+	logoSVG            = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-hexagon"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>`
+	searchDefaultLimit = 20
+	searchMaxLimit     = 50
 )
 
 // Handlers represents a group of http handlers in charge of handling
@@ -118,59 +123,24 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
-// GetAll is an http handler that returns all the repositories available.
-func (h *Handlers) GetAll(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.repoManager.GetAllJSON(r.Context(), false)
+// Search is an http handler used to search for repositories in the hub
+// database.
+func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
+	input, err := buildSearchInput(r.URL.Query())
 	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetAll").Send()
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Msg("invalid query")
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
-}
-
-// GetByKind is an http handler that returns all the repositories available of
-// the kind provided.
-func (h *Handlers) GetByKind(w http.ResponseWriter, r *http.Request) {
-	kind, err := hub.GetKindFromName(chi.URLParam(r, "kind"))
+	result, err := h.repoManager.SearchJSON(r.Context(), input)
 	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetByKind").Msg("invalid kind")
-		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
-		return
-	}
-	dataJSON, err := h.repoManager.GetByKindJSON(r.Context(), kind, false)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetByKind").Send()
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
-}
-
-// GetOwnedByOrg is an http handler that returns the repositories owned by the
-// organization provided. The user doing the request must belong to the
-// organization.
-func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
-	orgName := chi.URLParam(r, "orgName")
-	dataJSON, err := h.repoManager.GetOwnedByOrgJSON(r.Context(), orgName, true)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
-		helpers.RenderErrorJSON(w, err)
-		return
-	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
-}
-
-// GetOwnedByUser is an http handler that returns the repositories owned by the
-// user doing the request.
-func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.repoManager.GetOwnedByUserJSON(r.Context(), true)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetOwnedByUser").Send()
-		helpers.RenderErrorJSON(w, err)
-		return
-	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }
 
 // Transfer is an http handler that transfers the provided repository to a
@@ -202,4 +172,53 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// buildSearchInput builds a packages search query from a map of query string
+// values, validating them as they are extracted.
+func buildSearchInput(qs url.Values) (*hub.SearchRepositoryInput, error) {
+	// Kinds
+	kinds := make([]hub.RepositoryKind, 0, len(qs["kind"]))
+	for _, kindStr := range qs["kind"] {
+		kind, err := strconv.Atoi(kindStr)
+		if err != nil {
+			return nil, fmt.Errorf("invalid kind: %s", kindStr)
+		}
+		kinds = append(kinds, hub.RepositoryKind(kind))
+	}
+
+	// Limit
+	var limit int
+	if qs.Get("limit") != "" {
+		var err error
+		limit, err = strconv.Atoi(qs.Get("limit"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid limit: %s", qs.Get("limit"))
+		}
+		if limit > searchMaxLimit {
+			return nil, fmt.Errorf("invalid limit: %s (max: %d)", qs.Get("limit"), searchMaxLimit)
+		}
+	} else {
+		limit = searchDefaultLimit
+	}
+
+	// Offset
+	var offset int
+	if qs.Get("offset") != "" {
+		var err error
+		offset, err = strconv.Atoi(qs.Get("offset"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid offset: %s", qs.Get("offset"))
+		}
+	}
+
+	return &hub.SearchRepositoryInput{
+		Name:               qs.Get("name"),
+		Kinds:              kinds,
+		Orgs:               qs["org"],
+		Users:              qs["user"],
+		IncludeCredentials: false,
+		Limit:              limit,
+		Offset:             offset,
+	}, nil
 }

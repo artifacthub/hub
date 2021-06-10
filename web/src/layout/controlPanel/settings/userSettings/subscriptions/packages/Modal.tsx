@@ -131,10 +131,10 @@ const SubscriptionModal = (props: Props) => {
         <label className={`font-weight-bold ${styles.label}`} htmlFor="kind" id="events-group">
           Events
         </label>
-        <div role="group" aria-labelledby="events-group">
+        <div role="group" aria-labelledby="events-group" className="pb-2">
           {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
             return (
-              <div className="mb-3" key={`radio_${subs.name}`}>
+              <div className="mb-2" key={`radio_${subs.name}`}>
                 <CheckBox
                   key={`check_${subs.kind}`}
                   name="eventKind"

@@ -103,22 +103,19 @@ type RepositoryManager interface {
     CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
     ClaimOwnership(ctx context.Context, name, orgName string) error
     Delete(ctx context.Context, name string) error
-    GetAll(ctx context.Context, includeCredentials bool) ([]*Repository, error)
-    GetAllJSON(ctx context.Context, includeCredentials bool) ([]byte, error)
-    GetByID(ctx context.Context, repositorID string, includeCredentials bool) (*Repository, error)
-    GetByKind(ctx context.Context, kind RepositoryKind, includeCredentials bool) ([]*Repository, error)
-    GetByKindJSON(ctx context.Context, kind RepositoryKind, includeCredentials bool) ([]byte, error)
+    GetByID(ctx context.Context, repositoryID string, includeCredentials bool) (*Repository, error)
     GetByName(ctx context.Context, name string, includeCredentials bool) (*Repository, error)
     GetMetadata(mdFile string) (*RepositoryMetadata, error)
     GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)
-    GetOwnedByOrgJSON(ctx context.Context, orgName string, includeCredentials bool) ([]byte, error)
-    GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error)
     GetRemoteDigest(ctx context.Context, r *Repository) (string, error)
+    Search(ctx context.Context, input *SearchRepositoryInput) (*SearchRepositoryResult, error)
+    SearchJSON(ctx context.Context, input *SearchRepositoryInput) (*JSONQueryResult, error)
+    SetLastScanningResults(ctx context.Context, repositoryID, errs string) error
     SetLastTrackingResults(ctx context.Context, repositoryID, errs string) error
-    SetVerifiedPublisher(ctx context.Context, repositorID string, verified bool) error
+    SetVerifiedPublisher(ctx context.Context, repositoryID string, verified bool) error
     Transfer(ctx context.Context, name, orgName string, ownershipClaim bool) error
     Update(ctx context.Context, r *Repository) error
-    UpdateDigest(ctx context.Context, repositorID, digest string) error
+    UpdateDigest(ctx context.Context, repositoryID, digest string) error
 }
 ```
 

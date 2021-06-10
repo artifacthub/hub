@@ -34,3 +34,9 @@ type JSONQueryResult struct {
 	Data       []byte `json:"data"`
 	TotalCount int    `json:"total_count"`
 }
+
+// Pagination defines some information about the results page to fetch.
+type Pagination struct {
+	Limit  int `json:"limit"`
+	Offset int `json:"offset"`
+}

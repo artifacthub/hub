@@ -22,7 +22,7 @@ exports[`Filters creates snapshot 1`] = `
           value="official"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-official-official"
         >
@@ -80,7 +80,7 @@ exports[`Filters creates snapshot 1`] = `
           value="verifiedPublisher"
         />
         <label
-          class="custom-control-label w-100 label"
+          class="custom-control-label label w-100"
           data-testid="checkboxLabel"
           for="undefined-verifiedPublisher-verifiedPublisher"
         >
@@ -161,7 +161,7 @@ exports[`Filters creates snapshot 1`] = `
             value="0"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-kind-0"
           >
@@ -195,7 +195,7 @@ exports[`Filters creates snapshot 1`] = `
             value="3"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-kind-3"
           >
@@ -229,7 +229,7 @@ exports[`Filters creates snapshot 1`] = `
             value="1"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-kind-1"
           >
@@ -263,7 +263,7 @@ exports[`Filters creates snapshot 1`] = `
             value="2"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-kind-2"
           >
@@ -322,7 +322,7 @@ exports[`Filters creates snapshot 1`] = `
             value="database"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-database"
           >
@@ -351,7 +351,7 @@ exports[`Filters creates snapshot 1`] = `
             value="integration-and-delivery"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-integration-and-delivery"
           >
@@ -380,7 +380,7 @@ exports[`Filters creates snapshot 1`] = `
             value="logging-and-tracing"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-logging-and-tracing"
           >
@@ -409,7 +409,7 @@ exports[`Filters creates snapshot 1`] = `
             value="machine-learning"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-machine-learning"
           >
@@ -438,7 +438,7 @@ exports[`Filters creates snapshot 1`] = `
             value="monitoring"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-monitoring"
           >
@@ -467,7 +467,7 @@ exports[`Filters creates snapshot 1`] = `
             value="networking"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-networking"
           >
@@ -496,7 +496,7 @@ exports[`Filters creates snapshot 1`] = `
             value="security"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-security"
           >
@@ -525,7 +525,7 @@ exports[`Filters creates snapshot 1`] = `
             value="storage"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-storage"
           >
@@ -554,7 +554,7 @@ exports[`Filters creates snapshot 1`] = `
             value="streaming-messaging"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-streaming-messaging"
           >
@@ -583,7 +583,7 @@ exports[`Filters creates snapshot 1`] = `
             value="web-applications"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-tsQuery-web-applications"
           >
@@ -802,7 +802,7 @@ exports[`Filters creates snapshot 1`] = `
             value="basic install"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-capabilities-basic install"
           >
@@ -836,7 +836,7 @@ exports[`Filters creates snapshot 1`] = `
             value="seamless upgrades"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-capabilities-seamless upgrades"
           >
@@ -870,7 +870,7 @@ exports[`Filters creates snapshot 1`] = `
             value="full lifecycle"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-capabilities-full lifecycle"
           >
@@ -904,7 +904,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deep insights"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-capabilities-deep insights"
           >
@@ -938,7 +938,7 @@ exports[`Filters creates snapshot 1`] = `
             value="auto pilot"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-capabilities-auto pilot"
           >
@@ -997,7 +997,7 @@ exports[`Filters creates snapshot 1`] = `
             value="operators"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-operators-operators"
           >
@@ -1026,7 +1026,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deprecated"
           />
           <label
-            class="custom-control-label w-100 label"
+            class="custom-control-label label w-100"
             data-testid="checkboxLabel"
             for="undefined-deprecated-deprecated"
           >

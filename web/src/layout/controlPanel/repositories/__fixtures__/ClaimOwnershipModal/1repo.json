@@ -1,26 +1,29 @@
-[
-  {
-    "name": "community-operators",
-    "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
-    "kind": 3,
-    "verifiedPublisher": false,
-    "official": false,
-    "userAlias": "demo"
-  },
-  {
-    "name": "hephy",
-    "url": "https://charts.teamhephy.com/",
-    "kind": 0,
-    "verifiedPublisher": false,
-    "official": false,
-    "userAlias": "demo"
-  },
-  {
-    "name": "security-hub",
-    "url": "https://github.com/falcosecurity/cloud-native-security-hub/resources/falco",
-    "kind": 1,
-    "verifiedPublisher": true,
-    "official": false,
-    "userAlias": "demo"
-  }
-]
+{
+  "items": [
+    {
+      "name": "community-operators",
+      "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
+      "kind": 3,
+      "verifiedPublisher": false,
+      "official": false,
+      "userAlias": "demo"
+    },
+    {
+      "name": "hephy",
+      "url": "https://charts.teamhephy.com/",
+      "kind": 0,
+      "verifiedPublisher": false,
+      "official": false,
+      "userAlias": "demo"
+    },
+    {
+      "name": "security-hub",
+      "url": "https://github.com/falcosecurity/cloud-native-security-hub/resources/falco",
+      "kind": 1,
+      "verifiedPublisher": true,
+      "official": false,
+      "userAlias": "demo"
+    }
+  ],
+  "paginationTotalCount": "3"
+}

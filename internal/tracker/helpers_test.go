@@ -77,7 +77,10 @@ func TestGetRepositories(t *testing.T) {
 
 		// Setup expectations
 		rm := &repo.ManagerMock{}
-		rm.On("GetByKind", ctx, hub.Helm, true).Return(nil, tests.ErrFake)
+		rm.On("Search", ctx, &hub.SearchRepositoryInput{
+			Kinds:              []hub.RepositoryKind{hub.Helm},
+			IncludeCredentials: true,
+		}).Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
 		cfg := viper.New()
@@ -93,8 +96,12 @@ func TestGetRepositories(t *testing.T) {
 
 		// Setup expectations
 		rm := &repo.ManagerMock{}
-		rm.On("GetByKind", ctx, hub.Helm, true).Return([]*hub.Repository{repo1}, nil)
-		rm.On("GetByKind", ctx, hub.OLM, true).Return([]*hub.Repository{repo2}, nil)
+		rm.On("Search", ctx, &hub.SearchRepositoryInput{
+			Kinds:              []hub.RepositoryKind{hub.Helm, hub.OLM},
+			IncludeCredentials: true,
+		}).Return(&hub.SearchRepositoryResult{
+			Repositories: []*hub.Repository{repo1, repo2},
+		}, nil)
 
 		// Run test and check expectations
 		cfg := viper.New()
@@ -128,7 +135,9 @@ func TestGetRepositories(t *testing.T) {
 
 		// Setup expectations
 		rm := &repo.ManagerMock{}
-		rm.On("GetAll", ctx, true).Return(nil, tests.ErrFake)
+		rm.On("Search", ctx, &hub.SearchRepositoryInput{
+			IncludeCredentials: true,
+		}).Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
 		cfg := viper.New()
@@ -143,13 +152,17 @@ func TestGetRepositories(t *testing.T) {
 
 		// Setup expectations
 		rm := &repo.ManagerMock{}
-		rm.On("GetAll", ctx, true).Return([]*hub.Repository{repo1, repo2, repo3}, nil)
+		rm.On("Search", ctx, &hub.SearchRepositoryInput{
+			IncludeCredentials: true,
+		}).Return(&hub.SearchRepositoryResult{
+			Repositories: []*hub.Repository{repo1, repo2, repo3},
+		}, nil)
 
 		// Run test and check expectations
 		cfg := viper.New()
 		repos, err := GetRepositories(ctx, cfg, rm)
 		assert.Nil(t, err)
-		assert.ElementsMatch(t, []*hub.Repository{repo1, repo2}, repos)
+		assert.ElementsMatch(t, []*hub.Repository{repo1, repo2}, repos) // repo3 is disabled
 		rm.AssertExpectations(t)
 	})
 }

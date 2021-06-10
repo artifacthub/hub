@@ -1,23 +1,26 @@
-[
-  {
-    "kind": 0,
-    "repository_id": "test1",
-    "name": "test1",
-    "url": "http://test1.com",
-    "userAlias": "user"
-  },
-  {
-    "kind": 1,
-    "repository_id": "test2",
-    "name": "test2",
-    "userAlias": "user1",
-    "url": "http://test2.com"
-  },
-  {
-    "kind": 0,
-    "repository_id": "test3",
-    "name": "test3",
-    "userAlias": "user",
-    "url": "http://test3.com"
-  }
-]
+{
+  "data": [
+    {
+      "kind": 0,
+      "repository_id": "test1",
+      "name": "test1",
+      "url": "http://test1.com",
+      "userAlias": "user"
+    },
+    {
+      "kind": 1,
+      "repository_id": "test2",
+      "name": "test2",
+      "userAlias": "user1",
+      "url": "http://test2.com"
+    },
+    {
+      "kind": 0,
+      "repository_id": "test3",
+      "name": "test3",
+      "userAlias": "user",
+      "url": "http://test3.com"
+    }
+  ],
+  "paginationTotalCount": "3"
+}

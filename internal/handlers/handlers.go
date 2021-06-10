@@ -214,10 +214,8 @@ func (h *Handlers) setupRouter() {
 		// Repositories
 		r.Route("/repositories", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
-			r.Get("/", h.Repositories.GetAll)
-			r.Get("/{kind:^helm$|^falco$|^olm$|^opa|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler|^coredns$}", h.Repositories.GetByKind)
+			r.Get("/search", h.Repositories.Search)
 			r.Route("/user", func(r chi.Router) {
-				r.Get("/", h.Repositories.GetOwnedByUser)
 				r.Post("/", h.Repositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
 					r.Put("/claim-ownership", h.Repositories.ClaimOwnership)
@@ -227,7 +225,6 @@ func (h *Handlers) setupRouter() {
 				})
 			})
 			r.Route("/org/{orgName}", func(r chi.Router) {
-				r.Get("/", h.Repositories.GetOwnedByOrg)
 				r.Post("/", h.Repositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
 					r.Put("/claim-ownership", h.Repositories.ClaimOwnership)

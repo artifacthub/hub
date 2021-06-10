@@ -54,10 +54,11 @@ exports[`SubscriptionModal creates snapshot 1`] = `
               </label>
               <div
                 aria-labelledby="events-group"
+                class="pb-2"
                 role="group"
               >
                 <div
-                  class="mb-3"
+                  class="mb-2"
                 >
                   <div
                     class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
@@ -74,7 +75,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       value="0"
                     />
                     <label
-                      class="custom-control-label w-100 label"
+                      class="custom-control-label label undefined"
                       data-testid="checkboxLabel"
                       for="desktop-eventKind-0"
                     >
@@ -108,7 +109,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="mb-3"
+                  class="mb-2"
                 >
                   <div
                     class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
@@ -124,7 +125,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       value="1"
                     />
                     <label
-                      class="custom-control-label w-100 label"
+                      class="custom-control-label label undefined"
                       data-testid="checkboxLabel"
                       for="desktop-eventKind-1"
                     >

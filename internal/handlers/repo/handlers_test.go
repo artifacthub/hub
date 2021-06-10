@@ -392,205 +392,81 @@ func TestDelete(t *testing.T) {
 	})
 }
 
-func TestGetAll(t *testing.T) {
-	t.Run("get all repositories succeeded", func(t *testing.T) {
-		t.Parallel()
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+func TestSearch(t *testing.T) {
+	t.Run("invalid request params", func(t *testing.T) {
+		testCases := []struct {
+			desc   string
+			params string
+		}{
+			{"invalid limit", "limit=z"},
+			{"invalid limit", "limit=100"},
+			{"invalid offset", "offset=z"},
+			{"invalid kind", "kind=z"},
+			{"invalid kind (one of them)", "kind=0&kind=z"},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(fmt.Sprintf("%s: %s", tc.desc, tc.params), func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
 
-		hw := newHandlersWrapper()
-		hw.rm.On("GetAllJSON", r.Context(), false).Return([]byte("dataJSON"), nil)
-		hw.h.GetAll(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+				hw := newHandlersWrapper()
+				hw.h.Search(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("dataJSON"), data)
-		hw.rm.AssertExpectations(t)
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
 	})
 
-	t.Run("error getting all repositories", func(t *testing.T) {
+	t.Run("invalid search input", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetAllJSON", r.Context(), false).Return(nil, tests.ErrFakeDB)
-		hw.h.GetAll(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.rm.AssertExpectations(t)
-	})
-}
-
-func TestGetByKind(t *testing.T) {
-	rctx := &chi.Context{
-		URLParams: chi.RouteParams{
-			Keys:   []string{"kind"},
-			Values: []string{"olm"},
-		},
-	}
-
-	t.Run("invalid kind provided", func(t *testing.T) {
-		t.Parallel()
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-
-		hw := newHandlersWrapper()
-		hw.h.GetByKind(w, r)
+		hw.rm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, hub.ErrInvalidInput)
+		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-		hw.rm.AssertExpectations(t)
 	})
 
-	t.Run("get repositories by kind succeeded", func(t *testing.T) {
+	t.Run("valid request, search succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM, false).Return([]byte("dataJSON"), nil)
-		hw.h.GetByKind(w, r)
+		hw.rm.On("SearchJSON", r.Context(), mock.Anything).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
+		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("dataJSON"), data)
-		hw.rm.AssertExpectations(t)
-	})
-
-	t.Run("error getting repositories by kind", func(t *testing.T) {
-		t.Parallel()
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
-
-		hw := newHandlersWrapper()
-		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM, false).Return(nil, tests.ErrFakeDB)
-		hw.h.GetByKind(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.rm.AssertExpectations(t)
-	})
-}
-
-func TestGetOwnedByOrg(t *testing.T) {
-	rctx := &chi.Context{
-		URLParams: chi.RouteParams{
-			Keys:   []string{"orgName"},
-			Values: []string{"org1"},
-		},
-	}
-
-	t.Run("get repositories owned by organization succeeded", func(t *testing.T) {
-		t.Parallel()
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
-
-		hw := newHandlersWrapper()
-		hw.rm.On("GetOwnedByOrgJSON", r.Context(), "org1").Return([]byte("dataJSON"), nil)
-		hw.h.GetOwnedByOrg(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
-
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("dataJSON"), data)
-		hw.rm.AssertExpectations(t)
-	})
-
-	t.Run("error getting repositories owned by organization", func(t *testing.T) {
-		testCases := []struct {
-			rmErr              error
-			expectedStatusCode int
-		}{
-			{
-				hub.ErrInvalidInput,
-				http.StatusBadRequest,
-			},
-			{
-				tests.ErrFakeDB,
-				http.StatusInternalServerError,
-			},
-		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.rmErr.Error(), func(t *testing.T) {
-				t.Parallel()
-				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
-				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
-
-				hw := newHandlersWrapper()
-				hw.rm.On("GetOwnedByOrgJSON", r.Context(), "org1").Return(nil, tc.rmErr)
-				hw.h.GetOwnedByOrg(w, r)
-				resp := w.Result()
-				defer resp.Body.Close()
-
-				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.rm.AssertExpectations(t)
-			})
-		}
-	})
-}
-
-func TestGetOwnedByUser(t *testing.T) {
-	t.Run("get repositories owned by user succeeded", func(t *testing.T) {
-		t.Parallel()
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-
-		hw := newHandlersWrapper()
-		hw.rm.On("GetOwnedByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
-		hw.h.GetOwnedByUser(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
-
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.rm.AssertExpectations(t)
 	})
 
-	t.Run("error getting repositories owned by user", func(t *testing.T) {
+	t.Run("error searching repositories", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
-		hw.h.GetOwnedByUser(w, r)
+		hw.rm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, tests.ErrFakeDB)
+		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

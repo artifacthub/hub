@@ -257,16 +257,7 @@ func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput)
 
 	// Search packages in database
 	inputJSON, _ := json.Marshal(input)
-	var data []byte
-	var totalCount int
-	if err := m.db.QueryRow(ctx, searchPkgsDBQ, inputJSON).Scan(&data, &totalCount); err != nil {
-		return nil, err
-	}
-
-	return &hub.JSONQueryResult{
-		Data:       data,
-		TotalCount: totalCount,
-	}, nil
+	return util.DBQueryJSONWithPagination(ctx, m.db, searchPkgsDBQ, inputJSON)
 }
 
 // SearchMonocularJSON returns a json object with the search results produced

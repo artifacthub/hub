@@ -114,6 +114,7 @@ const Filters = (props: Props) => {
                 device={props.device}
                 value={option.id.toString()}
                 className={styles.checkbox}
+                labelClassName="w-100"
                 legend={option.total}
                 label={option.name}
                 checked={isChecked(option.id.toString())}
@@ -162,6 +163,7 @@ const Filters = (props: Props) => {
                 device={props.device}
                 value={option.id.toString()}
                 className={`text-capitalize ${styles.checkbox}`}
+                labelClassName="w-100"
                 legend={option.total}
                 label={option.name}
                 checked={isChecked(option.id.toString())}
@@ -256,6 +258,7 @@ const Filters = (props: Props) => {
           value="official"
           device={props.device}
           className={styles.checkbox}
+          labelClassName="w-100"
           label="Official"
           checked={props.official || false}
           onChange={props.onOfficialChange}
@@ -280,6 +283,7 @@ const Filters = (props: Props) => {
           value="verifiedPublisher"
           device={props.device}
           className={styles.checkbox}
+          labelClassName="w-100"
           label="Verified publishers"
           checked={props.verifiedPublisher || false}
           onChange={props.onVerifiedPublisherChange}
@@ -314,6 +318,7 @@ const Filters = (props: Props) => {
             value="operators"
             device={props.device}
             className={styles.checkbox}
+            labelClassName="w-100"
             label="Only operators"
             checked={props.operators || false}
             onChange={props.onOperatorsChange}
@@ -324,6 +329,7 @@ const Filters = (props: Props) => {
             value="deprecated"
             device={props.device}
             className={styles.checkbox}
+            labelClassName="w-100"
             label="Include deprecated"
             checked={props.deprecated || false}
             onChange={props.onDeprecatedChange}

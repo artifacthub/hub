@@ -17,6 +17,8 @@ interface Props {
   onSelection: (packageItem: Package) => void;
 }
 
+const DEFAULT_LIMIT = 20;
+
 const SearchPackages = (props: Props) => {
   const inputEl = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef(null);
@@ -32,7 +34,7 @@ const SearchPackages = (props: Props) => {
         {
           tsQueryWeb: tsQueryWeb,
           filters: {},
-          limit: 20,
+          limit: DEFAULT_LIMIT,
           offset: 0,
         },
         false

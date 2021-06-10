@@ -1,63 +1,66 @@
-[
-  {
-    "repositoryId": "741de440-dbe7-4e5e-8e3e-443d149b2358",
-    "name": "appscode",
-    "url": "https://charts.appscode.com/stable/",
-    "kind": 0,
-    "verifiedPublisher": false,
-    "official": false,
-    "lastTrackingTs": 1605212420,
-    "organizationName": "test"
-  },
-  {
-    "repositoryId": "ec2d4f36-1941-48d4-8a0f-78a5aab6326f",
-    "name": "artifact",
-    "url": "oci://ghcr.io/artifacthub/artifact-hub",
-    "kind": 0,
-    "verifiedPublisher": false,
-    "official": false,
-    "lastTrackingTs": 1605212420,
-    "userAlias": "user1"
-  },
-  {
-    "repositoryId": "1989c5db-14e1-4c0e-ba97-7c00c2ee796a",
-    "name": "ditto",
-    "url": "https://github.com/ctron/ditto-operator/olm",
-    "kind": 3,
-    "verifiedPublisher": false,
-    "official": false,
-    "lastTrackingTs": 1605212420,
-    "organizationName": "test"
-  },
-  {
-    "repositoryId": "212723ec-30ca-42c3-921e-7df08d69f0f3",
-    "name": "ibm",
-    "url": "oci://docker.io/ibmcom/ibm-operator-catalog:latest",
-    "kind": 3,
-    "verifiedPublisher": false,
-    "official": false,
-    "lastTrackingTs": 1605212420,
-    "lastTrackingErrors": "error getting package ibm-blockchain version 2.5.1 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-blockchain/2.5.1\nerror getting package ibm-eventstreams version 2.0.0 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.0.0\nerror getting package ibm-eventstreams version 2.0.1 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.0.1\nerror getting package ibm-eventstreams version 2.1.0 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.1.0",
-    "userAlias": "user1"
-  },
-  {
-    "repositoryId": "9b989d77-45b2-4636-ae4e-6f77d6a1776f",
-    "name": "kubeview",
-    "url": "https://benc-uk.github.io/kubeview/charts",
-    "kind": 0,
-    "verifiedPublisher": false,
-    "official": false,
-    "lastTrackingTs": 1605212420,
-    "userAlias": "cynthia"
-  },
-  {
-    "repositoryId": "04177e5d-1707-4aa7-8ba1-1838ec565422",
-    "name": "prometheus",
-    "url": "https://prometheus-community.github.io/helm-charts",
-    "kind": 0,
-    "verifiedPublisher": false,
-    "official": false,
-    "lastTrackingTs": 1605212420,
-    "userAlias": "cynthia"
-  }
-]
+{
+  "items": [
+    {
+      "repositoryId": "741de440-dbe7-4e5e-8e3e-443d149b2358",
+      "name": "appscode",
+      "url": "https://charts.appscode.com/stable/",
+      "kind": 0,
+      "verifiedPublisher": false,
+      "official": false,
+      "lastTrackingTs": 1605212420,
+      "organizationName": "test"
+    },
+    {
+      "repositoryId": "ec2d4f36-1941-48d4-8a0f-78a5aab6326f",
+      "name": "artifact",
+      "url": "oci://ghcr.io/artifacthub/artifact-hub",
+      "kind": 0,
+      "verifiedPublisher": false,
+      "official": false,
+      "lastTrackingTs": 1605212420,
+      "userAlias": "user1"
+    },
+    {
+      "repositoryId": "1989c5db-14e1-4c0e-ba97-7c00c2ee796a",
+      "name": "ditto",
+      "url": "https://github.com/ctron/ditto-operator/olm",
+      "kind": 3,
+      "verifiedPublisher": false,
+      "official": false,
+      "lastTrackingTs": 1605212420,
+      "organizationName": "test"
+    },
+    {
+      "repositoryId": "212723ec-30ca-42c3-921e-7df08d69f0f3",
+      "name": "ibm",
+      "url": "oci://docker.io/ibmcom/ibm-operator-catalog:latest",
+      "kind": 3,
+      "verifiedPublisher": false,
+      "official": false,
+      "lastTrackingTs": 1605212420,
+      "lastTrackingErrors": "error getting package ibm-blockchain version 2.5.1 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-blockchain/2.5.1\nerror getting package ibm-eventstreams version 2.0.0 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.0.0\nerror getting package ibm-eventstreams version 2.0.1 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.0.1\nerror getting package ibm-eventstreams version 2.1.0 csv: csv file not found in /var/folders/2p/wr9v_dbx71z_84vtlw2fkw0c0000gn/T/artifact-hub691688966/ibm-eventstreams/2.1.0",
+      "userAlias": "user1"
+    },
+    {
+      "repositoryId": "9b989d77-45b2-4636-ae4e-6f77d6a1776f",
+      "name": "kubeview",
+      "url": "https://benc-uk.github.io/kubeview/charts",
+      "kind": 0,
+      "verifiedPublisher": false,
+      "official": false,
+      "lastTrackingTs": 1605212420,
+      "userAlias": "cynthia"
+    },
+    {
+      "repositoryId": "04177e5d-1707-4aa7-8ba1-1838ec565422",
+      "name": "prometheus",
+      "url": "https://prometheus-community.github.io/helm-charts",
+      "kind": 0,
+      "verifiedPublisher": false,
+      "official": false,
+      "lastTrackingTs": 1605212420,
+      "userAlias": "cynthia"
+    }
+  ],
+  "paginationTotalCount": "6"
+}

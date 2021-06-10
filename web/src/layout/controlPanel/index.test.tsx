@@ -62,7 +62,7 @@ describe('ControlPanelView', () => {
   });
 
   it('renders correctly', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
@@ -74,7 +74,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls history replace when section is undefined', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
@@ -90,7 +90,7 @@ describe('ControlPanelView', () => {
   });
 
   it('renders 3 sections on user context', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     const { getByRole, getAllByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
@@ -110,7 +110,7 @@ describe('ControlPanelView', () => {
   });
 
   it('renders 3 sections on org context', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     const { getByRole, getAllByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -130,7 +130,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls updateOrg from ctx when organization name is defined', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -146,7 +146,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls updateOrg from ctx when organization userAlias is empty', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -162,7 +162,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls unselectOrg from ctx when user alias is defined', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -178,7 +178,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls unselectOrg from ctx when user alias is defined and org name is empty', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -194,7 +194,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls history replace when org name is defined, but not repo name', async () => {
-    mocked(API).getRepositories.mockResolvedValue([]);
+    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>

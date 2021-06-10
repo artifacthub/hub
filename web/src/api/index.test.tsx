@@ -7,6 +7,7 @@ import {
   ChartTemplatesData,
   CheckAvailabilityProps,
   ErrorKind,
+  ListableItems,
   OptOutItem,
   Organization,
   Package,
@@ -367,37 +368,30 @@ describe('API', () => {
       });
     });
 
-    describe('getRepositories', () => {
+    describe('searchRepositories', () => {
       it('success from user', async () => {
-        const repositories: Repository[] = getData('11') as Repository[];
-        fetchMock.mockResponse(JSON.stringify(repositories), {
+        const data: ListableItems = getData('11') as ListableItems;
+        fetchMock.mockResponse(JSON.stringify(data), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '3',
           },
           status: 200,
         });
 
-        const response = await API.getRepositories();
-
-        expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user');
-        expect(response).toEqual(API.toCamelCase(repositories));
-      });
-
-      it('success from org', async () => {
-        const repositories: Repository[] = getData('11') as Repository[];
-        fetchMock.mockResponse(JSON.stringify(repositories), {
-          headers: {
-            'content-type': 'application/json',
-          },
-          status: 200,
+        const response = await API.searchRepositories({
+          name: 'test',
+          organizations: ['org1', 'org2'],
+          users: ['user1'],
+          limit: 20,
+          offset: 0,
         });
 
-        const response = await API.getRepositories('org1');
-
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1');
-        expect(response).toEqual(API.toCamelCase(repositories));
+        expect(fetchMock.mock.calls[0][0]).toEqual(
+          '/api/v1/repositories/search?limit=20&offset=0&user=user1&org=org1&org=org2&name=test'
+        );
+        expect(response).toEqual(API.toCamelCase(data));
       });
     });
 
@@ -1542,24 +1536,6 @@ describe('API', () => {
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out/optOutId');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
-      });
-    });
-
-    describe('getAllRepositories', () => {
-      it('success', async () => {
-        const repositories: Repository[] = getData('32') as Repository[];
-        fetchMock.mockResponse(JSON.stringify(repositories), {
-          headers: {
-            'content-type': 'application/json',
-          },
-          status: 200,
-        });
-
-        const response = await API.getAllRepositories();
-
-        expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories');
-        expect(response).toEqual(API.toCamelCase(repositories));
       });
     });
 

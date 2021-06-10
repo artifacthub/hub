@@ -673,95 +673,6 @@ func TestDelete(t *testing.T) {
 	})
 }
 
-func TestGetAll(t *testing.T) {
-	t.Parallel()
-	ctx := context.Background()
-
-	db := &tests.DBMock{}
-	db.On("QueryRow", ctx, getAllReposDBQ, false).Return([]byte(`
-	[{
-        "repository_id": "00000000-0000-0000-0000-000000000001",
-        "name": "repo1",
-        "display_name": "Repo 1",
-		"url": "https://repo1.com",
-		"kind": 0,
-		"verified_publisher": true,
-		"official": true
-    }, {
-        "repository_id": "00000000-0000-0000-0000-000000000002",
-        "name": "repo2",
-        "display_name": "Repo 2",
-		"url": "https://repo2.com",
-		"kind": 0,
-		"verified_publisher": true,
-		"official": true
-    }, {
-        "repository_id": "00000000-0000-0000-0000-000000000003",
-        "name": "repo3",
-        "display_name": "Repo 3",
-		"url": "https://repo3.com",
-		"kind": 1,
-		"verified_publisher": true,
-		"official": true
-    }]
-	`), nil)
-	m := NewManager(cfg, db, nil, nil)
-
-	r, err := m.GetAll(ctx, false)
-	require.NoError(t, err)
-	assert.Len(t, r, 3)
-	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].RepositoryID)
-	assert.Equal(t, "repo1", r[0].Name)
-	assert.Equal(t, "Repo 1", r[0].DisplayName)
-	assert.Equal(t, "https://repo1.com", r[0].URL)
-	assert.Equal(t, hub.Helm, r[0].Kind)
-	assert.True(t, r[0].VerifiedPublisher)
-	assert.True(t, r[0].Official)
-	assert.Equal(t, "00000000-0000-0000-0000-000000000002", r[1].RepositoryID)
-	assert.Equal(t, "repo2", r[1].Name)
-	assert.Equal(t, "Repo 2", r[1].DisplayName)
-	assert.Equal(t, "https://repo2.com", r[1].URL)
-	assert.Equal(t, hub.Helm, r[1].Kind)
-	assert.True(t, r[1].VerifiedPublisher)
-	assert.True(t, r[1].Official)
-	assert.Equal(t, "00000000-0000-0000-0000-000000000003", r[2].RepositoryID)
-	assert.Equal(t, "repo3", r[2].Name)
-	assert.Equal(t, "Repo 3", r[2].DisplayName)
-	assert.Equal(t, "https://repo3.com", r[2].URL)
-	assert.Equal(t, hub.Falco, r[2].Kind)
-	assert.True(t, r[2].VerifiedPublisher)
-	assert.True(t, r[2].Official)
-	db.AssertExpectations(t)
-}
-
-func TestGetAllJSON(t *testing.T) {
-	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
-
-	t.Run("database error", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAllReposDBQ, false).Return(nil, tests.ErrFakeDB)
-		m := NewManager(cfg, db, nil, nil)
-
-		dataJSON, err := m.GetAllJSON(ctx, false)
-		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("all repositories data returned successfully", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAllReposDBQ, false).Return([]byte("dataJSON"), nil)
-		m := NewManager(cfg, db, nil, nil)
-
-		dataJSON, err := m.GetAllJSON(ctx, false)
-		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
-		db.AssertExpectations(t)
-	})
-}
-
 func TestGetByID(t *testing.T) {
 	ctx := context.Background()
 
@@ -829,80 +740,6 @@ func TestGetByID(t *testing.T) {
 		assert.Equal(t, hub.Helm, r.Kind)
 		assert.True(t, r.VerifiedPublisher)
 		assert.True(t, r.Official)
-		db.AssertExpectations(t)
-	})
-}
-
-func TestGetByKind(t *testing.T) {
-	t.Parallel()
-	ctx := context.Background()
-
-	db := &tests.DBMock{}
-	db.On("QueryRow", ctx, getReposByKindDBQ, hub.Helm, false).Return([]byte(`
-	[{
-        "repository_id": "00000000-0000-0000-0000-000000000001",
-        "name": "repo1",
-        "display_name": "Repo 1",
-		"url": "https://repo1.com",
-		"kind": 0,
-		"verified_publisher": true,
-		"official": true
-    }, {
-        "repository_id": "00000000-0000-0000-0000-000000000002",
-        "name": "repo2",
-        "display_name": "Repo 2",
-		"url": "https://repo2.com",
-		"kind": 0,
-		"verified_publisher": true,
-		"official": true
-    }]
-	`), nil)
-	m := NewManager(cfg, db, nil, nil)
-
-	r, err := m.GetByKind(ctx, hub.Helm, false)
-	require.NoError(t, err)
-	assert.Len(t, r, 2)
-	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].RepositoryID)
-	assert.Equal(t, "repo1", r[0].Name)
-	assert.Equal(t, "Repo 1", r[0].DisplayName)
-	assert.Equal(t, "https://repo1.com", r[0].URL)
-	assert.Equal(t, hub.Helm, r[0].Kind)
-	assert.True(t, r[0].VerifiedPublisher)
-	assert.True(t, r[0].Official)
-	assert.Equal(t, "00000000-0000-0000-0000-000000000002", r[1].RepositoryID)
-	assert.Equal(t, "repo2", r[1].Name)
-	assert.Equal(t, "Repo 2", r[1].DisplayName)
-	assert.Equal(t, "https://repo2.com", r[1].URL)
-	assert.Equal(t, hub.Helm, r[1].Kind)
-	assert.True(t, r[1].VerifiedPublisher)
-	assert.True(t, r[1].Official)
-	db.AssertExpectations(t)
-}
-
-func TestGetByKindJSON(t *testing.T) {
-	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
-
-	t.Run("database error", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM, false).Return(nil, tests.ErrFakeDB)
-		m := NewManager(cfg, db, nil, nil)
-
-		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM, false)
-		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("all repositories data returned successfully", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM, false).Return([]byte("dataJSON"), nil)
-		m := NewManager(cfg, db, nil, nil)
-
-		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM, false)
-		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
 	})
 }
@@ -1124,85 +961,6 @@ func TestGetPackagesDigest(t *testing.T) {
 	})
 }
 
-func TestGetOwnedByOrgJSON(t *testing.T) {
-	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
-
-	t.Run("user id not found in ctx", func(t *testing.T) {
-		t.Parallel()
-		m := NewManager(cfg, nil, nil, nil)
-		assert.Panics(t, func() {
-			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName", false)
-		})
-	})
-
-	t.Run("invalid input", func(t *testing.T) {
-		t.Parallel()
-		m := NewManager(cfg, nil, nil, nil)
-		_, err := m.GetOwnedByOrgJSON(ctx, "", false)
-		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
-	})
-
-	t.Run("database error", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName", false).Return(nil, tests.ErrFakeDB)
-		m := NewManager(cfg, db, nil, nil)
-
-		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName", false)
-		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("org repositories data returned successfully", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName", false).Return([]byte("dataJSON"), nil)
-		m := NewManager(cfg, db, nil, nil)
-
-		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName", false)
-		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
-		db.AssertExpectations(t)
-	})
-}
-
-func TestGetOwnedByUserJSON(t *testing.T) {
-	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
-
-	t.Run("user id not found in ctx", func(t *testing.T) {
-		t.Parallel()
-		m := NewManager(cfg, nil, nil, nil)
-		assert.Panics(t, func() {
-			_, _ = m.GetOwnedByUserJSON(context.Background(), false)
-		})
-	})
-
-	t.Run("database error", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserReposDBQ, "userID", false).Return(nil, tests.ErrFakeDB)
-		m := NewManager(cfg, db, nil, nil)
-
-		dataJSON, err := m.GetOwnedByUserJSON(ctx, false)
-		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("user repositories data returned successfully", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserReposDBQ, "userID", false).Return([]byte("dataJSON"), nil)
-		m := NewManager(cfg, db, nil, nil)
-
-		dataJSON, err := m.GetOwnedByUserJSON(ctx, false)
-		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
-		db.AssertExpectations(t)
-	})
-}
-
 func TestGetRemoteDigest(t *testing.T) {
 	ctx := context.Background()
 	helmHTTP := &hub.Repository{
@@ -1231,6 +989,182 @@ func TestGetRemoteDigest(t *testing.T) {
 		digest, err := m.GetRemoteDigest(ctx, helmHTTP)
 		assert.Equal(t, "digest", digest)
 		assert.Nil(t, err)
+	})
+}
+
+func TestSearch(t *testing.T) {
+	t.Parallel()
+	ctx := context.Background()
+	input := &hub.SearchRepositoryInput{}
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			input  *hub.SearchRepositoryInput
+		}{
+			{
+				"invalid user alias",
+				&hub.SearchRepositoryInput{
+					Users: []string{""},
+				},
+			},
+			{
+				"invalid organization name",
+				&hub.SearchRepositoryInput{
+					Orgs: []string{""},
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				m := NewManager(cfg, nil, nil, nil)
+				result, err := m.Search(ctx, tc.input)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+				assert.Nil(t, result)
+			})
+		}
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, searchRepositoriesDBQ, mock.Anything).Return([]interface{}{[]byte(`
+	[
+		{
+			"repository_id": "00000000-0000-0000-0000-000000000001",
+			"name": "repo1",
+			"display_name": "Repo 1",
+			"url": "https://repo1.com",
+			"kind": 0,
+			"verified_publisher": true,
+			"official": true
+    	},
+		{
+			"repository_id": "00000000-0000-0000-0000-000000000002",
+			"name": "repo2",
+			"display_name": "Repo 2",
+			"url": "https://repo2.com",
+			"kind": 0,
+			"verified_publisher": true,
+			"official": true
+    	},
+		{
+			"repository_id": "00000000-0000-0000-0000-000000000003",
+			"name": "repo3",
+			"display_name": "Repo 3",
+			"url": "https://repo3.com",
+			"kind": 1,
+			"verified_publisher": true,
+			"official": true
+    	}
+	]
+	`), 3}, nil)
+		m := NewManager(cfg, db, nil, nil)
+
+		result, err := m.Search(ctx, input)
+		r := result.Repositories
+
+		require.NoError(t, err)
+		assert.Equal(t, 3, result.TotalCount)
+		assert.Len(t, r, 3)
+		assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].RepositoryID)
+		assert.Equal(t, "repo1", r[0].Name)
+		assert.Equal(t, "Repo 1", r[0].DisplayName)
+		assert.Equal(t, "https://repo1.com", r[0].URL)
+		assert.Equal(t, hub.Helm, r[0].Kind)
+		assert.True(t, r[0].VerifiedPublisher)
+		assert.True(t, r[0].Official)
+		assert.Equal(t, "00000000-0000-0000-0000-000000000002", r[1].RepositoryID)
+		assert.Equal(t, "repo2", r[1].Name)
+		assert.Equal(t, "Repo 2", r[1].DisplayName)
+		assert.Equal(t, "https://repo2.com", r[1].URL)
+		assert.Equal(t, hub.Helm, r[1].Kind)
+		assert.True(t, r[1].VerifiedPublisher)
+		assert.True(t, r[1].Official)
+		assert.Equal(t, "00000000-0000-0000-0000-000000000003", r[2].RepositoryID)
+		assert.Equal(t, "repo3", r[2].Name)
+		assert.Equal(t, "Repo 3", r[2].DisplayName)
+		assert.Equal(t, "https://repo3.com", r[2].URL)
+		assert.Equal(t, hub.Falco, r[2].Kind)
+		assert.True(t, r[2].VerifiedPublisher)
+		assert.True(t, r[2].Official)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, searchRepositoriesDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
+		m := NewManager(cfg, db, nil, nil)
+
+		result, err := m.Search(ctx, input)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, result)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestSearchJSON(t *testing.T) {
+	ctx := context.Background()
+	input := &hub.SearchRepositoryInput{}
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			input  *hub.SearchRepositoryInput
+		}{
+			{
+				"invalid user alias",
+				&hub.SearchRepositoryInput{
+					Users: []string{""},
+				},
+			},
+			{
+				"invalid organization name",
+				&hub.SearchRepositoryInput{
+					Orgs: []string{""},
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				m := NewManager(cfg, nil, nil, nil)
+				result, err := m.SearchJSON(ctx, tc.input)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+				assert.Nil(t, result)
+			})
+		}
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, searchRepositoriesDBQ, mock.Anything).
+			Return([]interface{}{[]byte("dataJSON"), 1}, nil)
+		m := NewManager(cfg, db, nil, nil)
+
+		result, err := m.SearchJSON(ctx, input)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), result.Data)
+		assert.Equal(t, 1, result.TotalCount)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, searchRepositoriesDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
+		m := NewManager(cfg, db, nil, nil)
+
+		result, err := m.SearchJSON(ctx, input)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, result)
+		db.AssertExpectations(t)
 	})
 }
 

@@ -13,11 +13,15 @@
   line-height: 0.75rem;
 }
 
+.iconWrapper {
+  color: var(--color-1-700);
+  padding: 0.375rem 0.75rem;
+}
+
 .input {
   background-color: transparent;
   border: none;
   padding: 0.375rem 0;
-  border-radius: 20px;
 }
 
 .input:focus {
@@ -32,20 +36,12 @@
   right: 10px;
 }
 
-.icon {
-  height: 16px;
-  width: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.tinyIcon {
-  font-size: 0.5rem;
-}
-
 .dropdown {
-  max-height: 300px;
-  overflow-x: auto;
+  top: 2.65rem;
+}
+
+.table {
+  word-break: break-word;
 }
 
 .table th {
@@ -57,6 +53,7 @@
 }
 
 .disabledCell {
+  cursor: auto;
   opacity: 0.5;
   background-color: var(--color-1-2);
 }
@@ -67,6 +64,31 @@
 
 .fitCell {
   width: 1%;
+}
+
+.icon {
+  height: 17px;
+  width: auto;
+}
+
+.tinyIcon {
+  font-size: 0.5rem;
+}
+
+.imageWrapper {
+  min-width: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 2px solid var(--color-1-10);
+  box-shadow: 0px 0px 2px 0px var(--color-1-20);
+}
+
+.image {
+  max-width: calc(100% - 2px);
+  max-height: calc(100% - 2px);
+  font-size: 1.5rem;
 }
 
 .tableWrapper {
@@ -91,41 +113,8 @@
   background-color: var(--code-bg-md);
 }
 
-.repoCell {
-  width: 65%;
-}
-
-.activeUrlColumn .repoCell {
-  width: 25%;
-}
-
-.urlCell {
-  width: 45%;
-}
-
-.fieldFeedback {
-  left: 0;
-  top: 35px;
-}
-
-.truncateWrapper {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-}
-
 @media only screen and (max-width: 767.98px) {
   .tableWrapper td {
     font-size: 0.85rem;
-  }
-
-  .activeUrlColumn .repoCell {
-    width: 65%;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .iconCell {
-    width: 42px;
   }
 }

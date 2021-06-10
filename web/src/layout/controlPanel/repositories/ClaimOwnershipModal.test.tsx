@@ -1,12 +1,15 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, Organization, Repository } from '../../../types';
+import { ErrorKind, ListableItems, Organization } from '../../../types';
+import alertDispatcher from '../../../utils/alertDispatcher';
 import ClaimModal from './ClaimOwnershipModal';
 jest.mock('../../../api');
+jest.mock('../../../utils/alertDispatcher');
 
 const onAuthErrorMock = jest.fn();
 const scrollIntoViewMock = jest.fn();
@@ -63,8 +66,8 @@ const getMockOrganizations = (fixtureId: string): Organization[] => {
   return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}org.json`) as Organization[];
 };
 
-const getMockRepositories = (fixtureId: string): Repository[] => {
-  return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}repo.json`) as Repository[];
+const getMockRepositories = (fixtureId: string): ListableItems => {
+  return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}repo.json`) as ListableItems;
 };
 
 describe('Claim Repository Modal - repositories section', () => {
@@ -76,7 +79,7 @@ describe('Claim Repository Modal - repositories section', () => {
     const mockOrganizations = getMockOrganizations('1');
     mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
     const mockRepositories = getMockRepositories('1');
-    mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+    mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
     const result = render(
       <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -86,7 +89,6 @@ describe('Claim Repository Modal - repositories section', () => {
 
     await waitFor(() => {
       expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -96,7 +98,7 @@ describe('Claim Repository Modal - repositories section', () => {
       const mockOrganizations = getMockOrganizations('1');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('1');
-      mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+      mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -106,7 +108,6 @@ describe('Claim Repository Modal - repositories section', () => {
 
       await waitFor(() => {
         expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-        expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Claim repository ownership')).toBeInTheDocument();
@@ -133,7 +134,7 @@ describe('Claim Repository Modal - repositories section', () => {
       const mockOrganizations = getMockOrganizations('1');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('1');
-      mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+      mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -143,7 +144,6 @@ describe('Claim Repository Modal - repositories section', () => {
 
       await waitFor(() => {
         expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-        expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Claim repository ownership')).toBeInTheDocument();
@@ -166,11 +166,11 @@ describe('Claim Repository Modal - repositories section', () => {
       expect(getByText(mockOrganizations[2].name)).toBeInTheDocument();
     });
 
-    it('does not render OCI repos', async () => {
+    it('displays disabled OCI repos', async () => {
       const mockOrganizations = getMockOrganizations('1');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('2');
-      mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+      mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
       const { getByTestId, getByText, getAllByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -180,17 +180,21 @@ describe('Claim Repository Modal - repositories section', () => {
 
       await waitFor(() => {
         expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-        expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Claim repository ownership')).toBeInTheDocument();
 
-      const input = getByTestId('searchTypeaheadRepositoryInput');
+      const input = getByTestId('searchRepositoriesInput');
       expect(input).toBeInTheDocument();
-      fireEvent.change(input, { target: { value: 'ch' } });
+      userEvent.type(input, 'repo');
+
+      await waitFor(() => {
+        expect(API.searchRepositories).toHaveBeenCalledTimes(1);
+      });
 
       const buttons = await waitFor(() => getAllByTestId('repoItem'));
-      expect(buttons).toHaveLength(2);
+      expect(buttons).toHaveLength(6);
+      expect(buttons[2]).toHaveClass('disabledCell');
     });
 
     describe('Claim repo', () => {
@@ -198,7 +202,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const mockOrganizations = getMockOrganizations('1');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
 
         const { getByTestId, getByText, getAllByTestId } = render(
@@ -209,17 +213,19 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-          expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
         });
 
         const radio = getByText('My user');
         fireEvent.click(radio);
 
-        const input = getByTestId('searchTypeaheadRepositoryInput');
-        expect(input).toBeInTheDocument();
-        fireEvent.change(input, { target: { value: 'gi' } });
+        userEvent.type(getByTestId('searchRepositoriesInput'), 'repo');
+
+        await waitFor(() => {
+          expect(API.searchRepositories).toHaveBeenCalledTimes(1);
+        });
 
         const buttons = await waitFor(() => getAllByTestId('repoItem'));
+        expect(buttons).toHaveLength(3);
         fireEvent.click(buttons[0]);
 
         const activeRepo = getByTestId('activeRepoItem');
@@ -234,10 +240,10 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
-          expect(API.claimRepositoryOwnership).toHaveBeenCalledWith(mockRepositories[0], undefined);
+          expect(API.claimRepositoryOwnership).toHaveBeenCalledWith(mockRepositories.items[0], undefined);
         });
 
-        waitFor(() => {
+        await waitFor(() => {
           expect(onSuccessMock).toHaveBeenCalledTimes(1);
         });
       });
@@ -246,7 +252,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const mockOrganizations = getMockOrganizations('1');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
 
         const { getByTestId, getByText, getAllByTestId } = render(
@@ -257,12 +263,15 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-          expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchTypeaheadRepositoryInput');
+        const input = getByTestId('searchRepositoriesInput');
         expect(input).toBeInTheDocument();
-        fireEvent.change(input, { target: { value: 'gi' } });
+        userEvent.type(input, 'repo');
+
+        await waitFor(() => {
+          expect(API.searchRepositories).toHaveBeenCalledTimes(1);
+        });
 
         const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
@@ -279,10 +288,10 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
-          expect(API.claimRepositoryOwnership).toHaveBeenCalledWith(mockRepositories[2], 'helm');
+          expect(API.claimRepositoryOwnership).toHaveBeenCalledWith(mockRepositories.items[1], 'helm');
         });
 
-        waitFor(() => {
+        await waitFor(() => {
           expect(onSuccessMock).toHaveBeenCalledTimes(1);
         });
       });
@@ -293,7 +302,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const mockOrganizations = getMockOrganizations('1');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
@@ -306,11 +315,14 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-          expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchTypeaheadRepositoryInput');
-        fireEvent.change(input, { target: { value: 'gi' } });
+        const input = getByTestId('searchRepositoriesInput');
+        userEvent.type(input, 'repo');
+
+        await waitFor(() => {
+          expect(API.searchRepositories).toHaveBeenCalledTimes(1);
+        });
 
         const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
@@ -329,7 +341,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const mockOrganizations = getMockOrganizations('1');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockRejectedValue({
           kind: ErrorKind.Other,
         });
@@ -344,11 +356,14 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-          expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchTypeaheadRepositoryInput');
-        fireEvent.change(input, { target: { value: 'gi' } });
+        const input = getByTestId('searchRepositoriesInput');
+        userEvent.type(input, 'repo');
+
+        await waitFor(() => {
+          expect(API.searchRepositories).toHaveBeenCalledTimes(1);
+        });
 
         const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
@@ -370,7 +385,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const mockOrganizations = getMockOrganizations('1');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
@@ -386,11 +401,14 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-          expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchTypeaheadRepositoryInput');
-        fireEvent.change(input, { target: { value: 'gi' } });
+        const input = getByTestId('searchRepositoriesInput');
+        userEvent.type(input, 'repo');
+
+        await waitFor(() => {
+          expect(API.searchRepositories).toHaveBeenCalledTimes(1);
+        });
 
         const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
@@ -412,7 +430,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const mockOrganizations = getMockOrganizations('1');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockRejectedValue({
           kind: ErrorKind.Forbidden,
         });
@@ -427,11 +445,14 @@ describe('Claim Repository Modal - repositories section', () => {
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-          expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchTypeaheadRepositoryInput');
-        fireEvent.change(input, { target: { value: 'gi' } });
+        const input = getByTestId('searchRepositoriesInput');
+        userEvent.type(input, 'repo');
+
+        await waitFor(() => {
+          expect(API.searchRepositories).toHaveBeenCalledTimes(1);
+        });
 
         const buttons = await waitFor(() => getAllByTestId('repoItem'));
         fireEvent.click(buttons[1]);
@@ -459,8 +480,6 @@ describe('Claim Repository Modal - repositories section', () => {
         mocked(API).getUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
-        const mockRepositories = getMockRepositories('1');
-        mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
 
         render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -499,11 +518,11 @@ describe('Claim Repository Modal - repositories section', () => {
       });
     });
 
-    describe('When getAllRepositories fails', () => {
+    describe('When searchRepositories fails', () => {
       it('error UnauthorizedError', async () => {
         const mockOrganizations = getMockOrganizations('1');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).getAllRepositories.mockRejectedValue({
+        mocked(API).searchRepositories.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -513,8 +532,11 @@ describe('Claim Repository Modal - repositories section', () => {
           </AppCtx.Provider>
         );
 
+        const input = screen.getByTestId('searchRepositoriesInput');
+        userEvent.type(input, 'repo');
+
         await waitFor(() => {
-          expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
+          expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
         expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
@@ -523,26 +545,28 @@ describe('Claim Repository Modal - repositories section', () => {
       it('default error', async () => {
         const mockOrganizations = getMockOrganizations('1');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).getAllRepositories.mockRejectedValue({
+        mocked(API).searchRepositories.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
-        const component = (
+        render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
         );
 
-        const { getByText, rerender } = render(component);
+        const input = screen.getByTestId('searchRepositoriesInput');
+        userEvent.type(input, 'repo');
 
         await waitFor(() => {
-          expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
+          expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
-        rerender(component);
-
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred getting the repositories, please try again later.')).toBeInTheDocument();
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred searching repositories, please try again later.',
+        });
       });
     });
   });

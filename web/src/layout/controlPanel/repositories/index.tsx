@@ -8,10 +8,11 @@ import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
-import { AuthorizerAction, ErrorKind, Repository as Repo } from '../../../types';
+import { AuthorizerAction, ErrorKind, Repository as Repo, Repository, SearchRepositoriesQuery } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
+import Pagination from '../../common/Pagination';
 import ActionBtn from '../ActionBtn';
 import RepositoryCard from './Card';
 import ClaimOwnershipRepositoryModal from './ClaimOwnershipModal';
@@ -27,7 +28,10 @@ interface Props {
   onAuthError: () => void;
   repoName?: string;
   visibleModal?: string;
+  activePage?: string;
 }
+
+const DEFAULT_LIMIT = 10;
 
 const RepositoriesSection = (props: Props) => {
   const history = useHistory();
@@ -40,12 +44,43 @@ const RepositoriesSection = (props: Props) => {
   const [repositories, setRepositories] = useState<Repo[] | undefined>(undefined);
   const [activeOrg, setActiveOrg] = useState<undefined | string>(ctx.prefs.controlPanel.selectedOrg);
   const [apiError, setApiError] = useState<null | string>(null);
+  const [activePage, setActivePage] = useState<number>(props.activePage ? parseInt(props.activePage) : 1);
+
+  const calculateOffset = (pageNumber?: number): number => {
+    return DEFAULT_LIMIT * ((pageNumber || activePage) - 1);
+  };
+
+  const [offset, setOffset] = useState<number>(calculateOffset());
+  const [total, setTotal] = useState<number | undefined>(undefined);
+
+  const onPageNumberChange = (pageNumber: number): void => {
+    setOffset(calculateOffset(pageNumber));
+    setActivePage(pageNumber);
+  };
+
+  const updatePageNumber = () => {
+    history.replace({
+      search: `?page=${activePage}${props.repoName ? `&repo-name=${props.repoName}` : ''}`,
+    });
+  };
 
   async function fetchRepositories() {
     try {
       setIsLoading(true);
-      const repos = await API.getRepositories(activeOrg);
+      let query: SearchRepositoriesQuery = {
+        offset: offset,
+        limit: DEFAULT_LIMIT,
+      };
+      if (activeOrg) {
+        query.organizations = [activeOrg];
+      } else {
+        query.users = [ctx.user!.alias];
+      }
+      const data = await API.searchRepositories(query);
+      const repos = data.items as Repository[];
+
       setRepositories(repos);
+      setTotal(parseInt(data.paginationTotalCount));
       // Check if active repo logs modal is in the available repos
       if (!isUndefined(props.repoName)) {
         const activeRepo = repos.find((repo: Repo) => repo.name === props.repoName);
@@ -53,9 +88,11 @@ const RepositoriesSection = (props: Props) => {
         if (isUndefined(activeRepo)) {
           dispatch(unselectOrg());
           history.replace({
-            search: '',
+            search: `?page=${activePage}`,
           });
         }
+      } else {
+        updatePageNumber();
       }
       setApiError(null);
       setIsLoading(false);
@@ -71,12 +108,38 @@ const RepositoriesSection = (props: Props) => {
   }
 
   useEffect(() => {
-    fetchRepositories();
+    if (isUndefined(props.activePage)) {
+      updatePageNumber();
+    }
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (props.activePage && activePage !== parseInt(props.activePage)) {
+      fetchRepositories();
+    }
+  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (!isUndefined(repositories)) {
+      if (activePage === 1) {
+        // fetchRepositories is forced when context changes
+        fetchRepositories();
+      } else {
+        // when current page is different to 1, to update page number fetchRepositories is called
+        onPageNumberChange(1);
+      }
+    }
   }, [activeOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    setActiveOrg(ctx.prefs.controlPanel.selectedOrg);
-  }, [ctx.prefs.controlPanel.selectedOrg]);
+    if (activeOrg !== ctx.prefs.controlPanel.selectedOrg) {
+      setActiveOrg(ctx.prefs.controlPanel.selectedOrg);
+    }
+  }, [ctx.prefs.controlPanel.selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    fetchRepositories();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <main
@@ -198,23 +261,34 @@ const RepositoriesSection = (props: Props) => {
                 )}
               </NoData>
             ) : (
-              <div className="row mt-3 mt-md-4" data-testid="repoList">
-                {repositories.map((repo: Repo) => (
-                  <RepositoryCard
-                    key={repo.name}
-                    repository={repo}
-                    visibleModal={
-                      // Legacy - old tracking errors email were not passing modal param
-                      !isUndefined(props.repoName) && repo.name === props.repoName
-                        ? props.visibleModal || 'tracking'
-                        : undefined
-                    }
-                    setModalStatus={setModalStatus}
-                    onSuccess={fetchRepositories}
-                    onAuthError={props.onAuthError}
+              <>
+                <div className="row mt-3 mt-md-4" data-testid="repoList">
+                  {repositories.map((repo: Repo) => (
+                    <RepositoryCard
+                      key={repo.name}
+                      repository={repo}
+                      visibleModal={
+                        // Legacy - old tracking errors email were not passing modal param
+                        !isUndefined(props.repoName) && repo.name === props.repoName
+                          ? props.visibleModal || 'tracking'
+                          : undefined
+                      }
+                      setModalStatus={setModalStatus}
+                      onSuccess={fetchRepositories}
+                      onAuthError={props.onAuthError}
+                    />
+                  ))}
+                </div>
+                {!isUndefined(total) && (
+                  <Pagination
+                    limit={DEFAULT_LIMIT}
+                    offset={offset}
+                    total={total}
+                    active={activePage}
+                    onChange={onPageNumberChange}
                   />
-                ))}
-              </div>
+                )}
+              </>
             )}
           </>
         )}

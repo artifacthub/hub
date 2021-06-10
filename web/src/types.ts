@@ -41,6 +41,11 @@ export interface Repository {
   scannerDisabled?: boolean;
 }
 
+export interface ListableItems {
+  items: any[];
+  paginationTotalCount: string;
+}
+
 export interface Maintainer {
   name?: string;
   email: string;
@@ -195,7 +200,7 @@ export interface SearchFiltersURL {
   official?: boolean | null;
 }
 
-export interface SearchQuery {
+export interface SearchPackagesQuery {
   tsQueryWeb?: string;
   tsQuery?: string[];
   filters: {
@@ -208,6 +213,14 @@ export interface SearchQuery {
   limit: number;
   offset: number;
   total?: number;
+}
+
+export interface SearchRepositoriesQuery {
+  limit: number;
+  offset: number;
+  organizations?: string[];
+  users?: string[];
+  name?: string;
 }
 
 export interface SearchResults {
