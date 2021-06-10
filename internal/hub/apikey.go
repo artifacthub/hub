@@ -18,7 +18,7 @@ type APIKeyManager interface {
 	Check(ctx context.Context, apiKeyID, apiKeySecret string) (*CheckAPIKeyOutput, error)
 	Delete(ctx context.Context, apiKeyID string) error
 	GetJSON(ctx context.Context, apiKeyID string) ([]byte, error)
-	GetOwnedByUserJSON(ctx context.Context) ([]byte, error)
+	GetOwnedByUserJSON(ctx context.Context, p *Pagination) (*JSONQueryResult, error)
 	Update(ctx context.Context, ak *APIKey) error
 }
 

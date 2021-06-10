@@ -2,29 +2,54 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { AuthorizerAction, ErrorKind, Member } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
+import Pagination from '../../common/Pagination';
 import ActionBtn from '../ActionBtn';
 import MemberCard from './Card';
 import styles from './MembersSection.module.css';
 import MemberModal from './Modal';
 
 interface Props {
+  activePage?: string;
   onAuthError: () => void;
 }
 
+const DEFAULT_LIMIT = 10;
+
 const MembersSection = (props: Props) => {
+  const history = useHistory();
   const { ctx } = useContext(AppCtx);
   const [isGettingMembers, setIsGettingMembers] = useState(false);
   const [members, setMembers] = useState<Member[] | undefined>(undefined);
   const [modalMemberOpen, setModalMemberOpen] = useState(false);
   const [confirmedMembersNumber, setConfirmedMembersNumber] = useState<number>(0);
-  const selectedOrg = ctx.prefs.controlPanel.selectedOrg;
+  const [activeOrg, setActiveOrg] = useState<undefined | string>(ctx.prefs.controlPanel.selectedOrg);
   const [apiError, setApiError] = useState<null | string>(null);
+  const [activePage, setActivePage] = useState<number>(props.activePage ? parseInt(props.activePage) : 1);
+
+  const calculateOffset = (pageNumber?: number): number => {
+    return DEFAULT_LIMIT * ((pageNumber || activePage) - 1);
+  };
+
+  const [offset, setOffset] = useState<number>(calculateOffset());
+  const [total, setTotal] = useState<number | undefined>(undefined);
+
+  const onPageNumberChange = (pageNumber: number): void => {
+    setOffset(calculateOffset(pageNumber));
+    setActivePage(pageNumber);
+  };
+
+  const updatePageNumber = () => {
+    history.replace({
+      search: `?page=${activePage}`,
+    });
+  };
 
   const getConfirmedMembersNumber = (members: Member[]): number => {
     const confirmedMembers = members.filter((member: Member) => member.confirmed);
@@ -34,9 +59,17 @@ const MembersSection = (props: Props) => {
   async function fetchMembers() {
     try {
       setIsGettingMembers(true);
-      const membersList = await API.getOrganizationMembers(selectedOrg!);
-      setMembers(membersList);
-      setConfirmedMembersNumber(getConfirmedMembersNumber(membersList));
+      const data = await API.getOrganizationMembers(
+        {
+          limit: DEFAULT_LIMIT,
+          offset: offset,
+        },
+        activeOrg!
+      );
+      setMembers(data.items);
+      setTotal(parseInt(data.paginationTotalCount));
+      setConfirmedMembersNumber(getConfirmedMembersNumber(data.items));
+      updatePageNumber();
       setApiError(null);
       setIsGettingMembers(false);
     } catch (err) {
@@ -51,8 +84,32 @@ const MembersSection = (props: Props) => {
   }
 
   useEffect(() => {
+    if (props.activePage && activePage !== parseInt(props.activePage)) {
+      fetchMembers();
+    }
+  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (!isUndefined(members)) {
+      if (activePage === 1) {
+        // fetchMembers is forced when context changes
+        fetchMembers();
+      } else {
+        // when current page is different to 1, to update page number fetchMembers is called
+        onPageNumberChange(1);
+      }
+    }
+  }, [activeOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (activeOrg !== ctx.prefs.controlPanel.selectedOrg) {
+      setActiveOrg(ctx.prefs.controlPanel.selectedOrg);
+    }
+  }, [ctx.prefs.controlPanel.selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
     fetchMembers();
-  }, [selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <main
@@ -114,17 +171,31 @@ const MembersSection = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="row mt-4 mt-md-5">
-                  {members.map((member: Member) => (
-                    <MemberCard
-                      key={`member_${member.alias}`}
-                      member={member}
-                      onAuthError={props.onAuthError}
-                      onSuccess={fetchMembers}
-                      membersNumber={confirmedMembersNumber}
-                    />
-                  ))}
-                </div>
+                <>
+                  <div className="row mt-4 mt-md-5">
+                    {members.map((member: Member) => (
+                      <MemberCard
+                        key={`member_${member.alias}`}
+                        member={member}
+                        onAuthError={props.onAuthError}
+                        onSuccess={fetchMembers}
+                        membersNumber={confirmedMembersNumber}
+                      />
+                    ))}
+                  </div>
+                  {!isUndefined(total) && (
+                    <div className="mx-auto">
+                      <Pagination
+                        limit={DEFAULT_LIMIT}
+                        offset={offset}
+                        total={total}
+                        active={activePage}
+                        className="my-5"
+                        onChange={onPageNumberChange}
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </>
           )}

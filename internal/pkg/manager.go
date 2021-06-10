@@ -20,7 +20,7 @@ const (
 	getPkgChangeLogDBQ              = `select get_package_changelog($1::uuid)`
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
 	getPkgSummaryDBQ                = `select get_package_summary($1::jsonb)`
-	getPkgsStarredByUserDBQ         = `select get_packages_starred_by_user($1::uuid)`
+	getPkgsStarredByUserDBQ         = `select * from get_packages_starred_by_user($1::uuid, $2::int, $3::int)`
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
 	getSnapshotSecurityReportDBQ    = `select security_report from snapshot where package_id = $1 and version = $2`
 	getSnapshotsToScanDBQ           = `select get_snapshots_to_scan()`
@@ -116,9 +116,9 @@ func (m *Manager) GetSnapshotsToScan(ctx context.Context) ([]*hub.SnapshotToScan
 
 // GetStarredByUserJSON returns a json object with packages starred by the user
 // doing the request. The json object is built by the database.
-func (m *Manager) GetStarredByUserJSON(ctx context.Context) ([]byte, error) {
+func (m *Manager) GetStarredByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	return util.DBQueryJSON(ctx, m.db, getPkgsStarredByUserDBQ, userID)
+	return util.DBQueryJSONWithPagination(ctx, m.db, getPkgsStarredByUserDBQ, userID, p.Limit, p.Offset)
 }
 
 // GetStarsJSON returns the number of stars of the given package, indicating as

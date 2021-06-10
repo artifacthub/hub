@@ -21,7 +21,7 @@ const (
 	deleteAPIKeyDBQ    = `select delete_api_key($1::uuid, $2::uuid)`
 	getAPIKeyDBQ       = `select get_api_key($1::uuid, $2::uuid)`
 	getAPIKeyUserIDDBQ = `select user_id, secret from api_key where api_key_id = $1`
-	getUserAPIKeysDBQ  = `select get_user_api_keys($1::uuid)`
+	getUserAPIKeysDBQ  = `select * from get_user_api_keys($1::uuid, $2::int, $3::int)`
 	updateAPIKeyDBQ    = `select update_api_key($1::jsonb)`
 )
 
@@ -125,11 +125,11 @@ func (m *Manager) GetJSON(ctx context.Context, apiKeyID string) ([]byte, error) 
 
 // GetOwnedByUserJSON returns the api keys belonging to the requesting user as
 // a json array.
-func (m *Manager) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
+func (m *Manager) GetOwnedByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Get api keys from database
-	return util.DBQueryJSON(ctx, m.db, getUserAPIKeysDBQ, userID)
+	return util.DBQueryJSONWithPagination(ctx, m.db, getUserAPIKeysDBQ, userID, p.Limit, p.Offset)
 }
 
 // Update updates the provided api key in the database.

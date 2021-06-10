@@ -33,9 +33,9 @@ func (m *ManagerMock) Delete(ctx context.Context, apiKeyID string) error {
 }
 
 // GetOwnedByUserJSON implements the APIKeyManager interface.
-func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
-	args := m.Called(ctx)
-	data, _ := args.Get(0).([]byte)
+func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
+	args := m.Called(ctx, p)
+	data, _ := args.Get(0).(*hub.JSONQueryResult)
 	return data, args.Error(1)
 }
 

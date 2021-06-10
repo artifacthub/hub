@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import API from '../../api';
-import { ErrorKind, Package } from '../../types';
+import { ErrorKind } from '../../types';
 import StarredPackagesView from './index';
 jest.mock('../../api');
 
@@ -14,11 +14,12 @@ jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     push: mockHistoryPush,
+    replace: jest.fn(),
   }),
 }));
 
-const getMockStarredPackages = (fixtureId: string): Package[] => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as Package[];
+const getMockStarredPackages = (fixtureId: string) => {
+  return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 
 describe('StarredPackagesView', () => {

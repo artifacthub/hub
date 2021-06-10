@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(3);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -12,10 +12,15 @@ select plan(2);
 \set image2ID '00000000-0000-0000-0000-000000000002'
 
 -- No organizations at this point
-select is(
-    get_user_organizations(:'user1ID')::jsonb,
-    '[]'::jsonb,
-    'With no organizations an empty json array is returned'
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_organizations('00000000-0000-0000-0000-000000000001', 0, 0)
+    $$,
+    $$
+        values ('[]'::jsonb, 0)
+    $$,
+    'With no repositories an empty json array is returned'
 );
 
 -- Seed some users and organizations
@@ -32,26 +37,60 @@ insert into user__organization (user_id, organization_id, confirmed) values(:'us
 insert into user__organization (user_id, organization_id, confirmed) values(:'user2ID', :'org1ID', true);
 
 -- Users and organizations have just been seeded
-select is(
-    get_user_organizations(:'user1ID')::jsonb,
-    '[{
-        "name": "org1",
-        "display_name": "Organization 1",
-        "description": "Description 1",
-        "home_url": "https://org1.com",
-        "logo_image_id": "00000000-0000-0000-0000-000000000001",
-        "confirmed": true,
-        "members_count": 2
-    }, {
-        "name": "org2",
-        "display_name": "Organization 2",
-        "description": "Description 2",
-        "home_url": "https://org2.com",
-        "logo_image_id": "00000000-0000-0000-0000-000000000002",
-        "confirmed": false,
-        "members_count": 0
-    }]'::jsonb,
-    'Organizations are returned as a json array of objects'
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_organizations('00000000-0000-0000-0000-000000000001', 0, 0)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "name": "org1",
+                    "display_name": "Organization 1",
+                    "description": "Description 1",
+                    "home_url": "https://org1.com",
+                    "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                    "confirmed": true,
+                    "members_count": 2
+                },
+                {
+                    "name": "org2",
+                    "display_name": "Organization 2",
+                    "description": "Description 2",
+                    "home_url": "https://org2.com",
+                    "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                    "confirmed": false,
+                    "members_count": 0
+                }
+            ]'::jsonb,
+            2
+        )
+    $$,
+    'Organizations 1 and 2 are returned as a json array of objects'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_organizations('00000000-0000-0000-0000-000000000001', 1, 1)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "name": "org2",
+                    "display_name": "Organization 2",
+                    "description": "Description 2",
+                    "home_url": "https://org2.com",
+                    "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                    "confirmed": false,
+                    "members_count": 0
+                }
+            ]'::jsonb,
+            2
+        )
+    $$,
+    'Organization 2 is returned when using a limit and offset of 1'
 );
 
 -- Finish tests and rollback transaction

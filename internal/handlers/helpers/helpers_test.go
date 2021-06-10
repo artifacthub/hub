@@ -2,10 +2,12 @@ package helpers
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strconv"
 	"testing"
 	"time"
@@ -39,6 +41,87 @@ func TestBuildCacheControlHeader(t *testing.T) {
 			t.Parallel()
 			cacheControlHeader := BuildCacheControlHeader(tc.cacheMaxAge)
 			assert.Equal(t, tc.expectedCacheControlHeader, cacheControlHeader)
+		})
+	}
+}
+
+func TestGetPagination(t *testing.T) {
+	testCases := []struct {
+		qs                 url.Values
+		defaultLimit       int
+		maxLimit           int
+		expectedPagination *hub.Pagination
+		expectedError      error
+	}{
+		{
+			map[string][]string{
+				"limit": {"aa"},
+			},
+			5,
+			10,
+			nil,
+			errors.New("invalid limit"),
+		},
+		{
+			map[string][]string{
+				"limit": {"20"},
+			},
+			5,
+			10,
+			nil,
+			errors.New("invalid limit"),
+		},
+		{
+			nil,
+			5,
+			10,
+			&hub.Pagination{
+				Limit: 5,
+			},
+			nil,
+		},
+		{
+			map[string][]string{
+				"limit": {"10"},
+			},
+			5,
+			10,
+			&hub.Pagination{
+				Limit: 10,
+			},
+			nil,
+		},
+		{
+			map[string][]string{
+				"offset": {"aa"},
+			},
+			5,
+			10,
+			nil,
+			errors.New("invalid offset"),
+		},
+		{
+			map[string][]string{
+				"offset": {"1"},
+			},
+			5,
+			10,
+			&hub.Pagination{
+				Limit:  5,
+				Offset: 1,
+			},
+			nil,
+		},
+	}
+	for i, tc := range testCases {
+		tc := tc
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
+			p, err := GetPagination(tc.qs, tc.defaultLimit, tc.maxLimit)
+			assert.Equal(t, tc.expectedPagination, p)
+			if tc.expectedError != nil {
+				assert.Contains(t, err.Error(), tc.expectedError.Error())
+			}
 		})
 	}
 }

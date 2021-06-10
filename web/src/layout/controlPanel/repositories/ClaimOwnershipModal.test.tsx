@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, ListableItems, Organization } from '../../../types';
+import { ErrorKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ClaimModal from './ClaimOwnershipModal';
 jest.mock('../../../api');
@@ -25,7 +25,7 @@ const defaultProps = {
 };
 
 const mockWithoutSelectedOrgCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: undefined,
@@ -44,7 +44,7 @@ const mockWithoutSelectedOrgCtx = {
 };
 
 const mockWithSelectedOrgCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: 'orgTest',
@@ -62,12 +62,12 @@ const mockWithSelectedOrgCtx = {
   },
 };
 
-const getMockOrganizations = (fixtureId: string): Organization[] => {
-  return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}org.json`) as Organization[];
+const getMockOrganizations = (fixtureId: string) => {
+  return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}org.json`);
 };
 
-const getMockRepositories = (fixtureId: string): ListableItems => {
-  return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}repo.json`) as ListableItems;
+const getMockRepositories = (fixtureId: string) => {
+  return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}repo.json`);
 };
 
 describe('Claim Repository Modal - repositories section', () => {
@@ -77,7 +77,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
   it('creates snapshot', async () => {
     const mockOrganizations = getMockOrganizations('1');
-    mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+    mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
     const mockRepositories = getMockRepositories('1');
     mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
@@ -88,7 +88,7 @@ describe('Claim Repository Modal - repositories section', () => {
     );
 
     await waitFor(() => {
-      expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+      expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -96,7 +96,7 @@ describe('Claim Repository Modal - repositories section', () => {
   describe('Render', () => {
     it('renders component when org is selected in context', async () => {
       const mockOrganizations = getMockOrganizations('1');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('1');
       mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
@@ -107,7 +107,7 @@ describe('Claim Repository Modal - repositories section', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Claim repository ownership')).toBeInTheDocument();
@@ -132,7 +132,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
     it('renders component when org is not selected in context', async () => {
       const mockOrganizations = getMockOrganizations('1');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('1');
       mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
@@ -143,7 +143,7 @@ describe('Claim Repository Modal - repositories section', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Claim repository ownership')).toBeInTheDocument();
@@ -168,7 +168,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
     it('displays disabled OCI repos', async () => {
       const mockOrganizations = getMockOrganizations('1');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('2');
       mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
@@ -179,7 +179,7 @@ describe('Claim Repository Modal - repositories section', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Claim repository ownership')).toBeInTheDocument();
@@ -200,7 +200,7 @@ describe('Claim Repository Modal - repositories section', () => {
     describe('Claim repo', () => {
       it('from user', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
         mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
@@ -212,7 +212,7 @@ describe('Claim Repository Modal - repositories section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const radio = getByText('My user');
@@ -250,7 +250,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('from org', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
         mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
@@ -262,7 +262,7 @@ describe('Claim Repository Modal - repositories section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const input = getByTestId('searchRepositoriesInput');
@@ -300,7 +300,7 @@ describe('Claim Repository Modal - repositories section', () => {
     describe('When claim repo fails', () => {
       it('UnauthorizedError', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
         mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockRejectedValue({
@@ -314,7 +314,7 @@ describe('Claim Repository Modal - repositories section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const input = getByTestId('searchRepositoriesInput');
@@ -339,7 +339,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('default error', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
         mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockRejectedValue({
@@ -355,7 +355,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const input = getByTestId('searchRepositoriesInput');
@@ -383,7 +383,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('with custom error message', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
         mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockRejectedValue({
@@ -400,7 +400,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const input = getByTestId('searchRepositoriesInput');
@@ -428,7 +428,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('with Forbidden error', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
         mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockRejectedValue({
@@ -444,7 +444,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const input = getByTestId('searchRepositoriesInput');
@@ -477,7 +477,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
     describe('When fetchOrganizations fails', () => {
       it('error UnauthorizedError', async () => {
-        mocked(API).getUserOrganizations.mockRejectedValue({
+        mocked(API).getAllUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -488,14 +488,14 @@ describe('Claim Repository Modal - repositories section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
       });
 
       it('default error', async () => {
-        mocked(API).getUserOrganizations.mockRejectedValue({
+        mocked(API).getAllUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -508,7 +508,7 @@ describe('Claim Repository Modal - repositories section', () => {
         const { getByText, rerender } = render(component);
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         rerender(component);
@@ -521,7 +521,7 @@ describe('Claim Repository Modal - repositories section', () => {
     describe('When searchRepositories fails', () => {
       it('error UnauthorizedError', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).searchRepositories.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
@@ -544,7 +544,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('default error', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).searchRepositories.mockRejectedValue({
           kind: ErrorKind.Other,
         });

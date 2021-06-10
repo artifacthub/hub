@@ -93,7 +93,7 @@ const TransferRepositoryModal = (props: Props) => {
     async function fetchOrganizations() {
       try {
         setIsFetchingOrgs(true);
-        let orgs = await API.getUserOrganizations();
+        let orgs = await API.getAllUserOrganizations();
         if (!isUndefined(organizationName)) {
           orgs = orgs.filter((org: Organization) => org.name !== organizationName);
         }

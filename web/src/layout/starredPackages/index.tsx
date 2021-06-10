@@ -9,39 +9,79 @@ import { ErrorKind, Package } from '../../types';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
 import PackageCard from '../common/PackageCard';
+import Pagination from '../common/Pagination';
 import styles from './StarredPackagesView.module.css';
 
-const StarredPackagesView = () => {
+interface Props {
+  activePage?: string;
+}
+
+const DEFAULT_LIMIT = 10;
+
+const StarredPackagesView = (props: Props) => {
   const history = useHistory();
   const { dispatch } = useContext(AppCtx);
   const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
 
+  const [activePage, setActivePage] = useState<number>(props.activePage ? parseInt(props.activePage) : 1);
+
+  const calculateOffset = (pageNumber?: number): number => {
+    return DEFAULT_LIMIT * ((pageNumber || activePage) - 1);
+  };
+
+  const [offset, setOffset] = useState<number>(calculateOffset());
+  const [total, setTotal] = useState<number | undefined>(undefined);
+
+  const onPageNumberChange = (pageNumber: number): void => {
+    setOffset(calculateOffset(pageNumber));
+    setActivePage(pageNumber);
+  };
+
+  const updatePageNumber = () => {
+    history.replace({
+      search: `?page=${activePage}`,
+    });
+  };
+
   const onAuthError = (): void => {
     dispatch(signOut());
     history.push('/?modal=login&redirect=/packages/starred');
   };
 
-  useEffect(() => {
-    async function fetchStarredPackages() {
-      try {
-        setIsLoading(true);
-        setPackages(await API.getStarredByUser());
-        setApiError(null);
-        setIsLoading(false);
-      } catch (err) {
-        setIsLoading(false);
-        if (err.kind !== ErrorKind.Unauthorized) {
-          setApiError('An error occurred getting your starred packages, please try again later.');
-          setPackages([]);
-        } else {
-          onAuthError();
-        }
+  async function fetchStarredPackages() {
+    try {
+      setIsLoading(true);
+      const data = await API.getStarredByUser({
+        limit: DEFAULT_LIMIT,
+        offset: offset,
+      });
+      setPackages(data.items);
+      setTotal(parseInt(data.paginationTotalCount));
+      updatePageNumber();
+      setApiError(null);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      if (err.kind !== ErrorKind.Unauthorized) {
+        setApiError('An error occurred getting your starred packages, please try again later.');
+        setPackages([]);
+      } else {
+        onAuthError();
       }
     }
+  }
+
+  useEffect(() => {
     fetchStarredPackages();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (props.activePage && activePage !== parseInt(props.activePage)) {
+      fetchStarredPackages();
+    }
+  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div className="d-flex flex-column flex-grow-1 position-relative">
@@ -72,6 +112,18 @@ const StarredPackagesView = () => {
               </>
             )}
           </div>
+          {!isUndefined(total) && (
+            <div className="mx-auto">
+              <Pagination
+                limit={DEFAULT_LIMIT}
+                offset={offset}
+                total={total}
+                active={activePage}
+                className="my-5"
+                onChange={onPageNumberChange}
+              />
+            </div>
+          )}
         </div>
       </main>
     </div>

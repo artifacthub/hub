@@ -7,7 +7,7 @@ import {
   ChartTemplatesData,
   CheckAvailabilityProps,
   ErrorKind,
-  ListableItems,
+  Member,
   OptOutItem,
   Organization,
   Package,
@@ -370,7 +370,7 @@ describe('API', () => {
 
     describe('searchRepositories', () => {
       it('success from user', async () => {
-        const data: ListableItems = getData('11') as ListableItems;
+        const data: { items: Repository[]; paginationTotalCount: string } = getData('11');
         fetchMock.mockResponse(JSON.stringify(data), {
           headers: {
             'content-type': 'application/json',
@@ -805,14 +805,15 @@ describe('API', () => {
         fetchMock.mockResponse(JSON.stringify(orgs), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '2',
           },
           status: 200,
         });
 
-        const response = await API.getUserOrganizations();
+        const response = await API.getUserOrganizations({ offset: 0, limit: 10 });
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/user');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/user?limit=10&offset=0');
         expect(response).toEqual(API.toCamelCase(orgs));
       });
     });
@@ -903,18 +904,19 @@ describe('API', () => {
 
     describe('getOrganizationMembers', () => {
       it('success', async () => {
-        const members: User[] = getData('19') as User[];
+        const members: { items: Member[]; paginationTotalCount: string } = getData('19');
         fetchMock.mockResponse(JSON.stringify(members), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '2',
           },
           status: 200,
         });
 
-        const response = await API.getOrganizationMembers('artifacthub');
+        const response = await API.getOrganizationMembers({ limit: 10, offset: 0 }, 'artifacthub');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub/members');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/artifacthub/members?limit=10&offset=0');
         expect(response).toEqual(API.toCamelCase(members));
       });
     });
@@ -978,14 +980,15 @@ describe('API', () => {
         fetchMock.mockResponse(JSON.stringify(packages), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '1',
           },
           status: 200,
         });
 
-        const response = await API.getStarredByUser();
+        const response = await API.getStarredByUser({ limit: 10, offset: 0 });
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/starred');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/starred?limit=10&offset=0');
         expect(response).toEqual(API.toCamelCase(packages));
       });
     });
@@ -1124,14 +1127,15 @@ describe('API', () => {
         fetchMock.mockResponse(JSON.stringify(packages), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '7',
           },
           status: 200,
         });
 
-        const response = await API.getUserSubscriptions();
+        const response = await API.getUserSubscriptions({ limit: 10, offset: 0 });
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions?limit=10&offset=0');
         expect(response).toEqual(API.toCamelCase(packages));
       });
     });
@@ -1142,14 +1146,15 @@ describe('API', () => {
         fetchMock.mockResponse(JSON.stringify(webhooks), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '5',
           },
           status: 200,
         });
 
-        const response = await API.getWebhooks();
+        const response = await API.getWebhooks({ limit: 10, offset: 0 });
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/user?limit=10&offset=0');
         expect(response).toEqual(API.toCamelCase(webhooks));
       });
 
@@ -1158,14 +1163,15 @@ describe('API', () => {
         fetchMock.mockResponse(JSON.stringify(webhooks), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '5',
           },
           status: 200,
         });
 
-        const response = await API.getWebhooks('org1');
+        const response = await API.getWebhooks({ limit: 10, offset: 0 }, 'org1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/webhooks/org/org1?limit=10&offset=0');
         expect(response).toEqual(API.toCamelCase(webhooks));
       });
     });
@@ -1395,14 +1401,15 @@ describe('API', () => {
         fetchMock.mockResponse(JSON.stringify(apiKeys), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '1',
           },
           status: 200,
         });
 
-        const response = await API.getAPIKeys();
+        const response = await API.getAPIKeys({ offset: 0, limit: 10 });
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys?limit=10&offset=0');
         expect(response).toEqual(API.toCamelCase(apiKeys));
       });
     });
@@ -1490,14 +1497,15 @@ describe('API', () => {
         fetchMock.mockResponse(JSON.stringify(optOutList), {
           headers: {
             'content-type': 'application/json',
+            'Pagination-Total-Count': '3',
           },
           status: 200,
         });
 
-        const response = await API.getOptOutList();
+        const response = await API.getOptOutList({ limit: 10, offset: 0 });
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out');
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out?limit=10&offset=0');
         expect(response).toEqual(API.toCamelCase(optOutList));
       });
     });
@@ -1785,6 +1793,81 @@ describe('API', () => {
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/stats');
         expect(response).toEqual(stats);
+      });
+    });
+
+    describe('getAllUserOrganizations', () => {
+      it('success', async () => {
+        const orgs: Organization[] = getData('39') as Organization[];
+        fetchMock.mockResponse(JSON.stringify(orgs), {
+          headers: {
+            'content-type': 'application/json',
+            'Pagination-Total-Count': '3',
+          },
+          status: 200,
+        });
+
+        const response = await API.getAllUserOrganizations();
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/user?limit=60&offset=0');
+        expect(response).toEqual(API.toCamelCase(orgs));
+      });
+
+      it('success with multiple pages', async () => {
+        const orgs: Organization[] = getData('39') as Organization[];
+        fetchMock.mockResponse(JSON.stringify(orgs), {
+          headers: {
+            'content-type': 'application/json',
+            'Pagination-Total-Count': '123',
+          },
+          status: 200,
+        });
+
+        const response = await API.getAllUserOrganizations();
+
+        expect(fetchMock).toHaveBeenCalledTimes(3);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/user?limit=60&offset=0');
+        expect(fetchMock.mock.calls[1][0]).toEqual('/api/v1/orgs/user?limit=60&offset=60');
+        expect(fetchMock.mock.calls[2][0]).toEqual('/api/v1/orgs/user?limit=60&offset=120');
+        expect(response).toEqual(API.toCamelCase([...orgs, ...orgs, ...orgs]));
+      });
+    });
+
+    describe('getAllOrganizationMembers', () => {
+      it('success', async () => {
+        const members: Member[] = getData('40') as Member[];
+        fetchMock.mockResponse(JSON.stringify(members), {
+          headers: {
+            'content-type': 'application/json',
+            'Pagination-Total-Count': '2',
+          },
+          status: 200,
+        });
+
+        const response = await API.getAllOrganizationMembers('org1');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/members?limit=60&offset=0');
+        expect(response).toEqual(API.toCamelCase(members));
+      });
+
+      it('success with multiple pages', async () => {
+        const members: Member[] = getData('40') as Member[];
+        fetchMock.mockResponse(JSON.stringify(members), {
+          headers: {
+            'content-type': 'application/json',
+            'Pagination-Total-Count': '63',
+          },
+          status: 200,
+        });
+
+        const response = await API.getAllOrganizationMembers('org1');
+
+        expect(fetchMock).toHaveBeenCalledTimes(2);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/members?limit=60&offset=0');
+        expect(fetchMock.mock.calls[1][0]).toEqual('/api/v1/orgs/org1/members?limit=60&offset=60');
+        expect(response).toEqual(API.toCamelCase([...members, ...members]));
       });
     });
   });

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"text/template"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
@@ -77,25 +78,41 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 // organization.
 func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	dataJSON, err := h.webhookManager.GetOwnedByOrgJSON(r.Context(), orgName)
+	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
+	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetOwnedByOrg").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	result, err := h.webhookManager.GetOwnedByOrgJSON(r.Context(), orgName, p)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }
 
 // GetOwnedByUser is an http handler that returns the webhooks owned by the
 // user doing the request.
 func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.webhookManager.GetOwnedByUserJSON(r.Context())
+	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
+	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetOwnedByUser").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	result, err := h.webhookManager.GetOwnedByUserJSON(r.Context(), p)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByUser").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }
 
 // TriggerTest is an http handler used to test a webhook before adding or

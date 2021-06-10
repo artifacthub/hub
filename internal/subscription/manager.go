@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
 )
 
@@ -17,9 +18,9 @@ const (
 	deleteSubscriptionDBQ      = `select delete_subscription($1::jsonb)`
 	getPkgSubscriptorsDBQ      = `select get_package_subscriptors($1::uuid, $2::integer)`
 	getRepoSubscriptorsDBQ     = `select get_repository_subscriptors($1::uuid, $2::integer)`
-	getUserOptOutEntriesDBQ    = `select get_user_opt_out_entries($1::uuid)`
+	getUserOptOutEntriesDBQ    = `select * from get_user_opt_out_entries($1::uuid, $2::int, $3::int)`
 	getUserPkgSubscriptionsDBQ = `select get_user_package_subscriptions($1::uuid, $2::uuid)`
-	getUserSubscriptionsDBQ    = `select get_user_subscriptions($1::uuid)`
+	getUserSubscriptionsDBQ    = `select * from get_user_subscriptions($1::uuid, $2::int, $3::int)`
 )
 
 var (
@@ -95,34 +96,21 @@ func (m *Manager) GetByPackageJSON(ctx context.Context, packageID string) ([]byt
 	if _, err := uuid.FromString(packageID); err != nil {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
-	var dataJSON []byte
-	err := m.db.QueryRow(ctx, getUserPkgSubscriptionsDBQ, userID, packageID).Scan(&dataJSON)
-	if err != nil {
-		return nil, err
-	}
-	return dataJSON, nil
+	return util.DBQueryJSON(ctx, m.db, getUserPkgSubscriptionsDBQ, userID, packageID)
 }
 
 // GetByUserJSON returns all the subscriptions of the user doing the request as
 // as json array of objects.
-func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
+func (m *Manager) GetByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, getUserSubscriptionsDBQ, userID).Scan(&dataJSON); err != nil {
-		return nil, err
-	}
-	return dataJSON, nil
+	return util.DBQueryJSONWithPagination(ctx, m.db, getUserSubscriptionsDBQ, userID, p.Limit, p.Offset)
 }
 
 // GetOptOutListJSON returns all the opt-out entries of the user doing the
 // request as as json array of objects.
-func (m *Manager) GetOptOutListJSON(ctx context.Context) ([]byte, error) {
+func (m *Manager) GetOptOutListJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, getUserOptOutEntriesDBQ, userID).Scan(&dataJSON); err != nil {
-		return nil, err
-	}
-	return dataJSON, nil
+	return util.DBQueryJSONWithPagination(ctx, m.db, getUserOptOutEntriesDBQ, userID, p.Limit, p.Offset)
 }
 
 // GetSubscriptors returns the users subscribed to receive notifications for

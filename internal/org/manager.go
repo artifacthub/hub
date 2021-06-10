@@ -31,10 +31,10 @@ const (
 	deleteOrgMemberDBQ   = `select delete_organization_member($1::uuid, $2::text, $3::text)`
 	getAuthzPolicyDBQ    = `select get_authorization_policy($1::uuid, $2::text)`
 	getOrgDBQ            = `select get_organization($1::text)`
-	getOrgMembersDBQ     = `select get_organization_members($1::uuid, $2::text)`
+	getOrgMembersDBQ     = `select * from get_organization_members($1::uuid, $2::text, $3::int, $4::int)`
 	getUserAliasDBQ      = `select alias from "user" where user_id = $1`
 	getUserEmailDBQ      = `select email from "user" where alias = $1`
-	getUserOrgsDBQ       = `select get_user_organizations($1::uuid)`
+	getUserOrgsDBQ       = `select * from get_user_organizations($1::uuid, $2::int, $3::int)`
 	updateAuthzPolicyDBQ = `select update_authorization_policy($1::uuid, $2::text, $3::jsonb)`
 	updateOrgDBQ         = `select update_organization($1::uuid, $2::text, $3::jsonb)`
 )
@@ -297,9 +297,9 @@ func (m *Manager) GetAuthorizationPolicyJSON(ctx context.Context, orgName string
 
 // GetByUserJSON returns the organizations the user doing the request belongs
 // to as a json object.
-func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
+func (m *Manager) GetByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	return util.DBQueryJSON(ctx, m.db, getUserOrgsDBQ, userID)
+	return util.DBQueryJSONWithPagination(ctx, m.db, getUserOrgsDBQ, userID, p.Limit, p.Offset)
 }
 
 // GetJSON returns the organization requested as a json object.
@@ -315,7 +315,11 @@ func (m *Manager) GetJSON(ctx context.Context, orgName string) ([]byte, error) {
 
 // GetMembersJSON returns the members of the provided organization as a json
 // object.
-func (m *Manager) GetMembersJSON(ctx context.Context, orgName string) ([]byte, error) {
+func (m *Manager) GetMembersJSON(
+	ctx context.Context,
+	orgName string,
+	p *hub.Pagination,
+) (*hub.JSONQueryResult, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Validate input
@@ -324,7 +328,7 @@ func (m *Manager) GetMembersJSON(ctx context.Context, orgName string) ([]byte, e
 	}
 
 	// Get organization members from database
-	return util.DBQueryJSON(ctx, m.db, getOrgMembersDBQ, userID, orgName)
+	return util.DBQueryJSONWithPagination(ctx, m.db, getOrgMembersDBQ, userID, orgName, p.Limit, p.Offset)
 }
 
 // Update updates the provided organization in the database.

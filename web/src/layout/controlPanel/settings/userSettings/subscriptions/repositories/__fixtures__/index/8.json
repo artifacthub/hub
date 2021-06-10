@@ -1,38 +1,41 @@
-[
-  {
-    "optOutId": "87234sf-dfgdfgfe5-tyreh7i68",
-    "repository": {
-      "kind": 0,
-      "name": "adfinis",
-      "userAlias": "alias",
-      "displayName": "Adfinis Helm Charts",
-      "repositoryId": "8cf4ae9a-d43c-4abf-86d0-615bb3864db2",
-      "url": "http://url.com"
+{
+  "items": [
+    {
+      "optOutId": "87234sf-dfgdfgfe5-tyreh7i68",
+      "repository": {
+        "kind": 0,
+        "name": "adfinis",
+        "userAlias": "alias",
+        "displayName": "Adfinis Helm Charts",
+        "repositoryId": "8cf4ae9a-d43c-4abf-86d0-615bb3864db2",
+        "url": "http://url.com"
+      },
+      "eventKind": 2
     },
-    "eventKind": 2
-  },
-  {
-    "optOutId": "43543trger-gvnmbvf5u6-kjfg-utyiu8",
-    "repository": {
-      "kind": 0,
-      "name": "apache-pulsar-helm-chart-repo",
-      "userAlias": "alias",
-      "displayName": "Apache Pulsar Helm Chart repo",
-      "repositoryId": "68edcb58-ed11-42e1-953b-e52e3bfac3e5",
-      "url": "http://url1.com"
+    {
+      "optOutId": "43543trger-gvnmbvf5u6-kjfg-utyiu8",
+      "repository": {
+        "kind": 0,
+        "name": "apache-pulsar-helm-chart-repo",
+        "userAlias": "alias",
+        "displayName": "Apache Pulsar Helm Chart repo",
+        "repositoryId": "68edcb58-ed11-42e1-953b-e52e3bfac3e5",
+        "url": "http://url1.com"
+      },
+      "eventKind": 2
     },
-    "eventKind": 2
-  },
-  {
-    "optOutId": "5trurt4sf-drtyrygfe5-po09rikjtr",
-    "repository": {
-      "kind": 0,
-      "name": "artifact-hub",
-      "displayName": "Artifact Hub",
-      "repositoryId": "a032a436-3568-4970-804a-2780f5e9d231",
-      "organizationName": "artifactHub",
-      "url": "http://url2.com"
-    },
-    "eventKind": 2
-  }
-]
+    {
+      "optOutId": "5trurt4sf-drtyrygfe5-po09rikjtr",
+      "repository": {
+        "kind": 0,
+        "name": "artifact-hub",
+        "displayName": "Artifact Hub",
+        "repositoryId": "a032a436-3568-4970-804a-2780f5e9d231",
+        "organizationName": "artifactHub",
+        "url": "http://url2.com"
+      },
+      "eventKind": 2
+    }
+  ],
+  "paginationTotalCount": "3"
+}

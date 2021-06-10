@@ -564,11 +564,17 @@ func TestGetByUser(t *testing.T) {
 	t.Run("get user organizations succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.om.On("GetByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.om.On("GetByUserJSON", r.Context(), &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -576,6 +582,7 @@ func TestGetByUser(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
@@ -585,11 +592,14 @@ func TestGetByUser(t *testing.T) {
 	t.Run("error getting user organizations", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.om.On("GetByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
+		hw.om.On("GetByUserJSON", r.Context(), &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(nil, tests.ErrFakeDB)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -626,12 +636,15 @@ func TestGetMembers(t *testing.T) {
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.om.On("GetMembersJSON", r.Context(), "org1").Return(nil, tc.omErr)
+				hw.om.On("GetMembersJSON", r.Context(), "org1", &hub.Pagination{
+					Limit:  10,
+					Offset: 1,
+				}).Return(nil, tc.omErr)
 				hw.h.GetMembers(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -645,12 +658,18 @@ func TestGetMembers(t *testing.T) {
 	t.Run("get organization members succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.om.On("GetMembersJSON", r.Context(), "org1").Return([]byte("dataJSON"), nil)
+		hw.om.On("GetMembersJSON", r.Context(), "org1", &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
 		hw.h.GetMembers(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -658,6 +677,7 @@ func TestGetMembers(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)

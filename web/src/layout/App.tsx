@@ -173,11 +173,11 @@ export default function App() {
             <Route
               path="/packages/starred"
               exact
-              render={() => (
+              render={({ location }) => (
                 <>
                   <Navbar isSearching={isSearching} privateRoute />
                   <div className="d-flex flex-column flex-grow-1">
-                    <StarredPackagesView />
+                    <StarredPackagesView activePage={getQueryParam(location.search, 'page') || undefined} />
                   </div>
                   <Footer />
                 </>

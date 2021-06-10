@@ -23,8 +23,8 @@ type WebhookManager interface {
 	Add(ctx context.Context, orgName string, wh *Webhook) error
 	Delete(ctx context.Context, webhookID string) error
 	GetJSON(ctx context.Context, webhookID string) ([]byte, error)
-	GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error)
-	GetOwnedByUserJSON(ctx context.Context) ([]byte, error)
+	GetOwnedByOrgJSON(ctx context.Context, orgName string, p *Pagination) (*JSONQueryResult, error)
+	GetOwnedByUserJSON(ctx context.Context, p *Pagination) (*JSONQueryResult, error)
 	GetSubscribedTo(ctx context.Context, e *Event) ([]*Webhook, error)
 	Update(ctx context.Context, wh *Webhook) error
 }

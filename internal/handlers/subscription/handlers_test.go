@@ -424,11 +424,14 @@ func TestGetByUser(t *testing.T) {
 	t.Run("error getting user subscriptions", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.sm.On("GetByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
+		hw.sm.On("GetByUserJSON", r.Context(), &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(nil, tests.ErrFakeDB)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -440,11 +443,17 @@ func TestGetByUser(t *testing.T) {
 	t.Run("get user subscriptions succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.sm.On("GetByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.sm.On("GetByUserJSON", r.Context(), &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -452,6 +461,7 @@ func TestGetByUser(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
@@ -463,11 +473,14 @@ func TestGetOptOutList(t *testing.T) {
 	t.Run("error getting user opt-out entries", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.sm.On("GetOptOutListJSON", r.Context()).Return(nil, tests.ErrFakeDB)
+		hw.sm.On("GetOptOutListJSON", r.Context(), &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(nil, tests.ErrFakeDB)
 		hw.h.GetOptOutList(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -479,11 +492,17 @@ func TestGetOptOutList(t *testing.T) {
 	t.Run("get user opt-out entries succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.sm.On("GetOptOutListJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.sm.On("GetOptOutListJSON", r.Context(), &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
 		hw.h.GetOptOutList(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -491,6 +510,7 @@ func TestGetOptOutList(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)

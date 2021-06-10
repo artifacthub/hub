@@ -6,7 +6,7 @@ import { AppCtx } from '../../context/AppCtx';
 import UserAuthDropdown from './UserAuthDropdown';
 
 const mockCtxLoggedIn = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },

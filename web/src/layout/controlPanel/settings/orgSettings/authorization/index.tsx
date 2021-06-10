@@ -261,7 +261,7 @@ const AuthorizationSection = (props: Props) => {
 
   async function fetchMembers() {
     try {
-      const membersList: Member[] = await API.getOrganizationMembers(ctx.prefs.controlPanel.selectedOrg!);
+      const membersList: Member[] = await API.getAllOrganizationMembers(ctx.prefs.controlPanel.selectedOrg!);
       setMembers(membersList.map((member: Member) => member.alias));
     } catch (err) {
       setMembers(undefined);

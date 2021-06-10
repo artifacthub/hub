@@ -44,16 +44,16 @@ func (m *ManagerMock) GetByPackageJSON(ctx context.Context, packageID string) ([
 }
 
 // GetByUserJSON implements the SubscriptionManager interface.
-func (m *ManagerMock) GetByUserJSON(ctx context.Context) ([]byte, error) {
-	args := m.Called(ctx)
-	data, _ := args.Get(0).([]byte)
+func (m *ManagerMock) GetByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
+	args := m.Called(ctx, p)
+	data, _ := args.Get(0).(*hub.JSONQueryResult)
 	return data, args.Error(1)
 }
 
 // GetOptOutListJSON implements the SubscriptionManager interface.
-func (m *ManagerMock) GetOptOutListJSON(ctx context.Context) ([]byte, error) {
-	args := m.Called(ctx)
-	data, _ := args.Get(0).([]byte)
+func (m *ManagerMock) GetOptOutListJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
+	args := m.Called(ctx, p)
+	data, _ := args.Get(0).(*hub.JSONQueryResult)
 	return data, args.Error(1)
 }
 

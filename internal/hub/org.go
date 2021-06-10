@@ -25,9 +25,9 @@ type OrganizationManager interface {
 	Delete(ctx context.Context, orgName string) error
 	DeleteMember(ctx context.Context, orgName, userAlias string) error
 	GetJSON(ctx context.Context, orgName string) ([]byte, error)
-	GetByUserJSON(ctx context.Context) ([]byte, error)
+	GetByUserJSON(ctx context.Context, p *Pagination) (*JSONQueryResult, error)
 	GetAuthorizationPolicyJSON(ctx context.Context, orgName string) ([]byte, error)
-	GetMembersJSON(ctx context.Context, orgName string) ([]byte, error)
+	GetMembersJSON(ctx context.Context, orgName string, p *Pagination) (*JSONQueryResult, error)
 	Update(ctx context.Context, orgName string, org *Organization) error
 	UpdateAuthorizationPolicy(ctx context.Context, orgName string, policy *AuthorizationPolicy) error
 }

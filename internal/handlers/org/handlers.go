@@ -2,7 +2,9 @@ package org
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
@@ -144,26 +146,42 @@ func (h *Handlers) GetAuthorizationPolicy(w http.ResponseWriter, r *http.Request
 // GetByUser is an http handler that returns the organizations the user doing
 // the request belongs to.
 func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.orgManager.GetByUserJSON(r.Context())
+	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
+	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetByUser").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	result, err := h.orgManager.GetByUserJSON(r.Context(), p)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByUser").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }
 
 // GetMembers is an http handler that returns the members of the provided
 // organization.
 func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
+	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
+	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetMembers").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
 	orgName := chi.URLParam(r, "orgName")
-	dataJSON, err := h.orgManager.GetMembersJSON(r.Context(), orgName)
+	result, err := h.orgManager.GetMembersJSON(r.Context(), orgName, p)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetMembers").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }
 
 // Update is an http handler that updates the provided organization in the

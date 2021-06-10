@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(3);
+select plan(4);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -37,80 +37,137 @@ insert into opt_out (opt_out_id, user_id, repository_id, event_kind_id)
 values (:'optOut4ID', :'user2ID', :'repo1ID', 2);
 
 -- Run some tests
-select is(
-    get_user_opt_out_entries(:'user1ID')::jsonb,
-    '[{
-        "opt_out_id": "00000000-0000-0000-0000-000000000001",
-        "repository": {
-            "repository_id": "00000000-0000-0000-0000-000000000001",
-            "name": "repo1",
-            "display_name": "Repo 1",
-            "url": "https://repo1.com",
-            "private": false,
-            "kind": 0,
-            "verified_publisher": false,
-            "official": false,
-            "scanner_disabled": false,
-            "user_alias": "user1"
-        },
-        "event_kind": 1
-    }, {
-        "opt_out_id": "00000000-0000-0000-0000-000000000002",
-        "repository": {
-            "repository_id": "00000000-0000-0000-0000-000000000001",
-            "name": "repo1",
-            "display_name": "Repo 1",
-            "url": "https://repo1.com",
-            "private": false,
-            "kind": 0,
-            "verified_publisher": false,
-            "official": false,
-            "scanner_disabled": false,
-            "user_alias": "user1"
-        },
-        "event_kind": 2
-    }, {
-        "opt_out_id": "00000000-0000-0000-0000-000000000003",
-        "repository": {
-            "repository_id": "00000000-0000-0000-0000-000000000002",
-            "name": "repo2",
-            "display_name": "Repo 2",
-            "url": "https://repo2.com",
-            "private": false,
-            "kind": 0,
-            "verified_publisher": false,
-            "official": false,
-            "scanner_disabled": false,
-            "organization_name": "org1",
-            "organization_display_name": "Organization 1"
-        },
-        "event_kind": 2
-    }]'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_opt_out_entries('00000000-0000-0000-0000-000000000001', 0, 0)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "opt_out_id": "00000000-0000-0000-0000-000000000001",
+                    "repository": {
+                        "repository_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "repo1",
+                        "display_name": "Repo 1",
+                        "url": "https://repo1.com",
+                        "private": false,
+                        "kind": 0,
+                        "verified_publisher": false,
+                        "official": false,
+                        "scanner_disabled": false,
+                        "user_alias": "user1"
+                    },
+                    "event_kind": 1
+                },
+                {
+                    "opt_out_id": "00000000-0000-0000-0000-000000000002",
+                    "repository": {
+                        "repository_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "repo1",
+                        "display_name": "Repo 1",
+                        "url": "https://repo1.com",
+                        "private": false,
+                        "kind": 0,
+                        "verified_publisher": false,
+                        "official": false,
+                        "scanner_disabled": false,
+                        "user_alias": "user1"
+                    },
+                    "event_kind": 2
+                },
+                {
+                    "opt_out_id": "00000000-0000-0000-0000-000000000003",
+                    "repository": {
+                        "repository_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "repo2",
+                        "display_name": "Repo 2",
+                        "url": "https://repo2.com",
+                        "private": false,
+                        "kind": 0,
+                        "verified_publisher": false,
+                        "official": false,
+                        "scanner_disabled": false,
+                        "organization_name": "org1",
+                        "organization_display_name": "Organization 1"
+                    },
+                    "event_kind": 2
+                }
+            ]'::jsonb,
+            3
+        )
+    $$,
     'Three opt-out entries should be returned for user1'
 );
-select is(
-    get_user_opt_out_entries(:'user2ID')::jsonb,
-    '[{
-        "opt_out_id": "00000000-0000-0000-0000-000000000004",
-        "repository": {
-            "repository_id": "00000000-0000-0000-0000-000000000001",
-            "name": "repo1",
-            "display_name": "Repo 1",
-            "url": "https://repo1.com",
-            "private": false,
-            "kind": 0,
-            "verified_publisher": false,
-            "official": false,
-            "scanner_disabled": false,
-            "user_alias": "user1"
-        },
-        "event_kind": 2
-    }]'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_opt_out_entries('00000000-0000-0000-0000-000000000001', 1, 1)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "opt_out_id": "00000000-0000-0000-0000-000000000002",
+                    "repository": {
+                        "repository_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "repo1",
+                        "display_name": "Repo 1",
+                        "url": "https://repo1.com",
+                        "private": false,
+                        "kind": 0,
+                        "verified_publisher": false,
+                        "official": false,
+                        "scanner_disabled": false,
+                        "user_alias": "user1"
+                    },
+                    "event_kind": 2
+                }
+            ]'::jsonb,
+            3
+        )
+    $$,
+    'Only one opt-out entry should be returned for user1 when using a limit and offset of 1'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_opt_out_entries('00000000-0000-0000-0000-000000000002', 0, 0)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "opt_out_id": "00000000-0000-0000-0000-000000000004",
+                    "repository": {
+                        "repository_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "repo1",
+                        "display_name": "Repo 1",
+                        "url": "https://repo1.com",
+                        "private": false,
+                        "kind": 0,
+                        "verified_publisher": false,
+                        "official": false,
+                        "scanner_disabled": false,
+                        "user_alias": "user1"
+                    },
+                    "event_kind": 2
+                }
+            ]'::jsonb,
+            1
+        )
+    $$,
     'One opt-out entry should be returned for user2'
 );
-select is(
-    get_user_opt_out_entries(:'user3ID')::jsonb,
-    '[]',
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_opt_out_entries('00000000-0000-0000-0000-000000000003', 0, 0)
+    $$,
+    $$
+        values ('[]'::jsonb, 0)
+    $$,
     'No opt-out entries expected for user3'
 );
 

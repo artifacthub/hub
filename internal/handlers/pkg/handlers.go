@@ -183,13 +183,21 @@ func (h *Handlers) GetSnapshotSecurityReport(w http.ResponseWriter, r *http.Requ
 // GetStarredByUser is an http handler used to get the packages starred by the
 // user doing the request.
 func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.pkgManager.GetStarredByUserJSON(r.Context())
+	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
+	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetStarredByUser").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	result, err := h.pkgManager.GetStarredByUserJSON(r.Context(), p)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStarredByUser").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }
 
 // GetStars is an http handler used to get the number of stars of the package

@@ -4,14 +4,14 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import API from '../../../../../../api';
-import { ErrorKind, Package } from '../../../../../../types';
+import { ErrorKind } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import PackagesSection from '../index';
 jest.mock('../../../../../../api');
 jest.mock('../../../../../../utils/alertDispatcher');
 
-const getMockSubscriptions = (fixtureId: string): Package[] => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as Package[];
+const getMockSubscriptions = (fixtureId: string) => {
+  return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 
 const mockOnAuthError = jest.fn();
@@ -142,7 +142,6 @@ describe('PackagesSection', () => {
       );
 
       await waitFor(() => {
-        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
         expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
           type: 'danger',
           message: 'An error occurred getting your subscriptions, please try again later.',
@@ -182,17 +181,17 @@ describe('PackagesSection', () => {
       });
 
       const checkbox: HTMLInputElement = getByTestId(
-        `${mockSubscriptions[0].name}_newRelease_input`
+        `${mockSubscriptions.items[0].name}_newRelease_input`
       ) as HTMLInputElement;
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
 
-      const label = getByTestId(`${mockSubscriptions[0].name}_newRelease_label`);
+      const label = getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
       fireEvent.click(label);
 
       await waitFor(() => {
         expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
-        expect(API.deleteSubscription).toHaveBeenCalledWith(mockSubscriptions[0].packageId, 0);
+        expect(API.deleteSubscription).toHaveBeenCalledWith(mockSubscriptions.items[0].packageId, 0);
       });
 
       await waitFor(() => {
@@ -217,23 +216,22 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      expect(queryByTestId(`${mockSubscriptions[0].name}_newRelease_input`)).toBeInTheDocument();
+      expect(queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
 
-      const label = getByTestId(`${mockSubscriptions[0].name}_newRelease_label`);
+      const label = getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
       fireEvent.click(label);
 
       // Remove it optimistically from document
       await waitFor(() => {
-        expect(queryByTestId(`${mockSubscriptions[0].name}_newRelease_input`)).toBeNull();
+        expect(queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeNull();
       });
 
       expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
-      expect(API.deleteSubscription).toHaveBeenCalledWith(mockSubscriptions[0].packageId, 0);
+      expect(API.deleteSubscription).toHaveBeenCalledWith(mockSubscriptions.items[0].packageId, 0);
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: `An error occurred unsubscribing from new releases notification for ${mockSubscriptions[0].name} package, please try again later.`,
+        message: `An error occurred unsubscribing from new releases notification for ${mockSubscriptions.items[0].name} package, please try again later.`,
       });
 
       await waitFor(() => {
@@ -242,7 +240,7 @@ describe('PackagesSection', () => {
 
       // Add it again if subscription deletion failed
       await waitFor(() => {
-        expect(queryByTestId(`${mockSubscriptions[0].name}_newRelease_input`)).toBeInTheDocument();
+        expect(queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
       });
     });
 
@@ -263,16 +261,16 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const label = getByTestId(`${mockSubscriptions[1].name}_newRelease_label`);
+      const label = getByTestId(`${mockSubscriptions.items[1].name}_newRelease_label`);
       fireEvent.click(label);
 
       await waitFor(() => {
-        expect(queryByTestId(`${mockSubscriptions[1].name}_newRelease_input`)).toBeNull();
+        expect(queryByTestId(`${mockSubscriptions.items[1].name}_newRelease_input`)).toBeNull();
       });
 
       await waitFor(() => {
         expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
-        expect(API.deleteSubscription).toHaveBeenCalledWith(mockSubscriptions[1].packageId, 0);
+        expect(API.deleteSubscription).toHaveBeenCalledWith(mockSubscriptions.items[1].packageId, 0);
       });
 
       await waitFor(() => {

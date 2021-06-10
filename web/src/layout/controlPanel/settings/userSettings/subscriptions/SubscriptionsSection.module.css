@@ -11,7 +11,8 @@
   height: 55px;
 }
 
-.tableTitle:hover {
+.tableTitle:hover,
+.paginationCell:hover {
   background-color: inherit !important;
 }
 

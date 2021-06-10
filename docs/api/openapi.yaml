@@ -316,9 +316,17 @@ paths:
       summary: Get organizations the user belongs to
       description: Get organizations the user belongs to
       operationId: getUserOrganizations
+      parameters:
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         "200":
           description: ""
+          headers:
+            Pagination-Total-Count:
+              schema:
+                type: string
+              description: Total number of organizations
           content:
             application/json:
               schema:
@@ -1080,9 +1088,17 @@ paths:
       summary: Get packages starred by user
       description: Get packages starred by user
       operationId: getStarredPackagesByUser
+      parameters:
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         "200":
           description: ""
+          headers:
+            Pagination-Total-Count:
+              schema:
+                type: string
+              description: Total number of starred packages
           content:
             application/json:
               schema:
@@ -1813,9 +1829,17 @@ paths:
       summary: Get user's subscriptions
       description: Get user's subscriptions
       operationId: getUserSubscriptions
+      parameters:
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         "200":
           description: ""
+          headers:
+            Pagination-Total-Count:
+              schema:
+                type: string
+              description: Total number of subscriptions
           content:
             application/json:
               schema:
@@ -1941,9 +1965,17 @@ paths:
       summary: Get user's opt-out entries
       description: Get user's opt-out entries
       operationId: getUserOptOutEntries
+      parameters:
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
       responses:
         "200":
           description: ""
+          headers:
+            Pagination-Total-Count:
+              schema:
+                type: string
+              description: Total number of user's opt-out entries
           content:
             application/json:
               schema:
@@ -2023,6 +2055,11 @@ paths:
       responses:
         "200":
           description: ""
+          headers:
+            Pagination-Total-Count:
+              schema:
+                type: string
+              description: Total number of user's webhooks
           content:
             application/json:
               schema:
@@ -2141,6 +2178,11 @@ paths:
       responses:
         "200":
           description: ""
+          headers:
+            Pagination-Total-Count:
+              schema:
+                type: string
+              description: Total number of organization's webhooks
           content:
             application/json:
               schema:

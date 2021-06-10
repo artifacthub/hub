@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(3);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -8,6 +8,7 @@ select plan(2);
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set image1ID '00000000-0000-0000-0000-000000000001'
 \set webhook1ID '00000000-0000-0000-0000-000000000001'
+\set webhook2ID '00000000-0000-0000-0000-000000000002'
 
 -- Seed some data
 insert into "user" (user_id, alias, email)
@@ -57,53 +58,169 @@ insert into webhook (
     true,
     :'user1ID'
 );
+insert into webhook (
+    webhook_id,
+    name,
+    description,
+    url,
+    secret,
+    content_type,
+    template,
+    active,
+    user_id
+) values (
+    :'webhook2ID',
+    'webhook2',
+    'description',
+    'http://webhook2.url',
+    'very',
+    'application/json',
+    'custom payload',
+    true,
+    :'user1ID'
+);
 insert into webhook__event_kind (webhook_id, event_kind_id) values (:'webhook1ID', 0);
+insert into webhook__event_kind (webhook_id, event_kind_id) values (:'webhook2ID', 1);
 insert into webhook__package (webhook_id, package_id) values (:'webhook1ID', :'package1ID');
+insert into webhook__package (webhook_id, package_id) values (:'webhook2ID', :'package1ID');
 
 -- Run some tests
-select is(
-    get_user_webhooks('00000000-0000-0000-0000-000000000001')::jsonb,
-    '[
-        {
-            "webhook_id": "00000000-0000-0000-0000-000000000001",
-            "name": "webhook1",
-            "description": "description",
-            "url": "http://webhook1.url",
-            "secret": "very",
-            "content_type": "application/json",
-            "template": "custom payload",
-            "active": true,
-            "event_kinds": [0],
-            "packages": [
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_webhooks('00000000-0000-0000-0000-000000000001', 0, 0)
+    $$,
+    $$
+        values(
+            '[
                 {
-                    "package_id": "00000000-0000-0000-0000-000000000001",
-                    "name": "Package 1",
-                    "normalized_name": "package-1",
-                    "stars": 0,
-                    "version": "1.0.0",
-                    "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                    "ts": 1592299234,
-                    "repository": {
-                        "repository_id": "00000000-0000-0000-0000-000000000001",
-                        "kind": 0,
-                        "name": "repo1",
-                        "display_name": "Repo 1",
-                        "url": "https://repo1.com",
-                        "private": false,
-                        "verified_publisher": false,
-                        "official": false,
-                        "scanner_disabled": false,
-                        "user_alias": "user1"
-                    }
+                    "webhook_id": "00000000-0000-0000-0000-000000000001",
+                    "name": "webhook1",
+                    "description": "description",
+                    "url": "http://webhook1.url",
+                    "secret": "very",
+                    "content_type": "application/json",
+                    "template": "custom payload",
+                    "active": true,
+                    "event_kinds": [0],
+                    "packages": [
+                        {
+                            "package_id": "00000000-0000-0000-0000-000000000001",
+                            "name": "Package 1",
+                            "normalized_name": "package-1",
+                            "stars": 0,
+                            "version": "1.0.0",
+                            "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                            "ts": 1592299234,
+                            "repository": {
+                                "repository_id": "00000000-0000-0000-0000-000000000001",
+                                "kind": 0,
+                                "name": "repo1",
+                                "display_name": "Repo 1",
+                                "url": "https://repo1.com",
+                                "private": false,
+                                "verified_publisher": false,
+                                "official": false,
+                                "scanner_disabled": false,
+                                "user_alias": "user1"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "webhook_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "webhook2",
+                    "description": "description",
+                    "url": "http://webhook2.url",
+                    "secret": "very",
+                    "content_type": "application/json",
+                    "template": "custom payload",
+                    "active": true,
+                    "event_kinds": [1],
+                    "packages": [
+                        {
+                            "package_id": "00000000-0000-0000-0000-000000000001",
+                            "name": "Package 1",
+                            "normalized_name": "package-1",
+                            "stars": 0,
+                            "version": "1.0.0",
+                            "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                            "ts": 1592299234,
+                            "repository": {
+                                "repository_id": "00000000-0000-0000-0000-000000000001",
+                                "kind": 0,
+                                "name": "repo1",
+                                "display_name": "Repo 1",
+                                "url": "https://repo1.com",
+                                "private": false,
+                                "verified_publisher": false,
+                                "official": false,
+                                "scanner_disabled": false,
+                                "user_alias": "user1"
+                            }
+                        }
+                    ]
                 }
-            ]
-        }
-    ]'::jsonb,
-    'Webhook owned by user1 should be returned'
+            ]'::jsonb,
+            2)
+    $$,
+    'Two webhooks owned by user1 should be returned'
 );
-select is(
-    get_user_webhooks('00000000-0000-0000-0000-000000000002')::jsonb,
-    '[]',
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_webhooks('00000000-0000-0000-0000-000000000001', 1, 1)
+    $$,
+    $$
+        values(
+            '[
+                {
+                    "webhook_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "webhook2",
+                    "description": "description",
+                    "url": "http://webhook2.url",
+                    "secret": "very",
+                    "content_type": "application/json",
+                    "template": "custom payload",
+                    "active": true,
+                    "event_kinds": [1],
+                    "packages": [
+                        {
+                            "package_id": "00000000-0000-0000-0000-000000000001",
+                            "name": "Package 1",
+                            "normalized_name": "package-1",
+                            "stars": 0,
+                            "version": "1.0.0",
+                            "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                            "ts": 1592299234,
+                            "repository": {
+                                "repository_id": "00000000-0000-0000-0000-000000000001",
+                                "kind": 0,
+                                "name": "repo1",
+                                "display_name": "Repo 1",
+                                "url": "https://repo1.com",
+                                "private": false,
+                                "verified_publisher": false,
+                                "official": false,
+                                "scanner_disabled": false,
+                                "user_alias": "user1"
+                            }
+                        }
+                    ]
+                }
+            ]'::jsonb,
+            2)
+    $$,
+    'Only webhook2 owned by user1 should be returned when using a limit and offset of 1'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_webhooks('00000000-0000-0000-0000-000000000002', 0, 0)
+    $$,
+    $$
+        values('[]'::jsonb, 0)
+    $$,
     'No webhooks are expected as user2 owns none'
 );
 

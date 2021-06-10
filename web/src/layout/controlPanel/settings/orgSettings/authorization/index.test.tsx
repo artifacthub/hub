@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
-import { ErrorKind, OrganizationPolicy, User } from '../../../../../types';
+import { ErrorKind, OrganizationPolicy } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import AuthorizationSection from './index';
 jest.mock('../../../../../utils/alertDispatcher');
@@ -25,7 +25,7 @@ const getMockAuthz = (fixtureId: string): OrganizationPolicy => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as OrganizationPolicy;
 };
 
-const getOrganizationMembers = (): User[] => {
+const getAllOrganizationMembers = () => {
   return [
     {
       alias: 'jdoe',
@@ -37,7 +37,7 @@ const getOrganizationMembers = (): User[] => {
       firstName: 'Jane',
       lastName: 'Smith',
     },
-  ] as User[];
+  ];
 };
 
 const onAuthErrorMock = jest.fn();
@@ -50,7 +50,7 @@ const defaultProps = {
 };
 
 const mockCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: 'orgTest',
@@ -69,7 +69,7 @@ const mockCtx = {
 };
 
 const mockNotSelectedOrgCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: undefined,
@@ -93,8 +93,8 @@ describe('Authorization settings index', () => {
   });
 
   it('creates snapshot', async () => {
-    const mockMembers = getOrganizationMembers();
-    mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+    const mockMembers = getAllOrganizationMembers();
+    mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
     const mockAuthz = getMockAuthz('1');
     mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
@@ -108,15 +108,15 @@ describe('Authorization settings index', () => {
 
     await waitFor(() => {
       expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
-      expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
+      expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
 
   describe('Render', () => {
     it('renders component with disabled authz policy', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('2');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
@@ -131,8 +131,8 @@ describe('Authorization settings index', () => {
       await waitFor(() => {
         expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
         expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
-        expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-        expect(API.getOrganizationMembers).toHaveBeenCalledWith('orgTest');
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
       expect(getByRole('main')).toBeInTheDocument();
@@ -152,8 +152,8 @@ describe('Authorization settings index', () => {
     });
 
     it('renders component with selected predefined policy', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('3');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
@@ -168,8 +168,8 @@ describe('Authorization settings index', () => {
       await waitFor(() => {
         expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
         expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
-        expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-        expect(API.getOrganizationMembers).toHaveBeenCalledWith('orgTest');
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
       const swicthAccessControl = getByTestId('swicthAccessControl');
@@ -192,8 +192,8 @@ describe('Authorization settings index', () => {
     });
 
     it('renders component with selected custom policy', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('4');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
@@ -208,8 +208,8 @@ describe('Authorization settings index', () => {
       await waitFor(() => {
         expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
         expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
-        expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-        expect(API.getOrganizationMembers).toHaveBeenCalledWith('orgTest');
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
       const swicthAccessControl = getByTestId('swicthAccessControl');
@@ -246,8 +246,8 @@ describe('Authorization settings index', () => {
 
   describe('on getAuthorizationPolicy error', () => {
     it('Unauthorized', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       mocked(API).getAuthorizationPolicy.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
@@ -269,8 +269,8 @@ describe('Authorization settings index', () => {
     });
 
     it('Forbidden', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       mocked(API).getAuthorizationPolicy.mockRejectedValue({
         kind: ErrorKind.Forbidden,
       });
@@ -292,8 +292,8 @@ describe('Authorization settings index', () => {
     });
 
     it('Default', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       mocked(API).getAuthorizationPolicy.mockRejectedValue({
         kind: ErrorKind.Other,
       });
@@ -321,8 +321,8 @@ describe('Authorization settings index', () => {
 
   describe('calls updateAuthorizationPolicy', () => {
     it('on success', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('5');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
       mocked(API).updateAuthorizationPolicy.mockResolvedValue(null);
@@ -340,8 +340,8 @@ describe('Authorization settings index', () => {
       await waitFor(() => {
         expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
         expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
-        expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-        expect(API.getOrganizationMembers).toHaveBeenCalledWith('orgTest');
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
       const predefinedPolicyRadio = getByTestId('radio-predefined');
@@ -376,8 +376,8 @@ describe('Authorization settings index', () => {
 
     describe('on error', () => {
       it('Unauthorized', async () => {
-        const mockMembers = getOrganizationMembers();
-        mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+        const mockMembers = getAllOrganizationMembers();
+        mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
         const mockAuthz = getMockAuthz('6');
         mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
         mocked(API).updateAuthorizationPolicy.mockRejectedValue({
@@ -397,8 +397,8 @@ describe('Authorization settings index', () => {
         await waitFor(() => {
           expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
           expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
-          expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-          expect(API.getOrganizationMembers).toHaveBeenCalledWith('orgTest');
+          expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
+          expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
         const switchBtn = getByText('Fine-grained access control');
@@ -423,8 +423,8 @@ describe('Authorization settings index', () => {
       });
 
       it('Forbidden', async () => {
-        const mockMembers = getOrganizationMembers();
-        mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+        const mockMembers = getAllOrganizationMembers();
+        mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
         const mockAuthz = getMockAuthz('7');
         mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
         mocked(API).updateAuthorizationPolicy.mockRejectedValue({
@@ -444,8 +444,8 @@ describe('Authorization settings index', () => {
         await waitFor(() => {
           expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
           expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
-          expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-          expect(API.getOrganizationMembers).toHaveBeenCalledWith('orgTest');
+          expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
+          expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
         const switchBtn = getByText('Fine-grained access control');
@@ -478,8 +478,8 @@ describe('Authorization settings index', () => {
       });
 
       it('Custom error', async () => {
-        const mockMembers = getOrganizationMembers();
-        mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+        const mockMembers = getAllOrganizationMembers();
+        mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
         const mockAuthz = getMockAuthz('8');
         mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
         mocked(API).updateAuthorizationPolicy.mockRejectedValue({
@@ -500,8 +500,8 @@ describe('Authorization settings index', () => {
         await waitFor(() => {
           expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
           expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
-          expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-          expect(API.getOrganizationMembers).toHaveBeenCalledWith('orgTest');
+          expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
+          expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
         const switchBtn = getByText('Fine-grained access control');
@@ -532,8 +532,8 @@ describe('Authorization settings index', () => {
       });
 
       it('Default error', async () => {
-        const mockMembers = getOrganizationMembers();
-        mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+        const mockMembers = getAllOrganizationMembers();
+        mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
         const mockAuthz = getMockAuthz('9');
         mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
         mocked(API).updateAuthorizationPolicy.mockRejectedValue({
@@ -553,8 +553,8 @@ describe('Authorization settings index', () => {
         await waitFor(() => {
           expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
           expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
-          expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-          expect(API.getOrganizationMembers).toHaveBeenCalledWith('orgTest');
+          expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
+          expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
         const switchBtn = getByText('Fine-grained access control');
@@ -584,8 +584,8 @@ describe('Authorization settings index', () => {
 
   describe('calls triggerTestInRegoPlayground', () => {
     it('on success', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('10');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
       mocked(API).triggerTestInRegoPlayground.mockResolvedValue({ result: 'http://test.com' });
@@ -600,7 +600,7 @@ describe('Authorization settings index', () => {
 
       await waitFor(() => {
         expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
-        expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
       });
 
       const playgroundBtn = getByTestId('playgroundBtn');
@@ -622,8 +622,8 @@ describe('Authorization settings index', () => {
     });
 
     it('on error', async () => {
-      const mockMembers = getOrganizationMembers();
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      const mockMembers = getAllOrganizationMembers();
+      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('11');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
       mocked(API).triggerTestInRegoPlayground.mockRejectedValue({
@@ -640,7 +640,7 @@ describe('Authorization settings index', () => {
 
       await waitFor(() => {
         expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
-        expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
+        expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
       });
 
       const playgroundBtn = getByTestId('playgroundBtn');

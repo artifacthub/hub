@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../../../../api';
 import { AppCtx } from '../../../../../../context/AppCtx';
-import { ListableItems, OptOutItem, Organization } from '../../../../../../types';
+import { OptOutItem } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import OptOutModal from './Modal';
 jest.mock('../../../../../../api');
@@ -34,12 +34,12 @@ const mockOptOutList: OptOutItem[] = [
   },
 ];
 
-const getMockOrgs = (): Organization[] => {
-  return require('./__fixtures__/Modal/orgs.json') as Organization[];
+const getMockOrgs = () => {
+  return require('./__fixtures__/Modal/orgs.json');
 };
 
-const getMockRepos = (repoName?: string): ListableItems => {
-  return require(`./__fixtures__/Modal/${repoName || 'user'}.json`) as ListableItems;
+const getMockRepos = (repoName?: string) => {
+  return require(`./__fixtures__/Modal/${repoName || 'user'}.json`);
 };
 
 const defaultProps = {
@@ -52,7 +52,7 @@ const defaultProps = {
 };
 
 const mockCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -74,7 +74,7 @@ describe('OptOutModal', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).getUserOrganizations.mockResolvedValue(getMockOrgs());
+    mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
 
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -83,14 +83,14 @@ describe('OptOutModal', () => {
     );
 
     await waitFor(() => {
-      expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+      expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
 
   describe('Render', () => {
     it('renders component', async () => {
-      mocked(API).getUserOrganizations.mockResolvedValue(getMockOrgs());
+      mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
 
       const { getByText, getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -99,7 +99,7 @@ describe('OptOutModal', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Add opt-out entry')).toBeInTheDocument();
@@ -118,7 +118,7 @@ describe('OptOutModal', () => {
 
   describe('calls addOptOut', () => {
     it('when is successful', async () => {
-      mocked(API).getUserOrganizations.mockResolvedValue(getMockOrgs());
+      mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
       mocked(API).searchRepositories.mockResolvedValue(getMockRepos('repos'));
       mocked(API).addOptOut.mockResolvedValue('');
 
@@ -129,7 +129,7 @@ describe('OptOutModal', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       const input = getByTestId('searchRepositoriesInput');
@@ -166,7 +166,7 @@ describe('OptOutModal', () => {
     });
 
     it('when fails', async () => {
-      mocked(API).getUserOrganizations.mockResolvedValue(getMockOrgs());
+      mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
       mocked(API).searchRepositories.mockResolvedValue(getMockRepos('repos'));
       mocked(API).addOptOut.mockRejectedValue({});
 
@@ -177,7 +177,7 @@ describe('OptOutModal', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       const input = getByTestId('searchRepositoriesInput');

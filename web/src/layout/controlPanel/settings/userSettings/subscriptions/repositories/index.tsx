@@ -11,6 +11,7 @@ import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
 import prepareQueryString from '../../../../../../utils/prepareQueryString';
 import Loading from '../../../../../common/Loading';
+import Pagination from '../../../../../common/Pagination';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from '../SubscriptionsSection.module.css';
 import OptOutModal from './Modal';
@@ -19,6 +20,8 @@ import SubscriptionSwitch from './SubscriptionSwitch';
 interface Props {
   onAuthError: () => void;
 }
+
+const DEFAULT_LIMIT = 10;
 
 interface OptOutItemList {
   [key: string]: OptOutItem[];
@@ -39,6 +42,19 @@ const RepositoriesSection = (props: Props) => {
   const [optOutList, setOptOutList] = useState<OptOutItemList | undefined>(undefined);
   const [optOutItems, setOptOutItems] = useState<OptOutItem[] | undefined>(undefined);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
+  const [activePage, setActivePage] = useState<number>(1);
+
+  const calculateOffset = (pageNumber?: number): number => {
+    return DEFAULT_LIMIT * ((pageNumber || activePage) - 1);
+  };
+
+  const [offset, setOffset] = useState<number>(calculateOffset());
+  const [total, setTotal] = useState<number | undefined>(undefined);
+
+  const onPageNumberChange = (pageNumber: number): void => {
+    setOffset(calculateOffset(pageNumber));
+    setActivePage(pageNumber);
+  };
 
   const getNotificationTitle = (kind: EventKind): string => {
     let title = '';
@@ -52,9 +68,13 @@ const RepositoriesSection = (props: Props) => {
   async function getOptOutList(callback?: () => void) {
     try {
       setIsLoading(true);
-      const optOutRawList = await API.getOptOutList();
-      setOptOutItems(optOutRawList);
-      setOptOutList(groupBy(optOutRawList, (item: OptOutItem) => item.repository.repositoryId));
+      const data = await API.getOptOutList({
+        limit: DEFAULT_LIMIT,
+        offset: offset,
+      });
+      setOptOutItems(data.items);
+      setOptOutList(groupBy(data.items, (item: OptOutItem) => item.repository.repositoryId));
+      setTotal(parseInt(data.paginationTotalCount));
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -103,7 +123,7 @@ const RepositoriesSection = (props: Props) => {
 
   useEffect(() => {
     getOptOutList();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div className="mt-5 pt-3">
@@ -250,6 +270,20 @@ const RepositoriesSection = (props: Props) => {
                         </tr>
                       );
                     })}
+                    {!isUndefined(total) && total > DEFAULT_LIMIT && (
+                      <tr className={styles.paginationCell}>
+                        <td className="align-middle text-center" colSpan={5}>
+                          <Pagination
+                            limit={DEFAULT_LIMIT}
+                            offset={offset}
+                            total={total}
+                            active={activePage}
+                            className="my-3"
+                            onChange={onPageNumberChange}
+                          />
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

@@ -4,14 +4,14 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import API from '../../api';
-import { ErrorKind, ListableItems } from '../../types';
+import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import SearchRepositories from './SearchRepositories';
 jest.mock('../../api');
 jest.mock('../../utils/alertDispatcher');
 
-const getMockSearch = (fixtureId: string): ListableItems => {
-  return require(`./__fixtures__/SearchRepositories/${fixtureId}.json`) as ListableItems;
+const getMockSearch = (fixtureId: string) => {
+  return require(`./__fixtures__/SearchRepositories/${fixtureId}.json`);
 };
 
 const mockOnSelection = jest.fn();

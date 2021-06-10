@@ -27,7 +27,7 @@ type SubscriptionManager interface {
 	Delete(ctx context.Context, s *Subscription) error
 	DeleteOptOut(ctx context.Context, optOutID string) error
 	GetByPackageJSON(ctx context.Context, packageID string) ([]byte, error)
-	GetByUserJSON(ctx context.Context) ([]byte, error)
-	GetOptOutListJSON(ctx context.Context) ([]byte, error)
+	GetByUserJSON(ctx context.Context, p *Pagination) (*JSONQueryResult, error)
+	GetOptOutListJSON(ctx context.Context, p *Pagination) (*JSONQueryResult, error)
 	GetSubscriptors(ctx context.Context, e *Event) ([]*User, error)
 }

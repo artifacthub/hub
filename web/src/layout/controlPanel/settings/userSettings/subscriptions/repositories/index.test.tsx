@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import API from '../../../../../../api';
-import { ErrorKind, OptOutItem } from '../../../../../../types';
+import { ErrorKind } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import RepositoriesSection from './index';
 
@@ -15,8 +15,8 @@ const scrollIntoViewMock = jest.fn();
 
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
-const getMockOptOut = (fixtureId: string): OptOutItem[] => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as OptOutItem[];
+const getMockOptOut = (fixtureId: string) => {
+  return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 
 const mockOnAuthError = jest.fn();
@@ -181,17 +181,17 @@ describe('RepositoriesSection', () => {
       });
 
       const checkbox: HTMLInputElement = getByTestId(
-        `subs_${mockOptOut[0].repository.repositoryId}_2_input`
+        `subs_${mockOptOut.items[0].repository.repositoryId}_2_input`
       ) as HTMLInputElement;
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
 
-      const label = getByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_label`);
+      const label = getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_label`);
       fireEvent.click(label);
 
       await waitFor(() => {
         expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
-        expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut[0].optOutId);
+        expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut.items[0].optOutId);
       });
 
       await waitFor(() => {
@@ -216,9 +216,9 @@ describe('RepositoriesSection', () => {
         expect(API.getOptOutList).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
+      expect(getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
 
-      const label = getByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_label`);
+      const label = getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_label`);
       fireEvent.click(label);
 
       // Loading
@@ -227,12 +227,12 @@ describe('RepositoriesSection', () => {
       });
 
       expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
-      expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut[0].optOutId);
+      expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut.items[0].optOutId);
 
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: `An error occurred deleting the opt-out entry for tracking errors notifications for repository ${mockOptOut[0].repository.name}, please try again later.`,
+        message: `An error occurred deleting the opt-out entry for tracking errors notifications for repository ${mockOptOut.items[0].repository.name}, please try again later.`,
       });
 
       await waitFor(() => {
@@ -240,7 +240,7 @@ describe('RepositoriesSection', () => {
       });
 
       await waitFor(() => {
-        expect(queryByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
+        expect(queryByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
       });
     });
 
@@ -261,16 +261,16 @@ describe('RepositoriesSection', () => {
         expect(API.getOptOutList).toHaveBeenCalledTimes(1);
       });
 
-      const label = getByTestId(`subs_${mockOptOut[1].repository.repositoryId}_2_label`);
+      const label = getByTestId(`subs_${mockOptOut.items[1].repository.repositoryId}_2_label`);
       fireEvent.click(label);
 
       await waitFor(() => {
-        expect(getByTestId(`subs_${mockOptOut[1].repository.repositoryId}_2_input`)).toBeDisabled();
+        expect(getByTestId(`subs_${mockOptOut.items[1].repository.repositoryId}_2_input`)).toBeDisabled();
       });
 
       await waitFor(() => {
         expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
-        expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut[1].optOutId);
+        expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut.items[1].optOutId);
       });
 
       await waitFor(() => {

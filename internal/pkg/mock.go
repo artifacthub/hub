@@ -62,9 +62,9 @@ func (m *ManagerMock) GetSnapshotsToScan(ctx context.Context) ([]*hub.SnapshotTo
 }
 
 // GetStarredByUserJSON implements the PackageManager interface.
-func (m *ManagerMock) GetStarredByUserJSON(ctx context.Context) ([]byte, error) {
-	args := m.Called(ctx)
-	data, _ := args.Get(0).([]byte)
+func (m *ManagerMock) GetStarredByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
+	args := m.Called(ctx, p)
+	data, _ := args.Get(0).(*hub.JSONQueryResult)
 	return data, args.Error(1)
 }
 

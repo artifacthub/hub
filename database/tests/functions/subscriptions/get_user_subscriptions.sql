@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(3);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -40,51 +40,101 @@ insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package2ID', 0);
 
 -- Run some tests
-select is(
-    get_user_subscriptions(:'user1ID')::jsonb,
-    '[{
-        "package_id": "00000000-0000-0000-0000-000000000001",
-        "name": "Package 1",
-        "normalized_name": "package-1",
-        "logo_image_id": "00000000-0000-0000-0000-000000000001",
-        "repository": {
-            "repository_id": "00000000-0000-0000-0000-000000000001",
-            "name": "repo1",
-            "display_name": "Repo 1",
-            "url": "https://repo1.com",
-            "private": false,
-            "kind": 0,
-            "verified_publisher": false,
-            "official": false,
-            "scanner_disabled": false,
-            "user_alias": "user1"
-        },
-        "event_kinds": [0, 1]
-    }, {
-        "package_id": "00000000-0000-0000-0000-000000000002",
-        "name": "Package 2",
-        "normalized_name": "package-2",
-        "logo_image_id": "00000000-0000-0000-0000-000000000002",
-        "repository": {
-            "repository_id": "00000000-0000-0000-0000-000000000002",
-            "name": "repo2",
-            "display_name": "Repo 2",
-            "url": "https://repo2.com",
-            "private": false,
-            "kind": 0,
-            "verified_publisher": false,
-            "official": false,
-            "scanner_disabled": false,
-            "organization_name": "org1",
-            "organization_display_name": "Organization 1"
-        },
-        "event_kinds": [0]
-    }]'::jsonb,
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_subscriptions('00000000-0000-0000-0000-000000000001', 0, 0)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "package_id": "00000000-0000-0000-0000-000000000001",
+                    "name": "Package 1",
+                    "normalized_name": "package-1",
+                    "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                    "repository": {
+                        "repository_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "repo1",
+                        "display_name": "Repo 1",
+                        "url": "https://repo1.com",
+                        "private": false,
+                        "kind": 0,
+                        "verified_publisher": false,
+                        "official": false,
+                        "scanner_disabled": false,
+                        "user_alias": "user1"
+                    },
+                    "event_kinds": [0, 1]
+                },
+                {
+                    "package_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "Package 2",
+                    "normalized_name": "package-2",
+                    "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                    "repository": {
+                        "repository_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "repo2",
+                        "display_name": "Repo 2",
+                        "url": "https://repo2.com",
+                        "private": false,
+                        "kind": 0,
+                        "verified_publisher": false,
+                        "official": false,
+                        "scanner_disabled": false,
+                        "organization_name": "org1",
+                        "organization_display_name": "Organization 1"
+                    },
+                    "event_kinds": [0]
+                }
+            ]'::jsonb,
+            2
+        )
+    $$,
     'Two subscriptions should be returned'
 );
-select is(
-    get_user_subscriptions(:'user2ID')::jsonb,
-    '[]',
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_subscriptions('00000000-0000-0000-0000-000000000001', 1, 1)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "package_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "Package 2",
+                    "normalized_name": "package-2",
+                    "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                    "repository": {
+                        "repository_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "repo2",
+                        "display_name": "Repo 2",
+                        "url": "https://repo2.com",
+                        "private": false,
+                        "kind": 0,
+                        "verified_publisher": false,
+                        "official": false,
+                        "scanner_disabled": false,
+                        "organization_name": "org1",
+                        "organization_display_name": "Organization 1"
+                    },
+                    "event_kinds": [0]
+                }
+            ]'::jsonb,
+            2
+        )
+    $$,
+    'Only one subscription returned when using a limit and offset of 1'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_user_subscriptions('00000000-0000-0000-0000-000000000002', 0, 0)
+    $$,
+    $$
+        values ('[]'::jsonb, 0)
+    $$,
     'No subscriptions expected for user2'
 );
 

@@ -14,9 +14,9 @@ const SubscriptionsSection = (props: Props) => (
       <div className="flex-grow-1">
         <div className={`h3 pb-2 mb-2 border-bottom ${styles.title}`}>Your subscriptions</div>
 
-        <PackagesSection onAuthError={props.onAuthError} />
+        <PackagesSection {...props} />
 
-        <RepositoriesSection onAuthError={props.onAuthError} />
+        <RepositoriesSection {...props} />
       </div>
     </main>
   </div>

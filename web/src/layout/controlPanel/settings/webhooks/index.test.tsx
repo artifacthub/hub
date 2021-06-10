@@ -5,12 +5,12 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
-import { ErrorKind, Webhook } from '../../../../types';
+import { ErrorKind } from '../../../../types';
 import WebhooksSection from './index';
 jest.mock('../../../../api');
 
-const getMockWebhooks = (fixtureId: string): Webhook[] => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as Webhook[];
+const getMockWebhooks = (fixtureId: string) => {
+  return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 
 const mockOnAuthError = jest.fn();
@@ -159,7 +159,7 @@ describe('WebhooksSection', () => {
 
       await waitFor(() => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
-        expect(API.getWebhooks).toHaveBeenCalledWith('test');
+        expect(API.getWebhooks).toHaveBeenCalledWith({ limit: 10, offset: 0 }, 'test');
       });
     });
   });
