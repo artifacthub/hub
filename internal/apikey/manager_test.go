@@ -13,7 +13,6 @@ import (
 	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"golang.org/x/crypto/bcrypt"
 )
 
 const apiKeyID = "00000000-0000-0000-0000-000000000001"
@@ -150,21 +149,21 @@ func TestCheck(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("valid key (secret hashed with bcrypt)", func(t *testing.T) {
+	t.Run("invalid key", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		secretHashed, _ := bcrypt.GenerateFromPassword([]byte("secret"), bcrypt.DefaultCost)
-		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, "keyID").Return([]interface{}{"userID", string(secretHashed)}, nil)
+		secretHashed := fmt.Sprintf("%x", sha512.Sum512([]byte("secret")))
+		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, "keyID").Return([]interface{}{"userID", secretHashed}, nil)
 		m := NewManager(db)
 
-		output, err := m.Check(ctx, "keyID", "secret")
+		output, err := m.Check(ctx, "keyID", "invalid-secret")
 		assert.NoError(t, err)
-		assert.True(t, output.Valid)
-		assert.Equal(t, "userID", output.UserID)
+		assert.False(t, output.Valid)
+		assert.Empty(t, output.UserID)
 		db.AssertExpectations(t)
 	})
 
-	t.Run("valid key (secret hashed with sha512)", func(t *testing.T) {
+	t.Run("valid key", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		secretHashed := fmt.Sprintf("%x", sha512.Sum512([]byte("secret")))

@@ -8,13 +8,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/jackc/pgx/v4"
 	"github.com/satori/uuid"
-	"golang.org/x/crypto/bcrypt"
 )
 
 const (
@@ -88,18 +86,8 @@ func (m *Manager) Check(ctx context.Context, apiKeyID, apiKeySecret string) (*hu
 	}
 
 	// Check if the secret provided is valid
-	switch {
-	case strings.HasPrefix(apiKeySecretHashed, "$2a$"):
-		// Bcrypt hash, will be deprecated soon
-		err = bcrypt.CompareHashAndPassword([]byte(apiKeySecretHashed), []byte(apiKeySecret))
-		if err != nil {
-			return &hub.CheckAPIKeyOutput{Valid: false}, nil
-		}
-	default:
-		// SHA512 hash
-		if hash(apiKeySecret) != apiKeySecretHashed {
-			return &hub.CheckAPIKeyOutput{Valid: false}, nil
-		}
+	if hash(apiKeySecret) != apiKeySecretHashed {
+		return &hub.CheckAPIKeyOutput{Valid: false}, nil
 	}
 
 	return &hub.CheckAPIKeyOutput{
