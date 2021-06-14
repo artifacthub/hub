@@ -3,7 +3,6 @@ package scanner
 import (
 	"bytes"
 	"context"
-	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -12,10 +11,6 @@ import (
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/spf13/viper"
 )
-
-// ErrImageNotFound represents that the image provided was not found in the
-// repository.
-var ErrImageNotFound = errors.New("image not found")
 
 // TrivyScanner is an implementation of the Scanner interface that uses Trivy.
 type TrivyScanner struct {
@@ -55,9 +50,6 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 
 	// Run trivy command
 	if err := cmd.Run(); err != nil {
-		if strings.Contains(stderr.String(), "Cannot connect to the Docker daemon") {
-			return nil, ErrImageNotFound
-		}
 		return nil, fmt.Errorf("error running trivy on image %s: %w: %s", image, err, stderr.String())
 	}
 	return stdout.Bytes(), nil

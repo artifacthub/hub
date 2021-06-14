@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/sha512"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"sort"
 	"strings"
@@ -31,11 +30,6 @@ func ScanSnapshot(
 	for _, image := range s.ContainersImages {
 		reportData, err := scanner.Scan(image.Image)
 		if err != nil {
-			if errors.Is(err, ErrImageNotFound) {
-				err := fmt.Sprintf("%s: %s (package %s:%s)", err.Error(), image.Image, s.PackageName, s.Version)
-				ec.Append(s.RepositoryID, err)
-				continue
-			}
 			err := fmt.Errorf("error scanning image %s: %w (package %s:%s)", image.Image, err, s.PackageName, s.Version)
 			ec.Append(s.RepositoryID, err.Error())
 			return nil, err

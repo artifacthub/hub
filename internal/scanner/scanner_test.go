@@ -47,37 +47,6 @@ func TestScanSnapshot(t *testing.T) {
 		ecMock.AssertExpectations(t)
 	})
 
-	t.Run("image not found", func(t *testing.T) {
-		t.Parallel()
-		scannerMock := &Mock{}
-		scannerMock.On("Scan", image).Return(nil, ErrImageNotFound)
-		ecMock := &repo.ErrorsCollectorMock{}
-		ecMock.On("Init", repositoryID)
-		ecMock.On("Append", repositoryID, "image not found: repo/image:tag (package pkg1:1.0.0)")
-
-		snapshot := &hub.SnapshotToScan{
-			RepositoryID: repositoryID,
-			PackageID:    packageID,
-			PackageName:  packageName,
-			Version:      version,
-			ContainersImages: []*hub.ContainerImage{
-				{
-					Image: image,
-				},
-			},
-		}
-		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
-		require.Nil(t, err)
-		assert.Equal(t, &hub.SnapshotSecurityReport{
-			PackageID: packageID,
-			Version:   version,
-			Full:      nil,
-			Summary:   nil,
-		}, report)
-		scannerMock.AssertExpectations(t)
-		ecMock.AssertExpectations(t)
-	})
-
 	t.Run("error unmarshalling report", func(t *testing.T) {
 		t.Parallel()
 		scannerMock := &Mock{}
