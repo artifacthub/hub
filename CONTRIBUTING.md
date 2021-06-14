@@ -1,12 +1,24 @@
 # Contributing Guide
 
-The Artifact Hub accepts change requests using [GitHub pull requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests). This document outlines the process so you know what to expect.
+The Artifact Hub project accepts contributions via [GitHub pull requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests). This document outlines the process to help get your contribution accepted.
+
+## Issues
+
+Feature requests, bug reports, and support requests all occur through GitHub issues. If you would like to file an issue, view existing issues, or comment on an issue please engage with issues at <https://github.com/artifacthub/hub/issues>.
+
+## Pull Requests
+
+All changes to the source code and documentation are made through [GitHub pull requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests). If you would like to make a change to the source, documentation, or other component in the repository please open a pull request with the change.
+
+If you are unsure if the change will be welcome you may want to file an issue first. The issue can detail the change and you can get feedback from the maintainers prior to starting to make the change.
+
+You can find the existing pull requests at <https://github.com/artifacthub/hub/pulls>. For more details about the project **architecture** and **development setup** please see <https://artifacthub.io/docs/topics/architecture/> and <https://artifacthub.io/docs/topics/dev/>.
 
 ## Developer Certificate of Origin
 
 The Artifact Hub uses a [Developers Certificate of Origin (DCO)](https://developercertificate.org/) to sign-off that you have the right to contribute the code being contributed. The full text of the DCO reads:
 
-```
+```text
 Developer Certificate of Origin
 Version 1.1
 
@@ -48,7 +60,7 @@ By making a contribution to this project, I certify that:
 
 Every commit needs to have signoff added to it with a message like:
 
-```
+```text
 Signed-off-by: Joe Smith <joe.smith@example.com>
 ```
 
@@ -58,7 +70,7 @@ If you set your `user.name` and `user.email` in your git configuration, you can 
 
 Signed commits in the git log will look something like:
 
-```
+```text
 Author: Joe Smith <joe.smith@example.com>
 Date:   Thu Feb 2 11:41:15 2018 -0800
 
@@ -70,15 +82,3 @@ Date:   Thu Feb 2 11:41:15 2018 -0800
 Notice how the `Author` and `Signed-off-by` lines match. If they do not match the PR will be rejected by the automated DCO check.
 
 If more than one person contributed to a commit than there can be more than one `Signed-off-by` line where each line is a signoff from a different person who contributed to the commit.
-
-## Issues
-
-Feature requests, bug reports, and support requests all occur through GitHub issues. If you would like to file an issue, view existing issues, or comment on an issue please engage with issues at https://github.com/artifacthub/hub/issues
-
-## Pull Request
-
-All changes to the source code are made through GitHub [pull requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests). If you would like to make a change to the source, docs, or other component in the repository please open a pull request with the change.
-
-If you are unsure if the change will be welcome you may want to file an issue first. The issue can detail the change and you can get feedback from the maintainers prior to starting to make the change.
-
-You can find the existing pull requests at https://github.com/artifacthub/hub/pulls
