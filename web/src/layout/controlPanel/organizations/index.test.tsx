@@ -5,12 +5,12 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, Organization } from '../../../types';
+import { ErrorKind } from '../../../types';
 import OrganizationsSection from './index';
 jest.mock('../../../api');
 
-const getMockOrganizations = (fixtureId: string): Organization[] => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as Organization[];
+const getMockOrganizations = (fixtureId: string) => {
+  return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 
 const onAuthErrorMock = jest.fn();

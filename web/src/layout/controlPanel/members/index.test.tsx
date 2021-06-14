@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, User } from '../../../types';
+import { ErrorKind } from '../../../types';
 import MembersSection from './index';
 jest.mock('../../../api');
 
@@ -15,8 +15,8 @@ jest.mock('../../../utils/authorizer', () => ({
   },
 }));
 
-const getMembers = (fixtureId: string): User[] => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as User[];
+const getMembers = (fixtureId: string) => {
+  return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 
 const onAuthErrorMock = jest.fn();
@@ -26,7 +26,7 @@ const defaultProps = {
 };
 
 const mockCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: 'orgTest',

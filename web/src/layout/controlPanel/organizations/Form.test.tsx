@@ -31,7 +31,7 @@ const defaultProps = {
 };
 
 const mockCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: 'orgtest',

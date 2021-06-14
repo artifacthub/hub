@@ -16,8 +16,8 @@ import {
   Error,
   ErrorKind,
   EventKind,
-  ListableItems,
   LogoImage,
+  Member,
   OptOutItem,
   Organization,
   OrganizationPolicy,
@@ -28,6 +28,7 @@ import {
   RegoPlaygroundResult,
   Repository,
   SearchPackagesQuery,
+  SearchQuery,
   SearchRepositoriesQuery,
   SearchResults,
   SecurityReport,
@@ -427,7 +428,9 @@ class API_CLASS {
     });
   }
 
-  public searchRepositories(query: SearchRepositoriesQuery): Promise<ListableItems> {
+  public searchRepositories(
+    query: SearchRepositoriesQuery
+  ): Promise<{ items: Repository[]; paginationTotalCount: string }> {
     const q = new URLSearchParams();
     q.set('limit', query.limit.toString());
     q.set('offset', query.offset.toString());
@@ -529,8 +532,13 @@ class API_CLASS {
       });
   }
 
-  public getUserOrganizations(): Promise<Organization[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/orgs/user`);
+  public getUserOrganizations(query: SearchQuery): Promise<{ items: Organization[]; paginationTotalCount: string }> {
+    const q = new URLSearchParams();
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
+    return this.apiFetch(`${this.API_BASE_URL}/orgs/user?${q.toString()}`, undefined, false, false, [
+      this.HEADERS.pagination,
+    ]);
   }
 
   public getOrganization(organizationName: string): Promise<Organization | null> {
@@ -573,8 +581,20 @@ class API_CLASS {
     });
   }
 
-  public getOrganizationMembers(organizationName: string): Promise<User[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/orgs/${organizationName}/members`);
+  public getOrganizationMembers(
+    query: SearchQuery,
+    organizationName: string
+  ): Promise<{ items: Member[]; paginationTotalCount: string }> {
+    const q = new URLSearchParams();
+    q.set('limit', (query.limit || 0).toString());
+    q.set('offset', query.offset.toString());
+    return this.apiFetch(
+      `${this.API_BASE_URL}/orgs/${organizationName}/members?${q.toString()}`,
+      undefined,
+      false,
+      false,
+      [this.HEADERS.pagination]
+    );
   }
 
   public addOrganizationMember(organizationName: string, alias: string): Promise<null | string> {
@@ -593,8 +613,13 @@ class API_CLASS {
     return this.apiFetch(`${this.API_BASE_URL}/orgs/${organizationName}/accept-invitation`);
   }
 
-  public getStarredByUser(): Promise<Package[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/packages/starred`);
+  public getStarredByUser(query: SearchQuery): Promise<{ items: Package[]; paginationTotalCount: string }> {
+    const q = new URLSearchParams();
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
+    return this.apiFetch(`${this.API_BASE_URL}/packages/starred?${q.toString()}`, undefined, false, false, [
+      this.HEADERS.pagination,
+    ]);
   }
 
   public updateUserProfile(profile: UserFullName): Promise<null | string> {
@@ -655,12 +680,29 @@ class API_CLASS {
     });
   }
 
-  public getUserSubscriptions(): Promise<Package[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/subscriptions`);
+  public getUserSubscriptions(query: SearchQuery): Promise<{ items: Package[]; paginationTotalCount: string }> {
+    const q = new URLSearchParams();
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions?${q.toString()}`, undefined, false, false, [
+      this.HEADERS.pagination,
+    ]);
   }
 
-  public getWebhooks(fromOrgName?: string): Promise<Webhook[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/webhooks${this.getUrlContext(fromOrgName)}`);
+  public getWebhooks(
+    query: SearchQuery,
+    fromOrgName?: string
+  ): Promise<{ items: Webhook[]; paginationTotalCount: string }> {
+    const q = new URLSearchParams();
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
+    return this.apiFetch(
+      `${this.API_BASE_URL}/webhooks${this.getUrlContext(fromOrgName)}?${q.toString()}`,
+      undefined,
+      false,
+      false,
+      [this.HEADERS.pagination]
+    );
   }
 
   public getWebhook(webhookId: string, fromOrgName?: string): Promise<Webhook> {
@@ -716,8 +758,13 @@ class API_CLASS {
     });
   }
 
-  public getAPIKeys(): Promise<APIKey[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/api-keys`);
+  public getAPIKeys(query: SearchQuery): Promise<{ items: APIKey[]; paginationTotalCount: string }> {
+    const q = new URLSearchParams();
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
+    return this.apiFetch(`${this.API_BASE_URL}/api-keys?${q.toString()}`, undefined, false, false, [
+      this.HEADERS.pagination,
+    ]);
   }
 
   public getAPIKey(apiKeyId: string): Promise<APIKey> {
@@ -752,8 +799,13 @@ class API_CLASS {
     });
   }
 
-  public getOptOutList(): Promise<OptOutItem[]> {
-    return this.apiFetch(`${this.API_BASE_URL}/subscriptions/opt-out`);
+  public getOptOutList(query: SearchQuery): Promise<{ items: OptOutItem[]; paginationTotalCount: string }> {
+    const q = new URLSearchParams();
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
+    return this.apiFetch(`${this.API_BASE_URL}/subscriptions/opt-out?${q.toString()}`, undefined, false, false, [
+      this.HEADERS.pagination,
+    ]);
   }
 
   public addOptOut(repositoryId: string, eventKind: EventKind): Promise<string | null> {
@@ -900,6 +952,37 @@ class API_CLASS {
         passcode: passcode,
       }),
     });
+  }
+
+  public getAllUserOrganizations(): Promise<Organization[]> {
+    return this.getAllItems(`${this.API_BASE_URL}/orgs/user`) as Promise<Organization[]>;
+  }
+
+  public getAllOrganizationMembers(organizationName: string): Promise<Member[]> {
+    return this.getAllItems(`${this.API_BASE_URL}/orgs/${organizationName}/members`) as Promise<Member[]>;
+  }
+
+  private getAllItems(url: string): Promise<any[]> {
+    const MAX_LIMIT = 60;
+    let formattedUrl = `${url}?limit=${MAX_LIMIT}`;
+
+    return this.apiFetch(`${formattedUrl}&offset=0`, undefined, false, false, [this.HEADERS.pagination]).then(
+      async (result) => {
+        const paginationTotalCount = parseInt(result.paginationTotalCount);
+        let items = result.items;
+        if (paginationTotalCount > MAX_LIMIT) {
+          const totalPages = Math.ceil(paginationTotalCount / MAX_LIMIT);
+          const pagesList = Array.from(Array(totalPages - 1), (_, i) => i + 1);
+
+          await Promise.all([
+            ...pagesList.map((page: number) => this.apiFetch(`${formattedUrl}&offset=${page * MAX_LIMIT}`)),
+          ]).then((res) => res.forEach((list: any[]) => (items = [...items, ...list])));
+          return items;
+        } else {
+          return items;
+        }
+      }
+    );
   }
 
   // External API call

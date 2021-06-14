@@ -25,16 +25,20 @@ func (m *ManagerMock) Delete(ctx context.Context, webhookID string) error {
 }
 
 // GetOwnedByOrgJSON implements the WebhookManager interface.
-func (m *ManagerMock) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error) {
-	args := m.Called(ctx, orgName)
-	data, _ := args.Get(0).([]byte)
+func (m *ManagerMock) GetOwnedByOrgJSON(
+	ctx context.Context,
+	orgName string,
+	p *hub.Pagination,
+) (*hub.JSONQueryResult, error) {
+	args := m.Called(ctx, orgName, p)
+	data, _ := args.Get(0).(*hub.JSONQueryResult)
 	return data, args.Error(1)
 }
 
 // GetOwnedByUserJSON implements the WebhookManager interface.
-func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
-	args := m.Called(ctx)
-	data, _ := args.Get(0).([]byte)
+func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
+	args := m.Called(ctx, p)
+	data, _ := args.Get(0).(*hub.JSONQueryResult)
 	return data, args.Error(1)
 }
 

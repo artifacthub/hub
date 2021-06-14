@@ -6,7 +6,7 @@ import { AppCtx } from '../../context/AppCtx';
 import ThemeMode from './ThemeMode';
 
 const mockCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },

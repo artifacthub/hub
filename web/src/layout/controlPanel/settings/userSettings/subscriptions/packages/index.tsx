@@ -11,6 +11,7 @@ import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../
 import prepareQueryString from '../../../../../../utils/prepareQueryString';
 import Image from '../../../../../common/Image';
 import Loading from '../../../../../common/Loading';
+import Pagination from '../../../../../common/Pagination';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from '../SubscriptionsSection.module.css';
 import SubscriptionModal from './Modal';
@@ -20,10 +21,25 @@ interface Props {
   onAuthError: () => void;
 }
 
+const DEFAULT_LIMIT = 10;
+
 const PackagesSection = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
+  const [activePage, setActivePage] = useState<number>(1);
+
+  const calculateOffset = (pageNumber?: number): number => {
+    return DEFAULT_LIMIT * ((pageNumber || activePage) - 1);
+  };
+
+  const [offset, setOffset] = useState<number>(calculateOffset());
+  const [total, setTotal] = useState<number | undefined>(undefined);
+
+  const onPageNumberChange = (pageNumber: number): void => {
+    setOffset(calculateOffset(pageNumber));
+    setActivePage(pageNumber);
+  };
 
   const getNotificationTitle = (kind: EventKind): string => {
     let title = '';
@@ -55,7 +71,12 @@ const PackagesSection = (props: Props) => {
   async function getSubscriptions() {
     try {
       setIsLoading(true);
-      setPackages(await API.getUserSubscriptions());
+      const data = await API.getUserSubscriptions({
+        limit: DEFAULT_LIMIT,
+        offset: offset,
+      });
+      setPackages(data.items);
+      setTotal(parseInt(data.paginationTotalCount));
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -98,7 +119,7 @@ const PackagesSection = (props: Props) => {
 
   useEffect(() => {
     getSubscriptions();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <>
@@ -290,6 +311,20 @@ const PackagesSection = (props: Props) => {
                             })}
                           </tr>
                         ))}
+                        {!isUndefined(total) && total > DEFAULT_LIMIT && (
+                          <tr className={styles.paginationCell}>
+                            <td className="align-middle text-center" colSpan={5}>
+                              <Pagination
+                                limit={DEFAULT_LIMIT}
+                                offset={offset}
+                                total={total}
+                                active={activePage}
+                                className="my-3"
+                                onChange={onPageNumberChange}
+                              />
+                            </td>
+                          </tr>
+                        )}
                       </tbody>
                     </table>
                   </div>
@@ -300,6 +335,18 @@ const PackagesSection = (props: Props) => {
                 {packages.map((item: Package) => (
                   <PackageCard key={item.packageId} package={item} changeSubscription={changeSubscription} />
                 ))}
+                {!isUndefined(total) && (
+                  <div className="mx-auto">
+                    <Pagination
+                      limit={DEFAULT_LIMIT}
+                      offset={offset}
+                      total={total}
+                      active={activePage}
+                      className="my-5"
+                      onChange={onPageNumberChange}
+                    />
+                  </div>
+                )}
               </div>
             </>
           )}

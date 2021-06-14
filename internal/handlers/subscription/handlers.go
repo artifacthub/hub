@@ -110,23 +110,39 @@ func (h *Handlers) GetByPackage(w http.ResponseWriter, r *http.Request) {
 // GetByUser is an http handler that returns the subscriptions of the user
 // doing the request.
 func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.subscriptionManager.GetByUserJSON(r.Context())
+	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
+	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetByUser").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	result, err := h.subscriptionManager.GetByUserJSON(r.Context(), p)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByUser").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }
 
 // GetOptOutList is an http handler that returns the opt-out entries of the
 // user doing the request.
 func (h *Handlers) GetOptOutList(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.subscriptionManager.GetOptOutListJSON(r.Context())
+	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
+	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetOptOutList").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	result, err := h.subscriptionManager.GetOptOutListJSON(r.Context(), p)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOptOutList").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }

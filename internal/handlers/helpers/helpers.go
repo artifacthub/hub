@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -16,6 +18,13 @@ const (
 	// API endpoints.
 	DefaultAPICacheMaxAge = 5 * time.Minute
 
+	// PaginationDefaultLimit represents the default limit used for pagination.
+	PaginationDefaultLimit = 20
+
+	// PaginationMaxLimit represents the default maximum limit used for
+	// pagination.
+	PaginationMaxLimit = 60
+
 	// PaginationTotalCount represents a header used to indicate the number of
 	// entries available for pagination purposes.
 	PaginationTotalCount = "Pagination-Total-Count"
@@ -25,6 +34,40 @@ const (
 // duration provided.
 func BuildCacheControlHeader(cacheMaxAge time.Duration) string {
 	return fmt.Sprintf("max-age=%d", int64(cacheMaxAge.Seconds()))
+}
+
+// GetPagination is a helper that extracts the pagination information from the
+// query string values provided.
+func GetPagination(qs url.Values, defaultLimit, maxLimit int) (*hub.Pagination, error) {
+	// Limit
+	var limit int
+	if qs.Get("limit") != "" {
+		var err error
+		limit, err = strconv.Atoi(qs.Get("limit"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid limit: %s", qs.Get("limit"))
+		}
+		if limit > maxLimit {
+			return nil, fmt.Errorf("invalid limit: %s (max: %d)", qs.Get("limit"), maxLimit)
+		}
+	} else {
+		limit = defaultLimit
+	}
+
+	// Offset
+	var offset int
+	if qs.Get("offset") != "" {
+		var err error
+		offset, err = strconv.Atoi(qs.Get("offset"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid offset: %s", qs.Get("offset"))
+		}
+	}
+
+	return &hub.Pagination{
+		Limit:  limit,
+		Offset: offset,
+	}, nil
 }
 
 // RenderJSON is a helper to write the json data provided to the given http

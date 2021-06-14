@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
-import { AuthorizerAction, ErrorKind, Repository as Repo, Repository, SearchRepositoriesQuery } from '../../../types';
+import { AuthorizerAction, ErrorKind, Repository as Repo, SearchRepositoriesQuery } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
@@ -77,7 +77,7 @@ const RepositoriesSection = (props: Props) => {
         query.users = [ctx.user!.alias];
       }
       const data = await API.searchRepositories(query);
-      const repos = data.items as Repository[];
+      const repos = data.items;
 
       setRepositories(repos);
       setTotal(parseInt(data.paginationTotalCount));
@@ -285,6 +285,7 @@ const RepositoriesSection = (props: Props) => {
                     offset={offset}
                     total={total}
                     active={activePage}
+                    className="my-5"
                     onChange={onPageNumberChange}
                   />
                 )}

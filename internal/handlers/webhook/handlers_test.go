@@ -284,12 +284,18 @@ func TestGetOwnedByOrg(t *testing.T) {
 	t.Run("get webhooks owned by organization succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.wm.On("GetOwnedByOrgJSON", r.Context(), "org1").Return([]byte("dataJSON"), nil)
+		hw.wm.On("GetOwnedByOrgJSON", r.Context(), "org1", &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
 		hw.h.GetOwnedByOrg(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -297,6 +303,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
@@ -322,12 +329,15 @@ func TestGetOwnedByOrg(t *testing.T) {
 			t.Run(tc.err.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.wm.On("GetOwnedByOrgJSON", r.Context(), "org1").Return(nil, tc.err)
+				hw.wm.On("GetOwnedByOrgJSON", r.Context(), "org1", &hub.Pagination{
+					Limit:  10,
+					Offset: 1,
+				}).Return(nil, tc.err)
 				hw.h.GetOwnedByOrg(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -343,11 +353,14 @@ func TestGetOwnedByUser(t *testing.T) {
 	t.Run("error getting webhooks owned by user", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.wm.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
+		hw.wm.On("GetOwnedByUserJSON", r.Context(), &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(nil, tests.ErrFakeDB)
 		hw.h.GetOwnedByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -359,11 +372,17 @@ func TestGetOwnedByUser(t *testing.T) {
 	t.Run("get webhook owned by user succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.wm.On("GetOwnedByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.wm.On("GetOwnedByUserJSON", r.Context(), &hub.Pagination{
+			Limit:  10,
+			Offset: 1,
+		}).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
 		hw.h.GetOwnedByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -371,6 +390,7 @@ func TestGetOwnedByUser(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)

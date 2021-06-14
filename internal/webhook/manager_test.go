@@ -279,79 +279,84 @@ func TestGetJSON(t *testing.T) {
 
 func TestGetOwnedByOrgJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	p := &hub.Pagination{Limit: 10, Offset: 1}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName")
+			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName", p)
 		})
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(nil)
-		_, err := m.GetOwnedByOrgJSON(ctx, "")
+		_, err := m.GetOwnedByOrgJSON(ctx, "", p)
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getOrgWebhooksDBQ, "userID", "orgName").Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getOrgWebhooksDBQ, "userID", "orgName", 10, 1).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
+		result, err := m.GetOwnedByOrgJSON(ctx, "orgName", p)
 		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
+		assert.Nil(t, result)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("org webhooks data returned successfully", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getOrgWebhooksDBQ, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getOrgWebhooksDBQ, "userID", "orgName", 10, 1).
+			Return([]interface{}{[]byte("dataJSON"), 1}, nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
+		result, err := m.GetOwnedByOrgJSON(ctx, "orgName", p)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		assert.Equal(t, []byte("dataJSON"), result.Data)
+		assert.Equal(t, 1, result.TotalCount)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestGetOwnedByUserJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	p := &hub.Pagination{Limit: 10, Offset: 1}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetOwnedByUserJSON(context.Background())
+			_, _ = m.GetOwnedByUserJSON(context.Background(), p)
 		})
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserWebhooksDBQ, "userID").Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getUserWebhooksDBQ, "userID", 10, 1).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetOwnedByUserJSON(ctx)
+		result, err := m.GetOwnedByUserJSON(ctx, p)
 		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
+		assert.Nil(t, result)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("user webhooks data returned successfully", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserWebhooksDBQ, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserWebhooksDBQ, "userID", 10, 1).Return([]interface{}{[]byte("dataJSON"), 1}, nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetOwnedByUserJSON(ctx)
+		result, err := m.GetOwnedByUserJSON(ctx, p)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		assert.Equal(t, []byte("dataJSON"), result.Data)
+		assert.Equal(t, 1, result.TotalCount)
 		db.AssertExpectations(t)
 	})
 }

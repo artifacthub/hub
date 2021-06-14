@@ -658,34 +658,36 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 
 func TestGetByUserJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	p := &hub.Pagination{Limit: 10, Offset: 1}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetByUserJSON(context.Background())
+			_, _ = m.GetByUserJSON(context.Background(), p)
 		})
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID", 10, 1).Return([]interface{}{[]byte("dataJSON"), 1}, nil)
 		m := NewManager(cfg, db, nil, nil)
 
-		dataJSON, err := m.GetByUserJSON(ctx)
+		result, err := m.GetByUserJSON(ctx, p)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		assert.Equal(t, []byte("dataJSON"), result.Data)
+		assert.Equal(t, 1, result.TotalCount)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID").Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID", 10, 1).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil, nil)
 
-		dataJSON, err := m.GetByUserJSON(ctx)
+		dataJSON, err := m.GetByUserJSON(ctx, p)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -729,31 +731,34 @@ func TestGetJSON(t *testing.T) {
 
 func TestGetMembersJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	p := &hub.Pagination{Limit: 10, Offset: 1}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetMembersJSON(context.Background(), "orgName")
+			_, _ = m.GetMembersJSON(context.Background(), "orgName", p)
 		})
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
-		_, err := m.GetMembersJSON(ctx, "")
+		_, err := m.GetMembersJSON(ctx, "", p)
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName", 10, 1).
+			Return([]interface{}{[]byte("dataJSON"), 1}, nil)
 		m := NewManager(cfg, db, nil, nil)
 
-		dataJSON, err := m.GetMembersJSON(ctx, "orgName")
+		result, err := m.GetMembersJSON(ctx, "orgName", p)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		assert.Equal(t, []byte("dataJSON"), result.Data)
+		assert.Equal(t, 1, result.TotalCount)
 		db.AssertExpectations(t)
 	})
 
@@ -776,12 +781,12 @@ func TestGetMembersJSON(t *testing.T) {
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName").Return(nil, tc.dbErr)
+				db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName", 10, 1).Return(nil, tc.dbErr)
 				m := NewManager(cfg, db, nil, nil)
 
-				dataJSON, err := m.GetMembersJSON(ctx, "orgName")
+				result, err := m.GetMembersJSON(ctx, "orgName", p)
 				assert.Equal(t, tc.expectedError, err)
-				assert.Nil(t, dataJSON)
+				assert.Nil(t, result)
 				db.AssertExpectations(t)
 			})
 		}

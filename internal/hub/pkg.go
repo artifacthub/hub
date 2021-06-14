@@ -110,7 +110,7 @@ type PackageManager interface {
 	GetRandomJSON(ctx context.Context) ([]byte, error)
 	GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	GetSnapshotsToScan(ctx context.Context) ([]*SnapshotToScan, error)
-	GetStarredByUserJSON(ctx context.Context) ([]byte, error)
+	GetStarredByUserJSON(ctx context.Context, p *Pagination) (*JSONQueryResult, error)
 	GetStarsJSON(ctx context.Context, packageID string) ([]byte, error)
 	GetStatsJSON(ctx context.Context) ([]byte, error)
 	GetSummaryJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)

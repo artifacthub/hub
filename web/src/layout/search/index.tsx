@@ -527,6 +527,7 @@ const SearchView = (props: Props) => {
                       offset={offset}
                       total={parseInt(searchResults.paginationTotalCount)}
                       active={props.pageNumber}
+                      className="my-5"
                       onChange={onPageNumberChange}
                     />
                   </>

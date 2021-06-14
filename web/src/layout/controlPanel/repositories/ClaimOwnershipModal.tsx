@@ -120,7 +120,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
     async function fetchOrganizations() {
       try {
         setIsFetchingOrgs(true);
-        let orgs = await API.getUserOrganizations();
+        const orgs = await API.getAllUserOrganizations();
         const confirmedOrganizations = orgs.filter((org: Organization) => org.confirmed);
         setOrganizations(confirmedOrganizations);
         setApiOrgsError(null);

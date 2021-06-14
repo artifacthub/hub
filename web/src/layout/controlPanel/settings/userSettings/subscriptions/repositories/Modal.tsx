@@ -54,9 +54,9 @@ const OptOutModal = (props: Props) => {
     return selectedRepos.map((item: OptOutItem) => item.repository.repositoryId!);
   };
 
-  async function getUserOrganizations() {
+  async function getAllUserOrganizations() {
     try {
-      const orgs = await API.getUserOrganizations();
+      const orgs = await API.getAllUserOrganizations();
       const orgsList = orgs.map((org: Organization) => org.name);
       setUserOrganizations(orgsList);
     } catch (err) {
@@ -65,7 +65,7 @@ const OptOutModal = (props: Props) => {
   }
 
   useEffect(() => {
-    getUserOrganizations();
+    getAllUserOrganizations();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   async function addOptOut() {

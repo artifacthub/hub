@@ -5,16 +5,15 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
-import { Organization } from '../../types';
 import UserContext from './UserContext';
 jest.mock('../../api');
 
-const getMockOrgs = (fixtureId: string): Organization[] => {
-  return require(`./__fixtures__/UserContext/${fixtureId}.json`) as Organization[];
+const getMockOrgs = (fixtureId: string) => {
+  return require(`./__fixtures__/UserContext/${fixtureId}.json`);
 };
 
 const mockCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -31,7 +30,7 @@ const mockCtx = {
 };
 
 const mockOrgCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: 'test',
@@ -50,7 +49,7 @@ const mockOrgCtx = {
 };
 
 const mockOrgCtx1 = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: 'org',
@@ -77,7 +76,7 @@ describe('UserContext', () => {
 
   it('creates snapshot', async () => {
     const mockOrgs = getMockOrgs('1');
-    mocked(API).getUserOrganizations.mockResolvedValue(mockOrgs);
+    mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -88,7 +87,7 @@ describe('UserContext', () => {
     );
 
     await waitFor(() => {
-      expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+      expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -96,7 +95,7 @@ describe('UserContext', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockOrgs = getMockOrgs('2');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrgs);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -107,13 +106,13 @@ describe('UserContext', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
     });
 
     it('displays spinner to get organizations', async () => {
       const mockOrgs = getMockOrgs('3');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrgs);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       const { getByRole } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -130,7 +129,7 @@ describe('UserContext', () => {
 
     it('displays dropdown with ctx', async () => {
       const mockOrgs = getMockOrgs('4');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrgs);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       const { getByTestId, getAllByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -141,7 +140,7 @@ describe('UserContext', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       const ctxBtn = getByTestId('ctxBtn');
@@ -156,7 +155,7 @@ describe('UserContext', () => {
       expect(ctxDropdown).toHaveClass('show');
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(2);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(2);
       });
 
       expect(getByTestId('userCtxBtn')).toBeInTheDocument();
@@ -165,7 +164,7 @@ describe('UserContext', () => {
 
     it('renders only user ctx when no orgs', async () => {
       const mockOrgs = getMockOrgs('5');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrgs);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       const { getByTestId, queryAllByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -176,7 +175,7 @@ describe('UserContext', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         expect(getByTestId('userCtxBtn')).toBeInTheDocument();
         expect(queryAllByTestId('orgCtxBtn')).toHaveLength(0);
       });
@@ -184,7 +183,7 @@ describe('UserContext', () => {
 
     it('calls updateOrg when org ctx button is clicked', async () => {
       const mockOrgs = getMockOrgs('4');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrgs);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       const { getByTestId, getAllByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -195,7 +194,7 @@ describe('UserContext', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       const ctxBtn = getByTestId('ctxBtn');
@@ -209,7 +208,7 @@ describe('UserContext', () => {
 
       expect(ctxDropdown).toHaveClass('show');
 
-      expect(API.getUserOrganizations).toHaveBeenCalledTimes(2);
+      expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(2);
 
       expect(getByTestId('userCtxBtn')).toBeInTheDocument();
 
@@ -228,7 +227,7 @@ describe('UserContext', () => {
 
     it('calls unselectOrg when user ctx button is clicked', async () => {
       const mockOrgs = getMockOrgs('4');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrgs);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx, dispatch: mockDispatch }}>
@@ -239,13 +238,13 @@ describe('UserContext', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       const ctxBtn = getByTestId('ctxBtn');
       fireEvent.click(ctxBtn);
 
-      expect(API.getUserOrganizations).toHaveBeenCalledTimes(2);
+      expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(2);
 
       const userCtxBtn = getByTestId('userCtxBtn');
       fireEvent.click(userCtxBtn);
@@ -258,7 +257,7 @@ describe('UserContext', () => {
 
     it('calls unselectOrg when selectedOrg is not in the list', async () => {
       const mockOrgs = getMockOrgs('4');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrgs);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx1, dispatch: mockDispatch }}>
@@ -269,7 +268,7 @@ describe('UserContext', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       await waitFor(() => {

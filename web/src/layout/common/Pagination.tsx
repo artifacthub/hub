@@ -11,6 +11,7 @@ interface Props {
   total: number;
   offset: number;
   active: number;
+  className?: string;
   onChange: (pageNumber: number) => void;
 }
 
@@ -75,7 +76,7 @@ const Pagination = (props: Props) => {
 
   return (
     <nav role="navigation" aria-label="pagination">
-      <ul className={`pagination justify-content-center mt-5 mb-5 ${styles.pagination}`}>
+      <ul className={`pagination justify-content-center ${styles.pagination} ${props.className}`}>
         <li className={classnames('page-item', { disabled: active === 1 })}>
           <PaginationBtn
             pageNumber={active - 1}

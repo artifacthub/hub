@@ -340,70 +340,76 @@ func TestGetByPackageJSON(t *testing.T) {
 
 func TestGetByUserJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
+	p := &hub.Pagination{Limit: 10, Offset: 1}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetByUserJSON(context.Background())
+			_, _ = m.GetByUserJSON(context.Background(), p)
 		})
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserSubscriptionsDBQ, userID).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserSubscriptionsDBQ, userID, 10, 1).
+			Return([]interface{}{[]byte("dataJSON"), 1}, nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetByUserJSON(ctx)
+		result, err := m.GetByUserJSON(ctx, p)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		assert.Equal(t, []byte("dataJSON"), result.Data)
+		assert.Equal(t, 1, result.TotalCount)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserSubscriptionsDBQ, userID).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getUserSubscriptionsDBQ, userID, 10, 1).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetByUserJSON(ctx)
+		result, err := m.GetByUserJSON(ctx, p)
 		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
+		assert.Nil(t, result)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestGetOptOutListJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
+	p := &hub.Pagination{Limit: 10, Offset: 1}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetOptOutListJSON(context.Background())
+			_, _ = m.GetOptOutListJSON(context.Background(), p)
 		})
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserOptOutEntriesDBQ, userID).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserOptOutEntriesDBQ, userID, 10, 1).
+			Return([]interface{}{[]byte("dataJSON"), 1}, nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetOptOutListJSON(ctx)
+		result, err := m.GetOptOutListJSON(ctx, p)
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		assert.Equal(t, []byte("dataJSON"), result.Data)
+		assert.Equal(t, 1, result.TotalCount)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserOptOutEntriesDBQ, userID).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getUserOptOutEntriesDBQ, userID, 10, 1).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetOptOutListJSON(ctx)
+		dataJSON, err := m.GetOptOutListJSON(ctx, p)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)

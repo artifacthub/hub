@@ -2,11 +2,13 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
 import { ErrorKind, Organization } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
+import Pagination from '../../common/Pagination';
 import OrganizationCard from './Card';
 import OrganizationModal from './Modal';
 import styles from './OrganizationsSection.module.css';
@@ -17,10 +19,14 @@ interface ModalStatus {
 }
 
 interface Props {
+  activePage?: string;
   onAuthError: () => void;
 }
 
+const DEFAULT_LIMIT = 10;
+
 const OrganizationsSection = (props: Props) => {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [modalStatus, setModalStatus] = useState<ModalStatus>({
     open: false,
@@ -28,10 +34,36 @@ const OrganizationsSection = (props: Props) => {
   const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
   const [apiError, setApiError] = useState<null | string>(null);
 
+  const [activePage, setActivePage] = useState<number>(props.activePage ? parseInt(props.activePage) : 1);
+
+  const calculateOffset = (pageNumber?: number): number => {
+    return DEFAULT_LIMIT * ((pageNumber || activePage) - 1);
+  };
+
+  const [offset, setOffset] = useState<number>(calculateOffset());
+  const [total, setTotal] = useState<number | undefined>(undefined);
+
+  const onPageNumberChange = (pageNumber: number): void => {
+    setOffset(calculateOffset(pageNumber));
+    setActivePage(pageNumber);
+  };
+
+  const updatePageNumber = () => {
+    history.replace({
+      search: `?page=${activePage}`,
+    });
+  };
+
   async function fetchOrganizations() {
     try {
       setIsLoading(true);
-      setOrganizations(await API.getUserOrganizations());
+      const data = await API.getUserOrganizations({
+        limit: DEFAULT_LIMIT,
+        offset: offset,
+      });
+      setOrganizations(data.items);
+      setTotal(parseInt(data.paginationTotalCount));
+      updatePageNumber();
       setApiError(null);
       setIsLoading(false);
     } catch (err) {
@@ -48,6 +80,12 @@ const OrganizationsSection = (props: Props) => {
   useEffect(() => {
     fetchOrganizations();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (props.activePage && activePage !== parseInt(props.activePage)) {
+      fetchOrganizations();
+    }
+  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <main
@@ -103,16 +141,30 @@ const OrganizationsSection = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="row mt-4 mt-md-5">
-                  {organizations.map((org: Organization) => (
-                    <OrganizationCard
-                      key={`org_${org.name}`}
-                      organization={org}
-                      onAuthError={props.onAuthError}
-                      onSuccess={fetchOrganizations}
-                    />
-                  ))}
-                </div>
+                <>
+                  <div className="row mt-4 mt-md-5">
+                    {organizations.map((org: Organization) => (
+                      <OrganizationCard
+                        key={`org_${org.name}`}
+                        organization={org}
+                        onAuthError={props.onAuthError}
+                        onSuccess={fetchOrganizations}
+                      />
+                    ))}
+                  </div>
+                  {!isUndefined(total) && (
+                    <div className="mx-auto">
+                      <Pagination
+                        limit={DEFAULT_LIMIT}
+                        offset={offset}
+                        total={total}
+                        active={activePage}
+                        className="my-5"
+                        onChange={onPageNumberChange}
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </>
           )}

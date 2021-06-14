@@ -36,7 +36,7 @@ const UserContext = () => {
   async function fetchOrganizations() {
     try {
       setIsLoading(true);
-      const allOrganizations = await API.getUserOrganizations();
+      const allOrganizations = await API.getAllUserOrganizations();
       const confirmedOrganizations = allOrganizations.filter((org: Organization) => org.confirmed);
       if (ctx.prefs.controlPanel.selectedOrg) {
         const selectedOrg = confirmedOrganizations.find(

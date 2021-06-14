@@ -5,13 +5,13 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, ListableItems } from '../../../types';
+import { ErrorKind } from '../../../types';
 import Repository from './index';
 jest.mock('../../../api');
 jest.mock('../../../utils/minutesToNearestInterval', () => () => 3);
 
-const getMockRepository = (fixtureId: string): ListableItems => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as ListableItems;
+const getMockRepository = (fixtureId: string) => {
+  return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 
 const onAuthErrorMock = jest.fn();
@@ -30,7 +30,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const mockCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },

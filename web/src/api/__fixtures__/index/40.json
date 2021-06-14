@@ -1,0 +1,14 @@
+[
+  {
+    "alias": "jdoe",
+    "first_name": "John",
+    "last_name": "Doe",
+    "confirmed": true
+  },
+  {
+    "alias": "jsmith",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "confirmed": true
+  }
+]

@@ -2,19 +2,24 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 
 import API from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, Webhook } from '../../../../types';
 import Loading from '../../../common/Loading';
 import NoData from '../../../common/NoData';
+import Pagination from '../../../common/Pagination';
 import WebhookCard from './Card';
 import WebhookForm from './Form';
 import styles from './WebhooksSection.module.css';
 
 interface Props {
+  activePage?: string;
   onAuthError: () => void;
 }
+
+const DEFAULT_LIMIT = 10;
 
 interface VisibleForm {
   visible: boolean;
@@ -22,16 +27,44 @@ interface VisibleForm {
 }
 
 const WebhooksSection = (props: Props) => {
+  const history = useHistory();
   const { ctx } = useContext(AppCtx);
   const [isGettingWebhooks, setIsGettingWebhooks] = useState(false);
   const [webhooks, setWebhooks] = useState<Webhook[] | undefined>(undefined);
   const [apiError, setApiError] = useState<null | string>(null);
   const [visibleForm, setVisibleForm] = useState<VisibleForm | null>(null);
+  const [activePage, setActivePage] = useState<number>(props.activePage ? parseInt(props.activePage) : 1);
 
+  const calculateOffset = (pageNumber?: number): number => {
+    return DEFAULT_LIMIT * ((pageNumber || activePage) - 1);
+  };
+
+  const [offset, setOffset] = useState<number>(calculateOffset());
+  const [total, setTotal] = useState<number | undefined>(undefined);
+
+  const onPageNumberChange = (pageNumber: number): void => {
+    setOffset(calculateOffset(pageNumber));
+    setActivePage(pageNumber);
+  };
+
+  const updatePageNumber = () => {
+    history.replace({
+      search: `?page=${activePage}`,
+    });
+  };
   async function fetchWebhooks() {
     try {
       setIsGettingWebhooks(true);
-      setWebhooks(await API.getWebhooks(ctx.prefs.controlPanel.selectedOrg));
+      const data = await API.getWebhooks(
+        {
+          limit: DEFAULT_LIMIT,
+          offset: offset,
+        },
+        ctx.prefs.controlPanel.selectedOrg
+      );
+      setWebhooks(data.items);
+      setTotal(parseInt(data.paginationTotalCount));
+      updatePageNumber();
       setApiError(null);
       setIsGettingWebhooks(false);
     } catch (err) {
@@ -48,6 +81,12 @@ const WebhooksSection = (props: Props) => {
   useEffect(() => {
     fetchWebhooks();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (props.activePage && activePage !== parseInt(props.activePage)) {
+      fetchWebhooks();
+    }
+  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div className="d-flex flex-column flex-grow-1">
@@ -117,17 +156,31 @@ const WebhooksSection = (props: Props) => {
                         )}
                       </NoData>
                     ) : (
-                      <div className="row mt-3 mt-md-4">
-                        {webhooks.map((webhook: Webhook) => (
-                          <WebhookCard
-                            key={`member_${webhook.name}`}
-                            webhook={webhook}
-                            onEdition={() => setVisibleForm({ visible: true, webhook: webhook })}
-                            onAuthError={props.onAuthError}
-                            onDeletion={fetchWebhooks}
-                          />
-                        ))}
-                      </div>
+                      <>
+                        <div className="row mt-3 mt-md-4">
+                          {webhooks.map((webhook: Webhook) => (
+                            <WebhookCard
+                              key={`member_${webhook.name}`}
+                              webhook={webhook}
+                              onEdition={() => setVisibleForm({ visible: true, webhook: webhook })}
+                              onAuthError={props.onAuthError}
+                              onDeletion={fetchWebhooks}
+                            />
+                          ))}
+                        </div>
+                        {!isUndefined(total) && (
+                          <div className="mx-auto">
+                            <Pagination
+                              limit={DEFAULT_LIMIT}
+                              offset={offset}
+                              total={total}
+                              active={activePage}
+                              className="my-5"
+                              onChange={onPageNumberChange}
+                            />
+                          </div>
+                        )}
+                      </>
                     )}
                   </>
                 )}

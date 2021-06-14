@@ -4,7 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, Organization, Repository } from '../../../types';
+import { ErrorKind, Repository } from '../../../types';
 import TransferModal from './TransferModal';
 jest.mock('../../../api');
 
@@ -31,7 +31,7 @@ const defaultProps = {
 };
 
 const mockWithoutSelectedOrgCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: undefined,
@@ -50,7 +50,7 @@ const mockWithoutSelectedOrgCtx = {
 };
 
 const mockWithSelectedOrgCtx = {
-  user: { alias: 'test', email: 'test@test.com' },
+  user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
     controlPanel: {
       selectedOrg: 'orgTest',
@@ -68,8 +68,8 @@ const mockWithSelectedOrgCtx = {
   },
 };
 
-const getMockOrganizations = (fixtureId: string): Organization[] => {
-  return require(`./__fixtures__/TransferModal/${fixtureId}.json`) as Organization[];
+const getMockOrganizations = (fixtureId: string) => {
+  return require(`./__fixtures__/TransferModal/${fixtureId}.json`);
 };
 
 describe('Transfer Repository Modal - packages section', () => {
@@ -79,7 +79,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
   it('creates snapshot', async () => {
     const mockOrganizations = getMockOrganizations('1');
-    mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+    mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
     const result = render(
       <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -88,7 +88,7 @@ describe('Transfer Repository Modal - packages section', () => {
     );
 
     await waitFor(() => {
-      expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+      expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       expect(result.asFragment()).toMatchSnapshot();
     });
   });
@@ -96,7 +96,7 @@ describe('Transfer Repository Modal - packages section', () => {
   describe('Render', () => {
     it('renders component when org is selected in context', async () => {
       const mockOrganizations = getMockOrganizations('2');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
       const { getByTestId, getByText, queryByText } = render(
         <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -105,7 +105,7 @@ describe('Transfer Repository Modal - packages section', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Transfer repository')).toBeInTheDocument();
@@ -127,7 +127,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
     it('renders component when org is not selected in context', async () => {
       const mockOrganizations = getMockOrganizations('3');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
       const { getByTestId, queryByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -136,7 +136,7 @@ describe('Transfer Repository Modal - packages section', () => {
       );
 
       await waitFor(() => {
-        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
       expect(getByText('Transfer repository')).toBeInTheDocument();
@@ -155,7 +155,7 @@ describe('Transfer Repository Modal - packages section', () => {
     describe('Transfer repo', () => {
       it('from org to myself', async () => {
         const mockOrganizations = getMockOrganizations('4');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockResolvedValue(null);
 
         const { getByTestId } = render(
@@ -165,7 +165,7 @@ describe('Transfer Repository Modal - packages section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const btn = getByTestId('transferRepoBtn');
@@ -187,7 +187,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('from org to org', async () => {
         const mockOrganizations = getMockOrganizations('5');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockResolvedValue(null);
 
         const { getByTestId, getByText } = render(
@@ -197,7 +197,7 @@ describe('Transfer Repository Modal - packages section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         expect(getByTestId('selectOrgsWrapper')).toHaveClass('invisible');
@@ -229,7 +229,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('from user to org', async () => {
         const mockOrganizations = getMockOrganizations('6');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockResolvedValue(null);
 
         const { getByTestId } = render(
@@ -239,7 +239,7 @@ describe('Transfer Repository Modal - packages section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const select = getByTestId('select_orgs');
@@ -266,7 +266,7 @@ describe('Transfer Repository Modal - packages section', () => {
     describe('When transfer repo fails', () => {
       it('UnauthorizedError', async () => {
         const mockOrganizations = getMockOrganizations('7');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
@@ -278,7 +278,7 @@ describe('Transfer Repository Modal - packages section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const btn = getByTestId('transferRepoBtn');
@@ -293,7 +293,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('default error', async () => {
         const mockOrganizations = getMockOrganizations('8');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockRejectedValue({
           kind: ErrorKind.Other,
         });
@@ -307,7 +307,7 @@ describe('Transfer Repository Modal - packages section', () => {
         const { getByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const btn = getByTestId('transferRepoBtn');
@@ -325,7 +325,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('with custom error message', async () => {
         const mockOrganizations = getMockOrganizations('9');
-        mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
@@ -340,7 +340,7 @@ describe('Transfer Repository Modal - packages section', () => {
         const { getByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         const btn = getByTestId('transferRepoBtn');
@@ -359,7 +359,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
     describe('When fetchOrganizations fails', () => {
       it('error UnauthorizedError', async () => {
-        mocked(API).getUserOrganizations.mockRejectedValue({
+        mocked(API).getAllUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -370,14 +370,14 @@ describe('Transfer Repository Modal - packages section', () => {
         );
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
       });
 
       it('default error', async () => {
-        mocked(API).getUserOrganizations.mockRejectedValue({
+        mocked(API).getAllUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -390,7 +390,7 @@ describe('Transfer Repository Modal - packages section', () => {
         const { getByText, rerender } = render(component);
 
         await waitFor(() => {
-          expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+          expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
         rerender(component);

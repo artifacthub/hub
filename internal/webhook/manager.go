@@ -17,8 +17,8 @@ const (
 	addWebhookDBQ                 = `select add_webhook($1::uuid, $2::text, $3::jsonb)`
 	deleteWebhookDBQ              = `select delete_webhook($1::uuid, $2::uuid)`
 	getWebhooksSubscribedToPkgDBQ = `select get_webhooks_subscribed_to_package($1::int, $2::uuid)`
-	getOrgWebhooksDBQ             = `select get_org_webhooks($1::uuid, $2::text)`
-	getUserWebhooksDBQ            = `select get_user_webhooks($1::uuid)`
+	getOrgWebhooksDBQ             = `select * from get_org_webhooks($1::uuid, $2::text, $3::int, $4::int)`
+	getUserWebhooksDBQ            = `select * from get_user_webhooks($1::uuid, $2::int, $3::int)`
 	getWebhookDBQ                 = `select get_webhook($1::uuid, $2::uuid)`
 	updateWebhookDBQ              = `select update_webhook($1::uuid, $2::jsonb)`
 )
@@ -113,7 +113,11 @@ func (m *Manager) GetJSON(ctx context.Context, webhookID string) ([]byte, error)
 
 // GetOwnedByOrgJSON returns the webhooks belonging to the provided organization
 // as a json array.
-func (m *Manager) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error) {
+func (m *Manager) GetOwnedByOrgJSON(
+	ctx context.Context,
+	orgName string,
+	p *hub.Pagination,
+) (*hub.JSONQueryResult, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Validate input
@@ -122,16 +126,16 @@ func (m *Manager) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte
 	}
 
 	// Get webhooks from database
-	return util.DBQueryJSON(ctx, m.db, getOrgWebhooksDBQ, userID, orgName)
+	return util.DBQueryJSONWithPagination(ctx, m.db, getOrgWebhooksDBQ, userID, orgName, p.Limit, p.Offset)
 }
 
 // GetOwnedByUserJSON returns the webhooks belonging to the requesting user as
 // a json array.
-func (m *Manager) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
+func (m *Manager) GetOwnedByUserJSON(ctx context.Context, p *hub.Pagination) (*hub.JSONQueryResult, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Get webhooks from database
-	return util.DBQueryJSON(ctx, m.db, getUserWebhooksDBQ, userID)
+	return util.DBQueryJSONWithPagination(ctx, m.db, getUserWebhooksDBQ, userID, p.Limit, p.Offset)
 }
 
 // GetSubscribedTo returns the webhooks subscribed to the event provided.

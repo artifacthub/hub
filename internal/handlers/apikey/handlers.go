@@ -2,7 +2,9 @@ package apikey
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
@@ -70,13 +72,21 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 // GetOwnedByUser is an http handler that returns the api keys owned by the
 // user doing the request.
 func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.apiKeyManager.GetOwnedByUserJSON(r.Context())
+	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
+	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetOwnedByUser").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	result, err := h.apiKeyManager.GetOwnedByUserJSON(r.Context(), p)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByUser").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
+	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
 }
 
 // Update is an http handler that updates the provided api key in the database.

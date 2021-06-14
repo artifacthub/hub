@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(3);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -21,23 +21,54 @@ insert into user__organization (user_id, organization_id, confirmed) values(:'us
 insert into user__organization (user_id, organization_id, confirmed) values(:'user2ID', :'org1ID', false);
 
 -- Users and organizations have just been seeded
-select is(
-    get_organization_members(:'user1ID', 'org1')::jsonb,
-    '[{
-        "alias": "user1",
-        "first_name": "firstname1",
-        "last_name": "lastname1",
-        "confirmed": true
-    },{
-        "alias": "user2",
-        "first_name": "firstname2",
-        "last_name": "lastname2",
-        "confirmed": false
-    }]'::jsonb,
-    'Organization1 members are returned as a json array of objects'
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_organization_members('00000000-0000-0000-0000-000000000001', 'org1', 0, 0)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "alias": "user1",
+                    "first_name": "firstname1",
+                    "last_name": "lastname1",
+                    "confirmed": true
+                },
+                {
+                    "alias": "user2",
+                    "first_name": "firstname2",
+                    "last_name": "lastname2",
+                    "confirmed": false
+                }
+            ]'::jsonb,
+            2
+        )
+    $$,
+    'No limit or offset used, members user1 and user2 returned'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_organization_members('00000000-0000-0000-0000-000000000001', 'org1', 1, 1)
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "alias": "user2",
+                    "first_name": "firstname2",
+                    "last_name": "lastname2",
+                    "confirmed": false
+                }
+            ]'::jsonb,
+            2
+        )
+    $$,
+    'Limit and offset of 1 used, member user2 returned'
 );
 select throws_ok(
-    $$ select get_organization_members('00000000-0000-0000-0000-000000000001', 'org2') $$,
+    $$ select * from get_organization_members('00000000-0000-0000-0000-000000000001', 'org2', 0, 0) $$,
     42501,
     'insufficient_privilege',
     'User1 should not be able to get organization2 members'
