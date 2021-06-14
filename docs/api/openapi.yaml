@@ -34,7 +34,7 @@ paths:
         - Users
       summary: Register a new user
       description: Register a new user
-      operationId: registerUsers
+      operationId: registerUser
       requestBody:
         description: ""
         required: true
@@ -238,8 +238,8 @@ paths:
                   type: string
                   format: uuid
       responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
+        "200":
+          description: "The request has succeeded"
         "400":
           $ref: "#/components/responses/BadRequest"
         "410":
@@ -612,7 +612,7 @@ paths:
       operationId: searchRepositories
       parameters:
         - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/LimitRepositoriesParam"
         - $ref: "#/components/parameters/RepositoryKindsListParam"
         - $ref: "#/components/parameters/UsersListParam"
         - $ref: "#/components/parameters/OrgsListParam"
@@ -667,8 +667,8 @@ paths:
       security:
         - ApiKeyId: []
           ApiKeySecret: []
-      summary: Add user's repository
-      description: Add user's repository
+      summary: Update user's repository
+      description: Update user's repository
       operationId: updateUserRepository
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
@@ -721,7 +721,7 @@ paths:
       operationId: transferRepositoryOwnershipToOrganization
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
-        - $ref: "#/components/parameters/OrgNameToTransferParam"
+        - $ref: "#/components/parameters/OrgNameToParam"
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
@@ -745,7 +745,7 @@ paths:
       operationId: claimRepositoryOwnership
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
-        - $ref: "#/components/parameters/OrgNameToTransferParam"
+        - $ref: "#/components/parameters/OrgNameToParam"
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
@@ -848,7 +848,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
         - $ref: "#/components/parameters/RepoNameParam"
-        - $ref: "#/components/parameters/OrgNameToTransferParam"
+        - $ref: "#/components/parameters/OrgNameToParam"
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
@@ -873,7 +873,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
         - $ref: "#/components/parameters/RepoNameParam"
-        - $ref: "#/components/parameters/OrgNameToTransferParam"
+        - $ref: "#/components/parameters/OrgNameToParam"
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
@@ -902,8 +902,10 @@ paths:
                 properties:
                   packages:
                     type: integer
+                    nullable: false
                   releases:
                     type: integer
+                    nullable: false
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
@@ -937,7 +939,7 @@ paths:
       operationId: searchPackages
       parameters:
         - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/LimitPackagesParam"
         - $ref: "#/components/parameters/FacetsParam"
         - $ref: "#/components/parameters/TSQueryWebParam"
         - $ref: "#/components/parameters/TSQueryParam"
@@ -1624,8 +1626,10 @@ paths:
                 properties:
                   stars:
                     type: integer
+                    nullable: false
                   starred_by_user:
                     type: boolean
+                    nullable: false
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
@@ -1741,7 +1745,7 @@ paths:
                             type: string
                             nullable: false
                           kind:
-                            $ref: "#/components/schemas/ChangeKind"
+                            $ref: "#/components/schemas/ChangelogItemKind"
                           links:
                             type: array
                             items:
@@ -2658,6 +2662,7 @@ components:
         - all
         - addOrganizationMember
         - addOrganizationRepository
+        - deleteOrganization
         - deleteOrganizationMember
         - deleteOrganizationRepository
         - getAuthorizationPolicy
@@ -2673,6 +2678,8 @@ components:
         * `addOrganizationMember` - Add member to organization
 
         * `addOrganizationRepository` - Add repository to organization
+
+        * `deleteOrganization` - Delete organization
 
         * `deleteOrganizationMember` - Delete member from organization
 
@@ -2749,7 +2756,7 @@ components:
                 allowed_actions:
                   - addOrganizationMember
                   - addOrganizationRepository
-    ChangeKind:
+    ChangelogItemKind:
       type: string
       enum:
         - added
@@ -3848,15 +3855,32 @@ components:
         default: false
       required: true
       description: Whether we should get facets or not
+    LimitPackagesParam:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        maximum: 0
+      required: false
+      description: The number of packages to return
     LimitParam:
       in: query
       name: limit
       schema:
         type: integer
-        minimum: 0
-        maximum: 50
+        default: 20
+        maximum: 60
       required: false
       description: The number of items to return
+    LimitRepositoriesParam:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        default: 20
+        maximum: 50
+      required: false
+      description: The number of packages to return
     OffsetParam:
       in: query
       name: offset
@@ -3874,14 +3898,14 @@ components:
         example: org1
       required: true
       description: Organization name
-    OrgNameToTransferParam:
+    OrgNameToParam:
       in: query
       name: org
       required: false
       schema:
         type: string
         example: org1
-      description: The org to transfer the repoName
+      description: The org to transfer or from claiming the repository
     OrgsListParam:
       in: query
       name: org
@@ -3933,6 +3957,11 @@ components:
           * `2` - OPA policies
           * `3` - OLM operators
           * `4` - Tinkerbell actions
+          * `5` - Krew kubectl plugins
+          * `6` - Helm plugins
+          * `7` - Tekton tasks
+          * `8` - KEDA scalers
+          * `9` - Core DNS plugins
     PackageNameParam:
       in: path
       name: packageName
