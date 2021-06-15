@@ -142,4 +142,38 @@ describe('OrganizationInfo', () => {
 
     expect(await screen.findByTestId('orgInfoDropdown')).toBeEmptyDOMElement();
   });
+
+  it('does not call getOrganization if user is over link less than 100ms', async () => {
+    jest.useFakeTimers();
+
+    const mockOrganization = getMockOrganization('1');
+    mocked(API).getOrganization.mockResolvedValue(mockOrganization);
+
+    render(<OrganizationInfo {...defaultProps} />);
+    userEvent.hover(screen.getByTestId('orgLink'));
+
+    act(() => {
+      jest.advanceTimersByTime(50);
+    });
+
+    userEvent.unhover(screen.getByTestId('orgLink'));
+
+    await waitFor(() => {
+      expect(API.getOrganization).toHaveBeenCalledTimes(0);
+    });
+
+    userEvent.hover(screen.getByTestId('orgLink'));
+
+    act(() => {
+      jest.advanceTimersByTime(150);
+    });
+
+    userEvent.unhover(screen.getByTestId('orgLink'));
+
+    await waitFor(() => {
+      expect(API.getOrganization).toHaveBeenCalledTimes(1);
+    });
+
+    jest.useRealTimers();
+  });
 });

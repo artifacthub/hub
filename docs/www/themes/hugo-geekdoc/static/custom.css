@@ -78,28 +78,6 @@ code {
   top: -1px;
 }
 
-.gdoc-brand__badge {
-  position: relative;
-  top: -10px;
-  margin-left: 0;
-  background-color: var(--color-1-700);
-  font-size: .55rem;
-  border-radius: 10rem;
-  padding: 0.15rem 0.2rem;
-  font-weight: 700;
-  line-height: 1;
-  display: inline-block;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  align-items: center;
-}
-
-.gdoc-brand__badge-content {
-  position: relative;
-  bottom: -1px;
-}
-
 .gdoc-footer {
   background-color: var(--color-1-900);
 }

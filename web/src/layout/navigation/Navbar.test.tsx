@@ -80,18 +80,6 @@ describe('Navbar', () => {
   });
 
   describe('common elements', () => {
-    it('renders ', () => {
-      const { getByText } = render(
-        <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
-          <Router>
-            <Navbar {...defaultProps} />
-          </Router>
-        </AppCtx.Provider>
-      );
-
-      expect(getByText('Beta')).toBeInTheDocument();
-    });
-
     it('goes to Homepage to click brand link', () => {
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>

@@ -45,6 +45,9 @@
 
 .description {
   overflow-wrap: break-word;
+  -webkit-line-clamp: 6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 .rightColumnWrapper code,
@@ -208,6 +211,10 @@
   .optsWrapper {
     padding-right: 0;
   }
+
+  .description {
+    -webkit-line-clamp: 3;
+  }
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -249,6 +256,14 @@
 
   .noReadmeWrapper {
     margin-right: 0;
+  }
+
+  .manifestWrapper {
+    min-width: 75%;
+  }
+
+  .description {
+    -webkit-line-clamp: 2;
   }
 }
 

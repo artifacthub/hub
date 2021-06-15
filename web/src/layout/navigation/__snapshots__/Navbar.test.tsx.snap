@@ -23,11 +23,6 @@ exports[`Navbar creates snapshot 1`] = `
               alt="Logo null"
               class="logo"
             />
-            <div
-              class="position-relative text-uppercase badge badge-pill badge-secondary d-flex align-items-center ml-1 badge"
-            >
-              Beta
-            </div>
           </div>
         </a>
         <div />

@@ -53,11 +53,6 @@ const Navbar = (props: Props) => {
             <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
               <div className="d-flex align-items-start">
                 <img className={styles.logo} src={logo} alt={`Logo ${siteName}`} />
-                <div
-                  className={`position-relative text-uppercase badge badge-pill badge-secondary d-flex align-items-center ml-1 ${styles.badge}`}
-                >
-                  Beta
-                </div>
               </div>
             </Link>
 
