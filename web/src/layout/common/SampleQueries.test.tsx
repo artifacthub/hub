@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { SearchFiltersURL } from '../../types';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import SampleQueries from './SampleQueries';
 
 const mockQueries = [

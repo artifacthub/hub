@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
-import { AuthorizerAction, ErrorKind, Repository as Repo, SearchRepositoriesQuery } from '../../../types';
+import { AuthorizerAction, ErrorKind, Repository as Repo, SearchQuery } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
@@ -69,15 +69,17 @@ const RepositoriesSection = (props: Props) => {
   async function fetchRepositories() {
     try {
       setIsLoading(true);
-      let query: SearchRepositoriesQuery = {
+      let filters: { [key: string]: string[] } = {};
+      if (activeOrg) {
+        filters.org = [activeOrg];
+      } else {
+        filters.user = [ctx.user!.alias];
+      }
+      let query: SearchQuery = {
         offset: offset,
         limit: DEFAULT_LIMIT,
+        filters: filters,
       };
-      if (activeOrg) {
-        query.organizations = [activeOrg];
-      } else {
-        query.users = [ctx.user!.alias];
-      }
       const data = await API.searchRepositories(query);
       const total = parseInt(data.paginationTotalCount);
       if (total > 0 && data.items.length === 0) {

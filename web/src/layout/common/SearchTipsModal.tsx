@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { SearchTipItem } from '../../types';
 import { SEARH_TIPS } from '../../utils/data';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import Modal from './Modal';
 import styles from './SearchTipsModal.module.css';
 
@@ -54,7 +54,6 @@ const SearchTipsModal = (props: Props) => {
                   search: prepareQueryString({
                     pageNumber: 1,
                     tsQueryWeb: tip.example,
-                    filters: {},
                   }),
                 }}
                 aria-label={`Filter by ${tip.example}`}

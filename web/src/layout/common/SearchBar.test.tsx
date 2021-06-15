@@ -4,7 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../api';
 import { SearchResults } from '../../types';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import SearchBar from './SearchBar';
 jest.mock('../../api');
 
@@ -134,7 +134,6 @@ describe('SearchBar', () => {
         search: prepareQueryString({
           tsQueryWeb: 'testing',
           pageNumber: 1,
-          filters: {},
         }),
       });
     });
@@ -153,7 +152,6 @@ describe('SearchBar', () => {
         search: prepareQueryString({
           tsQueryWeb: undefined,
           pageNumber: 1,
-          filters: {},
         }),
       });
     });

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { RepositoryKind } from '../../types';
 import { RepoKindDef, REPOSITORY_KINDS } from '../../utils/data';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import styles from './RepositoryIconLabel.module.css';
 
 interface Props {

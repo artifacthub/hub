@@ -85,7 +85,7 @@ describe('SearchTipsModal', () => {
       fireEvent.click(tips[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe('?page=1&ts_query_web=kafka+operator');
+      expect(window.location.search).toBe('?ts_query_web=kafka+operator&page=1');
     });
   });
 });

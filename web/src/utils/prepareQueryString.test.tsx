@@ -1,5 +1,5 @@
 import { SearchFiltersURL } from '../types';
-import prepareQueryString from './prepareQueryString';
+import { prepareQueryString } from './prepareQueryString';
 
 interface Test {
   query: SearchFiltersURL;
@@ -15,7 +15,7 @@ const tests: Test[] = [
       },
       deprecated: true,
     },
-    result: '?page=1&deprecated=true&org=org',
+    result: '?org=org&deprecated=true&page=1',
   },
   {
     query: {
@@ -24,7 +24,7 @@ const tests: Test[] = [
       filters: {},
       deprecated: false,
     },
-    result: '?page=1&ts_query_web=test',
+    result: '?ts_query_web=test&page=1',
   },
   {
     query: {
@@ -43,7 +43,7 @@ const tests: Test[] = [
       },
       deprecated: true,
     },
-    result: '?page=3&deprecated=true&org=org1&org=org2&repo=stable&repo=incubator',
+    result: '?org=org1&org=org2&repo=stable&repo=incubator&deprecated=true&page=3',
   },
   {
     query: {
@@ -53,7 +53,7 @@ const tests: Test[] = [
       },
       deprecated: true,
     },
-    result: '?page=10&deprecated=true&user=user1&user=user2',
+    result: '?user=user1&user=user2&deprecated=true&page=10',
   },
   {
     query: {
@@ -61,7 +61,7 @@ const tests: Test[] = [
       filters: {},
       verifiedPublisher: true,
     },
-    result: '?page=1&verified_publisher=true',
+    result: '?verified_publisher=true&page=1',
   },
   {
     query: {
@@ -69,7 +69,7 @@ const tests: Test[] = [
       filters: {},
       official: true,
     },
-    result: '?page=1&official=true',
+    result: '?official=true&page=1',
   },
 ];
 

@@ -9,7 +9,7 @@ import regexifyString from 'regexify-string';
 
 import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { ErrorKind, Repository } from '../../types';
+import { ErrorKind, Repository, SearchQuery } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import { OCI_PREFIX } from '../../utils/data';
 import RepositoryIcon from './RepositoryIcon';
@@ -51,13 +51,13 @@ const SearchRepositories = (props: Props) => {
   async function searchRepositories() {
     try {
       setIsSearching(true);
-      let query = {
+      let query: SearchQuery = {
         name: searchName,
         limit: DEFAULT_LIMIT,
         offset: 0,
       };
       if (props.extraQueryParams) {
-        query = { ...query, ...props.extraQueryParams };
+        query = { ...query, filters: props.extraQueryParams };
       }
       const data = await API.searchRepositories(query);
       setRepositories(data.items);

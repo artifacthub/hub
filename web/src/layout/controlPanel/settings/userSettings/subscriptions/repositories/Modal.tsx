@@ -210,7 +210,7 @@ const OptOutModal = (props: Props) => {
                 disabledRepositories={{
                   ids: getSubscribedReposIds(),
                 }}
-                extraQueryParams={{ users: ctx.user ? [ctx.user.alias] : [], organizations: userOrganizations || [] }}
+                extraQueryParams={{ user: ctx.user ? [ctx.user.alias] : [], org: userOrganizations || [] }}
                 onSelection={onRepoSelect}
                 onAuthError={props.onAuthError}
                 visibleUrl={false}

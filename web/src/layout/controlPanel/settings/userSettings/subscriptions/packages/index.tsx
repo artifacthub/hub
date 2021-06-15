@@ -8,7 +8,7 @@ import { ErrorKind, EventKind, Package } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import buildPackageURL from '../../../../../../utils/buildPackageURL';
 import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
-import prepareQueryString from '../../../../../../utils/prepareQueryString';
+import { prepareQueryString } from '../../../../../../utils/prepareQueryString';
 import Image from '../../../../../common/Image';
 import Loading from '../../../../../common/Loading';
 import Pagination from '../../../../../common/Pagination';

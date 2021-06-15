@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import prepareQuerystring from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import Keywords from './Keywords';
 
 const mockHistoryPush = jest.fn();
@@ -81,10 +81,9 @@ describe('Keywords', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           tsQueryWeb: defaultProps.keywords[0],
           pageNumber: 1,
-          filters: {},
         }),
       });
     });

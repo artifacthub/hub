@@ -212,7 +212,7 @@ describe('API', () => {
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(
-          '/api/v1/packages/search?facets=true&limit=20&offset=0&kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database'
+          '/api/v1/packages/search?facets=true&kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database&limit=20&offset=0'
         );
         expect(response).toEqual(API.toCamelCase(search));
       });
@@ -381,15 +381,17 @@ describe('API', () => {
 
         const response = await API.searchRepositories({
           name: 'test',
-          organizations: ['org1', 'org2'],
-          users: ['user1'],
+          filters: {
+            org: ['org1', 'org2'],
+            user: ['user1'],
+          },
           limit: 20,
           offset: 0,
         });
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(
-          '/api/v1/repositories/search?limit=20&offset=0&user=user1&org=org1&org=org2&name=test'
+          '/api/v1/repositories/search?org=org1&org=org2&user=user1&name=test&limit=20&offset=0'
         );
         expect(response).toEqual(API.toCamelCase(data));
       });

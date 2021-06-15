@@ -25,7 +25,7 @@ import {
   Version,
 } from '../../types';
 import isPackageOfficial from '../../utils/isPackageOfficial';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
@@ -412,7 +412,7 @@ const PackageView = (props: Props) => {
                   pageNumber: pageNumber || 1,
                   tsQueryWeb: tsQueryWeb,
                   tsQuery: tsQuery,
-                  filters: filters || {},
+                  filters: filters,
                   deprecated: deprecated,
                   operators: operators,
                   verifiedPublisher: verifiedPublisher,

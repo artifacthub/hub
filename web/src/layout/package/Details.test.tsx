@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
 import { Package, PackageLink, Version } from '../../types';
-import prepareQuerystring from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import Details from './Details';
 
@@ -131,10 +131,9 @@ describe('Details', () => {
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);
         expect(mockHistoryPush).toHaveBeenCalledWith({
           pathname: '/packages/search',
-          search: prepareQuerystring({
+          search: prepareQueryString({
             tsQueryWeb: mockPackage.keywords![0],
             pageNumber: 1,
-            filters: {},
           }),
         });
       });

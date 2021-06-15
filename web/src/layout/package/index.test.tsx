@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../api';
 import { ErrorKind, Package } from '../../types';
-import prepareQuerystring from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageView from './index';
 jest.mock('../../api');
 jest.mock('../../utils/updateMetaIndex');
@@ -168,7 +168,7 @@ describe('Package index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring(searchUrlReferer),
+        search: prepareQueryString(searchUrlReferer),
         state: { 'from-detail': true },
       });
     });
@@ -191,7 +191,7 @@ describe('Package index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           pageNumber: 1,
           filters: {
             repo: [mockPackage.repository.name],

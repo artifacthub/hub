@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
 import { RepositoryKind } from '../../types';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import RepositoryIconLabel from './RepositoryIconLabel';
 
 const mockHistoryPush = jest.fn();

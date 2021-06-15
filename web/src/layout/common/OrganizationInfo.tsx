@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Organization } from '../../types';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import ExternalLink from './ExternalLink';
 import Image from './Image';
 import styles from './OrganizationInfo.module.css';

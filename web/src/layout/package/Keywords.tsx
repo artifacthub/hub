@@ -5,7 +5,7 @@ import uniq from 'lodash/uniq';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import styles from './Keywords.module.css';
 
 interface Props {
@@ -45,7 +45,6 @@ const Keywords = (props: Props) => {
                   search: prepareQueryString({
                     tsQueryWeb: keyword,
                     pageNumber: 1,
-                    filters: {},
                     deprecated: props.deprecated,
                   }),
                 });

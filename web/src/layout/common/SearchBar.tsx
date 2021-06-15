@@ -11,7 +11,7 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 import { Package } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import isPackageOfficial from '../../utils/isPackageOfficial';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import HoverableItem from './HoverableItem';
 import Image from './Image';
 import OfficialBadge from './OfficialBadge';
@@ -78,7 +78,6 @@ const SearchBar = (props: Props) => {
       search: prepareQueryString({
         pageNumber: 1,
         tsQueryWeb: value || undefined,
-        filters: {},
       }),
     });
   };
