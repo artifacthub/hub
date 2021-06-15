@@ -612,7 +612,7 @@ paths:
       operationId: searchRepositories
       parameters:
         - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitRepositoriesParam"
+        - $ref: "#/components/parameters/LimitParam"
         - $ref: "#/components/parameters/RepositoryKindsListParam"
         - $ref: "#/components/parameters/UsersListParam"
         - $ref: "#/components/parameters/OrgsListParam"
@@ -939,7 +939,7 @@ paths:
       operationId: searchPackages
       parameters:
         - $ref: "#/components/parameters/OffsetParam"
-        - $ref: "#/components/parameters/LimitPackagesParam"
+        - $ref: "#/components/parameters/LimitParam"
         - $ref: "#/components/parameters/FacetsParam"
         - $ref: "#/components/parameters/TSQueryWebParam"
         - $ref: "#/components/parameters/TSQueryParam"
@@ -3855,15 +3855,6 @@ components:
         default: false
       required: true
       description: Whether we should get facets or not
-    LimitPackagesParam:
-      in: query
-      name: limit
-      schema:
-        type: integer
-        default: 20
-        maximum: 60
-      required: false
-      description: The number of packages to return
     LimitParam:
       in: query
       name: limit
@@ -3873,15 +3864,6 @@ components:
         maximum: 60
       required: false
       description: The number of items to return
-    LimitRepositoriesParam:
-      in: query
-      name: limit
-      schema:
-        type: integer
-        default: 20
-        maximum: 50
-      required: false
-      description: The number of packages to return
     OffsetParam:
       in: query
       name: offset
