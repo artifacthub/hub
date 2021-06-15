@@ -855,17 +855,10 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 		testCases := []struct {
 			errMsg    string
 			userEmail string
-			baseURL   string
 		}{
 			{
 				"email not provided",
 				"",
-				"http://baseurl.com",
-			},
-			{
-				"invalid base url",
-				"email@email.com",
-				"invalid",
 			},
 		}
 		for _, tc := range testCases {
@@ -875,7 +868,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 				es := &email.SenderMock{}
 				m := NewManager(cfg, nil, es)
 
-				err := m.RegisterPasswordResetCode(ctx, tc.userEmail, tc.baseURL)
+				err := m.RegisterPasswordResetCode(ctx, tc.userEmail)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
@@ -906,7 +899,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(cfg, db, es)
 
-				err := m.RegisterPasswordResetCode(ctx, "email@email.com", "http://baseurl.com")
+				err := m.RegisterPasswordResetCode(ctx, "email@email.com")
 				assert.Equal(t, tc.emailSenderResponse, err)
 				db.AssertExpectations(t)
 				es.AssertExpectations(t)
@@ -920,7 +913,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 		db.On("Exec", ctx, registerPasswordResetCodeDBQ, "email@email.com", mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
-		err := m.RegisterPasswordResetCode(ctx, "email@email.com", "http://baseurl.com")
+		err := m.RegisterPasswordResetCode(ctx, "email@email.com")
 		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
@@ -932,34 +925,24 @@ func TestRegisterUser(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			errMsg  string
-			user    *hub.User
-			baseURL string
+			errMsg string
+			user   *hub.User
 		}{
 			{
 				"alias not provided",
 				&hub.User{},
-				"http://baseurl.com",
 			},
 			{
 				"email not provided",
 				&hub.User{Alias: "user1"},
-				"http://baseurl.com",
-			},
-			{
-				"invalid base url",
-				&hub.User{Alias: "user1", Email: "email"},
-				"invalid",
 			},
 			{
 				"invalid profile image id",
 				&hub.User{Alias: "user1", Email: "email", ProfileImageID: "invalid"},
-				"http://baseurl.com",
 			},
 			{
 				"insecure password",
 				&hub.User{Alias: "user1", Email: "email", Password: "hello"},
-				"http://baseurl.com",
 			},
 		}
 		for _, tc := range testCases {
@@ -969,7 +952,7 @@ func TestRegisterUser(t *testing.T) {
 				es := &email.SenderMock{}
 				m := NewManager(cfg, nil, es)
 
-				err := m.RegisterUser(ctx, tc.user, tc.baseURL)
+				err := m.RegisterUser(ctx, tc.user)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
@@ -1009,7 +992,7 @@ func TestRegisterUser(t *testing.T) {
 					Password:       password,
 					ProfileImageID: "00000000-0000-0000-0000-000000000001",
 				}
-				err := m.RegisterUser(ctx, u, "http://baseurl.com")
+				err := m.RegisterUser(ctx, u)
 				assert.Equal(t, tc.emailSenderResponse, err)
 				db.AssertExpectations(t)
 				es.AssertExpectations(t)
@@ -1029,7 +1012,7 @@ func TestRegisterUser(t *testing.T) {
 			Email:    "email@email.com",
 			Password: password,
 		}
-		err := m.RegisterUser(ctx, u, "http://baseurl.com")
+		err := m.RegisterUser(ctx, u)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
@@ -1040,38 +1023,27 @@ func TestResetPassword(t *testing.T) {
 	code := "code"
 	codeHashed := hash(code)
 	newPassword := "a66bV.Xp2" // #nosec
-	baseURL := "http://baseurl.com"
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			errMsg      string
 			code        string
 			newPassword string
-			baseURL     string
 		}{
 			{
 				"code not provided",
 				"",
 				newPassword,
-				baseURL,
 			},
 			{
 				"new password not provided",
 				code,
 				"",
-				baseURL,
-			},
-			{
-				"invalid base url",
-				code,
-				newPassword,
-				"invalid",
 			},
 			{
 				"insecure password",
 				code,
 				"password",
-				baseURL,
 			},
 		}
 		for _, tc := range testCases {
@@ -1080,7 +1052,7 @@ func TestResetPassword(t *testing.T) {
 				t.Parallel()
 				es := &email.SenderMock{}
 				m := NewManager(cfg, nil, es)
-				err := m.ResetPassword(ctx, tc.code, tc.newPassword, tc.baseURL)
+				err := m.ResetPassword(ctx, tc.code, tc.newPassword)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
@@ -1109,7 +1081,7 @@ func TestResetPassword(t *testing.T) {
 				db.On("QueryRow", ctx, resetUserPasswordDBQ, codeHashed, mock.Anything).Return("", tc.dbErr)
 				m := NewManager(cfg, db, nil)
 
-				err := m.ResetPassword(ctx, code, newPassword, baseURL)
+				err := m.ResetPassword(ctx, code, newPassword)
 				assert.Equal(t, tc.expectedErr, err)
 				db.AssertExpectations(t)
 			})
@@ -1140,7 +1112,7 @@ func TestResetPassword(t *testing.T) {
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(cfg, db, es)
 
-				err := m.ResetPassword(ctx, code, newPassword, baseURL)
+				err := m.ResetPassword(ctx, code, newPassword)
 				assert.Equal(t, tc.emailSenderResponse, err)
 				db.AssertExpectations(t)
 				es.AssertExpectations(t)

@@ -102,7 +102,7 @@ func TestAddMember(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
-			_ = m.AddMember(context.Background(), "orgName", "userAlias", "")
+			_ = m.AddMember(context.Background(), "orgName", "userAlias")
 		})
 	})
 
@@ -111,31 +111,16 @@ func TestAddMember(t *testing.T) {
 			errMsg    string
 			orgName   string
 			userAlias string
-			baseURL   string
 		}{
 			{
 				"organization name not provided",
 				"",
 				"user1",
-				"https://baseurl.com",
 			},
 			{
 				"user alias not provided",
 				"org1",
 				"",
-				"https://baseurl.com",
-			},
-			{
-				"base url not provided",
-				"org1",
-				"user1",
-				"",
-			},
-			{
-				"invalid base url",
-				"org1",
-				"user1",
-				"/invalid",
 			},
 		}
 		for _, tc := range testCases {
@@ -143,7 +128,7 @@ func TestAddMember(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil, nil)
-				err := m.AddMember(ctx, tc.orgName, tc.userAlias, tc.baseURL)
+				err := m.AddMember(ctx, tc.orgName, tc.userAlias)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
@@ -160,7 +145,7 @@ func TestAddMember(t *testing.T) {
 		}).Return(tests.ErrFake)
 		m := NewManager(cfg, nil, nil, az)
 
-		err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
+		err := m.AddMember(ctx, "orgName", "userAlias")
 		assert.Equal(t, tests.ErrFake, err)
 		az.AssertExpectations(t)
 	})
@@ -196,7 +181,7 @@ func TestAddMember(t *testing.T) {
 				}).Return(nil)
 				m := NewManager(cfg, db, es, az)
 
-				err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
+				err := m.AddMember(ctx, "orgName", "userAlias")
 				assert.Equal(t, tc.emailSenderResponse, err)
 				db.AssertExpectations(t)
 				es.AssertExpectations(t)
@@ -233,7 +218,7 @@ func TestAddMember(t *testing.T) {
 				}).Return(nil)
 				m := NewManager(cfg, db, nil, az)
 
-				err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
+				err := m.AddMember(ctx, "orgName", "userAlias")
 				assert.Equal(t, tc.expectedError, err)
 				db.AssertExpectations(t)
 				az.AssertExpectations(t)

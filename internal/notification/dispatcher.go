@@ -87,10 +87,9 @@ func NewDispatcher(svc *Services, opts ...func(d *Dispatcher)) *Dispatcher {
 
 	// Setup and launch workers
 	c := cache.New(cacheDefaultExpiration, cacheCleanupInterval)
-	baseURL := svc.Cfg.GetString("server.baseURL")
 	d.workers = make([]*Worker, 0, d.numWorkers)
 	for i := 0; i < d.numWorkers; i++ {
-		d.workers = append(d.workers, NewWorker(svc, c, baseURL, tmpl))
+		d.workers = append(d.workers, NewWorker(svc, c, tmpl))
 	}
 
 	return d

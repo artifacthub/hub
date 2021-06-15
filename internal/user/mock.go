@@ -86,8 +86,8 @@ func (m *ManagerMock) GetUserID(ctx context.Context, email string) (string, erro
 }
 
 // RegisterPasswordResetCode implements the UserManager interface.
-func (m *ManagerMock) RegisterPasswordResetCode(ctx context.Context, userEmail, baseURL string) error {
-	args := m.Called(ctx, userEmail, baseURL)
+func (m *ManagerMock) RegisterPasswordResetCode(ctx context.Context, userEmail string) error {
+	args := m.Called(ctx, userEmail)
 	return args.Error(0)
 }
 
@@ -99,14 +99,14 @@ func (m *ManagerMock) RegisterSession(ctx context.Context, session *hub.Session)
 }
 
 // RegisterUser implements the UserManager interface.
-func (m *ManagerMock) RegisterUser(ctx context.Context, user *hub.User, baseURL string) error {
-	args := m.Called(ctx, user, baseURL)
+func (m *ManagerMock) RegisterUser(ctx context.Context, user *hub.User) error {
+	args := m.Called(ctx, user)
 	return args.Error(0)
 }
 
 // ResetPassword implements the UserManager interface.
-func (m *ManagerMock) ResetPassword(ctx context.Context, code, newPassword, baseURL string) error {
-	args := m.Called(ctx, code, newPassword, baseURL)
+func (m *ManagerMock) ResetPassword(ctx context.Context, code, newPassword string) error {
+	args := m.Called(ctx, code, newPassword)
 	return args.Error(0)
 }
 

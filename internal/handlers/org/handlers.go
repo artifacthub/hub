@@ -53,8 +53,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	userAlias := chi.URLParam(r, "userAlias")
-	baseURL := h.cfg.GetString("server.baseURL")
-	err := h.orgManager.AddMember(r.Context(), orgName, userAlias, baseURL)
+	err := h.orgManager.AddMember(r.Context(), orgName, userAlias)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()
 		helpers.RenderErrorJSON(w, err)

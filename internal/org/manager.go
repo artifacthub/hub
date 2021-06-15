@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"net/url"
 	"regexp"
 	"strconv"
 
@@ -92,7 +91,7 @@ func (m *Manager) Add(ctx context.Context, org *hub.Organization) error {
 // must be a registered user. The user will receive an email to confirm her
 // willingness to join the organization. The user doing the request must be a
 // member of the organization.
-func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL string) error {
+func (m *Manager) AddMember(ctx context.Context, orgName, userAlias string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Validate input
@@ -101,13 +100,6 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 	}
 	if userAlias == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "user alias not provided")
-	}
-	if baseURL == "" {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "base url not provided")
-	}
-	u, err := url.Parse(baseURL)
-	if err != nil || u.Scheme == "" || u.Host == "" {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
 	}
 
 	// Authorize action
@@ -120,8 +112,7 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 	}
 
 	// Add organization member to database
-	_, err = m.db.Exec(ctx, addOrgMemberDBQ, userID, orgName, userAlias)
-	if err != nil {
+	if _, err := m.db.Exec(ctx, addOrgMemberDBQ, userID, orgName, userAlias); err != nil {
 		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 			return hub.ErrInsufficientPrivilege
 		}
@@ -134,7 +125,9 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 		if err := m.db.QueryRow(ctx, getUserEmailDBQ, userAlias).Scan(&userEmail); err != nil {
 			return err
 		}
+		baseURL := m.cfg.GetString("server.baseURL")
 		templateData := map[string]interface{}{
+			"BaseURL": baseURL,
 			"Link":    fmt.Sprintf("%s/accept-invitation?org=%s", baseURL, orgName),
 			"OrgName": orgName,
 			"Theme": map[string]string{

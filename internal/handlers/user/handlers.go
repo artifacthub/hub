@@ -526,11 +526,7 @@ func (h *Handlers) RegisterPasswordResetCode(w http.ResponseWriter, r *http.Requ
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	_ = h.userManager.RegisterPasswordResetCode(
-		r.Context(),
-		input["email"],
-		h.cfg.GetString("server.baseURL"),
-	)
+	_ = h.userManager.RegisterPasswordResetCode(r.Context(), input["email"])
 	w.WriteHeader(http.StatusCreated)
 }
 
@@ -550,7 +546,7 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, fmt.Errorf("%w: %s", hub.ErrInvalidInput, errMsg))
 		return
 	}
-	err = h.userManager.RegisterUser(r.Context(), u, h.cfg.GetString("server.baseURL"))
+	err = h.userManager.RegisterUser(r.Context(), u)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
 		helpers.RenderErrorJSON(w, err)
@@ -607,7 +603,7 @@ func (h *Handlers) registerUserWithOauth(
 	// Register user if needed
 	if userID == "" {
 		u.EmailVerified = true
-		err := h.userManager.RegisterUser(ctx, u, "")
+		err := h.userManager.RegisterUser(ctx, u)
 		if err != nil {
 			return "", err
 		}
@@ -816,12 +812,7 @@ func (h *Handlers) ResetPassword(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	err := h.userManager.ResetPassword(
-		r.Context(),
-		input["code"],
-		input["password"],
-		h.cfg.GetString("server.baseURL"),
-	)
+	err := h.userManager.ResetPassword(r.Context(), input["code"], input["password"])
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "ResetPassword").Send()
 		if errors.Is(err, user.ErrInvalidPasswordResetCode) {

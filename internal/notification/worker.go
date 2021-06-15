@@ -37,24 +37,21 @@ var (
 
 // Worker is in charge of delivering notifications to their intended recipients.
 type Worker struct {
-	svc     *Services
-	cache   *cache.Cache
-	baseURL string
-	tmpl    map[templateID]*template.Template
+	svc   *Services
+	cache *cache.Cache
+	tmpl  map[templateID]*template.Template
 }
 
 // NewWorker creates a new Worker instance.
 func NewWorker(
 	svc *Services,
 	c *cache.Cache,
-	baseURL string,
 	tmpl map[templateID]*template.Template,
 ) *Worker {
 	return &Worker{
-		svc:     svc,
-		cache:   c,
-		baseURL: baseURL,
-		tmpl:    tmpl,
+		svc:   svc,
+		cache: c,
+		tmpl:  tmpl,
 	}
 }
 
@@ -288,8 +285,9 @@ func (w *Worker) preparePkgNotificationTemplateData(
 		publisher = p.Repository.UserAlias
 	}
 
+	baseURL := w.svc.Cfg.GetString("server.baseURL")
 	return &hub.PackageNotificationTemplateData{
-		BaseURL: w.baseURL,
+		BaseURL: baseURL,
 		Event: map[string]interface{}{
 			"ID":   e.EventID,
 			"Kind": eventKindStr,
@@ -298,7 +296,7 @@ func (w *Worker) preparePkgNotificationTemplateData(
 			"Name":                    p.Name,
 			"Version":                 p.Version,
 			"LogoImageID":             p.LogoImageID,
-			"URL":                     pkg.BuildURL(w.baseURL, p, e.PackageVersion),
+			"URL":                     pkg.BuildURL(baseURL, p, e.PackageVersion),
 			"Changes":                 p.Changes,
 			"ContainsSecurityUpdates": p.ContainsSecurityUpdates,
 			"Prerelease":              p.Prerelease,
@@ -349,7 +347,7 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 	}
 
 	return &hub.RepositoryNotificationTemplateData{
-		BaseURL: w.baseURL,
+		BaseURL: w.svc.Cfg.GetString("server.baseURL"),
 		Event: map[string]interface{}{
 			"ID":   e.EventID,
 			"Kind": eventKindStr,
