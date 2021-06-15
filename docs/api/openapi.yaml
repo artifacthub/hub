@@ -3860,7 +3860,8 @@ components:
       name: limit
       schema:
         type: integer
-        maximum: 0
+        default: 20
+        maximum: 60
       required: false
       description: The number of packages to return
     LimitParam:
