@@ -22,6 +22,10 @@ import (
 	"helm.sh/helm/v3/pkg/chart/loader"
 )
 
+const (
+	searchDefaultLimit = 20
+)
+
 // Handlers represents a group of http handlers in charge of handling packages
 // operations.
 type Handlers struct {
@@ -402,6 +406,8 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		if err != nil {
 			return nil, fmt.Errorf("invalid limit: %s", qs.Get("limit"))
 		}
+	} else {
+		limit = searchDefaultLimit
 	}
 
 	// Offset
