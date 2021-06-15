@@ -20,12 +20,12 @@ begin
         where o.name = p_org_name
     )
     select
-        json_agg(json_strip_nulls(json_build_object(
+        coalesce(json_agg(json_strip_nulls(json_build_object(
             'alias', alias,
             'first_name', first_name,
             'last_name', last_name,
             'confirmed', confirmed
-        ))),
+        ))), '[]'),
         (select count(*) from organization_members)
     from (
         select *

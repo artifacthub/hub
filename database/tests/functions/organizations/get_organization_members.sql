@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(3);
+select plan(4);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -66,6 +66,16 @@ select results_eq(
         )
     $$,
     'Limit and offset of 1 used, member user2 returned'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer
+        from get_organization_members('00000000-0000-0000-0000-000000000001', 'org1', 0, 2)
+    $$,
+    $$
+        values ('[]'::jsonb, 2)
+    $$,
+    'No members expected when using an offset of 2'
 );
 select throws_ok(
     $$ select * from get_organization_members('00000000-0000-0000-0000-000000000001', 'org2', 0, 0) $$,
