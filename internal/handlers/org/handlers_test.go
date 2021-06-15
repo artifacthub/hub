@@ -168,7 +168,7 @@ func TestAddMember(t *testing.T) {
 			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 			hw := newHandlersWrapper()
-			hw.om.On("AddMember", r.Context(), "org1", "userAlias", "baseURL").Return(tc.omErr)
+			hw.om.On("AddMember", r.Context(), "org1", "userAlias").Return(tc.omErr)
 			hw.h.AddMember(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()

@@ -19,7 +19,7 @@ type Organization struct {
 // implementation must provide.
 type OrganizationManager interface {
 	Add(ctx context.Context, org *Organization) error
-	AddMember(ctx context.Context, orgName, userAlias, baseURL string) error
+	AddMember(ctx context.Context, orgName, userAlias string) error
 	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
 	ConfirmMembership(ctx context.Context, orgName string) error
 	Delete(ctx context.Context, orgName string) error

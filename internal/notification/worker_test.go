@@ -103,7 +103,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -116,7 +116,7 @@ func TestWorker(t *testing.T) {
 		sw.pm.On("Get", sw.ctx, gpi).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -129,7 +129,7 @@ func TestWorker(t *testing.T) {
 		sw.rm.On("GetByID", sw.ctx, "repositoryID", false).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -144,7 +144,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -159,7 +159,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -174,7 +174,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -189,7 +189,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -202,7 +202,7 @@ func TestWorker(t *testing.T) {
 		sw.pm.On("Get", sw.ctx, gpi).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -217,7 +217,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -235,7 +235,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, mock.Anything).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -253,7 +253,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
-		w := NewWorker(sw.svc, sw.cache, "", tmpl)
+		w := NewWorker(sw.svc, sw.cache, tmpl)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
@@ -338,7 +338,7 @@ func TestWorker(t *testing.T) {
 				sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, nil).Return(nil)
 				sw.tx.On("Commit", sw.ctx).Return(nil)
 
-				w := NewWorker(sw.svc, sw.cache, "http://baseURL", tmpl)
+				w := NewWorker(sw.svc, sw.cache, tmpl)
 				go w.Run(sw.ctx, sw.wg)
 				sw.assertExpectations(t)
 			})
@@ -370,6 +370,7 @@ func newServicesWrapper() *servicesWrapper {
 	wg.Add(1)
 
 	cfg := viper.New()
+	cfg.Set("server.baseURL", "http://baseURL")
 	db := &tests.DBMock{}
 	tx := &tests.TXMock{}
 	es := &email.SenderMock{}

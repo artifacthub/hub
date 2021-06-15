@@ -11,7 +11,6 @@ import (
 	"fmt"
 	"html/template"
 	"image/png"
-	"net/url"
 	"time"
 
 	_ "embed" // Used by templates
@@ -450,16 +449,10 @@ func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
 // RegisterPasswordResetCode registers a code that allows the user identified
 // by the email provided to reset the password. A link containing the code will
 // be email to the user to initiate the password reset process.
-func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail, baseURL string) error {
+func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail string) error {
 	// Validate input
 	if userEmail == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "email not provided")
-	}
-	if m.es != nil {
-		u, err := url.Parse(baseURL)
-		if err != nil || u.Scheme == "" || u.Host == "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
-		}
 	}
 
 	// Register password reset code in database
@@ -476,7 +469,7 @@ func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail, base
 	// Send password reset email
 	if m.es != nil {
 		templateData := baseTemplateData(m.cfg)
-		templateData["Link"] = fmt.Sprintf("%s/reset-password?code=%s", baseURL, code)
+		templateData["Link"] = fmt.Sprintf("%s/reset-password?code=%s", templateData["BaseURL"], code)
 		var emailBody bytes.Buffer
 		if err := m.tmpl[passwordResetEmail].Execute(&emailBody, templateData); err != nil {
 			return err
@@ -533,19 +526,13 @@ func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) (*h
 // The base url provided will be used to build the url the user will need to
 // click to complete the verification. When a user is registered using oauth,
 // the email is verified automatically and no email is sent.
-func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL string) error {
+func (m *Manager) RegisterUser(ctx context.Context, user *hub.User) error {
 	// Validate input
 	if user.Alias == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "alias not provided")
 	}
 	if user.Email == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "email not provided")
-	}
-	if !user.EmailVerified && m.es != nil {
-		u, err := url.Parse(baseURL)
-		if err != nil || u.Scheme == "" || u.Host == "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
-		}
 	}
 	if user.ProfileImageID != "" {
 		if _, err := uuid.FromString(user.ProfileImageID); err != nil {
@@ -578,7 +565,7 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 	// Send email verification code
 	if code != nil && m.es != nil {
 		templateData := baseTemplateData(m.cfg)
-		templateData["Link"] = fmt.Sprintf("%s/verify-email?code=%s", baseURL, *code)
+		templateData["Link"] = fmt.Sprintf("%s/verify-email?code=%s", templateData["BaseURL"], *code)
 		var emailBody bytes.Buffer
 		if err := m.tmpl[verificationEmail].Execute(&emailBody, templateData); err != nil {
 			return err
@@ -597,7 +584,7 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 }
 
 // ResetPassword resets the user password in the database.
-func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL string) error {
+func (m *Manager) ResetPassword(ctx context.Context, code, newPassword string) error {
 	// Validate input
 	if code == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
@@ -607,12 +594,6 @@ func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL 
 	}
 	if err := pwvalidator.Validate(newPassword, PasswordMinEntropyBits); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
-	}
-	if m.es != nil {
-		u, err := url.Parse(baseURL)
-		if err != nil || u.Scheme == "" || u.Host == "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
-		}
 	}
 
 	// Hash new password
@@ -634,7 +615,6 @@ func (m *Manager) ResetPassword(ctx context.Context, code, newPassword, baseURL 
 	// Send password reset success email
 	if m.es != nil {
 		templateData := baseTemplateData(m.cfg)
-		templateData["BaseURL"] = baseURL
 		var emailBody bytes.Buffer
 		if err := m.tmpl[passwordResetSuccessEmail].Execute(&emailBody, templateData); err != nil {
 			return err
@@ -812,6 +792,7 @@ func isValidRecoveryCode(recoveryCodes []string, code string) bool {
 // provided.
 func baseTemplateData(cfg *viper.Viper) map[string]interface{} {
 	return map[string]interface{}{
+		"BaseURL": cfg.GetString("server.baseURL"),
 		"Theme": map[string]string{
 			"PrimaryColor":   cfg.GetString("theme.colors.primary"),
 			"SecondaryColor": cfg.GetString("theme.colors.secondary"),

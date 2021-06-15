@@ -19,8 +19,8 @@ func (m *ManagerMock) Add(ctx context.Context, org *hub.Organization) error {
 }
 
 // AddMember implements the OrganizationManager interface.
-func (m *ManagerMock) AddMember(ctx context.Context, orgName, userAlias, baseURL string) error {
-	args := m.Called(ctx, orgName, userAlias, baseURL)
+func (m *ManagerMock) AddMember(ctx context.Context, orgName, userAlias string) error {
+	args := m.Called(ctx, orgName, userAlias)
 	return args.Error(0)
 }
 

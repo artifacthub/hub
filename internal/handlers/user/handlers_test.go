@@ -959,7 +959,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
-		hw.um.On("RegisterPasswordResetCode", r.Context(), "email", "baseURL").Return(tests.ErrFakeDB)
+		hw.um.On("RegisterPasswordResetCode", r.Context(), "email").Return(tests.ErrFakeDB)
 		hw.h.RegisterPasswordResetCode(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -975,7 +975,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
-		hw.um.On("RegisterPasswordResetCode", r.Context(), "email", "baseURL").Return(tests.ErrFakeDB)
+		hw.um.On("RegisterPasswordResetCode", r.Context(), "email").Return(tests.ErrFakeDB)
 		hw.h.RegisterPasswordResetCode(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -1035,7 +1035,7 @@ func TestRegisterUser(t *testing.T) {
 
 				hw := newHandlersWrapper()
 				if tc.umErr != nil {
-					hw.um.On("RegisterUser", r.Context(), mock.Anything, "baseURL").Return(tc.umErr)
+					hw.um.On("RegisterUser", r.Context(), mock.Anything).Return(tc.umErr)
 				}
 				hw.h.RegisterUser(w, r)
 				resp := w.Result()
@@ -1084,7 +1084,7 @@ func TestRegisterUser(t *testing.T) {
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(userJSON))
 
 				hw := newHandlersWrapper()
-				hw.um.On("RegisterUser", r.Context(), u, "baseURL").Return(tc.umErr)
+				hw.um.On("RegisterUser", r.Context(), u).Return(tc.umErr)
 				hw.h.RegisterUser(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -1337,7 +1337,7 @@ func TestResetPassword(t *testing.T) {
 		r, _ := http.NewRequest("PUT", "/", body)
 
 		hw := newHandlersWrapper()
-		hw.um.On("ResetPassword", r.Context(), "code", "password", "baseURL").
+		hw.um.On("ResetPassword", r.Context(), "code", "password").
 			Return(user.ErrInvalidPasswordResetCode)
 		hw.h.ResetPassword(w, r)
 		resp := w.Result()
@@ -1354,7 +1354,7 @@ func TestResetPassword(t *testing.T) {
 		r, _ := http.NewRequest("PUT", "/", body)
 
 		hw := newHandlersWrapper()
-		hw.um.On("ResetPassword", r.Context(), "code", "password", "baseURL").Return(tests.ErrFakeDB)
+		hw.um.On("ResetPassword", r.Context(), "code", "password").Return(tests.ErrFakeDB)
 		hw.h.ResetPassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -1371,7 +1371,7 @@ func TestResetPassword(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.um.On("ResetPassword", r.Context(), "code", "password", "baseURL").Return(nil)
+		hw.um.On("ResetPassword", r.Context(), "code", "password").Return(nil)
 		hw.h.ResetPassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

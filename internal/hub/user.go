@@ -72,10 +72,10 @@ type UserManager interface {
 	GetProfile(ctx context.Context) (*User, error)
 	GetProfileJSON(ctx context.Context) ([]byte, error)
 	GetUserID(ctx context.Context, email string) (string, error)
-	RegisterPasswordResetCode(ctx context.Context, userEmail, baseURL string) error
+	RegisterPasswordResetCode(ctx context.Context, userEmail string) error
 	RegisterSession(ctx context.Context, session *Session) (*Session, error)
-	RegisterUser(ctx context.Context, user *User, baseURL string) error
-	ResetPassword(ctx context.Context, code, newPassword, baseURL string) error
+	RegisterUser(ctx context.Context, user *User) error
+	ResetPassword(ctx context.Context, code, newPassword string) error
 	SetupTFA(ctx context.Context) ([]byte, error)
 	UpdatePassword(ctx context.Context, old, new string) error
 	UpdateProfile(ctx context.Context, user *User) error
