@@ -165,6 +165,29 @@ describe('Repository index', () => {
         expect(dispatchMock).toHaveBeenCalledTimes(1);
       });
     });
+
+    it('loads first page when not repositories in a different one', async () => {
+      const mockRepository = getMockRepository('8');
+
+      mocked(API).searchRepositories.mockResolvedValue(mockRepository).mockResolvedValueOnce({
+        items: [],
+        paginationTotalCount: '3',
+      });
+
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <Repository {...defaultProps} activePage="2" />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.searchRepositories).toHaveBeenCalledTimes(2);
+        expect(API.searchRepositories).toHaveBeenCalledWith({ limit: 10, offset: 10, users: ['test'] });
+        expect(API.searchRepositories).toHaveBeenLastCalledWith({ limit: 10, offset: 0, users: ['test'] });
+      });
+    });
   });
 
   describe('when searchRepositories fails', () => {

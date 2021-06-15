@@ -26,7 +26,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 You can use Artifact Hub to:
 
 - [Discover](https://artifacthub.io/packages/search), [install](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=install) and [publish](https://artifacthub.io/docs/topics/repositories/) packages and configurations
-- Explore content like Helm [schemas](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema) and [templates](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub/0.20.0?modal=template&template=db_migrator_install_job.yaml) in an interactive way
+- Explore content like Helm charts [schemas](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema) and [templates](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub/0.20.0?modal=template&template=db_migrator_install_job.yaml) in an interactive way
 - Subscribe to packages' new releases and security alerts notifications, via email or webhooks
 - Visualize packages' [security reports](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub/0.19.0?modal=security-report)
 - Inspect packages' [changelog](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog)

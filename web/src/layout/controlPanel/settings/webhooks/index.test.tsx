@@ -20,7 +20,7 @@ const defaultProps = {
 };
 
 const mockUserCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: false },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -37,7 +37,7 @@ const mockUserCtx = {
 };
 
 const mockOrgCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: false },
   prefs: {
     controlPanel: { selectedOrg: 'test' },
     search: { limit: 60 },
@@ -160,6 +160,29 @@ describe('WebhooksSection', () => {
       await waitFor(() => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
         expect(API.getWebhooks).toHaveBeenCalledWith({ limit: 10, offset: 0 }, 'test');
+      });
+    });
+
+    it('loads first page when not webhooks in a different one', async () => {
+      const mockWebhooks = getMockWebhooks('6');
+
+      mocked(API).getWebhooks.mockResolvedValue(mockWebhooks).mockResolvedValueOnce({
+        items: [],
+        paginationTotalCount: '5',
+      });
+
+      render(
+        <AppCtx.Provider value={{ ctx: mockOrgCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhooksSection {...defaultProps} activePage="2" />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.getWebhooks).toHaveBeenCalledTimes(2);
+        expect(API.getWebhooks).toHaveBeenCalledWith({ limit: 10, offset: 10 }, 'test');
+        expect(API.getWebhooks).toHaveBeenLastCalledWith({ limit: 10, offset: 0 }, 'test');
       });
     });
   });

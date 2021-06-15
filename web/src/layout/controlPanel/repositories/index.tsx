@@ -60,7 +60,9 @@ const RepositoriesSection = (props: Props) => {
 
   const updatePageNumber = () => {
     history.replace({
-      search: `?page=${activePage}${props.repoName ? `&repo-name=${props.repoName}` : ''}`,
+      search: `?page=${activePage}${props.repoName ? `&repo-name=${props.repoName}` : ''}${
+        props.visibleModal ? `&modal=${props.visibleModal}` : ''
+      }`,
     });
   };
 
@@ -77,22 +79,26 @@ const RepositoriesSection = (props: Props) => {
         query.users = [ctx.user!.alias];
       }
       const data = await API.searchRepositories(query);
-      const repos = data.items;
-
-      setRepositories(repos);
-      setTotal(parseInt(data.paginationTotalCount));
-      // Check if active repo logs modal is in the available repos
-      if (!isUndefined(props.repoName)) {
-        const activeRepo = repos.find((repo: Repo) => repo.name === props.repoName);
-        // Clean query string if repo is not available
-        if (isUndefined(activeRepo)) {
-          dispatch(unselectOrg());
-          history.replace({
-            search: `?page=${activePage}`,
-          });
-        }
+      const total = parseInt(data.paginationTotalCount);
+      if (total > 0 && data.items.length === 0) {
+        onPageNumberChange(1);
       } else {
-        updatePageNumber();
+        const repos = data.items;
+        setRepositories(repos);
+        setTotal(total);
+        // Check if active repo logs modal is in the available repos
+        if (!isUndefined(props.repoName)) {
+          const activeRepo = repos.find((repo: Repo) => repo.name === props.repoName);
+          // Clean query string if repo is not available
+          if (isUndefined(activeRepo)) {
+            dispatch(unselectOrg());
+            history.replace({
+              search: `?page=${activePage}`,
+            });
+          }
+        } else {
+          updatePageNumber();
+        }
       }
       setApiError(null);
       setIsLoading(false);
@@ -265,7 +271,7 @@ const RepositoriesSection = (props: Props) => {
                 <div className="row mt-3 mt-md-4" data-testid="repoList">
                   {repositories.map((repo: Repo) => (
                     <RepositoryCard
-                      key={repo.name}
+                      key={`repo_${repo.name}`}
                       repository={repo}
                       visibleModal={
                         // Legacy - old tracking errors email were not passing modal param

@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -161,6 +162,48 @@ describe('PackagesSection', () => {
       );
 
       await waitFor(() => expect(mockOnAuthError).toHaveBeenCalledTimes(1));
+    });
+  });
+
+  it('loads first page when not subscriptions after deleting one', async () => {
+    const mockSubscriptions = getMockSubscriptions('11');
+    mocked(API).deleteSubscription.mockResolvedValue('');
+    mocked(API)
+      .getUserSubscriptions.mockResolvedValue(mockSubscriptions)
+      .mockResolvedValueOnce(mockSubscriptions)
+      .mockResolvedValueOnce(mockSubscriptions)
+      .mockResolvedValueOnce({
+        items: [],
+        paginationTotalCount: '12',
+      });
+
+    render(
+      <Router>
+        <PackagesSection {...defaultProps} />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
+      expect(API.getUserSubscriptions).toHaveBeenCalledWith({ limit: 10, offset: 0 });
+    });
+
+    const nextBtn = screen.getAllByTestId('btnPagination-2');
+    userEvent.click(nextBtn[1]);
+
+    await waitFor(() => {
+      expect(API.getUserSubscriptions).toHaveBeenCalledTimes(2);
+      expect(API.getUserSubscriptions).toHaveBeenCalledWith({ limit: 10, offset: 10 });
+    });
+
+    const label = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
+    fireEvent.click(label);
+
+    await waitFor(() => {
+      expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
+      expect(API.getUserSubscriptions).toHaveBeenCalledTimes(4);
+      expect(API.getUserSubscriptions).toHaveBeenCalledWith({ limit: 10, offset: 10 });
+      expect(API.getUserSubscriptions).toHaveBeenCalledWith({ limit: 10, offset: 0 });
     });
   });
 

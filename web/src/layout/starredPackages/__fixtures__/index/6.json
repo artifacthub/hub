@@ -1,0 +1,96 @@
+{
+  "items": [
+    {
+      "packageId": "5882defb-5581-44ac-81a0-8d509ee5a0d8",
+      "name": "airflow",
+      "normalizedName": "airflow",
+      "description": "Airflow is a platform to programmatically author, schedule and monitor workflows",
+      "logoImageId": "48066829-7617-43ca-a37f-78d1e7ad1e31",
+      "deprecated": false,
+      "stars": 1,
+      "version": "6.6.0",
+      "appVersion": "1.10.4",
+      "repository": {
+        "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+        "kind": 0,
+        "name": "stable",
+        "displayName": "Stable",
+        "organizationName": "helm",
+        "organizationDisplayName": "Helm"
+      }
+    },
+    {
+      "packageId": "b699e3fd-a91f-49e1-aab3-9e915e199195",
+      "name": "cassandra",
+      "normalizedName": "cassandra",
+      "description": "Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.",
+      "logoImageId": "4bb9e777-3772-4ee5-a6a8-9e8aa1421c49",
+      "deprecated": false,
+      "stars": 1,
+      "version": "0.15.0",
+      "appVersion": "3.11.6",
+      "repository": {
+        "repositoryId": "d3945a69-2ope-4ff9-8fb3-ce3b070d0384",
+        "kind": 0,
+        "name": "incubator",
+        "displayName": "Incubator",
+        "organizationName": "helm",
+        "organizationDisplayName": "Helm"
+      }
+    },
+    {
+      "packageId": "d58d7886-7d41-45a8-afd4-1bd59b7814ff",
+      "name": "prometheus",
+      "normalizedName": "prometheus",
+      "description": "Prometheus is a monitoring system and time series database.",
+      "logoImageId": "97c12b63-0aba-4510-b648-e37c4f5cf15b",
+      "deprecated": false,
+      "stars": 2,
+      "version": "11.1.0",
+      "appVersion": "2.16.0",
+      "repository": {
+        "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+        "kind": 0,
+        "name": "stable",
+        "displayName": "Stable",
+        "organizationName": "helm",
+        "organizationDisplayName": "Helm"
+      }
+    },
+    {
+      "packageId": "96441d5e-03f1-4063-b3a7-0a9ce9545499",
+      "name": "Traefik",
+      "normalizedName": "traefik",
+      "description": "Falco rules for securing Traefik",
+      "logoImageId": "e9b2caa9-d6ce-446d-abaa-64be6b063f54",
+      "deprecated": false,
+      "stars": 2,
+      "version": "1.0.0",
+      "repository": {
+        "repositoryId": "0acb098c-17ab-4e50-85e9-ffc7102ea423",
+        "kind": 1,
+        "name": "falco",
+        "url": "repoUrl",
+        "userAlias": "user"
+      }
+    },
+    {
+      "packageId": "39d9fb76-b64d-4ac4-b12a-a3e5a068c10d",
+      "name": "Trusted Registry Images",
+      "normalizedName": "trusted-registry-images",
+      "description": "Open Policy Agent policy for running only images from a trusted repository",
+      "logoImageId": "0a54a7b4-2151-4eb7-af8d-55debc351c35",
+      "deprecated": false,
+      "stars": 2,
+      "version": "0.1.0",
+      "repository": {
+        "repositoryId": "0ac0i98c-17ab-4e50-85e9-ffc7102ea423",
+        "kind": 2,
+        "name": "opa",
+        "url": "repoUrl",
+        "userAlias": "user1"
+      }
+    }
+  ],
+  "paginationTotalCount": "5"
+}

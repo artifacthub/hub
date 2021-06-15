@@ -53,6 +53,7 @@ const PaginationBtn = (btnProps: ButtonProps) => (
     aria-label={`Open ${isString(btnProps.content) ? btnProps.content : `page ${btnProps.pageNumber}`}`}
     disabled={btnProps.disabled}
     tabIndex={btnProps.disabled ? -1 : 0}
+    data-testid={`btnPagination-${isString(btnProps.content) ? btnProps.content.toLowerCase() : btnProps.pageNumber}`}
   >
     {btnProps.content || btnProps.pageNumber}
   </button>

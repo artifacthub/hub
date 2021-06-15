@@ -60,8 +60,13 @@ const APIKeysSection = (props: Props) => {
         limit: DEFAULT_LIMIT,
         offset: offset,
       });
-      setApiKeysList(data.items);
-      setTotal(parseInt(data.paginationTotalCount));
+      const total = parseInt(data.paginationTotalCount);
+      if (total > 0 && data.items.length === 0) {
+        onPageNumberChange(1);
+      } else {
+        setApiKeysList(data.items);
+        setTotal(total);
+      }
       updatePageNumber();
       setApiError(null);
       setIsLoading(false);

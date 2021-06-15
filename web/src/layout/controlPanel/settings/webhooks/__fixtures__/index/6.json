@@ -1,0 +1,216 @@
+{
+  "items": [
+    {
+      "webhookId": "04181ebc-f94b-4a45-9598-63e824e9bd26",
+      "name": "test",
+      "description": "This is a sample webhook",
+      "url": "https://hooks.com",
+      "secret": "sfsfdsg",
+      "contentType": "application/json",
+      "template": "{\n     \"text\":\"Package {{ .Package.Name }} version {{ .Package.Version }} released! {{ .Package.URL }}\"\n}",
+      "active": false,
+      "eventKinds": [0],
+      "packages": [
+        {
+          "packageId": "7e833197-6252-4af2-871b-1bdcffdb5452",
+          "name": "unifi",
+          "logoImageId": "1830da4b-12de-4902-aaf2-b3d008c01d6b",
+          "repository": {
+            "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 0,
+            "name": "stable",
+            "displayName": "Stable",
+            "organizationName": "helm",
+            "organizationDisplayName": "Helm"
+          }
+        },
+        {
+          "packageId": "19392bb5-5390-4727-9c92-21eaa3b26a48",
+          "name": "airflow",
+          "logoImageId": "fd02f050-e601-495f-a5a9-8f9302efc4ab",
+          "repository": {
+            "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 0,
+            "name": "stable",
+            "displayName": "Stable",
+            "organizationName": "helm",
+            "organizationDisplayName": "Helm"
+          }
+        },
+        {
+          "packageId": "6dc6244e-e1d1-4848-aa53-1d84ecd20f95",
+          "name": "Redis",
+          "logoImageId": "d8e348cf-92ce-4af5-b210-3effd81d61be",
+          "repository": {
+            "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 1,
+            "name": "falco",
+            "displayName": "Falco",
+            "organizationName": "org1",
+            "organizationDisplayName": "Org 1"
+          }
+        },
+        {
+          "packageId": "a9f354a3-cfac-465a-bd31-44125355fd4a",
+          "name": "Rook",
+          "logoImageId": "7596b71a-25b6-42f5-8ca3-fccfeb36dc45",
+          "repository": {
+            "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 1,
+            "name": "falco",
+            "displayName": "Falco",
+            "organizationName": "org1",
+            "organizationDisplayName": "Org 1"
+          }
+        },
+        {
+          "packageId": "55c13085-0f72-4579-a7c4-811e27f9a327",
+          "name": "Redis",
+          "logoImageId": "d8e348cf-92ce-4af5-b210-3effd81d61be",
+          "repository": {
+            "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 1,
+            "name": "falco",
+            "displayName": "Falco",
+            "organizationName": "org1",
+            "organizationDisplayName": "Org 1"
+          }
+        },
+        {
+          "packageId": "23fa13b4-668c-4ff5-870f-af0b358cdff7",
+          "name": "Rook",
+          "logoImageId": "7596b71a-25b6-42f5-8ca3-fccfeb36dc45",
+          "repository": {
+            "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 1,
+            "name": "falco",
+            "displayName": "Falco",
+            "organizationName": "org1",
+            "organizationDisplayName": "Org 1"
+          }
+        },
+        {
+          "packageId": "9d5ff41e-8cce-4861-bc18-9237c45aef90",
+          "name": "chartmuseum",
+          "logoImageId": "f2c28d59-8986-4fb4-a460-c97885e81142",
+          "repository": {
+            "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 0,
+            "name": "stable",
+            "displayName": "Stable",
+            "organizationName": "helm",
+            "organizationDisplayName": "Helm"
+          }
+        },
+        {
+          "packageId": "58ba5969-b385-4739-930b-02feb90f3da7",
+          "name": "jenkins",
+          "logoImageId": "12960f50-b675-4f62-85ba-8dddef254e4b",
+          "repository": {
+            "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 0,
+            "name": "stable",
+            "displayName": "Stable",
+            "organizationName": "helm",
+            "organizationDisplayName": "Helm"
+          }
+        }
+      ]
+    },
+    {
+      "webhookId": "56b44288-3268-453e-94f8-6ad5f6645016",
+      "name": "test1",
+      "description": "retry",
+      "url": "http://skdhkdhjdfs",
+      "active": true,
+      "eventKinds": [0],
+      "packages": [
+        {
+          "packageId": "501b0e9e-b66b-4872-abb6-4297ea26e6a6",
+          "name": "ElasticSearch",
+          "logoImageId": "fa91244c-bf14-4742-af6a-204b268ce2b1",
+          "repository": {
+            "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 1,
+            "name": "falco",
+            "displayName": "Falco",
+            "organizationName": "org1",
+            "organizationDisplayName": "Org 1"
+          }
+        }
+      ]
+    },
+    {
+      "webhookId": "840d01ac-ff85-4778-8b1b-9b5e699994e8",
+      "name": "dfgfgdhg",
+      "url": "http://sdkljflkjds",
+      "active": true,
+      "eventKinds": [0],
+      "packages": [
+        {
+          "packageId": "f7f79967-da1c-41b2-be4c-ac353cd729cc",
+          "name": "cosbench",
+          "repository": {
+            "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 0,
+            "name": "stable",
+            "displayName": "Stable",
+            "organizationName": "helm",
+            "organizationDisplayName": "Helm"
+          }
+        }
+      ]
+    },
+    {
+      "webhookId": "0afd3b51-830f-4203-b74f-c0d6f3d34dca",
+      "name": "testdefault",
+      "description": "lkdjklfsd",
+      "url": "http://lksdjfkdl",
+      "contentType": "dfsdfggdfs",
+      "template": "{\n    \"text\": \"Package {{ .Package.name }} version {{ .Package.version }} released! {{ .Package.url }}\"}\nslkdjfdlkslskdfjkldf jldksjg kljdflk gsdjfkl lgfdks\n}",
+      "active": false,
+      "eventKinds": [0],
+      "packages": [
+        {
+          "packageId": "6ea62e06-6c2c-4a39-9713-31d70e750eb7",
+          "name": "aerospike",
+          "logoImageId": "97a7b4d7-c260-4fa0-812e-c81b618326fb",
+          "repository": {
+            "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 0,
+            "name": "stable",
+            "displayName": "Stable",
+            "organizationName": "helm",
+            "organizationDisplayName": "Helm"
+          }
+        }
+      ]
+    },
+    {
+      "webhookId": "d1e1299b-c3ce-4618-b67b-f5e63f4b891f",
+      "name": "ffdsffdfgdsd",
+      "description": "fgdfg",
+      "url": "http://jksdhfkjfds",
+      "contentType": "dsafddadsg",
+      "template": "{\n    \"event\": {\n        \"id\": \"{{ .Event.ID }}\",\n        \"kind\": {{ .Event.Kind }}\n    },\n    \"package\": {\n        \"kind\": {{ .Package.Kind }},\n        \"name\": \"{{ .Package.Name }}\",\n        \"version\": \"{{ .Package.Version }}\",\n        \"publisher\": \"{{ .Package.Publisher }}\",\n        \"url\": \"{{ .Package.URL }}\"\n    }\n}",
+      "active": true,
+      "eventKinds": [0],
+      "packages": [
+        {
+          "packageId": "701964f8-1730-45d2-bdfa-ae2b2d0ecac6",
+          "name": "envoy",
+          "logoImageId": "c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc",
+          "repository": {
+            "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+            "kind": 0,
+            "name": "stable",
+            "displayName": "Stable",
+            "organizationName": "helm",
+            "organizationDisplayName": "Helm"
+          }
+        }
+      ]
+    }
+  ],
+  "paginationTotalCount": "5"
+}

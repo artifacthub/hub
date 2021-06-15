@@ -167,6 +167,29 @@ describe('Members section index', () => {
         expect(queryByText('Username')).toBeInTheDocument();
       });
     });
+
+    it('loads first page when not members in a different one', async () => {
+      const mockMembers = getMembers('8');
+
+      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers).mockResolvedValueOnce({
+        items: [],
+        paginationTotalCount: '2',
+      });
+
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <MembersSection {...defaultProps} activePage="2" />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.getOrganizationMembers).toHaveBeenCalledTimes(2);
+        expect(API.getOrganizationMembers).toHaveBeenCalledWith({ limit: 10, offset: 10 }, 'orgTest');
+        expect(API.getOrganizationMembers).toHaveBeenLastCalledWith({ limit: 10, offset: 0 }, 'orgTest');
+      });
+    });
   });
 
   describe('on getOrganizationMembers error', () => {

@@ -72,9 +72,14 @@ const RepositoriesSection = (props: Props) => {
         limit: DEFAULT_LIMIT,
         offset: offset,
       });
-      setOptOutItems(data.items);
-      setOptOutList(groupBy(data.items, (item: OptOutItem) => item.repository.repositoryId));
-      setTotal(parseInt(data.paginationTotalCount));
+      const total = parseInt(data.paginationTotalCount);
+      if (total > 0 && data.items.length === 0) {
+        onPageNumberChange(1);
+      } else {
+        setOptOutItems(data.items);
+        setOptOutList(groupBy(data.items, (item: OptOutItem) => item.repository.repositoryId));
+        setTotal(total);
+      }
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);

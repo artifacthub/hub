@@ -66,9 +66,14 @@ const MembersSection = (props: Props) => {
         },
         activeOrg!
       );
-      setMembers(data.items);
-      setTotal(parseInt(data.paginationTotalCount));
-      setConfirmedMembersNumber(getConfirmedMembersNumber(data.items));
+      const total = parseInt(data.paginationTotalCount);
+      if (total > 0 && data.items.length === 0) {
+        onPageNumberChange(1);
+      } else {
+        setMembers(data.items);
+        setTotal(total);
+        setConfirmedMembersNumber(getConfirmedMembersNumber(data.items));
+      }
       updatePageNumber();
       setApiError(null);
       setIsGettingMembers(false);
