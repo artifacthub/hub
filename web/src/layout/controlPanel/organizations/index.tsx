@@ -61,8 +61,13 @@ const OrganizationsSection = (props: Props) => {
         limit: DEFAULT_LIMIT,
         offset: offset,
       });
-      setOrganizations(data.items);
-      setTotal(parseInt(data.paginationTotalCount));
+      const total = parseInt(data.paginationTotalCount);
+      if (total > 0 && data.items.length === 0) {
+        onPageNumberChange(1);
+      } else {
+        setOrganizations(data.items);
+        setTotal(total);
+      }
       updatePageNumber();
       setApiError(null);
       setIsLoading(false);
@@ -143,9 +148,9 @@ const OrganizationsSection = (props: Props) => {
               ) : (
                 <>
                   <div className="row mt-4 mt-md-5">
-                    {organizations.map((org: Organization) => (
+                    {organizations.map((org: Organization, index: number) => (
                       <OrganizationCard
-                        key={`org_${org.name}`}
+                        key={`org_${org.name}_${index}`}
                         organization={org}
                         onAuthError={props.onAuthError}
                         onSuccess={fetchOrganizations}

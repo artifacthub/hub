@@ -62,8 +62,13 @@ const WebhooksSection = (props: Props) => {
         },
         ctx.prefs.controlPanel.selectedOrg
       );
-      setWebhooks(data.items);
-      setTotal(parseInt(data.paginationTotalCount));
+      const total = parseInt(data.paginationTotalCount);
+      if (total > 0 && data.items.length === 0) {
+        onPageNumberChange(1);
+      } else {
+        setWebhooks(data.items);
+        setTotal(total);
+      }
       updatePageNumber();
       setApiError(null);
       setIsGettingWebhooks(false);
@@ -160,7 +165,7 @@ const WebhooksSection = (props: Props) => {
                         <div className="row mt-3 mt-md-4">
                           {webhooks.map((webhook: Webhook) => (
                             <WebhookCard
-                              key={`member_${webhook.name}`}
+                              key={`webhook_${webhook.webhookId}`}
                               webhook={webhook}
                               onEdition={() => setVisibleForm({ visible: true, webhook: webhook })}
                               onAuthError={props.onAuthError}

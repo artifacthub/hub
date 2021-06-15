@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "kind": 0,
+      "repositoryId": "test1",
+      "name": "test1",
+      "url": "http://test1.com",
+      "userAlias": "user"
+    },
+    {
+      "kind": 1,
+      "repositoryId": "test2",
+      "name": "test2",
+      "userAlias": "user1",
+      "url": "http://test2.com"
+    },
+    {
+      "kind": 0,
+      "repositoryId": "test3",
+      "name": "test3",
+      "userAlias": "user",
+      "url": "http://test3.com"
+    }
+  ],
+  "paginationTotalCount": "3"
+}

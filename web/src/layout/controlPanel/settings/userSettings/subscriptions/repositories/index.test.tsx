@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -196,6 +197,49 @@ describe('RepositoriesSection', () => {
 
       await waitFor(() => {
         expect(API.getOptOutList).toHaveBeenCalledTimes(2);
+      });
+    });
+
+    it('loads first page when not subscriptions after deleting one', async () => {
+      const mockOptOut = getMockOptOut('12');
+      mocked(API).deleteOptOut.mockResolvedValue('');
+
+      mocked(API)
+        .getOptOutList.mockResolvedValue(mockOptOut)
+        .mockResolvedValueOnce(mockOptOut)
+        .mockResolvedValueOnce(mockOptOut)
+        .mockResolvedValueOnce({
+          items: [],
+          paginationTotalCount: '12',
+        });
+
+      render(
+        <Router>
+          <RepositoriesSection {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 0 });
+      });
+
+      const nextBtn = screen.getAllByTestId('btnPagination-2');
+      userEvent.click(nextBtn[1]);
+
+      await waitFor(() => {
+        expect(API.getOptOutList).toHaveBeenCalledTimes(2);
+        expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 10 });
+      });
+
+      const label = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_label`);
+      fireEvent.click(label);
+
+      await waitFor(() => {
+        expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
+        expect(API.getOptOutList).toHaveBeenCalledTimes(4);
+        expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 10 });
+        expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 0 });
       });
     });
   });

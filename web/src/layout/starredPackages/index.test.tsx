@@ -91,6 +91,27 @@ describe('StarredPackagesView', () => {
       expect(noData).toHaveTextContent('You have not starred any package yet');
     });
 
+    it('loads first page when not packages in a different one', async () => {
+      const mockPackages = getMockStarredPackages('5');
+
+      mocked(API).getStarredByUser.mockResolvedValue(mockPackages).mockResolvedValueOnce({
+        items: [],
+        paginationTotalCount: '5',
+      });
+
+      render(
+        <Router>
+          <StarredPackagesView activePage="2" />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getStarredByUser).toHaveBeenCalledTimes(2);
+        expect(API.getStarredByUser).toHaveBeenCalledWith({ limit: 10, offset: 10 });
+        expect(API.getStarredByUser).toHaveBeenLastCalledWith({ limit: 10, offset: 0 });
+      });
+    });
+
     it('renders error message when getStarredByUser call fails with not unauthorized error', async () => {
       mocked(API).getStarredByUser.mockRejectedValue({ kind: ErrorKind.Other });
 

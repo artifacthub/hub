@@ -75,8 +75,13 @@ const PackagesSection = (props: Props) => {
         limit: DEFAULT_LIMIT,
         offset: offset,
       });
-      setPackages(data.items);
-      setTotal(parseInt(data.paginationTotalCount));
+      const total = parseInt(data.paginationTotalCount);
+      if (total > 0 && data.items.length === 0) {
+        onPageNumberChange(1);
+      } else {
+        setPackages(data.items);
+        setTotal(total);
+      }
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);

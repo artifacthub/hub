@@ -128,6 +128,27 @@ describe('API keys section index', () => {
     expect(cards).toHaveLength(2);
   });
 
+  it('loads first page when not api Keys in a different one', async () => {
+    const mockAPIKeys = getMockAPIKeys('6');
+
+    mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys).mockResolvedValueOnce({
+      items: [],
+      paginationTotalCount: '2',
+    });
+
+    render(
+      <Router>
+        <APIKeysSection {...defaultProps} activePage="2" />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(API.getAPIKeys).toHaveBeenCalledTimes(2);
+      expect(API.getAPIKeys).toHaveBeenCalledWith({ limit: 10, offset: 10 });
+      expect(API.getAPIKeys).toHaveBeenLastCalledWith({ limit: 10, offset: 0 });
+    });
+  });
+
   describe('on getAPIKeys error', () => {
     it('UnauthorizedError', async () => {
       mocked(API).getAPIKeys.mockRejectedValue({
