@@ -184,8 +184,8 @@ describe('Repository index', () => {
 
       await waitFor(() => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(2);
-        expect(API.searchRepositories).toHaveBeenCalledWith({ limit: 10, offset: 10, users: ['test'] });
-        expect(API.searchRepositories).toHaveBeenLastCalledWith({ limit: 10, offset: 0, users: ['test'] });
+        expect(API.searchRepositories).toHaveBeenCalledWith({ limit: 10, offset: 10, filters: { user: ['test'] } });
+        expect(API.searchRepositories).toHaveBeenLastCalledWith({ limit: 10, offset: 0, filters: { user: ['test'] } });
       });
     });
   });

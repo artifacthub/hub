@@ -12,7 +12,7 @@ import API from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import { Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults } from '../../types';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
 import PackageCard from '../common/PackageCard';
@@ -38,7 +38,7 @@ interface Props {
   tsQueryWeb?: string;
   tsQuery?: string[];
   pageNumber: number;
-  filters: FiltersProp;
+  filters?: FiltersProp;
   deprecated?: boolean | null;
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
@@ -127,7 +127,8 @@ const SearchView = (props: Props) => {
   };
 
   const onFiltersChange = (name: string, value: string, checked: boolean): void => {
-    let newFilters = isUndefined(props.filters[name]) ? [] : props.filters[name].slice();
+    const currentFilters = props.filters || {};
+    let newFilters = isUndefined(currentFilters[name]) ? [] : currentFilters[name].slice();
     if (checked) {
       newFilters.push(value);
     } else {
@@ -135,7 +136,7 @@ const SearchView = (props: Props) => {
     }
 
     updateCurrentPage({
-      filters: prepareSelectedFilters(name, newFilters, props.filters),
+      filters: prepareSelectedFilters(name, newFilters, currentFilters),
     });
   };
 
@@ -343,7 +344,7 @@ const SearchView = (props: Props) => {
                   <div role="menu">
                     <Filters
                       facets={searchResults.facets}
-                      activeFilters={props.filters}
+                      activeFilters={props.filters || {}}
                       activeTsQuery={props.tsQuery}
                       onChange={onFiltersChange}
                       onResetSomeFilters={onResetSomeFilters}
@@ -415,7 +416,7 @@ const SearchView = (props: Props) => {
               <div className="mr-5" role="menu">
                 <Filters
                   facets={searchResults.facets}
-                  activeFilters={props.filters}
+                  activeFilters={props.filters || {}}
                   activeTsQuery={props.tsQuery}
                   onChange={onFiltersChange}
                   onResetSomeFilters={onResetSomeFilters}

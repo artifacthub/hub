@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../api';
 import { ErrorKind, SearchResults } from '../../types';
-import prepareQuerystring from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import SearchView from './index';
 jest.mock('../common/SampleQueries', () => () => <div />);
 jest.mock('../../api');
@@ -197,7 +197,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { kind: ['0'] },
@@ -285,7 +285,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           tsQueryWeb: 'test',
           pageNumber: 2,
           filters: { kind: ['0'] },
@@ -333,7 +333,7 @@ describe('Search index', () => {
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           tsQueryWeb: 'test',
           pageNumber: 1,
           filters: {},
@@ -360,7 +360,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { kind: ['1'] },
@@ -385,7 +385,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { repo: ['stable'], kind: ['0'] },
@@ -410,7 +410,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { repo: ['stable'], kind: ['0'] },
@@ -497,10 +497,9 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           pageNumber: 1,
           tsQueryWeb: 'test',
-          filters: {},
         }),
       });
     });
@@ -526,10 +525,9 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           pageNumber: 1,
           tsQueryWeb: '',
-          filters: {},
         }),
       });
     });
@@ -555,10 +553,9 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           pageNumber: 1,
           tsQueryWeb: 'test',
-          filters: {},
         }),
       });
     });

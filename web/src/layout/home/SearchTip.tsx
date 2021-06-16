@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { SearchTipItem } from '../../types';
 import { SEARH_TIPS } from '../../utils/data';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import styles from './SearchTip.module.css';
 
 const SearchTip = () => {
@@ -30,7 +30,6 @@ const SearchTip = () => {
               search: prepareQueryString({
                 pageNumber: 1,
                 tsQueryWeb: activeTip.example,
-                filters: {},
               }),
             }}
           >

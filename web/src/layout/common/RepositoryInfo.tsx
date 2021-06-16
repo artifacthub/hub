@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Repository } from '../../types';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import AttachedIconToText from './AttachedIconToText';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
 import RepositoryIcon from './RepositoryIcon';

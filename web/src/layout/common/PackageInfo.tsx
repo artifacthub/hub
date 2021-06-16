@@ -7,7 +7,7 @@ import { Package, RepositoryKind } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import cutString from '../../utils/cutString';
 import isPackageOfficial from '../../utils/isPackageOfficial';
-import prepareQueryString from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import License from '../package/License';
 import Image from './Image';
 import Label from './Label';

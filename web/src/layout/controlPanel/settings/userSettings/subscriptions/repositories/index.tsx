@@ -9,7 +9,7 @@ import API from '../../../../../../api';
 import { ErrorKind, EventKind, OptOutItem, Repository } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
-import prepareQueryString from '../../../../../../utils/prepareQueryString';
+import { prepareQueryString } from '../../../../../../utils/prepareQueryString';
 import Loading from '../../../../../common/Loading';
 import Pagination from '../../../../../common/Pagination';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';

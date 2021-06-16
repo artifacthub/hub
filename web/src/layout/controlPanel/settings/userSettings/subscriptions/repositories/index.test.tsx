@@ -343,7 +343,7 @@ describe('RepositoriesSection', () => {
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe('?page=1&user=alias');
+      expect(window.location.search).toBe('?user=alias&page=1');
     });
 
     it('on org link click', async () => {
@@ -364,7 +364,7 @@ describe('RepositoriesSection', () => {
       fireEvent.click(link);
 
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe('?page=1&org=artifactHub');
+      expect(window.location.search).toBe('?org=artifactHub&page=1');
     });
 
     it('on repo link click', async () => {
@@ -386,7 +386,7 @@ describe('RepositoriesSection', () => {
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe('?page=1&repo=adfinis');
+      expect(window.location.search).toBe('?repo=adfinis&page=1');
     });
   });
 

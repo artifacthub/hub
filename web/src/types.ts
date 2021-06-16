@@ -182,28 +182,16 @@ export interface FalcoRules {
   [key: string]: string;
 }
 
-export interface SearchFiltersURL {
-  tsQueryWeb?: string;
-  tsQuery?: string[];
-  filters: {
-    [key: string]: string[];
-  };
+export interface SearchFiltersURL extends BasicQuery {
   pageNumber: number;
-  deprecated?: boolean | null;
-  operators?: boolean | null;
-  verifiedPublisher?: boolean | null;
-  official?: boolean | null;
 }
 
-export interface SearchQuery {
-  limit: number;
-  offset: number;
-}
-
-export interface SearchPackagesQuery extends SearchQuery {
+export interface BasicQuery {
   tsQueryWeb?: string;
+  name?: string;
   tsQuery?: string[];
-  filters: {
+  facets?: boolean;
+  filters?: {
     [key: string]: string[];
   };
   deprecated?: boolean | null;
@@ -213,10 +201,9 @@ export interface SearchPackagesQuery extends SearchQuery {
   total?: number;
 }
 
-export interface SearchRepositoriesQuery extends SearchQuery {
-  organizations?: string[];
-  users?: string[];
-  name?: string;
+export interface SearchQuery extends BasicQuery {
+  limit: number;
+  offset: number;
 }
 
 export interface SearchResults {

@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../api';
 import { Organization } from '../../types';
-import prepareQuerystring from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import OrganizationInfo from './OrganizationInfo';
 jest.mock('../../api');
 
@@ -50,7 +50,7 @@ describe('OrganizationInfo', () => {
     await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
     expect(mockHistoryPush).toHaveBeenCalledWith({
       pathname: '/packages/search',
-      search: prepareQuerystring({
+      search: prepareQueryString({
         pageNumber: 1,
         filters: {
           org: [defaultProps.organizationName],

@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package } from '../../types';
-import prepareQuerystring from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageInfo from './PackageInfo';
 
 const getMockPackage = (fixtureId: string): Package => {
@@ -105,7 +105,7 @@ describe('PackageInfo', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           pageNumber: 1,
           filters: {
             repo: [mockPackage.repository.name],
@@ -128,7 +128,7 @@ describe('PackageInfo', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           pageNumber: 1,
           filters: {
             user: [mockPackage.repository.userAlias!],
@@ -151,7 +151,7 @@ describe('PackageInfo', () => {
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
-        search: prepareQuerystring({
+        search: prepareQueryString({
           pageNumber: 1,
           filters: {
             kind: ['1'],

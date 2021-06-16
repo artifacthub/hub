@@ -2,7 +2,7 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import prepareQuerystring from '../../utils/prepareQueryString';
+import { prepareQueryString } from '../../utils/prepareQueryString';
 import RepositoryInfo from './RepositoryInfo';
 
 const mockHistoryPush = jest.fn();
@@ -52,7 +52,7 @@ describe('RepositoryInfo', () => {
     await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
     expect(mockHistoryPush).toHaveBeenCalledWith({
       pathname: '/packages/search',
-      search: prepareQuerystring({
+      search: prepareQueryString({
         pageNumber: 1,
         filters: {
           repo: [defaultProps.repository.name],
