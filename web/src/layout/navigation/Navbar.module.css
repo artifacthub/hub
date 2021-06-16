@@ -36,11 +36,6 @@
   box-shadow: 0;
 }
 
-.badge {
-  margin-top: -5px;
-  font-size: 0.5rem !important;
-}
-
 @media (min-width: 768px) {
   .navbar:not(.homeNavbar) {
     position: sticky !important;

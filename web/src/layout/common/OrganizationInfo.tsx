@@ -22,6 +22,8 @@ interface Props {
   multiLine?: boolean;
 }
 
+const FETCH_DELAY = 1 * 100; // 100ms
+
 const OrganizationInfo = (props: Props) => {
   const history = useHistory();
   const ref = useRef(null);
@@ -29,6 +31,7 @@ const OrganizationInfo = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [onLinkHover, setOnLinkHover] = useState(false);
   const [onDropdownHover, setOnDropdownHover] = useState(false);
+  const [fetchTimeout, setFetchTimeout] = useState<NodeJS.Timeout | null>(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
 
   async function fetchOrganization() {
@@ -41,7 +44,17 @@ const OrganizationInfo = (props: Props) => {
 
   const openOrgInfo = () => {
     if (isUndefined(organization)) {
-      fetchOrganization();
+      setFetchTimeout(
+        setTimeout(() => {
+          fetchOrganization();
+        }, FETCH_DELAY)
+      );
+    }
+  };
+
+  const cleanFetchTimeout = () => {
+    if (fetchTimeout) {
+      clearTimeout(fetchTimeout);
     }
   };
 
@@ -63,8 +76,9 @@ const OrganizationInfo = (props: Props) => {
       if (!isUndefined(timeout)) {
         clearTimeout(timeout);
       }
+      cleanFetchTimeout();
     };
-  }, [onLinkHover, onDropdownHover, organization, openStatus]);
+  }, [onLinkHover, onDropdownHover, organization, openStatus]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div className={props.className}>
@@ -152,6 +166,8 @@ const OrganizationInfo = (props: Props) => {
             openOrgInfo();
           }}
           onMouseLeave={() => {
+            setFetchTimeout(null);
+            cleanFetchTimeout();
             setOnLinkHover(false);
           }}
           aria-label="Organization info"

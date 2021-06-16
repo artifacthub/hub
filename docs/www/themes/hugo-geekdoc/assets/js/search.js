@@ -27,14 +27,12 @@
     }
 
     if (!input.value) {
-      console.log("empty")
       results.classList.remove("has-hits");
       return;
     }
 
     const searchHits = window.geekdocSearchIndex.search(input.value, 10);
 
-    console.log(searchHits.length);
     if (searchHits.length > 0) {
       results.classList.add("has-hits");
     } else {

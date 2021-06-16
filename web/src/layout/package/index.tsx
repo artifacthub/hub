@@ -547,7 +547,7 @@ const PackageView = (props: Props) => {
                       </div>
                     </div>
 
-                    <p className={`mb-0 ${styles.description}`}>{detail.description}</p>
+                    <p className={`mb-0 overflow-hidden ${styles.description}`}>{detail.description}</p>
 
                     <Stats packageStats={detail.stats} />
 
