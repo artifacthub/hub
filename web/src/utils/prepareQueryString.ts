@@ -1,14 +1,9 @@
 import { isEmpty, isUndefined } from 'lodash';
 
-import { BasicQuery, SearchFiltersURL, SearchQuery, TsQuery } from '../types';
-import { TS_QUERY } from './data';
+import { BasicQuery, SearchFiltersURL, SearchQuery } from '../types';
 
-const getURLSearchParams = (query: BasicQuery): URLSearchParams => {
+export const getURLSearchParams = (query: BasicQuery): URLSearchParams => {
   const q = new URLSearchParams();
-
-  if (!isUndefined(query.facets)) {
-    q.set('facets', query.facets ? 'true' : 'false');
-  }
   if (!isUndefined(query.filters) && !isEmpty(query.filters)) {
     Object.keys(query.filters).forEach((filterId: string) => {
       return query.filters![filterId].forEach((id: string) => {
@@ -22,19 +17,8 @@ const getURLSearchParams = (query: BasicQuery): URLSearchParams => {
   if (!isUndefined(query.name)) {
     q.set('name', query.name);
   }
-  if (!isUndefined(query.tsQuery)) {
-    let values: string[] = [];
-    query.tsQuery.forEach((value: string) => {
-      if (value !== '') {
-        const activeTsQuery = TS_QUERY.find((ts: TsQuery) => ts.label === value);
-        if (!isUndefined(activeTsQuery)) {
-          values.push(activeTsQuery.value);
-        }
-      }
-    });
-    if (values.length > 0) {
-      q.set('ts_query', values.join(' | '));
-    }
+  if (query.tsQuery && query.tsQuery.length > 0) {
+    q.set('ts_query', query.tsQuery.join(' | '));
   }
   if (!isUndefined(query.deprecated) && query.deprecated) {
     q.set('deprecated', 'true');
