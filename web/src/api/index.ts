@@ -33,14 +33,16 @@ import {
   Stats,
   Subscription,
   TestWebhook,
+  TsQuery,
   TwoFactorAuth,
   User,
   UserFullName,
   UserLogin,
   Webhook,
 } from '../types';
+import { TS_QUERY } from '../utils/data';
 import getHubBaseURL from '../utils/getHubBaseURL';
-import { prepareAPIQueryString } from '../utils/prepareQueryString';
+import { getURLSearchParams, prepareAPIQueryString } from '../utils/prepareQueryString';
 import renameKeysInObject from '../utils/renameKeysInObject';
 
 interface PackageRequest {
@@ -300,8 +302,27 @@ class API_CLASS {
   }
 
   public searchPackages(query: SearchQuery, facets: boolean = true): Promise<SearchResults> {
+    const q = getURLSearchParams(query);
+    q.set('facets', facets ? 'true' : 'false');
+    if (!isUndefined(query.tsQuery)) {
+      let values: string[] = [];
+      query.tsQuery.forEach((value: string) => {
+        if (value !== '') {
+          const activeTsQuery = TS_QUERY.find((ts: TsQuery) => ts.label === value);
+          if (!isUndefined(activeTsQuery)) {
+            values.push(activeTsQuery.value);
+          }
+        }
+      });
+      if (values.length > 0) {
+        q.set('ts_query', values.join(' | '));
+      }
+    }
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
+
     return this.apiFetch({
-      url: `${this.API_BASE_URL}/packages/search${prepareAPIQueryString({ ...query, facets: facets })}`,
+      url: `${this.API_BASE_URL}/packages/search?${q.toString()}`,
       headers: [this.HEADERS.pagination],
     });
   }

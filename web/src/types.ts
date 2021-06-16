@@ -190,7 +190,6 @@ export interface BasicQuery {
   tsQueryWeb?: string;
   name?: string;
   tsQuery?: string[];
-  facets?: boolean;
   filters?: {
     [key: string]: string[];
   };
