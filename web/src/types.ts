@@ -99,6 +99,12 @@ export interface Package {
   official?: boolean;
   stats?: PackageStats;
   allContainersImagesWhitelisted?: boolean;
+  signKey?: HelmChartSignKey;
+}
+
+export interface HelmChartSignKey {
+  fingerprint: string;
+  url: string;
 }
 
 export interface PackageStats {

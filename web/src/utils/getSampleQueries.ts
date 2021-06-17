@@ -5,9 +5,13 @@ import getMetaTag from './getMetaTag';
 export default (): any[] => {
   const sampleQueries = getMetaTag('sampleQueries');
   if (sampleQueries) {
-    const queries = JSON.parse(sampleQueries);
-    if (isArray(queries)) {
-      return queries;
+    try {
+      const queries = JSON.parse(sampleQueries);
+      if (isArray(queries)) {
+        return queries;
+      }
+    } catch {
+      return [];
     }
   }
   return [];

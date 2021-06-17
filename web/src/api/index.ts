@@ -1044,6 +1044,12 @@ class API_CLASS {
       },
     });
   }
+
+  public getPublicSignKey(url: string): Promise<string> {
+    return this.apiFetch({
+      url: url,
+    });
+  }
 }
 
 const API = new API_CLASS();

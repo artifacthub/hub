@@ -2869,6 +2869,18 @@ components:
         - $ref: "#/components/schemas/Package"
         - type: object
           properties:
+            sign_key:
+              type: object
+              nullable: false
+              properties:
+                fingerprint:
+                  type: string
+                  nullable: false
+                  example: "0011223344"
+                url:
+                  type: string
+                  format: uri
+                  example: https://key.url
             crds:
               type: array
               nullable: false
