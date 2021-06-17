@@ -120,6 +120,7 @@ hub:
       openGraphImage: "/static/media/artifactHub_v2.png"
       shortcutIcon: "/static/media/logo_v2.png"
       websiteLogo: "/static/media/logo/artifacthub-brand-white.svg"
+    sampleQueries: []
     siteName: "Artifact hub"
 
 scanner:

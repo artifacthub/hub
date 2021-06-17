@@ -1,6 +1,7 @@
 package static
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -161,6 +162,12 @@ func (h *Handlers) Index(w http.ResponseWriter, r *http.Request) {
 		"title":                    title,
 		"websiteLogo":              h.cfg.GetString("theme.images.websiteLogo"),
 	}
+	sampleQueriesJSON, err := getSampleQueriesJSON(h.cfg)
+	if err != nil {
+		h.logger.Error().Err(err).Msg("error reading provided sample queries to JSON, they won't be used")
+	} else {
+		data["sampleQueries"] = sampleQueriesJSON
+	}
 	if err := h.indexTmpl.Execute(w, data); err != nil {
 		h.logger.Error().Err(err).Msg("error executing index template")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -207,4 +214,18 @@ func FileServer(r chi.Router, public, static string, cacheMaxAge time.Duration) 
 		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(cacheMaxAge))
 		fsHandler.ServeHTTP(w, r)
 	}))
+}
+
+// getSampleQueriesJSON is a helper function that reads the sample queries from
+// the configuration provided and marshals them as json.
+func getSampleQueriesJSON(cfg *viper.Viper) (string, error) {
+	var sampleQueries []map[string]string
+	if err := cfg.UnmarshalKey("theme.sampleQueries", &sampleQueries); err != nil {
+		return "", err
+	}
+	sampleQueriesJSON, err := json.Marshal(sampleQueries)
+	if err != nil {
+		return "", err
+	}
+	return string(sampleQueriesJSON), nil
 }

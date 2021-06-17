@@ -148,22 +148,17 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="d-none d-md-inline-block text-center mt-5"
         >
-          You can also 
+          Or you can also 
           <a
             aria-label="Browse all packages"
-            class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
+            class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1 pr-0"
             href="/packages/search"
           >
             <u>
               browse all packages
             </u>
           </a>
-           - or - 
-          <span
-            class="ml-3"
-          >
-            try one of the sample queries:
-          </span>
+           .
         </div>
         <div
           class="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap"
