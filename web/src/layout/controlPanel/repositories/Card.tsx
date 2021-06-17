@@ -27,6 +27,7 @@ import ActionBtn from '../ActionBtn';
 import BadgeModal from './BadgeModal';
 import styles from './Card.module.css';
 import DeletionModal from './DeletionModal';
+import RepositoryWarningModal from './RepositoryWarningModal';
 import TransferRepositoryModal from './TransferModal';
 
 interface ModalStatus {
@@ -95,7 +96,14 @@ const RepositoryCard = (props: Props) => {
     const content = (
       <>
         <span>{moment(props.repository.lastTrackingTs! * 1000).fromNow()}</span>
-        {hasErrors ? <FaExclamation className="mx-2 text-warning" /> : <FaCheck className="mx-2 text-success" />}
+        {hasErrors ? (
+          <>
+            <FaExclamation className="ml-2 text-warning" />
+            <RepositoryWarningModal />
+          </>
+        ) : (
+          <FaCheck className="mx-2 text-success" />
+        )}
       </>
     );
 
@@ -128,6 +136,7 @@ const RepositoryCard = (props: Props) => {
             onClose={() => setOpenErrorsModal(false)}
           >
             <div className="mt-3 mw-100">
+              <div className="mb-2">{moment.unix(props.repository.lastTrackingTs!).format('llll Z')}</div>
               <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
                 {props.repository.lastTrackingErrors}
               </SyntaxHighlighter>
