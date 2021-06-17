@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import API from '../../api';
 import { RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import getSampleQueries from '../../utils/getSampleQueries';
 import isWhiteLabel from '../../utils/isWhiteLabel';
 import ExternalLink from '../common/ExternalLink';
 import RepositoryIcon from '../common/RepositoryIcon';
@@ -30,6 +31,7 @@ interface Props {
 
 const HomeView = (props: Props) => {
   const history = useHistory();
+  const sampleQueries = getSampleQueries();
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
   const [openTips, setOpenTips] = useState<boolean>(false);
@@ -104,9 +106,9 @@ const HomeView = (props: Props) => {
           </div>
 
           <div className="d-none d-md-inline-block text-center mt-5">
-            You can also{' '}
+            {sampleQueries.length > 0 ? <>You can also </> : <>Or you can also </>}
             <Link
-              className="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
+              className="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1 pr-0"
               to={{
                 pathname: '/packages/search',
               }}
@@ -114,7 +116,13 @@ const HomeView = (props: Props) => {
             >
               <u>browse all packages</u>
             </Link>{' '}
-            - or - <span className="ml-3">try one of the sample queries:</span>
+            {sampleQueries.length > 0 ? (
+              <span className="ml-3">
+                - or - <span className="ml-3">try one of the sample queries:</span>
+              </span>
+            ) : (
+              <>.</>
+            )}
           </div>
 
           <div className="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap">

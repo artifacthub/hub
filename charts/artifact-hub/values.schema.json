@@ -567,6 +567,14 @@
                             },
                             "required": ["appleTouchIcon192", "appleTouchIcon512", "openGraphImage", "shortcutIcon", "websiteLogo"]
                         },
+                        "sampleQueries": {
+                            "title": "Sample search queries used in home and no results found pages",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/sampleQuery"
+                            },
+                            "default": []
+                        },
                         "siteName": {
                             "title": "Name of the site",
                             "description": "This name is displayed in some places in the website and email templates. When a different value than the default one (Artifact Hub) is provided, the site enters `white label` mode. In this mode, some sections of the website are displayed in a more generic way, omitting certain parts that are unique to Artifact Hub.",
@@ -574,7 +582,7 @@
                             "default": "Artifact Hub"
                         }
                     },
-                    "required": ["colors", "images", "siteName"]
+                    "required": ["colors", "images", "sampleQueries", "siteName"]
                 }
             },
             "required": ["ingress", "service", "deploy", "server", "theme"]
@@ -812,5 +820,22 @@
             "required": ["deploy", "persistence"]
         }
     },
-    "required": ["db", "dbMigrator", "hub", "images", "log", "postgresql", "pullPolicy", "restrictedHTTPClient", "tracker", "trivy", "scanner"]
+    "required": ["db", "dbMigrator", "hub", "images", "log", "postgresql", "pullPolicy", "restrictedHTTPClient", "tracker", "trivy", "scanner"],
+    "definitions": {
+        "sampleQuery": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name of the search query. It will be displayed on the home and no results found pages.",
+                    "type": "string"
+                },
+                "queryString": {
+                    "title": "Search query string",
+                    "type": "string",
+                    "description": "Query string that defines the search filters to use. Example: ts_query_web=prometheus&official=true"
+                }
+            },
+            "required": ["name", "queryString"]
+        }
+    }
 }

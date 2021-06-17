@@ -2,58 +2,89 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { SearchFiltersURL } from '../../types';
-import { prepareQueryString } from '../../utils/prepareQueryString';
 import SampleQueries from './SampleQueries';
+
+jest.mock('../../utils/getSampleQueries', () => () => {
+  return [
+    {
+      name: 'OLM operators for databases',
+      queryString: 'kind=3&ts_query_web=database',
+    },
+    {
+      name: 'Helm Charts provided by Bitnami',
+      queryString: 'kind=0&org=bitnami',
+    },
+    {
+      name: 'Packages of any kind related to etcd',
+      queryString: 'ts_query_web=etcd',
+    },
+    {
+      name: 'Falco rules for CVE',
+      queryString: 'kind=1&ts_query_web=cve',
+    },
+    {
+      name: 'OLM operators in the monitoring category',
+      queryString: 'kind=3&ts_query=monitoring',
+    },
+    {
+      name: 'Packages from verified publishers',
+      queryString: 'verified_publisher=true',
+    },
+    {
+      name: 'Official Prometheus packages',
+      queryString: 'ts_query_web=prometheus&official=true',
+    },
+    {
+      name: 'Operators with auto pilot capabilities',
+      queryString: 'capabilities=auto+pilot',
+    },
+    {
+      name: 'Helm Charts in the storage category',
+      queryString: 'kind=0&ts_query=storage',
+    },
+    {
+      name: 'Packages with Apache-2.0 license',
+      queryString: 'license=Apache-2.0',
+    },
+    {
+      name: 'OPA policies with MIT license',
+      queryString: 'kind=2&license=MIT',
+    },
+    {
+      name: 'Helm plugins',
+      queryString: 'kind=6',
+    },
+    {
+      name: 'Kubectl plugins',
+      queryString: 'kind=5',
+    },
+    {
+      name: 'Tekton tasks',
+      queryString: 'kind=7',
+    },
+  ];
+});
 
 const mockQueries = [
   {
-    label: 'OLM operators for databases',
-    filters: {
-      pageNumber: 1,
-      tsQueryWeb: 'database',
-      filters: {
-        kind: ['3'],
-      },
-    },
+    name: 'OLM operators for databases',
+    queryString: 'kind=3&ts_query_web=database',
   },
   {
-    label: 'Helm Charts provided by Bitnami',
-    filters: {
-      pageNumber: 1,
-      filters: {
-        kind: ['0'],
-        org: ['bitnami'],
-      },
-    },
+    name: 'Helm Charts provided by Bitnami',
+    queryString: 'kind=0&org=bitnami',
   },
   {
-    label: 'Packages of any kind related to etcd',
-    filters: {
-      pageNumber: 1,
-      tsQueryWeb: 'etcd',
-      filters: {},
-    },
+    name: 'Packages of any kind related to etcd',
+    queryString: 'ts_query_web=etcd',
   },
   {
-    label: 'Falco rules for CVE',
-    filters: {
-      pageNumber: 1,
-      tsQuery: ['monitoring'],
-      filters: {
-        kind: ['3'],
-      },
-    },
+    name: 'Falco rules for CVE',
+    queryString: 'kind=1&ts_query_web=cve',
   },
   {
-    label: 'OLM operators in the monitoring category',
-    filters: {
-      pageNumber: 1,
-      tsQuery: ['monitoring'],
-      filters: {
-        kind: ['3'],
-      },
-    },
+    name: 'OLM operators in the monitoring category',
+    queryString: 'kind=3&ts_query=monitoring',
   },
 ];
 
@@ -90,7 +121,7 @@ describe('SampleQueries', () => {
       expect(getAllByTestId('sampleQuery')).toHaveLength(mockQueries.length);
 
       for (let i = 0; i < mockQueries.length; i++) {
-        expect(getByText(mockQueries[i].label)).toBeInTheDocument();
+        expect(getByText(mockQueries[i].name)).toBeInTheDocument();
       }
     });
 
@@ -126,7 +157,7 @@ describe('SampleQueries', () => {
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe(prepareQueryString(mockQueries[0].filters as SearchFiltersURL));
+      expect(window.location.search).toBe('?kind=3&ts_query_web=database');
     });
   });
 });

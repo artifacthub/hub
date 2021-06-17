@@ -12,6 +12,7 @@ import API from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import { Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults } from '../../types';
+import getSampleQueries from '../../utils/getSampleQueries';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
@@ -50,6 +51,7 @@ interface Props {
 const SearchView = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const history = useHistory();
+  const sampleQueries = getSampleQueries();
   const [searchResults, setSearchResults] = useState<SearchResults>({
     facets: null,
     packages: null,
@@ -489,7 +491,11 @@ const SearchView = (props: Props) => {
                               <u>browse all packages</u>
                             </button>
                           )}
-                          , try a new search or start with one of the sample queries:
+                          {sampleQueries.length > 0 ? (
+                            <>, try a new search or start with one of the sample queries:</>
+                          ) : (
+                            <> or try a new search.</>
+                          )}
                         </p>
                         <div className="h5 d-flex flex-row align-items-end justify-content-center flex-wrap">
                           <SampleQueries className="badge-light border-secondary text-dark" />
