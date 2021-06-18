@@ -204,7 +204,8 @@ select columns_are('snapshot', array[
     'prerelease',
     'ts',
     'created_at',
-    'recommendations'
+    'recommendations',
+    'sign_key'
 ]);
 select columns_are('subscription', array[
     'user_id',

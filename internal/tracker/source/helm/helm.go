@@ -46,6 +46,7 @@ const (
 	prereleaseAnnotation           = "artifacthub.io/prerelease"
 	recommendationsAnnotation      = "artifacthub.io/recommendations"
 	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
+	signKeyAnnotation              = "artifacthub.io/signKey"
 
 	helmChartConfigMediaType       = "application/vnd.cncf.helm.config.v1+json"
 	helmChartContentLayerMediaType = "application/tar+gzip"
@@ -623,6 +624,18 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 			return fmt.Errorf("invalid containsSecurityUpdates value: %s", v)
 		}
 		p.ContainsSecurityUpdates = containsSecurityUpdates
+	}
+
+	// Sign key
+	if v, ok := annotations[signKeyAnnotation]; ok {
+		var signKey *hub.SignKey
+		if err := yaml.Unmarshal([]byte(v), &signKey); err != nil {
+			return fmt.Errorf("invalid sign key value: %s", v)
+		}
+		if signKey.URL == "" {
+			return fmt.Errorf("sign key url not provided: %s", v)
+		}
+		p.SignKey = signKey
 	}
 
 	return nil

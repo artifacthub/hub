@@ -55,6 +55,7 @@ import styles from './PackageView.module.css';
 import ReadmeWrapper from './readme';
 import RecommendedPackages from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
+import SignKeyInfo from './SignKeyInfo';
 import StarButton from './StarButton';
 import Stats from './Stats';
 import SubscriptionsButton from './SubscriptionsButton';
@@ -286,6 +287,9 @@ const PackageView = (props: Props) => {
         signed={detail!.signed}
         className={`d-inline ${extraStyle}`}
       />
+      <div className="d-none d-lg-inline">
+        <SignKeyInfo repoKind={detail!.repository.kind} signed={detail!.signed} signKey={detail!.signKey} />
+      </div>
     </>
   );
 

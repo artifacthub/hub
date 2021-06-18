@@ -99,6 +99,10 @@ func TestTrackerSource(t *testing.T) {
 				URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
 			},
 		},
+		SignKey: &hub.SignKey{
+			Fingerprint: "0011223344",
+			URL:         "https://key.url",
+		},
 		ContainsSecurityUpdates: true,
 		Prerelease:              true,
 		TS:                      0,
@@ -853,6 +857,33 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			},
 			&hub.Package{
 				ContainsSecurityUpdates: true,
+			},
+			"",
+		},
+		// Sign key
+		{
+			&hub.Package{},
+			map[string]string{
+				signKeyAnnotation: `
+fingerprint: 0011223344
+`,
+			},
+			&hub.Package{},
+			"sign key url not provided",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				signKeyAnnotation: `
+fingerprint: 0011223344
+url: https://key.url
+`,
+			},
+			&hub.Package{
+				SignKey: &hub.SignKey{
+					Fingerprint: "0011223344",
+					URL:         "https://key.url",
+				},
 			},
 			"",
 		},

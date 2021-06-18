@@ -95,6 +95,7 @@ type Package struct {
 	Prerelease                     bool                   `json:"prerelease"`
 	Maintainers                    []*Maintainer          `json:"maintainers"`
 	Recommendations                []*Recommendation      `json:"recommendations"`
+	SignKey                        *SignKey               `json:"sign_key"`
 	Repository                     *Repository            `json:"repository"`
 	TS                             int64                  `json:"ts,omitempty"`
 	Stats                          *PackageStats          `json:"stats"`
@@ -161,6 +162,11 @@ type PackageStats struct {
 	Webhooks      int `json:"webhooks"`
 }
 
+// Provider represents a package's provider.
+type Provider struct {
+	Name string `yaml:"name"`
+}
+
 // Recommendation represents some information about a recommended package.
 type Recommendation struct {
 	URL string `json:"url" yaml:"url"`
@@ -185,6 +191,12 @@ type SecurityReportSummary struct {
 	Unknown  int `json:"unknown"`
 }
 
+// SignKey represents a key used to sign a package version.
+type SignKey struct {
+	Fingerprint string `json:"fingerprint" yaml:"fingerprint"`
+	URL         string `json:"url" yaml:"url"`
+}
+
 // SnapshotToScan represents some information about a package's snapshot that
 // needs to be scanned for security vulnerabilities.
 type SnapshotToScan struct {
@@ -193,11 +205,6 @@ type SnapshotToScan struct {
 	PackageName      string            `json:"package_name"`
 	Version          string            `json:"version"`
 	ContainersImages []*ContainerImage `json:"containers_images"`
-}
-
-// Provider represents a package's provider.
-type Provider struct {
-	Name string `yaml:"name"`
 }
 
 // SearchPackageInput represents the query input when searching for packages.

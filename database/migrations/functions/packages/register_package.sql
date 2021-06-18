@@ -154,6 +154,7 @@ begin
         contains_security_updates,
         prerelease,
         recommendations,
+        sign_key,
         ts
     ) values (
         v_package_id,
@@ -184,6 +185,7 @@ begin
         (p_pkg->>'contains_security_updates')::boolean,
         (p_pkg->>'prerelease')::boolean,
         nullif(p_pkg->'recommendations', 'null'),
+        nullif(p_pkg->'sign_key', 'null'),
         v_ts
     )
     on conflict (package_id, version) do update
@@ -214,6 +216,7 @@ begin
         contains_security_updates = excluded.contains_security_updates,
         prerelease = excluded.prerelease,
         recommendations = excluded.recommendations,
+        sign_key = excluded.sign_key,
         ts = v_ts;
 
     -- Register new release event if package's latest version has been updated

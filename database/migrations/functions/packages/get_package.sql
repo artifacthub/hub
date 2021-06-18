@@ -78,6 +78,7 @@ begin
             where pm.package_id = v_package_id
         ),
         'recommendations', s.recommendations,
+        'sign_key', s.sign_key,
         'repository', (select get_repository_summary(r.repository_id)),
         'stats', json_build_object(
             'subscriptions', (select count(*) from subscription where package_id = v_package_id),
