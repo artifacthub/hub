@@ -3,6 +3,7 @@ package scanner
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -10,6 +11,16 @@ import (
 
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/spf13/viper"
+)
+
+var (
+	// ErrImageNotFound indicates that the image provided was not found in the
+	// repository.
+	ErrImageNotFound = errors.New("image not found")
+
+	// ErrSchemaV1NotSupported indicates that the image provided is using a v1
+	// schema which is not supported.
+	ErrSchemaV1NotSupported = errors.New("schema v1 manifest not supported by trivy")
 )
 
 // TrivyScanner is an implementation of the Scanner interface that uses Trivy.
@@ -50,6 +61,15 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 
 	// Run trivy command
 	if err := cmd.Run(); err != nil {
+		if strings.Contains(stderr.String(), "MANIFEST_UNKNOWN") {
+			return nil, ErrImageNotFound
+		}
+		if strings.Contains(stderr.String(), "UNAUTHORIZED") {
+			return nil, ErrImageNotFound
+		}
+		if strings.Contains(stderr.String(), `unsupported MediaType: "application/vnd.docker.distribution.manifest.v1+prettyjws"`) {
+			return nil, ErrSchemaV1NotSupported
+		}
 		return nil, fmt.Errorf("error running trivy on image %s: %w: %s", image, err, stderr.String())
 	}
 	return stdout.Bytes(), nil
