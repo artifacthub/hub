@@ -70,7 +70,12 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 		if strings.Contains(stderr.String(), `unsupported MediaType: "application/vnd.docker.distribution.manifest.v1+prettyjws"`) {
 			return nil, ErrSchemaV1NotSupported
 		}
-		return nil, fmt.Errorf("error running trivy on image %s: %w: %s", image, err, stderr.String())
+		trivyError := stderr.String()
+		parts := strings.Split(stderr.String(), "podman/podman.sock: no such file or directory")
+		if len(parts) > 1 {
+			trivyError = strings.TrimSpace(parts[1])
+		}
+		return nil, fmt.Errorf("error running trivy on image %s: %s", image, trivyError)
 	}
 	return stdout.Bytes(), nil
 }
