@@ -1027,9 +1027,9 @@ func TestToggleStar(t *testing.T) {
 func TestUpdateSnapshotSecurityReport(t *testing.T) {
 	ctx := context.Background()
 
-	s := &hub.SnapshotSecurityReport{
-		PackageID: "",
-		Version:   "",
+	r := &hub.SnapshotSecurityReport{
+		PackageID: "pkgID",
+		Version:   "1.0.0",
 		Summary: &hub.SecurityReportSummary{
 			High:   2,
 			Medium: 1,
@@ -1042,15 +1042,51 @@ func TestUpdateSnapshotSecurityReport(t *testing.T) {
 			},
 		},
 	}
-	sJSON, _ := json.Marshal(s)
+	rJSON, _ := json.Marshal(r)
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			r      *hub.SnapshotSecurityReport
+		}{
+			{
+				"security report not provided",
+				nil,
+			},
+			{
+				"package id not provided",
+				&hub.SnapshotSecurityReport{
+					PackageID: "",
+					Version:   "1.0.0",
+				},
+			},
+			{
+				"version not provided",
+				&hub.SnapshotSecurityReport{
+					PackageID: "pkgID",
+					Version:   "",
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				m := NewManager(nil)
+				err := m.UpdateSnapshotSecurityReport(ctx, tc.r)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
 
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, sJSON).Return(tests.ErrFakeDB)
+		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON).Return(tests.ErrFakeDB)
 		m := NewManager(db)
 
-		err := m.UpdateSnapshotSecurityReport(ctx, s)
+		err := m.UpdateSnapshotSecurityReport(ctx, r)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
@@ -1058,10 +1094,10 @@ func TestUpdateSnapshotSecurityReport(t *testing.T) {
 	t.Run("database update succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, sJSON).Return(nil)
+		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON).Return(nil)
 		m := NewManager(db)
 
-		err := m.UpdateSnapshotSecurityReport(ctx, s)
+		err := m.UpdateSnapshotSecurityReport(ctx, r)
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})

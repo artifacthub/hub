@@ -287,6 +287,18 @@ func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 // UpdateSnapshotSecurityReport updates the security report for the snapshot
 // provided.
 func (m *Manager) UpdateSnapshotSecurityReport(ctx context.Context, r *hub.SnapshotSecurityReport) error {
+	// Validate input
+	if r == nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "security report not provided")
+	}
+	if r.PackageID == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "package id not provided")
+	}
+	if r.Version == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
+	}
+
+	// Update snapshot security report in database
 	rJSON, _ := json.Marshal(r)
 	_, err := m.db.Exec(ctx, updateSnapshotSecurityReportDBQ, rJSON)
 	return err

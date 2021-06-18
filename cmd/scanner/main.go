@@ -95,7 +95,7 @@ L:
 				logger.Error().Err(err).Send()
 			}
 			if err := pm.UpdateSnapshotSecurityReport(ctx, report); err != nil {
-				logger.Error().Err(err).Send()
+				logger.Error().Err(err).Msg("error updating snapshot security report")
 			}
 
 			<-limiter

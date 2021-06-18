@@ -24,40 +24,36 @@ func ScanSnapshot(
 	s *hub.SnapshotToScan,
 	ec hub.ErrorsCollector,
 ) (*hub.SnapshotSecurityReport, error) {
-	full := make(map[string][]interface{})
 	ec.Init(s.RepositoryID)
 
+	report := &hub.SnapshotSecurityReport{
+		PackageID: s.PackageID,
+		Version:   s.Version,
+	}
+
+	full := make(map[string][]interface{})
 	for _, image := range s.ContainersImages {
 		reportData, err := scanner.Scan(image.Image)
 		if err != nil {
 			err := fmt.Errorf("error scanning image %s: %w (package %s:%s)", image.Image, err, s.PackageName, s.Version)
 			ec.Append(s.RepositoryID, err.Error())
-			return nil, err
+			return report, err
 		}
 		var imageFullReport []interface{}
 		if err := json.Unmarshal(reportData, &imageFullReport); err != nil {
-			return nil, fmt.Errorf("error unmarshalling image %s full report: %w", image.Image, err)
+			return report, fmt.Errorf("error unmarshalling image %s full report: %w", image.Image, err)
 		}
 		if imageFullReport != nil {
 			full[image.Image] = imageFullReport
 		}
 	}
-	var summary *hub.SecurityReportSummary
-	var alertDigest string
 	if len(full) > 0 {
-		summary = generateSummary(full)
-		alertDigest = generateAlertDigest(full)
-	} else {
-		full = nil
+		report.Full = full
+		report.Summary = generateSummary(full)
+		report.AlertDigest = generateAlertDigest(full)
 	}
 
-	return &hub.SnapshotSecurityReport{
-		PackageID:   s.PackageID,
-		Version:     s.Version,
-		AlertDigest: alertDigest,
-		Full:        full,
-		Summary:     summary,
-	}, nil
+	return report, nil
 }
 
 // generateSummary generates a summary of the security report from the full
