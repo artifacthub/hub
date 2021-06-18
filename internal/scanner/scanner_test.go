@@ -8,7 +8,6 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/repo"
-	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -22,29 +21,47 @@ func TestScanSnapshot(t *testing.T) {
 	image := "repo/image:tag"
 
 	t.Run("error scanning image", func(t *testing.T) {
-		t.Parallel()
-		scannerMock := &Mock{}
-		scannerMock.On("Scan", image).Return(nil, tests.ErrFake)
-		ecMock := &repo.ErrorsCollectorMock{}
-		ecMock.On("Init", repositoryID)
-		ecMock.On("Append", repositoryID, "error scanning image repo/image:tag: fake error for tests (package pkg1:1.0.0)")
-
-		snapshot := &hub.SnapshotToScan{
-			RepositoryID: repositoryID,
-			PackageID:    packageID,
-			PackageName:  packageName,
-			Version:      version,
-			ContainersImages: []*hub.ContainerImage{
-				{
-					Image: image,
-				},
+		testCases := []struct {
+			scanError           error
+			expectedLoggedError string
+		}{
+			{
+				ErrImageNotFound,
+				"error scanning image repo/image:tag: image not found (package pkg1:1.0.0)",
+			},
+			{
+				ErrSchemaV1NotSupported,
+				"error scanning image repo/image:tag: schema v1 manifest not supported by trivy (package pkg1:1.0.0)",
 			},
 		}
-		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
-		require.True(t, errors.Is(err, tests.ErrFake))
-		assert.Nil(t, report)
-		scannerMock.AssertExpectations(t)
-		ecMock.AssertExpectations(t)
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.scanError.Error(), func(t *testing.T) {
+				t.Parallel()
+				scannerMock := &Mock{}
+				scannerMock.On("Scan", image).Return(nil, tc.scanError)
+				ecMock := &repo.ErrorsCollectorMock{}
+				ecMock.On("Init", repositoryID)
+				ecMock.On("Append", repositoryID, tc.expectedLoggedError)
+
+				snapshot := &hub.SnapshotToScan{
+					RepositoryID: repositoryID,
+					PackageID:    packageID,
+					PackageName:  packageName,
+					Version:      version,
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Image: image,
+						},
+					},
+				}
+				report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
+				assert.True(t, errors.Is(err, tc.scanError))
+				assert.Nil(t, report)
+				scannerMock.AssertExpectations(t)
+				ecMock.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("error unmarshalling report", func(t *testing.T) {
