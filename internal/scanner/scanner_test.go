@@ -57,7 +57,10 @@ func TestScanSnapshot(t *testing.T) {
 				}
 				report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
 				assert.True(t, errors.Is(err, tc.scanError))
-				assert.Nil(t, report)
+				assert.Equal(t, &hub.SnapshotSecurityReport{
+					PackageID: packageID,
+					Version:   version,
+				}, report)
 				scannerMock.AssertExpectations(t)
 				ecMock.AssertExpectations(t)
 			})
@@ -84,7 +87,10 @@ func TestScanSnapshot(t *testing.T) {
 		}
 		report, err := ScanSnapshot(ctx, scannerMock, snapshot, ecMock)
 		require.Error(t, err)
-		assert.Nil(t, report)
+		assert.Equal(t, &hub.SnapshotSecurityReport{
+			PackageID: packageID,
+			Version:   version,
+		}, report)
 		scannerMock.AssertExpectations(t)
 		ecMock.AssertExpectations(t)
 	})
