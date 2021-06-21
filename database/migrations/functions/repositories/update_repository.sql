@@ -41,9 +41,12 @@ begin
         scanner_disabled = (p_repository->>'scanner_disabled')::boolean
     where repository_id = v_repository_id;
 
-    -- If the repository has been disabled, remove packages belonging to it
+    -- If the repository has been disabled, remove packages belonging to it and
+    -- reset its digest so that it's processed if it's enabled again and
+    -- nothing has changed on it
     if (p_repository->>'disabled')::boolean = true and v_disabled = false then
         delete from package where repository_id = v_repository_id;
+        update repository set digest = null where repository_id = v_repository_id;
     end if;
 
     -- If security scanning has been disabled, remove existing security reports
