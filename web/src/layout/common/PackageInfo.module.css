@@ -82,6 +82,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  word-break: break-all;
 }
 
 .lastLine {
@@ -111,6 +112,7 @@
 @media only screen and (max-width: 575.98px) {
   .lineClamp {
     -webkit-line-clamp: 2;
+    word-break: normal;
   }
 }
 

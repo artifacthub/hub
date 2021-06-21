@@ -109,6 +109,7 @@ const WidgetsGroupModal = (props: Props) => {
     fixedWidth,
     groupWrapperWidthOpt,
     color,
+    loading,
     props.visibleWidget,
   ]); /* eslint-enable react-hooks/exhaustive-deps */
 
@@ -316,7 +317,7 @@ const WidgetsGroupModal = (props: Props) => {
 
               <div data-testid="block-content" className={`flex-grow-1 mr-3 user-select-none ${styles.blockWrapper}`}>
                 <SyntaxHighlighter
-                  language="html"
+                  language="text"
                   style={docco}
                   customStyle={{
                     backgroundColor: 'var(--color-1-10)',

@@ -346,6 +346,15 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 		eventKindStr = "repository.ownership-claim"
 	}
 
+	// Prepare last scanning and tracking errors
+	var lastScanningErrors, lastTrackingErrors []string
+	if v := strings.TrimSpace(r.LastScanningErrors); v != "" {
+		lastScanningErrors = strings.Split(v, "\n")
+	}
+	if v := strings.TrimSpace(r.LastTrackingErrors); v != "" {
+		lastTrackingErrors = strings.Split(v, "\n")
+	}
+
 	return &hub.RepositoryNotificationTemplateData{
 		BaseURL: w.svc.Cfg.GetString("server.baseURL"),
 		Event: map[string]interface{}{
@@ -357,8 +366,8 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 			"Name":               r.Name,
 			"UserAlias":          r.UserAlias,
 			"OrganizationName":   r.OrganizationName,
-			"LastScanningErrors": strings.Split(r.LastScanningErrors, "\n"),
-			"LastTrackingErrors": strings.Split(r.LastTrackingErrors, "\n"),
+			"LastScanningErrors": lastScanningErrors,
+			"LastTrackingErrors": lastTrackingErrors,
 		},
 		Theme: map[string]string{
 			"PrimaryColor":   w.svc.Cfg.GetString("theme.colors.primary"),

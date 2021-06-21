@@ -13,6 +13,10 @@
   right: 138px !important;
 }
 
+.onlyBadgeTooltipArrow {
+  right: 5px !important;
+}
+
 .ratingLetter {
   top: 1px;
 }

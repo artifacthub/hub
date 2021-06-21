@@ -46,12 +46,12 @@ const LastNotificationsModal = (props: Props) => {
               {props.notifications.map((item: WebhookNotification) => (
                 <tr data-testid="lastNotificationCell" key={`lastNotif_${item.notificationId}`}>
                   <td className="align-middle">{item.notificationId}</td>
-                  <td className="align-middle">{moment(item.createdAt * 1000).format('YYYY/MM/DD HH:mm:ss (Z)')}</td>
+                  <td className="align-middle">{moment.unix(item.createdAt).format('YYYY/MM/DD HH:mm:ss (Z)')}</td>
                   <td className="align-middle text-center">
                     {item.processed && <FaCheck className="text-success" data-testid="processedIcon" />}
                   </td>
                   <td className="align-middle">
-                    {!isNull(item.processedAt) && moment(item.processedAt * 1000).format('YYYY/MM/DD HH:mm:ss (Z)')}
+                    {!isNull(item.processedAt) && moment.unix(item.processedAt).format('YYYY/MM/DD HH:mm:ss (Z)')}
                   </td>
                   <td className="align-middle text-center">
                     {item.processed && (

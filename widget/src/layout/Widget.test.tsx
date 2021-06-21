@@ -7,7 +7,12 @@ import { PackageSummary } from '../types';
 import Widget from './Widget';
 jest.mock('../api');
 
-jest.mock('moment', () => () => ({ fromNow: () => '3 days ago' }));
+jest.mock('moment', () => ({
+  ...(jest.requireActual('moment') as {}),
+  unix: () => ({
+    fromNow: () => '3 hours ago',
+  }),
+}));
 
 const defaultProps = {
   url: 'https://localhost:8000/packages/helm/artifact-hub/artifact-hub',
@@ -74,7 +79,7 @@ describe('Widget', () => {
     expect(screen.getByText('Official')).toBeInTheDocument();
     expect(screen.getByTitle('verified')).toBeInTheDocument();
     expect(screen.getByText('Verified Publisher')).toBeInTheDocument();
-    expect(screen.getByText('Updated 3 days ago')).toBeInTheDocument();
+    expect(screen.getByText('Updated 3 hours ago')).toBeInTheDocument();
 
     const image = screen.getByAltText('Logo artifact-hub');
     expect(image).toBeInTheDocument();
@@ -141,7 +146,7 @@ describe('Widget', () => {
     expect(screen.getByText('Official')).toBeInTheDocument();
     expect(screen.getByTitle('verified')).toBeInTheDocument();
     expect(screen.getByText('Verified Publisher')).toBeInTheDocument();
-    expect(screen.getByText('Updated 3 days ago')).toBeInTheDocument();
+    expect(screen.getByText('Updated 3 hours ago')).toBeInTheDocument();
 
     const image = screen.getByAltText('Logo artifact-hub');
     expect(image).toBeInTheDocument();

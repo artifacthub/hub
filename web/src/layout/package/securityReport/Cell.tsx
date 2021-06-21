@@ -5,6 +5,7 @@ import { FaCaretDown, FaCaretRight, FaLink } from 'react-icons/fa';
 
 import { Vulnerability, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_RATING } from '../../../utils/data';
+import isFuture from '../../../utils/isFuture';
 import ExternalLink from '../../common/ExternalLink';
 import styles from './Cell.module.css';
 import CVSSVector from './CVSSVector';
@@ -104,11 +105,12 @@ const SecurityCell = (props: Props) => {
                     <p className="text-muted mb-1">{props.vulnerability.Description}</p>
                   )}
                   <div className="d-flex flex-column text-right">
-                    {!isUndefined(props.vulnerability.LastModifiedDate) && (
-                      <small className="font-italic">
-                        Updated {moment(props.vulnerability.LastModifiedDate).fromNow()}
-                      </small>
-                    )}
+                    {!isUndefined(props.vulnerability.LastModifiedDate) &&
+                      !isFuture(props.vulnerability.LastModifiedDate, false) && (
+                        <small className="font-italic">
+                          Updated {moment(props.vulnerability.LastModifiedDate).fromNow()}
+                        </small>
+                      )}
                   </div>
                   {props.vulnerability.CVSS && (
                     <CVSSVector

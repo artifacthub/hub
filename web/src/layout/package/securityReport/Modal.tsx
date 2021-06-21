@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import API from '../../../api';
 import { SearchFiltersURL, SecurityReport, SecurityReportSummary } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import isFuture from '../../../utils/isFuture';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
 import SecuritySummary from './Summary';
@@ -100,9 +101,9 @@ const SecurityModal = (props: Props) => {
   return (
     <>
       <div>
-        {props.createdAt && (
+        {props.createdAt && !isFuture(props.createdAt) && (
           <div className={`my-2 ${styles.created}`}>
-            <small className="text-uppercase text-muted">Last scan: </small> {moment(props.createdAt * 1000).fromNow()}
+            <small className="text-uppercase text-muted">Last scan: </small> {moment.unix(props.createdAt).fromNow()}
           </div>
         )}
 

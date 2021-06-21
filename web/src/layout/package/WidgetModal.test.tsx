@@ -43,7 +43,7 @@ describe('WidgetModal', () => {
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(screen.getByText('Theme')).toBeInTheDocument();
-      expect(screen.getAllByText('light')).toHaveLength(2);
+      expect(screen.getByText('light')).toBeInTheDocument();
       expect(screen.getByText('dark')).toBeInTheDocument();
       expect(screen.getByTestId('radio-theme-light')).toBeChecked();
       expect(screen.getByTestId('radio-theme-dark')).not.toBeChecked();

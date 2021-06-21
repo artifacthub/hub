@@ -188,7 +188,7 @@ const APIKeyCard = (props: Props) => {
           </div>
           <div className="text-truncate">
             <small className="text-muted text-uppercase mr-1">Created at: </small>
-            <small>{moment(props.apiKey.createdAt! * 1000).format('YYYY/MM/DD HH:mm:ss (Z)')}</small>
+            <small>{moment.unix(props.apiKey.createdAt!).format('YYYY/MM/DD HH:mm:ss (Z)')}</small>
           </div>
         </div>
       </div>

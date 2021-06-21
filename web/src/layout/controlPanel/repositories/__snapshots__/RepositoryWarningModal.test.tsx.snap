@@ -3,7 +3,7 @@
 exports[`RepositoryWarningModal creates snapshot 1`] = `
 <DocumentFragment>
   <button
-    class="d-inline-block pl-0 pr-1 py-2 btn btn-link"
+    class="d-inline-block pl-0 pr-1 py-2 btn btn-link trackingWarningBtn"
     data-testid="trackingWarningBtn"
   >
     <small>

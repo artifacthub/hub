@@ -15,6 +15,7 @@ import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { AppCtx } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { AuthorizerAction, Repository } from '../../../types';
+import isFuture from '../../../utils/isFuture';
 import minutesToNearestInterval from '../../../utils/minutesToNearestInterval';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import DisabledRepositoryBadge from '../../common/DisabledRepositoryBadge';
@@ -95,7 +96,9 @@ const RepositoryCard = (props: Props) => {
 
     const content = (
       <>
-        <span>{moment(props.repository.lastTrackingTs! * 1000).fromNow()}</span>
+        {!isFuture(props.repository.lastTrackingTs!) && (
+          <span>{moment.unix(props.repository.lastTrackingTs!).fromNow()}</span>
+        )}
         {hasErrors ? (
           <>
             <FaExclamation className="ml-2 text-warning" />
@@ -195,7 +198,9 @@ const RepositoryCard = (props: Props) => {
 
     const content = (
       <>
-        <span>{moment(props.repository.lastScanningTs! * 1000).fromNow()}</span>
+        {!isFuture(props.repository.lastScanningTs!) && (
+          <span>{moment.unix(props.repository.lastScanningTs!).fromNow()}</span>
+        )}
         {hasScanningErrors ? (
           <FaExclamation className="mx-2 text-warning" />
         ) : (

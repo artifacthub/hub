@@ -65,7 +65,7 @@ const SecurityRating = (props: Props) => {
       }
       alignmentTooltip="right"
       tooltipClassName={styles.tooltip}
-      tooltipArrowClassName={styles.tooltipArrow}
+      tooltipArrowClassName={props.onlyBadge ? styles.onlyBadgeTooltipArrow : styles.tooltipArrow}
       tooltipMessage={
         <div className="d-flex flex-column">
           <div className="d-flex flex-row align-items-center my-1">

@@ -191,7 +191,7 @@ const WidgetModal = (props: Props) => {
 
               <div data-testid="block-content" className={`flex-grow-1 mr-3 user-select-none ${styles.blockWrapper}`}>
                 <SyntaxHighlighter
-                  language="html"
+                  language="text"
                   style={docco}
                   customStyle={{
                     backgroundColor: 'var(--color-1-10)',

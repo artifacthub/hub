@@ -57,7 +57,7 @@ const WebhookCard = (props: Props) => {
 
   return (
     <div className="col-12 col-xxl-6 py-sm-3 py-2" role="listitem">
-      <div className={`card cardWithHover w-100 ${styles.card}`}>
+      <div className={`card cardWithHover w-100 h-100 ${styles.card}`}>
         <div className={`card-body p-0 position-relative ${styles.body}`}>
           <div className="d-flex flex-row">
             <div className={`h5 card-title mb-3 mr-3 ${styles.title}`}>
