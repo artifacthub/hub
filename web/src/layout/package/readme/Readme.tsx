@@ -36,10 +36,6 @@ interface BasicProps {
   children: JSX.Element | JSX.Element[];
 }
 
-interface TableRowProps extends BasicProps {
-  columnAlignment: any[];
-}
-
 const AVAILABLE_LANGUAGES = [
   'oneC',
   'abnf',
@@ -332,22 +328,6 @@ const Readme = (props: Props) => {
     </div>
   );
 
-  const TableRow: React.ElementType = (data: TableRowProps) => {
-    // Fix tables with empty cells
-    if (isArray(data.children) && data.columnAlignment.length !== data.children.length) {
-      return (
-        <tr>
-          {data.children}
-          {[...Array(data.columnAlignment.length - data.children.length)].map((e, i) => (
-            <td key={`tr_td_${i}`}></td>
-          ))}
-        </tr>
-      );
-    } else {
-      return <tr>{data.children}</tr>;
-    }
-  };
-
   const Paragraph: React.ElementType = (data: BasicProps) => {
     const isOneChild = data.children && isArray(data.children) && data.children.length === 1;
     if (isUndefined(data.children)) return null;
@@ -383,7 +363,6 @@ const Readme = (props: Props) => {
         imageReference: Image,
         linkReference: Link,
         table: Table,
-        tableRow: TableRow,
         heading: Heading,
         paragraph: Paragraph,
         blockquote: Blockquote,
