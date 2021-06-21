@@ -8,7 +8,12 @@ import alertDispatcher from '../../../../../utils/alertDispatcher';
 import Card from './Card';
 jest.mock('../../../../../api');
 jest.mock('../../../../../utils/alertDispatcher');
-jest.mock('moment', () => () => ({ format: () => '2020/06/18 16:35:39 (+00:00)' }));
+jest.mock('moment', () => ({
+  ...(jest.requireActual('moment') as {}),
+  unix: () => ({
+    format: () => '2020/06/18 16:35:39 (+00:00)',
+  }),
+}));
 
 const APIKeyMock: APIKey = {
   apiKeyId: 'bf28013f-610e-4691-80a2-bd3a673c4b3f',

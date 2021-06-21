@@ -417,7 +417,7 @@ export default function Widget(props: Props) {
                     theme={currentTheme}
                   />
 
-                  <Date>Updated {moment(packageSummary.ts * 1000).fromNow()}</Date>
+                  <Date>Updated {moment.unix(packageSummary.ts).fromNow()}</Date>
                 </ExtraInfo>
 
                 <Description>{packageSummary.description || ''}</Description>

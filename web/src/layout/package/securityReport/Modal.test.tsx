@@ -7,7 +7,13 @@ import { SecurityReport, VulnerabilitySeverity } from '../../../types';
 import SecurityModal from './Modal';
 jest.mock('../../../api');
 
-jest.mock('moment', () => () => ({ fromNow: () => '3 hours ago' }));
+jest.mock('moment', () => ({
+  ...(jest.requireActual('moment') as {}),
+  unix: () => ({
+    isAfter: () => false,
+    fromNow: () => '3 hours ago',
+  }),
+}));
 
 const getMockSecurityReport = (fixtureId: string): SecurityReport => {
   return require(`./__fixtures__/Modal/${fixtureId}.json`) as SecurityReport;
@@ -34,6 +40,7 @@ const defaultProps = {
   packageId: 'pkgID',
   version: '1.1.1',
   visibleSecurityReport: false,
+  hasWhitelistedContainers: false,
 };
 
 describe('SecurityModal', () => {

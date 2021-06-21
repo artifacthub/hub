@@ -15,6 +15,7 @@ import API from '../../api';
 import { Change, ChangeKind, ChangeLog, PackageLink, Repository, RepositoryKind, SearchFiltersURL } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import buildPackageURL from '../../utils/buildPackageURL';
+import isFuture from '../../utils/isFuture';
 import ElementWithTooltip from '../common/ElementWithTooltip';
 import ExternalLink from '../common/ExternalLink';
 import Modal from '../common/Modal';
@@ -199,9 +200,11 @@ const ChangelogModal = (props: Props) => {
                       </div>
                     )}
 
-                    <div className="ml-auto pl-0 pl-md-2 text-nowrap">
-                      <small className="text-muted">Released {moment(item.ts * 1000).fromNow()}</small>
-                    </div>
+                    {!isFuture(item.ts) && (
+                      <div className="ml-auto pl-0 pl-md-2 text-nowrap">
+                        <small className="text-muted">Released {moment.unix(item.ts).fromNow()}</small>
+                      </div>
+                    )}
                   </div>
 
                   <div className={`d-flex flex-column mb-4 ${styles.list}`}>

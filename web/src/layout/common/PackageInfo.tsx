@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { Package, RepositoryKind } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import cutString from '../../utils/cutString';
+import isFuture from '../../utils/isFuture';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import License from '../package/License';
@@ -31,9 +32,13 @@ const PackageInfo = (props: Props) => {
   const history = useHistory();
 
   const pkgTS = (
-    <small className={`text-muted text-nowrap ${styles.date}`}>
-      Updated {moment(props.package.ts * 1000).fromNow()}
-    </small>
+    <>
+      {!isFuture(props.package.ts) && (
+        <small className={`text-muted text-nowrap ${styles.date}`}>
+          Updated {moment.unix(props.package.ts).fromNow()}
+        </small>
+      )}
+    </>
   );
 
   const starsAndKindInfo = (

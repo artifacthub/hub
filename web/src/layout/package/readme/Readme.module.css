@@ -80,6 +80,10 @@
   background-color: var(--color-1-5) !important;
 }
 
+.md table code {
+  white-space: normal;
+}
+
 .md a {
   overflow-wrap: break-word;
 }

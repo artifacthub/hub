@@ -11,7 +11,7 @@ const RepositoryWarningModal = () => {
     <>
       <button
         data-testid="trackingWarningBtn"
-        className="d-inline-block pl-0 pr-1 py-2 btn btn-link"
+        className={`d-inline-block pl-0 pr-1 py-2 btn btn-link ${styles.trackingWarningBtn}`}
         onClick={() => setOpenStatus(true)}
       >
         <small>

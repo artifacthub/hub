@@ -15,29 +15,30 @@
                 We encountered some errors while tracking repository <strong>{{ .Repository.Name }}</strong>.
               </p>
 
-              <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+              <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: {{ if .Repository.LastTrackingErrors }} 15px; {{ else }} 25px; {{ end }}">
                 Some or all of these errors may be just warnings, and it's possible that your packages have been still indexed properly. However, it'd be great if you can take a look at them just in case there is something missing or failing in your repository that may affect how your content is displayed on {{ .Theme.SiteName }}.
               </p>
 
-              <h4 style="color: #921e12; font-family: sans-serif; margin: 0; Margin-bottom: 15px;">Errors log</h4>
-
-              <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="Margin-bottom: 30px; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box; background: #1D1F21; border-radius: 3px;">
-                <tbody>
-                  <tr>
-                    <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding: 16px;">
-                      <code style="overflow-x: auto;">
-                        {{ range $index, $trackingError := .Repository.LastTrackingErrors }}
-                          {{ if $index }}
-                            <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important; border-top: 1px solid #333; padding-top: 15px; font-size: 13px; ">{{ $trackingError }}</p>
-                          {{ else }}
-                            <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important;font-size: 13px;">{{ $trackingError }}</p>
-                          {{end}}
-                        {{ end }}
-                      </code>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              {{ if .Repository.LastTrackingErrors }}
+                <h4 style="color: #921e12; font-family: sans-serif; margin: 0; Margin-bottom: 15px;">Errors log</h4>
+                <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="Margin-bottom: 30px; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box; background: #1D1F21; border-radius: 3px;">
+                  <tbody>
+                    <tr>
+                      <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding: 16px;">
+                        <code style="overflow-x: auto;">
+                          {{ range $index, $trackingError := .Repository.LastTrackingErrors }}
+                            {{ if $index }}
+                              <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important; border-top: 1px solid #333; padding-top: 15px; font-size: 13px; ">{{ $trackingError }}</p>
+                            {{ else }}
+                              <p style="font-family: 'Courier New', Courier, monospace; color: #C5C8C6 !important;font-size: 13px;">{{ $trackingError }}</p>
+                            {{end}}
+                          {{ end }}
+                        </code>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              {{ end }}
 
               <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                 <tbody>

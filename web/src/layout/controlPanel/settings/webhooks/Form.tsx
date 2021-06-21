@@ -773,7 +773,7 @@ const WebhookForm = (props: Props) => {
             </div>
           </div>
 
-          <div className="mt-4 mt-md-5">
+          <div className={`mt-4 mt-md-5 ${styles.btnWrapper}`}>
             <div className="d-flex flex-row justify-content-between">
               <div className="d-flex flex-row align-items-center mr-3">
                 <button

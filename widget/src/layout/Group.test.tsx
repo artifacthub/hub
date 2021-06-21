@@ -7,7 +7,12 @@ import { SearchResults } from '../types';
 import Group from './Group';
 jest.mock('../api');
 
-jest.mock('moment', () => () => ({ fromNow: () => '3 days ago' }));
+jest.mock('moment', () => ({
+  ...(jest.requireActual('moment') as {}),
+  unix: () => ({
+    fromNow: () => '3 hours ago',
+  }),
+}));
 
 const defaultProps = {
   url: 'https://localhost:8000/api/v1/packages/search',

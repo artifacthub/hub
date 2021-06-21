@@ -18,6 +18,10 @@
   font-size: 1rem;
 }
 
+.trackingWarningBtn {
+  min-width: 20px;
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;

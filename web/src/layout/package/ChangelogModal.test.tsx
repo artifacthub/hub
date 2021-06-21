@@ -7,7 +7,13 @@ import { ChangeLog } from '../../types';
 import ChangelogModal from './ChangelogModal';
 jest.mock('../../api');
 
-jest.mock('moment', () => () => ({ fromNow: () => '3 hours ago' }));
+jest.mock('moment', () => ({
+  ...(jest.requireActual('moment') as {}),
+  unix: () => ({
+    isAfter: () => false,
+    fromNow: () => '3 hours ago',
+  }),
+}));
 
 const getMockChangelog = (fixtureId: string): ChangeLog[] => {
   return require(`./__fixtures__/ChangelogModal/${fixtureId}.json`) as ChangeLog[];
@@ -39,6 +45,10 @@ const defaultProps = {
 describe('ChangelogModal', () => {
   afterEach(() => {
     jest.resetAllMocks();
+  });
+
+  beforeEach(() => {
+    jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2019/11/24').getTime());
   });
 
   it('creates snapshot', async () => {

@@ -24,6 +24,7 @@ import {
   SearchFiltersURL,
   Version,
 } from '../../types';
+import isFuture from '../../utils/isFuture';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
@@ -558,9 +559,11 @@ const PackageView = (props: Props) => {
                     <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
 
                     <div className={`position-absolute d-flex flex-row align-items-center ${styles.optsWrapper}`}>
-                      <span className={`d-block d-md-none text-muted text-nowrap ${styles.date}`}>
-                        Updated {moment(detail!.ts * 1000).fromNow()}
-                      </span>
+                      {detail!.ts && !isFuture(detail!.ts) && (
+                        <span className={`d-block d-md-none text-muted text-nowrap ${styles.date}`}>
+                          Updated {moment.unix(detail!.ts).fromNow()}
+                        </span>
+                      )}
                       <StarButton packageId={detail.packageId} />
                       <SubscriptionsButton packageId={detail.packageId} />
                       <MoreActionsButton
