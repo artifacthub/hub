@@ -17,8 +17,8 @@ values (:'user1ID', 'user1', 'user1@email.com');
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into user__organization (user_id, organization_id, confirmed) values(:'user1ID', :'org1ID', true);
-insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
+insert into repository (repository_id, name, display_name, url, digest, repository_kind_id, user_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 'digest', 0, :'user1ID');
 insert into repository (repository_id, name, display_name, url, branch, repository_kind_id, organization_id)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 'main', 0, :'org1ID');
 insert into package (
@@ -114,12 +114,12 @@ select update_repository(:'user1ID', '
 '::jsonb);
 select results_eq(
     $$
-        select name, display_name, url, branch, auth_user, auth_pass, disabled
+        select name, display_name, url, branch, auth_user, auth_pass, disabled, digest
         from repository
         where name = 'repo1'
     $$,
     $$
-        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', 'user1', 'pass1', true)
+        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', 'user1', 'pass1', true, null)
     $$,
     'Repository should have been updated by user who owns it'
 );
