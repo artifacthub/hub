@@ -1000,6 +1000,33 @@ class API_CLASS {
     });
   }
 
+  public registerDeleteUserCode(): Promise<null> {
+    return this.apiFetch({
+      url: `${this.API_BASE_URL}/users/delete-user-code`,
+      opts: {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    });
+  }
+
+  public deleteUser(code: string): Promise<null> {
+    return this.apiFetch({
+      url: `${this.API_BASE_URL}/users`,
+      opts: {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: code,
+        }),
+      },
+    });
+  }
+
   public getAllUserOrganizations(): Promise<Organization[]> {
     return this.getAllItems(`${this.API_BASE_URL}/orgs/user`) as Promise<Organization[]>;
   }

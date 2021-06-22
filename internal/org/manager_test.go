@@ -350,7 +350,7 @@ func TestDelete(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 		assert.Panics(t, func() {
-			_ = m.Add(context.Background(), &hub.Organization{})
+			_ = m.Delete(context.Background(), "org1")
 		})
 	})
 

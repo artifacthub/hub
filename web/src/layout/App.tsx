@@ -67,7 +67,15 @@ export default function App() {
           <UserNotificationsController />
           <Switch>
             <Route
-              path={['/', '/verify-email', '/login', '/accept-invitation', '/oauth-failed', '/reset-password']}
+              path={[
+                '/',
+                '/verify-email',
+                '/login',
+                '/accept-invitation',
+                '/oauth-failed',
+                '/reset-password',
+                '/delete-user',
+              ]}
               exact
               render={({ location }) => (
                 <div className="d-flex flex-column flex-grow-1">
@@ -81,6 +89,9 @@ export default function App() {
                     isSearching={isSearching}
                     emailCode={
                       location.pathname === '/verify-email' ? getQueryParam(location.search, 'code') : undefined
+                    }
+                    deleteCode={
+                      location.pathname === '/delete-user' ? getQueryParam(location.search, 'code') : undefined
                     }
                     resetPwdCode={
                       location.pathname === '/reset-password' ? getQueryParam(location.search, 'code') : undefined

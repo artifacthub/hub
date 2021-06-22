@@ -20,7 +20,7 @@ const defaultProps = {
 };
 
 const mockCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: false },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -78,6 +78,11 @@ describe('User settings index', () => {
 
       expect(getByText('Profile information')).toBeInTheDocument();
       expect(getByText('Change password')).toBeInTheDocument();
+      expect(
+        getByText(
+          'Deleting your account will also delete all the content that belongs to it (repositories, subscriptions, webhooks, etc), as well as all organizations where you are the only member.'
+        )
+      ).toBeInTheDocument();
     });
   });
 

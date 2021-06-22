@@ -14,6 +14,7 @@ import SampleQueries from '../common/SampleQueries';
 import SearchBar from '../common/SearchBar';
 import SearchTipsModal from '../common/SearchTipsModal';
 import UserInvitation from '../controlPanel/members/UserInvitation';
+import AccountDeletion from './AccountDeletion';
 import Counter from './Counter';
 import styles from './HomeView.module.css';
 import RandomPackages from './RandomPackages';
@@ -24,6 +25,7 @@ import UserConfirmation from './UserConfirmation';
 interface Props {
   isSearching: boolean;
   emailCode?: string;
+  deleteCode?: string;
   resetPwdCode?: string;
   orgToConfirm?: string;
   onOauthFailed: boolean;
@@ -335,6 +337,7 @@ const HomeView = (props: Props) => {
       )}
 
       <UserConfirmation emailCode={props.emailCode} />
+      <AccountDeletion code={props.deleteCode} />
       <UserInvitation orgToConfirm={props.orgToConfirm} />
       <ResetPasswordModal code={props.resetPwdCode} />
     </div>

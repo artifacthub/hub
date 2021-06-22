@@ -1,0 +1,64 @@
+{{ define "title" }} Confirm account deletion {{ end }}
+{{ define "content" }}
+<div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
+  <!-- START CENTERED WHITE CONTAINER -->
+    <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Confirm account deletion</span>
+    <table class="main line" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; border-radius: 3px;">
+
+      <!-- START MAIN CONTENT AREA -->
+      <tr>
+        <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
+          <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+            <tr>
+              <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi!</p>
+                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">We got a request to delete your <span class="AHlink" style="font-weight: bold;">{{ .Theme.SiteName }}</span> account. Please click the link below to complete the process.</p>
+                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Please note that this link <span style="font-weight: bold;">will only be valid for 15 minutes</span>. If you haven't completed the process by then, you'll need to start the process from the beginning.</p>
+                <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                  <tbody>
+                    <tr>
+                      <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+                        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
+                          <tbody>
+                            <tr>
+                              <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top; text-align: center;"> <a href="{{ .Link }}" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize;">Delete account</a> </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                  <tbody>
+                    <tr>
+                      <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; padding-bottom: 30px; padding-top: 10px;">
+                        <p class="text-muted" style="font-size: 11px; text-decoration: none;">Or you can copy-paste this link: <span class="copy-link">{{ .Link }}</span></p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+    <!-- END MAIN CONTENT AREA -->
+    </table>
+
+    <!-- START FOOTER -->
+    <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+        <tr>
+          <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; text-align: center;">
+            <a href="{{ .BaseURL }}" class="AHlink" style="font-size: 12px; text-align: center; text-decoration: none;">© {{ .Theme.SiteName }}</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- END FOOTER -->
+
+  <!-- END CENTERED WHITE CONTAINER -->
+  </div>
+{{ end }}
