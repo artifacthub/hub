@@ -468,6 +468,57 @@ func TestDeleteSession(t *testing.T) {
 	})
 }
 
+func TestDeleteUser(t *testing.T) {
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	code := "code"
+	codeHashed := hash(code)
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(cfg, nil, nil)
+		assert.Panics(t, func() {
+			_ = m.DeleteUser(context.Background(), code)
+		})
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, deleteUserDBQ, "userID", codeHashed).Return("", tests.ErrFakeDB)
+		m := NewManager(cfg, db, nil)
+
+		err := m.DeleteUser(ctx, code)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error sending account deleted email nofication", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, deleteUserDBQ, "userID", codeHashed).Return("email", nil)
+		es := &email.SenderMock{}
+		es.On("SendEmail", mock.Anything).Return(email.ErrFakeSenderFailure)
+		m := NewManager(cfg, db, es)
+
+		err := m.DeleteUser(ctx, code)
+		assert.Equal(t, email.ErrFakeSenderFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, deleteUserDBQ, "userID", codeHashed).Return("email", nil)
+		es := &email.SenderMock{}
+		es.On("SendEmail", mock.Anything).Return(nil)
+		m := NewManager(cfg, db, es)
+
+		err := m.DeleteUser(ctx, code)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestDisableTFA(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	opts := totp.GenerateOpts{
@@ -534,12 +585,31 @@ func TestDisableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
+	t.Run("error sending tfa enabled email nofication", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
+		db.On("Exec", ctx, disableTFADBQ, "userID").Return(nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
+		es := &email.SenderMock{}
+		es.On("SendEmail", mock.Anything).Return(email.ErrFakeSenderFailure)
+		m := NewManager(cfg, db, es)
+
+		passcode, _ := totp.GenerateCode(key.Secret(), time.Now())
+		err := m.DisableTFA(ctx, passcode)
+		assert.Equal(t, email.ErrFakeSenderFailure, err)
+		db.AssertExpectations(t)
+	})
+
 	t.Run("tfa disabled successfully", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
 		db.On("Exec", ctx, disableTFADBQ, "userID").Return(nil)
-		m := NewManager(cfg, db, nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
+		es := &email.SenderMock{}
+		es.On("SendEmail", mock.Anything).Return(nil)
+		m := NewManager(cfg, db, es)
 
 		passcode, _ := totp.GenerateCode(key.Secret(), time.Now())
 		err := m.DisableTFA(ctx, passcode)
@@ -784,67 +854,55 @@ func TestGetUserID(t *testing.T) {
 	})
 }
 
-func TestRegisterSession(t *testing.T) {
-	ctx := context.Background()
-	userID := "00000000-0000-0000-0000-000000000001"
+func TestRegisterDeleteUserCode(t *testing.T) {
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
-	t.Run("invalid input", func(t *testing.T) {
-		testCases := []struct {
-			errMsg string
-			userID string
-		}{
-			{
-				"user id not provided",
-				"",
-			},
-			{
-				"invalid user id",
-				"invalid",
-			},
-		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.errMsg, func(t *testing.T) {
-				t.Parallel()
-				m := NewManager(cfg, nil, nil)
-				s := &hub.Session{UserID: tc.userID}
-				_, err := m.RegisterSession(ctx, s)
-				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
-				assert.Contains(t, err.Error(), tc.errMsg)
-			})
-		}
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(cfg, nil, nil)
+		assert.Panics(t, func() {
+			_ = m.RegisterDeleteUserCode(context.Background())
+		})
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("database error registering user delete code", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
+		db.On("Exec", ctx, registerDeleteUserCodeDBQ, "userID", mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
-		sIN := &hub.Session{UserID: userID}
-		sOUT, err := m.RegisterSession(ctx, sIN)
+		err := m.RegisterDeleteUserCode(ctx)
 		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, sOUT)
 		db.AssertExpectations(t)
 	})
 
-	t.Run("successful session registration", func(t *testing.T) {
+	t.Run("error sending user delete code email", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return(true, nil)
-		m := NewManager(cfg, db, nil)
+		db.On("Exec", ctx, registerDeleteUserCodeDBQ, "userID", mock.Anything).Return(nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
+		es := &email.SenderMock{}
+		es.On("SendEmail", mock.Anything).Return(email.ErrFakeSenderFailure)
+		m := NewManager(cfg, db, es)
 
-		sIN := &hub.Session{
-			UserID:    userID,
-			IP:        "192.168.1.100",
-			UserAgent: "Safari 13.0.5",
-		}
-		sOUT, err := m.RegisterSession(ctx, sIN)
-		assert.NoError(t, err)
-		assert.NotEmpty(t, sOUT.SessionID)
-		assert.Equal(t, userID, sOUT.UserID)
-		assert.True(t, sOUT.Approved)
+		err := m.RegisterDeleteUserCode(ctx)
+		assert.Equal(t, email.ErrFakeSenderFailure, err)
 		db.AssertExpectations(t)
+	})
+
+	t.Run("successful user delete code registration", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, registerDeleteUserCodeDBQ, "userID", mock.Anything).Return(nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
+		es := &email.SenderMock{}
+		es.On("SendEmail", mock.Anything).Return(nil)
+		m := NewManager(cfg, db, es)
+
+		err := m.RegisterDeleteUserCode(ctx)
+		assert.Nil(t, err)
+		db.AssertExpectations(t)
+		es.AssertExpectations(t)
 	})
 }
 
@@ -915,6 +973,70 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 
 		err := m.RegisterPasswordResetCode(ctx, "email@email.com")
 		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestRegisterSession(t *testing.T) {
+	ctx := context.Background()
+	userID := "00000000-0000-0000-0000-000000000001"
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			userID string
+		}{
+			{
+				"user id not provided",
+				"",
+			},
+			{
+				"invalid user id",
+				"invalid",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				m := NewManager(cfg, nil, nil)
+				s := &hub.Session{UserID: tc.userID}
+				_, err := m.RegisterSession(ctx, s)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
+		m := NewManager(cfg, db, nil)
+
+		sIN := &hub.Session{UserID: userID}
+		sOUT, err := m.RegisterSession(ctx, sIN)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, sOUT)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("successful session registration", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return(true, nil)
+		m := NewManager(cfg, db, nil)
+
+		sIN := &hub.Session{
+			UserID:    userID,
+			IP:        "192.168.1.100",
+			UserAgent: "Safari 13.0.5",
+		}
+		sOUT, err := m.RegisterSession(ctx, sIN)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, sOUT.SessionID)
+		assert.Equal(t, userID, sOUT.UserID)
+		assert.True(t, sOUT.Approved)
 		db.AssertExpectations(t)
 	})
 }

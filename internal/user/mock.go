@@ -53,6 +53,12 @@ func (m *ManagerMock) DeleteSession(ctx context.Context, sessionID string) error
 	return args.Error(0)
 }
 
+// DeleteUser implements the UserManager interface.
+func (m *ManagerMock) DeleteUser(ctx context.Context, code string) error {
+	args := m.Called(ctx, code)
+	return args.Error(0)
+}
+
 // DisableTFA implements the UserManager interface.
 func (m *ManagerMock) DisableTFA(ctx context.Context, passcode string) error {
 	args := m.Called(ctx, passcode)
@@ -83,6 +89,12 @@ func (m *ManagerMock) GetProfileJSON(ctx context.Context) ([]byte, error) {
 func (m *ManagerMock) GetUserID(ctx context.Context, email string) (string, error) {
 	args := m.Called(ctx)
 	return args.String(0), args.Error(1)
+}
+
+// RegisterDeleteUserCode implements the UserManager interface.
+func (m *ManagerMock) RegisterDeleteUserCode(ctx context.Context) error {
+	args := m.Called(ctx)
+	return args.Error(0)
 }
 
 // RegisterPasswordResetCode implements the UserManager interface.

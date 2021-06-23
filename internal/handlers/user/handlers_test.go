@@ -326,6 +326,78 @@ func TestCheckAvailability(t *testing.T) {
 	})
 }
 
+func TestDeleteUser(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`code`)
+		r, _ := http.NewRequest("DELETE", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.h.DeleteUser(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("delete user failed (invalid code)", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"code": "invalid"}`)
+		r, _ := http.NewRequest("DELETE", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("DeleteUser", r.Context(), "invalid").Return(user.ErrInvalidDeleteUserCode)
+		hw.h.DeleteUser(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("delete user failed (db error)", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"code": "code"}`)
+		r, _ := http.NewRequest("DELETE", "/", body)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("DeleteUser", r.Context(), "code").Return(tests.ErrFakeDB)
+		hw.h.DeleteUser(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("delete user succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"code": "code"}`)
+		r, _ := http.NewRequest("DELETE", "/", body)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("DeleteUser", r.Context(), "code").Return(nil)
+		hw.h.DeleteUser(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		require.Len(t, resp.Cookies(), 1)
+		cookie := resp.Cookies()[0]
+		assert.Equal(t, sessionCookieName, cookie.Name)
+		assert.Equal(t, "/", cookie.Path)
+		assert.True(t, cookie.Expires.Before(time.Now().Add(-24*time.Hour)))
+		hw.um.AssertExpectations(t)
+	})
+}
+
 func TestDisableTFA(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -936,6 +1008,40 @@ func TestOauthRedirect(t *testing.T) {
 	assert.Equal(t, expectedRedirectURL, redirectURL.String())
 }
 
+func TestRegisterDeleteUserCode(t *testing.T) {
+	t.Run("register delete user code failed", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader(""))
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("RegisterDeleteUserCode", r.Context()).Return(tests.ErrFakeDB)
+		hw.h.RegisterDeleteUserCode(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("register delete user code succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader(""))
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("RegisterDeleteUserCode", r.Context()).Return(nil)
+		hw.h.RegisterDeleteUserCode(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusCreated, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+}
+
 func TestRegisterPasswordResetCode(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
@@ -975,7 +1081,7 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
-		hw.um.On("RegisterPasswordResetCode", r.Context(), "email").Return(tests.ErrFakeDB)
+		hw.um.On("RegisterPasswordResetCode", r.Context(), "email").Return(nil)
 		hw.h.RegisterPasswordResetCode(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

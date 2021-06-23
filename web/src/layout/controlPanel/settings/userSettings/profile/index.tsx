@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
 import { ErrorKind, Profile } from '../../../../../types';
+import DeleteAccount from './DeleteAccount';
 import styles from './ProfileSection.module.css';
 import TwoFactorAuth from './twoFactorAuth';
 import UpdatePassword from './UpdatePassword';
@@ -54,7 +55,7 @@ const ProfileSection = (props: Props) => {
                 </div>
               </div>
 
-              <div>
+              <div className="mb-5">
                 <div className={`h3 mb-4 pb-2 border-bottom ${styles.title}`}>Two-factor authentication</div>
 
                 <div className="mt-4 mt-md-5">
@@ -69,6 +70,9 @@ const ProfileSection = (props: Props) => {
           )}
         </>
       )}
+
+      <div className={`h3 mb-4 pb-2 border-bottom ${styles.title}`}>Delete account</div>
+      <DeleteAccount onAuthError={props.onAuthError} />
     </main>
   );
 };

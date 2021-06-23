@@ -231,6 +231,37 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+// DeleteUser is an http handler used to delete the account of the user doing
+// the request.
+func (h *Handlers) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	// Delete user
+	var input map[string]string
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil || input["code"] == "" {
+		h.logger.Error().Err(err).Str("method", "DeleteUser").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	if err := h.userManager.DeleteUser(r.Context(), input["code"]); err != nil {
+		h.logger.Error().Err(err).Str("method", "DeleteUser").Send()
+		if errors.Is(err, user.ErrInvalidDeleteUserCode) {
+			helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
+		} else {
+			helpers.RenderErrorJSON(w, err)
+		}
+		return
+	}
+
+	// Request browser to delete session cookie
+	cookie := &http.Cookie{
+		Name:    sessionCookieName,
+		Path:    "/",
+		Expires: time.Now().Add(-24 * time.Hour),
+	}
+	http.SetCookie(w, cookie)
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // DisableTFA is an http handler used to disable two-factor authentication.
 func (h *Handlers) DisableTFA(w http.ResponseWriter, r *http.Request) {
 	var input map[string]string
@@ -515,6 +546,18 @@ func (h *Handlers) OauthRedirect(w http.ResponseWriter, r *http.Request) {
 	}
 	authCodeURL := providerConfig.AuthCodeURL(state.String())
 	http.Redirect(w, r, authCodeURL, http.StatusSeeOther)
+}
+
+// RegisterDeleteUserCode is an http handler used to register a code to
+// delete a user accouint. The code will be emailed to the address provided.
+func (h *Handlers) RegisterDeleteUserCode(w http.ResponseWriter, r *http.Request) {
+	err := h.userManager.RegisterDeleteUserCode(r.Context())
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "RegisterDeleteUserCode").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
 }
 
 // RegisterPasswordResetCode is an http handler used to register a code to

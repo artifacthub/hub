@@ -33,6 +33,7 @@ const (
 	checkUserAliasAvailDBQ       = `select check_user_alias_availability($1::text)`
 	checkUserCredsDBQ            = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true`
 	deleteSessionDBQ             = `delete from session where session_id = $1`
+	deleteUserDBQ                = `select delete_user($1::uuid, $2::text)`
 	disableTFADBQ                = `update "user" set tfa_enabled = false, tfa_url = null, tfa_recovery_codes = null where user_id = $1 and tfa_enabled = true`
 	enableTFADBQ                 = `update "user" set tfa_enabled = true where user_id = $1`
 	getSessionDBQ                = `select user_id, floor(extract(epoch from created_at)), approved from session where session_id = $1`
@@ -45,6 +46,7 @@ const (
 	registerPasswordResetCodeDBQ = `select register_password_reset_code($1::text, $2::text)`
 	registerSessionDBQ           = `select register_session($1::jsonb)`
 	registerUserDBQ              = `select register_user($1::jsonb)`
+	registerDeleteUserCodeDBQ    = `select register_delete_user_code($1::uuid, $2::text)`
 	resetUserPasswordDBQ         = `select reset_user_password($1::text, $2::text)`
 	updateTFAInfoDBQ             = `update "user" set tfa_url = $2, tfa_recovery_codes = $3 where user_id = $1`
 	updateUserPasswordDBQ        = `select update_user_password($1::uuid, $2::text, $3::text)`
@@ -64,14 +66,19 @@ const (
 type templateID int
 
 const (
-	passwordResetEmail templateID = iota
+	confirmUserDeletionEmail templateID = iota
+	passwordResetEmail
 	passwordResetSuccessEmail
 	tfaDisabledEmail
 	tfaEnabledEmail
+	userDeletedEmail
 	verificationEmail
 )
 
 var (
+	//go:embed template/confirm_user_deletion_email.tmpl
+	confirmUserDeletionEmailTmpl string
+
 	//go:embed template/password_reset_email.tmpl
 	passwordResetEmailTmpl string
 
@@ -84,17 +91,28 @@ var (
 	//go:embed template/tfa_enabled_email.tmpl
 	tfaEnabledEmailTmpl string
 
+	//go:embed template/user_deleted_email.tmpl
+	userDeletedEmailTmpl string
+
 	//go:embed template/verification_email.tmpl
 	verificationEmailTmpl string
 )
 
 var (
+	// ErrInvalidDeleteUserCode indicates that the delete user code provided is
+	// not valid.
+	ErrInvalidDeleteUserCode = errors.New("invalid delete user code")
+
 	// ErrInvalidPassword indicates that the password provided is not valid.
 	ErrInvalidPassword = errors.New("invalid password")
 
 	// ErrInvalidPasswordResetCode indicates that the password reset code
 	// provided is not valid.
 	ErrInvalidPasswordResetCode = errors.New("invalid password reset code")
+
+	// errInvalidDeleteUserCodeDB represents the error returned from the
+	// database when the delete user code is not valid.
+	errInvalidDeleteUserCodeDB = errors.New("ERROR: invalid delete user code (SQLSTATE P0001)")
 
 	// errInvalidPasswordResetCodeDB represents the error returned from the
 	// database when the password reset code is not valid.
@@ -123,10 +141,12 @@ func NewManager(cfg *viper.Viper, db hub.DB, es hub.EmailSender) *Manager {
 		db:  db,
 		es:  es,
 		tmpl: map[templateID]*template.Template{
+			confirmUserDeletionEmail:  template.Must(template.New("").Parse(email.BaseTmpl + confirmUserDeletionEmailTmpl)),
 			passwordResetEmail:        template.Must(template.New("").Parse(email.BaseTmpl + passwordResetEmailTmpl)),
 			passwordResetSuccessEmail: template.Must(template.New("").Parse(email.BaseTmpl + passwordResetSuccessEmailTmpl)),
 			tfaDisabledEmail:          template.Must(template.New("").Parse(email.BaseTmpl + tfaDisabledEmailTmpl)),
 			tfaEnabledEmail:           template.Must(template.New("").Parse(email.BaseTmpl + tfaEnabledEmailTmpl)),
+			userDeletedEmail:          template.Must(template.New("").Parse(email.BaseTmpl + userDeletedEmailTmpl)),
 			verificationEmail:         template.Must(template.New("").Parse(email.BaseTmpl + verificationEmailTmpl)),
 		},
 	}
@@ -300,6 +320,39 @@ func (m *Manager) DeleteSession(ctx context.Context, sessionID string) error {
 	return err
 }
 
+// DeleteUser deletes a user account from the database. The confirmation code
+// received by the user via email is expected to be provided.
+func (m *Manager) DeleteUser(ctx context.Context, code string) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Delete user from database
+	var userEmail string
+	if err := m.db.QueryRow(ctx, deleteUserDBQ, userID, hash(code)).Scan(&userEmail); err != nil {
+		if err.Error() == errInvalidDeleteUserCodeDB.Error() {
+			return ErrInvalidDeleteUserCode
+		}
+		return err
+	}
+
+	// Notify user by email that the account has been deleted
+	if m.es != nil {
+		var emailBody bytes.Buffer
+		if err := m.tmpl[userDeletedEmail].Execute(&emailBody, baseTemplateData(m.cfg)); err != nil {
+			return err
+		}
+		emailData := &email.Data{
+			To:      userEmail,
+			Subject: "Your account has been deleted",
+			Body:    emailBody.Bytes(),
+		}
+		if err := m.es.SendEmail(emailData); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 // DisableTFA disables two-factor authentication for the requesting user.
 func (m *Manager) DisableTFA(ctx context.Context, passcode string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
@@ -446,9 +499,51 @@ func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
 	return userID, nil
 }
 
+// RegisterDeleteUserCode registers a code that allows the user doing the
+// request to initiate the process to delete his account. A link containing the
+// code will be emailed to the user.
+func (m *Manager) RegisterDeleteUserCode(ctx context.Context) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Register delete user code in database
+	randomBytes := make([]byte, 32)
+	if _, err := rand.Read(randomBytes); err != nil {
+		return err
+	}
+	code := base64.URLEncoding.EncodeToString(randomBytes)
+	_, err := m.db.Exec(ctx, registerDeleteUserCodeDBQ, userID, hash(code))
+	if err != nil {
+		return err
+	}
+
+	// Send account deletion confirmation email
+	if m.es != nil {
+		var userEmail string
+		if err := m.db.QueryRow(ctx, getUserEmailDBQ, userID).Scan(&userEmail); err != nil {
+			return err
+		}
+		templateData := baseTemplateData(m.cfg)
+		templateData["Link"] = fmt.Sprintf("%s/delete-user?code=%s", templateData["BaseURL"], code)
+		var emailBody bytes.Buffer
+		if err := m.tmpl[confirmUserDeletionEmail].Execute(&emailBody, templateData); err != nil {
+			return err
+		}
+		emailData := &email.Data{
+			To:      userEmail,
+			Subject: "Confirm account deletion",
+			Body:    emailBody.Bytes(),
+		}
+		if err := m.es.SendEmail(emailData); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 // RegisterPasswordResetCode registers a code that allows the user identified
 // by the email provided to reset the password. A link containing the code will
-// be email to the user to initiate the password reset process.
+// be emailed to the user to initiate the password reset process.
 func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail string) error {
 	// Validate input
 	if userEmail == "" {

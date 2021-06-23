@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(140);
+select plan(144);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -15,6 +15,7 @@ select has_extension('pgcrypto');
 -- Check expected tables exist
 select tables_are(array[
     'api_key',
+    'delete_user_code',
     'email_verification_code',
     'event',
     'event_kind',
@@ -47,6 +48,11 @@ select columns_are('api_key', array[
     'api_key_id',
     'name',
     'secret',
+    'user_id',
+    'created_at'
+]);
+select columns_are('delete_user_code', array[
+    'delete_user_code_id',
     'user_id',
     'created_at'
 ]);
@@ -268,6 +274,10 @@ select columns_are('webhook__package', array[
 select indexes_are('api_key', array[
     'api_key_pkey'
 ]);
+select indexes_are('delete_user_code', array[
+    'delete_user_code_pkey',
+    'delete_user_code_user_id_key'
+]);
 select indexes_are('email_verification_code', array[
     'email_verification_code_pkey',
     'email_verification_code_user_id_key'
@@ -441,8 +451,10 @@ select has_function('get_user_subscriptions');
 -- Users
 select has_function('approve_session');
 select has_function('check_user_alias_availability');
+select has_function('delete_user');
 select has_function('get_user_profile');
 select has_function('get_user_tfa_config');
+select has_function('register_delete_user_code');
 select has_function('register_password_reset_code');
 select has_function('register_session');
 select has_function('register_user');
