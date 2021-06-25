@@ -165,6 +165,67 @@ describe('DeleteAccount', () => {
         ).toBeInTheDocument();
       });
 
+      it('clean modal after success', async () => {
+        mocked(API).registerDeleteUserCode.mockResolvedValue(null);
+
+        render(
+          <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+            <DeleteAccount {...defaultProps} />
+          </AppCtx.Provider>
+        );
+
+        const modal = screen.getByRole('dialog');
+        expect(modal).not.toHaveClass('d-block');
+
+        const btn = screen.getByTestId('deleteModalAccountBtn');
+        userEvent.click(btn);
+
+        await waitFor(() => {
+          expect(modal).toHaveClass('d-block');
+        });
+
+        const txt = screen.getByTestId('confirmationText');
+        expect(txt).toHaveTextContent('Please type test to confirm:');
+
+        const deleteBtn = screen.getByTestId('deleteAccountBtn');
+        expect(deleteBtn).toBeDisabled();
+
+        const input = screen.getByTestId('aliasInput');
+        userEvent.type(input, 'test');
+
+        await waitFor(() => {
+          expect(deleteBtn).toBeEnabled();
+        });
+        userEvent.click(deleteBtn);
+
+        expect(screen.getByText('Deleting...')).toBeInTheDocument();
+
+        await waitFor(() => {
+          expect(API.registerDeleteUserCode).toHaveBeenCalledTimes(1);
+        });
+
+        expect(screen.queryByTestId('deleteAccountBtn')).toBeNull();
+        expect(screen.getByText("We've just sent you a confirmation email")).toBeInTheDocument();
+        expect(screen.getByText('is only valid for 15 minures')).toBeInTheDocument();
+        expect(
+          screen.getByText(
+            'Please click on the link that has just been sent to your email account to delete your account and complete the process.'
+          )
+        ).toBeInTheDocument();
+        expect(
+          screen.getByText(
+            /If you haven't clicked the link by then you'll need to start the process from the beginning/g
+          )
+        ).toBeInTheDocument();
+
+        userEvent.click(screen.getByText('Close'));
+
+        userEvent.click(btn);
+
+        expect(screen.getByRole('dialog')).toHaveClass('d-block');
+        expect(screen.getByTestId('deleteAccountBtn')).toBeInTheDocument();
+      });
+
       describe('on error', () => {
         it('displays error', async () => {
           mocked(API).registerDeleteUserCode.mockRejectedValue({
