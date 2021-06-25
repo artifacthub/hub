@@ -26,6 +26,12 @@ const DeleteAccount = (props: Props) => {
     setIsValidInput(e.target.value === ctx.user!.alias);
   };
 
+  const onClose = () => {
+    setOpenStatus(false);
+    setDeleteSuccess(false);
+    setIsValidInput(false);
+  };
+
   async function registerDeleteUserCode() {
     try {
       setIsDeleting(true);
@@ -111,7 +117,7 @@ const DeleteAccount = (props: Props) => {
           )
         }
         header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Delete account</div>}
-        onClose={() => setOpenStatus(false)}
+        onClose={onClose}
         open={openStatus}
       >
         <div className="mw-100 h-100">
