@@ -1,22 +1,51 @@
 import classNames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FaKey } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 
-import { HelmChartSignKey, RepositoryKind } from '../../types';
+import { HelmChartSignKey, RepositoryKind, SearchFiltersURL } from '../../types';
 import ElementWithTooltip from '../common/ElementWithTooltip';
 import Modal from '../common/Modal';
 import CommandBlock from './installation/CommandBlock';
 import styles from './SignKeyInfo.module.css';
 
 interface Props {
+  visibleKeyInfo: boolean;
   signed: boolean | null;
   repoKind: RepositoryKind;
   signKey?: HelmChartSignKey;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const SignKeyInfo = (props: Props) => {
+  const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
+
+  const onClose = () => {
+    setOpenStatus(false);
+    history.replace({
+      search: '',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
+  };
+
+  const onOpen = useCallback(() => {
+    if (props.signed && props.repoKind === RepositoryKind.Helm) {
+      setOpenStatus(true);
+      history.replace({
+        search: '?modal=key-info',
+        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+      });
+    }
+  }, [history, props.fromStarredPage, props.repoKind, props.searchUrlReferer, props.signed]);
+
+  useEffect(() => {
+    if (props.visibleKeyInfo && !openStatus) {
+      onOpen();
+    }
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (isNull(props.signed) || !props.signed || props.repoKind !== RepositoryKind.Helm) return null;
 
@@ -29,7 +58,7 @@ const SignKeyInfo = (props: Props) => {
             className={classNames('btn btn-outline-secondary btn-sm ml-2', styles.btn, {
               disabled: isUndefined(props.signKey),
             })}
-            onClick={() => setOpenStatus(true)}
+            onClick={onOpen}
             aria-label="Open modal"
             aria-disabled={isUndefined(props.signKey)}
           >
@@ -49,7 +78,7 @@ const SignKeyInfo = (props: Props) => {
         <Modal
           modalDialogClassName={styles.modalDialog}
           header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Sign key information</div>}
-          onClose={() => setOpenStatus(false)}
+          onClose={onClose}
           open={openStatus}
         >
           <div className="mx-0 mx-md-3 my-1 mw-100">

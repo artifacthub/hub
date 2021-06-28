@@ -289,7 +289,14 @@ const PackageView = (props: Props) => {
         className={`d-inline ${extraStyle}`}
       />
       <div className="d-none d-lg-inline">
-        <SignKeyInfo repoKind={detail!.repository.kind} signed={detail!.signed} signKey={detail!.signKey} />
+        <SignKeyInfo
+          visibleKeyInfo={!isUndefined(props.visibleModal) && props.visibleModal === 'key-info'}
+          repoKind={detail!.repository.kind}
+          signed={detail!.signed}
+          signKey={detail!.signKey}
+          searchUrlReferer={props.searchUrlReferer}
+          fromStarredPage={props.fromStarredPage}
+        />
       </div>
     </>
   );
