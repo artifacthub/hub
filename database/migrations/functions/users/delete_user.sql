@@ -16,7 +16,7 @@ begin
     -- Get user's email
     select email from "user" into v_email where user_id = p_user_id;
 
-    -- Delete organizations where the deleted user is the only member
+    -- Delete organizations where the user to be deleted is the only member
     delete from organization where organization_id in (
         select organization_id
         from user__organization
@@ -25,6 +25,11 @@ begin
         )
         group by organization_id
         having count(*) = 1
+    );
+
+    -- Update stars count in packages starred by the user to be deleted
+    update package p set stars = stars - 1 where package_id in (
+        select package_id from user_starred_package where user_id = p_user_id
     );
 
     -- Delete user

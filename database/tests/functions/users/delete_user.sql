@@ -1,18 +1,24 @@
 -- Start transaction and plan tests
 begin;
-select plan(8);
+select plan(11);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
 \set user2ID '00000000-0000-0000-0000-000000000002'
+\set user3ID '00000000-0000-0000-0000-000000000003'
 \set org1ID '00000000-0000-0000-0000-000000000001'
 \set org2ID '00000000-0000-0000-0000-000000000002'
 \set code1ID 'code1'
 \set code2ID 'code2'
+\set repo1ID '00000000-0000-0000-0000-000000000001'
+\set package1ID '00000000-0000-0000-0000-000000000001'
+\set package2ID '00000000-0000-0000-0000-000000000002'
+\set package3ID '00000000-0000-0000-0000-000000000003'
 
 -- Seed some data
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 insert into "user" (user_id, alias, email) values (:'user2ID', 'user2', 'user2@email.com');
+insert into "user" (user_id, alias, email) values (:'user3ID', 'user3', 'user3@email.com');
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into organization (organization_id, name, display_name, description, home_url)
@@ -24,6 +30,54 @@ values (:'code2ID', :'user2ID', current_timestamp - '30 minute'::interval);
 insert into user__organization (user_id, organization_id, confirmed) values(:'user1ID', :'org1ID', true);
 insert into user__organization (user_id, organization_id, confirmed) values(:'user2ID', :'org1ID', true);
 insert into user__organization (user_id, organization_id, confirmed) values(:'user1ID', :'org2ID', true);
+insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user2ID');
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    stars,
+    repository_id
+) values (
+    :'package1ID',
+    'Package 1',
+    '1.0.0',
+    3,
+    :'repo1ID'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    stars,
+    repository_id
+) values (
+    :'package2ID',
+    'Package 2',
+    '1.0.0',
+    2,
+    :'repo1ID'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    stars,
+    repository_id
+) values (
+    :'package3ID',
+    'Package 3',
+    '1.0.0',
+    2,
+    :'repo1ID'
+);
+insert into user_starred_package(user_id, package_id) values (:'user1ID', :'package1ID');
+insert into user_starred_package(user_id, package_id) values (:'user2ID', :'package1ID');
+insert into user_starred_package(user_id, package_id) values (:'user3ID', :'package1ID');
+insert into user_starred_package(user_id, package_id) values (:'user1ID', :'package2ID');
+insert into user_starred_package(user_id, package_id) values (:'user2ID', :'package2ID');
+insert into user_starred_package(user_id, package_id) values (:'user2ID', :'package3ID');
+insert into user_starred_package(user_id, package_id) values (:'user3ID', :'package3ID');
 
 -- Run some tests
 select throws_ok(
@@ -67,6 +121,21 @@ select is(
 )
 from user__organization
 where organization_id = '00000000-0000-0000-0000-000000000001';
+select results_eq(
+    $$ select stars from package where package_id = '00000000-0000-0000-0000-000000000001' $$,
+    $$ values (2::int) $$,
+    'Package 1 should now have 2 stars'
+);
+select results_eq(
+    $$ select stars from package where package_id = '00000000-0000-0000-0000-000000000002' $$,
+    $$ values (1::int) $$,
+    'Package 2 should now have 1 star'
+);
+select results_eq(
+    $$ select stars from package where package_id = '00000000-0000-0000-0000-000000000003' $$,
+    $$ values (2::int) $$,
+    'Package 3 should have 2 stars (not changed)'
+);
 
 -- Finish tests and rollback transaction
 select * from finish();
