@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { MdImage } from 'react-icons/md';
 import { mocked } from 'ts-jest/utils';
@@ -45,12 +46,17 @@ describe('InputFileField', () => {
     expect(queryByTestId('defaultIcon')).toBeNull();
   });
 
-  it('calls input file click to click button', async () => {
+  it('calls saveImage to click saveOriginalBtn button', async () => {
     mocked(API).saveImage.mockResolvedValue({ imageId: '16782' });
     const { getByTestId } = render(<InputFileField {...defaultProps} />);
     const input = getByTestId('inputFile');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
     fireEvent.change(input, { target: { files: [file] } });
+
+    expect(await screen.findByRole('dialog')).toHaveClass('d-block');
+
+    const saveBtn = screen.getByTestId('saveOriginalBtn');
+    userEvent.click(saveBtn);
 
     await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 
@@ -64,6 +70,11 @@ describe('InputFileField', () => {
     const input = getByTestId('inputFile');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
     fireEvent.change(input, { target: { files: [file] } });
+
+    expect(await screen.findByRole('dialog')).toHaveClass('d-block');
+
+    const saveBtn = screen.getByTestId('saveOriginalBtn');
+    userEvent.click(saveBtn);
 
     await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 
@@ -82,6 +93,11 @@ describe('InputFileField', () => {
     const input = getByTestId('inputFile');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
     fireEvent.change(input, { target: { files: [file] } });
+
+    expect(await screen.findByRole('dialog')).toHaveClass('d-block');
+
+    const saveBtn = screen.getByTestId('saveOriginalBtn');
+    userEvent.click(saveBtn);
 
     await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 

@@ -15,13 +15,13 @@
   min-width: 80px;
   border-radius: 50%;
   background-color: var(--white);
-  border: 2px solid var(--color-1-20);
+  border: 2px solid var(--color-1-10);
   box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }
 
 .image {
-  max-width: calc(100% - 8px);
-  max-height: calc(100% - 8px);
+  max-width: calc(100% - 10px);
+  max-height: calc(100% - 10px);
 }
 
 .info {
@@ -165,8 +165,8 @@
   }
 
   .image {
-    max-width: calc(100% - 4px);
-    max-height: calc(100% - 4px);
+    max-width: calc(100% - 6px);
+    max-height: calc(100% - 6px);
   }
 
   .readme {

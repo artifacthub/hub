@@ -96,7 +96,7 @@ const OrganizationInfo = (props: Props) => {
             <div className={styles.content}>
               <div className="d-flex flex-row align-items-center">
                 <div
-                  className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
+                  className={`d-flex align-items-center justify-content-center overflow-hidden mr-2 p-1 position-relative ${styles.imageWrapper} imageWrapper`}
                 >
                   {organization.logoImageId ? (
                     <Image

@@ -6,13 +6,22 @@
   line-height: 1;
   border-radius: 50%;
   background-color: var(--white);
-  border: 2px solid var(--color-1-10);
+  border: 3px solid var(--white);
   box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }
 
 .image {
-  max-width: calc(100% - 8px);
-  max-height: calc(100% - 8px);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.imageAsBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .isLoading {
@@ -26,4 +35,23 @@
 
 .label {
   font-size: 0.875rem;
+}
+
+.cropWrapper {
+  background-color: var(--light-gray);
+  height: calc(100% - 80px);
+}
+
+.canvas {
+  border-radius: 50%;
+}
+
+.imageWrapper {
+  min-width: 60px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--white);
+  border-radius: 50%;
+  border: 3px solid var(--white);
+  box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }

@@ -60,8 +60,8 @@
 }
 
 .image {
-  max-width: calc(100% - 3px);
-  max-height: calc(100% - 3px);
+  max-width: calc(100% - 7px);
+  max-height: calc(100% - 7px);
 }
 
 .dropdownItem {

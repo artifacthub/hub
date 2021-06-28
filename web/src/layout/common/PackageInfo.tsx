@@ -50,7 +50,7 @@ const PackageInfo = (props: Props) => {
 
   const packageImage = (
     <div
-      className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 ${styles.imageWrapper} imageWrapper`}
+      className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 ${styles.imageWrapper} imageWrapper`}
     >
       <Image
         imageId={props.package.logoImageId}

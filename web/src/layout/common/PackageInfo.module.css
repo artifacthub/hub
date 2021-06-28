@@ -9,8 +9,8 @@
 }
 
 .image {
-  max-width: calc(100% - 8px);
-  max-height: calc(100% - 8px);
+  max-width: calc(100% - 10px);
+  max-height: calc(100% - 10px);
 }
 
 .icon {
@@ -129,8 +129,8 @@
   }
 
   .image {
-    max-width: calc(100% - 4px);
-    max-height: calc(100% - 4px);
+    max-width: calc(100% - 9px);
+    max-height: calc(100% - 9px);
   }
 }
 
