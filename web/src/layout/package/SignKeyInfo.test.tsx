@@ -12,7 +12,17 @@ const defaultProps = {
     url: 'https://key.url',
   },
   repoKind: RepositoryKind.Helm,
+  visibleKeyInfo: false,
 };
+
+const mockHistoryReplace = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as {}),
+  useHistory: () => ({
+    replace: mockHistoryReplace,
+  }),
+}));
 
 describe('SignKeyInfo', () => {
   afterEach(() => {
@@ -36,6 +46,15 @@ describe('SignKeyInfo', () => {
       const btn = screen.getByText('View key info');
       userEvent.click(btn);
 
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({
+        search: '?modal=key-info',
+        state: {
+          fromStarredPage: undefined,
+          searchUrlReferer: undefined,
+        },
+      });
+
       expect(screen.getByText('Sign key information'));
       expect(screen.getByText('Fingerprint')).toBeInTheDocument();
       expect(screen.getByText('0011223344')).toBeInTheDocument();
@@ -44,11 +63,16 @@ describe('SignKeyInfo', () => {
       expect(screen.getByText('Close')).toBeInTheDocument();
       expect(screen.getAllByTestId('ctcBtn')).toHaveLength(2);
     });
+
+    it('opens modal when visibleKeyInfo is true', () => {
+      render(<SignKeyInfo {...defaultProps} visibleKeyInfo />);
+      expect(screen.getByRole('dialog')).toHaveClass('d-block');
+    });
   });
 
   describe('renders disabled button', () => {
     it('when signed is true and signKey is undefined', async () => {
-      render(<SignKeyInfo signed repoKind={RepositoryKind.Helm} />);
+      render(<SignKeyInfo signed repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />);
 
       const btn = screen.getByTestId('signKeyBtn');
       expect(btn).toHaveClass('disabled');
@@ -62,17 +86,21 @@ describe('SignKeyInfo', () => {
 
   describe('does not render button', () => {
     it('when signed is null', () => {
-      const { container } = render(<SignKeyInfo signed={null} repoKind={RepositoryKind.Helm} />);
+      const { container } = render(<SignKeyInfo signed={null} repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />);
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when signed is false', () => {
-      const { container } = render(<SignKeyInfo signed={false} repoKind={RepositoryKind.Helm} />);
+      const { container } = render(
+        <SignKeyInfo signed={false} repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />
+      );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when repoKind is not Helm', () => {
-      const { container } = render(<SignKeyInfo {...defaultProps} repoKind={RepositoryKind.OLM} />);
+      const { container } = render(
+        <SignKeyInfo {...defaultProps} repoKind={RepositoryKind.OLM} visibleKeyInfo={false} />
+      );
       expect(container).toBeEmptyDOMElement();
     });
   });
