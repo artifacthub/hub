@@ -98,7 +98,7 @@ const OrganizationCard = (props: Props) => {
           <div className="d-flex flex-row w-100 justify-content-between align-items-start">
             <div className="d-flex flex-row align-items-center w-100">
               <div
-                className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
+                className={`d-flex align-items-center justify-content-center overflow-hidden p-1 mr-2 position-relative ${styles.imageWrapper} imageWrapper`}
               >
                 {!isUndefined(props.organization.logoImageId) ? (
                   <Image

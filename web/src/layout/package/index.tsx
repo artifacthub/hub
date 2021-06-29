@@ -483,7 +483,7 @@ const PackageView = (props: Props) => {
                     <div className="d-flex align-items-start w-100 mb-3">
                       <div className="d-flex align-items-center flex-grow-1 mw-100">
                         <div
-                          className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                          className={`d-flex align-items-center justify-content-center p-1 p-md-2 overflow-hidden ${styles.imageWrapper} imageWrapper`}
                         >
                           <Image
                             className={styles.image}

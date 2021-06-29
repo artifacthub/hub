@@ -198,7 +198,7 @@ const PackagesSection = (props: Props) => {
                             <td className="align-middle">
                               <div className="d-flex flex-row align-items-center">
                                 <div
-                                  className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                                  className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper} imageWrapper`}
                                 >
                                   <Image
                                     alt={item.displayName || item.name}

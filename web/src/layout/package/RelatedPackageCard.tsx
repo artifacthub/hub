@@ -38,7 +38,7 @@ const RelatedPackageCard = (props: Props) => {
         <div className={`card-body d-flex flex-column ${styles.body}`}>
           <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
             <div
-              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
+              className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper} imageWrapper`}
             >
               <Image
                 imageId={props.logoImageId}

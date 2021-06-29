@@ -1,6 +1,7 @@
+import classnames from 'classnames';
 import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { RepositoryKind } from '../../types';
 import getHubBaseURL from '../../utils/getHubBaseURL';
@@ -9,6 +10,7 @@ interface Props {
   imageId?: string | null;
   alt: string;
   className?: string;
+  classNameForSquare?: string;
   placeholderIcon?: JSX.Element;
   kind?: RepositoryKind;
 }
@@ -16,7 +18,9 @@ interface Props {
 const PLACEHOLDER_SRC = '/static/media/package_placeholder.svg';
 
 const Image = (props: Props) => {
+  const image = useRef<HTMLImageElement | null>(null);
   const [error, setError] = useState(false);
+  const [isSquare, setIsSquare] = useState<boolean | undefined>();
 
   const getSrc = () => {
     return `${getHubBaseURL()}/image/${props.imageId}`;
@@ -52,6 +56,12 @@ const Image = (props: Props) => {
     }
   };
 
+  const onLoad = () => {
+    if (!isNull(image) && image.current) {
+      setIsSquare(image.current.width === image.current.height);
+    }
+  };
+
   return (
     <>
       {error || isNull(props.imageId) || isUndefined(props.imageId) ? (
@@ -64,11 +74,16 @@ const Image = (props: Props) => {
         </>
       ) : (
         <img
+          ref={image}
           alt={props.alt}
           srcSet={`${getSrc()}@1x 1x, ${getSrc()}@2x 2x, ${getSrc()}@3x 3x, ${getSrc()}@4x 4x`}
           src={getSrc()}
-          className={props.className}
+          className={classnames(props.className, {
+            [props.classNameForSquare as string]:
+              !isUndefined(props.classNameForSquare) && !isUndefined(isSquare) && isSquare,
+          })}
           onError={() => setError(true)}
+          onLoad={onLoad}
           aria-hidden="true"
         />
       )}

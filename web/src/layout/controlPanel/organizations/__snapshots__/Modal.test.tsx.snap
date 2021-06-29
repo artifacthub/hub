@@ -77,7 +77,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Add image"
-                        class="btn p-0 overflow-hidden btn"
+                        class="btn p-0 overflow-hidden position-relative btn"
                         data-testid="inputFileBtn"
                         type="button"
                       >
