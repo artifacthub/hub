@@ -3,7 +3,7 @@
 exports[`MoreActionsButton creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-none d-md-block position-relative ml-2"
+    class="d-none d-md-block position-relative ml-3"
   >
     <button
       aria-expanded="false"

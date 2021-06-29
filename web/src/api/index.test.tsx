@@ -212,7 +212,7 @@ describe('API', () => {
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(
-          '/api/v1/packages/search?kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database&facets=true&limit=20&offset=0'
+          '/api/v1/packages/search?kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database&facets=true&sort=relevance&limit=20&offset=0'
         );
         expect(response).toEqual(API.toCamelCase(search));
       });
@@ -242,7 +242,7 @@ describe('API', () => {
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(
-          '/api/v1/packages/search?kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database&ts_query=%28integration+%7C+delivery%29+%7C+%28streaming+%7C+messaging%29&facets=true&limit=20&offset=0'
+          '/api/v1/packages/search?kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database&ts_query=%28integration+%7C+delivery%29+%7C+%28streaming+%7C+messaging%29&facets=true&sort=relevance&limit=20&offset=0'
         );
         expect(response).toEqual(API.toCamelCase(search));
       });

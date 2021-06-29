@@ -13,6 +13,7 @@ declare
     v_tsquery_web tsquery := websearch_to_tsquery(p_input->>'ts_query_web');
     v_tsquery_web_with_prefix_matching tsquery;
     v_tsquery tsquery := to_tsquery(p_input->>'ts_query');
+    v_sort text := coalesce(p_input->>'sort', 'relevance');
 begin
     -- Prepare filters for later use
     select array_agg(e::int) into v_repository_kinds
@@ -174,21 +175,23 @@ begin
                     )
                 )), '[]')
                 from (
-                    select
-                        paaf.*,
-                        (case when v_tsquery_web is not null then
-                            trunc(ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1)::numeric, 2) +
-                            trunc(ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)::numeric, 2)
-                        else 1 end) as rank,
-                        (case
-                            when repository_official = true or package_official = true
-                            then true else false
-                        end) as official
-                    from packages_applying_all_filters paaf
+                    select * from (
+                        select
+                            paaf.*,
+                            (case when v_tsquery_web is not null then
+                                trunc(ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1)::numeric, 2) +
+                                trunc(ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)::numeric, 2)
+                            else 1 end) as relevance,
+                            (case
+                                when repository_official = true or package_official = true
+                                then true else false
+                            end) as official
+                        from packages_applying_all_filters paaf
+                    ) as paafe
                     order by
-                        rank desc,
+                        case when v_sort = 'relevance' then (relevance, stars) end desc,
+                        case when v_sort = 'stars' then (stars, relevance) end desc,
                         official desc,
-                        stars desc,
                         verified_publisher desc,
                         name asc
                     limit (p_input->>'limit')::int

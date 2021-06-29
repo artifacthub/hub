@@ -1,0 +1,78 @@
+{
+  "packages": [],
+  "facets": [
+    {
+      "title": "Organization",
+      "filterKey": "org",
+      "options": [
+        {
+          "id": "helm",
+          "name": "Helm",
+          "total": 256
+        },
+        {
+          "id": "falco",
+          "name": "Falco",
+          "total": 22
+        },
+        {
+          "id": "org1",
+          "name": "Org 1",
+          "total": 1
+        },
+        {
+          "id": "org2",
+          "name": "Org 2",
+          "total": 1
+        },
+        {
+          "id": "org3",
+          "name": "Org 3",
+          "total": 1
+        },
+        {
+          "id": "org4",
+          "name": "Org 4",
+          "total": 1
+        }
+      ]
+    },
+    {
+      "title": "Repository",
+      "filterKey": "repo",
+      "options": [
+        {
+          "id": "stable",
+          "name": "Stable",
+          "total": 203
+        },
+        {
+          "id": "incubator",
+          "name": "Incubator",
+          "total": 53
+        },
+        {
+          "id": "test1",
+          "name": "Test 1",
+          "total": 1
+        },
+        {
+          "id": "test2",
+          "name": "Test 2",
+          "total": 1
+        },
+        {
+          "id": "test3",
+          "name": "Test 3",
+          "total": 1
+        },
+        {
+          "id": "test4",
+          "name": "Test 4",
+          "total": 1
+        }
+      ]
+    }
+  ],
+  "paginationTotalCount": "0"
+}

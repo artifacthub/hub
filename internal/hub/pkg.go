@@ -224,6 +224,7 @@ type SearchPackageInput struct {
 	Deprecated        bool             `json:"deprecated"`
 	Licenses          []string         `json:"licenses,omitempty"`
 	Capabilities      []string         `json:"capabilities,omitempty"`
+	Sort              string           `json:"sort,omitempty"`
 }
 
 // Version represents a package's version.

@@ -363,7 +363,7 @@ describe('PackagesSection', () => {
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe('?user=jsmith&page=1');
+      expect(window.location.search).toBe('?user=jsmith&sort=relevance&page=1');
     });
 
     it('on org link click', async () => {
@@ -385,7 +385,7 @@ describe('PackagesSection', () => {
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe('?org=helm&page=1');
+      expect(window.location.search).toBe('?org=helm&sort=relevance&page=1');
     });
 
     it('on repo link click', async () => {
@@ -407,7 +407,7 @@ describe('PackagesSection', () => {
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe('?repo=stable&page=1');
+      expect(window.location.search).toBe('?repo=stable&sort=relevance&page=1');
     });
   });
 });

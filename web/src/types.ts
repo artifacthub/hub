@@ -190,6 +190,7 @@ export interface FalcoRules {
 
 export interface SearchFiltersURL extends BasicQuery {
   pageNumber: number;
+  sort?: string | null;
 }
 
 export interface BasicQuery {
@@ -209,6 +210,7 @@ export interface BasicQuery {
 export interface SearchQuery extends BasicQuery {
   limit: number;
   offset: number;
+  sort?: string;
 }
 
 export interface SearchResults {

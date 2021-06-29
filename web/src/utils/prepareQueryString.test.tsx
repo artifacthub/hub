@@ -15,7 +15,7 @@ const tests: Test[] = [
       },
       deprecated: true,
     },
-    result: '?org=org&deprecated=true&page=1',
+    result: '?org=org&deprecated=true&sort=relevance&page=1',
   },
   {
     query: {
@@ -24,7 +24,7 @@ const tests: Test[] = [
       filters: {},
       deprecated: false,
     },
-    result: '?ts_query_web=test&page=1',
+    result: '?ts_query_web=test&sort=relevance&page=1',
   },
   {
     query: {
@@ -32,7 +32,7 @@ const tests: Test[] = [
       filters: {},
       deprecated: false,
     },
-    result: '?page=1',
+    result: '?sort=relevance&page=1',
   },
   {
     query: {
@@ -43,7 +43,7 @@ const tests: Test[] = [
       },
       deprecated: true,
     },
-    result: '?org=org1&org=org2&repo=stable&repo=incubator&deprecated=true&page=3',
+    result: '?org=org1&org=org2&repo=stable&repo=incubator&deprecated=true&sort=relevance&page=3',
   },
   {
     query: {
@@ -53,7 +53,7 @@ const tests: Test[] = [
       },
       deprecated: true,
     },
-    result: '?user=user1&user=user2&deprecated=true&page=10',
+    result: '?user=user1&user=user2&deprecated=true&sort=relevance&page=10',
   },
   {
     query: {
@@ -61,7 +61,7 @@ const tests: Test[] = [
       filters: {},
       verifiedPublisher: true,
     },
-    result: '?verified_publisher=true&page=1',
+    result: '?verified_publisher=true&sort=relevance&page=1',
   },
   {
     query: {
@@ -69,7 +69,7 @@ const tests: Test[] = [
       filters: {},
       official: true,
     },
-    result: '?official=true&page=1',
+    result: '?official=true&sort=relevance&page=1',
   },
 ];
 

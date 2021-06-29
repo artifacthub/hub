@@ -3,7 +3,7 @@
 exports[`Filters creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="form-inline flex-nowrap align-items-center"
+    class="form-inline flex-nowrap align-items-center ml-3"
   >
     <label
       class="mr-2 mb-0"

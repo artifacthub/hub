@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"os"
 	"strings"
 	"testing"
@@ -438,10 +439,28 @@ func TestSearch(t *testing.T) {
 	t.Run("valid request, search succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		v := url.Values{}
+		v.Set("name", "n1")
+		v.Add("user", "u1")
+		v.Add("user", "u2")
+		v.Add("org", "o1")
+		v.Add("org", "o2")
+		v.Add("kind", "0")
+		v.Add("kind", "3")
+		v.Set("limit", "10")
+		v.Set("offset", "10")
+		r, _ := http.NewRequest("GET", "/?"+v.Encode(), nil)
 
 		hw := newHandlersWrapper()
-		hw.rm.On("SearchJSON", r.Context(), mock.Anything).Return(&hub.JSONQueryResult{
+		hw.rm.On("SearchJSON", r.Context(), &hub.SearchRepositoryInput{
+			Name:               "n1",
+			Kinds:              []hub.RepositoryKind{hub.Helm, hub.OLM},
+			Orgs:               []string{"o1", "o2"},
+			Users:              []string{"u1", "u2"},
+			IncludeCredentials: false,
+			Limit:              10,
+			Offset:             10,
+		}).Return(&hub.JSONQueryResult{
 			Data:       []byte("dataJSON"),
 			TotalCount: 1,
 		}, nil)

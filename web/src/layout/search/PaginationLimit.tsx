@@ -23,7 +23,7 @@ const PaginationLimit = (props: Props) => {
   }, [props]);
 
   return (
-    <div className="form-inline flex-nowrap align-items-center">
+    <div className="form-inline flex-nowrap align-items-center ml-3">
       <label className="mr-2 mb-0">Show:</label>
       <select
         className={`custom-select custom-select-sm ${styles.select}`}

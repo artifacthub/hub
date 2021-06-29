@@ -16,7 +16,7 @@ const MoreActionsButton = () => {
 
   return (
     <>
-      <div className="d-none d-md-block position-relative ml-2">
+      <div className="d-none d-md-block position-relative ml-3">
         <button
           data-testid="moreActionsBtn"
           className="btn p-0 position-relative"

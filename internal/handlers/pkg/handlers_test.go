@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -1020,10 +1021,50 @@ func TestSearch(t *testing.T) {
 	t.Run("valid request, search succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		v := url.Values{}
+		v.Set("limit", "10")
+		v.Set("offset", "10")
+		v.Set("facets", "true")
+		v.Set("ts_query_web", "q1")
+		v.Set("ts_query", "q2")
+		v.Add("user", "u1")
+		v.Add("user", "u2")
+		v.Add("org", "o1")
+		v.Add("org", "o2")
+		v.Add("repo", "r1")
+		v.Add("repo", "r2")
+		v.Add("kind", "0")
+		v.Add("kind", "3")
+		v.Set("verified_publisher", "true")
+		v.Set("official", "true")
+		v.Set("operators", "true")
+		v.Set("deprecated", "true")
+		v.Add("license", "l1")
+		v.Add("license", "l2")
+		v.Add("capabilities", "c1")
+		v.Add("capabilities", "c2")
+		v.Set("sort", "stars")
+		r, _ := http.NewRequest("GET", "/?"+v.Encode(), nil)
 
 		hw := newHandlersWrapper()
-		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(&hub.JSONQueryResult{
+		hw.pm.On("SearchJSON", r.Context(), &hub.SearchPackageInput{
+			Limit:             10,
+			Offset:            10,
+			Facets:            true,
+			TSQueryWeb:        "q1",
+			TSQuery:           "q2",
+			Users:             []string{"u1", "u2"},
+			Orgs:              []string{"o1", "o2"},
+			Repositories:      []string{"r1", "r2"},
+			RepositoryKinds:   []hub.RepositoryKind{hub.Helm, hub.OLM},
+			VerifiedPublisher: true,
+			Official:          true,
+			Operators:         true,
+			Deprecated:        true,
+			Licenses:          []string{"l1", "l2"},
+			Capabilities:      []string{"c1", "c2"},
+			Sort:              "stars",
+		}).Return(&hub.JSONQueryResult{
 			Data:       []byte("dataJSON"),
 			TotalCount: 1,
 		}, nil)

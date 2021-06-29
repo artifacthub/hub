@@ -318,6 +318,7 @@ class API_CLASS {
         q.set('ts_query', values.join(' | '));
       }
     }
+    q.set('sort', query.sort || 'relevance');
     q.set('limit', query.limit.toString());
     q.set('offset', query.offset.toString());
 
