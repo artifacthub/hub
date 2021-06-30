@@ -22,35 +22,67 @@ exports[`Search index creates snapshot 1`] = `
             class="form-inline flex-nowrap align-items-center"
           >
             <label
-              class="mr-2 mb-0"
+              class="d-none d-sm-inline mb-0"
             >
-              Show:
+              Sort:
             </label>
             <select
-              aria-label="pagination-limit"
-              class="custom-select custom-select-sm select"
+              aria-label="sort-options"
+              class="custom-select custom-select-sm ml-2 select"
               disabled=""
             >
               <option
-                value="20"
+                class="option"
+                value="relevance"
               >
-                20
+                Relevance
               </option>
               <option
-                value="40"
+                class="option"
+                value="stars"
               >
-                40
-              </option>
-              <option
-                value="60"
-              >
-                60
+                Stars
               </option>
               ;
             </select>
           </div>
           <div
-            class="d-none d-md-block position-relative ml-2"
+            class="d-none d-sm-flex"
+          >
+            <div
+              class="form-inline flex-nowrap align-items-center ml-3"
+            >
+              <label
+                class="mr-2 mb-0"
+              >
+                Show:
+              </label>
+              <select
+                aria-label="pagination-limit"
+                class="custom-select custom-select-sm select"
+                disabled=""
+              >
+                <option
+                  value="20"
+                >
+                  20
+                </option>
+                <option
+                  value="40"
+                >
+                  40
+                </option>
+                <option
+                  value="60"
+                >
+                  60
+                </option>
+                ;
+              </select>
+            </div>
+          </div>
+          <div
+            class="d-none d-md-block position-relative ml-3"
           >
             <button
               aria-expanded="false"

@@ -440,6 +440,7 @@ describe('Search index', () => {
           limit: 20,
           offset: 0,
           tsQueryWeb: 'test',
+          sort: 'relevance',
         });
       });
 
@@ -464,6 +465,7 @@ describe('Search index', () => {
           offset: 0,
           tsQueryWeb: 'test',
           tsQuery: ['database'],
+          sort: 'relevance',
         });
       });
 
@@ -557,6 +559,80 @@ describe('Search index', () => {
           pageNumber: 1,
           tsQueryWeb: 'test',
         }),
+      });
+    });
+  });
+
+  describe('Sort options', () => {
+    it('renders default sort value', async () => {
+      const mockSearchResults = getMockSearchResults('25');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getByLabelText } = render(
+        <Router>
+          <SearchView {...defaultProps} />
+        </Router>
+      );
+
+      const sortOpts = await waitFor(() => getByLabelText('sort-options') as HTMLSelectElement);
+      expect(sortOpts.value).toBe('relevance');
+    });
+
+    it('updates sort value', async () => {
+      const mockSearchResults = getMockSearchResults('26');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getByLabelText } = render(
+        <Router>
+          <SearchView {...defaultProps} />
+        </Router>
+      );
+
+      const sortOpts = await waitFor(() => getByLabelText('sort-options') as HTMLSelectElement);
+      expect(sortOpts.value).toBe('relevance');
+
+      fireEvent.change(sortOpts, { target: { value: 'stars' } });
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          tsQueryWeb: 'test',
+          pageNumber: 1,
+          filters: {},
+          deprecated: false,
+          sort: 'stars',
+        }),
+      });
+    });
+
+    describe('does not render sort options', () => {
+      it('when tsQueryWeb is undefined', async () => {
+        const mockSearchResults = getMockSearchResults('27');
+        mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+        const { queryByLabelText } = render(
+          <Router>
+            <SearchView {...defaultProps} tsQueryWeb={undefined} />
+          </Router>
+        );
+
+        const sortOpts = await waitFor(() => queryByLabelText('sort-options') as HTMLSelectElement);
+        expect(sortOpts).toBeNull();
+      });
+
+      it('when tsQueryWeb is a empty string', async () => {
+        const mockSearchResults = getMockSearchResults('28');
+        mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+        const { queryByLabelText } = render(
+          <Router>
+            <SearchView {...defaultProps} tsQueryWeb="" />
+          </Router>
+        );
+
+        const sortOpts = await waitFor(() => queryByLabelText('sort-options') as HTMLSelectElement);
+        expect(sortOpts).toBeNull();
       });
     });
   });

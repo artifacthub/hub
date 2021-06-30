@@ -44,6 +44,7 @@ export const prepareAPIQueryString = (query: SearchQuery): string => {
 
 export const prepareQueryString = (query: SearchFiltersURL): string => {
   const q = getURLSearchParams(query);
+  q.set('sort', query.sort || 'relevance');
   q.set('page', query.pageNumber.toString());
   return `?${q.toString()}`;
 };

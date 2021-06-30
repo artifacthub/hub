@@ -26,6 +26,7 @@ import Filters from './Filters';
 import MoreActionsButton from './MoreActionsButton';
 import PaginationLimit from './PaginationLimit';
 import styles from './SearchView.module.css';
+import SortOptions from './SortOptions';
 
 interface FiltersProp {
   [key: string]: string[];
@@ -46,7 +47,10 @@ interface Props {
   official?: boolean | null;
   fromDetail: boolean;
   visibleModal?: string;
+  sort?: string | null;
 }
+
+const DEFAULT_SORT = 'relevance';
 
 const SearchView = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
@@ -114,6 +118,7 @@ const SearchView = (props: Props) => {
       operators: props.operators,
       verifiedPublisher: props.verifiedPublisher,
       official: props.official,
+      sort: props.sort,
     };
   };
 
@@ -200,6 +205,7 @@ const SearchView = (props: Props) => {
         tsQueryWeb: props.tsQueryWeb,
         tsQuery: [],
         filters: {},
+        sort: DEFAULT_SORT,
       }),
     });
   };
@@ -208,6 +214,19 @@ const SearchView = (props: Props) => {
     updateCurrentPage({
       pageNumber: pageNumber,
     });
+  };
+
+  const onSortChange = (sort: string): void => {
+    history.replace({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        ...getCurrentFilters(),
+        sort: sort,
+        pageNumber: 1,
+      }),
+    });
+    setScrollPosition(0);
+    updateWindowScrollPosition(0);
   };
 
   const onPaginationLimitChange = (newLimit: number): void => {
@@ -236,6 +255,7 @@ const SearchView = (props: Props) => {
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
         official: props.official,
+        sort: props.sort || DEFAULT_SORT,
       };
 
       try {
@@ -287,6 +307,7 @@ const SearchView = (props: Props) => {
     props.verifiedPublisher,
     props.official,
     ctx.prefs.search.limit,
+    props.sort,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
@@ -394,11 +415,21 @@ const SearchView = (props: Props) => {
 
         <div className="ml-3">
           <div className="d-flex flex-row">
-            <PaginationLimit
-              limit={ctx.prefs.search.limit}
-              updateLimit={onPaginationLimitChange}
-              disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
-            />
+            {/* Only display sort options when ts_query_web is defined */}
+            {props.tsQueryWeb && props.tsQueryWeb !== '' && (
+              <SortOptions
+                activeSort={props.sort || DEFAULT_SORT}
+                updateSort={onSortChange}
+                disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
+              />
+            )}
+            <div className="d-none d-sm-flex">
+              <PaginationLimit
+                limit={ctx.prefs.search.limit}
+                updateLimit={onPaginationLimitChange}
+                disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
+              />
+            </div>
             <MoreActionsButton />
           </div>
         </div>

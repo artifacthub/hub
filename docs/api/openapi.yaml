@@ -953,6 +953,7 @@ paths:
         - $ref: "#/components/parameters/OperatorsParam"
         - $ref: "#/components/parameters/VerifiedPublisherParam"
         - $ref: "#/components/parameters/OfficialParam"
+        - $ref: "#/components/parameters/SortParam"
       responses:
         "200":
           description: ""
@@ -3852,6 +3853,15 @@ components:
         type: boolean
       required: false
       description: Whether to get only official repositoties
+    SortParam:
+      in: query
+      name: sort
+      schema:
+        type: string
+        enum: ['relevance', 'stars']
+        example: relevance
+      required: false
+      description: Sort criteria
     EventKindParam:
       in: query
       name: event_kind

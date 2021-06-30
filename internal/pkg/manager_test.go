@@ -846,6 +846,7 @@ func TestSearchJSON(t *testing.T) {
 	input := &hub.SearchPackageInput{
 		Limit:      10,
 		TSQueryWeb: "kw1",
+		Sort:       "relevance",
 	}
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -876,6 +877,13 @@ func TestSearchJSON(t *testing.T) {
 				&hub.SearchPackageInput{
 					Limit:  10,
 					Offset: -1,
+				},
+			},
+			{
+				"invalid sort (relevance|stars)",
+				&hub.SearchPackageInput{
+					Limit: 10,
+					Sort:  "invalid",
 				},
 			},
 			{

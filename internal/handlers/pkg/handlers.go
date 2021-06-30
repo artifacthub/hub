@@ -496,6 +496,7 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		Deprecated:        deprecated,
 		Licenses:          qs["license"],
 		Capabilities:      qs["capabilities"],
+		Sort:              qs.Get("sort"),
 	}, nil
 }
 
