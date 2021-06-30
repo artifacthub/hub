@@ -206,7 +206,7 @@ export default function App() {
                     visibleModal={getQueryParam(location.search, 'modal') || undefined}
                   />
                   <div className="d-flex flex-column flex-grow-1">
-                    <StatsView />
+                    <StatsView hash={location.hash} />
                   </div>
                   <Footer />
                 </>

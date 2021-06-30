@@ -1,8 +1,9 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useHistory } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
@@ -11,11 +12,17 @@ import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import getMetaTag from '../../utils/getMetaTag';
 import isWhiteLabel from '../../utils/isWhiteLabel';
 import prettifyNumber from '../../utils/prettifyNumber';
+import AnchorHeader from '../common/AnchorHeader';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
 import styles from './StatsView.module.css';
 
-const StatsView = () => {
+interface Props {
+  hash?: string;
+}
+
+const StatsView = (props: Props) => {
+  const history = useHistory();
   const { ctx } = useContext(AppCtx);
   const whiteLabel = isWhiteLabel();
   const siteName = getMetaTag('siteName');
@@ -256,6 +263,7 @@ const StatsView = () => {
       try {
         setIsLoading(true);
         setStats(await API.getAHStats());
+        scrollIntoView();
         setApiError(null);
         setIsLoading(false);
       } catch (err) {
@@ -267,6 +275,29 @@ const StatsView = () => {
     }
     getStats();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  const scrollIntoView = useCallback(
+    (id?: string) => {
+      const elId = id || props.hash;
+      if (isUndefined(elId) || elId === '') return;
+
+      try {
+        const element = document.querySelector(elId);
+        if (element) {
+          element.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+          if (props.hash !== elId) {
+            history.push({
+              pathname: history.location.pathname,
+              hash: elId,
+            });
+          }
+        }
+      } finally {
+        return;
+      }
+    },
+    [props.hash, history]
+  );
 
   return (
     <div className="d-flex flex-column flex-grow-1 position-relative">
@@ -292,7 +323,12 @@ const StatsView = () => {
                 stats.packages.createdMonthly ||
                 stats.snapshots.createdMonthly) && (
                 <>
-                  <div className={`h3 mb-4 font-weight-bold ${styles.title}`}>Packages and releases</div>
+                  <AnchorHeader
+                    level={2}
+                    scrollIntoView={scrollIntoView}
+                    className={`mb-4 font-weight-bold ${styles.title}`}
+                    title="Packages and releases"
+                  />
 
                   {(stats.packages.runningTotal || stats.snapshots.runningTotal) && (
                     <div className="row my-4 pb-0 pb-lg-4">
@@ -376,7 +412,12 @@ const StatsView = () => {
 
               {stats.repositories.runningTotal && (
                 <>
-                  <div className={`h3 my-4 font-weight-bold ${styles.title}`}>Repositories</div>
+                  <AnchorHeader
+                    level={2}
+                    scrollIntoView={scrollIntoView}
+                    className={`my-4 font-weight-bold ${styles.title}`}
+                    title="Repositories"
+                  />
 
                   <div className="row my-4">
                     <div className="col-12 my-4">
@@ -395,7 +436,12 @@ const StatsView = () => {
 
               {(stats.organizations.runningTotal || stats.users.runningTotal) && (
                 <>
-                  <div className={`h3 mt-4 font-weight-bold ${styles.title}`}>Organizations and users</div>
+                  <AnchorHeader
+                    level={2}
+                    scrollIntoView={scrollIntoView}
+                    className={`mt-4 font-weight-bold ${styles.title}`}
+                    title="Organizations and users"
+                  />
                   <div className="row my-4">
                     {stats.organizations.runningTotal && (
                       <div className={classnames('col-12', { 'col-lg-6': stats.users.runningTotal })}>
