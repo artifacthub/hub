@@ -26,7 +26,7 @@ interface Props {
   placeholderIcon?: JSX.Element;
 }
 
-const DEFAULT_CROP: ReactCrop.Crop = { unit: '%', aspect: 1 };
+const DEFAULT_CROP: ReactCrop.Crop = { aspect: 1 };
 
 const InputFileField = (props: Props) => {
   const imgRef = useRef(null);
@@ -128,11 +128,44 @@ const InputFileField = (props: Props) => {
   };
 
   const onLoad = useCallback((img) => {
+    const initialCrop = () => {
+      const width = img.width > img.height ? (img.height / img.width) * 100 : 100;
+      const height = img.height > img.width ? (img.width / img.height) * 100 : 100;
+      const x = width === 100 ? 0 : (100 - width) / 2;
+      const y = height === 100 ? 0 : (100 - height) / 2;
+
+      setCrop({
+        unit: '%',
+        aspect: 1,
+        width,
+        height,
+        x,
+        y,
+      });
+    };
+
     imgRef.current = img;
+    initialCrop();
+    return false;
   }, []);
 
+  // Update completedCrop after loading image
   useEffect(() => {
-    if (completedCrop && openStatus) {
+    if (openStatus && isNull(completedCrop) && crop !== DEFAULT_CROP) {
+      const img: any = imgRef.current;
+      setCompletedCrop({
+        unit: 'px',
+        aspect: 1,
+        width: (img.width * crop.width!) / 100,
+        height: (img.height * crop.height!) / 100,
+        x: (img.width * crop.x!) / 100,
+        y: (img.height * crop.y!) / 100,
+      });
+    }
+  }, [openStatus, crop, completedCrop]);
+
+  useEffect(() => {
+    if (!isNull(completedCrop) && openStatus) {
       const img: any = imgRef.current;
       const canvas: any = previewCanvasRef.current;
 
@@ -164,33 +197,6 @@ const InputFileField = (props: Props) => {
       }
     }
   }, [completedCrop]); /* eslint-disable-line react-hooks/exhaustive-deps */
-
-  useEffect(() => {
-    const img: any = imgRef.current;
-    if (!isNull(img) && openStatus) {
-      const width = img.width > img.height ? (img.height / img.width) * 100 : 100;
-      const height = img.height > img.width ? (img.width / img.height) * 100 : 100;
-      const x = width === 100 ? 0 : (100 - width) / 2;
-      const y = height === 100 ? 0 : (100 - height) / 2;
-
-      setCrop({
-        unit: '%',
-        aspect: 1,
-        width,
-        height,
-        x,
-        y,
-      });
-      setCompletedCrop({
-        unit: 'px',
-        aspect: 1,
-        width: (img.width * width) / 100,
-        height: (img.height * height) / 100,
-        x: (img.width * x) / 100,
-        y: (img.height * y) / 100,
-      });
-    }
-  }, [upImg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const onClick = () => {
     if (!isNull(fileInput) && !isNull(fileInput.current)) {
