@@ -553,6 +553,7 @@ const SearchView = (props: Props) => {
                               operators: props.operators,
                               verifiedPublisher: props.verifiedPublisher,
                               official: props.official,
+                              sort: props.sort,
                             }}
                             saveScrollPosition={saveScrollPosition}
                           />
