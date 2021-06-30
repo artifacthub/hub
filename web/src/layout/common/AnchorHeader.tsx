@@ -10,6 +10,7 @@ interface Props {
   level: number;
   title?: string;
   children?: JSX.Element[];
+  className?: string;
   scrollIntoView: (id?: string) => void;
 }
 
@@ -41,7 +42,7 @@ const AnchorHeader: React.ElementType = (props: Props) => {
 
   return (
     <span className={styles.header}>
-      <Tag className={`position-relative anchorHeader ${styles.headingWrapper}`}>
+      <Tag className={`position-relative anchorHeader ${styles.headingWrapper} ${props.className}`}>
         <div data-testid="anchor" className={`position-absolute ${styles.headerAnchor}`} id={anchor} />
         <a
           data-testid="anchorHeaderLink"

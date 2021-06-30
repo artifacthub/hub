@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -12,6 +12,9 @@ jest.mock('react-apexcharts', () => () => <div>Chart</div>);
 const getMockStats = (fixtureId: string): AHStats => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as AHStats;
 };
+
+const scrollIntoViewMock = jest.fn();
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const mockCtx = {
   user: { alias: 'test', email: 'test@test.com', passwordSet: true },
@@ -119,6 +122,50 @@ describe('StatsView', () => {
       const noData = await waitFor(() => getByTestId('noData'));
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/stats: custom errorIf this error persists, please create an issue here/i);
+    });
+  });
+
+  describe('Anchors', () => {
+    it('calls scrollIntoView when click on anchor section', async () => {
+      const mockStats = getMockStats('4');
+      mocked(API).getAHStats.mockResolvedValue(mockStats);
+
+      const { getAllByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <StatsView />
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.getAHStats).toHaveBeenCalledTimes(1);
+      });
+
+      const anchors = getAllByTestId('anchorHeaderLink');
+      fireEvent.click(anchors[0]);
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls scrollIntoView when hash is defined to load component', async () => {
+      const mockStats = getMockStats('4');
+      mocked(API).getAHStats.mockResolvedValue(mockStats);
+
+      const { getAllByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <StatsView hash="#repositories" />
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.getAHStats).toHaveBeenCalledTimes(1);
+      });
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+
+      const anchors = getAllByTestId('anchorHeaderLink');
+      fireEvent.click(anchors[0]);
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(2);
     });
   });
 });

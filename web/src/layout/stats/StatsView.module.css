@@ -5,6 +5,10 @@
   padding-bottom: calc(1rem - 15px);
 }
 
+.title {
+  font-size: 1.75rem !important;
+}
+
 [data-theme='dark'] :global(.card).chartWrapper {
   background-color: var(--color-black-5) !important;
 }
@@ -37,7 +41,7 @@
 
 @media only screen and (max-width: 767.98px) {
   .title {
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
   }
 }
 
