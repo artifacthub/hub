@@ -129,10 +129,12 @@ const ChartTemplatesModal = (props: Props) => {
   };
 
   useEffect(() => {
-    if (props.visibleChartTemplates && !openStatus && props.repoKind === RepositoryKind.Helm) {
-      onOpenModal();
-    } else {
-      cleanUrl();
+    if (props.visibleChartTemplates) {
+      if (!openStatus && props.repoKind === RepositoryKind.Helm) {
+        onOpenModal();
+      } else {
+        cleanUrl();
+      }
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 

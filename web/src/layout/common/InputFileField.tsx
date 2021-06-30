@@ -71,6 +71,7 @@ const InputFileField = (props: Props) => {
   };
 
   const saveOriginal = (file: any) => {
+    setIsSending(true);
     const reader = new FileReader();
     reader.onloadend = (r: ProgressEvent<FileReader>) => {
       if (!isNull(r.target) && !isNull(r.target.result)) {
@@ -82,9 +83,14 @@ const InputFileField = (props: Props) => {
 
   const saveCroppedImage = (canvas: any, crop: any) => {
     if (!crop || !canvas) {
+      alertDispatcher.postAlert({
+        type: 'danger',
+        message: 'An error occurred saving the image, please try again later.',
+      });
       return;
     }
 
+    setIsSending(true);
     canvas.toBlob(
       (blob: any) => {
         saveImage(blob);
@@ -222,6 +228,7 @@ const InputFileField = (props: Props) => {
               type="button"
               onClick={onClick}
               aria-label="Add image"
+              disabled={isSending}
             >
               {props.value ? (
                 <Image
