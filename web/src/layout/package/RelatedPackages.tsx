@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
@@ -5,12 +6,17 @@ import React, { useEffect, useState } from 'react';
 import API from '../../api';
 import { Package } from '../../types';
 import SmallTitle from '../common/SmallTitle';
+import BigRelatedPackageCard from './BigRelatedPackageCard';
 import RelatedPackageCard from './RelatedPackageCard';
+import styles from './RelatedPackages.module.css';
 
 interface Props {
   name: string;
   packageId: string;
   keywords?: string[];
+  title?: JSX.Element;
+  className?: string;
+  in?: 'column' | 'content';
 }
 
 const RelatedPackages = (props: Props) => {
@@ -50,20 +56,30 @@ const RelatedPackages = (props: Props) => {
   if (isUndefined(packages) || packages.length === 0) return null;
 
   return (
-    <div className="mt-4 w-100" role="list" aria-describedby="related-list">
-      <SmallTitle text="Related packages" id="related-list" />
-      <div className="pt-1">
+    <div className={`mt-4 w-100 ${props.className}`} role="list" aria-describedby="related-list">
+      {props.title || <SmallTitle text="Related packages" id="related-list" className={styles.title} />}
+      <div className={classnames('pt-1 row no-gutters', { [`${styles.cardsWrapper} mb-5`]: props.in === 'content' })}>
         {packages.map((item: Package) => (
-          <div key={`reltedCard_${item.packageId}`}>
-            <RelatedPackageCard
-              normalizedName={item.normalizedName}
-              name={item.name}
-              displayName={item.displayName}
-              logoImageId={item.logoImageId}
-              version={item.version!}
-              repository={item.repository}
-              stars={item.stars}
-            />
+          <div
+            key={`relatedCard_${item.packageId}`}
+            className={classnames(
+              { 'col-12': props.in !== 'content' },
+              { 'col-12 col-xxl-6 p-0 p-xxl-2': props.in === 'content' }
+            )}
+          >
+            {props.in === 'content' ? (
+              <BigRelatedPackageCard package={item} />
+            ) : (
+              <RelatedPackageCard
+                normalizedName={item.normalizedName}
+                name={item.name}
+                displayName={item.displayName}
+                logoImageId={item.logoImageId}
+                version={item.version!}
+                repository={item.repository}
+                stars={item.stars}
+              />
+            )}
           </div>
         ))}
       </div>

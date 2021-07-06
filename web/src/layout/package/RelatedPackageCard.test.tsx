@@ -12,6 +12,7 @@ interface Props {
   name: string;
   displayName?: string | null;
   logoImageId?: string | null;
+  size: 'normal';
 }
 
 const getMockProps = (fixtureId: string): Props => {

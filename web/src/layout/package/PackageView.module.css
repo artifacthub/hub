@@ -139,7 +139,7 @@
   z-index: 10;
 }
 
-.noReadmeWrapper {
+.contentWrapper {
   margin-right: 250px;
 }
 
@@ -196,7 +196,7 @@
     margin-top: 3rem !important;
   }
 
-  .noReadmeWrapper {
+  .contentWrapper {
     margin-right: 0;
   }
 }
@@ -254,7 +254,7 @@
     width: 310px;
   }
 
-  .noReadmeWrapper {
+  .contentWrapper {
     margin-right: 0;
   }
 
