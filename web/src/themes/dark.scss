@@ -177,6 +177,11 @@
     border-color: var(--border-md);
   }
 
+  .custom-select:disabled {
+    background-color: var(--color-1-500);
+    opacity: 0.75;
+  }
+
   .was-validated .form-control:valid {
     border-color: var(--color2) !important;
   }

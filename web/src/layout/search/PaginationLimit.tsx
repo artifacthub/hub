@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { isNull } from 'lodash';
+import React, { useEffect, useRef } from 'react';
 
 import { DEFAULT_SEARCH_LIMIT } from '../../utils/localStoragePreferences';
 import styles from './PaginationLimit.module.css';
@@ -12,8 +13,17 @@ interface Props {
 const LIMIT_VALUES: number[] = [20, 40, 60];
 
 const PaginationLimit = (props: Props) => {
+  const selectEl = useRef<HTMLSelectElement>(null);
+
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     props.updateLimit(parseInt(event.target.value));
+    forceBlur();
+  };
+
+  const forceBlur = (): void => {
+    if (!isNull(selectEl) && !isNull(selectEl.current)) {
+      selectEl.current.blur();
+    }
   };
 
   useEffect(() => {
@@ -26,6 +36,7 @@ const PaginationLimit = (props: Props) => {
     <div className="form-inline flex-nowrap align-items-center ml-3">
       <label className="mr-2 mb-0">Show:</label>
       <select
+        ref={selectEl}
         className={`custom-select custom-select-sm ${styles.select}`}
         aria-label="pagination-limit"
         value={props.limit}
