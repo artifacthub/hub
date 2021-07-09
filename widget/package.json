@@ -29,7 +29,6 @@
     "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.1.1",
     "react-scripts": "^4.0.3",
-    "rewire": "^5.0.0",
     "ts-jest": "^27.0.3",
     "typescript": "^3.9.7",
     "webpack-cli": "^4.6.0"
