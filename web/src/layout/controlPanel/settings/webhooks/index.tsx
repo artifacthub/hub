@@ -138,7 +138,7 @@ const WebhooksSection = (props: Props) => {
                       <NoData issuesLinkVisible={!isNull(apiError)}>
                         {isNull(apiError) ? (
                           <>
-                            <p className="h6 my-4">
+                            <p className={`h6 my-4 ${styles.noDataMessage}`}>
                               You have not created any webhook yet. You can create your first one by clicking on the
                               button below.
                             </p>

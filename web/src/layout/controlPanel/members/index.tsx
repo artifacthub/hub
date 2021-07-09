@@ -156,7 +156,7 @@ const MembersSection = (props: Props) => {
                 <NoData issuesLinkVisible={!isNull(apiError)}>
                   {isNull(apiError) ? (
                     <>
-                      <p className="h6 my-4">Do you want to add a member?</p>
+                      <p className={`h6 my-4 ${styles.noDataMessage}`}>Do you want to add a member?</p>
 
                       <button
                         type="button"
