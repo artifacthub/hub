@@ -211,7 +211,7 @@ ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
   font-weight: 700;
   color: var(--color-1-700);
   margin-bottom: 1.5rem;
-  line-height: 1.5rem;
+  line-height: 1.75rem;
 }
 
 .gdoc-markdown h1, .gdoc-markdown h2 {
@@ -297,4 +297,10 @@ ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
 
 #menu-control:checked ~ main .gdoc-nav nav, #menu-control:checked ~ main .gdoc-page {
   transform: translateX(20rem);
+}
+
+@media only screen and (max-width: 768px) {
+  .gdoc-markdown h1, .gdoc-markdown h2, .gdoc-markdown h3 {
+    font-size: 1.75rem;
+  }
 }
