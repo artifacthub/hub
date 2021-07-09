@@ -254,6 +254,14 @@ const StatsView = (props: Props) => {
             },
           },
         },
+        {
+          breakpoint: 768,
+          options: {
+            dataLabels: {
+              enabled: false,
+            },
+          },
+        },
       ],
     };
   };
