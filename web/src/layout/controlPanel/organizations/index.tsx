@@ -126,7 +126,7 @@ const OrganizationsSection = (props: Props) => {
                 <NoData issuesLinkVisible={!isNull(apiError)}>
                   {isNull(apiError) ? (
                     <>
-                      <p className="h6 my-4">Do you need to create a organization?</p>
+                      <p className={`h6 my-4 ${styles.noDataMessage}`}>Do you need to create a organization?</p>
 
                       <button
                         data-testid="addFirstOrgBtn"
