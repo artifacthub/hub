@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { isNull } from 'lodash';
+import React, { useEffect, useRef } from 'react';
 
 import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 import styles from './SortOptions.module.css';
@@ -13,8 +14,17 @@ const DEFAULT_SORT = 'relevance';
 const SORT_OPTS = [DEFAULT_SORT, 'stars'];
 
 const SortOptions = (props: Props) => {
+  const selectEl = useRef<HTMLSelectElement>(null);
+
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     props.updateSort(event.target.value);
+    forceBlur();
+  };
+
+  const forceBlur = (): void => {
+    if (!isNull(selectEl) && !isNull(selectEl.current)) {
+      selectEl.current.blur();
+    }
   };
 
   useEffect(() => {
@@ -27,6 +37,7 @@ const SortOptions = (props: Props) => {
     <div className="form-inline flex-nowrap align-items-center">
       <label className="d-none d-sm-inline mb-0">Sort:</label>
       <select
+        ref={selectEl}
         className={`custom-select custom-select-sm ml-2 ${styles.select}`}
         aria-label="sort-options"
         value={props.activeSort}
