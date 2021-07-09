@@ -9,7 +9,7 @@ import styles from './StarBadge.module.css';
 interface Props {
   starsNumber?: number | any;
   className?: string;
-  size?: 'xs';
+  size?: 'xs' | 'sm';
 }
 
 const StarBadge = (props: Props) => {

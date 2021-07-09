@@ -11,3 +11,12 @@
 .size-xs .icon {
   font-size: 0.95em;
 }
+
+.size-sm {
+  font-size: 0.7rem;
+  padding: 0.2em 0.4em;
+}
+
+.size-sm .icon {
+  font-size: 1em;
+}

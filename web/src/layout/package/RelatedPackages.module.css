@@ -1,0 +1,13 @@
+@media only screen and (max-width: 767.98px) {
+  .title {
+    text-transform: none;
+    font-size: 1.6rem;
+    color: var(--color-font);
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  .cardsWrapper {
+    margin: 0 -0.5rem;
+  }
+}

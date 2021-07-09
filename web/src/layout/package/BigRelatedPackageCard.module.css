@@ -1,0 +1,109 @@
+.card {
+  background-color: var(--white) !important;
+  box-shadow: 0px 0px 5px 0px var(--light);
+}
+
+.link {
+  color: var(--gray-dark);
+  background-color: transparent;
+}
+
+.body {
+  padding: 1rem !important;
+}
+
+.imageWrapper {
+  position: relative;
+  min-width: 50px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--white);
+  border: 2px solid var(--color-1-10);
+  box-shadow: 0px 0px 5px 0px var(--color-1-20);
+}
+
+.image {
+  max-width: calc(100% - 5px);
+  max-height: calc(100% - 5px);
+}
+
+.icon {
+  height: auto;
+  width: 18px;
+}
+
+.link {
+  color: var(--gray-dark);
+  background-color: transparent;
+}
+
+.link:hover {
+  color: inherit;
+}
+
+.mx50 {
+  max-width: 50%;
+  text-align: left;
+  width: auto;
+}
+
+.mx100 {
+  max-width: 90%;
+  text-align: left;
+  width: auto;
+}
+
+.title {
+  font-size: 1.15rem;
+}
+
+.titleWrapper {
+  margin-top: -3px;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  line-height: 20px;
+}
+
+.subtitle span {
+  font-size: 0.75rem;
+}
+
+.kind {
+  font-size: 0.9rem;
+  color: var(--color-1-500);
+}
+
+.truncateWrapper {
+  min-width: 0;
+}
+
+.date {
+  font-size: 75%;
+}
+
+@media (hover: hover) {
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  .card:hover {
+    border-color: var(--color-black-50);
+    box-shadow: 0px 0px 5px 0px var(--color-black-75);
+  }
+}
+
+@media only screen and (max-width: 767.98px) {
+  .imageWrapper {
+    min-width: 60px;
+    width: 60px;
+    height: 60px;
+    margin: 0;
+  }
+
+  .image {
+    max-width: calc(100% - 9px);
+    max-height: calc(100% - 9px);
+  }
+}

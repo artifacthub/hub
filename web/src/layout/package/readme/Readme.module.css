@@ -19,6 +19,7 @@
   margin: 24px 0;
   background-color: var(--border-md);
   border: 0;
+  display: flex;
 }
 
 .md pre {

@@ -2,15 +2,17 @@ import { isArray } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiCode, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import useResizeObserver from 'use-resize-observer';
 
 import API from '../../api';
+import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import {
   CustomResourcesDefinition,
@@ -77,8 +79,11 @@ interface Props {
   visibleFile?: string;
 }
 
+const RELATED_PKGS_GAP = 400;
+
 const PackageView = (props: Props) => {
   const history = useHistory();
+  const point = useBreakpointDetect();
   const [isLoadingPackage, setIsLoadingPackage] = useState(false);
   const [packageName, setPackageName] = useState(props.packageName);
   const [repositoryKind, setRepositoryKind] = useState(props.repositoryKind);
@@ -89,6 +94,8 @@ const PackageView = (props: Props) => {
     props.searchUrlReferer || {};
   const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
   const [currentHash, setCurrentHash] = useState<string | undefined>(props.hash);
+  const columnWrapper = useRef<HTMLDivElement>(null);
+  const [relatedPosition, setRelatedPosition] = useState<'column' | 'content' | undefined>(undefined);
 
   useScrollRestorationFix();
 
@@ -100,6 +107,19 @@ const PackageView = (props: Props) => {
       setRepositoryName(props.repositoryName);
     }
   }, [props, isLoadingPackage]);
+
+  const { ref } = useResizeObserver<HTMLDivElement>({
+    onResize: ({ height }) => {
+      // Change related packages component position depending content height
+      if (columnWrapper.current && point && detail && isUndefined(relatedPosition) && height) {
+        if (point && !['xs', 'sm'].includes(point)) {
+          setRelatedPosition(height <= columnWrapper.current.offsetHeight + RELATED_PKGS_GAP ? 'content' : 'column');
+        } else {
+          setRelatedPosition('column');
+        }
+      }
+    },
+  });
 
   async function fetchPackageDetail() {
     try {
@@ -113,6 +133,7 @@ const PackageView = (props: Props) => {
         detailPkg.repository.userAlias || detailPkg.repository.organizationName
       }/${detailPkg.repository.name}`;
       updateMetaIndex(metaTitle, detailPkg.description);
+      setRelatedPosition(undefined);
       setDetail(detailPkg);
       if (currentHash) {
         setCurrentHash(undefined);
@@ -649,7 +670,7 @@ const PackageView = (props: Props) => {
                     className={`ml-0 ml-md-5 mb-5 position-relative float-none float-md-right ${styles.additionalInfo}`}
                   >
                     {!isNull(detail) && (
-                      <div className={styles.rightColumnWrapper}>
+                      <div ref={columnWrapper} className={styles.rightColumnWrapper}>
                         <div className="d-none d-md-block">
                           {getInstallationModal('mb-2')}
 
@@ -815,9 +836,16 @@ const PackageView = (props: Props) => {
                           </div>
                         </div>
 
-                        <div className={styles.relatedPackagesWrapper}>
-                          <RelatedPackages packageId={detail.packageId} name={detail.name} keywords={detail.keywords} />
-                        </div>
+                        {!isUndefined(relatedPosition) && relatedPosition === 'column' && (
+                          <div className={styles.relatedPackagesWrapper}>
+                            <RelatedPackages
+                              packageId={detail.packageId}
+                              name={detail.name}
+                              keywords={detail.keywords}
+                              in={relatedPosition}
+                            />
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -830,20 +858,33 @@ const PackageView = (props: Props) => {
                         tabIndex={-1}
                         aria-label="Package detail"
                       >
-                        {isNull(detail.readme) || isUndefined(detail.readme) ? (
-                          <div className={styles.noReadmeWrapper}>
-                            <NoData>No README file available for this package</NoData>
-                          </div>
-                        ) : (
-                          <ReadmeWrapper
-                            packageName={detail.displayName || detail.name}
-                            markdownContent={detail.readme}
-                            scrollIntoView={scrollIntoView}
-                            additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}
+                        <div ref={ref}>
+                          {isNull(detail.readme) || isUndefined(detail.readme) ? (
+                            <div className={styles.contentWrapper}>
+                              <NoData>No README file available for this package</NoData>
+                            </div>
+                          ) : (
+                            <ReadmeWrapper
+                              packageName={detail.displayName || detail.name}
+                              markdownContent={detail.readme}
+                              scrollIntoView={scrollIntoView}
+                              additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}
+                            />
+                          )}
+
+                          {!isNull(additionalInfo) && <>{additionalInfo.content}</>}
+                        </div>
+
+                        {!isUndefined(relatedPosition) && relatedPosition === 'content' && (
+                          <RelatedPackages
+                            className={styles.contentWrapper}
+                            packageId={detail.packageId}
+                            name={detail.name}
+                            keywords={detail.keywords}
+                            title={<AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Related packages" />}
+                            in={relatedPosition}
                           />
                         )}
-
-                        {!isNull(additionalInfo) && <>{additionalInfo.content}</>}
                       </div>
                     </>
                   )}
