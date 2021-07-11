@@ -665,9 +665,8 @@ export interface AHStats {
 }
 
 export interface TOCEntryItem {
-  level: number;
-  title: string;
-  link: string;
+  depth: number;
+  value: string;
   children?: TOCEntryItem[];
 }
 

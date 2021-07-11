@@ -56,7 +56,7 @@ const RelatedPackages = (props: Props) => {
   if (isUndefined(packages) || packages.length === 0) return null;
 
   return (
-    <div className={`mt-4 w-100 ${props.className}`} role="list" aria-describedby="related-list">
+    <div className={`mt-4 ${props.className}`} role="list" aria-describedby="related-list">
       {props.title || <SmallTitle text="Related packages" id="related-list" className={styles.title} />}
       <div className={classnames('pt-1 row no-gutters', { [`${styles.cardsWrapper} mb-5`]: props.in === 'content' })}>
         {packages.map((item: Package) => (

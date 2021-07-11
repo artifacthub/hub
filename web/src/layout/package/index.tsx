@@ -133,7 +133,9 @@ const PackageView = (props: Props) => {
         detailPkg.repository.userAlias || detailPkg.repository.organizationName
       }/${detailPkg.repository.name}`;
       updateMetaIndex(metaTitle, detailPkg.description);
-      setRelatedPosition(undefined);
+      if (!isUndefined(detailPkg.readme) && !isUndefined(relatedPosition)) {
+        setRelatedPosition(undefined);
+      }
       setDetail(detailPkg);
       if (currentHash) {
         setCurrentHash(undefined);
