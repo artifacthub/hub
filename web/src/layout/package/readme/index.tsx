@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { TOCEntryItem } from '../../../types';
-import prepareMarkdownTOC, { HEADING_REGEX } from '../../../utils/prepareMarkdownTOC';
+import prepareMarkdownTOC from '../../../utils/prepareMarkdownTOC';
 import ErrorBoundary from '../../common/ErrorBoundary';
 import Readme from './Readme';
 import TOC from './TOC';
@@ -24,19 +24,16 @@ const ReadmeWrapper = (props: Props) => {
     const checkReadme = () => {
       let title = '';
       let readmeTmp = props.markdownContent;
+      const mdContent = props.markdownContent.split('\n');
 
       const hasTitle = (): boolean => {
         if (INITIAL_HEADING.test(readmeTmp)) {
-          const matches = HEADING_REGEX.exec(`\n${readmeTmp}`);
-          if (matches) {
-            title = matches[2];
-            readmeTmp = readmeTmp.replace(`${matches[1]} ${matches[2]}`, '');
-          }
+          title = mdContent[0].replace(/#/g, '').trim();
+          readmeTmp = readmeTmp.replace(mdContent[0], '');
           return true;
         }
 
         let hasTitle = false;
-        const mdContent = props.markdownContent.split('\n');
         if (mdContent.length > 1) {
           const secondLine = mdContent[1];
           if (secondLine.includes('===') || secondLine.includes('---')) {

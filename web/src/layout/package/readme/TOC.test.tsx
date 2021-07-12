@@ -7,43 +7,39 @@ const defaultProps = {
   title: 'Readme',
   toc: [
     {
-      level: 1,
-      link: 'title-1',
-      title: 'Title 1',
+      depth: 1,
+      value: 'Title 1',
       children: [
         {
-          level: 2,
-          link: 'subtitle-1a',
-          title: 'Subtitle 1a',
+          depth: 2,
+          value: 'Subtitle 1a',
           children: [
             {
-              level: 3,
-              link: 'opt-1',
-              title: 'Opt 1',
+              depth: 3,
+              value: 'Opt 1',
+              children: [],
             },
             {
-              level: 3,
-              link: 'opt-2',
-              title: 'Opt 2',
+              depth: 3,
+              value: 'Opt 2',
+              children: [],
             },
           ],
         },
         {
-          level: 2,
-          link: 'subtitle-1b',
-          title: 'Subtitle 1b',
+          depth: 2,
+          value: 'Subtitle 1b',
         },
       ],
     },
     {
-      level: 1,
-      link: 'title-2',
-      title: 'Title 2',
+      depth: 1,
+      value: 'Title 2',
       children: [
         {
-          level: 2,
-          link: 'subtitle-2',
-          title: 'Subtitle 2',
+          depth: 2,
+          value: 'Subtitle 2',
+          children: [],
         },
       ],
     },

@@ -1,93 +1,14 @@
-import { isNull } from 'lodash';
-import regexifyString from 'regexify-string';
-
 import { TOCEntryItem } from '../types';
-import getAnchorValue from './getAnchorValue';
-import removeEmojis from './removeEmojis';
 
-/* eslint-disable no-control-regex */
-export const HEADING_REGEX = new RegExp('\n(#+) (.*)', 'g');
-const CODE_REGEX = new RegExp('```([^`]*)```', 'gm');
-const SETEXT_HEADER = new RegExp('^(.*)$\n[=-]{3,}\n', 'igm');
-const TABLE_REGEX = new RegExp('^(|[^\n]+)', 'gm');
-const HTML_REGEX = new RegExp('</?[^>]*>', 'gi');
-const LINK_REGEX = /[^[\]]+(?=])/gm;
-/* eslint-enable no-control-regex */
-
-const cleanTitle = (title: string): string => {
-  // Remove backticks and asteriks
-  return removeEmojis(title.replace(/`/g, '').replace(/\*\*/g, ''));
-};
-
-const convertSetextHeadersToAtx = (md: string): string => {
-  const result = regexifyString({
-    pattern: SETEXT_HEADER,
-    decorator: (match: string) => {
-      const content = match.split('\n');
-      if (content[0] !== '') {
-        return `${content[1].includes('=') ? '# ' : '## '}${content[0]}`;
-      }
-      return '';
-    },
-    input: md,
-  });
-  return result.join('\n');
-};
+const unified = require('unified');
+const markdown = require('remark-parse');
+const unlink = require('remark-unlink');
+const utf8 = require('remark-utf8');
+const extractToc = require('remark-extract-toc');
+const processor = unified().use(markdown).use(unlink).use(utf8).use(extractToc);
 
 export default (md: string): TOCEntryItem[] => {
-  let cleanMD = md;
-  try {
-    cleanMD = convertSetextHeadersToAtx(md.replace(CODE_REGEX, '').replace(TABLE_REGEX, '').replace(HTML_REGEX, ''));
-  } catch {
-    // Only if error to clean markdown
-  }
-  let titles: TOCEntryItem[] = [];
-  let entries: TOCEntryItem[] = [];
-  let processed: TOCEntryItem[] = [];
-
-  const findParent = (entries: TOCEntryItem[], child: TOCEntryItem): TOCEntryItem | null => {
-    const reversedEntries = entries.slice().reverse();
-    for (let i = 0; i < reversedEntries.length; i++) {
-      if (reversedEntries[i].level < child.level) {
-        return reversedEntries[i];
-      }
-    }
-    return null;
-  };
-
-  let match = HEADING_REGEX.exec(cleanMD);
-
-  while (!isNull(match)) {
-    if (!match[2].startsWith('[')) {
-      titles.push({
-        level: match[1].length,
-        title: cleanTitle(match[2]),
-        link: getAnchorValue(match[2]),
-      });
-    } else {
-      const link = match[2];
-      const linkMatch = link.match(LINK_REGEX);
-      if (!isNull(linkMatch)) {
-        const link = linkMatch[0];
-        titles.push({
-          level: match[1].length,
-          title: cleanTitle(link),
-          link: getAnchorValue(link),
-        });
-      }
-    }
-    match = HEADING_REGEX.exec(cleanMD);
-  }
-
-  for (let i = 0; i < titles.length; i++) {
-    const parent = findParent(processed, titles[i]);
-    if (!isNull(parent)) {
-      parent.children = parent.children ? [...parent.children, titles[i]] : [titles[i]];
-    } else {
-      entries = [...entries, titles[i]];
-    }
-    processed = [...processed, titles[i]];
-  }
-
-  return entries;
+  const node = processor.parse(md);
+  const tree = processor.runSync(node);
+  return tree;
 };

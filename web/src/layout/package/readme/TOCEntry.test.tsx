@@ -8,9 +8,8 @@ const scrollIntoViewMock = jest.fn();
 
 const defaultProps = {
   entry: {
-    title: 'Installing the Chart',
-    level: 1,
-    link: 'installing-the-chart',
+    value: 'Installing the Chart',
+    depth: 1,
   },
   level: 1,
   setVisibleTOC: setVisibleTOCMock,

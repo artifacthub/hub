@@ -19,14 +19,14 @@ const TOCList = (props: Props) => {
       {props.toc.map((entry: TOCEntryItem, index: number) => {
         if (!isUndefined(props.index) && props.index >= MAX_VISIBLE_LEVEL) return null;
         return (
-          <div key={`toc_${entry.title}_${index}`}>
+          <div key={`toc_${entry.value}_${index}`}>
             <TOCEntry
               entry={entry}
               scrollIntoView={props.scrollIntoView}
               level={props.index || 0}
               setVisibleTOC={props.setVisibleTOC}
             />
-            {entry.children && (
+            {entry.children && entry.children.length > 0 && (
               <TOCList
                 toc={entry.children}
                 setVisibleTOC={props.setVisibleTOC}
