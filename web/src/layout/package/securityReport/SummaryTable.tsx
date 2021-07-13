@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SecurityReport, SecurityTargetReport, Vulnerability, VulnerabilitySeverity } from '../../../types';
+import { SecurityReport, SecurityReportResult, Vulnerability, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER } from '../../../utils/data';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
 import sumObjectValues from '../../../utils/sumObjectValues';
@@ -37,7 +37,7 @@ const SummaryTable = (props: Props) => {
         <tbody>
           {Object.keys(props.report).map((image: string, index: number) => {
             let vulnerabilitiesList: Vulnerability[] = [];
-            props.report[image].forEach((targetReport: SecurityTargetReport) => {
+            props.report[image].Results.forEach((targetReport: SecurityReportResult) => {
               if (targetReport.Vulnerabilities) {
                 vulnerabilitiesList = [...vulnerabilitiesList, ...targetReport.Vulnerabilities];
               }

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 
-import { SecurityTargetReport, Vulnerability } from '../../../types';
+import { SecurityReportResult, Vulnerability } from '../../../types';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
 import getTextBetweenParenthesis from '../../../utils/getTextBetweenParenthesis';
 import SecurityRating from '../../common/SecutityRating';
@@ -15,7 +15,7 @@ interface Props {
   expandedTarget: string | null;
   setExpandedTarget: React.Dispatch<React.SetStateAction<string | null>>;
   image: string;
-  reports: SecurityTargetReport[];
+  reports: SecurityReportResult[];
   hasOnlyOneTarget: boolean;
 }
 
@@ -44,7 +44,7 @@ const SecurityTable = (props: Props) => {
           <div className="ml-4 mb-4">{getEmptyMessage()}</div>
         ) : (
           <>
-            {props.reports.map((item: SecurityTargetReport) => {
+            {props.reports.map((item: SecurityReportResult) => {
               const targetImageName = `${props.image}_${item.Target}`;
               const { list, summary } = formatSecurityReport(item.Vulnerabilities);
               const visibleVulnerabilities = slice(list, 0, MAX_VULNERABILITY_NUMBER);

@@ -39,13 +39,13 @@ const SecurityModal = (props: Props) => {
   const activateTargetWhenIsOnlyOne = (report: SecurityReport) => {
     const images = Object.keys(report);
     if (images.length === 1) {
-      const targets = report[images[0]];
+      const results = report[images[0]].Results;
       if (
-        targets.length === 1 &&
-        report[images[0]][0].Vulnerabilities &&
-        report[images[0]][0].Vulnerabilities!.length > 0
+        results.length === 1 &&
+        report[images[0]].Results[0].Vulnerabilities &&
+        report[images[0]].Results[0].Vulnerabilities!.length > 0
       ) {
-        setExpandedTarget(`${images[0]}_${report[images[0]][0].Target}`);
+        setExpandedTarget(`${images[0]}_${report[images[0]].Results[0].Target}`);
         setHasOnlyOneTarget(true);
       }
     }
@@ -151,7 +151,7 @@ const SecurityModal = (props: Props) => {
                     return (
                       <SecurityTable
                         image={image}
-                        reports={report[image]}
+                        reports={report[image].Results}
                         key={`image_${image}`}
                         expandedTarget={expandedTarget}
                         setExpandedTarget={setExpandedTarget}
