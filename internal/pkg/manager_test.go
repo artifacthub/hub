@@ -6,6 +6,7 @@ import (
 	"errors"
 	"testing"
 
+	trivyreport "github.com/aquasecurity/trivy/pkg/report"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
@@ -1042,10 +1043,12 @@ func TestUpdateSnapshotSecurityReport(t *testing.T) {
 			High:   2,
 			Medium: 1,
 		},
-		Full: map[string][]interface{}{
+		ImagesReports: map[string]*trivyreport.Report{
 			"organization/image:tag": {
-				map[string]interface{}{
-					"k": "v",
+				Results: trivyreport.Results{
+					{
+						Vulnerabilities: nil,
+					},
 				},
 			},
 		},
