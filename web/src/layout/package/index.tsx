@@ -2,14 +2,13 @@ import { isArray } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiCode, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import useResizeObserver from 'use-resize-observer';
 
 import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
@@ -84,6 +83,7 @@ const RELATED_PKGS_GAP = 400;
 const PackageView = (props: Props) => {
   const history = useHistory();
   const point = useBreakpointDetect();
+  const contentWrapper = useRef<HTMLDivElement | null>(null);
   const [isLoadingPackage, setIsLoadingPackage] = useState(false);
   const [packageName, setPackageName] = useState(props.packageName);
   const [repositoryKind, setRepositoryKind] = useState(props.repositoryKind);
@@ -94,10 +94,30 @@ const PackageView = (props: Props) => {
     props.searchUrlReferer || {};
   const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
   const [currentHash, setCurrentHash] = useState<string | undefined>(props.hash);
-  const columnWrapper = useRef<HTMLDivElement>(null);
-  const [relatedPosition, setRelatedPosition] = useState<'column' | 'content' | undefined>(undefined);
+  const columnWrapper = useRef<HTMLDivElement | null>(null);
+  const [relatedPosition, setRelatedPosition] = useState<'column' | 'content' | undefined | null>(null);
 
   useScrollRestorationFix();
+
+  useLayoutEffect(() => {
+    const updateRelatedPosition = () => {
+      if (contentWrapper.current && columnWrapper.current && point && detail) {
+        if (point && !['xs', 'sm'].includes(point)) {
+          setRelatedPosition(
+            contentWrapper.current.offsetHeight <= columnWrapper.current.offsetHeight + RELATED_PKGS_GAP
+              ? 'content'
+              : 'column'
+          );
+        } else {
+          setRelatedPosition('column');
+        }
+      }
+    };
+
+    if (isUndefined(relatedPosition)) {
+      updateRelatedPosition();
+    }
+  }, [relatedPosition]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (!isUndefined(props.packageName) && !isLoadingPackage) {
@@ -108,21 +128,9 @@ const PackageView = (props: Props) => {
     }
   }, [props, isLoadingPackage]);
 
-  const { ref } = useResizeObserver<HTMLDivElement>({
-    onResize: ({ height }) => {
-      // Change related packages component position depending content height
-      if (columnWrapper.current && point && detail && isUndefined(relatedPosition) && height) {
-        if (point && !['xs', 'sm'].includes(point)) {
-          setRelatedPosition(height <= columnWrapper.current.offsetHeight + RELATED_PKGS_GAP ? 'content' : 'column');
-        } else {
-          setRelatedPosition('column');
-        }
-      }
-    },
-  });
-
   async function fetchPackageDetail() {
     try {
+      setRelatedPosition(null);
       const detailPkg = await API.getPackage({
         packageName: packageName,
         version: version,
@@ -133,14 +141,12 @@ const PackageView = (props: Props) => {
         detailPkg.repository.userAlias || detailPkg.repository.organizationName
       }/${detailPkg.repository.name}`;
       updateMetaIndex(metaTitle, detailPkg.description);
-      if (!isUndefined(detailPkg.readme) && !isUndefined(relatedPosition)) {
-        setRelatedPosition(undefined);
-      }
       setDetail(detailPkg);
       if (currentHash) {
         setCurrentHash(undefined);
       }
       setApiError(null);
+      setRelatedPosition(undefined);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
       setIsLoadingPackage(false);
       scrollIntoView();
@@ -860,7 +866,7 @@ const PackageView = (props: Props) => {
                         tabIndex={-1}
                         aria-label="Package detail"
                       >
-                        <div ref={ref}>
+                        <div ref={contentWrapper}>
                           {isNull(detail.readme) || isUndefined(detail.readme) ? (
                             <div className={styles.contentWrapper}>
                               <NoData>No README file available for this package</NoData>
@@ -879,7 +885,7 @@ const PackageView = (props: Props) => {
 
                         {!isUndefined(relatedPosition) && relatedPosition === 'content' && (
                           <RelatedPackages
-                            className={styles.contentWrapper}
+                            className={styles.relatedWrapper}
                             packageId={detail.packageId}
                             name={detail.name}
                             keywords={detail.keywords}

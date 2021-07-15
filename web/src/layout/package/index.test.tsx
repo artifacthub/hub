@@ -26,10 +26,6 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-jest.mock('use-resize-observer', () => {
-  return jest.requireActual('use-resize-observer/polyfilled');
-});
-
 const defaultProps = {
   repositoryKind: 'helm',
   repositoryName: 'repoName',
