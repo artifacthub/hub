@@ -17,7 +17,6 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-syntax-highlighter": "^13.5.0",
     "@types/semver": "^7.3.3",
-    "@types/use-resize-observer": "^6.1.0",
     "analytics": "^0.3.5",
     "apexcharts": "^3.26.0",
     "bootstrap": "^4.5.2",
@@ -48,7 +47,6 @@
     "semver": "^7.3.2",
     "tinycolor2": "^1.4.2",
     "unified": "^9.2.1",
-    "use-resize-observer": "^7.0.0",
     "yaml": "^1.10.0"
   },
   "devDependencies": {

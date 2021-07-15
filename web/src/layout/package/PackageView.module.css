@@ -143,6 +143,10 @@
   margin-right: 250px;
 }
 
+.relatedWrapper {
+  margin-right: 280px;
+}
+
 .spinner {
   top: 50%;
 }
@@ -201,6 +205,12 @@
   }
 }
 
+@media only screen and (max-width: 991.98px) {
+  .relatedWrapper {
+    margin-right: 0;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .rightColumnWrapper {
     margin-top: 10px;
@@ -254,7 +264,8 @@
     width: 310px;
   }
 
-  .contentWrapper {
+  .contentWrapper,
+  .relatedWrapper {
     margin-right: 0;
   }
 
