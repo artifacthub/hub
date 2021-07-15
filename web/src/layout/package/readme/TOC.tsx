@@ -3,6 +3,7 @@ import { FaListUl } from 'react-icons/fa';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { TOCEntryItem } from '../../../types';
+import cleanTOCEntry from '../../../utils/cleanTOCEntry';
 import styles from './TOC.module.css';
 import TOCList from './TOCList';
 
@@ -42,7 +43,7 @@ const TOC = (props: Props) => {
           </button>
         </div>
         <div className="flex-grow-1">
-          <h1 className={`mb-0 ${styles.title}`}>{props.title}</h1>
+          <h1 className={`mb-0 ${styles.title}`}>{cleanTOCEntry(props.title)}</h1>
         </div>
       </div>
 
