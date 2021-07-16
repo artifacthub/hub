@@ -30,6 +30,7 @@ import {
   SearchQuery,
   SearchResults,
   SecurityReport,
+  SecurityReportResult,
   Stats,
   Subscription,
   TestWebhook,
@@ -77,6 +78,10 @@ interface APIFetchProps {
   checkApprovedSession?: boolean;
   headers?: string[];
 }
+
+type SecurityReportRaw = {
+  [key: string]: { Results: SecurityReportResult[] } | SecurityReportResult[];
+};
 
 class API_CLASS {
   private EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples'];
@@ -879,6 +884,19 @@ class API_CLASS {
     return this.apiFetch({
       url: `${this.API_BASE_URL}/packages/${packageId}/${version}/security-report`,
       skipCamelConversion: true,
+    }).then((report: SecurityReportRaw) => {
+      const newFormatReport: SecurityReport = {};
+      Object.keys(report).forEach((item: string) => {
+        // https://github.com/aquasecurity/trivy/discussions/1050
+        if (isArray(report[item])) {
+          newFormatReport[item] = {
+            Results: report[item] as SecurityReportResult[],
+          };
+        } else if (isObject(report[item]) && report[item].hasOwnProperty('Results')) {
+          newFormatReport[item] = report[item] as { Results: SecurityReportResult[] };
+        }
+      });
+      return newFormatReport;
     });
   }
 

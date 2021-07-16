@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
+	github.com/aquasecurity/trivy v0.19.1
 	github.com/containerd/containerd v1.4.6
 	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/deislabs/oras v0.11.1

@@ -524,10 +524,10 @@ export type SecurityReportSummary = {
 };
 
 export interface SecurityReport {
-  [key: string]: SecurityTargetReport[];
+  [key: string]: { Results: SecurityReportResult[] };
 }
 
-export interface SecurityTargetReport {
+export interface SecurityReportResult {
   Target: string;
   Type: string;
   Vulnerabilities: Vulnerability[] | null;

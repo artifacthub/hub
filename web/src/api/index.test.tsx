@@ -1790,6 +1790,23 @@ describe('API', () => {
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.1.1/security-report');
         expect(response).toEqual(report);
       });
+
+      it('success with old format', async () => {
+        const report: SecurityReport = getData('36') as SecurityReport;
+        const oldReportVersion: SecurityReport = getData('36_old');
+        fetchMock.mockResponse(JSON.stringify(oldReportVersion), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.getSnapshotSecurityReport('pkgID', '1.1.1');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.1.1/security-report');
+        expect(response).toEqual(report);
+      });
     });
 
     describe('getChartTemplates', () => {

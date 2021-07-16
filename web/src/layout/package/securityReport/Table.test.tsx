@@ -1,11 +1,11 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
-import { SecurityTargetReport } from '../../../types';
+import { SecurityReportResult } from '../../../types';
 import SecurityTable from './Table';
 
-const getMockSecurityReport = (fixtureId: string): SecurityTargetReport[] => {
-  return require(`./__fixtures__/Table/${fixtureId}.json`) as SecurityTargetReport[];
+const getMockSecurityReport = (fixtureId: string): SecurityReportResult[] => {
+  return require(`./__fixtures__/Table/${fixtureId}.json`) as SecurityReportResult[];
 };
 
 const mockSetExpandedTarget = jest.fn();

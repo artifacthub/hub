@@ -76,7 +76,7 @@ select update_snapshot_security_report('{
         "high": 3,
         "low": 10
     },
-    "full": {
+    "images_reports": {
         "quay.io/org/pkg1:1.0.0": [
             {"k": "v"}
         ]

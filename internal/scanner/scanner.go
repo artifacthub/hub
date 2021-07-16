@@ -1,76 +1,124 @@
 package scanner
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha512"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"os"
+	"os/exec"
 	"sort"
 	"strings"
 
+	trivyreport "github.com/aquasecurity/trivy/pkg/report"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/google/go-containerregistry/pkg/name"
+	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
-// Scanner describes the methods a Scanner implementation must provide.
-type Scanner interface {
-	Scan(image string) ([]byte, error)
+var (
+	// ErrImageNotFound indicates that the image provided was not found in the
+	// registry.
+	ErrImageNotFound = errors.New("image not found")
+
+	// ErrSchemaV1NotSupported indicates that the image provided is using a v1
+	// schema which is not supported.
+	ErrSchemaV1NotSupported = errors.New("schema v1 manifest not supported by trivy")
+)
+
+// ImageScanner describes the methods an ImageScanner implementation must
+// provide. An image scanner is responsible of scanning a container image for
+// security vulnerabilities.
+type ImageScanner interface {
+	// ScanImage scans the provided image for security vulnerabilities,
+	// returning a report in json format.
+	ScanImage(image string) ([]byte, error)
 }
 
-// ScanSnapshot scans the provided package's snapshot for security
-// vulnerabilities returning a report with the results.
-func ScanSnapshot(
+// Scanner is in charge of scanning packages' snapshots for security
+// vulnerabilities. It relies on an image scanner to scan all the containers
+// images listed on the snapshot.
+type Scanner struct {
+	is ImageScanner
+	ec hub.ErrorsCollector
+}
+
+// New creates a new Scanner instance.
+func New(
 	ctx context.Context,
-	scanner Scanner,
-	s *hub.SnapshotToScan,
+	cfg *viper.Viper,
 	ec hub.ErrorsCollector,
-) (*hub.SnapshotSecurityReport, error) {
-	ec.Init(s.RepositoryID)
+	opts ...func(s *Scanner),
+) *Scanner {
+	if cfg.GetString("scanner.trivyURL") == "" {
+		log.Fatal().Msg("trivy url not set")
+	}
+	s := &Scanner{
+		is: &TrivyScanner{
+			ctx: ctx,
+			cfg: cfg,
+		},
+		ec: ec,
+	}
+	for _, o := range opts {
+		o(s)
+	}
+	return s
+}
+
+// WithImageScanner allows providing a specific ImageScanner implementation for
+// a Scanner instance.
+func WithImageScanner(is ImageScanner) func(s *Scanner) {
+	return func(s *Scanner) {
+		s.is = is
+	}
+}
+
+// Scan scans the provided package's snapshot for security vulnerabilities
+// returning a report with the results.
+func (s *Scanner) Scan(sn *hub.SnapshotToScan) (*hub.SnapshotSecurityReport, error) {
+	s.ec.Init(sn.RepositoryID)
 
 	report := &hub.SnapshotSecurityReport{
-		PackageID: s.PackageID,
-		Version:   s.Version,
+		PackageID: sn.PackageID,
+		Version:   sn.Version,
 	}
 
-	full := make(map[string][]interface{})
-	for _, image := range s.ContainersImages {
-		reportData, err := scanner.Scan(image.Image)
+	imagesReports := make(map[string]*trivyreport.Report)
+	for _, image := range sn.ContainersImages {
+		imageReportJSON, err := s.is.ScanImage(image.Image)
 		if err != nil {
-			err := fmt.Errorf("error scanning image %s: %w (package %s:%s)", image.Image, err, s.PackageName, s.Version)
-			ec.Append(s.RepositoryID, err.Error())
+			err := fmt.Errorf("error scanning image %s: %w (package %s:%s)", image.Image, err, sn.PackageName, sn.Version)
+			s.ec.Append(sn.RepositoryID, err.Error())
 			return report, err
 		}
-		var imageFullReport []interface{}
-		if err := json.Unmarshal(reportData, &imageFullReport); err != nil {
-			return report, fmt.Errorf("error unmarshalling image %s full report: %w", image.Image, err)
+		var imageReport *trivyreport.Report
+		if err := json.Unmarshal(imageReportJSON, &imageReport); err != nil {
+			return report, fmt.Errorf("error unmarshalling image %s report: %w", image.Image, err)
 		}
-		if imageFullReport != nil {
-			full[image.Image] = imageFullReport
+		if imageReport != nil {
+			imagesReports[image.Image] = imageReport
 		}
 	}
-	if len(full) > 0 {
-		report.Full = full
-		report.Summary = generateSummary(full)
-		report.AlertDigest = generateAlertDigest(full)
+	if len(imagesReports) > 0 {
+		report.ImagesReports = imagesReports
+		report.Summary = generateSummary(imagesReports)
+		report.AlertDigest = generateAlertDigest(imagesReports)
 	}
 
 	return report, nil
 }
 
-// generateSummary generates a summary of the security report from the full
-// report
-func generateSummary(full map[string][]interface{}) *hub.SecurityReportSummary {
+// generateSummary generates a summary of the security report from the images
+// reports.
+func generateSummary(imagesReports map[string]*trivyreport.Report) *hub.SecurityReportSummary {
 	summary := &hub.SecurityReportSummary{}
-	for _, targets := range full {
-		for _, entry := range targets {
-			var target *Target
-			entryJSON, err := json.Marshal(entry)
-			if err != nil {
-				continue
-			}
-			if err := json.Unmarshal(entryJSON, &target); err != nil {
-				continue
-			}
-			for _, vulnerability := range target.Vulnerabilities {
+	for _, imageReport := range imagesReports {
+		for _, result := range imageReport.Results {
+			for _, vulnerability := range result.Vulnerabilities {
 				switch vulnerability.Severity {
 				case "CRITICAL":
 					summary.Critical++
@@ -90,21 +138,13 @@ func generateSummary(full map[string][]interface{}) *hub.SecurityReportSummary {
 }
 
 // generateAlertDigest generates an alert digest of the security report from
-// the full report. At the moment the digest is based on the vulnerabilities
+// the images reports. At the moment the digest is based on the vulnerabilities
 // with a severity of high or critical.
-func generateAlertDigest(full map[string][]interface{}) string {
+func generateAlertDigest(imagesReports map[string]*trivyreport.Report) string {
 	var vs []string
-	for _, targets := range full {
-		for _, entry := range targets {
-			var target *Target
-			entryJSON, err := json.Marshal(entry)
-			if err != nil {
-				continue
-			}
-			if err := json.Unmarshal(entryJSON, &target); err != nil {
-				continue
-			}
-			for _, v := range target.Vulnerabilities {
+	for _, imageReport := range imagesReports {
+		for _, result := range imageReport.Results {
+			for _, v := range result.Vulnerabilities {
 				if v.Severity == "HIGH" || v.Severity == "CRITICAL" {
 					vs = append(vs, fmt.Sprintf("[%s:%s]", v.Severity, v.VulnerabilityID))
 				}
@@ -119,13 +159,60 @@ func generateAlertDigest(full map[string][]interface{}) string {
 	return digest
 }
 
-// Target represents a target in a security report.
-type Target struct {
-	Vulnerabilities []*Vulnerability `json:"Vulnerabilities"`
+// TrivyScanner is an ImageScanner implementation that uses Trivy to scan
+// containers images for security vulnerabilities.
+type TrivyScanner struct {
+	ctx context.Context
+	cfg *viper.Viper
 }
 
-// Vulnerability represents a vulnerability in a security report target.
-type Vulnerability struct {
-	VulnerabilityID string `json:"VulnerabilityID"`
-	Severity        string `json:"Severity"`
+// ScanImage implements the ImageScanner interface.
+func (s *TrivyScanner) ScanImage(image string) ([]byte, error) {
+	// Setup trivy command
+	trivyURL := s.cfg.GetString("scanner.trivyURL")
+	cmd := exec.CommandContext(s.ctx, "trivy", "--quiet", "client", "--remote", trivyURL, "-f", "json", image) // #nosec
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	cmd.Env = []string{
+		"PATH=" + os.Getenv("PATH"),
+		"USER=" + os.Getenv("USER"),
+		"HOME=" + os.Getenv("HOME"),
+		"TRIVY_CACHE_DIR=" + os.Getenv("TRIVY_CACHE_DIR"),
+		"TRIVY_NEW_JSON_SCHEMA=true", // Not needed in Trivy >= 0.20.0
+	}
+
+	// If the registry is the Docker Hub, include credentials to avoid rate
+	// limiting issues. Empty registry names will also match this check as the
+	// registry name will be set to index.docker.io when parsing the reference.
+	ref, err := name.ParseReference(image)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing image %s ref: %w", image, err)
+	}
+	if strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
+		cmd.Env = append(cmd.Env,
+			"TRIVY_USERNAME="+s.cfg.GetString("creds.dockerUsername"),
+			"TRIVY_PASSWORD="+s.cfg.GetString("creds.dockerPassword"),
+		)
+	}
+
+	// Run trivy command
+	if err := cmd.Run(); err != nil {
+		if strings.Contains(stderr.String(), "MANIFEST_UNKNOWN") {
+			return nil, ErrImageNotFound
+		}
+		if strings.Contains(stderr.String(), "UNAUTHORIZED") {
+			return nil, ErrImageNotFound
+		}
+		if strings.Contains(stderr.String(), `unsupported MediaType: "application/vnd.docker.distribution.manifest.v1+prettyjws"`) {
+			return nil, ErrSchemaV1NotSupported
+		}
+		trivyError := stderr.String()
+		parts := strings.Split(stderr.String(), "podman/podman.sock: no such file or directory")
+		if len(parts) > 1 {
+			trivyError = strings.TrimSpace(parts[1])
+		}
+		return nil, fmt.Errorf("error running trivy on image %s: %s", image, trivyError)
+	}
+	return stdout.Bytes(), nil
 }

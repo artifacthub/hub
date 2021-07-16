@@ -57,17 +57,9 @@ func main() {
 	rm := repo.NewManager(cfg, db, az, hc)
 	pm := pkg.NewManager(db)
 	ec := repo.NewErrorsCollector(rm, repo.Scanner)
+	s := scanner.New(ctx, cfg, ec)
 
 	// Scan pending snapshots
-	trivyURL := cfg.GetString("scanner.trivyURL")
-	if trivyURL == "" {
-		log.Fatal().Err(err).Msg("trivy url not set")
-	}
-	trivyScanner := &scanner.TrivyScanner{
-		Ctx: ctx,
-		Cfg: cfg,
-		URL: trivyURL,
-	}
 	snapshots, err := pm.GetSnapshotsToScan(ctx)
 	if err != nil {
 		log.Fatal().Err(err).Msg("error getting snapshots to scan")
@@ -76,7 +68,7 @@ func main() {
 	limiter := make(chan struct{}, cfg.GetInt("scanner.concurrency"))
 	var wg sync.WaitGroup
 L:
-	for _, s := range snapshots {
+	for _, sn := range snapshots {
 		select {
 		case <-ctx.Done():
 			break L
@@ -90,7 +82,7 @@ L:
 
 			logger := log.With().Str("pkg", snapshot.PackageID).Str("version", snapshot.Version).Logger()
 			logger.Info().Msg("scanning snapshot")
-			report, err := scanner.ScanSnapshot(ctx, trivyScanner, snapshot, ec)
+			report, err := s.Scan(snapshot)
 			if err != nil {
 				logger.Error().Err(err).Send()
 			}
@@ -99,7 +91,7 @@ L:
 			}
 
 			<-limiter
-		}(s)
+		}(sn)
 	}
 	wg.Wait()
 	ec.Flush()
