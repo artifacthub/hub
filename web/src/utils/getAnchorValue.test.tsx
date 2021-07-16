@@ -29,6 +29,10 @@ const tests: Test[] = [
     input: '可选：微信推送打卡结果',
     result: '可选-微信推送打卡结果',
   },
+  {
+    input: '[2.3.1]',
+    result: 'X-3-1',
+  },
 ];
 
 describe('getAnchorValue', () => {

@@ -48,4 +48,11 @@ describe('TOCEntry', () => {
       expect(scrollIntoViewMock).toHaveBeenCalledWith('#installing-the-chart');
     });
   });
+
+  describe('does not render element', () => {
+    it('when value is an empty string', () => {
+      const { container } = render(<TOCEntry {...defaultProps} entry={{ ...defaultProps.entry, value: '' }} />);
+      expect(container).toBeEmptyDOMElement();
+    });
+  });
 });

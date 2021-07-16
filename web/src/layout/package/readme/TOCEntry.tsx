@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { TOCEntryItem } from '../../../types';
+import cleanTOCEntry from '../../../utils/cleanTOCEntry';
 import getAnchorValue from '../../../utils/getAnchorValue';
 import history from '../../../utils/history';
-import removeEmojis from '../../../utils/removeEmojis';
 import styles from './TOCEntry.module.css';
 
 interface Props {
@@ -13,14 +13,11 @@ interface Props {
   scrollIntoView: (id?: string) => void;
 }
 
-const cleanTitle = (title: string): string => {
-  // Remove backticks and asteriks
-  return title !== '' ? removeEmojis(title.replace(/`/g, '').replace(/\*\*/g, '')) : title;
-};
-
 const TOCEntry = (props: Props) => {
+  if (props.entry.value === '') return null;
+
   const link = getAnchorValue(props.entry.value);
-  const title = cleanTitle(props.entry.value);
+  const title = cleanTOCEntry(props.entry.value);
 
   return (
     <div className={`${styles.dropdownItem} dropdownItem`}>
