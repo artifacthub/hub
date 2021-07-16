@@ -27,7 +27,7 @@ begin
 
     -- Update security report info in snapshot
     update snapshot set
-        security_report = p_report->'full',
+        security_report = p_report->'images_reports',
         security_report_alert_digest = v_alert_digest,
         security_report_summary = p_report->'summary',
         security_report_created_at = current_timestamp
