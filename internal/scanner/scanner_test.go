@@ -92,18 +92,39 @@ func TestScan(t *testing.T) {
 		ecMock.AssertExpectations(t)
 	})
 
-	t.Run("image report generated successfully", func(t *testing.T) {
+	t.Run("image report returned no results", func(t *testing.T) {
 		t.Parallel()
 		ecMock := &repo.ErrorsCollectorMock{}
 		ecMock.On("Init", repositoryID)
 		isMock := &ImageScannerMock{}
-		isMock.On("ScanImage", image).Return(sampleReportData, nil)
+		isMock.On("ScanImage", image).Return(sampleReport1Data, nil)
 		s := New(ctx, cfg, ecMock, WithImageScanner(isMock))
 
 		report, err := s.Scan(snapshot)
 		require.Nil(t, err)
 		var expectedImageFullReport *trivyreport.Report
-		err = json.Unmarshal(sampleReportData, &expectedImageFullReport)
+		err = json.Unmarshal(sampleReport1Data, &expectedImageFullReport)
+		require.NoError(t, err)
+		assert.Equal(t, &hub.SnapshotSecurityReport{
+			PackageID: packageID,
+			Version:   version,
+		}, report)
+		isMock.AssertExpectations(t)
+		ecMock.AssertExpectations(t)
+	})
+
+	t.Run("image report generated successfully", func(t *testing.T) {
+		t.Parallel()
+		ecMock := &repo.ErrorsCollectorMock{}
+		ecMock.On("Init", repositoryID)
+		isMock := &ImageScannerMock{}
+		isMock.On("ScanImage", image).Return(sampleReport2Data, nil)
+		s := New(ctx, cfg, ecMock, WithImageScanner(isMock))
+
+		report, err := s.Scan(snapshot)
+		require.Nil(t, err)
+		var expectedImageFullReport *trivyreport.Report
+		err = json.Unmarshal(sampleReport2Data, &expectedImageFullReport)
 		require.NoError(t, err)
 		assert.Equal(t, &hub.SnapshotSecurityReport{
 			PackageID:   packageID,
@@ -122,7 +143,27 @@ func TestScan(t *testing.T) {
 	})
 }
 
-var sampleReportData = []byte(`
+var sampleReport1Data = []byte(`
+{
+  "SchemaVersion": 2,
+  "ArtifactName": "artifacthub/hub:v1.0.0",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "OS": {
+      "Family": "alpine",
+      "Name": "3.13.5"
+    },
+    "RepoTags": [
+      "artifacthub/hub:v1.0.0"
+    ],
+    "RepoDigests": [
+      "artifacthub/hub@sha256:becb8e06fb01f0324dabac05d700755bcd324071e66ebf4bc10151e356de9c71"
+    ]
+  }
+}
+`)
+
+var sampleReport2Data = []byte(`
 {
   "SchemaVersion": 2,
   "ArtifactName": "artifacthub/hub:v1.0.0",
