@@ -99,7 +99,7 @@ func (s *Scanner) Scan(sn *hub.SnapshotToScan) (*hub.SnapshotSecurityReport, err
 		if err := json.Unmarshal(imageReportJSON, &imageReport); err != nil {
 			return report, fmt.Errorf("error unmarshalling image %s report: %w", image.Image, err)
 		}
-		if imageReport != nil {
+		if imageReport != nil && len(imageReport.Results) > 0 {
 			imagesReports[image.Image] = imageReport
 		}
 	}
