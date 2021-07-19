@@ -203,10 +203,12 @@ const ChartTemplatesModal = (props: Props) => {
   }
 
   const onOpenModal = () => {
-    if (templates && props.packageId === currentPkgId && props.version === currentVersion) {
-      setOpenStatus(true);
-    } else {
-      getChartTemplates();
+    if (!props.repoUrl.startsWith(OCI_PREFIX)) {
+      if (templates && props.packageId === currentPkgId && props.version === currentVersion) {
+        setOpenStatus(true);
+      } else {
+        getChartTemplates();
+      }
     }
   };
 
