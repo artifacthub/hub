@@ -19,6 +19,10 @@
   width: calc(100% - 6rem);
 }
 
+.tooltip {
+  width: 230px;
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;
