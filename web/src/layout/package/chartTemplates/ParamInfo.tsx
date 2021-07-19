@@ -18,7 +18,6 @@ interface Props {
 
 interface HeadingProps {
   level: number;
-  title?: string;
   children?: JSX.Element[];
 }
 
@@ -30,12 +29,12 @@ interface LinkProps {
 
 const Heading: React.ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className={`text-dark ${styles.header}`}>{data.title || data.children}</Tag>;
+  return <Tag className={`text-dark ${styles.header}`}>{data.children}</Tag>;
 };
 
 const Link: React.ElementType = (data: LinkProps) => {
   const linkIcon =
-    data.children && isArray(data.children) && data.children[0].props.children === 'iconLink' ? (
+    data.children && isArray(data.children) && data.children[0] === 'iconLink' ? (
       <FiExternalLink className={`position-relative ${styles.linkIcon}`} />
     ) : undefined;
 
@@ -95,9 +94,14 @@ const ParamInfo = (props: Props) => {
               <ReactMarkdown
                 className="p-2"
                 children={props.info as string}
-                renderers={{
-                  heading: Heading,
-                  link: Link,
+                components={{
+                  h1: Heading,
+                  h2: Heading,
+                  h3: Heading,
+                  h4: Heading,
+                  h5: Heading,
+                  h6: Heading,
+                  a: Link,
                 }}
                 linkTarget="_blank"
                 skipHtml

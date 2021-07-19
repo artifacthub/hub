@@ -1,4 +1,4 @@
-import { isArray } from 'lodash';
+import { isArray, isString } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { GoLink } from 'react-icons/go';
@@ -18,24 +18,14 @@ const AnchorHeader: React.ElementType = (props: Props) => {
   let value = props.title;
   if (isUndefined(value) && props.children && props.children.length > 0) {
     const el = props.children![0];
-    if (el.props.children && isArray(el.props.children)) {
-      value = el.props.children[0].props.value;
-    } else {
-      value = el.props.value || el.props.href;
+    if (!isUndefined(el.props) && isArray(el.props.children) && isString(el.props.children[0])) {
+      value = el.props.children[0];
+    } else if (isString(el)) {
+      value = el;
     }
   }
 
   if (isUndefined(value)) return null;
-
-  // Get proper value when header is wrapped into html tag
-  if (value.startsWith('<')) {
-    props.children!.forEach((child: any) => {
-      if (child.props && child.props.value && !child.props.value.startsWith('<')) {
-        value = child.props.value;
-        return;
-      }
-    });
-  }
 
   const Tag = `h${props.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   const anchor = getAnchorValue(value);

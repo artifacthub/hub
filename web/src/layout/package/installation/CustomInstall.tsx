@@ -11,8 +11,7 @@ interface Props {
 }
 
 interface CodeProps {
-  language: string;
-  value: string;
+  children: any;
 }
 
 interface HeadingProps {
@@ -26,11 +25,16 @@ interface TableProps {
 
 const CustomInstall = (props: Props) => {
   const Code: React.ElementType = (props: CodeProps) => {
-    if (props.value) {
-      return <CommandBlock command={props.value} />;
+    if (props.children) {
+      const content = String(props.children).replace(/\n$/, '');
+      return <CommandBlock command={content} />;
     } else {
       return null;
     }
+  };
+
+  const Pre: React.ElementType = (props: CodeProps) => {
+    return <>{props.children}</>;
   };
 
   const Heading: React.ElementType = (props: HeadingProps) => (
@@ -54,9 +58,15 @@ const CustomInstall = (props: Props) => {
           linkTarget="_blank"
           plugins={[[gfm, { singleTilde: false }]]}
           skipHtml
-          renderers={{
+          components={{
+            pre: Pre,
             code: Code,
-            heading: Heading,
+            h1: Heading,
+            h2: Heading,
+            h3: Heading,
+            h4: Heading,
+            h5: Heading,
+            h6: Heading,
             table: Table,
           }}
         />
