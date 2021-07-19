@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { compact, isNull, uniq } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { ImInsertTemplate } from 'react-icons/im';
@@ -7,7 +8,9 @@ import { useHistory } from 'react-router-dom';
 import API from '../../../api';
 import { ChartTemplate, ChartTmplTypeFile, RepositoryKind, SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import { OCI_PREFIX } from '../../../utils/data';
 import BlockCodeButtons from '../../common/BlockCodeButtons';
+import ElementWithTooltip from '../../common/ElementWithTooltip';
 import ErrorBoundary from '../../common/ErrorBoundary';
 import Loading from '../../common/Loading';
 import Modal from '../../common/Modal';
@@ -19,6 +22,7 @@ interface Props {
   normalizedName: string;
   packageId: string;
   version: string;
+  repoUrl: string;
   repoKind: RepositoryKind;
   visibleChartTemplates: boolean;
   visibleTemplate?: string;
@@ -130,7 +134,7 @@ const ChartTemplatesModal = (props: Props) => {
 
   useEffect(() => {
     if (props.visibleChartTemplates) {
-      if (!openStatus && props.repoKind === RepositoryKind.Helm) {
+      if (!openStatus && props.repoKind === RepositoryKind.Helm && !props.repoUrl.startsWith(OCI_PREFIX)) {
         onOpenModal();
       } else {
         cleanUrl();
@@ -218,26 +222,36 @@ const ChartTemplatesModal = (props: Props) => {
   return (
     <div className="mb-2">
       <div className="text-center">
-        <button
-          data-testid="tmplModalBtn"
-          className={`btn btn-outline-secondary btn-sm text-nowrap ${props.btnClassName}`}
-          onClick={onOpenModal}
-          aria-label="Open templates modal"
-        >
-          <div className="d-flex flex-row align-items-center justify-content-center">
-            {isLoading ? (
-              <>
-                <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                <span className="d-none d-md-inline ml-2 font-weight-bold">Loading templates...</span>
-              </>
-            ) : (
-              <>
-                <ImInsertTemplate />
-                <span className="ml-2 font-weight-bold text-uppercase">Templates</span>
-              </>
-            )}
-          </div>
-        </button>
+        <ElementWithTooltip
+          element={
+            <button
+              data-testid="tmplModalBtn"
+              className={classnames('btn btn-outline-secondary btn-sm text-nowrap', props.btnClassName, {
+                disabled: props.repoUrl.startsWith(OCI_PREFIX),
+              })}
+              onClick={onOpenModal}
+              aria-label="Open templates modal"
+            >
+              <div className="d-flex flex-row align-items-center justify-content-center">
+                {isLoading ? (
+                  <>
+                    <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                    <span className="d-none d-md-inline ml-2 font-weight-bold">Loading templates...</span>
+                  </>
+                ) : (
+                  <>
+                    <ImInsertTemplate />
+                    <span className="ml-2 font-weight-bold text-uppercase">Templates</span>
+                  </>
+                )}
+              </div>
+            </button>
+          }
+          visibleTooltip={props.repoUrl.startsWith(OCI_PREFIX)}
+          tooltipClassName={styles.tooltip}
+          tooltipMessage="Exploring chart templates is not yet supported in OCI repositories."
+          active
+        />
       </div>
 
       {openStatus && templates && (

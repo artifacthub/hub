@@ -8,26 +8,34 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
     <div
       class="text-center"
     >
-      <button
-        aria-label="Open templates modal"
-        class="btn btn-outline-secondary btn-sm text-nowrap undefined"
-        data-testid="tmplModalBtn"
+      <div
+        class="position-relative undefined"
       >
         <div
-          class="d-flex flex-row align-items-center justify-content-center"
+          data-testid="elementWithTooltip"
         >
-          <span
-            aria-hidden="true"
-            class="spinner-grow spinner-grow-sm"
-            role="status"
-          />
-          <span
-            class="d-none d-md-inline ml-2 font-weight-bold"
+          <button
+            aria-label="Open templates modal"
+            class="btn btn-outline-secondary btn-sm text-nowrap"
+            data-testid="tmplModalBtn"
           >
-            Loading templates...
-          </span>
+            <div
+              class="d-flex flex-row align-items-center justify-content-center"
+            >
+              <span
+                aria-hidden="true"
+                class="spinner-grow spinner-grow-sm"
+                role="status"
+              />
+              <span
+                class="d-none d-md-inline ml-2 font-weight-bold"
+              >
+                Loading templates...
+              </span>
+            </div>
+          </button>
         </div>
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
