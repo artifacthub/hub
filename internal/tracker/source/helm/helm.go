@@ -221,6 +221,7 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		if err != nil {
 			return nil, fmt.Errorf("error loading chart (%s): %w", chartURL.String(), err)
 		}
+		md := chrt.Metadata
 
 		// Validate chart version metadata for known issues and sanitize some strings
 		if err := chrt.Validate(); err != nil {
