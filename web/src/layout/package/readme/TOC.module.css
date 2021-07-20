@@ -34,6 +34,10 @@
   font-size: 1.85rem;
 }
 
+.title p {
+  margin-bottom: 0;
+}
+
 /* Scroll */
 .list::-webkit-scrollbar {
   width: 10px;

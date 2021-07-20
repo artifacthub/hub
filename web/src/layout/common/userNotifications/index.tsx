@@ -11,13 +11,12 @@ import styles from './UserNotifications.module.css';
 
 interface HeadingProps {
   level: number;
-  title?: string;
   children?: JSX.Element[];
 }
 
 const Heading: React.ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className={`text-dark ${styles.header}`}>{data.title || data.children}</Tag>;
+  return <Tag className={`text-dark ${styles.header}`}>{data.children}</Tag>;
 };
 
 const ANIMATION_TIME = 300; //300ms
@@ -132,8 +131,13 @@ const UserNotificationsController: React.ElementType = () => {
                 <ReactMarkdown
                   className={styles.content}
                   children={notification.body}
-                  renderers={{
-                    heading: Heading,
+                  components={{
+                    h1: Heading,
+                    h2: Heading,
+                    h3: Heading,
+                    h4: Heading,
+                    h5: Heading,
+                    h6: Heading,
                   }}
                   linkTarget="_blank"
                   skipHtml

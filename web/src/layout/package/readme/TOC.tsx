@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FaListUl } from 'react-icons/fa';
+import ReactMarkdown from 'react-markdown';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { TOCEntryItem } from '../../../types';
@@ -43,7 +44,9 @@ const TOC = (props: Props) => {
           </button>
         </div>
         <div className="flex-grow-1">
-          <h1 className={`mb-0 ${styles.title}`}>{cleanTOCEntry(props.title)}</h1>
+          <h1 className={`mb-0 ${styles.title}`}>
+            <ReactMarkdown children={cleanTOCEntry(props.title)} linkTarget="_blank" skipHtml />
+          </h1>
         </div>
       </div>
 

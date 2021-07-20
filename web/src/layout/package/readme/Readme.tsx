@@ -17,8 +17,9 @@ interface Props {
 }
 
 interface CodeProps {
-  language: string;
-  value: string;
+  className: string;
+  inline: boolean;
+  children: any;
 }
 
 interface ImageProps {
@@ -242,15 +243,16 @@ const checkCodeLanguage = (language: string | null): string => {
 };
 
 const Readme = (props: Props) => {
-  const Code: React.ElementType = (props: CodeProps) => {
-    if (props.value) {
+  const Code: React.ElementType = ({ inline, className, children }: CodeProps) => {
+    const match = /language-(\w+)/.exec(className || '');
+    if (inline) {
+      return <code className={className}>{children}</code>;
+    } else {
       return (
-        <SyntaxHighlighter language={checkCodeLanguage(props.language)} style={github}>
-          {props.value}
+        <SyntaxHighlighter language={checkCodeLanguage(match ? match[1] : 'bash')} style={github}>
+          {String(children).replace(/\n$/, '')}
         </SyntaxHighlighter>
       );
-    } else {
-      return null;
     }
   };
 
@@ -287,7 +289,7 @@ const Readme = (props: Props) => {
   // Only for external links and anchors
   const Link: React.ElementType = (data: LinkProps) => {
     const isContentImage =
-      data.children && isArray(data.children) && data.children.length > 0
+      data.children && isArray(data.children) && data.children.length > 0 && !isUndefined(data.children[0].props)
         ? !isUndefined(data.children[0].props.src)
         : false;
 
@@ -355,16 +357,21 @@ const Readme = (props: Props) => {
       children={props.readme}
       linkTarget="_blank"
       skipHtml
-      plugins={[[gfm, { tableCellPadding: false }]]}
-      renderers={{
+      remarkPlugins={[[gfm, { tableCellPadding: false }]]}
+      components={{
+        pre: 'span',
         code: Code,
         image: Image,
-        link: Link,
-        imageReference: Image,
-        linkReference: Link,
+        img: Image,
+        a: Link,
         table: Table,
-        heading: Heading,
-        paragraph: Paragraph,
+        h1: Heading,
+        h2: Heading,
+        h3: Heading,
+        h4: Heading,
+        h5: Heading,
+        h6: Heading,
+        p: Paragraph,
         blockquote: Blockquote,
       }}
     />

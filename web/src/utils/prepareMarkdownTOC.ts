@@ -8,7 +8,9 @@ const extractToc = require('remark-extract-toc');
 const processor = unified().use(markdown).use(unlink).use(utf8).use(extractToc);
 
 export default (md: string): TOCEntryItem[] => {
-  const node = processor.parse(md);
+  // Remove bold
+  const cleanMD = md.replace(/\*\*/g, '');
+  const node = processor.parse(cleanMD);
   const tree = processor.runSync(node);
   return tree;
 };
