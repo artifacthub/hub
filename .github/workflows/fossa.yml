@@ -18,10 +18,11 @@ jobs:
       - name: run FOSSA analysis
         env:
           # FOSSA Push-Only API Token
-          FOSSA_API_KEY: '5cda1cd0d5036f6f368682c23a5fdfec'
+          FOSSA_API_KEY: "5cda1cd0d5036f6f368682c23a5fdfec"
+          BINDIR: /home/runner/work/hub/hub
         run: |
           export GOPATH=$HOME/go
           export PATH=$PATH:$(go env GOPATH)/bin
-          curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash
-          fossa init
-          fossa analyze
+          curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash -s -- -b $BINDIR
+          $BINDIR/fossa init
+          $BINDIR/fossa analyze

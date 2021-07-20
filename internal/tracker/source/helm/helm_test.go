@@ -887,12 +887,24 @@ url: https://key.url
 			},
 			"",
 		},
+		// Multiple errors
+		{
+			&hub.Package{},
+			map[string]string{
+				signKeyAnnotation: `
+fingerprint: 0011223344
+`,
+				prereleaseAnnotation: "invalid",
+			},
+			&hub.Package{},
+			"2 errors occurred:\n\t* invalid annotation: invalid prerelease value\n\t* invalid annotation: sign key url not provided\n\n",
+		},
 	}
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
-			err := enrichPackageFromAnnotations(tc.pkg, tc.annotations)
+			err := EnrichPackageFromAnnotations(tc.pkg, tc.annotations)
 			if tc.expectedErrMsg != "" {
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), tc.expectedErrMsg)

@@ -1,0 +1,30 @@
+apiVersion: v2
+name: test1
+description: Test chart 1
+type: application
+version: 0.0.1
+appVersion: 0.0.1
+kubeVersion: ">= 1.14.0-0"
+home: https://testchart.org
+icon: https://testchart.org/logo.svg
+keywords:
+  - test
+  - chart
+maintainers:
+  - name: User1
+    email: user1@testchart.org
+  - name: User2
+    email: user2@testchart.org
+annotations:
+  artifacthub.io/changes: |
+    - kind: added
+      description: Test addition
+      links:
+        - name: Sample link
+          url: https://sample.link
+    - kind: fixed
+      description: Test fix
+  artifacthub.io/containsSecurityUpdates: "true"
+  artifacthub.io/images: |
+    - name: test-image
+      image: test-image/test-image:0.0.1
