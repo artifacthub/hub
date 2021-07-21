@@ -1,0 +1,41 @@
+
+------------------------------------------------------------------------------------------------------------------------
+✓ test 0.0.1 (testdata/test1/pkgs)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: test
+✓ Version: 0.0.1
+✓ App version: 0.0.1
+✓ Description: Test chart
+! License: *** NOT PROVIDED ***
+✓ Logo URL: https://testchart.org/logo.svg
+✓ Home URL: https://testchart.org
+✓ Deprecated: false
+✓ Pre-release: false
+✓ Contains security updates: true
+✓ Readme: PROVIDED
+✓ Keywords:
+  - test
+  - chart
+! Links: *** NOT PROVIDED ***
+✓ Maintainers:
+  - Name: User1 | Email: user1@testchart.org
+  - Name: User2 | Email: user2@testchart.org
+✓ Containers images:
+  - Name: test-image | Image: test-image/test-image:0.0.1
+✓ Changes:
+  - Kind: added | Description: Test addition
+    - Links:
+      - Name: Sample link | URL: https://sample.link
+  - Kind: fixed | Description: Test fix
+! Recommendations: *** NOT PROVIDED ***
+✓ Operator: false
+! Values schema: *** NOT PROVIDED ***
+! Sign key: *** NOT PROVIDED ***
+
+------------------------------------------------------------------------------------------------------------------------
+
+1 package(s) found, 0 package(s) with errors
+

@@ -23,6 +23,7 @@ import (
 	"github.com/deislabs/oras/pkg/content"
 	ctxo "github.com/deislabs/oras/pkg/context"
 	"github.com/deislabs/oras/pkg/oras"
+	"github.com/hashicorp/go-multierror"
 	"gopkg.in/yaml.v3"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
@@ -56,6 +57,9 @@ var (
 	// containersImagesRE is a regexp used to extract containers images from
 	// kubernetes manifests files.
 	containersImagesRE = regexp.MustCompile(`\simage:\s(\S+)`)
+
+	// errInvalidAnnotation indicates that the annotation provided is not valid.
+	errInvalidAnnotation = errors.New("invalid annotation")
 )
 
 // TrackerSource is a hub.TrackerSource implementation for Helm repositories.
@@ -250,21 +254,12 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 			}
 		}
 
-		// Extract containers images
-		imagesRefs, err := extractContainersImages(chrt)
-		if err == nil && len(imagesRefs) > 0 {
-			containersImages := make([]*hub.ContainerImage, 0, len(imagesRefs))
-			for _, imageRef := range imagesRefs {
-				containersImages = append(containersImages, &hub.ContainerImage{Image: imageRef})
-			}
-			if err := pkg.ValidateContainersImages(containersImages); err == nil {
-				p.ContainersImages = containersImages
-			}
-		}
+		// Enrich package with data available in chart archive
+		EnrichPackageFromChart(p, chrt)
 
-		// Enrich package from data available in chart archive
-		if err := enrichPackageFromArchive(p, chrt); err != nil {
-			return nil, fmt.Errorf("error enriching package from archive: %w", err)
+		// Enrich package with information from annotations
+		if err := EnrichPackageFromAnnotations(p, chrt.Metadata.Annotations); err != nil {
+			return nil, fmt.Errorf("error enriching package from annotations: %w", err)
 		}
 	}
 
@@ -387,42 +382,9 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 	}
 }
 
-// extractContainersImages extracts the containers images references found in
-// the manifest generated as a result of Helm dry-run install with the default
-// values.
-func extractContainersImages(chrt *chart.Chart) ([]string, error) {
-	// Dry-run Helm install
-	install := action.NewInstall(&action.Configuration{
-		Log: func(string, ...interface{}) {},
-	})
-	install.ReleaseName = "release-name"
-	install.DryRun = true
-	install.DisableHooks = true
-	install.Replace = true
-	install.ClientOnly = true
-	install.IncludeCRDs = true
-	install.DependencyUpdate = false
-	release, err := install.Run(chrt, chartutil.Values{})
-	if err != nil {
-		return nil, err
-	}
-
-	// Extract containers images from release manifest
-	results := containersImagesRE.FindAllStringSubmatch(release.Manifest, -1)
-	images := make([]string, 0, len(results))
-	for _, result := range results {
-		image := strings.Trim(result[1], `"'`)
-		if image != "" && !contains(images, image) {
-			images = append(images, image)
-		}
-	}
-
-	return images, nil
-}
-
-// enrichPackageFromArchive adds some extra information to the package from the
+// EnrichPackageFromChart adds some extra information to the package from the
 // chart archive.
-func enrichPackageFromArchive(p *hub.Package, chrt *chart.Chart) error {
+func EnrichPackageFromChart(p *hub.Package, chrt *chart.Chart) {
 	md := chrt.Metadata
 	p.Description = md.Description
 	p.Keywords = md.Keywords
@@ -434,6 +396,18 @@ func enrichPackageFromArchive(p *hub.Package, chrt *chart.Chart) error {
 
 	// API version
 	p.Data["apiVersion"] = chrt.Metadata.APIVersion
+
+	// Containers images
+	imagesRefs, err := extractContainersImages(chrt)
+	if err == nil && len(imagesRefs) > 0 {
+		containersImages := make([]*hub.ContainerImage, 0, len(imagesRefs))
+		for _, imageRef := range imagesRefs {
+			containersImages = append(containersImages, &hub.ContainerImage{Image: imageRef})
+		}
+		if err := pkg.ValidateContainersImages(containersImages); err == nil {
+			p.ContainersImages = containersImages
+		}
+	}
 
 	// Dependencies
 	dependencies := make([]map[string]string, 0, len(md.Dependencies))
@@ -496,55 +470,88 @@ func enrichPackageFromArchive(p *hub.Package, chrt *chart.Chart) error {
 
 	// Type
 	p.Data["type"] = chrt.Metadata.Type
-
-	// Enrich package with information from annotations
-	if err := enrichPackageFromAnnotations(p, md.Annotations); err != nil {
-		return fmt.Errorf("error enriching package from annotations: %w", err)
-	}
-
-	return nil
 }
 
-// enrichPackageFromAnnotations adds some extra information to the package from
+// extractContainersImages extracts the containers images references found in
+// the manifest generated as a result of Helm dry-run install with the default
+// values.
+func extractContainersImages(chrt *chart.Chart) ([]string, error) {
+	// Dry-run Helm install
+	install := action.NewInstall(&action.Configuration{
+		Log: func(string, ...interface{}) {},
+	})
+	install.ReleaseName = "release-name"
+	install.DryRun = true
+	install.DisableHooks = true
+	install.Replace = true
+	install.ClientOnly = true
+	install.IncludeCRDs = true
+	install.DependencyUpdate = false
+	release, err := install.Run(chrt, chartutil.Values{})
+	if err != nil {
+		return nil, err
+	}
+
+	// Extract containers images from release manifest
+	results := containersImagesRE.FindAllStringSubmatch(release.Manifest, -1)
+	images := make([]string, 0, len(results))
+	for _, result := range results {
+		image := strings.Trim(result[1], `"'`)
+		if image != "" && !contains(images, image) {
+			images = append(images, image)
+		}
+	}
+
+	return images, nil
+}
+
+// EnrichPackageFromAnnotations adds some extra information to the package from
 // the provided annotations.
-func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
+func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
+	var result *multierror.Error
+
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {
 		changes, err := source.ParseChangesAnnotation(v)
 		if err != nil {
-			return err
+			result = multierror.Append(result, err)
+		} else {
+			p.Changes = changes
 		}
-		p.Changes = changes
 	}
 
 	// CRDs
 	if v, ok := annotations[crdsAnnotation]; ok {
 		var crds []interface{}
 		if err := yaml.Unmarshal([]byte(v), &crds); err != nil {
-			return fmt.Errorf("invalid crds value: %s", v)
+			result = multierror.Append(result, fmt.Errorf("%w: invalid crds value", errInvalidAnnotation))
+		} else {
+			p.CRDs = crds
 		}
-		p.CRDs = crds
 	}
 
 	// CRDs examples
 	if v, ok := annotations[crdsExamplesAnnotation]; ok {
 		var crdsExamples []interface{}
 		if err := yaml.Unmarshal([]byte(v), &crdsExamples); err != nil {
-			return fmt.Errorf("invalid crdsExamples value: %s", v)
+			result = multierror.Append(result, fmt.Errorf("%w: invalid crdsExamples value", errInvalidAnnotation))
+		} else {
+			p.CRDsExamples = crdsExamples
 		}
-		p.CRDsExamples = crdsExamples
 	}
 
 	// Images
 	if v, ok := annotations[imagesAnnotation]; ok {
 		var images []*hub.ContainerImage
 		if err := yaml.Unmarshal([]byte(v), &images); err != nil {
-			return fmt.Errorf("invalid images value: %s", v)
+			result = multierror.Append(result, fmt.Errorf("%w: invalid images value", errInvalidAnnotation))
+		} else {
+			if err := pkg.ValidateContainersImages(images); err != nil {
+				result = multierror.Append(result, fmt.Errorf("%w: %s", errInvalidAnnotation, err.Error()))
+			} else {
+				p.ContainersImages = images
+			}
 		}
-		if err := pkg.ValidateContainersImages(images); err != nil {
-			return err
-		}
-		p.ContainersImages = images
 	}
 
 	// License
@@ -556,17 +563,18 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[linksAnnotation]; ok {
 		var links []*hub.Link
 		if err := yaml.Unmarshal([]byte(v), &links); err != nil {
-			return fmt.Errorf("invalid links value: %s", v)
-		}
-	LL:
-		for _, link := range links {
-			for _, pLink := range p.Links {
-				if link.URL == pLink.URL {
-					pLink.Name = link.Name
-					continue LL
+			result = multierror.Append(result, fmt.Errorf("%w: invalid links value", errInvalidAnnotation))
+		} else {
+		LL:
+			for _, link := range links {
+				for _, pLink := range p.Links {
+					if link.URL == pLink.URL {
+						pLink.Name = link.Name
+						continue LL
+					}
 				}
+				p.Links = append(p.Links, link)
 			}
-			p.Links = append(p.Links, link)
 		}
 	}
 
@@ -574,17 +582,18 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[maintainersAnnotation]; ok {
 		var maintainers []*hub.Maintainer
 		if err := yaml.Unmarshal([]byte(v), &maintainers); err != nil {
-			return fmt.Errorf("invalid maintainers value: %s", v)
-		}
-	ML:
-		for _, maintainer := range maintainers {
-			for _, pMaintainer := range p.Maintainers {
-				if maintainer.Email == pMaintainer.Email {
-					pMaintainer.Name = maintainer.Name
-					continue ML
+			result = multierror.Append(result, fmt.Errorf("%w: invalid maintainers value", errInvalidAnnotation))
+		} else {
+		ML:
+			for _, maintainer := range maintainers {
+				for _, pMaintainer := range p.Maintainers {
+					if maintainer.Email == pMaintainer.Email {
+						pMaintainer.Name = maintainer.Name
+						continue ML
+					}
 				}
+				p.Maintainers = append(p.Maintainers, maintainer)
 			}
-			p.Maintainers = append(p.Maintainers, maintainer)
 		}
 	}
 
@@ -592,9 +601,10 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[operatorAnnotation]; ok {
 		isOperator, err := strconv.ParseBool(v)
 		if err != nil {
-			return fmt.Errorf("invalid operator value: %s", v)
+			result = multierror.Append(result, fmt.Errorf("%w: invalid operator value", errInvalidAnnotation))
+		} else {
+			p.IsOperator = isOperator
 		}
-		p.IsOperator = isOperator
 	}
 
 	// Operator capabilities
@@ -604,42 +614,47 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[prereleaseAnnotation]; ok {
 		prerelease, err := strconv.ParseBool(v)
 		if err != nil {
-			return fmt.Errorf("invalid prerelease value: %s", v)
+			result = multierror.Append(result, fmt.Errorf("%w: invalid prerelease value", errInvalidAnnotation))
+		} else {
+			p.Prerelease = prerelease
 		}
-		p.Prerelease = prerelease
 	}
 
 	// Recommendations
 	if v, ok := annotations[recommendationsAnnotation]; ok {
 		var recommendations []*hub.Recommendation
 		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
-			return fmt.Errorf("invalid recommendations value: %s", v)
+			result = multierror.Append(result, fmt.Errorf("%w: invalid recommendations value", errInvalidAnnotation))
+		} else {
+			p.Recommendations = recommendations
 		}
-		p.Recommendations = recommendations
 	}
 
 	// Security updates
 	if v, ok := annotations[securityUpdatesAnnotation]; ok {
 		containsSecurityUpdates, err := strconv.ParseBool(v)
 		if err != nil {
-			return fmt.Errorf("invalid containsSecurityUpdates value: %s", v)
+			result = multierror.Append(result, fmt.Errorf("%w: invalid containsSecurityUpdates value", errInvalidAnnotation))
+		} else {
+			p.ContainsSecurityUpdates = containsSecurityUpdates
 		}
-		p.ContainsSecurityUpdates = containsSecurityUpdates
 	}
 
 	// Sign key
 	if v, ok := annotations[signKeyAnnotation]; ok {
 		var signKey *hub.SignKey
 		if err := yaml.Unmarshal([]byte(v), &signKey); err != nil {
-			return fmt.Errorf("invalid sign key value: %s", v)
+			result = multierror.Append(result, fmt.Errorf("%w: invalid sign key value", errInvalidAnnotation))
+		} else {
+			if signKey.URL == "" {
+				result = multierror.Append(result, fmt.Errorf("%w: sign key url not provided", errInvalidAnnotation))
+			} else {
+				p.SignKey = signKey
+			}
 		}
-		if signKey.URL == "" {
-			return fmt.Errorf("sign key url not provided: %s", v)
-		}
-		p.SignKey = signKey
 	}
 
-	return nil
+	return result.ErrorOrNil()
 }
 
 // getFile returns the file requested from the provided chart.

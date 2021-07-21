@@ -147,7 +147,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path3",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error preparing package test-operator version 0.1.0: invalid changes annotation: single string. Please use quotes on strings that include any of the following characters: {}:[],&*#?|-<>=!%@"
+		expectedErr := "error preparing package test-operator version 0.1.0: invalid changes annotation. Please use quotes on strings that include any of the following characters: {}:[],&*#?|-<>=!%@"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations

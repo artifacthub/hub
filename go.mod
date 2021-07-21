@@ -19,6 +19,7 @@ require (
 	github.com/gorilla/feeds v1.1.1
 	github.com/gorilla/securecookie v1.1.1
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
+	github.com/hashicorp/go-multierror v1.1.1
 	github.com/hashicorp/golang-lru v0.5.4
 	github.com/jackc/pgconn v1.8.1
 	github.com/jackc/pgx/v4 v4.11.0
@@ -32,7 +33,8 @@ require (
 	github.com/rs/zerolog v1.23.0
 	github.com/sabhiram/go-gitignore v0.0.0-20201211210132-54b8a0bf510f
 	github.com/satori/uuid v1.2.0
-	github.com/spf13/viper v1.8.0
+	github.com/spf13/cobra v1.2.1
+	github.com/spf13/viper v1.8.1
 	github.com/stretchr/testify v1.7.0
 	github.com/tektoncd/pipeline v0.25.0
 	github.com/unrolled/secure v1.0.9
