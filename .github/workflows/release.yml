@@ -46,3 +46,11 @@ jobs:
             -t artifacthub/tracker:latest .
       - name: Push tracker image
         run: docker push --all-tags artifacthub/tracker
+      - name: Build ah image
+        run: |
+          docker build \
+            -f cmd/ah/Dockerfile \
+            -t artifacthub/ah:${{steps.extract_tag_name.outputs.tag}} \
+            -t artifacthub/ah:latest .
+      - name: Push ah image
+        run: docker push --all-tags artifacthub/ah
