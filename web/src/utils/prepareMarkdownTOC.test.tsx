@@ -492,6 +492,38 @@ const tests: Test[] = [
       },
     ],
   },
+  {
+    input:
+      "# Helm Chart for Glowroot\n\nThis is a kubernetes helm chart for Glowroot. It deploys a pod for glowroot-central and one for cassandra database. The glowroot admin section is fully configurable through the values. Ingress is supported as well.\n\n# Content\n<!-- vscode-markdown-toc -->\n* 1. [Prerequisites](#Prerequisites)\n* 2. [Installation](#Installation)\n* 3. [Current Limitation](#CurrentLimitation)\n* 4. [Configuration](#Configuration)\n\t* 4.1. [Image](#Image)\n\t* 4.2. [Service](#Service)\n\t* 4.3. [Glowroot Cassandra](#GlowrootCassandra)\n\t* 4.4. [Glowroot UI](#GlowrootUI)\n\t* 4.5. [Glowroot Admin](#GlowrootAdmin)\n\t* 4.6. [Cassandra](#Cassandra)\n\t\t* 4.6.1. [Ingress](#Ingress)\n\n<!-- vscode-markdown-toc-config\n\tnumbering=true\n\tautoSave=true\n\t/vscode-markdown-toc-config -->\n<!-- /vscode-markdown-toc -->\n\n##  1. <a name='Prerequisites'></a>Prerequisites\n\n* Kubernetes cluster 1.10(should also work on older versions)\n* Helm 2.8.0+\n\n##  2. <a name='Installation'></a>Installation\n\n```\n  helm repo add novum-rgi-helm https://novumrgi.github.io/helm/\n  helm install glowroot novum-rgi-helm/glowroot\n```\n\n##  3. <a name='CurrentLimitation'></a>Current Limitation\n\nSince this image needs to configure the admin part via values this chart is based on a little patch for glowroot.",
+    output: [
+      {
+        children: [],
+        depth: 1,
+        value: 'Helm Chart for Glowroot',
+      },
+      {
+        children: [
+          {
+            children: [],
+            depth: 2,
+            value: '1. Prerequisites',
+          },
+          {
+            children: [],
+            depth: 2,
+            value: '2. Installation',
+          },
+          {
+            children: [],
+            depth: 2,
+            value: '3. Current Limitation',
+          },
+        ],
+        depth: 1,
+        value: 'Content',
+      },
+    ],
+  },
 ];
 
 describe('prepareMarkdownTOC', () => {

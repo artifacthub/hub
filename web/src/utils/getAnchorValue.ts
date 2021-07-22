@@ -5,7 +5,7 @@ export default (str: string): string => {
     str
       .trim()
       .toLowerCase()
-      .replace('#', '')
+      .replace(/#/g, '')
       .replace(/[`$&+,:;=?@|'.<>^*()\\/%!®[\]： ]/g, ' ')
       .trim()
       .replace(/^[0-9-]/g, 'X')
