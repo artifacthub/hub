@@ -9,7 +9,7 @@ RUN cd cmd/scanner && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /scanner
 # Trivy installer
 FROM alpine:3.13 AS trivy-installer
 RUN apk --no-cache add curl
-RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin v0.19.1
+RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin v0.19.2
 
 # Final stage
 FROM alpine:3.13
