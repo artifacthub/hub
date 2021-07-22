@@ -1,5 +1,5 @@
 # Build backend
-FROM golang:1.16-alpine3.13 AS backend-builder
+FROM golang:1.16-alpine3.14 AS backend-builder
 WORKDIR /go/src/github.com/artifacthub/hub
 COPY go.* ./
 COPY cmd/hub cmd/hub
@@ -7,7 +7,7 @@ COPY internal internal
 RUN cd cmd/hub && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /hub .
 
 # Build frontend
-FROM node:14-alpine3.12 AS frontend-builder
+FROM node:14-alpine3.14 AS frontend-builder
 RUN apk --no-cache add jq
 WORKDIR /web
 COPY web .
@@ -20,7 +20,7 @@ RUN cd /tmp && cat package.json | jq 'del(.devDependencies)' > tmp && mv tmp pac
 RUN cd /tmp && yarn install
 
 # Build widget
-FROM node:14-alpine3.12 AS widget-builder
+FROM node:14-alpine3.14 AS widget-builder
 WORKDIR /widget
 COPY widget .
 ENV NODE_OPTIONS=--max_old_space_size=4096
@@ -36,7 +36,7 @@ RUN scripts/prepare-docs.sh
 RUN cd docs/www && hugo
 
 # Final stage
-FROM alpine:3.13
+FROM alpine:3.14
 RUN apk --no-cache add ca-certificates && addgroup -S hub && adduser -S hub -G hub
 USER hub
 WORKDIR /home/hub
