@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import Platforms from './Platforms';
@@ -13,23 +13,23 @@ describe('Platforms', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Platforms {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Platforms {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByTestId } = render(<Platforms {...defaultProps} />);
+      render(<Platforms {...defaultProps} />);
 
-      expect(getByText('Supported platforms')).toBeInTheDocument();
-      const platforms = getAllByTestId('platformBadge');
+      expect(screen.getByText('Supported platforms')).toBeInTheDocument();
+      const platforms = screen.getAllByTestId('platformBadge');
       expect(platforms).toHaveLength(3);
     });
 
     it('renders only uniq platfoms', () => {
-      const { getAllByTestId } = render(<Platforms platforms={[...defaultProps.platforms, 'darwin']} />);
+      render(<Platforms platforms={[...defaultProps.platforms, 'darwin']} />);
 
-      const platforms = getAllByTestId('platformBadge');
+      const platforms = screen.getAllByTestId('platformBadge');
       expect(platforms).toHaveLength(3);
     });
 

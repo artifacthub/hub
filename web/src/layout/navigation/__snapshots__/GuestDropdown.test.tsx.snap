@@ -9,7 +9,6 @@ exports[`GuestDropdown creates snapshot 1`] = `
       aria-expanded="false"
       aria-label="Guest dropdown button"
       class="btn p-0 position-relative btn"
-      data-testid="guestDropdownBtn"
       type="button"
     >
       <div
@@ -55,7 +54,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
     </button>
     <div
       class="dropdown-menu dropdown-menu-right dropdown"
-      data-testid="guestDropdown"
+      role="menu"
     >
       <div
         class="arrow arrow"
@@ -91,7 +90,6 @@ exports[`GuestDropdown creates snapshot 1`] = `
               <input
                 aria-checked="false"
                 class="custom-control-input input"
-                data-testid="radio-automatic"
                 id="desktop-automatic"
                 name="automatic"
                 readonly=""
@@ -132,7 +130,6 @@ exports[`GuestDropdown creates snapshot 1`] = `
                 aria-checked="true"
                 checked=""
                 class="custom-control-input input"
-                data-testid="radio-light"
                 id="desktop-light"
                 name="light"
                 readonly=""
@@ -223,7 +220,6 @@ exports[`GuestDropdown creates snapshot 1`] = `
               <input
                 aria-checked="false"
                 class="custom-control-input input"
-                data-testid="radio-dark"
                 id="desktop-dark"
                 name="dark"
                 readonly=""

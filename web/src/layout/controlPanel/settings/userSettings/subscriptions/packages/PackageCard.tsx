@@ -95,7 +95,6 @@ const PackageCard = (props: Props) => {
                 >
                   <div className={`custom-control custom-switch ${styles.clickable}`}>
                     <input
-                      data-testid={`${subs.name}MobileBtn`}
                       id={`${props.package.name}_${subs.name}`}
                       type="checkbox"
                       className={`custom-control-input ${styles.checkbox}`}

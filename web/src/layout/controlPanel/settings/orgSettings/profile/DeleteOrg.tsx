@@ -59,13 +59,13 @@ const DeleteOrganization = (props: Props) => {
         </p>
 
         <ActionBtn
-          testId="deleteModalOrgBtn"
           className="btn btn-sm btn-danger"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             setOpenStatus(true);
           }}
           action={AuthorizerAction.DeleteOrganization}
+          label="Open delete organization modal"
         >
           <div className="d-flex flex-row align-items-center text-uppercase">
             <FaTrashAlt className="mr-2" />
@@ -90,7 +90,6 @@ const DeleteOrganization = (props: Props) => {
             </button>
 
             <button
-              data-testid="deleteOrgBtn"
               className="btn btn-sm btn-danger ml-3"
               onClick={(e) => {
                 e.preventDefault();

@@ -10,9 +10,9 @@ const RepositoryWarningModal = () => {
   return (
     <>
       <button
-        data-testid="trackingWarningBtn"
         className={`d-inline-block pl-0 pr-1 py-0 btn btn-link btn-sm ${styles.trackingWarningBtn}`}
         onClick={() => setOpenStatus(true)}
+        aria-label="Open repository warning modal"
       >
         <small>
           <FaRegQuestionCircle className={`position-relative ${styles.icon}`} />
@@ -26,7 +26,6 @@ const RepositoryWarningModal = () => {
 
               <div>
                 <button
-                  data-testid="closeModalBtn"
                   type="button"
                   className={`close ${styles.closeModalBtn}`}
                   onClick={() => {

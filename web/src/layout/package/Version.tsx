@@ -87,7 +87,6 @@ const Version = (props: Props) => {
         <>
           <div className="d-flex flex-row align-items-baseline">
             <button
-              data-testid="version"
               onClick={() => openPackagePage()}
               className="btn btn-link text-primary pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
               aria-label={`Open version ${props.version}`}

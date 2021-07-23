@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import CapatabilityLevelInfoModal from './CapatabilityLevelInfoModal';
@@ -9,25 +10,25 @@ describe('CapatabilityLevelInfoModal', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<CapatabilityLevelInfoModal />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<CapatabilityLevelInfoModal />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<CapatabilityLevelInfoModal />);
-      expect(getByText('Capability level')).toBeInTheDocument();
+      render(<CapatabilityLevelInfoModal />);
+      expect(screen.getByText('Capability level')).toBeInTheDocument();
     });
 
     it('opens modal', () => {
-      const { getByRole, getByTestId, getByAltText } = render(<CapatabilityLevelInfoModal />);
+      render(<CapatabilityLevelInfoModal />);
 
-      expect(getByRole('dialog')).not.toHaveClass('active');
-      const btn = getByTestId('openModalBtn');
-      fireEvent.click(btn);
+      expect(screen.getByRole('dialog')).not.toHaveClass('active');
+      const btn = screen.getByRole('button', { name: /Open modal/ });
+      userEvent.click(btn);
 
-      expect(getByRole('dialog')).toHaveClass('active');
-      expect(getByAltText('Capability Level Diagram')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toHaveClass('active');
+      expect(screen.getByAltText('Capability Level Diagram')).toBeInTheDocument();
     });
   });
 });

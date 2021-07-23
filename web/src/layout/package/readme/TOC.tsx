@@ -31,7 +31,6 @@ const TOC = (props: Props) => {
         <div className="mt-0 mt-sm-2">
           <button
             ref={buttonRef}
-            data-testid="btnTOC"
             className={`btn btn-sm mr-2 btn-outline-dark ${styles.btn}`}
             onClick={() => setVisibleTOC(!visibleTOC)}
             aria-label="Table of contents"
@@ -52,7 +51,6 @@ const TOC = (props: Props) => {
 
       {visibleTOC && (
         <div
-          data-testid="dropdownTOC"
           ref={dropdownRef}
           id="TOC-list"
           className={`dropdown-menu dropdown-menu-left shadow-sm noFocus show p-0 ${styles.dropdown}`}

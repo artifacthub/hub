@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -98,7 +99,7 @@ describe('Authorization settings index', () => {
     const mockAuthz = getMockAuthz('1');
     mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <AuthorizationSection {...defaultProps} />
@@ -109,7 +110,7 @@ describe('Authorization settings index', () => {
     await waitFor(() => {
       expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
       expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -120,7 +121,7 @@ describe('Authorization settings index', () => {
       const mockAuthz = getMockAuthz('2');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
-      const { getByRole, getByTestId, getAllByRole, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <AuthorizationSection {...defaultProps} />
@@ -135,20 +136,20 @@ describe('Authorization settings index', () => {
         expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
-      expect(getByRole('main')).toBeInTheDocument();
+      expect(screen.getByRole('main')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           /Depending on your requirements, you can use a predefined policy and only supply a data file, or you can provide your custom policy for maximum flexibility/i
         )
       ).toBeInTheDocument();
-      expect(getAllByRole('button')).toHaveLength(4);
+      expect(screen.getAllByRole('button')).toHaveLength(4);
 
-      const swicthAccessControl = getByTestId('swicthAccessControl');
+      const swicthAccessControl = screen.getByRole('checkbox', { name: 'Fine-grained access control' });
       expect(swicthAccessControl).toBeInTheDocument();
       expect(swicthAccessControl).not.toBeChecked();
 
-      expect(getByText('Fine-grained access control')).toBeInTheDocument();
-      expect(getByText('Save')).toBeInTheDocument();
+      expect(screen.getByText('Fine-grained access control')).toBeInTheDocument();
+      expect(screen.getByText('Save')).toBeInTheDocument();
     });
 
     it('renders component with selected predefined policy', async () => {
@@ -157,7 +158,7 @@ describe('Authorization settings index', () => {
       const mockAuthz = getMockAuthz('3');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <AuthorizationSection {...defaultProps} />
@@ -172,23 +173,23 @@ describe('Authorization settings index', () => {
         expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
-      const swicthAccessControl = getByTestId('swicthAccessControl');
+      const swicthAccessControl = screen.getByRole('checkbox', { name: 'Fine-grained access control' });
       expect(swicthAccessControl).toBeInTheDocument();
       expect(swicthAccessControl).toBeChecked();
 
-      const predefinedPolicyRadio = getByTestId('radio-predefined');
+      const predefinedPolicyRadio = screen.getByRole('radio', { name: 'Use predefined policy' });
       expect(predefinedPolicyRadio).toBeInTheDocument();
       expect(predefinedPolicyRadio).toBeChecked();
 
-      const customPolicyRadio = getByTestId('radio-custom');
+      const customPolicyRadio = screen.getByRole('radio', { name: 'Use custom policy' });
       expect(customPolicyRadio).toBeInTheDocument();
       expect(customPolicyRadio).not.toBeChecked();
 
-      const selectPredefinedPolicies = getByTestId('selectPredefinedPolicies');
+      const selectPredefinedPolicies = screen.getByRole('combobox', { name: 'org-select' });
       expect(selectPredefinedPolicies).toBeInTheDocument();
       expect(selectPredefinedPolicies).toHaveValue(mockAuthz.predefinedPolicy!);
 
-      expect(getByText('Test in Playground')).toBeInTheDocument();
+      expect(screen.getByText('Test in Playground')).toBeInTheDocument();
     });
 
     it('renders component with selected custom policy', async () => {
@@ -197,7 +198,7 @@ describe('Authorization settings index', () => {
       const mockAuthz = getMockAuthz('4');
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
-      const { getByTestId, getByText, queryByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <AuthorizationSection {...defaultProps} />
@@ -212,21 +213,21 @@ describe('Authorization settings index', () => {
         expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
-      const swicthAccessControl = getByTestId('swicthAccessControl');
+      const swicthAccessControl = screen.getByRole('checkbox', { name: 'Fine-grained access control' });
       expect(swicthAccessControl).toBeInTheDocument();
       expect(swicthAccessControl).toBeChecked();
 
-      const predefinedPolicyRadio = getByTestId('radio-predefined');
+      const predefinedPolicyRadio = screen.getByRole('radio', { name: 'Use predefined policy' });
       expect(predefinedPolicyRadio).toBeInTheDocument();
       expect(predefinedPolicyRadio).not.toBeChecked();
 
-      const customPolicyRadio = getByTestId('radio-custom');
+      const customPolicyRadio = screen.getByRole('radio', { name: 'Use custom policy' });
       expect(customPolicyRadio).toBeInTheDocument();
       expect(customPolicyRadio).toBeChecked();
 
-      expect(queryByTestId('selectPredefinedPolicies')).toBeNull();
+      expect(screen.queryByRole('combobox', { name: 'org-select' })).toBeNull();
 
-      expect(getByText('Test in Playground')).toBeInTheDocument();
+      expect(screen.getByText('Test in Playground')).toBeInTheDocument();
     });
 
     it('when not selected org in context', async () => {
@@ -275,7 +276,7 @@ describe('Authorization settings index', () => {
         kind: ErrorKind.Forbidden,
       });
 
-      const { getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <AuthorizationSection {...defaultProps} />
@@ -288,7 +289,9 @@ describe('Authorization settings index', () => {
         expect(API.getAuthorizationPolicy).toHaveBeenCalledWith('orgTest');
       });
 
-      expect(getByText("You are not allowed to manage this organization's authorization policy")).toBeInTheDocument();
+      expect(
+        screen.getByText("You are not allowed to manage this organization's authorization policy")
+      ).toBeInTheDocument();
     });
 
     it('Default', async () => {
@@ -335,7 +338,7 @@ describe('Authorization settings index', () => {
         </AppCtx.Provider>
       );
 
-      const { getByTestId, getByText, rerender } = render(component);
+      const { rerender } = render(component);
 
       await waitFor(() => {
         expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
@@ -344,23 +347,23 @@ describe('Authorization settings index', () => {
         expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
-      const predefinedPolicyRadio = getByTestId('radio-predefined');
+      const predefinedPolicyRadio = screen.getByRole('radio', { name: 'Use predefined policy' });
       expect(predefinedPolicyRadio).not.toBeChecked();
 
-      fireEvent.click(getByText('Use predefined policy'));
+      userEvent.click(screen.getByText('Use predefined policy'));
 
       expect(predefinedPolicyRadio).toBeChecked();
 
-      const btn = getByTestId('updateAuthorizationPolicyBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Update authorization policy' });
+      userEvent.click(btn);
 
       rerender(component);
 
-      expect(getByText(/Your custom policy and previous policy data will be lost./i)).toBeInTheDocument();
-      expect(getByTestId('modalOKBtn')).toBeInTheDocument();
+      expect(screen.getByText(/Your custom policy and previous policy data will be lost./i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Confirm' })).toBeInTheDocument();
 
-      const confirmBtn = getByTestId('modalOKBtn');
-      fireEvent.click(confirmBtn);
+      const confirmBtn = screen.getByRole('button', { name: 'Confirm' });
+      userEvent.click(confirmBtn);
 
       await waitFor(() => {
         expect(API.updateAuthorizationPolicy).toHaveBeenCalledTimes(1);
@@ -392,7 +395,7 @@ describe('Authorization settings index', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
@@ -401,11 +404,11 @@ describe('Authorization settings index', () => {
           expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
-        const switchBtn = getByText('Fine-grained access control');
-        fireEvent.click(switchBtn);
+        const switchBtn = screen.getByText('Fine-grained access control');
+        userEvent.click(switchBtn);
 
-        const btn = getByTestId('updateAuthorizationPolicyBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Update authorization policy' });
+        userEvent.click(btn);
 
         rerender(component);
 
@@ -439,7 +442,7 @@ describe('Authorization settings index', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
@@ -448,11 +451,11 @@ describe('Authorization settings index', () => {
           expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
-        const switchBtn = getByText('Fine-grained access control');
-        fireEvent.click(switchBtn);
+        const switchBtn = screen.getByText('Fine-grained access control');
+        userEvent.click(switchBtn);
 
-        const btn = getByTestId('updateAuthorizationPolicyBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Update authorization policy' });
+        userEvent.click(btn);
 
         rerender(component);
 
@@ -466,11 +469,9 @@ describe('Authorization settings index', () => {
           });
         });
 
-        await waitFor(() => {
-          expect(
-            getByText('You do not have permissions to update the policy from the organization.')
-          ).toBeInTheDocument();
-        });
+        expect(
+          await screen.findByText('You do not have permissions to update the policy from the organization.')
+        ).toBeInTheDocument();
 
         waitFor(() => {
           expect(switchBtn).toBeDisabled();
@@ -495,7 +496,7 @@ describe('Authorization settings index', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
@@ -504,11 +505,11 @@ describe('Authorization settings index', () => {
           expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
-        const switchBtn = getByText('Fine-grained access control');
-        fireEvent.click(switchBtn);
+        const switchBtn = screen.getByText('Fine-grained access control');
+        userEvent.click(switchBtn);
 
-        const btn = getByTestId('updateAuthorizationPolicyBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Update authorization policy' });
+        userEvent.click(btn);
 
         rerender(component);
 
@@ -522,13 +523,11 @@ describe('Authorization settings index', () => {
           });
         });
 
-        await waitFor(() => {
-          expect(
-            getByText(
-              /An error occurred updating the policy: invalid input: editing user will be locked out with this policy/i
-            )
-          ).toBeInTheDocument();
-        });
+        expect(
+          await screen.findByText(
+            /An error occurred updating the policy: invalid input: editing user will be locked out with this policy/i
+          )
+        ).toBeInTheDocument();
       });
 
       it('Default error', async () => {
@@ -548,7 +547,7 @@ describe('Authorization settings index', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAuthorizationPolicy).toHaveBeenCalledTimes(1);
@@ -557,11 +556,11 @@ describe('Authorization settings index', () => {
           expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
-        const switchBtn = getByText('Fine-grained access control');
-        fireEvent.click(switchBtn);
+        const switchBtn = screen.getByText('Fine-grained access control');
+        userEvent.click(switchBtn);
 
-        const btn = getByTestId('updateAuthorizationPolicyBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Update authorization policy' });
+        userEvent.click(btn);
 
         rerender(component);
 
@@ -575,9 +574,9 @@ describe('Authorization settings index', () => {
           });
         });
 
-        await waitFor(() => {
-          expect(getByText(/An error occurred updating the policy, please try again later./i)).toBeInTheDocument();
-        });
+        expect(
+          await screen.findByText(/An error occurred updating the policy, please try again later./i)
+        ).toBeInTheDocument();
       });
     });
   });
@@ -590,7 +589,7 @@ describe('Authorization settings index', () => {
       mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
       mocked(API).triggerTestInRegoPlayground.mockResolvedValue({ result: 'http://test.com' });
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <AuthorizationSection {...defaultProps} />
@@ -603,8 +602,8 @@ describe('Authorization settings index', () => {
         expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
       });
 
-      const playgroundBtn = getByTestId('playgroundBtn');
-      fireEvent.click(playgroundBtn);
+      const playgroundBtn = screen.getByRole('button', { name: 'Test in playground' });
+      userEvent.click(playgroundBtn);
 
       await waitFor(() => {
         expect(API.triggerTestInRegoPlayground).toHaveBeenCalledTimes(1);
@@ -630,7 +629,7 @@ describe('Authorization settings index', () => {
         kind: ErrorKind.Other,
       });
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <AuthorizationSection {...defaultProps} />
@@ -643,8 +642,8 @@ describe('Authorization settings index', () => {
         expect(API.getAllOrganizationMembers).toHaveBeenCalledTimes(1);
       });
 
-      const playgroundBtn = getByTestId('playgroundBtn');
-      fireEvent.click(playgroundBtn);
+      const playgroundBtn = screen.getByRole('button', { name: 'Test in playground' });
+      userEvent.click(playgroundBtn);
 
       await waitFor(() => {
         expect(API.triggerTestInRegoPlayground).toHaveBeenCalledTimes(1);

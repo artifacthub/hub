@@ -1,3 +1,190 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PackageCard creates snapshot 1`] = `[Function]`;
+exports[`PackageCard creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="py-2"
+    role="listitem"
+  >
+    <div
+      class="card cardWithHover h-100 card"
+    >
+      <div>
+        <div
+          class="card-body position-relative body"
+        >
+          <a
+            class="text-decoration-none text-reset link"
+            data-testid="packageCardLink"
+            href="/packages/helm/stable/airflow"
+          >
+            <div
+              class="d-flex align-items-start justify-content-between mb-3"
+            >
+              <div
+                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                >
+                  <img
+                    alt="Logo airflow"
+                    aria-hidden="true"
+                    class="image"
+                    src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
+                    srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
+                  />
+                </div>
+                <div
+                  class="ml-3 flex-grow-1 truncateWrapper"
+                >
+                  <div
+                    class="card-title font-weight-bolder mb-2 title"
+                  >
+                    <div
+                      class="h5 d-flex flex-row align-items-center"
+                    >
+                      airflow
+                    </div>
+                  </div>
+                  <div
+                    class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                  >
+                    <div
+                      class="mr-2 text-truncate"
+                    >
+                      <span
+                        class="text-muted text-uppercase mr-1"
+                      >
+                        Org:
+                      </span>
+                      <p
+                        class="d-inline mb-0 text-dark"
+                      >
+                        Helm
+                      </p>
+                    </div>
+                    <div
+                      class="mr-2 text-truncate"
+                    >
+                      <span
+                        class="text-muted text-uppercase mr-1"
+                      >
+                        Repo:
+                      </span>
+                      <p
+                        class="d-inline mb-0 text-dark"
+                      >
+                        Stable
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center text-uppercase kind"
+              >
+                <img
+                  alt="Icon"
+                  class="icon iconLight"
+                  src="/static/media/helm-chart.svg"
+                />
+                <img
+                  alt="Icon"
+                  class="icon iconDark"
+                  src="/static/media/helm-chart-light.svg"
+                />
+              </div>
+            </div>
+          </a>
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <div
+              class="custom-control custom-switch clickable"
+            >
+              <input
+                checked=""
+                class="custom-control-input checkbox"
+                id="airflow_newRelease"
+                type="checkbox"
+              />
+              <label
+                class="custom-control-label"
+                data-testid="newRelease_label"
+                for="airflow_newRelease"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="ml-1"
+                  >
+                    New releases
+                  </span>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <div
+              class="custom-control custom-switch clickable"
+            >
+              <input
+                class="custom-control-input checkbox"
+                id="airflow_securityAlert"
+                type="checkbox"
+              />
+              <label
+                class="custom-control-label"
+                data-testid="securityAlert_label"
+                for="airflow_securityAlert"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="ml-1"
+                  >
+                    Security alerts
+                  </span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

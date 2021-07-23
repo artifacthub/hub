@@ -1,5 +1,76 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AttachedIconToText creates snapshot 1`] = `[Function]`;
-
-exports[`AttachedIconToText creates snapshot 2`] = `[Function]`;
+exports[`AttachedIconToText creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="attachedIconToTextWrapper"
+    style="line-height: 21px;"
+  >
+    <div
+      class="d-inline"
+    >
+      a
+    </div>
+    <div
+      class="d-inline"
+    >
+      b
+    </div>
+    <div
+      class="d-inline"
+    >
+      c
+    </div>
+    <div
+      class="d-inline"
+    >
+      d
+    </div>
+    <div
+      class="d-inline"
+    >
+      e
+    </div>
+    <div
+      class="d-inline"
+    >
+      f
+    </div>
+    <div
+      class="d-inline"
+    >
+      g
+    </div>
+    <div
+      class="d-inline"
+    >
+      h
+    </div>
+    <div
+      class="d-inline"
+    >
+      i
+    </div>
+    <div
+      class="d-inline"
+    >
+      j
+    </div>
+    <div
+      class="d-inline"
+    >
+      k
+    </div>
+    <div
+      class="d-inline"
+    >
+      l
+    </div>
+    <div
+      class="d-inline-block"
+    >
+      icon
+    </div>
+  </div>
+</DocumentFragment>
+`;

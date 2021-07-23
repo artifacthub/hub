@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -31,30 +32,30 @@ describe('PackageInfo', () => {
         <PackageInfo package={mockPackage} />
       </Router>
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Image', () => {
     it('renders package logo', () => {
       const mockPackage = getMockPackage('2');
-      const { queryByAltText } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
-      const image = queryByAltText(`Logo ${mockPackage.displayName}`);
+      const image = screen.getByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
     });
 
     it('renders placeholder when imageId is null', () => {
       const mockPackage = getMockPackage('3');
 
-      const { queryByAltText } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
-      const image = queryByAltText(`Logo ${mockPackage.displayName}`);
+      const image = screen.getByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
       expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_pkg_helm.png');
     });
@@ -64,25 +65,23 @@ describe('PackageInfo', () => {
     it('renders display name', () => {
       const mockPackage = getMockPackage('4');
 
-      const { queryByText } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
-      const title = queryByText(mockPackage.displayName!);
-      expect(title).toBeInTheDocument();
+      expect(screen.getByText(mockPackage.displayName!)).toBeInTheDocument();
     });
 
     it('renders name when display name is null', () => {
       const mockPackage = getMockPackage('5');
 
-      const { queryByText } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
-      const title = queryByText(mockPackage.name!);
-      expect(title).toBeInTheDocument();
+      expect(screen.getByText(mockPackage.name!)).toBeInTheDocument();
     });
   });
 
@@ -90,18 +89,18 @@ describe('PackageInfo', () => {
     it('renders repository link', () => {
       const mockPackage = getMockPackage('6');
 
-      const { queryAllByTestId, queryAllByAltText } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
-      const buttons = queryAllByTestId('repoLink');
+      const buttons = screen.getAllByTestId('repoLink');
       expect(buttons).toHaveLength(2);
-      const icons = queryAllByAltText('Icon');
+      const icons = screen.getAllByAltText('Icon');
       expect(icons).toHaveLength(8);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
-      fireEvent.click(buttons[0]!);
+      userEvent.click(buttons[0]!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -117,14 +116,14 @@ describe('PackageInfo', () => {
     it('renders user link', () => {
       const mockPackage = getMockPackage('7');
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
-      const button = getByTestId('userLink');
+      const button = screen.getByTestId('userLink');
       expect(button).toBeInTheDocument();
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -140,14 +139,14 @@ describe('PackageInfo', () => {
     it('renders repo kind link', () => {
       const mockPackage = getMockPackage('8');
 
-      const { getAllByTestId } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
-      const buttons = getAllByTestId('repoIconLabelLink');
+      const buttons = screen.getAllByTestId('repoIconLabelLink');
       expect(buttons).toHaveLength(2);
-      fireEvent.click(buttons[0]);
+      userEvent.click(buttons[0]);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -165,13 +164,13 @@ describe('PackageInfo', () => {
     it('renders correct label', () => {
       const mockPackage = getMockPackage('10');
 
-      const { getAllByText } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
 
-      expect(getAllByText('Verified Publisher')).toHaveLength(1);
+      expect(screen.getAllByText('Verified Publisher')).toHaveLength(1);
     });
   });
 
@@ -179,13 +178,13 @@ describe('PackageInfo', () => {
     it('renders correct label', () => {
       const mockPackage = getMockPackage('11');
 
-      const { getAllByText } = render(
+      render(
         <Router>
           <PackageInfo package={mockPackage} />
         </Router>
       );
 
-      expect(getAllByText('Security scanner disabled')).toHaveLength(1);
+      expect(screen.getAllByText('Security scanner disabled')).toHaveLength(1);
     });
   });
 });

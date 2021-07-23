@@ -14,26 +14,26 @@ describe('MoreActionsButton', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<MoreActionsButton />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<MoreActionsButton />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
       render(<MoreActionsButton />);
 
-      const btn = screen.getByTestId('moreActionsBtn');
+      const btn = screen.getByRole('button', { name: /Show menu/ });
       expect(btn).toBeInTheDocument();
     });
 
     it('displays dropdown', () => {
       render(<MoreActionsButton />);
 
-      const dropdown = screen.getByTestId('moreActionsDropdown');
+      const dropdown = screen.getByRole('menu');
       expect(dropdown).toBeInTheDocument();
       expect(dropdown).not.toHaveClass('show');
 
-      const btn = screen.getByTestId('moreActionsBtn');
+      const btn = screen.getByRole('button', { name: /Show menu/ });
       expect(btn).toBeInTheDocument();
 
       userEvent.click(btn);
@@ -50,12 +50,12 @@ describe('MoreActionsButton', () => {
         </>
       );
 
-      const btn = screen.getByTestId('moreActionsBtn');
+      const btn = screen.getByRole('button', { name: /Show menu/ });
       expect(btn).toBeInTheDocument();
 
       userEvent.click(btn);
 
-      const widgetBtn = screen.getByTestId('embedResultsWidget');
+      const widgetBtn = screen.getByRole('button', { name: /Open embed results modal/ });
       expect(widgetBtn).toBeInTheDocument();
 
       userEvent.click(widgetBtn);

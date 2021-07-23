@@ -62,9 +62,8 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                 class="arrow arrow"
               />
               <button
-                aria-label="Open modal"
+                aria-label="Open badge modal"
                 class="dropdown-item btn btn-sm rounded-0 text-dark"
-                data-testid="getBadgeBtn"
               >
                 <div
                   class="d-flex flex-row align-items-center"
@@ -92,9 +91,8 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                 class="position-relative"
               >
                 <button
-                  aria-label="Action"
+                  aria-label="Open transfer repository modal"
                   class="dropdown-item btn btn-sm rounded-0 text-dark"
-                  data-testid="transferRepoBtn"
                   type="button"
                 >
                   <div
@@ -130,9 +128,8 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                 class="position-relative"
               >
                 <button
-                  aria-label="Action"
+                  aria-label="Open update repository modal"
                   class="dropdown-item btn btn-sm rounded-0 text-dark"
-                  data-testid="updateRepoBtn"
                   type="button"
                 >
                   <div
@@ -162,9 +159,8 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                 class="position-relative"
               >
                 <button
-                  aria-label="Action"
+                  aria-label="Open delete repository modal"
                   class="dropdown-item btn btn-sm rounded-0 text-dark"
-                  data-testid="deleteRepoDropdownBtn"
                   type="button"
                 >
                   <div

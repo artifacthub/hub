@@ -1,3 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RepositoryIconLabel creates snapshot 1`] = `[Function]`;
+exports[`RepositoryIconLabel creates snapshot 1`] = `
+<DocumentFragment>
+  <span
+    class="badge badge-light rounded-pill bg badge"
+  >
+    <div
+      class="d-flex flex-row align-items-center"
+    >
+      <div
+        aria-hidden="true"
+        class="position-relative icon undefined"
+      >
+        <img
+          alt="Icon"
+          class="mw-100 mh-100 iconLight"
+          src="/static/media/helm-chart.svg"
+        />
+        <img
+          alt="Icon"
+          class="mw-100 mh-100 iconDark"
+          src="/static/media/helm-chart-light.svg"
+        />
+      </div>
+      <div
+        class="ml-1"
+      >
+        Helm chart
+      </div>
+    </div>
+  </span>
+</DocumentFragment>
+`;

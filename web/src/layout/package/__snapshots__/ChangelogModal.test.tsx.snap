@@ -10,9 +10,8 @@ exports[`ChangelogModal creates snapshot 1`] = `
     >
       <button
         aria-disabled="false"
-        aria-label="Open modal"
+        aria-label="Open Changelog modal"
         class="btn btn-outline-secondary btn-block btn-sm text-nowrap"
-        data-testid="changelogBtn"
       >
         <div
           class="d-flex flex-row align-items-center justify-content-center text-uppercase"

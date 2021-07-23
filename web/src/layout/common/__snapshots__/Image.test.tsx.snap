@@ -1,3 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Image creates snapshot 1`] = `[Function]`;
+exports[`Image creates snapshot 1`] = `
+<DocumentFragment>
+  <img
+    alt="image"
+    aria-hidden="true"
+    class=""
+    src="/image/123"
+    srcset="/image/123@1x 1x, /image/123@2x 2x, /image/123@3x 3x, /image/123@4x 4x"
+  />
+</DocumentFragment>
+`;

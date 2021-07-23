@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import AutoresizeTextarea from './AutoresizeTextarea';
@@ -31,21 +31,20 @@ describe('AutoresizeTextarea', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<AutoresizeTextarea {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   for (let i = 0; i < tests.length; i++) {
     it('renders component', () => {
-      const { getByTestId } = render(<AutoresizeTextarea {...defaultProps} value={tests[i].value} />);
-      const textarea = getByTestId('testTextarea');
+      render(<AutoresizeTextarea {...defaultProps} value={tests[i].value} />);
+      const textarea = screen.getByRole('textbox');
       expect(textarea).toHaveProperty('rows', tests[i].rows);
     });
   }
 
   it('calls onChange when textarea content is changed', () => {
-    const { getByTestId } = render(<AutoresizeTextarea {...defaultProps} />);
-    const textarea = getByTestId('testTextarea');
-    fireEvent.change(textarea, { target: { value: 'test' } });
+    render(<AutoresizeTextarea {...defaultProps} />);
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'text' } });
 
     expect(mockOnChange).toHaveBeenCalledTimes(1);
   });

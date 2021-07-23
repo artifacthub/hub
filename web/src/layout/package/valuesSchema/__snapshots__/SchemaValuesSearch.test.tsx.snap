@@ -13,7 +13,6 @@ exports[`SchemaValuesSearch creates snapshot 1`] = `
       >
         <input
           class="flex-grow-1 form-control input pl-3 pr-4"
-          data-testid="typeaheadInput"
           name="inputTypeahead_path"
           placeholder="Search path"
           spellcheck="false"

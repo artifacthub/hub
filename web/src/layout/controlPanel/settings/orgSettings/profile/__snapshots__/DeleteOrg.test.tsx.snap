@@ -20,9 +20,8 @@ exports[`DeleteOrg creates snapshot 1`] = `
       class="position-relative"
     >
       <button
-        aria-label="Action"
+        aria-label="Open delete organization modal"
         class="btn btn-sm btn-danger"
-        data-testid="deleteModalOrgBtn"
         type="button"
       >
         <div
@@ -76,9 +75,8 @@ exports[`DeleteOrg creates snapshot 1`] = `
               Delete organization
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -130,7 +128,6 @@ exports[`DeleteOrg creates snapshot 1`] = `
             <button
               aria-label="Delete organization"
               class="btn btn-sm btn-danger ml-3"
-              data-testid="deleteOrgBtn"
               disabled=""
             >
               <div

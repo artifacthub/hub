@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -20,7 +20,7 @@ describe('UserInvitation', () => {
   it('creates snapshot', async () => {
     mocked(API).confirmOrganizationMembership.mockResolvedValue(null);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <UserInvitation {...defaultProps} />
       </Router>
@@ -28,14 +28,14 @@ describe('UserInvitation', () => {
 
     await waitFor(() => {
       expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
   it('when org name is valid', async () => {
     mocked(API).confirmOrganizationMembership.mockResolvedValue(null);
 
-    const { getByText } = render(
+    render(
       <Router>
         <UserInvitation {...defaultProps} />
       </Router>
@@ -43,18 +43,18 @@ describe('UserInvitation', () => {
 
     await waitFor(() => {
       expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-      expect(getByText('You have accepted the invitation to join the organization.')).toBeInTheDocument();
+      expect(screen.getByText('You have accepted the invitation to join the organization.')).toBeInTheDocument();
     });
   });
 
   it('does not render component when email code is undefined', () => {
-    const { queryByTestId } = render(
+    render(
       <Router>
         <UserInvitation />
       </Router>
     );
 
-    expect(queryByTestId('userInvitationModal')).toBeNull();
+    expect(screen.queryByTestId('userInvitationModal')).toBeNull();
   });
 
   describe('when email code is invalid', () => {
@@ -64,7 +64,7 @@ describe('UserInvitation', () => {
         message: 'The request sent was not valid',
       });
 
-      const { getByText } = render(
+      render(
         <Router>
           <UserInvitation {...defaultProps} />
         </Router>
@@ -72,7 +72,7 @@ describe('UserInvitation', () => {
 
       await waitFor(() => {
         expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-        expect(getByText('The request sent was not valid')).toBeInTheDocument();
+        expect(screen.getByText('The request sent was not valid')).toBeInTheDocument();
       });
     });
 
@@ -81,7 +81,7 @@ describe('UserInvitation', () => {
         kind: ErrorKind.Unauthorized,
       });
 
-      const { getByText } = render(
+      render(
         <Router>
           <UserInvitation {...defaultProps} />
         </Router>
@@ -90,7 +90,7 @@ describe('UserInvitation', () => {
       await waitFor(() => {
         expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
         expect(
-          getByText(
+          screen.getByText(
             'Please sign in to accept the invitation to join the organization. You can accept it from the Control Panel, in the organizations tab, or from the link you received in the invitation email.'
           )
         ).toBeInTheDocument();
@@ -102,7 +102,7 @@ describe('UserInvitation', () => {
         kind: ErrorKind.Other,
       });
 
-      const { getByText } = render(
+      render(
         <Router>
           <UserInvitation {...defaultProps} />
         </Router>
@@ -111,7 +111,7 @@ describe('UserInvitation', () => {
       await waitFor(() => {
         expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
         expect(
-          getByText('An error occurred accepting your invitation, please contact us about this issue.')
+          screen.getByText('An error occurred accepting your invitation, please contact us about this issue.')
         ).toBeInTheDocument();
       });
     });

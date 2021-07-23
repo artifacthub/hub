@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -31,45 +32,45 @@ describe('LogIn', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <LogIn {...defaultProps} />
       </Router>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(
+      render(
         <Router>
           <LogIn {...defaultProps} />
         </Router>
       );
 
-      expect(getByText('Email')).toBeInTheDocument();
-      expect(getByText('Password')).toBeInTheDocument();
-      expect(getByTestId('logInBtn')).toBeInTheDocument();
-      expect(getByTestId('resetPasswordTabBtn')).toBeInTheDocument();
+      expect(screen.getByText('Email')).toBeInTheDocument();
+      expect(screen.getByText('Password')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Sign in' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open reset password' })).toBeInTheDocument();
     });
 
     it('updates all fields and calls login', async () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <LogIn {...defaultProps} />
         </Router>
       );
 
-      const password = getByTestId('passwordInput') as HTMLInputElement;
-      const email = getByTestId('emailInput') as HTMLInputElement;
+      const password = screen.getByLabelText('Password');
+      const email = screen.getByRole('textbox', { name: 'Email' });
 
-      fireEvent.change(password, { target: { value: 'pass123' } });
-      fireEvent.change(email, { target: { value: 'jsmith@email.com' } });
+      userEvent.type(password, 'pass123');
+      userEvent.type(email, 'jsmith@email.com');
 
-      const btn = getByTestId('logInBtn');
+      const btn = screen.getByRole('button', { name: 'Sign in' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.login).toBeCalledTimes(1);
@@ -90,17 +91,17 @@ describe('LogIn', () => {
           <LogIn {...defaultProps} />
         </Router>
       );
-      const { getByTestId, getByText, rerender } = render(component);
+      const { rerender } = render(component);
 
-      const password = getByTestId('passwordInput') as HTMLInputElement;
-      const email = getByTestId('emailInput') as HTMLInputElement;
+      const password = screen.getByLabelText('Password');
+      const email = screen.getByRole('textbox', { name: 'Email' });
 
-      fireEvent.change(password, { target: { value: 'pass123' } });
-      fireEvent.change(email, { target: { value: 'jsmith@email.com' } });
+      userEvent.type(password, 'pass123');
+      userEvent.type(email, 'jsmith@email.com');
 
-      const btn = getByTestId('logInBtn');
+      const btn = screen.getByRole('button', { name: 'Sign in' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.login).toHaveBeenCalledTimes(1);
@@ -109,7 +110,7 @@ describe('LogIn', () => {
       rerender(component);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-      expect(getByText('Authentication failed. Please check your credentials.')).toBeInTheDocument();
+      expect(screen.getByText('Authentication failed. Please check your credentials.')).toBeInTheDocument();
     });
 
     it('with custom error message', async () => {
@@ -123,17 +124,17 @@ describe('LogIn', () => {
           <LogIn {...defaultProps} />
         </Router>
       );
-      const { getByTestId, getByText, rerender } = render(component);
+      const { rerender } = render(component);
 
-      const password = getByTestId('passwordInput') as HTMLInputElement;
-      const email = getByTestId('emailInput') as HTMLInputElement;
+      const password = screen.getByLabelText('Password');
+      const email = screen.getByRole('textbox', { name: 'Email' });
 
-      fireEvent.change(password, { target: { value: 'pass123' } });
-      fireEvent.change(email, { target: { value: 'jsmith@email.com' } });
+      userEvent.type(password, 'pass123');
+      userEvent.type(email, 'jsmith@email.com');
 
-      const btn = getByTestId('logInBtn');
+      const btn = screen.getByRole('button', { name: 'Sign in' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.login).toHaveBeenCalledTimes(1);
@@ -142,7 +143,7 @@ describe('LogIn', () => {
       rerender(component);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-      expect(getByText('An error occurred signing in: Password not provided')).toBeInTheDocument();
+      expect(screen.getByText('An error occurred signing in: Password not provided')).toBeInTheDocument();
     });
 
     it('displays common login error', async () => {
@@ -155,17 +156,17 @@ describe('LogIn', () => {
           <LogIn {...defaultProps} />
         </Router>
       );
-      const { getByTestId, getByText, rerender } = render(component);
+      const { rerender } = render(component);
 
-      const password = getByTestId('passwordInput') as HTMLInputElement;
-      const email = getByTestId('emailInput') as HTMLInputElement;
+      const password = screen.getByLabelText('Password');
+      const email = screen.getByRole('textbox', { name: 'Email' });
 
-      fireEvent.change(password, { target: { value: 'pass123' } });
-      fireEvent.change(email, { target: { value: 'jsmith@email.com' } });
+      userEvent.type(password, 'pass123');
+      userEvent.type(email, 'jsmith@email.com');
 
-      const btn = getByTestId('logInBtn');
+      const btn = screen.getByRole('button', { name: 'Sign in' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.login).toHaveBeenCalledTimes(1);
@@ -174,19 +175,19 @@ describe('LogIn', () => {
       rerender(component);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-      expect(getByText('An error occurred signing in, please try again later.')).toBeInTheDocument();
+      expect(screen.getByText('An error occurred signing in, please try again later.')).toBeInTheDocument();
     });
 
     it('calls history replace on close modal when redirect is not undefined', async () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <LogIn {...defaultProps} redirect="/control-panel" />
         </Router>
       );
 
-      const btn = getByTestId('closeModalBtn');
+      const btn = screen.getByRole('button', { name: 'Close modal' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
@@ -196,27 +197,27 @@ describe('LogIn', () => {
 
     describe('Reset password', () => {
       it('displays form', () => {
-        const { getByText, getByTestId } = render(
+        render(
           <Router>
             <LogIn {...defaultProps} />
           </Router>
         );
 
-        const tabBtn = getByTestId('resetPasswordTabBtn');
+        const tabBtn = screen.getByRole('button', { name: 'Open reset password' });
         expect(tabBtn).toBeInTheDocument();
 
-        fireEvent.click(tabBtn);
+        userEvent.click(tabBtn);
 
-        const backBtn = getByTestId('resetPasswordBackBtn');
+        const backBtn = screen.getByRole('button', { name: 'Back to Sign in' });
         expect(backBtn).toBeInTheDocument();
         expect(backBtn).toHaveTextContent('Back to Sign in');
 
-        expect(getByText('Forgot Password?')).toBeInTheDocument();
-        expect(getByTestId('resetPasswordForm')).toBeInTheDocument();
+        expect(screen.getByText('Forgot Password?')).toBeInTheDocument();
+        expect(screen.getByTestId('resetPasswordForm')).toBeInTheDocument();
         expect(
-          getByText('Please enter your email address and we will send you a password reset link.')
+          screen.getByText('Please enter your email address and we will send you a password reset link.')
         ).toBeInTheDocument();
-        expect(getByTestId('resetPwdEmailInput')).toBeInTheDocument();
+        expect(screen.getByRole('textbox', { name: 'Email' })).toBeInTheDocument();
       });
     });
   });

@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
@@ -33,24 +33,22 @@ describe('SubscriptionModal', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('1')} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('1')} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId, getAllByTestId } = render(
-        <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('2')} />
-      );
+      render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('2')} />);
 
-      expect(getByText('Events')).toBeInTheDocument();
-      expect(getByText('Package')).toBeInTheDocument();
+      expect(screen.getByText('Events')).toBeInTheDocument();
+      expect(screen.getByText('Package')).toBeInTheDocument();
 
-      const btn = getByTestId('addSubsModalBtn');
+      const btn = screen.getByRole('button', { name: 'Add subscription' });
       expect(btn).toBeInTheDocument();
       expect(btn).toBeDisabled();
 
-      const checkboxes = getAllByTestId('checkbox');
+      const checkboxes = screen.getAllByRole('checkbox');
       expect(checkboxes).toHaveLength(2);
       expect(checkboxes[0]).toBeChecked();
       expect(checkboxes[1]).not.toBeChecked();
@@ -62,22 +60,19 @@ describe('SubscriptionModal', () => {
       const mockSearch = getMockSearch('3');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getAllByTestId, getByTestId } = render(
-        <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('3')} />
-      );
+      render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('3')} />);
 
-      const input = getByTestId('searchPackagesInput');
+      const input = screen.getByRole('textbox', { name: 'Search packages' });
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      fireEvent.change(input, { target: { value: 'testing' } });
-      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+      userEvent.type(input, 'testing{enter}');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByTestId('packageItem');
+      const buttons = screen.getAllByTestId('packageItem');
       expect(buttons).toHaveLength(8);
       expect(buttons[0]).toHaveClass('disabledCell');
       expect(buttons[1]).toHaveClass('disabledCell');
@@ -93,22 +88,19 @@ describe('SubscriptionModal', () => {
       const mockSearch = getMockSearch('4');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getAllByTestId, getByTestId } = render(
-        <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('4')} />
-      );
+      render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('4')} />);
 
-      const input = getByTestId('searchPackagesInput');
+      const input = screen.getByRole('textbox', { name: 'Search packages' });
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      fireEvent.change(input, { target: { value: 'testing' } });
-      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+      userEvent.type(input, 'testing{enter}');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByTestId('packageItem');
+      const buttons = screen.getAllByTestId('packageItem');
       expect(buttons[0]).toHaveClass('clickableCell');
       expect(buttons[1]).toHaveClass('clickableCell');
     });
@@ -117,22 +109,19 @@ describe('SubscriptionModal', () => {
       const mockSearch = getMockSearch('5');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getAllByTestId, getByTestId } = render(
-        <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('5')} />
-      );
+      render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('5')} />);
 
-      const input = getByTestId('searchPackagesInput');
+      const input = screen.getByRole('textbox', { name: 'Search packages' });
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      fireEvent.change(input, { target: { value: 'testing' } });
-      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+      userEvent.type(input, 'testing{enter}');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByTestId('packageItem');
+      const buttons = screen.getAllByTestId('packageItem');
       expect(buttons[0]).toHaveClass('disabledCell');
       expect(buttons[1]).toHaveClass('disabledCell');
     });
@@ -141,22 +130,19 @@ describe('SubscriptionModal', () => {
       const mockSearch = getMockSearch('6');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getAllByTestId, getByTestId } = render(
-        <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('6')} />
-      );
+      render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('6')} />);
 
-      const input = getByTestId('searchPackagesInput');
+      const input = screen.getByRole('textbox', { name: 'Search packages' });
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      fireEvent.change(input, { target: { value: 'testing' } });
-      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+      userEvent.type(input, 'testing{enter}');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByTestId('packageItem');
+      const buttons = screen.getAllByTestId('packageItem');
       expect(buttons[0]).toHaveClass('disabledCell');
       expect(buttons[1]).toHaveClass('clickableCell');
     });
@@ -168,25 +154,22 @@ describe('SubscriptionModal', () => {
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
       mocked(API).addSubscription.mockResolvedValue('');
 
-      const { getAllByTestId, getByTestId, queryByTestId } = render(
-        <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('7')} />
-      );
+      render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('7')} />);
 
-      const input = getByTestId('searchPackagesInput');
+      const input = screen.getByRole('textbox', { name: 'Search packages' });
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'testing');
-      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+      userEvent.type(input, 'testing{enter}');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByTestId('packageItem');
-      fireEvent.click(buttons[0]);
+      const buttons = screen.getAllByTestId('packageItem');
+      userEvent.click(buttons[0]);
 
-      const activePackage = getByTestId('activePackageItem');
+      const activePackage = screen.getByTestId('activePackageItem');
 
       expect(activePackage).toBeInTheDocument();
       expect(activePackage).toHaveTextContent(
@@ -195,10 +178,10 @@ describe('SubscriptionModal', () => {
         })`
       );
 
-      expect(queryByTestId('searchPackagesInput')).toBeNull();
+      expect(screen.queryByRole('textbox', { name: 'Search packages' })).toBeNull();
 
-      const btn = getByTestId('addSubsModalBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add subscription' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addSubscription).toHaveBeenCalledTimes(1);
@@ -216,25 +199,22 @@ describe('SubscriptionModal', () => {
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
       mocked(API).addSubscription.mockRejectedValue({});
 
-      const { getAllByTestId, getByTestId, queryByTestId } = render(
-        <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('8')} />
-      );
+      render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('8')} />);
 
-      const input = getByTestId('searchPackagesInput');
+      const input = screen.getByRole('textbox', { name: 'Search packages' });
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      fireEvent.change(input, { target: { value: 'testing' } });
-      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+      userEvent.type(input, 'testing{enter}');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByTestId('packageItem');
-      fireEvent.click(buttons[0]);
+      const buttons = screen.getAllByTestId('packageItem');
+      userEvent.click(buttons[0]);
 
-      const activePackage = getByTestId('activePackageItem');
+      const activePackage = screen.getByTestId('activePackageItem');
 
       expect(activePackage).toBeInTheDocument();
       expect(activePackage).toHaveTextContent(
@@ -243,10 +223,10 @@ describe('SubscriptionModal', () => {
         })`
       );
 
-      expect(queryByTestId('searchPackagesInput')).toBeNull();
+      expect(screen.queryByRole('textbox', { name: 'Search packages' })).toBeNull();
 
-      const btn = getByTestId('addSubsModalBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add subscription' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addSubscription).toHaveBeenCalledTimes(1);

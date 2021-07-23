@@ -12,7 +12,6 @@ exports[`HelmInstall creates snapshot 1`] = `
         aria-disabled="false"
         aria-label="Open installation modal"
         class="btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap"
-        data-testid="openModalBtn"
         type="button"
       >
         <div
@@ -94,9 +93,8 @@ exports[`HelmInstall creates snapshot 1`] = `
               </div>
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -111,7 +109,7 @@ exports[`HelmInstall creates snapshot 1`] = `
           >
             <div
               class="alert alert-warning mt-1 mb-4"
-              data-testid="prerelease-alert"
+              role="alert"
             >
               This package version is a 
               <span
@@ -131,7 +129,6 @@ exports[`HelmInstall creates snapshot 1`] = `
                   <button
                     aria-label="Open tab v3"
                     class="btn btn-link nav-item btn active btn-primary active"
-                    data-testid="tabBtn"
                   >
                     <span
                       class="d-none d-sm-block"
@@ -151,7 +148,6 @@ exports[`HelmInstall creates snapshot 1`] = `
                   <button
                     aria-label="Open tab v2"
                     class="btn btn-link nav-item btn"
-                    data-testid="tabBtn"
                   >
                     <span
                       class="d-none d-sm-block"
@@ -208,7 +204,6 @@ exports[`HelmInstall creates snapshot 1`] = `
                       <button
                         aria-label="Copy command to clipboard"
                         class="btn btn-sm btn-primary rounded-circle copyBtn"
-                        data-testid="ctcBtn"
                         type="button"
                       >
                         <div
@@ -286,7 +281,6 @@ exports[`HelmInstall creates snapshot 1`] = `
                       <button
                         aria-label="Copy command to clipboard"
                         class="btn btn-sm btn-primary rounded-circle copyBtn"
-                        data-testid="ctcBtn"
                         type="button"
                       >
                         <div
@@ -367,7 +361,6 @@ exports[`HelmInstall creates snapshot 1`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               type="button"
             >
               <div

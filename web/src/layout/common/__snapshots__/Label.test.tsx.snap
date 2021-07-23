@@ -1,3 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Label creates snapshot 1`] = `[Function]`;
+exports[`Label creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="undefined"
+  >
+    <div
+      class="d-flex flex-row align-items-center overflow-hidden labelWrapper default"
+    >
+      <div
+        class="text-nowrap labelText labelTextNoIcon"
+      >
+        Label text
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { Maintainer } from '../../types';
@@ -15,18 +15,18 @@ describe('Maintainers', () => {
 
   it('creates snapshot', () => {
     const mockMaintainers = getMockMaintainers('1');
-    const result = render(<Maintainers maintainers={mockMaintainers} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Maintainers maintainers={mockMaintainers} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
       const mockMaintainers = getMockMaintainers('2');
-      const { getByText, getAllByRole } = render(<Maintainers maintainers={mockMaintainers} />);
+      render(<Maintainers maintainers={mockMaintainers} />);
 
-      expect(getByText('Maintainers')).toBeInTheDocument();
+      expect(screen.getByText('Maintainers')).toBeInTheDocument();
 
-      const maintainers = getAllByRole('button');
+      const maintainers = screen.getAllByRole('button');
       expect(maintainers).toHaveLength(mockMaintainers.length);
       expect(maintainers[0]).toHaveTextContent(mockMaintainers[0].name!);
       expect(maintainers[0]).toHaveProperty('href', `mailto:${mockMaintainers[0].email}`);

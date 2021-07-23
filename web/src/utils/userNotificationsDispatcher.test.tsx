@@ -1,4 +1,5 @@
 import { waitFor } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 
 import { UserNotification } from '../types';
 import userNotificationsDispatcher from './userNotificationsDispatcher';
@@ -49,6 +50,10 @@ describe('userNotificationsDispatcher', () => {
       displayed: [],
     });
 
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
     await waitFor(() => {
       expect(updateUserNotificationMock).toHaveBeenCalledTimes(1);
     });
@@ -79,6 +84,10 @@ describe('userNotificationsDispatcher', () => {
     });
 
     userNotificationsDispatcher.dismissNotification('/packages/helm/hub/artifact-hub');
+
+    act(() => {
+      jest.advanceTimersByTime(20000);
+    });
 
     await waitFor(() => {
       expect(updateUserNotificationMock).toHaveBeenCalledTimes(2);

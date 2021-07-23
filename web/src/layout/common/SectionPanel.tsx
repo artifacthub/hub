@@ -67,7 +67,6 @@ const SectionPanel = (props: Props) => {
                       case 'authorization':
                         return (
                           <ActionBtn
-                            testId="sectionBtn"
                             className={className}
                             contentClassName="flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
                             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,6 +74,7 @@ const SectionPanel = (props: Props) => {
                               history.push(`${props.pathPrefix || ''}/${section.name}`);
                             }}
                             action={AuthorizerAction.GetAuthorizationPolicy}
+                            label="Open section"
                           >
                             <>{getBtnContent(section)}</>
                           </ActionBtn>
@@ -83,7 +83,6 @@ const SectionPanel = (props: Props) => {
                         return (
                           <button
                             type="button"
-                            data-testid="sectionBtn"
                             className={`btn btn-link text-reset ${className}`}
                             disabled={section.disabled}
                             onClick={() => {

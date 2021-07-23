@@ -102,7 +102,6 @@ const MobileSettings = (props: Props) => {
                     </Link>
 
                     <Link
-                      data-testid="starredPackagesLink"
                       className="dropdown-item my-2"
                       to={{
                         pathname: '/packages/starred',
@@ -116,7 +115,6 @@ const MobileSettings = (props: Props) => {
                     </Link>
 
                     <Link
-                      data-testid="controlPanelLink"
                       className="dropdown-item my-2"
                       to={{
                         pathname: '/control-panel',

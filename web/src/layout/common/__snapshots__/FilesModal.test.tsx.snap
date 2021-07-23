@@ -1,3 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Files modal creates snapshot 1`] = `[Function]`;
+exports[`Files modal creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-2"
+  >
+    <div
+      class="text-center"
+    >
+      <button
+        aria-label="Open CRDs modal"
+        class="btn btn-outline-secondary btn-sm text-nowrap btn-block"
+      >
+        Btn
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

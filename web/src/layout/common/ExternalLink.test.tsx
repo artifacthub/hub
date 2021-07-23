@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ExternalLink from './ExternalLink';
@@ -18,12 +19,12 @@ describe('External link', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<ExternalLink {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getByRole } = render(<ExternalLink {...defaultProps} />);
-    const link = getByRole('button');
+    render(<ExternalLink {...defaultProps} />);
+    const link = screen.getByRole('button');
     expect(link).toBeInTheDocument();
     expect(link).toHaveProperty('target', '_blank');
     expect(link).toHaveProperty('href', `${defaultProps.href}/`);
@@ -35,12 +36,12 @@ describe('External link', () => {
       ...defaultProps,
       btnType: true,
     };
-    const { getByTestId } = render(<ExternalLink {...props} />);
-    const link = getByTestId('externalBtn');
+    render(<ExternalLink {...props} />);
+    const link = screen.getByRole('button');
     expect(link).toBeInTheDocument();
     expect(link).toHaveProperty('type', 'button');
 
-    fireEvent.click(link);
+    userEvent.click(link);
     expect(openMock).toHaveBeenCalledTimes(1);
     expect(openMock).toHaveBeenCalledWith('http://test.com', '_blank');
   });

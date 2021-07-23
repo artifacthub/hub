@@ -46,7 +46,6 @@ exports[`SchemaLine creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"

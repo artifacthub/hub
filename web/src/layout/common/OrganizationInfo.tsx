@@ -85,7 +85,7 @@ const OrganizationInfo = (props: Props) => {
       <div className="position-absolute">
         <div
           ref={ref}
-          data-testid="orgInfoDropdown"
+          role="complementary"
           className={classnames('dropdown-menu dropdown-menu-left', styles.dropdown, {
             show: openStatus,
           })}
@@ -145,7 +145,6 @@ const OrganizationInfo = (props: Props) => {
         )}
 
         <button
-          data-testid="orgLink"
           className={`p-0 border-0 text-dark text-truncate flex-grow-1 ${styles.link} ${props.btnClassName}`}
           onClick={(e) => {
             e.preventDefault();

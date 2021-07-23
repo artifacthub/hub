@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import Loading from './Loading';
@@ -6,13 +6,13 @@ import Loading from './Loading';
 describe('Loading', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<Loading />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getByRole } = render(<Loading spinnerClassName="test" />);
-    expect(getByRole('status')).toBeInTheDocument();
-    expect(getByRole('status')).toHaveClass('test');
-    expect(getByRole('status')).toHaveTextContent('Loading...');
+    render(<Loading spinnerClassName="test" />);
+    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveClass('test');
+    expect(screen.getByRole('status')).toHaveTextContent('Loading...');
   });
 });

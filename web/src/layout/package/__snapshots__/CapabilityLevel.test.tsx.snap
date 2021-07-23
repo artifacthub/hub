@@ -30,7 +30,6 @@ exports[`CapabilityLevel creates snapshot 1`] = `
           <button
             aria-label="Open modal"
             class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-dark btn"
-            data-testid="openModalBtn"
             type="button"
           >
             <div
@@ -72,9 +71,8 @@ exports[`CapabilityLevel creates snapshot 1`] = `
                   Capability level
                 </div>
                 <button
-                  aria-label="Close modal"
+                  aria-label="Close"
                   class="close"
-                  data-testid="closeModalBtn"
                   type="button"
                 >
                   <span
@@ -100,7 +98,6 @@ exports[`CapabilityLevel creates snapshot 1`] = `
                 <button
                   aria-label="Close modal"
                   class="btn btn-sm btn-outline-secondary text-uppercase"
-                  data-testid="closeModalFooterBtn"
                   type="button"
                 >
                   <div

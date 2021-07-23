@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Sidebar from './Sidebar';
@@ -12,25 +13,25 @@ const defaultProps = {
 describe('Sidebar', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<Sidebar {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getByTestId, getByText } = render(<Sidebar {...defaultProps} />);
-    expect(getByTestId('openSidebarBtn')).toBeInTheDocument();
-    expect(getByTestId('closeSidebarBtn')).toBeInTheDocument();
-    expect(getByTestId('closeSidebarFooterBtn')).toBeInTheDocument();
-    expect(getByText(defaultProps.header)).toBeInTheDocument();
-    expect(getByText('Sidebar content')).toBeInTheDocument();
+    render(<Sidebar {...defaultProps} />);
+    expect(screen.getByRole('button', { name: /Open sidebar/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Close sidebar/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
+    expect(screen.getByText(defaultProps.header)).toBeInTheDocument();
+    expect(screen.getByText('Sidebar content')).toBeInTheDocument();
   });
 
   it('opens sidebar', () => {
-    const { getByTestId } = render(<Sidebar {...defaultProps} />);
-    const sidebar = getByTestId('sidebarContent');
+    render(<Sidebar {...defaultProps} />);
+    const sidebar = screen.getByRole('complementary', { name: 'Sidebar' });
     expect(sidebar).toBeInTheDocument();
     expect(sidebar).not.toHaveClass('active');
-    const btn = getByTestId('openSidebarBtn');
-    fireEvent.click(btn);
+    const btn = screen.getByRole('button', { name: /Open sidebar/ });
+    userEvent.click(btn);
     expect(sidebar).toHaveClass('active');
   });
 });

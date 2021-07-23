@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import SettingsSection from './index';
@@ -16,21 +16,19 @@ describe('SettingsSection', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SettingsSection context="user" {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SettingsSection context="user" {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders user settings', () => {
-      const { getByText } = render(<SettingsSection context="user" {...defaultProps} />);
-
-      expect(getByText('user')).toBeInTheDocument();
+      render(<SettingsSection context="user" {...defaultProps} />);
+      expect(screen.getByText('user')).toBeInTheDocument();
     });
 
     it('renders org settings', () => {
-      const { getByText } = render(<SettingsSection context="org" {...defaultProps} />);
-
-      expect(getByText('org')).toBeInTheDocument();
+      render(<SettingsSection context="org" {...defaultProps} />);
+      expect(screen.getByText('org')).toBeInTheDocument();
     });
   });
 });

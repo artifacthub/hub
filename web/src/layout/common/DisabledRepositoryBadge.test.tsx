@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import DisabledRepositoryBadge from './DisabledRepositoryBadge';
@@ -10,12 +10,12 @@ describe('DisabledRepositoryBadge', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<DisabledRepositoryBadge disabled />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders label', () => {
-    const { getByText } = render(<DisabledRepositoryBadge disabled />);
-    expect(getByText('Disabled')).toBeInTheDocument();
+    render(<DisabledRepositoryBadge disabled />);
+    expect(screen.getByText('Disabled')).toBeInTheDocument();
   });
 
   it('does not render label', () => {

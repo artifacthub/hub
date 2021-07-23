@@ -264,7 +264,6 @@ const SearchBar = (props: Props) => {
           )}
 
           <button
-            data-testid="cleanBtn"
             type="button"
             className={classnames('close', styles.inputClean, { invisible: value === '' || props.isSearching })}
             aria-label="Close"
@@ -279,7 +278,6 @@ const SearchBar = (props: Props) => {
             })}
           >
             <button
-              data-testid="openSearchTipsBtn"
               onClick={() => props.setOpenTips(true)}
               className={classnames('btn btn-link p-2 text-light', {
                 'btn-lg': props.size === 'big',

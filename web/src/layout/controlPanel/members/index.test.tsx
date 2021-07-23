@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -53,7 +54,7 @@ describe('Members section index', () => {
     const mockMembers = getMembers('1');
     mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <MembersSection {...defaultProps} />
@@ -63,7 +64,7 @@ describe('Members section index', () => {
 
     await waitFor(() => {
       expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -89,7 +90,7 @@ describe('Members section index', () => {
       const mockMembers = getMembers('4');
       mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -98,17 +99,17 @@ describe('Members section index', () => {
       );
 
       await waitFor(() => {
-        expect(getByTestId('noData')).toBeInTheDocument();
+        expect(screen.getByRole('alert')).toBeInTheDocument();
       });
-      expect(getByText('Do you want to add a member?')).toBeInTheDocument();
-      expect(getByTestId('addFirstMemberBtn')).toBeInTheDocument();
+      expect(screen.getByText('Do you want to add a member?')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open modal' })).toBeInTheDocument();
     });
 
     it('renders 2 members card', async () => {
       const mockMembers = getMembers('5');
       mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-      const { getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -117,7 +118,7 @@ describe('Members section index', () => {
       );
 
       await waitFor(() => {
-        expect(getAllByTestId('memberCard')).toHaveLength(2);
+        expect(screen.getAllByTestId('memberCard')).toHaveLength(2);
       });
     });
 
@@ -125,7 +126,7 @@ describe('Members section index', () => {
       const mockMembers = getMembers('6');
       mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-      const { getByTestId, queryByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -133,23 +134,21 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const addBtn = await waitFor(() => getByTestId('addMemberBtn'));
+      const addBtn = await screen.findByRole('button', { name: 'Open invite member modal' });
       expect(addBtn).toBeInTheDocument();
 
-      expect(queryByText('Username')).toBeNull();
+      expect(screen.queryByText('Username')).toBeNull();
 
-      fireEvent.click(addBtn);
+      userEvent.click(addBtn);
 
-      await waitFor(() => {
-        expect(queryByText('Username')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Username')).toBeInTheDocument();
     });
 
     it('renders organization form when add org button is clicked', async () => {
       const mockMembers = getMembers('7');
       mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-      const { getByTestId, queryByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -157,15 +156,13 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const firstBtn = await waitFor(() => getByTestId('addFirstMemberBtn'));
-      expect(queryByText('Username')).toBeNull();
+      const firstBtn = await screen.findByRole('button', { name: 'Open modal' });
+      expect(screen.queryByText('Username')).toBeNull();
       expect(firstBtn).toBeInTheDocument();
 
-      fireEvent.click(firstBtn);
+      userEvent.click(firstBtn);
 
-      await waitFor(() => {
-        expect(queryByText('Username')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Username')).toBeInTheDocument();
     });
 
     it('loads first page when not members in a different one', async () => {
@@ -214,7 +211,7 @@ describe('Members section index', () => {
     it('rest API errors', async () => {
       mocked(API).getOrganizationMembers.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -224,12 +221,10 @@ describe('Members section index', () => {
 
       await waitFor(() => expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1));
 
-      await waitFor(() => {
-        expect(getByTestId('noData')).toBeInTheDocument();
-        expect(
-          getByText(/An error occurred getting the organization members, please try again later./i)
-        ).toBeInTheDocument();
-      });
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
+      expect(
+        screen.getByText(/An error occurred getting the organization members, please try again later./i)
+      ).toBeInTheDocument();
     });
   });
 });

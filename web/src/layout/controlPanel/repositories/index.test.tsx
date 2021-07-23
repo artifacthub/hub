@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -55,7 +56,7 @@ describe('Repository index', () => {
     const mockRepository = getMockRepository('1');
     mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <Repository {...defaultProps} />
@@ -65,7 +66,7 @@ describe('Repository index', () => {
 
     await waitFor(() => {
       expect(API.searchRepositories).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -74,7 +75,7 @@ describe('Repository index', () => {
       const mockRepository = getMockRepository('2');
       mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <Repository {...defaultProps} />
@@ -86,16 +87,16 @@ describe('Repository index', () => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByTestId('refreshRepoBtn')).toBeInTheDocument();
-      expect(getByTestId('claimRepoBtn')).toBeInTheDocument();
-      expect(getByTestId('addRepoBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Refresh repositories list' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open claim repository modal' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open add repository modal' })).toBeInTheDocument();
     });
 
     it('displays no data component when no repositories', async () => {
       const mockRepository = getMockRepository('4');
       mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <Repository {...defaultProps} />
@@ -103,19 +104,17 @@ describe('Repository index', () => {
         </AppCtx.Provider>
       );
 
-      await waitFor(() => {
-        expect(getByTestId('noData')).toBeInTheDocument();
-      });
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
 
-      expect(getByText('Add your first repository!')).toBeInTheDocument();
-      expect(getByTestId('addFirstRepoBtn')).toBeInTheDocument();
+      expect(screen.getByText('Add your first repository!')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open add first repository modal' })).toBeInTheDocument();
     });
 
     it('renders list with 3 repositories', async () => {
       const mockRepository = getMockRepository('5');
       mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
-      const { getByTestId, getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <Repository {...defaultProps} />
@@ -124,16 +123,16 @@ describe('Repository index', () => {
       );
 
       await waitFor(() => {
-        expect(getByTestId('repoList')).toBeInTheDocument();
+        expect(screen.getByTestId('repoList')).toBeInTheDocument();
       });
-      expect(getAllByTestId('repoCard')).toHaveLength(3);
+      expect(screen.getAllByTestId('repoCard')).toHaveLength(3);
     });
 
     it('calls getRepositories to click Refresh button', async () => {
       const mockRepository = getMockRepository('6');
       mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <Repository {...defaultProps} />
@@ -141,9 +140,9 @@ describe('Repository index', () => {
         </AppCtx.Provider>
       );
 
-      const refreshBtn = await waitFor(() => getByTestId('refreshRepoBtn'));
+      const refreshBtn = await screen.findByRole('button', { name: 'Refresh repositories list' });
       expect(refreshBtn).toBeInTheDocument();
-      fireEvent.click(refreshBtn);
+      userEvent.click(refreshBtn);
 
       await waitFor(() => expect(API.searchRepositories).toHaveBeenCalledTimes(2));
     });
@@ -214,7 +213,7 @@ describe('Repository index', () => {
     it('on error different to UnauthorizedError', async () => {
       mocked(API).searchRepositories.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <Repository {...defaultProps} />
@@ -226,7 +225,7 @@ describe('Repository index', () => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      const noData = getByTestId('noData');
+      const noData = screen.getByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting the repositories, please try again later./i);
     });

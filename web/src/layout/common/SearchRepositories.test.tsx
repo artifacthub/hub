@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
@@ -30,8 +30,8 @@ describe('SearchRepositories', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SearchRepositories {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SearchRepositories {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -41,7 +41,7 @@ describe('SearchRepositories', () => {
 
       render(<SearchRepositories {...defaultProps} />);
 
-      const input = screen.getByTestId('searchRepositoriesInput');
+      const input = screen.getByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -60,7 +60,7 @@ describe('SearchRepositories', () => {
 
       render(<SearchRepositories {...defaultProps} />);
 
-      const input = screen.getByTestId('searchRepositoriesInput');
+      const input = screen.getByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -71,7 +71,7 @@ describe('SearchRepositories', () => {
       });
 
       const repos = screen.getAllByTestId('repoItem');
-      fireEvent.click(repos[0]);
+      userEvent.click(repos[0]);
 
       expect(mockOnSelection).toHaveBeenCalledTimes(1);
       expect(mockOnSelection).toHaveBeenCalledWith(mockSearch.items![0]);
@@ -88,7 +88,7 @@ describe('SearchRepositories', () => {
         />
       );
 
-      userEvent.type(screen.getByTestId('searchRepositoriesInput'), 'sec');
+      userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
 
       await waitFor(() => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
@@ -110,7 +110,7 @@ describe('SearchRepositories', () => {
 
         render(<SearchRepositories {...defaultProps} />);
 
-        userEvent.type(screen.getByTestId('searchRepositoriesInput'), 'sec');
+        userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
@@ -130,7 +130,7 @@ describe('SearchRepositories', () => {
 
         render(<SearchRepositories {...defaultProps} />);
 
-        userEvent.type(screen.getByTestId('searchRepositoriesInput'), 'sec');
+        userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
@@ -144,10 +144,10 @@ describe('SearchRepositories', () => {
       render(<SearchRepositories {...defaultProps} />);
 
       const icon = screen.getByTestId('searchBarIcon');
-      fireEvent.click(icon);
+      userEvent.click(icon);
 
       waitFor(() => {
-        expect(screen.getByTestId('searchRepositoriesInput')).toHaveFocus();
+        expect(screen.getByRole('textbox', { name: 'Search repositories' })).toHaveFocus();
       });
     });
   });

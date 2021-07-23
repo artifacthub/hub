@@ -1,5 +1,5 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import compoundJSONSchemaYAML from '../../../utils/compoundJSONSchemaYAML';
@@ -20,25 +20,23 @@ describe('Schema', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Schema {...defaultProps} />);
-
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Schema {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getAllByTestId, getByText, getByTestId } = render(<Schema {...defaultProps} />);
+      render(<Schema {...defaultProps} />);
 
-      expect(getByText(`# ${defaultSchema.title}`)).toBeInTheDocument();
-      const lines = getAllByTestId('schemaLine');
+      expect(screen.getByText(`# ${defaultSchema.title}`)).toBeInTheDocument();
+      const lines = screen.getAllByTestId('schemaLine');
       expect(lines).toHaveLength(97);
 
       waitFor(() => {
         expect(compoundJSONSchemaYAML).toHaveBeenCalledTimes(1);
-
-        expect(getByTestId('ctcBtn')).toBeInTheDocument();
-        expect(getByTestId('downloadBtn')).toBeInTheDocument();
       });
+      expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
     });
   });
 });

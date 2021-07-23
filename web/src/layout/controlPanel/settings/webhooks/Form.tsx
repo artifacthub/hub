@@ -282,7 +282,6 @@ const WebhookForm = (props: Props) => {
     <div>
       <div className="mb-4 pb-2 border-bottom">
         <button
-          data-testid="goBack"
           className={`btn btn-link text-dark btn-sm pl-0 d-flex align-items-center ${styles.link}`}
           onClick={onCloseForm}
           aria-label="Back to webhooks list"
@@ -379,7 +378,6 @@ const WebhookForm = (props: Props) => {
           <div className="mb-3">
             <div className="custom-control custom-switch pl-0">
               <input
-                data-testid="activeCheckbox"
                 id="active"
                 type="checkbox"
                 className={`custom-control-input ${styles.checkbox}`}
@@ -500,7 +498,6 @@ const WebhookForm = (props: Props) => {
 
                           <td className="align-middle">
                             <button
-                              data-testid="deletePackageButton"
                               className={`close text-danger mx-2 ${styles.closeBtn}`}
                               type="button"
                               onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -529,7 +526,6 @@ const WebhookForm = (props: Props) => {
               return (
                 <div className="custom-control custom-radio mr-4" key={`payload_${item.kind}`}>
                   <input
-                    data-testid={`${item.name}Radio`}
                     className="custom-control-input"
                     type="radio"
                     id={`payload_${item.kind}`}
@@ -777,7 +773,6 @@ const WebhookForm = (props: Props) => {
             <div className="d-flex flex-row justify-content-between">
               <div className="d-flex flex-row align-items-center mr-3">
                 <button
-                  data-testid="testWebhookBtn"
                   type="button"
                   className="btn btn-sm btn-success"
                   onClick={triggerTest}
@@ -826,7 +821,6 @@ const WebhookForm = (props: Props) => {
                   type="button"
                   disabled={isSending}
                   onClick={submitForm}
-                  data-testid="sendWebhookBtn"
                   aria-label="Add webhook"
                 >
                   {isSending ? (

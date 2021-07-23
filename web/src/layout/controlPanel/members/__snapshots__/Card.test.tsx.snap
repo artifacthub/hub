@@ -64,9 +64,8 @@ exports[`Member Card - members section creates snapshot 1`] = `
                 class="position-relative"
               >
                 <button
-                  aria-label="Action"
+                  aria-label="Open leave organization modal"
                   class="dropdown-item btn btn-sm rounded-0 text-dark"
-                  data-testid="leaveOrRemoveModalBtn"
                   type="button"
                 >
                   <div

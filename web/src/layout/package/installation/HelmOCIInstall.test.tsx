@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { Repository } from '../../../types';
@@ -25,29 +25,27 @@ describe('HelmOCIInstall', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<HelmOCIInstall {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<HelmOCIInstall {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByText } = render(<HelmOCIInstall {...defaultProps} />);
+      render(<HelmOCIInstall {...defaultProps} />);
 
-      expect(getByText('Enable OCI support')).toBeInTheDocument();
-      expect(getByText('HELM_EXPERIMENTAL_OCI=1')).toBeInTheDocument();
-      expect(getByText('Pull chart from remote')).toBeInTheDocument();
-      expect(getAllByText(/ghcr.io\/artifacthub\/artifact-hub:1.0.0/g)).toHaveLength(2);
-      expect(getByText('Export chart to directory')).toBeInTheDocument();
-      expect(getByText('Install chart')).toBeInTheDocument();
-      expect(getByText('helm install my-packageName ./packageName')).toBeInTheDocument();
+      expect(screen.getByText('Enable OCI support')).toBeInTheDocument();
+      expect(screen.getByText('HELM_EXPERIMENTAL_OCI=1')).toBeInTheDocument();
+      expect(screen.getByText('Pull chart from remote')).toBeInTheDocument();
+      expect(screen.getAllByText(/ghcr.io\/artifacthub\/artifact-hub:1.0.0/g)).toHaveLength(2);
+      expect(screen.getByText('Export chart to directory')).toBeInTheDocument();
+      expect(screen.getByText('Install chart')).toBeInTheDocument();
+      expect(screen.getByText('helm install my-packageName ./packageName')).toBeInTheDocument();
     });
 
     it('renders private repo', () => {
-      const { getByRole } = render(
-        <HelmOCIInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />
-      );
+      render(<HelmOCIInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />);
 
-      const alert = getByRole('alert');
+      const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });

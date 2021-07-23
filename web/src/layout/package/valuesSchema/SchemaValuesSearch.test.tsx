@@ -17,19 +17,19 @@ describe('SchemaValuesSearch', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SchemaValuesSearch {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SchemaValuesSearch {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', () => {
     render(<SchemaValuesSearch {...defaultProps} />);
-    expect(screen.getByTestId('typeaheadInput')).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('displays options', () => {
     render(<SchemaValuesSearch {...defaultProps} />);
 
-    userEvent.type(screen.getByTestId('typeaheadInput'), 'sub');
+    userEvent.type(screen.getByRole('textbox'), 'sub');
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
   });
@@ -37,7 +37,7 @@ describe('SchemaValuesSearch', () => {
   it('calls onSearch with selected path', () => {
     render(<SchemaValuesSearch {...defaultProps} />);
 
-    userEvent.type(screen.getByTestId('typeaheadInput'), 'sub');
+    userEvent.type(screen.getByRole('textbox'), 'sub');
 
     const opts = screen.getAllByTestId('typeaheadDropdownBtn');
     userEvent.click(opts[0]);
@@ -49,7 +49,7 @@ describe('SchemaValuesSearch', () => {
   it('calls onSearch twice', async () => {
     render(<SchemaValuesSearch {...defaultProps} activePath="path1.subpath1" />);
 
-    userEvent.type(screen.getByTestId('typeaheadInput'), 'sub');
+    userEvent.type(screen.getByRole('textbox'), 'sub');
 
     const opts = screen.getAllByTestId('typeaheadDropdownBtn');
     userEvent.click(opts[0]);

@@ -37,7 +37,6 @@ const UpdateOrganization = (props: Props) => {
 
       <div className="mt-4">
         <ActionBtn
-          testId="updateOrgBtn"
           className="btn btn-sm btn-outline-secondary"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
@@ -45,6 +44,7 @@ const UpdateOrganization = (props: Props) => {
           }}
           action={AuthorizerAction.UpdateOrganization}
           disabled={isSending}
+          label="Update organization modal"
         >
           <>
             {isSending ? (

@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -45,7 +45,7 @@ describe('User settings index', () => {
     const mockProfile = getMockProfile('1');
     mocked(API).getUserProfile.mockResolvedValue(mockProfile);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <UserSettings {...defaultProps} />
@@ -55,7 +55,7 @@ describe('User settings index', () => {
 
     await waitFor(() => {
       expect(API.getUserProfile).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -64,7 +64,7 @@ describe('User settings index', () => {
       const mockProfile = getMockProfile('2');
       mocked(API).getUserProfile.mockResolvedValue(mockProfile);
 
-      const { getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <UserSettings {...defaultProps} />
@@ -76,10 +76,10 @@ describe('User settings index', () => {
         expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Profile information')).toBeInTheDocument();
-      expect(getByText('Change password')).toBeInTheDocument();
+      expect(screen.getByText('Profile information')).toBeInTheDocument();
+      expect(screen.getByText('Change password')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           'Deleting your account will also delete all the content that belongs to it (repositories, subscriptions, webhooks, etc), as well as all organizations where you are the only member.'
         )
       ).toBeInTheDocument();
@@ -90,7 +90,7 @@ describe('User settings index', () => {
     it('does not render profile information section if error is different to UnauthorizedError', async () => {
       mocked(API).getUserProfile.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
-      const { queryByText, queryByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <UserSettings {...defaultProps} />
@@ -102,9 +102,9 @@ describe('User settings index', () => {
         expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(queryByText('Profile information')).toBeNull();
-      expect(queryByTestId('updateProfileForm')).toBeNull();
-      expect(queryByText('Change password')).toBeNull();
+      expect(screen.queryByText('Profile information')).toBeNull();
+      expect(screen.queryByTestId('updateProfileForm')).toBeNull();
+      expect(screen.queryByText('Change password')).toBeNull();
     });
 
     it('calls onAuthError if error is UnauthorizedError', async () => {

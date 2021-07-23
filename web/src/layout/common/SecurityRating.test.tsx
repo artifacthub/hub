@@ -22,7 +22,7 @@ describe('SecurityRating', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<SecurityRating {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders label', async () => {

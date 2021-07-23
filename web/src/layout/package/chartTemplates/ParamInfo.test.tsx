@@ -16,8 +16,8 @@ describe('ParamInfo', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<ParamInfo {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<ParamInfo {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {

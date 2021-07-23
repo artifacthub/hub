@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import TargetImageBtn from './TargetImageBtn';
@@ -22,24 +23,23 @@ describe('TargetImageBtn', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<TargetImageBtn {...defaultProps} />);
-
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<TargetImageBtn {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId, getByText } = render(<TargetImageBtn {...defaultProps} />);
+      render(<TargetImageBtn {...defaultProps} />);
 
-      expect(getByTestId('btnExpand')).toBeInTheDocument();
-      expect(getByText('content')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open target image' })).toBeInTheDocument();
+      expect(screen.getByText('content')).toBeInTheDocument();
     });
 
     it('calls onClick', () => {
-      const { getByTestId } = render(<TargetImageBtn {...defaultProps} />);
+      render(<TargetImageBtn {...defaultProps} />);
 
-      const btn = getByTestId('btnExpand');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Open target image' });
+      userEvent.click(btn);
 
       waitFor(() => {
         expect(onClickMock).toHaveBeenCalledTimes(1);
@@ -47,9 +47,9 @@ describe('TargetImageBtn', () => {
     });
 
     it('renders disabled button', () => {
-      const { getByTestId } = render(<TargetImageBtn {...defaultProps} disabled={true} />);
+      render(<TargetImageBtn {...defaultProps} disabled={true} />);
 
-      const btn = getByTestId('btnExpand');
+      const btn = screen.getByRole('button', { name: 'Open target image' });
       expect(btn).toBeDisabled();
     });
 

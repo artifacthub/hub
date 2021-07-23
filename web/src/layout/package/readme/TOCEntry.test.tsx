@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import TOCEntry from './TOCEntry';
@@ -22,25 +23,25 @@ describe('TOCEntry', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<TOCEntry {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<TOCEntry {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders properly', () => {
-      const { getByText } = render(<TOCEntry {...defaultProps} />);
+      render(<TOCEntry {...defaultProps} />);
 
-      const link = getByText('Installing the Chart');
+      const link = screen.getByText('Installing the Chart');
       expect(link).toBeInTheDocument();
       expect(link).toHaveClass('level1');
       expect(link).toHaveProperty('href', 'http://localhost/#installing-the-chart');
     });
 
     it('clicks link', () => {
-      const { getByText } = render(<TOCEntry {...defaultProps} />);
+      render(<TOCEntry {...defaultProps} />);
 
-      const link = getByText('Installing the Chart');
-      fireEvent.click(link);
+      const link = screen.getByText('Installing the Chart');
+      userEvent.click(link);
 
       expect(setVisibleTOCMock).toHaveBeenCalledTimes(1);
       expect(setVisibleTOCMock).toHaveBeenCalledWith(false);

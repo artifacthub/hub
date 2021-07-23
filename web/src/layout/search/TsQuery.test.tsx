@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import TsQuery from './TsQuery';
@@ -7,6 +8,7 @@ const onChangeMock = jest.fn();
 
 const defaultProps = {
   active: [],
+  device: 'desktop',
   onChange: onChangeMock,
 };
 
@@ -16,17 +18,17 @@ describe('TsQuery', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<TsQuery {...defaultProps} />);
+    const { asFragment } = render(<TsQuery {...defaultProps} />);
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getAllByTestId, getByText } = render(<TsQuery {...defaultProps} />);
+      render(<TsQuery {...defaultProps} />);
 
-      expect(getByText('Category')).toBeInTheDocument();
-      expect(getAllByTestId('checkbox')).toHaveLength(10);
+      expect(screen.getByText('Category')).toBeInTheDocument();
+      expect(screen.getAllByRole('checkbox')).toHaveLength(10);
     });
 
     it('renders with some checked options', () => {
@@ -34,36 +36,36 @@ describe('TsQuery', () => {
         ...defaultProps,
         active: ['database', 'monitoring'],
       };
-      const { getAllByTestId, getByLabelText } = render(<TsQuery {...props} />);
+      render(<TsQuery {...props} />);
 
-      const checkboxes = getAllByTestId('checkbox');
+      const checkboxes = screen.getAllByRole('checkbox');
       expect(checkboxes).toHaveLength(10);
-      expect(getByLabelText('Database')).toBeInTheDocument();
+      expect(screen.getByLabelText('Database')).toBeInTheDocument();
       expect(checkboxes[0]).toBeChecked();
-      expect(getByLabelText('Integration and Delivery')).toBeInTheDocument();
+      expect(screen.getByLabelText('Integration and Delivery')).toBeInTheDocument();
       expect(checkboxes[1]).not.toBeChecked();
-      expect(getByLabelText('Logging and Tracing')).toBeInTheDocument();
+      expect(screen.getByLabelText('Logging and Tracing')).toBeInTheDocument();
       expect(checkboxes[2]).not.toBeChecked();
-      expect(getByLabelText('Machine learning')).toBeInTheDocument();
+      expect(screen.getByLabelText('Machine learning')).toBeInTheDocument();
       expect(checkboxes[3]).not.toBeChecked();
-      expect(getByLabelText('Monitoring')).toBeInTheDocument();
+      expect(screen.getByLabelText('Monitoring')).toBeInTheDocument();
       expect(checkboxes[4]).toBeChecked();
-      expect(getByLabelText('Networking')).toBeInTheDocument();
+      expect(screen.getByLabelText('Networking')).toBeInTheDocument();
       expect(checkboxes[5]).not.toBeChecked();
-      expect(getByLabelText('Security')).toBeInTheDocument();
+      expect(screen.getByLabelText('Security')).toBeInTheDocument();
       expect(checkboxes[6]).not.toBeChecked();
-      expect(getByLabelText('Storage')).toBeInTheDocument();
+      expect(screen.getByLabelText('Storage')).toBeInTheDocument();
       expect(checkboxes[7]).not.toBeChecked();
-      expect(getByLabelText('Streaming and Messaging')).toBeInTheDocument();
+      expect(screen.getByLabelText('Streaming and Messaging')).toBeInTheDocument();
       expect(checkboxes[8]).not.toBeChecked();
-      expect(getByLabelText('Web applications')).toBeInTheDocument();
+      expect(screen.getByLabelText('Web applications')).toBeInTheDocument();
       expect(checkboxes[9]).not.toBeChecked();
     });
 
     it('calls on change event', () => {
-      const { getByLabelText } = render(<TsQuery {...defaultProps} />);
-      const opt1 = getByLabelText('Database');
-      fireEvent.click(opt1);
+      render(<TsQuery {...defaultProps} />);
+      const opt1 = screen.getByLabelText('Database');
+      userEvent.click(opt1);
       expect(onChangeMock).toHaveBeenCalledTimes(1);
     });
   });

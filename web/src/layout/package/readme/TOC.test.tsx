@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import TOC from './TOC';
@@ -53,48 +54,47 @@ describe('TOC', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<TOC {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<TOC {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders properly', () => {
-      const { getByText, getByTestId } = render(<TOC {...defaultProps} />);
+      render(<TOC {...defaultProps} />);
 
-      expect(getByText('Readme')).toBeInTheDocument();
-      expect(getByTestId('btnTOC')).toBeInTheDocument();
+      expect(screen.getByText('Readme')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Table of contents/ })).toBeInTheDocument();
     });
 
     it('displays dropdown', () => {
-      const { getByText, getByTestId } = render(<TOC {...defaultProps} />);
+      render(<TOC {...defaultProps} />);
 
-      const btn = getByTestId('btnTOC');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Table of contents/ });
+      userEvent.click(btn);
 
-      expect(getByTestId('dropdownTOC')).toBeInTheDocument();
-      expect(getByText('Title 1')).toBeInTheDocument();
-      expect(getByText('Subtitle 1a')).toBeInTheDocument();
-      expect(getByText('Opt 1')).toBeInTheDocument();
-      expect(getByText('Opt 2')).toBeInTheDocument();
-      expect(getByText('Subtitle 1b')).toBeInTheDocument();
-      expect(getByText('Title 2')).toBeInTheDocument();
-      expect(getByText('Subtitle 2')).toBeInTheDocument();
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+      expect(screen.getByText('Title 1')).toBeInTheDocument();
+      expect(screen.getByText('Subtitle 1a')).toBeInTheDocument();
+      expect(screen.getByText('Opt 1')).toBeInTheDocument();
+      expect(screen.getByText('Opt 2')).toBeInTheDocument();
+      expect(screen.getByText('Subtitle 1b')).toBeInTheDocument();
+      expect(screen.getByText('Title 2')).toBeInTheDocument();
+      expect(screen.getByText('Subtitle 2')).toBeInTheDocument();
     });
 
     it('displays dropdown', () => {
-      const { queryByTestId, getByTestId } = render(<TOC {...defaultProps} />);
+      render(<TOC {...defaultProps} />);
 
-      const btn = getByTestId('btnTOC');
-      fireEvent.click(btn);
-      expect(getByTestId('dropdownTOC')).toBeInTheDocument();
+      const btn = screen.getByRole('button', { name: /Table of contents/ });
+      userEvent.click(btn);
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
 
-      fireEvent.click(btn);
-      expect(queryByTestId('dropdownTOC')).toBeNull();
+      userEvent.click(btn);
+      expect(screen.queryByRole('listbox')).toBeNull();
     });
 
     it('does not render component when list is empty', () => {
       const { container } = render(<TOC {...defaultProps} toc={[]} />);
-
       expect(container).toBeEmptyDOMElement();
     });
   });

@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import Modal from './Modal';
@@ -50,23 +50,23 @@ describe('HelmInstall', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Modal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Modal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders pre-release message', () => {
-      const { getByTestId } = render(<Modal {...defaultProps} />);
+      render(<Modal {...defaultProps} />);
 
-      const alert = getByTestId('prerelease-alert');
+      const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveTextContent('This package version is a pre-release and it is not ready for production use.');
     });
 
     it('closes modal when a new pkg is open', () => {
-      const { getByRole, queryByRole, rerender } = render(<Modal {...defaultProps} />);
+      const { rerender } = render(<Modal {...defaultProps} />);
 
-      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
 
       rerender(
         <Modal
@@ -77,7 +77,7 @@ describe('HelmInstall', () => {
       );
 
       waitFor(() => {
-        expect(queryByRole('dialog')).toBeNull();
+        expect(screen.queryByRole('dialog')).toBeNull();
       });
     });
   });

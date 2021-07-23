@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { ChartTemplate } from '../../../types';
@@ -25,44 +26,42 @@ describe('TemplatesList', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<TemplatesList {...defaultProps} templates={getMockChartTemplates('1').templates} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<TemplatesList {...defaultProps} templates={getMockChartTemplates('1').templates} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getAllByTestId, getByPlaceholderText, getByText, getAllByText } = render(
-        <TemplatesList {...defaultProps} templates={getMockChartTemplates('2').templates} />
-      );
+      render(<TemplatesList {...defaultProps} templates={getMockChartTemplates('2').templates} />);
 
-      expect(getByPlaceholderText('Search by template or resource kind')).toBeInTheDocument();
-      expect(getAllByTestId('tmplBtn')).toHaveLength(16);
+      expect(screen.getByPlaceholderText('Search by template or resource kind')).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: /Show template/ })).toHaveLength(16);
 
       // Templates
-      expect(getByText('db_migrator_install_job.yaml')).toBeInTheDocument();
-      expect(getByText('db_migrator_secret.yaml')).toBeInTheDocument();
-      expect(getByText('hub_deployment.yaml')).toBeInTheDocument();
-      expect(getByText('hub_ingress.yaml')).toBeInTheDocument();
-      expect(getByText('hub_secret.yaml')).toBeInTheDocument();
-      expect(getByText('hub_service.yaml')).toBeInTheDocument();
-      expect(getByText('hub_serviceaccount.yaml')).toBeInTheDocument();
-      expect(getByText('scanner_cronjob.yaml')).toBeInTheDocument();
-      expect(getByText('scanner_secret.yaml')).toBeInTheDocument();
-      expect(getByText('tracker_cronjob.yaml')).toBeInTheDocument();
-      expect(getByText('tracker_secret.yaml')).toBeInTheDocument();
-      expect(getByText('trivy_deployment.yaml')).toBeInTheDocument();
-      expect(getByText('trivy_pvc.yaml')).toBeInTheDocument();
-      expect(getByText('trivy_service.yaml')).toBeInTheDocument();
-      expect(getByText('_helpers.tpl')).toBeInTheDocument();
+      expect(screen.getByText('db_migrator_install_job.yaml')).toBeInTheDocument();
+      expect(screen.getByText('db_migrator_secret.yaml')).toBeInTheDocument();
+      expect(screen.getByText('hub_deployment.yaml')).toBeInTheDocument();
+      expect(screen.getByText('hub_ingress.yaml')).toBeInTheDocument();
+      expect(screen.getByText('hub_secret.yaml')).toBeInTheDocument();
+      expect(screen.getByText('hub_service.yaml')).toBeInTheDocument();
+      expect(screen.getByText('hub_serviceaccount.yaml')).toBeInTheDocument();
+      expect(screen.getByText('scanner_cronjob.yaml')).toBeInTheDocument();
+      expect(screen.getByText('scanner_secret.yaml')).toBeInTheDocument();
+      expect(screen.getByText('tracker_cronjob.yaml')).toBeInTheDocument();
+      expect(screen.getByText('tracker_secret.yaml')).toBeInTheDocument();
+      expect(screen.getByText('trivy_deployment.yaml')).toBeInTheDocument();
+      expect(screen.getByText('trivy_pvc.yaml')).toBeInTheDocument();
+      expect(screen.getByText('trivy_service.yaml')).toBeInTheDocument();
+      expect(screen.getByText('_helpers.tpl')).toBeInTheDocument();
 
       // Some labels
-      expect(getAllByText('Secret')).toHaveLength(4);
-      expect(getAllByText('CronJob')).toHaveLength(2);
-      expect(getByText('Multiple kinds')).toBeInTheDocument();
+      expect(screen.getAllByText('Secret')).toHaveLength(4);
+      expect(screen.getAllByText('CronJob')).toHaveLength(2);
+      expect(screen.getByText('Multiple kinds')).toBeInTheDocument();
     });
 
     it('renders active template', () => {
-      const { getAllByTestId } = render(
+      render(
         <TemplatesList
           {...defaultProps}
           templates={getMockChartTemplates('3').templates}
@@ -70,13 +69,13 @@ describe('TemplatesList', () => {
         />
       );
 
-      const btns = getAllByTestId('tmplBtn');
+      const btns = screen.getAllByRole('button', { name: /Show template/ });
       expect(btns[1]).toHaveClass('active');
       expect(btns[1]).toHaveTextContent('Template:db_migrator_secret.yamlResource:Secret');
     });
 
     it('filters templates', () => {
-      const { getAllByTestId, getByPlaceholderText } = render(
+      render(
         <TemplatesList
           {...defaultProps}
           templates={getMockChartTemplates('3').templates}
@@ -84,16 +83,16 @@ describe('TemplatesList', () => {
         />
       );
 
-      expect(getAllByTestId('tmplBtn')).toHaveLength(16);
+      expect(screen.getAllByRole('button', { name: /Show template/ })).toHaveLength(16);
 
-      const input = getByPlaceholderText('Search by template or resource kind');
-      fireEvent.change(input, { target: { value: 'role' } });
+      const input = screen.getByPlaceholderText('Search by template or resource kind');
+      userEvent.type(input, 'role');
 
-      expect(getAllByTestId('tmplBtn')).toHaveLength(1);
+      expect(screen.getAllByRole('button', { name: /Show template/ })).toHaveLength(1);
     });
 
     it('changes active template', () => {
-      const { getAllByTestId } = render(
+      render(
         <TemplatesList
           {...defaultProps}
           templates={getMockChartTemplates('3').templates}
@@ -101,8 +100,8 @@ describe('TemplatesList', () => {
         />
       );
 
-      const btns = getAllByTestId('tmplBtn');
-      fireEvent.click(btns[4]);
+      const btns = screen.getAllByRole('button', { name: /Show template/ });
+      userEvent.click(btns[4]);
 
       expect(onTemplateChangeMock).toHaveBeenCalledTimes(1);
       expect(onTemplateChangeMock).toHaveBeenCalledWith({

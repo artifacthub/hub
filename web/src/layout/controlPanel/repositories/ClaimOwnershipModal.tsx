@@ -147,7 +147,6 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
       size="xl"
       closeButton={
         <button
-          data-testid="claimRepoBtn"
           className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isSending || isNull(repoItem)}
@@ -270,7 +269,6 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
             <div className="custom-control custom-radio mb-2">
               <input
                 aria-labelledby="claiming user"
-                data-testid="radio_claim_user"
                 className="custom-control-input"
                 type="radio"
                 name="claim"
@@ -288,7 +286,6 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
             <div className="custom-control custom-radio mb-3">
               <input
                 aria-labelledby="claiming org"
-                data-testid="radio_claim_org"
                 className="custom-control-input"
                 type="radio"
                 name="claim"
@@ -307,7 +304,6 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
           <div className="d-flex flex-row align-items-center position-relative mb-3">
             <div className="form-group w-75 mb-2">
               <select
-                data-testid="select_claim_orgs"
                 className="custom-select"
                 aria-label="org-select"
                 value={claimingOrg}

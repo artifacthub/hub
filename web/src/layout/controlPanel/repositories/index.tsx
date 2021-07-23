@@ -161,7 +161,6 @@ const RepositoriesSection = (props: Props) => {
 
             <div>
               <button
-                data-testid="refreshRepoBtn"
                 className={`btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
                 onClick={fetchRepositories}
                 aria-label="Refresh repositories list"
@@ -174,7 +173,6 @@ const RepositoriesSection = (props: Props) => {
               </button>
 
               <button
-                data-testid="claimRepoBtn"
                 className={`btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
                 onClick={() => setOpenClaimRepo(true)}
                 aria-label="Open claim repository modal"
@@ -186,7 +184,6 @@ const RepositoriesSection = (props: Props) => {
               </button>
 
               <ActionBtn
-                testId="addRepoBtn"
                 className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 contentClassName="justify-content-center"
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -194,6 +191,7 @@ const RepositoriesSection = (props: Props) => {
                   setModalStatus({ open: true });
                 }}
                 action={AuthorizerAction.AddOrganizationRepository}
+                label="Open add repository modal"
               >
                 <>
                   <MdAdd className="d-inline d-md-none" />
@@ -250,13 +248,13 @@ const RepositoriesSection = (props: Props) => {
                     <p className="h6 my-4">Add your first repository!</p>
 
                     <ActionBtn
-                      testId="addFirstRepoBtn"
                       className="btn btn-sm btn-outline-secondary"
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                         e.preventDefault();
                         setModalStatus({ open: true });
                       }}
                       action={AuthorizerAction.AddOrganizationRepository}
+                      label="Open add first repository modal"
                     >
                       <div className="d-flex flex-row align-items-center text-uppercase">
                         <MdAddCircle className="mr-2" />

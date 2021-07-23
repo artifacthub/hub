@@ -30,8 +30,8 @@ describe('SignKeyInfo', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SignKeyInfo {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SignKeyInfo {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -61,7 +61,7 @@ describe('SignKeyInfo', () => {
       expect(screen.getByText('URL')).toBeInTheDocument();
       expect(screen.getByText('https://key.url')).toBeInTheDocument();
       expect(screen.getByText('Close')).toBeInTheDocument();
-      expect(screen.getAllByTestId('ctcBtn')).toHaveLength(2);
+      expect(screen.getAllByRole('button', { name: 'Copy command to clipboard' })).toHaveLength(2);
     });
 
     it('opens modal when visibleKeyInfo is true', () => {
@@ -74,7 +74,7 @@ describe('SignKeyInfo', () => {
     it('when signed is true and signKey is undefined', async () => {
       render(<SignKeyInfo signed repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />);
 
-      const btn = screen.getByTestId('signKeyBtn');
+      const btn = screen.getByRole('button', { name: 'Open sign key modal' });
       expect(btn).toHaveClass('disabled');
       userEvent.hover(btn);
 

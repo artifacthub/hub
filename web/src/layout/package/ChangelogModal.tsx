@@ -123,12 +123,11 @@ const ChangelogModal = (props: Props) => {
       <ElementWithTooltip
         element={
           <button
-            data-testid="changelogBtn"
             className={classnames('btn btn-outline-secondary btn-block btn-sm text-nowrap', {
               disabled: !props.hasChangelog,
             })}
             onClick={onOpenModal}
-            aria-label="Open modal"
+            aria-label="Open Changelog modal"
             aria-disabled={!props.hasChangelog}
           >
             <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">

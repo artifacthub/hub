@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
@@ -76,7 +76,7 @@ describe('OptOutModal', () => {
   it('creates snapshot', async () => {
     mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <OptOutModal {...defaultProps} />
       </AppCtx.Provider>
@@ -84,7 +84,7 @@ describe('OptOutModal', () => {
 
     await waitFor(() => {
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -92,7 +92,7 @@ describe('OptOutModal', () => {
     it('renders component', async () => {
       mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
 
-      const { getByText, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <OptOutModal {...defaultProps} />
         </AppCtx.Provider>
@@ -102,15 +102,15 @@ describe('OptOutModal', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Add opt-out entry')).toBeInTheDocument();
-      expect(getByText('Events')).toBeInTheDocument();
-      expect(getByText('Repository')).toBeInTheDocument();
+      expect(screen.getByText('Add opt-out entry')).toBeInTheDocument();
+      expect(screen.getByText('Events')).toBeInTheDocument();
+      expect(screen.getByText('Repository')).toBeInTheDocument();
 
-      const btn = getByTestId('addOptOutModalBtn');
+      const btn = screen.getByRole('button', { name: 'Add opt-out entry' });
       expect(btn).toBeInTheDocument();
       expect(btn).toBeDisabled();
 
-      const radio = getByTestId('radio_2');
+      const radio = screen.getByRole('radio', { name: 'Tracking errors' });
       expect(radio).toBeInTheDocument();
       expect(radio).toBeChecked();
     });
@@ -122,7 +122,7 @@ describe('OptOutModal', () => {
       mocked(API).searchRepositories.mockResolvedValue(getMockRepos('repos'));
       mocked(API).addOptOut.mockResolvedValue('');
 
-      const { getAllByTestId, getByTestId, queryByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <OptOutModal {...defaultProps} />
         </AppCtx.Provider>
@@ -132,7 +132,7 @@ describe('OptOutModal', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const input = getByTestId('searchRepositoriesInput');
+      const input = screen.getByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
       userEvent.type(input, 'sec');
 
@@ -140,7 +140,7 @@ describe('OptOutModal', () => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = await waitFor(() => getAllByTestId('repoItem'));
+      const buttons = await screen.findAllByTestId('repoItem');
       expect(buttons).toHaveLength(3);
       userEvent.click(buttons[1]);
 
@@ -149,10 +149,10 @@ describe('OptOutModal', () => {
       expect(activeRepo).toBeInTheDocument();
       expect(activeRepo).toHaveTextContent('security-hub(Publisher: test)');
 
-      expect(queryByTestId('searchRepositoriesInput')).toBeNull();
+      expect(screen.queryByTestId('searchRepositoriesInput')).toBeNull();
 
-      const btn = getByTestId('addOptOutModalBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add opt-out entry' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addOptOut).toHaveBeenCalledTimes(1);
@@ -170,7 +170,7 @@ describe('OptOutModal', () => {
       mocked(API).searchRepositories.mockResolvedValue(getMockRepos('repos'));
       mocked(API).addOptOut.mockRejectedValue({});
 
-      const { getAllByTestId, getByTestId, queryByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <OptOutModal {...defaultProps} />
         </AppCtx.Provider>
@@ -180,7 +180,7 @@ describe('OptOutModal', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const input = getByTestId('searchRepositoriesInput');
+      const input = screen.getByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
       userEvent.type(input, 'sec');
 
@@ -188,7 +188,7 @@ describe('OptOutModal', () => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = await waitFor(() => getAllByTestId('repoItem'));
+      const buttons = await screen.findAllByTestId('repoItem');
       userEvent.click(buttons[1]);
 
       const activeRepo = await screen.findByTestId('activeRepoItem');
@@ -196,10 +196,10 @@ describe('OptOutModal', () => {
       expect(activeRepo).toBeInTheDocument();
       expect(activeRepo).toHaveTextContent('security-hub(Publisher: test)');
 
-      expect(queryByTestId('searchRepositoriesInput')).toBeNull();
+      expect(screen.queryByRole('textbox', { name: 'Search repositories' })).toBeNull();
 
-      const btn = getByTestId('addOptOutModalBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add opt-out entry' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addOptOut).toHaveBeenCalledTimes(1);

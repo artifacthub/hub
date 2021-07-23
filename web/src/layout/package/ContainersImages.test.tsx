@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { ContainerImage } from '../../types';
@@ -20,36 +21,34 @@ describe('ContainersImages', () => {
 
   it('creates snapshot', () => {
     const mockContainers = getMockImages('1');
-    const result = render(<ContainersImages containers={mockContainers} {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<ContainersImages containers={mockContainers} {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
       const mockContainers = getMockImages('2');
-      const { getByText, getAllByTestId } = render(<ContainersImages containers={mockContainers} {...defaultProps} />);
+      render(<ContainersImages containers={mockContainers} {...defaultProps} />);
 
-      expect(getByText('Containers Images')).toBeInTheDocument();
+      expect(screen.getByText('Containers Images')).toBeInTheDocument();
 
-      const containers = getAllByTestId('containerImageItem');
+      const containers = screen.getAllByTestId('containerImageItem');
       expect(containers).toHaveLength(mockContainers.length);
     });
 
     it('renders 3 images max + see all modal', () => {
       const mockContainers = getMockImages('3');
-      const { getByText, getAllByTestId, getByTestId } = render(
-        <ContainersImages containers={mockContainers} {...defaultProps} />
-      );
+      render(<ContainersImages containers={mockContainers} {...defaultProps} />);
 
-      expect(getAllByTestId('containerImageItem')).toHaveLength(8); // 3 + 5 mobile version
-      expect(getByText('See all'));
+      expect(screen.getAllByTestId('containerImageItem')).toHaveLength(8); // 3 + 5 mobile version
+      expect(screen.getByText('See all'));
 
-      const btn = getByTestId('seeAllModalBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'See all entries' });
+      userEvent.click(btn);
 
       waitFor(() => {
-        expect(getAllByTestId('containerImageItem')).toHaveLength(50);
-        expect(getByText('Title'));
+        expect(screen.getAllByTestId('containerImageItem')).toHaveLength(50);
+        expect(screen.getByText('Title')).toBeInTheDocument();
       });
     });
 

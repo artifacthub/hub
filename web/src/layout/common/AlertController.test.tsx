@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import alertDispatcher from '../../utils/alertDispatcher';
@@ -12,20 +13,20 @@ describe('AlertController', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<AlertController />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component when alert is null', () => {
-    const { getByTestId } = render(<AlertController />);
+    render(<AlertController />);
 
-    const component = getByTestId('alertController');
+    const component = screen.getByTestId('alertController');
     expect(component).toBeInTheDocument();
     expect(component).not.toHaveClass('show');
     expect(component).toHaveClass('fade');
   });
 
   it('closes alert to click close button', () => {
-    const { getByText } = render(<AlertController />);
+    render(<AlertController />);
 
     alertDispatcher.postAlert({
       type: 'warning',
@@ -33,15 +34,14 @@ describe('AlertController', () => {
     });
 
     waitFor(() => {
-      const btn = getByText('×');
-      fireEvent.click(btn);
+      userEvent.click(screen.getByText('×'));
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith(null);
     });
   });
 
   it('renders warning alert', () => {
-    const { getByTestId, getByText } = render(<AlertController />);
+    render(<AlertController />);
 
     alertDispatcher.postAlert({
       type: 'warning',
@@ -49,16 +49,16 @@ describe('AlertController', () => {
     });
 
     waitFor(() => {
-      const component = getByTestId('alertController');
+      const component = screen.getByTestId('alertController');
       expect(component).toHaveClass('alert-warning');
       expect(component).toHaveClass('show active');
 
-      expect(getByText('This is a warning alert'));
+      expect(screen.getByText('This is a warning alert'));
     });
   });
 
   it('renders success alert', () => {
-    const { getByTestId, getByText } = render(<AlertController />);
+    render(<AlertController />);
 
     alertDispatcher.postAlert({
       type: 'success',
@@ -66,16 +66,16 @@ describe('AlertController', () => {
     });
 
     waitFor(() => {
-      const component = getByTestId('alertController');
+      const component = screen.getByTestId('alertController');
       expect(component).toHaveClass('alert-success');
       expect(component).toHaveClass('show active');
 
-      expect(getByText('This is a success alert'));
+      expect(screen.getByText('This is a success alert'));
     });
   });
 
   it('renders danger alert', () => {
-    const { getByTestId, getByText } = render(<AlertController />);
+    render(<AlertController />);
 
     alertDispatcher.postAlert({
       type: 'danger',
@@ -83,11 +83,11 @@ describe('AlertController', () => {
     });
 
     waitFor(() => {
-      const component = getByTestId('alertController');
+      const component = screen.getByTestId('alertController');
       expect(component).toHaveClass('alert-danger');
       expect(component).toHaveClass('show active');
 
-      expect(getByText('This is a danger alert'));
+      expect(screen.getByText('This is a danger alert'));
     });
   });
 });

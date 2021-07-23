@@ -112,7 +112,6 @@ const StarButton = (props: Props) => {
           className={styles.starBtnWrapper}
           element={
             <button
-              data-testid="toggleStarBtn"
               className={classnames('btn btn-sm btn-primary px-1 px-md-3', styles.starBtn, {
                 [`disabled ${styles.disabled}`]: notLoginUser || isGettingIfStarred,
               })}

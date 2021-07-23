@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -53,7 +53,7 @@ describe('Organization profile settings index', () => {
     const mockOrganization = getMockOrganization('1');
     mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <ProfileOrgSection {...defaultProps} />
@@ -63,7 +63,7 @@ describe('Organization profile settings index', () => {
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -72,7 +72,7 @@ describe('Organization profile settings index', () => {
       const mockOrganization = getMockOrganization('2');
       mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
-      const { getByText, getAllByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <ProfileOrgSection {...defaultProps} />
@@ -84,8 +84,8 @@ describe('Organization profile settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Profile information')).toBeInTheDocument();
-      expect(getAllByText('Delete organization')).toHaveLength(3);
+      expect(screen.getByText('Profile information')).toBeInTheDocument();
+      expect(screen.getAllByText('Delete organization')).toHaveLength(3);
     });
   });
 
@@ -93,7 +93,7 @@ describe('Organization profile settings index', () => {
     it('not found', async () => {
       mocked(API).getOrganization.mockResolvedValue(null);
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <ProfileOrgSection {...defaultProps} />
@@ -105,16 +105,15 @@ describe('Organization profile settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      const noData = getByTestId('noData');
-
+      const noData = screen.getByRole('alert');
       expect(noData).toBeInTheDocument();
-      expect(getByText('Sorry, the organization you requested was not found.')).toBeInTheDocument();
+      expect(screen.getByText('Sorry, the organization you requested was not found.')).toBeInTheDocument();
     });
 
     it('generic error', async () => {
       mocked(API).getOrganization.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <ProfileOrgSection {...defaultProps} />
@@ -126,11 +125,10 @@ describe('Organization profile settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      const noData = getByTestId('noData');
-
+      const noData = screen.getByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(
-        getByText(/An error occurred getting the organization details, please try again later./i)
+        screen.getByText(/An error occurred getting the organization details, please try again later./i)
       ).toBeInTheDocument();
     });
 

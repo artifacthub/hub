@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import TOCList from './TOCList';
@@ -54,21 +54,21 @@ describe('TOCList', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<TOCList {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<TOCList {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders properly', () => {
-      const { getByText } = render(<TOCList {...defaultProps} />);
+      render(<TOCList {...defaultProps} />);
 
-      expect(getByText('Title 1')).toBeInTheDocument();
-      expect(getByText('Subtitle 1a')).toBeInTheDocument();
-      expect(getByText('Opt 1')).toBeInTheDocument();
-      expect(getByText('Opt 2')).toBeInTheDocument();
-      expect(getByText('Subtitle 1b')).toBeInTheDocument();
-      expect(getByText('Title 2')).toBeInTheDocument();
-      expect(getByText('Subtitle 2')).toBeInTheDocument();
+      expect(screen.getByText('Title 1')).toBeInTheDocument();
+      expect(screen.getByText('Subtitle 1a')).toBeInTheDocument();
+      expect(screen.getByText('Opt 1')).toBeInTheDocument();
+      expect(screen.getByText('Opt 2')).toBeInTheDocument();
+      expect(screen.getByText('Subtitle 1b')).toBeInTheDocument();
+      expect(screen.getByText('Title 2')).toBeInTheDocument();
+      expect(screen.getByText('Subtitle 2')).toBeInTheDocument();
     });
   });
 });

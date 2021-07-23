@@ -22,7 +22,6 @@ exports[`Organizations section index creates snapshot 1`] = `
             <button
               aria-label="Open modal"
               class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
-              data-testid="addOrgButton"
             >
               <div
                 class="d-flex flex-row align-items-center justify-content-center"
@@ -105,9 +104,8 @@ exports[`Organizations section index creates snapshot 1`] = `
                 Add organization
               </div>
               <button
-                aria-label="Close modal"
+                aria-label="Close"
                 class="close"
-                data-testid="closeModalBtn"
                 type="button"
               >
                 <span

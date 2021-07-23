@@ -1,3 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InputField creates snapshot 1`] = `[Function]`;
+exports[`InputField creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="form-group mb-4 position-relative undefined"
+  >
+    <label
+      class="font-weight-bold label"
+      for="name"
+    >
+      <span
+        class="font-weight-bold"
+      >
+        label
+      </span>
+    </label>
+    <input
+      autocomplete="on"
+      class="form-control"
+      data-testid="nameInput"
+      id="name"
+      name="name"
+      placeholder="placeholder"
+      spellcheck="false"
+      type="text"
+      value=""
+    />
+    <div
+      class="valid-feedback mt-0 inputFeedback"
+    >
+      valid text
+    </div>
+    <div
+      class="invalid-feedback mt-0 inputFeedback"
+    >
+      invalid text
+    </div>
+    <div
+      class="alert p-0 mt-4"
+    >
+      additional info
+    </div>
+  </div>
+</DocumentFragment>
+`;

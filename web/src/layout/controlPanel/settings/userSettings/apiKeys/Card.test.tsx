@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -37,32 +38,32 @@ describe('API key Card - API keys section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Card {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Card {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(<Card {...defaultProps} />);
+      render(<Card {...defaultProps} />);
 
-      expect(getByTestId('APIKeyCard')).toBeInTheDocument();
-      expect(getByText(APIKeyMock.name!)).toBeInTheDocument();
-      expect(getByText('Created at:')).toBeInTheDocument();
-      expect(getByTestId('updateAPIKeyBtn')).toBeInTheDocument();
-      expect(getByTestId('deleteAPIKeyModalBtn')).toBeInTheDocument();
+      expect(screen.getByTestId('APIKeyCard')).toBeInTheDocument();
+      expect(screen.getByText(APIKeyMock.name!)).toBeInTheDocument();
+      expect(screen.getByText('Created at:')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open API key modal' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open deletion modal' })).toBeInTheDocument();
     });
 
     it('calls deleteAPIKey when leave button in dropdown is clicked', async () => {
-      const { getByTestId, getByText } = render(<Card {...defaultProps} />);
+      render(<Card {...defaultProps} />);
 
-      const modalBtn = getByTestId('deleteAPIKeyModalBtn');
+      const modalBtn = screen.getByRole('button', { name: 'Open deletion modal' });
       expect(modalBtn).toBeInTheDocument();
-      fireEvent.click(modalBtn);
+      userEvent.click(modalBtn);
 
-      expect(getByText('Are you sure you want to remove this API key?')).toBeInTheDocument();
+      expect(screen.getByText('Are you sure you want to remove this API key?')).toBeInTheDocument();
 
-      const btn = getByTestId('deleteAPIKeyBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Delete API key' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteAPIKey).toHaveBeenCalledTimes(1);
@@ -70,12 +71,12 @@ describe('API key Card - API keys section', () => {
     });
 
     it('calls setModalStatusMock when Edit button is clicked', () => {
-      const { getByTestId } = render(<Card {...defaultProps} />);
+      render(<Card {...defaultProps} />);
 
-      const btn = getByTestId('updateAPIKeyBtn');
+      const btn = screen.getByRole('button', { name: 'Open API key modal' });
       expect(btn).toBeInTheDocument();
 
-      fireEvent.click(btn);
+      userEvent.click(btn);
       expect(setModalStatusMock).toHaveBeenCalledTimes(1);
       expect(setModalStatusMock).toHaveBeenCalledWith({
         open: true,
@@ -89,14 +90,14 @@ describe('API key Card - API keys section', () => {
       mocked(API).deleteAPIKey.mockRejectedValue({
         kind: ErrorKind.Other,
       });
-      const { getByTestId } = render(<Card {...defaultProps} />);
+      render(<Card {...defaultProps} />);
 
-      const modalBtn = getByTestId('deleteAPIKeyModalBtn');
+      const modalBtn = screen.getByRole('button', { name: 'Open deletion modal' });
       expect(modalBtn).toBeInTheDocument();
-      fireEvent.click(modalBtn);
+      userEvent.click(modalBtn);
 
-      const btn = getByTestId('deleteAPIKeyBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Delete API key' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteAPIKey).toHaveBeenCalledTimes(1);
@@ -113,14 +114,14 @@ describe('API key Card - API keys section', () => {
       mocked(API).deleteAPIKey.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
-      const { getByTestId } = render(<Card {...defaultProps} />);
+      render(<Card {...defaultProps} />);
 
-      const modalBtn = getByTestId('deleteAPIKeyModalBtn');
+      const modalBtn = screen.getByRole('button', { name: 'Open deletion modal' });
       expect(modalBtn).toBeInTheDocument();
-      fireEvent.click(modalBtn);
+      userEvent.click(modalBtn);
 
-      const btn = getByTestId('deleteAPIKeyBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Delete API key' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteAPIKey).toHaveBeenCalledTimes(1);

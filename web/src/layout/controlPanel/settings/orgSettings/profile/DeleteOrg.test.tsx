@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -54,87 +55,80 @@ describe('DeleteOrg', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <DeleteOrg {...defaultProps} />
       </AppCtx.Provider>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
           <DeleteOrg {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      expect(getByTestId('deleteModalOrgBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open delete organization modal' })).toBeInTheDocument();
     });
 
     it('opens and closes modal', async () => {
-      const { getByTestId, getByText, getByRole } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
           <DeleteOrg {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const modal = getByRole('dialog');
+      const modal = screen.getByRole('dialog');
       expect(modal).toBeInTheDocument();
       expect(modal).not.toHaveClass('d-block');
 
-      const btn = getByTestId('deleteModalOrgBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
+      userEvent.click(btn);
 
-      expect(getByTestId('deleteOrgBtn')).toBeInTheDocument();
-      expect(getByText('Cancel')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Delete organization' })).toBeInTheDocument();
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
       expect(modal).toHaveClass('d-block');
 
-      expect(getByTestId('deleteOrgBtn')).toBeInTheDocument();
-      const cancelBtn = getByText('Cancel');
-      fireEvent.click(cancelBtn);
+      const cancelBtn = screen.getByText('Cancel');
+      userEvent.click(cancelBtn);
 
-      await waitFor(() => {
-        expect(modal).not.toHaveClass('d-block');
-      });
+      expect(await screen.findByRole('dialog')).not.toHaveClass('d-block');
     });
 
     describe('calls deleteOrganization', () => {
       it('on success', async () => {
         mocked(API).deleteOrganization.mockResolvedValue(null);
 
-        const { getByTestId, getByText, getByRole } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
             <DeleteOrg {...defaultProps} />
           </AppCtx.Provider>
         );
 
-        const modal = getByRole('dialog');
+        const modal = screen.getByRole('dialog');
         expect(modal).not.toHaveClass('d-block');
 
-        const btn = getByTestId('deleteModalOrgBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
+        userEvent.click(btn);
 
-        await waitFor(() => {
-          expect(modal).toHaveClass('d-block');
-        });
+        expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-        const txt = getByTestId('confirmationText');
+        const txt = screen.getByTestId('confirmationText');
         expect(txt).toHaveTextContent('Please type orgTest to confirm:');
 
-        const deleteBtn = getByTestId('deleteOrgBtn');
+        const deleteBtn = screen.getByRole('button', { name: 'Delete organization' });
         expect(deleteBtn).toBeDisabled();
 
-        const input = getByTestId('orgNameInput');
-        fireEvent.change(input, { target: { value: 'orgTest' } });
+        const input = screen.getByRole('textbox');
+        userEvent.type(input, 'orgTest');
 
-        await waitFor(() => {
-          expect(deleteBtn).toBeEnabled();
-        });
-        fireEvent.click(deleteBtn);
+        expect(await screen.findByRole('button', { name: 'Delete organization' })).toBeEnabled();
+        userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
-        expect(getByText('Deleting...')).toBeInTheDocument();
+        expect(screen.getByText('Deleting...')).toBeInTheDocument();
 
         await waitFor(() => {
           expect(API.deleteOrganization).toHaveBeenCalledTimes(1);
@@ -151,30 +145,22 @@ describe('DeleteOrg', () => {
             kind: ErrorKind.Other,
           });
 
-          const { getByTestId, getByRole } = render(
+          render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
               <DeleteOrg {...defaultProps} />
             </AppCtx.Provider>
           );
 
-          const modal = getByRole('dialog');
+          const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
+          userEvent.click(btn);
 
-          const btn = getByTestId('deleteModalOrgBtn');
-          fireEvent.click(btn);
+          expect(await screen.getByRole('dialog')).toHaveClass('d-block');
 
-          await waitFor(() => {
-            expect(modal).toHaveClass('d-block');
-          });
+          const input = screen.getByRole('textbox');
+          userEvent.type(input, 'orgTest');
 
-          const deleteBtn = getByTestId('deleteOrgBtn');
-
-          const input = getByTestId('orgNameInput');
-          fireEvent.change(input, { target: { value: 'orgTest' } });
-
-          await waitFor(() => {
-            expect(deleteBtn).toBeEnabled();
-          });
-          fireEvent.click(deleteBtn);
+          expect(await screen.findByRole('button', { name: 'Delete organization' })).toBeEnabled();
+          userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
           await waitFor(() => {
             expect(API.deleteOrganization).toHaveBeenCalledTimes(1);
@@ -192,30 +178,22 @@ describe('DeleteOrg', () => {
             kind: ErrorKind.Forbidden,
           });
 
-          const { getByTestId, getByRole } = render(
+          render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
               <DeleteOrg {...defaultProps} />
             </AppCtx.Provider>
           );
 
-          const modal = getByRole('dialog');
+          const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
+          userEvent.click(btn);
 
-          const btn = getByTestId('deleteModalOrgBtn');
-          fireEvent.click(btn);
+          expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-          await waitFor(() => {
-            expect(modal).toHaveClass('d-block');
-          });
+          const input = screen.getByRole('textbox');
+          userEvent.type(input, 'orgTest');
 
-          const deleteBtn = getByTestId('deleteOrgBtn');
-
-          const input = getByTestId('orgNameInput');
-          fireEvent.change(input, { target: { value: 'orgTest' } });
-
-          await waitFor(() => {
-            expect(deleteBtn).toBeEnabled();
-          });
-          fireEvent.click(deleteBtn);
+          expect(await screen.getByRole('button', { name: 'Delete organization' })).toBeEnabled();
+          userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
           await waitFor(() => {
             expect(API.deleteOrganization).toHaveBeenCalledTimes(1);
@@ -233,30 +211,22 @@ describe('DeleteOrg', () => {
             kind: ErrorKind.Unauthorized,
           });
 
-          const { getByTestId, getByRole } = render(
+          render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
               <DeleteOrg {...defaultProps} />
             </AppCtx.Provider>
           );
 
-          const modal = getByRole('dialog');
+          const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
+          userEvent.click(btn);
 
-          const btn = getByTestId('deleteModalOrgBtn');
-          fireEvent.click(btn);
+          expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-          await waitFor(() => {
-            expect(modal).toHaveClass('d-block');
-          });
+          const input = screen.getByRole('textbox');
+          userEvent.type(input, 'orgTest');
 
-          const deleteBtn = getByTestId('deleteOrgBtn');
-
-          const input = getByTestId('orgNameInput');
-          fireEvent.change(input, { target: { value: 'orgTest' } });
-
-          await waitFor(() => {
-            expect(deleteBtn).toBeEnabled();
-          });
-          fireEvent.click(deleteBtn);
+          expect(await screen.findByRole('button', { name: 'Delete organization' })).toBeEnabled();
+          userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
           await waitFor(() => {
             expect(API.deleteOrganization).toHaveBeenCalledTimes(1);

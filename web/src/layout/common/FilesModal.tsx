@@ -206,7 +206,6 @@ const FilesModal = (props: Props) => {
     <div className="mb-2">
       <div className="text-center">
         <button
-          data-testid="filesModalBtn"
           className="btn btn-outline-secondary btn-sm text-nowrap btn-block"
           onClick={onOpenModal}
           aria-label={`Open ${props.title} modal`}
@@ -269,7 +268,6 @@ const FilesModal = (props: Props) => {
                       return (
                         <button
                           key={`file_${file.name}_${index}`}
-                          data-testid="fileBtn"
                           className={classnames('btn btn-light btn-sm mb-2 text-left w-100', styles.btn, {
                             [`activeTemplate ${styles.active}`]: isActive,
                           })}

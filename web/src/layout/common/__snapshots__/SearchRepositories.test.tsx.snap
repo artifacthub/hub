@@ -43,7 +43,6 @@ exports[`SearchRepositories creates snapshot 1`] = `
           aria-label="Search repositories"
           autocomplete="new-input"
           class="flex-grow-1 pr-4 pl-2 pl-md-0 input"
-          data-testid="searchRepositoriesInput"
           name="searchRepositoriesInput"
           spellcheck="false"
           type="text"

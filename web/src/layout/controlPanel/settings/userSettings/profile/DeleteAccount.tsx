@@ -60,10 +60,9 @@ const DeleteAccount = (props: Props) => {
         </p>
 
         <button
-          data-testid="deleteModalAccountBtn"
           className="btn btn-sm btn-danger"
           onClick={() => setOpenStatus(true)}
-          aria-label="Open modal"
+          aria-label="Open deletion account modal"
         >
           <div className="d-flex flex-row align-items-center text-uppercase">
             <FaTrashAlt className="mr-2" />
@@ -90,7 +89,6 @@ const DeleteAccount = (props: Props) => {
               </button>
 
               <button
-                data-testid="deleteAccountBtn"
                 className="btn btn-sm btn-danger ml-3"
                 onClick={(e) => {
                   e.preventDefault();

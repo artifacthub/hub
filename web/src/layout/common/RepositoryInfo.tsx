@@ -58,7 +58,7 @@ const RepositoryInfo = (props: Props) => {
         <div className="position-absolute">
           <div
             ref={ref}
-            data-testid="repoInfoDropdown"
+            role="complementary"
             className={classnames('dropdown-menu dropdown-menu-left', styles.dropdown, {
               show: openStatus,
             })}

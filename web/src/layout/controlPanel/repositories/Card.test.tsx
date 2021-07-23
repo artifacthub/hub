@@ -64,12 +64,12 @@ describe('Repository Card - packages section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Card {...defaultProps} />
       </AppCtx.Provider>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -81,10 +81,10 @@ describe('Repository Card - packages section', () => {
       );
 
       expect(screen.getByText(repoMock.displayName!)).toBeInTheDocument();
-      expect(screen.getByTestId('getBadgeBtn')).toBeInTheDocument();
-      expect(screen.getByTestId('updateRepoBtn')).toBeInTheDocument();
-      expect(screen.getByTestId('transferRepoBtn')).toBeInTheDocument();
-      expect(screen.getByTestId('deleteRepoDropdownBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open badge modal' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open update repository modal' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open transfer repository modal' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open delete repository modal' })).toBeInTheDocument();
       expect(screen.getByText(repoMock.url!)).toBeInTheDocument();
       expect(
         screen.getByText('Not processed yet, it will be processed automatically in ~ 3 minutes')
@@ -154,10 +154,10 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
 
-      const btn = screen.getByTestId('deleteRepoDropdownBtn');
+      const btn = screen.getByRole('button', { name: 'Open delete repository modal' });
       userEvent.click(btn);
 
-      expect(await screen.findByTestId('deleteRepoBtn')).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Delete repository' })).toBeInTheDocument();
     });
 
     it('opens Get Badge Modal when Get badge button is clicked', async () => {
@@ -167,7 +167,7 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
 
-      const btn = screen.getByTestId('getBadgeBtn');
+      const btn = screen.getByRole('button', { name: 'Open badge modal' });
       expect(btn).toBeInTheDocument();
       userEvent.click(btn);
 
@@ -181,7 +181,7 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
 
-      const btn = screen.getByTestId('updateRepoBtn');
+      const btn = screen.getByRole('button', { name: 'Open update repository modal' });
       expect(btn).toBeInTheDocument();
       userEvent.click(btn);
 
@@ -199,7 +199,7 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
 
-      const btn = screen.getByTestId('transferRepoBtn');
+      const btn = screen.getByRole('button', { name: 'Open transfer repository modal' });
       expect(btn).toBeInTheDocument();
       userEvent.click(btn);
 

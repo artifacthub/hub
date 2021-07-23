@@ -68,7 +68,6 @@ const ButtonCopyToClipboard = (props: Props) => {
         </div>
       )}
       <button
-        data-testid="ctcBtn"
         type="button"
         className={classnames(
           'btn btn-sm',

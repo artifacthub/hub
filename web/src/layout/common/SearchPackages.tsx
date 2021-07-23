@@ -81,7 +81,6 @@ const SearchPackages = (props: Props) => {
           className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative ${styles.inputWrapper}`}
         >
           <input
-            data-testid="searchPackagesInput"
             ref={inputEl}
             type="text"
             className={`flex-grow-1 px-3 ${styles.input}`}
@@ -90,6 +89,7 @@ const SearchPackages = (props: Props) => {
             onKeyDown={handleOnKeyDown}
             onChange={onChange}
             spellCheck="false"
+            aria-label="Search packages"
           />
 
           {isSearching && (

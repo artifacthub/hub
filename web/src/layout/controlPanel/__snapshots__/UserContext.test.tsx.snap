@@ -20,7 +20,6 @@ exports[`UserContext creates snapshot 1`] = `
           aria-expanded="false"
           aria-label="Open context"
           class="btn btn-primary badge-pill btn-sm pr-3 position-relative ctxBtn"
-          data-testid="ctxBtn"
           type="button"
         >
           <div
@@ -79,7 +78,7 @@ exports[`UserContext creates snapshot 1`] = `
     </div>
     <div
       class="dropdown-menu dropdown-menu-right dropdown"
-      data-testid="ctxDropdown"
+      role="menu"
     >
       <div
         class="arrow arrow"
@@ -87,7 +86,6 @@ exports[`UserContext creates snapshot 1`] = `
       <button
         aria-label="Activate user context"
         class="dropdown-item mw-100"
-        data-testid="userCtxBtn"
       >
         <div
           class="d-flex flex-row align-items-center text-truncate"

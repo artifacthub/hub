@@ -46,8 +46,8 @@ describe('EnableModal', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -63,7 +63,7 @@ describe('EnableModal', () => {
 
       render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
-      const btn = screen.getByTestId('enable2FAModalBtn');
+      const btn = screen.getByRole('button', { name: 'Open modal' });
       userEvent.click(btn);
 
       await waitFor(() => {
@@ -98,7 +98,7 @@ describe('EnableModal', () => {
         )
       ).toBeInTheDocument();
       expect(screen.getByText('Cancel')).toBeInTheDocument();
-      const passcodeInput = screen.getByTestId('passcodeInput');
+      const passcodeInput = screen.getByRole('textbox');
       expect(passcodeInput).toBeInTheDocument();
 
       userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
@@ -126,7 +126,7 @@ describe('EnableModal', () => {
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('enable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open modal' });
         userEvent.click(btn);
 
         await waitFor(() => {
@@ -145,7 +145,7 @@ describe('EnableModal', () => {
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('enable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open modal' });
         userEvent.click(btn);
 
         await waitFor(() => {
@@ -164,7 +164,7 @@ describe('EnableModal', () => {
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('enable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open modal' });
         userEvent.click(btn);
 
         await waitFor(() => {
@@ -182,7 +182,7 @@ describe('EnableModal', () => {
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('enable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open modal' });
         userEvent.click(btn);
 
         await waitFor(() => {
@@ -194,7 +194,7 @@ describe('EnableModal', () => {
 
         expect(await screen.findByText('Authentication app')).toBeInTheDocument();
 
-        const passcodeInput = screen.getByTestId('passcodeInput');
+        const passcodeInput = screen.getByRole('textbox');
         userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
         userEvent.click(screen.getByText('Enable'));
 
@@ -214,7 +214,7 @@ describe('EnableModal', () => {
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('enable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open modal' });
         userEvent.click(btn);
 
         await waitFor(() => {
@@ -226,7 +226,7 @@ describe('EnableModal', () => {
 
         expect(await screen.findByText('Authentication app')).toBeInTheDocument();
 
-        const passcodeInput = screen.getByTestId('passcodeInput');
+        const passcodeInput = screen.getByRole('textbox');
         userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
         userEvent.click(screen.getByText('Enable'));
 
@@ -246,7 +246,7 @@ describe('EnableModal', () => {
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('enable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open modal' });
         userEvent.click(btn);
 
         await waitFor(() => {
@@ -258,7 +258,7 @@ describe('EnableModal', () => {
 
         expect(await screen.findByText('Authentication app')).toBeInTheDocument();
 
-        const passcodeInput = screen.getByTestId('passcodeInput');
+        const passcodeInput = screen.getByRole('textbox');
         userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
         userEvent.click(screen.getByText('Enable'));
 

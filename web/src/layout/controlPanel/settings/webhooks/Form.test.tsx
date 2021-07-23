@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -29,7 +30,7 @@ const defaultProps = {
 };
 
 const mockUserCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -46,7 +47,7 @@ const mockUserCtx = {
 };
 
 const mockOrgCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: { selectedOrg: 'test' },
     search: { limit: 60 },
@@ -76,14 +77,14 @@ describe('WebhookForm', () => {
         </Router>
       </AppCtx.Provider>
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('when webhook edition', () => {
       const mockWebhook = getMockWebhook('2');
 
-      const { getByText, getAllByTestId, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} webhook={mockWebhook} />
@@ -91,93 +92,90 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByTestId('goBack')).toBeInTheDocument();
-      expect(getByText('Back to webhooks list')).toBeInTheDocument();
-      expect(getByTestId('webhookForm')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Back to webhooks list' })).toBeInTheDocument();
+      expect(screen.getByText('Back to webhooks list')).toBeInTheDocument();
+      expect(screen.getByTestId('webhookForm')).toBeInTheDocument();
 
-      expect(getByTestId('nameInput')).toBeInTheDocument();
-      expect(getByText('Name')).toBeInTheDocument();
-      expect(getByTestId('nameInput')).toHaveValue(mockWebhook.name);
+      expect(screen.getByRole('textbox', { name: /Name/ })).toBeInTheDocument();
+      expect(screen.getByText('Name')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Name/ })).toHaveValue(mockWebhook.name);
 
-      expect(getByTestId('descriptionInput')).toBeInTheDocument();
-      expect(getByText('Description')).toBeInTheDocument();
-      expect(getByTestId('descriptionInput')).toHaveValue(mockWebhook.description!);
+      expect(screen.getByRole('textbox', { name: 'Description' })).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Description' })).toHaveValue(mockWebhook.description!);
 
       expect(
-        getByText(
+        screen.getByText(
           'A POST request will be sent to the provided URL when any of the events selected in the triggers section happens.'
         )
       ).toBeInTheDocument();
-      expect(getByTestId('urlInput')).toBeInTheDocument();
-      expect(getByText('Url')).toBeInTheDocument();
-      expect(getByTestId('urlInput')).toHaveValue(mockWebhook.url);
+      expect(screen.getByRole('textbox', { name: /Url/ })).toBeInTheDocument();
+      expect(screen.getByText('Url')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Url/ })).toHaveValue(mockWebhook.url);
 
-      expect(getByText(/X-ArtifactHub-Secret/i)).toBeInTheDocument();
-      expect(getByTestId('secretInput')).toBeInTheDocument();
-      expect(getByText('Secret')).toBeInTheDocument();
-      expect(getByTestId('secretInput')).toHaveValue(mockWebhook.secret!);
+      expect(screen.getByText(/X-ArtifactHub-Secret/i)).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Secret' })).toBeInTheDocument();
+      expect(screen.getByText('Secret')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Secret' })).toHaveValue(mockWebhook.secret!);
 
-      expect(getByText('Active')).toBeInTheDocument();
-      expect(getByTestId('activeCheckbox')).toBeInTheDocument();
-      expect(getByTestId('activeCheckbox')).not.toBeChecked();
+      expect(screen.getByText('Active')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           'This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.'
         )
       ).toBeInTheDocument();
 
-      expect(getByText('Triggers')).toBeInTheDocument();
+      expect(screen.getByText('Triggers')).toBeInTheDocument();
 
-      expect(getByText('Events')).toBeInTheDocument();
-      const checkboxes = getAllByTestId('checkbox');
-      expect(checkboxes).toHaveLength(2);
-      expect(checkboxes[0]).toBeChecked();
+      expect(screen.getByText('Events')).toBeInTheDocument();
+      const checkboxes = screen.getAllByRole('checkbox');
+      expect(checkboxes).toHaveLength(3);
+      expect(checkboxes[0]).not.toBeChecked();
       expect(checkboxes[1]).toBeChecked();
+      expect(checkboxes[2]).toBeChecked();
 
-      expect(getByText('Packages')).toBeInTheDocument();
+      expect(screen.getByText('Packages')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           "When the events selected happen for any of the packages you've chosen, a notification will be triggered and the configured url will be called. At least one package must be selected."
         )
       ).toBeInTheDocument();
-      expect(getByText('Package')).toBeInTheDocument();
-      expect(getByText('Publisher')).toBeInTheDocument();
-      expect(getAllByTestId('packageTableCell')).toHaveLength(1);
+      expect(screen.getByText('Package')).toBeInTheDocument();
+      expect(screen.getByText('Publisher')).toBeInTheDocument();
+      expect(screen.getAllByTestId('packageTableCell')).toHaveLength(1);
 
-      expect(getByText('Payload')).toBeInTheDocument();
-      expect(getByTestId('defaultPayloadRadio')).toBeInTheDocument();
-      expect(getByTestId('defaultPayloadRadio')).not.toBeChecked();
-      expect(getByTestId('customPayloadRadio')).toBeInTheDocument();
-      expect(getByTestId('customPayloadRadio')).toBeChecked();
-      expect(getByText('Default payload')).toBeInTheDocument();
-      expect(getByText('Custom payload')).toBeInTheDocument();
+      expect(screen.getByText('Payload')).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Default payload' })).not.toBeChecked();
+      expect(screen.getByRole('radio', { name: 'Custom payload' })).toBeChecked();
+      expect(screen.getByText('Default payload')).toBeInTheDocument();
+      expect(screen.getByText('Custom payload')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           "It's possible to customize the payload used to notify your service. This may help integrating ArtifactHub webhooks with other services without requiring you to write any code. To integrate ArtifactHub webhooks with Slack, for example, you could use a custom payload using the following template:"
         )
       ).toBeInTheDocument();
 
-      expect(getByTestId('contentTypeInput')).toBeInTheDocument();
-      expect(getByText('Request Content-Type')).toBeInTheDocument();
-      expect(getByTestId('contentTypeInput')).toHaveValue(mockWebhook.contentType!);
+      expect(screen.getByRole('textbox', { name: /Content-Type/ })).toBeInTheDocument();
+      expect(screen.getByText('Request Content-Type')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Content-Type/ })).toHaveValue(mockWebhook.contentType!);
 
-      expect(getByText('Template')).toBeInTheDocument();
-      expect(getByTestId('templateTextarea')).toBeInTheDocument();
-      expect(getByTestId('templateTextarea')).toHaveValue(mockWebhook.template!);
+      expect(screen.getByText('Template')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Template Variables reference/ })).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Template Variables reference/ })).toHaveValue(mockWebhook.template!);
 
-      expect(getByText('Variables reference')).toBeInTheDocument();
-      expect(getByText(`{{ .Event.Kind }}`)).toBeInTheDocument();
-      expect(getByText('Version of the new release.')).toBeInTheDocument();
+      expect(screen.getByText('Variables reference')).toBeInTheDocument();
+      expect(screen.getByText(`{{ .Event.Kind }}`)).toBeInTheDocument();
+      expect(screen.getByText('Version of the new release.')).toBeInTheDocument();
 
-      expect(getByTestId('testWebhookBtn')).toBeInTheDocument();
-      expect(getByTestId('testWebhookBtn')).toBeEnabled();
-      expect(getByText('Cancel')).toBeInTheDocument();
-      expect(getByText('Save')).toBeInTheDocument();
-      expect(getByTestId('sendWebhookBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Test webhook' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Test webhook' })).toBeEnabled();
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
+      expect(screen.getByText('Save')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Add webhook' })).toBeInTheDocument();
     });
 
     it('when webhook addition', () => {
-      const { getByText, queryByText, getByTestId, getByPlaceholderText, getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} />
@@ -185,81 +183,78 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByTestId('goBack')).toBeInTheDocument();
-      expect(getByText('Back to webhooks list')).toBeInTheDocument();
-      expect(getByTestId('webhookForm')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Back to webhooks list' })).toBeInTheDocument();
+      expect(screen.getByText('Back to webhooks list')).toBeInTheDocument();
+      expect(screen.getByTestId('webhookForm')).toBeInTheDocument();
 
-      expect(getByTestId('nameInput')).toBeInTheDocument();
-      expect(getByText('Name')).toBeInTheDocument();
-      expect(getByTestId('nameInput')).toHaveValue('');
+      expect(screen.getByRole('textbox', { name: /Name/ })).toBeInTheDocument();
+      expect(screen.getByText('Name')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Name/ })).toHaveValue('');
 
-      expect(getByTestId('descriptionInput')).toBeInTheDocument();
-      expect(getByText('Description')).toBeInTheDocument();
-      expect(getByTestId('descriptionInput')).toHaveValue('');
+      expect(screen.getByRole('textbox', { name: 'Description' })).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Description' })).toHaveValue('');
 
       expect(
-        getByText(
+        screen.getByText(
           'A POST request will be sent to the provided URL when any of the events selected in the triggers section happens.'
         )
       ).toBeInTheDocument();
-      expect(getByTestId('urlInput')).toBeInTheDocument();
-      expect(getByText('Url')).toBeInTheDocument();
-      expect(getByTestId('urlInput')).toHaveValue('');
+      expect(screen.getByTestId('urlInput')).toBeInTheDocument();
+      expect(screen.getByText('Url')).toBeInTheDocument();
+      expect(screen.getByTestId('urlInput')).toHaveValue('');
 
-      expect(getByText(/X-ArtifactHub-Secret/i)).toBeInTheDocument();
-      expect(getByTestId('secretInput')).toBeInTheDocument();
-      expect(getByText('Secret')).toBeInTheDocument();
-      expect(getByTestId('secretInput')).toHaveValue('');
+      expect(screen.getByText(/X-ArtifactHub-Secret/i)).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Secret' })).toBeInTheDocument();
+      expect(screen.getByText('Secret')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Secret' })).toHaveValue('');
 
-      expect(getByText('Active')).toBeInTheDocument();
-      expect(getByTestId('activeCheckbox')).toBeInTheDocument();
-      expect(getByTestId('activeCheckbox')).toBeChecked();
+      expect(screen.getByText('Active')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           'This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.'
         )
       ).toBeInTheDocument();
 
-      expect(getByText('Triggers')).toBeInTheDocument();
+      expect(screen.getByText('Triggers')).toBeInTheDocument();
 
-      expect(getByText('Events')).toBeInTheDocument();
+      expect(screen.getByText('Events')).toBeInTheDocument();
 
-      const checkboxes = getAllByTestId('checkbox');
-      expect(checkboxes).toHaveLength(2);
+      const checkboxes = screen.getAllByRole('checkbox');
+      expect(checkboxes).toHaveLength(3);
       expect(checkboxes[0]).toBeChecked();
-      expect(checkboxes[1]).not.toBeChecked();
+      expect(checkboxes[1]).toBeChecked();
+      expect(checkboxes[2]).not.toBeChecked();
 
-      expect(getByText('Packages')).toBeInTheDocument();
+      expect(screen.getByText('Packages')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           "When the events selected happen for any of the packages you've chosen, a notification will be triggered and the configured url will be called. At least one package must be selected."
         )
       ).toBeInTheDocument();
-      expect(queryByText('Package')).toBeNull();
-      expect(queryByText('Publisher')).toBeNull();
+      expect(screen.queryByText('Package')).toBeNull();
+      expect(screen.queryByText('Publisher')).toBeNull();
 
-      expect(getByText('Payload')).toBeInTheDocument();
-      expect(getByTestId('defaultPayloadRadio')).toBeInTheDocument();
-      expect(getByTestId('defaultPayloadRadio')).toBeChecked();
-      expect(getByTestId('customPayloadRadio')).toBeInTheDocument();
-      expect(getByTestId('customPayloadRadio')).not.toBeChecked();
-      expect(getByText('Default payload')).toBeInTheDocument();
-      expect(getByText('Custom payload')).toBeInTheDocument();
+      expect(screen.getByText('Payload')).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Default payload' })).toBeChecked();
+      expect(screen.getByRole('radio', { name: 'Custom payload' })).not.toBeChecked();
+      expect(screen.getByText('Default payload')).toBeInTheDocument();
+      expect(screen.getByText('Custom payload')).toBeInTheDocument();
       expect(
-        queryByText(
+        screen.queryByText(
           "It's possible to customize the payload used to notify your service. This may help integrating ArtifactHub webhooks with other services without requiring you to write any code. To integrate ArtifactHub webhooks with Slack, for example, you could use a custom payload using the following template:"
         )
       ).toBeNull();
 
-      expect(getByTestId('contentTypeInput')).toBeInTheDocument();
-      expect(getByText('Request Content-Type')).toBeInTheDocument();
-      expect(getByTestId('contentTypeInput')).toHaveValue('');
-      expect(getByPlaceholderText('application/cloudevents+json')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Content-Type/ })).toBeInTheDocument();
+      expect(screen.getByText('Request Content-Type')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Content-Type/ })).toHaveValue('');
+      expect(screen.getByPlaceholderText('application/cloudevents+json')).toBeInTheDocument();
 
-      expect(getByText('Template')).toBeInTheDocument();
-      expect(getByTestId('templateTextarea')).toBeInTheDocument();
-      expect(getByTestId('templateTextarea')).toBeDisabled();
-      expect(getByTestId('templateTextarea')).toHaveValue(`{
+      expect(screen.getByText('Template')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Template Variables reference/ })).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Template Variables reference/ })).toBeDisabled();
+      expect(screen.getByRole('textbox', { name: /Template Variables reference/ })).toHaveValue(`{
     "specversion" : "1.0",
     "id" : "{{ .Event.ID }}",
     "source" : "{{ .BaseURL }}",
@@ -282,19 +277,19 @@ describe('WebhookForm', () => {
     }
 }`);
 
-      expect(getByText('Variables reference')).toBeInTheDocument();
-      expect(getByText(`{{ .Event.Kind }}`)).toBeInTheDocument();
-      expect(getByText('Version of the new release.')).toBeInTheDocument();
+      expect(screen.getByText('Variables reference')).toBeInTheDocument();
+      expect(screen.getByText(`{{ .Event.Kind }}`)).toBeInTheDocument();
+      expect(screen.getByText('Version of the new release.')).toBeInTheDocument();
 
-      expect(getByTestId('testWebhookBtn')).toBeInTheDocument();
-      expect(getByTestId('testWebhookBtn')).toBeDisabled();
-      expect(getByText('Cancel')).toBeInTheDocument();
-      expect(getByText('Add')).toBeInTheDocument();
-      expect(getByTestId('sendWebhookBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Test webhook' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Test webhook' })).toBeDisabled();
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
+      expect(screen.getByText('Add')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Add webhook' })).toBeInTheDocument();
     });
 
     it('closes form on back button click', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} />
@@ -302,14 +297,14 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('goBack');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Back to webhooks list' });
+      userEvent.click(btn);
 
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
 
     it('closes form on Cancel button click', () => {
-      const { getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} />
@@ -317,8 +312,8 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByText('Cancel');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Cancel');
+      userEvent.click(btn);
 
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
@@ -326,7 +321,7 @@ describe('WebhookForm', () => {
 
   describe('Form submission', () => {
     it('when incomplete form', () => {
-      const { getByTestId, getAllByText, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} />
@@ -334,18 +329,18 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('sendWebhookBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add webhook' });
+      userEvent.click(btn);
 
-      expect(getAllByText('This field is required')).toHaveLength(4);
-      expect(getByText('At least one package has to be selected')).toBeInTheDocument();
+      expect(screen.getAllByText('This field is required')).toHaveLength(4);
+      expect(screen.getByText('At least one package has to be selected')).toBeInTheDocument();
     });
 
     it('calls updateWebhook', async () => {
       mocked(API).updateWebhook.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('3');
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
@@ -353,11 +348,12 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const input = getByTestId('nameInput');
-      fireEvent.change(input, { target: { value: 'test' } });
+      const input = screen.getByRole('textbox', { name: /Name/ });
+      userEvent.clear(input);
+      userEvent.type(input, 'test');
 
-      const btn = getByTestId('sendWebhookBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add webhook' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -378,7 +374,7 @@ describe('WebhookForm', () => {
       mocked(API).updateWebhook.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('4');
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
@@ -386,11 +382,12 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const input = getByTestId('nameInput');
-      fireEvent.change(input, { target: { value: 'test' } });
+      const input = screen.getByRole('textbox', { name: /Name/ });
+      userEvent.clear(input);
+      userEvent.type(input, 'test');
 
-      const btn = getByTestId('sendWebhookBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add webhook' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -411,7 +408,7 @@ describe('WebhookForm', () => {
       mocked(API).updateWebhook.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('14');
 
-      const { getAllByTestId, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
@@ -419,14 +416,14 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const checkboxes = getAllByTestId('checkbox');
-      expect(checkboxes).toHaveLength(2);
-      expect(checkboxes[1]).not.toBeChecked();
-      fireEvent.click(checkboxes[1]);
-      expect(checkboxes[1]).toBeChecked();
+      const checkboxes = screen.getAllByRole('checkbox');
+      expect(checkboxes).toHaveLength(3);
+      expect(checkboxes[2]).not.toBeChecked();
+      userEvent.click(checkboxes[2]);
+      expect(checkboxes[2]).toBeChecked();
 
-      const btn = getByTestId('sendWebhookBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add webhook' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -448,7 +445,7 @@ describe('WebhookForm', () => {
       const mockSearch = getMockSearch('1');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByTestId, getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} />
@@ -456,25 +453,24 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const nameInput = getByTestId('nameInput');
-      fireEvent.change(nameInput, { target: { value: 'test' } });
+      const nameInput = screen.getByRole('textbox', { name: /Name/ });
+      userEvent.type(nameInput, 'test');
 
-      const urlInput = getByTestId('urlInput');
-      fireEvent.change(urlInput, { target: { value: 'http://url.com' } });
+      const urlInput = screen.getByRole('textbox', { name: /Url/ });
+      userEvent.type(urlInput, 'http://url.com');
 
-      const input = getByTestId('searchPackagesInput');
-      fireEvent.change(input, { target: { value: 'testing' } });
-      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+      const input = screen.getByRole('textbox', { name: 'Search packages' });
+      userEvent.type(input, 'testing{enter}');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const packages = getAllByTestId('packageItem');
-      fireEvent.click(packages[0]);
+      const packages = screen.getAllByTestId('packageItem');
+      userEvent.click(packages[0]);
 
-      const btn = getByTestId('sendWebhookBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add webhook' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addWebhook).toHaveBeenCalledTimes(1);
@@ -503,7 +499,7 @@ describe('WebhookForm', () => {
         });
         const mockWebhook = getMockWebhook('5');
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
@@ -511,11 +507,12 @@ describe('WebhookForm', () => {
           </AppCtx.Provider>
         );
 
-        const input = getByTestId('nameInput');
-        fireEvent.change(input, { target: { value: 'test' } });
+        const input = screen.getByRole('textbox', { name: /Name/ });
+        userEvent.clear(input);
+        userEvent.type(input, 'test');
 
-        const btn = getByTestId('sendWebhookBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Add webhook' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -538,20 +535,20 @@ describe('WebhookForm', () => {
         });
         const mockWebhook = getMockWebhook('6');
 
-        const component = (
+        render(
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
             </Router>
           </AppCtx.Provider>
         );
-        const { getByTestId, getByText } = render(component);
 
-        const input = getByTestId('nameInput');
-        fireEvent.change(input, { target: { value: 'test' } });
+        const input = screen.getByRole('textbox', { name: /Name/ });
+        userEvent.clear(input);
+        userEvent.type(input, 'test');
 
-        const btn = getByTestId('sendWebhookBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Add webhook' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -565,7 +562,7 @@ describe('WebhookForm', () => {
         });
 
         await waitFor(() => {
-          expect(getByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
+          expect(screen.getByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
         });
       });
 
@@ -580,13 +577,14 @@ describe('WebhookForm', () => {
             </Router>
           </AppCtx.Provider>
         );
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
-        const input = getByTestId('nameInput');
-        fireEvent.change(input, { target: { value: 'test' } });
+        const input = screen.getByRole('textbox', { name: /Name/ });
+        userEvent.clear(input);
+        userEvent.type(input, 'test');
 
-        const btn = getByTestId('sendWebhookBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Add webhook' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -601,9 +599,9 @@ describe('WebhookForm', () => {
 
         rerender(component);
 
-        await waitFor(() => {
-          expect(getByText('An error occurred updating the webhook, please try again later.')).toBeInTheDocument();
-        });
+        expect(
+          await screen.findByText('An error occurred updating the webhook, please try again later.')
+        ).toBeInTheDocument();
       });
     });
 
@@ -613,7 +611,7 @@ describe('WebhookForm', () => {
       const newPackagesList = [...mockWebhook.packages];
       newPackagesList.shift();
 
-      const { getByTestId, getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
@@ -621,12 +619,12 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const btns = getAllByTestId('deletePackageButton');
+      const btns = screen.getAllByRole('button', { name: 'Delete package from webhook' });
       expect(btns).toHaveLength(mockWebhook.packages.length);
-      fireEvent.click(btns[0]);
+      userEvent.click(btns[0]);
 
-      const btn = getByTestId('sendWebhookBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Add webhook' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -646,7 +644,7 @@ describe('WebhookForm', () => {
       mocked(API).triggerWebhookTest.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('9');
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
@@ -654,10 +652,10 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('testWebhookBtn');
+      const btn = screen.getByRole('button', { name: 'Test webhook' });
       expect(btn).toBeInTheDocument();
       expect(btn).toBeEnabled();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -667,13 +665,13 @@ describe('WebhookForm', () => {
         });
       });
 
-      expect(getByTestId('testWebhookTick')).toBeInTheDocument();
+      expect(screen.getByTestId('testWebhookTick')).toBeInTheDocument();
     });
 
     it('triggers test on webhook addition', async () => {
       mocked(API).triggerWebhookTest.mockResolvedValue(null);
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} />
@@ -681,15 +679,15 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('testWebhookBtn');
+      const btn = screen.getByRole('button', { name: 'Test webhook' });
       expect(btn).toBeInTheDocument();
       expect(btn).toBeDisabled();
 
-      const urlInput = getByTestId('urlInput');
-      fireEvent.change(urlInput, { target: { value: 'http://url.com' } });
+      const urlInput = screen.getByRole('textbox', { name: /Url/ });
+      userEvent.type(urlInput, 'http://url.com');
 
       expect(btn).toBeEnabled();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -699,13 +697,13 @@ describe('WebhookForm', () => {
         });
       });
 
-      expect(getByTestId('testWebhookTick')).toBeInTheDocument();
+      expect(screen.getByTestId('testWebhookTick')).toBeInTheDocument();
     });
 
     it('disables test btn when webhook for testing is not valid', () => {
       const mockWebhook = getMockWebhook('10');
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
@@ -713,12 +711,13 @@ describe('WebhookForm', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('testWebhookBtn');
+      const btn = screen.getByRole('button', { name: 'Test webhook' });
       expect(btn).toBeInTheDocument();
       expect(btn).toBeEnabled();
 
-      const urlInput = getByTestId('urlInput');
-      fireEvent.change(urlInput, { target: { value: 'wrongUrl' } });
+      const urlInput = screen.getByRole('textbox', { name: /Url/ });
+      userEvent.clear(urlInput);
+      userEvent.type(urlInput, 'wrongUrl');
 
       expect(btn).toBeDisabled();
     });
@@ -730,7 +729,7 @@ describe('WebhookForm', () => {
         });
         const mockWebhook = getMockWebhook('11');
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
@@ -738,8 +737,8 @@ describe('WebhookForm', () => {
           </AppCtx.Provider>
         );
 
-        const btn = getByTestId('testWebhookBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Test webhook' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -766,10 +765,10 @@ describe('WebhookForm', () => {
             </Router>
           </AppCtx.Provider>
         );
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
-        const btn = getByTestId('testWebhookBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Test webhook' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -781,9 +780,7 @@ describe('WebhookForm', () => {
 
         rerender(component);
 
-        await waitFor(() => {
-          expect(getByText('An error occurred testing the webhook: custom error')).toBeInTheDocument();
-        });
+        expect(await screen.findByText('An error occurred testing the webhook: custom error')).toBeInTheDocument();
       });
 
       it('default error', async () => {
@@ -799,10 +796,10 @@ describe('WebhookForm', () => {
             </Router>
           </AppCtx.Provider>
         );
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
-        const btn = getByTestId('testWebhookBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Test webhook' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -814,9 +811,11 @@ describe('WebhookForm', () => {
 
         rerender(component);
 
-        await waitFor(() => {
-          expect(getByText('An error occurred testing the webhook, please try again later.')).toBeInTheDocument();
-        });
+        // await waitFor(() => {
+        expect(
+          await screen.findByText('An error occurred testing the webhook, please try again later.')
+        ).toBeInTheDocument();
+        // });
       });
     });
   });

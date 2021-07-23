@@ -29,9 +29,8 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
               Delete repository
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -137,7 +136,6 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
             <button
               aria-label="Delete repository"
               class="btn btn-sm btn-danger ml-3"
-              data-testid="deleteRepoBtn"
               disabled=""
             >
               <div

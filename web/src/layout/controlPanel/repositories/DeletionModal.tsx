@@ -66,7 +66,6 @@ const DeletionModal = (props: Props) => {
           </button>
 
           <button
-            data-testid="deleteRepoBtn"
             className="btn btn-sm btn-danger ml-3"
             onClick={(e) => {
               e.preventDefault();

@@ -35,7 +35,6 @@ exports[`Organization settings index creates snapshot 1`] = `
           <button
             aria-label="Add image"
             class="btn p-0 overflow-hidden position-relative btn"
-            data-testid="inputFileBtn"
             type="button"
           >
             <img
@@ -50,7 +49,6 @@ exports[`Organization settings index creates snapshot 1`] = `
       </div>
       <input
         class="d-none"
-        data-testid="inputFile"
         id="logo"
         name="logo"
         type="file"
@@ -172,9 +170,8 @@ exports[`Organization settings index creates snapshot 1`] = `
       class="position-relative"
     >
       <button
-        aria-label="Action"
+        aria-label="Update organization modal"
         class="btn btn-sm btn-outline-secondary"
-        data-testid="updateOrgBtn"
         type="button"
       >
         <div

@@ -1,3 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Checkbox creates snapshot 1`] = `[Function]`;
+exports[`Checkbox creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+  >
+    <input
+      aria-checked="false"
+      class="custom-control-input input"
+      id="all-checkbox-val"
+      name="checkbox"
+      tabindex="0"
+      type="checkbox"
+      value="val"
+    />
+    <label
+      class="custom-control-label label undefined"
+      data-testid="checkboxLabel"
+      for="all-checkbox-val"
+    >
+      <div
+        class="d-flex align-items-baseline mw-100"
+      >
+        <span
+          class="d-inline-block text-truncate"
+        >
+          label
+        </span>
+      </div>
+    </label>
+  </div>
+</DocumentFragment>
+`;

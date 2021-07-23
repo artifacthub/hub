@@ -11,7 +11,7 @@ describe('VerifiedPublisherBadge', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<VerifiedPublisherBadge verifiedPublisher />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders label', async () => {

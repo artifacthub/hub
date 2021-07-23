@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Tabs from './Tabs';
@@ -28,33 +29,33 @@ const defaultProps = {
 describe('Tabs', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<Tabs {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getAllByTestId, getByText } = render(<Tabs {...defaultProps} />);
-    const btns = getAllByTestId('tabBtn');
+    render(<Tabs {...defaultProps} />);
+    const btns = screen.getAllByRole('button', { name: /Open tab/ });
     expect(btns).toHaveLength(3);
     expect(btns[0]).toHaveTextContent('Tab 1');
     expect(btns[1]).toHaveTextContent('Tab 2');
     expect(btns[2]).toHaveTextContent('Tab 3');
 
-    expect(getByText('Content 1')).toBeInTheDocument();
+    expect(screen.getByText('Content 1')).toBeInTheDocument();
   });
 
   it('activates another tab', () => {
-    const { getAllByTestId, getByText } = render(<Tabs {...defaultProps} />);
+    render(<Tabs {...defaultProps} />);
 
-    expect(getByText('Content 1')).toBeInTheDocument();
+    expect(screen.getByText('Content 1')).toBeInTheDocument();
 
-    const btns = getAllByTestId('tabBtn');
+    const btns = screen.getAllByRole('button', { name: /Open tab/ });
     expect(btns[0]).toHaveClass('active');
 
-    fireEvent.click(btns[2]);
+    userEvent.click(btns[2]);
 
     waitFor(() => {
       expect(btns[2]).toHaveClass('active');
-      expect(getByText('Content 3')).toBeInTheDocument();
+      expect(screen.getByText('Content 3')).toBeInTheDocument();
     });
   });
 });

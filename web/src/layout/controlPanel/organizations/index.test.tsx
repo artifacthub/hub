@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -20,13 +21,18 @@ const defaultProps = {
 };
 
 const mockCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
     theme: {
       configured: 'light',
       effective: 'light',
+    },
+    notifications: {
+      lastDisplayedTime: null,
+      enabled: true,
+      displayed: [],
     },
   },
 };
@@ -40,7 +46,7 @@ describe('Organizations section index', () => {
     const mockOrganizations = getMockOrganizations('1');
     mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <OrganizationsSection {...defaultProps} />
@@ -50,7 +56,7 @@ describe('Organizations section index', () => {
 
     await waitFor(() => {
       expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -76,7 +82,7 @@ describe('Organizations section index', () => {
       const mockOrganizations = getMockOrganizations('4');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <OrganizationsSection {...defaultProps} />
@@ -85,17 +91,17 @@ describe('Organizations section index', () => {
       );
 
       await waitFor(() => {
-        expect(getByTestId('noData')).toBeInTheDocument();
+        expect(screen.getByRole('alert')).toBeInTheDocument();
       });
-      expect(getByText('Do you need to create a organization?')).toBeInTheDocument();
-      expect(getByTestId('addFirstOrgBtn')).toBeInTheDocument();
+      expect(screen.getByText('Do you need to create a organization?')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open modal for adding first organization' })).toBeInTheDocument();
     });
 
     it('renders organization form when add first org button is clicked', async () => {
       const mockOrganizations = getMockOrganizations('5');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-      const { getByTestId, queryByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <OrganizationsSection {...defaultProps} />
@@ -104,27 +110,27 @@ describe('Organizations section index', () => {
       );
 
       await waitFor(() => {
-        expect(getByTestId('noData')).toBeInTheDocument();
+        expect(screen.getByRole('alert')).toBeInTheDocument();
       });
 
-      expect(queryByText('Name')).toBeNull();
-      expect(queryByText('Display name')).toBeNull();
-      expect(queryByText('Home URL')).toBeNull();
-      expect(queryByText('Description')).toBeNull();
+      expect(screen.queryByText('Name')).toBeNull();
+      expect(screen.queryByText('Display name')).toBeNull();
+      expect(screen.queryByText('Home URL')).toBeNull();
+      expect(screen.queryByText('Description')).toBeNull();
 
-      const addBtn = getByTestId('addFirstOrgBtn');
-      fireEvent.click(addBtn);
-      expect(queryByText('Name')).toBeInTheDocument();
-      expect(queryByText('Display name')).toBeInTheDocument();
-      expect(queryByText('Home URL')).toBeInTheDocument();
-      expect(queryByText('Description')).toBeInTheDocument();
+      const addBtn = screen.getByRole('button', { name: 'Open modal for adding first organization' });
+      userEvent.click(addBtn);
+      expect(screen.queryByText('Name')).toBeInTheDocument();
+      expect(screen.queryByText('Display name')).toBeInTheDocument();
+      expect(screen.queryByText('Home URL')).toBeInTheDocument();
+      expect(screen.queryByText('Description')).toBeInTheDocument();
     });
 
     it('renders organization form when add org button is clicked', async () => {
       const mockOrganizations = getMockOrganizations('6');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-      const { getByTestId, queryByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <OrganizationsSection {...defaultProps} />
@@ -132,20 +138,20 @@ describe('Organizations section index', () => {
         </AppCtx.Provider>
       );
 
-      const addBtn = await waitFor(() => getByTestId('addOrgButton'));
+      const addBtn = await screen.findByRole('button', { name: 'Open modal' });
       expect(addBtn).toBeInTheDocument();
 
-      expect(queryByText('Name')).toBeNull();
-      expect(queryByText('Display name')).toBeNull();
-      expect(queryByText('Home URL')).toBeNull();
-      expect(queryByText('Description')).toBeNull();
+      expect(screen.queryByText('Name')).toBeNull();
+      expect(screen.queryByText('Display name')).toBeNull();
+      expect(screen.queryByText('Home URL')).toBeNull();
+      expect(screen.queryByText('Description')).toBeNull();
 
-      fireEvent.click(addBtn);
+      userEvent.click(addBtn);
 
-      expect(queryByText('Name')).toBeInTheDocument();
-      expect(queryByText('Display name')).toBeInTheDocument();
-      expect(queryByText('Home URL')).toBeInTheDocument();
-      expect(queryByText('Description')).toBeInTheDocument();
+      expect(screen.queryByText('Name')).toBeInTheDocument();
+      expect(screen.queryByText('Display name')).toBeInTheDocument();
+      expect(screen.queryByText('Home URL')).toBeInTheDocument();
+      expect(screen.queryByText('Description')).toBeInTheDocument();
     });
   });
 
@@ -153,7 +159,7 @@ describe('Organizations section index', () => {
     const mockOrganizations = getMockOrganizations('6');
     mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-    const { getAllByTestId } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <OrganizationsSection {...defaultProps} />
@@ -162,7 +168,7 @@ describe('Organizations section index', () => {
     );
 
     await waitFor(() => {
-      expect(getAllByTestId('organizationCard')).toHaveLength(2);
+      expect(screen.getAllByTestId('organizationCard')).toHaveLength(2);
     });
   });
 
@@ -188,7 +194,7 @@ describe('Organizations section index', () => {
     it('rest API errors - displays generic error message', async () => {
       mocked(API).getUserOrganizations.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <OrganizationsSection {...defaultProps} />
@@ -198,8 +204,10 @@ describe('Organizations section index', () => {
 
       await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));
 
-      expect(getByTestId('noData')).toBeInTheDocument();
-      expect(getByText(/An error occurred getting your organizations, please try again later./i)).toBeInTheDocument();
+      expect(screen.getByRole('alert')).toBeInTheDocument();
+      expect(
+        screen.getByText(/An error occurred getting your organizations, please try again later./i)
+      ).toBeInTheDocument();
     });
   });
 });

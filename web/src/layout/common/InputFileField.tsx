@@ -221,7 +221,6 @@ const InputFileField = (props: Props) => {
 
           <div className="position-relative">
             <button
-              data-testid="inputFileBtn"
               className={classnames('btn p-0 overflow-hidden position-relative', styles.btn, {
                 [styles.isLoading]: isSending,
               })}
@@ -248,7 +247,6 @@ const InputFileField = (props: Props) => {
         </div>
 
         <input
-          data-testid="inputFile"
           type="file"
           id={props.name}
           name={props.name}
@@ -267,7 +265,6 @@ const InputFileField = (props: Props) => {
           closeButton={
             <>
               <button
-                data-testid="saveOriginalBtn"
                 className="btn btn-sm btn-outline-secondary"
                 onClick={() => {
                   if (!isNull(image)) {
@@ -285,7 +282,6 @@ const InputFileField = (props: Props) => {
               </button>
 
               <button
-                data-testid="saveCroppedBtn"
                 type="button"
                 className="btn btn-sm btn-secondary ml-3"
                 disabled={!completedCrop?.width || !completedCrop?.height}

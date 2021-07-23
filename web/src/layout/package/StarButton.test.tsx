@@ -1,4 +1,5 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -51,7 +52,7 @@ describe('StarButton', () => {
   it('creates snapshot', async () => {
     mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <StarButton {...defaultProps} />
@@ -61,7 +62,7 @@ describe('StarButton', () => {
 
     await waitFor(() => {
       expect(API.getStars).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -71,7 +72,7 @@ describe('StarButton', () => {
         mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
         mocked(API).toggleStar.mockResolvedValue('');
 
-        const { getByText, getByTestId, getByRole, queryByRole, getAllByText } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <StarButton {...defaultProps} />
@@ -85,21 +86,21 @@ describe('StarButton', () => {
         });
 
         waitFor(() => {
-          expect(getByRole('status')).toBeInTheDocument();
+          expect(screen.getByRole('status')).toBeInTheDocument();
         });
 
-        expect(getByText('Star')).toBeInTheDocument();
-        expect(getAllByText('4')).toHaveLength(1);
-        expect(queryByRole('status')).toBeNull();
+        expect(screen.getByText('Star')).toBeInTheDocument();
+        expect(screen.getAllByText('4')).toHaveLength(1);
+        expect(screen.queryByRole('status')).toBeNull();
 
-        const btn = getByTestId('toggleStarBtn');
+        const btn = screen.getByRole('button', { name: 'Star package' });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.toggleStar).toHaveBeenCalledTimes(1);
           expect(API.toggleStar).toHaveBeenCalledWith(defaultProps.packageId);
-          expect(getByRole('status')).toBeInTheDocument();
+          expect(screen.getByRole('status')).toBeInTheDocument();
         });
       });
 
@@ -107,7 +108,7 @@ describe('StarButton', () => {
         mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: true });
         mocked(API).toggleStar.mockResolvedValue('');
 
-        const { getByText, getByTestId, getByRole } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <StarButton {...defaultProps} />
@@ -119,16 +120,17 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByText('Unstar')).toBeInTheDocument();
-        const btn = getByTestId('toggleStarBtn');
+        expect(screen.getByText('Unstar')).toBeInTheDocument();
+        const btn = screen.getByRole('button', { name: 'Unstar package' });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.toggleStar).toHaveBeenCalledTimes(1);
           expect(API.toggleStar).toHaveBeenCalledWith(defaultProps.packageId);
-          expect(getByRole('status')).toBeInTheDocument();
         });
+
+        expect(screen.getByRole('status')).toBeInTheDocument();
       });
     });
 
@@ -137,7 +139,7 @@ describe('StarButton', () => {
         mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
         mocked(API).toggleStar.mockRejectedValue('');
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <StarButton {...defaultProps} />
@@ -149,9 +151,9 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        const btn = getByTestId('toggleStarBtn');
+        const btn = screen.getByRole('button', { name: 'Star package' });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
@@ -166,7 +168,7 @@ describe('StarButton', () => {
         mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: true });
         mocked(API).toggleStar.mockRejectedValue('');
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <StarButton {...defaultProps} />
@@ -178,9 +180,9 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        const btn = getByTestId('toggleStarBtn');
+        const btn = screen.getByRole('button', { name: 'Unstar package' });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
@@ -204,7 +206,7 @@ describe('StarButton', () => {
           </AppCtx.Provider>
         );
 
-        const { queryByTestId, queryByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         rerender(component);
 
@@ -212,8 +214,8 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        expect(queryByTestId('toggleStarBtn')).toBeNull();
-        expect(queryByText('Star')).toBeNull();
+        expect(screen.queryByRole('button', { name: 'Star package' })).toBeNull();
+        expect(screen.queryByText('Star')).toBeNull();
       });
     });
 
@@ -240,7 +242,7 @@ describe('StarButton', () => {
         mocked(API).getStars.mockResolvedValue({ stars: 4 });
         mocked(API).toggleStar.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
             <Router>
               <StarButton {...defaultProps} />
@@ -252,9 +254,9 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        const btn = getByTestId('toggleStarBtn');
+        const btn = screen.getByRole('button', { name: 'Unstar package' });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -276,7 +278,7 @@ describe('StarButton', () => {
 
         expect(await screen.findByText('4'));
 
-        const btn = screen.getByTestId('toggleStarBtn');
+        const btn = screen.getByRole('button', { name: 'Star package' });
         expect(btn).toBeInTheDocument();
         expect(btn).toHaveClass('disabled');
       });

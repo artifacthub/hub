@@ -23,14 +23,14 @@ describe('ButtonCopyToClipboard', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<ButtonCopyToClipboard text="Text to copy" />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders tooltip after clicking button', async () => {
     render(<ButtonCopyToClipboard text="Text to copy" />);
     expect(screen.queryByRole('tooltip')).toBeNull();
 
-    const btn = screen.getByTestId('ctcBtn');
+    const btn = screen.getByRole('button', { name: 'Copy to clipboard' });
     userEvent.click(btn);
 
     expect(clipboardWriteTextMock).toHaveBeenCalledTimes(1);
@@ -44,7 +44,7 @@ describe('ButtonCopyToClipboard', () => {
     render(<ButtonCopyToClipboard text="Text to copy" />);
     expect(screen.queryByRole('tooltip')).toBeNull();
 
-    const btn = screen.getByTestId('ctcBtn');
+    const btn = screen.getByRole('button', { name: 'Copy to clipboard' });
     userEvent.click(btn);
 
     await waitFor(() => expect(copyToClipboardMock).toHaveBeenCalledWith('copy'));
@@ -59,7 +59,7 @@ describe('ButtonCopyToClipboard', () => {
     render(<ButtonCopyToClipboard text="Text to copy" />);
     expect(screen.queryByRole('tooltip')).toBeNull();
 
-    const btn = screen.getByTestId('ctcBtn');
+    const btn = screen.getByRole('button', { name: 'Copy to clipboard' });
     userEvent.click(btn);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();

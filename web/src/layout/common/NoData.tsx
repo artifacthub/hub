@@ -12,7 +12,7 @@ interface Props {
 
 const NoData = (props: Props) => (
   <div
-    data-testid="noData"
+    role="alert"
     className={`alert alert-primary ml-auto mr-auto my-5 text-center p-4 p-sm-5 border ${styles.wrapper} ${props.className}`}
   >
     <div className="h4">{props.children}</div>

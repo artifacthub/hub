@@ -96,7 +96,6 @@ exports[`Home index creates snapshot 1`] = `
             <button
               aria-label="Close"
               class="close inputClean invisible"
-              data-testid="cleanBtn"
               type="button"
             >
               <span
@@ -111,7 +110,6 @@ exports[`Home index creates snapshot 1`] = `
               <button
                 aria-label="Open search tips modal"
                 class="btn btn-link p-2 text-light btn-lg"
-                data-testid="openSearchTipsBtn"
               >
                 <svg
                   fill="currentColor"

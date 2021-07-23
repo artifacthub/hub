@@ -57,7 +57,6 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
                 <button
                   aria-label="Open modal"
                   class="dropdown-item btn btn-sm rounded-0 text-dark"
-                  data-testid="leaveOrgModalBtn"
                 >
                   <div
                     class="d-flex flex-row align-items-center"

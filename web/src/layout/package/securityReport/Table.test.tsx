@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { SecurityReportResult } from '../../../types';
@@ -28,17 +29,17 @@ describe('SecurityTable', () => {
   it('creates snapshot', () => {
     const mockReports = getMockSecurityReport('1');
 
-    const result = render(<SecurityTable {...defaultProps} reports={mockReports} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SecurityTable {...defaultProps} reports={mockReports} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
       const mockReports = getMockSecurityReport('2');
 
-      const { getAllByTestId } = render(<SecurityTable {...defaultProps} reports={mockReports} />);
+      render(<SecurityTable {...defaultProps} reports={mockReports} />);
 
-      const targets = getAllByTestId('targetTitle');
+      const targets = screen.getAllByTestId('targetTitle');
       expect(targets).toHaveLength(2);
       expect(targets[0]).toHaveTextContent('Target:centos 7.7.1908');
       expect(targets[1]).toHaveTextContent('Target:usr/share/ceph/mgr/dashboard/frontend/package-lock.json');
@@ -47,15 +48,15 @@ describe('SecurityTable', () => {
     it('renders empty report', () => {
       const mockReports = getMockSecurityReport('3');
 
-      const { queryByTestId } = render(<SecurityTable {...defaultProps} reports={mockReports} />);
+      render(<SecurityTable {...defaultProps} reports={mockReports} />);
 
-      expect(queryByTestId('btnExpand')).toBeNull();
+      expect(screen.queryByTestId('btnExpand')).toBeNull();
     });
 
     it('collapses report', () => {
       const mockReports = getMockSecurityReport('4');
 
-      const { getByTestId } = render(
+      render(
         <SecurityTable
           {...defaultProps}
           reports={mockReports}
@@ -63,9 +64,9 @@ describe('SecurityTable', () => {
         />
       );
 
-      expect(getByTestId('securityReportInfo')).toBeInTheDocument();
-      const reportBtn = getByTestId('btnExpand');
-      fireEvent.click(reportBtn);
+      expect(screen.getByTestId('securityReportInfo')).toBeInTheDocument();
+      const reportBtn = screen.getByRole('button', { name: 'Open target image' });
+      userEvent.click(reportBtn);
 
       expect(mockSetExpandedTarget).toHaveBeenCalledTimes(1);
       expect(mockSetExpandedTarget).toHaveBeenCalledWith(null);
@@ -74,7 +75,7 @@ describe('SecurityTable', () => {
     it('renders expanded target report', () => {
       const mockReports = getMockSecurityReport('5');
 
-      const { getAllByTestId, getByTestId, getByText } = render(
+      render(
         <SecurityTable
           {...defaultProps}
           reports={mockReports}
@@ -82,18 +83,18 @@ describe('SecurityTable', () => {
         />
       );
 
-      const reportBtn = getByTestId('btnExpand');
+      const reportBtn = screen.getByRole('button', { name: 'Open target image' });
       expect(reportBtn).toBeInTheDocument();
       expect(reportBtn).toHaveTextContent('Target:centos 7.7.1908Rating:FHide vulnerabilities');
 
-      expect(getByText('ID')).toBeInTheDocument();
-      expect(getByText('Severity')).toBeInTheDocument();
-      expect(getByText('Package')).toBeInTheDocument();
-      expect(getByText('Version')).toBeInTheDocument();
-      expect(getByText('Fixed in')).toBeInTheDocument();
-      expect(getByText('Displaying only the first 100 entries')).toBeInTheDocument();
+      expect(screen.getByText('ID')).toBeInTheDocument();
+      expect(screen.getByText('Severity')).toBeInTheDocument();
+      expect(screen.getByText('Package')).toBeInTheDocument();
+      expect(screen.getByText('Version')).toBeInTheDocument();
+      expect(screen.getByText('Fixed in')).toBeInTheDocument();
+      expect(screen.getByText('Displaying only the first 100 entries')).toBeInTheDocument();
 
-      expect(getAllByTestId('vulnerabilityCell')).toHaveLength(100);
+      expect(screen.getAllByTestId('vulnerabilityCell')).toHaveLength(100);
     });
   });
 });

@@ -1,3 +1,184 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SearchTipsModal creates snapshot 1`] = `[Function]`;
+exports[`SearchTipsModal creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div
+          class="modal-content content"
+        >
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="mw-100 text-left text-dark"
+            >
+              <div
+                class="d-flex flex-row justify-content-between mb-4"
+              >
+                <div
+                  class="h3 d-flex flex-row align-items-baseline title"
+                >
+                  Search tips
+                  <svg
+                    class="ml-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 352 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <button
+                    aria-label="Close"
+                    class="close closeModalBtn"
+                    type="button"
+                  >
+                    <span
+                      aria-hidden="true"
+                    >
+                      ×
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <ul
+                class="mb-0 list"
+              >
+                <li
+                  class="my-1"
+                >
+                  Use 
+                  <span
+                    class="font-weight-bold"
+                  >
+                    multiple words
+                  </span>
+                   to refine your search. 
+                  <small
+                    class="text-muted"
+                  >
+                    Example:
+                  </small>
+                   
+                  <a
+                    aria-label="Filter by kafka operator"
+                    class="font-weight-bold text-dark p-0"
+                    href="/packages/search?ts_query_web=kafka+operator&sort=relevance&page=1"
+                  >
+                    <u>
+                      kafka operator
+                    </u>
+                  </a>
+                </li>
+                <li
+                  class="my-1"
+                >
+                  Use 
+                  <span
+                    class="font-weight-bold"
+                  >
+                    -
+                  </span>
+                   to exclude words from your search. 
+                  <small
+                    class="text-muted"
+                  >
+                    Example:
+                  </small>
+                   
+                  <a
+                    aria-label="Filter by apache -solr -hadoop"
+                    class="font-weight-bold text-dark p-0"
+                    href="/packages/search?ts_query_web=apache+-solr+-hadoop&sort=relevance&page=1"
+                  >
+                    <u>
+                      apache -solr -hadoop
+                    </u>
+                  </a>
+                </li>
+                <li
+                  class="my-1"
+                >
+                  Put a phrase inside 
+                  <span
+                    class="font-weight-bold"
+                  >
+                    double quotes
+                  </span>
+                   for an exact match. 
+                  <small
+                    class="text-muted"
+                  >
+                    Example:
+                  </small>
+                   
+                  <a
+                    aria-label="Filter by \\"monitoring system\\""
+                    class="font-weight-bold text-dark p-0"
+                    href="/packages/search?ts_query_web=%22monitoring+system%22&sort=relevance&page=1"
+                  >
+                    <u>
+                      "monitoring system"
+                    </u>
+                  </a>
+                </li>
+                <li
+                  class="my-1"
+                >
+                  Use 
+                  <span
+                    class="font-weight-bold"
+                  >
+                    or
+                  </span>
+                   to combine multiple searches. 
+                  <small
+                    class="text-muted"
+                  >
+                    Example:
+                  </small>
+                   
+                  <a
+                    aria-label="Filter by postgresql or mysql"
+                    class="font-weight-bold text-dark p-0"
+                    href="/packages/search?ts_query_web=postgresql+or+mysql&sort=relevance&page=1"
+                  >
+                    <u>
+                      postgresql or mysql
+                    </u>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

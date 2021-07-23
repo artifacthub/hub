@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import SubscriptionsSection from './index';
@@ -15,15 +15,15 @@ describe('SubscriptionsSection', () => {
   });
 
   it('creates snapshot', async () => {
-    const result = render(<SubscriptionsSection {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SubscriptionsSection {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', async () => {
-      const { getByText } = render(<SubscriptionsSection {...defaultProps} />);
+      render(<SubscriptionsSection {...defaultProps} />);
 
-      expect(getByText('Your subscriptions')).toBeInTheDocument();
+      expect(screen.getByText('Your subscriptions')).toBeInTheDocument();
     });
   });
 });

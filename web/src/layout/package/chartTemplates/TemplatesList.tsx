@@ -103,7 +103,6 @@ const TemplatesList = (props: Props) => {
             return (
               <div key={`template_${index}`}>
                 <button
-                  data-testid="tmplBtn"
                   className={classnames('btn btn-light btn-sm mb-2 text-left w-100', styles.btn, {
                     [`activeTemplate ${styles.active}`]: isActive,
                   })}

@@ -8,13 +8,13 @@ import authorizer from '../../utils/authorizer';
 import styles from './ActionBtn.module.css';
 
 interface Props {
-  testId: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children: JSX.Element;
   className?: string;
   contentClassName?: string;
   action: AuthorizerAction;
   disabled?: boolean;
+  label?: string;
 }
 
 const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
@@ -80,13 +80,12 @@ const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
       }}
     >
       <button
-        data-testid={props.testId}
         type="button"
         className={classnames(props.className, {
           [`disabled ${styles.disabled}`]: !isAuthorized || (!isUndefined(props.disabled) && props.disabled),
         })}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => (isAuthorized ? props.onClick(e) : null)}
-        aria-label="Action"
+        aria-label={props.label || 'Action'}
       >
         <div className={`d-flex flex-row align-items-center ${props.contentClassName}`}>{props.children}</div>
       </button>

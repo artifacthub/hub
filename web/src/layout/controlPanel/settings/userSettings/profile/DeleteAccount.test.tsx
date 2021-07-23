@@ -48,12 +48,12 @@ describe('DeleteAccount', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <DeleteAccount {...defaultProps} />
       </AppCtx.Provider>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -70,45 +70,43 @@ describe('DeleteAccount', () => {
         )
       ).toBeInTheDocument();
       expect(screen.getAllByText('Delete account')).toHaveLength(3);
-      expect(screen.getByTestId('deleteModalAccountBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open deletion account modal' })).toBeInTheDocument();
     });
 
     it('opens and closes modal', async () => {
-      const { getByTestId, getByText, getByRole } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
           <DeleteAccount {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const modal = getByRole('dialog');
+      const modal = screen.getByRole('dialog');
       expect(modal).toBeInTheDocument();
       expect(modal).not.toHaveClass('d-block');
 
-      const btn = getByTestId('deleteModalAccountBtn');
+      const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
       userEvent.click(btn);
 
       expect(
-        getByText(
+        screen.getByText(
           'If you delete your account all repositories belonging to it will be deleted. Please consider transferring them to another user.'
         )
       ).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           'All information related to the repositories will be permanently deleted as well. This includes packages, stars, users subscriptions, webhooks, events and notifications. Some of this information was created by users and will be lost. In addition to that, all organizations where you are the only member and all content belonging to those organizations will be removed as well.'
         )
       ).toBeInTheDocument();
-      expect(getByText('This operation cannot be undone')).toBeInTheDocument();
-      expect(getByTestId('deleteAccountBtn')).toBeInTheDocument();
-      expect(getByText('Cancel')).toBeInTheDocument();
+      expect(screen.getByText('This operation cannot be undone')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Delete account' })).toBeInTheDocument();
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
       expect(modal).toHaveClass('d-block');
 
-      expect(getByTestId('deleteAccountBtn')).toBeInTheDocument();
-      const cancelBtn = getByText('Cancel');
+      expect(screen.getByRole('button', { name: 'Delete account' })).toBeInTheDocument();
+      const cancelBtn = screen.getByText('Cancel');
       userEvent.click(cancelBtn);
 
-      await waitFor(() => {
-        expect(modal).not.toHaveClass('d-block');
-      });
+      expect(await screen.findByRole('dialog')).not.toHaveClass('d-block');
     });
 
     describe('calls registerDeleteUserCode', () => {
@@ -124,25 +122,21 @@ describe('DeleteAccount', () => {
         const modal = screen.getByRole('dialog');
         expect(modal).not.toHaveClass('d-block');
 
-        const btn = screen.getByTestId('deleteModalAccountBtn');
+        const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
         userEvent.click(btn);
 
-        await waitFor(() => {
-          expect(modal).toHaveClass('d-block');
-        });
+        expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
         const txt = screen.getByTestId('confirmationText');
         expect(txt).toHaveTextContent('Please type test to confirm:');
 
-        const deleteBtn = screen.getByTestId('deleteAccountBtn');
+        const deleteBtn = screen.getByRole('button', { name: 'Delete account' });
         expect(deleteBtn).toBeDisabled();
 
-        const input = screen.getByTestId('aliasInput');
+        const input = screen.getByRole('textbox');
         userEvent.type(input, 'test');
 
-        await waitFor(() => {
-          expect(deleteBtn).toBeEnabled();
-        });
+        expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
         userEvent.click(deleteBtn);
 
         expect(screen.getByText('Deleting...')).toBeInTheDocument();
@@ -177,25 +171,21 @@ describe('DeleteAccount', () => {
         const modal = screen.getByRole('dialog');
         expect(modal).not.toHaveClass('d-block');
 
-        const btn = screen.getByTestId('deleteModalAccountBtn');
+        const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
         userEvent.click(btn);
 
-        await waitFor(() => {
-          expect(modal).toHaveClass('d-block');
-        });
+        expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
         const txt = screen.getByTestId('confirmationText');
         expect(txt).toHaveTextContent('Please type test to confirm:');
 
-        const deleteBtn = screen.getByTestId('deleteAccountBtn');
+        const deleteBtn = screen.getByRole('button', { name: 'Delete account' });
         expect(deleteBtn).toBeDisabled();
 
-        const input = screen.getByTestId('aliasInput');
+        const input = screen.getByRole('textbox');
         userEvent.type(input, 'test');
 
-        await waitFor(() => {
-          expect(deleteBtn).toBeEnabled();
-        });
+        expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
         userEvent.click(deleteBtn);
 
         expect(screen.getByText('Deleting...')).toBeInTheDocument();
@@ -204,7 +194,7 @@ describe('DeleteAccount', () => {
           expect(API.registerDeleteUserCode).toHaveBeenCalledTimes(1);
         });
 
-        expect(screen.queryByTestId('deleteAccountBtn')).toBeNull();
+        expect(screen.queryByRole('button', { name: 'Delete account' })).toBeNull();
         expect(screen.getByText("We've just sent you a confirmation email")).toBeInTheDocument();
         expect(screen.getByText('is only valid for 15 minures')).toBeInTheDocument();
         expect(
@@ -223,7 +213,7 @@ describe('DeleteAccount', () => {
         userEvent.click(btn);
 
         expect(screen.getByRole('dialog')).toHaveClass('d-block');
-        expect(screen.getByTestId('deleteAccountBtn')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Delete account' })).toBeInTheDocument();
       });
 
       describe('on error', () => {
@@ -238,23 +228,17 @@ describe('DeleteAccount', () => {
             </AppCtx.Provider>
           );
 
-          const modal = screen.getByRole('dialog');
-
-          const btn = screen.getByTestId('deleteModalAccountBtn');
+          const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
           userEvent.click(btn);
 
-          await waitFor(() => {
-            expect(modal).toHaveClass('d-block');
-          });
+          expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-          const deleteBtn = screen.getByTestId('deleteAccountBtn');
+          const deleteBtn = screen.getByRole('button', { name: 'Delete account' });
 
-          const input = screen.getByTestId('aliasInput');
+          const input = screen.getByRole('textbox');
           userEvent.type(input, 'test');
 
-          await waitFor(() => {
-            expect(deleteBtn).toBeEnabled();
-          });
+          expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
           userEvent.click(deleteBtn);
 
           await waitFor(() => {
@@ -279,23 +263,17 @@ describe('DeleteAccount', () => {
             </AppCtx.Provider>
           );
 
-          const modal = screen.getByRole('dialog');
-
-          const btn = screen.getByTestId('deleteModalAccountBtn');
+          const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
           userEvent.click(btn);
 
-          await waitFor(() => {
-            expect(modal).toHaveClass('d-block');
-          });
+          expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-          const deleteBtn = screen.getByTestId('deleteAccountBtn');
+          const deleteBtn = screen.getByRole('button', { name: 'Delete account' });
 
-          const input = screen.getByTestId('aliasInput');
+          const input = screen.getByRole('textbox');
           userEvent.type(input, 'test');
 
-          await waitFor(() => {
-            expect(deleteBtn).toBeEnabled();
-          });
+          expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
           userEvent.click(deleteBtn);
 
           await waitFor(() => {

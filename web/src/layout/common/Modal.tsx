@@ -72,7 +72,6 @@ const Modal = (props: Props) => {
       {!isUndefined(props.buttonContent) && (
         <div className={`position-relative ${styles.buttonWrapper}`}>
           <button
-            data-testid="openModalBtn"
             type="button"
             className={classnames(
               'font-weight-bold text-uppercase position-relative btn btn-block',
@@ -129,7 +128,6 @@ const Modal = (props: Props) => {
 
                 {!unclosable && (
                   <button
-                    data-testid="closeModalBtn"
                     type="button"
                     className="close"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -137,7 +135,7 @@ const Modal = (props: Props) => {
                       closeModal();
                     }}
                     disabled={props.disabledClose}
-                    aria-label="Close modal"
+                    aria-label="Close"
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -156,7 +154,6 @@ const Modal = (props: Props) => {
               <div className="modal-footer p-3">
                 {isUndefined(props.closeButton) ? (
                   <button
-                    data-testid="closeModalFooterBtn"
                     type="button"
                     className="btn btn-sm btn-outline-secondary text-uppercase"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {

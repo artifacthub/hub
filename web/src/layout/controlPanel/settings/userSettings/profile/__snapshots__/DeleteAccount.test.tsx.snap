@@ -11,9 +11,8 @@ exports[`DeleteAccount creates snapshot 1`] = `
       Deleting your account will also delete all the content that belongs to it (repositories, subscriptions, webhooks, etc), as well as all organizations where you are the only member.
     </p>
     <button
-      aria-label="Open modal"
+      aria-label="Open deletion account modal"
       class="btn btn-sm btn-danger"
-      data-testid="deleteModalAccountBtn"
     >
       <div
         class="d-flex flex-row align-items-center text-uppercase"
@@ -61,9 +60,8 @@ exports[`DeleteAccount creates snapshot 1`] = `
               Delete account
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -115,7 +113,6 @@ exports[`DeleteAccount creates snapshot 1`] = `
             <button
               aria-label="Delete account"
               class="btn btn-sm btn-danger ml-3"
-              data-testid="deleteAccountBtn"
               disabled=""
             >
               <div

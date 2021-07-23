@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -63,14 +63,14 @@ describe('ControlPanelView', () => {
 
   it('renders correctly', async () => {
     mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView />
         </Router>
       </AppCtx.Provider>
     );
-    await waitFor(() => expect(result.asFragment()).toMatchSnapshot());
+    await waitFor(() => expect(asFragment()).toMatchSnapshot());
   });
 
   it('calls history replace when section is undefined', async () => {
@@ -91,7 +91,7 @@ describe('ControlPanelView', () => {
 
   it('renders 3 sections on user context', async () => {
     mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
-    const { getByRole, getAllByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" />
@@ -99,19 +99,17 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => {
-      const tabs = getAllByRole('tab');
-      expect(getByRole('tablist')).toBeInTheDocument();
-      expect(tabs).toHaveLength(3);
-      expect(tabs[0]).toHaveTextContent('Repositories');
-      expect(tabs[1]).toHaveTextContent('Organizations');
-      expect(tabs[2]).toHaveTextContent('Settings');
-    });
+    const tabs = await screen.findAllByRole('tab');
+    expect(screen.getByRole('tablist')).toBeInTheDocument();
+    expect(tabs).toHaveLength(3);
+    expect(tabs[0]).toHaveTextContent('Repositories');
+    expect(tabs[1]).toHaveTextContent('Organizations');
+    expect(tabs[2]).toHaveTextContent('Settings');
   });
 
   it('renders 3 sections on org context', async () => {
     mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
-    const { getByRole, getAllByRole } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" />
@@ -119,14 +117,12 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => {
-      const tabs = getAllByRole('tab');
-      expect(getByRole('tablist')).toBeInTheDocument();
-      expect(tabs).toHaveLength(3);
-      expect(tabs[0]).toHaveTextContent('Repositories');
-      expect(tabs[1]).toHaveTextContent('Members');
-      expect(tabs[2]).toHaveTextContent('Settings');
-    });
+    const tabs = await screen.findAllByRole('tab');
+    expect(screen.getByRole('tablist')).toBeInTheDocument();
+    expect(tabs).toHaveLength(3);
+    expect(tabs[0]).toHaveTextContent('Repositories');
+    expect(tabs[1]).toHaveTextContent('Members');
+    expect(tabs[2]).toHaveTextContent('Settings');
   });
 
   it('calls updateOrg from ctx when organization name is defined', async () => {

@@ -36,7 +36,7 @@ describe('RepositoryInfo', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<RepositoryInfo {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
@@ -93,7 +93,7 @@ describe('RepositoryInfo', () => {
       jest.advanceTimersByTime(100);
     });
 
-    expect(await screen.findByTestId('repoInfoDropdown')).toHaveClass('show');
+    expect(await screen.findByRole('complementary')).toHaveClass('show');
 
     userEvent.unhover(screen.getByTestId('repoLink'));
 
@@ -101,7 +101,7 @@ describe('RepositoryInfo', () => {
       jest.advanceTimersByTime(50);
     });
 
-    expect(await screen.findByTestId('repoInfoDropdown')).not.toHaveClass('show');
+    expect(await screen.findByRole('complementary')).not.toHaveClass('show');
 
     jest.useRealTimers();
   });
@@ -112,22 +112,22 @@ describe('RepositoryInfo', () => {
     render(<RepositoryInfo {...defaultProps} />);
     userEvent.hover(screen.getByTestId('repoLink'));
 
-    userEvent.hover(screen.getByTestId('repoInfoDropdown'));
+    userEvent.hover(screen.getByRole('complementary'));
     userEvent.unhover(screen.getByTestId('repoLink'));
 
     act(() => {
       jest.advanceTimersByTime(100);
     });
 
-    expect(await screen.findByTestId('repoInfoDropdown')).toHaveClass('show');
+    expect(await screen.findByRole('complementary')).toHaveClass('show');
 
-    userEvent.unhover(screen.getByTestId('repoInfoDropdown'));
+    userEvent.unhover(screen.getByRole('complementary'));
 
     act(() => {
       jest.advanceTimersByTime(50);
     });
 
-    expect(await screen.findByTestId('repoInfoDropdown')).not.toHaveClass('show');
+    expect(await screen.findByRole('complementary')).not.toHaveClass('show');
 
     jest.useRealTimers();
   });

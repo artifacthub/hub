@@ -33,8 +33,8 @@ describe('WidgetModal', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<WidgetModal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<WidgetModal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -45,10 +45,10 @@ describe('WidgetModal', () => {
       expect(screen.getByText('Theme')).toBeInTheDocument();
       expect(screen.getByText('light')).toBeInTheDocument();
       expect(screen.getByText('dark')).toBeInTheDocument();
-      expect(screen.getByTestId('radio-theme-light')).toBeChecked();
-      expect(screen.getByTestId('radio-theme-dark')).not.toBeChecked();
+      expect(screen.getByRole('radio', { name: 'light' })).toBeChecked();
+      expect(screen.getByRole('radio', { name: 'dark' })).not.toBeChecked();
       expect(screen.getByText('Responsive')).toBeInTheDocument();
-      expect(screen.getByTestId('checkbox-responsive')).not.toBeChecked();
+      expect(screen.getByRole('checkbox', { name: 'Responsive' })).not.toBeChecked();
       expect(
         screen.getByText(
           'The widget will try to use the width available on the parent container (between 350px and 650px).'
@@ -80,7 +80,7 @@ describe('WidgetModal', () => {
       );
 
       expect(screen.getByText('Header')).toBeInTheDocument();
-      expect(screen.getByTestId('checkbox-header')).toBeChecked();
+      expect(screen.getByRole('checkbox', { name: 'Header' })).toBeChecked();
       expect(screen.getByText('Displays Artifact Hub header at the top of the widget.')).toBeInTheDocument();
     });
 

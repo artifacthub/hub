@@ -1,3 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RepositoryIcon creates snapshot 1`] = `[Function]`;
+exports[`RepositoryIcon creates snapshot 1`] = `
+<DocumentFragment>
+  <img
+    alt="Icon"
+    class="undefined iconLight"
+    src="/static/media/helm-chart.svg"
+  />
+  <img
+    alt="Icon"
+    class="undefined iconDark"
+    src="/static/media/helm-chart-light.svg"
+  />
+</DocumentFragment>
+`;

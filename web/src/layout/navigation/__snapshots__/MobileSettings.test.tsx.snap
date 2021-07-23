@@ -13,7 +13,6 @@ exports[`MobileSettings creates snapshot 1`] = `
         aria-expanded="false"
         aria-label="Open sidebar"
         class="font-weight-bold text-uppercase position-relative btn position-relative btn text-secondary pr-0 pl-3"
-        data-testid="openSidebarBtn"
         type="button"
       >
         <div
@@ -39,8 +38,9 @@ exports[`MobileSettings creates snapshot 1`] = `
         </div>
       </button>
       <div
+        aria-label="Sidebar"
         class="sidebar sidebar right"
-        data-testid="sidebarContent"
+        role="complementary"
       >
         <div
           class="d-flex flex-column h-100"
@@ -67,7 +67,6 @@ exports[`MobileSettings creates snapshot 1`] = `
                 <button
                   aria-label="Close sidebar"
                   class="close"
-                  data-testid="closeSidebarBtn"
                   type="button"
                 >
                   <span
@@ -113,7 +112,6 @@ exports[`MobileSettings creates snapshot 1`] = `
                     <input
                       aria-checked="false"
                       class="custom-control-input input"
-                      data-testid="radio-automatic"
                       id="mobile-automatic"
                       name="automatic"
                       readonly=""
@@ -154,7 +152,6 @@ exports[`MobileSettings creates snapshot 1`] = `
                       aria-checked="true"
                       checked=""
                       class="custom-control-input input"
-                      data-testid="radio-light"
                       id="mobile-light"
                       name="light"
                       readonly=""
@@ -245,7 +242,6 @@ exports[`MobileSettings creates snapshot 1`] = `
                     <input
                       aria-checked="false"
                       class="custom-control-input input"
-                      data-testid="radio-dark"
                       id="mobile-dark"
                       name="dark"
                       readonly=""
@@ -311,7 +307,6 @@ exports[`MobileSettings creates snapshot 1`] = `
               </a>
               <a
                 class="dropdown-item my-2"
-                data-testid="starredPackagesLink"
                 href="/packages/starred"
               >
                 <div
@@ -338,7 +333,6 @@ exports[`MobileSettings creates snapshot 1`] = `
               </a>
               <a
                 class="dropdown-item my-2"
-                data-testid="controlPanelLink"
                 href="/control-panel"
               >
                 <div
@@ -366,7 +360,6 @@ exports[`MobileSettings creates snapshot 1`] = `
               <button
                 aria-label="Sign out"
                 class="dropdown-item my-2"
-                data-testid="logOutBtn"
               >
                 <div
                   class="d-flex align-items-center"
@@ -401,7 +394,6 @@ exports[`MobileSettings creates snapshot 1`] = `
               <button
                 aria-label="Close"
                 class="ml-auto btn btn-sm btn-outline-secondary"
-                data-testid="closeSidebarFooterBtn"
                 type="button"
               >
                 Close

@@ -14,9 +14,8 @@ exports[`BannerMOTD creates snapshot 1`] = `
       this is a sample
     </div>
     <button
-      aria-label="Close"
+      aria-label="Close banner"
       class="close position-absolute close"
-      data-testid="closeBannerMOTD"
       type="button"
     >
       <span

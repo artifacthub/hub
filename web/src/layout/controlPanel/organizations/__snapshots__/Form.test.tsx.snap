@@ -35,7 +35,6 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
           <button
             aria-label="Add image"
             class="btn p-0 overflow-hidden position-relative btn"
-            data-testid="inputFileBtn"
             type="button"
           >
             <svg
@@ -56,7 +55,6 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       </div>
       <input
         class="d-none"
-        data-testid="inputFile"
         id="logo"
         name="logo"
         type="file"

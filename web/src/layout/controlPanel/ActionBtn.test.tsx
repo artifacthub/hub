@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 
 import { AppCtx } from '../../context/AppCtx';
 import { AuthorizerAction, AuthorizerInput } from '../../types';
@@ -18,7 +19,6 @@ jest.mock('../../utils/authorizer', () => ({
 const onClickMock = jest.fn();
 
 const defaultProps = {
-  testId: 'test',
   onClick: onClickMock,
   action: AuthorizerAction.AddOrganizationMember,
 };
@@ -46,14 +46,14 @@ describe('ActionBtn', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <ActionBtn {...defaultProps}>
           <div>button content</div>
         </ActionBtn>
       </AppCtx.Provider>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders enabled button', () => {
@@ -65,7 +65,7 @@ describe('ActionBtn', () => {
       </AppCtx.Provider>
     );
 
-    const btn = screen.getByTestId(defaultProps.testId);
+    const btn = screen.getByRole('button');
     expect(btn).toBeInTheDocument();
     expect(btn).not.toHaveClass('disabled');
 
@@ -81,7 +81,7 @@ describe('ActionBtn', () => {
         value={{
           ctx: {
             ...mockCtx,
-            user: { alias: 'member', email: 'test@test.com' },
+            user: { alias: 'member', email: 'test@test.com', passwordSet: false },
           },
           dispatch: jest.fn(),
         }}
@@ -92,7 +92,7 @@ describe('ActionBtn', () => {
       </AppCtx.Provider>
     );
 
-    const btn = screen.getByTestId(defaultProps.testId);
+    const btn = screen.getByRole('button');
     expect(btn).toBeInTheDocument();
     expect(btn).toHaveClass('disabled');
 
@@ -110,7 +110,7 @@ describe('ActionBtn', () => {
         value={{
           ctx: {
             ...mockCtx,
-            user: { alias: 'member', email: 'test@test.com' },
+            user: { alias: 'member', email: 'test@test.com', passwordSet: false },
           },
           dispatch: jest.fn(),
         }}
@@ -121,8 +121,12 @@ describe('ActionBtn', () => {
       </AppCtx.Provider>
     );
 
-    const btn = screen.getByTestId(defaultProps.testId);
+    const btn = screen.getByRole('button');
     userEvent.hover(btn);
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
     expect(screen.getByText('You are not allowed to perform this action')).toBeInTheDocument();

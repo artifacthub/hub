@@ -20,7 +20,6 @@ const TargetImageBtn = (props: Props) => {
 
   return (
     <button
-      data-testid="btnExpand"
       ref={ref}
       className="btn btn-link text-reset pl-0 btn-block position-relative"
       onClick={props.onClick}

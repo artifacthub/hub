@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -49,7 +50,7 @@ describe('Search index', () => {
     const mockSearchResults = getMockSearchResults('1');
     mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <SearchView {...defaultProps} />
       </Router>
@@ -57,7 +58,7 @@ describe('Search index', () => {
 
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -81,37 +82,7 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('4');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId } = render(
-        <Router>
-          <SearchView {...defaultProps} />
-        </Router>
-      );
-
-      const results = await waitFor(() => getByTestId('resultsText'));
-
-      expect(results).toBeInTheDocument();
-      expect(results).toHaveTextContent('1 - 7 of 7 results for "test"');
-    });
-
-    it('renders correct legend with some filters applied', async () => {
-      const mockSearchResults = getMockSearchResults('4');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const { getByTestId, getByText } = render(
-        <Router>
-          <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
-        </Router>
-      );
-
-      const results = await waitFor(() => getByTestId('resultsText'));
-      expect(results).toBeInTheDocument();
-      expect(getByText(/(some filters applied)/i)).toBeInTheDocument();
-    });
-
-    it('renders error message when searchPackages call fails', async () => {
-      mocked(API).searchPackages.mockRejectedValue({ kind: ErrorKind.Other });
-
-      const { getByTestId } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
@@ -121,8 +92,44 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const noData = getByTestId('noData');
+      const results = screen.getByRole('status');
+      expect(results).toBeInTheDocument();
+      expect(results).toHaveTextContent('1 - 7 of 7 results for "test"');
+    });
 
+    it('renders correct legend with some filters applied', async () => {
+      const mockSearchResults = getMockSearchResults('4');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      const results = screen.getByRole('status');
+      expect(results).toBeInTheDocument();
+      expect(screen.getByText(/(some filters applied)/i)).toBeInTheDocument();
+    });
+
+    it('renders error message when searchPackages call fails', async () => {
+      mocked(API).searchPackages.mockRejectedValue({ kind: ErrorKind.Other });
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      const noData = screen.getByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('An error occurred searching packages, please try again later.');
     });
@@ -133,13 +140,13 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('5');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getAllByRole } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const packages = await waitFor(() => getAllByRole('listitem'));
+      const packages = await screen.findAllByRole('listitem');
       expect(packages).toHaveLength(7);
     });
 
@@ -147,19 +154,18 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('6');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
-
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
-      expect(getByTestId('resetLink')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Browse all packages/ })).toBeInTheDocument();
     });
   });
 
@@ -168,13 +174,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('7');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getAllByRole, getAllByTestId } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const [facets, options] = await waitFor(() => [getAllByRole('menuitem'), getAllByTestId('checkbox')]);
+      const facets = await screen.findAllByRole('menuitem');
+      const options = screen.getAllByRole('checkbox');
 
       // Desktop + mobile (sidebar)
       expect(facets).toHaveLength(2 * 3);
@@ -185,14 +192,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('8');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getAllByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const opts = await waitFor(() => getAllByLabelText(/Chart/g));
-      fireEvent.click(opts[0]);
+      const opts = await screen.findAllByLabelText(/Chart/g);
+      userEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -210,15 +217,15 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('9');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { queryAllByTestId, queryByRole } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
       await waitFor(() => {
-        expect(queryAllByTestId('facetBlock')).toHaveLength(0);
-        expect(queryByRole('complementary')).toBeNull();
+        expect(screen.queryAllByTestId('facetBlock')).toHaveLength(0);
+        expect(screen.queryByRole('complementary')).toBeNull();
       });
     });
   });
@@ -228,7 +235,7 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('10');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { queryByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
@@ -237,7 +244,7 @@ describe('Search index', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
-      const pagination = queryByLabelText('pagination');
+      const pagination = screen.queryByLabelText('pagination');
       expect(pagination).toBeNull();
     });
 
@@ -245,7 +252,7 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('11');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { queryByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
@@ -254,7 +261,7 @@ describe('Search index', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
-      const pagination = queryByLabelText('pagination');
+      const pagination = screen.getByLabelText('pagination');
       expect(pagination).toBeInTheDocument();
     });
 
@@ -267,7 +274,7 @@ describe('Search index', () => {
         filters: { kind: ['0'] },
       };
 
-      const { queryByLabelText } = render(
+      render(
         <Router>
           <SearchView {...props} />
         </Router>
@@ -277,11 +284,11 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const pagination = queryByLabelText('pagination');
+      const pagination = screen.getByLabelText('pagination');
       expect(pagination).toBeInTheDocument();
 
       const button = within(pagination!).getByText('2');
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -300,13 +307,13 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('13');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const paginationLimit = await waitFor(() => getByLabelText('pagination-limit') as HTMLSelectElement);
+      const paginationLimit = (await screen.findByLabelText('pagination-limit')) as HTMLSelectElement;
       expect(paginationLimit.value).toBe('20');
     });
 
@@ -319,16 +326,16 @@ describe('Search index', () => {
         pageNumber: 2,
       };
 
-      const { getByLabelText } = render(
+      render(
         <Router>
           <SearchView {...props} />
         </Router>
       );
 
-      const paginationLimit = await waitFor(() => getByLabelText('pagination-limit') as HTMLSelectElement);
+      const paginationLimit = (await screen.findByLabelText('pagination-limit')) as HTMLSelectElement;
       expect(paginationLimit.value).toBe('20');
 
-      fireEvent.change(paginationLimit, { target: { value: '60' } });
+      userEvent.selectOptions(paginationLimit, '60');
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({
@@ -348,14 +355,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('15');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getAllByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
         </Router>
       );
 
-      const opts = await waitFor(() => getAllByLabelText(/Falco rules/g));
-      fireEvent.click(opts[0]);
+      const opts = await screen.findAllByLabelText(/Falco rules/g);
+      userEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -373,14 +380,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('16');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getAllByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
         </Router>
       );
 
-      const opts = await waitFor(() => getAllByLabelText(/Helm charts/g));
-      fireEvent.click(opts[0]);
+      const opts = await screen.findAllByLabelText(/Helm charts/g);
+      userEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -398,14 +405,14 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('16');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getAllByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
         </Router>
       );
 
-      const opts = await waitFor(() => getAllByLabelText(/Helm charts/g));
-      fireEvent.click(opts[0]);
+      const opts = await screen.findAllByLabelText(/Helm charts/g);
+      userEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -426,7 +433,7 @@ describe('Search index', () => {
       const mockSearchResults2 = getMockSearchResults('22b');
       mocked(API).searchPackages.mockResolvedValueOnce(mockSearchResults1).mockResolvedValue(mockSearchResults2);
 
-      const { rerender, getByRole, getAllByTestId, getByTestId } = render(
+      const { rerender } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
@@ -444,10 +451,10 @@ describe('Search index', () => {
         });
       });
 
-      const main = await waitFor(() => getByRole('main'));
+      const main = await screen.findByRole('main');
 
       expect(main).toBeInTheDocument();
-      const checks = getAllByTestId('checkbox');
+      const checks = screen.getAllByRole('checkbox');
       expect(checks).toHaveLength(28);
 
       rerender(
@@ -469,7 +476,7 @@ describe('Search index', () => {
         });
       });
 
-      const noData = await waitFor(() => getByTestId('noData'));
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
@@ -483,7 +490,7 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('23');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} verifiedPublisher official deprecated filters={{ repo: ['stable'] }} />
         </Router>
@@ -492,9 +499,10 @@ describe('Search index', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
-      const resetBtn = getByTestId('resetBtn');
-      expect(resetBtn).toBeInTheDocument();
-      fireEvent.click(resetBtn);
+      const buttons = screen.getAllByRole('button', { name: 'Reset filters' });
+      expect(buttons).toHaveLength(2);
+      expect(buttons[0]).toHaveTextContent('Reset');
+      userEvent.click(buttons[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -506,11 +514,11 @@ describe('Search index', () => {
       });
     });
 
-    it('resets all filters included tsQueryWeb when resetLink is clicked', async () => {
+    it('resets all filters included tsQueryWeb when browseAllBtn is clicked', async () => {
       const mockSearchResults = getMockSearchResults('24');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} filters={{}} />
         </Router>
@@ -520,9 +528,9 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const resetLink = getByTestId('resetLink');
-      expect(resetLink).toBeInTheDocument();
-      fireEvent.click(resetLink);
+      const browseAllBtn = screen.getByRole('button', { name: /Browse all packages/i });
+      expect(browseAllBtn).toBeInTheDocument();
+      userEvent.click(browseAllBtn);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -534,11 +542,11 @@ describe('Search index', () => {
       });
     });
 
-    it('resets filters when resetFiltersLink is clicked', async () => {
+    it('resets filters when reset the filters button is clicked', async () => {
       const mockSearchResults = getMockSearchResults('24');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} verifiedPublisher official deprecated filters={{ repo: ['stable'] }} />
         </Router>
@@ -548,9 +556,10 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const resetFiltersLink = getByTestId('resetFiltersLink');
-      expect(resetFiltersLink).toBeInTheDocument();
-      fireEvent.click(resetFiltersLink);
+      const buttons = screen.getAllByRole('button', { name: 'Reset filters' });
+      expect(buttons).toHaveLength(3);
+      expect(buttons[2]).toHaveTextContent('reset the filters');
+      userEvent.click(buttons[2]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -568,13 +577,13 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('25');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const sortOpts = await waitFor(() => getByLabelText('sort-options') as HTMLSelectElement);
+      const sortOpts = (await screen.findByLabelText('sort-options')) as HTMLSelectElement;
       expect(sortOpts.value).toBe('relevance');
     });
 
@@ -582,13 +591,13 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('26');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByLabelText } = render(
+      render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const sortOpts = await waitFor(() => getByLabelText('sort-options') as HTMLSelectElement);
+      const sortOpts = (await screen.findByLabelText('sort-options')) as HTMLSelectElement;
       expect(sortOpts.value).toBe('relevance');
 
       fireEvent.change(sortOpts, { target: { value: 'stars' } });
@@ -611,13 +620,13 @@ describe('Search index', () => {
         const mockSearchResults = getMockSearchResults('27');
         mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-        const { queryByLabelText } = render(
+        render(
           <Router>
             <SearchView {...defaultProps} tsQueryWeb={undefined} />
           </Router>
         );
 
-        const sortOpts = await waitFor(() => queryByLabelText('sort-options') as HTMLSelectElement);
+        const sortOpts = await waitFor(() => screen.queryByLabelText('sort-options') as HTMLSelectElement);
         expect(sortOpts).toBeNull();
       });
 
@@ -625,13 +634,13 @@ describe('Search index', () => {
         const mockSearchResults = getMockSearchResults('28');
         mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-        const { queryByLabelText } = render(
+        render(
           <Router>
             <SearchView {...defaultProps} tsQueryWeb="" />
           </Router>
         );
 
-        const sortOpts = await waitFor(() => queryByLabelText('sort-options') as HTMLSelectElement);
+        const sortOpts = await waitFor(() => screen.queryByLabelText('sort-options') as HTMLSelectElement);
         expect(sortOpts).toBeNull();
       });
     });

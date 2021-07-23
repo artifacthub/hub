@@ -1,16 +1,16 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import detectLinksInText from './detectLinksInText';
 
 describe('detectLinksInText', () => {
   it('renders text without link', () => {
-    const { getByText } = render(<>{detectLinksInText('text')}</>);
-    expect(getByText('text')).toBeInTheDocument();
+    render(<>{detectLinksInText('text')}</>);
+    expect(screen.getByText('text')).toBeInTheDocument();
   });
 
   it('renders text with link', () => {
-    const { getByText } = render(
+    render(
       <>
         {detectLinksInText(
           'More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core'
@@ -18,7 +18,7 @@ describe('detectLinksInText', () => {
       </>
     );
 
-    const link = getByText(
+    const link = screen.getByText(
       'https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core'
     );
     expect(link).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('detectLinksInText', () => {
   });
 
   it('renders text with link and custom class', () => {
-    const { getByText } = render(
+    render(
       <>
         {detectLinksInText(
           'More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core',
@@ -41,7 +41,7 @@ describe('detectLinksInText', () => {
       </>
     );
 
-    const link = getByText(
+    const link = screen.getByText(
       'https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core'
     );
     expect(link).toBeInTheDocument();

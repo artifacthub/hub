@@ -21,8 +21,8 @@ describe('WidgetsGroupModal', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<WidgetsGroupModal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<WidgetsGroupModal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -33,16 +33,15 @@ describe('WidgetsGroupModal', () => {
       expect(screen.getByText('Theme')).toBeInTheDocument();
       expect(screen.getByText('light')).toBeInTheDocument();
       expect(screen.getByText('dark')).toBeInTheDocument();
-      expect(screen.getByTestId('radio-theme-light')).toBeChecked();
-      expect(screen.getByTestId('radio-theme-dark')).not.toBeChecked();
+      expect(screen.getByRole('radio', { name: /light/ })).toBeChecked();
+      expect(screen.getByRole('radio', { name: /dark/ })).not.toBeChecked();
       expect(screen.getByText('Container width')).toBeInTheDocument();
       expect(screen.getByText('responsive')).toBeInTheDocument();
       expect(screen.getByText('fixed')).toBeInTheDocument();
-      expect(screen.getByTestId('radio-wrapper-width-responsive')).toBeChecked();
-      expect(screen.getByTestId('radio-wrapper-width-fixed')).not.toBeChecked();
-      expect(screen.queryByTestId('fixedWidthInput')).toBeNull();
-      expect(screen.getByText('Loading spinner')).toBeInTheDocument();
-      expect(screen.getByTestId('checkbox-loading')).toBeChecked();
+      expect(screen.getByRole('radio', { name: /responsive/ })).toBeChecked();
+      expect(screen.getByRole('radio', { name: /fixed/ })).not.toBeChecked();
+      expect(screen.getByRole('checkbox', { name: /Header/ })).not.toBeChecked();
+      expect(screen.getByRole('checkbox', { name: /Loading spinner/ })).toBeChecked();
       expect(screen.getByText('Displays loading spinner while waiting for search results.')).toBeInTheDocument();
       expect(screen.getByText('Color')).toBeInTheDocument();
       expect(screen.getByText('Color used for widgets border, header and loading spinner.')).toBeInTheDocument();
@@ -61,7 +60,7 @@ describe('WidgetsGroupModal', () => {
       );
 
       expect(screen.getByText('Header')).toBeInTheDocument();
-      expect(screen.getByTestId('checkbox-header')).not.toBeChecked();
+      expect(screen.getByRole('checkbox', { name: /Header/ })).not.toBeChecked();
       expect(screen.getByText('Displays Artifact Hub header at the top of the widget.')).toBeInTheDocument();
     });
 
@@ -70,7 +69,7 @@ describe('WidgetsGroupModal', () => {
 
       expect(screen.queryByTestId('fixedWidthInput')).toBeNull();
       const label = screen.getByText('fixed');
-      const radioFixed = screen.getByTestId('radio-wrapper-width-fixed');
+      const radioFixed = screen.getByRole('radio', { name: /fixed/ });
       expect(radioFixed).not.toBeChecked();
       userEvent.click(label);
 
@@ -86,8 +85,9 @@ describe('WidgetsGroupModal', () => {
       );
 
       userEvent.click(screen.getByText('fixed'));
-      userEvent.click(screen.getByTestId('checkbox-loading'));
-      userEvent.type(screen.getByTestId('fixedWidthInput'), '1800');
+      userEvent.click(screen.getByRole('checkbox', { name: /Loading spinner/ }));
+
+      userEvent.type(screen.getByRole('spinbutton'), '1800');
 
       waitFor(() => {
         expect(screen.getByTestId('block-content')).toHaveTextContent(

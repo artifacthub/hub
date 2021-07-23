@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -71,7 +72,7 @@ describe('MobileSettings', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
         <Router>
           <MobileSettings {...defaultProps} />
@@ -79,12 +80,12 @@ describe('MobileSettings', () => {
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('when user is signed in', () => {
     it('renders component', () => {
-      const { getByText, queryByAltText, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -92,19 +93,19 @@ describe('MobileSettings', () => {
         </AppCtx.Provider>
       );
 
-      const signedText = getByText(/Signed in as/i);
+      const signedText = screen.getByText(/Signed in as/i);
       expect(signedText).toBeInTheDocument();
       expect(signedText).toHaveTextContent('Signed in as test');
-      expect(queryByAltText('User profile')).toBeNull();
+      expect(screen.queryByAltText('User profile')).toBeNull();
 
-      expect(getByText('Starred packages')).toBeInTheDocument();
-      expect(getByText('Control Panel')).toBeInTheDocument();
-      expect(getByTestId('themeOptions')).toBeInTheDocument();
-      expect(getByText('Sign out')).toBeInTheDocument();
+      expect(screen.getByText('Starred packages')).toBeInTheDocument();
+      expect(screen.getByText('Control Panel')).toBeInTheDocument();
+      expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
+      expect(screen.getByText('Sign out')).toBeInTheDocument();
     });
 
     it('renders profile Image', () => {
-      const { getByText, getByAltText, getByTestId } = render(
+      render(
         <AppCtx.Provider
           value={{
             ctx: { ...mockCtxLoggedIn, user: { ...mockCtxLoggedIn.user, profileImageId: '123' } },
@@ -117,19 +118,19 @@ describe('MobileSettings', () => {
         </AppCtx.Provider>
       );
 
-      const signedText = getByText(/Signed in as/i);
+      const signedText = screen.getByText(/Signed in as/i);
       expect(signedText).toBeInTheDocument();
       expect(signedText).toHaveTextContent('Signed in as test');
 
-      expect(getByAltText('User profile')).toBeInTheDocument();
-      expect(getByText('Starred packages')).toBeInTheDocument();
-      expect(getByText('Control Panel')).toBeInTheDocument();
-      expect(getByTestId('themeOptions')).toBeInTheDocument();
-      expect(getByText('Sign out')).toBeInTheDocument();
+      expect(screen.getByAltText('User profile')).toBeInTheDocument();
+      expect(screen.getByText('Starred packages')).toBeInTheDocument();
+      expect(screen.getByText('Control Panel')).toBeInTheDocument();
+      expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
+      expect(screen.getByText('Sign out')).toBeInTheDocument();
     });
 
     it('loads starred packages page', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -137,14 +138,14 @@ describe('MobileSettings', () => {
         </AppCtx.Provider>
       );
 
-      const link = getByTestId('starredPackagesLink');
+      const link = screen.getByRole('link', { name: 'Starred packages' });
       expect(link).toBeInTheDocument();
-      fireEvent.click(link);
+      userEvent.click(link);
       expect(window.location.pathname).toBe('/packages/starred');
     });
 
     it('loads control panel page', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -152,16 +153,16 @@ describe('MobileSettings', () => {
         </AppCtx.Provider>
       );
 
-      const link = getByTestId('controlPanelLink');
+      const link = screen.getByRole('link', { name: 'Control Panel' });
       expect(link).toBeInTheDocument();
-      fireEvent.click(link);
+      userEvent.click(link);
       expect(window.location.pathname).toBe('/control-panel');
     });
   });
 
   describe('when user is not signed in', () => {
     it('renders component', () => {
-      const { getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -169,12 +170,12 @@ describe('MobileSettings', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByText('Sign in')).toBeInTheDocument();
-      expect(getByText('Sign up')).toBeInTheDocument();
+      expect(screen.getByText('Sign in')).toBeInTheDocument();
+      expect(screen.getByText('Sign up')).toBeInTheDocument();
     });
 
     it('calls open Sign in modal to click Sign in button', () => {
-      const { getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -182,13 +183,13 @@ describe('MobileSettings', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByText('Sign in');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Sign in');
+      userEvent.click(btn);
       expect(setOpenLogInMock).toHaveBeenCalledTimes(1);
     });
 
     it('calls open Sign up modal to click Sign up button', () => {
-      const { getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -196,15 +197,15 @@ describe('MobileSettings', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByText('Sign up');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Sign up');
+      userEvent.click(btn);
       expect(setOpenSignUpMock).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('when we are checking if user is or not signed in', () => {
     it('renders spinning', () => {
-      const { getByRole } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUndefinedUser, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -212,7 +213,7 @@ describe('MobileSettings', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByRole('status')).toBeInTheDocument();
+      expect(screen.getByRole('status')).toBeInTheDocument();
     });
   });
 });

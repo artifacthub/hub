@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import InputTypeaheadWithDropdown from './InputTypeaheadWithDropdown';
@@ -48,68 +49,57 @@ describe('InputTypeaheadWithDropdown', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<InputTypeaheadWithDropdown {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content with selectedValues', () => {
-    const { getAllByTestId, getByText } = render(<InputTypeaheadWithDropdown {...defaultProps} />);
+    render(<InputTypeaheadWithDropdown {...defaultProps} />);
 
-    expect(getAllByTestId('typeaheadSelectedItem')).toHaveLength(2);
-    expect(getByText(defaultProps.label)).toBeInTheDocument();
+    expect(screen.getAllByTestId('typeaheadSelectedItem')).toHaveLength(2);
+    expect(screen.getByText(defaultProps.label)).toBeInTheDocument();
   });
 
   it('renders proper content without selectedValues', () => {
-    const { getByText } = render(<InputTypeaheadWithDropdown {...defaultProps} selected={{}} />);
+    render(<InputTypeaheadWithDropdown {...defaultProps} selected={{}} />);
 
-    expect(getByText(defaultProps.label)).toBeInTheDocument();
-    expect(getByText('No test selected')).toBeInTheDocument();
+    expect(screen.getByText(defaultProps.label)).toBeInTheDocument();
+    expect(screen.getByText('No test selected')).toBeInTheDocument();
   });
 
   it('renders selected options in correct order', () => {
-    const { getAllByTestId } = render(<InputTypeaheadWithDropdown {...defaultProps} />);
+    render(<InputTypeaheadWithDropdown {...defaultProps} />);
 
-    const opts = getAllByTestId('typeaheadSelectedItem');
+    const opts = screen.getAllByTestId('typeaheadSelectedItem');
     expect(opts[0]).toHaveTextContent('Option key 2 (12)');
     expect(opts[1]).toHaveTextContent('Option key 1 (7)');
   });
 
   it('opens dropdown', () => {
-    const { getByTestId, getAllByTestId, getByText, getByPlaceholderText } = render(
-      <InputTypeaheadWithDropdown {...defaultProps} />
-    );
+    render(<InputTypeaheadWithDropdown {...defaultProps} />);
 
-    const btn = getByTestId('typeaheadBtn');
+    userEvent.click(screen.getByRole('button'));
 
-    fireEvent.click(btn);
-
-    expect(getByTestId('typeaheadDropdown')).toBeInTheDocument();
-    expect(getByTestId('typeaheadInput')).toBeInTheDocument();
-    expect(getByPlaceholderText('Search test')).toBeInTheDocument();
-    expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
-    expect(getByText('Clear all')).toBeInTheDocument();
-    expect(getByTestId('typeaheadClearBtn')).toBeInTheDocument();
+    expect(screen.getByRole('menu')).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search test')).toBeInTheDocument();
+    expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
+    expect(screen.getByText('Clear all')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Clear all' })).toBeInTheDocument();
   });
 
   it('opens dropdown to click over selected item', () => {
-    const { getByText, getByTestId } = render(<InputTypeaheadWithDropdown {...defaultProps} />);
+    render(<InputTypeaheadWithDropdown {...defaultProps} />);
 
-    const item = getByText('Option key 1');
+    userEvent.click(screen.getByText('Option key 1'));
 
-    fireEvent.click(item);
-
-    expect(getByTestId('typeaheadDropdown')).toBeInTheDocument();
+    expect(screen.getByRole('menu')).toBeInTheDocument();
   });
 
   it('calls Clear all', () => {
-    const { getByTestId } = render(<InputTypeaheadWithDropdown {...defaultProps} />);
+    render(<InputTypeaheadWithDropdown {...defaultProps} />);
 
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
-
-    const clearBtn = getByTestId('typeaheadClearBtn');
-
-    fireEvent.click(clearBtn);
+    userEvent.click(screen.getByRole('button', { name: /Typeahead for/ }));
+    userEvent.click(screen.getByRole('button', { name: 'Clear all' }));
 
     expect(onResetSomeFiltersMock).toHaveBeenCalledTimes(1);
     expect(onResetSomeFiltersMock).toHaveBeenCalledWith(['key1']);

@@ -1,3 +1,80 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Sidebar creates snapshot 1`] = `[Function]`;
+exports[`Sidebar creates snapshot 1`] = `
+<DocumentFragment>
+  <aside
+    aria-label="test"
+  >
+    <button
+      aria-expanded="false"
+      aria-label="Open sidebar"
+      class="font-weight-bold text-uppercase position-relative btn btn-primary"
+      type="button"
+    >
+      <div
+        class="d-flex align-items-center justify-content-center"
+      />
+    </button>
+    <div
+      aria-label="Sidebar"
+      class="sidebar sidebar left"
+      role="complementary"
+    >
+      <div
+        class="d-flex flex-column h-100"
+      >
+        <div
+          class="border-bottom p-4 pb-3"
+        >
+          <div
+            class="d-flex align-items-center justify-content-between"
+          >
+            <div>
+              title
+            </div>
+            <div>
+              <button
+                aria-label="Close sidebar"
+                class="close"
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ×
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex-grow-1 d-flex contentWrapper undefined"
+        >
+          <div
+            class="overflow-auto mh-100 w-100 py-3"
+          >
+            <span>
+              Sidebar content
+            </span>
+          </div>
+        </div>
+        <div
+          class="mt-auto p-4"
+        >
+          <div
+            class="d-flex align-items-center justify-content-between"
+          >
+            <button
+              aria-label="Close"
+              class="ml-auto btn btn-sm btn-outline-secondary"
+              type="button"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</DocumentFragment>
+`;

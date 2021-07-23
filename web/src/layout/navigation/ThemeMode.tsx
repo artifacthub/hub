@@ -32,7 +32,6 @@ const ThemeMode = (props: Props) => {
             <input
               id={`${props.device}-automatic`}
               name="automatic"
-              data-testid="radio-automatic"
               className={`custom-control-input ${styles.input}`}
               type="radio"
               value="automatic"
@@ -57,7 +56,6 @@ const ThemeMode = (props: Props) => {
             <input
               id={`${props.device}-light`}
               name="light"
-              data-testid="radio-light"
               className={`custom-control-input ${styles.input}`}
               type="radio"
               value="light"
@@ -81,7 +79,6 @@ const ThemeMode = (props: Props) => {
             <input
               id={`${props.device}-dark`}
               name="dark"
-              data-testid="radio-dark"
               className={`custom-control-input ${styles.input}`}
               type="radio"
               value="dark"

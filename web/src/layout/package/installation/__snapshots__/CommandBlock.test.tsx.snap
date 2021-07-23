@@ -30,7 +30,6 @@ exports[`CommandBlock creates snapshot 1`] = `
         <button
           aria-label="Copy command to clipboard"
           class="btn btn-sm btn-primary rounded-circle copyBtn"
-          data-testid="ctcBtn"
           type="button"
         >
           <div

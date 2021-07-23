@@ -1,3 +1,88 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InputTypeaheadWithDropdown creates snapshot 1`] = `[Function]`;
+exports[`InputTypeaheadWithDropdown creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative undefined"
+  >
+    <button
+      aria-expanded="false"
+      aria-label="Typeahead for test"
+      class="btn text-left p-0 btn-block"
+    >
+      <div
+        class="d-flex flex-row align-items-center justify-content-between"
+      >
+        <div
+          class="mt-2 mb-1 undefined"
+          data-testid="smallTitle"
+        >
+          <small
+            class="card-title text-muted text-uppercase"
+          >
+            <span
+              aria-level="5"
+              class="text-dark font-weight-bold pt-2"
+              role="heading"
+            >
+              test
+            </span>
+          </small>
+        </div>
+        <svg
+          class="mt-2 mb-1 text-dark"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
+          />
+        </svg>
+      </div>
+      <div>
+        <div
+          class="d-flex flex-row align-items-center mt-2 option"
+          data-testid="typeaheadSelectedItem"
+        >
+          <div
+            class="text-truncate"
+          >
+            Option key 2
+          </div>
+          <div>
+             
+            <small
+              class="ml-1"
+            >
+              (12)
+            </small>
+          </div>
+        </div>
+        <div
+          class="d-flex flex-row align-items-center mt-2 option"
+          data-testid="typeaheadSelectedItem"
+        >
+          <div
+            class="text-truncate"
+          >
+            Option key 1
+          </div>
+          <div>
+             
+            <small
+              class="ml-1"
+            >
+              (7)
+            </small>
+          </div>
+        </div>
+      </div>
+    </button>
+  </div>
+</DocumentFragment>
+`;

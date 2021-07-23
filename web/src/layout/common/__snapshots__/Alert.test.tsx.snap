@@ -1,3 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Alert creates snapshot 1`] = `[Function]`;
+exports[`Alert creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="alertWrapper isAlertActive"
+    data-testid="alertWrapper"
+  >
+    <div
+      class="alert alert-danger mt-3 mb-0"
+      role="alert"
+    >
+      <div
+        class="d-flex flex-row align-items-start justify-content-between"
+      >
+        <div>
+          errorMessage
+        </div>
+        <button
+          aria-label="Close alert"
+          class="close ml-3"
+          data-testid="closeAlertBtn"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

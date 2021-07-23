@@ -109,7 +109,6 @@ const UserNotificationsController: React.ElementType = () => {
               <div className="float-right">
                 <div className="d-flex flex-row align-items-start">
                   <button
-                    data-testid="disableNotificationsBtn"
                     type="button"
                     className={`btn btn-link text-dark py-0 position-relative ${styles.btn}`}
                     onClick={onChangeNotificationsPrefs}

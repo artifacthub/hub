@@ -115,7 +115,6 @@ const MemberModal = (props: Props) => {
       modalClassName={styles.modal}
       closeButton={
         <button
-          data-testid="membersFormBtn"
           className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isSending}

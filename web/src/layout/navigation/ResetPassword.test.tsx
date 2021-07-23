@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -14,35 +15,34 @@ describe('ResetPassword visibleTitle', () => {
   it('creates snapshot', () => {
     mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
 
-    const result = render(<ResetPassword visibleTitle />);
-
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<ResetPassword visibleTitle />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId, getByText } = render(<ResetPassword visibleTitle />);
+      render(<ResetPassword visibleTitle />);
 
-      expect(getByTestId('resetPasswordForm')).toBeInTheDocument();
-      expect(getByTestId('resetPwdEmailInput')).toBeInTheDocument();
-      expect(getByTestId('resetPasswordBtn')).toBeInTheDocument();
+      expect(screen.getByTestId('resetPasswordForm')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Email' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Send password reset email' })).toBeInTheDocument();
 
-      expect(getByText('Forgot Password?')).toBeInTheDocument();
+      expect(screen.getByText('Forgot Password?')).toBeInTheDocument();
       expect(
-        getByText('Please enter your email address and we will send you a password reset link.')
+        screen.getByText('Please enter your email address and we will send you a password reset link.')
       ).toBeInTheDocument();
-      expect(getByText('Send password reset email')).toBeInTheDocument();
+      expect(screen.getByText('Send password reset email')).toBeInTheDocument();
     });
 
     it('requests password reset code', async () => {
       mocked(API).requestPasswordResetCode.mockResolvedValue(null);
 
-      const { getByTestId, getByText } = render(<ResetPassword visibleTitle />);
+      render(<ResetPassword visibleTitle />);
 
-      fireEvent.change(getByTestId('resetPwdEmailInput'), { target: { value: 'test@email.com' } });
+      userEvent.type(screen.getByRole('textbox', { name: 'Email' }), 'test@email.com');
 
-      const btn = getByTestId('resetPasswordBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Send password reset email' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.requestPasswordResetCode).toHaveBeenCalledTimes(1);
@@ -51,7 +51,7 @@ describe('ResetPassword visibleTitle', () => {
 
       waitFor(() => {
         expect(
-          getByText(
+          screen.getByText(
             'We have sent a password reset link to your email, please check your inbox (and the spam folder if needed).'
           )
         ).toBeInTheDocument();
@@ -62,12 +62,12 @@ describe('ResetPassword visibleTitle', () => {
       mocked(API).requestPasswordResetCode.mockResolvedValue(null);
       const onFinishMock = jest.fn();
 
-      const { getByTestId } = render(<ResetPassword visibleTitle onFinish={onFinishMock} />);
+      render(<ResetPassword visibleTitle onFinish={onFinishMock} />);
 
-      fireEvent.change(getByTestId('resetPwdEmailInput'), { target: { value: 'test@email.com' } });
+      userEvent.type(screen.getByRole('textbox', { name: 'Email' }), 'test@email.com');
 
-      const btn = getByTestId('resetPasswordBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Send password reset email' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.requestPasswordResetCode).toHaveBeenCalledTimes(1);

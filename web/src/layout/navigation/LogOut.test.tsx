@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -30,36 +31,36 @@ describe('LogOut', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <LogOut {...defaultProps} />
       </Router>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(
+      render(
         <Router>
           <LogOut {...defaultProps} />
         </Router>
       );
 
-      expect(getByText('Sign out')).toBeInTheDocument();
-      expect(getByTestId('logOutBtn')).toBeInTheDocument();
+      expect(screen.getByText('Sign out')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Sign out' })).toBeInTheDocument();
     });
 
     it('calls logout', async () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <LogOut {...defaultProps} />
         </Router>
       );
 
-      const btn = getByTestId('logOutBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Sign out' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.logout).toBeCalledTimes(1);
@@ -68,14 +69,14 @@ describe('LogOut', () => {
     });
 
     it('calls history push to homepage when route is private', async () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <LogOut {...defaultProps} privateRoute />
         </Router>
       );
 
-      const btn = getByTestId('logOutBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Sign out' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -89,14 +90,14 @@ describe('LogOut', () => {
         message: 'custom error',
       });
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <LogOut {...defaultProps} />
         </Router>
       );
 
-      const btn = getByTestId('logOutBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Sign out' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
@@ -112,14 +113,14 @@ describe('LogOut', () => {
         kind: ErrorKind.Other,
       });
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <LogOut {...defaultProps} />
         </Router>
       );
 
-      const btn = getByTestId('logOutBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Sign out' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);

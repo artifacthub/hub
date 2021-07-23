@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -19,36 +20,36 @@ describe('RecommendedPackageCard', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <RecommendedPackageCard {...defaultProps} />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <RecommendedPackageCard {...defaultProps} />
         </Router>
       );
 
-      const pkg = getByTestId('recommended-pkg');
+      const pkg = screen.getByTestId('recommended-pkg');
       expect(pkg).toBeInTheDocument();
       expect(pkg).toHaveTextContent('Helm chartartifact-hubREPO: artifact-hub');
     });
 
     it('opens package', () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <RecommendedPackageCard {...defaultProps} />
         </Router>
       );
 
-      const pkg = getByTestId('recommended-pkg');
-      fireEvent.click(pkg);
+      const pkg = screen.getByTestId('recommended-pkg');
+      userEvent.click(pkg);
 
       expect(window.location.pathname).toBe('/packages/helm/artifact-hub/artifact-hub');
     });

@@ -137,7 +137,6 @@ const RepositoriesSection = (props: Props) => {
         <div className={`h4 pb-0 ${styles.title}`}>Repositories</div>
         <div>
           <button
-            data-testid="addOptOut"
             className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
             onClick={() => setModalStatus(true)}
             aria-label="Open opt-out modal"

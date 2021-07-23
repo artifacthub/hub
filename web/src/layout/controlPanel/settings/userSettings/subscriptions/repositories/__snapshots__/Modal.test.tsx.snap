@@ -27,9 +27,8 @@ exports[`OptOutModal creates snapshot 1`] = `
               Add opt-out entry
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -63,7 +62,6 @@ exports[`OptOutModal creates snapshot 1`] = `
                     <input
                       checked=""
                       class="custom-control-input"
-                      data-testid="radio_2"
                       id="trackingErrors"
                       name="kind"
                       required=""
@@ -109,7 +107,6 @@ exports[`OptOutModal creates snapshot 1`] = `
                   >
                     <input
                       class="custom-control-input"
-                      data-testid="radio_4"
                       id="scanningErrors"
                       name="kind"
                       required=""
@@ -206,7 +203,6 @@ exports[`OptOutModal creates snapshot 1`] = `
                           aria-label="Search repositories"
                           autocomplete="new-input"
                           class="flex-grow-1 pr-4 pl-2 pl-md-0 input"
-                          data-testid="searchRepositoriesInput"
                           name="searchRepositoriesInput"
                           spellcheck="false"
                           type="text"
@@ -230,7 +226,6 @@ exports[`OptOutModal creates snapshot 1`] = `
             <button
               aria-label="Add opt-out entry"
               class="btn btn-sm btn-outline-secondary"
-              data-testid="addOptOutModalBtn"
               disabled=""
               type="button"
             >

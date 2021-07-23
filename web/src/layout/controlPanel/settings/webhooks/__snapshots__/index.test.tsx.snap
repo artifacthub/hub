@@ -23,9 +23,8 @@ exports[`WebhooksSection creates snapshot 1`] = `
             </div>
             <div>
               <button
-                aria-label="Open form"
+                aria-label="Open webhook form"
                 class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
-                data-testid="addWebhookBtn"
               >
                 <div
                   class="d-flex flex-row align-items-center justify-content-center"

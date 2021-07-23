@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -15,6 +16,7 @@ const profile: Profile = {
   firstName: 'John',
   lastName: 'Smith',
   email: 'jsmith@email.com',
+  passwordSet: true,
 };
 
 const onAuthErrorMock = jest.fn();
@@ -30,34 +32,34 @@ describe('Update profile - user settings', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<UpdateProfile {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<UpdateProfile {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
+      render(<UpdateProfile {...defaultProps} />);
 
-      const form = getByTestId('updateProfileForm');
+      const form = screen.getByTestId('updateProfileForm');
       expect(form).toBeInTheDocument();
-      expect(getByTestId('inputFile')).toBeInTheDocument();
-      expect(getByDisplayValue(profile.alias)).toBeInTheDocument();
-      expect(getByDisplayValue(profile.email)).toBeInTheDocument();
-      expect(getByDisplayValue(profile.firstName!)).toBeInTheDocument();
-      expect(getByDisplayValue(profile.lastName!)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Profile image/)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(profile.alias)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(profile.email)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(profile.firstName!)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(profile.lastName!)).toBeInTheDocument();
     });
 
     it('calls updateUserProfile', async () => {
       mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).updateUserProfile.mockResolvedValue(null);
 
-      const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
+      render(<UpdateProfile {...defaultProps} />);
 
-      const alias = getByDisplayValue(profile.alias);
-      fireEvent.change(alias, { target: { value: 'userAlias1' } });
+      const alias = screen.getByDisplayValue(profile.alias);
+      userEvent.type(alias, '1');
 
-      const btn = getByTestId('updateProfileBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Update profile' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);
@@ -79,13 +81,13 @@ describe('Update profile - user settings', () => {
         message: 'custom error',
       });
 
-      const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
+      render(<UpdateProfile {...defaultProps} />);
 
-      const alias = getByDisplayValue(profile.alias);
-      fireEvent.change(alias, { target: { value: 'userAlias1' } });
+      const alias = screen.getByDisplayValue(profile.alias);
+      userEvent.type(alias, '1');
 
-      const btn = getByTestId('updateProfileBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Update profile' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);
@@ -104,13 +106,13 @@ describe('Update profile - user settings', () => {
         kind: ErrorKind.Unauthorized,
       });
 
-      const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
+      render(<UpdateProfile {...defaultProps} />);
 
-      const alias = getByDisplayValue(profile.alias);
-      fireEvent.change(alias, { target: { value: 'userAlias1' } });
+      const alias = screen.getByDisplayValue(profile.alias);
+      userEvent.type(alias, '1');
 
-      const btn = getByTestId('updateProfileBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Update profile' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);
@@ -125,13 +127,13 @@ describe('Update profile - user settings', () => {
         kind: ErrorKind.Other,
       });
 
-      const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
+      render(<UpdateProfile {...defaultProps} />);
 
-      const alias = getByDisplayValue(profile.alias);
-      fireEvent.change(alias, { target: { value: 'userAlias1' } });
+      const alias = screen.getByDisplayValue(profile.alias);
+      userEvent.type(alias, '1');
 
-      const btn = getByTestId('updateProfileBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Update profile' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);

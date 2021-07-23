@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import License from './License';
@@ -13,36 +13,34 @@ describe('License', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<License {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<License {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getAllByText, getByRole } = render(<License {...defaultProps} />);
+      render(<License {...defaultProps} />);
 
-      expect(getAllByText(defaultProps.license)).toHaveLength(2);
+      expect(screen.getAllByText(defaultProps.license)).toHaveLength(2);
 
-      const link = getByRole('button', { hidden: true });
+      const link = screen.getByRole('button', { hidden: true });
       expect(link).toHaveProperty('href', `https://choosealicense.com/licenses/${defaultProps.license.toLowerCase()}/`);
     });
 
     it('does not render external link when license is not on the available licenses links list', () => {
-      const { getByText, queryByRole } = render(<License license="xxx" />);
+      render(<License license="xxx" />);
 
-      expect(getByText('xxx')).toBeInTheDocument();
-      expect(queryByRole('button', { hidden: true })).toBeNull();
+      expect(screen.getByText('xxx')).toBeInTheDocument();
+      expect(screen.queryByRole('button', { hidden: true })).toBeNull();
     });
 
     it('does not render component when license is undefined', () => {
       const { container } = render(<License />);
-
       expect(container).toBeEmptyDOMElement();
     });
 
     it('does not render component when license is null', () => {
       const { container } = render(<License license={null} />);
-
       expect(container).toBeEmptyDOMElement();
     });
   });

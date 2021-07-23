@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import TektonManifestModal from './TektonManifestModal';
@@ -15,16 +16,16 @@ describe('TektonManifestModal', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<TektonManifestModal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<TektonManifestModal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders properly', () => {
-      const { getByTestId, getByText } = render(<TektonManifestModal {...defaultProps} />);
+      render(<TektonManifestModal {...defaultProps} />);
 
-      expect(getByTestId('tektonManifestBtn')).toBeInTheDocument();
-      expect(getByText('Manifest')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open Manifest' })).toBeInTheDocument();
+      expect(screen.getByText('Manifest')).toBeInTheDocument();
     });
 
     it('does not render component when manifest is undefined', () => {
@@ -33,20 +34,20 @@ describe('TektonManifestModal', () => {
     });
 
     it('opens manifest modal', () => {
-      const { queryByRole, getByText, getByTestId, getAllByText } = render(<TektonManifestModal {...defaultProps} />);
+      render(<TektonManifestModal {...defaultProps} />);
 
-      const modal = queryByRole('dialog');
+      const modal = screen.queryByRole('dialog');
       expect(modal).toBeNull();
 
-      const btn = getByTestId('tektonManifestBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Open Manifest' });
+      userEvent.click(btn);
 
       waitFor(() => {
         expect(modal).toBeInTheDocument();
-        expect(getAllByText('Manifest')).toHaveLength(2);
-        expect(getByText(/apiVersion: tekton.dev\/11abetv/g)).toBeInTheDocument();
-        expect(getByTestId('ctcBtn')).toBeInTheDocument();
-        expect(getByTestId('downloadBtn')).toBeInTheDocument();
+        expect(screen.getAllByText('Manifest')).toHaveLength(2);
+        expect(screen.getByText(/apiVersion: tekton.dev\/11abetv/g)).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
       });
     });
   });

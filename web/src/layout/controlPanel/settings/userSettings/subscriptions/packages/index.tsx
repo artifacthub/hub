@@ -134,7 +134,6 @@ const PackagesSection = (props: Props) => {
         <div className={`h4 mb-0 ${styles.title}`}>Packages</div>
         <div>
           <button
-            data-testid="addSubscriptionsBtn"
             className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
             onClick={() => setModalStatus(true)}
             aria-label="Open subscription modal"

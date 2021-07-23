@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -55,26 +56,25 @@ describe('Organization Form - organizations section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <OrganizationForm {...defaultProps} />
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId } = render(<OrganizationForm {...defaultProps} />);
+      render(<OrganizationForm {...defaultProps} />);
 
-      const form = getByTestId('organizationForm');
-      expect(form).toBeInTheDocument();
-      expect(getByTestId('inputFile')).toBeInTheDocument();
-      expect(getByTestId('nameInput')).toBeInTheDocument();
-      expect(getByTestId('displayNameInput')).toBeInTheDocument();
-      expect(getByTestId('homeUrlInput')).toBeInTheDocument();
-      expect(getByTestId('descriptionTextarea')).toBeInTheDocument();
+      expect(screen.getByTestId('organizationForm')).toBeInTheDocument();
+      expect(screen.getByLabelText(/Logo/)).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Name/ })).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Display name' })).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Home URL' })).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Description' })).toBeInTheDocument();
     });
 
     describe('Add organization', () => {
@@ -82,16 +82,16 @@ describe('Organization Form - organizations section', () => {
         mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addOrganization.mockResolvedValue(null);
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...defaultProps} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('homeUrlInput'), { target: { value: 'http://test.org' } });
-        fireEvent.submit(getByTestId('organizationForm'));
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
+        fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
           expect(API.addOrganization).toHaveBeenCalledTimes(1);
@@ -112,24 +112,24 @@ describe('Organization Form - organizations section', () => {
         mocked(API).addOrganization.mockRejectedValue({
           kind: ErrorKind.Other,
         });
-        const { getByTestId, getByText } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...defaultProps} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name2' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('homeUrlInput'), { target: { value: 'http://test.org' } });
-        fireEvent.submit(getByTestId('organizationForm'));
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
+        fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
           expect(API.addOrganization).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(getByText('An error occurred adding the organization, please try again later.')).toBeInTheDocument();
-        });
+        expect(
+          await screen.findByText('An error occurred adding the organization, please try again later.')
+        ).toBeInTheDocument();
       });
 
       it('displays custom Api error', async () => {
@@ -139,24 +139,22 @@ describe('Organization Form - organizations section', () => {
           kind: ErrorKind.Other,
           message: 'custom error',
         });
-        const { getByTestId, getByText } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...defaultProps} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name2' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('homeUrlInput'), { target: { value: 'http://test.org' } });
-        fireEvent.submit(getByTestId('organizationForm'));
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
+        fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
           expect(API.addOrganization).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(getByText('An error occurred adding the organization: custom error')).toBeInTheDocument();
-        });
+        expect(await screen.findByText('An error occurred adding the organization: custom error')).toBeInTheDocument();
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -165,16 +163,16 @@ describe('Organization Form - organizations section', () => {
         mocked(API).addOrganization.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...defaultProps} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name2' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('homeUrlInput'), { target: { value: 'http://test.org' } });
-        fireEvent.submit(getByTestId('organizationForm'));
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
+        fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
           expect(API.addOrganization).toHaveBeenCalledTimes(1);
@@ -195,14 +193,16 @@ describe('Organization Form - organizations section', () => {
           organization: orgMock,
         };
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...props} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.submit(getByTestId('organizationForm'));
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
           expect(API.updateOrganization).toHaveBeenCalledTimes(1);
@@ -222,22 +222,24 @@ describe('Organization Form - organizations section', () => {
         mocked(API).updateOrganization.mockRejectedValue({
           kind: ErrorKind.Other,
         });
-        const { getByTestId, getByText } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...defaultProps} organization={orgMock} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.submit(getByTestId('organizationForm'));
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
           expect(API.updateOrganization).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(getByText('An error occurred updating the organization, please try again later.')).toBeInTheDocument();
-        });
+        expect(
+          await screen.findByText('An error occurred updating the organization, please try again later.')
+        ).toBeInTheDocument();
       });
 
       it('displays custom message error', async () => {
@@ -247,22 +249,24 @@ describe('Organization Form - organizations section', () => {
           kind: ErrorKind.Other,
           message: 'message error',
         });
-        const { getByTestId, getByText } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...defaultProps} organization={orgMock} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.submit(getByTestId('organizationForm'));
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
           expect(API.updateOrganization).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(getByText('An error occurred updating the organization: message error')).toBeInTheDocument();
-        });
+        expect(
+          await screen.findByText('An error occurred updating the organization: message error')
+        ).toBeInTheDocument();
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -270,14 +274,16 @@ describe('Organization Form - organizations section', () => {
         mocked(API).updateOrganization.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...defaultProps} organization={orgMock} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.submit(getByTestId('organizationForm'));
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
           expect(API.updateOrganization).toHaveBeenCalledTimes(1);

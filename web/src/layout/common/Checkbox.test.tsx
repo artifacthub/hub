@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Checkbox from './Checkbox';
@@ -21,15 +22,15 @@ describe('Checkbox', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<Checkbox {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders input and label', () => {
-    const { getByTestId, getByLabelText } = render(<Checkbox {...defaultProps} />);
-    const checkbox: HTMLInputElement = getByTestId('checkbox') as HTMLInputElement;
+    render(<Checkbox {...defaultProps} />);
+    const checkbox = screen.getByRole('checkbox');
     expect(checkbox).toBeInTheDocument();
     expect(checkbox).not.toBeChecked();
-    expect(getByLabelText(defaultProps.label)).toBeInTheDocument();
+    expect(screen.getByLabelText(defaultProps.label)).toBeInTheDocument();
   });
 
   it('renders checked input with legend', () => {
@@ -38,19 +39,18 @@ describe('Checkbox', () => {
       legend: 1,
       checked: true,
     };
-    const { getByTestId } = render(<Checkbox {...props} />);
-    const checkbox: HTMLInputElement = getByTestId('checkbox') as HTMLInputElement;
+    render(<Checkbox {...props} />);
+    const checkbox = screen.getByRole('checkbox');
     expect(checkbox).toBeInTheDocument();
     expect(checkbox).toBeChecked();
-    const label = getByTestId('checkboxLabel');
+    const label = screen.getByTestId('checkboxLabel');
     expect(label).toBeInTheDocument();
     expect(label).toHaveTextContent(`${props.label}(${props.legend})`);
   });
 
   it('calls onChange to click checkbox label', () => {
-    const { getByTestId } = render(<Checkbox {...defaultProps} />);
-    const label = getByTestId('checkboxLabel');
-    fireEvent.click(label);
+    render(<Checkbox {...defaultProps} />);
+    userEvent.click(screen.getByTestId('checkboxLabel'));
     expect(onChangeMock).toHaveBeenCalledTimes(1);
   });
 });

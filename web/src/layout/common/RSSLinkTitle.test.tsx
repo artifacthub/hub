@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import RSSLinkTitle from './RSSLinkTitle';
@@ -20,14 +20,14 @@ const defaultProps = {
 describe('RSSLinkTitle', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<RSSLinkTitle {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getByRole, getByText } = render(<RSSLinkTitle {...defaultProps} />);
-    expect(getByText(defaultProps.title)).toBeInTheDocument();
-    expect(getByText('RSS')).toBeInTheDocument();
-    const link = getByRole('button');
+    render(<RSSLinkTitle {...defaultProps} />);
+    expect(screen.getByText(defaultProps.title)).toBeInTheDocument();
+    expect(screen.getByText('RSS')).toBeInTheDocument();
+    const link = screen.getByRole('button');
     expect(link).toBeInTheDocument();
     expect(link).toHaveProperty('href', 'http://localhost/api/v1/packages/helm/stable/test/feed/rss');
   });

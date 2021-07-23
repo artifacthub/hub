@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -20,24 +20,24 @@ describe('SearchTip', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <SearchTip />
       </Router>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(
+      render(
         <Router>
           <SearchTip />
         </Router>
       );
 
-      expect(getByText(/to refine your search/i)).toBeInTheDocument();
+      expect(screen.getByText(/to refine your search/i)).toBeInTheDocument();
     });
   });
 });

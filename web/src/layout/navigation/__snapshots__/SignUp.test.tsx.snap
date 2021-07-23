@@ -27,9 +27,8 @@ exports[`SignUp creates snapshot 1`] = `
               Sign up
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -53,7 +52,6 @@ exports[`SignUp creates snapshot 1`] = `
               <button
                 aria-label="Open sign up form"
                 class="btn btn-outline-secondary btn-block"
-                data-testid="signUpBtn"
                 type="button"
               >
                 <div
@@ -171,7 +169,6 @@ exports[`SignUp creates snapshot 1`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               type="button"
             >
               <div

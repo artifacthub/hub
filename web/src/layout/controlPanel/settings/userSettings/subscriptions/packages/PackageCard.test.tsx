@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -36,30 +37,30 @@ describe('PackageCard', () => {
         <PackageCard {...defaultProps} package={mockPackage} />
       </Router>
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Image', () => {
     it('renders package logo', () => {
       const mockPackage = getMockPackage('2');
-      const { queryByAltText } = render(
+      render(
         <Router>
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const image = queryByAltText(`Logo ${mockPackage.name}`);
+      const image = screen.queryByAltText(`Logo ${mockPackage.name}`);
       expect(image).toBeInTheDocument();
     });
 
     it('renders placeholder when imageId is null', () => {
       const mockPackage = getMockPackage('3');
 
-      const { queryByAltText } = render(
+      render(
         <Router>
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const image = queryByAltText(`Logo ${mockPackage.name}`);
+      const image = screen.queryByAltText(`Logo ${mockPackage.name}`);
       expect(image).toBeInTheDocument();
       expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_pkg_helm.png');
     });
@@ -69,24 +70,24 @@ describe('PackageCard', () => {
     it('renders display name', () => {
       const mockPackage = getMockPackage('4');
 
-      const { queryByText } = render(
+      render(
         <Router>
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const title = queryByText(mockPackage.displayName!);
+      const title = screen.queryByText(mockPackage.displayName!);
       expect(title).toBeInTheDocument();
     });
 
     it('renders name when display name is null', () => {
       const mockPackage = getMockPackage('5');
 
-      const { queryByText } = render(
+      render(
         <Router>
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const title = queryByText(mockPackage.name!);
+      const title = screen.queryByText(mockPackage.name!);
       expect(title).toBeInTheDocument();
     });
   });
@@ -95,12 +96,12 @@ describe('PackageCard', () => {
     it('detail page link', () => {
       const mockPackage = getMockPackage('9');
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const link = getByTestId('packageCardLink');
+      const link = screen.getByTestId('packageCardLink');
       expect(link).toBeInTheDocument();
       expect(link).toHaveProperty('href', 'http://localhost/packages/helm/stable/airflow');
     });
@@ -110,14 +111,14 @@ describe('PackageCard', () => {
     it('renders active New releases subscription', () => {
       const mockPackage = getMockPackage('10');
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const btn = getByTestId('newReleaseMobileBtn');
+      const btn = screen.getByRole('checkbox', { name: 'New releases' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
       expect(mockChangeSubscription).toHaveBeenCalledTimes(1);
       expect(mockChangeSubscription).toHaveBeenCalledWith('0acb228c-17ab-4e50-85e9-ffc7102ea423', 0, true, 'airflow');
     });

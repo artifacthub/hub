@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import SubNavbar from './SubNavbar';
@@ -13,17 +13,17 @@ describe('SubNavbar', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SubNavbar {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SubNavbar {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId, getByRole } = render(<SubNavbar {...defaultProps} />);
+      render(<SubNavbar {...defaultProps} />);
 
-      expect(getByRole('navigation')).toBeInTheDocument();
-      expect(getByTestId('children')).toBeInTheDocument();
-      expect(getByText('Test')).toBeInTheDocument();
+      expect(screen.getByRole('navigation')).toBeInTheDocument();
+      expect(screen.getByTestId('children')).toBeInTheDocument();
+      expect(screen.getByText('Test')).toBeInTheDocument();
     });
   });
 });

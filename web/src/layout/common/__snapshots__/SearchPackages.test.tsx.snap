@@ -12,9 +12,9 @@ exports[`SearchPackages creates snapshot 1`] = `
         class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
       >
         <input
+          aria-label="Search packages"
           autocomplete="new-input"
           class="flex-grow-1 px-3 input"
-          data-testid="searchPackagesInput"
           name="searchInput"
           spellcheck="false"
           type="text"

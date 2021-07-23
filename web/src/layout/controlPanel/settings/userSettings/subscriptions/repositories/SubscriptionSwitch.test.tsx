@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { EventKind } from '../../../../../../types';
@@ -43,37 +44,37 @@ describe('SubscriptionSwitch', () => {
   });
 
   it('renders correctly', () => {
-    const result = render(<SubscriptionSwitch {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SubscriptionSwitch {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders inactive switch', () => {
-      const { getByTestId } = render(<SubscriptionSwitch {...defaultProps} />);
+      render(<SubscriptionSwitch {...defaultProps} />);
 
-      const checkbox = getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`);
+      const checkbox = screen.getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`);
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).not.toBeChecked();
     });
 
     it('renders active switch', () => {
-      const { getByTestId } = render(<SubscriptionSwitch {...defaultProps} optOutItem={optOutItem} />);
+      render(<SubscriptionSwitch {...defaultProps} optOutItem={optOutItem} />);
 
-      const checkbox = getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`);
+      const checkbox = screen.getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`);
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
     });
 
     it('calls change subscription', () => {
-      const { getByTestId, getByRole } = render(<SubscriptionSwitch {...defaultProps} />);
+      render(<SubscriptionSwitch {...defaultProps} />);
 
-      const label = getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_label`);
+      const label = screen.getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_label`);
       expect(label).toBeInTheDocument();
-      fireEvent.click(label);
+      userEvent.click(label);
 
       waitFor(() => {
-        expect(getByRole('status')).toBeInTheDocument();
-        expect(getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`)).toBeEnabled();
+        expect(screen.getByRole('status')).toBeInTheDocument();
+        expect(screen.getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`)).toBeEnabled();
         expect(changeSubscriptionMock).toHaveBeenCalledTimes(1);
       });
     });

@@ -80,7 +80,6 @@ const InstallationModal = (props: Props) => {
       <ElementWithTooltip
         element={
           <button
-            data-testid="openModalBtn"
             type="button"
             className={classnames(
               'btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap',
@@ -117,7 +116,7 @@ const InstallationModal = (props: Props) => {
           {installMethods.methods.length > 0 && (
             <>
               {props.package && props.package.prerelease && (
-                <div className="alert alert-warning mt-1 mb-4" data-testid="prerelease-alert">
+                <div className="alert alert-warning mt-1 mb-4" role="alert">
                   This package version is a <span className="font-weight-bold">pre-release</span> and it is not ready
                   for production use.
                 </div>

@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import GuestDropdown from './GuestDropdown';
@@ -9,25 +10,25 @@ describe('GuestDropdown', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<GuestDropdown />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<GuestDropdown />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', () => {
-    const { getByTestId } = render(<GuestDropdown />);
+    render(<GuestDropdown />);
 
-    expect(getByTestId('settingsIcon')).toBeInTheDocument();
-    expect(getByTestId('guestDropdownBtn')).toBeInTheDocument();
-    expect(getByTestId('guestDropdown')).toBeInTheDocument();
+    expect(screen.getByTestId('settingsIcon')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Guest dropdown button' })).toBeInTheDocument();
+    expect(screen.getByRole('menu')).toBeInTheDocument();
   });
 
   it('displays dropdown', () => {
-    const { getByTestId } = render(<GuestDropdown />);
+    render(<GuestDropdown />);
 
-    const dropdown = getByTestId('guestDropdown');
+    const dropdown = screen.getByRole('menu');
     expect(dropdown).not.toHaveClass('show');
-    const btn = getByTestId('guestDropdownBtn');
-    fireEvent.click(btn);
+    const btn = screen.getByRole('button', { name: 'Guest dropdown button' });
+    userEvent.click(btn);
     expect(dropdown).toHaveClass('show');
   });
 });

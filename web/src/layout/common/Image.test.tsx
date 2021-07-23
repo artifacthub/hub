@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { RepositoryKind } from '../../types';
@@ -14,12 +14,12 @@ const defaultProps = {
 describe('Image', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<Image {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getByAltText } = render(<Image {...defaultProps} />);
-    const image = getByAltText(defaultProps.alt);
+    render(<Image {...defaultProps} />);
+    const image = screen.getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
     expect(image).toHaveProperty('src', `http://localhost/image/${defaultProps.imageId}`);
     expect(image).toHaveProperty(
@@ -33,15 +33,15 @@ describe('Image', () => {
       ...defaultProps,
       imageId: undefined,
     };
-    const { getByAltText } = render(<Image {...props} />);
-    const image = getByAltText(defaultProps.alt);
+    render(<Image {...props} />);
+    const image = screen.getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
     expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
   });
 
   it('renders placeholder on error', () => {
-    const { getByAltText } = render(<Image {...defaultProps} />);
-    const image = getByAltText(defaultProps.alt);
+    render(<Image {...defaultProps} />);
+    const image = screen.getByAltText(defaultProps.alt);
     expect(image).toHaveProperty('src', `http://localhost/image/${defaultProps.imageId}`);
 
     fireEvent.error(image);
@@ -57,8 +57,8 @@ describe('Image', () => {
       imageId: undefined,
       kind: undefined,
     };
-    const { getByAltText } = render(<Image {...props} />);
-    const image = getByAltText(defaultProps.alt);
+    render(<Image {...props} />);
+    const image = screen.getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
     expect(image).toHaveProperty('src', 'http://localhost/static/media/package_placeholder.svg');
   });

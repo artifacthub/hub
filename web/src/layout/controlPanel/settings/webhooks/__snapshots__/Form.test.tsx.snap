@@ -1,3 +1,1144 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WebhookForm creates snapshot 1`] = `[Function]`;
+exports[`WebhookForm creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="mb-4 pb-2 border-bottom"
+    >
+      <button
+        aria-label="Back to webhooks list"
+        class="btn btn-link text-dark btn-sm pl-0 d-flex align-items-center link"
+      >
+        <svg
+          class="mr-2"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M217.9 256L345 129c9.4-9.4 9.4-24.6 0-33.9-9.4-9.4-24.6-9.3-34 0L167 239c-9.1 9.1-9.3 23.7-.7 33.1L310.9 417c4.7 4.7 10.9 7 17 7s12.3-2.3 17-7c9.4-9.4 9.4-24.6 0-33.9L217.9 256z"
+          />
+        </svg>
+        Back to webhooks list
+      </button>
+    </div>
+    <div
+      class="mt-2"
+    >
+      <form
+        autocomplete="off"
+        class="w-100 needs-validation"
+        data-testid="webhookForm"
+        novalidate=""
+      >
+        <div
+          class="form-row"
+        >
+          <div
+            class="col-md-8"
+          >
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                class="font-weight-bold label"
+                for="name"
+              >
+                <span
+                  class="font-weight-bold"
+                >
+                  Name
+                </span>
+                <small
+                  class="ml-1 font-italic"
+                >
+                  (Required)
+                </small>
+              </label>
+              <input
+                class="form-control"
+                data-testid="nameInput"
+                id="name"
+                name="name"
+                required=""
+                spellcheck="false"
+                type="text"
+                value="Webhook name"
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              >
+                This field is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-row"
+        >
+          <div
+            class="col-md-8"
+          >
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                class="font-weight-bold label"
+                for="description"
+              >
+                <span
+                  class="font-weight-bold"
+                >
+                  Description
+                </span>
+              </label>
+              <input
+                class="form-control"
+                data-testid="descriptionInput"
+                id="description"
+                name="description"
+                spellcheck="false"
+                type="text"
+                value="this is a test description"
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <label
+            class="font-weight-bold label"
+            for="url"
+          >
+            Url
+            <small
+              class="ml-1 font-italic"
+            >
+              (Required)
+            </small>
+          </label>
+          <div>
+            <small
+              class="form-text text-muted mb-2 mt-0"
+            >
+              A POST request will be sent to the provided URL when any of the events selected in the triggers section happens.
+            </small>
+          </div>
+          <div
+            class="form-row"
+          >
+            <div
+              class="col-md-8"
+            >
+              <div
+                class="form-group mb-4 position-relative undefined"
+              >
+                <input
+                  class="form-control"
+                  data-testid="urlInput"
+                  id="url"
+                  name="url"
+                  required=""
+                  spellcheck="false"
+                  type="url"
+                  value="http://jksdhfkjfds"
+                />
+                <div
+                  class="invalid-feedback mt-0 inputFeedback"
+                >
+                  This field is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label
+            class="font-weight-bold label"
+            for="secret"
+          >
+            Secret
+          </label>
+          <div>
+            <small
+              class="form-text text-muted mb-2 mt-0"
+            >
+              If you provide a secret, we'll send it to you in the 
+              <span
+                class="font-weight-bold"
+              >
+                X-ArtifactHub-Secret
+              </span>
+               header on each request. This will allow you to validate that the request comes from ArtifactHub.
+            </small>
+          </div>
+          <div
+            class="form-row"
+          >
+            <div
+              class="col-md-8"
+            >
+              <div
+                class="form-group mb-4 position-relative undefined"
+              >
+                <input
+                  class="form-control"
+                  data-testid="secretInput"
+                  id="secret"
+                  name="secret"
+                  spellcheck="false"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="invalid-feedback mt-0 inputFeedback"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-3"
+        >
+          <div
+            class="custom-control custom-switch pl-0"
+          >
+            <input
+              checked=""
+              class="custom-control-input checkbox"
+              id="active"
+              type="checkbox"
+              value="true"
+            />
+            <label
+              class="custom-control-label font-weight-bold label customControlRightLabel"
+              for="active"
+            >
+              Active
+            </label>
+          </div>
+          <small
+            class="form-text text-muted mt-2"
+          >
+            This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.
+          </small>
+        </div>
+        <div
+          class="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom"
+        >
+          Triggers
+        </div>
+        <div
+          class="my-4"
+        >
+          <label
+            class="font-weight-bold label"
+            for="kind"
+            id="events-group"
+          >
+            Events
+          </label>
+          <div
+            aria-labelledby="events-group"
+            role="group"
+          >
+            <div
+              class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+            >
+              <input
+                aria-checked="true"
+                checked=""
+                class="custom-control-input input"
+                id="all-eventKind-0"
+                name="eventKind"
+                tabindex="0"
+                type="checkbox"
+                value="0"
+              />
+              <label
+                class="custom-control-label label undefined"
+                data-testid="checkboxLabel"
+                for="all-eventKind-0"
+              >
+                <div
+                  class="d-flex align-items-baseline mw-100"
+                >
+                  <span
+                    class="d-inline-block text-truncate"
+                  >
+                    New releases
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+            >
+              <input
+                aria-checked="false"
+                class="custom-control-input input"
+                id="all-eventKind-1"
+                name="eventKind"
+                tabindex="0"
+                type="checkbox"
+                value="1"
+              />
+              <label
+                class="custom-control-label label undefined"
+                data-testid="checkboxLabel"
+                for="all-eventKind-1"
+              >
+                <div
+                  class="d-flex align-items-baseline mw-100"
+                >
+                  <span
+                    class="d-inline-block text-truncate"
+                  >
+                    Security alerts
+                  </span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-4"
+        >
+          <label
+            class="font-weight-bold label"
+            for="packages"
+            id="webhook-pkg-list"
+          >
+            Packages
+            <small
+              class="ml-1 font-italic"
+            >
+              (Required)
+            </small>
+          </label>
+          <div>
+            <small
+              class="form-text text-muted mb-4 mt-0"
+            >
+              When the events selected happen for any of the packages you've chosen, a notification will be triggered and the configured url will be called. At least one package must be selected.
+            </small>
+          </div>
+          <div
+            class="mb-3 row"
+          >
+            <div
+              class="col-12 col-xxl-8"
+            >
+              <div
+                class="position-relative"
+              >
+                <div
+                  class="d-flex flex-row"
+                >
+                  <div
+                    class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
+                  >
+                    <input
+                      aria-label="Search packages"
+                      autocomplete="new-input"
+                      class="flex-grow-1 px-3 input"
+                      name="searchInput"
+                      spellcheck="false"
+                      type="text"
+                    />
+                  </div>
+                  <button
+                    aria-expanded="false"
+                    aria-label="Search by "
+                    class="btn btn-outline-secondary ml-3 text-center p-0 searchBtn"
+                    data-testid="searchIconBtn"
+                    disabled=""
+                    type="button"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-12 col-xxl-8"
+            >
+              <table
+                class="table table-hover table-sm table"
+              >
+                <thead>
+                  <tr
+                    class="tableTitle"
+                  >
+                    <th
+                      class="align-middle d-none d-sm-table-cell fitCell"
+                      scope="col"
+                    />
+                    <th
+                      class="align-middle w-50"
+                      scope="col"
+                    >
+                      Package
+                    </th>
+                    <th
+                      class="align-middle w-50"
+                      scope="col"
+                    >
+                      Publisher
+                    </th>
+                    <th
+                      class="align-middle fitCell"
+                      scope="col"
+                    />
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    data-testid="packageTableCell"
+                  >
+                    <td
+                      class="align-middle text-center d-none d-sm-table-cell"
+                    >
+                      <img
+                        alt="Icon"
+                        class="icon mx-2 iconLight"
+                        src="/static/media/helm-chart.svg"
+                      />
+                      <img
+                        alt="Icon"
+                        class="icon mx-2 iconDark"
+                        src="/static/media/helm-chart-light.svg"
+                      />
+                    </td>
+                    <td
+                      class="align-middle"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                        >
+                          <img
+                            alt="envoy"
+                            aria-hidden="true"
+                            class="image"
+                            src="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc"
+                            srcset="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@1x 1x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@2x 2x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@3x 3x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="ml-2 text-dark"
+                        >
+                          envoy
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="align-middle position-relative text-dark"
+                    >
+                      Helm
+                      <small
+                        class="ml-2"
+                      >
+                        (
+                        <span
+                          class="text-uppercase text-muted d-none d-sm-inline legend"
+                        >
+                          Repo: 
+                        </span>
+                        <span
+                          class="text-dark"
+                        >
+                          Stable
+                        </span>
+                        )
+                      </small>
+                    </td>
+                    <td
+                      class="align-middle"
+                    >
+                      <button
+                        aria-label="Delete package from webhook"
+                        class="close text-danger mx-2 closeBtn"
+                        type="button"
+                      >
+                        <span
+                          aria-hidden="true"
+                        >
+                          ×
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div
+          class="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom"
+        >
+          Payload
+        </div>
+        <div
+          class="d-flex flex-row mb-3"
+        >
+          <div
+            class="custom-control custom-radio mr-4"
+          >
+            <input
+              class="custom-control-input"
+              id="payload_0"
+              name="payloadKind"
+              type="radio"
+              value="defaultPayload"
+            />
+            <label
+              class="custom-control-label"
+              for="payload_0"
+            >
+              Default payload
+            </label>
+          </div>
+          <div
+            class="custom-control custom-radio mr-4"
+          >
+            <input
+              checked=""
+              class="custom-control-input"
+              id="payload_1"
+              name="payloadKind"
+              type="radio"
+              value="customPayload"
+            />
+            <label
+              class="custom-control-label"
+              for="payload_1"
+            >
+              Custom payload
+            </label>
+          </div>
+        </div>
+        <small
+          class="form-text text-muted mb-3"
+        >
+          It's possible to customize the payload used to notify your service. This may help integrating ArtifactHub webhooks with other services without requiring you to write any code. To integrate ArtifactHub webhooks with Slack, for example, you could use a custom payload using the following template:
+          <div
+            class="my-3 w-100"
+          >
+            <div
+              aria-atomic="true"
+              aria-live="off"
+              class="alert alert-light text-nowrap codeWrapper"
+              role="alert"
+            >
+              {
+              <br />
+              <span
+                class="ml-3"
+              >
+                "text": "Package 
+                <span
+                  class="font-weight-bold"
+                >
+                  {{ .Package.Name }}
+                </span>
+                 version 
+                <span
+                  class="font-weight-bold"
+                >
+                  {{ .Package.Version }}
+                </span>
+                 released! 
+                <span
+                  class="font-weight-bold"
+                >
+                  {{ .Package.URL }}
+                </span>
+                "
+                <br />
+                }
+              </span>
+            </div>
+          </div>
+        </small>
+        <div
+          class="form-row"
+        >
+          <div
+            class="col-md-8"
+          >
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                class="font-weight-bold label"
+                for="contentType"
+              >
+                <span
+                  class="font-weight-bold"
+                >
+                  Request Content-Type
+                </span>
+              </label>
+              <input
+                class="form-control"
+                data-testid="contentTypeInput"
+                id="contentType"
+                name="contentType"
+                placeholder="application/json"
+                required=""
+                spellcheck="false"
+                type="text"
+                value="application/json"
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              >
+                This field is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group mb-4"
+        >
+          <label
+            class="font-weight-bold label"
+            for="template"
+          >
+            Template
+          </label>
+          <div>
+            <small
+              class="form-text text-muted mb-4 mt-0"
+            >
+              Custom payloads are generated using 
+              <a
+                aria-label="Open Go templates documentation"
+                class="link font-weight-bold text-dark"
+                href="https://golang.org/pkg/text/template/"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                Go templates
+              </a>
+              . Below you will find a list of the variables available for use in your template.
+            </small>
+          </div>
+          <div
+            class="form-row"
+          >
+            <div
+              class="col-xxl-8"
+            >
+              <textarea
+                class="form-control textarea"
+                id="template"
+                name="template"
+                required=""
+                rows="13"
+                spellcheck="false"
+                wrap="off"
+              >
+                {
+    "event": {
+        "id": "{{ .Event.ID }}",
+        "kind": {{ .Event.Kind }}
+    },
+    "package": {
+        "kind": {{ .Package.Kind }},
+        "name": "{{ .Package.Name }}",
+        "version": "{{ .Package.Version }}",
+        "publisher": "{{ .Package.Publisher }}",
+        "url": "{{ .Package.URL }}"
+    }
+}
+              </textarea>
+              <div
+                class="invalid-feedback mt-0"
+              >
+                This field is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-3"
+        >
+          <label
+            class="font-weight-bold label"
+            for="template"
+          >
+            Variables reference
+          </label>
+          <div
+            class="form-row"
+          >
+            <div
+              class="col-xxl-8"
+            >
+              <small
+                class="form-text text-muted"
+              >
+                <table
+                  class="table table-sm variablesTable"
+                >
+                  <tbody>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .BaseURL }}
+                        </span>
+                      </th>
+                      <td>
+                        Artifact Hub deployment base url.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Event.ID }}
+                        </span>
+                      </th>
+                      <td>
+                        Id of the event triggering the notification.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Event.Kind }}
+                        </span>
+                      </th>
+                      <td>
+                        Kind of the event triggering notification. Possible values are 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          package.new-release
+                        </span>
+                         and 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          package.security-alert
+                        </span>
+                        .
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Name }}
+                        </span>
+                      </th>
+                      <td>
+                        Name of the package.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Version }}
+                        </span>
+                      </th>
+                      <td>
+                        Version of the new release.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.URL }}
+                        </span>
+                      </th>
+                      <td>
+                        ArtifactHub URL of the package.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Changes }}
+                        </span>
+                      </th>
+                      <td>
+                        List of changes this package version introduces.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Changes[i].Kind }}
+                        </span>
+                      </th>
+                      <td>
+                        Kind of the change. Possible values are 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          added
+                        </span>
+                        , 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          changed
+                        </span>
+                        , 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          deprecated
+                        </span>
+                        , 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          removed
+                        </span>
+                        , 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          fixed
+                        </span>
+                         and 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          security
+                        </span>
+                        . When the change kind is not provided, the value will be empty.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Changes[i].Description }}
+                        </span>
+                      </th>
+                      <td>
+                        Brief text explaining the change.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Changes[i].Links }}
+                        </span>
+                      </th>
+                      <td>
+                        List of links related to the change.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Changes[i].Links[i].Name }}
+                        </span>
+                      </th>
+                      <td>
+                        Name of the link.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Changes[i].Links[i].URL }}
+                        </span>
+                      </th>
+                      <td>
+                        Url of the link.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.ContainsSecurityUpdates }}
+                        </span>
+                      </th>
+                      <td>
+                        Boolean flag that indicates whether this package contains security updates or not.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Prerelease }}
+                        </span>
+                      </th>
+                      <td>
+                        Boolean flag that indicates whether this package version is a pre-release or not.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Repository.Kind }}
+                        </span>
+                      </th>
+                      <td>
+                        Kind of the repository associated with the notification. Possible values are 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          falco
+                        </span>
+                        , 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          helm
+                        </span>
+                        , 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          olm
+                        </span>
+                         and 
+                        <span
+                          class="font-weight-bold"
+                        >
+                          opa
+                        </span>
+                        .
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Repository.Name }}
+                        </span>
+                      </th>
+                      <td>
+                        Name of the repository.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        <span
+                          class="text-nowrap"
+                        >
+                          {{ .Package.Repository.Publisher }}
+                        </span>
+                      </th>
+                      <td>
+                        Publisher of the repository. If the owner is a user it'll be the user alias. If it's an organization, it'll be the organization name.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </small>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-4 mt-md-5 btnWrapper"
+        >
+          <div
+            class="d-flex flex-row justify-content-between"
+          >
+            <div
+              class="d-flex flex-row align-items-center mr-3"
+            >
+              <button
+                aria-label="Test webhook"
+                class="btn btn-sm btn-success"
+                type="button"
+              >
+                <div
+                  class="d-flex flex-row align-items-center text-uppercase"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g>
+                      <path
+                        d="M0 0H24V24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M17 2v2h-1v14c0 2.21-1.79 4-4 4s-4-1.79-4-4V4H7V2h10zm-4 13c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-2-3c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm3-8h-4v4h4V4z"
+                      />
+                    </g>
+                  </svg>
+                   
+                  <div>
+                    Test 
+                    <span
+                      class="d-none d-sm-inline-block"
+                    >
+                      webhook
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div
+              class="ml-auto"
+            >
+              <button
+                aria-label="Cancel"
+                class="btn btn-sm btn-outline-secondary mr-3"
+                type="button"
+              >
+                <div
+                  class="d-flex flex-row align-items-center text-uppercase"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                  <div>
+                    Cancel
+                  </div>
+                </div>
+              </button>
+              <button
+                aria-label="Add webhook"
+                class="btn btn-sm btn-outline-secondary"
+                type="button"
+              >
+                <div
+                  class="d-flex flex-row align-items-center text-uppercase"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                    />
+                  </svg>
+                  <div>
+                    Save
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div />
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;

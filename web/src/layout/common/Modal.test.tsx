@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Modal from './Modal';
@@ -19,50 +20,50 @@ const defaultProps = {
 describe('Modal', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<Modal {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
-    expect(getByTestId('closeModalBtn')).toBeInTheDocument();
-    expect(getByText('children')).toBeInTheDocument();
-    expect(getByText('title')).toBeInTheDocument();
-    expect(getByTestId('modalBackdrop')).toBeInTheDocument();
-    expect(getByTestId('closeModalFooterBtn')).toBeInTheDocument();
+    render(<Modal {...defaultProps} />);
+    expect(screen.getByRole('button', { name: 'Close modal' })).toBeInTheDocument();
+    expect(screen.getByText('children')).toBeInTheDocument();
+    expect(screen.getByText('title')).toBeInTheDocument();
+    expect(screen.getByTestId('modalBackdrop')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
   });
 
   it('calls onClose to click close button', () => {
-    const { getByTestId, getByRole } = render(<Modal {...defaultProps} />);
-    expect(getByRole('dialog')).toHaveClass('d-block');
+    render(<Modal {...defaultProps} />);
+    expect(screen.getByRole('dialog')).toHaveClass('d-block');
 
-    fireEvent.click(getByTestId('closeModalBtn'));
+    userEvent.click(screen.getByRole('button', { name: 'Close modal' }));
     expect(onCloseMock).toHaveBeenCalledTimes(1);
 
-    expect(getByRole('dialog')).not.toHaveClass('d-block');
+    expect(screen.getByRole('dialog')).not.toHaveClass('d-block');
   });
 
   it('calls onClose to click close button on modal footer', () => {
-    const { getByTestId, getByRole } = render(<Modal {...defaultProps} />);
-    expect(getByRole('dialog')).toHaveClass('d-block');
+    render(<Modal {...defaultProps} />);
+    expect(screen.getByRole('dialog')).toHaveClass('d-block');
 
-    fireEvent.click(getByTestId('closeModalFooterBtn'));
+    userEvent.click(screen.getByRole('button', { name: 'Close' }));
 
-    expect(getByRole('dialog')).not.toHaveClass('d-block');
+    expect(screen.getByRole('dialog')).not.toHaveClass('d-block');
   });
 
   it('renders error alert if error is defined', () => {
-    const { getByText } = render(<Modal {...defaultProps} error="api error" />);
-    expect(getByText('api error')).toBeInTheDocument();
+    render(<Modal {...defaultProps} error="api error" />);
+    expect(screen.getByText('api error')).toBeInTheDocument();
   });
 
   it('opens Modal to click Open Modal btn', () => {
-    const { getByTestId, getByRole } = render(<Modal {...defaultProps} buttonContent="Open modal" open={false} />);
+    render(<Modal {...defaultProps} buttonContent="Open modal" open={false} />);
 
-    const modal = getByRole('dialog');
+    const modal = screen.getByRole('dialog');
     expect(modal).not.toHaveClass('active d-block');
-    const btn = getByTestId('openModalBtn');
+    const btn = screen.getByRole('button', { name: /Open modal/ });
 
-    fireEvent.click(btn);
+    userEvent.click(btn);
 
     waitFor(() => {
       expect(modal).toHaveClass('active d-block');
@@ -70,10 +71,10 @@ describe('Modal', () => {
   });
 
   it('calls cleanErrorMock to click close button when error is not null', () => {
-    const { getByTestId, getByRole } = render(<Modal {...defaultProps} error="Error" />);
-    expect(getByRole('dialog')).toHaveClass('d-block');
+    render(<Modal {...defaultProps} error="Error" />);
+    expect(screen.getByRole('dialog')).toHaveClass('d-block');
 
-    fireEvent.click(getByTestId('closeModalFooterBtn'));
+    userEvent.click(screen.getByRole('button', { name: 'Close' }));
 
     expect(cleanErrorMock).toHaveBeenCalledTimes(1);
   });

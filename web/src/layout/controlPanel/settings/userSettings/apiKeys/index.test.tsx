@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -28,7 +29,7 @@ describe('API keys section index', () => {
     const mockAPIKeys = getMockAPIKeys('1');
     mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <APIKeysSection {...defaultProps} />
       </Router>
@@ -36,7 +37,7 @@ describe('API keys section index', () => {
 
     await waitFor(() => {
       expect(API.getAPIKeys).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -60,57 +61,53 @@ describe('API keys section index', () => {
       const mockAPIKeys = getMockAPIKeys('3');
       mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
-      const { getByTestId, getByText } = render(
+      render(
         <Router>
           <APIKeysSection {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
-
-      expect(noData).toBeInTheDocument();
-      expect(getByText('Add your first API key!')).toBeInTheDocument();
-      expect(getByTestId('addFirstAPIKeyBtn')).toBeInTheDocument();
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
+      expect(screen.getByText('Add your first API key!')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open API key modal to add the first one' })).toBeInTheDocument();
     });
 
     it('renders API form form when add first API key button is clicked', async () => {
       const mockAPIKeys = getMockAPIKeys('4');
       mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
-      const { getByTestId, queryByText } = render(
+      render(
         <Router>
           <APIKeysSection {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
-      expect(noData).toBeInTheDocument();
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
 
-      expect(queryByText('Name')).toBeNull();
+      expect(screen.queryByText('Name')).toBeNull();
 
-      const addBtn = getByTestId('addFirstAPIKeyBtn');
-      fireEvent.click(addBtn);
-      expect(queryByText('Name')).toBeInTheDocument();
+      const addBtn = screen.getByRole('button', { name: 'Open API key modal to add the first one' });
+      userEvent.click(addBtn);
+      expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
     it('renders API key form when add API key button is clicked', async () => {
       const mockAPIKeys = getMockAPIKeys('5');
       mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
-      const { getByTestId, queryByText } = render(
+      render(
         <Router>
           <APIKeysSection {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
-      expect(noData).toBeInTheDocument();
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
 
-      expect(queryByText('Name')).toBeNull();
+      expect(screen.queryByText('Name')).toBeNull();
 
-      const addBtn = getByTestId('addAPIKeyBtn');
-      fireEvent.click(addBtn);
-      expect(queryByText('Name')).toBeInTheDocument();
+      const addBtn = screen.getByRole('button', { name: 'Open modal to add API key' });
+      userEvent.click(addBtn);
+      expect(screen.queryByText('Name')).toBeInTheDocument();
     });
   });
 
@@ -118,14 +115,13 @@ describe('API keys section index', () => {
     const mockAPIKeys = getMockAPIKeys('6');
     mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
-    const { getAllByTestId } = render(
+    render(
       <Router>
         <APIKeysSection {...defaultProps} />
       </Router>
     );
 
-    const cards = await waitFor(() => getAllByTestId('APIKeyCard'));
-    expect(cards).toHaveLength(2);
+    expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
   });
 
   it('loads first page when not api Keys in a different one', async () => {
@@ -169,7 +165,7 @@ describe('API keys section index', () => {
     it('rest API errors - displays generic error message', async () => {
       mocked(API).getAPIKeys.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
-      const { getByTestId, getByText } = render(
+      render(
         <Router>
           <APIKeysSection {...defaultProps} />
         </Router>
@@ -177,9 +173,8 @@ describe('API keys section index', () => {
 
       await waitFor(() => expect(API.getAPIKeys).toHaveBeenCalledTimes(1));
 
-      const noData = getByTestId('noData');
-      expect(noData).toBeInTheDocument();
-      expect(getByText(/An error occurred getting your API keys, please try again later./i)).toBeInTheDocument();
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
+      expect(screen.getByText(/An error occurred getting your API keys, please try again later./i)).toBeInTheDocument();
     });
   });
 });

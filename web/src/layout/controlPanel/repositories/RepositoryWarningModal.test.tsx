@@ -10,22 +10,22 @@ describe('RepositoryWarningModal', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<RepositoryWarningModal />);
+    const { asFragment } = render(<RepositoryWarningModal />);
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
       render(<RepositoryWarningModal />);
 
-      expect(screen.getByTestId('trackingWarningBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open repository warning modal' })).toBeInTheDocument();
     });
 
     it('opens modal', async () => {
       render(<RepositoryWarningModal />);
 
-      const btn = screen.getByTestId('trackingWarningBtn');
+      const btn = screen.getByRole('button', { name: 'Open repository warning modal' });
       userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toHaveClass('d-block');

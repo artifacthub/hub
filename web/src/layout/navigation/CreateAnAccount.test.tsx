@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -26,48 +27,48 @@ describe('CreateAnAccount', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<CreateAnAccount {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<CreateAnAccount {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<CreateAnAccount {...defaultProps} />);
+      render(<CreateAnAccount {...defaultProps} />);
 
-      expect(getByText('Username')).toBeInTheDocument();
-      expect(getByText('Email')).toBeInTheDocument();
-      expect(getByText('First Name')).toBeInTheDocument();
-      expect(getByText('Last Name')).toBeInTheDocument();
-      expect(getByText('Password')).toBeInTheDocument();
-      expect(getByText('Confirm password')).toBeInTheDocument();
+      expect(screen.getByText('Username')).toBeInTheDocument();
+      expect(screen.getByText('Email')).toBeInTheDocument();
+      expect(screen.getByText('First Name')).toBeInTheDocument();
+      expect(screen.getByText('Last Name')).toBeInTheDocument();
+      expect(screen.getByText('Password')).toBeInTheDocument();
+      expect(screen.getByText('Confirm password')).toBeInTheDocument();
     });
 
     it('renders success info', () => {
-      const { getByText } = render(<CreateAnAccount {...defaultProps} success />);
+      render(<CreateAnAccount {...defaultProps} success />);
 
-      expect(getByText('A verification link has been sent to your email account')).toBeInTheDocument();
+      expect(screen.getByText('A verification link has been sent to your email account')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           'Please click on the link that has just been sent to your email account to verify your email and finish the registration process.'
         )
       ).toBeInTheDocument();
-      expect(getByText('is only valid for 24 hours')).toBeInTheDocument();
+      expect(screen.getByText('is only valid for 24 hours')).toBeInTheDocument();
     });
 
     it('calls registerUser', async () => {
       mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).register.mockResolvedValue(null);
 
-      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+      render(<CreateAnAccount {...defaultProps} />);
 
-      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
-      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
-      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
-      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
-      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe' } });
-      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe' } });
+      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
+      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
 
-      const form = getByTestId('createAnAccountForm');
+      const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
 
       await waitFor(() => {
@@ -86,16 +87,16 @@ describe('CreateAnAccount', () => {
       mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).register.mockResolvedValue(null);
 
-      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+      render(<CreateAnAccount {...defaultProps} />);
 
-      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
-      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
-      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
-      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
-      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe*$' } });
-      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe*$' } });
+      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      userEvent.type(screen.getByTestId('passwordInput'), '123qwe*$');
+      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe*$');
 
-      const form = getByTestId('createAnAccountForm');
+      const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
 
       await waitFor(() => {
@@ -114,16 +115,16 @@ describe('CreateAnAccount', () => {
       mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).register.mockResolvedValue(null);
 
-      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+      render(<CreateAnAccount {...defaultProps} />);
 
-      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
-      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
-      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
-      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
-      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe' } });
-      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe' } });
+      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
+      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
 
-      const form = getByTestId('createAnAccountForm');
+      const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
 
       await waitFor(() => {
@@ -140,16 +141,16 @@ describe('CreateAnAccount', () => {
         message: 'custom error',
       });
 
-      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+      render(<CreateAnAccount {...defaultProps} />);
 
-      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
-      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
-      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
-      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
-      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe' } });
-      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe' } });
+      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
+      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
 
-      const form = getByTestId('createAnAccountForm');
+      const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
 
       await waitFor(() => {
@@ -165,16 +166,16 @@ describe('CreateAnAccount', () => {
         kind: ErrorKind.Other,
       });
 
-      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+      render(<CreateAnAccount {...defaultProps} />);
 
-      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
-      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
-      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
-      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
-      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe' } });
-      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe' } });
+      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
+      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
 
-      const form = getByTestId('createAnAccountForm');
+      const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
 
       await waitFor(() => {

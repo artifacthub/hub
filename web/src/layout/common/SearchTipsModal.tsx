@@ -28,7 +28,6 @@ const SearchTipsModal = (props: Props) => {
 
           <div>
             <button
-              data-testid="closeModalBtn"
               type="button"
               className={`close ${styles.closeModalBtn}`}
               onClick={() => {
@@ -43,10 +42,9 @@ const SearchTipsModal = (props: Props) => {
 
         <ul className={`mb-0 ${styles.list}`}>
           {SEARH_TIPS.map((tip: SearchTipItem, index: number) => (
-            <li data-testid="searchTip" className="my-1" key={`searchBarTip_${index}`}>
+            <li className="my-1" key={`searchBarTip_${index}`}>
               {tip.content} <small className="text-muted">Example:</small>{' '}
               <Link
-                data-testid="searchTipLink"
                 className="font-weight-bold text-dark p-0"
                 onClick={() => props.setOpenTips(false)}
                 to={{

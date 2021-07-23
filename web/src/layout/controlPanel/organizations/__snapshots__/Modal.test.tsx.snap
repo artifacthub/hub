@@ -27,9 +27,8 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
               Update organization
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -78,7 +77,6 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                       <button
                         aria-label="Add image"
                         class="btn p-0 overflow-hidden position-relative btn"
-                        data-testid="inputFileBtn"
                         type="button"
                       >
                         <img
@@ -93,7 +91,6 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                   </div>
                   <input
                     class="d-none"
-                    data-testid="inputFile"
                     id="logo"
                     name="logo"
                     type="file"

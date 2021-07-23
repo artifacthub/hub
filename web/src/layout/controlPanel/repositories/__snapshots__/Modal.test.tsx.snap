@@ -27,9 +27,8 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
               Add repository
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -285,7 +284,6 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   >
                     <input
                       class="custom-control-input"
-                      data-testid="toggleDisabledRepo"
                       id="disabledRepo"
                       type="checkbox"
                       value="true"
@@ -343,7 +341,6 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
             <button
               aria-label="Add repository"
               class="btn btn-sm btn-outline-secondary"
-              data-testid="repoBtn"
               type="button"
             >
               <div

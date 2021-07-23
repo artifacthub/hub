@@ -155,9 +155,9 @@ const SchemaDefinition = (props: Props) => {
       case 'object':
         if (isArray(value)) {
           return (
-            <div className="d-flex flex-column ml-3">
+            <div className="d-flex flex-column ml-3" role="list">
               {value.map((el: string) => (
-                <div key={`it_${el}`} className={`${styles.listItem} position-relative`} data-testid="listItem">
+                <div key={`it_${el}`} className={`${styles.listItem} position-relative`} role="listitem">
                   {el}
                 </div>
               ))}
@@ -165,9 +165,9 @@ const SchemaDefinition = (props: Props) => {
           );
         } else {
           return (
-            <div className="ml-3">
+            <div className="ml-3" role="list">
               {Object.keys(value).map((el: string) => (
-                <div key={`it_${el}`} className={`${styles.listItem} position-relative`} data-testid="listItem">
+                <div key={`it_${el}`} className={`${styles.listItem} position-relative`} role="listitem">
                   {el}:{' '}
                   <span className="text-muted">
                     {value[el] && value[el].type
@@ -278,7 +278,6 @@ const SchemaDefinition = (props: Props) => {
     <div className="position-relative w-100" ref={ref}>
       <div className={styles.contentWrapper}>
         <button
-          data-testid="expandBtn"
           className={`btn btn-block text-reset text-left p-0 position-relative ${styles.btn}`}
           onClick={changeActivePath}
           aria-label={`${props.isExpanded ? 'Hide' : 'Show'} detail`}
@@ -325,7 +324,7 @@ const SchemaDefinition = (props: Props) => {
                         <small className="text-muted text-uppercase">Type</small>:{' '}
                         {def.type && isArray(def.type) ? (
                           <select
-                            data-testid="schemaCombSelect"
+                            aria-label="Type selection"
                             value={activeType}
                             onClick={(e: React.MouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {

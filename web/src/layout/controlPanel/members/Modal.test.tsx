@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -46,36 +47,36 @@ describe('Members Modal - members section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <MemberModal {...defaultProps} />
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId } = render(<MemberModal {...defaultProps} />);
+      render(<MemberModal {...defaultProps} />);
 
-      const form = getByTestId('membersForm');
+      const form = screen.getByTestId('membersForm');
       expect(form).toBeInTheDocument();
-      expect(getByTestId('aliasInput')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Username/ })).toBeInTheDocument();
     });
 
     it('calls add organization member', async () => {
       mocked(API).checkAvailability.mockResolvedValue(true);
       mocked(API).addOrganizationMember.mockResolvedValue(null);
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <MemberModal {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const input = getByTestId('aliasInput');
-      fireEvent.change(input, { target: { value: 'test' } });
-      fireEvent.click(getByTestId('membersFormBtn'));
+      const input = screen.getByRole('textbox', { name: /Username/ });
+      userEvent.type(input, 'test');
+      userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
 
       await waitFor(() => {
         expect(API.addOrganizationMember).toHaveBeenCalledTimes(1);
@@ -96,11 +97,12 @@ describe('Members Modal - members section', () => {
           <MemberModal {...defaultProps} />
         </AppCtx.Provider>
       );
-      const { getByTestId, getByText, rerender } = render(component);
 
-      const input = getByTestId('aliasInput');
-      fireEvent.change(input, { target: { value: 'test' } });
-      fireEvent.click(getByTestId('membersFormBtn'));
+      const { rerender } = render(component);
+
+      const input = screen.getByRole('textbox', { name: /Username/ });
+      userEvent.type(input, 'test');
+      userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
 
       await waitFor(() => {
         expect(API.addOrganizationMember).toHaveBeenCalledTimes(1);
@@ -108,7 +110,7 @@ describe('Members Modal - members section', () => {
 
       rerender(component);
 
-      expect(getByText('An error occurred adding the new member, please try again later.')).toBeInTheDocument();
+      expect(screen.getByText('An error occurred adding the new member, please try again later.')).toBeInTheDocument();
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -116,15 +118,15 @@ describe('Members Modal - members section', () => {
       mocked(API).addOrganizationMember.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <MemberModal {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const input = getByTestId('aliasInput');
-      fireEvent.change(input, { target: { value: 'test' } });
-      fireEvent.click(getByTestId('membersFormBtn'));
+      const input = screen.getByRole('textbox', { name: /Username/ });
+      userEvent.type(input, 'test');
+      userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
 
       await waitFor(() => {
         expect(API.addOrganizationMember).toHaveBeenCalledTimes(1);

@@ -86,13 +86,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
 
   return (
     <>
-      <button
-        data-testid="enable2FAModalBtn"
-        className="btn btn-success btn-sm"
-        onClick={setUpTFA}
-        disabled={isLoading}
-        aria-label="Open modal"
-      >
+      <button className="btn btn-success btn-sm" onClick={setUpTFA} disabled={isLoading} aria-label="Open modal">
         <div className="d-flex flex-row align-items-center">
           {isLoading ? (
             <>
@@ -148,7 +142,6 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                 case 2:
                   return (
                     <button
-                      data-testid="enable2FABtn"
                       className="btn btn-sm btn-success ml-3"
                       onClick={(e) => {
                         e.preventDefault();

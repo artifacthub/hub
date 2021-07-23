@@ -23,7 +23,6 @@ const SearchTip = () => {
           <span className="font-weight-bold mr-1">Tip:</span>
           {activeTip.content} Example:{' '}
           <Link
-            data-testid="sampleFilter"
             className="font-weight-bold textLight p-0"
             to={{
               pathname: '/packages/search',

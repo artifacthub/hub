@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import NoData from './NoData';
@@ -10,19 +10,19 @@ const defaultProps = {
 describe('NoData', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<NoData {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getByTestId, getByText } = render(<NoData {...defaultProps} />);
-    expect(getByTestId('noData')).toBeInTheDocument();
-    expect(getByText(defaultProps.children)).toBeInTheDocument();
+    render(<NoData {...defaultProps} />);
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(defaultProps.children)).toBeInTheDocument();
   });
 
   it('renders proper content with issues link visible', () => {
-    const { getByRole, getByText } = render(<NoData {...defaultProps} issuesLinkVisible />);
-    expect(getByText(/If this error persists, please create an issue/i)).toBeInTheDocument();
-    const link = getByRole('button');
+    render(<NoData {...defaultProps} issuesLinkVisible />);
+    expect(screen.getByText(/If this error persists, please create an issue/i)).toBeInTheDocument();
+    const link = screen.getByRole('button');
     expect(link).toBeInTheDocument();
     expect(link).toHaveTextContent('here');
     expect(link).toHaveAttribute('href', 'https://github.com/artifacthub/hub/issues/new/choose');

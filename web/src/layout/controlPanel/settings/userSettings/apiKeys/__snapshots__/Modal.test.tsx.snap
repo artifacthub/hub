@@ -27,9 +27,8 @@ exports[`APIKeyModal - API keys section creates snapshot 1`] = `
               Add API key
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -101,7 +100,6 @@ exports[`APIKeyModal - API keys section creates snapshot 1`] = `
             <button
               aria-label="Add API key"
               class="btn btn-sm btn-outline-secondary"
-              data-testid="apiKeyFormBtn"
               type="button"
             >
               <div

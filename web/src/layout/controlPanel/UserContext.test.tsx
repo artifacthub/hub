@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -78,7 +79,7 @@ describe('UserContext', () => {
     const mockOrgs = getMockOrgs('1');
     mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
           <UserContext />
@@ -88,7 +89,7 @@ describe('UserContext', () => {
 
     await waitFor(() => {
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -114,7 +115,7 @@ describe('UserContext', () => {
       const mockOrgs = getMockOrgs('3');
       mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
-      const { getByRole } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
           <Router>
             <UserContext />
@@ -122,16 +123,14 @@ describe('UserContext', () => {
         </AppCtx.Provider>
       );
 
-      await waitFor(() => {
-        expect(getByRole('status')).toBeTruthy();
-      });
+      expect(await screen.findByRole('status')).toBeTruthy();
     });
 
     it('displays dropdown with ctx', async () => {
       const mockOrgs = getMockOrgs('4');
       mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
-      const { getByTestId, getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
           <Router>
             <UserContext />
@@ -143,14 +142,14 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const ctxBtn = getByTestId('ctxBtn');
-      const ctxDropdown = getByTestId('ctxDropdown');
+      const ctxBtn = screen.getByRole('button', { name: 'Open context' });
+      const ctxDropdown = screen.getByRole('menu');
 
       expect(ctxBtn).toBeInTheDocument();
       expect(ctxDropdown).toBeInTheDocument();
       expect(ctxDropdown).not.toHaveClass('show');
 
-      fireEvent.click(ctxBtn);
+      userEvent.click(ctxBtn);
 
       expect(ctxDropdown).toHaveClass('show');
 
@@ -158,15 +157,15 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(2);
       });
 
-      expect(getByTestId('userCtxBtn')).toBeInTheDocument();
-      expect(getAllByTestId('orgCtxBtn')).toHaveLength(mockOrgs.length);
+      expect(screen.getByRole('button', { name: 'Activate user context' })).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: /Activate org/ })).toHaveLength(mockOrgs.length);
     });
 
     it('renders only user ctx when no orgs', async () => {
       const mockOrgs = getMockOrgs('5');
       mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
-      const { getByTestId, queryAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
           <Router>
             <UserContext />
@@ -176,16 +175,17 @@ describe('UserContext', () => {
 
       await waitFor(() => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-        expect(getByTestId('userCtxBtn')).toBeInTheDocument();
-        expect(queryAllByTestId('orgCtxBtn')).toHaveLength(0);
       });
+
+      expect(screen.getByRole('button', { name: 'Activate user context' })).toBeInTheDocument();
+      expect(screen.queryAllByTestId('orgCtxBtn')).toHaveLength(0);
     });
 
     it('calls updateOrg when org ctx button is clicked', async () => {
       const mockOrgs = getMockOrgs('4');
       mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
-      const { getByTestId, getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
           <Router>
             <UserContext />
@@ -197,25 +197,25 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const ctxBtn = getByTestId('ctxBtn');
-      const ctxDropdown = getByTestId('ctxDropdown');
+      const ctxBtn = screen.getByRole('button', { name: 'Open context' });
+      const ctxDropdown = screen.getByRole('menu');
 
       expect(ctxBtn).toBeInTheDocument();
       expect(ctxDropdown).toBeInTheDocument();
       expect(ctxDropdown).not.toHaveClass('show');
 
-      fireEvent.click(ctxBtn);
+      userEvent.click(ctxBtn);
 
       expect(ctxDropdown).toHaveClass('show');
 
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(2);
 
-      expect(getByTestId('userCtxBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Activate user context' })).toBeInTheDocument();
 
-      const orgBtns = getAllByTestId('orgCtxBtn');
+      const orgBtns = screen.getAllByRole('button', { name: /Activate org/ });
       expect(orgBtns).toHaveLength(mockOrgs.length);
 
-      fireEvent.click(orgBtns[0]);
+      userEvent.click(orgBtns[0]);
 
       await waitFor(() => {
         expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -229,7 +229,7 @@ describe('UserContext', () => {
       const mockOrgs = getMockOrgs('4');
       mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx, dispatch: mockDispatch }}>
           <Router>
             <UserContext />
@@ -241,13 +241,13 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const ctxBtn = getByTestId('ctxBtn');
-      fireEvent.click(ctxBtn);
+      const ctxBtn = screen.getByRole('button', { name: 'Open context' });
+      userEvent.click(ctxBtn);
 
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(2);
 
-      const userCtxBtn = getByTestId('userCtxBtn');
-      fireEvent.click(userCtxBtn);
+      const userCtxBtn = screen.getByRole('button', { name: 'Activate user context' });
+      userEvent.click(userCtxBtn);
 
       await waitFor(() => {
         expect(mockDispatch).toHaveBeenCalledTimes(1);

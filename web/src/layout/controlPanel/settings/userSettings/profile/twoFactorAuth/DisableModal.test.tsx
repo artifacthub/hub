@@ -25,8 +25,8 @@ describe('DisableModal', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -41,7 +41,7 @@ describe('DisableModal', () => {
 
       render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
 
-      const btn = screen.getByTestId('disable2FAModalBtn');
+      const btn = screen.getByRole('button', { name: 'Open disable two-factor authentication modal' });
       userEvent.click(btn);
 
       expect(await screen.findByText('Disable')).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe('DisableModal', () => {
         )
       ).toBeInTheDocument();
 
-      const passcodeInput = screen.getByTestId('passcodeInput');
+      const passcodeInput = screen.getByRole('textbox');
       expect(passcodeInput).toBeInTheDocument();
 
       userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
@@ -73,10 +73,10 @@ describe('DisableModal', () => {
 
         render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('disable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open disable two-factor authentication modal' });
         userEvent.click(btn);
 
-        const passcodeInput = screen.getByTestId('passcodeInput');
+        const passcodeInput = screen.getByRole('textbox');
         userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
         userEvent.click(screen.getByText('Disable'));
 
@@ -95,12 +95,12 @@ describe('DisableModal', () => {
 
         render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('disable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open disable two-factor authentication modal' });
         userEvent.click(btn);
 
-        const passcodeInput = screen.getByTestId('passcodeInput');
+        const passcodeInput = screen.getByRole('textbox');
         userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
-        userEvent.click(screen.getByTestId('disable2FABtn'));
+        userEvent.click(screen.getByRole('button', { name: 'Disable two-factor authentication' }));
 
         await waitFor(() => {
           expect(API.disableTFA).toHaveBeenCalledTimes(1);
@@ -117,12 +117,12 @@ describe('DisableModal', () => {
 
         render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
 
-        const btn = screen.getByTestId('disable2FAModalBtn');
+        const btn = screen.getByRole('button', { name: 'Open disable two-factor authentication modal' });
         userEvent.click(btn);
 
-        const passcodeInput = screen.getByTestId('passcodeInput');
+        const passcodeInput = screen.getByRole('textbox');
         userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
-        userEvent.click(screen.getByTestId('disable2FABtn'));
+        userEvent.click(screen.getByRole('button', { name: 'Disable two-factor authentication' }));
 
         await waitFor(() => {
           expect(API.disableTFA).toHaveBeenCalledTimes(1);

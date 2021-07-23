@@ -377,7 +377,6 @@ exports[`Template creates snapshot 1`] = `
                           >
                             <textarea
                               class="form-control textarea"
-                              data-testid="templateTextarea"
                               disabled=""
                               id="template"
                               name="template"

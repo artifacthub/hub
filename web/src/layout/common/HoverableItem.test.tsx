@@ -15,7 +15,7 @@ const defaultProps = {
 describe('HoverableItem', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<HoverableItem {...defaultProps}>hi</HoverableItem>);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('calls events', () => {

@@ -19,7 +19,6 @@ const PackageCard = (props: Props) => (
   <div className="col-12 col-xxl-6 py-sm-3 py-2" role="listitem">
     <div className={`card cardWithHover h-100 ${styles.card} ${props.className}`}>
       <Link
-        data-testid="link"
         className={`text-decoration-none text-reset h-100 ${styles.link}`}
         onClick={() => {
           if (!isUndefined(props.saveScrollPosition)) {

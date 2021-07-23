@@ -29,7 +29,6 @@ const CheckBox = (props: Props) => {
   return (
     <div className={`custom-control custom-checkbox mr-sm-2 mb-2 ${props.className}`}>
       <input
-        data-testid="checkbox"
         type="checkbox"
         className={`custom-control-input ${styles.input}`}
         name={props.name}

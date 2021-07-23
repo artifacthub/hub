@@ -36,11 +36,10 @@ const BannerMOTD = () => {
       <div className="container-lg px-sm-4 px-lg-0">{motd}</div>
 
       <button
-        data-testid="closeBannerMOTD"
         type="button"
         className={`close position-absolute ${styles.close}`}
         onClick={() => setOpenStatus(false)}
-        aria-label="Close"
+        aria-label="Close banner"
       >
         <span aria-hidden="true">&times;</span>
       </button>
