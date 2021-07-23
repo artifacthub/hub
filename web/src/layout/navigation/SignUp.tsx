@@ -44,20 +44,25 @@ const SignUp = (props: Props) => {
 
   const closeButton = (
     <button
-      className="btn btn-outline-secondary"
+      className="btn btn-sm btn-outline-secondary"
       type="button"
       disabled={isLoading.status}
       onClick={submitForm}
       aria-label="Sign up"
     >
-      {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
-        <>
-          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-          <span className="ml-2">Signing up...</span>
-        </>
-      ) : (
-        <>Sign up</>
-      )}
+      <div className="d-flex flex-row align-items-center text-uppercase">
+        {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
+          <>
+            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+            <span className="ml-2">Signing up...</span>
+          </>
+        ) : (
+          <>
+            <FaEnvelope className="mr-2" />
+            <>Sign up</>
+          </>
+        )}
+      </div>
     </button>
   );
 

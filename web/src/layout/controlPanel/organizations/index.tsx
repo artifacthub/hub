@@ -131,11 +131,11 @@ const OrganizationsSection = (props: Props) => {
                       <button
                         data-testid="addFirstOrgBtn"
                         type="button"
-                        className="btn btn-outline-secondary"
+                        className="btn btn-sm btn-outline-secondary"
                         onClick={() => setModalStatus({ open: true })}
                         aria-label="Open modal"
                       >
-                        <div className="d-flex flex-row align-items-center">
+                        <div className="d-flex flex-row align-items-center text-uppercase">
                           <MdAddCircle className="mr-2" />
                           <span>Add new organization</span>
                         </div>

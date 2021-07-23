@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { every, isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
+import { CgLastpass } from 'react-icons/cg';
 import { MdClose, MdDone } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
@@ -149,14 +150,19 @@ const ResetPasswordModal = (props: Props) => {
       onClick={submitForm}
       aria-label="Reset password"
     >
-      {isSending ? (
-        <>
-          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-          <span className="ml-2">Resetting password...</span>
-        </>
-      ) : (
-        <span className="text-uppercase">Reset password</span>
-      )}
+      <div className="d-flex flex-row align-items-center">
+        {isSending ? (
+          <>
+            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+            <span className="ml-2">Resetting password...</span>
+          </>
+        ) : (
+          <>
+            <CgLastpass className="mr-2" />
+            <span className="text-uppercase">Reset password</span>
+          </>
+        )}
+      </div>
     </button>
   );
 
