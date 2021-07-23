@@ -251,17 +251,17 @@ const RepositoriesSection = (props: Props) => {
 
                     <ActionBtn
                       testId="addFirstRepoBtn"
-                      className="btn btn-outline-secondary"
+                      className="btn btn-sm btn-outline-secondary"
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                         e.preventDefault();
                         setModalStatus({ open: true });
                       }}
                       action={AuthorizerAction.AddOrganizationRepository}
                     >
-                      <>
+                      <div className="d-flex flex-row align-items-center text-uppercase">
                         <MdAddCircle className="mr-2" />
                         <span>Add repository</span>
-                      </>
+                      </div>
                     </ActionBtn>
                   </>
                 ) : (

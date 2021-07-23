@@ -145,12 +145,12 @@ const WebhooksSection = (props: Props) => {
 
                             <button
                               type="button"
-                              className="btn btn-outline-secondary"
+                              className="btn btn-sm btn-outline-secondary"
                               onClick={() => setVisibleForm({ visible: true })}
                               data-testid="addFirstWebhookBtn"
                               aria-label="Open form"
                             >
-                              <div className="d-flex flex-row align-items-center">
+                              <div className="d-flex flex-row align-items-center text-uppercase">
                                 <MdAddCircle className="mr-2" />
                                 <span>Add webhook</span>
                               </div>

@@ -3,6 +3,7 @@ import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
+import { FaSignInAlt } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
 
@@ -299,20 +300,25 @@ const LogIn = (props: Props) => {
 
                   <button
                     data-testid="logInBtn"
-                    className="btn btn-outline-secondary"
+                    className="btn btn-sm btn-outline-secondary"
                     type="button"
                     disabled={isLoading.status}
                     onClick={submitForm}
                     aria-label="Sign in"
                   >
-                    {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
-                      <>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">Singing in...</span>
-                      </>
-                    ) : (
-                      <>Sign in</>
-                    )}
+                    <div className="d-flex flex-row align-items-center text-uppercase">
+                      {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
+                        <>
+                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                          <span className="ml-2">Singing in...</span>
+                        </>
+                      ) : (
+                        <>
+                          <FaSignInAlt className="mr-2" />
+                          <>Sign in</>
+                        </>
+                      )}
+                    </div>
                   </button>
                 </div>
               </form>

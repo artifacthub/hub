@@ -127,11 +127,11 @@ const APIKeysSection = (props: Props) => {
                         <button
                           data-testid="addFirstAPIKeyBtn"
                           type="button"
-                          className="btn btn-outline-secondary"
+                          className="btn btn-sm  btn-outline-secondary"
                           onClick={() => setModalStatus({ open: true })}
                           aria-label="Add API key"
                         >
-                          <div className="d-flex flex-row align-items-center">
+                          <div className="d-flex flex-row align-items-center text-uppercase">
                             <MdAddCircle className="mr-2" />
                             <span>Add API key</span>
                           </div>

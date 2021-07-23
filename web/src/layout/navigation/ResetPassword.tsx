@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import React, { useRef, useState } from 'react';
+import { CgLastpass } from 'react-icons/cg';
 import { MdDone } from 'react-icons/md';
 
 import API from '../../api';
@@ -113,20 +114,25 @@ const ResetPassword = (props: Props) => {
             <div className="text-right">
               <button
                 data-testid="resetPasswordBtn"
-                className="btn btn-outline-secondary"
+                className="btn btn-sm btn-outline-secondary"
                 type="button"
                 disabled={isSending || resetPwdEmail === ''}
                 onClick={submitForm}
                 aria-label="Send password reset email"
               >
-                {isSending ? (
-                  <>
-                    <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                    <span className="ml-2">Sending email...</span>
-                  </>
-                ) : (
-                  <>Send password reset email</>
-                )}
+                <div className="d-flex flex-row align-items-center">
+                  {isSending ? (
+                    <>
+                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                      <span className="ml-2">Sending email...</span>
+                    </>
+                  ) : (
+                    <>
+                      <CgLastpass className="mr-2" />
+                      <>Send password reset email</>
+                    </>
+                  )}
+                </div>
               </button>
             </div>
           </div>

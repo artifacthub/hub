@@ -137,11 +137,11 @@ const MembersSection = (props: Props) => {
                 }}
                 action={AuthorizerAction.AddOrganizationMember}
               >
-                <>
+                <div className="d-flex flex-row align-items-center">
                   <MdAdd className="d-inline d-md-none" />
                   <MdAddCircle className="d-none d-md-inline mr-2" />
                   <span className="d-none d-md-inline">Invite</span>
-                </>
+                </div>
               </ActionBtn>
             </div>
           </div>
@@ -160,12 +160,12 @@ const MembersSection = (props: Props) => {
 
                       <button
                         type="button"
-                        className="btn btn-outline-secondary"
+                        className="btn btn-sm btn-outline-secondary"
                         onClick={() => setModalMemberOpen(true)}
                         data-testid="addFirstMemberBtn"
                         aria-label="Open modal"
                       >
-                        <div className="d-flex flex-row align-items-center">
+                        <div className="d-flex flex-row align-items-center text-uppercase">
                           <MdAddCircle className="mr-2" />
                           <span>Add member</span>
                         </div>
