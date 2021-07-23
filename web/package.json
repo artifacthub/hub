@@ -30,6 +30,7 @@
     "remark-extract-toc": "^1.1.0",
     "remark-gfm": "^1.0.0",
     "remark-parse": "^9.0.0",
+    "remark-strip-html": "^1.0.2",
     "remark-unlink": "^3.1.0",
     "remark-utf8": "^1.1.0",
     "semver": "^7.3.2",

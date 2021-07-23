@@ -21,7 +21,7 @@ const AnchorHeader: React.ElementType = (props: Props) => {
     if (!isUndefined(el.props) && isArray(el.props.children) && isString(el.props.children[0])) {
       value = el.props.children[0];
     } else if (isString(el)) {
-      value = el;
+      value = String(props.children);
     }
   }
 
