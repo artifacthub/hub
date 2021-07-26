@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/aquasecurity/trivy v0.19.1
-	github.com/containerd/containerd v1.4.6
+	github.com/containerd/containerd v1.4.8
 	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/deislabs/oras v0.11.1
 	github.com/disintegration/imaging v1.6.2
@@ -23,7 +23,6 @@ require (
 	github.com/hashicorp/golang-lru v0.5.4
 	github.com/jackc/pgconn v1.8.1
 	github.com/jackc/pgx/v4 v4.11.0
-	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/open-policy-agent/opa v0.29.4
 	github.com/operator-framework/api v0.10.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
@@ -44,7 +43,6 @@ require (
 	golang.org/x/image v0.0.0-20210607152325-775e3b0c77b9 // indirect
 	golang.org/x/oauth2 v0.0.0-20210615190721-d04028783cf1
 	golang.org/x/time v0.0.0-20210611083556-38a9dc6acbc6
-	gonum.org/v1/netlib v0.0.0-20210302091547-ede94419cf37 // indirect
 	google.golang.org/api v0.48.0
 	gopkg.in/src-d/go-license-detector.v3 v3.1.0
 	gopkg.in/yaml.v2 v2.4.0
