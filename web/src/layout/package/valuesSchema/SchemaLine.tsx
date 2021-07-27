@@ -1,6 +1,6 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
-import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
+import { isArray, isEmpty, isNull, isString, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
 import { ActiveJSONSchemaValue } from '../../../types';
@@ -63,9 +63,9 @@ const getValue = (newValue: any): ValueProp => {
                   <>{`[]`}</>
                 ) : (
                   <>
-                    {(valueToCheck.default as string[]).map((listItem: string) => (
+                    {(valueToCheck.default as string[]).map((listItem: any) => (
                       <div className={`level1 ${styles.line} ${styles.listItem} position-relative`} key={listItem}>
-                        {listItem}
+                        {isString(listItem) ? listItem : JSON.stringify(listItem)}
                       </div>
                     ))}
                   </>
