@@ -19,7 +19,7 @@ const CapatabilityLevelInfoModal = () => {
         <div className={styles.imageWrapper}>
           {!onLoadedImage && <Loading />}
           <img
-            src="/static/media/capability-level-diagram_v2.svg"
+            src="/static/media/capability-level-diagram_v3.svg"
             alt="Capability Level Diagram"
             className="capability-level-diagram mw-100"
             onLoad={() => setOnLoadedImage(true)}
