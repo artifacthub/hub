@@ -155,6 +155,7 @@ begin
         prerelease,
         recommendations,
         sign_key,
+        annotations,
         ts
     ) values (
         v_package_id,
@@ -186,6 +187,7 @@ begin
         (p_pkg->>'prerelease')::boolean,
         nullif(p_pkg->'recommendations', 'null'),
         nullif(p_pkg->'sign_key', 'null'),
+        nullif(p_pkg->'annotations', 'null'),
         v_ts
     )
     on conflict (package_id, version) do update
@@ -217,6 +219,7 @@ begin
         prerelease = excluded.prerelease,
         recommendations = excluded.recommendations,
         sign_key = excluded.sign_key,
+        annotations = excluded.annotations,
         ts = v_ts;
 
     -- Register new release event if package's latest version has been updated

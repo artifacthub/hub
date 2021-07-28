@@ -101,6 +101,7 @@ insert into snapshot (
     prerelease,
     recommendations,
     sign_key,
+    annotations,
     ts
 ) values (
     :'package1ID',
@@ -139,6 +140,7 @@ insert into snapshot (
     true,
     '[{"url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"}]',
     '{"fingerprint": "0011223344", "url": "https://key.url"}',
+    '{"key": "value"}',
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -340,6 +342,9 @@ select is(
             "fingerprint": "0011223344",
             "url": "https://key.url"
         },
+        "annotations": {
+            "key": "value"
+        },
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
             "kind": 0,
@@ -477,6 +482,9 @@ select is(
         "sign_key": {
             "fingerprint": "0011223344",
             "url": "https://key.url"
+        },
+        "annotations": {
+            "key": "value"
         },
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",

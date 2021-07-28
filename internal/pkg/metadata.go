@@ -85,6 +85,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		ContainersImages:        md.ContainersImages,
 		Maintainers:             md.Maintainers,
 		Recommendations:         md.Recommendations,
+		Annotations:             md.Annotations,
 	}
 	if md.Provider != nil {
 		p.Provider = md.Provider.Name

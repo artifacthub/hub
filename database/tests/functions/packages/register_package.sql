@@ -108,6 +108,9 @@ select register_package('
         "fingerprint": "0011223344",
         "url": "https://key.url"
     },
+    "annotations": {
+        "key": "value"
+    },
     "repository": {
         "repository_id": "00000000-0000-0000-0000-000000000001"
     }
@@ -177,6 +180,7 @@ select results_eq(
             s.prerelease,
             s.recommendations,
             s.sign_key,
+            s.annotations,
             s.ts
         from snapshot s
         join package p using (package_id)
@@ -219,6 +223,7 @@ select results_eq(
             true,
             '[{"url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"}]'::jsonb,
             '{"fingerprint": "0011223344", "url": "https://key.url"}'::jsonb,
+            '{"key": "value"}'::jsonb,
             '2020-06-16 11:20:34+02'::timestamptz
         )
     $$,

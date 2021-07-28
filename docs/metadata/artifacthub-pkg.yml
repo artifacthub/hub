@@ -54,3 +54,6 @@ ignore: # (optional, used to ignore some falco rules or opa policies files in a
   - lib # Entries use .gitignore syntax)
 recommendations: # (optional, list of recommended packages)
   - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+annotations: # (optional, keys and values must be strings)
+  key1: value1
+  key2: value2

@@ -98,6 +98,7 @@ type Package struct {
 	Maintainers                    []*Maintainer          `json:"maintainers"`
 	Recommendations                []*Recommendation      `json:"recommendations"`
 	SignKey                        *SignKey               `json:"sign_key"`
+	Annotations                    map[string]string      `json:"annotations"`
 	Repository                     *Repository            `json:"repository"`
 	TS                             int64                  `json:"ts,omitempty"`
 	Stats                          *PackageStats          `json:"stats"`
@@ -156,6 +157,7 @@ type PackageMetadata struct {
 	Provider                *Provider         `yaml:"provider"`
 	Ignore                  []string          `yaml:"ignore"`
 	Recommendations         []*Recommendation `yaml:"recommendations"`
+	Annotations             map[string]string `yaml:"annotations"`
 }
 
 // PackageStats represents some statistics about a package.
