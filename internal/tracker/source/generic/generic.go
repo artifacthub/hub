@@ -91,17 +91,19 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *hub.PackageMetadat
 
 	// Include kind specific data into package
 	ignorer := ignore.CompileIgnoreLines(md.Ignore...)
-	var data map[string]interface{}
+	var kindData map[string]interface{}
 	switch r.Kind {
 	case hub.Falco:
-		data, err = prepareFalcoData(pkgPath, ignorer)
+		kindData, err = prepareFalcoData(pkgPath, ignorer)
 	case hub.OPA:
-		data, err = prepareOPAData(pkgPath, ignorer)
+		kindData, err = prepareOPAData(pkgPath, ignorer)
 	}
 	if err != nil {
 		return nil, fmt.Errorf("error preparing package %s version %s data: %w", md.Name, md.Version, err)
 	}
-	p.Data = data
+	for k, v := range kindData {
+		p.Data[k] = v
+	}
 
 	// Store logo image when available
 	if md.LogoPath != "" {

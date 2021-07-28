@@ -170,7 +170,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 						URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
 					},
 				},
-				Annotations: map[string]string{
+				Data: map[string]interface{}{
 					"key": "value",
 				},
 				TS: 1136214245,

@@ -85,7 +85,12 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		ContainersImages:        md.ContainersImages,
 		Maintainers:             md.Maintainers,
 		Recommendations:         md.Recommendations,
-		Annotations:             md.Annotations,
+	}
+	if p.Data == nil && len(md.Annotations) > 0 {
+		p.Data = make(map[string]interface{})
+	}
+	for k, v := range md.Annotations {
+		p.Data[k] = v
 	}
 	if md.Provider != nil {
 		p.Provider = md.Provider.Name
