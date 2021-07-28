@@ -114,6 +114,9 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 						URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
 					},
 				},
+				Annotations: map[string]string{
+					"key": "value",
+				},
 			},
 			&hub.Package{
 				Name:        "pkg1",
@@ -166,6 +169,9 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 					{
 						URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
 					},
+				},
+				Annotations: map[string]string{
+					"key": "value",
 				},
 				TS: 1136214245,
 			},

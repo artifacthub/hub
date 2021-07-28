@@ -211,7 +211,8 @@ select columns_are('snapshot', array[
     'ts',
     'created_at',
     'recommendations',
-    'sign_key'
+    'sign_key',
+    'annotations'
 ]);
 select columns_are('subscription', array[
     'user_id',
