@@ -51,6 +51,9 @@ const (
 
 	// CoreDNS represents a repository with CoreDNS plugins.
 	CoreDNS RepositoryKind = 9
+
+	// Keptn represents a repository with Keptn integrations.
+	Keptn RepositoryKind = 10
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -66,6 +69,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "helm-plugin"
 	case KedaScaler:
 		return "keda-scaler"
+	case Keptn:
+		return "keptn"
 	case Krew:
 		return "krew"
 	case OLM:
@@ -95,6 +100,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return HelmPlugin, nil
 	case "keda-scaler":
 		return KedaScaler, nil
+	case "keptn":
+		return Keptn, nil
 	case "krew":
 		return Krew, nil
 	case "olm":

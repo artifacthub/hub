@@ -23,7 +23,7 @@ interface TableProps {
   children: JSX.Element | JSX.Element[];
 }
 
-const CustomInstall = (props: Props) => {
+const PublisherInstructionsInstall = (props: Props) => {
   const Code: React.ElementType = (props: CodeProps) => {
     if (props.children) {
       const content = String(props.children).replace(/\n$/, '');
@@ -39,7 +39,9 @@ const CustomInstall = (props: Props) => {
 
   const Heading: React.ElementType = (props: HeadingProps) => (
     <div className="my-2">
-      <small className="text-muted mt-2 mb-1">{props.children}</small>
+      <div className={`h${props.level} text-muted pt-2 pb-1`}>
+        <div className={styles.mdHeader}>{props.children}</div>
+      </div>
     </div>
   );
 
@@ -75,4 +77,4 @@ const CustomInstall = (props: Props) => {
   );
 };
 
-export default CustomInstall;
+export default PublisherInstructionsInstall;

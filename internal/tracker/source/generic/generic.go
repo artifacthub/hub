@@ -101,8 +101,14 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *hub.PackageMetadat
 	if err != nil {
 		return nil, fmt.Errorf("error preparing package %s version %s data: %w", md.Name, md.Version, err)
 	}
-	for k, v := range kindData {
-		p.Data[k] = v
+	if kindData != nil {
+		if p.Data == nil {
+			p.Data = kindData
+		} else {
+			for k, v := range kindData {
+				p.Data[k] = v
+			}
+		}
 	}
 
 	// Store logo image when available

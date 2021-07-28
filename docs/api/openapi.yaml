@@ -1229,6 +1229,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/keptn/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getKeptnIntegrationsDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KeptnIntegrationsPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/krew/{repoName}/{packageName}":
     get:
       tags:
@@ -1458,6 +1481,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/KedaScalerPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/keptn/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getKeptnIntegrationsVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KeptnIntegrationsPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -2955,6 +3002,21 @@ components:
       $ref: "#/components/schemas/Package"
     KedaScalerPackage:
       $ref: "#/components/schemas/Package"
+    KeptnIntegrationsPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                keptn/version:
+                  type: string
+                  example: "0.1.0"
+                keptn/kind:
+                  type: string
+                  example: "service,sli-provider"
     KrewPluginsPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -3475,6 +3537,7 @@ components:
           * `7` - Tekton tasks
           * `8` - KEDA scalers
           * `9` - Core DNS plugins
+          * `10` - Keptn integrations
     RepositoryKindParam:
       type: string
       enum:
@@ -3488,6 +3551,7 @@ components:
         - tekton-task
         - keda-scaler
         - coredns
+        - keptn
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -3500,6 +3564,7 @@ components:
         * `tekton` - Tekton tasks
         * `keda-scaler` - KEDA scalers
         * `coredns` - Core DNS plugins
+        * `keptn` - Keptn integrations
     RepositorySummary:
       type: object
       required:
@@ -3967,6 +4032,7 @@ components:
           * `7` - Tekton tasks
           * `8` - KEDA scalers
           * `9` - Core DNS plugins
+          * `10` - Keptn integrations
     PackageNameParam:
       in: path
       name: packageName

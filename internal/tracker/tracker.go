@@ -165,7 +165,8 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 		hub.TBAction,
 		hub.TektonTask,
 		hub.KedaScaler,
-		hub.CoreDNS:
+		hub.CoreDNS,
+		hub.Keptn:
 		tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 	}
 
@@ -192,7 +193,8 @@ func (t *Tracker) getRepositoryMetadata() *hub.RepositoryMetadata {
 		hub.TBAction,
 		hub.TektonTask,
 		hub.KedaScaler,
-		hub.CoreDNS:
+		hub.CoreDNS,
+		hub.Keptn:
 		md, _ = t.svc.Rm.GetMetadata(filepath.Join(t.basePath, hub.RepositoryMetadataFile))
 	}
 

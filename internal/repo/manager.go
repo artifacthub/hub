@@ -73,6 +73,7 @@ var (
 		hub.TektonTask,
 		hub.KedaScaler,
 		hub.CoreDNS,
+		hub.Keptn,
 	}
 )
 
@@ -235,7 +236,8 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		hub.TBAction,
 		hub.TektonTask,
 		hub.KedaScaler,
-		hub.CoreDNS:
+		hub.CoreDNS,
+		hub.Keptn:
 		tmpDir, packagesPath, err := m.rc.CloneRepository(ctx, r)
 		if err != nil {
 			return err
@@ -670,7 +672,8 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 		hub.TBAction,
 		hub.TektonTask,
 		hub.KedaScaler,
-		hub.CoreDNS:
+		hub.CoreDNS,
+		hub.Keptn:
 		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
 			return errors.New("invalid url format")
 		}

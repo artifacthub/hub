@@ -50,6 +50,10 @@ const ICONS = {
     default: '/static/media/coredns-plugin.svg',
     white: '/static/media/coredns-plugin-light.svg',
   },
+  [RepositoryKind.Keptn]: {
+    default: '/static/media/keptn-integrations.svg',
+    white: '/static/media/keptn-integrations-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

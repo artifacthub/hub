@@ -1,8 +1,17 @@
+import classnames from 'classnames';
 import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Channel, HelmChartType, Package, RepositoryKind, SearchFiltersURL, Version as VersionData } from '../../types';
+import {
+  Channel,
+  HelmChartType,
+  KeptnData,
+  Package,
+  RepositoryKind,
+  SearchFiltersURL,
+  Version as VersionData,
+} from '../../types';
 import RSSLinkTitle from '../common/RSSLinkTitle';
 import SeeAllModal from '../common/SeeAllModal';
 import SmallTitle from '../common/SmallTitle';
@@ -194,6 +203,43 @@ const Details = (props: Props) => {
                     <p data-testid="appVersion" className="text-truncate">
                       {props.package.data.pipelinesMinVersion}
                     </p>
+                  </div>
+                )}
+              </>
+            );
+
+          case RepositoryKind.Keptn:
+            const kinds: string[] =
+              props.package.data &&
+              !isUndefined(props.package.data[KeptnData.Kind]) &&
+              props.package.data[KeptnData.Kind] !== ''
+                ? props.package.data[KeptnData.Kind]!.split(',')
+                : [];
+
+            return (
+              <>
+                {props.package.data &&
+                  !isUndefined(props.package.data[KeptnData.Version]) &&
+                  props.package.data[KeptnData.Version] !== '' && (
+                    <div>
+                      <SmallTitle text="Keptn version" />
+                      <p data-testid="keptnVersion" className="text-truncate">
+                        {props.package.data[KeptnData.Version]}
+                      </p>
+                    </div>
+                  )}
+                {kinds.length > 0 && (
+                  <div>
+                    <SmallTitle text="Kind" />
+                    {kinds.map((kind: string, index: number) => (
+                      <p
+                        data-testid="keptnKind"
+                        className={classnames('text-truncate', { 'mb-1': index + 1 !== kinds.length })}
+                        key={`keptn-kind-${kind}`}
+                      >
+                        {kind}
+                      </p>
+                    ))}
                   </div>
                 )}
               </>

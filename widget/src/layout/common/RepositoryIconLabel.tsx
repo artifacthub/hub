@@ -57,6 +57,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.CoreDNS,
     name: 'CoreDNS plugin',
   },
+  {
+    kind: RepositoryKind.Keptn,
+    name: 'Keptn integration',
+  },
 ];
 
 const Wrapper = styled('span')`

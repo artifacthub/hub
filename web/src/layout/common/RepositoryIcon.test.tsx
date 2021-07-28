@@ -80,6 +80,13 @@ describe('RepositoryIcon', () => {
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/coredns-plugin-light.svg');
   });
 
+  it('renders Keptn integration icon', () => {
+    const { getByAltText } = render(<RepositoryIcon kind={RepositoryKind.Keptn} type="white" />);
+    const icon = getByAltText('Icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/keptn-integrations-light.svg');
+  });
+
   it('renders Chart icon - default type', () => {
     const { getAllByAltText } = render(<RepositoryIcon kind={RepositoryKind.Helm} />);
     const icons = getAllByAltText('Icon');

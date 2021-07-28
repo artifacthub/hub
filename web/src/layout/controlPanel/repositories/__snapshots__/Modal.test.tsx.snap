@@ -116,6 +116,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     >
                       CoreDNS plugins
                     </option>
+                    <option
+                      value="10"
+                    >
+                      Keptn integrations
+                    </option>
                   </select>
                 </div>
                 <div

@@ -23,6 +23,10 @@
   font-size: 0.875rem;
 }
 
+.mdHeader {
+  font-size: 55%;
+}
+
 @media only screen and (max-width: 767.98px) {
   .blockWrapper {
     font-size: 0.9rem;

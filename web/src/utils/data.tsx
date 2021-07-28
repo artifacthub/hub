@@ -178,6 +178,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     icon: <RepositoryIcon kind={RepositoryKind.CoreDNS} className="mw-100 mh-100" />,
     active: true,
   },
+  {
+    kind: RepositoryKind.Keptn,
+    label: 'keptn',
+    name: 'Keptn integrations',
+    singular: 'Keptn integration',
+    plural: 'Keptn integrations',
+    icon: <RepositoryIcon kind={RepositoryKind.Keptn} className="mw-100 mh-100" />,
+    active: true,
+  },
 ];
 
 export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [

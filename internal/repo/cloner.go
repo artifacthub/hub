@@ -35,7 +35,8 @@ func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string
 		hub.TBAction,
 		hub.TektonTask,
 		hub.KedaScaler,
-		hub.CoreDNS:
+		hub.CoreDNS,
+		hub.Keptn:
 		matches := GitRepoURLRE.FindStringSubmatch(r.URL)
 		if len(matches) < 2 {
 			return "", "", fmt.Errorf("invalid repository url")

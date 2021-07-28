@@ -188,8 +188,8 @@ const tests: Tests[] = [
     output: {
       methods: [
         {
-          label: 'custom',
-          title: 'Custom',
+          label: 'publisher',
+          title: 'Publisher instructions',
           kind: 0,
           props: {
             install:
@@ -315,8 +315,8 @@ const tests: Tests[] = [
     output: {
       methods: [
         {
-          label: 'custom',
-          title: 'Custom',
+          label: 'publisher',
+          title: 'Publisher instructions',
           kind: 0,
           props: {
             install:
@@ -469,8 +469,8 @@ const tests: Tests[] = [
     output: {
       methods: [
         {
-          label: 'custom',
-          title: 'Custom',
+          label: 'publisher',
+          title: 'Publisher instructions',
           kind: 0,
           props: {
             install: '###Custom install',
@@ -894,8 +894,8 @@ const tests: Tests[] = [
     output: {
       methods: [
         {
-          label: 'custom',
-          title: 'Custom',
+          label: 'publisher',
+          title: 'Publisher instructions',
           kind: 0,
           props: {
             install: '###Custom install',

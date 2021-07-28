@@ -22,6 +22,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.KedaScaler;
     case 'coredns':
       return RepositoryKind.CoreDNS;
+    case 'keptn':
+      return RepositoryKind.Keptn;
     default:
       return null;
   }
@@ -49,6 +51,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'keda-scaler';
     case RepositoryKind.CoreDNS:
       return 'coredns';
+    case RepositoryKind.Keptn:
+      return 'keptn';
     default:
       return null;
   }

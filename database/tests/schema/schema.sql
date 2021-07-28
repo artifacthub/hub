@@ -486,7 +486,8 @@ select results_eq(
         (6, 'Helm plugins'),
         (7, 'Tekton tasks'),
         (8, 'KEDA scalers'),
-        (9, 'CoreDNS plugins')
+        (9, 'CoreDNS plugins'),
+        (10, 'Keptn integrations')
     $$,
     'Repository kinds should exist'
 );

@@ -43,6 +43,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('coredns')).toBe(RepositoryKind.CoreDNS);
     });
 
+    it('keptn', () => {
+      expect(methods.getRepoKind('keptn')).toBe(RepositoryKind.Keptn);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -87,6 +91,10 @@ describe('repoKind', () => {
 
     it('coredns kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.CoreDNS)).toBe('coredns');
+    });
+
+    it('keptn kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.Keptn)).toBe('keptn');
     });
 
     it('unknown kind', () => {
