@@ -79,6 +79,11 @@ describe('SVGIcons', () => {
     expect(screen.getByTitle('coredns'));
   });
 
+  it('renders keptn icon', () => {
+    render(<SVGIcons name="keptn" />);
+    expect(screen.getByTitle('keptn'));
+  });
+
   it('does not render when name is not in the list', () => {
     render(<SVGIcons name="not-listed" />);
     expect(screen.getByTestId('iconWrapper')).toBeEmptyDOMElement();

@@ -5,7 +5,8 @@ import updateMetaIndex from './updateMetaIndex';
 import notificationsDispatcher from './userNotificationsDispatcher';
 const history = createBrowserHistory();
 
-const detailPath = /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns)\//;
+const detailPath =
+  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn)\//;
 
 history.listen((location) => {
   // Updates meta tags every time that history is called for all locations except for package detail page

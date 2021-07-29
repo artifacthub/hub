@@ -126,7 +126,7 @@ describe('Home index', () => {
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
 
       const links = getAllByRole('button');
-      expect(links).toHaveLength(16);
+      expect(links).toHaveLength(17);
 
       expect(links[2]).toHaveProperty('href', 'https://github.com/cncf/hub');
       expect(links[3]).toHaveProperty('href', 'https://cloud-native.slack.com/channels/artifact-hub');
@@ -145,8 +145,9 @@ describe('Home index', () => {
       expect(links[12]).toHaveProperty('href', 'https://tekton.dev/');
       expect(links[13]).toHaveProperty('href', 'https://keda.sh/');
       expect(links[14]).toHaveProperty('href', 'https://coredns.io/');
+      expect(links[15]).toHaveProperty('href', 'https://keptn.sh/');
 
-      expect(links[15]).toHaveProperty('href', 'https://www.cncf.io/sandbox-projects/');
+      expect(links[16]).toHaveProperty('href', 'https://www.cncf.io/sandbox-projects/');
     });
   });
 });

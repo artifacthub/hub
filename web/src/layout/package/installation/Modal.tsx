@@ -14,7 +14,6 @@ import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
 import Tabs from '../../common/Tabs';
 import ModalHeader from '../ModalHeader';
-import CustomInstall from './CustomInstall';
 import FalcoInstall from './FalcoInstall';
 import HelmInstall from './HelmInstall';
 import HelmOCIInstall from './HelmOCIInstall';
@@ -22,6 +21,7 @@ import HelmPluginInstall from './HelmPluginInstall';
 import KrewInstall from './KrewInstall';
 import OLMInstall from './OLMInstall';
 import OLMOCIInstall from './OLMOCIInstall';
+import PublisherInstructionsInstall from './PublisherInstructionsInstall';
 import TektonInstall from './TektonInstall';
 
 interface Props {
@@ -132,8 +132,8 @@ const InstallationModal = (props: Props) => {
                     <>
                       {(() => {
                         switch (method.kind) {
-                          case InstallMethodKind.Custom:
-                            return <CustomInstall install={method.props.install!} />;
+                          case InstallMethodKind.PublisherInstructions:
+                            return <PublisherInstructionsInstall install={method.props.install!} />;
                           case InstallMethodKind.Helm:
                             return (
                               <HelmInstall

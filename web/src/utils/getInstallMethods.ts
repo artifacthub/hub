@@ -32,7 +32,7 @@ interface PackageInfo {
 }
 
 export enum InstallMethodKind {
-  Custom = 0,
+  PublisherInstructions = 0,
   Helm,
   HelmOCI,
   OLM,
@@ -79,9 +79,9 @@ export default (props: PackageInfo): InstallMethodOutput => {
   if (pkg && pkg.version && !checkIfErrorMessage()) {
     if (pkg.install) {
       output.methods.push({
-        label: 'custom',
-        title: 'Custom',
-        kind: InstallMethodKind.Custom,
+        label: 'publisher',
+        title: 'Publisher instructions',
+        kind: InstallMethodKind.PublisherInstructions,
         props: {
           install: pkg.install,
         },

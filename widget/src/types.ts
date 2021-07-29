@@ -33,6 +33,7 @@ export enum RepositoryKind {
   TektonTask,
   KedaScaler,
   CoreDNS,
+  Keptn,
 }
 
 export interface SearchResults {

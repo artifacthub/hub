@@ -11,6 +11,12 @@ export enum RepositoryKind {
   TektonTask,
   KedaScaler,
   CoreDNS,
+  Keptn,
+}
+
+export enum KeptnData {
+  Version = 'keptnVersion',
+  Kind = 'keptnKind',
 }
 
 export enum HelmChartType {
@@ -173,6 +179,8 @@ export interface PackageData {
   apiVersion?: string;
   type?: HelmChartType;
   kubeVersion?: string;
+  [KeptnData.Version]?: string;
+  [KeptnData.Kind]?: string;
 }
 
 export interface OPAPolicies {

@@ -277,6 +277,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Keptn:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories#keptn-integrations-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
+            <u>Keptn integrations</u>
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -543,6 +554,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TektonTask,
               RepositoryKind.KedaScaler,
               RepositoryKind.CoreDNS,
+              RepositoryKind.Keptn,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -652,6 +664,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TektonTask,
               RepositoryKind.KedaScaler,
               RepositoryKind.CoreDNS,
+              RepositoryKind.Keptn,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="custom-control custom-switch pl-0">
