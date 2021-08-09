@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.0.3
-appVersion: 1.0.0
+version: 1.1.0
+appVersion: 1.1.0
 kubeVersion: ">= 1.14.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/hub/chart/logo_v2.png
@@ -34,45 +34,43 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Display Helm charts sign key information
+      description: Add Artifact Hub CLI tool
     - kind: added
-      description: Sample search queries can now be customized
+      description: Add support for Keptn integrations
+    - kind: added
+      description: Search results can now be sorted by relevance or stars
+    - kind: added
+      description: Allow users deleting their accounts
+    - kind: added
+      description: Allow users cropping their avatar image
     - kind: changed
-      description: Add pagination support to some endpoints
+      description: Related packages are now displayed below the readme in some cases
+    - kind: changed
+      description: Use third party library for readme ToC generation
+    - kind: changed
+      description: Bump Alpine to 3.14
+    - kind: changed
+      description: Bump Trivy to 0.19.2
       links:
-        - name: Github PR
-          url: https://github.com/artifacthub/hub/pull/1386
+        - name: Trivy migrating to new JSON schema
+          url: https://github.com/artifacthub/hub/pull/1437#issue-689445316
     - kind: changed
-      description: Consolidate some repositories API endpoints
-      links:
-        - name: Github PR
-          url: https://github.com/artifacthub/hub/pull/1382
-    - kind: changed
-      description: Refactor packages search API endpoint
-      links:
-        - name: Github PR
-          url: https://github.com/artifacthub/hub/pull/1379
-    - kind: changed
-      description: Update API documentation
-    - kind: changed
-      description: Improve scanner errors handling
+      description: Bump OPM to 1.17.5
     - kind: changed
       description: Upgrade backend dependencies
     - kind: changed
       description: Upgrade frontend dependencies
-    - kind: removed
-      description: Support for API keys hashed with bcrypt
     - kind: fixed
       description: Some bugs and other improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.0.0
+      image: artifacthub/db-migrator:v1.1.0
     - name: hub
-      image: artifacthub/hub:v1.0.0
+      image: artifacthub/hub:v1.1.0
     - name: tracker
-      image: artifacthub/tracker:v1.0.0
+      image: artifacthub/tracker:v1.1.0
     - name: scanner
-      image: artifacthub/scanner:v1.0.0
+      image: artifacthub/scanner:v1.1.0
     - name: trivy
       image: aquasec/trivy:0.19.2
