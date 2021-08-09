@@ -2,6 +2,7 @@ import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
+import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import compoundJSONSchemaYAML from '../../../utils/compoundJSONSchemaYAML';
 import BlockCodeButtons from '../../common/BlockCodeButtons';
 import styles from './Schema.module.css';
@@ -71,7 +72,7 @@ const Schema = (props: Props) => {
           {Object.keys(props.schema.properties).map((propName: string) => {
             const value = props.schema.properties![propName] as JSONSchema;
             if (isUndefined(value)) return null;
-            const isRequired = props.schema.required ? props.schema.required.includes(propName) : false;
+            const isRequired = checkIfPropIsRequiredInSchema(propName, props.schema.required);
 
             return (
               <React.Fragment key={propName}>

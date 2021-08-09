@@ -351,6 +351,10 @@ const Readme = (props: Props) => {
     }
   };
 
+  const Pre: React.ElementType = (props: CodeProps) => {
+    return <>{props.children}</>;
+  };
+
   return (
     <ReactMarkdown
       className={`mt-3 mb-5 position-relative ${styles.md}`}
@@ -359,7 +363,7 @@ const Readme = (props: Props) => {
       skipHtml
       remarkPlugins={[[gfm, { tableCellPadding: false }]]}
       components={{
-        pre: 'span',
+        pre: Pre,
         code: Code,
         image: Image,
         img: Image,
