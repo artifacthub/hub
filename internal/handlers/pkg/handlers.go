@@ -181,7 +181,7 @@ func (h *Handlers) GetSnapshotSecurityReport(w http.ResponseWriter, r *http.Requ
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 30*time.Minute, http.StatusOK)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
 // GetStarredByUser is an http handler used to get the packages starred by the
