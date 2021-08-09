@@ -73,7 +73,11 @@ describe('SecurityModal', () => {
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
-        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(
+          defaultProps.packageId,
+          defaultProps.version,
+          undefined
+        );
       });
     });
 
@@ -116,7 +120,11 @@ describe('SecurityModal', () => {
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
-        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(
+          defaultProps.packageId,
+          defaultProps.version,
+          undefined
+        );
       });
 
       expect(getByRole('dialog')).toBeInTheDocument();
@@ -127,7 +135,7 @@ describe('SecurityModal', () => {
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(2);
-        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, '1.0.0');
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, '1.0.0', undefined);
       });
 
       expect(getByRole('dialog')).toBeInTheDocument();
@@ -144,7 +152,11 @@ describe('SecurityModal', () => {
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
-        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(
+          defaultProps.packageId,
+          defaultProps.version,
+          undefined
+        );
       });
 
       rerender(<SecurityModal {...defaultProps} packageId="pkgID2" />);
@@ -153,7 +165,7 @@ describe('SecurityModal', () => {
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(2);
-        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith('pkgID2', defaultProps.version);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith('pkgID2', defaultProps.version, undefined);
       });
 
       expect(getByRole('dialog')).toBeInTheDocument();
@@ -169,7 +181,11 @@ describe('SecurityModal', () => {
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
-        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(
+          defaultProps.packageId,
+          defaultProps.version,
+          undefined
+        );
       });
 
       const btn = getByTestId('closeModalFooterBtn');
@@ -234,6 +250,24 @@ describe('SecurityModal', () => {
         expect(queryByText('Version')).toBeNull();
         expect(queryByText('Fixed in')).toBeNull();
       });
+    });
+
+    it('opens modal', async () => {
+      const mockReport = getMockSecurityReport('9');
+      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+
+      const { getByRole } = render(<SecurityModal {...defaultProps} visibleSecurityReport eventId="eventId" />);
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(
+          defaultProps.packageId,
+          defaultProps.version,
+          'eventId'
+        );
+      });
+
+      expect(getByRole('dialog')).toBeInTheDocument();
     });
   });
 });

@@ -152,6 +152,7 @@ export default function App() {
                       visibleTemplate={getQueryParam(location.search, 'template') || undefined}
                       visibleFile={getQueryParam(location.search, 'file') || undefined}
                       visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
+                      eventId={getQueryParam(location.search, 'event-id') || undefined}
                       {...location.state}
                       {...match.params}
                     />

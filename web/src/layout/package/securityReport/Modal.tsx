@@ -21,6 +21,7 @@ interface Props {
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
+  eventId?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
   hasWhitelistedContainers: boolean;
@@ -51,10 +52,10 @@ const SecurityModal = (props: Props) => {
     }
   };
 
-  async function getSecurityReports() {
+  async function getSecurityReports(eventId?: string) {
     try {
       setIsLoading(true);
-      const report = await API.getSnapshotSecurityReport(props.packageId, props.version);
+      const report = await API.getSnapshotSecurityReport(props.packageId, props.version, eventId);
       setReport(report);
       activateTargetWhenIsOnlyOne(report);
       setCurrentPkgId(props.packageId);
@@ -75,7 +76,7 @@ const SecurityModal = (props: Props) => {
     if (report && props.version === currentVersion && props.packageId === currentPkgId) {
       setOpenStatus(true);
     } else {
-      getSecurityReports();
+      getSecurityReports(props.eventId); // Send eventId, if defined, from security alert email
     }
     history.replace({
       search: '?modal=security-report',
