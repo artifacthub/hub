@@ -479,7 +479,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, helpers.BuildCacheControlHeader(30*time.Minute), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.assertExpectations(t)
 	})
