@@ -37,7 +37,7 @@ func TestTrackerSource(t *testing.T) {
 				URL:  "https://link2.url",
 			},
 		},
-		Capabilities: "Basic Install",
+		Capabilities: "basic install",
 		CRDs: []interface{}{
 			map[string]interface{}{
 				"kind":        "MyKind",
@@ -784,10 +784,20 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 		{
 			&hub.Package{},
 			map[string]string{
+				operatorCapabilitiesAnnotation: "invalid",
+			},
+			&hub.Package{
+				Capabilities: "",
+			},
+			"invalid operator capabilities value",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
 				operatorCapabilitiesAnnotation: "Basic Install",
 			},
 			&hub.Package{
-				Capabilities: "Basic Install",
+				Capabilities: "basic install",
 			},
 			"",
 		},

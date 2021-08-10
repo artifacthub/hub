@@ -60,6 +60,16 @@ var (
 
 	// errInvalidAnnotation indicates that the annotation provided is not valid.
 	errInvalidAnnotation = errors.New("invalid annotation")
+
+	// validOperatorCapabilities represents the valid operator capabilities
+	// values that can be provided.
+	validOperatorCapabilities = []string{
+		"basic install",
+		"seamless upgrades",
+		"full lifecycle",
+		"deep insights",
+		"auto pilot",
+	}
 )
 
 // TrackerSource is a hub.TrackerSource implementation for Helm repositories.
@@ -608,7 +618,14 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	}
 
 	// Operator capabilities
-	p.Capabilities = annotations[operatorCapabilitiesAnnotation]
+	if v, ok := annotations[operatorCapabilitiesAnnotation]; ok {
+		v = strings.ToLower(v)
+		if !contains(validOperatorCapabilities, v) {
+			result = multierror.Append(result, fmt.Errorf("%w: invalid operator capabilities value", errInvalidAnnotation))
+		} else {
+			p.Capabilities = v
+		}
+	}
 
 	// Prerelease
 	if v, ok := annotations[prereleaseAnnotation]; ok {
