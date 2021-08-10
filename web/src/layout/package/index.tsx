@@ -689,7 +689,6 @@ const PackageView = (props: Props) => {
                               normalizedName={detail.normalizedName}
                               packageId={detail.packageId}
                               version={detail.version!}
-                              repoUrl={detail.repository.url}
                               repoKind={detail.repository.kind}
                               visibleChartTemplates={
                                 !isUndefined(props.visibleModal) && props.visibleModal === 'template'

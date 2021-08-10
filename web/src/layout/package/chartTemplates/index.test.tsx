@@ -28,7 +28,6 @@ const defaultProps = {
   packageId: 'id',
   version: '1.1.1',
   repoKind: RepositoryKind.Helm,
-  repoUrl: 'http://url.com',
   visibleChartTemplates: false,
 };
 
@@ -247,7 +246,7 @@ describe('ChartTemplatesModal', () => {
   });
 
   describe('does not render component', () => {
-    it('when repo is not Helm kind', () => {
+    it('when repo is not Helm chart', () => {
       const { container } = render(
         <Router>
           <ChartTemplatesModal {...defaultProps} repoKind={RepositoryKind.Krew} visibleChartTemplates />
@@ -255,29 +254,6 @@ describe('ChartTemplatesModal', () => {
       );
 
       expect(container).toBeEmptyDOMElement();
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
-      });
-    });
-  });
-
-  describe('renders disable button', () => {
-    it('when repo is OCI', () => {
-      const { getByTestId } = render(
-        <Router>
-          <ChartTemplatesModal {...defaultProps} repoUrl="oci://ghcr.io/xxx/yyyy" visibleChartTemplates />
-        </Router>
-      );
-
-      const btn = getByTestId('tmplModalBtn');
-      expect(btn).toBeInTheDocument();
-      expect(btn).toHaveClass('disabled');
-
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({
         search: '',

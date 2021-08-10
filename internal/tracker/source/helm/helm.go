@@ -2,6 +2,7 @@ package helm
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -19,11 +20,13 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker/source"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/containerd/containerd/remotes/docker"
 	"github.com/deislabs/oras/pkg/content"
 	ctxo "github.com/deislabs/oras/pkg/context"
 	"github.com/deislabs/oras/pkg/oras"
 	"github.com/hashicorp/go-multierror"
+	"golang.org/x/time/rate"
 	"gopkg.in/yaml.v3"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
@@ -231,7 +234,17 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 	digest, ok := s.i.PackagesRegistered[pkg.BuildKey(p)]
 	if !ok || chartVersion.Digest != digest || bypassDigestCheck {
 		// Load chart from remote archive
-		chrt, err := s.loadChartArchive(chartURL)
+		chrt, err := LoadChartArchive(
+			s.i.Svc.Ctx,
+			chartURL,
+			&LoadChartArchiveOptions{
+				HC:          s.i.Svc.Hc,
+				GithubToken: s.i.Svc.Cfg.GetString("creds.githubToken"),
+				GithubRL:    s.i.Svc.GithubRL,
+				Username:    s.i.Repository.AuthUser,
+				Password:    s.i.Repository.AuthPass,
+			},
+		)
 		if err != nil {
 			return nil, fmt.Errorf("error loading chart (%s): %w", chartURL.String(), err)
 		}
@@ -276,87 +289,6 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 	return p, nil
 }
 
-// loadChartArchive loads a chart from a remote archive located at the url
-// provided.
-func (s *TrackerSource) loadChartArchive(u *url.URL) (*chart.Chart, error) {
-	var r io.Reader
-
-	switch u.Scheme {
-	case "http", "https":
-		// Get chart content
-		req, _ := http.NewRequest("GET", u.String(), nil)
-		req.Header.Set("Accept-Encoding", "*")
-		if u.Host == "github.com" || u.Host == "raw.githubusercontent.com" {
-			// Authenticate and rate limit requests to Github
-			githubToken := s.i.Svc.Cfg.GetString("creds.githubToken")
-			if githubToken != "" {
-				req.Header.Set("Authorization", fmt.Sprintf("token %s", githubToken))
-			}
-			if s.i.Svc.GithubRL != nil {
-				_ = s.i.Svc.GithubRL.Wait(s.i.Svc.Ctx)
-			}
-		}
-		if s.i.Repository.AuthUser != "" || s.i.Repository.AuthPass != "" {
-			req.SetBasicAuth(s.i.Repository.AuthUser, s.i.Repository.AuthPass)
-		}
-		resp, err := s.i.Svc.Hc.Do(req)
-		if err != nil {
-			return nil, err
-		}
-		defer resp.Body.Close()
-		if resp.StatusCode != http.StatusOK {
-			return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
-		}
-		r = resp.Body
-	case "oci":
-		// Pull reference layers from OCI registry
-		ref := strings.TrimPrefix(u.String(), hub.RepositoryOCIPrefix)
-		resolverOptions := docker.ResolverOptions{}
-		if s.i.Repository.AuthUser != "" || s.i.Repository.AuthPass != "" {
-			resolverOptions.Authorizer = docker.NewDockerAuthorizer(
-				docker.WithAuthCreds(func(string) (string, string, error) {
-					return s.i.Repository.AuthUser, s.i.Repository.AuthPass, nil
-				}),
-			)
-		}
-		store := content.NewMemoryStore()
-		_, layers, err := oras.Pull(
-			ctxo.WithLoggerDiscarded(s.i.Svc.Ctx),
-			docker.NewResolver(resolverOptions),
-			ref,
-			store,
-			oras.WithPullEmptyNameAllowed(),
-			oras.WithAllowedMediaTypes([]string{helmChartConfigMediaType, helmChartContentLayerMediaType}),
-		)
-		if err != nil {
-			return nil, err
-		}
-
-		// Create reader for Helm chart content layer, if available
-		for _, layer := range layers {
-			if layer.MediaType == helmChartContentLayerMediaType {
-				_, b, ok := store.Get(layer)
-				if ok {
-					r = bytes.NewReader(b)
-					break
-				}
-			}
-		}
-		if r == nil {
-			return nil, errors.New("content layer not found")
-		}
-	default:
-		return nil, repo.ErrSchemeNotSupported
-	}
-
-	// Load chart from reader previously set up
-	chart, err := loader.LoadArchive(r)
-	if err != nil {
-		return nil, err
-	}
-	return chart, nil
-}
-
 // chartHasProvenanceFile checks if a chart version has a provenance file
 // checking if a .prov file exists for the chart version url provided.
 func (s *TrackerSource) chartHasProvenanceFile(u string) (bool, error) {
@@ -390,6 +322,101 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 	if !md.Deprecated {
 		s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 	}
+}
+
+// LoadChartArchiveOptions represents some options that can be provided to load
+// a chart archive from its remote location.
+type LoadChartArchiveOptions struct {
+	HC          hub.HTTPClient
+	Username    string
+	Password    string
+	GithubToken string
+	GithubRL    *rate.Limiter
+}
+
+// LoadChartArchive loads a chart from a remote archive located at the url
+// provided.
+func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOptions) (*chart.Chart, error) {
+	var r io.Reader
+
+	switch u.Scheme {
+	case "http", "https":
+		// Get chart content
+		req, _ := http.NewRequest("GET", u.String(), nil)
+		req = req.WithContext(ctx)
+		req.Header.Set("Accept-Encoding", "*")
+		if u.Host == "github.com" || u.Host == "raw.githubusercontent.com" {
+			// Authenticate and rate limit requests to Github
+			if o.GithubToken != "" {
+				req.Header.Set("Authorization", fmt.Sprintf("token %s", o.GithubToken))
+			}
+			if o.GithubRL != nil {
+				_ = o.GithubRL.Wait(ctx)
+			}
+		}
+		if o.Username != "" || o.Password != "" {
+			req.SetBasicAuth(o.Username, o.Password)
+		}
+		hc := o.HC
+		if hc == nil {
+			hc = util.SetupHTTPClient(false)
+		}
+		resp, err := hc.Do(req)
+		if err != nil {
+			return nil, err
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+		}
+		r = resp.Body
+	case "oci":
+		// Pull reference layers from OCI registry
+		ref := strings.TrimPrefix(u.String(), hub.RepositoryOCIPrefix)
+		resolverOptions := docker.ResolverOptions{}
+		if o.Username != "" || o.Password != "" {
+			resolverOptions.Authorizer = docker.NewDockerAuthorizer(
+				docker.WithAuthCreds(func(string) (string, string, error) {
+					return o.Username, o.Password, nil
+				}),
+			)
+		}
+		store := content.NewMemoryStore()
+		_, layers, err := oras.Pull(
+			ctxo.WithLoggerDiscarded(ctx),
+			docker.NewResolver(resolverOptions),
+			ref,
+			store,
+			oras.WithPullEmptyNameAllowed(),
+			oras.WithAllowedMediaTypes([]string{helmChartConfigMediaType, helmChartContentLayerMediaType}),
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		// Create reader for Helm chart content layer, if available
+		for _, layer := range layers {
+			if layer.MediaType == helmChartContentLayerMediaType {
+				_, b, ok := store.Get(layer)
+				if ok {
+					r = bytes.NewReader(b)
+					break
+				}
+			}
+		}
+		if r == nil {
+			return nil, errors.New("content layer not found")
+		}
+	default:
+		return nil, repo.ErrSchemeNotSupported
+	}
+
+	// Load chart from reader previously set up
+	chrt, err := loader.LoadArchive(r)
+	if err != nil {
+		return nil, err
+	}
+	return chrt, nil
 }
 
 // EnrichPackageFromChart adds some extra information to the package from the

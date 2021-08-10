@@ -194,47 +194,24 @@ func TestGetChartTemplates(t *testing.T) {
 		hw.assertExpectations(t)
 	})
 
-	t.Run("bad request", func(t *testing.T) {
-		testCases := []struct {
-			description string
-			pkg         *hub.Package
-		}{
-			{
-				"repository kind not supported",
-				&hub.Package{
-					Repository: &hub.Repository{
-						Kind: hub.OLM,
-					},
-				},
-			},
-			{
-				"helm oci repositories not supported",
-				&hub.Package{
-					Repository: &hub.Repository{
-						Kind: hub.Helm,
-						URL:  "oci://repo.url/chart",
-					},
-				},
-			},
-		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.description, func(t *testing.T) {
-				t.Parallel()
-				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
-				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+	t.Run("bad request: repository kind not supported", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
-				hw := newHandlersWrapper()
-				hw.pm.On("Get", r.Context(), getPkgInput).Return(tc.pkg, nil)
-				hw.h.GetChartTemplates(w, r)
-				resp := w.Result()
-				defer resp.Body.Close()
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), getPkgInput).Return(&hub.Package{
+			Repository: &hub.Repository{
+				Kind: hub.OLM,
+			},
+		}, nil)
+		hw.h.GetChartTemplates(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
 
-				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-				hw.assertExpectations(t)
-			})
-		}
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.assertExpectations(t)
 	})
 
 	t.Run("error downloading repository", func(t *testing.T) {

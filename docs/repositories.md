@@ -161,7 +161,6 @@ Please note that there are some features that are not yet available for Helm rep
 - [Ownership claim](#ownership-claim)
 - Provenance files processing (signed label)
 - Force an existing version to be reindexed by changing its digest
-- Exploring chart templates
 
 For additional information about Helm OCI support, please see the [HIP-0006](https://github.com/helm/community/blob/master/hips/hip-0006.md).
 
