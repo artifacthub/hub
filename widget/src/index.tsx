@@ -12,13 +12,15 @@ Widgets.forEach((div: Element) => {
   ReactDOM.render(
     <React.StrictMode>
       <root.section>
-        <Widget
-          url={url}
-          theme={theme}
-          responsive={responsive === 'true'}
-          header={isUndefined(header) || header === 'true'}
-          inGroup={false}
-        />
+        <div style={{ all: 'initial' }}>
+          <Widget
+            url={url}
+            theme={theme}
+            responsive={responsive === 'true'}
+            header={isUndefined(header) || header === 'true'}
+            inGroup={false}
+          />
+        </div>
       </root.section>
     </React.StrictMode>,
     div
@@ -31,15 +33,17 @@ WidgetsGroups.forEach((div: Element) => {
   ReactDOM.render(
     <React.StrictMode>
       <root.section>
-        <Group
-          url={url}
-          loading={isUndefined(loading) || loading === 'true'}
-          header={isUndefined(header) || header === 'true'}
-          theme={theme}
-          color={color}
-          responsive={isUndefined(responsive) || responsive === 'true'}
-          width={width}
-        />
+        <div style={{ all: 'initial' }}>
+          <Group
+            url={url}
+            loading={isUndefined(loading) || loading === 'true'}
+            header={isUndefined(header) || header === 'true'}
+            theme={theme}
+            color={color}
+            responsive={isUndefined(responsive) || responsive === 'true'}
+            width={width}
+          />
+        </div>
       </root.section>
     </React.StrictMode>,
     div
