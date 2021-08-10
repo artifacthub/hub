@@ -201,6 +201,7 @@ const ChartTemplatesModal = (props: Props) => {
   const onOpenModal = () => {
     if (templates && props.packageId === currentPkgId && props.version === currentVersion) {
       setOpenStatus(true);
+      updateUrl(templates[0].name);
     } else {
       getChartTemplates();
     }

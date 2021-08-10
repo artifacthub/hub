@@ -177,6 +177,14 @@ describe('ChartTemplatesModal', () => {
       await waitFor(() => {
         expect(getByRole('dialog')).toBeInTheDocument();
         expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
+        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+          search: '?modal=template&template=db_migrator_install_job.yaml',
+          state: {
+            fromStarredPage: undefined,
+            searchUrlReferer: undefined,
+          },
+        });
       });
     });
   });
