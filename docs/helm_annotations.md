@@ -48,7 +48,7 @@ Use this annotation to indicate that your chart represents an operator. Artifact
 
 - **artifacthub.io/operatorCapabilities** *(string)*
 
-Use this annotation to indicate the capabilities of the operator your chart provides. It must be one of the following options: *Basic Install*, *Seamless Upgrades*, *Full Lifecycle*, *Deep Insights* or *Auto Pilot*. For more information please see the [capability level diagram](https://artifacthub.io/static/media/capability-level-diagram_v3.svg).
+Use this annotation to indicate the capabilities of the operator your chart provides. It must be one of the following options: *basic install*, *seamless upgrades*, *full lifecycle*, *deep insights* or *auto pilot*. For more information please see the [capability level diagram](https://artifacthub.io/static/media/capability-level-diagram_v3.svg).
 
 - **artifacthub.io/prerelease** *(boolean string, see example below)*
 
