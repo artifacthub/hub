@@ -8,18 +8,17 @@ import (
 	"net/url"
 	"sort"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/tracker/source/helm"
 	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/feeds"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
-	"helm.sh/helm/v3/pkg/chart/loader"
 )
 
 const (
@@ -96,40 +95,34 @@ func (h *Handlers) GetChartTemplates(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Only Helm charts packages can have templates
-	// NOTE: OCI based repositories are NOT supported yet
-	if p.Repository.Kind != hub.Helm || strings.HasPrefix(p.Repository.URL, hub.RepositoryOCIPrefix) {
+	if p.Repository.Kind != hub.Helm {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusBadRequest)
 		return
 	}
 
 	// Download chart package from remote source
-	req, _ := http.NewRequest("GET", p.ContentURL, nil)
-	req.Header.Set("Accept-Encoding", "*")
-	req = req.WithContext(r.Context())
+	var username, password string
 	if p.Repository.Private {
-		// Get credentials and set them in request if the repository is private
+		// Get credentials if the repository is private
 		repo, err := h.repoManager.GetByID(r.Context(), p.Repository.RepositoryID, true)
 		if err != nil {
 			h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
 			helpers.RenderErrorJSON(w, err)
 			return
 		}
-		req.SetBasicAuth(repo.AuthUser, repo.AuthPass)
+		username = repo.AuthUser
+		password = repo.AuthPass
 	}
-	resp, err := h.hc.Do(req)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
-		helpers.RenderErrorJSON(w, err)
-		return
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		err := fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
-		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
-		helpers.RenderErrorJSON(w, err)
-		return
-	}
-	chart, err := loader.LoadArchive(resp.Body)
+	u, _ := url.Parse(p.ContentURL)
+	chrt, err := helm.LoadChartArchive(
+		r.Context(),
+		u,
+		&helm.LoadChartArchiveOptions{
+			HC:       h.hc,
+			Username: username,
+			Password: password,
+		},
+	)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
 		helpers.RenderErrorJSON(w, err)
@@ -138,8 +131,8 @@ func (h *Handlers) GetChartTemplates(w http.ResponseWriter, r *http.Request) {
 
 	// Prepare json data with templates and values and return it
 	data := map[string]interface{}{
-		"templates": chart.Templates,
-		"values":    chart.Values,
+		"templates": chrt.Templates,
+		"values":    chrt.Values,
 	}
 	dataJSON, _ := json.Marshal(data)
 	helpers.RenderJSON(w, dataJSON, 24*time.Hour, http.StatusOK)
