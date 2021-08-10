@@ -67,6 +67,16 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     required=""
                   >
                     <option
+                      value="9"
+                    >
+                      CoreDNS plugins
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      Falco rules
+                    </option>
+                    <option
                       value="0"
                     >
                       Helm charts
@@ -77,24 +87,14 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Helm plugins
                     </option>
                     <option
-                      value="1"
+                      value="8"
                     >
-                      Falco rules
+                      KEDA scalers
                     </option>
                     <option
-                      value="2"
+                      value="10"
                     >
-                      OPA policies
-                    </option>
-                    <option
-                      value="3"
-                    >
-                      OLM operators
-                    </option>
-                    <option
-                      value="4"
-                    >
-                      Tinkerbell actions
+                      Keptn integrations
                     </option>
                     <option
                       value="5"
@@ -102,24 +102,24 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Krew kubectl plugins
                     </option>
                     <option
+                      value="3"
+                    >
+                      OLM operators
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      OPA policies
+                    </option>
+                    <option
                       value="7"
                     >
                       Tekton tasks
                     </option>
                     <option
-                      value="8"
+                      value="4"
                     >
-                      KEDA scalers
-                    </option>
-                    <option
-                      value="9"
-                    >
-                      CoreDNS plugins
-                    </option>
-                    <option
-                      value="10"
-                    >
-                      Keptn integrations
+                      Tinkerbell actions
                     </option>
                   </select>
                 </div>
