@@ -8,6 +8,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { ActiveJSONSchemaValue } from '../../../types';
+import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import detectLinksInText from '../../../utils/detectLinksInText';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import styles from './SchemaDefinition.module.css';
@@ -175,7 +176,7 @@ const SchemaDefinition = (props: Props) => {
                         : value[el].type
                       : '-'}
                   </span>{' '}
-                  {((def.required && def.required.includes(el)) || (required && required.includes(el))) && (
+                  {(checkIfPropIsRequiredInSchema(el, def.required) || checkIfPropIsRequiredInSchema(el, required)) && (
                     <span
                       className={`text-success text-uppercase position-relative ml-2 font-weight-bold ${styles.xsBadge}`}
                     >
@@ -319,10 +320,10 @@ const SchemaDefinition = (props: Props) => {
                       </>
                     )}
 
-                    <div className="d-flex flex-row align-items-center w-100">
+                    <div className="d-flex flex-row align-items-start w-100">
                       <div className="text-nowrap">
                         <small className="text-muted text-uppercase">Type</small>:{' '}
-                        {isArray(def.type) ? (
+                        {def.type && isArray(def.type) ? (
                           <select
                             data-testid="schemaCombSelect"
                             value={activeType}
@@ -334,7 +335,7 @@ const SchemaDefinition = (props: Props) => {
                               }
                             }}
                           >
-                            {def.type.map((type: string, index: number) => (
+                            {(def.type as string[]).map((type: string, index: number) => (
                               <option value={type} key={`opt_${index}`}>
                                 {type}
                               </option>

@@ -54,7 +54,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
                 </option>
               </select>
               <div
-                class="d-flex flex-row align-items-center w-100"
+                class="d-flex flex-row align-items-start w-100"
               >
                 <div
                   class="text-nowrap"

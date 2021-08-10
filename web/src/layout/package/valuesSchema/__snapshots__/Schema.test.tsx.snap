@@ -190,7 +190,7 @@ exports[`Schema creates snapshot 1`] = `
                     Database configuration
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -303,7 +303,7 @@ exports[`Schema creates snapshot 1`] = `
                     Database host
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -437,7 +437,7 @@ exports[`Schema creates snapshot 1`] = `
                     Database port
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -571,7 +571,7 @@ exports[`Schema creates snapshot 1`] = `
                     Database user
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -705,7 +705,7 @@ exports[`Schema creates snapshot 1`] = `
                     Database name
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -839,7 +839,7 @@ exports[`Schema creates snapshot 1`] = `
                     Database password
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -969,7 +969,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub configuration
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -1068,7 +1068,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -1175,7 +1175,7 @@ exports[`Schema creates snapshot 1`] = `
                     From address used in emails
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -1289,7 +1289,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -1396,7 +1396,7 @@ exports[`Schema creates snapshot 1`] = `
                     SMTP host
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -1524,7 +1524,7 @@ exports[`Schema creates snapshot 1`] = `
                     SMTP port
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -1652,7 +1652,7 @@ exports[`Schema creates snapshot 1`] = `
                     SMTP password
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -1780,7 +1780,7 @@ exports[`Schema creates snapshot 1`] = `
                     SMTP username
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -1908,7 +1908,7 @@ exports[`Schema creates snapshot 1`] = `
                     Reply-to address used in emails
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2036,7 +2036,7 @@ exports[`Schema creates snapshot 1`] = `
                     From name used in emails
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2150,7 +2150,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2249,7 +2249,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2362,7 +2362,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub image repository (without the tag)
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2496,7 +2496,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub pod resource requirements
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2630,7 +2630,7 @@ exports[`Schema creates snapshot 1`] = `
                     Number of Hub replicas
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2762,7 +2762,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub pod readiness gates
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2879,7 +2879,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -2978,7 +2978,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -3071,7 +3071,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -3185,7 +3185,7 @@ exports[`Schema creates snapshot 1`] = `
                     Github oauth scopes
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -3333,7 +3333,7 @@ exports[`Schema creates snapshot 1`] = `
                     Github oauth client id
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -3461,7 +3461,7 @@ exports[`Schema creates snapshot 1`] = `
                     Github oauth redirect url
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -3589,7 +3589,7 @@ exports[`Schema creates snapshot 1`] = `
                     Github oauth client secret
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -3703,7 +3703,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -3817,7 +3817,7 @@ exports[`Schema creates snapshot 1`] = `
                     Google oauth scopes
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -3965,7 +3965,7 @@ exports[`Schema creates snapshot 1`] = `
                     Google oauth client id
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -4093,7 +4093,7 @@ exports[`Schema creates snapshot 1`] = `
                     Google oauth redirect url
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -4221,7 +4221,7 @@ exports[`Schema creates snapshot 1`] = `
                     Google oauth client secret
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -4335,7 +4335,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -4448,7 +4448,7 @@ exports[`Schema creates snapshot 1`] = `
                     Enable Hub secure cookies
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -4582,7 +4582,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub cookie hash key
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -4710,7 +4710,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub server base url
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -4844,7 +4844,7 @@ exports[`Schema creates snapshot 1`] = `
                     X-Forwarded-For IP index
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -4964,7 +4964,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -5077,7 +5077,7 @@ exports[`Schema creates snapshot 1`] = `
                     Enable Hub basic auth
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -5211,7 +5211,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub basic auth password
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -5339,7 +5339,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub basic auth username
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -5467,7 +5467,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub server shutdown timeout
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -5587,7 +5587,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -5698,7 +5698,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub ingress rules
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -5829,7 +5829,7 @@ exports[`Schema creates snapshot 1`] = `
                     Enable Hub ingress
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -5959,7 +5959,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub ingress annotations
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -6072,7 +6072,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub ingress class
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -6192,7 +6192,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -6305,7 +6305,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub service port
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -6439,7 +6439,7 @@ exports[`Schema creates snapshot 1`] = `
                     Hub service type
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -6559,7 +6559,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -6666,7 +6666,7 @@ exports[`Schema creates snapshot 1`] = `
                     Google Analytics tracking id
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -6780,7 +6780,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -6893,7 +6893,7 @@ exports[`Schema creates snapshot 1`] = `
                     Log level
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7027,7 +7027,7 @@ exports[`Schema creates snapshot 1`] = `
                     Enable pretty logging
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7157,7 +7157,7 @@ exports[`Schema creates snapshot 1`] = `
                     Trivy configuration
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7256,7 +7256,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7359,7 +7359,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7493,7 +7493,7 @@ exports[`Schema creates snapshot 1`] = `
                     Trivy pod resource requirements
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7627,7 +7627,7 @@ exports[`Schema creates snapshot 1`] = `
                     Trivy authentication URL
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7755,7 +7755,7 @@ exports[`Schema creates snapshot 1`] = `
                     Trivy authentication password
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7883,7 +7883,7 @@ exports[`Schema creates snapshot 1`] = `
                     Trivy authentication username
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -7997,7 +7997,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -8110,7 +8110,7 @@ exports[`Schema creates snapshot 1`] = `
                     Size of persistent volume claim
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -8238,7 +8238,7 @@ exports[`Schema creates snapshot 1`] = `
                     Use persistent volume to store data
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -8372,7 +8372,7 @@ exports[`Schema creates snapshot 1`] = `
                     Type of persistent volume claim
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -8496,7 +8496,7 @@ exports[`Schema creates snapshot 1`] = `
                     Scanner configuration
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -8595,7 +8595,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -8694,7 +8694,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -8807,7 +8807,7 @@ exports[`Schema creates snapshot 1`] = `
                     Scanner image repository (without the tag)
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -8941,7 +8941,7 @@ exports[`Schema creates snapshot 1`] = `
                     Scanner pod resource requirements
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -9075,7 +9075,7 @@ exports[`Schema creates snapshot 1`] = `
                     Trivy server url
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -9209,7 +9209,7 @@ exports[`Schema creates snapshot 1`] = `
                     Snapshots to process concurrently
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -9339,7 +9339,7 @@ exports[`Schema creates snapshot 1`] = `
                     Tracker configuration
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -9438,7 +9438,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -9551,7 +9551,7 @@ exports[`Schema creates snapshot 1`] = `
                     Enable repository tracking errors events
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -9665,7 +9665,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -9764,7 +9764,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -9877,7 +9877,7 @@ exports[`Schema creates snapshot 1`] = `
                     Tracker image repository (without the tag)
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -10011,7 +10011,7 @@ exports[`Schema creates snapshot 1`] = `
                     Tracker pod resource requirements
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -10145,7 +10145,7 @@ exports[`Schema creates snapshot 1`] = `
                     Store for images
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -10279,7 +10279,7 @@ exports[`Schema creates snapshot 1`] = `
                     Repositories to process concurrently
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -10413,7 +10413,7 @@ exports[`Schema creates snapshot 1`] = `
                     Bypass digest check
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -10545,7 +10545,7 @@ exports[`Schema creates snapshot 1`] = `
                     Repositories kinds to process ([] = all)
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -10685,7 +10685,7 @@ exports[`Schema creates snapshot 1`] = `
                     Repositories names to process ([] = all)
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -10827,7 +10827,7 @@ exports[`Schema creates snapshot 1`] = `
                     Tag used when pulling images
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -10957,7 +10957,7 @@ exports[`Schema creates snapshot 1`] = `
                     Database migrator configuration
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -11056,7 +11056,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -11155,7 +11155,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -11268,7 +11268,7 @@ exports[`Schema creates snapshot 1`] = `
                     Database migrator image repository (without the tag)
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -11402,7 +11402,7 @@ exports[`Schema creates snapshot 1`] = `
                     Load demo user and sample repositories
                   </div>
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -11526,7 +11526,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -11650,7 +11650,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -11768,7 +11768,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"
@@ -11884,7 +11884,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="d-flex flex-row align-items-center w-100"
+                    class="d-flex flex-row align-items-start w-100"
                   >
                     <div
                       class="text-nowrap"

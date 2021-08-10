@@ -4,6 +4,7 @@ import { isArray, isEmpty, isNull, isString, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
 import { ActiveJSONSchemaValue } from '../../../types';
+import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import formatStringForYAML from '../../../utils/formatStringForYAML';
 import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchema';
 import SchemaDefinition from './SchemaDefinition';
@@ -220,7 +221,7 @@ const SchemaLine = (props: Props) => {
           {Object.keys(children).map((propName: string, index: number) => {
             const currentValue = children![propName] as JSONSchema;
             if (isUndefined(value)) return null;
-            let isRequired = activeValue.required ? activeValue.required.includes(propName) : false;
+            let isRequired = checkIfPropIsRequiredInSchema(propName, activeValue.required);
             if (isArrayParent) {
               isRequired =
                 (props.value.items as JSONSchema).hasOwnProperty('required') &&
