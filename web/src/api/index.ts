@@ -880,9 +880,11 @@ class API_CLASS {
     return this.apiFetch({ url: `${this.API_BASE_URL}/orgs/${orgName}/user-allowed-actions` });
   }
 
-  public getSnapshotSecurityReport(packageId: string, version: string): Promise<SecurityReport> {
+  public getSnapshotSecurityReport(packageId: string, version: string, eventId?: string): Promise<SecurityReport> {
     return this.apiFetch({
-      url: `${this.API_BASE_URL}/packages/${packageId}/${version}/security-report`,
+      url: `${this.API_BASE_URL}/packages/${packageId}/${version}/security-report${
+        !isUndefined(eventId) ? `?event-id=${eventId}` : ''
+      }`,
       skipCamelConversion: true,
     }).then((report: SecurityReportRaw) => {
       const newFormatReport: SecurityReport = {};

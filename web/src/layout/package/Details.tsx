@@ -35,6 +35,7 @@ interface Props {
   fromStarredPage?: boolean;
   visibleSecurityReport: boolean;
   channels?: Channel[] | null;
+  eventId?: string;
 }
 
 interface VersionsProps {
@@ -257,6 +258,7 @@ const Details = (props: Props) => {
         version={props.package.version!}
         createdAt={props.package.securityReportCreatedAt}
         visibleSecurityReport={props.visibleSecurityReport}
+        eventId={props.eventId}
         searchUrlReferer={props.searchUrlReferer}
         fromStarredPage={props.fromStarredPage}
         containers={props.package.containersImages || []}

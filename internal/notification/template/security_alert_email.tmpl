@@ -30,7 +30,7 @@
                       <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                         <tbody>
                           <tr>
-                            <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .Package.URL }}?modal=security-report" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">Security report</a> </div></td>
+                            <td style="font-family: sans-serif; font-size: 14px; border-radius: 5px; vertical-align: top;"><div style="text-align: center;"> <a href="{{ .Package.URL }}?modal=security-report&event-id={{ .Event.ID }}" class="AHbtn" target="_blank" style="display: inline-block; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px;">Security report</a> </div></td>
                           </tr>
                         </tbody>
                       </table>
@@ -43,7 +43,7 @@
                 <tbody>
                   <tr>
                     <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; font-size: 11px; padding-bottom: 30px; padding-top: 10px;">
-                      <p class="text-muted" style="font-size: 11px; text-decoration: none; Margin-bottom: 30px;">Or you can copy-paste this link: <span class="copy-link">{{ .Package.URL }}?modal=security-report</span></p>
+                      <p class="text-muted" style="font-size: 11px; text-decoration: none; Margin-bottom: 30px;">Or you can copy-paste this link: <span class="copy-link">{{ .Package.URL }}?modal=security-report&event-id={{ .Event.ID }}</span></p>
 
                       <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px; text-align: left;">
                         Please note that security alerts only consider vulnerabilities of <b>high</b> and <b>critical</b> severity. Any time a new potential security vulnerability is detected you'll be notified again.

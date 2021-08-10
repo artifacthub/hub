@@ -74,6 +74,7 @@ interface Props {
   hash?: string;
   visibleModal?: string;
   visibleValuesSchemaPath?: string;
+  eventId?: string;
   visibleTemplate?: string;
   visibleFile?: string;
 }
@@ -839,6 +840,11 @@ const PackageView = (props: Props) => {
                                 fromStarredPage={props.fromStarredPage}
                                 visibleSecurityReport={
                                   !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
+                                }
+                                eventId={
+                                  !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
+                                    ? props.eventId
+                                    : undefined
                                 }
                               />
                             </div>
