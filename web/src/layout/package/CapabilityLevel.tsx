@@ -13,7 +13,9 @@ interface Props {
 }
 
 const CapabilityLevel = (props: Props) => {
-  const activeLevel = OPERATOR_CAPABILITIES.findIndex((level: string) => level === props.capabilityLevel);
+  const activeLevel = OPERATOR_CAPABILITIES.findIndex(
+    (level: string) => level === (props.capabilityLevel || '').toLowerCase()
+  );
   if (isUndefined(props.capabilityLevel) || isNull(props.capabilityLevel) || activeLevel < 0) return null;
 
   return (
