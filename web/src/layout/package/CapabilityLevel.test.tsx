@@ -33,6 +33,25 @@ describe('CapabilityLevel', () => {
       expect(steps[4]).not.toHaveClass('activeStep');
     });
 
+    it('renders component with capital letters', () => {
+      const { getByText, getAllByTestId } = render(<CapabilityLevel capabilityLevel="Auto Pilot" />);
+
+      expect(getByText('Capability Level')).toBeInTheDocument();
+
+      expect(getByText('basic install')).toBeInTheDocument();
+      expect(getByText('seamless upgrades')).toBeInTheDocument();
+      expect(getByText('full lifecycle')).toBeInTheDocument();
+      expect(getByText('deep insights')).toBeInTheDocument();
+      expect(getByText('auto pilot')).toBeInTheDocument();
+
+      const steps = getAllByTestId('capabilityLevelStep');
+      expect(steps[0]).toHaveClass('activeStep');
+      expect(steps[1]).toHaveClass('activeStep');
+      expect(steps[2]).toHaveClass('activeStep');
+      expect(steps[3]).toHaveClass('activeStep');
+      expect(steps[4]).toHaveClass('activeStep');
+    });
+
     it('opens modal', () => {
       const { getByTestId, getByRole, getByAltText } = render(<CapabilityLevel capabilityLevel="deep insights" />);
 
