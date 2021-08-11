@@ -557,9 +557,6 @@ const PackageView = (props: Props) => {
                                         user: [detail.repository.userAlias!],
                                       },
                                       deprecated: detail.deprecated || false,
-                                      operators: detail.isOperator || false,
-                                      verifiedPublisher: detail.repository.verifiedPublisher || false,
-                                      official: detail.repository.official || false,
                                     }),
                                   }}
                                 >

@@ -15,6 +15,7 @@ interface Props {
   iconClassName?: string;
   noBackground?: boolean;
   clickable?: boolean;
+  deprecated?: boolean | null;
 }
 
 const RepositoryIconLabel = (props: Props) => {
@@ -60,6 +61,7 @@ const RepositoryIconLabel = (props: Props) => {
                   filters: {
                     kind: [props.kind.toString()],
                   },
+                  deprecated: props.deprecated,
                 }),
               });
             }}
