@@ -18,6 +18,7 @@ func main() {
 	}
 	rootCmd.AddCommand(
 		newLintCmd(),
+		newVersionCmd(),
 	)
 
 	// Execute root command

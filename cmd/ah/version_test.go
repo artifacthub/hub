@@ -11,57 +11,42 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestLintCmd(t *testing.T) {
+func TestVersionCmd(t *testing.T) {
 	testCases := []struct {
-		kind          string
-		path          string
-		desc          string
-		expectedError error
+		name      string
+		version   string
+		gitCommit string
 	}{
 		{
-			"helm",
 			"test1",
-			"one package found, no errors",
-			nil,
+			"0.0.1",
+			"aaabbbcccdddeeefff",
 		},
 		{
-			"helm",
 			"test2",
-			"two packages found, no errors",
-			nil,
-		},
-		{
-			"helm",
-			"test3",
-			"one package found, one with errors (invalid annotation)",
-			errLintFailed,
-		},
-		{
-			"helm",
-			"test4",
-			"no packages found",
-			errNoPackagesFound,
+			"",
+			"",
 		},
 	}
 
 	for _, tc := range testCases {
 		tc := tc
-		t.Run(tc.desc, func(t *testing.T) {
-			t.Parallel()
-
+		t.Run(tc.name, func(t *testing.T) {
 			// Prepare command and execute it
+			version = tc.version
+			gitCommit = tc.gitCommit
 			var b bytes.Buffer
-			cmd := newLintCmd()
+			cmd := newVersionCmd()
 			cmd.SilenceUsage = true
 			cmd.SilenceErrors = true
 			cmd.SetOut(&b)
-			cmd.SetArgs([]string{"--kind", tc.kind, "--path", filepath.Join("testdata", "lint", tc.path, "pkgs")})
+			cmd.SetArgs([]string{})
 			cmdErr := cmd.Execute()
 
 			// Read command output and check it matches what we expect
 			cmdOutput, err := io.ReadAll(&b)
 			require.NoError(t, err)
-			goldenPath := filepath.Join("testdata", "lint", tc.path, "output.golden")
+			goldenPath := filepath.Join("testdata", "version", tc.name, "output.golden")
 			if *update {
 				// Update tests golden files
 				golden, err := os.Create(goldenPath)
@@ -72,7 +57,7 @@ func TestLintCmd(t *testing.T) {
 			expectedOutput, err := os.ReadFile(goldenPath)
 			require.NoError(t, err)
 			assert.Equal(t, expectedOutput, cmdOutput)
-			assert.Equal(t, tc.expectedError, cmdErr)
+			assert.Equal(t, nil, cmdErr)
 		})
 	}
 }

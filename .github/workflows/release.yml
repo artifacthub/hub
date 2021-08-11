@@ -49,6 +49,8 @@ jobs:
       - name: Build ah image
         run: |
           docker build \
+            --build-arg VERSION=${{steps.extract_tag_name.outputs.tag}} \
+            --build-arg GIT_COMMIT=$GITHUB_SHA \
             -f cmd/ah/Dockerfile \
             -t artifacthub/ah:${{steps.extract_tag_name.outputs.tag}} \
             -t artifacthub/ah:latest .
