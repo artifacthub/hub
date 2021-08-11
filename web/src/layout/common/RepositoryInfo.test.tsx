@@ -62,6 +62,23 @@ describe('RepositoryInfo', () => {
     });
   });
 
+  it('calls proper history push to click repo label', async () => {
+    render(<RepositoryInfo {...defaultProps} deprecated />);
+    userEvent.click(screen.getByTestId('repoLink'));
+
+    await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
+    expect(mockHistoryPush).toHaveBeenCalledWith({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        pageNumber: 1,
+        filters: {
+          repo: [defaultProps.repository.name],
+        },
+        deprecated: true,
+      }),
+    });
+  });
+
   it('displays repo info to enter on link and hides on leave', async () => {
     jest.useFakeTimers();
 
