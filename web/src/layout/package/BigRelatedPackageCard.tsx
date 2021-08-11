@@ -59,7 +59,6 @@ const BigRelatedPackageCard = (props: Props) => {
                   <div className={`card-subtitle align-items-baseline ${styles.subtitle}`}>
                     <RepositoryInfo
                       repository={props.package.repository}
-                      deprecated={props.package.deprecated}
                       className="d-inline d-md-none text-truncate w-100"
                       repoLabelClassName="d-none"
                       withLabels={false}
@@ -75,7 +74,6 @@ const BigRelatedPackageCard = (props: Props) => {
                         btnClassName="text-truncate mw-100"
                         organizationName={props.package.repository.organizationName}
                         organizationDisplayName={props.package.repository.organizationDisplayName}
-                        deprecated={props.package.deprecated}
                         visibleLegend
                       />
                     )}
@@ -112,7 +110,6 @@ const BigRelatedPackageCard = (props: Props) => {
                     <div className={styles.mx50}>
                       <RepositoryInfo
                         repository={props.package.repository}
-                        deprecated={props.package.deprecated}
                         className={`d-flex flex-row align-items-baseline ml-3 ${styles.truncateWrapper}`}
                         repoLabelClassName="d-none d-lg-inline"
                         withLabels={false}

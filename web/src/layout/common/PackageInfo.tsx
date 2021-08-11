@@ -44,7 +44,7 @@ const PackageInfo = (props: Props) => {
   const starsAndKindInfo = (
     <div className={`align-self-start d-flex align-items-center text-uppercase ml-auto ${styles.kind}`}>
       <StarBadge className="mr-2" starsNumber={props.package.stars} />
-      <RepositoryIconLabel kind={props.package.repository.kind} clickable />
+      <RepositoryIconLabel kind={props.package.repository.kind} deprecated={props.package.deprecated} clickable />
     </div>
   );
 
@@ -118,6 +118,7 @@ const PackageInfo = (props: Props) => {
                             filters: {
                               user: [props.package.repository.userAlias!],
                             },
+                            deprecated: props.package.deprecated,
                           }),
                         });
                       }}
