@@ -104,7 +104,14 @@ const RepositoryInfo = (props: Props) => {
         <div className="d-flex flex-row aling-items-baseline text-truncate">
           <div className="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase">
             <small>Repo:</small>
-            {props.visibleIcon && <RepositoryIconLabel kind={props.repository.kind} className="ml-1" clickable />}
+            {props.visibleIcon && (
+              <RepositoryIconLabel
+                kind={props.repository.kind}
+                deprecated={props.deprecated}
+                className="ml-1"
+                clickable
+              />
+            )}
           </div>
           <span className="sr-only">{props.repository.name}</span>
 
