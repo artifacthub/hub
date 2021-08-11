@@ -2,7 +2,7 @@
 
 # Build docker images
 GIT_SHA=$(git rev-parse HEAD)
-docker build -f cmd/ah/Dockerfile -t artifacthub/ah -t artifacthub/ah:$GIT_SHA .
+docker build -f cmd/ah/Dockerfile -t artifacthub/ah -t artifacthub/ah:$GIT_SHA --build-arg VERSION=devel --build-arg GIT_COMMIT=$GIT_SHA .
 docker build -f cmd/hub/Dockerfile -t artifacthub/hub -t artifacthub/hub:$GIT_SHA .
 docker build -f database/migrations/Dockerfile -t artifacthub/db-migrator -t artifacthub/db-migrator:$GIT_SHA .
 docker build -f cmd/scanner/Dockerfile -t artifacthub/scanner -t artifacthub/scanner:$GIT_SHA .
