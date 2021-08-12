@@ -17,3 +17,4 @@ docs/www/content/topics/*
 !docs/www/content/topics/annotations
 docs/www/content/topics/annotations/*
 !docs/www/content/topics/annotations/_index.md
+dist

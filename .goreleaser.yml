@@ -1,0 +1,111 @@
+project_name: ah
+
+release:
+  name_template: "Artifact Hub {{ .Tag }}"
+
+snapshot:
+  name_template: "devel-{{ .ShortCommit }}"
+
+gomod:
+  proxy: true
+
+builds:
+  - id: ah
+    binary: ah
+    main: ./cmd/ah
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -X main.version={{ .Version }}
+      - -X main.gitCommit={{ .FullCommit }}
+
+archives:
+  - id: ah
+    files:
+      - LICENSE
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      darwin: macos
+
+dockers:
+  - dockerfile: cmd/ah/Dockerfile
+    image_templates:
+      - "artifacthub/ah:{{ .Tag }}"
+      - "artifacthub/ah:latest"
+    build_flag_templates:
+      - "--build-arg=VERSION={{ .Version }}"
+      - "--build-arg=GIT_COMMIT={{ .FullCommit }}"
+    extra_files:
+      - go.mod
+      - go.sum
+      - cmd/ah
+      - internal
+  - dockerfile: database/migrations/Dockerfile
+    image_templates:
+      - "artifacthub/db-migrator:{{ .Tag }}"
+      - "artifacthub/db-migrator:latest"
+    extra_files:
+      - database/migrations
+  - dockerfile: cmd/hub/Dockerfile
+    image_templates:
+      - "artifacthub/hub:{{ .Tag }}"
+      - "artifacthub/hub:latest"
+    extra_files:
+      - go.mod
+      - go.sum
+      - cmd/hub
+      - docs
+      - internal
+      - scripts
+      - web
+      - widget
+  - dockerfile: cmd/scanner/Dockerfile
+    image_templates:
+      - "artifacthub/scanner:{{ .Tag }}"
+      - "artifacthub/scanner:latest"
+    extra_files:
+      - go.mod
+      - go.sum
+      - cmd/scanner
+      - internal
+  - dockerfile: cmd/tracker/Dockerfile
+    image_templates:
+      - "artifacthub/tracker:{{ .Tag }}"
+      - "artifacthub/tracker:latest"
+    extra_files:
+      - go.mod
+      - go.sum
+      - cmd/tracker
+      - internal
+
+brews:
+  - description: Artifact Hub command line tool
+    homepage: https://github.com/artifacthub/hub
+    license: Apache-2.0
+    tap:
+      owner: artifacthub
+      name: homebrew-cmd
+    commit_author:
+      name: artifacthubio
+      email: hub@artifacthub.io
+
+scoop:
+  description: Artifact Hub command line tool
+  homepage: https://github.com/artifacthub/hub
+  license: Apache-2.0
+  bucket:
+    owner: artifacthub
+    name: scoop-cmd
+  commit_author:
+    name: artifacthubio
+    email: hub@artifacthub.io
