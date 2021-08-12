@@ -3,6 +3,9 @@ project_name: ah
 release:
   name_template: "Artifact Hub {{ .Tag }}"
 
+changelog:
+  skip: true
+
 snapshot:
   name_template: "devel-{{ .ShortCommit }}"
 
