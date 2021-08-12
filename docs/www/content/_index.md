@@ -21,3 +21,4 @@ The documentation is organized in the following topics:
 | [Architecture](/docs/topics/architecture)                | Describes the components that form Artifact Hub, what each of them do and the layout of the source repository.                                          |
 | [Development environment setup](/docs/topics/dev)        | This guide will help contributors setup their development environment to do some work on Artifact Hub.                                                  |
 | [Infrastructure](/docs/topics/infrastructure)            | Describes the infrastructure used to deploy the production and staging environments of `artifacthub.io`.                                                |
+| [CLI tool](/docs/topics/cli)                             | Explains how to install and use the Artifact Hub command line interface tool.                                                                           |
