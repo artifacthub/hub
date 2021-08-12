@@ -6,9 +6,6 @@ release:
 snapshot:
   name_template: "devel-{{ .ShortCommit }}"
 
-gomod:
-  proxy: true
-
 builds:
   - id: ah
     binary: ah
