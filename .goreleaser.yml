@@ -2,6 +2,8 @@ project_name: ah
 
 release:
   name_template: "Artifact Hub {{ .Tag }}"
+  header: |
+    Please see the [changelog](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog) for more details.
 
 changelog:
   skip: true
