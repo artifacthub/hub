@@ -344,14 +344,13 @@ const RepositoryCard = (props: Props) => {
                 <div className={`arrow ${styles.arrow}`} />
 
                 <button
-                  data-testid="getBadgeBtn"
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     setBadgeModalStatus(true);
                   }}
-                  aria-label="Open modal"
+                  aria-label="Open badge modal"
                 >
                   <div className="d-flex flex-row align-items-center">
                     <MdLabel className={`mr-2 ${styles.btnIcon}`} />
@@ -360,7 +359,6 @@ const RepositoryCard = (props: Props) => {
                 </button>
 
                 <ActionBtn
-                  testId="transferRepoBtn"
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
@@ -368,6 +366,7 @@ const RepositoryCard = (props: Props) => {
                     setTransferModalStatus(true);
                   }}
                   action={AuthorizerAction.TransferOrganizationRepository}
+                  label="Open transfer repository modal"
                 >
                   <>
                     <RiArrowLeftRightLine className={`mr-2 ${styles.btnIcon}`} />
@@ -376,7 +375,6 @@ const RepositoryCard = (props: Props) => {
                 </ActionBtn>
 
                 <ActionBtn
-                  testId="updateRepoBtn"
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
@@ -387,6 +385,7 @@ const RepositoryCard = (props: Props) => {
                     });
                   }}
                   action={AuthorizerAction.UpdateOrganizationRepository}
+                  label="Open update repository modal"
                 >
                   <>
                     <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
@@ -395,7 +394,6 @@ const RepositoryCard = (props: Props) => {
                 </ActionBtn>
 
                 <ActionBtn
-                  testId="deleteRepoDropdownBtn"
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
@@ -403,6 +401,7 @@ const RepositoryCard = (props: Props) => {
                     setDeletionModalStatus(true);
                   }}
                   action={AuthorizerAction.DeleteOrganizationRepository}
+                  label="Open delete repository modal"
                 >
                   <>
                     <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />

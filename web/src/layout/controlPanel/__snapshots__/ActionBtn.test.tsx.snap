@@ -8,7 +8,6 @@ exports[`ActionBtn creates snapshot 1`] = `
     <button
       aria-label="Action"
       class=""
-      data-testid="test"
       type="button"
     >
       <div

@@ -22,7 +22,7 @@ describe('Alert', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<Alert {...defaultProps} message="errorMessage" />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders alert', async () => {

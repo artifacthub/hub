@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -20,7 +20,7 @@ describe('UserConfirmation', () => {
   it('creates snapshot', async () => {
     mocked(API).verifyEmail.mockResolvedValue(null);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <UserConfirmation {...defaultProps} />
       </Router>
@@ -28,14 +28,14 @@ describe('UserConfirmation', () => {
 
     await waitFor(() => {
       expect(API.verifyEmail).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
   it('when email code is valid', async () => {
     mocked(API).verifyEmail.mockResolvedValue(null);
 
-    const { getByText } = render(
+    render(
       <Router>
         <UserConfirmation {...defaultProps} />
       </Router>
@@ -44,17 +44,17 @@ describe('UserConfirmation', () => {
     await waitFor(() => {
       expect(API.verifyEmail).toHaveBeenCalledTimes(1);
     });
-    expect(getByText(/You email has been verified! Please, login to/g)).toBeInTheDocument();
+    expect(screen.getByText(/You email has been verified! Please, login to/g)).toBeInTheDocument();
   });
 
   it('does not render component when email code is undefined', () => {
-    const { queryByTestId } = render(
+    render(
       <Router>
         <UserConfirmation />
       </Router>
     );
 
-    expect(queryByTestId('userConfirmationModal')).toBeNull();
+    expect(screen.queryByTestId('userConfirmationModal')).toBeNull();
   });
 
   describe('when email code is invalid', () => {
@@ -64,7 +64,7 @@ describe('UserConfirmation', () => {
         message: 'custom error',
       });
 
-      const { getByText } = render(
+      render(
         <Router>
           <UserConfirmation {...defaultProps} />
         </Router>
@@ -73,7 +73,7 @@ describe('UserConfirmation', () => {
       await waitFor(() => {
         expect(API.verifyEmail).toHaveBeenCalledTimes(1);
       });
-      expect(getByText('Sorry, custom error')).toBeInTheDocument();
+      expect(screen.getByText('Sorry, custom error')).toBeInTheDocument();
     });
 
     it('Code has expired', async () => {
@@ -82,7 +82,7 @@ describe('UserConfirmation', () => {
         message: 'email verification code has expired.',
       });
 
-      const { getByText } = render(
+      render(
         <Router>
           <UserConfirmation {...defaultProps} />
         </Router>
@@ -92,7 +92,7 @@ describe('UserConfirmation', () => {
         expect(API.verifyEmail).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Sorry, email verification code has expired.')).toBeInTheDocument();
+      expect(screen.getByText('Sorry, email verification code has expired.')).toBeInTheDocument();
     });
 
     it('default error message', async () => {
@@ -100,7 +100,7 @@ describe('UserConfirmation', () => {
         kind: ErrorKind.Other,
       });
 
-      const { getByText } = render(
+      render(
         <Router>
           <UserConfirmation {...defaultProps} />
         </Router>
@@ -111,7 +111,7 @@ describe('UserConfirmation', () => {
       });
 
       expect(
-        getByText('An error occurred verifying your email, please contact us about this issue.')
+        screen.getByText('An error occurred verifying your email, please contact us about this issue.')
       ).toBeInTheDocument();
     });
   });

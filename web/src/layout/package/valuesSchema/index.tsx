@@ -122,7 +122,6 @@ const ValuesSchema = (props: Props) => {
       <ElementWithTooltip
         element={
           <button
-            data-testid="valuesSchemaBtn"
             className={classnames('btn btn-outline-secondary btn-block btn-sm', {
               disabled: !props.hasValuesSchema,
             })}

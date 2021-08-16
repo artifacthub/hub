@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -24,35 +25,35 @@ describe('SearchTipsModal', () => {
         <SearchTipsModal {...defaultProps} />
       </Router>
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Search tip', () => {
     it('renders properly modal', () => {
-      const { getByRole, getByText, getAllByTestId } = render(
+      render(
         <Router>
           <SearchTipsModal {...defaultProps} />
         </Router>
       );
 
-      const modal = getByRole('dialog');
+      const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('d-block');
-      expect(getByText(/Search tips/g)).toBeInTheDocument();
-      expect(getAllByTestId('searchTip')).toHaveLength(SEARH_TIPS.length);
+      expect(screen.getByText(/Search tips/g)).toBeInTheDocument();
+      expect(screen.getAllByRole('listitem')).toHaveLength(SEARH_TIPS.length);
     });
 
     it('closes modal', () => {
-      const { getByRole, getByTestId } = render(
+      render(
         <Router>
           <SearchTipsModal {...defaultProps} />
         </Router>
       );
 
-      const modal = getByRole('dialog');
+      const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('d-block');
 
-      const closeBtn = getByTestId('closeModalBtn');
-      fireEvent.click(closeBtn);
+      const closeBtn = screen.getByRole('button', { name: 'Close' });
+      userEvent.click(closeBtn);
 
       expect(openTipsMock).toHaveBeenCalledTimes(1);
       expect(openTipsMock).toHaveBeenCalledWith(false);
@@ -60,29 +61,29 @@ describe('SearchTipsModal', () => {
 
     for (let i = 0; i < SEARH_TIPS.length; i++) {
       it(`renders tip ${i + 1}`, () => {
-        const { getByText, getByRole } = render(
+        render(
           <Router>
             <SearchTipsModal {...defaultProps} />
           </Router>
         );
 
-        expect(getByRole('dialog')).toHaveClass('d-block');
-        expect(getByText(SEARH_TIPS[i].example)).toBeInTheDocument();
+        expect(screen.getByRole('dialog')).toHaveClass('d-block');
+        expect(screen.getByText(SEARH_TIPS[i].example)).toBeInTheDocument();
       });
     }
 
     it('clicks first search tip', () => {
-      const { getByRole, getAllByTestId } = render(
+      render(
         <Router>
           <SearchTipsModal {...defaultProps} />
         </Router>
       );
 
-      const modal = getByRole('dialog');
+      const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('d-block');
 
-      const tips = getAllByTestId('searchTipLink');
-      fireEvent.click(tips[0]);
+      const tips = screen.getAllByRole('link', { name: /Filter by/ });
+      userEvent.click(tips[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe('?ts_query_web=kafka+operator&sort=relevance&page=1');

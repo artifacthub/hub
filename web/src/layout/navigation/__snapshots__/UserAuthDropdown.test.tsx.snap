@@ -8,7 +8,6 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
     <button
       aria-label="Open menu"
       class="btn p-0 position-relative btn"
-      data-testid="userAuthBtn"
       type="button"
     >
       <div
@@ -99,7 +98,6 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
             <input
               aria-checked="false"
               class="custom-control-input input"
-              data-testid="radio-automatic"
               id="desktop-automatic"
               name="automatic"
               readonly=""
@@ -140,7 +138,6 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
               aria-checked="true"
               checked=""
               class="custom-control-input input"
-              data-testid="radio-light"
               id="desktop-light"
               name="light"
               readonly=""
@@ -231,7 +228,6 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
             <input
               aria-checked="false"
               class="custom-control-input input"
-              data-testid="radio-dark"
               id="desktop-dark"
               name="dark"
               readonly=""
@@ -269,7 +265,6 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
       />
       <a
         class="dropdown-item"
-        data-testid="starredPackagesLink"
         href="/packages/starred"
       >
         <div
@@ -296,7 +291,6 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
       </a>
       <a
         class="dropdown-item"
-        data-testid="controlPanelLink"
         href="/control-panel"
       >
         <div
@@ -324,7 +318,6 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
       <button
         aria-label="Sign out"
         class="dropdown-item mb-2"
-        data-testid="logOutBtn"
       >
         <div
           class="d-flex align-items-center"

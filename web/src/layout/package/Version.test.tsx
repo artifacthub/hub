@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -35,82 +36,82 @@ describe('Version', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <Version {...defaultProps} />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <Version {...defaultProps} />
         </Router>
       );
 
-      expect(getByTestId('version')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Open version/ })).toBeInTheDocument();
     });
 
     it('renders active version', () => {
-      const { getByText, queryByTestId } = render(
+      render(
         <Router>
           <Version {...defaultProps} isActive={true} />
         </Router>
       );
 
-      expect(getByText(defaultProps.version)).toBeInTheDocument();
-      expect(queryByTestId('version')).toBeNull();
+      expect(screen.getByText(defaultProps.version)).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /Open version/ })).toBeNull();
     });
 
-    it('calls history push to click version', () => {
-      const { getByTestId, getByRole } = render(
+    it('calls history push to click version', async () => {
+      render(
         <Router>
           <Version {...defaultProps} />
         </Router>
       );
 
-      const versionLink = getByTestId('version');
-      fireEvent.click(versionLink);
+      const versionLink = screen.getByRole('button', { name: /Open version/ });
+      userEvent.click(versionLink);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/helm/repo/pr/1.0.1',
         state: { searchUrlReferer: undefined, fromStarred: undefined },
       });
 
-      waitFor(() => expect(getByRole('status')).toBeInTheDocument());
+      expect(await screen.findByRole('status')).toBeInTheDocument();
     });
 
     it('renders linked channel badge', () => {
-      const { getByText } = render(
+      render(
         <Router>
           <Version {...defaultProps} linkedChannel="stable" />
         </Router>
       );
 
-      expect(getByText('stable')).toBeInTheDocument();
+      expect(screen.getByText('stable')).toBeInTheDocument();
     });
 
     it('renders security updates badge', () => {
-      const { getByText } = render(
+      render(
         <Router>
           <Version {...defaultProps} containsSecurityUpdates />
         </Router>
       );
 
-      expect(getByText('Contains security updates')).toBeInTheDocument();
+      expect(screen.getByText('Contains security updates')).toBeInTheDocument();
     });
 
     it('renders pre-release badge', () => {
-      const { getByText } = render(
+      render(
         <Router>
           <Version {...defaultProps} prerelease />
         </Router>
       );
 
-      expect(getByText('Pre-release')).toBeInTheDocument();
+      expect(screen.getByText('Pre-release')).toBeInTheDocument();
     });
   });
 });

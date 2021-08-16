@@ -25,7 +25,6 @@ const UserAuthDropdown = (props: Props) => {
   return (
     <div className="btn-group">
       <button
-        data-testid="userAuthBtn"
         className={`btn p-0 position-relative ${styles.btn}`}
         type="button"
         onClick={() => setOpenStatus(true)}
@@ -70,7 +69,6 @@ const UserAuthDropdown = (props: Props) => {
         <div className="dropdown-divider my-3" />
 
         <Link
-          data-testid="starredPackagesLink"
           className="dropdown-item"
           to={{
             pathname: '/packages/starred',
@@ -84,7 +82,6 @@ const UserAuthDropdown = (props: Props) => {
         </Link>
 
         <Link
-          data-testid="controlPanelLink"
           className="dropdown-item"
           to={{
             pathname: '/control-panel',

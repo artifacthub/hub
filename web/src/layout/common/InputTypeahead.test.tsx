@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import InputTypeahead from './InputTypeahead';
@@ -53,13 +54,13 @@ describe('InputTypeahead', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<InputTypeahead {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders options in correct order', () => {
-    const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+    render(<InputTypeahead {...defaultProps} />);
 
-    const opts = getAllByTestId('typeaheadDropdownBtn');
+    const opts = screen.getAllByTestId('typeaheadDropdownBtn');
     expect(opts[0]).toHaveTextContent('Option key 2 (12)');
     expect(opts[1]).toHaveTextContent('Option key 1 (7)');
     expect(opts[2]).toHaveTextContent('Option 1 (19)');
@@ -67,84 +68,78 @@ describe('InputTypeahead', () => {
   });
 
   it('unselects option', () => {
-    const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+    render(<InputTypeahead {...defaultProps} />);
 
-    const opts = getAllByTestId('typeaheadDropdownBtn');
-
-    fireEvent.click(opts[0]);
+    const opts = screen.getAllByTestId('typeaheadDropdownBtn');
+    userEvent.click(opts[0]);
 
     expect(onChangeMock).toHaveBeenCalledTimes(1);
     expect(onChangeMock).toHaveBeenCalledWith('key1', 'opt2', false);
   });
 
   it('selects option', () => {
-    const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+    render(<InputTypeahead {...defaultProps} />);
 
-    const opts = getAllByTestId('typeaheadDropdownBtn');
-
-    fireEvent.click(opts[2]);
+    const opts = screen.getAllByTestId('typeaheadDropdownBtn');
+    userEvent.click(opts[2]);
 
     expect(onChangeMock).toHaveBeenCalledTimes(1);
     expect(onChangeMock).toHaveBeenCalledWith('key2', 'opt11', true);
   });
 
   it('calls Clear all', () => {
-    const { getByTestId } = render(<InputTypeahead {...defaultProps} />);
+    render(<InputTypeahead {...defaultProps} />);
 
-    const clearBtn = getByTestId('typeaheadClearBtn');
-    fireEvent.click(clearBtn);
+    const clearBtn = screen.getByRole('button', { name: 'Clear all' });
+    userEvent.click(clearBtn);
 
     expect(onClearMock).toHaveBeenCalledTimes(1);
   });
 
   it('does not render clear button', () => {
-    const { queryByTestId } = render(<InputTypeahead {...defaultProps} visibleClear={false} />);
+    render(<InputTypeahead {...defaultProps} visibleClear={false} />);
 
-    expect(queryByTestId('typeaheadClearBtn')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Clear all' })).toBeNull();
   });
 
   it('filters options on input change', () => {
-    const { getByTestId, getAllByTestId, getAllByText } = render(<InputTypeahead {...defaultProps} />);
+    render(<InputTypeahead {...defaultProps} />);
 
-    expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
+    expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
 
-    const input = getByTestId('typeaheadInput');
-    fireEvent.change(input, { target: { value: 'ke' } });
+    userEvent.type(screen.getByRole('textbox'), 'ke');
 
-    expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
-    expect(getAllByText('ke')).toHaveLength(2);
-    expect(getAllByText('ke')[0]).toHaveClass('hightlighted');
+    expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
+    expect(screen.getAllByText('ke')).toHaveLength(2);
+    expect(screen.getAllByText('ke')[0]).toHaveClass('hightlighted');
   });
 
   it('filters options on input change when displayItemsInValueLength is defined', () => {
-    const { getByTestId, queryAllByTestId, getAllByTestId, getAllByText } = render(
-      <InputTypeahead {...defaultProps} displayItemsInValueLength={3} />
-    );
+    render(<InputTypeahead {...defaultProps} displayItemsInValueLength={3} />);
 
-    expect(queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
+    expect(screen.queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
 
-    const input = getByTestId('typeaheadInput');
-    fireEvent.change(input, { target: { value: 'key' } });
+    const input = screen.getByPlaceholderText('Search test');
+    userEvent.type(input, 'key');
 
-    expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
-    expect(getAllByText('key')).toHaveLength(2);
-    expect(getAllByText('key')[0]).toHaveClass('hightlighted');
+    expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
+    expect(screen.getAllByText('key')).toHaveLength(2);
+    expect(screen.getAllByText('key')[0]).toHaveClass('hightlighted');
 
-    fireEvent.change(input, { target: { value: 'ke' } });
+    userEvent.type(input, 'ke');
 
-    expect(queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
+    expect(screen.queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
   });
 
   it('renders placeholder when any results', () => {
-    const { getByTestId, getAllByTestId, queryAllByTestId, getByText } = render(<InputTypeahead {...defaultProps} />);
+    render(<InputTypeahead {...defaultProps} />);
 
-    expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
+    expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
 
-    const input = getByTestId('typeaheadInput');
-    fireEvent.change(input, { target: { value: 'test' } });
+    userEvent.type(screen.getByPlaceholderText('Search test'), 'test');
 
-    expect(queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
-    expect(getByText('Sorry, no matches found')).toBeInTheDocument();
+    expect(screen.queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
+    expect(screen.getByText('Sorry, no matches found')).toBeInTheDocument();
   });
 
   it('does not render component when options list is empty', () => {
@@ -154,67 +149,64 @@ describe('InputTypeahead', () => {
       options: [],
     };
     const { container } = render(<InputTypeahead {...props} />);
-
     expect(container).toBeEmptyDOMElement();
   });
 
   describe('on key down', () => {
     it('highlightes first option', () => {
-      const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+      render(<InputTypeahead {...defaultProps} />);
 
-      const options = getAllByTestId('typeaheadDropdownBtn');
+      const options = screen.getAllByTestId('typeaheadDropdownBtn');
       expect(options).toHaveLength(4);
 
-      const input = getByTestId('typeaheadInput');
-      fireEvent.keyDown(input, { key: 'ArrowDown' });
+      userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowdown}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
       expect(options[0]).toHaveClass('dropdown-item option selected hightlighted');
     });
 
     it('highlightes last option', () => {
-      const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+      render(<InputTypeahead {...defaultProps} />);
 
-      const options = getAllByTestId('typeaheadDropdownBtn');
+      const options = screen.getAllByTestId('typeaheadDropdownBtn');
       expect(options).toHaveLength(4);
 
-      const input = getByTestId('typeaheadInput');
-      fireEvent.keyDown(input, { key: 'ArrowUp' });
+      userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowup}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
       expect(options[3]).toHaveClass('dropdown-item option hightlighted');
     });
 
     it('highlightes first option and unselects it', () => {
-      const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+      render(<InputTypeahead {...defaultProps} />);
 
-      const options = getAllByTestId('typeaheadDropdownBtn');
+      const options = screen.getAllByTestId('typeaheadDropdownBtn');
       expect(options).toHaveLength(4);
 
-      const input = getByTestId('typeaheadInput');
-      fireEvent.keyDown(input, { key: 'ArrowDown' });
+      const input = screen.getByPlaceholderText('Search test');
+      userEvent.type(input, '{arrowdown}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
       expect(options[0]).toHaveClass('dropdown-item option selected hightlighted');
 
-      fireEvent.keyDown(input, { key: 'Enter' });
+      userEvent.type(input, '{enter}');
       expect(onChangeMock).toHaveBeenCalledTimes(1);
       expect(onChangeMock).toHaveBeenCalledWith('key1', 'opt2', false);
     });
 
     it('highlightes last option and selects it', () => {
-      const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+      render(<InputTypeahead {...defaultProps} />);
 
-      const options = getAllByTestId('typeaheadDropdownBtn');
+      const options = screen.getAllByTestId('typeaheadDropdownBtn');
       expect(options).toHaveLength(4);
 
-      const input = getByTestId('typeaheadInput');
-      fireEvent.keyDown(input, { key: 'ArrowUp' });
+      const input = screen.getByPlaceholderText('Search test');
+      userEvent.type(input, '{arrowup}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
       expect(options[3]).toHaveClass('dropdown-item option hightlighted');
 
-      fireEvent.keyDown(input, { key: 'Enter' });
+      userEvent.type(input, '{enter}');
       expect(onChangeMock).toHaveBeenCalledTimes(1);
       expect(onChangeMock).toHaveBeenCalledWith('key2', 'opt12', true);
     });

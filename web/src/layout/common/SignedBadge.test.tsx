@@ -11,7 +11,7 @@ describe('SignedBadge', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<SignedBadge repositoryKind={0} signed />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders label for Helm package', async () => {

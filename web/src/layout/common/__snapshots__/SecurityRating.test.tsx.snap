@@ -1,3 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SecurityRating creates snapshot 1`] = `[Function]`;
+exports[`SecurityRating creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative undefined"
+  >
+    <div
+      data-testid="elementWithTooltip"
+    >
+      <div
+        class="font-weight-bold undefined"
+      >
+        <div
+          class="d-flex flex-row align-items-center overflow-hidden labelWrapper custom"
+        >
+          <div
+            class="text-center labelIconWrapper iconWrapper"
+            style="background-color: rgb(150, 0, 3);"
+          >
+            <span
+              class="position-relative ratingLetter"
+            >
+              F
+            </span>
+          </div>
+          <div
+            class="text-nowrap labelText"
+          >
+            Images Security Rating
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

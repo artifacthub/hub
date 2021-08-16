@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -20,7 +21,7 @@ const organizationMock: Organization = {
 };
 
 const mockCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: false },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -52,27 +53,27 @@ describe('Organization Card - organization section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Card {...defaultProps} />
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      expect(getByText(organizationMock.displayName!)).toBeInTheDocument();
-      expect(getByTestId('leaveOrgModalBtn')).toBeInTheDocument();
-      expect(getByText(organizationMock.homeUrl!)).toBeInTheDocument();
-      expect(getByText(organizationMock.description!)).toBeInTheDocument();
+      expect(screen.getByText(organizationMock.displayName!)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open modal' })).toBeInTheDocument();
+      expect(screen.getByText(organizationMock.homeUrl!)).toBeInTheDocument();
+      expect(screen.getByText(organizationMock.description!)).toBeInTheDocument();
     });
 
     it('renders component when user is not a member yet', async () => {
@@ -87,14 +88,14 @@ describe('Organization Card - organization section', () => {
           membersCount: 2,
         },
       };
-      const { getByText, getByTestId } = render(<Card {...props} />);
+      render(<Card {...props} />);
 
-      expect(getByText('Invitation not accepted yet')).toBeInTheDocument();
+      expect(screen.getByText('Invitation not accepted yet')).toBeInTheDocument();
 
-      const btn = getByTestId('acceptInvitationBtn');
+      const btn = screen.getByRole('button', { name: 'Confirm membership' });
       expect(btn).toBeInTheDocument();
 
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
@@ -103,18 +104,18 @@ describe('Organization Card - organization section', () => {
     });
 
     it('calls deleteOrganizationMember when leave button in dropdown is clicked', async () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const modalBtn = getByTestId('leaveOrgModalBtn');
+      const modalBtn = screen.getByRole('button', { name: 'Open modal' });
       expect(modalBtn).toBeInTheDocument();
-      fireEvent.click(modalBtn);
+      userEvent.click(modalBtn);
 
-      const btn = getByTestId('leaveOrgBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Leave organization' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
@@ -128,18 +129,18 @@ describe('Organization Card - organization section', () => {
       mocked(API).deleteOrganizationMember.mockRejectedValue({
         kind: ErrorKind.Other,
       });
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const modalBtn = getByTestId('leaveOrgModalBtn');
+      const modalBtn = screen.getByRole('button', { name: 'Open modal' });
       expect(modalBtn).toBeInTheDocument();
-      fireEvent.click(modalBtn);
+      userEvent.click(modalBtn);
 
-      const btn = getByTestId('leaveOrgBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Leave organization' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
@@ -156,18 +157,18 @@ describe('Organization Card - organization section', () => {
       mocked(API).deleteOrganizationMember.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const modalBtn = getByTestId('leaveOrgModalBtn');
+      const modalBtn = screen.getByRole('button', { name: 'Open modal' });
       expect(modalBtn).toBeInTheDocument();
-      fireEvent.click(modalBtn);
+      userEvent.click(modalBtn);
 
-      const btn = getByTestId('leaveOrgBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Leave organization' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);

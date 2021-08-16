@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -55,14 +56,14 @@ describe('ChangelogModal', () => {
     const mockChangelog = getMockChangelog('1');
     mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-    const result = render(<ChangelogModal {...defaultProps} visibleChangelog />);
+    const { asFragment } = render(<ChangelogModal {...defaultProps} visibleChangelog />);
 
     await waitFor(() => {
       expect(API.getChangelog).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    expect(result.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   describe('Render', () => {
@@ -70,18 +71,18 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('2');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { getByTestId, getByRole } = render(<ChangelogModal {...defaultProps} />);
+      render(<ChangelogModal {...defaultProps} />);
 
-      const btn = getByTestId('changelogBtn');
+      const btn = screen.getByRole('button', { name: 'Open Changelog modal' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
         expect(API.getChangelog).toHaveBeenCalledWith('id');
       });
 
-      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
     it('does not render component when repo kind is Krew, Falco or Helm plugin', async () => {
@@ -97,9 +98,9 @@ describe('ChangelogModal', () => {
     });
 
     it('renders disabled button when package has not changelog and does not call getChangelog', async () => {
-      const { getByTestId } = render(<ChangelogModal {...defaultProps} hasChangelog={false} />);
+      render(<ChangelogModal {...defaultProps} hasChangelog={false} />);
 
-      const btn = getByTestId('changelogBtn');
+      const btn = screen.getByRole('button', { name: 'Open Changelog modal' });
       expect(btn).toHaveClass('disabled');
     });
 
@@ -107,10 +108,10 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('3');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { getByTestId, getAllByText, getByRole, getAllByTestId } = render(<ChangelogModal {...defaultProps} />);
+      render(<ChangelogModal {...defaultProps} />);
 
-      const btn = getByTestId('changelogBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Open Changelog modal' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
@@ -125,10 +126,10 @@ describe('ChangelogModal', () => {
         },
       });
 
-      expect(getByRole('dialog')).toBeInTheDocument();
-      expect(getAllByText('Changelog')).toHaveLength(2);
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getAllByText('Changelog')).toHaveLength(2);
 
-      const blocks = getAllByTestId('changelogBlock');
+      const blocks = screen.getAllByTestId('changelogBlock');
       expect(blocks).toHaveLength(Object.keys(mockChangelog).length);
     });
 
@@ -136,17 +137,17 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('4');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { getByText, queryByRole } = render(<ChangelogModal {...defaultProps} visibleChangelog />);
+      render(<ChangelogModal {...defaultProps} visibleChangelog />);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const close = getByText('Close');
-      fireEvent.click(close);
+      const close = screen.getByText('Close');
+      userEvent.click(close);
 
       await waitFor(() => {
-        expect(queryByRole('dialog')).toBeNull();
+        expect(screen.queryByRole('dialog')).toBeNull();
       });
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
@@ -163,18 +164,18 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('10');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { getByRole, queryByRole, rerender } = render(<ChangelogModal {...defaultProps} visibleChangelog />);
+      const { rerender } = render(<ChangelogModal {...defaultProps} visibleChangelog />);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
 
       rerender(<ChangelogModal {...defaultProps} packageId="id2" />);
 
       waitFor(() => {
-        expect(queryByRole('dialog')).toBeNull();
+        expect(screen.queryByRole('dialog')).toBeNull();
       });
     });
 
@@ -182,16 +183,16 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('5');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { getByText, getAllByTestId } = render(<ChangelogModal {...defaultProps} />);
+      render(<ChangelogModal {...defaultProps} />);
 
-      const btn = getByText('Changelog');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Changelog');
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const titles = getAllByTestId('changelogBlockTitle');
+      const titles = screen.getAllByTestId('changelogBlockTitle');
       expect(titles[0]).toHaveTextContent('0.8.0');
       expect(titles[1]).toHaveTextContent('0.7.0');
       expect(titles[2]).toHaveTextContent('0.6.0');
@@ -205,25 +206,25 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('6');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { queryByText, getAllByTestId } = render(<ChangelogModal {...defaultProps} visibleChangelog />);
+      render(<ChangelogModal {...defaultProps} visibleChangelog />);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const titles = getAllByTestId('changelogBlockTitle');
+      const titles = screen.getAllByTestId('changelogBlockTitle');
       expect(titles).toHaveLength(1);
-      expect(queryByText('0.4.0')).toBeNull();
+      expect(screen.queryByText('0.4.0')).toBeNull();
     });
 
     it('calls again to getMockChangelog when packageId is different', async () => {
       const mockChangelog = getMockChangelog('7');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { rerender, getByText } = render(<ChangelogModal {...defaultProps} />);
+      const { rerender } = render(<ChangelogModal {...defaultProps} />);
 
-      const btn = getByText('Changelog');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Changelog');
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
@@ -232,7 +233,7 @@ describe('ChangelogModal', () => {
 
       rerender(<ChangelogModal {...defaultProps} packageId="id2" />);
 
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(2);
@@ -244,25 +245,23 @@ describe('ChangelogModal', () => {
       const mockReport = getMockChangelog('7');
       mocked(API).getChangelog.mockResolvedValue(mockReport);
 
-      const { queryByRole, getByText, getByTestId, getByRole } = render(
-        <ChangelogModal {...defaultProps} visibleChangelog />
-      );
+      render(<ChangelogModal {...defaultProps} visibleChangelog />);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
         expect(API.getChangelog).toHaveBeenCalledWith('id');
       });
 
-      const btn = getByTestId('closeModalFooterBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Close modal' });
+      userEvent.click(btn);
 
-      expect(queryByRole('dialog')).toBeNull();
+      expect(screen.queryByRole('dialog')).toBeNull();
 
-      const openBtn = getByText('Changelog');
-      fireEvent.click(openBtn);
+      const openBtn = screen.getByText('Changelog');
+      userEvent.click(openBtn);
 
       await waitFor(() => {
-        expect(getByRole('dialog')).toBeInTheDocument();
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
     });
@@ -271,32 +270,32 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('8');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { getByText } = render(<ChangelogModal {...defaultProps} />);
+      render(<ChangelogModal {...defaultProps} />);
 
-      const btn = getByText('Changelog');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Changelog');
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Contains security updates')).toBeInTheDocument();
+      expect(screen.getByText('Contains security updates')).toBeInTheDocument();
     });
 
     it('dislays pre-release badge', async () => {
       const mockChangelog = getMockChangelog('9');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { getByText } = render(<ChangelogModal {...defaultProps} />);
+      render(<ChangelogModal {...defaultProps} />);
 
-      const btn = getByText('Changelog');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Changelog');
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Pre-release')).toBeInTheDocument();
+      expect(screen.getByText('Pre-release')).toBeInTheDocument();
     });
   });
 });

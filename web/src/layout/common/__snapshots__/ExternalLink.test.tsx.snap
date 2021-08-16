@@ -1,3 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`External link creates snapshot 1`] = `[Function]`;
+exports[`External link creates snapshot 1`] = `
+<DocumentFragment>
+  <a
+    aria-label="Open external link"
+    class="link undefined"
+    href="http://test.com"
+    rel="noopener noreferrer"
+    role="button"
+    tabindex="-1"
+    target="_blank"
+  >
+    <span>
+      external
+    </span>
+  </a>
+</DocumentFragment>
+`;

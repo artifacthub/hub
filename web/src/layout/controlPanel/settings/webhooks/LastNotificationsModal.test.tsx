@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { WebhookNotification } from '../../../../types';
@@ -16,120 +17,110 @@ describe('Repository LastNotificationsModal - packages section', () => {
 
   it('creates snapshot', () => {
     const mockNotifications = getMockNotifications('1');
-    const result = render(<LastNotificationsModal notifications={mockNotifications} />);
+    const { asFragment } = render(<LastNotificationsModal notifications={mockNotifications} />);
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component with errors', () => {
       const mockNotifications = getMockNotifications('2');
 
-      const { getByText, getByTestId, getAllByText, getAllByTestId } = render(
-        <LastNotificationsModal notifications={mockNotifications} />
-      );
+      render(<LastNotificationsModal notifications={mockNotifications} />);
 
-      expect(getByText('Show last notifications')).toBeInTheDocument();
-      expect(getByTestId('lastNotifAlert')).toBeInTheDocument();
+      expect(screen.getByText('Show last notifications')).toBeInTheDocument();
+      expect(screen.getByTestId('lastNotifAlert')).toBeInTheDocument();
 
-      const btn = getByTestId('openModalBtn');
+      const btn = screen.getByRole('button', { name: /Open modal/ });
       expect(btn).toBeInTheDocument();
       expect(btn).toHaveTextContent('Show last notifications');
 
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
-      expect(getByText('Last notifications')).toBeInTheDocument();
-      expect(getAllByText('Notification id')).toHaveLength(2);
-      expect(getByText('Created at')).toBeInTheDocument();
-      expect(getByText('Processed at')).toBeInTheDocument();
-      expect(getByText('Succeeded')).toBeInTheDocument();
-      expect(getByText('Error')).toBeInTheDocument();
-      expect(getByText('Errors logs')).toBeInTheDocument();
-      expect(getAllByTestId('lastNotificationCell')).toHaveLength(7);
-      expect(getAllByTestId('lastNotificationErrorCell')).toHaveLength(3);
+      expect(screen.getByText('Last notifications')).toBeInTheDocument();
+      expect(screen.getAllByText('Notification id')).toHaveLength(2);
+      expect(screen.getByText('Created at')).toBeInTheDocument();
+      expect(screen.getByText('Processed at')).toBeInTheDocument();
+      expect(screen.getByText('Succeeded')).toBeInTheDocument();
+      expect(screen.getByText('Error')).toBeInTheDocument();
+      expect(screen.getByText('Errors logs')).toBeInTheDocument();
+      expect(screen.getAllByTestId('lastNotificationCell')).toHaveLength(7);
+      expect(screen.getAllByTestId('lastNotificationErrorCell')).toHaveLength(3);
     });
 
     it('renders component without errors', () => {
       const mockNotifications = getMockNotifications('3');
 
-      const { getByText, getByTestId, getAllByTestId, queryByText, queryByTestId } = render(
-        <LastNotificationsModal notifications={mockNotifications} />
-      );
+      render(<LastNotificationsModal notifications={mockNotifications} />);
 
-      expect(getByText('Show last notifications')).toBeInTheDocument();
-      expect(queryByTestId('lastNotifAlert')).toBeNull();
+      expect(screen.getByText('Show last notifications')).toBeInTheDocument();
+      expect(screen.queryByTestId('lastNotifAlert')).toBeNull();
 
-      const btn = getByTestId('openModalBtn');
+      const btn = screen.getByRole('button', { name: /Open modal/ });
       expect(btn).toBeInTheDocument();
       expect(btn).toHaveTextContent('Show last notifications');
 
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
-      expect(getByText('Last notifications')).toBeInTheDocument();
-      expect(getByText('Notification id')).toBeInTheDocument();
-      expect(getByText('Created at')).toBeInTheDocument();
-      expect(getByText('Processed at')).toBeInTheDocument();
-      expect(getByText('Succeeded')).toBeInTheDocument();
-      expect(getAllByTestId('lastNotificationCell')).toHaveLength(1);
-      expect(queryByText('Errors logs')).toBeNull();
+      expect(screen.getByText('Last notifications')).toBeInTheDocument();
+      expect(screen.getByText('Notification id')).toBeInTheDocument();
+      expect(screen.getByText('Created at')).toBeInTheDocument();
+      expect(screen.getByText('Processed at')).toBeInTheDocument();
+      expect(screen.getByText('Succeeded')).toBeInTheDocument();
+      expect(screen.getAllByTestId('lastNotificationCell')).toHaveLength(1);
+      expect(screen.queryByText('Errors logs')).toBeNull();
     });
 
     describe('Cell types', () => {
       it('succeded notification', () => {
         const mockNotifications = getMockNotifications('4');
 
-        const { getByTestId, getAllByTestId, queryByText, queryByTestId } = render(
-          <LastNotificationsModal notifications={mockNotifications} />
-        );
+        render(<LastNotificationsModal notifications={mockNotifications} />);
 
-        expect(queryByTestId('lastNotifAlert')).toBeNull();
+        expect(screen.queryByTestId('lastNotifAlert')).toBeNull();
 
-        const btn = getByTestId('openModalBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: /Open modal/ });
+        userEvent.click(btn);
 
-        expect(getAllByTestId('lastNotificationCell')).toHaveLength(1);
-        expect(getByTestId('processedIcon')).toBeInTheDocument();
-        expect(getByTestId('succeededIcon')).toBeInTheDocument();
-        expect(queryByText('Errors logs')).toBeNull();
+        expect(screen.getAllByTestId('lastNotificationCell')).toHaveLength(1);
+        expect(screen.getByTestId('processedIcon')).toBeInTheDocument();
+        expect(screen.getByTestId('succeededIcon')).toBeInTheDocument();
+        expect(screen.queryByText('Errors logs')).toBeNull();
       });
 
       it('not processed notification', () => {
         const mockNotifications = getMockNotifications('5');
 
-        const { queryByTestId, getByTestId, getAllByTestId, queryByText } = render(
-          <LastNotificationsModal notifications={mockNotifications} />
-        );
+        render(<LastNotificationsModal notifications={mockNotifications} />);
 
-        expect(queryByTestId('lastNotifAlert')).toBeNull();
+        expect(screen.queryByTestId('lastNotifAlert')).toBeNull();
 
-        const btn = getByTestId('openModalBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: /Open modal/ });
+        userEvent.click(btn);
 
-        expect(getAllByTestId('lastNotificationCell')).toHaveLength(1);
-        expect(queryByTestId('processedIcon')).toBeNull();
-        expect(queryByTestId('succeededIcon')).toBeNull();
-        expect(queryByText('Errors logs')).toBeNull();
+        expect(screen.getAllByTestId('lastNotificationCell')).toHaveLength(1);
+        expect(screen.queryByTestId('processedIcon')).toBeNull();
+        expect(screen.queryByTestId('succeededIcon')).toBeNull();
+        expect(screen.queryByText('Errors logs')).toBeNull();
       });
 
       it('not succeded notification', () => {
         const mockNotifications = getMockNotifications('6');
 
-        const { getByTestId, getAllByTestId, getByText } = render(
-          <LastNotificationsModal notifications={mockNotifications} />
-        );
+        render(<LastNotificationsModal notifications={mockNotifications} />);
 
-        expect(getByTestId('lastNotifAlert')).toBeInTheDocument();
+        expect(screen.getByTestId('lastNotifAlert')).toBeInTheDocument();
 
-        const btn = getByTestId('openModalBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: /Open modal/ });
+        userEvent.click(btn);
 
-        expect(getAllByTestId('lastNotificationCell')).toHaveLength(1);
-        expect(getByTestId('processedIcon')).toBeInTheDocument();
-        expect(getByTestId('failedIcon')).toBeInTheDocument();
+        expect(screen.getAllByTestId('lastNotificationCell')).toHaveLength(1);
+        expect(screen.getByTestId('processedIcon')).toBeInTheDocument();
+        expect(screen.getByTestId('failedIcon')).toBeInTheDocument();
 
-        expect(getAllByTestId('lastNotificationErrorCell')).toHaveLength(1);
-        expect(getByText('Errors logs')).toBeInTheDocument();
-        expect(getByText(mockNotifications[0].error!)).toBeInTheDocument();
+        expect(screen.getAllByTestId('lastNotificationErrorCell')).toHaveLength(1);
+        expect(screen.getByText('Errors logs')).toBeInTheDocument();
+        expect(screen.getByText(mockNotifications[0].error!)).toBeInTheDocument();
       });
     });
   });

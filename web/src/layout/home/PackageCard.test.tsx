@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -31,30 +32,30 @@ describe('PackageCard', () => {
         <PackageCard package={mockPackage} />
       </Router>
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Image', () => {
     it('renders package logo', () => {
       const mockPackage = getMockPackage('2');
-      const { queryByAltText } = render(
+      render(
         <Router>
           <PackageCard package={mockPackage} />
         </Router>
       );
-      const image = queryByAltText(`Logo ${mockPackage.displayName}`);
+      const image = screen.getByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
     });
 
     it('renders placeholder when imageId is null', () => {
       const mockPackage = getMockPackage('3');
 
-      const { queryByAltText } = render(
+      render(
         <Router>
           <PackageCard package={mockPackage} />
         </Router>
       );
-      const image = queryByAltText(`Logo ${mockPackage.displayName}`);
+      const image = screen.getByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
       expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_pkg_helm.png');
     });
@@ -64,24 +65,24 @@ describe('PackageCard', () => {
     it('renders display name', () => {
       const mockPackage = getMockPackage('4');
 
-      const { queryByText } = render(
+      render(
         <Router>
           <PackageCard package={mockPackage} />
         </Router>
       );
-      const title = queryByText(mockPackage.displayName!);
+      const title = screen.queryByText(mockPackage.displayName!);
       expect(title).toBeInTheDocument();
     });
 
     it('renders name when display name is null', () => {
       const mockPackage = getMockPackage('5');
 
-      const { queryByText } = render(
+      render(
         <Router>
           <PackageCard package={mockPackage} />
         </Router>
       );
-      const title = queryByText(mockPackage.name!);
+      const title = screen.queryByText(mockPackage.name!);
       expect(title).toBeInTheDocument();
     });
   });
@@ -90,18 +91,18 @@ describe('PackageCard', () => {
     it('renders repository link', () => {
       const mockPackage = getMockPackage('7');
 
-      const { queryAllByTestId, queryAllByAltText } = render(
+      render(
         <Router>
           <PackageCard package={mockPackage} />
         </Router>
       );
-      const buttons = queryAllByTestId('repoLink');
+      const buttons = screen.queryAllByTestId('repoLink');
       expect(buttons).toHaveLength(2);
-      const icons = queryAllByAltText('Icon');
+      const icons = screen.queryAllByAltText('Icon');
       expect(icons).toHaveLength(8);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
-      fireEvent.click(buttons[0]!);
+      userEvent.click(buttons[0]!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -118,14 +119,14 @@ describe('PackageCard', () => {
   describe('Detail', () => {
     it('opens detail page', () => {
       const mockPackage = getMockPackage('9');
-      const { getByTestId } = render(
+      render(
         <Router>
           <PackageCard package={mockPackage} />
         </Router>
       );
-      const link = getByTestId('link');
+      const link = screen.getByRole('link');
       expect(link).toBeInTheDocument();
-      fireEvent.click(link);
+      userEvent.click(link);
       expect(window.location.pathname).toBe('/packages/helm/stable/test');
     });
   });

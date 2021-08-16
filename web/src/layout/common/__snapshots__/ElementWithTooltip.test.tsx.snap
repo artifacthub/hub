@@ -1,3 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ElementWithTooltip creates snapshot 1`] = `[Function]`;
+exports[`ElementWithTooltip creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative undefined"
+  >
+    <div
+      data-testid="elementWithTooltip"
+    >
+      <div>
+        label
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

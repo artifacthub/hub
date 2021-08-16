@@ -220,7 +220,6 @@ const ChartTemplatesModal = (props: Props) => {
     <div className="mb-2">
       <div className="text-center">
         <button
-          data-testid="tmplModalBtn"
           className={`btn btn-outline-secondary btn-sm text-nowrap ${props.btnClassName}`}
           onClick={onOpenModal}
           aria-label="Open templates modal"

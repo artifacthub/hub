@@ -35,7 +35,6 @@ exports[`RepositoriesSection creates snapshot 1`] = `
         <button
           aria-label="Open opt-out modal"
           class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
-          data-testid="addOptOut"
         >
           <div
             class="d-flex flex-row align-items-center justify-content-center"

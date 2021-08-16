@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -27,7 +27,7 @@ const defaultProps = {
 };
 
 const mockUserCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -44,7 +44,7 @@ const mockUserCtx = {
 };
 
 const mockOrgCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: { selectedOrg: 'test' },
     search: { limit: 60 },
@@ -74,14 +74,14 @@ describe('WebhookCard', () => {
         </Router>
       </AppCtx.Provider>
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders active component', () => {
       const mockWebhook = getmockWebhook('2');
 
-      const { getByText, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -89,19 +89,19 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByText(mockWebhook.name)).toBeInTheDocument();
-      expect(getByText(mockWebhook.url)).toBeInTheDocument();
-      expect(getByText(mockWebhook.description!)).toBeInTheDocument();
-      expect(getByText('Active')).toBeInTheDocument();
-      expect(getByText('Edit')).toBeInTheDocument();
-      expect(getByText('Delete')).toBeInTheDocument();
-      expect(getByTestId('deleteWebhookModalBtn')).toBeInTheDocument();
+      expect(screen.getByText(mockWebhook.name)).toBeInTheDocument();
+      expect(screen.getByText(mockWebhook.url)).toBeInTheDocument();
+      expect(screen.getByText(mockWebhook.description!)).toBeInTheDocument();
+      expect(screen.getByText('Active')).toBeInTheDocument();
+      expect(screen.getByText('Edit')).toBeInTheDocument();
+      expect(screen.getByText('Delete')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open deletion webhook modal' })).toBeInTheDocument();
     });
 
     it('renders inactive component', () => {
       const mockWebhook = getmockWebhook('3');
 
-      const { getByText, queryByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -109,14 +109,14 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByText('Inactive')).toBeInTheDocument();
-      expect(queryByText('Active')).toBeNull();
+      expect(screen.getByText('Inactive')).toBeInTheDocument();
+      expect(screen.queryByText('Active')).toBeNull();
     });
 
     it('opens Edit form', () => {
       const mockWebhook = getmockWebhook('4');
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -124,9 +124,9 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('editWebhookBtn');
+      const btn = screen.getByRole('button', { name: 'Edit webhook' });
       expect(btn).toHaveTextContent('Edit');
-      fireEvent.click(btn);
+      userEvent.click(btn);
       expect(mockOnEdition).toHaveBeenCalledTimes(1);
     });
   });
@@ -137,7 +137,7 @@ describe('WebhookCard', () => {
 
       const mockWebhook = getmockWebhook('5');
 
-      const { getByTestId, queryByRole, getByRole, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -145,18 +145,18 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      const modal = queryByRole('dialog');
+      const modal = screen.queryByRole('dialog');
       expect(modal).toBeNull();
 
-      const btn = getByTestId('deleteWebhookModalBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
+      userEvent.click(btn);
 
-      expect(getByRole('dialog')).toHaveClass('active');
-      expect(getByText('Are you sure you want to delete this webhook?')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toHaveClass('active');
+      expect(screen.getByText('Are you sure you want to delete this webhook?')).toBeInTheDocument();
 
-      const deleteBtn = getByTestId('deleteWebhookBtn');
+      const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
       expect(deleteBtn).toBeInTheDocument();
-      fireEvent.click(deleteBtn);
+      userEvent.click(deleteBtn);
 
       await waitFor(() => {
         expect(API.deleteWebhook).toHaveBeenCalledTimes(1);
@@ -171,7 +171,7 @@ describe('WebhookCard', () => {
 
       const mockWebhook = getmockWebhook('6');
 
-      const { getByTestId, queryByRole, getByRole } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -179,16 +179,16 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      const modal = queryByRole('dialog');
+      const modal = screen.queryByRole('dialog');
       expect(modal).toBeNull();
 
-      const btn = getByTestId('deleteWebhookModalBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
+      userEvent.click(btn);
 
-      expect(getByRole('dialog')).toHaveClass('active');
+      expect(screen.getByRole('dialog')).toHaveClass('active');
 
-      const deleteBtn = getByTestId('deleteWebhookBtn');
-      fireEvent.click(deleteBtn);
+      const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
+      userEvent.click(deleteBtn);
 
       await waitFor(() => {
         expect(API.deleteWebhook).toHaveBeenCalledTimes(1);
@@ -206,7 +206,7 @@ describe('WebhookCard', () => {
 
         const mockWebhook = getmockWebhook('7');
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -214,11 +214,11 @@ describe('WebhookCard', () => {
           </AppCtx.Provider>
         );
 
-        const btn = getByTestId('deleteWebhookModalBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
+        userEvent.click(btn);
 
-        const deleteBtn = getByTestId('deleteWebhookBtn');
-        fireEvent.click(deleteBtn);
+        const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
+        userEvent.click(deleteBtn);
 
         await waitFor(() => {
           expect(API.deleteWebhook).toHaveBeenCalledTimes(1);
@@ -233,7 +233,7 @@ describe('WebhookCard', () => {
 
         const mockWebhook = getmockWebhook('8');
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -241,11 +241,11 @@ describe('WebhookCard', () => {
           </AppCtx.Provider>
         );
 
-        const btn = getByTestId('deleteWebhookModalBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
+        userEvent.click(btn);
 
-        const deleteBtn = getByTestId('deleteWebhookBtn');
-        fireEvent.click(deleteBtn);
+        const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
+        userEvent.click(deleteBtn);
 
         await waitFor(() => {
           expect(API.deleteWebhook).toHaveBeenCalledTimes(1);
@@ -265,7 +265,7 @@ describe('WebhookCard', () => {
     it('renders button', () => {
       const mockWebhook = getmockWebhook('9');
 
-      const { getByText, queryByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -273,14 +273,14 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByText('Show last notifications')).toBeInTheDocument();
-      expect(queryByTestId('lastNotifAlert')).toBeNull();
+      expect(screen.getByText('Show last notifications')).toBeInTheDocument();
+      expect(screen.queryByTestId('lastNotifAlert')).toBeNull();
     });
 
     it('renders button with exclamation icon', () => {
       const mockWebhook = getmockWebhook('10');
 
-      const { getByText, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -288,14 +288,14 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByText('Show last notifications')).toBeInTheDocument();
-      expect(getByTestId('lastNotifAlert')).toBeInTheDocument();
+      expect(screen.getByText('Show last notifications')).toBeInTheDocument();
+      expect(screen.getByTestId('lastNotifAlert')).toBeInTheDocument();
     });
 
     it('does not render button', () => {
       const mockWebhook = getmockWebhook('11');
 
-      const { queryByText, queryByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -303,8 +303,8 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      expect(queryByText('Show last notifications')).toBeNull();
-      expect(queryByTestId('lastNotifAlert')).toBeNull();
+      expect(screen.queryByText('Show last notifications')).toBeNull();
+      expect(screen.queryByTestId('lastNotifAlert')).toBeNull();
     });
   });
 

@@ -118,14 +118,13 @@ const MemberCard = (props: Props) => {
                         </button>
 
                         <button
-                          data-testid="leaveOrRemoveBtn"
                           className="btn btn-sm btn-danger ml-3"
                           onClick={(e) => {
                             e.preventDefault();
                             deleteMember();
                           }}
                           disabled={isDeletingMember}
-                          aria-label={`${isUser ? 'Leave' : 'Remove'} member`}
+                          aria-label={isUser ? 'Leave organization' : 'Remove member'}
                         >
                           <div className="d-flex flex-row align-items-center text-uppercase">
                             {isDeletingMember ? (
@@ -176,14 +175,13 @@ const MemberCard = (props: Props) => {
 
                     {isUser ? (
                       <button
-                        data-testid="leaveOrRemoveModalBtn"
                         className="dropdown-item btn btn-sm rounded-0 text-dark"
                         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                           e.preventDefault();
                           closeDropdown();
                           setModalStatus(true);
                         }}
-                        aria-label="Leave organization"
+                        aria-label="Open leave organization modal"
                       >
                         <div className="d-flex flex-row align-items-center">
                           <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
@@ -192,7 +190,6 @@ const MemberCard = (props: Props) => {
                       </button>
                     ) : (
                       <ActionBtn
-                        testId="leaveOrRemoveModalBtn"
                         className="dropdown-item btn btn-sm rounded-0 text-dark"
                         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                           e.preventDefault();
@@ -200,6 +197,7 @@ const MemberCard = (props: Props) => {
                           setModalStatus(true);
                         }}
                         action={AuthorizerAction.DeleteOrganizationMember}
+                        label="Open leave organization modal"
                       >
                         <>
                           <FaUserMinus className={`mr-2 ${styles.btnIcon}`} />

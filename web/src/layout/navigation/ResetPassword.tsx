@@ -113,7 +113,6 @@ const ResetPassword = (props: Props) => {
 
             <div className="text-right">
               <button
-                data-testid="resetPasswordBtn"
                 className="btn btn-sm btn-outline-secondary"
                 type="button"
                 disabled={isSending || resetPwdEmail === ''}

@@ -445,7 +445,6 @@ const PackageView = (props: Props) => {
       {!isUndefined(props.searchUrlReferer) && (
         <SubNavbar>
           <button
-            data-testid="goBack"
             className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
               history.push({
@@ -484,7 +483,6 @@ const PackageView = (props: Props) => {
       {!isUndefined(props.fromStarredPage) && props.fromStarredPage && (
         <SubNavbar>
           <button
-            data-testid="goBack"
             className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
               history.push({

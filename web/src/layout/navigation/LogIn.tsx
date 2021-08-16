@@ -176,7 +176,6 @@ const LogIn = (props: Props) => {
         <div className="h-100 d-flex flex-column">
           <div>
             <button
-              data-testid="resetPasswordBackBtn"
               className="btn btn-sm btn-link pl-0 mb-2 text-no-decoration"
               type="button"
               onClick={() => setVisibleResetPassword(false)}
@@ -199,7 +198,6 @@ const LogIn = (props: Props) => {
             <div className="h-100 d-flex flex-column">
               <div>
                 <button
-                  data-testid="resetPasswordBackBtn"
                   className="btn btn-sm btn-link pl-0 mb-2 text-no-decoration"
                   type="button"
                   onClick={() => setVisible2FACode(false)}
@@ -289,7 +287,6 @@ const LogIn = (props: Props) => {
 
                 <div className="d-flex flex-row align-items-row justify-content-between">
                   <button
-                    data-testid="resetPasswordTabBtn"
                     className="btn btn-sm btn-link pl-0 text-no-decoration"
                     type="button"
                     onClick={() => setVisibleResetPassword(true)}
@@ -299,7 +296,6 @@ const LogIn = (props: Props) => {
                   </button>
 
                   <button
-                    data-testid="logInBtn"
                     className="btn btn-sm btn-outline-secondary"
                     type="button"
                     disabled={isLoading.status}

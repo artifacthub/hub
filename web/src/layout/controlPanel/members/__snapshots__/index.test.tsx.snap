@@ -23,9 +23,8 @@ exports[`Members section index creates snapshot 1`] = `
               class="position-relative"
             >
               <button
-                aria-label="Action"
+                aria-label="Open invite member modal"
                 class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
-                data-testid="addMemberBtn"
                 type="button"
               >
                 <div

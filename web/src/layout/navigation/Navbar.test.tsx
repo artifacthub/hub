@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -68,7 +69,7 @@ describe('Navbar', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
         <Router>
           <Navbar {...defaultProps} />
@@ -76,27 +77,27 @@ describe('Navbar', () => {
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('common elements', () => {
     it('goes to Homepage to click brand link', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
-      const brandLink = getByTestId('brandLink');
-      fireEvent.click(brandLink);
+      const brandLink = screen.getByTestId('brandLink');
+      userEvent.click(brandLink);
       expect(window.location.pathname).toBe('/');
     });
   });
 
   describe('when user is signed in', () => {
     it('renders component', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} />
@@ -104,13 +105,13 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByTestId('userAuthBtn')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open menu' })).toBeInTheDocument();
     });
   });
 
   describe('when user is not signed in', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} />
@@ -118,13 +119,13 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByText('Sign in')).toBeInTheDocument();
-      expect(getByText('Sign up')).toBeInTheDocument();
-      expect(getByTestId('themeOptions')).toBeInTheDocument();
+      expect(screen.getByText('Sign in')).toBeInTheDocument();
+      expect(screen.getByText('Sign up')).toBeInTheDocument();
+      expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
     });
 
-    it('opens Sign in modal when redirect is defined', () => {
-      const { getByTestId } = render(
+    it('opens Sign in modal when redirect is defined', async () => {
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} redirect="/control-panel" />
@@ -132,13 +133,11 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
 
-      waitFor(() => {
-        expect(getByTestId('loginForm')).toBeInTheDocument();
-      });
+      expect(await screen.findByTestId('loginForm')).toBeInTheDocument();
     });
 
-    it('opens Sign in modal to click Sign in button', () => {
-      const { getByText, getByTestId } = render(
+    it('opens Sign in modal to click Sign in button', async () => {
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} />
@@ -146,16 +145,14 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByText('Sign in');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Sign in');
+      userEvent.click(btn);
 
-      waitFor(() => {
-        expect(getByTestId('loginForm')).toBeInTheDocument();
-      });
+      expect(await screen.findByTestId('loginForm')).toBeInTheDocument();
     });
 
     it('opens Sign up modal to click Sign up button', () => {
-      const { getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} />
@@ -163,16 +160,16 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
 
-      const btn = getByText('Sign up');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Sign up');
+      userEvent.click(btn);
 
-      expect(getByText('Create your account using your email')).toBeInTheDocument();
+      expect(screen.getByText('Create your account using your email')).toBeInTheDocument();
     });
   });
 
   describe('when we are checking if user is or not signed in', () => {
     it('renders spinning', () => {
-      const { getByRole } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockUndefinedUser, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} />
@@ -180,7 +177,7 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
 
-      expect(getByRole('status')).toBeInTheDocument();
+      expect(screen.getByRole('status')).toBeInTheDocument();
     });
   });
 });

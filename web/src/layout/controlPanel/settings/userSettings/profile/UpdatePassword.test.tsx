@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -15,35 +16,35 @@ describe('Update password - user settings', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<UpdatePassword />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<UpdatePassword />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId } = render(<UpdatePassword />);
+      render(<UpdatePassword />);
 
-      const form = getByTestId('updatePasswordForm');
+      const form = screen.getByTestId('updatePasswordForm');
       expect(form).toBeInTheDocument();
-      expect(getByTestId('oldPasswordInput')).toBeInTheDocument();
-      expect(getByTestId('passwordInput')).toBeInTheDocument();
-      expect(getByTestId('confirmPasswordInput')).toBeInTheDocument();
+      expect(screen.getByTestId('oldPasswordInput')).toBeInTheDocument();
+      expect(screen.getByTestId('passwordInput')).toBeInTheDocument();
+      expect(screen.getByTestId('confirmPasswordInput')).toBeInTheDocument();
     });
 
     it('updates all fields and calls updatePassword', async () => {
-      const { getByTestId } = render(<UpdatePassword />);
+      render(<UpdatePassword />);
 
-      const oldPassword = getByTestId('oldPasswordInput') as HTMLInputElement;
-      const newPassword = getByTestId('passwordInput') as HTMLInputElement;
-      const repeatNewPassword = getByTestId('confirmPasswordInput') as HTMLInputElement;
+      const oldPassword = screen.getByTestId('oldPasswordInput') as HTMLInputElement;
+      const newPassword = screen.getByTestId('passwordInput') as HTMLInputElement;
+      const repeatNewPassword = screen.getByTestId('confirmPasswordInput') as HTMLInputElement;
 
-      fireEvent.change(oldPassword, { target: { value: 'oldpass' } });
-      fireEvent.change(newPassword, { target: { value: 'newpass' } });
-      fireEvent.change(repeatNewPassword, { target: { value: 'newpass' } });
+      userEvent.type(oldPassword, 'oldpass');
+      userEvent.type(newPassword, 'newpass');
+      userEvent.type(repeatNewPassword, 'newpass');
 
-      const btn = getByTestId('updatePasswordBtn');
+      const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toBeCalledTimes(1);
@@ -52,19 +53,19 @@ describe('Update password - user settings', () => {
     });
 
     it('escapes password properly', async () => {
-      const { getByTestId } = render(<UpdatePassword />);
+      render(<UpdatePassword />);
 
-      const oldPassword = getByTestId('oldPasswordInput') as HTMLInputElement;
-      const newPassword = getByTestId('passwordInput') as HTMLInputElement;
-      const repeatNewPassword = getByTestId('confirmPasswordInput') as HTMLInputElement;
+      const oldPassword = screen.getByTestId('oldPasswordInput') as HTMLInputElement;
+      const newPassword = screen.getByTestId('passwordInput') as HTMLInputElement;
+      const repeatNewPassword = screen.getByTestId('confirmPasswordInput') as HTMLInputElement;
 
-      fireEvent.change(oldPassword, { target: { value: 'oldpass' } });
-      fireEvent.change(newPassword, { target: { value: 'newpass$^' } });
-      fireEvent.change(repeatNewPassword, { target: { value: 'newpass$^' } });
+      userEvent.type(oldPassword, 'oldpass');
+      userEvent.type(newPassword, 'newpass$^');
+      userEvent.type(repeatNewPassword, 'newpass$^');
 
-      const btn = getByTestId('updatePasswordBtn');
+      const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toBeCalledTimes(1);
@@ -73,19 +74,19 @@ describe('Update password - user settings', () => {
     });
 
     it("doesn`t pass form validation when passwords don't match", async () => {
-      const { getByTestId } = render(<UpdatePassword />);
+      render(<UpdatePassword />);
 
-      const oldPassword = getByTestId('oldPasswordInput') as HTMLInputElement;
-      const newPassword = getByTestId('passwordInput') as HTMLInputElement;
-      const repeatNewPassword = getByTestId('confirmPasswordInput') as HTMLInputElement;
+      const oldPassword = screen.getByTestId('oldPasswordInput') as HTMLInputElement;
+      const newPassword = screen.getByTestId('passwordInput') as HTMLInputElement;
+      const repeatNewPassword = screen.getByTestId('confirmPasswordInput') as HTMLInputElement;
 
-      fireEvent.change(oldPassword, { target: { value: 'oldpass' } });
-      fireEvent.change(newPassword, { target: { value: 'new' } });
-      fireEvent.change(repeatNewPassword, { target: { value: 'notMatch' } });
+      userEvent.type(oldPassword, 'oldpass');
+      userEvent.type(newPassword, 'newpass');
+      userEvent.type(repeatNewPassword, 'noMatch');
 
-      const btn = getByTestId('updatePasswordBtn');
+      const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toBeCalledTimes(0);
@@ -100,15 +101,15 @@ describe('Update password - user settings', () => {
         message: 'custom error',
       });
 
-      const { getByTestId } = render(<UpdatePassword />);
+      render(<UpdatePassword />);
 
-      fireEvent.change(getByTestId('oldPasswordInput'), { target: { value: 'oldpass' } });
-      fireEvent.change(getByTestId('passwordInput'), { target: { value: 'newpass' } });
-      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: 'newpass' } });
+      userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
 
-      const btn = getByTestId('updatePasswordBtn');
+      const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toHaveBeenCalledTimes(1);
@@ -126,15 +127,15 @@ describe('Update password - user settings', () => {
         kind: ErrorKind.Unauthorized,
       });
 
-      const { getByTestId } = render(<UpdatePassword />);
+      render(<UpdatePassword />);
 
-      fireEvent.change(getByTestId('oldPasswordInput'), { target: { value: 'oldpass' } });
-      fireEvent.change(getByTestId('passwordInput'), { target: { value: 'newpass' } });
-      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: 'newpass' } });
+      userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
 
-      const btn = getByTestId('updatePasswordBtn');
+      const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toHaveBeenCalledTimes(1);
@@ -153,15 +154,15 @@ describe('Update password - user settings', () => {
         kind: ErrorKind.Other,
       });
 
-      const { getByTestId } = render(<UpdatePassword />);
+      render(<UpdatePassword />);
 
-      fireEvent.change(getByTestId('oldPasswordInput'), { target: { value: 'oldpass' } });
-      fireEvent.change(getByTestId('passwordInput'), { target: { value: 'newpass' } });
-      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: 'newpass' } });
+      userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
 
-      const btn = getByTestId('updatePasswordBtn');
+      const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toHaveBeenCalledTimes(1);

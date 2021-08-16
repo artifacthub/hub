@@ -69,7 +69,6 @@ const UserContext = () => {
         <small className={`text-uppercase text-muted ${styles.legendCtx}`}>Control panel context</small>
         <div className="d-flex flex-row align-items-center">
           <button
-            data-testid="ctxBtn"
             className={`btn btn-primary badge-pill btn-sm pr-3 position-relative ${styles.ctxBtn}`}
             type="button"
             onClick={() => {
@@ -111,17 +110,12 @@ const UserContext = () => {
 
       <div
         ref={ref}
-        data-testid="ctxDropdown"
+        role="menu"
         className={classnames('dropdown-menu dropdown-menu-right', styles.dropdown, { show: openStatus })}
       >
         <div className={`arrow ${styles.arrow}`} />
 
-        <button
-          data-testid="userCtxBtn"
-          className="dropdown-item mw-100"
-          onClick={() => handleChange(alias)}
-          aria-label="Activate user context"
-        >
+        <button className="dropdown-item mw-100" onClick={() => handleChange(alias)} aria-label="Activate user context">
           <div className="d-flex flex-row align-items-center text-truncate">
             <FaUser className={`mr-2 ${styles.icon}`} />
             <div className="flex-grow-1 text-truncate">{alias}</div>
@@ -134,7 +128,6 @@ const UserContext = () => {
           <>
             {organizations.map((org: Organization) => (
               <button
-                data-testid="orgCtxBtn"
                 key={`opt_${org.name}`}
                 className="dropdown-item"
                 onClick={() => handleChange(org)}

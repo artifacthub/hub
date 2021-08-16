@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -31,7 +31,7 @@ describe('StarredPackagesView', () => {
     const mockPackages = getMockStarredPackages('1');
     mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <StarredPackagesView />
       </Router>
@@ -39,7 +39,7 @@ describe('StarredPackagesView', () => {
 
     await waitFor(() => {
       expect(API.getStarredByUser).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -48,7 +48,7 @@ describe('StarredPackagesView', () => {
       const mockPackages = getMockStarredPackages('2');
       mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
 
-      const { getByText } = render(
+      render(
         <Router>
           <StarredPackagesView />
         </Router>
@@ -57,7 +57,7 @@ describe('StarredPackagesView', () => {
       await waitFor(() => {
         expect(API.getStarredByUser).toHaveBeenCalledTimes(1);
       });
-      expect(getByText('Your starred packages')).toBeInTheDocument();
+      expect(screen.getByText('Your starred packages')).toBeInTheDocument();
     });
   });
 
@@ -66,13 +66,13 @@ describe('StarredPackagesView', () => {
       const mockPackages = getMockStarredPackages('4');
       mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
 
-      const { getAllByRole } = render(
+      render(
         <Router>
           <StarredPackagesView />
         </Router>
       );
 
-      const packages = await waitFor(() => getAllByRole('listitem'));
+      const packages = await screen.findAllByRole('listitem');
       expect(packages).toHaveLength(5);
     });
 
@@ -80,13 +80,13 @@ describe('StarredPackagesView', () => {
       const mockPackages = getMockStarredPackages('5');
       mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <StarredPackagesView />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('You have not starred any package yet');
     });
@@ -115,13 +115,13 @@ describe('StarredPackagesView', () => {
     it('renders error message when getStarredByUser call fails with not unauthorized error', async () => {
       mocked(API).getStarredByUser.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <StarredPackagesView />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting your starred packages, please try again later./i);
     });

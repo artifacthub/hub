@@ -27,9 +27,8 @@ exports[`WidgetModal creates snapshot 1`] = `
               Widget
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -60,7 +59,6 @@ exports[`WidgetModal creates snapshot 1`] = `
                   <input
                     checked=""
                     class="custom-control-input"
-                    data-testid="radio-theme-light"
                     id="light"
                     name="theme"
                     readonly=""
@@ -153,7 +151,6 @@ exports[`WidgetModal creates snapshot 1`] = `
                 >
                   <input
                     class="custom-control-input"
-                    data-testid="radio-theme-dark"
                     id="dark"
                     name="theme"
                     readonly=""
@@ -201,7 +198,6 @@ exports[`WidgetModal creates snapshot 1`] = `
                   <input
                     checked=""
                     class="custom-control-input"
-                    data-testid="checkbox-header"
                     id="header"
                     type="checkbox"
                     value="true"
@@ -227,7 +223,6 @@ exports[`WidgetModal creates snapshot 1`] = `
                 >
                   <input
                     class="custom-control-input"
-                    data-testid="checkbox-responsive"
                     id="responsive"
                     type="checkbox"
                     value="true"
@@ -276,7 +271,6 @@ exports[`WidgetModal creates snapshot 1`] = `
                   <button
                     aria-label="Copy code to clipboard"
                     class="btn btn-sm btn-outline-secondary copyBtn"
-                    data-testid="ctcBtn"
                     type="button"
                   >
                     <div
@@ -329,7 +323,6 @@ exports[`WidgetModal creates snapshot 1`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               type="button"
             >
               <div

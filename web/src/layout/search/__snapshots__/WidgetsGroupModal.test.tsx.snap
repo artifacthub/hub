@@ -27,9 +27,8 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
               Widgets group
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -60,7 +59,6 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   <input
                     checked=""
                     class="custom-control-input"
-                    data-testid="radio-theme-light"
                     id="light"
                     name="theme"
                     readonly=""
@@ -153,7 +151,6 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 >
                   <input
                     class="custom-control-input"
-                    data-testid="radio-theme-dark"
                     id="dark"
                     name="theme"
                     readonly=""
@@ -200,7 +197,6 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 >
                   <input
                     class="custom-control-input"
-                    data-testid="checkbox-header"
                     id="header"
                     type="checkbox"
                     value="true"
@@ -237,7 +233,6 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                       <input
                         checked=""
                         class="custom-control-input"
-                        data-testid="radio-wrapper-width-responsive"
                         id="responsive"
                         name="groupWrapperWidthOpt"
                         readonly=""
@@ -300,7 +295,6 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                     >
                       <input
                         class="custom-control-input"
-                        data-testid="radio-wrapper-width-fixed"
                         id="fixed"
                         name="groupWrapperWidthOpt"
                         readonly=""
@@ -351,7 +345,6 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   <input
                     checked=""
                     class="custom-control-input"
-                    data-testid="checkbox-loading"
                     id="loading"
                     type="checkbox"
                     value="true"
@@ -432,7 +425,6 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   <button
                     aria-label="Copy code to clipboard"
                     class="btn btn-sm btn-outline-secondary copyBtn"
-                    data-testid="ctcBtn"
                     type="button"
                   >
                     <div
@@ -485,7 +477,6 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               type="button"
             >
               <div

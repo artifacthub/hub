@@ -131,7 +131,6 @@ const WidgetsGroupModal = (props: Props) => {
                 return (
                   <div className="custom-control custom-radio mr-4" key={`radio_theme_${themeOpt.name}`}>
                     <input
-                      data-testid={`radio-theme-${themeOpt.name}`}
                       className="custom-control-input"
                       type="radio"
                       name="theme"
@@ -162,7 +161,6 @@ const WidgetsGroupModal = (props: Props) => {
               <div className="mt-4 mb-3">
                 <div className="custom-control custom-switch pl-0">
                   <input
-                    data-testid="checkbox-header"
                     id="header"
                     type="checkbox"
                     className="custom-control-input"
@@ -194,7 +192,6 @@ const WidgetsGroupModal = (props: Props) => {
                     return (
                       <div className="custom-control custom-radio mr-4" key={`radio_wrapperOpt_${wrapperOpt.name}`}>
                         <input
-                          data-testid={`radio-wrapper-width-${wrapperOpt.name}`}
                           className="custom-control-input"
                           type="radio"
                           name="groupWrapperWidthOpt"
@@ -254,7 +251,6 @@ const WidgetsGroupModal = (props: Props) => {
             <div className="mt-4 mb-3">
               <div className="custom-control custom-switch pl-0">
                 <input
-                  data-testid="checkbox-loading"
                   id="loading"
                   type="checkbox"
                   className="custom-control-input"

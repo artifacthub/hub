@@ -18,13 +18,13 @@ describe('ElementWithTooltip', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<ElementWithTooltip {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders properly', () => {
-    const { getByTestId, getByText } = render(<ElementWithTooltip {...defaultProps} />);
-    expect(getByTestId('elementWithTooltip')).toBeInTheDocument();
-    expect(getByText('label')).toBeInTheDocument();
+    render(<ElementWithTooltip {...defaultProps} />);
+    expect(screen.getByTestId('elementWithTooltip')).toBeInTheDocument();
+    expect(screen.getByText('label')).toBeInTheDocument();
   });
 
   it('does not render label', () => {

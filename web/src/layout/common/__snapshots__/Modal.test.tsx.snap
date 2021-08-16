@@ -1,3 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Modal creates snapshot 1`] = `[Function]`;
+exports[`Modal creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div
+          class="modal-content content"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center header undefined"
+          >
+            <div
+              class="modal-title h5"
+            >
+              title
+            </div>
+            <button
+              aria-label="Close"
+              class="close"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <span>
+              children
+            </span>
+            <div>
+              <div />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              aria-label="Close modal"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  class="mr-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <div>
+                  Close
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

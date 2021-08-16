@@ -1,5 +1,6 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -37,11 +38,11 @@ describe('ValuesSchema', () => {
     const mockValuesSchema = getMockValuesSchema('1');
     mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-    const result = render(<ValuesSchema {...defaultProps} visibleValuesSchema />);
+    const { asFragment } = render(<ValuesSchema {...defaultProps} visibleValuesSchema />);
 
     await waitFor(() => {
       expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -50,11 +51,11 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('2');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { getByTestId } = render(<ValuesSchema {...defaultProps} />);
+      render(<ValuesSchema {...defaultProps} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
@@ -63,9 +64,9 @@ describe('ValuesSchema', () => {
     });
 
     it('renders disabled button when package has not ValuesSchema and does not call getValuesSchema', async () => {
-      const { getByTestId } = render(<ValuesSchema {...defaultProps} hasValuesSchema={false} />);
+      render(<ValuesSchema {...defaultProps} hasValuesSchema={false} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       expect(btn).toHaveClass('disabled');
 
       expect(API.getValuesSchema).toHaveBeenCalledTimes(0);
@@ -75,10 +76,10 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('3');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { getByTestId, getByText, getByRole } = render(<ValuesSchema {...defaultProps} />);
+      render(<ValuesSchema {...defaultProps} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
@@ -92,25 +93,25 @@ describe('ValuesSchema', () => {
         });
       });
 
-      expect(getByRole('dialog')).toBeInTheDocument();
-      expect(getByText('Values schema reference')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByText('Values schema reference')).toBeInTheDocument();
     });
 
     it('closes modal', async () => {
       const mockValuesSchema = getMockValuesSchema('4');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { getByTestId, queryByRole } = render(<ValuesSchema {...defaultProps} visibleValuesSchema />);
+      render(<ValuesSchema {...defaultProps} visibleValuesSchema />);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
       });
 
-      const close = getByTestId('closeModalFooterBtn');
-      fireEvent.click(close);
+      const close = screen.getByRole('button', { name: 'Close modal' });
+      userEvent.click(close);
 
       waitFor(() => {
-        expect(queryByRole('dialog')).toBeNull();
+        expect(screen.queryByRole('dialog')).toBeNull();
         expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
         expect(mockHistoryReplace).toHaveBeenCalledWith({
           search: '',
@@ -126,267 +127,249 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('5');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { rerender, getByText, getByTestId } = render(<ValuesSchema {...defaultProps} />);
+      const { rerender } = render(<ValuesSchema {...defaultProps} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
 
-      await waitFor(() => {
-        expect(getByText('Values schema reference')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
 
-      const close = getByText('Close');
-      fireEvent.click(close);
+      const close = screen.getByText('Close');
+      userEvent.click(close);
 
       rerender(<ValuesSchema {...defaultProps} version="1.0.0" />);
 
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(2);
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, '1.0.0');
       });
 
-      await waitFor(() => {
-        expect(getByText('Values schema reference')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
     });
 
     it('calls again to getValuesSchema when packageId is different', async () => {
       const mockValuesSchema = getMockValuesSchema('6');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { rerender, getByText, getByTestId } = render(<ValuesSchema {...defaultProps} />);
+      const { rerender } = render(<ValuesSchema {...defaultProps} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
 
-      await waitFor(() => {
-        expect(getByText('Values schema reference')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
 
-      const close = getByText('Close');
-      fireEvent.click(close);
+      const close = screen.getByText('Close');
+      userEvent.click(close);
 
       rerender(<ValuesSchema {...defaultProps} packageId="id2" />);
 
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(2);
         expect(API.getValuesSchema).toHaveBeenCalledWith('id2', defaultProps.version);
       });
 
-      await waitFor(() => {
-        expect(getByText('Values schema reference')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
     });
 
     it('does not call again to getValuesSchema when package is the same', async () => {
       const mockValuesSchema = getMockValuesSchema('7');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { getByText, getByTestId, queryByRole } = render(<ValuesSchema {...defaultProps} />);
+      render(<ValuesSchema {...defaultProps} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
 
-      await waitFor(() => {
-        expect(getByText('Values schema reference')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
 
-      const close = getByText('Close');
-      fireEvent.click(close);
+      const close = screen.getByText('Close');
+      userEvent.click(close);
 
-      expect(queryByRole('dialog')).toBeNull();
+      expect(screen.queryByRole('dialog')).toBeNull();
 
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
       });
 
-      await waitFor(() => {
-        expect(getByText('Values schema reference')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
     });
 
     it('renders JSON schema with refs', async () => {
       const mockValuesSchema = getMockValuesSchema('8');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { getByText, getAllByText, getByTestId } = render(<ValuesSchema {...defaultProps} />);
+      render(<ValuesSchema {...defaultProps} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
 
-      await waitFor(() => {
-        expect(getByText('env:')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('env:')).toBeInTheDocument();
 
-      expect(getByText('image:')).toBeInTheDocument();
-      expect(getByText('array')).toBeInTheDocument();
-      expect(getByText('(unique)')).toBeInTheDocument();
-      expect(getAllByText(/\[\]/g)).toHaveLength(2);
+      expect(screen.getByText('image:')).toBeInTheDocument();
+      expect(screen.getByText('array')).toBeInTheDocument();
+      expect(screen.getByText('(unique)')).toBeInTheDocument();
+      expect(screen.getAllByText(/\[\]/g)).toHaveLength(2);
     });
 
     it('renders complex full JSON', async () => {
       const mockValuesSchema = getMockValuesSchema('9');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { getByText, getAllByText, getByTestId, getAllByTestId } = render(<ValuesSchema {...defaultProps} />);
+      render(<ValuesSchema {...defaultProps} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
 
-      await waitFor(() => {
-        expect(getByText('Values schema reference')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
 
-      expect(getByText('# CMAK operator Helm values')).toBeInTheDocument();
-      expect(getByText('# ui container k8s settings')).toBeInTheDocument();
-      expect(getByText('ui:')).toBeInTheDocument();
-      expect(getByText('# extra cmd line arguments')).toBeInTheDocument();
-      expect(getByText('extraArgs:')).toBeInTheDocument();
-      expect(getAllByText('[]')).toHaveLength(2);
-      expect(getAllByText('# resource requests and limits')).toHaveLength(2);
-      expect(getAllByText('resources:')).toHaveLength(2);
-      expect(getAllByText('# resource limits')).toHaveLength(2);
-      expect(getAllByText('limits:')).toHaveLength(2);
-      expect(getAllByText('{}')).toHaveLength(14);
-      expect(getAllByText('# resource requests')).toHaveLength(2);
-      expect(getAllByText('requests:')).toHaveLength(2);
+      expect(screen.getByText('# CMAK operator Helm values')).toBeInTheDocument();
+      expect(screen.getByText('# ui container k8s settings')).toBeInTheDocument();
+      expect(screen.getByText('ui:')).toBeInTheDocument();
+      expect(screen.getByText('# extra cmd line arguments')).toBeInTheDocument();
+      expect(screen.getByText('extraArgs:')).toBeInTheDocument();
+      expect(screen.getAllByText('[]')).toHaveLength(2);
+      expect(screen.getAllByText('# resource requests and limits')).toHaveLength(2);
+      expect(screen.getAllByText('resources:')).toHaveLength(2);
+      expect(screen.getAllByText('# resource limits')).toHaveLength(2);
+      expect(screen.getAllByText('limits:')).toHaveLength(2);
+      expect(screen.getAllByText('{}')).toHaveLength(14);
+      expect(screen.getAllByText('# resource requests')).toHaveLength(2);
+      expect(screen.getAllByText('requests:')).toHaveLength(2);
       expect(
-        getByText('# provide key value base pairs for consumer properties according to java docs')
+        screen.getByText('# provide key value base pairs for consumer properties according to java docs')
       ).toBeInTheDocument();
-      expect(getByText('consumerProperties:')).toBeInTheDocument();
-      expect(getByText('# Consumer SSL configuration')).toBeInTheDocument();
-      expect(getByText('consumerPropertiesSsl:')).toBeInTheDocument();
-      expect(getAllByText('null')).toHaveLength(26);
-      expect(getByText('# keystore configuration')).toBeInTheDocument();
-      expect(getByText('keystore:')).toBeInTheDocument();
-      expect(getAllByText('type:')).toHaveLength(2);
-      expect(getAllByText('value:')).toHaveLength(2);
-      expect(getAllByText('password:')).toHaveLength(2);
-      expect(getByText('# truststore configuration')).toBeInTheDocument();
-      expect(getByText('truststore:')).toBeInTheDocument();
-      expect(getByText('# zk container k8s settings')).toBeInTheDocument();
-      expect(getByText('zk:')).toBeInTheDocument();
-      expect(getByText('# zk version')).toBeInTheDocument();
-      expect(getByText('version:')).toBeInTheDocument();
-      expect(getAllByText('3.6.1')).toHaveLength(2);
-      expect(getAllByText('# resource requests and limits')).toHaveLength(2);
-      expect(getAllByText('resources:')).toHaveLength(2);
-      expect(getByText('# cmak instance settings')).toBeInTheDocument();
-      expect(getByText('cmak:')).toBeInTheDocument();
-      expect(getAllByText('jmxSsl:')).toHaveLength(2);
-      expect(getAllByText('false')).toHaveLength(20);
-      expect(getAllByText('# either cluster enabled')).toHaveLength(2);
-      expect(getAllByText('enabled:')).toHaveLength(2);
-      expect(getAllByText('true')).toHaveLength(14);
-      expect(getAllByText('jmxPass:')).toHaveLength(2);
-      expect(getAllByText('jmxUser:')).toHaveLength(2);
-      expect(getAllByText('jmxEnabled:')).toHaveLength(2);
-      expect(getAllByText('kafkaVersion:')).toHaveLength(2);
-      expect(getAllByText('2.2.0')).toHaveLength(4);
-      expect(getAllByText('pollConsumers:')).toHaveLength(2);
-      expect(getAllByText('filterConsumers:')).toHaveLength(2);
-      expect(getAllByText('logkafkaEnabled:')).toHaveLength(2);
-      expect(getAllByText('displaySizeEnabled:')).toHaveLength(2);
-      expect(getAllByText('activeOffsetCacheEnabled:')).toHaveLength(2);
-      expect(getByText('# display name for the cluster')).toBeInTheDocument();
-      expect(getByText('name:')).toBeInTheDocument();
-      expect(getAllByText('# curator framework settings for zookeeper')).toHaveLength(2);
-      expect(getAllByText('curatorConfig:')).toHaveLength(2);
-      expect(getAllByText('zkMaxRetry:')).toHaveLength(2);
-      expect(getAllByText('100')).toHaveLength(8);
-      expect(getAllByText('maxSleepTimeMs:')).toHaveLength(2);
-      expect(getAllByText('1000')).toHaveLength(4);
-      expect(getAllByText('baseSleepTimeMs:')).toHaveLength(2);
-      expect(getByText('# zookeeper connection string')).toBeInTheDocument();
-      expect(getByText('zkConnect:')).toBeInTheDocument();
-      expect(getByText('# common config for all declared clusters')).toBeInTheDocument();
-      expect(getAllByText('curatorConfig:')).toHaveLength(2);
-      expect(getByText('# ingress configuration')).toBeInTheDocument();
-      expect(getByText('ingress:')).toBeInTheDocument();
-      expect(getByText('# use TLS secret')).toBeInTheDocument();
-      expect(getByText('tls:')).toBeInTheDocument();
-      expect(getByText('# Secret name to attach to the ingress object')).toBeInTheDocument();
-      expect(getByText('secret:')).toBeInTheDocument();
-      expect(getByText('# ingress host')).toBeInTheDocument();
-      expect(getByText('host:')).toBeInTheDocument();
-      expect(getByText('# ingress path')).toBeInTheDocument();
-      expect(getByText('path:')).toBeInTheDocument();
-      expect(getByText('# optional ingress labels')).toBeInTheDocument();
-      expect(getByText('labels:')).toBeInTheDocument();
-      expect(getByText('# optional ingress annotations')).toBeInTheDocument();
-      expect(getByText('annotations:')).toBeInTheDocument();
-      expect(getByText('# reconciliation job config')).toBeInTheDocument();
-      expect(getByText('reconcile:')).toBeInTheDocument();
-      expect(getByText('# cron expression for periodic reconciliation')).toBeInTheDocument();
-      expect(getByText('schedule:')).toBeInTheDocument();
-      expect(getAllByText('"*/3 * * * *"')).toHaveLength(2);
-      expect(getByText('# allow overwrite Zookeeper settings of CMAK')).toBeInTheDocument();
-      expect(getByText('overwriteZk:')).toBeInTheDocument();
-      expect(getByText('# number of failed jobs to keep')).toBeInTheDocument();
-      expect(getByText('failedJobsHistoryLimit:')).toBeInTheDocument();
-      expect(getByText('# number of completed jobs to keep')).toBeInTheDocument();
-      expect(getByText('successfulJobsHistoryLimit:')).toBeInTheDocument();
-      expect(getByText('# docker registry for all images of the chart')).toBeInTheDocument();
-      expect(getByText('imageRegistry:')).toBeInTheDocument();
-      expect(getAllByText('docker.io')).toHaveLength(2);
-      expect(getAllByText('Required')).toHaveLength(18);
-      expect(getAllByText('object')).toHaveLength(21);
-      expect(getAllByText('array')).toHaveLength(2);
-      expect(getByText('[string]')).toBeInTheDocument();
-      expect(getAllByText('boolean')).toHaveLength(17);
-      expect(getAllByText('integer')).toHaveLength(8);
-      expect(getAllByTestId('schemaCombSelect')).toHaveLength(8);
+      expect(screen.getByText('consumerProperties:')).toBeInTheDocument();
+      expect(screen.getByText('# Consumer SSL configuration')).toBeInTheDocument();
+      expect(screen.getByText('consumerPropertiesSsl:')).toBeInTheDocument();
+      expect(screen.getAllByText('null')).toHaveLength(26);
+      expect(screen.getByText('# keystore configuration')).toBeInTheDocument();
+      expect(screen.getByText('keystore:')).toBeInTheDocument();
+      expect(screen.getAllByText('type:')).toHaveLength(2);
+      expect(screen.getAllByText('value:')).toHaveLength(2);
+      expect(screen.getAllByText('password:')).toHaveLength(2);
+      expect(screen.getByText('# truststore configuration')).toBeInTheDocument();
+      expect(screen.getByText('truststore:')).toBeInTheDocument();
+      expect(screen.getByText('# zk container k8s settings')).toBeInTheDocument();
+      expect(screen.getByText('zk:')).toBeInTheDocument();
+      expect(screen.getByText('# zk version')).toBeInTheDocument();
+      expect(screen.getByText('version:')).toBeInTheDocument();
+      expect(screen.getAllByText('3.6.1')).toHaveLength(2);
+      expect(screen.getAllByText('# resource requests and limits')).toHaveLength(2);
+      expect(screen.getAllByText('resources:')).toHaveLength(2);
+      expect(screen.getByText('# cmak instance settings')).toBeInTheDocument();
+      expect(screen.getByText('cmak:')).toBeInTheDocument();
+      expect(screen.getAllByText('jmxSsl:')).toHaveLength(2);
+      expect(screen.getAllByText('false')).toHaveLength(20);
+      expect(screen.getAllByText('# either cluster enabled')).toHaveLength(2);
+      expect(screen.getAllByText('enabled:')).toHaveLength(2);
+      expect(screen.getAllByText('true')).toHaveLength(14);
+      expect(screen.getAllByText('jmxPass:')).toHaveLength(2);
+      expect(screen.getAllByText('jmxUser:')).toHaveLength(2);
+      expect(screen.getAllByText('jmxEnabled:')).toHaveLength(2);
+      expect(screen.getAllByText('kafkaVersion:')).toHaveLength(2);
+      expect(screen.getAllByText('2.2.0')).toHaveLength(4);
+      expect(screen.getAllByText('pollConsumers:')).toHaveLength(2);
+      expect(screen.getAllByText('filterConsumers:')).toHaveLength(2);
+      expect(screen.getAllByText('logkafkaEnabled:')).toHaveLength(2);
+      expect(screen.getAllByText('displaySizeEnabled:')).toHaveLength(2);
+      expect(screen.getAllByText('activeOffsetCacheEnabled:')).toHaveLength(2);
+      expect(screen.getByText('# display name for the cluster')).toBeInTheDocument();
+      expect(screen.getByText('name:')).toBeInTheDocument();
+      expect(screen.getAllByText('# curator framework settings for zookeeper')).toHaveLength(2);
+      expect(screen.getAllByText('curatorConfig:')).toHaveLength(2);
+      expect(screen.getAllByText('zkMaxRetry:')).toHaveLength(2);
+      expect(screen.getAllByText('100')).toHaveLength(8);
+      expect(screen.getAllByText('maxSleepTimeMs:')).toHaveLength(2);
+      expect(screen.getAllByText('1000')).toHaveLength(4);
+      expect(screen.getAllByText('baseSleepTimeMs:')).toHaveLength(2);
+      expect(screen.getByText('# zookeeper connection string')).toBeInTheDocument();
+      expect(screen.getByText('zkConnect:')).toBeInTheDocument();
+      expect(screen.getByText('# common config for all declared clusters')).toBeInTheDocument();
+      expect(screen.getAllByText('curatorConfig:')).toHaveLength(2);
+      expect(screen.getByText('# ingress configuration')).toBeInTheDocument();
+      expect(screen.getByText('ingress:')).toBeInTheDocument();
+      expect(screen.getByText('# use TLS secret')).toBeInTheDocument();
+      expect(screen.getByText('tls:')).toBeInTheDocument();
+      expect(screen.getByText('# Secret name to attach to the ingress object')).toBeInTheDocument();
+      expect(screen.getByText('secret:')).toBeInTheDocument();
+      expect(screen.getByText('# ingress host')).toBeInTheDocument();
+      expect(screen.getByText('host:')).toBeInTheDocument();
+      expect(screen.getByText('# ingress path')).toBeInTheDocument();
+      expect(screen.getByText('path:')).toBeInTheDocument();
+      expect(screen.getByText('# optional ingress labels')).toBeInTheDocument();
+      expect(screen.getByText('labels:')).toBeInTheDocument();
+      expect(screen.getByText('# optional ingress annotations')).toBeInTheDocument();
+      expect(screen.getByText('annotations:')).toBeInTheDocument();
+      expect(screen.getByText('# reconciliation job config')).toBeInTheDocument();
+      expect(screen.getByText('reconcile:')).toBeInTheDocument();
+      expect(screen.getByText('# cron expression for periodic reconciliation')).toBeInTheDocument();
+      expect(screen.getByText('schedule:')).toBeInTheDocument();
+      expect(screen.getAllByText('"*/3 * * * *"')).toHaveLength(2);
+      expect(screen.getByText('# allow overwrite Zookeeper settings of CMAK')).toBeInTheDocument();
+      expect(screen.getByText('overwriteZk:')).toBeInTheDocument();
+      expect(screen.getByText('# number of failed jobs to keep')).toBeInTheDocument();
+      expect(screen.getByText('failedJobsHistoryLimit:')).toBeInTheDocument();
+      expect(screen.getByText('# number of completed jobs to keep')).toBeInTheDocument();
+      expect(screen.getByText('successfulJobsHistoryLimit:')).toBeInTheDocument();
+      expect(screen.getByText('# docker registry for all images of the chart')).toBeInTheDocument();
+      expect(screen.getByText('imageRegistry:')).toBeInTheDocument();
+      expect(screen.getAllByText('docker.io')).toHaveLength(2);
+      expect(screen.getAllByText('Required')).toHaveLength(18);
+      expect(screen.getAllByText('object')).toHaveLength(21);
+      expect(screen.getAllByText('array')).toHaveLength(2);
+      expect(screen.getByText('[string]')).toBeInTheDocument();
+      expect(screen.getAllByText('boolean')).toHaveLength(17);
+      expect(screen.getAllByText('integer')).toHaveLength(8);
+      expect(screen.getAllByRole('combobox', { name: 'Type selection' })).toHaveLength(8);
     });
 
     it('closes modal when a new pkg is open', async () => {
       const mockValuesSchema = getMockValuesSchema('10');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { getByRole, getByTestId, queryByRole, rerender } = render(<ValuesSchema {...defaultProps} />);
+      const { rerender } = render(<ValuesSchema {...defaultProps} />);
 
-      const btn = getByTestId('valuesSchemaBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      userEvent.click(btn);
 
-      await waitFor(() => {
-        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
-        expect(getByRole('dialog')).toBeInTheDocument();
-      });
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
+      expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
 
       rerender(<ValuesSchema {...defaultProps} packageId="id2" />);
 
       waitFor(() => {
-        expect(queryByRole('dialog')).toBeNull();
+        expect(screen.queryByRole('dialog')).toBeNull();
       });
     });
   });

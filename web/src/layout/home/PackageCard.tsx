@@ -15,7 +15,6 @@ const PackageCard = (props: Props) => (
   <div className={`col-12 col-xxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative ${props.className}`} role="listitem">
     <div className={`card cardWithHover h-100 ${styles.card}`}>
       <Link
-        data-testid="link"
         className={`text-decoration-none text-reset h-100 ${styles.link}`}
         to={{
           pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),

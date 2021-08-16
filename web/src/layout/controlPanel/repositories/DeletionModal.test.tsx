@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -54,51 +55,51 @@ describe('Deletion modal Modal - packages section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <DeletionModal {...defaultProps} />
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <DeletionModal {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      expect(getByText('Delete repository')).toBeInTheDocument();
-      expect(getByText('Important:')).toBeInTheDocument();
-      expect(getByText('Please read this carefully.')).toBeInTheDocument();
+      expect(screen.getByText('Delete repository')).toBeInTheDocument();
+      expect(screen.getByText('Important:')).toBeInTheDocument();
+      expect(screen.getByText('Please read this carefully.')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           /All information related to your repository or packages will be permanently deleted as well. This includes packages' stars, users subscriptions to packages, webhooks, events and notifications./g
         )
       ).toBeInTheDocument();
-      expect(getByText('repoTest')).toBeInTheDocument();
+      expect(screen.getByText('repoTest')).toBeInTheDocument();
 
-      expect(getByTestId('repoNameInput')).toBeInTheDocument();
-      expect(getByTestId('deleteRepoBtn')).toBeInTheDocument();
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Delete repository' })).toBeInTheDocument();
     });
 
     it('calls delete repo when delete button in dropdown is clicked', async () => {
       mocked(API).deleteRepository.mockResolvedValue(null);
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <DeletionModal {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const input = getByTestId('repoNameInput');
-      fireEvent.change(input, { target: { value: 'repoTest' } });
+      const input = screen.getByRole('textbox');
+      userEvent.type(input, 'repoTest');
 
-      const btn = getByTestId('deleteRepoBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Delete repository' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteRepository).toHaveBeenCalledTimes(1);
@@ -106,17 +107,17 @@ describe('Deletion modal Modal - packages section', () => {
     });
 
     it('renders disabled input until user enters repo name', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <DeletionModal {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const btn = getByTestId('deleteRepoBtn');
+      const btn = screen.getByRole('button', { name: 'Delete repository' });
       expect(btn).toBeDisabled();
 
-      const input = getByTestId('repoNameInput');
-      fireEvent.change(input, { target: { value: 'repoTest' } });
+      const input = screen.getByRole('textbox');
+      userEvent.type(input, 'repoTest');
 
       expect(btn).toBeEnabled();
     });
@@ -127,17 +128,17 @@ describe('Deletion modal Modal - packages section', () => {
       mocked(API).deleteRepository.mockRejectedValue({
         kind: ErrorKind.Other,
       });
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <DeletionModal {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const input = getByTestId('repoNameInput');
-      fireEvent.change(input, { target: { value: 'repoTest' } });
+      const input = screen.getByRole('textbox');
+      userEvent.type(input, 'repoTest');
 
-      const btn = getByTestId('deleteRepoBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Delete repository' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteRepository).toHaveBeenCalledTimes(1);
@@ -154,17 +155,17 @@ describe('Deletion modal Modal - packages section', () => {
       mocked(API).deleteRepository.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <DeletionModal {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const input = getByTestId('repoNameInput');
-      fireEvent.change(input, { target: { value: 'repoTest' } });
+      const input = screen.getByRole('textbox');
+      userEvent.type(input, 'repoTest');
 
-      const btn = getByTestId('deleteRepoBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Delete repository' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteRepository).toHaveBeenCalledTimes(1);

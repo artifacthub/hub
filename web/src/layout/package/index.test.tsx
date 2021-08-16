@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -42,7 +43,7 @@ describe('Package index', () => {
     const mockPackage = getMockPackage('1');
     mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <PackageView {...defaultProps} />
       </Router>
@@ -50,7 +51,7 @@ describe('Package index', () => {
 
     await waitFor(() => {
       expect(API.getPackage).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -78,15 +79,13 @@ describe('Package index', () => {
         ...defaultProps,
       };
 
-      const { getByRole } = render(
+      render(
         <Router>
           <PackageView {...props} />
         </Router>
       );
 
-      await waitFor(() => {
-        expect(getByRole('status')).toBeTruthy();
-      });
+      expect(await screen.findByRole('status')).toBeTruthy();
     });
   });
 
@@ -100,7 +99,7 @@ describe('Package index', () => {
         ...defaultProps,
       };
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <PackageView {...props} />
         </Router>
@@ -110,7 +109,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      const noData = getByTestId('noData');
+      const noData = screen.getByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting this package, please try again later./i);
     });
@@ -124,7 +123,7 @@ describe('Package index', () => {
         ...defaultProps,
       };
 
-      const { getByTestId, getByText } = render(
+      render(
         <Router>
           <PackageView {...props} />
         </Router>
@@ -134,11 +133,11 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      const noData = getByTestId('noData');
+      const noData = screen.getByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('Sorry, the package you requested was not found.');
       expect(
-        getByText(
+        screen.getByText(
           'The package you are looking for may have been deleted by the provider, or it may now belong to a different repository. Please try searching for it, as it may help locating the package in a different repository or discovering other alternatives.'
         )
       ).toBeInTheDocument();
@@ -156,15 +155,15 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('4');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} searchUrlReferer={searchUrlReferer} />
         </Router>
       );
 
-      const goBack = await waitFor(() => getByTestId('goBack'));
+      const goBack = await screen.findByRole('button', { name: /Back to results/ });
       expect(goBack).toBeInTheDocument();
-      fireEvent.click(goBack);
+      userEvent.click(goBack);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -179,15 +178,15 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('5');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      const link = await waitFor(() => getByTestId('repoLink'));
+      const link = await screen.findByTestId('repoLink');
       expect(link).toBeInTheDocument();
-      fireEvent.click(link);
+      userEvent.click(link);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -207,15 +206,13 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('6');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByRole } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => {
-        expect(getByRole('dialog')).toBeInTheDocument();
-      });
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
     });
   });
 
@@ -224,23 +221,23 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('7');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByTestId, queryByTestId } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('No README file available for this package');
-      expect(queryByTestId('readme')).toBeNull();
+      expect(screen.queryByTestId('readme')).toBeNull();
     });
 
     it('renders it correctly', async () => {
       const mockPackage = getMockPackage('8');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { queryByTestId } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
@@ -250,7 +247,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      const readme = await waitFor(() => queryByTestId('readme'));
+      const readme = await screen.findByTestId('readme');
       expect(readme).toBeInTheDocument();
       expect(readme).toHaveTextContent(mockPackage.readme!);
     });
@@ -261,7 +258,7 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('9');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getAllByText } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
@@ -271,7 +268,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(getAllByText('Verified Publisher')).toHaveLength(2);
+      expect(screen.getAllByText('Verified Publisher')).toHaveLength(2);
     });
   });
 
@@ -280,7 +277,7 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('10');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByText } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
@@ -290,7 +287,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('CRDs')).toBeInTheDocument();
+      expect(screen.getByText('CRDs')).toBeInTheDocument();
     });
   });
 
@@ -299,7 +296,7 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('11');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByText } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
@@ -309,7 +306,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('CRDs')).toBeInTheDocument();
+      expect(screen.getByText('CRDs')).toBeInTheDocument();
     });
   });
 
@@ -318,7 +315,7 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('12');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByTestId, getByText } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
@@ -328,8 +325,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByTestId('mainPackage')).toBeInTheDocument();
-      expect(getByText('Rules')).toBeInTheDocument();
+      expect(screen.getByTestId('mainPackage')).toBeInTheDocument();
+      expect(screen.getByText('Rules')).toBeInTheDocument();
     });
   });
 
@@ -338,7 +335,7 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('13');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getByTestId, getByText } = render(
+      render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
@@ -348,8 +345,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Manifest')).toBeInTheDocument();
-      expect(getByTestId('tektonManifestBtn')).toBeInTheDocument();
+      expect(screen.getByText('Manifest')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open Manifest' })).toBeInTheDocument();
     });
 
     describe('Krew kubectl plugin', () => {
@@ -357,7 +354,7 @@ describe('Package index', () => {
         const mockPackage = getMockPackage('14');
         mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-        const { getByText, getAllByTestId, getByTestId } = render(
+        render(
           <Router>
             <PackageView {...defaultProps} />
           </Router>
@@ -367,9 +364,9 @@ describe('Package index', () => {
           expect(API.getPackage).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByText('Manifest')).toBeInTheDocument();
-        expect(getAllByTestId('ctcBtn')).toHaveLength(2);
-        expect(getByTestId('downloadBtn')).toBeInTheDocument();
+        expect(screen.getByText('Manifest')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
       });
     });
   });

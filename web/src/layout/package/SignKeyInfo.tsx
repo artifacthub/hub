@@ -54,12 +54,11 @@ const SignKeyInfo = (props: Props) => {
       <ElementWithTooltip
         element={
           <button
-            data-testid="signKeyBtn"
             className={classNames('btn btn-outline-secondary btn-sm ml-2', styles.btn, {
               disabled: isUndefined(props.signKey),
             })}
             onClick={onOpen}
-            aria-label="Open modal"
+            aria-label="Open sign key modal"
             aria-disabled={isUndefined(props.signKey)}
           >
             <small className="d-flex flex-row align-items-center text-uppercase">

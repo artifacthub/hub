@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { Package, PackageLink, Version } from '../../types';
@@ -49,14 +50,14 @@ describe('Details', () => {
         }}
       />
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Helm chart', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('2');
 
-      const { getByText, queryByText, getAllByText } = render(
+      render(
         <Details
           {...defaultProps}
           package={mockPackage}
@@ -68,36 +69,36 @@ describe('Details', () => {
         />
       );
 
-      expect(getByText('Application version')).toBeInTheDocument();
-      expect(getByText('Type')).toBeInTheDocument();
-      expect(getByText('Kubernetes version')).toBeInTheDocument();
-      expect(getByText('Chart versions')).toBeInTheDocument();
-      expect(queryByText('Links')).toBeNull();
-      expect(getByText('License')).toBeInTheDocument();
-      expect(getByText('Maintainers')).toBeInTheDocument();
-      expect(getByText('Keywords')).toBeInTheDocument();
+      expect(screen.getByText('Application version')).toBeInTheDocument();
+      expect(screen.getByText('Type')).toBeInTheDocument();
+      expect(screen.getByText('Kubernetes version')).toBeInTheDocument();
+      expect(screen.getByText('Chart versions')).toBeInTheDocument();
+      expect(screen.queryByText('Links')).toBeNull();
+      expect(screen.getByText('License')).toBeInTheDocument();
+      expect(screen.getByText('Maintainers')).toBeInTheDocument();
+      expect(screen.getByText('Keywords')).toBeInTheDocument();
 
-      const maintainer = queryByText('maintainerName');
+      const maintainer = screen.getByText('maintainerName');
       expect(maintainer).toBeInTheDocument();
       expect(maintainer!.closest('a')).toHaveProperty('href', 'mailto:main@tainer.com');
 
-      expect(getByText('1.0.0')).toBeInTheDocument();
-      expect(getAllByText('-')).toHaveLength(2);
-      expect(getAllByText('MIT')).toHaveLength(2);
+      expect(screen.getByText('1.0.0')).toBeInTheDocument();
+      expect(screen.getAllByText('-')).toHaveLength(2);
+      expect(screen.getAllByText('MIT')).toHaveLength(2);
     });
 
     describe('Application version', () => {
       it('renders correct app version', () => {
         const mockPackage = getMockPackage('3');
-        const { queryByText } = render(<Details {...defaultProps} package={mockPackage} />);
-        expect(queryByText(mockPackage.appVersion!)).toBeInTheDocument();
+        render(<Details {...defaultProps} package={mockPackage} />);
+        expect(screen.getByText(mockPackage.appVersion!)).toBeInTheDocument();
       });
 
       it("does not render app version when package hasn't", () => {
         const mockPackage = getMockPackage('4');
-        const { queryByTestId } = render(<Details {...defaultProps} package={mockPackage} />);
+        render(<Details {...defaultProps} package={mockPackage} />);
 
-        const appVersion = queryByTestId('appVersion');
+        const appVersion = screen.queryByTestId('appVersion');
         expect(appVersion).toBeNull();
       });
     });
@@ -105,29 +106,29 @@ describe('Details', () => {
     describe('Keywords', () => {
       it('renders 3 keywords', () => {
         const mockPackage = getMockPackage('5');
-        const { queryByTestId } = render(<Details {...defaultProps} package={mockPackage} />);
+        render(<Details {...defaultProps} package={mockPackage} />);
 
-        const keywords = queryByTestId('keywords');
-        expect(keywords?.children).toHaveLength(mockPackage.keywords!.length);
-        expect(keywords?.children[0]).toHaveTextContent(mockPackage.keywords![0]);
+        const keywords = screen.getByTestId('keywords');
+        expect(keywords!.children).toHaveLength(mockPackage.keywords!.length);
+        expect(keywords!.children[0]).toHaveTextContent(mockPackage.keywords![0]);
       });
 
       it('renders placeholder when no keywords', () => {
         const mockPackage = getMockPackage('6');
-        const { queryByTestId } = render(<Details {...defaultProps} package={mockPackage} />);
+        render(<Details {...defaultProps} package={mockPackage} />);
 
-        const keywords = queryByTestId('keywords');
+        const keywords = screen.getByTestId('keywords');
         expect(keywords).toBeInTheDocument();
         expect(keywords).toHaveTextContent('-');
       });
 
       it('calls history push on keyword click', () => {
         const mockPackage = getMockPackage('7');
-        const { queryByText } = render(<Details {...defaultProps} package={mockPackage} />);
+        render(<Details {...defaultProps} package={mockPackage} />);
 
-        const keywordBtn = queryByText(mockPackage.keywords![0])?.closest('button');
+        const keywordBtn = screen.getByText(mockPackage.keywords![0])!.closest('button');
         expect(keywordBtn).toBeInTheDocument();
-        fireEvent.click(keywordBtn!);
+        userEvent.click(keywordBtn!);
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);
         expect(mockHistoryPush).toHaveBeenCalledWith({
           pathname: '/packages/search',
@@ -142,20 +143,20 @@ describe('Details', () => {
     describe('Maintainers', () => {
       it('renders 2 maintainers', () => {
         const mockPackage = getMockPackage('8');
-        const { queryByTestId, queryByText } = render(<Details {...defaultProps} package={mockPackage} />);
+        render(<Details {...defaultProps} package={mockPackage} />);
 
-        const maintainers = queryByTestId('maintainers');
-        expect(maintainers?.children).toHaveLength(2);
+        const maintainers = screen.getByTestId('maintainers');
+        expect(maintainers.children).toHaveLength(2);
 
-        const firstMaintainer = queryByText(mockPackage.maintainers![0].name!);
-        expect(firstMaintainer?.closest('a')).toHaveAttribute('href', `mailto:${mockPackage.maintainers![0].email}`);
+        const firstMaintainer = screen.getByText(mockPackage.maintainers![0].name!);
+        expect(firstMaintainer!.closest('a')).toHaveAttribute('href', `mailto:${mockPackage.maintainers![0].email}`);
       });
 
       it('does not render maintaners when no maintainers', () => {
         const mockPackage = getMockPackage('9');
-        const { queryByTestId } = render(<Details {...defaultProps} package={mockPackage} />);
+        render(<Details {...defaultProps} package={mockPackage} />);
 
-        const maintainers = queryByTestId('maintainers');
+        const maintainers = screen.queryByTestId('maintainers');
         expect(maintainers).toBeNull();
       });
     });
@@ -163,8 +164,8 @@ describe('Details', () => {
     describe('Home url', () => {
       it('renders correctly', () => {
         const mockPackage = getMockPackage('10');
-        const { getByText } = render(<Details {...defaultProps} package={mockPackage} />);
-        const homeUrl = getByText('Homepage');
+        render(<Details {...defaultProps} package={mockPackage} />);
+        const homeUrl = screen.getByText('Homepage');
         expect(homeUrl).toBeInTheDocument();
         expect(homeUrl.closest('a')).toHaveAttribute('href', mockPackage.homeUrl);
       });
@@ -173,7 +174,7 @@ describe('Details', () => {
     describe('Package versions', () => {
       it('renders correctly', () => {
         const mockPackage = getMockPackage('11');
-        const { queryByTestId, queryAllByTestId } = render(
+        render(
           <Details
             {...defaultProps}
             sortedVersions={sortPackageVersions(mockPackage.availableVersions!)}
@@ -181,15 +182,15 @@ describe('Details', () => {
           />
         );
 
-        const versions = queryByTestId('versions');
+        const versions = screen.getByTestId('versions');
         expect(versions).toBeInTheDocument();
-        const versionsList = queryAllByTestId('version');
+        const versionsList = screen.getAllByRole('button', { name: /version/ });
         expect(versionsList).toHaveLength(2);
       });
 
       it('renders placeholder when no versions', () => {
         const mockPackage = getMockPackage('12');
-        const { queryByTestId } = render(
+        render(
           <Details
             {...defaultProps}
             sortedVersions={sortPackageVersions(mockPackage.availableVersions!)}
@@ -197,7 +198,7 @@ describe('Details', () => {
           />
         );
 
-        const versions = queryByTestId(/versions/i);
+        const versions = screen.getByTestId(/versions/i);
         expect(versions).toBeInTheDocument();
         expect(versions).toHaveTextContent('-');
       });
@@ -206,14 +207,14 @@ describe('Details', () => {
     describe('Not chart package renders', () => {
       it('renders correctly', () => {
         const mockPackage = getMockPackage('13');
-        const { getByText, getAllByText } = render(<Details {...defaultProps} package={mockPackage} />);
+        render(<Details {...defaultProps} package={mockPackage} />);
 
-        expect(getByText('Versions')).toBeInTheDocument();
-        expect(getByText('Keywords')).toBeInTheDocument();
+        expect(screen.getByText('Versions')).toBeInTheDocument();
+        expect(screen.getByText('Keywords')).toBeInTheDocument();
 
-        expect(getByText('key1')).toBeInTheDocument();
-        expect(getByText('key2')).toBeInTheDocument();
-        expect(getAllByText('-')).toHaveLength(1);
+        expect(screen.getByText('key1')).toBeInTheDocument();
+        expect(screen.getByText('key2')).toBeInTheDocument();
+        expect(screen.getAllByText('-')).toHaveLength(1);
       });
     });
   });
@@ -221,7 +222,7 @@ describe('Details', () => {
   describe('OLM operator', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('14');
-      const { getByText, getAllByText, getByTestId, getAllByTestId } = render(
+      render(
         <Details
           package={mockPackage}
           {...defaultProps}
@@ -238,112 +239,110 @@ describe('Details', () => {
         />
       );
 
-      expect(getByText('Versions')).toBeInTheDocument();
+      expect(screen.getByText('Versions')).toBeInTheDocument();
       mockPackage.availableVersions!.forEach((vs: Version) => {
-        expect(getByText(vs.version)).toBeInTheDocument();
+        expect(screen.getByText(vs.version)).toBeInTheDocument();
       });
 
-      expect(getByText('Capability Level')).toBeInTheDocument();
-      const steps = getAllByTestId('capabilityLevelStep');
+      expect(screen.getByText('Capability Level')).toBeInTheDocument();
+      const steps = screen.getAllByTestId('capabilityLevelStep');
       expect(steps[0]).toHaveClass('activeStep');
       expect(steps[1]).toHaveClass('activeStep');
       expect(steps[2]).not.toHaveClass('activeStep');
       expect(steps[3]).not.toHaveClass('activeStep');
       expect(steps[4]).not.toHaveClass('activeStep');
 
-      expect(getByText('Provider')).toBeInTheDocument();
-      expect(getByText(mockPackage.provider!)).toBeInTheDocument();
+      expect(screen.getByText('Provider')).toBeInTheDocument();
+      expect(screen.getByText(mockPackage.provider!)).toBeInTheDocument();
 
-      expect(getByText('Links')).toBeInTheDocument();
-      const homepage = getByText('source');
+      expect(screen.getByText('Links')).toBeInTheDocument();
+      const homepage = screen.getByText('source');
       expect(homepage).toBeInTheDocument();
       expect(homepage.closest('a')).toHaveProperty('href', mockPackage.links![0].url);
       mockPackage.links!.forEach((link: PackageLink) => {
-        expect(getByText(link.name)).toBeInTheDocument();
+        expect(screen.getByText(link.name)).toBeInTheDocument();
       });
 
-      expect(getByText('Maintainers')).toBeInTheDocument();
-      expect(getByTestId('maintainers')).toBeInTheDocument();
-      const maintainer1 = getByText(mockPackage.maintainers![0].name!);
+      expect(screen.getByText('Maintainers')).toBeInTheDocument();
+      expect(screen.getByTestId('maintainers')).toBeInTheDocument();
+      const maintainer1 = screen.getByText(mockPackage.maintainers![0].name!);
       expect(maintainer1).toBeInTheDocument();
       expect(maintainer1.closest('a')).toHaveProperty('href', `mailto:${mockPackage.maintainers![0].email}`);
 
-      expect(getByText('License')).toBeInTheDocument();
-      expect(getAllByText(mockPackage.license!)).toHaveLength(2);
+      expect(screen.getByText('License')).toBeInTheDocument();
+      expect(screen.getAllByText(mockPackage.license!)).toHaveLength(2);
 
-      expect(getByText(/Containers Images/g)).toBeInTheDocument();
-      expect(getByTestId('containerImage')).toBeInTheDocument();
-      expect(getByTestId('containerImage')).toHaveTextContent(mockPackage.containersImages![0].image);
+      expect(screen.getByText(/Containers Images/g)).toBeInTheDocument();
+      expect(screen.getByTestId('containerImage')).toBeInTheDocument();
+      expect(screen.getByTestId('containerImage')).toHaveTextContent(mockPackage.containersImages![0].image);
 
-      expect(getByText('Keywords')).toBeInTheDocument();
-      expect(getAllByTestId('keywordBtn')).toHaveLength(mockPackage.keywords!.length);
+      expect(screen.getByText('Keywords')).toBeInTheDocument();
+      expect(screen.getAllByRole('listitem', { name: /Filter by/ })).toHaveLength(mockPackage.keywords!.length);
     });
   });
 
   describe('OPA policy', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('16');
-      const { getByText, getAllByText, getByTestId, getAllByTestId } = render(
-        <Details package={mockPackage} {...defaultProps} />
-      );
+      render(<Details package={mockPackage} {...defaultProps} />);
 
-      expect(getByText('Versions')).toBeInTheDocument();
-      expect(getByText('1.0.0')).toBeInTheDocument();
+      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getByText('1.0.0')).toBeInTheDocument();
 
-      expect(getByText('Provider')).toBeInTheDocument();
-      expect(getByText(mockPackage.provider!)).toBeInTheDocument();
+      expect(screen.getByText('Provider')).toBeInTheDocument();
+      expect(screen.getByText(mockPackage.provider!)).toBeInTheDocument();
 
-      expect(getByText('Links')).toBeInTheDocument();
-      const homepage = getByText('source');
+      expect(screen.getByText('Links')).toBeInTheDocument();
+      const homepage = screen.getByText('source');
       expect(homepage).toBeInTheDocument();
       expect(homepage.closest('a')).toHaveProperty('href', mockPackage.links![0].url);
 
-      expect(getByText('Maintainers')).toBeInTheDocument();
-      expect(getByTestId('maintainers')).toBeInTheDocument();
-      const maintainer1 = getByText(mockPackage.maintainers![0].name!);
+      expect(screen.getByText('Maintainers')).toBeInTheDocument();
+      expect(screen.getByTestId('maintainers')).toBeInTheDocument();
+      const maintainer1 = screen.getByText(mockPackage.maintainers![0].name!);
       expect(maintainer1).toBeInTheDocument();
       expect(maintainer1.closest('a')).toHaveProperty('href', `mailto:${mockPackage.maintainers![0].email}`);
 
-      expect(getByText('License')).toBeInTheDocument();
-      expect(getAllByText(mockPackage.license!)).toHaveLength(2);
+      expect(screen.getByText('License')).toBeInTheDocument();
+      expect(screen.getAllByText(mockPackage.license!)).toHaveLength(2);
 
-      expect(getByText(/Containers Images/g)).toBeInTheDocument();
-      expect(getByTestId('containerImage')).toBeInTheDocument();
-      expect(getByTestId('containerImage')).toHaveTextContent(mockPackage.containersImages![0].image);
+      expect(screen.getByText(/Containers Images/g)).toBeInTheDocument();
+      expect(screen.getByTestId('containerImage')).toBeInTheDocument();
+      expect(screen.getByTestId('containerImage')).toHaveTextContent(mockPackage.containersImages![0].image);
 
-      expect(getByText('Keywords')).toBeInTheDocument();
-      expect(getAllByTestId('keywordBtn')).toHaveLength(mockPackage.keywords!.length);
+      expect(screen.getByText('Keywords')).toBeInTheDocument();
+      expect(screen.getAllByRole('listitem', { name: /Filter by/ })).toHaveLength(mockPackage.keywords!.length);
     });
   });
 
   describe('Falco rule', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('17');
-      const { getByText, getAllByText } = render(<Details package={mockPackage} {...defaultProps} />);
+      render(<Details package={mockPackage} {...defaultProps} />);
 
-      expect(getByText('Versions')).toBeInTheDocument();
-      expect(getByText('License')).toBeInTheDocument();
-      expect(getByText('Keywords')).toBeInTheDocument();
+      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getByText('License')).toBeInTheDocument();
+      expect(screen.getByText('Keywords')).toBeInTheDocument();
 
-      expect(getByText('key1')).toBeInTheDocument();
-      expect(getByText('key2')).toBeInTheDocument();
-      expect(getAllByText('MIT')).toHaveLength(2);
-      expect(getAllByText('-')).toHaveLength(1);
+      expect(screen.getByText('key1')).toBeInTheDocument();
+      expect(screen.getByText('key2')).toBeInTheDocument();
+      expect(screen.getAllByText('MIT')).toHaveLength(2);
+      expect(screen.getAllByText('-')).toHaveLength(1);
     });
   });
 
   describe('Tekton task', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('18');
-      const { getByText } = render(<Details package={mockPackage} {...defaultProps} />);
+      render(<Details package={mockPackage} {...defaultProps} />);
 
-      expect(getByText('Versions')).toBeInTheDocument();
-      expect(getByText('Pipeline minimal version')).toBeInTheDocument();
-      expect(getByText('Keywords')).toBeInTheDocument();
+      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getByText('Pipeline minimal version')).toBeInTheDocument();
+      expect(screen.getByText('Keywords')).toBeInTheDocument();
 
-      expect(getByText('tekton')).toBeInTheDocument();
-      expect(getByText('task')).toBeInTheDocument();
-      expect(getByText('cli')).toBeInTheDocument();
+      expect(screen.getByText('tekton')).toBeInTheDocument();
+      expect(screen.getByText('task')).toBeInTheDocument();
+      expect(screen.getByText('cli')).toBeInTheDocument();
     });
   });
 });

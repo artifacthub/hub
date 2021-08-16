@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import AnchorHeader from './AnchorHeader';
@@ -39,31 +40,31 @@ describe('AnchorHeader', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<AnchorHeader {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders header properly', () => {
-    const { getByText } = render(<AnchorHeader {...defaultProps} />);
-    const header = getByText(/Header/i);
+    render(<AnchorHeader {...defaultProps} />);
+    const header = screen.getByText(/Header/i);
     expect(header).toBeInTheDocument();
     expect(header.tagName).toBe('H2');
   });
 
   it('calls scroll into view', () => {
-    const { getByTestId } = render(<AnchorHeader {...defaultProps} />);
-    const link = getByTestId('anchorHeaderLink');
+    render(<AnchorHeader {...defaultProps} />);
+    const link = screen.getByRole('button');
     expect(link).toBeInTheDocument();
-    fireEvent.click(link);
+    userEvent.click(link);
     expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
   });
 
   for (let i = 0; i < tests.length; i++) {
     it('renders proper id and href from title', () => {
-      const { getByTestId, getByText } = render(<AnchorHeader {...defaultProps} title={tests[i].title} />);
-      expect(getByText(new RegExp(tests[i].title, 'i'))).toBeInTheDocument();
-      const link = getByTestId('anchorHeaderLink');
+      render(<AnchorHeader {...defaultProps} title={tests[i].title} />);
+      expect(screen.getByText(new RegExp(tests[i].title, 'i'))).toBeInTheDocument();
+      const link = screen.getByRole('button');
       expect(link).toHaveProperty('href', `http://localhost/#${tests[i].id}`);
-      const anchor = getByTestId('anchor');
+      const anchor = screen.getByTestId('anchor');
       expect(anchor).toHaveProperty('id', tests[i].id);
     });
   }

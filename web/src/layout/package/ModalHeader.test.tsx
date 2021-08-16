@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import ModalHeader from './ModalHeader';
@@ -16,22 +16,21 @@ describe('ModalHeader', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<ModalHeader {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<ModalHeader {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByAltText } = render(<ModalHeader {...defaultProps} />);
-      expect(getByText('Pretty name')).toBeInTheDocument();
-      expect(getByAltText('Pretty name')).toBeInTheDocument();
+      render(<ModalHeader {...defaultProps} />);
+      expect(screen.getByText('Pretty name')).toBeInTheDocument();
+      expect(screen.getByAltText('Pretty name')).toBeInTheDocument();
     });
 
     it('renders component without displayName', () => {
-      const { getByText, getByAltText } = render(<ModalHeader {...defaultProps} displayName={null} />);
-
-      expect(getByText('test')).toBeInTheDocument();
-      expect(getByAltText('test')).toBeInTheDocument();
+      render(<ModalHeader {...defaultProps} displayName={null} />);
+      expect(screen.getByText('test')).toBeInTheDocument();
+      expect(screen.getByAltText('test')).toBeInTheDocument();
     });
   });
 });

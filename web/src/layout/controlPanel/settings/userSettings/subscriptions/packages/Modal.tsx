@@ -101,7 +101,6 @@ const SubscriptionModal = (props: Props) => {
       modalDialogClassName={styles.modal}
       closeButton={
         <button
-          data-testid="addSubsModalBtn"
           className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isNull(packageItem) || isSending}

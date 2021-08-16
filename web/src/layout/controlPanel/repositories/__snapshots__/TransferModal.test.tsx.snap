@@ -27,9 +27,8 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
               Transfer repository
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -57,7 +56,6 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                   <input
                     checked=""
                     class="custom-control-input"
-                    data-testid="radio_user"
                     id="user"
                     name="transfer"
                     required=""
@@ -76,7 +74,6 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                 >
                   <input
                     class="custom-control-input"
-                    data-testid="radio_org"
                     id="org"
                     name="transfer"
                     required=""
@@ -100,7 +97,6 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                     <select
                       aria-label="org-select"
                       class="custom-select"
-                      data-testid="select_orgs"
                     />
                     <div
                       class="invalid-feedback fieldFeedback"
@@ -138,7 +134,6 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
             <button
               aria-label="Transfer repository"
               class="btn btn-sm btn-outline-secondary"
-              data-testid="transferRepoBtn"
               type="button"
             >
               <div

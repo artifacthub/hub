@@ -15,7 +15,6 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
           aria-expanded="false"
           aria-label="Open subscriptions menu"
           class="btn p-0 position-relative subsBtn disabled disabled"
-          data-testid="subscriptionsBtn"
           type="button"
         >
           <div
@@ -41,15 +40,14 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
     </div>
     <div
       class="dropdown-menu dropdown-menu-right p-0 dropdown"
-      data-testid="subsBtnDropdown"
+      role="menu"
     >
       <div
         class="arrow arrow"
       />
       <button
-        aria-label="Change subscription"
+        aria-label="Change New releases subscription"
         class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
-        data-testid="newReleaseBtn"
       >
         <div
           class="d-flex flex-row align-items-center w-100 justify-content-between"
@@ -106,9 +104,8 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
         </div>
       </button>
       <button
-        aria-label="Change subscription"
+        aria-label="Change Security alerts subscription"
         class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
-        data-testid="securityAlertBtn"
       >
         <div
           class="d-flex flex-row align-items-center w-100 justify-content-between"

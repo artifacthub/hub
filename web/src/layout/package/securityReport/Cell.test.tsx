@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { VulnerabilitySeverity } from '../../../types';
@@ -128,38 +129,38 @@ describe('SecuritySummary', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <table>
         <tbody>
           <SecurityCell {...defaultProps} />
         </tbody>
       </table>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByRole, getByTestId } = render(
+      render(
         <table>
           <tbody>
             <SecurityCell {...defaultProps} />
           </tbody>
         </table>
       );
-      expect(getByText(defaultProps.vulnerability.VulnerabilityID)).toBeInTheDocument();
-      expect(getByText(defaultProps.vulnerability.PkgName)).toBeInTheDocument();
+      expect(screen.getByText(defaultProps.vulnerability.VulnerabilityID)).toBeInTheDocument();
+      expect(screen.getByText(defaultProps.vulnerability.PkgName)).toBeInTheDocument();
 
-      const link = getByRole('button');
+      const link = screen.getByRole('button');
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('href', 'http://linux.oracle.com/cve/CVE-2020-8492.html');
 
-      const badge = getByTestId('severityBadge');
+      const badge = screen.getByTestId('severityBadge');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveStyle('background-color: #F7860F');
 
-      expect(getByText(defaultProps.vulnerability.InstalledVersion)).toBeInTheDocument();
-      expect(getByText(defaultProps.vulnerability.FixedVersion)).toBeInTheDocument();
+      expect(screen.getByText(defaultProps.vulnerability.InstalledVersion)).toBeInTheDocument();
+      expect(screen.getByText(defaultProps.vulnerability.FixedVersion)).toBeInTheDocument();
     });
 
     it('renders cell without fixed version', () => {
@@ -173,7 +174,7 @@ describe('SecuritySummary', () => {
         setVisibleVulnerability: mockSetVisibleVulnerability,
       };
 
-      const { getByTestId } = render(
+      render(
         <table>
           <tbody>
             <SecurityCell {...props} />
@@ -181,13 +182,13 @@ describe('SecuritySummary', () => {
         </table>
       );
 
-      const cell = getByTestId('fixedVersionCell');
+      const cell = screen.getByTestId('fixedVersionCell');
       expect(cell).toBeInTheDocument();
       expect(cell).toHaveTextContent('-');
     });
 
     it('opens vulnerability detail', () => {
-      const { queryByTestId, getByTestId, rerender } = render(
+      const { rerender } = render(
         <table>
           <tbody>
             <SecurityCell {...defaultProps} />
@@ -195,9 +196,9 @@ describe('SecuritySummary', () => {
         </table>
       );
 
-      expect(queryByTestId('vulnerabilityDetail')).toBeNull();
-      const cell = getByTestId('vulnerabilityCell');
-      fireEvent.click(cell);
+      expect(screen.queryByTestId('vulnerabilityDetail')).toBeNull();
+      const cell = screen.getByTestId('vulnerabilityCell');
+      userEvent.click(cell);
 
       expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
       expect(mockSetVisibleVulnerability).toHaveBeenCalledWith('CVE-2020-8492_1');
@@ -214,7 +215,7 @@ describe('SecuritySummary', () => {
     });
 
     it('Closes vulnerability detail', () => {
-      const { getByTestId } = render(
+      render(
         <table>
           <tbody>
             <SecurityCell {...defaultProps} isExpanded />
@@ -222,9 +223,9 @@ describe('SecuritySummary', () => {
         </table>
       );
 
-      expect(getByTestId('vulnerabilityDetail')).toBeInTheDocument();
-      const cell = getByTestId('vulnerabilityCell');
-      fireEvent.click(cell);
+      expect(screen.getByTestId('vulnerabilityDetail')).toBeInTheDocument();
+      const cell = screen.getByTestId('vulnerabilityCell');
+      userEvent.click(cell);
 
       expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
       expect(mockSetVisibleVulnerability).toHaveBeenCalledWith(undefined);
@@ -244,7 +245,7 @@ describe('SecuritySummary', () => {
           setVisibleVulnerability: mockSetVisibleVulnerability,
         };
 
-        const { getByTestId } = render(
+        render(
           <table>
             <tbody>
               <SecurityCell {...props} />
@@ -252,7 +253,7 @@ describe('SecuritySummary', () => {
           </table>
         );
 
-        const badge = getByTestId('severityBadge');
+        const badge = screen.getByTestId('severityBadge');
         expect(badge).toBeInTheDocument();
         expect(badge).toHaveStyle(`background-color: ${badges[i].color}`);
       });
@@ -273,7 +274,7 @@ describe('SecuritySummary', () => {
           setVisibleVulnerability: mockSetVisibleVulnerability,
         };
 
-        const { getByRole } = render(
+        render(
           <table>
             <tbody>
               <SecurityCell {...props} />
@@ -281,7 +282,7 @@ describe('SecuritySummary', () => {
           </table>
         );
 
-        const link = getByRole('button');
+        const link = screen.getByRole('button');
         expect(link).toBeInTheDocument();
         expect(link).toHaveAttribute('href', references[i].reference);
       });

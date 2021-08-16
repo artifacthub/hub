@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import BlockCodeButtons from './BlockCodeButtons';
@@ -23,28 +24,26 @@ describe('BlockCodeButtons', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<BlockCodeButtons {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders component', async () => {
-    const { getByTestId } = render(<BlockCodeButtons {...defaultProps} />);
+  it('renders component', () => {
+    render(<BlockCodeButtons {...defaultProps} />);
 
-    expect(getByTestId('ctcBtn')).toBeInTheDocument();
-    expect(getByTestId('downloadBtn')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
   });
 
   it('download file', () => {
-    const { getByTestId } = render(<BlockCodeButtons {...defaultProps} />);
+    render(<BlockCodeButtons {...defaultProps} />);
 
-    const btn = getByTestId('downloadBtn');
-    fireEvent.click(btn);
+    userEvent.click(screen.getByRole('button', { name: 'Download' }));
 
     const blob = new Blob([defaultProps.content], {
       type: 'text/yaml',
     });
 
-    const link = document.querySelector('a');
-    expect(link).toBeInTheDocument();
+    expect(document.querySelector('a')).toBeInTheDocument();
 
     expect(createObjectMock).toHaveBeenCalledTimes(1);
     expect(createObjectMock).toHaveBeenCalledWith(blob);

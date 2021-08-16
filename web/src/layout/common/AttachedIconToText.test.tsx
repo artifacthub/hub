@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import AttachedIconToText from './AttachedIconToText';
@@ -16,21 +16,16 @@ describe('AttachedIconToText', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<AttachedIconToText {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
-  });
-
-  it('creates snapshot', () => {
-    const { asFragment } = render(<AttachedIconToText {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', () => {
-    const { getByText, getByTestId } = render(<AttachedIconToText {...defaultProps} />);
+    render(<AttachedIconToText {...defaultProps} />);
 
-    expect(getByTestId('attachedIconToTextWrapper')).toBeInTheDocument();
-    expect(getByText('icon')).toBeInTheDocument();
+    expect(screen.getByTestId('attachedIconToTextWrapper')).toBeInTheDocument();
+    expect(screen.getByText('icon')).toBeInTheDocument();
     for (let i = 0; i < defaultProps.text.length; i++) {
-      expect(getByText(defaultProps.text[i])).toBeInTheDocument();
+      expect(screen.getByText(defaultProps.text[i])).toBeInTheDocument();
     }
   });
 });

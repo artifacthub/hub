@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { Repository } from '../../../types';
@@ -28,26 +28,26 @@ describe('OLMOCIInstall', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<OLMOCIInstall {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<OLMOCIInstall {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByText } = render(<OLMOCIInstall {...defaultProps} />);
+      render(<OLMOCIInstall {...defaultProps} />);
 
-      expect(getByText('Install catalog')).toBeInTheDocument();
-      expect(getByText('repo-catalog.yaml')).toBeInTheDocument();
-      expect(getByText(/Repo/g)).toBeInTheDocument();
-      expect(getByText(/user/g)).toBeInTheDocument();
-      expect(getByText(/docker.io\/ibmcom\/ibm-operator-catalog:latest/g)).toBeInTheDocument();
-      expect(getByText('kubectl apply -f repo-catalog.yaml')).toBeInTheDocument();
-      expect(getByText('Create subscription')).toBeInTheDocument();
-      expect(getByText('packageName-subscription.yaml')).toBeInTheDocument();
-      expect(getAllByText(/stable/g)).toHaveLength(2);
-      expect(getByText('kubectl apply -f packageName-subscription.yaml')).toBeInTheDocument();
+      expect(screen.getByText('Install catalog')).toBeInTheDocument();
+      expect(screen.getByText('repo-catalog.yaml')).toBeInTheDocument();
+      expect(screen.getByText(/Repo/g)).toBeInTheDocument();
+      expect(screen.getByText(/user/g)).toBeInTheDocument();
+      expect(screen.getByText(/docker.io\/ibmcom\/ibm-operator-catalog:latest/g)).toBeInTheDocument();
+      expect(screen.getByText('kubectl apply -f repo-catalog.yaml')).toBeInTheDocument();
+      expect(screen.getByText('Create subscription')).toBeInTheDocument();
+      expect(screen.getByText('packageName-subscription.yaml')).toBeInTheDocument();
+      expect(screen.getAllByText(/stable/g)).toHaveLength(2);
+      expect(screen.getByText('kubectl apply -f packageName-subscription.yaml')).toBeInTheDocument();
 
-      const olmLink = getByText('Need OLM?');
+      const olmLink = screen.getByText('Need OLM?');
       expect(olmLink).toBeInTheDocument();
       expect(olmLink).toHaveProperty(
         'href',
@@ -56,11 +56,9 @@ describe('OLMOCIInstall', () => {
     });
 
     it('renders private repo', () => {
-      const { getByRole } = render(
-        <OLMOCIInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />
-      );
+      render(<OLMOCIInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />);
 
-      const alert = getByRole('alert');
+      const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });

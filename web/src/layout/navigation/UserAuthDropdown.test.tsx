@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -28,7 +29,7 @@ describe('UserAuthDropdown', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
         <Router>
           <UserAuthDropdown />
@@ -36,12 +37,12 @@ describe('UserAuthDropdown', () => {
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId, queryByAltText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <UserAuthDropdown />
@@ -49,20 +50,20 @@ describe('UserAuthDropdown', () => {
         </AppCtx.Provider>
       );
 
-      const signedAs = getByText(/Signed in as/i);
+      const signedAs = screen.getByText(/Signed in as/i);
       expect(signedAs).toBeInTheDocument();
       expect(signedAs).toHaveTextContent('Signed in as test');
 
-      expect(getByTestId('profileIcon')).toBeInTheDocument();
-      expect(queryByAltText('User profile')).toBeNull();
-      expect(getByText('Starred packages')).toBeInTheDocument();
-      expect(getByText('Control Panel')).toBeInTheDocument();
-      expect(getByTestId('themeOptions')).toBeInTheDocument();
-      expect(getByText('Sign out')).toBeInTheDocument();
+      expect(screen.getByTestId('profileIcon')).toBeInTheDocument();
+      expect(screen.queryByAltText('User profile')).toBeNull();
+      expect(screen.getByText('Starred packages')).toBeInTheDocument();
+      expect(screen.getByText('Control Panel')).toBeInTheDocument();
+      expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
+      expect(screen.getByText('Sign out')).toBeInTheDocument();
     });
 
     it('renders component with user image', () => {
-      const { getByText, getByAltText, queryByTestId, getByTestId } = render(
+      render(
         <AppCtx.Provider
           value={{
             ctx: { ...mockCtxLoggedIn, user: { ...mockCtxLoggedIn.user, profileImageId: '123' } },
@@ -75,20 +76,20 @@ describe('UserAuthDropdown', () => {
         </AppCtx.Provider>
       );
 
-      const signedAs = getByText(/Signed in as/i);
+      const signedAs = screen.getByText(/Signed in as/i);
       expect(signedAs).toBeInTheDocument();
       expect(signedAs).toHaveTextContent('Signed in as test');
 
-      expect(getByAltText('User profile')).toBeInTheDocument();
-      expect(queryByTestId('profileIcon')).toBeNull();
-      expect(getByText('Starred packages')).toBeInTheDocument();
-      expect(getByText('Control Panel')).toBeInTheDocument();
-      expect(getByTestId('themeOptions')).toBeInTheDocument();
-      expect(getByText('Sign out')).toBeInTheDocument();
+      expect(screen.getByAltText('User profile')).toBeInTheDocument();
+      expect(screen.queryByTestId('profileIcon')).toBeNull();
+      expect(screen.getByText('Starred packages')).toBeInTheDocument();
+      expect(screen.getByText('Control Panel')).toBeInTheDocument();
+      expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
+      expect(screen.getByText('Sign out')).toBeInTheDocument();
     });
 
     it('loads starred packages page', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <UserAuthDropdown />
@@ -96,14 +97,14 @@ describe('UserAuthDropdown', () => {
         </AppCtx.Provider>
       );
 
-      const link = getByTestId('starredPackagesLink');
+      const link = screen.getByRole('link', { name: 'Starred packages' });
       expect(link).toBeInTheDocument();
-      fireEvent.click(link);
+      userEvent.click(link);
       expect(window.location.pathname).toBe('/packages/starred');
     });
 
     it('loads control panel page', () => {
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <UserAuthDropdown />
@@ -111,9 +112,9 @@ describe('UserAuthDropdown', () => {
         </AppCtx.Provider>
       );
 
-      const link = getByTestId('controlPanelLink');
+      const link = screen.getByRole('link', { name: 'Control Panel' });
       expect(link).toBeInTheDocument();
-      fireEvent.click(link);
+      userEvent.click(link);
       expect(window.location.pathname).toBe('/control-panel');
     });
   });

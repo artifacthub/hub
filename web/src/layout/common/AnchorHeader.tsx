@@ -35,7 +35,6 @@ const AnchorHeader: React.ElementType = (props: Props) => {
       <Tag className={`position-relative anchorHeader ${styles.headingWrapper} ${props.className}`}>
         <div data-testid="anchor" className={`position-absolute ${styles.headerAnchor}`} id={anchor} />
         <a
-          data-testid="anchorHeaderLink"
           href={`${history.location.pathname}#${anchor}`}
           onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();

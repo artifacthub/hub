@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { RepositoryKind } from '../../types';
@@ -17,14 +18,14 @@ jest.mock('react-router-dom', () => ({
 describe('RepositoryIconLabel', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<RepositoryIconLabel kind={RepositoryKind.Helm} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper content', () => {
-    const { getByText, getAllByAltText } = render(<RepositoryIconLabel kind={RepositoryKind.Helm} />);
-    expect(getByText('Helm chart')).toBeInTheDocument();
+    render(<RepositoryIconLabel kind={RepositoryKind.Helm} />);
+    expect(screen.getByText('Helm chart')).toBeInTheDocument();
 
-    const icons = getAllByAltText('Icon');
+    const icons = screen.getAllByAltText('Icon');
     expect(icons).toHaveLength(2);
     expect(icons[0]).toHaveProperty('src', 'http://localhost/static/media/helm-chart.svg');
     expect(icons[0]).toHaveClass('iconLight');
@@ -33,16 +34,16 @@ describe('RepositoryIconLabel', () => {
   });
 
   it('renders proper content with isPlural', () => {
-    const { getByText } = render(<RepositoryIconLabel kind={RepositoryKind.Helm} isPlural />);
-    expect(getByText('Helm charts')).toBeInTheDocument();
+    render(<RepositoryIconLabel kind={RepositoryKind.Helm} isPlural />);
+    expect(screen.getByText('Helm charts')).toBeInTheDocument();
   });
 
   it('renders button', () => {
-    const { getByTestId } = render(<RepositoryIconLabel kind={RepositoryKind.Helm} clickable />);
-    const btn = getByTestId('repoIconLabelLink');
+    render(<RepositoryIconLabel kind={RepositoryKind.Helm} clickable />);
+    const btn = screen.getByTestId('repoIconLabelLink');
     expect(btn).toBeInTheDocument();
 
-    fireEvent.click(btn);
+    userEvent.click(btn);
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
     expect(mockHistoryPush).toHaveBeenCalledWith({
       pathname: '/packages/search',

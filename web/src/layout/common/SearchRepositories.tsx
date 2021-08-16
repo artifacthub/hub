@@ -153,7 +153,6 @@ const SearchRepositories = (props: Props) => {
           </div>
 
           <input
-            data-testid="searchRepositoriesInput"
             ref={inputEl}
             type="text"
             className={`flex-grow-1 pr-4 pl-2 pl-md-0 ${styles.input}`}

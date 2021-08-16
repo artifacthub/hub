@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -19,16 +20,16 @@ describe('ResetPasswordModal', () => {
   it('creates snapshot', async () => {
     mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <ResetPasswordModal code="123" />
       </Router>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
     await waitFor(() => {
       expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -36,26 +37,26 @@ describe('ResetPasswordModal', () => {
     it('renders component', async () => {
       mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
 
-      const { getByTestId, getByRole, getByText } = render(
+      render(
         <Router>
           <ResetPasswordModal code="123" />
         </Router>
       );
 
-      expect(getByRole('status')).toBeInTheDocument();
+      expect(screen.getByRole('status')).toBeInTheDocument();
 
       await waitFor(() => {
         expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
         expect(API.verifyPasswordResetCode).toHaveBeenCalledWith('123');
       });
 
-      expect(getByTestId('resetPwdForm')).toBeInTheDocument();
-      expect(getByTestId('passwordInput')).toBeInTheDocument();
-      expect(getByTestId('confirmPasswordInput')).toBeInTheDocument();
-      expect(getByTestId('resetPwdBtn')).toBeInTheDocument();
+      expect(screen.getByTestId('resetPwdForm')).toBeInTheDocument();
+      expect(screen.getByTestId('passwordInput')).toBeInTheDocument();
+      expect(screen.getByTestId('confirmPasswordInput')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Reset password' })).toBeInTheDocument();
 
-      expect(getByText('Password')).toBeInTheDocument();
-      expect(getByText('Confirm password')).toBeInTheDocument();
+      expect(screen.getByText('Password')).toBeInTheDocument();
+      expect(screen.getByText('Confirm password')).toBeInTheDocument();
     });
 
     describe('when verifyPasswordResetCode fails', () => {
@@ -64,7 +65,7 @@ describe('ResetPasswordModal', () => {
           kind: ErrorKind.Gone,
         });
 
-        const { getByTestId, getByText } = render(
+        render(
           <Router>
             <ResetPasswordModal code="123" />
           </Router>
@@ -74,13 +75,15 @@ describe('ResetPasswordModal', () => {
           expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByText('This password reset link is no longer valid, please get a new one.')).toBeInTheDocument();
-
-        expect(getByTestId('resetPasswordForm')).toBeInTheDocument();
         expect(
-          getByText('Please enter your email address and we will send you a password reset link.')
+          screen.getByText('This password reset link is no longer valid, please get a new one.')
         ).toBeInTheDocument();
-        expect(getByTestId('resetPwdEmailInput')).toBeInTheDocument();
+
+        expect(screen.getByTestId('resetPasswordForm')).toBeInTheDocument();
+        expect(
+          screen.getByText('Please enter your email address and we will send you a password reset link.')
+        ).toBeInTheDocument();
+        expect(screen.getByTestId('resetPwdEmailInput')).toBeInTheDocument();
       });
 
       it('custom error', async () => {
@@ -89,7 +92,7 @@ describe('ResetPasswordModal', () => {
           message: 'custom error',
         });
 
-        const { getByText } = render(
+        render(
           <Router>
             <ResetPasswordModal code="123" />
           </Router>
@@ -99,7 +102,7 @@ describe('ResetPasswordModal', () => {
           expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByText('Sorry, custom error')).toBeInTheDocument();
+        expect(screen.getByText('Sorry, custom error')).toBeInTheDocument();
       });
 
       it('default error', async () => {
@@ -107,7 +110,7 @@ describe('ResetPasswordModal', () => {
           kind: ErrorKind.Other,
         });
 
-        const { getByText } = render(
+        render(
           <Router>
             <ResetPasswordModal code="123" />
           </Router>
@@ -117,7 +120,7 @@ describe('ResetPasswordModal', () => {
           expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByText('An error occurred with your password reset code.')).toBeInTheDocument();
+        expect(screen.getByText('An error occurred with your password reset code.')).toBeInTheDocument();
       });
     });
 
@@ -125,7 +128,7 @@ describe('ResetPasswordModal', () => {
       mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
       mocked(API).resetPassword.mockResolvedValue(null);
 
-      const { getByTestId, getByText } = render(
+      render(
         <Router>
           <ResetPasswordModal code="123" />
         </Router>
@@ -135,27 +138,25 @@ describe('ResetPasswordModal', () => {
         expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
       });
 
-      const [passwordInput, confirmPasswordInput] = await waitFor(() => [
-        getByTestId('passwordInput'),
-        getByTestId('confirmPasswordInput'),
-      ]);
+      const passwordInput = await screen.findByTestId('passwordInput');
+      const confirmPasswordInput = screen.getByTestId('confirmPasswordInput');
 
-      fireEvent.change(passwordInput, { target: { value: '123abc' } });
-      fireEvent.change(confirmPasswordInput, { target: { value: '123abc' } });
+      userEvent.type(passwordInput, '123abc');
+      userEvent.type(confirmPasswordInput, '123abc');
 
-      const btn = getByTestId('resetPwdBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Reset password' });
+      userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.resetPassword).toHaveBeenCalledTimes(1);
         expect(API.resetPassword).toHaveBeenCalledWith('123', '123abc');
       });
 
-      waitFor(() => {
-        expect(
-          getByText('Your password has been reset successfully. You can now log in using the new credentials.')
-        ).toBeInTheDocument();
-      });
+      expect(
+        await screen.findByText(
+          'Your password has been reset successfully. You can now log in using the new credentials.'
+        )
+      ).toBeInTheDocument();
     });
 
     describe('when resetPassword fails', () => {
@@ -166,7 +167,7 @@ describe('ResetPasswordModal', () => {
           message: 'custom error',
         });
 
-        const { getByText, getByTestId } = render(
+        render(
           <Router>
             <ResetPasswordModal code="123" />
           </Router>
@@ -176,22 +177,20 @@ describe('ResetPasswordModal', () => {
           expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
         });
 
-        const [passwordInput, confirmPasswordInput] = await waitFor(() => [
-          getByTestId('passwordInput'),
-          getByTestId('confirmPasswordInput'),
-        ]);
+        const passwordInput = await screen.findByTestId('passwordInput');
+        const confirmPasswordInput = screen.getByTestId('confirmPasswordInput');
 
-        fireEvent.change(passwordInput, { target: { value: '123abc' } });
-        fireEvent.change(confirmPasswordInput, { target: { value: '123abc' } });
+        userEvent.type(passwordInput, '123abc');
+        userEvent.type(confirmPasswordInput, '123abc');
 
-        const btn = getByTestId('resetPwdBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Reset password' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.resetPassword).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByText('An error occurred resetting the password: custom error')).toBeInTheDocument();
+        expect(screen.getByText('An error occurred resetting the password: custom error')).toBeInTheDocument();
       });
 
       it('default error', async () => {
@@ -200,7 +199,7 @@ describe('ResetPasswordModal', () => {
           kind: ErrorKind.Other,
         });
 
-        const { getByText, getByTestId } = render(
+        render(
           <Router>
             <ResetPasswordModal code="123" />
           </Router>
@@ -210,22 +209,22 @@ describe('ResetPasswordModal', () => {
           expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
         });
 
-        const [passwordInput, confirmPasswordInput] = await waitFor(() => [
-          getByTestId('passwordInput'),
-          getByTestId('confirmPasswordInput'),
-        ]);
+        const passwordInput = await screen.findByTestId('passwordInput');
+        const confirmPasswordInput = screen.getByTestId('confirmPasswordInput');
 
-        fireEvent.change(passwordInput, { target: { value: '123abc' } });
-        fireEvent.change(confirmPasswordInput, { target: { value: '123abc' } });
+        userEvent.type(passwordInput, '123abc');
+        userEvent.type(confirmPasswordInput, '123abc');
 
-        const btn = getByTestId('resetPwdBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Reset password' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.resetPassword).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByText('An error occurred resetting the password, please try again later.')).toBeInTheDocument();
+        expect(
+          screen.getByText('An error occurred resetting the password, please try again later.')
+        ).toBeInTheDocument();
       });
     });
   });

@@ -104,7 +104,6 @@ const OrganizationsSection = (props: Props) => {
 
             <div>
               <button
-                data-testid="addOrgButton"
                 className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalStatus({ open: true })}
                 aria-label="Open modal"
@@ -129,11 +128,10 @@ const OrganizationsSection = (props: Props) => {
                       <p className={`h6 my-4 ${styles.noDataMessage}`}>Do you need to create a organization?</p>
 
                       <button
-                        data-testid="addFirstOrgBtn"
                         type="button"
                         className="btn btn-sm btn-outline-secondary"
                         onClick={() => setModalStatus({ open: true })}
-                        aria-label="Open modal"
+                        aria-label="Open modal for adding first organization"
                       >
                         <div className="d-flex flex-row align-items-center text-uppercase">
                           <MdAddCircle className="mr-2" />

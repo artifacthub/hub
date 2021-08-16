@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import ResourceLabel from './ResourceLabel';
@@ -9,16 +9,16 @@ describe('ResourceLabel', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<ResourceLabel text="Scanner" />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<ResourceLabel text="Scanner" />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<ResourceLabel text="Scanner" />);
+      render(<ResourceLabel text="Scanner" />);
 
-      expect(getByText('Scanner')).toBeInTheDocument();
-      expect(getByText('Scanner')).toHaveClass('label');
+      expect(screen.getByText('Scanner')).toBeInTheDocument();
+      expect(screen.getByText('Scanner')).toHaveClass('label');
     });
   });
 });

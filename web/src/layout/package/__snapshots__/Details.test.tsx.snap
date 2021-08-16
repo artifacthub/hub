@@ -1,3 +1,222 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Details renders correctly 1`] = `[Function]`;
+exports[`Details renders correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="mt-2 mb-1 undefined"
+      data-testid="smallTitle"
+    >
+      <small
+        class="card-title text-muted text-uppercase"
+      >
+        <span
+          aria-level="5"
+          role="heading"
+        >
+          Application version
+        </span>
+      </small>
+    </div>
+    <p
+      class="text-truncate"
+      data-testid="appVersion"
+    >
+      0.5.1
+    </p>
+  </div>
+  <div>
+    <div
+      class="d-flex flex-row align-items-center mt-2 mb-1"
+    >
+      <div
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          Chart versions
+        </small>
+      </div>
+      <small>
+        <a
+          class="badge badge-pill badge-secondary rssBadge ml-3 badge"
+          href="/api/v1/packages/helm/incubator/undefined/feed/rss"
+          rel="alternate noopener noreferrer"
+          role="button"
+          target="_blank"
+          type="application/rss+xml"
+        >
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              class="mr-1"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"
+              />
+            </svg>
+            <div>
+              RSS
+            </div>
+          </div>
+        </a>
+      </small>
+    </div>
+    <div
+      class="mb-3"
+      data-testid="versions"
+    >
+      <div
+        role="list"
+      >
+        <div
+          class="py-1 py-sm-0 w-100 text-truncate"
+          role="listitem"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline"
+          >
+            <button
+              aria-label="Open version 1.0.0"
+              class="btn btn-link text-primary pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
+            >
+              1.0.0
+            </button>
+            <small
+              class="text-muted"
+            >
+              (1 Jan, 1970)
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        role="heading"
+      >
+        Links
+      </span>
+    </small>
+  </div>
+  <div
+    class="mb-3"
+  >
+    <div
+      class="py-1 py-sm-0"
+    >
+      <a
+        aria-label="Open Homepage"
+        class="link d-flex align-items-start mb-1 text-capitalize text-primary"
+        href="https://github.com/chartmuseum/chartmuseum"
+        rel="noopener noreferrer"
+        role="button"
+        tabindex="-1"
+        target="_blank"
+      >
+        <div
+          class="d-flex flex-row align-items-start mw-100"
+        >
+          <svg
+            baseProfile="tiny"
+            class="text-muted mr-2 icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            version="1.2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 3s-6.186 5.34-9.643 8.232c-.203.184-.357.452-.357.768 0 .553.447 1 1 1h2v7c0 .553.447 1 1 1h3c.553 0 1-.448 1-1v-4h4v4c0 .552.447 1 1 1h3c.553 0 1-.447 1-1v-7h2c.553 0 1-.447 1-1 0-.316-.154-.584-.383-.768-3.433-2.892-9.617-8.232-9.617-8.232z"
+            />
+          </svg>
+          <div
+            class="flex-grow-1 linkText"
+          >
+            Homepage
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        id="keywords-list"
+        role="heading"
+      >
+        Keywords
+      </span>
+    </small>
+  </div>
+  <div
+    aria-describedby="keywords-list"
+    class="mb-3"
+    role="list"
+  >
+    <span
+      data-testid="keywords"
+    >
+      <button
+        aria-label="Filter by chartmuseum"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
+        role="listitem"
+      >
+        <div
+          class="text-truncate"
+        >
+          chartmuseum
+        </div>
+      </button>
+      <button
+        aria-label="Filter by helm"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
+        role="listitem"
+      >
+        <div
+          class="text-truncate"
+        >
+          helm
+        </div>
+      </button>
+      <button
+        aria-label="Filter by charts repo"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
+        role="listitem"
+      >
+        <div
+          class="text-truncate"
+        >
+          charts repo
+        </div>
+      </button>
+    </span>
+  </div>
+</DocumentFragment>
+`;

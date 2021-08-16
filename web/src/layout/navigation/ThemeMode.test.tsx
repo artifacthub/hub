@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -30,47 +31,47 @@ describe('ThemeMode', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
-          <ThemeMode />
+          <ThemeMode device="desktop" />
         </Router>
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', () => {
-    const { getByTestId, getByText } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
-          <ThemeMode />
+          <ThemeMode device="desktop" />
         </Router>
       </AppCtx.Provider>
     );
 
-    expect(getByTestId('themeOptions')).toBeInTheDocument();
-    expect(getByText(/Automatic/g)).toBeInTheDocument();
-    expect(getByText(/Light/g)).toBeInTheDocument();
-    expect(getByText(/Dark/g)).toBeInTheDocument();
+    expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
+    expect(screen.getByText(/Automatic/g)).toBeInTheDocument();
+    expect(screen.getByText(/Light/g)).toBeInTheDocument();
+    expect(screen.getByText(/Dark/g)).toBeInTheDocument();
   });
 
   it('when theme is light', () => {
-    const { getByTestId } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
-          <ThemeMode />
+          <ThemeMode device="desktop" />
         </Router>
       </AppCtx.Provider>
     );
 
-    const lightOpt = getByTestId('radio-light');
+    const lightOpt = screen.getByRole('radio', { name: 'Light' });
     expect(lightOpt).toBeChecked();
   });
 
   it('when theme is dark', () => {
-    const { getByTestId } = render(
+    render(
       <AppCtx.Provider
         value={{
           ctx: {
@@ -87,17 +88,17 @@ describe('ThemeMode', () => {
         }}
       >
         <Router>
-          <ThemeMode />
+          <ThemeMode device="desktop" />
         </Router>
       </AppCtx.Provider>
     );
 
-    const darkOpt = getByTestId('radio-dark');
+    const darkOpt = screen.getByRole('radio', { name: 'Dark' });
     expect(darkOpt).toBeChecked();
   });
 
   it('when autommatic theme is enabled', () => {
-    const { getByTestId } = render(
+    render(
       <AppCtx.Provider
         value={{
           ctx: {
@@ -114,31 +115,31 @@ describe('ThemeMode', () => {
         }}
       >
         <Router>
-          <ThemeMode />
+          <ThemeMode device="desktop" />
         </Router>
       </AppCtx.Provider>
     );
 
-    const automaticOpt = getByTestId('radio-automatic');
+    const automaticOpt = screen.getByRole('radio', { name: 'Automatic' });
     expect(automaticOpt).toBeChecked();
   });
 
   it('changes active theme', () => {
-    const { getByTestId, getByText } = render(
+    render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
-          <ThemeMode />
+          <ThemeMode device="desktop" />
         </Router>
       </AppCtx.Provider>
     );
 
-    const lightOpt = getByTestId('radio-light');
+    const lightOpt = screen.getByRole('radio', { name: 'Light' });
     expect(lightOpt).toBeChecked();
 
-    const darkLabel = getByText(/Dark/g);
-    const darkOpt = getByTestId('radio-dark');
+    const darkLabel = screen.getByText(/Dark/g);
+    const darkOpt = screen.getByRole('radio', { name: 'Dark' });
     expect(darkOpt).not.toBeChecked();
-    fireEvent.click(darkLabel);
+    userEvent.click(darkLabel);
 
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith({

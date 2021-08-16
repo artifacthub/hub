@@ -11,7 +11,6 @@ exports[`Repository LastNotificationsModal - packages section creates snapshot 1
       <button
         aria-label="Open modal"
         class="font-weight-bold text-uppercase position-relative btn btn-block btn btn badge btn-outline-secondary"
-        data-testid="openModalBtn"
         type="button"
       >
         <div
@@ -60,9 +59,8 @@ exports[`Repository LastNotificationsModal - packages section creates snapshot 1
               Last notifications
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -88,7 +86,6 @@ exports[`Repository LastNotificationsModal - packages section creates snapshot 1
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               type="button"
             >
               <div

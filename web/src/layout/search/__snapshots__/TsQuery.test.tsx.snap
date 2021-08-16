@@ -31,8 +31,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-database"
+          id="desktop-tsQuery-database"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -41,7 +40,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-database"
+          for="desktop-tsQuery-database"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -60,8 +59,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-integration-and-delivery"
+          id="desktop-tsQuery-integration-and-delivery"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -70,7 +68,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-integration-and-delivery"
+          for="desktop-tsQuery-integration-and-delivery"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -89,8 +87,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-logging-and-tracing"
+          id="desktop-tsQuery-logging-and-tracing"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -99,7 +96,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-logging-and-tracing"
+          for="desktop-tsQuery-logging-and-tracing"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -118,8 +115,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-machine-learning"
+          id="desktop-tsQuery-machine-learning"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -128,7 +124,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-machine-learning"
+          for="desktop-tsQuery-machine-learning"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -147,8 +143,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-monitoring"
+          id="desktop-tsQuery-monitoring"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -157,7 +152,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-monitoring"
+          for="desktop-tsQuery-monitoring"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -176,8 +171,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-networking"
+          id="desktop-tsQuery-networking"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -186,7 +180,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-networking"
+          for="desktop-tsQuery-networking"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -205,8 +199,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-security"
+          id="desktop-tsQuery-security"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -215,7 +208,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-security"
+          for="desktop-tsQuery-security"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -234,8 +227,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-storage"
+          id="desktop-tsQuery-storage"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -244,7 +236,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-storage"
+          for="desktop-tsQuery-storage"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -263,8 +255,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-streaming-messaging"
+          id="desktop-tsQuery-streaming-messaging"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -273,7 +264,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-streaming-messaging"
+          for="desktop-tsQuery-streaming-messaging"
         >
           <div
             class="d-flex align-items-baseline mw-100"
@@ -292,8 +283,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="checkbox"
-          id="undefined-tsQuery-web-applications"
+          id="desktop-tsQuery-web-applications"
           name="tsQuery"
           tabindex="0"
           type="checkbox"
@@ -302,7 +292,7 @@ exports[`TsQuery creates snapshot 1`] = `
         <label
           class="custom-control-label label w-100"
           data-testid="checkboxLabel"
-          for="undefined-tsQuery-web-applications"
+          for="desktop-tsQuery-web-applications"
         >
           <div
             class="d-flex align-items-baseline mw-100"

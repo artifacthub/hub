@@ -91,7 +91,6 @@ const SignUp = (props: Props) => {
           <div className="h5 mb-5 text-center">Create your account using your email</div>
 
           <button
-            data-testid="signUpBtn"
             type="button"
             onClick={() => setActiveSignUp(true)}
             className="btn btn-outline-secondary btn-block"

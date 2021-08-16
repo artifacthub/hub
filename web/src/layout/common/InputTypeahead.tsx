@@ -207,7 +207,6 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
     <>
       <div className={`form-group input-group-sm ${styles.inputWrapper} ${props.inputWrapperClassName}`}>
         <input
-          data-testid="typeaheadInput"
           ref={inputEl}
           type="text"
           placeholder={props.placeholder || `Search ${props.label}`}
@@ -233,7 +232,6 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
       {selectedItems.length > 0 && props.visibleClear && (
         <div className="py-1 border-bottom">
           <button
-            data-testid="typeaheadClearBtn"
             className="btn btn-sm btn-block"
             onClick={() => {
               if (props.onClear) {

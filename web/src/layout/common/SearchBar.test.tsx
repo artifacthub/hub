@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -35,44 +36,48 @@ describe('SearchBar', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<SearchBar {...defaultProps} isSearching={false} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders loading when is searching', () => {
-    const { getByTestId } = render(<SearchBar {...defaultProps} isSearching />);
-    expect(getByTestId('searchBarSpinning')).toBeInTheDocument();
+    render(<SearchBar {...defaultProps} isSearching />);
+    expect(screen.getByTestId('searchBarSpinning')).toBeInTheDocument();
   });
 
   it('renders loading when is searching', () => {
-    const { getByTestId, getByPlaceholderText } = render(<SearchBar {...defaultProps} isSearching />);
+    render(<SearchBar {...defaultProps} isSearching />);
 
-    const spinning = getByTestId('searchBarSpinning');
-    const input = getByPlaceholderText('Search packages') as HTMLInputElement;
+    const spinning = screen.getByTestId('searchBarSpinning');
+    const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
     expect(spinning).toBeInTheDocument();
     expect(input.disabled).toBeTruthy();
   });
 
   it('focuses input when clean button is clicked', () => {
-    const { getByTestId, getByPlaceholderText } = render(<SearchBar {...defaultProps} isSearching={false} />);
+    render(<SearchBar {...defaultProps} isSearching={false} />);
 
-    const cleanBtn = getByTestId('cleanBtn');
-    const input = getByPlaceholderText('Search packages') as HTMLInputElement;
+    const cleanBtn = screen.getByRole('button', { name: 'Close' });
+    const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
     expect(input.value).toBe('test');
-    fireEvent.click(cleanBtn);
+    userEvent.click(cleanBtn);
     expect(input).toBe(document.activeElement);
     expect(input.value).toBe('');
   });
 
-  it('updates value on change input', () => {
-    const { getByPlaceholderText } = render(<SearchBar {...defaultProps} isSearching={false} />);
+  it('updates value on change input', async () => {
+    render(<SearchBar {...defaultProps} isSearching={false} />);
 
-    const input = getByPlaceholderText('Search packages') as HTMLInputElement;
+    const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
     expect(input.value).toBe('test');
-    fireEvent.change(input, { target: { value: 'new test' } });
-    expect(input.value).toBe('new test');
+    userEvent.type(input, 'ing');
+    expect(input.value).toBe('testing');
+
+    await waitFor(() => {
+      expect(API.searchPackages).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('search packages', () => {
@@ -80,35 +85,33 @@ describe('SearchBar', () => {
       const mockSearch = getMockSearch('1');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByPlaceholderText, getByRole, getAllByRole } = render(
-        <SearchBar {...defaultProps} isSearching={false} />
-      );
+      render(<SearchBar {...defaultProps} isSearching={false} />);
 
-      const input = getByPlaceholderText('Search packages') as HTMLInputElement;
+      const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
       expect(input.value).toBe('test');
       input.focus();
-      fireEvent.change(input, { target: { value: 'new test' } });
+      userEvent.type(input, 'ing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByRole('listbox')).toBeInTheDocument();
-      expect(getAllByRole('option')).toHaveLength(3);
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+      expect(screen.getAllByRole('option')).toHaveLength(3);
     });
 
     it("doesn't display results when input is not focused", async () => {
       const mockSearch = getMockSearch('2');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByPlaceholderText, queryByRole } = render(<SearchBar {...defaultProps} isSearching={false} />);
+      render(<SearchBar {...defaultProps} isSearching={false} />);
 
-      const input = getByPlaceholderText('Search packages') as HTMLInputElement;
+      const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
       expect(input.value).toBe('test');
       input.focus();
-      fireEvent.change(input, { target: { value: 'new test' } });
+      userEvent.type(input, 'ing');
       input.blur();
 
       await waitFor(() => {
@@ -116,17 +119,16 @@ describe('SearchBar', () => {
         input.blur();
       });
 
-      expect(queryByRole('listbox')).toBeNull();
+      expect(screen.queryByRole('listbox')).toBeNull();
     });
   });
 
   describe('History push', () => {
     it('calls on Enter key press', () => {
-      const { getByPlaceholderText } = render(<SearchBar {...defaultProps} isSearching={false} />);
+      render(<SearchBar {...defaultProps} isSearching={false} />);
 
-      const input = getByPlaceholderText('Search packages') as HTMLInputElement;
-      fireEvent.change(input, { target: { value: 'testing' } });
-      fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+      const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
+      userEvent.type(input, 'ing{enter}');
       expect(input).not.toBe(document.activeElement);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -139,13 +141,10 @@ describe('SearchBar', () => {
     });
 
     it('calls history push on Enter key press when text is empty with undefined text', () => {
-      const { getByPlaceholderText } = render(
-        <SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />
-      );
+      render(<SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />);
 
-      const input = getByPlaceholderText('Search packages') as HTMLInputElement;
-      fireEvent.change(input, { target: { value: '' } });
-      fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+      const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
+      userEvent.type(input, '{enter}');
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -157,15 +156,13 @@ describe('SearchBar', () => {
     });
 
     it('forces focus to click search bar icon', () => {
-      const { getByTestId, getByPlaceholderText } = render(
-        <SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />
-      );
+      render(<SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />);
 
-      const icon = getByTestId('searchBarIcon');
-      fireEvent.click(icon);
+      const icon = screen.getByTestId('searchBarIcon');
+      userEvent.click(icon);
 
       waitFor(() => {
-        expect(getByPlaceholderText('Search packages')).toHaveFocus();
+        expect(screen.getByPlaceholderText('Search packages')).toHaveFocus();
       });
     });
   });

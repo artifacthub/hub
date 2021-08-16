@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
@@ -81,7 +81,7 @@ describe('Claim Repository Modal - repositories section', () => {
     const mockRepositories = getMockRepositories('1');
     mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
         <ClaimModal {...defaultProps} />
       </AppCtx.Provider>
@@ -89,7 +89,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
     await waitFor(() => {
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -100,7 +100,7 @@ describe('Claim Repository Modal - repositories section', () => {
       const mockRepositories = getMockRepositories('1');
       mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
           <ClaimModal {...defaultProps} />
         </AppCtx.Provider>
@@ -110,24 +110,26 @@ describe('Claim Repository Modal - repositories section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Claim repository ownership')).toBeInTheDocument();
-      const form = getByTestId('claimRepoForm');
+      expect(screen.getByText('Claim repository ownership')).toBeInTheDocument();
+      const form = screen.getByTestId('claimRepoForm');
       expect(form).toBeInTheDocument();
-      expect(getByTestId('radio_claim_user')).toBeInTheDocument();
-      expect(getByTestId('radio_claim_user')).not.toBeChecked();
-      expect(getByTestId('radio_claim_org')).toBeInTheDocument();
-      expect(getByTestId('radio_claim_org')).toBeChecked();
-      expect(getByTestId('select_claim_orgs')).toBeRequired();
-      expect(getByTestId('select_claim_orgs')).toBeInTheDocument();
-      expect(getByTestId('claimRepoBtn')).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Transfer to: My user' })).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Transfer to: My user' })).not.toBeChecked();
+      expect(screen.getByRole('radio', { name: 'Transfer to: Organization' })).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Transfer to: Organization' })).toBeChecked();
+      expect(screen.getByRole('combobox', { name: 'org-select' })).toBeRequired();
+      expect(screen.getByRole('combobox', { name: 'org-select' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Claim ownership' })).toBeInTheDocument();
       expect(
-        getByText(/Please make sure the email used in the metatata file matches with the one you use in/g)
+        screen.getByText(/Please make sure the email used in the metatata file matches with the one you use in/g)
       ).toBeInTheDocument();
-      expect(getByText('It may take a few minutes for this change to be visible across the Hub.')).toBeInTheDocument();
+      expect(
+        screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
+      ).toBeInTheDocument();
 
-      expect(getByText(mockOrganizations[0].name)).toBeInTheDocument();
-      expect(getByText(mockOrganizations[1].name)).toBeInTheDocument();
-      expect(getByText(mockOrganizations[2].name)).toBeInTheDocument();
+      expect(screen.getByText(mockOrganizations[0].name)).toBeInTheDocument();
+      expect(screen.getByText(mockOrganizations[1].name)).toBeInTheDocument();
+      expect(screen.getByText(mockOrganizations[2].name)).toBeInTheDocument();
     });
 
     it('renders component when org is not selected in context', async () => {
@@ -136,7 +138,7 @@ describe('Claim Repository Modal - repositories section', () => {
       const mockRepositories = getMockRepositories('1');
       mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
-      const { getByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
           <ClaimModal {...defaultProps} />
         </AppCtx.Provider>
@@ -146,24 +148,26 @@ describe('Claim Repository Modal - repositories section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Claim repository ownership')).toBeInTheDocument();
-      const form = getByTestId('claimRepoForm');
+      expect(screen.getByText('Claim repository ownership')).toBeInTheDocument();
+      const form = screen.getByTestId('claimRepoForm');
       expect(form).toBeInTheDocument();
-      expect(getByTestId('radio_claim_user')).toBeInTheDocument();
-      expect(getByTestId('radio_claim_user')).toBeChecked();
-      expect(getByTestId('radio_claim_org')).toBeInTheDocument();
-      expect(getByTestId('radio_claim_org')).not.toBeChecked();
-      expect(getByTestId('select_claim_orgs')).not.toBeRequired();
-      expect(getByTestId('select_claim_orgs')).toBeInTheDocument();
-      expect(getByTestId('claimRepoBtn')).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Transfer to: My user' })).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Transfer to: My user' })).toBeChecked();
+      expect(screen.getByRole('radio', { name: 'Transfer to: Organization' })).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Transfer to: Organization' })).not.toBeChecked();
+      expect(screen.getByRole('combobox', { name: 'org-select' })).not.toBeRequired();
+      expect(screen.getByRole('combobox', { name: 'org-select' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Claim ownership' })).toBeInTheDocument();
       expect(
-        getByText(/Please make sure the email used in the metatata file matches with the one you use in/g)
+        screen.getByText(/Please make sure the email used in the metatata file matches with the one you use in/g)
       ).toBeInTheDocument();
-      expect(getByText('It may take a few minutes for this change to be visible across the Hub.')).toBeInTheDocument();
+      expect(
+        screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
+      ).toBeInTheDocument();
 
-      expect(getByText(mockOrganizations[0].name)).toBeInTheDocument();
-      expect(getByText(mockOrganizations[1].name)).toBeInTheDocument();
-      expect(getByText(mockOrganizations[2].name)).toBeInTheDocument();
+      expect(screen.getByText(mockOrganizations[0].name)).toBeInTheDocument();
+      expect(screen.getByText(mockOrganizations[1].name)).toBeInTheDocument();
+      expect(screen.getByText(mockOrganizations[2].name)).toBeInTheDocument();
     });
 
     it('displays disabled OCI repos', async () => {
@@ -172,7 +176,7 @@ describe('Claim Repository Modal - repositories section', () => {
       const mockRepositories = getMockRepositories('2');
       mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
-      const { getByTestId, getByText, getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
           <ClaimModal {...defaultProps} />
         </AppCtx.Provider>
@@ -182,9 +186,9 @@ describe('Claim Repository Modal - repositories section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Claim repository ownership')).toBeInTheDocument();
+      expect(screen.getByText('Claim repository ownership')).toBeInTheDocument();
 
-      const input = getByTestId('searchRepositoriesInput');
+      const input = screen.getByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
       userEvent.type(input, 'repo');
 
@@ -192,7 +196,7 @@ describe('Claim Repository Modal - repositories section', () => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = await waitFor(() => getAllByTestId('repoItem'));
+      const buttons = await screen.findAllByTestId('repoItem');
       expect(buttons).toHaveLength(6);
       expect(buttons[2]).toHaveClass('disabledCell');
     });
@@ -205,7 +209,7 @@ describe('Claim Repository Modal - repositories section', () => {
         mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
 
-        const { getByTestId, getByText, getAllByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
@@ -215,28 +219,28 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const radio = getByText('My user');
-        fireEvent.click(radio);
+        const radio = screen.getByText('My user');
+        userEvent.click(radio);
 
-        userEvent.type(getByTestId('searchRepositoriesInput'), 'repo');
+        userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const buttons = await waitFor(() => getAllByTestId('repoItem'));
+        const buttons = await screen.findAllByTestId('repoItem');
         expect(buttons).toHaveLength(3);
-        fireEvent.click(buttons[0]);
+        userEvent.click(buttons[0]);
 
-        const activeRepo = getByTestId('activeRepoItem');
+        const activeRepo = screen.getByTestId('activeRepoItem');
 
         expect(activeRepo).toBeInTheDocument();
         expect(activeRepo).toHaveTextContent(
           'community-operators (https://github.com/operator-framework/community-operators/upstream-community-operators)(Publisher: demo)'
         );
 
-        const btn = getByTestId('claimRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Claim ownership' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -255,7 +259,7 @@ describe('Claim Repository Modal - repositories section', () => {
         mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
         mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
 
-        const { getByTestId, getByText, getAllByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
@@ -265,7 +269,7 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchRepositoriesInput');
+        const input = screen.getByRole('textbox', { name: 'Search repositories' });
         expect(input).toBeInTheDocument();
         userEvent.type(input, 'repo');
 
@@ -273,18 +277,17 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const buttons = await waitFor(() => getAllByTestId('repoItem'));
-        fireEvent.click(buttons[1]);
+        const buttons = await screen.findAllByTestId('repoItem');
+        userEvent.click(buttons[1]);
 
-        const radio = getByText('Organization');
-        fireEvent.click(radio);
+        const radio = screen.getByText('Organization');
+        userEvent.click(radio);
 
-        const btn = getByTestId('claimRepoBtn');
+        const select = screen.getByRole('combobox', { name: 'org-select' });
+        userEvent.selectOptions(select, mockOrganizations[2].name);
 
-        const select = getByTestId('select_claim_orgs');
-        fireEvent.change(select, { target: { value: mockOrganizations[2].name } });
-
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Claim ownership' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -307,7 +310,7 @@ describe('Claim Repository Modal - repositories section', () => {
           kind: ErrorKind.Unauthorized,
         });
 
-        const { getByTestId, getAllByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
@@ -317,18 +320,18 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchRepositoriesInput');
+        const input = screen.getByRole('textbox', { name: 'Search repositories' });
         userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const buttons = await waitFor(() => getAllByTestId('repoItem'));
-        fireEvent.click(buttons[1]);
+        const buttons = await screen.findAllByTestId('repoItem');
+        userEvent.click(buttons[1]);
 
-        const btn = getByTestId('claimRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Claim ownership' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -352,24 +355,24 @@ describe('Claim Repository Modal - repositories section', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchRepositoriesInput');
+        const input = screen.getByRole('textbox', { name: 'Search repositories' });
         userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const buttons = await waitFor(() => getAllByTestId('repoItem'));
-        fireEvent.click(buttons[1]);
+        const buttons = await screen.findAllByTestId('repoItem');
+        userEvent.click(buttons[1]);
 
-        const btn = getByTestId('claimRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Claim ownership' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -378,7 +381,9 @@ describe('Claim Repository Modal - repositories section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred claiming the repository, please try again later.')).toBeInTheDocument();
+        expect(
+          screen.getByText('An error occurred claiming the repository, please try again later.')
+        ).toBeInTheDocument();
       });
 
       it('with custom error message', async () => {
@@ -397,24 +402,24 @@ describe('Claim Repository Modal - repositories section', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchRepositoriesInput');
+        const input = screen.getByRole('textbox', { name: 'Search repositories' });
         userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const buttons = await waitFor(() => getAllByTestId('repoItem'));
-        fireEvent.click(buttons[1]);
+        const buttons = await screen.findAllByTestId('repoItem');
+        userEvent.click(buttons[1]);
 
-        const btn = getByTestId('claimRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Claim ownership' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -423,7 +428,7 @@ describe('Claim Repository Modal - repositories section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred claiming the repository: custom error')).toBeInTheDocument();
+        expect(screen.getByText('An error occurred claiming the repository: custom error')).toBeInTheDocument();
       });
 
       it('with Forbidden error', async () => {
@@ -441,24 +446,24 @@ describe('Claim Repository Modal - repositories section', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = getByTestId('searchRepositoriesInput');
+        const input = screen.getByRole('textbox', { name: 'Search repositories' });
         userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
-        const buttons = await waitFor(() => getAllByTestId('repoItem'));
-        fireEvent.click(buttons[1]);
+        const buttons = await screen.findAllByTestId('repoItem');
+        userEvent.click(buttons[1]);
 
-        const btn = getByTestId('claimRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Claim ownership' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -468,7 +473,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
         expect(
-          getByText(
+          screen.getByText(
             'You do not have permissions to claim this repository ownership. Please make sure your metadata file has been setup correctly.'
           )
         ).toBeInTheDocument();
@@ -505,7 +510,7 @@ describe('Claim Repository Modal - repositories section', () => {
           </AppCtx.Provider>
         );
 
-        const { getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
@@ -514,7 +519,9 @@ describe('Claim Repository Modal - repositories section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred getting your organizations, please try again later.')).toBeInTheDocument();
+        expect(
+          screen.getByText('An error occurred getting your organizations, please try again later.')
+        ).toBeInTheDocument();
       });
     });
 
@@ -532,7 +539,7 @@ describe('Claim Repository Modal - repositories section', () => {
           </AppCtx.Provider>
         );
 
-        const input = screen.getByTestId('searchRepositoriesInput');
+        const input = screen.getByRole('textbox', { name: 'Search repositories' });
         userEvent.type(input, 'repo');
 
         await waitFor(() => {
@@ -555,7 +562,7 @@ describe('Claim Repository Modal - repositories section', () => {
           </AppCtx.Provider>
         );
 
-        const input = screen.getByTestId('searchRepositoriesInput');
+        const input = screen.getByRole('textbox', { name: 'Search repositories' });
         userEvent.type(input, 'repo');
 
         await waitFor(() => {

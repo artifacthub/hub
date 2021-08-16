@@ -137,7 +137,6 @@ const OrganizationCard = (props: Props) => {
                     <>
                       {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
                         <button
-                          data-testid="leaveOrgModalBtn"
                           className="dropdown-item btn btn-sm rounded-0 text-dark"
                           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.preventDefault();
@@ -156,7 +155,6 @@ const OrganizationCard = (props: Props) => {
                   ) : (
                     <div>
                       <button
-                        data-testid="acceptInvitationBtn"
                         className="dropdown-item btn btn-sm rounded-0 text-dark"
                         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                           e.preventDefault();
@@ -214,7 +212,6 @@ const OrganizationCard = (props: Props) => {
                     </button>
 
                     <button
-                      data-testid="leaveOrgBtn"
                       className="btn btn-sm btn-danger ml-3"
                       onClick={(e) => {
                         e.preventDefault();

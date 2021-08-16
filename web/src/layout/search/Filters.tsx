@@ -240,7 +240,6 @@ const Filters = (props: Props) => {
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
               <button
-                data-testid="resetFiltersBtn"
                 className={`btn btn-link btn-sm p-0 pl-1 text-dark ${styles.resetBtn}`}
                 onClick={props.onResetFilters}
                 aria-label="Reset filters"

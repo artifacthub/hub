@@ -11,12 +11,12 @@ describe('ScannerDisabledRepositoryBadge', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<ScannerDisabledRepositoryBadge scannerDisabled />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders label', () => {
-    const { getByText } = render(<ScannerDisabledRepositoryBadge scannerDisabled />);
-    expect(getByText('Security scanner disabled')).toBeInTheDocument();
+    render(<ScannerDisabledRepositoryBadge scannerDisabled />);
+    expect(screen.getByText('Security scanner disabled')).toBeInTheDocument();
   });
 
   it('does not render label', () => {

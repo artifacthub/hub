@@ -11,7 +11,6 @@ exports[`SchemaDefinition creates snapshot 1`] = `
       <button
         aria-label="Hide detail"
         class="btn btn-block text-reset text-left p-0 position-relative btn"
-        data-testid="expandBtn"
       >
         <div
           class="d-flex flex-column"
@@ -121,7 +120,6 @@ exports[`SchemaDefinition creates snapshot 1`] = `
                 <button
                   aria-label="Copy path to clipboard"
                   class="btn btn-sm btn-link text-muted p-0 btnClip"
-                  data-testid="ctcBtn"
                   type="button"
                 >
                   <div

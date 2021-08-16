@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import BannerMOTD from './BannerMOTD';
@@ -24,8 +25,8 @@ describe('BannerMOTD', () => {
       writable: true,
     });
 
-    const result = render(<BannerMOTD />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<BannerMOTD />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -44,13 +45,13 @@ describe('BannerMOTD', () => {
         writable: true,
       });
 
-      const { getByRole, getByText, getByTestId } = render(<BannerMOTD />);
+      render(<BannerMOTD />);
 
-      const alert = getByRole('alert');
+      const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveClass('infoAlert alert-info');
-      expect(getByTestId('closeBannerMOTD')).toBeInTheDocument();
-      expect(getByText('this is a sample')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Close banner' })).toBeInTheDocument();
+      expect(screen.getByText('this is a sample')).toBeInTheDocument();
     });
 
     it('renders component with specific severity type', () => {
@@ -77,9 +78,9 @@ describe('BannerMOTD', () => {
         writable: true,
       });
 
-      const { getByRole } = render(<BannerMOTD />);
+      render(<BannerMOTD />);
 
-      const alert = getByRole('alert');
+      const alert = screen.getByRole('alert');
       expect(alert).toHaveClass('dangerAlert alert-danger');
     });
 
@@ -98,13 +99,13 @@ describe('BannerMOTD', () => {
         writable: true,
       });
 
-      const { getByRole, getByTestId, container } = render(<BannerMOTD />);
+      const { container } = render(<BannerMOTD />);
 
-      const alert = getByRole('alert');
+      const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
 
-      const btn = getByTestId('closeBannerMOTD');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Close banner' });
+      userEvent.click(btn);
 
       waitFor(() => {
         expect(container).toBeEmptyDOMElement();

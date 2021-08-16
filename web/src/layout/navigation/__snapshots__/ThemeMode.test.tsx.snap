@@ -30,8 +30,7 @@ exports[`ThemeMode creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="radio-automatic"
-          id="undefined-automatic"
+          id="desktop-automatic"
           name="automatic"
           readonly=""
           tabindex="0"
@@ -40,7 +39,7 @@ exports[`ThemeMode creates snapshot 1`] = `
         />
         <label
           class="custom-control-label font-weight-bold label"
-          for="undefined-automatic"
+          for="desktop-automatic"
         >
           <svg
             class="mx-1"
@@ -71,8 +70,7 @@ exports[`ThemeMode creates snapshot 1`] = `
           aria-checked="true"
           checked=""
           class="custom-control-input input"
-          data-testid="radio-light"
-          id="undefined-light"
+          id="desktop-light"
           name="light"
           readonly=""
           tabindex="-1"
@@ -81,7 +79,7 @@ exports[`ThemeMode creates snapshot 1`] = `
         />
         <label
           class="custom-control-label font-weight-bold label"
-          for="undefined-light"
+          for="desktop-light"
         >
           <svg
             class="mx-1"
@@ -162,8 +160,7 @@ exports[`ThemeMode creates snapshot 1`] = `
         <input
           aria-checked="false"
           class="custom-control-input input"
-          data-testid="radio-dark"
-          id="undefined-dark"
+          id="desktop-dark"
           name="dark"
           readonly=""
           tabindex="-1"
@@ -172,7 +169,7 @@ exports[`ThemeMode creates snapshot 1`] = `
         />
         <label
           class="custom-control-label font-weight-bold label"
-          for="undefined-dark"
+          for="desktop-dark"
         >
           <svg
             class="mx-1"

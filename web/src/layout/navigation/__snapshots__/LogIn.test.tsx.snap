@@ -27,9 +27,8 @@ exports[`LogIn creates snapshot 1`] = `
               Sign in
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -117,7 +116,6 @@ exports[`LogIn creates snapshot 1`] = `
                   <button
                     aria-label="Open reset password"
                     class="btn btn-sm btn-link pl-0 text-no-decoration"
-                    data-testid="resetPasswordTabBtn"
                     type="button"
                   >
                     Forgot password?
@@ -125,7 +123,6 @@ exports[`LogIn creates snapshot 1`] = `
                   <button
                     aria-label="Sign in"
                     class="btn btn-sm btn-outline-secondary"
-                    data-testid="logInBtn"
                     type="button"
                   >
                     <div
@@ -164,7 +161,6 @@ exports[`LogIn creates snapshot 1`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               type="button"
             >
               <div

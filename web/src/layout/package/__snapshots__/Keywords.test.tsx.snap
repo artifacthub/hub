@@ -13,7 +13,6 @@ exports[`Keywords creates snapshot 1`] = `
       <button
         aria-label="Filter by key1"
         class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
-        data-testid="keywordBtn"
         role="listitem"
       >
         <div
@@ -25,7 +24,6 @@ exports[`Keywords creates snapshot 1`] = `
       <button
         aria-label="Filter by key2"
         class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
-        data-testid="keywordBtn"
         role="listitem"
       >
         <div
@@ -37,7 +35,6 @@ exports[`Keywords creates snapshot 1`] = `
       <button
         aria-label="Filter by key3"
         class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
-        data-testid="keywordBtn"
         role="listitem"
       >
         <div

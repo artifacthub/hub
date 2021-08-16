@@ -52,7 +52,6 @@ const InputTypeaheadWithDropdown = (props: Props) => {
   return (
     <div className={`position-relative ${props.className}`}>
       <button
-        data-testid="typeaheadBtn"
         className="btn text-left p-0 btn-block"
         onClick={() => {
           if (collapsed) setCollapsed(false);
@@ -88,11 +87,7 @@ const InputTypeaheadWithDropdown = (props: Props) => {
       </button>
 
       {!collapsed && (
-        <div
-          ref={dropdownRef}
-          data-testid="typeaheadDropdown"
-          className={`dropdown-menu p-0 shadow-sm w-100 show ${styles.dropdown}`}
-        >
+        <div ref={dropdownRef} role="menu" className={`dropdown-menu p-0 shadow-sm w-100 show ${styles.dropdown}`}>
           <InputTypeahead
             {...props}
             inputWrapperClassName="border-bottom p-1 mb-0"

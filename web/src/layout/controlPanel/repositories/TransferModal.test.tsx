@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -81,7 +82,7 @@ describe('Transfer Repository Modal - packages section', () => {
     const mockOrganizations = getMockOrganizations('1');
     mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
         <TransferModal {...defaultProps} />
       </AppCtx.Provider>
@@ -89,7 +90,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
     await waitFor(() => {
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -98,7 +99,7 @@ describe('Transfer Repository Modal - packages section', () => {
       const mockOrganizations = getMockOrganizations('2');
       mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
-      const { getByTestId, getByText, queryByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
           <TransferModal {...defaultProps} />
         </AppCtx.Provider>
@@ -108,28 +109,30 @@ describe('Transfer Repository Modal - packages section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Transfer repository')).toBeInTheDocument();
-      const form = getByTestId('transferRepoForm');
+      expect(screen.getByText('Transfer repository')).toBeInTheDocument();
+      const form = screen.getByTestId('transferRepoForm');
       expect(form).toBeInTheDocument();
-      expect(getByTestId('radio_user')).toBeInTheDocument();
-      expect(getByTestId('radio_user')).toBeChecked();
-      expect(getByTestId('radio_org')).toBeInTheDocument();
-      expect(getByTestId('select_orgs')).not.toBeRequired();
-      expect(getByTestId('select_orgs')).toBeInTheDocument();
-      expect(getByTestId('selectOrgsWrapper')).toBeInTheDocument();
-      expect(getByTestId('selectOrgsWrapper')).toHaveClass('invisible');
-      expect(getByText('It may take a few minutes for this change to be visible across the Hub.')).toBeInTheDocument();
-      expect(getByTestId('transferRepoBtn')).toBeInTheDocument();
-      expect(getByText(mockOrganizations[0].name)).toBeInTheDocument();
-      expect(getByText(mockOrganizations[2].name)).toBeInTheDocument();
-      expect(queryByText('orgTest')).toBeNull(); // Does not render selected org in context
+      expect(screen.getByRole('radio', { name: 'Transfer to my user' })).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Transfer to my user' })).toBeChecked();
+      expect(screen.getByRole('radio', { name: 'Transfer to organization' })).toBeInTheDocument();
+      expect(screen.getByRole('combobox', { name: 'org-select' })).not.toBeRequired();
+      expect(screen.getByRole('combobox', { name: 'org-select' })).toBeInTheDocument();
+      expect(screen.getByTestId('selectOrgsWrapper')).toBeInTheDocument();
+      expect(screen.getByTestId('selectOrgsWrapper')).toHaveClass('invisible');
+      expect(
+        screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
+      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Transfer repository' })).toBeInTheDocument();
+      expect(screen.getByText(mockOrganizations[0].name)).toBeInTheDocument();
+      expect(screen.getByText(mockOrganizations[2].name)).toBeInTheDocument();
+      expect(screen.queryByText('orgTest')).toBeNull(); // Does not render selected org in context
     });
 
     it('renders component when org is not selected in context', async () => {
       const mockOrganizations = getMockOrganizations('3');
       mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
-      const { getByTestId, queryByTestId, getByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
           <TransferModal {...defaultProps} />
         </AppCtx.Provider>
@@ -139,17 +142,19 @@ describe('Transfer Repository Modal - packages section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Transfer repository')).toBeInTheDocument();
-      const form = getByTestId('transferRepoForm');
+      expect(screen.getByText('Transfer repository')).toBeInTheDocument();
+      const form = screen.getByTestId('transferRepoForm');
       expect(form).toBeInTheDocument();
-      expect(queryByTestId('radio_user')).toBeNull();
-      expect(queryByTestId('radio_org')).toBeNull();
-      expect(getByTestId('select_orgs')).toBeInTheDocument();
-      expect(getByTestId('select_orgs')).toBeRequired();
-      expect(getByTestId('selectOrgsWrapper')).toBeInTheDocument();
-      expect(getByTestId('selectOrgsWrapper')).not.toHaveClass('invisible');
-      expect(getByText('It may take a few minutes for this change to be visible across the Hub.')).toBeInTheDocument();
-      expect(getByTestId('transferRepoBtn')).toBeInTheDocument();
+      expect(screen.queryByRole('radio', { name: 'Transfer to my user' })).toBeNull();
+      expect(screen.queryByRole('radio', { name: 'Transfer to organization' })).toBeNull();
+      expect(screen.getByRole('combobox', { name: 'org-select' })).toBeInTheDocument();
+      expect(screen.getByRole('combobox', { name: 'org-select' })).toBeRequired();
+      expect(screen.getByTestId('selectOrgsWrapper')).toBeInTheDocument();
+      expect(screen.getByTestId('selectOrgsWrapper')).not.toHaveClass('invisible');
+      expect(
+        screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
+      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Transfer repository' })).toBeInTheDocument();
     });
 
     describe('Transfer repo', () => {
@@ -158,7 +163,7 @@ describe('Transfer Repository Modal - packages section', () => {
         mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockResolvedValue(null);
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <TransferModal {...defaultProps} />
           </AppCtx.Provider>
@@ -168,8 +173,7 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const btn = getByTestId('transferRepoBtn');
-        fireEvent.click(btn);
+        userEvent.click(screen.getByRole('button', { name: 'Transfer repository' }));
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -190,7 +194,7 @@ describe('Transfer Repository Modal - packages section', () => {
         mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockResolvedValue(null);
 
-        const { getByTestId, getByText } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <TransferModal {...defaultProps} />
           </AppCtx.Provider>
@@ -200,18 +204,17 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        expect(getByTestId('selectOrgsWrapper')).toHaveClass('invisible');
-        expect(getByTestId('select_orgs')).not.toBeRequired();
+        expect(screen.getByTestId('selectOrgsWrapper')).toHaveClass('invisible');
+        expect(screen.getByRole('combobox', { name: 'org-select' })).not.toBeRequired();
 
-        const radio = getByText('Transfer to organization');
-        fireEvent.click(radio);
+        const radio = screen.getByText('Transfer to organization');
+        userEvent.click(radio);
 
-        const btn = getByTestId('transferRepoBtn');
+        const select = screen.getByRole('combobox', { name: 'org-select' });
+        userEvent.selectOptions(select, mockOrganizations[2].name);
 
-        const select = getByTestId('select_orgs');
-        fireEvent.change(select, { target: { value: mockOrganizations[2].name } });
-
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Transfer repository' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -232,7 +235,7 @@ describe('Transfer Repository Modal - packages section', () => {
         mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockResolvedValue(null);
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
             <TransferModal {...defaultProps} />
           </AppCtx.Provider>
@@ -242,11 +245,11 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const select = getByTestId('select_orgs');
-        fireEvent.change(select, { target: { value: mockOrganizations[2].name } });
+        const select = screen.getByRole('combobox', { name: 'org-select' });
+        userEvent.selectOptions(select, mockOrganizations[2].name);
 
-        const btn = getByTestId('transferRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Transfer repository' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -271,7 +274,7 @@ describe('Transfer Repository Modal - packages section', () => {
           kind: ErrorKind.Unauthorized,
         });
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <TransferModal {...defaultProps} />
           </AppCtx.Provider>
@@ -281,8 +284,8 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const btn = getByTestId('transferRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Transfer repository' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -304,14 +307,14 @@ describe('Transfer Repository Modal - packages section', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const btn = getByTestId('transferRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Transfer repository' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -320,7 +323,9 @@ describe('Transfer Repository Modal - packages section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred transfering the repository, please try again later.')).toBeInTheDocument();
+        expect(
+          screen.getByText('An error occurred transfering the repository, please try again later.')
+        ).toBeInTheDocument();
       });
 
       it('with custom error message', async () => {
@@ -337,14 +342,14 @@ describe('Transfer Repository Modal - packages section', () => {
           </AppCtx.Provider>
         );
 
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const btn = getByTestId('transferRepoBtn');
-        fireEvent.click(btn);
+        const btn = screen.getByRole('button', { name: 'Transfer repository' });
+        userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -353,7 +358,7 @@ describe('Transfer Repository Modal - packages section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred transfering the repository: custom error')).toBeInTheDocument();
+        expect(screen.getByText('An error occurred transfering the repository: custom error')).toBeInTheDocument();
       });
     });
 
@@ -387,7 +392,7 @@ describe('Transfer Repository Modal - packages section', () => {
           </AppCtx.Provider>
         );
 
-        const { getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
@@ -396,7 +401,9 @@ describe('Transfer Repository Modal - packages section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred getting your organizations, please try again later.')).toBeInTheDocument();
+        expect(
+          screen.getByText('An error occurred getting your organizations, please try again later.')
+        ).toBeInTheDocument();
       });
     });
   });

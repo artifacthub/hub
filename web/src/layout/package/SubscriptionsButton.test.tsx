@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -16,7 +17,7 @@ const defaultProps = {
 };
 
 const mockCtx = {
-  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: true },
   prefs: {
     controlPanel: {},
     search: { limit: 60 },
@@ -74,7 +75,7 @@ describe('SubscriptionsButton', () => {
   it('creates snapshot', async () => {
     mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <SubscriptionsButton {...defaultProps} />
@@ -84,7 +85,7 @@ describe('SubscriptionsButton', () => {
 
     await waitFor(() => {
       expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -94,7 +95,7 @@ describe('SubscriptionsButton', () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
         mocked(API).deleteSubscription.mockResolvedValue('');
 
-        const { getByText, getByTestId, queryByRole, getAllByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -108,37 +109,35 @@ describe('SubscriptionsButton', () => {
         });
 
         await waitFor(() => {
-          expect(queryByRole('status')).toBeNull();
+          expect(screen.queryByRole('status')).toBeNull();
         });
 
-        expect(getByTestId('subsBtnDropdown')).toBeInTheDocument();
-        expect(getByText('New releases')).toBeInTheDocument();
-        expect(getByText('Receive a notification when a new version of this package is released.')).toBeInTheDocument();
+        expect(screen.getByRole('menu')).toBeInTheDocument();
+        expect(screen.getByText('New releases')).toBeInTheDocument();
+        expect(
+          screen.getByText('Receive a notification when a new version of this package is released.')
+        ).toBeInTheDocument();
 
-        await waitFor(() => {
-          expect(getByTestId('checkedSubsBtn')).toBeInTheDocument();
-        });
+        expect(await screen.findByTestId('checkedSubsBtn')).toBeInTheDocument();
 
-        const btn = getByTestId('newReleaseBtn');
+        const btn = screen.getByRole('button', { name: /Change new releases subscription/i });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
-        expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
+        userEvent.click(btn);
+        expect(screen.getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
 
         await waitFor(() => {
           expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
           expect(API.deleteSubscription).toHaveBeenCalledWith(defaultProps.packageId, 0);
         });
 
-        await waitFor(() => {
-          expect(getByTestId('subsBtnDropdown')).not.toHaveClass('show');
-        });
+        expect(await screen.findByRole('menu')).not.toHaveClass('show');
       });
 
       it('renders component with inactive event notifications', async () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([]);
         mocked(API).addSubscription.mockResolvedValue('');
 
-        const { getByTestId, getAllByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -150,11 +149,11 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
         });
 
-        expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
-        const btn = getByTestId('newReleaseBtn');
+        expect(screen.getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
+        const btn = screen.getByRole('button', { name: /Change new releases subscription/i });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
-        expect(getByTestId('checkedSubsBtn')).toBeInTheDocument();
+        userEvent.click(btn);
+        expect(screen.getByTestId('checkedSubsBtn')).toBeInTheDocument();
 
         await waitFor(() => {
           expect(API.addSubscription).toHaveBeenCalledTimes(1);
@@ -166,7 +165,7 @@ describe('SubscriptionsButton', () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([]);
         mocked(API).addSubscription.mockResolvedValue('');
 
-        const { getByTestId, getAllByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -178,11 +177,11 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
         });
 
-        expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
-        const btn = getByTestId('securityAlertBtn');
+        expect(screen.getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
+        const btn = screen.getByRole('button', { name: /Change security alerts subscription/i });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
-        expect(getByTestId('checkedSubsBtn')).toBeInTheDocument();
+        userEvent.click(btn);
+        expect(screen.getByTestId('checkedSubsBtn')).toBeInTheDocument();
 
         await waitFor(() => {
           expect(API.addSubscription).toHaveBeenCalledTimes(1);
@@ -221,7 +220,7 @@ describe('SubscriptionsButton', () => {
 
     describe('displays disabled button', () => {
       it('when user is not signed in', async () => {
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockNotSignedInCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -233,7 +232,7 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(0);
         });
 
-        const btn = getByTestId('subscriptionsBtn');
+        const btn = screen.getByRole('button', { name: /Open subscriptions menu/ });
         expect(btn).toBeInTheDocument();
         expect(btn).toHaveClass('disabled');
       });
@@ -241,7 +240,7 @@ describe('SubscriptionsButton', () => {
       it('when getPackageSubscriptions fails', async () => {
         mocked(API).getPackageSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
 
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -258,7 +257,7 @@ describe('SubscriptionsButton', () => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(0);
         });
 
-        const btn = getByTestId('subscriptionsBtn');
+        const btn = screen.getByRole('button', { name: /Open subscriptions menu/ });
         expect(btn).toBeInTheDocument();
         expect(btn).toHaveClass('disabled');
       });
@@ -287,7 +286,7 @@ describe('SubscriptionsButton', () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([]);
         mocked(API).addSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
-        const { getByTestId, getAllByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Router>
               <SubscriptionsButton {...defaultProps} />
@@ -299,11 +298,11 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(1);
         });
 
-        expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
-        const btn = getByTestId('newReleaseBtn');
+        expect(screen.getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
+        const btn = screen.getByRole('button', { name: /Change new releases subscription/i });
         expect(btn).toBeInTheDocument();
-        fireEvent.click(btn);
-        expect(getByTestId('checkedSubsBtn')).toBeInTheDocument();
+        userEvent.click(btn);
+        expect(screen.getByTestId('checkedSubsBtn')).toBeInTheDocument();
 
         await waitFor(() => {
           expect(API.addSubscription).toHaveBeenCalledTimes(1);
@@ -318,8 +317,8 @@ describe('SubscriptionsButton', () => {
 
         await waitFor(() => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(2);
-          expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
         });
+        expect(screen.getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
       });
     });
 
@@ -327,7 +326,7 @@ describe('SubscriptionsButton', () => {
       mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
       mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByText, getByTestId, getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <SubscriptionsButton {...defaultProps} />
@@ -340,17 +339,19 @@ describe('SubscriptionsButton', () => {
         expect(API.getPackageSubscriptions).toHaveBeenCalledWith(defaultProps.packageId);
       });
 
-      expect(getByText('New releases')).toBeInTheDocument();
-      expect(getByText('Receive a notification when a new version of this package is released.')).toBeInTheDocument();
+      expect(screen.getByText('New releases')).toBeInTheDocument();
+      expect(
+        screen.getByText('Receive a notification when a new version of this package is released.')
+      ).toBeInTheDocument();
 
       await waitFor(() => {
-        expect(getByTestId('checkedSubsBtn')).toBeInTheDocument();
+        expect(screen.getByTestId('checkedSubsBtn')).toBeInTheDocument();
       });
 
-      const btn = getByTestId('newReleaseBtn');
+      const btn = screen.getByRole('button', { name: /Change new releases subscription/i });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
-      expect(getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
+      userEvent.click(btn);
+      expect(screen.getAllByTestId('uncheckedSubsBtn')).toHaveLength(2);
 
       await waitFor(() => {
         expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
@@ -365,8 +366,8 @@ describe('SubscriptionsButton', () => {
 
       await waitFor(() => {
         expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(2);
-        expect(getByTestId('checkedSubsBtn')).toBeInTheDocument();
       });
+      expect(screen.getByTestId('checkedSubsBtn')).toBeInTheDocument();
     });
   });
 });

@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { Repository } from '../../../types';
@@ -23,50 +24,48 @@ describe('Badge Modal - repositories section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<BadgeModal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<BadgeModal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders markdown tab', () => {
-      const { getByTestId, getByText, getByAltText, getAllByTestId, getAllByText } = render(
-        <BadgeModal {...defaultProps} />
-      );
+      render(<BadgeModal {...defaultProps} />);
 
-      expect(getByText('Get badge')).toBeInTheDocument();
-      expect(getAllByText('Markdown')).toHaveLength(2);
-      expect(getByTestId('badgeModalContent')).toBeInTheDocument();
-      expect(getAllByTestId('tabBtn')).toHaveLength(2);
+      expect(screen.getByText('Get badge')).toBeInTheDocument();
+      expect(screen.getAllByText('Markdown')).toHaveLength(2);
+      expect(screen.getByTestId('badgeModalContent')).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: /Open tab/ })).toHaveLength(2);
 
-      const badge = getByAltText('Artifact HUB badge');
+      const badge = screen.getByAltText('Artifact HUB badge');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveProperty(
         'src',
         `https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}`
       );
       expect(
-        getByText(
+        screen.getByText(
           `[![null](https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name})](http://localhost/packages/search?repo=${repoMock.name})`
         )
       ).toBeInTheDocument();
     });
 
     it('renders ascii tab', () => {
-      const { getByText, getByAltText, getAllByTestId, getAllByText } = render(<BadgeModal {...defaultProps} />);
+      render(<BadgeModal {...defaultProps} />);
 
-      expect(getAllByText('AsciiDoc')).toHaveLength(2);
-      const btns = getAllByTestId('tabBtn');
+      expect(screen.getAllByText('AsciiDoc')).toHaveLength(2);
+      const btns = screen.getAllByRole('button', { name: /Open tab/ });
       expect(btns[1]).toHaveTextContent('AsciiDoc');
-      fireEvent.click(btns[1]);
+      userEvent.click(btns[1]);
 
-      const badge = getByAltText('Artifact HUB badge');
+      const badge = screen.getByAltText('Artifact HUB badge');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveProperty(
         'src',
         `https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}`
       );
       expect(
-        getByText(
+        screen.getByText(
           `http://localhost/packages/search?repo=${repoMock.name}[image:https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}[null]]`
         )
       ).toBeInTheDocument();

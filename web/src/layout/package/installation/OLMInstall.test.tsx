@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import OLMInstall from './OLMInstall';
@@ -19,29 +19,29 @@ describe('OLMInstall', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<OLMInstall {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<OLMInstall {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<OLMInstall {...defaultProps} />);
+      render(<OLMInstall {...defaultProps} />);
 
-      expect(getByText('Install the operator by running the following command:')).toBeInTheDocument();
+      expect(screen.getByText('Install the operator by running the following command:')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           `kubectl create -f https://operatorhub.io/install/${defaultProps.defaultChannel}/${defaultProps.name}.yaml`
         )
       ).toBeInTheDocument();
-      expect(getByText('After install, watch your operator come up using next command:')).toBeInTheDocument();
-      expect(getByText(`kubectl get csv -n my-${defaultProps.name}`)).toBeInTheDocument();
+      expect(screen.getByText('After install, watch your operator come up using next command:')).toBeInTheDocument();
+      expect(screen.getByText(`kubectl get csv -n my-${defaultProps.name}`)).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           'To use it, checkout the custom resource definitions (CRDs) introduced by this operator to start using it.'
         )
       ).toBeInTheDocument();
 
-      const olmLink = getByText('Need OLM?');
+      const olmLink = screen.getByText('Need OLM?');
       expect(olmLink).toBeInTheDocument();
       expect(olmLink).toHaveProperty(
         'href',
@@ -50,14 +50,14 @@ describe('OLMInstall', () => {
     });
 
     it('renders global operator', () => {
-      const { getByText } = render(<OLMInstall {...defaultProps} isGlobalOperator />);
-      expect(getByText('kubectl get csv -n operators')).toBeInTheDocument();
+      render(<OLMInstall {...defaultProps} isGlobalOperator />);
+      expect(screen.getByText('kubectl get csv -n operators')).toBeInTheDocument();
     });
 
     it('renders private repo', () => {
-      const { getByRole } = render(<OLMInstall {...defaultProps} isPrivate />);
+      render(<OLMInstall {...defaultProps} isPrivate />);
 
-      const alert = getByRole('alert');
+      const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });

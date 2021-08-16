@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -21,32 +21,32 @@ describe('RecommendedPackages', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <RecommendedPackages {...defaultProps} />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByTestId } = render(
+      render(
         <Router>
           <RecommendedPackages {...defaultProps} />
         </Router>
       );
 
-      expect(getByText('Other packages recommended by the publisher:')).toBeInTheDocument();
+      expect(screen.getByText('Other packages recommended by the publisher:')).toBeInTheDocument();
 
-      const pkgs = getAllByTestId('recommended-pkg');
+      const pkgs = screen.getAllByTestId('recommended-pkg');
       expect(pkgs).toHaveLength(2);
       expect(pkgs[0]).toHaveTextContent('Helm chartartifact-hubREPO: artifact-hub');
       expect(pkgs[1]).toHaveTextContent('Helm chartkube-prometheus-stackREPO: prometheus-community');
     });
 
     it('renders component with clean pkgs', () => {
-      const { getByText, getAllByTestId } = render(
+      render(
         <Router>
           <RecommendedPackages
             recommendations={[
@@ -57,9 +57,9 @@ describe('RecommendedPackages', () => {
         </Router>
       );
 
-      expect(getByText('Other packages recommended by the publisher:')).toBeInTheDocument();
+      expect(screen.getByText('Other packages recommended by the publisher:')).toBeInTheDocument();
 
-      const pkgs = getAllByTestId('recommended-pkg');
+      const pkgs = screen.getAllByTestId('recommended-pkg');
       expect(pkgs).toHaveLength(1);
       expect(pkgs[0]).toHaveTextContent('Helm chartartifact-hubREPO: artifact-hub');
     });

@@ -27,9 +27,8 @@ exports[`Members Modal - members section creates snapshot 1`] = `
               Add member
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -112,7 +111,6 @@ exports[`Members Modal - members section creates snapshot 1`] = `
             <button
               aria-label="Invite member"
               class="btn btn-sm btn-outline-secondary"
-              data-testid="membersFormBtn"
               type="button"
             >
               <div

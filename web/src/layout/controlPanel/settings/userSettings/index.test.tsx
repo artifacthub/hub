@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import UserSettingsSection from './index';
@@ -16,39 +16,39 @@ describe('UserSettingsSection', () => {
   });
 
   it('renders correctly', () => {
-    const result = render(<UserSettingsSection {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<UserSettingsSection {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders profile section', () => {
-      const { getByText } = render(<UserSettingsSection subsection="profile" {...defaultProps} />);
+      render(<UserSettingsSection subsection="profile" {...defaultProps} />);
 
-      expect(getByText('profile')).toBeInTheDocument();
+      expect(screen.getByText('profile')).toBeInTheDocument();
     });
 
     it('renders subscriptions section', () => {
-      const { getByText } = render(<UserSettingsSection subsection="subscriptions" {...defaultProps} />);
+      render(<UserSettingsSection subsection="subscriptions" {...defaultProps} />);
 
-      expect(getByText('subscriptions')).toBeInTheDocument();
+      expect(screen.getByText('subscriptions')).toBeInTheDocument();
     });
 
     it('renders apiKeys section', () => {
-      const { getByText } = render(<UserSettingsSection subsection="api-keys" {...defaultProps} />);
+      render(<UserSettingsSection subsection="api-keys" {...defaultProps} />);
 
-      expect(getByText('api-keys')).toBeInTheDocument();
+      expect(screen.getByText('api-keys')).toBeInTheDocument();
     });
 
     it('renders webhooks section', () => {
-      const { getByText } = render(<UserSettingsSection subsection="webhooks" {...defaultProps} />);
+      render(<UserSettingsSection subsection="webhooks" {...defaultProps} />);
 
-      expect(getByText('webhooks')).toBeInTheDocument();
+      expect(screen.getByText('webhooks')).toBeInTheDocument();
     });
 
     it('renders profile as default section', () => {
-      const { getByText } = render(<UserSettingsSection {...defaultProps} />);
+      render(<UserSettingsSection {...defaultProps} />);
 
-      expect(getByText('profile')).toBeInTheDocument();
+      expect(screen.getByText('profile')).toBeInTheDocument();
     });
   });
 });

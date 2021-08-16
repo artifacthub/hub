@@ -18,7 +18,6 @@ exports[`TOC creates snapshot 1`] = `
           aria-owns="TOC-list"
           aria-pressed="false"
           class="btn btn-sm mr-2 btn-outline-dark btn"
-          data-testid="btnTOC"
         >
           <svg
             class="position-relative icon"

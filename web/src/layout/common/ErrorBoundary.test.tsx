@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import ErrorBoundary from './ErrorBoundary';
@@ -25,7 +25,7 @@ describe('ErrorBoundary', () => {
         <Throw />
       </ErrorBoundary>
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
 
     spy.mockRestore();
   });
@@ -34,14 +34,16 @@ describe('ErrorBoundary', () => {
     const spy = jest.spyOn(console, 'error');
     spy.mockImplementation(() => {});
 
-    const { getByText } = render(
+    render(
       <ErrorBoundary {...defaultProps}>
         <Throw />
       </ErrorBoundary>
     );
 
-    expect(getByText(defaultProps.message)).toBeDefined();
-    expect(getByText(/indicating the URL of the package you are experiencing problems with/i)).toBeInTheDocument();
+    expect(screen.getByText(defaultProps.message)).toBeDefined();
+    expect(
+      screen.getByText(/indicating the URL of the package you are experiencing problems with/i)
+    ).toBeInTheDocument();
 
     spy.mockRestore();
   });
@@ -50,15 +52,15 @@ describe('ErrorBoundary', () => {
     const spy = jest.spyOn(console, 'error');
     spy.mockImplementation(() => {});
 
-    const { getByText, queryByText } = render(
+    render(
       <ErrorBoundary {...defaultProps}>
         <span>No error</span>
       </ErrorBoundary>
     );
 
-    expect(queryByText(defaultProps.message)).toBeNull();
-    expect(queryByText(/indicating the URL of the package you are experiencing problems with/i)).toBeNull();
-    expect(getByText('No error')).toBeInTheDocument();
+    expect(screen.queryByText(defaultProps.message)).toBeNull();
+    expect(screen.queryByText(/indicating the URL of the package you are experiencing problems with/i)).toBeNull();
+    expect(screen.getByText('No error')).toBeInTheDocument();
 
     spy.mockRestore();
   });

@@ -1,3 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Loading creates snapshot 1`] = `[Function]`;
+exports[`Loading creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-absolute p-5 wrapper undefined"
+  >
+    <div
+      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+    >
+      <div
+        class="spinner-border text-primary spinner undefined"
+        role="status"
+      >
+        <span
+          class="sr-only"
+        >
+          Loading...
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

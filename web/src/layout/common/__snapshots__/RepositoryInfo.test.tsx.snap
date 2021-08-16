@@ -1,3 +1,230 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RepositoryInfo creates snapshot 1`] = `[Function]`;
+exports[`RepositoryInfo creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="position-absolute"
+    >
+      <div
+        class="dropdown-menu dropdown-menu-left dropdown"
+        role="complementary"
+      >
+        <div
+          class="content"
+        >
+          <div
+            class="d-flex flex-column"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <small
+                class="text-muted text-uppercase mr-1"
+              >
+                Repo: 
+              </small>
+              <img
+                alt="Icon"
+                class="mr-1 repoIconMini iconLight"
+                src="/static/media/helm-chart.svg"
+              />
+              <img
+                alt="Icon"
+                class="mr-1 repoIconMini iconDark"
+                src="/static/media/helm-chart-light.svg"
+              />
+              <div
+                class="text-reset text-truncate labelContent"
+              >
+                Stable
+              </div>
+            </div>
+            <div
+              class="mt-2 d-flex flex-row align-items-baseline"
+            >
+              <small
+                class="text-muted text-uppercase mr-1"
+              >
+                Url: 
+              </small>
+              <div
+                class="text-reset urlContent labelContent"
+                data-testid="repoUrl"
+              >
+                <div
+                  data-testid="attachedIconToTextWrapper"
+                  style="line-height: 21px;"
+                >
+                  <div
+                    class="d-inline"
+                  >
+                    h
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    t
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    t
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    p
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    :
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    /
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    /
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    r
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    e
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    p
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    o
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    U
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    r
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    l
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    .
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    c
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    o
+                  </div>
+                  <div
+                    class="d-inline"
+                  >
+                    m
+                  </div>
+                  <div
+                    class="d-inline-block"
+                  >
+                    <div
+                      class="position-relative d-inline"
+                    >
+                      <button
+                        aria-label="Copy repository url to clipboard"
+                        class="btn btn-sm miniBtn"
+                        type="button"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="none"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              height="13"
+                              rx="2"
+                              ry="2"
+                              width="13"
+                              x="9"
+                              y="9"
+                            />
+                            <path
+                              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex flex-row aling-items-baseline text-truncate"
+    >
+      <div
+        class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+      >
+        <small>
+          Repo:
+        </small>
+      </div>
+      <span
+        class="sr-only"
+      >
+        stable
+      </span>
+      <button
+        aria-expanded="false"
+        aria-hidden="true"
+        aria-label="Filter by repo Stable"
+        class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+        data-testid="repoLink"
+        tabindex="-1"
+      >
+        <div
+          class="text-truncate"
+        >
+          Stable
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

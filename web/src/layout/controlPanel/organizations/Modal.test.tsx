@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { Organization } from '../../../types';
@@ -26,25 +26,25 @@ describe('OrganizationModal - organizations section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Modal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Modal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component when org is defined', () => {
-      const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+      render(<Modal {...defaultProps} />);
 
-      expect(getByTestId('organizationForm')).toBeInTheDocument();
-      expect(getByText('Update organization')).toBeInTheDocument();
-      expect(getByText('Update')).toBeInTheDocument();
+      expect(screen.getByTestId('organizationForm')).toBeInTheDocument();
+      expect(screen.getByText('Update organization')).toBeInTheDocument();
+      expect(screen.getByText('Update')).toBeInTheDocument();
     });
 
     it('renders component when org is undefined', () => {
-      const { getByTestId, getByText } = render(<Modal {...defaultProps} organization={undefined} />);
+      render(<Modal {...defaultProps} organization={undefined} />);
 
-      expect(getByTestId('organizationForm')).toBeInTheDocument();
-      expect(getByText('Add organization')).toBeInTheDocument();
-      expect(getByText('Add')).toBeInTheDocument();
+      expect(screen.getByTestId('organizationForm')).toBeInTheDocument();
+      expect(screen.getByText('Add organization')).toBeInTheDocument();
+      expect(screen.getByText('Add')).toBeInTheDocument();
     });
   });
 });

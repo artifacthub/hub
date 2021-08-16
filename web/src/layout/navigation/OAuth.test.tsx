@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import OAuth from './OAuth';
@@ -36,24 +37,24 @@ describe('OAuth', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<OAuth {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<OAuth {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<OAuth {...defaultProps} />);
+      render(<OAuth {...defaultProps} />);
 
-      expect(getByText('Github')).toBeInTheDocument();
-      expect(getByText('Google')).toBeInTheDocument();
-      expect(getByText('OpenID Connect')).toBeInTheDocument();
+      expect(screen.getByText('Github')).toBeInTheDocument();
+      expect(screen.getByText('Google')).toBeInTheDocument();
+      expect(screen.getByText('OpenID Connect')).toBeInTheDocument();
     });
 
     it('goes to correct route on Github btn click', () => {
-      const { getByText } = render(<OAuth {...defaultProps} />);
+      render(<OAuth {...defaultProps} />);
 
-      const btn = getByText('Github');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Github');
+      userEvent.click(btn);
 
       waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
@@ -67,10 +68,10 @@ describe('OAuth', () => {
     });
 
     it('goes to correct route on Google btn click', () => {
-      const { getByText } = render(<OAuth {...defaultProps} />);
+      render(<OAuth {...defaultProps} />);
 
-      const btn = getByText('Google');
-      fireEvent.click(btn);
+      const btn = screen.getByText('Google');
+      userEvent.click(btn);
 
       waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
@@ -84,10 +85,10 @@ describe('OAuth', () => {
     });
 
     it('goes to correct route on OpenID btn click', () => {
-      const { getByText } = render(<OAuth {...defaultProps} />);
+      render(<OAuth {...defaultProps} />);
 
-      const btn = getByText('OpenID Connect');
-      fireEvent.click(btn);
+      const btn = screen.getByText('OpenID Connect');
+      userEvent.click(btn);
 
       waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);

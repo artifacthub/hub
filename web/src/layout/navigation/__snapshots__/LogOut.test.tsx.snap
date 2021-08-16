@@ -5,7 +5,6 @@ exports[`LogOut creates snapshot 1`] = `
   <button
     aria-label="Sign out"
     class="dropdown-item undefined"
-    data-testid="logOutBtn"
   >
     <div
       class="d-flex align-items-center"

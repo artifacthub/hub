@@ -160,7 +160,6 @@ const UpdatePassword = () => {
 
       <div className="mt-4 mb-2">
         <button
-          data-testid="updatePasswordBtn"
           className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isSending}

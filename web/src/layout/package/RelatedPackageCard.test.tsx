@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -31,30 +32,30 @@ describe('RelatedPackageCard', () => {
         <RelatedPackageCard {...mockProps} />
       </Router>
     );
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Image', () => {
     it('renders package logo', () => {
       const mockProps = getMockProps('2');
-      const { queryByAltText } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
-      const image = queryByAltText(`Logo ${mockProps.displayName}`);
+      const image = screen.getByAltText(`Logo ${mockProps.displayName}`);
       expect(image).toBeInTheDocument();
     });
 
     it('renders placeholder when imageId is undefined', () => {
       const mockProps = getMockProps('3');
 
-      const { queryByAltText } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
-      const image = queryByAltText(`Logo ${mockProps.displayName}`);
+      const image = screen.getByAltText(`Logo ${mockProps.displayName}`);
       expect(image).toBeInTheDocument();
       expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_pkg_helm.png');
     });
@@ -64,24 +65,24 @@ describe('RelatedPackageCard', () => {
     it('renders display name', () => {
       const mockProps = getMockProps('4');
 
-      const { queryByText } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
-      const title = queryByText(mockProps.displayName!);
+      const title = screen.getByText(mockProps.displayName!);
       expect(title).toBeInTheDocument();
     });
 
     it('renders name when display name is undefined', () => {
       const mockProps = getMockProps('5');
 
-      const { queryByText } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
-      const title = queryByText(mockProps.name!);
+      const title = screen.getByText(mockProps.name!);
       expect(title).toBeInTheDocument();
     });
   });
@@ -90,14 +91,14 @@ describe('RelatedPackageCard', () => {
     it('opens detail page', () => {
       const mockProps = getMockProps('5');
 
-      const { queryByTestId } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
-      const link = queryByTestId('relatedPackageLink');
+      const link = screen.getByTestId('relatedPackageLink');
       expect(link).toBeInTheDocument();
-      fireEvent.click(link!);
+      userEvent.click(link!);
       expect(window.location.pathname).toBe('/packages/helm/incubator/test');
     });
   });
@@ -106,40 +107,40 @@ describe('RelatedPackageCard', () => {
     it('renders user alias', () => {
       const mockProps = getMockProps('6');
 
-      const { getByText } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
 
-      expect(getByText(new RegExp(mockProps.repository.userAlias!, 'i'))).toBeInTheDocument();
-      expect(getByText('/')).toBeInTheDocument();
+      expect(screen.getByText(new RegExp(mockProps.repository.userAlias!, 'i'))).toBeInTheDocument();
+      expect(screen.getByText('/')).toBeInTheDocument();
     });
 
     it('renders organization', () => {
       const mockProps = getMockProps('7');
 
-      const { getByText } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
 
-      expect(getByText(new RegExp('Org name', 'i'))).toBeInTheDocument();
-      expect(getByText('/')).toBeInTheDocument();
+      expect(screen.getByText(new RegExp('Org name', 'i'))).toBeInTheDocument();
+      expect(screen.getByText('/')).toBeInTheDocument();
     });
 
     it('renders repo', () => {
       const mockProps = getMockProps('8');
 
-      const { getByText } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
 
-      expect(getByText(new RegExp(mockProps.repository.name, 'i'))).toBeInTheDocument();
-      expect(getByText('/')).toBeInTheDocument();
+      expect(screen.getByText(new RegExp(mockProps.repository.name, 'i'))).toBeInTheDocument();
+      expect(screen.getByText('/')).toBeInTheDocument();
     });
   });
 
@@ -147,12 +148,12 @@ describe('RelatedPackageCard', () => {
     it('renders user alias', () => {
       const mockProps = getMockProps('9');
 
-      const { getByText } = render(
+      render(
         <Router>
           <RelatedPackageCard {...mockProps} />
         </Router>
       );
-      expect(getByText(new RegExp(mockProps.repository.userAlias!, 'i'))).toBeInTheDocument();
+      expect(screen.getByText(new RegExp(mockProps.repository.userAlias!, 'i'))).toBeInTheDocument();
     });
   });
 });

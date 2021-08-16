@@ -41,7 +41,6 @@ const BlockCodeButtons = (props: Props) => {
       )}
 
       <button
-        data-testid="downloadBtn"
         className={`btn btn-sm btn-primary rounded-circle ${styles.btn}`}
         style={btnStyle}
         onClick={downloadFile}

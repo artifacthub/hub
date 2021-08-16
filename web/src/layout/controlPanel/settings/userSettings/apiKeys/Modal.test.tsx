@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -33,25 +34,25 @@ describe('APIKeyModal - API keys section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Modal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Modal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component when API key is defined', () => {
-      const { getByTestId, getByText } = render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
+      render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
 
-      expect(getByTestId('apiKeyForm')).toBeInTheDocument();
-      expect(getByText('Update API key')).toBeInTheDocument();
-      expect(getByText('Update')).toBeInTheDocument();
+      expect(screen.getByTestId('apiKeyForm')).toBeInTheDocument();
+      expect(screen.getByText('Update API key')).toBeInTheDocument();
+      expect(screen.getByText('Update')).toBeInTheDocument();
     });
 
     it('renders component when API key is undefined', () => {
-      const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+      render(<Modal {...defaultProps} />);
 
-      expect(getByTestId('apiKeyForm')).toBeInTheDocument();
-      expect(getByText('Add API key')).toBeInTheDocument();
-      expect(getByText('Add')).toBeInTheDocument();
+      expect(screen.getByTestId('apiKeyForm')).toBeInTheDocument();
+      expect(screen.getByText('Add API key')).toBeInTheDocument();
+      expect(screen.getByText('Add')).toBeInTheDocument();
     });
   });
 
@@ -61,12 +62,12 @@ describe('APIKeyModal - API keys section', () => {
         secret: '1276576',
         apiKeyId: 'id',
       });
-      const { getByTestId, getByText, getAllByRole } = render(<Modal {...defaultProps} />);
+      render(<Modal {...defaultProps} />);
 
-      expect(getByText('Add API key')).toBeInTheDocument();
-      expect(getByText('Add')).toBeInTheDocument();
-      fireEvent.change(getByTestId('nameInput'), { target: { value: 'test' } });
-      fireEvent.click(getByTestId('apiKeyFormBtn'));
+      expect(screen.getByText('Add API key')).toBeInTheDocument();
+      expect(screen.getByText('Add')).toBeInTheDocument();
+      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test');
+      userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
 
       await waitFor(() => {
         expect(API.addAPIKey).toHaveBeenCalledTimes(1);
@@ -75,19 +76,21 @@ describe('APIKeyModal - API keys section', () => {
 
       expect(onSuccessMock).toHaveBeenCalledTimes(1);
 
-      expect(getByText('API-KEY-ID')).toBeInTheDocument();
-      expect(getByText('API-KEY-SECRET')).toBeInTheDocument();
+      expect(screen.getByText('API-KEY-ID')).toBeInTheDocument();
+      expect(screen.getByText('API-KEY-SECRET')).toBeInTheDocument();
       expect(
-        getByText(
+        screen.getByText(
           /These are the credentials you will need to provide when making requests to the API. Please, copy and store them in a safe place./i
         )
       ).toBeInTheDocument();
-      expect(getByText('You will not be able to see the secret again when you close this window.')).toBeInTheDocument();
-      expect(getByText('Important:')).toBeInTheDocument();
-      expect(getByText(/the API key you've just generated can be used to perform/i)).toBeInTheDocument();
-      expect(getByText('Close')).toBeInTheDocument();
+      expect(
+        screen.getByText('You will not be able to see the secret again when you close this window.')
+      ).toBeInTheDocument();
+      expect(screen.getByText('Important:')).toBeInTheDocument();
+      expect(screen.getByText(/the API key you've just generated can be used to perform/i)).toBeInTheDocument();
+      expect(screen.getByText('Close')).toBeInTheDocument();
 
-      const btns = getAllByRole('button');
+      const btns = screen.getAllByRole('button');
       expect(btns[3]).toHaveTextContent('API docs');
       expect(btns[3]).toHaveAttribute('href', '/docs/api');
     });
@@ -98,10 +101,10 @@ describe('APIKeyModal - API keys section', () => {
       });
 
       const component = <Modal {...defaultProps} />;
-      const { getByTestId, getByText, rerender } = render(component);
+      const { rerender } = render(component);
 
-      fireEvent.change(getByTestId('nameInput'), { target: { value: 'test2' } });
-      fireEvent.click(getByTestId('apiKeyFormBtn'));
+      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test2');
+      userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
 
       await waitFor(() => {
         expect(API.addAPIKey).toHaveBeenCalledTimes(1);
@@ -110,17 +113,17 @@ describe('APIKeyModal - API keys section', () => {
       rerender(component);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-      expect(getByText('An error occurred adding the API key, please try again later.')).toBeInTheDocument();
+      expect(screen.getByText('An error occurred adding the API key, please try again later.')).toBeInTheDocument();
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
       mocked(API).addAPIKey.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
-      const { getByTestId } = render(<Modal {...defaultProps} />);
+      render(<Modal {...defaultProps} />);
 
-      fireEvent.change(getByTestId('nameInput'), { target: { value: 'test2' } });
-      fireEvent.click(getByTestId('apiKeyFormBtn'));
+      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test2');
+      userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
 
       await waitFor(() => {
         expect(API.addAPIKey).toHaveBeenCalledTimes(1);
@@ -133,12 +136,12 @@ describe('APIKeyModal - API keys section', () => {
   describe('Update API key', () => {
     it('calls update API key', async () => {
       mocked(API).updateAPIKey.mockResolvedValue(null);
-      const { getByTestId, getByText } = render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
+      render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
 
-      expect(getByText('Update API key')).toBeInTheDocument();
-      expect(getByText('Update')).toBeInTheDocument();
-      fireEvent.change(getByTestId('nameInput'), { target: { value: 'key1-a' } });
-      fireEvent.click(getByTestId('apiKeyFormBtn'));
+      expect(screen.getByText('Update API key')).toBeInTheDocument();
+      expect(screen.getByText('Update')).toBeInTheDocument();
+      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
+      userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
 
       await waitFor(() => {
         expect(API.updateAPIKey).toHaveBeenCalledTimes(1);
@@ -154,10 +157,10 @@ describe('APIKeyModal - API keys section', () => {
       });
 
       const component = <Modal {...defaultProps} apiKey={APIKeyMock} />;
-      const { getByTestId, getByText, rerender } = render(component);
+      const { rerender } = render(component);
 
-      fireEvent.change(getByTestId('nameInput'), { target: { value: 'key1-a' } });
-      fireEvent.click(getByTestId('apiKeyFormBtn'));
+      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
+      userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
 
       await waitFor(() => {
         expect(API.updateAPIKey).toHaveBeenCalledTimes(1);
@@ -166,17 +169,17 @@ describe('APIKeyModal - API keys section', () => {
       rerender(component);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-      expect(getByText('An error occurred updating the API key, please try again later.')).toBeInTheDocument();
+      expect(screen.getByText('An error occurred updating the API key, please try again later.')).toBeInTheDocument();
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
       mocked(API).updateAPIKey.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
-      const { getByTestId } = render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
+      render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
 
-      fireEvent.change(getByTestId('nameInput'), { target: { value: 'key1-a' } });
-      fireEvent.click(getByTestId('apiKeyFormBtn'));
+      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
+      userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
 
       await waitFor(() => {
         expect(API.updateAPIKey).toHaveBeenCalledTimes(1);

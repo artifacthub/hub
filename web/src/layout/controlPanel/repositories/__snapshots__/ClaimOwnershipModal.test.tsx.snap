@@ -27,9 +27,8 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
               Claim repository ownership
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -126,7 +125,6 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                               aria-label="Search repositories"
                               autocomplete="new-input"
                               class="flex-grow-1 pr-4 pl-2 pl-md-0 input"
-                              data-testid="searchRepositoriesInput"
                               name="searchRepositoriesInput"
                               spellcheck="false"
                               type="text"
@@ -148,7 +146,6 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                     <input
                       aria-labelledby="claiming user"
                       class="custom-control-input"
-                      data-testid="radio_claim_user"
                       id="user"
                       name="claim"
                       required=""
@@ -170,7 +167,6 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                       aria-labelledby="claiming org"
                       checked=""
                       class="custom-control-input"
-                      data-testid="radio_claim_org"
                       id="org"
                       name="claim"
                       required=""
@@ -195,7 +191,6 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                     <select
                       aria-label="org-select"
                       class="custom-select"
-                      data-testid="select_claim_orgs"
                       required=""
                     />
                     <div
@@ -234,7 +229,6 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
             <button
               aria-label="Claim ownership"
               class="btn btn-sm btn-outline-secondary"
-              data-testid="claimRepoBtn"
               disabled=""
               type="button"
             >

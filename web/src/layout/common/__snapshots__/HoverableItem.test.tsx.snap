@@ -1,3 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HoverableItem creates snapshot 1`] = `[Function]`;
+exports[`HoverableItem creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    hi
+  </div>
+</DocumentFragment>
+`;

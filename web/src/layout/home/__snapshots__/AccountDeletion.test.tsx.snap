@@ -27,9 +27,8 @@ exports[`AccountDeletion creates snapshot 1`] = `
               Account deletion
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               disabled=""
               type="button"
             >
@@ -83,7 +82,6 @@ exports[`AccountDeletion creates snapshot 1`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               disabled=""
               type="button"
             >
@@ -144,9 +142,8 @@ exports[`AccountDeletion creates snapshot 2`] = `
               Account deletion
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               disabled=""
               type="button"
             >
@@ -200,7 +197,6 @@ exports[`AccountDeletion creates snapshot 2`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               disabled=""
               type="button"
             >

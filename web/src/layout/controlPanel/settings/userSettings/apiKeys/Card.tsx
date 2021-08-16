@@ -79,7 +79,6 @@ const APIKeyCard = (props: Props) => {
                     </button>
 
                     <button
-                      data-testid="deleteAPIKeyBtn"
                       className="btn btn-sm btn-danger ml-3"
                       onClick={(e) => {
                         e.preventDefault();
@@ -125,7 +124,6 @@ const APIKeyCard = (props: Props) => {
                 <div className={`arrow ${styles.arrow}`} />
 
                 <button
-                  data-testid="updateAPIKeyBtn"
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
@@ -144,7 +142,6 @@ const APIKeyCard = (props: Props) => {
                 </button>
 
                 <button
-                  data-testid="deleteAPIKeyModalBtn"
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();

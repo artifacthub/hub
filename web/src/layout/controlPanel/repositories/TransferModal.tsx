@@ -121,7 +121,6 @@ const TransferRepositoryModal = (props: Props) => {
       modalClassName={styles.modal}
       closeButton={
         <button
-          data-testid="transferRepoBtn"
           className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isSending}
@@ -158,7 +157,6 @@ const TransferRepositoryModal = (props: Props) => {
             <>
               <div className="custom-control custom-radio mb-3">
                 <input
-                  data-testid="radio_user"
                   className="custom-control-input"
                   type="radio"
                   name="transfer"
@@ -175,7 +173,6 @@ const TransferRepositoryModal = (props: Props) => {
 
               <div className="custom-control custom-radio mb-3">
                 <input
-                  data-testid="radio_org"
                   className="custom-control-input"
                   type="radio"
                   name="transfer"
@@ -202,7 +199,6 @@ const TransferRepositoryModal = (props: Props) => {
           >
             <div className="form-group w-75 mb-2">
               <select
-                data-testid="select_orgs"
                 className="custom-select"
                 aria-label="org-select"
                 value={orgToTransfer}

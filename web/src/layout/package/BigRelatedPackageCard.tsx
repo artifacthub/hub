@@ -24,7 +24,6 @@ const BigRelatedPackageCard = (props: Props) => {
   return (
     <div className={`card cardWithHover mt-3 mt-xxl-0 w-100 relatedCard ${styles.card}`}>
       <Link
-        data-testid="relatedPackageLink"
         className={`text-decoration-none text-reset ${styles.link}`}
         to={{
           pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),
@@ -84,7 +83,6 @@ const BigRelatedPackageCard = (props: Props) => {
                         <span className="sr-only">{props.package.repository.userAlias}</span>
 
                         <button
-                          data-testid="userLink"
                           className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link} ${styles.mx50}`}
                           onClick={(e) => {
                             e.preventDefault();

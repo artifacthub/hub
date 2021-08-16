@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { Repository } from '../../../types';
@@ -23,28 +23,26 @@ describe('HelmPluginInstall', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<HelmPluginInstall {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<HelmPluginInstall {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<HelmPluginInstall {...defaultProps} />);
+      render(<HelmPluginInstall {...defaultProps} />);
 
-      expect(getByText('Install plugin')).toBeInTheDocument();
-      expect(getByText('helm plugin install http://repo.test')).toBeInTheDocument();
+      expect(screen.getByText('Install plugin')).toBeInTheDocument();
+      expect(screen.getByText('helm plugin install http://repo.test')).toBeInTheDocument();
 
-      const link = getByText('Need Helm?');
+      const link = screen.getByText('Need Helm?');
       expect(link).toBeInTheDocument();
       expect(link).toHaveProperty('href', 'https://helm.sh/docs/intro/quickstart/');
     });
 
     it('renders private repo', () => {
-      const { getByRole } = render(
-        <HelmPluginInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />
-      );
+      render(<HelmPluginInstall {...defaultProps} repository={{ ...defaultProps.repository, private: true }} />);
 
-      const alert = getByRole('alert');
+      const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });

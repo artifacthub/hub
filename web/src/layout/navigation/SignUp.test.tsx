@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import SignUp from './SignUp';
@@ -24,29 +25,29 @@ describe('SignUp', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SignUp {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SignUp {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(<SignUp {...defaultProps} />);
+      render(<SignUp {...defaultProps} />);
 
-      expect(getByText('Create your account using your email')).toBeInTheDocument();
-      expect(getByTestId('signUpBtn')).toBeInTheDocument();
-      expect(getByText('Github')).toBeInTheDocument();
-      expect(getByText('Google')).toBeInTheDocument();
-      expect(getByText('OpenID Connect')).toBeInTheDocument();
+      expect(screen.getByText('Create your account using your email')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Open sign up form' })).toBeInTheDocument();
+      expect(screen.getByText('Github')).toBeInTheDocument();
+      expect(screen.getByText('Google')).toBeInTheDocument();
+      expect(screen.getByText('OpenID Connect')).toBeInTheDocument();
     });
 
     it('renders create an account form to click Sign up button', () => {
-      const { getByTestId } = render(<SignUp {...defaultProps} />);
+      render(<SignUp {...defaultProps} />);
 
-      const btn = getByTestId('signUpBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: 'Open sign up form' });
+      userEvent.click(btn);
 
       waitFor(() => {
-        expect(getByTestId('createAnAccountForm')).toBeInTheDocument();
+        expect(screen.getByTestId('createAnAccountForm')).toBeInTheDocument();
       });
     });
   });

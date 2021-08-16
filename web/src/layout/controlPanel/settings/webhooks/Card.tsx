@@ -96,7 +96,6 @@ const WebhookCard = (props: Props) => {
                     </button>
 
                     <button
-                      data-testid="deleteWebhookBtn"
                       className="btn btn-sm btn-danger ml-3"
                       onClick={(e) => {
                         e.preventDefault();
@@ -141,7 +140,6 @@ const WebhookCard = (props: Props) => {
                 <div className={`arrow ${styles.arrow}`} />
 
                 <button
-                  data-testid="editWebhookBtn"
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
@@ -157,7 +155,6 @@ const WebhookCard = (props: Props) => {
                 </button>
 
                 <button
-                  data-testid="deleteWebhookModalBtn"
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();

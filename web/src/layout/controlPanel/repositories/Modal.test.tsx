@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -59,31 +60,31 @@ describe('Repository Modal - repositories section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Modal {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Modal {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId } = render(<Modal {...defaultProps} />);
+      render(<Modal {...defaultProps} />);
 
-      const form = getByTestId('repoForm');
+      const form = screen.getByTestId('repoForm');
       expect(form).toBeInTheDocument();
-      expect(getByTestId('nameInput')).toBeInTheDocument();
-      expect(getByTestId('displayNameInput')).toBeInTheDocument();
-      expect(getByTestId('urlInput')).toBeInTheDocument();
-      expect(getByTestId('toggleDisabledRepo')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Name/ })).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Display name' })).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: /Url/ })).toBeInTheDocument();
+      expect(screen.getByRole('checkbox', { name: 'Disabled' })).toBeInTheDocument();
     });
 
     it('renders component with existing repo', () => {
-      const { getByTestId, getByDisplayValue } = render(<Modal {...defaultProps} repository={repoMock} />);
+      render(<Modal {...defaultProps} repository={repoMock} />);
 
-      const form = getByTestId('repoForm');
+      const form = screen.getByTestId('repoForm');
       expect(form).toBeInTheDocument();
-      expect(getByDisplayValue(repoMock.name)).toBeInTheDocument();
-      expect(getByDisplayValue(repoMock.displayName!)).toBeInTheDocument();
-      expect(getByDisplayValue(repoMock.url)).toBeInTheDocument();
-      expect(getByTestId('toggleDisabledRepo')).toBeInTheDocument();
+      expect(screen.getByDisplayValue(repoMock.name)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(repoMock.displayName!)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(repoMock.url)).toBeInTheDocument();
+      expect(screen.getByRole('checkbox', { name: 'Disabled' })).toBeInTheDocument();
     });
 
     it('renders private not Helm charts repo', () => {
@@ -94,27 +95,25 @@ describe('Repository Modal - repositories section', () => {
         writable: true,
       });
 
-      const { getByText, queryByTestId } = render(
+      render(
         <Modal {...defaultProps} repository={{ ...repoMock, kind: RepositoryKind.HelmPlugin, authPass: 'pass123' }} />
       );
 
-      expect(getByText('Update repository')).toBeInTheDocument();
-      expect(getByText('Update')).toBeInTheDocument();
-      expect(getByText('Authentication token')).toBeInTheDocument();
-      expect(queryByTestId('authUserInput')).toBeNull();
+      expect(screen.getByText('Update repository')).toBeInTheDocument();
+      expect(screen.getByText('Update')).toBeInTheDocument();
+      expect(screen.getByText('Authentication token')).toBeInTheDocument();
+      expect(screen.queryByRole('textbox', { name: 'Username' })).toBeNull();
     });
 
     it('displays warning about repo url', () => {
-      const { getByText, getByTestId } = render(
-        <Modal {...defaultProps} repository={{ ...repoMock, kind: RepositoryKind.OLM }} />
-      );
+      render(<Modal {...defaultProps} repository={{ ...repoMock, kind: RepositoryKind.OLM }} />);
 
-      expect(getByText(/Please DO NOT include the git hosting platform specific parts/g)).toBeInTheDocument();
-      expect(getByText('tree/branch')).toBeInTheDocument();
+      expect(screen.getByText(/Please DO NOT include the git hosting platform specific parts/g)).toBeInTheDocument();
+      expect(screen.getByText('tree/branch')).toBeInTheDocument();
 
-      fireEvent.change(getByTestId('urlInput'), { target: { value: 'https://github.com/test/tree/test' } });
+      userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'https://github.com/test/tree/test');
 
-      expect(getByText(/Please DO NOT include the git hosting platform specific parts/g)).toHaveClass(
+      expect(screen.getByText(/Please DO NOT include the git hosting platform specific parts/g)).toHaveClass(
         'animatedWarning'
       );
     });
@@ -129,14 +128,14 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
-        const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+        render(<Modal {...defaultProps} />);
 
-        expect(getByText('Add repository')).toBeInTheDocument();
-        expect(getByText('Add')).toBeInTheDocument();
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        expect(screen.getByText('Add repository')).toBeInTheDocument();
+        expect(screen.getByText('Add')).toBeInTheDocument();
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -168,16 +167,16 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Modal {...defaultProps} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -208,12 +207,12 @@ describe('Repository Modal - repositories section', () => {
         });
 
         const component = <Modal {...defaultProps} />;
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name2' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -222,7 +221,9 @@ describe('Repository Modal - repositories section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred adding the repository, please try again later.')).toBeInTheDocument();
+        expect(
+          screen.getByText('An error occurred adding the repository, please try again later.')
+        ).toBeInTheDocument();
       });
 
       it('displays custom Api error', async () => {
@@ -234,12 +235,12 @@ describe('Repository Modal - repositories section', () => {
         });
 
         const component = <Modal {...defaultProps} />;
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name2' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -248,7 +249,7 @@ describe('Repository Modal - repositories section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred adding the repository: custom error')).toBeInTheDocument();
+        expect(screen.getByText('An error occurred adding the repository: custom error')).toBeInTheDocument();
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -257,12 +258,12 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).addRepository.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
-        const { getByTestId } = render(<Modal {...defaultProps} />);
+        render(<Modal {...defaultProps} />);
 
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name2' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -277,12 +278,14 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).updateRepository.mockResolvedValue(null);
-        const { getByTestId, getByText } = render(<Modal {...defaultProps} repository={repoMock} />);
+        render(<Modal {...defaultProps} repository={repoMock} />);
 
-        expect(getByText('Update repository')).toBeInTheDocument();
-        expect(getByText('Update')).toBeInTheDocument();
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        expect(screen.getByText('Update repository')).toBeInTheDocument();
+        expect(screen.getByText('Update')).toBeInTheDocument();
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -302,14 +305,16 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).updateRepository.mockResolvedValue(null);
-        const { getByTestId } = render(
+        render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Modal {...defaultProps} repository={repoMock} />
           </AppCtx.Provider>
         );
 
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -333,10 +338,12 @@ describe('Repository Modal - repositories section', () => {
         });
 
         const component = <Modal {...defaultProps} repository={repoMock} />;
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -345,7 +352,9 @@ describe('Repository Modal - repositories section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred updating the repository, please try again later.')).toBeInTheDocument();
+        expect(
+          screen.getByText('An error occurred updating the repository, please try again later.')
+        ).toBeInTheDocument();
       });
 
       it('displays custom Api error message', async () => {
@@ -357,10 +366,12 @@ describe('Repository Modal - repositories section', () => {
         });
 
         const component = <Modal {...defaultProps} repository={repoMock} />;
-        const { getByTestId, getByText, rerender } = render(component);
+        const { rerender } = render(component);
 
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -369,7 +380,7 @@ describe('Repository Modal - repositories section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred updating the repository: custom error')).toBeInTheDocument();
+        expect(screen.getByText('An error occurred updating the repository: custom error')).toBeInTheDocument();
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -377,10 +388,12 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).updateRepository.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
-        const { getByTestId } = render(<Modal {...defaultProps} repository={repoMock} />);
+        render(<Modal {...defaultProps} repository={repoMock} />);
 
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.clear(displayNameInput);
+        userEvent.type(displayNameInput, 'Pretty name');
+        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -395,20 +408,23 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
-        const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+        render(<Modal {...defaultProps} />);
 
-        expect(getByText('Add repository')).toBeInTheDocument();
-        expect(getByText('Add')).toBeInTheDocument();
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
+        expect(screen.getByText('Add repository')).toBeInTheDocument();
+        expect(screen.getByText('Add')).toBeInTheDocument();
+        const nameInput = screen.getByRole('textbox', { name: /Name/ });
+        userEvent.type(nameInput, 'name');
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        userEvent.type(displayNameInput, 'Pretty name');
+        const urlInput = screen.getByRole('textbox', { name: /Url/ });
+        userEvent.type(urlInput, 'http://test.com');
 
-        const toggle = getByTestId('toggleDisabledRepo');
+        const toggle = screen.getByRole('checkbox', { name: 'Disabled' });
         expect(toggle).toBeInTheDocument();
         expect(toggle).not.toBeChecked();
-        fireEvent.click(toggle);
+        userEvent.click(toggle);
 
-        fireEvent.click(getByTestId('repoBtn'));
+        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -437,33 +453,31 @@ describe('Repository Modal - repositories section', () => {
           mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
           mocked(API).updateRepository.mockResolvedValue(null);
 
-          const { getByTestId, getByText } = render(
+          render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
               <Modal {...defaultProps} repository={repoMock} />
             </AppCtx.Provider>
           );
 
-          const toggle = getByTestId('toggleDisabledRepo');
+          const toggle = screen.getByRole('checkbox', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).not.toBeChecked();
-          fireEvent.click(toggle);
+          userEvent.click(toggle);
+
+          expect(await screen.findByText('Disable repository')).toBeInTheDocument();
+          expect(screen.getByText(/Please read this carefully./g)).toBeInTheDocument();
+          expect(screen.getByText('This operation cannot be undone.')).toBeInTheDocument();
+          expect(screen.getByRole('textbox')).toBeInTheDocument();
+          expect(screen.getByRole('button', { name: 'Disable repository' })).toBeInTheDocument();
+
+          userEvent.type(screen.getByRole('textbox'), 'repoTest');
+          userEvent.click(screen.getByRole('button', { name: 'Disable repository' }));
 
           await waitFor(() => {
-            expect(getByText('Disable repository')).toBeInTheDocument();
-            expect(getByText(/Please read this carefully./g)).toBeInTheDocument();
-            expect(getByText('This operation cannot be undone.')).toBeInTheDocument();
-            expect(getByTestId('repoNameInput')).toBeInTheDocument();
-            expect(getByTestId('confirmDisabledRepo')).toBeInTheDocument();
+            expect(screen.getByText('Update repository')).toBeInTheDocument();
           });
 
-          fireEvent.change(getByTestId('repoNameInput'), { target: { value: 'repoTest' } });
-          fireEvent.click(getByTestId('confirmDisabledRepo'));
-
-          await waitFor(() => {
-            expect(getByText('Update repository')).toBeInTheDocument();
-          });
-
-          fireEvent.click(getByTestId('repoBtn'));
+          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -484,33 +498,32 @@ describe('Repository Modal - repositories section', () => {
           mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
           mocked(API).updateRepository.mockResolvedValue(null);
 
-          const { getByTestId, getByText } = render(
+          render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
               <Modal {...defaultProps} repository={repoMock} />
             </AppCtx.Provider>
           );
 
-          const toggle = getByTestId('toggleDisabledRepo');
+          const toggle = screen.getByRole('checkbox', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).not.toBeChecked();
-          fireEvent.click(toggle);
+          userEvent.click(toggle);
+
+          expect(await screen.findByText('Disable repository')).toBeInTheDocument();
+
+          expect(screen.getByText(/Please read this carefully./g)).toBeInTheDocument();
+          expect(screen.getByText('This operation cannot be undone.')).toBeInTheDocument();
+          expect(screen.getByRole('textbox')).toBeInTheDocument();
+          expect(screen.getByRole('button', { name: 'Disable repository' })).toBeInTheDocument();
+
+          userEvent.type(screen.getByRole('textbox'), 'repoTest');
+          userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
 
           await waitFor(() => {
-            expect(getByText('Disable repository')).toBeInTheDocument();
-            expect(getByText(/Please read this carefully./g)).toBeInTheDocument();
-            expect(getByText('This operation cannot be undone.')).toBeInTheDocument();
-            expect(getByTestId('repoNameInput')).toBeInTheDocument();
-            expect(getByTestId('confirmDisabledRepo')).toBeInTheDocument();
+            expect(screen.getByText('Update repository')).toBeInTheDocument();
           });
 
-          fireEvent.change(getByTestId('repoNameInput'), { target: { value: 'repoTest' } });
-          fireEvent.click(getByTestId('cancelDisabledRepo'));
-
-          await waitFor(() => {
-            expect(getByText('Update repository')).toBeInTheDocument();
-          });
-
-          fireEvent.click(getByTestId('repoBtn'));
+          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -530,7 +543,7 @@ describe('Repository Modal - repositories section', () => {
           mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
           mocked(API).updateRepository.mockResolvedValue(null);
 
-          const { getByTestId } = render(
+          render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
               <Modal
                 {...defaultProps}
@@ -542,16 +555,16 @@ describe('Repository Modal - repositories section', () => {
             </AppCtx.Provider>
           );
 
-          const toggle = getByTestId('toggleDisabledRepo');
+          const toggle = screen.getByRole('checkbox', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).toBeChecked();
-          fireEvent.click(toggle);
+          userEvent.click(toggle);
 
           await waitFor(() => {
             expect(toggle).not.toBeChecked();
           });
 
-          fireEvent.click(toggle);
+          userEvent.click(toggle);
 
           await waitFor(() => {
             expect(toggle).toBeChecked();
@@ -569,12 +582,12 @@ describe('Repository Modal - repositories section', () => {
           writable: true,
         });
 
-        const { getByTestId } = render(<Modal {...defaultProps} />);
+        render(<Modal {...defaultProps} />);
 
-        const form = getByTestId('repoForm');
+        const form = screen.getByTestId('repoForm');
         expect(form).toBeInTheDocument();
-        expect(getByTestId('authUserInput')).toBeInTheDocument();
-        expect(getByTestId('authPassInput')).toBeInTheDocument();
+        expect(screen.getByRole('textbox', { name: 'Username' })).toBeInTheDocument();
+        expect(screen.getByTestId('authPassInput')).toBeInTheDocument();
       });
 
       it('calls add repo for Helm charts', async () => {
@@ -588,16 +601,16 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
-        const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+        render(<Modal {...defaultProps} />);
 
-        expect(getByText('Add repository')).toBeInTheDocument();
-        expect(getByText('Add')).toBeInTheDocument();
-        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name' } });
-        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
-        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
-        fireEvent.change(getByTestId('authUserInput'), { target: { value: 'username' } });
-        fireEvent.change(getByTestId('authPassInput'), { target: { value: 'pass123' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        expect(screen.getByText('Add repository')).toBeInTheDocument();
+        expect(screen.getByText('Add')).toBeInTheDocument();
+        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        userEvent.type(screen.getByRole('textbox', { name: 'Username' }), 'username');
+        userEvent.type(screen.getByTestId('authPassInput'), 'pass123');
+        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -631,14 +644,12 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).updateRepository.mockResolvedValue(null);
-        const { getByTestId, getByText } = render(
-          <Modal {...defaultProps} repository={{ ...repoMock, authUser: 'username', authPass: 'pass123' }} />
-        );
+        render(<Modal {...defaultProps} repository={{ ...repoMock, authUser: 'username', authPass: 'pass123' }} />);
 
-        expect(getByText('Update repository')).toBeInTheDocument();
-        expect(getByText('Update')).toBeInTheDocument();
-        fireEvent.change(getByTestId('authPassInput'), { target: { value: 'pass1234' } });
-        fireEvent.click(getByTestId('repoBtn'));
+        expect(screen.getByText('Update repository')).toBeInTheDocument();
+        expect(screen.getByText('Update')).toBeInTheDocument();
+        userEvent.type(screen.getByTestId('authPassInput'), '4');
+        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);

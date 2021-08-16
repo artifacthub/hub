@@ -13,7 +13,6 @@ exports[`Schema creates snapshot 1`] = `
       >
         <input
           class="flex-grow-1 form-control input pl-3 pr-4"
-          data-testid="typeaheadInput"
           name="inputTypeahead_path"
           placeholder="Search path"
           spellcheck="false"
@@ -57,7 +56,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Copy to clipboard"
             class="btn btn-sm btn-primary rounded-circle btn"
-            data-testid="ctcBtn"
             type="button"
           >
             <div
@@ -93,7 +91,6 @@ exports[`Schema creates snapshot 1`] = `
         <button
           aria-label="Download"
           class="btn btn-sm btn-primary rounded-circle btn"
-          data-testid="downloadBtn"
         >
           <svg
             aria-hidden="true"
@@ -156,7 +153,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -269,7 +265,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -403,7 +398,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -537,7 +531,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -671,7 +664,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -805,7 +797,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -935,7 +926,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -1039,7 +1029,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -1141,7 +1130,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -1260,7 +1248,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -1362,7 +1349,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -1490,7 +1476,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -1618,7 +1603,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -1746,7 +1730,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -1874,7 +1857,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2002,7 +1984,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2121,7 +2102,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2220,7 +2200,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2328,7 +2307,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2462,7 +2440,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2596,7 +2573,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2728,7 +2704,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2850,7 +2825,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -2949,7 +2923,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -3042,7 +3015,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -3151,7 +3123,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -3299,7 +3270,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -3427,7 +3397,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -3555,7 +3524,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -3674,7 +3642,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -3783,7 +3750,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -3931,7 +3897,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -4059,7 +4024,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -4187,7 +4151,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -4306,7 +4269,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -4414,7 +4376,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -4548,7 +4509,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -4676,7 +4636,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -4810,7 +4769,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -4935,7 +4893,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -5043,7 +5000,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -5177,7 +5133,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -5305,7 +5260,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -5433,7 +5387,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -5558,7 +5511,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -5664,7 +5616,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -5795,7 +5746,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -5925,7 +5875,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6038,7 +5987,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6163,7 +6111,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6271,7 +6218,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6405,7 +6351,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6530,7 +6475,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6632,7 +6576,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6751,7 +6694,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6859,7 +6801,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -6993,7 +6934,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -7123,7 +7063,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -7227,7 +7166,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -7330,7 +7268,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -7459,7 +7396,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -7593,7 +7529,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -7721,7 +7656,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -7849,7 +7783,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -7968,7 +7901,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -8076,7 +8008,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -8204,7 +8135,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -8338,7 +8268,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -8462,7 +8391,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -8566,7 +8494,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -8665,7 +8592,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -8773,7 +8699,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -8907,7 +8832,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9041,7 +8965,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9175,7 +9098,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9305,7 +9227,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9409,7 +9330,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9517,7 +9437,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9636,7 +9555,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9735,7 +9653,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9843,7 +9760,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -9977,7 +9893,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -10111,7 +10026,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -10245,7 +10159,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -10379,7 +10292,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -10511,7 +10423,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -10651,7 +10562,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -10793,7 +10703,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -10923,7 +10832,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -11027,7 +10935,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -11126,7 +11033,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -11234,7 +11140,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -11368,7 +11273,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -11497,7 +11401,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -11621,7 +11524,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -11739,7 +11641,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"
@@ -11855,7 +11756,6 @@ exports[`Schema creates snapshot 1`] = `
           <button
             aria-label="Show detail"
             class="btn btn-block text-reset text-left p-0 position-relative btn"
-            data-testid="expandBtn"
           >
             <div
               class="d-flex flex-column"

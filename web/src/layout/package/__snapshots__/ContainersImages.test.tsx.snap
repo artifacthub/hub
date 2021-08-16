@@ -58,7 +58,6 @@ exports[`ContainersImages creates snapshot 1`] = `
             <button
               aria-label="Copy db-migrator container image to clipboard"
               class="btn btn-sm btn-link text-dark border-0 copyBtn"
-              data-testid="ctcBtn"
               type="button"
             >
               <div
@@ -128,7 +127,6 @@ exports[`ContainersImages creates snapshot 1`] = `
             <button
               aria-label="Copy hub container image to clipboard"
               class="btn btn-sm btn-link text-dark border-0 copyBtn"
-              data-testid="ctcBtn"
               type="button"
             >
               <div
@@ -198,7 +196,6 @@ exports[`ContainersImages creates snapshot 1`] = `
             <button
               aria-label="Copy tracker container image to clipboard"
               class="btn btn-sm btn-link text-dark border-0 copyBtn"
-              data-testid="ctcBtn"
               type="button"
             >
               <div
@@ -268,7 +265,6 @@ exports[`ContainersImages creates snapshot 1`] = `
             <button
               aria-label="Copy scanner container image to clipboard"
               class="btn btn-sm btn-link text-dark border-0 copyBtn"
-              data-testid="ctcBtn"
               type="button"
             >
               <div

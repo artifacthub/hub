@@ -36,7 +36,7 @@ describe('AccountDeletion', () => {
   it('creates snapshot', async () => {
     mocked(API).deleteUser.mockResolvedValue(null);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <AccountDeletion code="123" />
@@ -44,10 +44,10 @@ describe('AccountDeletion', () => {
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
     await waitFor(() => {
       expect(API.deleteUser).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 

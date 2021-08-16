@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import Template from './Template';
@@ -113,15 +113,15 @@ describe('Template', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Template {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Template {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getAllByTestId } = render(<Template {...defaultProps} />);
+      render(<Template {...defaultProps} />);
 
-      const betweenBrackets = getAllByTestId('betweenBracketsContent');
+      const betweenBrackets = screen.getAllByTestId('betweenBracketsContent');
       expect(betweenBrackets).toHaveLength(15);
       expect(betweenBrackets[0]).toHaveTextContent('{{- if DEFAULT:true.Values.hub.ingress.enabled -}}');
       expect(betweenBrackets[1]).toHaveTextContent('{{ include "chart.resourceNamePrefix" . }}');
@@ -151,7 +151,7 @@ describe('Template', () => {
     });
 
     it('renders component', () => {
-      const { getAllByText } = render(
+      render(
         <Template
           {...defaultProps}
           template={{
@@ -165,27 +165,27 @@ describe('Template', () => {
       );
 
       // Functions
-      const functionsSample = getAllByText('nindent');
+      const functionsSample = screen.getAllByText('nindent');
       expect(functionsSample).toHaveLength(12);
       expect(functionsSample[1]).toHaveClass('tmplFunction');
 
       // Built-in
-      const builtInSample = getAllByText('.Release.Namespace');
+      const builtInSample = screen.getAllByText('.Release.Namespace');
       expect(builtInSample).toHaveLength(2);
       expect(builtInSample[1]).toHaveClass('tmplBuiltIn');
 
       // Values
-      const valuesSample = getAllByText('.Values.pullPolicy');
+      const valuesSample = screen.getAllByText('.Values.pullPolicy');
       expect(valuesSample).toHaveLength(2);
       expect(valuesSample[0]).toHaveClass('tmplValue');
 
       // Flow Control
-      const flowControlSample = getAllByText('include');
+      const flowControlSample = screen.getAllByText('include');
       expect(flowControlSample).toHaveLength(7);
       expect(flowControlSample[0]).toHaveClass('tmplFlowControl');
 
       // Variable
-      const variableSample = getAllByText('$variable');
+      const variableSample = screen.getAllByText('$variable');
       expect(variableSample).toHaveLength(1);
       expect(variableSample[0]).toHaveClass('tmplVariable');
     });

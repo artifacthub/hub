@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -21,7 +21,7 @@ describe('RandomPackages', () => {
     const mockPackages = getMockRandomPackages('1');
     mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <RandomPackages />
       </Router>
@@ -29,7 +29,7 @@ describe('RandomPackages', () => {
 
     await waitFor(() => {
       expect(API.getRandomPackages).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -53,7 +53,7 @@ describe('RandomPackages', () => {
       const mockPackages = getMockRandomPackages('3');
       mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
 
-      const { getByText } = render(
+      render(
         <Router>
           <RandomPackages />
         </Router>
@@ -64,7 +64,7 @@ describe('RandomPackages', () => {
       });
 
       expect(
-        getByText(
+        screen.getByText(
           "It looks like you haven't added any content yet. You can add repositories from the control panel once you log in."
         )
       ).toBeInTheDocument();

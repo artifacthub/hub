@@ -9,7 +9,6 @@ exports[`MoreActionsButton creates snapshot 1`] = `
       aria-expanded="false"
       aria-label="Show menu"
       class="btn p-0 position-relative"
-      data-testid="moreActionsBtn"
       type="button"
     >
       <div
@@ -36,7 +35,7 @@ exports[`MoreActionsButton creates snapshot 1`] = `
     </button>
     <div
       class="dropdown-menu dropdown-menu-right p-0 dropdown"
-      data-testid="moreActionsDropdown"
+      role="menu"
     >
       <div
         class="arrow arrow"
@@ -44,7 +43,6 @@ exports[`MoreActionsButton creates snapshot 1`] = `
       <button
         aria-label="Open embed results modal"
         class="dropdown-item btn btn-sm rounded-0 text-dark"
-        data-testid="embedResultsWidget"
       >
         <div
           class="d-flex flex-row align-items-center"

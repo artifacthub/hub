@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -24,60 +25,60 @@ describe('Keywords', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <Keywords {...defaultProps} />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId, getAllByTestId } = render(
+      render(
         <Router>
           <Keywords {...defaultProps} />
         </Router>
       );
 
-      expect(getByTestId('keywords')).toBeInTheDocument();
-      const keywords = getAllByTestId('keywordBtn');
+      expect(screen.getByTestId('keywords')).toBeInTheDocument();
+      const keywords = screen.getAllByRole('listitem', { name: /Filter by/ });
       expect(keywords).toHaveLength(defaultProps.keywords!.length);
     });
 
     it('renders only uniq keywords', () => {
-      const { getByTestId, getAllByTestId } = render(
+      render(
         <Router>
           <Keywords keywords={['key1', 'key2', 'key3', 'key1']} deprecated={false} />
         </Router>
       );
 
-      expect(getByTestId('keywords')).toBeInTheDocument();
-      const keywords = getAllByTestId('keywordBtn');
+      expect(screen.getByTestId('keywords')).toBeInTheDocument();
+      const keywords = screen.getAllByRole('listitem', { name: /Filter by/ });
       expect(keywords).toHaveLength(3);
     });
 
     it('renders placeholder if keywords prop is null', () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <Keywords keywords={null} deprecated={false} />
         </Router>
       );
 
-      const keywords = getByTestId('keywords');
+      const keywords = screen.getByTestId('keywords');
       expect(keywords).toBeInTheDocument();
       expect(keywords).toHaveTextContent('-');
     });
 
     it('calls history push to click keyword button', () => {
-      const { getByText } = render(
+      render(
         <Router>
           <Keywords {...defaultProps} />
         </Router>
       );
 
-      const keywordBtn = getByText(defaultProps.keywords[0]);
-      fireEvent.click(keywordBtn);
+      const keywordBtn = screen.getByText(defaultProps.keywords[0]);
+      userEvent.click(keywordBtn);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',

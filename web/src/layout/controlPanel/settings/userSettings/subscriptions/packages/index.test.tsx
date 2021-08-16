@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -30,7 +30,7 @@ describe('PackagesSection', () => {
     const mockSubscriptions = getMockSubscriptions('1');
     mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <PackagesSection {...defaultProps} />
       </Router>
@@ -38,7 +38,7 @@ describe('PackagesSection', () => {
 
     await waitFor(() => {
       expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -47,7 +47,7 @@ describe('PackagesSection', () => {
       const mockSubscriptions = getMockSubscriptions('2');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { getByText, getAllByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -57,23 +57,23 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Packages')).toBeInTheDocument();
-      expect(getByText('Kind')).toBeInTheDocument();
-      expect(getByText('Package')).toBeInTheDocument();
-      expect(getByText('Publisher')).toBeInTheDocument();
+      expect(screen.getByText('Packages')).toBeInTheDocument();
+      expect(screen.getByText('Kind')).toBeInTheDocument();
+      expect(screen.getByText('Package')).toBeInTheDocument();
+      expect(screen.getByText('Publisher')).toBeInTheDocument();
 
-      expect(getAllByTestId('packageLink')).toHaveLength(8);
-      expect(getAllByTestId('packageCardLink')).toHaveLength(8);
-      expect(getAllByTestId('userLink')).toHaveLength(1);
-      expect(getAllByTestId('orgLink')).toHaveLength(7);
-      expect(getAllByTestId('repoLink')).toHaveLength(8);
+      expect(screen.getAllByTestId('packageLink')).toHaveLength(8);
+      expect(screen.getAllByTestId('packageCardLink')).toHaveLength(8);
+      expect(screen.getAllByTestId('userLink')).toHaveLength(1);
+      expect(screen.getAllByTestId('orgLink')).toHaveLength(7);
+      expect(screen.getAllByTestId('repoLink')).toHaveLength(8);
     });
 
     it('opens Add subscription modal', async () => {
       const mockSubscriptions = getMockSubscriptions('2');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { getByTestId, getByRole } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -83,17 +83,15 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const modal = getByRole('dialog');
+      const modal = screen.getByRole('dialog');
       expect(modal).toBeInTheDocument();
       expect(modal).not.toHaveClass('active');
 
-      const btn = getByTestId('addSubscriptionsBtn');
+      const btn = screen.getByRole('button', { name: 'Open subscription modal' });
       expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
+      userEvent.click(btn);
 
-      await waitFor(() => {
-        expect(modal).toHaveClass('active');
-      });
+      expect(await screen.findByRole('dialog')).toHaveClass('active');
     });
   });
 
@@ -102,15 +100,15 @@ describe('PackagesSection', () => {
       const mockSubscriptions = getMockSubscriptions('3');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { getAllByTestId, getAllByRole } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
       );
 
       await waitFor(() => {
-        expect(getAllByTestId('subsTableCell')).toHaveLength(8);
-        expect(getAllByRole('listitem')).toHaveLength(8);
+        expect(screen.getAllByTestId('subsTableCell')).toHaveLength(8);
+        expect(screen.getAllByRole('listitem')).toHaveLength(8);
       });
     });
 
@@ -118,7 +116,7 @@ describe('PackagesSection', () => {
       const mockSubscriptions = getMockSubscriptions('4');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { queryByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -128,9 +126,7 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const packagesList = queryByTestId('packagesList');
-
-      expect(packagesList).toBeNull();
+      expect(screen.queryByTestId('packagesList')).toBeNull();
     });
 
     it('calls alertDispatcher when getUserSubscriptions call fails with not Unauthorized error', async () => {
@@ -188,7 +184,7 @@ describe('PackagesSection', () => {
       expect(API.getUserSubscriptions).toHaveBeenCalledWith({ limit: 10, offset: 0 });
     });
 
-    const nextBtn = screen.getAllByTestId('btnPagination-2');
+    const nextBtn = screen.getAllByRole('button', { name: 'Open page 2' });
     userEvent.click(nextBtn[1]);
 
     await waitFor(() => {
@@ -197,7 +193,7 @@ describe('PackagesSection', () => {
     });
 
     const label = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
-    fireEvent.click(label);
+    userEvent.click(label);
 
     await waitFor(() => {
       expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
@@ -213,7 +209,7 @@ describe('PackagesSection', () => {
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
       mocked(API).deleteSubscription.mockResolvedValue('');
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -223,14 +219,14 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const checkbox: HTMLInputElement = getByTestId(
+      const checkbox: HTMLInputElement = screen.getByTestId(
         `${mockSubscriptions.items[0].name}_newRelease_input`
       ) as HTMLInputElement;
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
 
-      const label = getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
-      fireEvent.click(label);
+      const label = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
+      userEvent.click(label);
 
       await waitFor(() => {
         expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
@@ -249,7 +245,7 @@ describe('PackagesSection', () => {
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
       mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByTestId, queryByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -259,14 +255,14 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      expect(queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
+      expect(screen.queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
 
-      const label = getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
-      fireEvent.click(label);
+      const label = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
+      userEvent.click(label);
 
       // Remove it optimistically from document
       await waitFor(() => {
-        expect(queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeNull();
+        expect(screen.queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeNull();
       });
 
       expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
@@ -282,9 +278,7 @@ describe('PackagesSection', () => {
       });
 
       // Add it again if subscription deletion failed
-      await waitFor(() => {
-        expect(queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
-      });
+      expect(await screen.findByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
     });
 
     it('UnauthorizedError', async () => {
@@ -294,7 +288,7 @@ describe('PackagesSection', () => {
         kind: ErrorKind.Unauthorized,
       });
 
-      const { getByTestId, queryByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -304,11 +298,11 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const label = getByTestId(`${mockSubscriptions.items[1].name}_newRelease_label`);
-      fireEvent.click(label);
+      const label = screen.getByTestId(`${mockSubscriptions.items[1].name}_newRelease_label`);
+      userEvent.click(label);
 
       await waitFor(() => {
-        expect(queryByTestId(`${mockSubscriptions.items[1].name}_newRelease_input`)).toBeNull();
+        expect(screen.queryByTestId(`${mockSubscriptions.items[1].name}_newRelease_input`)).toBeNull();
       });
 
       await waitFor(() => {
@@ -327,7 +321,7 @@ describe('PackagesSection', () => {
       const mockSubscriptions = getMockSubscriptions('7');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { queryAllByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -337,9 +331,9 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const links = queryAllByTestId('packageLink');
+      const links = screen.queryAllByTestId('packageLink');
       expect(links).toHaveLength(8);
-      fireEvent.click(links[0]);
+      userEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/helm/stable/airflow');
     });
@@ -348,7 +342,7 @@ describe('PackagesSection', () => {
       const mockSubscriptions = getMockSubscriptions('8');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { queryAllByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -358,9 +352,9 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const links = queryAllByTestId('userLink');
+      const links = screen.queryAllByTestId('userLink');
       expect(links).toHaveLength(1);
-      fireEvent.click(links[0]);
+      userEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe('?user=jsmith&sort=relevance&page=1');
@@ -370,7 +364,7 @@ describe('PackagesSection', () => {
       const mockSubscriptions = getMockSubscriptions('9');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { queryAllByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -380,9 +374,9 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const links = queryAllByTestId('orgLink');
+      const links = screen.queryAllByTestId('orgLink');
       expect(links).toHaveLength(8);
-      fireEvent.click(links[0]);
+      userEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe('?org=helm&sort=relevance&page=1');
@@ -392,7 +386,7 @@ describe('PackagesSection', () => {
       const mockSubscriptions = getMockSubscriptions('10');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { queryAllByTestId } = render(
+      render(
         <Router>
           <PackagesSection {...defaultProps} />
         </Router>
@@ -402,9 +396,9 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const links = queryAllByTestId('repoLink');
+      const links = screen.queryAllByTestId('repoLink');
       expect(links).toHaveLength(8);
-      fireEvent.click(links[0]);
+      userEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe('?repo=stable&sort=relevance&page=1');

@@ -1,3 +1,108 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RelatedPackageCard creates snapshot 1`] = `[Function]`;
+exports[`RelatedPackageCard creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="card cardWithHover mt-2 w-100 relatedCard card"
+    role="listitem"
+  >
+    <a
+      class="text-decoration-none text-reset link"
+      data-testid="relatedPackageLink"
+      href="/packages/helm/incubator/test"
+    >
+      <div
+        class="card-body d-flex flex-column body"
+      >
+        <div
+          class="d-flex align-items-center flex-grow-1 truncateWrapper"
+        >
+          <div
+            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+          >
+            <img
+              alt="Logo Pretty name"
+              aria-hidden="true"
+              class="image"
+              src="/image/imageId"
+              srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+            />
+          </div>
+          <div
+            class="ml-2 h-100 flex-grow-1 truncateWrapper"
+          >
+            <div
+              class="d-flex flex-row justify-content-between"
+            >
+              <div
+                class="text-truncate w-100"
+              >
+                <div
+                  class="d-flex flex-row align-items-center justify-content-between legend"
+                >
+                  <div
+                    class="kind"
+                  >
+                    <span
+                      class="badge font-weight-bold badge"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class="position-relative icon badgeIcon"
+                        >
+                          <img
+                            alt="Icon"
+                            class="mw-100 mh-100 iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="mw-100 mh-100 iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </div>
+                        <div
+                          class="ml-1"
+                        >
+                          Helm chart
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="align-self-end text-truncate card-title mb-2 title"
+                >
+                  Pretty name
+                </div>
+                <div
+                  class="card-subtitle align-items-center text-muted subtitle"
+                >
+                  <div
+                    class="w-100"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      Helm
+                      <span
+                        class="px-1"
+                      >
+                        /
+                      </span>
+                      incubator
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</DocumentFragment>
+`;

@@ -10,9 +10,8 @@ exports[`SignKeyInfo creates snapshot 1`] = `
     >
       <button
         aria-disabled="false"
-        aria-label="Open modal"
+        aria-label="Open sign key modal"
         class="btn btn-outline-secondary btn-sm ml-2 btn"
-        data-testid="signKeyBtn"
       >
         <small
           class="d-flex flex-row align-items-center text-uppercase"
@@ -60,9 +59,8 @@ exports[`SignKeyInfo creates snapshot 1`] = `
               Sign key information
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -88,7 +86,6 @@ exports[`SignKeyInfo creates snapshot 1`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              data-testid="closeModalFooterBtn"
               type="button"
             >
               <div

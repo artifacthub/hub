@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import SecurityReport from './index';
@@ -31,18 +31,18 @@ describe('SecurityReport', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SecurityReport {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SecurityReport {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByTestId } = render(<SecurityReport {...defaultProps} />);
-      expect(getByText('Security Report')).toBeInTheDocument();
-      expect(getByText('179')).toBeInTheDocument();
-      expect(getByText(/vulnerabilities found/g)).toBeInTheDocument();
+      render(<SecurityReport {...defaultProps} />);
+      expect(screen.getByText('Security Report')).toBeInTheDocument();
+      expect(screen.getByText('179')).toBeInTheDocument();
+      expect(screen.getByText(/vulnerabilities found/g)).toBeInTheDocument();
 
-      const items = getAllByTestId('summaryItem');
+      const items = screen.getAllByTestId('summaryItem');
       expect(items).toHaveLength(5);
       expect(items[0]).toHaveTextContent('critical2');
       expect(items[1]).toHaveTextContent('high10');
@@ -50,14 +50,14 @@ describe('SecurityReport', () => {
       expect(items[3]).toHaveTextContent('low53');
       expect(items[4]).toHaveTextContent('unknown');
 
-      const badges = getAllByTestId('summaryBadge');
+      const badges = screen.getAllByTestId('summaryBadge');
       expect(badges[0]).toHaveStyle('background-color: #960003');
       expect(badges[1]).toHaveStyle('background-color: #DF2A19');
       expect(badges[2]).toHaveStyle('background-color: #F7860F');
       expect(badges[3]).toHaveStyle('background-color: #F4BD0C');
       expect(badges[4]).toHaveStyle('background-color: #b2b2b2');
 
-      expect(getByText('Open full report')).toBeInTheDocument();
+      expect(screen.getByText('Open full report')).toBeInTheDocument();
     });
 
     it('renders component with 0 vulnerabilities', () => {
@@ -71,11 +71,11 @@ describe('SecurityReport', () => {
           unknown: 0,
         },
       };
-      const { getByText } = render(<SecurityReport {...props} />);
+      render(<SecurityReport {...props} />);
 
-      expect(getByText('Security Report')).toBeInTheDocument();
-      expect(getByText('No vulnerabilities found')).toBeInTheDocument();
-      expect(getByText('Open full report')).toBeInTheDocument();
+      expect(screen.getByText('Security Report')).toBeInTheDocument();
+      expect(screen.getByText('No vulnerabilities found')).toBeInTheDocument();
+      expect(screen.getByText('Open full report')).toBeInTheDocument();
     });
 
     it('renders component with a big number of vulnerabilities', () => {
@@ -90,14 +90,14 @@ describe('SecurityReport', () => {
         },
       };
 
-      const { getByText } = render(<SecurityReport {...props} />);
+      render(<SecurityReport {...props} />);
 
-      expect(getByText('24.5k')).toBeInTheDocument();
-      expect(getByText(/vulnerabilities found/g)).toBeInTheDocument();
+      expect(screen.getByText('24.5k')).toBeInTheDocument();
+      expect(screen.getByText(/vulnerabilities found/g)).toBeInTheDocument();
     });
 
     it('renders scanner disabled repository security badge', () => {
-      const { getByText } = render(
+      render(
         <SecurityReport
           summary={null}
           packageId="pkgID"
@@ -109,12 +109,14 @@ describe('SecurityReport', () => {
         />
       );
 
-      expect(getByText('Security scanner disabled')).toBeInTheDocument();
-      expect(getByText('Security scanning of this package has been disabled by the publisher.')).toBeInTheDocument();
+      expect(screen.getByText('Security scanner disabled')).toBeInTheDocument();
+      expect(
+        screen.getByText('Security scanning of this package has been disabled by the publisher.')
+      ).toBeInTheDocument();
     });
 
     it('renders scanner disabled repository security badge when all containers are whitelisted', () => {
-      const { getByText } = render(
+      render(
         <SecurityReport
           summary={{}}
           packageId="pkgID"
@@ -137,8 +139,10 @@ describe('SecurityReport', () => {
         />
       );
 
-      expect(getByText('Security scanner disabled')).toBeInTheDocument();
-      expect(getByText('Security scanning of this package has been disabled by the publisher.')).toBeInTheDocument();
+      expect(screen.getByText('Security scanner disabled')).toBeInTheDocument();
+      expect(
+        screen.getByText('Security scanning of this package has been disabled by the publisher.')
+      ).toBeInTheDocument();
     });
   });
 
@@ -151,6 +155,7 @@ describe('SecurityReport', () => {
           visibleSecurityReport={false}
           disabledReport={false}
           containers={defaultProps.containers}
+          allContainersImagesWhitelisted={false}
         />
       );
       expect(container).toBeEmptyDOMElement();
@@ -165,6 +170,7 @@ describe('SecurityReport', () => {
           visibleSecurityReport={false}
           disabledReport={false}
           containers={defaultProps.containers}
+          allContainersImagesWhitelisted={false}
         />
       );
       expect(container).toBeEmptyDOMElement();
@@ -179,6 +185,7 @@ describe('SecurityReport', () => {
           visibleSecurityReport={false}
           disabledReport={false}
           containers={defaultProps.containers}
+          allContainersImagesWhitelisted={false}
         />
       );
       expect(container).toBeEmptyDOMElement();

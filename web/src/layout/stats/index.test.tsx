@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -42,7 +43,7 @@ describe('StatsView', () => {
     const mockStats = getMockStats('1');
     mocked(API).getAHStats.mockResolvedValue(mockStats);
 
-    const result = render(
+    const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <StatsView />
       </AppCtx.Provider>
@@ -50,7 +51,7 @@ describe('StatsView', () => {
 
     await waitFor(() => {
       expect(API.getAHStats).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -59,7 +60,7 @@ describe('StatsView', () => {
       const mockStats = getMockStats('2');
       mocked(API).getAHStats.mockResolvedValue(mockStats);
 
-      const { getByText, getAllByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <StatsView />
         </AppCtx.Provider>
@@ -68,18 +69,18 @@ describe('StatsView', () => {
       await waitFor(() => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
-      expect(getByText('Report generated at:')).toBeInTheDocument();
-      expect(getByText('Packages and releases')).toBeInTheDocument();
-      expect(getByText('Repositories')).toBeInTheDocument();
-      expect(getByText('Organizations and users')).toBeInTheDocument();
-      expect(getAllByText('Chart')).toHaveLength(7);
+      expect(screen.getByText('Report generated at:')).toBeInTheDocument();
+      expect(screen.getByText('Packages and releases')).toBeInTheDocument();
+      expect(screen.getByText('Repositories')).toBeInTheDocument();
+      expect(screen.getByText('Organizations and users')).toBeInTheDocument();
+      expect(screen.getAllByText('Chart')).toHaveLength(7);
     });
 
     it('renders only 2 sections', async () => {
       const mockStats = getMockStats('3');
       mocked(API).getAHStats.mockResolvedValue(mockStats);
 
-      const { getByText, getAllByText, queryByText } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <StatsView />
         </AppCtx.Provider>
@@ -88,10 +89,10 @@ describe('StatsView', () => {
       await waitFor(() => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
-      expect(getByText('Packages and releases')).toBeInTheDocument();
-      expect(getByText('Repositories')).toBeInTheDocument();
-      expect(queryByText('Organizations and users')).toBeNull();
-      expect(getAllByText('Chart')).toHaveLength(5);
+      expect(screen.getByText('Packages and releases')).toBeInTheDocument();
+      expect(screen.getByText('Repositories')).toBeInTheDocument();
+      expect(screen.queryByText('Organizations and users')).toBeNull();
+      expect(screen.getAllByText('Chart')).toHaveLength(5);
     });
   });
 
@@ -99,13 +100,13 @@ describe('StatsView', () => {
     it('renders default error message', async () => {
       mocked(API).getAHStats.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <StatsView />
         </AppCtx.Provider>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting/i);
     });
@@ -113,13 +114,13 @@ describe('StatsView', () => {
     it('renders custom error message', async () => {
       mocked(API).getAHStats.mockRejectedValue({ kind: ErrorKind.Other, message: 'custom error' });
 
-      const { getByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <StatsView />
         </AppCtx.Provider>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/stats: custom errorIf this error persists, please create an issue here/i);
     });
@@ -130,7 +131,7 @@ describe('StatsView', () => {
       const mockStats = getMockStats('4');
       mocked(API).getAHStats.mockResolvedValue(mockStats);
 
-      const { getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <StatsView />
         </AppCtx.Provider>
@@ -140,8 +141,8 @@ describe('StatsView', () => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
 
-      const anchors = getAllByTestId('anchorHeaderLink');
-      fireEvent.click(anchors[0]);
+      const anchors = screen.getAllByRole('button');
+      userEvent.click(anchors[0]);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
     });
@@ -150,7 +151,7 @@ describe('StatsView', () => {
       const mockStats = getMockStats('4');
       mocked(API).getAHStats.mockResolvedValue(mockStats);
 
-      const { getAllByTestId } = render(
+      render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <StatsView hash="#repositories" />
         </AppCtx.Provider>
@@ -162,8 +163,8 @@ describe('StatsView', () => {
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
 
-      const anchors = getAllByTestId('anchorHeaderLink');
-      fireEvent.click(anchors[0]);
+      const anchors = screen.getAllByRole('button');
+      userEvent.click(anchors[0]);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(2);
     });

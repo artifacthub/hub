@@ -347,7 +347,6 @@ const RepositoryModal = (props: Props) => {
           {visibleDisabledConfirmation ? (
             <>
               <button
-                data-testid="cancelDisabledRepo"
                 type="button"
                 className={`btn btn-sm btn-success ${styles.btnLight}`}
                 onClick={() => {
@@ -360,7 +359,6 @@ const RepositoryModal = (props: Props) => {
               </button>
 
               <button
-                data-testid="confirmDisabledRepo"
                 type="button"
                 className={classnames(
                   'btn btn-sm ml-3',
@@ -380,7 +378,6 @@ const RepositoryModal = (props: Props) => {
             </>
           ) : (
             <button
-              data-testid="repoBtn"
               className="btn btn-sm btn-outline-secondary"
               type="button"
               disabled={isSending || visibleDisabledConfirmation}
@@ -627,7 +624,6 @@ const RepositoryModal = (props: Props) => {
             <div className="mb-4">
               <div className="custom-control custom-switch pl-0">
                 <input
-                  data-testid="toggleDisabledRepo"
                   id="disabledRepo"
                   type="checkbox"
                   className="custom-control-input"

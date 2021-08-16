@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -29,7 +29,7 @@ describe('Home index', () => {
     const mockStats = getMockStats('1');
     mocked(API).getStats.mockResolvedValue(mockStats);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <HomeView {...defaultProps} />
       </Router>
@@ -37,7 +37,7 @@ describe('Home index', () => {
 
     await waitFor(() => {
       expect(API.getStats).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -66,13 +66,13 @@ describe('Home index', () => {
         isSearching: true,
       };
 
-      const { getAllByText } = render(
+      render(
         <Router>
           <HomeView {...props} />
         </Router>
       );
 
-      const emptyStats = await waitFor(() => getAllByText('-'));
+      const emptyStats = await screen.findAllByText('-');
       expect(emptyStats).toHaveLength(2);
     });
 
@@ -84,31 +84,30 @@ describe('Home index', () => {
         isSearching: true,
       };
 
-      const { getAllByText } = render(
+      render(
         <Router>
           <HomeView {...props} />
         </Router>
       );
 
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
-      expect(getAllByText('-')).toHaveLength(2);
+      expect(screen.getAllByText('-')).toHaveLength(2);
     });
 
     it('renders project definition', async () => {
       const mockStats = getMockStats('5');
       mocked(API).getStats.mockResolvedValue(mockStats);
 
-      const { getByRole, getByText } = render(
+      render(
         <Router>
           <HomeView {...defaultProps} />
         </Router>
       );
 
-      const heading = await waitFor(() => getByRole('banner'));
-
+      const heading = await screen.findByRole('banner');
       expect(heading).toBeInTheDocument();
-      expect(getByText(/Find, install and publish/g)).toBeInTheDocument();
-      expect(getByText('Kubernetes packages')).toBeInTheDocument();
+      expect(screen.getByText(/Find, install and publish/g)).toBeInTheDocument();
+      expect(screen.getByText('Kubernetes packages')).toBeInTheDocument();
     });
   });
 
@@ -117,7 +116,7 @@ describe('Home index', () => {
       const mockStats = getMockStats('5');
       mocked(API).getStats.mockResolvedValue(mockStats);
 
-      const { getAllByRole } = render(
+      render(
         <Router>
           <HomeView {...defaultProps} />
         </Router>
@@ -125,7 +124,7 @@ describe('Home index', () => {
 
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
 
-      const links = getAllByRole('button');
+      const links = screen.getAllByRole('button');
       expect(links).toHaveLength(17);
 
       expect(links[2]).toHaveProperty('href', 'https://github.com/cncf/hub');

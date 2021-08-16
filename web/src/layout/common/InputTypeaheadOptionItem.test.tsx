@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import InputTypeaheadOptionItem from './InputTypeaheadOptionItem';
@@ -22,15 +22,15 @@ describe('InputTypeaheadOptionItem', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<InputTypeaheadOptionItem {...defaultProps} />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders proper component', () => {
-    const { getByText } = render(<InputTypeaheadOptionItem {...defaultProps} />);
+    render(<InputTypeaheadOptionItem {...defaultProps} />);
 
-    expect(getByText('Option 1')).toBeInTheDocument();
-    expect(getByText('(19)')).toBeInTheDocument();
-    expect(getByText('icon')).toBeInTheDocument();
-    expect(getByText('icon')).toHaveClass('iconClass');
+    expect(screen.getByText('Option 1')).toBeInTheDocument();
+    expect(screen.getByText('(19)')).toBeInTheDocument();
+    expect(screen.getByText('icon')).toBeInTheDocument();
+    expect(screen.getByText('icon')).toHaveClass('iconClass');
   });
 });

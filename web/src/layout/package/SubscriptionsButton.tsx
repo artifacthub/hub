@@ -144,7 +144,6 @@ const SubscriptionsButton = (props: Props) => {
         tooltipArrowClassName={styles.tooltipArrow}
         element={
           <button
-            data-testid="subscriptionsBtn"
             className={classnames('btn p-0 position-relative', styles.subsBtn, {
               [`disabled ${styles.disabled}`]: isDisabled,
             })}
@@ -183,7 +182,7 @@ const SubscriptionsButton = (props: Props) => {
 
       <div
         ref={ref}
-        data-testid="subsBtnDropdown"
+        role="menu"
         className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, { show: openStatus })}
       >
         <div className={`arrow ${styles.arrow}`} />
@@ -192,13 +191,12 @@ const SubscriptionsButton = (props: Props) => {
           const isActive = isActiveNotification(subs.kind);
           return (
             <button
-              data-testid={`${subs.name}Btn`}
               className={classnames(styles.dropdownItem, 'dropdownItem btn p-3 rounded-0 w-100', {
                 [`disabled ${styles.isDisabled}`]: !subs.enabled,
               })}
               onClick={() => changeSubscription(subs.kind, isActive)}
               key={`subs_${subs.kind}`}
-              aria-label="Change subscription"
+              aria-label={`Change ${subs.title} subscription`}
             >
               <div className="d-flex flex-row align-items-center w-100 justify-content-between">
                 <div className="mr-3">

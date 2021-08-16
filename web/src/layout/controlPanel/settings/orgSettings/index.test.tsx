@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import OrganizationSettingsSection from './index';
@@ -16,33 +16,33 @@ describe('OrganizationSettingsSection', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<OrganizationSettingsSection {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<OrganizationSettingsSection {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders profile section', () => {
-      const { getByText } = render(<OrganizationSettingsSection subsection="profile" {...defaultProps} />);
+      render(<OrganizationSettingsSection subsection="profile" {...defaultProps} />);
 
-      expect(getByText('profile')).toBeInTheDocument();
+      expect(screen.getByText('profile')).toBeInTheDocument();
     });
 
     it('renders webhooks section', () => {
-      const { getByText } = render(<OrganizationSettingsSection subsection="webhooks" {...defaultProps} />);
+      render(<OrganizationSettingsSection subsection="webhooks" {...defaultProps} />);
 
-      expect(getByText('webhooks')).toBeInTheDocument();
+      expect(screen.getByText('webhooks')).toBeInTheDocument();
     });
 
     it('renders authorization section', () => {
-      const { getByText } = render(<OrganizationSettingsSection subsection="authorization" {...defaultProps} />);
+      render(<OrganizationSettingsSection subsection="authorization" {...defaultProps} />);
 
-      expect(getByText('authorization')).toBeInTheDocument();
+      expect(screen.getByText('authorization')).toBeInTheDocument();
     });
 
     it('renders profile as default section', () => {
-      const { getByText } = render(<OrganizationSettingsSection {...defaultProps} />);
+      render(<OrganizationSettingsSection {...defaultProps} />);
 
-      expect(getByText('profile')).toBeInTheDocument();
+      expect(screen.getByText('profile')).toBeInTheDocument();
     });
   });
 });

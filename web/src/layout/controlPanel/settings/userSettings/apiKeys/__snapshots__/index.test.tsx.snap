@@ -42,7 +42,6 @@ exports[`API keys section index creates snapshot 1`] = `
             <button
               aria-label="Open modal to add API key"
               class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
-              data-testid="addAPIKeyBtn"
             >
               <div
                 class="d-flex flex-row align-items-center justify-content-center"
@@ -108,9 +107,8 @@ exports[`API keys section index creates snapshot 1`] = `
                     Add API key
                   </div>
                   <button
-                    aria-label="Close modal"
+                    aria-label="Close"
                     class="close"
-                    data-testid="closeModalBtn"
                     type="button"
                   >
                     <span
@@ -136,7 +134,6 @@ exports[`API keys section index creates snapshot 1`] = `
                   <button
                     aria-label="Add API key"
                     class="btn btn-sm btn-outline-secondary"
-                    data-testid="apiKeyFormBtn"
                     type="button"
                   >
                     <div

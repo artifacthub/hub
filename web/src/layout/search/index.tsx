@@ -352,7 +352,6 @@ const SearchView = (props: Props) => {
                       <div className="d-flex align-items-center">
                         <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
                         <button
-                          data-testid="resetBtn"
                           className="btn btn-link btn-sm p-0 pl-1 text-dark"
                           onClick={onResetFilters}
                           aria-label="Reset filters"
@@ -389,7 +388,7 @@ const SearchView = (props: Props) => {
               )}
 
               {!isSearching && (
-                <div data-testid="resultsText" className="text-truncate" role="status">
+                <div className="text-truncate" role="status">
                   {parseInt(searchResults.paginationTotalCount) > 0 && (
                     <span className="pr-1">
                       {offset + 1} -{' '}
@@ -495,7 +494,6 @@ const SearchView = (props: Props) => {
                           You can{' '}
                           {!isEmpty(props.filters) ? (
                             <button
-                              data-testid="resetFiltersLink"
                               className="btn btn-link text-dark font-weight-bold py-0 pb-1 px-0"
                               onClick={onResetFilters}
                               aria-label="Reset filters"
@@ -504,7 +502,6 @@ const SearchView = (props: Props) => {
                             </button>
                           ) : (
                             <button
-                              data-testid="resetLink"
                               className="btn btn-link text-dark font-weight-bold py-0 pb-1 px-0"
                               onClick={() => {
                                 history.push({

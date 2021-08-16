@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -27,7 +27,7 @@ describe('RelatedPackages', () => {
     const mockPackages = getMockRelatedPackages('1');
     mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <RelatedPackages {...defaultProps} />
       </Router>
@@ -35,7 +35,7 @@ describe('RelatedPackages', () => {
 
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
-      expect(result.asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
@@ -44,7 +44,7 @@ describe('RelatedPackages', () => {
       const mockPackages = getMockRelatedPackages('2');
       mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
-      const { getByText } = render(
+      render(
         <Router>
           <RelatedPackages {...defaultProps} />
         </Router>
@@ -62,7 +62,7 @@ describe('RelatedPackages', () => {
           false
         );
       });
-      expect(getByText('Related packages')).toBeInTheDocument();
+      expect(screen.getByText('Related packages')).toBeInTheDocument();
     });
   });
 
@@ -71,34 +71,28 @@ describe('RelatedPackages', () => {
       const mockPackages = getMockRelatedPackages('3');
       mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
-      const { getAllByTestId } = render(
+      render(
         <Router>
           <RelatedPackages {...defaultProps} />
         </Router>
       );
-      const packages = await waitFor(() => getAllByTestId('relatedPackageLink'));
 
       expect(mockPackages.packages).toHaveLength(7);
-      await waitFor(() => {
-        expect(packages).toHaveLength(6);
-      });
+      expect(await screen.findAllByTestId('relatedPackageLink')).toHaveLength(6);
     });
 
     it('renders only 8 related packages', async () => {
       const mockPackages = getMockRelatedPackages('4');
       mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
-      const { getAllByTestId } = render(
+      render(
         <Router>
           <RelatedPackages {...defaultProps} />
         </Router>
       );
-      const packages = await waitFor(() => getAllByTestId('relatedPackageLink'));
 
       expect(mockPackages.packages).toHaveLength(25);
-      await waitFor(() => {
-        expect(packages).toHaveLength(8);
-      });
+      expect(await screen.findAllByTestId('relatedPackageLink')).toHaveLength(8);
     });
 
     describe('does not render component', () => {

@@ -96,7 +96,6 @@ const OptOutModal = (props: Props) => {
       modalDialogClassName={styles.modal}
       closeButton={
         <button
-          data-testid="addOptOutModalBtn"
           className="btn btn-sm btn-outline-secondary"
           type="button"
           disabled={isNull(repoItem) || isSending}
@@ -131,7 +130,6 @@ const OptOutModal = (props: Props) => {
               <div className="mb-2" key={`radio_${subs.name}`}>
                 <div className="custom-control custom-radio text-nowrap my-1 my-md-0">
                   <input
-                    data-testid={`radio_${subs.kind}`}
                     className="custom-control-input"
                     type="radio"
                     name="kind"

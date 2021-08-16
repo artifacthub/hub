@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import PaginationLimit from './PaginationLimit';
@@ -17,26 +18,26 @@ describe('Filters', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<PaginationLimit {...defaultProps} />);
+    const { asFragment } = render(<PaginationLimit {...defaultProps} />);
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByLabelText, getByText } = render(<PaginationLimit {...defaultProps} />);
+      render(<PaginationLimit {...defaultProps} />);
 
-      expect(getByLabelText('pagination-limit')).toBeInTheDocument();
-      expect(getByText('20'));
-      expect(getByText('40'));
-      expect(getByText('60'));
+      expect(screen.getByLabelText('pagination-limit')).toBeInTheDocument();
+      expect(screen.getByText('20'));
+      expect(screen.getByText('40'));
+      expect(screen.getByText('60'));
     });
 
     it('calls updateLimit on select change', () => {
-      const { getByLabelText } = render(<PaginationLimit {...defaultProps} />);
+      render(<PaginationLimit {...defaultProps} />);
 
-      const select = getByLabelText('pagination-limit');
-      fireEvent.change(select, { target: { value: '60' } });
+      const select = screen.getByLabelText('pagination-limit');
+      userEvent.selectOptions(select, '60');
 
       expect(updateLimitMock).toBeCalledTimes(1);
       expect(updateLimitMock).toHaveBeenCalledWith(60);
@@ -44,9 +45,9 @@ describe('Filters', () => {
 
     it('renders disabled select component', () => {
       const props = { ...defaultProps, disabled: true };
-      const { getByLabelText } = render(<PaginationLimit {...props} />);
+      render(<PaginationLimit {...props} />);
 
-      const select = getByLabelText('pagination-limit');
+      const select = screen.getByLabelText('pagination-limit');
       expect(select).toBeDisabled();
     });
 

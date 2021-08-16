@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import CapabilityLevel from './CapabilityLevel';
@@ -9,23 +10,23 @@ describe('CapabilityLevel', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<CapabilityLevel capabilityLevel="deep insights" />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<CapabilityLevel capabilityLevel="deep insights" />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByTestId } = render(<CapabilityLevel capabilityLevel="deep insights" />);
+      render(<CapabilityLevel capabilityLevel="deep insights" />);
 
-      expect(getByText('Capability Level')).toBeInTheDocument();
+      expect(screen.getByText('Capability Level')).toBeInTheDocument();
 
-      expect(getByText('basic install')).toBeInTheDocument();
-      expect(getByText('seamless upgrades')).toBeInTheDocument();
-      expect(getByText('full lifecycle')).toBeInTheDocument();
-      expect(getByText('deep insights')).toBeInTheDocument();
-      expect(getByText('auto pilot')).toBeInTheDocument();
+      expect(screen.getByText('basic install')).toBeInTheDocument();
+      expect(screen.getByText('seamless upgrades')).toBeInTheDocument();
+      expect(screen.getByText('full lifecycle')).toBeInTheDocument();
+      expect(screen.getByText('deep insights')).toBeInTheDocument();
+      expect(screen.getByText('auto pilot')).toBeInTheDocument();
 
-      const steps = getAllByTestId('capabilityLevelStep');
+      const steps = screen.getAllByTestId('capabilityLevelStep');
       expect(steps[0]).toHaveClass('activeStep');
       expect(steps[1]).toHaveClass('activeStep');
       expect(steps[2]).toHaveClass('activeStep');
@@ -34,17 +35,17 @@ describe('CapabilityLevel', () => {
     });
 
     it('renders component with capital letters', () => {
-      const { getByText, getAllByTestId } = render(<CapabilityLevel capabilityLevel="Auto Pilot" />);
+      render(<CapabilityLevel capabilityLevel="Auto Pilot" />);
 
-      expect(getByText('Capability Level')).toBeInTheDocument();
+      expect(screen.getByText('Capability Level')).toBeInTheDocument();
 
-      expect(getByText('basic install')).toBeInTheDocument();
-      expect(getByText('seamless upgrades')).toBeInTheDocument();
-      expect(getByText('full lifecycle')).toBeInTheDocument();
-      expect(getByText('deep insights')).toBeInTheDocument();
-      expect(getByText('auto pilot')).toBeInTheDocument();
+      expect(screen.getByText('basic install')).toBeInTheDocument();
+      expect(screen.getByText('seamless upgrades')).toBeInTheDocument();
+      expect(screen.getByText('full lifecycle')).toBeInTheDocument();
+      expect(screen.getByText('deep insights')).toBeInTheDocument();
+      expect(screen.getByText('auto pilot')).toBeInTheDocument();
 
-      const steps = getAllByTestId('capabilityLevelStep');
+      const steps = screen.getAllByTestId('capabilityLevelStep');
       expect(steps[0]).toHaveClass('activeStep');
       expect(steps[1]).toHaveClass('activeStep');
       expect(steps[2]).toHaveClass('activeStep');
@@ -53,35 +54,32 @@ describe('CapabilityLevel', () => {
     });
 
     it('opens modal', () => {
-      const { getByTestId, getByRole, getByAltText } = render(<CapabilityLevel capabilityLevel="deep insights" />);
+      render(<CapabilityLevel capabilityLevel="deep insights" />);
 
-      const modal = getByRole('dialog');
+      const modal = screen.getByRole('dialog');
       expect(modal).not.toHaveClass('d-block');
 
-      const btn = getByTestId('openModalBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Open modal/ });
+      userEvent.click(btn);
 
       expect(modal).toHaveClass('d-block');
-      expect(getByAltText('Capability Level Diagram')).toBeInTheDocument();
+      expect(screen.getByAltText('Capability Level Diagram')).toBeInTheDocument();
     });
   });
 
   describe('does not render', () => {
     it('when capability level is null', () => {
       const { container } = render(<CapabilityLevel capabilityLevel={null} />);
-
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when capability level is undefined', () => {
       const { container } = render(<CapabilityLevel />);
-
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when capability level is different to described levels', () => {
       const { container } = render(<CapabilityLevel capabilityLevel="a not valid one" />);
-
       expect(container).toBeEmptyDOMElement();
     });
   });

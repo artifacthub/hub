@@ -47,7 +47,6 @@ const Sidebar = (props: Props) => {
   return (
     <aside className={props.className} aria-label={props.label}>
       <button
-        data-testid="openSidebarBtn"
         type="button"
         className={classnames(
           'font-weight-bold text-uppercase position-relative btn',
@@ -67,7 +66,8 @@ const Sidebar = (props: Props) => {
       {openStatus && <div className={`modal-backdrop ${styles.activeBackdrop}`} />}
 
       <div
-        data-testid="sidebarContent"
+        role="complementary"
+        aria-label="Sidebar"
         ref={ref}
         className={classnames('sidebar', styles.sidebar, styles[direction], { [styles.active]: openStatus })}
       >
@@ -78,7 +78,6 @@ const Sidebar = (props: Props) => {
 
               <div>
                 <button
-                  data-testid="closeSidebarBtn"
                   type="button"
                   className="close"
                   onClick={() => openStatusChange(false)}
@@ -98,7 +97,6 @@ const Sidebar = (props: Props) => {
             <div className="d-flex align-items-center justify-content-between">
               {!isUndefined(props.leftButton) && <>{props.leftButton}</>}
               <button
-                data-testid="closeSidebarFooterBtn"
                 type="button"
                 className="ml-auto btn btn-sm btn-outline-secondary"
                 onClick={() => openStatusChange(false)}

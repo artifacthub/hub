@@ -11,7 +11,7 @@ describe('OfficialBadge', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(<OfficialBadge official type="package" />);
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders label', async () => {

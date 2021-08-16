@@ -27,9 +27,8 @@ exports[`SubscriptionModal creates snapshot 1`] = `
               Add subscription
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -67,7 +66,6 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       aria-checked="true"
                       checked=""
                       class="custom-control-input input"
-                      data-testid="checkbox"
                       id="desktop-eventKind-0"
                       name="eventKind"
                       tabindex="0"
@@ -117,7 +115,6 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                     <input
                       aria-checked="false"
                       class="custom-control-input input"
-                      data-testid="checkbox"
                       id="desktop-eventKind-1"
                       name="eventKind"
                       tabindex="0"
@@ -187,9 +184,9 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                         class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
                       >
                         <input
+                          aria-label="Search packages"
                           autocomplete="new-input"
                           class="flex-grow-1 px-3 input"
-                          data-testid="searchPackagesInput"
                           name="searchInput"
                           spellcheck="false"
                           type="text"
@@ -235,7 +232,6 @@ exports[`SubscriptionModal creates snapshot 1`] = `
             <button
               aria-label="Add subscription"
               class="btn btn-sm btn-outline-secondary"
-              data-testid="addSubsModalBtn"
               disabled=""
               type="button"
             >

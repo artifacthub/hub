@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -101,60 +102,60 @@ describe('SampleQueries', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <SampleQueries />
       </Router>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getAllByTestId, getByText } = render(
+      render(
         <Router>
           <SampleQueries />
         </Router>
       );
 
-      expect(getAllByTestId('sampleQuery')).toHaveLength(mockQueries.length);
+      expect(screen.getAllByRole('link', { name: /Filter by/ })).toHaveLength(mockQueries.length);
 
       for (let i = 0; i < mockQueries.length; i++) {
-        expect(getByText(mockQueries[i].name)).toBeInTheDocument();
+        expect(screen.getByText(mockQueries[i].name)).toBeInTheDocument();
       }
     });
 
     it('renders proper classes', () => {
-      const { getAllByTestId } = render(
+      render(
         <Router>
           <SampleQueries className="badge-light border-secondary text-secondary" />
         </Router>
       );
 
-      const links = getAllByTestId('sampleQuery');
+      const links = screen.getAllByRole('link', { name: /Filter by/ });
       expect(links[0]).toHaveClass('badge-light border-secondary text-secondary');
     });
 
     it('renders break line', () => {
-      const { getByTestId } = render(
+      render(
         <Router>
           <SampleQueries lineBreakIn={2} />
         </Router>
       );
 
-      expect(getByTestId('sampleQueryBreakLine')).toBeInTheDocument();
+      expect(screen.getByTestId('sampleQueryBreakLine')).toBeInTheDocument();
     });
 
     it('opens first sample query', () => {
-      const { getAllByTestId } = render(
+      render(
         <Router>
           <SampleQueries />
         </Router>
       );
 
-      const links = getAllByTestId('sampleQuery');
-      fireEvent.click(links[0]);
+      const links = screen.getAllByRole('link', { name: /Filter by/ });
+      userEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe('?kind=3&ts_query_web=database');

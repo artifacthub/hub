@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import SchemaDefinition from './SchemaDefinition';
@@ -27,107 +28,107 @@ describe('SchemaDefinition', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<SchemaDefinition {...getProps('1')} {...defaultProps} />);
-
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<SchemaDefinition {...getProps('1')} {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component - type: string', () => {
       const props = getProps('2');
-      const { getByText } = render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      expect(getByText('Copy path to clipboard')).toBeInTheDocument();
-      expect(getByText('Phone')).toBeInTheDocument();
-      expect(getByText('Default')).toBeInTheDocument();
-      expect(getByText('value')).toBeInTheDocument();
-      expect(getByText('Type')).toBeInTheDocument();
-      expect(getByText('string')).toBeInTheDocument();
-      expect(getByText('Annotations')).toBeInTheDocument();
-      expect(getByText('Description')).toBeInTheDocument();
-      expect(getByText('this is a description')).toBeInTheDocument();
-      expect(getByText('Constraints')).toBeInTheDocument();
-      expect(getByText('Format')).toBeInTheDocument();
-      expect(getByText('Pattern')).toBeInTheDocument();
-      expect(getByText('^(\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$')).toBeInTheDocument();
-      expect(getByText('Min length')).toBeInTheDocument();
-      expect(getByText('7')).toBeInTheDocument();
-      expect(getByText('Max length')).toBeInTheDocument();
-      expect(getByText('12')).toBeInTheDocument();
-      expect(getByText('Enum')).toBeInTheDocument();
+      render(<SchemaDefinition {...props} {...defaultProps} />);
+
+      expect(screen.getByText('Copy path to clipboard')).toBeInTheDocument();
+      expect(screen.getByText('Phone')).toBeInTheDocument();
+      expect(screen.getByText('Default')).toBeInTheDocument();
+      expect(screen.getByText('value')).toBeInTheDocument();
+      expect(screen.getByText('Type')).toBeInTheDocument();
+      expect(screen.getByText('string')).toBeInTheDocument();
+      expect(screen.getByText('Annotations')).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
+      expect(screen.getByText('this is a description')).toBeInTheDocument();
+      expect(screen.getByText('Constraints')).toBeInTheDocument();
+      expect(screen.getByText('Format')).toBeInTheDocument();
+      expect(screen.getByText('Pattern')).toBeInTheDocument();
+      expect(screen.getByText('^(\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$')).toBeInTheDocument();
+      expect(screen.getByText('Min length')).toBeInTheDocument();
+      expect(screen.getByText('7')).toBeInTheDocument();
+      expect(screen.getByText('Max length')).toBeInTheDocument();
+      expect(screen.getByText('12')).toBeInTheDocument();
+      expect(screen.getByText('Enum')).toBeInTheDocument();
     });
 
     it('renders component - type: integer', () => {
       const props = getProps('3');
-      const { getByText } = render(<SchemaDefinition {...props} {...defaultProps} />);
+      render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      expect(getByText('Sample')).toBeInTheDocument();
-      expect(getByText('Default')).toBeInTheDocument();
-      expect(getByText('2')).toBeInTheDocument();
-      expect(getByText('Type')).toBeInTheDocument();
-      expect(getByText('integer')).toBeInTheDocument();
-      expect(getByText('Annotations')).toBeInTheDocument();
-      expect(getByText('Description')).toBeInTheDocument();
-      expect(getByText('this is a description')).toBeInTheDocument();
-      expect(getByText('Constraints')).toBeInTheDocument();
-      expect(getByText('Min')).toBeInTheDocument();
-      expect(getByText('0')).toBeInTheDocument();
-      expect(getByText('Max')).toBeInTheDocument();
-      expect(getByText('100')).toBeInTheDocument();
-      expect(getByText('Exclusive min')).toBeInTheDocument();
-      expect(getByText('Exclusive max')).toBeInTheDocument();
-      expect(getByText('true')).toBeInTheDocument();
-      expect(getByText('Enum')).toBeInTheDocument();
+      expect(screen.getByText('Sample')).toBeInTheDocument();
+      expect(screen.getByText('Default')).toBeInTheDocument();
+      expect(screen.getByText('2')).toBeInTheDocument();
+      expect(screen.getByText('Type')).toBeInTheDocument();
+      expect(screen.getByText('integer')).toBeInTheDocument();
+      expect(screen.getByText('Annotations')).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
+      expect(screen.getByText('this is a description')).toBeInTheDocument();
+      expect(screen.getByText('Constraints')).toBeInTheDocument();
+      expect(screen.getByText('Min')).toBeInTheDocument();
+      expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.getByText('Max')).toBeInTheDocument();
+      expect(screen.getByText('100')).toBeInTheDocument();
+      expect(screen.getByText('Exclusive min')).toBeInTheDocument();
+      expect(screen.getByText('Exclusive max')).toBeInTheDocument();
+      expect(screen.getByText('true')).toBeInTheDocument();
+      expect(screen.getByText('Enum')).toBeInTheDocument();
     });
 
     it('renders component - type: object', () => {
       const props = getProps('4');
-      const { getByText, getAllByTestId } = render(<SchemaDefinition {...props} {...defaultProps} />);
+      render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      expect(getByText('Scanner configuration')).toBeInTheDocument();
-      expect(getByText('Type')).toBeInTheDocument();
-      expect(getByText('object')).toBeInTheDocument();
-      expect(getByText('Annotations')).toBeInTheDocument();
-      expect(getByText('Description')).toBeInTheDocument();
-      expect(getByText('this is a description')).toBeInTheDocument();
-      expect(getByText('Constraints')).toBeInTheDocument();
-      expect(getByText('Properties')).toBeInTheDocument();
-      expect(getAllByTestId('listItem')).toHaveLength(3);
-      expect(getByText('Enum')).toBeInTheDocument();
+      expect(screen.getByText('Scanner configuration')).toBeInTheDocument();
+      expect(screen.getByText('Type')).toBeInTheDocument();
+      expect(screen.getByText('object')).toBeInTheDocument();
+      expect(screen.getByText('Annotations')).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
+      expect(screen.getByText('this is a description')).toBeInTheDocument();
+      expect(screen.getByText('Constraints')).toBeInTheDocument();
+      expect(screen.getByText('Properties')).toBeInTheDocument();
+      expect(screen.getAllByRole('listitem')).toHaveLength(3);
+      expect(screen.getByText('Enum')).toBeInTheDocument();
     });
 
     it('renders component - type: array', () => {
       const props = getProps('5');
-      const { getByText, getAllByText } = render(<SchemaDefinition {...props} {...defaultProps} />);
+      render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      expect(getByText('title')).toBeInTheDocument();
-      expect(getByText('Type')).toBeInTheDocument();
-      expect(getByText('array')).toBeInTheDocument();
-      expect(getAllByText('Default')).toHaveLength(2);
-      expect(getByText('(please expand for more details)')).toBeInTheDocument();
-      expect(getByText('Annotations')).toBeInTheDocument();
-      expect(getByText('Description')).toBeInTheDocument();
-      expect(getByText('this is a description')).toBeInTheDocument();
-      expect(getByText('Constraints')).toBeInTheDocument();
-      expect(getByText('Items')).toBeInTheDocument();
-      expect(getAllByText('[string]')).toHaveLength(2);
-      expect(getAllByText('(unique)')).toHaveLength(2);
-      expect(getByText('Min items')).toBeInTheDocument();
-      expect(getByText('2')).toBeInTheDocument();
-      expect(getByText('Max items')).toBeInTheDocument();
-      expect(getByText('6')).toBeInTheDocument();
-      expect(getByText('Enum')).toBeInTheDocument();
+      expect(screen.getByText('title')).toBeInTheDocument();
+      expect(screen.getByText('Type')).toBeInTheDocument();
+      expect(screen.getByText('array')).toBeInTheDocument();
+      expect(screen.getAllByText('Default')).toHaveLength(2);
+      expect(screen.getByText('(please expand for more details)')).toBeInTheDocument();
+      expect(screen.getByText('Annotations')).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
+      expect(screen.getByText('this is a description')).toBeInTheDocument();
+      expect(screen.getByText('Constraints')).toBeInTheDocument();
+      expect(screen.getByText('Items')).toBeInTheDocument();
+      expect(screen.getAllByText('[string]')).toHaveLength(2);
+      expect(screen.getAllByText('(unique)')).toHaveLength(2);
+      expect(screen.getByText('Min items')).toBeInTheDocument();
+      expect(screen.getByText('2')).toBeInTheDocument();
+      expect(screen.getByText('Max items')).toBeInTheDocument();
+      expect(screen.getByText('6')).toBeInTheDocument();
+      expect(screen.getByText('Enum')).toBeInTheDocument();
     });
 
     it('calls setActivePathMock', () => {
       const props = getProps('6');
-      const { getByTestId, queryByText } = render(<SchemaDefinition {...props} {...defaultProps} isExpanded={false} />);
+      render(<SchemaDefinition {...props} {...defaultProps} isExpanded={false} />);
 
-      expect(queryByText('Annotations')).toBeNull();
-      expect(queryByText('Constraints')).toBeNull();
+      expect(screen.queryByText('Annotations')).toBeNull();
+      expect(screen.queryByText('Constraints')).toBeNull();
 
-      const btn = getByTestId('expandBtn');
-      fireEvent.click(btn);
+      const btn = screen.getByRole('button', { name: /Show detail/ });
+      userEvent.click(btn);
 
       expect(onActivePathChangeMock).toHaveBeenCalledTimes(1);
       expect(onActivePathChangeMock).toHaveBeenCalledWith('currentPath');
@@ -135,36 +136,36 @@ describe('SchemaDefinition', () => {
 
     it('renders ENUM', () => {
       const props = getProps('7');
-      const { getAllByTestId, getByText } = render(<SchemaDefinition {...props} {...defaultProps} />);
+      render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      expect(getByText('Enum')).toBeInTheDocument();
-      expect(getAllByTestId('listItem')).toHaveLength(7);
-      expect(getByText('trace')).toBeInTheDocument();
-      expect(getByText('debug')).toBeInTheDocument();
-      expect(getByText('info')).toBeInTheDocument();
-      expect(getByText('warn')).toBeInTheDocument();
-      expect(getByText('error')).toBeInTheDocument();
-      expect(getByText('fatal')).toBeInTheDocument();
-      expect(getByText('panic')).toBeInTheDocument();
+      expect(screen.getByText('Enum')).toBeInTheDocument();
+      expect(screen.getAllByRole('listitem')).toHaveLength(7);
+      expect(screen.getByText('trace')).toBeInTheDocument();
+      expect(screen.getByText('debug')).toBeInTheDocument();
+      expect(screen.getByText('info')).toBeInTheDocument();
+      expect(screen.getByText('warn')).toBeInTheDocument();
+      expect(screen.getByText('error')).toBeInTheDocument();
+      expect(screen.getByText('fatal')).toBeInTheDocument();
+      expect(screen.getByText('panic')).toBeInTheDocument();
     });
 
     it('renders REQUIRED label', () => {
       const props = getProps('8');
-      const { getByText } = render(<SchemaDefinition {...props} {...defaultProps} isRequired />);
+      render(<SchemaDefinition {...props} {...defaultProps} isRequired />);
 
-      expect(getByText('Required')).toBeInTheDocument();
-      expect(getByText('Required')).toHaveClass('badge-success');
+      expect(screen.getByText('Required')).toBeInTheDocument();
+      expect(screen.getByText('Required')).toHaveClass('badge-success');
     });
 
     it('renders value with different options', () => {
       const props = getProps('9');
-      const { getByDisplayValue, getByText, rerender } = render(<SchemaDefinition {...props} {...defaultProps} />);
+      const { rerender } = render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      const select = getByDisplayValue('Option 1');
+      const select = screen.getByDisplayValue('Option 1');
       expect(select).toBeInTheDocument();
-      expect(getByText('object')).toBeInTheDocument();
+      expect(screen.getByText('object')).toBeInTheDocument();
 
-      fireEvent.change(select, { target: { value: '2' } });
+      userEvent.selectOptions(select, '2');
 
       expect(setValueMock).toHaveBeenCalledTimes(1);
       expect(setValueMock).toHaveBeenCalledWith({
@@ -217,31 +218,28 @@ describe('SchemaDefinition', () => {
       });
 
       rerender(<SchemaDefinition {...props} {...defaultProps} def={{ ...props.def, active: 2 }} isRequired />);
-      expect(getByText('null')).toBeInTheDocument();
+      expect(screen.getByText('null')).toBeInTheDocument();
     });
 
     it('renders 2 different types', () => {
       const props = getProps('10');
-      const { getByDisplayValue, getByText, queryByText, getByTestId } = render(
-        <SchemaDefinition {...props} {...defaultProps} />
-      );
+      render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      const select = getByDisplayValue('string');
+      const select = screen.getByRole('combobox', { name: 'Type selection' });
 
       expect(select).toBeInTheDocument();
-      expect(getByText('Constraints')).toBeInTheDocument();
-      expect(getByTestId('schemaCombSelect')).toBeInTheDocument();
+      expect(screen.getByText('Constraints')).toBeInTheDocument();
 
-      fireEvent.change(select, { target: { value: 'null' } });
+      userEvent.selectOptions(select, 'null');
 
-      expect(queryByText('Constraints')).toBeNull();
+      expect(screen.queryByText('Constraints')).toBeNull();
     });
 
     it('renders link in description', () => {
       const props = getProps('11');
-      const { getByText } = render(<SchemaDefinition {...props} {...defaultProps} />);
+      render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      const link = getByText(
+      const link = screen.getByText(
         'https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core'
       );
       expect(link).toBeInTheDocument();
@@ -256,15 +254,15 @@ describe('SchemaDefinition', () => {
 
     it('updates combinationType', () => {
       const props = getProps('12a');
-      const { getByText, queryByText, rerender } = render(<SchemaDefinition {...props} {...defaultProps} />);
+      const { rerender } = render(<SchemaDefinition {...props} {...defaultProps} />);
 
-      expect(getByText('Raw')).toBeInTheDocument();
+      expect(screen.getByText('Raw')).toBeInTheDocument();
 
       const updatedProps = getProps('12b');
       rerender(<SchemaDefinition {...updatedProps} {...defaultProps} />);
 
       waitFor(() => {
-        expect(queryByText('Raw')).toBeNull();
+        expect(screen.findByText('Raw')).toBeNull();
       });
     });
   });

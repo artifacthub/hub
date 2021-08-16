@@ -1,4 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { Facets } from '../../types';
@@ -135,6 +136,7 @@ const defaultProps = {
   activeTsQuery: [],
   facets: FacetsMock,
   visibleTitle: false,
+  device: 'desktop',
   onChange: onChangeMock,
   onResetSomeFilters: jest.fn(),
   onTsQueryChange: jest.fn(),
@@ -290,19 +292,19 @@ describe('Filters', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Filters {...defaultProps} />);
+    const { asFragment } = render(<Filters {...defaultProps} />);
 
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByLabelText, getAllByTestId } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      expect(getAllByTestId('checkbox')).toHaveLength(23);
-      expect(getByLabelText('Official')).toBeInTheDocument();
-      expect(getByLabelText('Verified publishers')).toBeInTheDocument();
-      expect(getByLabelText('Include deprecated')).toBeInTheDocument();
+      expect(screen.getAllByRole('checkbox')).toHaveLength(23);
+      expect(screen.getByLabelText('Official')).toBeInTheDocument();
+      expect(screen.getByLabelText('Verified publishers')).toBeInTheDocument();
+      expect(screen.getByLabelText('Include deprecated')).toBeInTheDocument();
     });
 
     it('renders component with title', () => {
@@ -310,10 +312,10 @@ describe('Filters', () => {
         ...defaultProps,
         visibleTitle: true,
       };
-      const { getByText, queryByTestId } = render(<Filters {...props} />);
+      render(<Filters {...props} />);
 
-      expect(getByText('Filters')).toBeInTheDocument();
-      expect(queryByTestId('resetFiltersBtn')).toBeNull();
+      expect(screen.getByText('Filters')).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /Reset filters/ })).toBeNull();
     });
 
     it('renders reset btn when active filters is not empty and calls mock to click', () => {
@@ -322,53 +324,53 @@ describe('Filters', () => {
         activeFilters: { kind: ['0'] },
         visibleTitle: true,
       };
-      const { getByTestId } = render(<Filters {...props} />);
-      const resetBtn = getByTestId('resetFiltersBtn');
-      fireEvent.click(resetBtn);
+      render(<Filters {...props} />);
+      const resetBtn = screen.getByRole('button', { name: /Reset filters/ });
+      userEvent.click(resetBtn);
 
       expect(onResetFiltersMock).toHaveBeenCalledTimes(1);
     });
 
     it('calls deprecated mock when deprecated checkbox is clicked', () => {
-      const { getByLabelText } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      const opt = getByLabelText('Include deprecated');
+      const opt = screen.getByLabelText('Include deprecated');
       expect(opt).toBeInTheDocument();
-      fireEvent.click(opt);
+      userEvent.click(opt);
       expect(onDeprecatedChangeMock).toHaveBeenCalledTimes(1);
     });
 
     it('calls verifiedPublisherChange mock when verified publisher checkbox is clicked', () => {
-      const { getByLabelText } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      const opt = getByLabelText('Verified publishers');
+      const opt = screen.getByLabelText('Verified publishers');
       expect(opt).toBeInTheDocument();
-      fireEvent.click(opt);
+      userEvent.click(opt);
       expect(onVerifiedPublisherChangeMock).toHaveBeenCalledTimes(1);
     });
 
     it('calls officalChange mock when official checkbox is clicked', () => {
-      const { getByLabelText } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      const opt = getByLabelText('Official');
+      const opt = screen.getByLabelText('Official');
       expect(opt).toBeInTheDocument();
-      fireEvent.click(opt);
+      userEvent.click(opt);
       expect(onOfficialChangeMock).toHaveBeenCalledTimes(1);
     });
 
     it('calls onchange mock when any checkbox is clicked', () => {
-      const { getByLabelText } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      const opt = getByLabelText(/Helm charts/g);
+      const opt = screen.getByLabelText(/Helm charts/g);
       expect(opt).toBeInTheDocument();
-      fireEvent.click(opt);
+      userEvent.click(opt);
       expect(onChangeMock).toHaveBeenCalledTimes(1);
     });
 
     it('renders facets in correct order', () => {
-      const { getAllByTestId } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      const titles = getAllByTestId('smallTitle');
+      const titles = screen.getAllByTestId('smallTitle');
       expect(titles).toHaveLength(7);
 
       expect(titles[0]).toHaveTextContent('Kind');
@@ -381,25 +383,25 @@ describe('Filters', () => {
     });
 
     it('renders all kind options', () => {
-      const { getByText } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      expect(getByText('Helm charts')).toBeInTheDocument();
-      expect(getByText('OLM operators')).toBeInTheDocument();
-      expect(getByText('Falco rules')).toBeInTheDocument();
-      expect(getByText('OPA policies')).toBeInTheDocument();
+      expect(screen.getByText('Helm charts')).toBeInTheDocument();
+      expect(screen.getByText('OLM operators')).toBeInTheDocument();
+      expect(screen.getByText('Falco rules')).toBeInTheDocument();
+      expect(screen.getByText('OPA policies')).toBeInTheDocument();
     });
 
     it('renders other options', () => {
-      const { getByText } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      expect(getByText('Only operators')).toBeInTheDocument();
-      expect(getByText('Include deprecated')).toBeInTheDocument();
+      expect(screen.getByText('Only operators')).toBeInTheDocument();
+      expect(screen.getByText('Include deprecated')).toBeInTheDocument();
     });
 
     it('renders license', () => {
-      const { getByText } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      expect(getByText('license')).toBeInTheDocument();
+      expect(screen.getByText('license')).toBeInTheDocument();
     });
 
     it('does not render license when no options', () => {
@@ -413,15 +415,15 @@ describe('Filters', () => {
           },
         ],
       };
-      const { queryByText } = render(<Filters {...props} />);
+      render(<Filters {...props} />);
 
-      expect(queryByText('License')).toBeNull();
+      expect(screen.queryByText('License')).toBeNull();
     });
 
     it('render Operator capatibilities', () => {
-      const { getByText } = render(<Filters {...defaultProps} />);
+      render(<Filters {...defaultProps} />);
 
-      expect(getByText('Operator capabilities')).toBeInTheDocument();
+      expect(screen.getByText('Operator capabilities')).toBeInTheDocument();
     });
 
     it('does not render Operator capatibilities', () => {
@@ -436,9 +438,9 @@ describe('Filters', () => {
         ],
       };
 
-      const { queryByText } = render(<Filters {...props} />);
+      render(<Filters {...props} />);
 
-      expect(queryByText('Operator capabilities')).toBeNull();
+      expect(screen.queryByText('Operator capabilities')).toBeNull();
     });
   });
 
@@ -449,8 +451,8 @@ describe('Filters', () => {
           ...defaultProps,
           facets: [capabitiesTests[i].input],
         };
-        const { getAllByTestId } = render(<Filters {...props} />);
-        const labels = getAllByTestId('checkboxLabel');
+        render(<Filters {...props} />);
+        const labels = screen.getAllByTestId('checkboxLabel');
 
         for (let j = 0; j < capabitiesTests[i].output.length; j++) {
           expect(labels[12 + j]).toHaveTextContent(capabitiesTests[i].output[j]);

@@ -5,7 +5,6 @@ exports[`DisableModal creates snapshot 1`] = `
   <button
     aria-label="Open disable two-factor authentication modal"
     class="btn btn-danger btn-sm"
-    data-testid="disable2FAModalBtn"
   >
     <div
       class="d-flex flex-row align-items-center"
@@ -50,9 +49,8 @@ exports[`DisableModal creates snapshot 1`] = `
               Disable 2FA
             </div>
             <button
-              aria-label="Close modal"
+              aria-label="Close"
               class="close"
-              data-testid="closeModalBtn"
               type="button"
             >
               <span
@@ -104,7 +102,6 @@ exports[`DisableModal creates snapshot 1`] = `
             <button
               aria-label="Disable two-factor authentication"
               class="btn btn-sm btn-danger ml-3"
-              data-testid="disable2FABtn"
               disabled=""
             >
               <div

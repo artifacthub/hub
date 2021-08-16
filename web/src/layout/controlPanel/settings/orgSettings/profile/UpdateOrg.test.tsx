@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { Organization } from '../../../../../types';
@@ -27,26 +27,24 @@ describe('Organization settings index', () => {
   it('creates snapshot', () => {
     const mockOrganization = getMockOrganization('1');
 
-    const result = render(<UpdateOrg {...defaultProps} organization={mockOrganization} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<UpdateOrg {...defaultProps} organization={mockOrganization} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders organization details in form', () => {
       const mockOrganization = getMockOrganization('2');
 
-      const { getByTestId, getByAltText, getByDisplayValue } = render(
-        <UpdateOrg {...defaultProps} organization={mockOrganization} />
-      );
+      render(<UpdateOrg {...defaultProps} organization={mockOrganization} />);
 
-      const form = getByTestId('organizationForm');
+      const form = screen.getByTestId('organizationForm');
 
       expect(form).toBeInTheDocument();
-      expect(getByAltText('Logo')).toBeInTheDocument();
-      expect(getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
-      expect(getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
-      expect(getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
-      expect(getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
+      expect(screen.getByAltText('Logo')).toBeInTheDocument();
+      expect(screen.getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
     });
   });
 });

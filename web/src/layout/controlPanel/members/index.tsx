@@ -128,7 +128,6 @@ const MembersSection = (props: Props) => {
 
             <div>
               <ActionBtn
-                testId="addMemberBtn"
                 className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 contentClassName="justify-content-center"
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -136,6 +135,7 @@ const MembersSection = (props: Props) => {
                   setModalMemberOpen(true);
                 }}
                 action={AuthorizerAction.AddOrganizationMember}
+                label="Open invite member modal"
               >
                 <div className="d-flex flex-row align-items-center">
                   <MdAdd className="d-inline d-md-none" />
@@ -162,7 +162,6 @@ const MembersSection = (props: Props) => {
                         type="button"
                         className="btn btn-sm btn-outline-secondary"
                         onClick={() => setModalMemberOpen(true)}
-                        data-testid="addFirstMemberBtn"
                         aria-label="Open modal"
                       >
                         <div className="d-flex flex-row align-items-center text-uppercase">

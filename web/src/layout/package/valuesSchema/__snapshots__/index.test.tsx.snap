@@ -12,7 +12,6 @@ exports[`ValuesSchema creates snapshot 1`] = `
         aria-disabled="false"
         aria-label="Open values schema modal"
         class="btn btn-outline-secondary btn-block btn-sm"
-        data-testid="valuesSchemaBtn"
       >
         <div
           class="d-flex flex-row align-items-center justify-content-center text-uppercase"

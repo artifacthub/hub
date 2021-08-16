@@ -36,7 +36,6 @@ const MoreActionsButton = (props: Props) => {
     <>
       <div className="d-none d-md-block position-relative ml-2">
         <button
-          data-testid="moreActionsBtn"
           className="btn p-0 position-relative"
           type="button"
           onClick={() => {
@@ -56,13 +55,12 @@ const MoreActionsButton = (props: Props) => {
 
         <div
           ref={ref}
-          data-testid="moreActionsDropdown"
+          role="menu"
           className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, { show: openStatus })}
         >
           <div className={`arrow ${styles.arrow}`} />
 
           <button
-            data-testid="embedWidgetBtn"
             className="dropdown-item btn btn-sm rounded-0 text-dark"
             onClick={() => {
               setVisibleWidget(true);

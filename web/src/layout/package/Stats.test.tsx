@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import Stats from './Stats';
@@ -16,33 +16,33 @@ describe('Stats', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Stats {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<Stats {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<Stats {...defaultProps} />);
-      expect(getByText('Subscriptions:')).toBeInTheDocument();
-      expect(getByText('12')).toBeInTheDocument();
-      expect(getByText('Webhooks:')).toBeInTheDocument();
-      expect(getByText('8')).toBeInTheDocument();
+      render(<Stats {...defaultProps} />);
+      expect(screen.getByText('Subscriptions:')).toBeInTheDocument();
+      expect(screen.getByText('12')).toBeInTheDocument();
+      expect(screen.getByText('Webhooks:')).toBeInTheDocument();
+      expect(screen.getByText('8')).toBeInTheDocument();
     });
 
     it('renders only subscriptions', () => {
-      const { getByText, queryByText } = render(<Stats packageStats={{ subscriptions: 3, webhooks: 0 }} />);
-      expect(getByText('Subscriptions:')).toBeInTheDocument();
-      expect(getByText('3')).toBeInTheDocument();
-      expect(queryByText('Webhooks:')).toBeNull();
-      expect(queryByText('0')).toBeNull();
+      render(<Stats packageStats={{ subscriptions: 3, webhooks: 0 }} />);
+      expect(screen.getByText('Subscriptions:')).toBeInTheDocument();
+      expect(screen.getByText('3')).toBeInTheDocument();
+      expect(screen.queryByText('Webhooks:')).toBeNull();
+      expect(screen.queryByText('0')).toBeNull();
     });
 
     it('renders only webhooks', () => {
-      const { getByText, queryByText } = render(<Stats packageStats={{ subscriptions: 0, webhooks: 5 }} />);
-      expect(queryByText('Subscriptions:')).toBeNull();
-      expect(queryByText('0')).toBeNull();
-      expect(getByText('Webhooks:')).toBeInTheDocument();
-      expect(getByText('5')).toBeInTheDocument();
+      render(<Stats packageStats={{ subscriptions: 0, webhooks: 5 }} />);
+      expect(screen.queryByText('Subscriptions:')).toBeNull();
+      expect(screen.queryByText('0')).toBeNull();
+      expect(screen.getByText('Webhooks:')).toBeInTheDocument();
+      expect(screen.getByText('5')).toBeInTheDocument();
     });
   });
 

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -10,25 +10,25 @@ describe('Footer', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(
+    const { asFragment } = render(
       <Router>
         <Footer />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByRole, getByRole } = render(
+      render(
         <Router>
           <Footer />
         </Router>
       );
 
-      expect(getByRole('contentinfo')).toBeInTheDocument();
+      expect(screen.getByRole('contentinfo')).toBeInTheDocument();
 
-      const links = getAllByRole('button');
+      const links = screen.getAllByRole('button');
       expect(links).toHaveLength(6);
       expect(links[0]).toHaveTextContent('Documentation');
       expect(links[1]).toHaveTextContent('Blog');
@@ -37,21 +37,21 @@ describe('Footer', () => {
       expect(links[4]).toHaveTextContent('Twitter');
       expect(links[5]).toHaveTextContent('Apache License 2.0');
 
-      const statsLink = getByText('Statistics');
+      const statsLink = screen.getByText('Statistics');
       expect(statsLink).toBeInTheDocument();
       expect(statsLink).toHaveAttribute('href', '/stats');
 
-      expect(getByText('© The Artifact Hub Authors')).toBeInTheDocument();
+      expect(screen.getByText('© The Artifact Hub Authors')).toBeInTheDocument();
     });
 
     it('adds proper styles for hiding footer', () => {
-      const { getByRole } = render(
+      render(
         <Router>
           <Footer isHidden />
         </Router>
       );
 
-      const footer = getByRole('contentinfo');
+      const footer = screen.getByRole('contentinfo');
       expect(footer).toHaveClass('invisibleFooter');
     });
   });

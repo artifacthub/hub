@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { VulnerabilitySeverity } from '../../../types';
@@ -58,37 +58,37 @@ describe('CVSSVector', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<CVSSVector {...defaultProps} />);
-    expect(result.asFragment()).toMatchSnapshot();
+    const { asFragment } = render(<CVSSVector {...defaultProps} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByText } = render(<CVSSVector {...defaultProps} />);
-      expect(getByText('CVSS v3 Vector')).toBeInTheDocument();
-      expect(getByText('Score:')).toBeInTheDocument();
-      expect(getByText('9.8')).toBeInTheDocument();
-      expect(getByText('Exploitability Metrics')).toBeInTheDocument();
-      expect(getByText(/Attack Vector/g)).toBeInTheDocument();
-      expect(getByText('Physical')).toBeInTheDocument();
-      expect(getByText('Local')).toBeInTheDocument();
-      expect(getByText('Adjacent Network')).toBeInTheDocument();
-      expect(getByText('Network')).toBeInTheDocument();
-      expect(getByText(/Attack Complexity/g)).toBeInTheDocument();
-      expect(getAllByText('High')).toHaveLength(5);
-      expect(getAllByText('Low')).toHaveLength(5);
-      expect(getByText('Changed')).toBeInTheDocument();
-      expect(getByText('Unchanged')).toBeInTheDocument();
-      expect(getByText('Required')).toBeInTheDocument();
-      expect(getAllByText('None')).toHaveLength(5);
-      expect(getByText('Impact Metrics')).toBeInTheDocument();
-      expect(getByText(/Confidentiality/g)).toBeInTheDocument();
-      expect(getByText(/Integrity/g)).toBeInTheDocument();
-      expect(getByText(/Availability/g)).toBeInTheDocument();
+      render(<CVSSVector {...defaultProps} />);
+      expect(screen.getByText('CVSS v3 Vector')).toBeInTheDocument();
+      expect(screen.getByText('Score:')).toBeInTheDocument();
+      expect(screen.getByText('9.8')).toBeInTheDocument();
+      expect(screen.getByText('Exploitability Metrics')).toBeInTheDocument();
+      expect(screen.getByText(/Attack Vector/g)).toBeInTheDocument();
+      expect(screen.getByText('Physical')).toBeInTheDocument();
+      expect(screen.getByText('Local')).toBeInTheDocument();
+      expect(screen.getByText('Adjacent Network')).toBeInTheDocument();
+      expect(screen.getByText('Network')).toBeInTheDocument();
+      expect(screen.getByText(/Attack Complexity/g)).toBeInTheDocument();
+      expect(screen.getAllByText('High')).toHaveLength(5);
+      expect(screen.getAllByText('Low')).toHaveLength(5);
+      expect(screen.getByText('Changed')).toBeInTheDocument();
+      expect(screen.getByText('Unchanged')).toBeInTheDocument();
+      expect(screen.getByText('Required')).toBeInTheDocument();
+      expect(screen.getAllByText('None')).toHaveLength(5);
+      expect(screen.getByText('Impact Metrics')).toBeInTheDocument();
+      expect(screen.getByText(/Confidentiality/g)).toBeInTheDocument();
+      expect(screen.getByText(/Integrity/g)).toBeInTheDocument();
+      expect(screen.getByText(/Availability/g)).toBeInTheDocument();
     });
 
     it('renders CVSS v2 when v3 is not provided', () => {
-      const { getByText, getAllByText } = render(
+      render(
         <CVSSVector
           {...defaultProps}
           CVSS={{
@@ -99,33 +99,33 @@ describe('CVSSVector', () => {
           }}
         />
       );
-      expect(getByText('CVSS v2 Vector')).toBeInTheDocument();
-      expect(getByText('Exploitability Metrics')).toBeInTheDocument();
-      expect(getByText(/Access Vector/g)).toBeInTheDocument();
-      expect(getByText('Local')).toBeInTheDocument();
-      expect(getByText('Adjacent Network')).toBeInTheDocument();
-      expect(getByText('Network')).toBeInTheDocument();
-      expect(getByText(/Access Complexity/g)).toBeInTheDocument();
-      expect(getByText('High')).toBeInTheDocument();
-      expect(getByText('Medium')).toBeInTheDocument();
-      expect(getByText('Low')).toBeInTheDocument();
-      expect(getByText(/Authentication/g)).toBeInTheDocument();
-      expect(getByText('Multiple')).toBeInTheDocument();
-      expect(getByText('Single')).toBeInTheDocument();
-      expect(getAllByText('None')).toHaveLength(4);
-      expect(getByText('Impact Metrics')).toBeInTheDocument();
-      expect(getByText(/Confidentiality/g)).toBeInTheDocument();
-      expect(getAllByText('Partial')).toHaveLength(3);
-      expect(getAllByText('Complete')).toHaveLength(3);
-      expect(getByText(/Integrity/g)).toBeInTheDocument();
-      expect(getByText(/Availability/g)).toBeInTheDocument();
+      expect(screen.getByText('CVSS v2 Vector')).toBeInTheDocument();
+      expect(screen.getByText('Exploitability Metrics')).toBeInTheDocument();
+      expect(screen.getByText(/Access Vector/g)).toBeInTheDocument();
+      expect(screen.getByText('Local')).toBeInTheDocument();
+      expect(screen.getByText('Adjacent Network')).toBeInTheDocument();
+      expect(screen.getByText('Network')).toBeInTheDocument();
+      expect(screen.getByText(/Access Complexity/g)).toBeInTheDocument();
+      expect(screen.getByText('High')).toBeInTheDocument();
+      expect(screen.getByText('Medium')).toBeInTheDocument();
+      expect(screen.getByText('Low')).toBeInTheDocument();
+      expect(screen.getByText(/Authentication/g)).toBeInTheDocument();
+      expect(screen.getByText('Multiple')).toBeInTheDocument();
+      expect(screen.getByText('Single')).toBeInTheDocument();
+      expect(screen.getAllByText('None')).toHaveLength(4);
+      expect(screen.getByText('Impact Metrics')).toBeInTheDocument();
+      expect(screen.getByText(/Confidentiality/g)).toBeInTheDocument();
+      expect(screen.getAllByText('Partial')).toHaveLength(3);
+      expect(screen.getAllByText('Complete')).toHaveLength(3);
+      expect(screen.getByText(/Integrity/g)).toBeInTheDocument();
+      expect(screen.getByText(/Availability/g)).toBeInTheDocument();
     });
 
     it('renders correct value when source is provided', () => {
-      const { getByText } = render(<CVSSVector {...defaultProps} source="source1" />);
+      render(<CVSSVector {...defaultProps} source="source1" />);
 
-      expect(getByText(/source1/g)).toBeInTheDocument();
-      expect(getByText('8.1')).toBeInTheDocument();
+      expect(screen.getByText(/source1/g)).toBeInTheDocument();
+      expect(screen.getByText('8.1')).toBeInTheDocument();
     });
 
     for (let i = 0; i < activeMetrics.length; i++) {
@@ -139,9 +139,9 @@ describe('CVSSVector', () => {
           },
         };
 
-        const { getByTestId } = render(<CVSSVector {...props} />);
+        render(<CVSSVector {...props} />);
         for (let j = 0; j < activeMetrics[i].active.length; j++) {
-          const metric = getByTestId(`metric_${activeMetrics[i].active[j]}`);
+          const metric = screen.getByTestId(`metric_${activeMetrics[i].active[j]}`);
           expect(metric).toBeInTheDocument();
           expect(metric).toHaveClass('active');
         }
