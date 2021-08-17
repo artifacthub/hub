@@ -33,6 +33,10 @@ const tests: Test[] = [
     input: '[2.3.1]',
     result: 'X-3-1',
   },
+  {
+    input: 'I am receiving "Invalid pattern for given tag"',
+    result: 'i-am-receiving-invalid-pattern-for-given-tag',
+  },
 ];
 
 describe('getAnchorValue', () => {
