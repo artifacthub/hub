@@ -10,32 +10,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-
       - name: Checkout Helm charts repo
         uses: actions/checkout@master
         with:
           repository: artifacthub/helm-charts
           path: helm-charts
           token: ${{ secrets.GHT_RELEASE }}
-
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
-
       - name: Set up Helm
         uses: azure/setup-helm@v1
-
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
-
       - name: Extract tag name
         id: extract_tag_name
         run: echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
-
       - name: Release Docker images and CLI tool binaries
         uses: goreleaser/goreleaser-action@v2
         with:
@@ -43,7 +37,6 @@ jobs:
           args: release --rm-dist --timeout 60m
         env:
           GITHUB_TOKEN: ${{ secrets.GHT_RELEASE }}
-
       - name: Release Helm chart
         run: |
           mkdir tmp && cd tmp

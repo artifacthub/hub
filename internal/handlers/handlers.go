@@ -455,15 +455,6 @@ func logger(next http.Handler) http.Handler {
 		start := time.Now()
 		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
 		host, port, _ := net.SplitHostPort(r.RemoteAddr)
-		fields := map[string]interface{}{
-			"host":      host,
-			"port":      port,
-			"method":    r.Method,
-			"status":    ww.Status(),
-			"took":      float64(time.Since(start)) / 1e6,
-			"bytes_in":  r.Header.Get("Content-Length"),
-			"bytes_out": ww.BytesWritten(),
-		}
 		msg := r.URL.Path
 		if r.URL.Path == "/api/v1/packages/search" || r.URL.Path == "/api/chartsvc/v1/charts/search" {
 			msg += "?" + r.URL.RawQuery
@@ -475,7 +466,18 @@ func logger(next http.Handler) http.Handler {
 			} else {
 				event = log.Error()
 			}
-			event.Fields(fields).Timestamp().Msg(msg)
+			event.
+				Fields(map[string]interface{}{
+					"host":      host,
+					"port":      port,
+					"method":    r.Method,
+					"status":    ww.Status(),
+					"took":      float64(time.Since(start)) / 1e6,
+					"bytes_in":  r.Header.Get("Content-Length"),
+					"bytes_out": ww.BytesWritten(),
+				}).
+				Timestamp().
+				Msg(msg)
 		}()
 		next.ServeHTTP(ww, r)
 	})
