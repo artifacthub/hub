@@ -20,8 +20,6 @@ spec:
           - name: check-db-ready
             image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
             imagePullPolicy: {{ .Values.pullPolicy }}
-            resources:
-              {{- toYaml .Values.tracker.cronjob.resources | nindent 14 }}
             env:
               - name: PGHOST
                 value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
@@ -32,6 +30,8 @@ spec:
           - name: tracker
             image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
             imagePullPolicy: {{ .Values.pullPolicy }}
+            resources:
+              {{- toYaml .Values.tracker.cronjob.resources | nindent 14 }}
             {{- if .Values.tracker.cacheDir }}
             env:
               - name: XDG_CACHE_HOME
