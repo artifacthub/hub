@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.1.0-1
-appVersion: 1.1.0
+version: 1.1.1
+appVersion: 1.1.1
 kubeVersion: ">= 1.14.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -33,44 +33,24 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
-    - kind: added
-      description: Add Artifact Hub CLI tool
-    - kind: added
-      description: Add support for Keptn integrations
-    - kind: added
-      description: Search results can now be sorted by relevance or stars
-    - kind: added
-      description: Allow users deleting their accounts
-    - kind: added
-      description: Allow users cropping their avatar image
     - kind: changed
-      description: Related packages are now displayed below the readme in some cases
-    - kind: changed
-      description: Use third party library for readme ToC generation
-    - kind: changed
-      description: Bump Alpine to 3.14
-    - kind: changed
-      description: Bump Trivy to 0.19.2
+      description: Helm charts repository moved to a new location
       links:
-        - name: Trivy migrating to new JSON schema
-          url: https://github.com/artifacthub/hub/pull/1437#issue-689445316
-    - kind: changed
-      description: Bump OPM to 1.17.5
-    - kind: changed
-      description: Upgrade backend dependencies
-    - kind: changed
-      description: Upgrade frontend dependencies
+        - name: New location
+          url: https://artifacthub.github.io/helm-charts/
     - kind: fixed
-      description: Some bugs and other improvements
-  artifacthub.io/containsSecurityUpdates: "true"
+      description: Tracker and scanner containers resources were not being set properly
+    - kind: fixed
+      description: Regression in logger middleware
+  artifacthub.io/containsSecurityUpdates: "false"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.1.0
+      image: artifacthub/db-migrator:v1.1.1
     - name: hub
-      image: artifacthub/hub:v1.1.0
+      image: artifacthub/hub:v1.1.1
     - name: tracker
-      image: artifacthub/tracker:v1.1.0
+      image: artifacthub/tracker:v1.1.1
     - name: scanner
-      image: artifacthub/scanner:v1.1.0
+      image: artifacthub/scanner:v1.1.1
     - name: trivy
       image: aquasec/trivy:0.19.2
