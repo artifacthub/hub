@@ -64,7 +64,7 @@ describe('OAuth', () => {
         });
       });
 
-      expect(window.location.href).toBe('/oauth/github?redirect_url=/control-panel');
+      expect(window.location.href).toBe('/oauth/github?redirect_url=%2Fcontrol-panel');
     });
 
     it('goes to correct route on Google btn click', () => {
@@ -81,7 +81,7 @@ describe('OAuth', () => {
         });
       });
 
-      expect(window.location.href).toBe('/oauth/google?redirect_url=/control-panel');
+      expect(window.location.href).toBe('/oauth/google?redirect_url=%2Fcontrol-panel');
     });
 
     it('goes to correct route on OpenID btn click', () => {
@@ -98,7 +98,35 @@ describe('OAuth', () => {
         });
       });
 
-      expect(window.location.href).toBe('/oauth/oidc?redirect_url=/control-panel');
+      expect(window.location.href).toBe('/oauth/oidc?redirect_url=%2Fcontrol-panel');
+    });
+
+    it('goes to correct route with querystring on btn click', () => {
+      Object.defineProperty(window, 'location', {
+        value: {
+          href: 'http://localhost',
+          pathname: '/packages/search',
+          search: '?kind=0&ts_query=security&sort=relevance&page=1',
+        },
+        writable: true,
+      });
+
+      render(<OAuth {...defaultProps} />);
+
+      const btn = screen.getByText('Github');
+      userEvent.click(btn);
+
+      waitFor(() => {
+        expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
+        expect(setIsLoadingMock).toHaveBeenCalledWith({
+          name: 'github',
+          status: true,
+        });
+      });
+
+      expect(window.location.href).toBe(
+        '/oauth/github?redirect_url=%2Fpackages%2Fsearch%3Fkind%3D0%26ts_query%3Dsecurity%26sort%3Drelevance%26page%3D1'
+      );
     });
   });
 });
