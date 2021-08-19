@@ -1,4 +1,4 @@
-import { isArray, isString } from 'lodash';
+import { isObject, isString } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { GoLink } from 'react-icons/go';
@@ -17,12 +17,16 @@ interface Props {
 const AnchorHeader: React.ElementType = (props: Props) => {
   let value = props.title;
   if (isUndefined(value) && props.children && props.children.length > 0) {
-    const el = props.children![0];
-    if (!isUndefined(el.props) && isArray(el.props.children) && isString(el.props.children[0])) {
-      value = el.props.children[0];
-    } else if (isString(el)) {
-      value = String(props.children);
-    }
+    const allContentValues = props.children.map((n: any) => {
+      if (isString(n)) {
+        return [n];
+      } else if (isObject(n)) {
+        return String((n as any).props.children);
+      } else {
+        return '';
+      }
+    });
+    value = allContentValues.join('');
   }
 
   if (isUndefined(value)) return null;

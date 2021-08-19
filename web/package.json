@@ -27,7 +27,6 @@
     "react-router-scroll-memory": "^2.0.7",
     "react-syntax-highlighter": "^15.4.3",
     "regexify-string": "^1.0.5",
-    "remark-extract-toc": "^1.1.0",
     "remark-gfm": "^1.0.0",
     "remark-parse": "^9.0.0",
     "remark-strip-html": "^1.0.2",
