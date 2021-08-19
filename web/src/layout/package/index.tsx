@@ -783,6 +783,11 @@ const PackageView = (props: Props) => {
                                   <TektonManifestModal
                                     normalizedName={detail.normalizedName}
                                     manifestRaw={getManifestRaw()}
+                                    searchUrlReferer={props.searchUrlReferer}
+                                    fromStarredPage={props.fromStarredPage}
+                                    visibleManifest={
+                                      !isUndefined(props.visibleModal) && props.visibleModal === 'manifest'
+                                    }
                                   />
                                 );
 
