@@ -71,6 +71,14 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.hub.deploy.resources | nindent 12 }}
+          {{- if .Values.hub.deploy.livenessProbe }}
+          livenessProbe:
+            {{- toYaml .Values.hub.deploy.livenessProbe | nindent 12}}
+          {{- end }}
+          {{- if .Values.hub.deploy.readinessProbe }}
+          readinessProbe:
+            {{- toYaml .Values.hub.deploy.readinessProbe | nindent 12}}
+          {{- end }}
       volumes:
       - name: hub-config
         secret:
