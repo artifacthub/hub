@@ -346,7 +346,8 @@ select indexes_are('snapshot', array[
     'snapshot_not_deprecated_with_readme_idx'
 ]);
 select indexes_are('subscription', array[
-    'subscription_pkey'
+    'subscription_pkey',
+    'subscription_package_id_idx'
 ]);
 select indexes_are('user', array[
     'user_pkey',
@@ -368,7 +369,8 @@ select indexes_are('webhook__event_kind', array[
     'webhook__event_kind_pkey'
 ]);
 select indexes_are('webhook__package', array[
-    'webhook__package_pkey'
+    'webhook__package_pkey',
+    'webhook__package_package_id_idx'
 ]);
 
 -- Check expected functions exist
