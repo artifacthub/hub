@@ -62,6 +62,12 @@ hub:
     image:
       repository: artifacthub/hub
     resources: {}
+    livenessProbe:
+      tcpSocket:
+        port: 8000
+    readinessProbe:
+      tcpSocket:
+        port: 8000
   server:
     allowPrivateRepositories: false
     cacheDir: ""
