@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(144);
+select plan(146);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -11,6 +11,8 @@ select results_eq(
 
 -- Check pgcrypto extension exist
 select has_extension('pgcrypto');
+select has_extension('pg_trgm');
+select has_extension('tsm_system_rows');
 
 -- Check expected tables exist
 select tables_are(array[
