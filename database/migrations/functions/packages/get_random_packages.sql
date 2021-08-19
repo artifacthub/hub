@@ -4,7 +4,7 @@ returns setof json as $$
     select coalesce(json_agg(pkgJSON), '[]')
     from (
         select p.package_id
-        from package p
+        from package p tablesample system_rows(1000)
         join snapshot s using (package_id)
         where s.version = p.latest_version
         and (s.deprecated is null or s.deprecated = false)
