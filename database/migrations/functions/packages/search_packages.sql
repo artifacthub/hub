@@ -44,7 +44,7 @@ begin
     end if;
 
     return query
-    with packages_applying_minimum_filters as (
+    with filtered_packages_excluding_facets_filters as (
         select
             p.package_id,
             p.name,
@@ -115,8 +115,8 @@ begin
             else
                 (s.deprecated is null or s.deprecated = false)
             end
-    ), packages_applying_all_filters as (
-        select * from packages_applying_minimum_filters
+    ), filtered_packages as (
+        select * from filtered_packages_excluding_facets_filters
         where
             case when cardinality(v_repository_kinds) > 0
             then repository_kind_id = any(v_repository_kinds) else true end
@@ -177,7 +177,7 @@ begin
                 from (
                     select * from (
                         select
-                            paaf.*,
+                            fp.*,
                             (case when v_tsquery_web is not null then
                                 trunc(ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1)::numeric, 2) +
                                 trunc(ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)::numeric, 2)
@@ -186,8 +186,8 @@ begin
                                 when repository_official = true or package_official = true
                                 then true else false
                             end) as official
-                        from packages_applying_all_filters paaf
-                    ) as paafe
+                        from filtered_packages fp
+                    ) as fpe
                     order by
                         case when v_sort = 'relevance' then (relevance, stars) end desc,
                         case when v_sort = 'stars' then (stars, relevance) end desc,
@@ -196,7 +196,7 @@ begin
                         name asc
                     limit (p_input->>'limit')::int
                     offset (p_input->>'offset')::int
-                ) packages_applying_all_filters_paginated
+                ) filtered_packages_paginated
             ),
             'facets', case when v_facets then (
                 select json_build_array(
@@ -214,12 +214,12 @@ begin
                                     select organization_name, organization_display_name, total
                                     from (
                                         select 1 as pri, organization_name, organization_display_name, count(*) as total
-                                        from packages_applying_minimum_filters
+                                        from filtered_packages_excluding_facets_filters
                                         where organization_name = any(v_orgs)
                                         group by organization_name, organization_display_name
                                         union
                                         select 2 as pri, organization_name, organization_display_name, count(*) as total
-                                        from packages_applying_minimum_filters
+                                        from filtered_packages_excluding_facets_filters
                                         where organization_name is not null
                                         and
                                             case when cardinality(v_orgs) > 0
@@ -245,12 +245,12 @@ begin
                                     select user_alias, total
                                     from (
                                         select 1 as pri, user_alias, count(*) as total
-                                        from packages_applying_minimum_filters
+                                        from filtered_packages_excluding_facets_filters
                                         where user_alias = any(v_users)
                                         group by user_alias
                                         union
                                         select 2 as pri, user_alias, count(*) as total
-                                        from packages_applying_minimum_filters
+                                        from filtered_packages_excluding_facets_filters
                                         where user_alias is not null
                                         and
                                             case when cardinality(v_users) > 0
@@ -277,7 +277,7 @@ begin
                                         repository_kind_id,
                                         repository_kind_name,
                                         count(*) as total
-                                    from packages_applying_minimum_filters
+                                    from filtered_packages_excluding_facets_filters
                                     group by repository_kind_id, repository_kind_name
                                     order by total desc, repository_kind_name asc
                                 ) as kinds_breakdown
@@ -298,12 +298,12 @@ begin
                                     select repository_name, total
                                     from (
                                         select 1 as pri, repository_name, count(*) as total
-                                        from packages_applying_minimum_filters
+                                        from filtered_packages_excluding_facets_filters
                                         where repository_name = any(v_repositories)
                                         group by repository_name
                                         union
                                         select 2 as pri, repository_name, count(*) as total
-                                        from packages_applying_minimum_filters
+                                        from filtered_packages_excluding_facets_filters
                                         where repository_name is not null
                                         and
                                             case when cardinality(v_repositories) > 0
@@ -329,12 +329,12 @@ begin
                                     select license, total
                                     from (
                                         select 1 as pri, license, count(*) as total
-                                        from packages_applying_minimum_filters
+                                        from filtered_packages_excluding_facets_filters
                                         where license = any(v_licenses)
                                         group by license
                                         union
                                         select 2 as pri, license, count(*) as total
-                                        from packages_applying_minimum_filters
+                                        from filtered_packages_excluding_facets_filters
                                         where license is not null
                                         and
                                             case when cardinality(v_licenses) > 0
@@ -358,7 +358,7 @@ begin
                                 )), '[]')
                                 from (
                                     select capabilities, count(*) as total
-                                    from packages_applying_minimum_filters
+                                    from filtered_packages_excluding_facets_filters
                                     where capabilities is not null
                                     group by capabilities
                                     order by total desc, capabilities asc
@@ -369,6 +369,6 @@ begin
                 )
             ) else null end
         )),
-        (select count(*) from packages_applying_all_filters);
+        (select count(*) from filtered_packages);
 end
 $$ language plpgsql;
