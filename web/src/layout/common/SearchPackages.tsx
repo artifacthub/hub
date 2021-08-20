@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import React, { useRef, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import React, { useEffect, useRef, useState } from 'react';
 
 import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -18,6 +17,8 @@ interface Props {
 }
 
 const DEFAULT_LIMIT = 20;
+const SEARCH_DELAY = 3 * 100; // 300ms
+const MIN_CHARACTERS_SEARCH = 3;
 
 const SearchPackages = (props: Props) => {
   const inputEl = useRef<HTMLInputElement>(null);
@@ -25,6 +26,9 @@ const SearchPackages = (props: Props) => {
   const [isSearching, setIsSearching] = useState(false);
   const [packages, setPackages] = useState<Package[] | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [highlightedItem, setHighlightedItem] = useState<number | null>(null);
+
   useOutsideClick([dropdownRef], !isNull(packages), () => setPackages(null));
 
   async function searchPackages(tsQueryWeb: string) {
@@ -51,12 +55,46 @@ const SearchPackages = (props: Props) => {
     }
   }
 
-  const handleOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter' && searchQuery !== '') {
-      event.preventDefault();
-      event.stopPropagation();
-      searchPackages(searchQuery);
-      inputEl.current!.blur();
+  const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    switch (e.key) {
+      case 'Escape':
+        cleanSearch();
+        return;
+      case 'ArrowDown':
+        updateHighlightedItem('down');
+        return;
+      case 'ArrowUp':
+        updateHighlightedItem('up');
+        return;
+      case 'Enter':
+        e.preventDefault();
+        if (!isNull(packages) && !isNull(highlightedItem)) {
+          const selectedPkg = packages[highlightedItem];
+          if (selectedPkg && !props.disabledPackages.includes(selectedPkg.packageId)) {
+            saveSelectedPackage(selectedPkg);
+          }
+        }
+        return;
+      default:
+        return;
+    }
+  };
+
+  const updateHighlightedItem = (arrow: 'up' | 'down') => {
+    if (!isNull(packages) && packages.length > 0) {
+      if (!isNull(highlightedItem)) {
+        let newIndex: number = arrow === 'up' ? highlightedItem - 1 : highlightedItem + 1;
+        if (newIndex > packages.length - 1) {
+          newIndex = 0;
+        }
+        if (newIndex < 0) {
+          newIndex = packages.length - 1;
+        }
+        setHighlightedItem(newIndex);
+      } else {
+        const newIndex = arrow === 'up' ? packages.length - 1 : 0;
+        setHighlightedItem(newIndex);
+      }
     }
   };
 
@@ -65,14 +103,48 @@ const SearchPackages = (props: Props) => {
     setSearchQuery('');
     inputEl.current!.value = '';
     props.onSelection(item);
+    setHighlightedItem(null);
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     if (packages) {
       setPackages(null);
+      setHighlightedItem(null);
     }
   };
+
+  const cleanTimeout = () => {
+    if (!isNull(dropdownTimeout)) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+  };
+
+  const cleanSearch = () => {
+    setPackages(null);
+    setSearchQuery('');
+  };
+
+  useEffect(() => {
+    const isInputFocused = inputEl.current === document.activeElement;
+    if (searchQuery.length >= MIN_CHARACTERS_SEARCH && isInputFocused) {
+      cleanTimeout();
+      setDropdownTimeout(
+        setTimeout(() => {
+          searchPackages(searchQuery);
+        }, SEARCH_DELAY)
+      );
+    } else {
+      cleanSearch();
+    }
+
+    return () => {
+      if (!isNull(dropdownTimeout)) {
+        clearTimeout(dropdownTimeout);
+      }
+    };
+  }, [searchQuery]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div className="position-relative">
@@ -98,24 +170,6 @@ const SearchPackages = (props: Props) => {
             </div>
           )}
         </div>
-
-        <button
-          data-testid="searchIconBtn"
-          type="button"
-          className={`btn btn-outline-secondary ml-3 text-center p-0 ${styles.searchBtn}`}
-          disabled={searchQuery === '' || isSearching}
-          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (searchQuery !== '') {
-              searchPackages(searchQuery);
-            }
-          }}
-          aria-label={`Search by ${searchQuery}`}
-          aria-expanded={!isNull(packages)}
-        >
-          <FaSearch />
-        </button>
       </div>
 
       {!isNull(packages) && (
@@ -144,7 +198,7 @@ const SearchPackages = (props: Props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {packages.map((item: Package) => {
+                  {packages.map((item: Package, index: number) => {
                     const isDisabled = props.disabledPackages.includes(item.packageId);
 
                     return (
@@ -153,7 +207,8 @@ const SearchPackages = (props: Props) => {
                         role="button"
                         className={classnames(
                           { [styles.clickableCell]: !isDisabled },
-                          { [styles.disabledCell]: isDisabled }
+                          { [styles.disabledCell]: isDisabled },
+                          { [styles.activeCell]: index === highlightedItem }
                         )}
                         onClick={() => {
                           if (!isDisabled) {
@@ -161,6 +216,8 @@ const SearchPackages = (props: Props) => {
                           }
                         }}
                         key={`search_${item.packageId}`}
+                        onMouseOver={() => setHighlightedItem(index)}
+                        onMouseOut={() => setHighlightedItem(null)}
                       >
                         <td className="align-middle text-center d-none d-sm-table-cell">
                           <RepositoryIcon kind={item.repository.kind} className={`mx-2 ${styles.icon}`} />
