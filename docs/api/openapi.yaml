@@ -2394,9 +2394,9 @@ paths:
           description: Value to check
       responses:
         "204":
-          description: "Found, the value is not available"
+          description: "Found, the value exists, and is not free to use"
         "404":
-          description: "Not found, the value is available"
+          description: "Not found, the value does not exist, and is free to use"
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
