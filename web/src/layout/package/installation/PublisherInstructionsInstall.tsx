@@ -1,4 +1,5 @@
-import React from 'react';
+import classnames from 'classnames';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
@@ -11,11 +12,23 @@ interface Props {
 }
 
 interface CodeProps {
+  inline: boolean;
   children: any;
 }
 
 interface HeadingProps {
   level: number;
+  children: any;
+}
+
+interface ImageProps {
+  alt: string;
+  src: string;
+}
+
+interface LinkProps {
+  href: string;
+  target: string;
   children: any;
 }
 
@@ -25,6 +38,9 @@ interface TableProps {
 
 const PublisherInstructionsInstall = (props: Props) => {
   const Code: React.ElementType = (props: CodeProps) => {
+    if (props.inline) {
+      return <code className={styles.inlineCode}>{props.children}</code>;
+    }
     if (props.children) {
       const content = String(props.children).replace(/\n$/, '');
       return <CommandBlock command={content} />;
@@ -51,6 +67,30 @@ const PublisherInstructionsInstall = (props: Props) => {
     </div>
   );
 
+  const Image: React.ElementType = (data: ImageProps) => {
+    const [error, setError] = useState<boolean>(false);
+
+    // Only absolute path
+    return /^https?:/.test(data.src) ? (
+      <img
+        src={data.src}
+        alt={data.alt || ''}
+        className={classnames('mw-100', { 'd-none': error })}
+        onError={() => setError(true)}
+      />
+    ) : null;
+  };
+
+  // Only for external links and anchors
+  const Link: React.ElementType = (data: LinkProps) => {
+    // Only absolute link
+    return /^https?:/.test(data.href) ? (
+      <a href={data.href} target={data.target} rel="noopener noreferrer" className="text-primary">
+        {data.children}
+      </a>
+    ) : null;
+  };
+
   return (
     <ErrorBoundary message="Something went wrong rendering the install instructions of this package.">
       <span data-testid="readme">
@@ -63,6 +103,8 @@ const PublisherInstructionsInstall = (props: Props) => {
           components={{
             pre: Pre,
             code: Code,
+            img: Image,
+            a: Link,
             h1: Heading,
             h2: Heading,
             h3: Heading,
