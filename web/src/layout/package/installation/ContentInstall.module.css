@@ -27,6 +27,24 @@
   font-size: 55%;
 }
 
+.md p code {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+}
+
+.inlineCode {
+  hyphens: none;
+  color: var(--dark);
+  background-color: var(--code-bg-md);
+  border: 1px solid var(--color-1-20);
+  border-radius: 3px;
+  padding: 0 0.15rem;
+}
+
+.md li ul {
+  margin-bottom: 1rem;
+}
+
 @media only screen and (max-width: 767.98px) {
   .blockWrapper {
     font-size: 0.9rem;
