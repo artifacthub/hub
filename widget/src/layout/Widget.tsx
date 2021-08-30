@@ -334,22 +334,23 @@ const AVAILABLE_THEMES = [DEFAULT_THEME, 'dark'];
 
 export default function Widget(props: Props) {
   const currentTheme = props.theme && AVAILABLE_THEMES.includes(props.theme) ? props.theme : DEFAULT_THEME;
+  const [currentUrl, setCurrentUrl] = useState<string | undefined>(props.url);
   const urlParams = props.url ? new URL(props.url) : undefined;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [packageSummary, setPackageSummary] = useState<PackageSummary | undefined | null>(props.packageSummary);
 
-  useEffect(() => {
-    async function fetchPackage() {
-      try {
-        setIsLoading(true);
-        setPackageSummary(await API.getPackageInfo(urlParams!.origin, urlParams!.pathname));
-        setIsLoading(false);
-      } catch {
-        setIsLoading(false);
-        setPackageSummary(null);
-      }
+  async function fetchPackage() {
+    try {
+      setIsLoading(true);
+      setPackageSummary(await API.getPackageInfo(urlParams!.origin, urlParams!.pathname));
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+      setPackageSummary(null);
     }
+  }
 
+  useEffect(() => {
     if (isUndefined(packageSummary)) {
       if (!isUndefined(urlParams)) {
         fetchPackage();
@@ -358,6 +359,13 @@ export default function Widget(props: Props) {
       }
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (props.url !== currentUrl && !props.inGroup) {
+      setCurrentUrl(props.url);
+      fetchPackage();
+    }
+  }, [props.url]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (isNull(packageSummary) || isUndefined(props.url)) return null;
 
