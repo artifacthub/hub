@@ -128,5 +128,31 @@ describe('OAuth', () => {
         '/oauth/github?redirect_url=%2Fpackages%2Fsearch%3Fkind%3D0%26ts_query%3Dsecurity%26sort%3Drelevance%26page%3D1'
       );
     });
+
+    it('goes to correct route without wrong querystring on btn click', () => {
+      Object.defineProperty(window, 'location', {
+        value: {
+          href: 'http://localhost',
+          pathname: '/',
+          search: '?modal=login&redirect=%2F',
+        },
+        writable: true,
+      });
+
+      render(<OAuth {...defaultProps} />);
+
+      const btn = screen.getByText('Github');
+      userEvent.click(btn);
+
+      waitFor(() => {
+        expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
+        expect(setIsLoadingMock).toHaveBeenCalledWith({
+          name: 'github',
+          status: true,
+        });
+      });
+
+      expect(window.location.href).toBe('/oauth/github?redirect_url=%2F');
+    });
   });
 });

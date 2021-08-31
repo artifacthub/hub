@@ -1,5 +1,6 @@
 import React from 'react';
 
+import cleanLoginUrlParams from '../../utils/cleanLoginUrlParams';
 import getHubBaseURL from '../../utils/getHubBaseURL';
 import getMetaTag from '../../utils/getMetaTag';
 import styles from './OAuth.module.css';
@@ -22,8 +23,9 @@ const OPENID_LOGO = '/static/media/openid.svg';
 const OAuth = (props: Props) => {
   const goToOAuthPage = (name: 'google' | 'github' | 'oidc') => {
     props.setIsLoading({ type: name, status: true });
+    const querystring = cleanLoginUrlParams(window.location.search);
     window.location.href = `${getHubBaseURL()}/oauth/${name}?redirect_url=${encodeURIComponent(
-      `${window.location.pathname}${window.location.search || ''}`
+      `${window.location.pathname}${querystring !== '' ? `?${querystring}` : ''}`
     )}`;
     return;
   };
