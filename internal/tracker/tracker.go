@@ -1,6 +1,7 @@
 package tracker
 
 import (
+	"errors"
 	"fmt"
 	"net/url"
 	"os"
@@ -176,13 +177,14 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 // getRepositoryMetadata returns the repository's metadata when available.
 func (t *Tracker) getRepositoryMetadata() *hub.RepositoryMetadata {
 	var md *hub.RepositoryMetadata
+	var err error
 
 	u, _ := url.Parse(t.r.URL)
 	switch t.r.Kind {
 	case hub.Helm:
 		if repo.SchemeIsHTTP(u) {
 			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-			md, _ = t.svc.Rm.GetMetadata(u.String())
+			md, err = t.svc.Rm.GetMetadata(u.String())
 		}
 	case
 		hub.Falco,
@@ -195,7 +197,10 @@ func (t *Tracker) getRepositoryMetadata() *hub.RepositoryMetadata {
 		hub.KedaScaler,
 		hub.CoreDNS,
 		hub.Keptn:
-		md, _ = t.svc.Rm.GetMetadata(filepath.Join(t.basePath, hub.RepositoryMetadataFile))
+		md, err = t.svc.Rm.GetMetadata(filepath.Join(t.basePath, hub.RepositoryMetadataFile))
+	}
+	if err != nil && !errors.Is(err, repo.ErrMetadataNotFound) {
+		t.warn(fmt.Errorf("error getting repository metadata: %w", err))
 	}
 
 	return md

@@ -815,12 +815,12 @@ func TestGetMetadata(t *testing.T) {
 	mdNotFoundYmlReq, _ := http.NewRequest("GET", "http://url.test/not-found.yml", nil)
 	mdNotFoundYamlReq, _ := http.NewRequest("GET", "http://url.test/not-found.yaml", nil)
 
-	t.Run("local file: error reading repository metadata file", func(t *testing.T) {
+	t.Run("local file: metadata file not found", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 		_, err := m.GetMetadata("testdata/not-exists.yaml")
 		assert.Error(t, err)
-		assert.Contains(t, err.Error(), "error reading repository metadata file")
+		assert.Contains(t, err.Error(), "metadata not found")
 	})
 
 	t.Run("remote file: error downloading repository metadata file", func(t *testing.T) {
@@ -834,7 +834,7 @@ func TestGetMetadata(t *testing.T) {
 		assert.Contains(t, err.Error(), "error downloading repository metadata file")
 	})
 
-	t.Run("remote file: unexpected status code received", func(t *testing.T) {
+	t.Run("remote file: metadata file not found", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
 		hc.On("Do", mdNotFoundYmlReq).Return(&http.Response{
@@ -844,6 +844,23 @@ func TestGetMetadata(t *testing.T) {
 		hc.On("Do", mdNotFoundYamlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
+		}, nil)
+		m := NewManager(cfg, nil, nil, hc)
+		_, err := m.GetMetadata("http://url.test/not-found")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "metadata not found")
+	})
+
+	t.Run("remote file: unexpected status code received", func(t *testing.T) {
+		t.Parallel()
+		hc := &tests.HTTPClientMock{}
+		hc.On("Do", mdNotFoundYmlReq).Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusForbidden,
+		}, nil)
+		hc.On("Do", mdNotFoundYamlReq).Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusForbidden,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
 		_, err := m.GetMetadata("http://url.test/not-found")
