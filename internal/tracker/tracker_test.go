@@ -3,6 +3,7 @@ package tracker
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strings"
 	"testing"
 
@@ -261,7 +262,8 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).
+			Return(nil, fmt.Errorf("error: %w", repo.ErrMetadataNotFound))
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
 			pkg.BuildKey(p1v1): p1v1,
@@ -281,7 +283,9 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, tests.ErrFake)
+		expectedErr := "error getting repository metadata: fake error for tests"
+		sw.ec.On("Append", r1.RepositoryID, expectedErr).Return()
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
 			pkg.BuildKey(p1v1): "new digest",
 		}, nil)

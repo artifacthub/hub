@@ -53,6 +53,9 @@ var (
 	// ErrInvalidMetadata indicates that the repository metadata is not valid.
 	ErrInvalidMetadata = errors.New("invalid metadata")
 
+	// ErrMetadataNotFound indicates that the repository metadata was not found.
+	ErrMetadataNotFound = errors.New("metadata not found")
+
 	// ErrSchemeNotSupported error indicates that the scheme used in the
 	// repository url is not supported.
 	ErrSchemeNotSupported = errors.New("scheme not supported")
@@ -370,6 +373,9 @@ func (m *Manager) readMetadataFile(mdFile string) ([]byte, error) {
 	var data []byte
 	u, err := url.Parse(mdFile)
 	if err != nil || u.Scheme == "" || u.Host == "" {
+		if _, err := os.Stat(mdFile); os.IsNotExist(err) {
+			return nil, ErrMetadataNotFound
+		}
 		data, err = ioutil.ReadFile(mdFile)
 		if err != nil {
 			return nil, fmt.Errorf("error reading repository metadata file: %w", err)
@@ -381,7 +387,11 @@ func (m *Manager) readMetadataFile(mdFile string) ([]byte, error) {
 			return nil, fmt.Errorf("error downloading repository metadata file: %w", err)
 		}
 		defer resp.Body.Close()
-		if resp.StatusCode != http.StatusOK {
+		switch resp.StatusCode {
+		case http.StatusOK:
+		case http.StatusNotFound:
+			return nil, ErrMetadataNotFound
+		default:
 			return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
 		}
 		data, err = ioutil.ReadAll(resp.Body)
