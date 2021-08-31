@@ -6,9 +6,8 @@ import root from 'react-shadow/styled-components';
 import Group from './layout/Group';
 import Widget from './layout/Widget';
 
-const Widgets = document.querySelectorAll('.artifacthub-widget');
-Widgets.forEach((div: Element) => {
-  const { url, theme, responsive, header } = (div as HTMLElement).dataset;
+const renderWidget = (element: HTMLElement) => {
+  const { url, theme, responsive, header } = element.dataset;
   ReactDOM.render(
     <React.StrictMode>
       <root.section>
@@ -23,13 +22,27 @@ Widgets.forEach((div: Element) => {
         </div>
       </root.section>
     </React.StrictMode>,
-    div
+    element
   );
+};
+
+const Widgets = document.querySelectorAll('.artifacthub-widget');
+Widgets.forEach((div: Element) => {
+  const observer = new MutationObserver((mutationsList: MutationRecord[]) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'attributes' && mutation.attributeName?.startsWith('data-')) {
+        renderWidget(mutation.target as HTMLElement);
+      }
+    }
+  });
+  observer.observe(div, {
+    attributes: true, // only listen to attribute changes
+  });
+  renderWidget(div as HTMLElement);
 });
 
-const WidgetsGroups = document.querySelectorAll('.artifacthub-widget-group');
-WidgetsGroups.forEach((div: Element) => {
-  const { url, loading, theme, color, responsive, width, header } = (div as HTMLElement).dataset;
+const renderGroup = (element: HTMLElement) => {
+  const { url, loading, theme, color, responsive, width, header } = element.dataset;
   ReactDOM.render(
     <React.StrictMode>
       <root.section>
@@ -46,6 +59,21 @@ WidgetsGroups.forEach((div: Element) => {
         </div>
       </root.section>
     </React.StrictMode>,
-    div
+    element
   );
+};
+
+const WidgetsGroups = document.querySelectorAll('.artifacthub-widget-group');
+WidgetsGroups.forEach((div: Element) => {
+  const observer = new MutationObserver((mutationsList: MutationRecord[]) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'attributes' && mutation.attributeName?.startsWith('data-')) {
+        renderGroup(mutation.target as HTMLElement);
+      }
+    }
+  });
+  observer.observe(div, {
+    attributes: true, // only listen to attribute changes
+  });
+  renderGroup(div as HTMLElement);
 });
