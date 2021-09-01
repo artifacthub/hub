@@ -3,25 +3,25 @@
 exports[`Widget creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="sc-jrsJWt CIebv"
+    class="sc-jrAFXE jjpVwG"
     data-testid="mainWrapper"
   >
     <div
-      class="sc-kEqXSa jGCqbn"
+      class="sc-kEjbQP dDZVPU"
       data-testid="cardWrapper"
     >
       <a
-        class="sc-iqAclL kjxlub"
+        class="sc-iqHYmW bYeuCz"
         href="https://localhost:8000/packages/helm/artifact-hub/artifact-hub"
         rel="noopener noreferrer"
         target="_blank"
       >
         <div
-          class="sc-crzoAE iCcPor"
+          class="sc-crrszt gbWTYU"
         >
           <div
             aria-hidden="true"
-            class="sc-gKAaRy fnOkev sc-bqGGPW cVpEhD"
+            class="sc-gKseQn kKFreg sc-bqyKOL jjIvWU"
             data-testid="iconWrapper"
           >
             <svg
@@ -113,14 +113,14 @@ exports[`Widget creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="sc-dIsUp gNyQfd"
+          class="sc-dQoVA eiZJhu"
           data-testid="cardBody"
         >
           <div
-            class="sc-eCApnc klaGnn"
+            class="sc-eCstlR dUwzH"
           >
             <div
-              class="sc-jSFjdj hhTyUD"
+              class="sc-jSgvzq jNTtZa"
               role="status"
             />
           </div>
