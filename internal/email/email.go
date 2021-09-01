@@ -10,6 +10,7 @@ import (
 	"github.com/domodwyer/mailyak"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"github.com/versine/loginauth"
 )
 
 // BaseTmpl represents the base template used by emails.
@@ -64,7 +65,14 @@ func NewSender(cfg *viper.Viper) *Sender {
 	username := cfg.GetString("email.smtp.username")
 	password := cfg.GetString("email.smtp.password")
 	if username != "" && password != "" {
-		s.smtpAuth = smtp.PlainAuth("", username, password, cfg.GetString("email.smtp.host"))
+		switch cfg.GetString("email.smtp.auth") {
+		case "login":
+			s.smtpAuth = loginauth.New(username, password, cfg.GetString("email.smtp.host"))
+		case "plain":
+			s.smtpAuth = smtp.PlainAuth("", username, password, cfg.GetString("email.smtp.host"))
+		default:
+			s.smtpAuth = smtp.PlainAuth("", username, password, cfg.GetString("email.smtp.host"))
+		}
 	}
 	return s
 }
