@@ -22,6 +22,7 @@ email:
   from: ""
   replyTo: ""
   smtp:
+    auth: plain
     host: ""
     port: 587
     username: ""

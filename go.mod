@@ -38,6 +38,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/tektoncd/pipeline v0.26.0
 	github.com/unrolled/secure v1.0.9
+	github.com/versine/loginauth v0.0.0-20170330164406-8380ec243689
 	github.com/vincent-petithory/dataurl v0.0.0-20191104211930-d1553a71de50
 	github.com/wagslane/go-password-validator v0.3.0
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97

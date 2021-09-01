@@ -116,6 +116,12 @@
                 "smtp": {
                     "type": "object",
                     "properties": {
+                        "auth": {
+                            "title": "Authentication mechanism",
+                            "type": "string",
+                            "default": "plain",
+                            "enum": ["login", "plain"]
+                        },
                         "host": {
                             "title": "SMTP host",
                             "description": "This field is required if you want to enable email sending in Artifact Hub.",
