@@ -8,6 +8,7 @@ import { AppCtx } from '../../context/AppCtx';
 import { AHStats, ErrorKind } from '../../types';
 import StatsView from './index';
 jest.mock('../../api');
+jest.mock('./BrushChart', () => () => <div>Chart</div>);
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
 
 const getMockStats = (fixtureId: string): AHStats => {

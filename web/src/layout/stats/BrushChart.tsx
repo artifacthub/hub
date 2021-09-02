@@ -1,0 +1,249 @@
+import moment from 'moment';
+import React, { useEffect } from 'react';
+import ReactApexChart from 'react-apexcharts';
+
+import useBreakpointDetect from '../../hooks/useBreakpointDetect';
+import getMetaTag from '../../utils/getMetaTag';
+import prettifyNumber from '../../utils/prettifyNumber';
+
+interface Props {
+  series: any[];
+  id: string;
+  title: string;
+  activeTheme: string;
+}
+
+const BrushChart = (props: Props) => {
+  const primaryColor = getMetaTag('primaryColor');
+  const secondaryColor = getMetaTag('secondaryColor');
+  const point = useBreakpointDetect();
+
+  useEffect(() => {
+    // We force to use original selection after changing breakpoint
+    ApexCharts.exec(
+      `${props.id}BrushChart`,
+      'updateOptions',
+      {
+        selection: {
+          xaxis: {
+            min: moment().subtract(12, 'months').valueOf(), // We select last year
+            max: moment.now(),
+          },
+        },
+      },
+      false,
+      true
+    );
+  }, [point, props.id]);
+
+  const getBarChartConfig = (): ApexCharts.ApexOptions => {
+    return {
+      chart: {
+        id: `${props.id}BarChart`,
+        height: 300,
+        type: 'bar',
+        zoom: {
+          enabled: false,
+        },
+        redrawOnWindowResize: false,
+        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        toolbar: {
+          show: false,
+        },
+      },
+      grid: { borderColor: 'var(--border-md)' },
+      plotOptions: {
+        bar: {
+          borderRadius: 5,
+          dataLabels: {
+            position: 'top',
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        offsetY: -20,
+        style: {
+          fontSize: '12px',
+          colors: ['var(--color-font)'],
+        },
+        formatter: (value: number) => {
+          return prettifyNumber(value);
+        },
+      },
+      colors: ['var(--color-1-500)'],
+      xaxis: {
+        type: 'datetime',
+        position: 'bottom',
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        tooltip: {
+          enabled: true,
+        },
+        labels: {
+          format: `MM/yy`,
+          style: {
+            colors: 'var(--color-font)',
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: 'var(--color-font)',
+          },
+        },
+      },
+      tooltip: {
+        x: {
+          format: `MMM'yy`,
+        },
+      },
+      title: {
+        text: props.title,
+        style: {
+          color: 'var(--color-font)',
+        },
+      },
+      responsive: [
+        {
+          breakpoint: 1920,
+          options: {
+            plotOptions: {
+              bar: {
+                columnWidth: '80%',
+              },
+            },
+            dataLabels: {
+              offsetY: -15,
+              style: {
+                fontSize: '9px',
+              },
+            },
+          },
+        },
+        {
+          breakpoint: 768,
+          options: {
+            dataLabels: {
+              enabled: false,
+            },
+          },
+        },
+      ],
+    };
+  };
+
+  const getAreaChartConfig = (): ApexCharts.ApexOptions => {
+    return {
+      chart: {
+        id: `${props.id}BrushChart`,
+        height: 120,
+        type: 'area',
+        zoom: {
+          enabled: false,
+        },
+        redrawOnWindowResize: false,
+        brush: {
+          target: `${props.id}BarChart`,
+          enabled: true,
+          autoScaleYaxis: false,
+        },
+        selection: {
+          enabled: true,
+          xaxis: {
+            min: moment().subtract(12, 'months').valueOf(), // We select last year
+            max: moment.now(),
+          },
+          fill: {
+            color: props.activeTheme === 'dark' ? '#222529' : secondaryColor,
+            opacity: 0.2,
+          },
+          stroke: {
+            width: 1,
+            dashArray: 4,
+            color: props.activeTheme === 'dark' ? '#222529' : secondaryColor,
+            opacity: 1,
+          },
+        },
+        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        toolbar: {
+          show: false,
+        },
+      },
+      grid: { borderColor: 'var(--border-md)' },
+      plotOptions: {
+        bar: {
+          borderRadius: 5,
+          dataLabels: {
+            position: 'top',
+          },
+        },
+      },
+      colors: ['var(--color-1-500)'],
+      xaxis: {
+        type: 'datetime',
+        position: 'bottom',
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        tooltip: {
+          enabled: true,
+        },
+        labels: {
+          format: `MM/yy`,
+          style: {
+            colors: 'var(--color-font)',
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: 'var(--color-font)',
+          },
+        },
+      },
+      stroke: {
+        curve: 'smooth',
+      },
+      fill: {
+        opacity: 0.5,
+        colors: [
+          () => {
+            return props.activeTheme === 'dark' ? '#222529' : primaryColor;
+          },
+        ],
+      },
+    };
+  };
+
+  return (
+    <>
+      <ReactApexChart
+        options={getBarChartConfig()}
+        series={[
+          {
+            name: 'Packages',
+            data: props.series,
+          },
+        ]}
+        type="bar"
+        height={300}
+      />
+      {/* Brush chart is only visible when we have collected data from more than one year */}
+      {props.series.length > 12 && (
+        <ReactApexChart options={getAreaChartConfig()} series={[{ data: props.series }]} type="area" height={130} />
+      )}
+    </>
+  );
+};
+
+export default BrushChart;

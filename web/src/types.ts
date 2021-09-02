@@ -646,7 +646,7 @@ export enum ChartTemplateSpecialType {
 }
 
 export interface AHStats {
-  generatedAt: number;
+  generatedAt?: number;
   packages: {
     total: number;
     runningTotal?: any[];
