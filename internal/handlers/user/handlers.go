@@ -767,7 +767,8 @@ func (h *Handlers) newUserFromOIDProfile(
 	if err := idToken.Claims(&claims); err != nil {
 		return nil, fmt.Errorf("error extracting claims from id token: %w", err)
 	}
-	if claims.Email == "" || !claims.EmailVerified {
+	skipEmailVerifiedCheck := h.cfg.GetBool("server.oauth.oidc.skipEmailVerifiedCheck")
+	if claims.Email == "" || (!skipEmailVerifiedCheck && !claims.EmailVerified) {
 		return nil, errors.New("no valid email available for use")
 	}
 	alias := claims.PreferredUsername

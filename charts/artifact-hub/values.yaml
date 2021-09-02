@@ -108,6 +108,7 @@ hub:
           - openid
           - profile
           - email
+        skipEmailVerifiedCheck: false
     xffIndex: 0
   analytics:
     gaTrackingID: ""
