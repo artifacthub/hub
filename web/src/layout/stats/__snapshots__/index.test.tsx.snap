@@ -5,24 +5,6 @@ exports[`StatsView creates snapshot 1`] = `
   <div
     class="d-flex flex-column flex-grow-1 position-relative"
   >
-    <div
-      class="position-absolute p-5 wrapper undefined"
-    >
-      <div
-        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-      >
-        <div
-          class="spinner-border text-primary spinner undefined"
-          role="status"
-        >
-          <span
-            class="sr-only"
-          >
-            Loading...
-          </span>
-        </div>
-      </div>
-    </div>
     <main
       class="container-lg px-sm-4 px-lg-0 py-5 noFocus"
       id="content"
@@ -36,6 +18,295 @@ exports[`StatsView creates snapshot 1`] = `
           class="h2 text-dark text-center title"
         >
            Stats
+        </div>
+        <div
+          class="text-center mb-5"
+        >
+          <small>
+            <span
+              class="text-muted mr-2"
+            >
+              Report generated at:
+            </span>
+          </small>
+        </div>
+        <span
+          class="header"
+        >
+          <h2
+            class="position-relative anchorHeader headingWrapper mb-4 font-weight-bold title"
+          >
+            <div
+              class="position-absolute headerAnchor"
+              data-testid="anchor"
+              id="packages-and-releases"
+            />
+            <a
+              aria-label="Packages and releases"
+              class="text-reset text-center d-none d-md-block headingLink"
+              href="/#packages-and-releases"
+              role="button"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </a>
+            Packages and releases
+          </h2>
+        </span>
+        <div
+          class="row my-4 pb-0 pb-lg-4"
+        >
+          <div
+            class="col-12 col-lg-6"
+          >
+            <div
+              class="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0"
+            >
+              <div
+                class="card chartWrapper"
+              >
+                <div
+                  class="position-absolute p-5 wrapper undefined"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                  >
+                    <div
+                      class="spinner-border text-primary spinner undefined"
+                      role="status"
+                    >
+                      <span
+                        class="sr-only"
+                      >
+                        Loading...
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  Chart
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-12 col-lg-6"
+          >
+            <div
+              class="pl-0 pl-lg-3 pl-xxl-4 mt-4"
+            >
+              <div
+                class="card chartWrapper"
+              >
+                <div
+                  class="position-absolute p-5 wrapper undefined"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                  >
+                    <div
+                      class="spinner-border text-primary spinner undefined"
+                      role="status"
+                    >
+                      <span
+                        class="sr-only"
+                      >
+                        Loading...
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  Chart
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span
+          class="header"
+        >
+          <h2
+            class="position-relative anchorHeader headingWrapper my-4 font-weight-bold title"
+          >
+            <div
+              class="position-absolute headerAnchor"
+              data-testid="anchor"
+              id="repositories"
+            />
+            <a
+              aria-label="Repositories"
+              class="text-reset text-center d-none d-md-block headingLink"
+              href="/#repositories"
+              role="button"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </a>
+            Repositories
+          </h2>
+        </span>
+        <div
+          class="row my-4"
+        >
+          <div
+            class="col-12 my-4"
+          >
+            <div
+              class="card chartWrapper"
+            >
+              <div
+                class="position-absolute p-5 wrapper undefined"
+              >
+                <div
+                  class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                >
+                  <div
+                    class="spinner-border text-primary spinner undefined"
+                    role="status"
+                  >
+                    <span
+                      class="sr-only"
+                    >
+                      Loading...
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                Chart
+              </div>
+            </div>
+          </div>
+        </div>
+        <span
+          class="header"
+        >
+          <h2
+            class="position-relative anchorHeader headingWrapper mt-4 font-weight-bold title"
+          >
+            <div
+              class="position-absolute headerAnchor"
+              data-testid="anchor"
+              id="organizations-and-users"
+            />
+            <a
+              aria-label="Organizations and users"
+              class="text-reset text-center d-none d-md-block headingLink"
+              href="/#organizations-and-users"
+              role="button"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </a>
+            Organizations and users
+          </h2>
+        </span>
+        <div
+          class="row my-4"
+        >
+          <div
+            class="col-12 col-lg-6"
+          >
+            <div
+              class="pr-0 pr-lg-3 pr-xxl-4 pt-4"
+            >
+              <div
+                class="card chartWrapper"
+              >
+                <div
+                  class="position-absolute p-5 wrapper undefined"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                  >
+                    <div
+                      class="spinner-border text-primary spinner undefined"
+                      role="status"
+                    >
+                      <span
+                        class="sr-only"
+                      >
+                        Loading...
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  Chart
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-12 col-lg-6"
+          >
+            <div
+              class="pl-0 pl-lg-3 pl-xxl-4 pt-4"
+            >
+              <div
+                class="card chartWrapper"
+              >
+                <div
+                  class="position-absolute p-5 wrapper undefined"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                  >
+                    <div
+                      class="spinner-border text-primary spinner undefined"
+                      role="status"
+                    >
+                      <span
+                        class="sr-only"
+                      >
+                        Loading...
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  Chart
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>

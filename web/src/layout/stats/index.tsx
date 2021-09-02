@@ -11,10 +11,10 @@ import { AHStats } from '../../types';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import getMetaTag from '../../utils/getMetaTag';
 import isWhiteLabel from '../../utils/isWhiteLabel';
-import prettifyNumber from '../../utils/prettifyNumber';
 import AnchorHeader from '../common/AnchorHeader';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
+import BrushChart from './BrushChart';
 import styles from './StatsView.module.css';
 
 interface Props {
@@ -30,7 +30,28 @@ const StatsView = (props: Props) => {
   const { effective } = ctx.prefs.theme;
   const [activeTheme, setActiveTheme] = useState(effective);
   const [isLoading, setIsLoading] = useState(false);
-  const [stats, setStats] = useState<AHStats | null | undefined>(undefined);
+  const [stats, setStats] = useState<AHStats | null>({
+    packages: {
+      total: 0,
+      runningTotal: [],
+    },
+    snapshots: {
+      total: 0,
+      runningTotal: [],
+    },
+    repositories: {
+      total: 0,
+      runningTotal: [],
+    },
+    organizations: {
+      total: 0,
+      runningTotal: [],
+    },
+    users: {
+      total: 0,
+      runningTotal: [],
+    },
+  });
   const [apiError, setApiError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -142,7 +163,6 @@ const StatsView = (props: Props) => {
       },
       xaxis: {
         type: 'datetime',
-        tickPlacement: 'on',
         labels: {
           datetimeFormatter: {
             year: 'yyyy',
@@ -166,103 +186,6 @@ const StatsView = (props: Props) => {
       markers: {
         size: 0,
       },
-    };
-  };
-
-  const getBarChartConfig = (title: string): ApexCharts.ApexOptions => {
-    return {
-      chart: {
-        height: 300,
-        type: 'bar',
-        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
-        toolbar: {
-          show: false,
-        },
-      },
-      grid: { borderColor: 'var(--border-md)' },
-      plotOptions: {
-        bar: {
-          borderRadius: 5,
-          dataLabels: {
-            position: 'top',
-          },
-        },
-      },
-      dataLabels: {
-        enabled: true,
-        offsetY: -20,
-        style: {
-          fontSize: '12px',
-          colors: ['var(--color-font)'],
-        },
-        formatter: (value: number) => {
-          return prettifyNumber(value);
-        },
-      },
-      colors: ['var(--color-1-500)'],
-      xaxis: {
-        type: 'datetime',
-        position: 'bottom',
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        tooltip: {
-          enabled: true,
-        },
-        labels: {
-          format: `MM/yy`,
-          style: {
-            colors: 'var(--color-font)',
-          },
-        },
-      },
-      yaxis: {
-        labels: {
-          style: {
-            colors: 'var(--color-font)',
-          },
-        },
-      },
-      tooltip: {
-        x: {
-          format: `MMM'yy`,
-        },
-      },
-      title: {
-        text: title,
-        style: {
-          color: 'var(--color-font)',
-        },
-      },
-      responsive: [
-        {
-          breakpoint: 1920,
-          options: {
-            plotOptions: {
-              bar: {
-                columnWidth: '80%',
-              },
-            },
-            dataLabels: {
-              offsetY: -15,
-              style: {
-                fontSize: '9px',
-              },
-            },
-          },
-        },
-        {
-          breakpoint: 768,
-          options: {
-            dataLabels: {
-              enabled: false,
-            },
-          },
-        },
-      ],
     };
   };
 
@@ -309,8 +232,6 @@ const StatsView = (props: Props) => {
 
   return (
     <div className="d-flex flex-column flex-grow-1 position-relative">
-      {(isUndefined(stats) || isLoading) && <Loading />}
-
       <main role="main" className="container-lg px-sm-4 px-lg-0 py-5 noFocus" id="content" tabIndex={-1}>
         <div className="flex-grow-1 position-relative">
           <div className={`h2 text-dark text-center ${styles.title}`}>{siteName} Stats</div>
@@ -322,7 +243,7 @@ const StatsView = (props: Props) => {
               <div className="text-center mb-5">
                 <small>
                   <span className="text-muted mr-2">Report generated at:</span>
-                  {moment(stats.generatedAt).format('YYYY/MM/DD HH:mm:ss (Z)')}
+                  {stats.generatedAt ? moment(stats.generatedAt).format('YYYY/MM/DD HH:mm:ss (Z)') : ''}
                 </small>
               </div>
 
@@ -344,6 +265,7 @@ const StatsView = (props: Props) => {
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.runningTotal })}>
                           <div className="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
+                              {(stats.snapshots.runningTotal!.length === 0 || isLoading) && <Loading />}
                               <ReactApexChart
                                 options={getAreaChartConfig('Packages available')}
                                 series={[{ name: 'Packages', data: stats.packages.runningTotal }]}
@@ -359,6 +281,7 @@ const StatsView = (props: Props) => {
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.runningTotal })}>
                           <div className="pl-0 pl-lg-3 pl-xxl-4 mt-4">
                             <div className={`card ${styles.chartWrapper}`}>
+                              {(stats.packages.runningTotal!.length === 0 || isLoading) && <Loading />}
                               <ReactApexChart
                                 options={getAreaChartConfig('Releases available')}
                                 series={[{ name: 'Releases', data: stats.snapshots.runningTotal }]}
@@ -378,16 +301,12 @@ const StatsView = (props: Props) => {
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.createdMonthly })}>
                           <div className="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
-                              <ReactApexChart
-                                options={getBarChartConfig('New packages added monthly')}
-                                series={[
-                                  {
-                                    name: 'Packages',
-                                    data: stats.packages.createdMonthly,
-                                  },
-                                ]}
-                                type="bar"
-                                height={300}
+                              {(stats.packages.createdMonthly!.length === 0 || isLoading) && <Loading />}
+                              <BrushChart
+                                series={stats.packages.createdMonthly}
+                                title="New packages added monthly"
+                                id="snapshots"
+                                activeTheme={activeTheme}
                               />
                             </div>
                           </div>
@@ -398,16 +317,12 @@ const StatsView = (props: Props) => {
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.createdMonthly })}>
                           <div className="pl-0 pl-lg-3 pl-xxl-4 mt-4">
                             <div className={`card ${styles.chartWrapper}`}>
-                              <ReactApexChart
-                                options={getBarChartConfig('New releases added monthly')}
-                                series={[
-                                  {
-                                    name: 'Releases',
-                                    data: stats.snapshots.createdMonthly,
-                                  },
-                                ]}
-                                type="bar"
-                                height={300}
+                              {(stats.snapshots.createdMonthly!.length === 0 || isLoading) && <Loading />}
+                              <BrushChart
+                                series={stats.snapshots.createdMonthly}
+                                title="New packages added monthly"
+                                id="packages"
+                                activeTheme={activeTheme}
                               />
                             </div>
                           </div>
@@ -430,6 +345,7 @@ const StatsView = (props: Props) => {
                   <div className="row my-4">
                     <div className="col-12 my-4">
                       <div className={`card ${styles.chartWrapper}`}>
+                        {(stats.repositories.runningTotal!.length === 0 || isLoading) && <Loading />}
                         <ReactApexChart
                           options={getAreaChartConfig('Registered repositories')}
                           series={[{ name: 'Repositories', data: stats.repositories.runningTotal }]}
@@ -455,6 +371,7 @@ const StatsView = (props: Props) => {
                       <div className={classnames('col-12', { 'col-lg-6': stats.users.runningTotal })}>
                         <div className="pr-0 pr-lg-3 pr-xxl-4 pt-4">
                           <div className={`card ${styles.chartWrapper}`}>
+                            {(stats.organizations.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
                               options={getAreaChartConfig('Registered organizations', true)}
                               series={[
@@ -475,6 +392,7 @@ const StatsView = (props: Props) => {
                       <div className={classnames('col-12', { 'col-lg-6': stats.organizations.runningTotal })}>
                         <div className="pl-0 pl-lg-3 pl-xxl-4 pt-4">
                           <div className={`card ${styles.chartWrapper}`}>
+                            {(stats.users.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
                               options={getAreaChartConfig('Registered users', true)}
                               series={[
