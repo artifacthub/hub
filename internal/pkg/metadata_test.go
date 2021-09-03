@@ -196,31 +196,52 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 func TestValidatePackageMetadata(t *testing.T) {
 	t.Run("invalid metadata", func(t *testing.T) {
 		testCases := []struct {
-			md     *hub.PackageMetadata
-			errMsg string
+			md             *hub.PackageMetadata
+			expectedErrors []string
 		}{
 			{
 				&hub.PackageMetadata{},
-				"version not provided",
+				[]string{
+					"invalid metadata: version not provided",
+					"invalid metadata: name not provided",
+					"invalid metadata: display name not provided",
+					"invalid metadata: createdAt not provided",
+					"invalid metadata: description not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
 					Version: "invalid",
 				},
-				"invalid version (semver expected)",
+				[]string{
+					"invalid metadata: invalid version (semver expected)",
+					"invalid metadata: name not provided",
+					"invalid metadata: display name not provided",
+					"invalid metadata: createdAt not provided",
+					"invalid metadata: description not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
 					Version: "1.0.0",
 				},
-				"name not provided",
+				[]string{
+					"invalid metadata: name not provided",
+					"invalid metadata: display name not provided",
+					"invalid metadata: createdAt not provided",
+					"invalid metadata: description not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
 					Version: "1.0.0",
 					Name:    "pkg1",
 				},
-				"display name not provided",
+				[]string{
+					"invalid metadata: display name not provided",
+					"invalid metadata: createdAt not provided",
+					"invalid metadata: description not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
@@ -228,7 +249,10 @@ func TestValidatePackageMetadata(t *testing.T) {
 					Name:        "pkg1",
 					DisplayName: "Package 1",
 				},
-				"createdAt not provided",
+				[]string{
+					"invalid metadata: createdAt not provided",
+					"invalid metadata: description not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
@@ -237,7 +261,10 @@ func TestValidatePackageMetadata(t *testing.T) {
 					DisplayName: "Package 1",
 					CreatedAt:   "2006-01-02  15:04",
 				},
-				"invalid createdAt (RFC3339 expected)",
+				[]string{
+					"invalid metadata: invalid createdAt (RFC3339 expected)",
+					"invalid metadata: description not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
@@ -246,7 +273,9 @@ func TestValidatePackageMetadata(t *testing.T) {
 					DisplayName: "Package 1",
 					CreatedAt:   "2006-01-02T15:04:05Z",
 				},
-				"description not provided",
+				[]string{
+					"invalid metadata: description not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
@@ -262,7 +291,9 @@ func TestValidatePackageMetadata(t *testing.T) {
 						},
 					},
 				},
-				"invalid change: invalid kind: test",
+				[]string{
+					"invalid change: invalid kind: test",
+				},
 			},
 			{
 				&hub.PackageMetadata{
@@ -277,7 +308,9 @@ func TestValidatePackageMetadata(t *testing.T) {
 						},
 					},
 				},
-				"invalid change: description not provided",
+				[]string{
+					"invalid change: description not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
@@ -288,8 +321,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 					Description: "description",
 					Changes: []*hub.Change{
 						{
-							Kind:        "added",
-							Description: "feature 1",
+							Kind: "added",
 							Links: []*hub.Link{
 								{
 									URL: "https://link1.url",
@@ -298,7 +330,10 @@ func TestValidatePackageMetadata(t *testing.T) {
 						},
 					},
 				},
-				"invalid change: link name not provided",
+				[]string{
+					"invalid change: description not provided",
+					"invalid change: link name not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
@@ -319,7 +354,9 @@ func TestValidatePackageMetadata(t *testing.T) {
 						},
 					},
 				},
-				"invalid change: link url not provided",
+				[]string{
+					"invalid change: link url not provided",
+				},
 			},
 			{
 				&hub.PackageMetadata{
@@ -334,16 +371,20 @@ func TestValidatePackageMetadata(t *testing.T) {
 						},
 					},
 				},
-				"invalid container image: could not parse reference",
+				[]string{
+					"invalid container image: could not parse reference",
+				},
 			},
 		}
-		for _, tc := range testCases {
+		for i, tc := range testCases {
 			tc := tc
-			t.Run(tc.errMsg, func(t *testing.T) {
+			t.Run(strconv.Itoa(i), func(t *testing.T) {
 				t.Parallel()
 				err := ValidatePackageMetadata(tc.md)
 				assert.True(t, errors.Is(err, ErrInvalidMetadata))
-				assert.Contains(t, err.Error(), tc.errMsg)
+				for _, expectedErr := range tc.expectedErrors {
+					assert.Contains(t, err.Error(), expectedErr)
+				}
 			})
 		}
 	})
