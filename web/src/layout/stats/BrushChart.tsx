@@ -42,10 +42,11 @@ const BrushChart = (props: Props) => {
         id: `${props.id}BarChart`,
         height: 300,
         type: 'bar',
+        redrawOnWindowResize: true,
+        redrawOnParentResize: false,
         zoom: {
           enabled: false,
         },
-        redrawOnWindowResize: false,
         fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
         toolbar: {
           show: false,
@@ -144,10 +145,11 @@ const BrushChart = (props: Props) => {
         id: `${props.id}BrushChart`,
         height: 120,
         type: 'area',
+        redrawOnWindowResize: true,
+        redrawOnParentResize: false,
         zoom: {
           enabled: false,
         },
-        redrawOnWindowResize: false,
         brush: {
           target: `${props.id}BarChart`,
           enabled: true,

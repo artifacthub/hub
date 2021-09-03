@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -29,7 +29,8 @@ const StatsView = (props: Props) => {
   const primaryColor = getMetaTag('primaryColor');
   const { effective } = ctx.prefs.theme;
   const [activeTheme, setActiveTheme] = useState(effective);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [emptyStats, setEmptyStats] = useState<boolean>(false);
   const [stats, setStats] = useState<AHStats | null>({
     packages: {
       total: 0,
@@ -85,6 +86,7 @@ const StatsView = (props: Props) => {
         fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
         height: 300,
         type: 'area',
+        redrawOnParentResize: false,
         zoom: {
           type: 'x',
           enabled: true,
@@ -189,11 +191,22 @@ const StatsView = (props: Props) => {
     };
   };
 
+  const checkCurrentStats = (currentStats: AHStats | null) => {
+    if (!isNull(currentStats)) {
+      const notEmptyItems = Object.keys(currentStats).some((elem: string) => {
+        return elem !== 'generatedAt' && (currentStats as any)[elem].total !== 0;
+      });
+      setEmptyStats(!notEmptyItems);
+    }
+  };
+
   useEffect(() => {
     async function getStats() {
       try {
         setIsLoading(true);
-        setStats(await API.getAHStats());
+        const stats = await API.getAHStats();
+        setStats(stats);
+        checkCurrentStats(stats);
         scrollIntoView();
         setApiError(null);
         setIsLoading(false);
@@ -237,15 +250,26 @@ const StatsView = (props: Props) => {
           <div className={`h2 text-dark text-center ${styles.title}`}>{siteName} Stats</div>
 
           {apiError && <NoData issuesLinkVisible>{apiError}</NoData>}
-
           {stats && (
             <>
               <div className="text-center mb-5">
                 <small>
                   <span className="text-muted mr-2">Report generated at:</span>
-                  {stats.generatedAt ? moment(stats.generatedAt).format('YYYY/MM/DD HH:mm:ss (Z)') : ''}
+                  {!isUndefined(stats.generatedAt) ? (
+                    moment(stats.generatedAt).format('YYYY/MM/DD HH:mm:ss (Z)')
+                  ) : (
+                    <div className={`d-inline text-secondary ${styles.loading}`} role="status">
+                      <span className="spinner-border spinner-border-sm" />
+                    </div>
+                  )}
                 </small>
               </div>
+
+              {emptyStats && (
+                <div>
+                  <NoData>No Stats available for the moment</NoData>
+                </div>
+              )}
 
               {(stats.packages.runningTotal ||
                 stats.snapshots.runningTotal ||
@@ -305,7 +329,7 @@ const StatsView = (props: Props) => {
                               <BrushChart
                                 series={stats.packages.createdMonthly}
                                 title="New packages added monthly"
-                                id="snapshots"
+                                id="packages"
                                 activeTheme={activeTheme}
                               />
                             </div>
@@ -320,8 +344,8 @@ const StatsView = (props: Props) => {
                               {(stats.snapshots.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
                                 series={stats.snapshots.createdMonthly}
-                                title="New packages added monthly"
-                                id="packages"
+                                title="New snapshots added monthly"
+                                id="snapshots"
                                 activeTheme={activeTheme}
                               />
                             </div>

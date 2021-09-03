@@ -28,6 +28,14 @@ exports[`StatsView creates snapshot 1`] = `
             >
               Report generated at:
             </span>
+            <div
+              class="d-inline text-secondary loading"
+              role="status"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+              />
+            </div>
           </small>
         </div>
         <span
