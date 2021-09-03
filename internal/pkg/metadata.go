@@ -10,6 +10,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/google/go-containerregistry/pkg/name"
+	"github.com/hashicorp/go-multierror"
 	"gopkg.in/yaml.v2"
 )
 
@@ -102,55 +103,59 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 
 // ValidatePackageMetadata validates if the package metadata provided is valid.
 func ValidatePackageMetadata(md *hub.PackageMetadata) error {
+	var errs *multierror.Error
+
 	if md.Version == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidMetadata, "version not provided")
-	}
-	if _, err := semver.NewVersion(md.Version); err != nil {
-		return fmt.Errorf("%w: %s: %v", ErrInvalidMetadata, "invalid version (semver expected)", err)
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "version not provided"))
+	} else if _, err := semver.NewVersion(md.Version); err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s: %v", ErrInvalidMetadata, "invalid version (semver expected)", err))
 	}
 	if md.Name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidMetadata, "name not provided")
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "name not provided"))
 	}
 	if md.DisplayName == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidMetadata, "display name not provided")
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "display name not provided"))
 	}
 	if md.CreatedAt == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidMetadata, "createdAt not provided")
-	}
-	if _, err := time.Parse(time.RFC3339, md.CreatedAt); err != nil {
-		return fmt.Errorf("%w: %s: %v", ErrInvalidMetadata, "invalid createdAt (RFC3339 expected)", err)
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "createdAt not provided"))
+	} else if _, err := time.Parse(time.RFC3339, md.CreatedAt); err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s: %v", ErrInvalidMetadata, "invalid createdAt (RFC3339 expected)", err))
 	}
 	if md.Description == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidMetadata, "description not provided")
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "description not provided"))
 	}
 	for _, change := range md.Changes {
 		if err := ValidateChange(change); err != nil {
-			return fmt.Errorf("%w: %v", ErrInvalidMetadata, err)
+			errs = multierror.Append(errs, fmt.Errorf("%w: %v", ErrInvalidMetadata, err))
 		}
 	}
 	if err := ValidateContainersImages(md.ContainersImages); err != nil {
-		return fmt.Errorf("%w: %v", ErrInvalidMetadata, err)
+		errs = multierror.Append(errs, fmt.Errorf("%w: %v", ErrInvalidMetadata, err))
 	}
-	return nil
+
+	return errs.ErrorOrNil()
 }
 
 // ValidateChange validates if the provided change is valid.
 func ValidateChange(change *hub.Change) error {
+	var errs *multierror.Error
+
 	if change.Kind != "" && !isValidChangeKind(change.Kind) {
-		return fmt.Errorf("invalid change: invalid kind: %s", change.Kind)
+		errs = multierror.Append(errs, fmt.Errorf("invalid change: invalid kind: %s", change.Kind))
 	}
 	if change.Description == "" {
-		return errors.New("invalid change: description not provided")
+		errs = multierror.Append(errs, errors.New("invalid change: description not provided"))
 	}
 	for _, link := range change.Links {
 		if link.Name == "" {
-			return errors.New("invalid change: link name not provided")
+			errs = multierror.Append(errs, errors.New("invalid change: link name not provided"))
 		}
 		if link.URL == "" {
-			return errors.New("invalid change: link url not provided")
+			errs = multierror.Append(errs, errors.New("invalid change: link url not provided"))
 		}
 	}
-	return nil
+
+	return errs.ErrorOrNil()
 }
 
 // NormalizeChange normalizes some values of the change provided when needed.
@@ -170,11 +175,14 @@ func isValidChangeKind(kind string) bool {
 
 // ValidateContainersImages checks if the provided containers images are valid.
 func ValidateContainersImages(images []*hub.ContainerImage) error {
-	// Check if the image reference is valid
+	var errs *multierror.Error
+
 	for _, image := range images {
+		// Check if the image reference is valid
 		if _, err := name.ParseReference(image.Image); err != nil {
-			return fmt.Errorf("invalid container image: %w", err)
+			errs = multierror.Append(errs, fmt.Errorf("invalid container image: %w", err))
 		}
 	}
-	return nil
+
+	return errs.ErrorOrNil()
 }
