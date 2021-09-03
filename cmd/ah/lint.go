@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -11,10 +12,17 @@ import (
 	"strings"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/tracker/source/generic"
 	"github.com/artifacthub/hub/internal/tracker/source/helm"
+	"github.com/artifacthub/hub/internal/tracker/source/helmplugin"
+	"github.com/artifacthub/hub/internal/tracker/source/krew"
+	"github.com/artifacthub/hub/internal/tracker/source/olm"
+	"github.com/artifacthub/hub/internal/tracker/source/tekton"
 	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
 	"helm.sh/helm/v3/pkg/chart/loader"
+	"helm.sh/helm/v3/pkg/plugin"
 )
 
 const (
@@ -32,10 +40,7 @@ var lintDesc = `Check the repository's packages are ready for Artifact Hub
 Use this command to check that the packages in your repository are ready to be
 listed on Artifact Hub. This command checks that the packages metadata provided
 is valid and displays some information about the data that will be collected so
-that you can verify everything looks right.
-
-At the moment the only supported kind is helm. Support for other repositories
-kinds will be added soon.`
+that you can verify everything looks right.`
 
 var (
 	// errLintFailed indicates that the lint command failed. This happens
@@ -83,7 +88,7 @@ func newLintCmd() *cobra.Command {
 			return lint(opts, &output{cmd.OutOrStdout()})
 		},
 	}
-	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind")
+	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: coredns, falco, helm, helm-plugin, keda-scaler, keptn, krew, olm, opa, tbaction, tekton-task")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
 	return lintCmd
 }
@@ -101,8 +106,24 @@ func lint(opts *lintOptions, out *output) error {
 	}
 	var report *lintReport
 	switch kind {
+	case
+		hub.CoreDNS,
+		hub.Falco,
+		hub.KedaScaler,
+		hub.Keptn,
+		hub.OPA,
+		hub.TBAction:
+		report = lintGeneric(opts.path, kind)
 	case hub.Helm:
 		report = lintHelm(opts.path)
+	case hub.HelmPlugin:
+		report = lintHelmPlugin(opts.path)
+	case hub.Krew:
+		report = lintKrew(opts.path)
+	case hub.OLM:
+		report = lintOLM(opts.path)
+	case hub.TektonTask:
+		report = lintTektonTask(opts.path)
 	default:
 		return errors.New("kind not supported yet")
 	}
@@ -120,8 +141,49 @@ func lint(opts *lintOptions, out *output) error {
 	return nil
 }
 
-// lintHelm is a linter used to check if the Helm charts available in the path
-// provided are ready to be listed on Artifact Hub.
+// lintGeneric checks if the packages available in the path provided are ready
+// to be processed by the generic tracker source and listed on Artifact Hub.
+func lintGeneric(basePath string, kind hub.RepositoryKind) *lintReport {
+	report := &lintReport{}
+
+	// Walk the path provided looking for available packages
+	_ = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
+		// If an error is raised while visiting a path or the path is not a
+		// directory, we skip it
+		if err != nil || !info.IsDir() {
+			return nil
+		}
+
+		// Initialize report entry. If a package is found in the current path,
+		// errors found while processing it will be added to the report.
+		e := &lintReportEntry{
+			path: pkgPath,
+		}
+
+		// Get package version metadata and prepare entry package
+		mdFilePath := filepath.Join(pkgPath, hub.PackageMetadataFile)
+		md, err := pkg.GetPackageMetadata(mdFilePath)
+		if err != nil {
+			if errors.Is(err, os.ErrNotExist) {
+				return nil
+			}
+			e.result = multierror.Append(e.result, err)
+		} else {
+			e.pkg, err = generic.PreparePackage(&hub.Repository{Kind: kind}, md, pkgPath)
+			if err != nil {
+				e.result = multierror.Append(e.result, err)
+			}
+		}
+
+		report.entries = append(report.entries, e)
+		return nil
+	})
+
+	return report
+}
+
+// lintHelm checks if the Helm charts available in the path provided are ready
+// to be processed by the Helm tracker source and listed on Artifact Hub.
 func lintHelm(basePath string) *lintReport {
 	report := &lintReport{}
 
@@ -163,8 +225,185 @@ func lintHelm(basePath string) *lintReport {
 		helm.EnrichPackageFromChart(e.pkg, chrt)
 		err = helm.EnrichPackageFromAnnotations(e.pkg, chrt.Metadata.Annotations)
 		e.result = multierror.Append(e.result, err)
-		report.entries = append(report.entries, e)
 
+		report.entries = append(report.entries, e)
+		return nil
+	})
+
+	return report
+}
+
+// lintHelmPlugin checks if the Helm plugins available in the path provided are
+// ready to be processed by the Helm plugins tracker source and listed on
+// Artifact Hub.
+func lintHelmPlugin(basePath string) *lintReport {
+	report := &lintReport{}
+
+	// Walk the path provided looking for available plugins
+	_ = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
+		// If an error is raised while visiting a path or the path is not a
+		// directory, we skip it
+		if err != nil || !info.IsDir() {
+			return nil
+		}
+
+		// Initialize report entry. If a package is found in the current path,
+		// errors found while processing it will be added to the report.
+		e := &lintReportEntry{
+			path: pkgPath,
+		}
+
+		// Get Helm plugin metadata and prepare package
+		mdFilePath := filepath.Join(pkgPath, plugin.PluginFileName)
+		md, err := helmplugin.GetMetadata(mdFilePath)
+		if err != nil {
+			if errors.Is(err, os.ErrNotExist) {
+				return nil
+			}
+			e.result = multierror.Append(e.result, err)
+		} else {
+			repo := &hub.Repository{
+				Kind: hub.HelmPlugin,
+				URL:  "https://github.com/user/repo/path",
+			}
+			e.pkg, err = helmplugin.PreparePackage(repo, md, pkgPath)
+			if err != nil {
+				e.result = multierror.Append(e.result, err)
+			}
+		}
+
+		report.entries = append(report.entries, e)
+		return nil
+	})
+
+	return report
+}
+
+// lintKrew checks if the Krew plugins available in the path provided are ready
+// to be processed by the Krew tracker source and listed on Artifact Hub.
+func lintKrew(basePath string) *lintReport {
+	report := &lintReport{}
+
+	// Process plugins available in the path provided
+	pluginsPath := filepath.Join(basePath, "plugins")
+	pluginManifestFiles, err := ioutil.ReadDir(pluginsPath)
+	if err != nil {
+		return report
+	}
+	for _, file := range pluginManifestFiles {
+		// Only process plugins files
+		if !file.Mode().IsRegular() || filepath.Ext(file.Name()) != ".yaml" {
+			continue
+		}
+
+		// Initialize report entry. If a package is found in the current path,
+		// errors found while processing it will be added to the report.
+		pluginPath := filepath.Join(pluginsPath, file.Name())
+		e := &lintReportEntry{
+			path: pluginPath,
+		}
+
+		// Get Krew plugin manifest and prepare package
+		manifest, manifestRaw, err := krew.GetManifest(filepath.Join(pluginsPath, file.Name()))
+		if err != nil {
+			e.result = multierror.Append(e.result, err)
+		} else {
+			e.pkg, err = krew.PreparePackage(&hub.Repository{Kind: hub.Krew}, manifest, manifestRaw)
+			if err != nil {
+				e.result = multierror.Append(e.result, err)
+			}
+		}
+
+		report.entries = append(report.entries, e)
+	}
+
+	return report
+}
+
+// lintOLM checks if the OLM operators available in the path provided are ready
+// to be processed by the OLM tracker source and listed on Artifact Hub.
+func lintOLM(basePath string) *lintReport {
+	report := &lintReport{}
+
+	// Walk the path provided looking for available OLM operators
+	_ = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
+		// If an error is raised while visiting a path or the path is not a
+		// directory, we skip it
+		if err != nil || !info.IsDir() {
+			return nil
+		}
+
+		// Initialize report entry. If a package is found in the current path,
+		// errors found while processing it will be added to the report.
+		e := &lintReportEntry{
+			path: pkgPath,
+		}
+
+		// Get metadata and prepare package
+		md, err := olm.GetMetadata(pkgPath)
+		switch {
+		case err != nil:
+			e.result = multierror.Append(e.result, err)
+		case md == nil:
+			// Package manifest not found, not a package path
+			return nil
+		default:
+			repo := &hub.Repository{
+				Kind: hub.OLM,
+			}
+			e.pkg, err = olm.PreparePackage(repo, md)
+			if err != nil {
+				e.result = multierror.Append(e.result, err)
+			}
+		}
+
+		report.entries = append(report.entries, e)
+		return nil
+	})
+
+	return report
+}
+
+// lintTektonTask checks if the Tekton tasks available in the path provided are
+// ready to be processed by the Tekton tasks tracker source and listed on
+// Artifact Hub.
+func lintTektonTask(basePath string) *lintReport {
+	report := &lintReport{}
+
+	// Walk the path provided looking for available Tekton tasks
+	_ = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
+		// If an error is raised while visiting a path or the path is not a
+		// directory, we skip it
+		if err != nil || !info.IsDir() {
+			return nil
+		}
+
+		// Initialize report entry. If a package is found in the current path,
+		// errors found while processing it will be added to the report.
+		e := &lintReportEntry{
+			path: pkgPath,
+		}
+
+		// Get manifest and prepare package
+		manifest, manifestRaw, err := tekton.GetManifest(pkgPath)
+		switch {
+		case err != nil:
+			e.result = multierror.Append(e.result, err)
+		case manifest == nil:
+			// Package manifest not found, not a package path
+			return nil
+		default:
+			repo := &hub.Repository{
+				Kind: hub.TektonTask,
+				URL:  "https://github.com/user/repo/path",
+			}
+			e.pkg, err = tekton.PreparePackage(repo, manifest, manifestRaw, basePath, pkgPath)
+			if err != nil {
+				e.result = multierror.Append(e.result, err)
+			}
+		}
+
+		report.entries = append(report.entries, e)
 		return nil
 	})
 
@@ -180,6 +419,14 @@ type output struct {
 func (out *output) printReport(report *lintReport) {
 	// Print packages checks results
 	for _, e := range report.entries {
+		// Setup minimal skeleton package if not provided
+		if e.pkg == nil {
+			e.pkg = &hub.Package{
+				Name:    "name: ?",
+				Version: "version: ?",
+			}
+		}
+
 		// Header
 		var mark rune
 		if e.result.ErrorOrNil() != nil {
@@ -198,7 +445,7 @@ func (out *output) printReport(report *lintReport) {
 		} else {
 			fmt.Fprintf(out, "Package lint FAILED. %d error(s) occurred:\n\n", len(e.result.Errors))
 			for _, err := range e.result.Errors {
-				fmt.Fprintf(out, "  * %s\n", err.Error())
+				fmt.Fprintf(out, "  * %s\n", strings.TrimSpace(err.Error()))
 			}
 		}
 	}
@@ -220,6 +467,7 @@ func (out *output) printReport(report *lintReport) {
 func (out *output) printPkgDetails(pkg *hub.Package) {
 	// General
 	out.print("Name", pkg.Name)
+	out.print("Display name", pkg.DisplayName)
 	out.print("Version", pkg.Version)
 	out.print("App version", pkg.AppVersion)
 	out.print("Description", pkg.Description)
@@ -230,6 +478,7 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 	out.print("Deprecated", strconv.FormatBool(pkg.Deprecated))
 	out.print("Pre-release", strconv.FormatBool(pkg.Prerelease))
 	out.print("Contains security updates", strconv.FormatBool(pkg.ContainsSecurityUpdates))
+	out.print("Provider", pkg.Provider)
 
 	// Readme
 	if pkg.Readme != "" {
@@ -314,13 +563,69 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 
 	// Values specific to a repository kind
 	switch pkg.Repository.Kind {
+	case
+		hub.CoreDNS,
+		hub.Falco,
+		hub.KedaScaler,
+		hub.Keptn,
+		hub.OPA,
+		hub.TBAction:
+
+		// Install
+		if pkg.Install != "" {
+			fmt.Fprintf(out, "%c Install: %s\n", success, provided)
+		} else {
+			fmt.Fprintf(out, "%c Install: %s\n", warning, notProvided)
+		}
+
+		switch pkg.Repository.Kind {
+		case hub.Falco:
+			// Rules files
+			fmt.Fprintf(out, "%c Rules: %s\n", success, provided)
+			for name := range pkg.Data["rules"].(map[string]string) {
+				fmt.Fprintf(out, "  - %s\n", name)
+			}
+		case hub.OPA:
+			// Policies files
+			fmt.Fprintf(out, "%c Policies: %s\n", success, provided)
+			for name := range pkg.Data["policies"].(map[string]string) {
+				fmt.Fprintf(out, "  - %s\n", name)
+			}
+		}
 	case hub.Helm:
+		out.print("Sign key", pkg.SignKey)
+
+		// Values schema
 		if pkg.ValuesSchema != nil {
 			fmt.Fprintf(out, "%c Values schema: %s\n", success, provided)
 		} else {
 			fmt.Fprintf(out, "%c Values schema: %s\n", warning, notProvided)
 		}
-		out.print("Sign key", pkg.SignKey)
+	case hub.Krew:
+		// Platforms
+		if v, ok := pkg.Data["platforms"]; ok {
+			platforms, ok := v.([]string)
+			if ok && len(platforms) > 0 {
+				fmt.Fprintf(out, "%c Platforms: %s\n", success, provided)
+				for _, platform := range platforms {
+					fmt.Fprintf(out, "  - %s\n", platform)
+				}
+			} else {
+				fmt.Fprintf(out, "%c Platforms: %s\n", warning, notProvided)
+			}
+		}
+	case hub.OLM:
+		out.print("Default channel", pkg.DefaultChannel)
+
+		// Channels
+		if len(pkg.Channels) > 0 {
+			fmt.Fprintf(out, "%c Channels:\n", success)
+			for _, channel := range pkg.Channels {
+				fmt.Fprintf(out, "  - %s -> %s\n", channel.Name, channel.Version)
+			}
+		} else {
+			fmt.Fprintf(out, "%c Channels: %s\n", warning, notProvided)
+		}
 	}
 }
 

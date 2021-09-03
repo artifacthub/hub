@@ -1,0 +1,44 @@
+
+------------------------------------------------------------------------------------------------------------------------
+✓ task1 0.1.0 (testdata/lint/test12/pkgs)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: task1
+✓ Display name: Task 1
+✓ Version: 0.1.0
+! App version: *** NOT PROVIDED ***
+✓ Description: Test task
+✓ License: Apache-2.0
+! Logo URL: *** NOT PROVIDED ***
+! Home URL: *** NOT PROVIDED ***
+✓ Deprecated: false
+✓ Pre-release: false
+✓ Contains security updates: false
+✓ Provider: Some organization
+✓ Readme: PROVIDED
+✓ Keywords:
+  - tekton
+  - task
+  - tag1
+  - tag2
+✓ Links:
+  - Name: source | URL: https://github.com/user/repo/blob/master/path/task1.yaml
+  - Name: link1 | URL: https://link1.url
+  - Name: link2 | URL: https://link2.url
+✓ Maintainers:
+  - Name: user1 | Email: user1@email.com
+  - Name: user2 | Email: user2@email.com
+! Containers images: *** NOT PROVIDED ***
+✓ Changes:
+  - Kind:  | Description: Added cool feature
+  - Kind:  | Description: Fixed minor bug
+✓ Recommendations:
+  - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+✓ Operator: false
+
+------------------------------------------------------------------------------------------------------------------------
+
+1 package(s) found, 0 package(s) with errors
+

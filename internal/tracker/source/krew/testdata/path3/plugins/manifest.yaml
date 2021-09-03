@@ -2,3 +2,4 @@ metadata:
   name: test-plugin
 spec:
   version: invalid
+  shortDescription: Test plugin

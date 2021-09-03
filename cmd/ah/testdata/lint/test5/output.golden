@@ -1,0 +1,43 @@
+
+------------------------------------------------------------------------------------------------------------------------
+✓ pkg1 1.0.0 (testdata/lint/test5/pkgs)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: pkg1
+✓ Display name: Package 1
+✓ Version: 1.0.0
+✓ App version: 10.0.0
+✓ Description: Description
+✓ License: Apache-2.0
+✓ Logo URL: https://home.url/logo.svg
+✓ Home URL: https://home.url
+✓ Deprecated: false
+✓ Pre-release: true
+✓ Contains security updates: true
+✓ Provider: Provider
+✓ Readme: PROVIDED
+✓ Keywords:
+  - kw1
+  - kw2
+✓ Links:
+  - Name: Link1 | URL: https://link1.url
+✓ Maintainers:
+  - Name: Maintainer | Email: test@email.com
+✓ Containers images:
+  - Name:  | Image: registry/test/test:latest
+✓ Changes:
+  - Kind: added | Description: feature 1
+  - Kind: fixed | Description: issue 1
+✓ Recommendations:
+  - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+✓ Operator: false
+✓ Install: PROVIDED
+✓ Policies: PROVIDED
+  - policy1.rego
+
+------------------------------------------------------------------------------------------------------------------------
+
+1 package(s) found, 0 package(s) with errors
+

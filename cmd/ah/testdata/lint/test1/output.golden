@@ -6,6 +6,7 @@
 Package lint SUCCEEDED!
 
 ✓ Name: test
+! Display name: *** NOT PROVIDED ***
 ✓ Version: 0.0.1
 ✓ App version: 0.0.1
 ✓ Description: Test chart
@@ -15,6 +16,7 @@ Package lint SUCCEEDED!
 ✓ Deprecated: false
 ✓ Pre-release: false
 ✓ Contains security updates: true
+! Provider: *** NOT PROVIDED ***
 ✓ Readme: PROVIDED
 ✓ Keywords:
   - test
@@ -32,8 +34,8 @@ Package lint SUCCEEDED!
   - Kind: fixed | Description: Test fix
 ! Recommendations: *** NOT PROVIDED ***
 ✓ Operator: false
-! Values schema: *** NOT PROVIDED ***
 ! Sign key: *** NOT PROVIDED ***
+! Values schema: *** NOT PROVIDED ***
 
 ------------------------------------------------------------------------------------------------------------------------
 

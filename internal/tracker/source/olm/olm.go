@@ -3,6 +3,7 @@ package olm
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -18,6 +19,7 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/ghodss/yaml"
+	"github.com/hashicorp/go-multierror"
 	"github.com/operator-framework/api/pkg/manifests"
 	operatorsv1alpha1 "github.com/operator-framework/api/pkg/operators/v1alpha1"
 )
@@ -72,7 +74,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		// Get package version metadata
-		md, err := getMetadata(path)
+		md, err := GetMetadata(path)
 		if err != nil {
 			s.warn(fmt.Errorf("error getting package metadata: %w", err))
 			return nil
@@ -82,19 +84,19 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			return nil
 		}
 
-		// Validate version
-		if _, err := semver.StrictNewVersion(md.Version); err != nil {
-			s.warn(fmt.Errorf("invalid package %s version (%s): %w", md.Name, md.Version, err))
-			return nil
-		}
-
 		// Prepare and store package version
-		p, err := s.preparePackage(s.i.Repository, md)
+		p, err := PreparePackage(s.i.Repository, md)
 		if err != nil {
 			s.warn(fmt.Errorf("error preparing package %s version %s: %w", md.Name, md.Version, err))
 			return nil
 		}
 		packagesAvailable[pkg.BuildKey(p)] = p
+		logoImageID, err := s.prepareLogoImage(md)
+		if err != nil {
+			s.warn(fmt.Errorf("error preparing package %s version %s logo image: %w", md.Name, md.Version, err))
+		} else {
+			p.LogoImageID = logoImageID
+		}
 
 		return nil
 	})
@@ -107,160 +109,22 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 	return packagesAvailable, nil
 }
 
-// preparePackage prepares a package version using the provided metadata.
-func (s *TrackerSource) preparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
-	// Prepare package from manifest and csv
-	p := &hub.Package{
-		Name:           md.Name,
-		DisplayName:    md.CSV.Spec.DisplayName,
-		Description:    md.CSV.Annotations["description"],
-		Keywords:       md.CSV.Spec.Keywords,
-		Readme:         md.CSV.Spec.Description,
-		Version:        md.CSV.Spec.Version.String(),
-		IsOperator:     true,
-		Capabilities:   md.CSV.Annotations["capabilities"],
-		Channels:       md.Channels,
-		DefaultChannel: md.DefaultChannelName,
-		License:        md.CSV.Annotations[licenseAnnotation],
-		Provider:       md.CSV.Spec.Provider.Name,
-		Install:        md.CSV.Annotations[installAnnotation],
-		Repository:     r,
-	}
+// prepareLogoImage processes and stores the logo image provided.
+func (s *TrackerSource) prepareLogoImage(md *Metadata) (string, error) {
+	var logoImageID string
 
-	// Containers images
-	containersImages, err := getContainersImages(md.CSV, md.CSVData)
-	if err != nil {
-		return nil, err
-	}
-	if err := pkg.ValidateContainersImages(containersImages); err != nil {
-		return nil, err
-	}
-	p.ContainersImages = containersImages
-
-	// TS
-	ts, err := time.Parse(time.RFC3339, md.CSV.Annotations["createdAt"])
-	if err == nil {
-		p.TS = ts.Unix()
-	} else {
-		// Try alternative layout
-		ts, err = time.Parse("2006-01-02 15:04:05", md.CSV.Annotations["createdAt"])
-		if err == nil {
-			p.TS = ts.Unix()
-		}
-	}
-
-	// Keywords
-	for _, category := range strings.Split(md.CSV.Annotations["categories"], ",") {
-		if strings.Trim(strings.ToLower(category), " ") == "ai/machine learning" {
-			p.Keywords = append(p.Keywords, []string{"AI", "Machine Learning"}...)
-		} else {
-			p.Keywords = append(p.Keywords, strings.Trim(category, " "))
-		}
-	}
-
-	// Links
-	for _, link := range md.CSV.Spec.Links {
-		p.Links = append(p.Links, &hub.Link{
-			Name: link.Name,
-			URL:  link.URL,
-		})
-	}
-	if md.CSV.Annotations["repository"] != "" {
-		p.Links = append(p.Links, &hub.Link{
-			Name: "source",
-			URL:  md.CSV.Annotations["repository"],
-		})
-	}
-
-	// Store logo when available
 	if len(md.CSV.Spec.Icon) > 0 && md.CSV.Spec.Icon[0].Data != "" {
 		data, err := base64.StdEncoding.DecodeString(md.CSV.Spec.Icon[0].Data)
 		if err != nil {
-			s.warn(fmt.Errorf("error decoding package %s logo image: %w", p.Name, err))
-		} else {
-			p.LogoImageID, err = s.i.Svc.Is.SaveImage(s.i.Svc.Ctx, data)
-			if err != nil {
-				s.warn(fmt.Errorf("error saving package %s image: %w", p.Name, err))
-			}
+			return "", fmt.Errorf("error decoding image: %w", err)
 		}
-	}
-
-	// Maintainers
-	for _, maintainer := range md.CSV.Spec.Maintainers {
-		p.Maintainers = append(p.Maintainers, &hub.Maintainer{
-			Name:  maintainer.Name,
-			Email: maintainer.Email,
-		})
-	}
-
-	// CRDs
-	crds := make([]interface{}, 0, len(md.CSV.Spec.CustomResourceDefinitions.Owned))
-	for _, crd := range md.CSV.Spec.CustomResourceDefinitions.Owned {
-		crds = append(crds, map[string]interface{}{
-			"name":        crd.Name,
-			"version":     crd.Version,
-			"kind":        crd.Kind,
-			"displayName": crd.DisplayName,
-			"description": crd.Description,
-		})
-	}
-	if len(crds) > 0 {
-		p.CRDs = crds
-	}
-	var crdsExamples []interface{}
-	if err := json.Unmarshal([]byte(md.CSV.Annotations["alm-examples"]), &crdsExamples); err == nil {
-		p.CRDsExamples = crdsExamples
-	}
-
-	// Changes
-	if v, ok := md.CSV.Annotations[changesAnnotation]; ok {
-		changes, err := source.ParseChangesAnnotation(v)
+		logoImageID, err = s.i.Svc.Is.SaveImage(s.i.Svc.Ctx, data)
 		if err != nil {
-			return nil, err
-		}
-		p.Changes = changes
-	}
-
-	// Prerelease
-	if v, ok := md.CSV.Annotations[prereleaseAnnotation]; ok {
-		prerelease, err := strconv.ParseBool(v)
-		if err != nil {
-			return nil, fmt.Errorf("invalid prerelease value: %s", v)
-		}
-		p.Prerelease = prerelease
-	}
-
-	// Recommendations
-	if v, ok := md.CSV.Annotations[recommendationsAnnotation]; ok {
-		var recommendations []*hub.Recommendation
-		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
-			return nil, fmt.Errorf("invalid recommendations value: %s", v)
-		}
-		p.Recommendations = recommendations
-	}
-
-	// Security updates
-	if v, ok := md.CSV.Annotations[securityUpdatesAnnotation]; ok {
-		containsSecurityUpdates, err := strconv.ParseBool(v)
-		if err != nil {
-			return nil, fmt.Errorf("invalid containsSecurityUpdates value: %s", v)
-		}
-		p.ContainsSecurityUpdates = containsSecurityUpdates
-	}
-
-	// Prepare data specific to the package kind
-	var isGlobalOperator bool
-	for _, e := range md.CSV.Spec.InstallModes {
-		if e.Type == operatorsv1alpha1.InstallModeTypeAllNamespaces && e.Supported {
-			isGlobalOperator = true
+			return "", fmt.Errorf("error saving image: %w", err)
 		}
 	}
-	p.Data = map[string]interface{}{
-		"format":           md.Format,
-		"isGlobalOperator": isGlobalOperator,
-	}
 
-	return p, nil
+	return logoImageID, nil
 }
 
 // warn is a helper that sends the error provided to the errors collector and
@@ -282,9 +146,25 @@ type Metadata struct {
 	CSVPath            string
 }
 
-// getMetadata returns the metadata for the package version located in the path
+// validate checks if the metadata provided is valid.
+func (md *Metadata) validate() error {
+	var errs *multierror.Error
+
+	if md.Name == "" {
+		errs = multierror.Append(errs, errors.New("name not provided"))
+	}
+	if md.Version == "" {
+		errs = multierror.Append(errs, errors.New("version not provided"))
+	} else if _, err := semver.StrictNewVersion(md.Version); err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("invalid version (semver expected): %w", err))
+	}
+
+	return errs.ErrorOrNil()
+}
+
+// GetMetadata returns the metadata for the package version located in the path
 // provided.
-func getMetadata(path string) (*Metadata, error) {
+func GetMetadata(path string) (*Metadata, error) {
 	var md *Metadata
 
 	// PackageManifest format
@@ -345,6 +225,12 @@ func getMetadata(path string) (*Metadata, error) {
 			DefaultChannelName: annotations.DefaultChannelName,
 			CSV:                csv,
 			CSVData:            csvData,
+		}
+	}
+
+	if md != nil {
+		if err := md.validate(); err != nil {
+			return nil, fmt.Errorf("error validating metadata: %w", err)
 		}
 	}
 
@@ -466,6 +352,151 @@ func getContainersImages(
 	}
 
 	return images, nil
+}
+
+// PreparePackage prepares a package version using the provided metadata.
+func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
+	// Prepare package from manifest and csv
+	p := &hub.Package{
+		Name:           md.Name,
+		DisplayName:    md.CSV.Spec.DisplayName,
+		Description:    md.CSV.Annotations["description"],
+		Keywords:       md.CSV.Spec.Keywords,
+		Readme:         md.CSV.Spec.Description,
+		Version:        md.CSV.Spec.Version.String(),
+		IsOperator:     true,
+		Capabilities:   md.CSV.Annotations["capabilities"],
+		Channels:       md.Channels,
+		DefaultChannel: md.DefaultChannelName,
+		License:        md.CSV.Annotations[licenseAnnotation],
+		Provider:       md.CSV.Spec.Provider.Name,
+		Install:        md.CSV.Annotations[installAnnotation],
+		Repository:     r,
+	}
+
+	// Containers images
+	containersImages, err := getContainersImages(md.CSV, md.CSVData)
+	if err != nil {
+		return nil, err
+	}
+	if err := pkg.ValidateContainersImages(containersImages); err != nil {
+		return nil, err
+	}
+	p.ContainersImages = containersImages
+
+	// TS
+	ts, err := time.Parse(time.RFC3339, md.CSV.Annotations["createdAt"])
+	if err == nil {
+		p.TS = ts.Unix()
+	} else {
+		// Try alternative layout
+		ts, err = time.Parse("2006-01-02 15:04:05", md.CSV.Annotations["createdAt"])
+		if err == nil {
+			p.TS = ts.Unix()
+		}
+	}
+
+	// Keywords
+	for _, category := range strings.Split(md.CSV.Annotations["categories"], ",") {
+		if strings.Trim(strings.ToLower(category), " ") == "ai/machine learning" {
+			p.Keywords = append(p.Keywords, []string{"AI", "Machine Learning"}...)
+		} else {
+			p.Keywords = append(p.Keywords, strings.Trim(category, " "))
+		}
+	}
+
+	// Links
+	for _, link := range md.CSV.Spec.Links {
+		p.Links = append(p.Links, &hub.Link{
+			Name: link.Name,
+			URL:  link.URL,
+		})
+	}
+	if md.CSV.Annotations["repository"] != "" {
+		p.Links = append(p.Links, &hub.Link{
+			Name: "source",
+			URL:  md.CSV.Annotations["repository"],
+		})
+	}
+
+	// Maintainers
+	for _, maintainer := range md.CSV.Spec.Maintainers {
+		if maintainer.Email != "" {
+			p.Maintainers = append(p.Maintainers, &hub.Maintainer{
+				Name:  maintainer.Name,
+				Email: maintainer.Email,
+			})
+		}
+	}
+
+	// CRDs
+	crds := make([]interface{}, 0, len(md.CSV.Spec.CustomResourceDefinitions.Owned))
+	for _, crd := range md.CSV.Spec.CustomResourceDefinitions.Owned {
+		crds = append(crds, map[string]interface{}{
+			"name":        crd.Name,
+			"version":     crd.Version,
+			"kind":        crd.Kind,
+			"displayName": crd.DisplayName,
+			"description": crd.Description,
+		})
+	}
+	if len(crds) > 0 {
+		p.CRDs = crds
+	}
+	var crdsExamples []interface{}
+	if err := json.Unmarshal([]byte(md.CSV.Annotations["alm-examples"]), &crdsExamples); err == nil {
+		p.CRDsExamples = crdsExamples
+	}
+
+	// Changes
+	if v, ok := md.CSV.Annotations[changesAnnotation]; ok {
+		changes, err := source.ParseChangesAnnotation(v)
+		if err != nil {
+			return nil, err
+		}
+		p.Changes = changes
+	}
+
+	// Prerelease
+	if v, ok := md.CSV.Annotations[prereleaseAnnotation]; ok {
+		prerelease, err := strconv.ParseBool(v)
+		if err != nil {
+			return nil, fmt.Errorf("invalid prerelease value: %s", v)
+		}
+		p.Prerelease = prerelease
+	}
+
+	// Recommendations
+	if v, ok := md.CSV.Annotations[recommendationsAnnotation]; ok {
+		var recommendations []*hub.Recommendation
+		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
+			return nil, fmt.Errorf("invalid recommendations value: %s", v)
+		}
+		p.Recommendations = recommendations
+	}
+
+	// Security updates
+	if v, ok := md.CSV.Annotations[securityUpdatesAnnotation]; ok {
+		containsSecurityUpdates, err := strconv.ParseBool(v)
+		if err != nil {
+			return nil, fmt.Errorf("invalid containsSecurityUpdates value: %s", v)
+		}
+		p.ContainsSecurityUpdates = containsSecurityUpdates
+	}
+
+	// Prepare data specific to the package kind
+	var isGlobalOperator bool
+	for _, e := range md.CSV.Spec.InstallModes {
+		if e.Type == operatorsv1alpha1.InstallModeTypeAllNamespaces && e.Supported {
+			isGlobalOperator = true
+		}
+	}
+	p.Data = map[string]interface{}{
+		"format":           md.Format,
+		"isGlobalOperator": isGlobalOperator,
+	}
+
+	return p, nil
 }
 
 // preparePackagesChannels prepares and updates the channels in the packages

@@ -1,0 +1,35 @@
+
+------------------------------------------------------------------------------------------------------------------------
+✓ test-plugin 0.1.0 (testdata/lint/test8/pkgs)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: test-plugin
+! Display name: *** NOT PROVIDED ***
+✓ Version: 0.1.0
+! App version: *** NOT PROVIDED ***
+✓ Description: This is a sample test plugin
+✓ License: Apache-2.0
+! Logo URL: *** NOT PROVIDED ***
+! Home URL: *** NOT PROVIDED ***
+✓ Deprecated: false
+✓ Pre-release: false
+✓ Contains security updates: false
+! Provider: *** NOT PROVIDED ***
+✓ Readme: PROVIDED
+✓ Keywords:
+  - helm
+  - helm-plugin
+✓ Links:
+  - Name: Source | URL: https://github.com/user/repo/path
+! Maintainers: *** NOT PROVIDED ***
+! Containers images: *** NOT PROVIDED ***
+! Changes: *** NOT PROVIDED ***
+! Recommendations: *** NOT PROVIDED ***
+✓ Operator: false
+
+------------------------------------------------------------------------------------------------------------------------
+
+1 package(s) found, 0 package(s) with errors
+

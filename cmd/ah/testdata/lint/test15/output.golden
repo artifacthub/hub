@@ -1,0 +1,90 @@
+
+------------------------------------------------------------------------------------------------------------------------
+✓ test-operator 0.1.0 (testdata/lint/test15/pkgs/test-operator/0.1.0)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: test-operator
+✓ Display name: Test Operator
+✓ Version: 0.1.0
+! App version: *** NOT PROVIDED ***
+✓ Description: This is just a test
+✓ License: Apache-2.0
+! Logo URL: *** NOT PROVIDED ***
+! Home URL: *** NOT PROVIDED ***
+✓ Deprecated: false
+✓ Pre-release: true
+✓ Contains security updates: true
+✓ Provider: Test
+✓ Readme: PROVIDED
+✓ Keywords:
+  - Test
+  - Application Runtime
+✓ Links:
+  - Name: Sample link | URL: https://sample.link
+  - Name: source | URL: https://github.com/test/test-operator
+✓ Maintainers:
+  - Name: Test | Email: test@email.com
+✓ Containers images:
+  - Name:  | Image: repo.url:latest
+  - Name: image1 | Image: registry.io/image1:1.0.0
+  - Name: image2 | Image: registry.io/image2:1.0.0
+✓ Changes:
+  - Kind:  | Description: feature 1
+  - Kind:  | Description: fix 1
+✓ Recommendations:
+  - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+✓ Operator: true
+✓ Operator capabilities: Basic Install
+✓ Default channel: stable
+✓ Channels:
+  - alpha -> 0.1.0
+  - stable -> 0.1.0
+
+------------------------------------------------------------------------------------------------------------------------
+✓ test-operator 0.2.0 (testdata/lint/test15/pkgs/test-operator/0.2.0)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: test-operator
+✓ Display name: Test Operator
+✓ Version: 0.2.0
+! App version: *** NOT PROVIDED ***
+✓ Description: This is just a test
+✓ License: Apache-2.0
+! Logo URL: *** NOT PROVIDED ***
+! Home URL: *** NOT PROVIDED ***
+✓ Deprecated: false
+✓ Pre-release: true
+✓ Contains security updates: true
+✓ Provider: Test
+✓ Readme: PROVIDED
+✓ Keywords:
+  - Test
+  - Application Runtime
+✓ Links:
+  - Name: Sample link | URL: https://sample.link
+  - Name: source | URL: https://github.com/test/test-operator
+✓ Maintainers:
+  - Name: Test | Email: test@email.com
+✓ Containers images:
+  - Name:  | Image: repo.url:latest
+  - Name: image1 | Image: registry.io/image1:1.0.0
+  - Name: image2 | Image: registry.io/image2:1.0.0
+✓ Changes:
+  - Kind:  | Description: feature 1
+  - Kind:  | Description: fix 1
+✓ Recommendations:
+  - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+✓ Operator: true
+✓ Operator capabilities: Basic Install
+✓ Default channel: stable
+✓ Channels:
+  - alpha -> 0.2.0
+
+------------------------------------------------------------------------------------------------------------------------
+
+2 package(s) found, 0 package(s) with errors
+

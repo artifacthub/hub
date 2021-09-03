@@ -39,7 +39,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path2",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error unmarshaling plugin manifest file: error converting YAML to JSON: yaml: line 3: found unexpected end of stream"
+		expectedErr := "error getting package manifest (path: testdata/path2/plugins/manifest.yaml): error unmarshaling plugin manifest file: error converting YAML to JSON: yaml: line 3: found unexpected end of stream"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
@@ -59,7 +59,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path3",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error preparing package: invalid package (test-plugin) version (invalid): Invalid Semantic Version"
+		expectedErr := "error getting package manifest (path: testdata/path3/plugins/manifest.yaml): error validating plugin manifest: 1 error occurred:\n\t* invalid version (semver expected): Invalid Semantic Version\n\n"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
