@@ -14,6 +14,8 @@ const getMockSearch = (fixtureId: string): SearchResults => {
   return require(`./__fixtures__/SearchPackages/${fixtureId}.json`) as SearchResults;
 };
 
+Object.defineProperty(HTMLElement.prototype, 'scroll', { configurable: true, value: jest.fn() });
+
 const mockOnSelection = jest.fn();
 
 const defaultProps = {

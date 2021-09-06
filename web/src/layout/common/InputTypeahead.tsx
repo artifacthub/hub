@@ -68,6 +68,10 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
         ],
         ['asc', 'desc']
       );
+      // Scroll top when new visible items are displayed
+      if (itemsWrapper && itemsWrapper.current) {
+        itemsWrapper.current.scroll(0, 0);
+      }
     }
 
     return elements;

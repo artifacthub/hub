@@ -37,10 +37,12 @@ interface Props {
 const DEFAULT_LIMIT = 20;
 const SEARCH_DELAY = 3 * 100; // 300ms
 const MIN_CHARACTERS_SEARCH = 3;
+const ITEM_HEIGHT = 41;
 
 const SearchRepositories = (props: Props) => {
   const inputEl = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef(null);
+  const itemsWrapper = useRef<HTMLDivElement | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [repositories, setRepositories] = useState<Repository[] | null>(null);
   const [searchName, setSearchName] = useState<string>('');
@@ -145,9 +147,11 @@ const SearchRepositories = (props: Props) => {
         if (newIndex < 0) {
           newIndex = repositories.length - 1;
         }
+        scrollDropdown(newIndex);
         setHighlightedItem(newIndex);
       } else {
         const newIndex = arrow === 'up' ? repositories.length - 1 : 0;
+        scrollDropdown(newIndex);
         setHighlightedItem(newIndex);
       }
     }
@@ -170,6 +174,17 @@ const SearchRepositories = (props: Props) => {
     setRepositories(null);
     setSearchName('');
     setHighlightedItem(null);
+  };
+
+  const scrollDropdown = (index: number) => {
+    if (itemsWrapper && itemsWrapper.current) {
+      const itemsOnScreen = Math.floor(itemsWrapper.current.clientHeight / ITEM_HEIGHT) - 1;
+      if (index + 1 > itemsOnScreen) {
+        itemsWrapper.current.scroll(0, (index - itemsOnScreen) * ITEM_HEIGHT);
+      } else {
+        itemsWrapper.current.scroll(0, 0);
+      }
+    }
   };
 
   useEffect(() => {
@@ -234,7 +249,7 @@ const SearchRepositories = (props: Props) => {
               <span className="font-weight-bold">{searchName}</span>
             </p>
           ) : (
-            <div className={styles.tableWrapper}>
+            <div className={styles.tableWrapper} ref={itemsWrapper}>
               <table
                 className={`table table-hover table-sm mb-0 ${styles.table}`}
                 role="grid"
