@@ -593,7 +593,7 @@ const RepositoryModal = (props: Props) => {
                             type="password"
                             label="Password"
                             name="authPass"
-                            autoComplete="off"
+                            autoComplete="new-password"
                             value={props.repository ? props.repository.authPass || '' : ''}
                             visiblePassword
                           />

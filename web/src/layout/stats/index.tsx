@@ -344,8 +344,8 @@ const StatsView = (props: Props) => {
                               {(stats.snapshots.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
                                 series={stats.snapshots.createdMonthly}
-                                title="New snapshots added monthly"
-                                id="snapshots"
+                                title="New releases added monthly"
+                                id="releases"
                                 activeTheme={activeTheme}
                               />
                             </div>
