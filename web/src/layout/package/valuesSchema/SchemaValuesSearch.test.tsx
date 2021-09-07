@@ -4,6 +4,8 @@ import React from 'react';
 
 import SchemaValuesSearch from './SchemaValuesSearch';
 
+Object.defineProperty(HTMLElement.prototype, 'scroll', { configurable: true, value: jest.fn() });
+
 const onSearchMock = jest.fn();
 
 const defaultProps = {
