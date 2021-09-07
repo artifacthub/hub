@@ -24,7 +24,7 @@ import (
 const (
 	githubMaxRequestsPerHourUnauthenticated = 60
 	githubMaxRequestsPerHourAuthenticated   = 5000
-	repositoryTimeout                       = 5 * time.Minute
+	repositoryTimeout                       = 10 * time.Minute
 )
 
 var (
