@@ -17,6 +17,7 @@ const BrushChart = (props: Props) => {
   const primaryColor = getMetaTag('primaryColor');
   const secondaryColor = getMetaTag('secondaryColor');
   const point = useBreakpointDetect();
+  const lastSeriesDate = props.series[props.series.length - 1][0];
 
   useEffect(() => {
     // We force to use original selection after changing breakpoint
@@ -26,15 +27,15 @@ const BrushChart = (props: Props) => {
       {
         selection: {
           xaxis: {
-            min: moment().subtract(12, 'months').valueOf(), // We select last year
-            max: moment.now(),
+            min: moment(lastSeriesDate).subtract(12, 'months').valueOf(), // We select last year
+            max: lastSeriesDate,
           },
         },
       },
       false,
       true
     );
-  }, [point, props.id]);
+  }, [point, props.id, lastSeriesDate]);
 
   const getBarChartConfig = (): ApexCharts.ApexOptions => {
     return {
@@ -158,8 +159,8 @@ const BrushChart = (props: Props) => {
         selection: {
           enabled: true,
           xaxis: {
-            min: moment().subtract(12, 'months').valueOf(), // We select last year
-            max: moment.now(),
+            min: moment(lastSeriesDate).subtract(12, 'months').valueOf(), // We select last year
+            max: lastSeriesDate,
           },
           fill: {
             color: props.activeTheme === 'dark' ? '#222529' : secondaryColor,
