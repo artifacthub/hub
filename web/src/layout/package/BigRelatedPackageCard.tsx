@@ -22,7 +22,10 @@ const BigRelatedPackageCard = (props: Props) => {
   const history = useHistory();
 
   return (
-    <div className={`card cardWithHover mt-3 mt-xxl-0 w-100 relatedCard ${styles.card}`}>
+    <div
+      className={`card cardWithHover mt-3 mt-xxl-0 w-100 relatedCard ${styles.card}`}
+      data-testid="relatedPackageLink"
+    >
       <Link
         className={`text-decoration-none text-reset ${styles.link}`}
         to={{
