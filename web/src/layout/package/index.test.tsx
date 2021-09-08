@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import API from '../../api';
-import { ErrorKind, Package } from '../../types';
+import { ErrorKind, Package, SearchResults } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageView from './index';
 jest.mock('../../api');
@@ -13,6 +13,10 @@ jest.mock('../../utils/updateMetaIndex');
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
+};
+
+const getMockRelatedPackages = (fixtureId: string): SearchResults => {
+  return require(`./__fixtures__/index/${fixtureId}Related.json`) as SearchResults;
 };
 
 const mockHistoryPush = jest.fn();
@@ -348,11 +352,36 @@ describe('Package index', () => {
       expect(screen.getByText('Manifest')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open Manifest' })).toBeInTheDocument();
     });
+  });
 
-    describe('Krew kubectl plugin', () => {
-      it('renders plugin properly', async () => {
-        const mockPackage = getMockPackage('14');
+  describe('Krew kubectl plugin', () => {
+    it('renders plugin properly', async () => {
+      const mockPackage = getMockPackage('14');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      expect(screen.getByText('Manifest')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
+    });
+  });
+
+  describe('Related packages', () => {
+    describe('Render', () => {
+      it('renders component', async () => {
+        const mockPackage = getMockPackage('15');
         mocked(API).getPackage.mockResolvedValue(mockPackage);
+        const mockPackages = getMockRelatedPackages('1');
+        mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
         render(
           <Router>
@@ -362,11 +391,110 @@ describe('Package index', () => {
 
         await waitFor(() => {
           expect(API.getPackage).toHaveBeenCalledTimes(1);
+          expect(API.searchPackages).toHaveBeenCalledTimes(1);
+          expect(API.searchPackages).toHaveBeenCalledWith(
+            {
+              filters: {},
+              limit: 9,
+              offset: 0,
+              tsQueryWeb: 'test or key1 or key2',
+            },
+            false
+          );
         });
+        expect(screen.getByText('Related packages')).toBeInTheDocument();
+      });
+    });
 
-        expect(screen.getByText('Manifest')).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
+    it('excludes selected package from search results list', async () => {
+      const mockPackage = getMockPackage('15');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      const mockPackages = getMockRelatedPackages('2');
+      mocked(API).searchPackages.mockResolvedValue(mockPackages);
+
+      render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+      expect(await screen.findAllByTestId('relatedPackageLink')).toHaveLength(6);
+    });
+
+    it('renders only 8 related packages', async () => {
+      const mockPackage = getMockPackage('15');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      const mockPackages = getMockRelatedPackages('3');
+      mocked(API).searchPackages.mockResolvedValue(mockPackages);
+
+      render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      expect(await screen.findAllByTestId('relatedPackageLink')).toHaveLength(8);
+    });
+
+    describe('does not render', () => {
+      it('when related packages list is empty', async () => {
+        const mockPackage = getMockPackage('15');
+        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        const mockPackages = getMockRelatedPackages('4');
+        mocked(API).searchPackages.mockResolvedValue(mockPackages);
+
+        render(
+          <Router>
+            <PackageView {...defaultProps} />
+          </Router>
+        );
+
+        await waitFor(() => {
+          expect(API.getPackage).toHaveBeenCalledTimes(1);
+          expect(API.searchPackages).toHaveBeenCalledTimes(1);
+        });
+        expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
+      });
+
+      it('when list contains only selected package', async () => {
+        const mockPackage = getMockPackage('15');
+        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        const mockPackages = getMockRelatedPackages('5');
+        mocked(API).searchPackages.mockResolvedValue(mockPackages);
+
+        render(
+          <Router>
+            <PackageView {...defaultProps} />
+          </Router>
+        );
+
+        await waitFor(() => {
+          expect(API.getPackage).toHaveBeenCalledTimes(1);
+          expect(API.searchPackages).toHaveBeenCalledTimes(1);
+        });
+        expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
+      });
+
+      it('when SearchPackages call fails', async () => {
+        const mockPackage = getMockPackage('15');
+        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        mocked(API).searchPackages.mockRejectedValue(null);
+
+        render(
+          <Router>
+            <PackageView {...defaultProps} />
+          </Router>
+        );
+
+        await waitFor(() => {
+          expect(API.getPackage).toHaveBeenCalledTimes(1);
+          expect(API.searchPackages).toHaveBeenCalledTimes(1);
+        });
+        expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
       });
     });
   });

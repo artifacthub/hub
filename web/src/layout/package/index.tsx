@@ -97,6 +97,8 @@ const PackageView = (props: Props) => {
   const [currentHash, setCurrentHash] = useState<string | undefined>(props.hash);
   const columnWrapper = useRef<HTMLDivElement | null>(null);
   const [relatedPosition, setRelatedPosition] = useState<'column' | 'content' | undefined | null>(null);
+  const [currentPkgId, setCurrentPkgId] = useState<null | string>(null);
+  const [relatedPackages, setRelatedPackages] = useState<Package[] | undefined>(undefined);
 
   useScrollRestorationFix();
 
@@ -129,6 +131,39 @@ const PackageView = (props: Props) => {
     }
   }, [props, isLoadingPackage]);
 
+  useEffect(() => {
+    async function fetchRelatedPackages(pkgDetail: Package) {
+      try {
+        let name = pkgDetail.name.split('-');
+        let words = [...name];
+        if (!isUndefined(pkgDetail.keywords) && pkgDetail.keywords.length > 0) {
+          words = [...name, ...pkgDetail.keywords];
+        }
+        const searchResults = await API.searchPackages(
+          {
+            tsQueryWeb: Array.from(new Set(words)).join(' or '),
+            filters: {},
+            limit: 9,
+            offset: 0,
+          },
+          false
+        );
+        let filteredPackages: Package[] = [];
+        if (!isNull(searchResults.packages)) {
+          filteredPackages = searchResults.packages
+            .filter((item: Package) => item.packageId !== currentPkgId)
+            .slice(0, 8); // Only first 8 packages
+        }
+        setRelatedPackages(filteredPackages);
+      } catch {
+        setRelatedPackages([]);
+      }
+    }
+    if (!isNull(currentPkgId) && detail) {
+      fetchRelatedPackages(detail);
+    }
+  }, [currentPkgId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   async function fetchPackageDetail() {
     try {
       setRelatedPosition(null);
@@ -147,6 +182,7 @@ const PackageView = (props: Props) => {
         setCurrentHash(undefined);
       }
       setApiError(null);
+      setCurrentPkgId(detailPkg.packageId);
       setRelatedPosition(undefined);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
       setIsLoadingPackage(false);
@@ -852,12 +888,7 @@ const PackageView = (props: Props) => {
 
                         {!isUndefined(relatedPosition) && relatedPosition === 'column' && (
                           <div className={styles.relatedPackagesWrapper}>
-                            <RelatedPackages
-                              packageId={detail.packageId}
-                              name={detail.name}
-                              keywords={detail.keywords}
-                              in={relatedPosition}
-                            />
+                            <RelatedPackages packages={relatedPackages} in={relatedPosition} />
                           </div>
                         )}
                       </div>
@@ -892,9 +923,7 @@ const PackageView = (props: Props) => {
                         {!isUndefined(relatedPosition) && relatedPosition === 'content' && (
                           <RelatedPackages
                             className={styles.relatedWrapper}
-                            packageId={detail.packageId}
-                            name={detail.name}
-                            keywords={detail.keywords}
+                            packages={relatedPackages}
                             title={<AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Related packages" />}
                             in={relatedPosition}
                           />

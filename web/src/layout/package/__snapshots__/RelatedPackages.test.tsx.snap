@@ -1,3 +1,773 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RelatedPackages renders correctly 1`] = `<DocumentFragment />`;
+exports[`RelatedPackages renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    aria-describedby="related-list"
+    class="mt-4 undefined"
+    role="list"
+  >
+    <div
+      class="mt-2 mb-1 undefined"
+      data-testid="smallTitle"
+    >
+      <small
+        class="card-title text-muted text-uppercase"
+      >
+        <span
+          aria-level="5"
+          class="title"
+          id="related-list"
+          role="heading"
+        >
+          Related packages
+        </span>
+      </small>
+    </div>
+    <div
+      class="pt-1 row no-gutters"
+    >
+      <div
+        class="col-12"
+      >
+        <div
+          class="card cardWithHover mt-2 w-100 relatedCard card"
+          role="listitem"
+        >
+          <a
+            class="text-decoration-none text-reset link"
+            data-testid="relatedPackageLink"
+            href="/packages/helm/stable/test"
+          >
+            <div
+              class="card-body d-flex flex-column body"
+            >
+              <div
+                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                >
+                  <img
+                    alt="Logo centrifugo"
+                    aria-hidden="true"
+                    class="image"
+                    src="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e"
+                    srcset="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@1x 1x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@2x 2x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@3x 3x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@4x 4x"
+                  />
+                </div>
+                <div
+                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                >
+                  <div
+                    class="d-flex flex-row justify-content-between"
+                  >
+                    <div
+                      class="text-truncate w-100"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-between legend"
+                      >
+                        <div
+                          class="kind"
+                        >
+                          <span
+                            class="badge font-weight-bold badge"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center"
+                            >
+                              <div
+                                aria-hidden="true"
+                                class="position-relative icon badgeIcon"
+                              >
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconLight"
+                                  src="/static/media/helm-chart.svg"
+                                />
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconDark"
+                                  src="/static/media/helm-chart-light.svg"
+                                />
+                              </div>
+                              <div
+                                class="ml-1"
+                              >
+                                Helm chart
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="align-self-end text-truncate card-title mb-2 title"
+                      >
+                        centrifugo
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center text-muted subtitle"
+                      >
+                        <div
+                          class="w-100"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            user
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            stable
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="col-12"
+      >
+        <div
+          class="card cardWithHover mt-2 w-100 relatedCard card"
+          role="listitem"
+        >
+          <a
+            class="text-decoration-none text-reset link"
+            data-testid="relatedPackageLink"
+            href="/packages/helm/incubator/test"
+          >
+            <div
+              class="card-body d-flex flex-column body"
+            >
+              <div
+                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                >
+                  <img
+                    alt="Logo kafka"
+                    aria-hidden="true"
+                    class="image"
+                    src="/static/media/placeholder_pkg_helm.png"
+                  />
+                </div>
+                <div
+                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                >
+                  <div
+                    class="d-flex flex-row justify-content-between"
+                  >
+                    <div
+                      class="text-truncate w-100"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-between legend"
+                      >
+                        <div
+                          class="kind"
+                        >
+                          <span
+                            class="badge font-weight-bold badge"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center"
+                            >
+                              <div
+                                aria-hidden="true"
+                                class="position-relative icon badgeIcon"
+                              >
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconLight"
+                                  src="/static/media/helm-chart.svg"
+                                />
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconDark"
+                                  src="/static/media/helm-chart-light.svg"
+                                />
+                              </div>
+                              <div
+                                class="ml-1"
+                              >
+                                Helm chart
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="align-self-end text-truncate card-title mb-2 title"
+                      >
+                        kafka
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center text-muted subtitle"
+                      >
+                        <div
+                          class="w-100"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            user
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            incubator
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="col-12"
+      >
+        <div
+          class="card cardWithHover mt-2 w-100 relatedCard card"
+          role="listitem"
+        >
+          <a
+            class="text-decoration-none text-reset link"
+            data-testid="relatedPackageLink"
+            href="/packages/helm/dhiatn/test"
+          >
+            <div
+              class="card-body d-flex flex-column body"
+            >
+              <div
+                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                >
+                  <img
+                    alt="Logo kafka-topics-ui"
+                    aria-hidden="true"
+                    class="image"
+                    src="/image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2"
+                    srcset="/image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2@1x 1x, /image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2@2x 2x, /image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2@3x 3x, /image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2@4x 4x"
+                  />
+                </div>
+                <div
+                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                >
+                  <div
+                    class="d-flex flex-row justify-content-between"
+                  >
+                    <div
+                      class="text-truncate w-100"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-between legend"
+                      >
+                        <div
+                          class="kind"
+                        >
+                          <span
+                            class="badge font-weight-bold badge"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center"
+                            >
+                              <div
+                                aria-hidden="true"
+                                class="position-relative icon badgeIcon"
+                              >
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconLight"
+                                  src="/static/media/helm-chart.svg"
+                                />
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconDark"
+                                  src="/static/media/helm-chart-light.svg"
+                                />
+                              </div>
+                              <div
+                                class="ml-1"
+                              >
+                                Helm chart
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="align-self-end text-truncate card-title mb-2 title"
+                      >
+                        kafka-topics-ui
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center text-muted subtitle"
+                      >
+                        <div
+                          class="w-100"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            user
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            dhiatn
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="col-12"
+      >
+        <div
+          class="card cardWithHover mt-2 w-100 relatedCard card"
+          role="listitem"
+        >
+          <a
+            class="text-decoration-none text-reset link"
+            data-testid="relatedPackageLink"
+            href="/packages/helm/stable/test"
+          >
+            <div
+              class="card-body d-flex flex-column body"
+            >
+              <div
+                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                >
+                  <img
+                    alt="Logo nats"
+                    aria-hidden="true"
+                    class="image"
+                    src="/image/9d48cd3f-d6f0-499e-b070-4dd30def1306"
+                    srcset="/image/9d48cd3f-d6f0-499e-b070-4dd30def1306@1x 1x, /image/9d48cd3f-d6f0-499e-b070-4dd30def1306@2x 2x, /image/9d48cd3f-d6f0-499e-b070-4dd30def1306@3x 3x, /image/9d48cd3f-d6f0-499e-b070-4dd30def1306@4x 4x"
+                  />
+                </div>
+                <div
+                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                >
+                  <div
+                    class="d-flex flex-row justify-content-between"
+                  >
+                    <div
+                      class="text-truncate w-100"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-between legend"
+                      >
+                        <div
+                          class="kind"
+                        >
+                          <span
+                            class="badge font-weight-bold badge"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center"
+                            >
+                              <div
+                                aria-hidden="true"
+                                class="position-relative icon badgeIcon"
+                              >
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconLight"
+                                  src="/static/media/helm-chart.svg"
+                                />
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconDark"
+                                  src="/static/media/helm-chart-light.svg"
+                                />
+                              </div>
+                              <div
+                                class="ml-1"
+                              >
+                                Helm chart
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="align-self-end text-truncate card-title mb-2 title"
+                      >
+                        nats
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center text-muted subtitle"
+                      >
+                        <div
+                          class="w-100"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            user
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            stable
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="col-12"
+      >
+        <div
+          class="card cardWithHover mt-2 w-100 relatedCard card"
+          role="listitem"
+        >
+          <a
+            class="text-decoration-none text-reset link"
+            data-testid="relatedPackageLink"
+            href="/packages/helm/stable/test"
+          >
+            <div
+              class="card-body d-flex flex-column body"
+            >
+              <div
+                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                >
+                  <img
+                    alt="Logo rabbitmq"
+                    aria-hidden="true"
+                    class="image"
+                    src="/image/2af77252-fa22-4b56-97c2-2e0da1307601"
+                    srcset="/image/2af77252-fa22-4b56-97c2-2e0da1307601@1x 1x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@2x 2x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@3x 3x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@4x 4x"
+                  />
+                </div>
+                <div
+                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                >
+                  <div
+                    class="d-flex flex-row justify-content-between"
+                  >
+                    <div
+                      class="text-truncate w-100"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-between legend"
+                      >
+                        <div
+                          class="kind"
+                        >
+                          <span
+                            class="badge font-weight-bold badge"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center"
+                            >
+                              <div
+                                aria-hidden="true"
+                                class="position-relative icon badgeIcon"
+                              >
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconLight"
+                                  src="/static/media/helm-chart.svg"
+                                />
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconDark"
+                                  src="/static/media/helm-chart-light.svg"
+                                />
+                              </div>
+                              <div
+                                class="ml-1"
+                              >
+                                Helm chart
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="align-self-end text-truncate card-title mb-2 title"
+                      >
+                        rabbitmq
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center text-muted subtitle"
+                      >
+                        <div
+                          class="w-100"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            user
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            stable
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="col-12"
+      >
+        <div
+          class="card cardWithHover mt-2 w-100 relatedCard card"
+          role="listitem"
+        >
+          <a
+            class="text-decoration-none text-reset link"
+            data-testid="relatedPackageLink"
+            href="/packages/helm/stable/test"
+          >
+            <div
+              class="card-body d-flex flex-column body"
+            >
+              <div
+                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                >
+                  <img
+                    alt="Logo rabbitmq-ha"
+                    aria-hidden="true"
+                    class="image"
+                    src="/image/2af77252-fa22-4b56-97c2-2e0da1307601"
+                    srcset="/image/2af77252-fa22-4b56-97c2-2e0da1307601@1x 1x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@2x 2x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@3x 3x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@4x 4x"
+                  />
+                </div>
+                <div
+                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                >
+                  <div
+                    class="d-flex flex-row justify-content-between"
+                  >
+                    <div
+                      class="text-truncate w-100"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-between legend"
+                      >
+                        <div
+                          class="kind"
+                        >
+                          <span
+                            class="badge font-weight-bold badge"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center"
+                            >
+                              <div
+                                aria-hidden="true"
+                                class="position-relative icon badgeIcon"
+                              >
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconLight"
+                                  src="/static/media/helm-chart.svg"
+                                />
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconDark"
+                                  src="/static/media/helm-chart-light.svg"
+                                />
+                              </div>
+                              <div
+                                class="ml-1"
+                              >
+                                Helm chart
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="align-self-end text-truncate card-title mb-2 title"
+                      >
+                        rabbitmq-ha
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center text-muted subtitle"
+                      >
+                        <div
+                          class="w-100"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            user
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            stable
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="col-12"
+      >
+        <div
+          class="card cardWithHover mt-2 w-100 relatedCard card"
+          role="listitem"
+        >
+          <a
+            class="text-decoration-none text-reset link"
+            data-testid="relatedPackageLink"
+            href="/packages/helm/incubator/test"
+          >
+            <div
+              class="card-body d-flex flex-column body"
+            >
+              <div
+                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                >
+                  <img
+                    alt="Logo schema-registry"
+                    aria-hidden="true"
+                    class="image"
+                    src="/static/media/placeholder_pkg_helm.png"
+                  />
+                </div>
+                <div
+                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                >
+                  <div
+                    class="d-flex flex-row justify-content-between"
+                  >
+                    <div
+                      class="text-truncate w-100"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-between legend"
+                      >
+                        <div
+                          class="kind"
+                        >
+                          <span
+                            class="badge font-weight-bold badge"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center"
+                            >
+                              <div
+                                aria-hidden="true"
+                                class="position-relative icon badgeIcon"
+                              >
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconLight"
+                                  src="/static/media/helm-chart.svg"
+                                />
+                                <img
+                                  alt="Icon"
+                                  class="mw-100 mh-100 iconDark"
+                                  src="/static/media/helm-chart-light.svg"
+                                />
+                              </div>
+                              <div
+                                class="ml-1"
+                              >
+                                Helm chart
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="align-self-end text-truncate card-title mb-2 title"
+                      >
+                        schema-registry
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center text-muted subtitle"
+                      >
+                        <div
+                          class="w-100"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            user
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            incubator
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
