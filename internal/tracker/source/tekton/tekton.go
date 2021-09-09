@@ -1,6 +1,7 @@
 package tekton
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -13,6 +14,7 @@ import (
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/ghodss/yaml"
+	"github.com/hashicorp/go-multierror"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
 )
 
@@ -23,6 +25,11 @@ const (
 	maintainersAnnotation     = "artifacthub.io/maintainers"
 	providerAnnotation        = "artifacthub.io/provider"
 	recommendationsAnnotation = "artifacthub.io/recommendations"
+)
+
+var (
+	// errInvalidAnnotation indicates that the annotation provided is not valid.
+	errInvalidAnnotation = errors.New("invalid annotation")
 )
 
 // TrackerSource is a hub.TrackerSource implementation for Tekton repositories.
@@ -55,9 +62,9 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		// Get package manifest
-		manifest, manifestRaw, err := getManifest(pkgPath)
+		manifest, manifestRaw, err := GetManifest(pkgPath)
 		if err != nil {
-			s.warn(fmt.Errorf("error getting package manifest: %w", err))
+			s.warn(fmt.Errorf("error getting package manifest (path: %s): %w", pkgPath, err))
 			return nil
 		}
 		if manifest == nil {
@@ -65,18 +72,14 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			return nil
 		}
 
-		// Parse and validate version
-		versionLabel := manifest.Labels["app.kubernetes.io/version"]
-		sv, err := semver.NewVersion(versionLabel)
-		if err != nil {
-			s.warn(fmt.Errorf("invalid package (%s) version (%s): %w", manifest.Name, versionLabel, err))
-			return nil
-		}
-
 		// Prepare and store package version
-		p, err := s.preparePackage(s.i.Repository, manifest, manifestRaw, pkgPath, sv.String())
+		p, err := PreparePackage(s.i.Repository, manifest, manifestRaw, s.i.BasePath, pkgPath)
 		if err != nil {
-			s.warn(fmt.Errorf("error preparing package: %w", err))
+			s.warn(fmt.Errorf("error preparing package %s version %s: %w",
+				manifest.Name,
+				manifest.Labels["app.kubernetes.io/version"],
+				err,
+			))
 			return nil
 		}
 		packagesAvailable[pkg.BuildKey(p)] = p
@@ -90,15 +93,80 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 	return packagesAvailable, nil
 }
 
-// preparePackage prepares a package version using the package manifest and the
+// warn is a helper that sends the error provided to the errors collector and
+// logs it as a warning.
+func (s *TrackerSource) warn(err error) {
+	s.i.Svc.Logger.Warn().Err(err).Send()
+	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
+}
+
+// GetManifest reads and parses the package manifest.
+func GetManifest(pkgPath string) (*v1beta1.Task, []byte, error) {
+	// Locate manifest file
+	matches, err := filepath.Glob(filepath.Join(pkgPath, "*.yaml"))
+	if err != nil {
+		return nil, nil, fmt.Errorf("error locating manifest file: %w", err)
+	}
+	if len(matches) != 1 {
+		return nil, nil, nil
+	}
+
+	// Process matches, returning the first valid resource manifest found
+	for _, match := range matches {
+		// Read and parse manifest file
+		manifestData, err := ioutil.ReadFile(match)
+		if err != nil {
+			continue
+		}
+		manifest := &v1beta1.Task{}
+		if err := yaml.Unmarshal(manifestData, &manifest); err != nil {
+			continue
+		}
+		if manifest.Kind != "Task" && manifest.Kind != "ClusterTask" {
+			continue
+		}
+		if err := validateManifest(manifest); err != nil {
+			return nil, nil, fmt.Errorf("error validating manifest: %w", err)
+		}
+		return manifest, manifestData, nil
+	}
+
+	return nil, nil, nil
+}
+
+// validateManifest checks if the Tekton task manifest provided is valid.
+func validateManifest(manifest *v1beta1.Task) error {
+	var errs *multierror.Error
+
+	if manifest.Name == "" {
+		errs = multierror.Append(errs, errors.New("name not provided"))
+	}
+	versionLabel := manifest.Labels["app.kubernetes.io/version"]
+	if versionLabel == "" {
+		errs = multierror.Append(errs, errors.New("version not provided"))
+	} else if _, err := semver.NewVersion(versionLabel); err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("invalid version (semver expected): %w", err))
+	}
+	if manifest.Spec.Description == "" {
+		errs = multierror.Append(errs, errors.New("description not provided"))
+	}
+
+	return errs.ErrorOrNil()
+}
+
+// PreparePackage prepares a package version using the package manifest and the
 // files in the path provided.
-func (s *TrackerSource) preparePackage(
+func PreparePackage(
 	r *hub.Repository,
 	manifest *v1beta1.Task,
 	manifestRaw []byte,
-	pkgPath,
-	version string,
+	basePath string,
+	pkgPath string,
 ) (*hub.Package, error) {
+	// Parse version (previously validated)
+	sv, _ := semver.NewVersion(manifest.Labels["app.kubernetes.io/version"])
+	version := sv.String()
+
 	// Prepare content and source urls
 	var repoBaseURL, pkgsPath, provider string
 	matches := repo.GitRepoURLRE.FindStringSubmatch(r.URL)
@@ -119,7 +187,7 @@ func (s *TrackerSource) preparePackage(
 		rawPath = "-/raw"
 	}
 	branch := repo.GetBranch(r)
-	pkgVersionPath := strings.TrimPrefix(pkgPath, s.i.BasePath)
+	pkgVersionPath := strings.TrimPrefix(pkgPath, basePath)
 	contentURL := fmt.Sprintf("%s/%s/%s/%s%s/%s.yaml",
 		repoBaseURL, rawPath, branch, pkgsPath, pkgVersionPath, manifest.Name)
 	sourceURL := fmt.Sprintf("%s/%s/%s/%s%s/%s.yaml",
@@ -170,54 +238,19 @@ func (s *TrackerSource) preparePackage(
 	return p, nil
 }
 
-// warn is a helper that sends the error provided to the errors collector and
-// logs it as a warning.
-func (s *TrackerSource) warn(err error) {
-	s.i.Svc.Logger.Warn().Err(err).Send()
-	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
-}
-
-// getManifest reads and parses the package manifest.
-func getManifest(pkgPath string) (*v1beta1.Task, []byte, error) {
-	// Locate manifest file
-	matches, err := filepath.Glob(filepath.Join(pkgPath, "*.yaml"))
-	if err != nil {
-		return nil, nil, fmt.Errorf("error locating manifest file: %w", err)
-	}
-	if len(matches) != 1 {
-		return nil, nil, nil
-	}
-
-	// Process matches, returning the first valid resource manifest found
-	for _, match := range matches {
-		// Read and parse manifest file
-		manifestData, err := ioutil.ReadFile(match)
-		if err != nil {
-			continue
-		}
-		manifest := &v1beta1.Task{}
-		if err = yaml.Unmarshal(manifestData, &manifest); err != nil {
-			continue
-		}
-		if manifest.Kind != "Task" && manifest.Kind != "ClusterTask" {
-			continue
-		}
-		return manifest, manifestData, nil
-	}
-
-	return nil, nil, nil
-}
-
 // enrichPackageFromAnnotations adds some extra information to the package from
 // the provided annotations.
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
+	var errs *multierror.Error
+
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {
 		changes, err := source.ParseChangesAnnotation(v)
 		if err != nil {
-			return err
+			errs = multierror.Append(errs, err)
+		} else {
+			p.Changes = changes
 		}
-		p.Changes = changes
 	}
 
 	// License
@@ -227,18 +260,29 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[linksAnnotation]; ok {
 		var links []*hub.Link
 		if err := yaml.Unmarshal([]byte(v), &links); err != nil {
-			return fmt.Errorf("invalid links value: %s", v)
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid links value", errInvalidAnnotation))
+		} else {
+			p.Links = append(p.Links, links...)
 		}
-		p.Links = append(p.Links, links...)
 	}
 
 	// Maintainers
 	if v, ok := annotations[maintainersAnnotation]; ok {
 		var maintainers []*hub.Maintainer
 		if err := yaml.Unmarshal([]byte(v), &maintainers); err != nil {
-			return fmt.Errorf("invalid maintainers value: %s", v)
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid maintainers value", errInvalidAnnotation))
+		} else {
+			var invalidMaintainersFound bool
+			for _, maintainer := range maintainers {
+				if maintainer.Email == "" {
+					invalidMaintainersFound = true
+					errs = multierror.Append(errs, fmt.Errorf("%w: maintainer email not provided", errInvalidAnnotation))
+				}
+			}
+			if !invalidMaintainersFound {
+				p.Maintainers = maintainers
+			}
 		}
-		p.Maintainers = maintainers
 	}
 
 	// Provider
@@ -248,10 +292,11 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[recommendationsAnnotation]; ok {
 		var recommendations []*hub.Recommendation
 		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
-			return fmt.Errorf("invalid recommendations value: %s", v)
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid recommendations value", errInvalidAnnotation))
+		} else {
+			p.Recommendations = recommendations
 		}
-		p.Recommendations = recommendations
 	}
 
-	return nil
+	return errs.ErrorOrNil()
 }

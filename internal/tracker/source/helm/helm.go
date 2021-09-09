@@ -545,13 +545,13 @@ func extractContainersImages(chrt *chart.Chart) ([]string, error) {
 // EnrichPackageFromAnnotations adds some extra information to the package from
 // the provided annotations.
 func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
-	var result *multierror.Error
+	var errs *multierror.Error
 
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {
 		changes, err := source.ParseChangesAnnotation(v)
 		if err != nil {
-			result = multierror.Append(result, err)
+			errs = multierror.Append(errs, err)
 		} else {
 			p.Changes = changes
 		}
@@ -561,7 +561,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[crdsAnnotation]; ok {
 		var crds []interface{}
 		if err := yaml.Unmarshal([]byte(v), &crds); err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid crds value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid crds value", errInvalidAnnotation))
 		} else {
 			p.CRDs = crds
 		}
@@ -571,7 +571,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[crdsExamplesAnnotation]; ok {
 		var crdsExamples []interface{}
 		if err := yaml.Unmarshal([]byte(v), &crdsExamples); err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid crdsExamples value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid crdsExamples value", errInvalidAnnotation))
 		} else {
 			p.CRDsExamples = crdsExamples
 		}
@@ -581,10 +581,10 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[imagesAnnotation]; ok {
 		var images []*hub.ContainerImage
 		if err := yaml.Unmarshal([]byte(v), &images); err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid images value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid images value", errInvalidAnnotation))
 		} else {
 			if err := pkg.ValidateContainersImages(images); err != nil {
-				result = multierror.Append(result, fmt.Errorf("%w: %s", errInvalidAnnotation, err.Error()))
+				errs = multierror.Append(errs, fmt.Errorf("%w: %s", errInvalidAnnotation, err.Error()))
 			} else {
 				p.ContainersImages = images
 			}
@@ -600,7 +600,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[linksAnnotation]; ok {
 		var links []*hub.Link
 		if err := yaml.Unmarshal([]byte(v), &links); err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid links value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid links value", errInvalidAnnotation))
 		} else {
 		LL:
 			for _, link := range links {
@@ -619,7 +619,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[maintainersAnnotation]; ok {
 		var maintainers []*hub.Maintainer
 		if err := yaml.Unmarshal([]byte(v), &maintainers); err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid maintainers value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid maintainers value", errInvalidAnnotation))
 		} else {
 		ML:
 			for _, maintainer := range maintainers {
@@ -638,7 +638,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[operatorAnnotation]; ok {
 		isOperator, err := strconv.ParseBool(v)
 		if err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid operator value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid operator value", errInvalidAnnotation))
 		} else {
 			p.IsOperator = isOperator
 		}
@@ -648,7 +648,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[operatorCapabilitiesAnnotation]; ok {
 		v = strings.ToLower(v)
 		if !contains(validOperatorCapabilities, v) {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid operator capabilities value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid operator capabilities value", errInvalidAnnotation))
 		} else {
 			p.Capabilities = v
 		}
@@ -658,7 +658,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[prereleaseAnnotation]; ok {
 		prerelease, err := strconv.ParseBool(v)
 		if err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid prerelease value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid prerelease value", errInvalidAnnotation))
 		} else {
 			p.Prerelease = prerelease
 		}
@@ -668,7 +668,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[recommendationsAnnotation]; ok {
 		var recommendations []*hub.Recommendation
 		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid recommendations value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid recommendations value", errInvalidAnnotation))
 		} else {
 			p.Recommendations = recommendations
 		}
@@ -678,7 +678,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[securityUpdatesAnnotation]; ok {
 		containsSecurityUpdates, err := strconv.ParseBool(v)
 		if err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid containsSecurityUpdates value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid containsSecurityUpdates value", errInvalidAnnotation))
 		} else {
 			p.ContainsSecurityUpdates = containsSecurityUpdates
 		}
@@ -688,17 +688,17 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[signKeyAnnotation]; ok {
 		var signKey *hub.SignKey
 		if err := yaml.Unmarshal([]byte(v), &signKey); err != nil {
-			result = multierror.Append(result, fmt.Errorf("%w: invalid sign key value", errInvalidAnnotation))
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid sign key value", errInvalidAnnotation))
 		} else {
 			if signKey.URL == "" {
-				result = multierror.Append(result, fmt.Errorf("%w: sign key url not provided", errInvalidAnnotation))
+				errs = multierror.Append(errs, fmt.Errorf("%w: sign key url not provided", errInvalidAnnotation))
 			} else {
 				p.SignKey = signKey
 			}
 		}
 	}
 
-	return result.ErrorOrNil()
+	return errs.ErrorOrNil()
 }
 
 // getFile returns the file requested from the provided chart.

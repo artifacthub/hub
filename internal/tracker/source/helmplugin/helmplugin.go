@@ -3,7 +3,6 @@ package helmplugin
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -12,6 +11,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/license"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/hashicorp/go-multierror"
 	"helm.sh/helm/v3/pkg/plugin"
 	"sigs.k8s.io/yaml"
 )
@@ -52,24 +52,20 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			return nil
 		}
 
-		// Read and parse plugin metadata file
-		data, err := ioutil.ReadFile(filepath.Join(pkgPath, plugin.PluginFileName))
+		// Get plugin metadata
+		pluginMetadataPath := filepath.Join(pkgPath, plugin.PluginFileName)
+		md, err := GetMetadata(pluginMetadataPath)
 		if err != nil {
 			if !errors.Is(err, os.ErrNotExist) {
-				s.warn(fmt.Errorf("error reading plugin metadata file: %w", err))
+				s.warn(fmt.Errorf("error getting pluging metadata (path: %s): %w", pluginMetadataPath, err))
 			}
-			return nil
-		}
-		var md *plugin.Metadata
-		if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
-			s.warn(fmt.Errorf("error unmarshaling plugin metadata file: %w", err))
 			return nil
 		}
 
 		// Prepare and store package version
-		p, err := preparePackage(s.i.Repository, md, pkgPath)
+		p, err := PreparePackage(s.i.Repository, md, pkgPath)
 		if err != nil {
-			s.warn(fmt.Errorf("error preparing package: %w", err))
+			s.warn(fmt.Errorf("error preparing package %s version %s: %w", md.Name, md.Version, err))
 			return nil
 		}
 		packagesAvailable[pkg.BuildKey(p)] = p
@@ -90,14 +86,46 @@ func (s *TrackerSource) warn(err error) {
 	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 }
 
-// preparePackage prepares a package version using the plugin metadata and the
-// files in the path provided.
-func preparePackage(r *hub.Repository, md *plugin.Metadata, pkgPath string) (*hub.Package, error) {
-	// Parse and validate version
-	sv, err := semver.NewVersion(md.Version)
+// GetManifest reads and parses the plugin metadata file.
+func GetMetadata(pkgPath string) (*plugin.Metadata, error) {
+	data, err := os.ReadFile(pkgPath)
 	if err != nil {
-		return nil, fmt.Errorf("invalid package (%s) version (%s): %w", md.Name, md.Version, err)
+		return nil, fmt.Errorf("error reading plugin metadata file: %w", err)
 	}
+	var md *plugin.Metadata
+	if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
+		return nil, fmt.Errorf("error unmarshaling plugin metadata file: %w", err)
+	}
+	if err := validateMetadata(md); err != nil {
+		return nil, fmt.Errorf("error validating plugin metadata: %w", err)
+	}
+	return md, nil
+}
+
+// validateMetadata checks if the plugin metadata provided is valid.
+func validateMetadata(md *plugin.Metadata) error {
+	var errs *multierror.Error
+
+	if md.Name == "" {
+		errs = multierror.Append(errs, errors.New("name not provided"))
+	}
+	if md.Version == "" {
+		errs = multierror.Append(errs, errors.New("version not provided"))
+	} else if _, err := semver.NewVersion(md.Version); err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("invalid version (semver expected): %w", err))
+	}
+	if md.Description == "" {
+		errs = multierror.Append(errs, errors.New("description not provided"))
+	}
+
+	return errs.ErrorOrNil()
+}
+
+// PreparePackage prepares a package version using the plugin metadata and the
+// files in the path provided.
+func PreparePackage(r *hub.Repository, md *plugin.Metadata, pkgPath string) (*hub.Package, error) {
+	// Parse version (previously validated)
+	sv, _ := semver.NewVersion(md.Version)
 	version := sv.String()
 
 	// Prepare package from metadata
@@ -119,17 +147,17 @@ func preparePackage(r *hub.Repository, md *plugin.Metadata, pkgPath string) (*hu
 	}
 
 	// Include readme file if available
-	readme, err := ioutil.ReadFile(filepath.Join(pkgPath, "README.md"))
+	readme, err := os.ReadFile(filepath.Join(pkgPath, "README.md"))
 	if err == nil {
 		p.Readme = string(readme)
 	}
 
 	// Process and include license if available
-	files, err := ioutil.ReadDir(pkgPath)
+	files, err := os.ReadDir(pkgPath)
 	if err == nil {
 		for _, file := range files {
 			if licenseRE.Match([]byte(file.Name())) {
-				licenseFile, err := ioutil.ReadFile(filepath.Join(pkgPath, file.Name()))
+				licenseFile, err := os.ReadFile(filepath.Join(pkgPath, file.Name()))
 				if err == nil {
 					p.License = license.Detect(licenseFile)
 					break

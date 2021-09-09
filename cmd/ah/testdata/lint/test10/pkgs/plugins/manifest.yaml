@@ -1,0 +1,33 @@
+apiVersion: krew.googlecontainertools.github.com/v1alpha2
+kind: Plugin
+metadata:
+  name: test-plugin
+  annotations:
+    artifacthub.io/displayName: My test plugin
+    artifacthub.io/keywords: |
+      - networking
+      - security
+    artifacthub.io/license: Apache-2.0
+    artifacthub.io/links: |
+      - name: link1
+        url: https://link1.url
+      - name: link2
+        url: https://link2.url
+    artifacthub.io/maintainers: |
+      - name: user1
+        email: user1@email.com
+      - name: user2
+        email: user2@email.com
+    artifacthub.io/provider: Some organization
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+spec:
+  version: v0.1.0
+  shortDescription: Test plugin
+  homepage: https://test/plugin
+  description: This is just a test plugin
+  platforms:
+    - selector:
+        matchLabels:
+          os: linux
+          arch: amd64

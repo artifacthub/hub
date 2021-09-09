@@ -168,7 +168,7 @@ func TestTrackerSource(t *testing.T) {
 			Svc:        sw.Svc,
 		}
 		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("", tests.ErrFake)
-		expectedErr := "error saving package test-operator image: fake error for tests"
+		expectedErr := "error preparing package test-operator version 0.1.0 logo image: error saving image: fake error for tests"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations

@@ -1,0 +1,15 @@
+
+------------------------------------------------------------------------------------------------------------------------
+✗ name: ? version: ? (testdata/lint/test7/pkgs)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint FAILED. 1 error(s) occurred:
+
+  * error validating package metadata file: 2 errors occurred:
+	* invalid metadata: createdAt not provided
+	* invalid metadata: description not provided
+
+------------------------------------------------------------------------------------------------------------------------
+
+1 package(s) found, 1 package(s) with errors
+

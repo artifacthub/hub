@@ -15,7 +15,7 @@ func TestGetPackageMetadata(t *testing.T) {
 		t.Parallel()
 		_, err := GetPackageMetadata("testdata/not-exists")
 		assert.Error(t, err)
-		assert.Contains(t, err.Error(), "error reading package metadata file")
+		assert.Equal(t, "error reading package metadata file: open testdata/not-exists.yaml: no such file or directory", err.Error())
 		assert.True(t, errors.Is(err, os.ErrNotExist))
 	})
 
@@ -23,14 +23,14 @@ func TestGetPackageMetadata(t *testing.T) {
 		t.Parallel()
 		_, err := GetPackageMetadata("testdata/invalid")
 		assert.Error(t, err)
-		assert.Contains(t, err.Error(), "error unmarshaling package metadata file")
+		assert.Equal(t, "error unmarshaling package metadata file: yaml: line 2: found unexpected end of stream", err.Error())
 	})
 
 	t.Run("error validating package metadata file", func(t *testing.T) {
 		t.Parallel()
 		_, err := GetPackageMetadata("testdata/no-version")
 		assert.Error(t, err)
-		assert.Contains(t, err.Error(), "error validating package metadata file")
+		assert.Equal(t, "error validating package metadata file: 5 errors occurred:\n\t* invalid metadata: version not provided\n\t* invalid metadata: name not provided\n\t* invalid metadata: display name not provided\n\t* invalid metadata: createdAt not provided\n\t* invalid metadata: description not provided\n\n", err.Error())
 	})
 
 	t.Run("success with .yml", func(t *testing.T) {
@@ -52,11 +52,6 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 		expectedPkg *hub.Package
 		expectedErr error
 	}{
-		{
-			&hub.PackageMetadata{},
-			nil,
-			ErrInvalidMetadata,
-		},
 		{
 			&hub.PackageMetadata{
 				Version:     "v1.0.0",
@@ -275,6 +270,23 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 				[]string{
 					"invalid metadata: description not provided",
+				},
+			},
+			{
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Maintainers: []*hub.Maintainer{
+						{
+							Name: "test",
+						},
+					},
+				},
+				[]string{
+					"invalid metadata: maintainer email not provided",
 				},
 			},
 			{

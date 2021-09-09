@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -42,11 +43,89 @@ func TestLintCmd(t *testing.T) {
 			"no packages found",
 			errNoPackagesFound,
 		},
+		{
+			"opa",
+			"test5",
+			"one package found",
+			nil,
+		},
+		{
+			"opa",
+			"test6",
+			"two packages found, no errors",
+			nil,
+		},
+		{
+			"opa",
+			"test7",
+			"one package found, one with errors",
+			errLintFailed,
+		},
+		{
+			"helm-plugin",
+			"test8",
+			"one package found, no errors",
+			nil,
+		},
+		{
+			"helm-plugin",
+			"test9",
+			"one package found, one with errors",
+			errLintFailed,
+		},
+		{
+			"krew",
+			"test10",
+			"one package found, no errors",
+			nil,
+		},
+		{
+			"krew",
+			"test11",
+			"one package found, one with errors",
+			errLintFailed,
+		},
+		{
+			"tekton-task",
+			"test12",
+			"one package found, no errors",
+			nil,
+		},
+		{
+			"tekton-task",
+			"test13",
+			"one package found, one with errors",
+			errLintFailed,
+		},
+		{
+			"olm",
+			"test14",
+			"one package found, no errors",
+			nil,
+		},
+		{
+			"olm",
+			"test15",
+			"two packages found, no errors",
+			nil,
+		},
+		{
+			"olm",
+			"test16",
+			"one package found, one with errors",
+			errLintFailed,
+		},
+		{
+			"olm",
+			"test17",
+			"no packages found",
+			errNoPackagesFound,
+		},
 	}
 
 	for _, tc := range testCases {
 		tc := tc
-		t.Run(tc.desc, func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s: %s", tc.kind, tc.desc), func(t *testing.T) {
 			t.Parallel()
 
 			// Prepare command and execute it

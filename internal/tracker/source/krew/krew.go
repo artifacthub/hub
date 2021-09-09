@@ -1,6 +1,7 @@
 package krew
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
@@ -9,6 +10,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/hashicorp/go-multierror"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/krew/pkg/index"
 	"sigs.k8s.io/yaml"
@@ -28,6 +30,11 @@ const (
 	// Platform keys
 	os   = "os"
 	arch = "arch"
+)
+
+var (
+	// errInvalidAnnotation indicates that the annotation provided is not valid.
+	errInvalidAnnotation = errors.New("invalid annotation")
 )
 
 // TrackerSource is a hub.TrackerSource implementation for Krew plugins
@@ -64,22 +71,22 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			continue
 		}
 
-		// Read and parse plugin manifest file
-		manifestRaw, err := ioutil.ReadFile(filepath.Join(pluginsPath, file.Name()))
+		// Get package manifest
+		pluginManifestPath := filepath.Join(pluginsPath, file.Name())
+		manifest, manifestRaw, err := GetManifest(pluginManifestPath)
 		if err != nil {
-			s.warn(fmt.Errorf("error reading plugin manifest file: %w", err))
-			continue
-		}
-		var manifest *index.Plugin
-		if err = yaml.Unmarshal(manifestRaw, &manifest); err != nil || manifest == nil {
-			s.warn(fmt.Errorf("error unmarshaling plugin manifest file: %w", err))
+			s.warn(fmt.Errorf("error getting package manifest (path: %s): %w", pluginManifestPath, err))
 			continue
 		}
 
 		// Prepare and store package version
-		p, err := preparePackage(s.i.Repository, manifest, manifestRaw)
+		p, err := PreparePackage(s.i.Repository, manifest, manifestRaw)
 		if err != nil {
-			s.warn(fmt.Errorf("error preparing package: %w", err))
+			s.warn(fmt.Errorf("error preparing package %s version %s: %w",
+				manifest.ObjectMeta.Name,
+				manifest.Spec.Version,
+				err,
+			))
 			continue
 		}
 		packagesAvailable[pkg.BuildKey(p)] = p
@@ -95,14 +102,49 @@ func (s *TrackerSource) warn(err error) {
 	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 }
 
-// preparePackage prepares a package version using the plugin manifest provided.
-func preparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byte) (*hub.Package, error) {
-	// Extract package name and version from manifest
-	name := manifest.ObjectMeta.Name
-	sv, err := semver.NewVersion(manifest.Spec.Version)
+// GetManifest reads and parses the plugin manifest.
+func GetManifest(pluginManifestPath string) (*index.Plugin, []byte, error) {
+	manifestRaw, err := ioutil.ReadFile(pluginManifestPath)
 	if err != nil {
-		return nil, fmt.Errorf("invalid package (%s) version (%s): %w", name, manifest.Spec.Version, err)
+		return nil, nil, fmt.Errorf("error reading plugin manifest file: %w", err)
 	}
+	var manifest *index.Plugin
+	if err = yaml.Unmarshal(manifestRaw, &manifest); err != nil || manifest == nil {
+		return nil, nil, fmt.Errorf("error unmarshaling plugin manifest file: %w", err)
+	}
+	if err := validateManifest(manifest); err != nil {
+		return nil, nil, fmt.Errorf("error validating plugin manifest: %w", err)
+	}
+	return manifest, manifestRaw, nil
+}
+
+// validateManifest checks if the plugin manifest provided is valid.
+func validateManifest(manifest *index.Plugin) error {
+	var errs *multierror.Error
+
+	if manifest.ObjectMeta.Name == "" {
+		errs = multierror.Append(errs, errors.New("name not provided"))
+	}
+	if manifest.Spec.Version == "" {
+		errs = multierror.Append(errs, errors.New("version not provided"))
+	} else if _, err := semver.NewVersion(manifest.Spec.Version); err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("invalid version (semver expected): %w", err))
+	}
+	if manifest.Spec.ShortDescription == "" {
+		errs = multierror.Append(errs, errors.New("description not provided"))
+	}
+
+	return errs.ErrorOrNil()
+}
+
+// PreparePackage prepares a package version using the plugin manifest provided.
+func PreparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byte) (*hub.Package, error) {
+	// Validate plugin manifest
+	name := manifest.ObjectMeta.Name
+	if err := validateManifest(manifest); err != nil {
+		return nil, fmt.Errorf("invalid manifest for plugin (%s) version (%s): %w", name, manifest.Spec.Version, err)
+	}
+	sv, _ := semver.NewVersion(manifest.Spec.Version)
 	version := sv.String()
 
 	// Prepare supported platforms
@@ -141,7 +183,7 @@ func preparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byt
 
 	// Enrich package with information from annotations
 	if err := enrichPackageFromAnnotations(p, manifest.Annotations); err != nil {
-		return nil, fmt.Errorf("error enriching package %s version %s: %w", name, version, err)
+		return nil, fmt.Errorf("error enriching package %s version %s from annotations: %w", name, version, err)
 	}
 
 	return p, nil
@@ -150,6 +192,8 @@ func preparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byt
 // enrichPackageFromAnnotations adds some extra information to the package from
 // the provided annotations.
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
+	var errs *multierror.Error
+
 	// Display name
 	p.DisplayName = annotations[displayNameAnnotation]
 
@@ -162,9 +206,10 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[keywordsAnnotation]; ok {
 		var extraKeywords []string
 		if err := yaml.Unmarshal([]byte(v), &extraKeywords); err != nil {
-			return fmt.Errorf("invalid keywords value: %s", v)
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid keywords value", errInvalidAnnotation))
+		} else {
+			p.Keywords = append(p.Keywords, extraKeywords...)
 		}
-		p.Keywords = append(p.Keywords, extraKeywords...)
 	}
 
 	// License
@@ -174,18 +219,29 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[linksAnnotation]; ok {
 		var links []*hub.Link
 		if err := yaml.Unmarshal([]byte(v), &links); err != nil {
-			return fmt.Errorf("invalid links value: %s", v)
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid links value", errInvalidAnnotation))
+		} else {
+			p.Links = links
 		}
-		p.Links = links
 	}
 
 	// Maintainers
 	if v, ok := annotations[maintainersAnnotation]; ok {
 		var maintainers []*hub.Maintainer
 		if err := yaml.Unmarshal([]byte(v), &maintainers); err != nil {
-			return fmt.Errorf("invalid maintainers value: %s", v)
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid maintainers value", errInvalidAnnotation))
+		} else {
+			var invalidMaintainersFound bool
+			for _, maintainer := range maintainers {
+				if maintainer.Email == "" {
+					invalidMaintainersFound = true
+					errs = multierror.Append(errs, fmt.Errorf("%w: maintainer email not provided", errInvalidAnnotation))
+				}
+			}
+			if !invalidMaintainersFound {
+				p.Maintainers = maintainers
+			}
 		}
-		p.Maintainers = maintainers
 	}
 
 	// Provider
@@ -200,10 +256,11 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	if v, ok := annotations[recommendationsAnnotation]; ok {
 		var recommendations []*hub.Recommendation
 		if err := yaml.Unmarshal([]byte(v), &recommendations); err != nil {
-			return fmt.Errorf("invalid recommendations value: %s", v)
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid recommendations value", errInvalidAnnotation))
+		} else {
+			p.Recommendations = recommendations
 		}
-		p.Recommendations = recommendations
 	}
 
-	return nil
+	return errs.ErrorOrNil()
 }

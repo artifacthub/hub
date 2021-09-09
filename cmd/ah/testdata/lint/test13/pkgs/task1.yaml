@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task1
+  labels:
+    app.kubernetes.io/version: "0.1.0"
+  annotations:
+    artifacthub.io/changes: |
+      - Added cool feature
+      - Fixed minor bug
+    artifacthub.io/license: Apache-2.0
+    artifacthub.io/links: |
+      - name: link1
+        url: https://link1.url
+      - name: link2
+        url: https://link2.url
+    artifacthub.io/maintainers: |
+      - name: user1
+        email: user1@email.com
+      - name: user2
+        email: user2@email.com
+    artifacthub.io/provider: Some organization
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+    tekton.dev/pipelines.minVersion: "0.12.1"
+    tekton.dev/tags: tag1, tag2
+    tekton.dev/displayName: "Task 1"

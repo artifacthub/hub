@@ -97,7 +97,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path2",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error unmarshaling package metadata file: yaml: line 2: did not find expected node content"
+		expectedErr := "error getting package metadata (path: testdata/path2): error unmarshaling package metadata file: yaml: line 2: did not find expected node content"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
@@ -117,7 +117,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path3",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error validating package metadata file: 5 errors occurred:\n\t* invalid metadata: invalid version (semver expected): Invalid Semantic Version\n\t* invalid metadata: name not provided\n\t* invalid metadata: display name not provided\n\t* invalid metadata: createdAt not provided\n\t* invalid metadata: description not provided\n\n"
+		expectedErr := "error getting package metadata (path: testdata/path3): error validating package metadata file: 5 errors occurred:\n\t* invalid metadata: invalid version (semver expected): Invalid Semantic Version\n\t* invalid metadata: name not provided\n\t* invalid metadata: display name not provided\n\t* invalid metadata: createdAt not provided\n\t* invalid metadata: description not provided\n\n"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
@@ -127,33 +127,44 @@ func TestTrackerSource(t *testing.T) {
 		sw.AssertExpectations(t)
 	})
 
-	t.Run("falco and opa packages must contain at least one data file", func(t *testing.T) {
-		repositories := []*hub.Repository{
-			{Kind: hub.Falco},
-			{Kind: hub.OPA},
-		}
-		for _, r := range repositories {
-			r := r
-			t.Run(hub.GetKindName(r.Kind), func(t *testing.T) {
-				t.Parallel()
+	t.Run("falco packages must contain at least one rules file", func(t *testing.T) {
+		t.Parallel()
 
-				// Setup services and expectations
-				sw := source.NewTestsServicesWrapper()
-				i := &hub.TrackerSourceInput{
-					Repository: r,
-					BasePath:   "testdata/path4",
-					Svc:        sw.Svc,
-				}
-				expectedErr := "error preparing package: error preparing package pkg1 version 1.0.0 data: no files found"
-				sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
-
-				// Run test and check expectations
-				packages, err := NewTrackerSource(i).GetPackagesAvailable()
-				assert.Equal(t, map[string]*hub.Package{}, packages)
-				assert.NoError(t, err)
-				sw.AssertExpectations(t)
-			})
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{Kind: hub.Falco},
+			BasePath:   "testdata/path4",
+			Svc:        sw.Svc,
 		}
+		expectedErr := "error preparing package pkg1 version 1.0.0 data: error getting falco rules files: no files found"
+		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("opa packages must contain at least one policies file", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{Kind: hub.OPA},
+			BasePath:   "testdata/path4",
+			Svc:        sw.Svc,
+		}
+		expectedErr := "error preparing package pkg1 version 1.0.0 data: error getting opa policies files: no files found"
+		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
 	})
 
 	t.Run("error reading logo image, package returned anyway", func(t *testing.T) {
@@ -168,7 +179,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath: "testdata/path4",
 			Svc:      sw.Svc,
 		}
-		expectedErr := "error reading package pkg1 version 1.0.0 logo: open testdata/path4/red-dot.png: no such file or directory"
+		expectedErr := "error preparing package pkg1 version 1.0.0 logo image: error reading logo image: open testdata/path4/red-dot.png: no such file or directory"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
@@ -195,7 +206,7 @@ func TestTrackerSource(t *testing.T) {
 			Svc:      sw.Svc,
 		}
 		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("", tests.ErrFake)
-		expectedErr := "error saving package pkg1 version 1.0.0 logo: fake error for tests"
+		expectedErr := "error preparing package pkg1 version 1.0.0 logo image: error saving logo image: fake error for tests"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations

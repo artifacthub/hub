@@ -6,6 +6,7 @@
 Package lint SUCCEEDED!
 
 ✓ Name: test1
+! Display name: *** NOT PROVIDED ***
 ✓ Version: 0.0.1
 ✓ App version: 0.0.1
 ✓ Description: Test chart 1
@@ -15,6 +16,7 @@ Package lint SUCCEEDED!
 ✓ Deprecated: false
 ✓ Pre-release: false
 ✓ Contains security updates: true
+! Provider: *** NOT PROVIDED ***
 ✓ Readme: PROVIDED
 ✓ Keywords:
   - test
@@ -32,8 +34,8 @@ Package lint SUCCEEDED!
   - Kind: fixed | Description: Test fix
 ! Recommendations: *** NOT PROVIDED ***
 ✓ Operator: false
-! Values schema: *** NOT PROVIDED ***
 ! Sign key: *** NOT PROVIDED ***
+! Values schema: *** NOT PROVIDED ***
 
 ------------------------------------------------------------------------------------------------------------------------
 ✓ test2 0.0.1 (testdata/lint/test2/pkgs/chart2)
@@ -42,6 +44,7 @@ Package lint SUCCEEDED!
 Package lint SUCCEEDED!
 
 ✓ Name: test2
+! Display name: *** NOT PROVIDED ***
 ✓ Version: 0.0.1
 ✓ App version: 0.0.1
 ✓ Description: Test chart 2
@@ -51,6 +54,7 @@ Package lint SUCCEEDED!
 ✓ Deprecated: false
 ✓ Pre-release: false
 ✓ Contains security updates: true
+! Provider: *** NOT PROVIDED ***
 ✓ Readme: PROVIDED
 ✓ Keywords:
   - test
@@ -68,8 +72,8 @@ Package lint SUCCEEDED!
   - Kind: fixed | Description: Test fix
 ! Recommendations: *** NOT PROVIDED ***
 ✓ Operator: false
-! Values schema: *** NOT PROVIDED ***
 ! Sign key: *** NOT PROVIDED ***
+! Values schema: *** NOT PROVIDED ***
 
 ------------------------------------------------------------------------------------------------------------------------
 

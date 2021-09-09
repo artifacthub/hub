@@ -44,7 +44,7 @@ func GetPackageMetadata(mdFile string) (*hub.PackageMetadata, error) {
 	}
 
 	var md *hub.PackageMetadata
-	if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
+	if err = yaml.UnmarshalStrict(data, &md); err != nil || md == nil {
 		return nil, fmt.Errorf("error unmarshaling package metadata file: %w", err)
 	}
 	if err := ValidatePackageMetadata(md); err != nil {
@@ -58,9 +58,6 @@ func GetPackageMetadata(mdFile string) (*hub.PackageMetadata, error) {
 // proceed with a package registration from the PackageMetadata provided by the
 // publisher.
 func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
-	if err := ValidatePackageMetadata(md); err != nil {
-		return nil, err
-	}
 	for _, change := range md.Changes {
 		NormalizeChange(change)
 	}
@@ -71,6 +68,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		DisplayName:             md.DisplayName,
 		Description:             md.Description,
 		Keywords:                md.Keywords,
+		LogoURL:                 md.LogoURL,
 		HomeURL:                 md.HomeURL,
 		Readme:                  md.Readme,
 		Install:                 md.Install,
@@ -123,6 +121,11 @@ func ValidatePackageMetadata(md *hub.PackageMetadata) error {
 	}
 	if md.Description == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "description not provided"))
+	}
+	for _, maintainer := range md.Maintainers {
+		if maintainer.Email == "" {
+			errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "maintainer email not provided"))
+		}
 	}
 	for _, change := range md.Changes {
 		if err := ValidateChange(change); err != nil {

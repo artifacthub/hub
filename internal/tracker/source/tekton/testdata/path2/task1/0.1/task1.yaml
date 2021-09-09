@@ -5,4 +5,4 @@ metadata:
   labels:
     app.kubernetes.io/version: "invalid"
 spec:
-  description:
+  description: sample task

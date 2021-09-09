@@ -1,0 +1,44 @@
+
+------------------------------------------------------------------------------------------------------------------------
+✓ test-plugin 0.1.0 (testdata/lint/test10/pkgs/plugins/manifest.yaml)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: test-plugin
+✓ Display name: My test plugin
+✓ Version: 0.1.0
+! App version: *** NOT PROVIDED ***
+✓ Description: Test plugin
+✓ License: Apache-2.0
+! Logo URL: *** NOT PROVIDED ***
+✓ Home URL: https://test/plugin
+✓ Deprecated: false
+✓ Pre-release: false
+✓ Contains security updates: false
+✓ Provider: Some organization
+✓ Readme: PROVIDED
+✓ Keywords:
+  - kubernetes
+  - kubectl
+  - plugin
+  - networking
+  - security
+✓ Links:
+  - Name: link1 | URL: https://link1.url
+  - Name: link2 | URL: https://link2.url
+✓ Maintainers:
+  - Name: user1 | Email: user1@email.com
+  - Name: user2 | Email: user2@email.com
+! Containers images: *** NOT PROVIDED ***
+! Changes: *** NOT PROVIDED ***
+✓ Recommendations:
+  - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+✓ Operator: false
+✓ Platforms: PROVIDED
+  - linux/amd64
+
+------------------------------------------------------------------------------------------------------------------------
+
+1 package(s) found, 0 package(s) with errors
+
