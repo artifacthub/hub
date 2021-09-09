@@ -44,6 +44,8 @@ dockers:
     image_templates:
       - "artifacthub/ah:{{ .Tag }}"
       - "artifacthub/ah:latest"
+      - "public.ecr.aws/artifacthub/ah:{{ .Tag }}"
+      - "public.ecr.aws/artifacthub/ah:latest"
     build_flag_templates:
       - "--build-arg=VERSION={{ .Version }}"
       - "--build-arg=GIT_COMMIT={{ .FullCommit }}"
@@ -56,12 +58,16 @@ dockers:
     image_templates:
       - "artifacthub/db-migrator:{{ .Tag }}"
       - "artifacthub/db-migrator:latest"
+      - "public.ecr.aws/artifacthub/db-migrator:{{ .Tag }}"
+      - "public.ecr.aws/artifacthub/db-migrator:latest"
     extra_files:
       - database/migrations
   - dockerfile: cmd/hub/Dockerfile
     image_templates:
       - "artifacthub/hub:{{ .Tag }}"
       - "artifacthub/hub:latest"
+      - "public.ecr.aws/artifacthub/hub:{{ .Tag }}"
+      - "public.ecr.aws/artifacthub/hub:latest"
     extra_files:
       - go.mod
       - go.sum
@@ -75,6 +81,8 @@ dockers:
     image_templates:
       - "artifacthub/scanner:{{ .Tag }}"
       - "artifacthub/scanner:latest"
+      - "public.ecr.aws/artifacthub/scanner:{{ .Tag }}"
+      - "public.ecr.aws/artifacthub/scanner:latest"
     extra_files:
       - go.mod
       - go.sum
@@ -84,6 +92,8 @@ dockers:
     image_templates:
       - "artifacthub/tracker:{{ .Tag }}"
       - "artifacthub/tracker:latest"
+      - "public.ecr.aws/artifacthub/tracker:{{ .Tag }}"
+      - "public.ecr.aws/artifacthub/tracker:latest"
     extra_files:
       - go.mod
       - go.sum
