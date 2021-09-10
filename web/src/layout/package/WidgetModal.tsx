@@ -41,15 +41,16 @@ const WidgetModal = (props: Props) => {
   const siteName = getMetaTag('siteName');
   const [theme, setTheme] = useState<string>(DEFAULT_THEME);
   const [header, setHeader] = useState<boolean>(whiteLabel ? false : true);
+  const [stars, setStars] = useState<boolean>(true);
   const [responsive, setRepsonsive] = useState<boolean>(false);
 
   const buildWidgetCode = (): string => {
     const url = `${window.location.origin}${window.location.pathname}`;
     const code = `<div class="artifacthub-widget" data-url="${url}" data-theme="${theme}" data-header="${
       !header ? 'false' : 'true'
-    }" data-responsive="${responsive ? 'true' : 'false'}"><blockquote><p lang="en" dir="ltr"><b>${
-      props.packageName
-    }</b>${
+    }" data-stars="${!stars ? 'false' : 'true'}" data-responsive="${
+      responsive ? 'true' : 'false'
+    }"><blockquote><p lang="en" dir="ltr"><b>${props.packageName}</b>${
       props.packageDescription ? `: ${props.packageDescription}` : ''
     }</p>&mdash; Open in <a href="${url}">${siteName}</a></blockquote></div><script async src="${
       window.location.origin
@@ -79,7 +80,7 @@ const WidgetModal = (props: Props) => {
   useEffect(() => {
     setWidgetCode(buildWidgetCode());
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [theme, header, responsive, props.packageId, props.visibleWidget]);
+  }, [theme, header, responsive, stars, props.packageId, props.visibleWidget]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
@@ -155,10 +156,31 @@ const WidgetModal = (props: Props) => {
                 </div>
 
                 <small className="form-text text-muted mt-2">
-                  Displays Artifact Hub header at the top of the widget.
+                  Display Artifact Hub header at the top of the widget.
                 </small>
               </div>
             )}
+
+            <div className="mt-4 mb-3">
+              <div className="custom-control custom-switch pl-0">
+                <input
+                  id="stars"
+                  type="checkbox"
+                  className="custom-control-input"
+                  value="true"
+                  onChange={() => setStars(!stars)}
+                  checked={stars}
+                />
+                <label
+                  htmlFor="stars"
+                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
+                >
+                  Stars
+                </label>
+              </div>
+
+              <small className="form-text text-muted mt-2">Display number of stars given to the package.</small>
+            </div>
 
             <div className="mt-4 mb-3">
               <div className="custom-control custom-switch pl-0">

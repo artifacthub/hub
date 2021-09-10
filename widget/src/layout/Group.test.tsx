@@ -20,6 +20,7 @@ const defaultProps = {
   theme: 'light',
   responsive: true,
   header: false,
+  stars: true,
 };
 
 const getMockGroup = (fixtureId: string): SearchResults => {

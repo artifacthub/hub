@@ -14,6 +14,7 @@ import SVGIcons from './common/SVGIcons';
 interface Props {
   url?: string;
   header: boolean;
+  stars: boolean;
   responsive: boolean;
   theme?: string;
   color?: string;
@@ -406,12 +407,14 @@ export default function Widget(props: Props) {
                   <Content>
                     <TitleWrapper>
                       <Title>{packageSummary.displayName || packageSummary.name}</Title>
-                      <Badge>
-                        <IconStarsWrapper>
-                          <SVGIcons name="stars" />
-                        </IconStarsWrapper>
-                        <StarsNumber>{prettifyNumber(packageSummary.stars || 0)}</StarsNumber>
-                      </Badge>
+                      {props.stars && (
+                        <Badge>
+                          <IconStarsWrapper>
+                            <SVGIcons name="stars" />
+                          </IconStarsWrapper>
+                          <StarsNumber>{prettifyNumber(packageSummary.stars || 0)}</StarsNumber>
+                        </Badge>
+                      )}
                     </TitleWrapper>
                     <div>
                       <Version>

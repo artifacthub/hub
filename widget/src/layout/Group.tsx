@@ -11,6 +11,7 @@ interface Props {
   url?: string;
   loading: boolean;
   header: boolean;
+  stars: boolean;
   theme?: string;
   color?: string;
   responsive: boolean;
@@ -132,6 +133,7 @@ const Group = (props: Props) => {
                     url={props.url}
                     theme={props.theme}
                     header={props.header}
+                    stars={props.stars}
                     color={mainColor}
                     responsive={false}
                     packageSummary={packageSummary}

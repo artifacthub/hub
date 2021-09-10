@@ -7,7 +7,7 @@ import Group from './layout/Group';
 import Widget from './layout/Widget';
 
 const renderWidget = (element: HTMLElement) => {
-  const { url, theme, responsive, header } = element.dataset;
+  const { url, theme, responsive, header, stars } = element.dataset;
   ReactDOM.render(
     <React.StrictMode>
       <root.section>
@@ -16,6 +16,7 @@ const renderWidget = (element: HTMLElement) => {
             url={url}
             theme={theme}
             responsive={responsive === 'true'}
+            stars={isUndefined(stars) || stars === 'true'}
             header={isUndefined(header) || header === 'true'}
             inGroup={false}
           />
@@ -42,7 +43,7 @@ Widgets.forEach((div: Element) => {
 });
 
 const renderGroup = (element: HTMLElement) => {
-  const { url, loading, theme, color, responsive, width, header } = element.dataset;
+  const { url, loading, theme, color, responsive, width, header, stars } = element.dataset;
   ReactDOM.render(
     <React.StrictMode>
       <root.section>
@@ -51,6 +52,7 @@ const renderGroup = (element: HTMLElement) => {
             url={url}
             loading={isUndefined(loading) || loading === 'true'}
             header={isUndefined(header) || header === 'true'}
+            stars={isUndefined(stars) || stars === 'true'}
             theme={theme}
             color={color}
             responsive={isUndefined(responsive) || responsive === 'true'}

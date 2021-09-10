@@ -1,0 +1,33 @@
+{
+  "packageId": "614a5896-0b60-4e2b-a5b7-3b694658ab2a",
+  "name": "strimzi-kafka-operator",
+  "normalizedName": "strimzi-kafka-operator",
+  "logoImageId": "83c34ef5-d2f7-4282-94ab-468dea859677",
+  "stars": 13,
+  "displayName": "Strimzi",
+  "description": "Strimzi provides a way to run an Apache Kafka cluster on Kubernetes or OpenShift in various deployment configurations.",
+  "version": "0.23.0",
+  "deprecated": false,
+  "signed": false,
+  "securityReportSummary": {
+    "low": 3190,
+    "high": 138,
+    "medium": 2317,
+    "unknown": 0,
+    "critical": 33
+  },
+  "allContainersImagesWhitelisted": false,
+  "ts": 1620992233,
+  "repository": {
+    "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
+    "kind": 3,
+    "name": "community-operators",
+    "official": false,
+    "displayName": "Community Operators",
+    "repositoryId": "0f467c6e-3eb4-4b6c-8140-410c084de5b8",
+    "scannerDisabled": false,
+    "organizationName": "operator-framework",
+    "verifiedPublisher": false,
+    "organizationDisplayName": "Operator Framework"
+  }
+}
