@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.1.2-2
-appVersion: 1.1.1
+version: 1.2.0
+appVersion: 1.2.0
 kubeVersion: ">= 1.14.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -33,24 +33,47 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
+    - kind: added
+      description: ah lint now supports all repository kinds supported by Artifact Hub
+    - kind: added
+      description: Docker images are now published to AWS ECR Public Gallery
+    - kind: added
+      description: SMTP auth login support (allows using Outlook.com SMTP servers)
+    - kind: added
+      description: Allow skipping email verified check when using OIDC authentication
+    - kind: added
+      description: Widgets are now re-rendered automatically when data attributes change
+    - kind: added
+      description: Direct link to Tekton manifest modal
+    - kind: added
+      description: Some missing database indexes and update some queries to improve performance
     - kind: changed
-      description: Helm charts repository moved to a new location
-      links:
-        - name: New location
-          url: https://artifacthub.github.io/helm-charts/
+      description: Improve stats page
+    - kind: changed
+      description: Improve tracker metadata validation and error logging
+    - kind: changed
+      description: Bump Go to 1.17
+    - kind: changed
+      description: Upgrade frontend dependencies
     - kind: fixed
-      description: Tracker and scanner containers resources were not being set properly
+      description: Issue rendering publisher provided installation instructions
     - kind: fixed
-      description: Regression in logger middleware
-  artifacthub.io/containsSecurityUpdates: "false"
+      description: Issue generating packages readme ToC
+    - kind: fixed
+      description: Issue in oauth redirection
+    - kind: fixed
+      description: Issue with site name and colors in development environment
+    - kind: fixed
+      description: Some bugs and other improvements
+  artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.1.1
+      image: artifacthub/db-migrator:v1.2.0
     - name: hub
-      image: artifacthub/hub:v1.1.1
+      image: artifacthub/hub:v1.2.0
     - name: tracker
-      image: artifacthub/tracker:v1.1.1
+      image: artifacthub/tracker:v1.2.0
     - name: scanner
-      image: artifacthub/scanner:v1.1.1
+      image: artifacthub/scanner:v1.2.0
     - name: trivy
       image: aquasec/trivy:0.19.2
