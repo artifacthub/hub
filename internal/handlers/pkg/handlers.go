@@ -151,6 +151,19 @@ func (h *Handlers) GetHarborReplicationDump(w http.ResponseWriter, r *http.Reque
 	helpers.RenderJSON(w, dataJSON, 1*time.Hour, http.StatusOK)
 }
 
+// GetHelmExporterDump is an http handler used to get a summary of the latest
+// version available of all packages of kind Helm in the hub database so that
+// they can be used by Helm exporter.
+func (h *Handlers) GetHelmExporterDump(w http.ResponseWriter, r *http.Request) {
+	dataJSON, err := h.pkgManager.GetHelmExporterDumpJSON(r.Context())
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetHelmExporterDump").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 1*time.Hour, http.StatusOK)
+}
+
 // GetRandom is an http handler used to get some random packages from the hub
 // database.
 func (h *Handlers) GetRandom(w http.ResponseWriter, r *http.Request) {
