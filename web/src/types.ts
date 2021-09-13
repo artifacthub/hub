@@ -233,7 +233,7 @@ export interface Stats {
 }
 
 export interface Facets {
-  filterKey: string;
+  filterKey?: string;
   title: string;
   options: FacetOption[];
 }
@@ -242,6 +242,7 @@ export interface FacetOption {
   id: string | number;
   name: string;
   total?: number;
+  filterKey?: string;
 }
 
 export interface Option extends FacetOption {

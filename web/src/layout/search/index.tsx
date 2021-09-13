@@ -63,6 +63,7 @@ const SearchView = (props: Props) => {
   });
   const { isSearching, setIsSearching, scrollPosition, setScrollPosition } = props;
   const [apiError, setApiError] = useState<string | null>(null);
+  const [currentTsQueryWeb, setCurrentTsQueryWeb] = useState(props.tsQueryWeb);
 
   const calculateOffset = (): number => {
     return props.pageNumber && ctx.prefs.search.limit ? (props.pageNumber - 1) * ctx.prefs.search.limit : 0;
@@ -260,7 +261,12 @@ const SearchView = (props: Props) => {
 
       try {
         let newSearchResults = await API.searchPackages(query);
-        if (newSearchResults.paginationTotalCount === '0' && searchResults.facets && !isEmpty(searchResults.facets)) {
+        if (
+          newSearchResults.paginationTotalCount === '0' &&
+          searchResults.facets &&
+          !isEmpty(searchResults.facets) &&
+          currentTsQueryWeb === props.tsQueryWeb // When some filters have changed, but not ts_query_web
+        ) {
           newSearchResults = {
             ...newSearchResults,
             facets: searchResults.facets,
@@ -268,6 +274,7 @@ const SearchView = (props: Props) => {
         }
         setSearchResults(newSearchResults);
         setOffset(query.offset);
+        setCurrentTsQueryWeb(props.tsQueryWeb);
         setApiError(null);
       } catch {
         setSearchResults({
@@ -365,6 +372,7 @@ const SearchView = (props: Props) => {
                 >
                   <div role="menu">
                     <Filters
+                      forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
                       facets={searchResults.facets}
                       activeFilters={props.filters || {}}
                       activeTsQuery={props.tsQuery}
@@ -447,6 +455,7 @@ const SearchView = (props: Props) => {
             >
               <div className="mr-5" role="menu">
                 <Filters
+                  forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
                   facets={searchResults.facets}
                   activeFilters={props.filters || {}}
                   activeTsQuery={props.tsQuery}

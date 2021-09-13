@@ -7,28 +7,25 @@ import Filters from './Filters';
 
 const FacetsMock: Facets[] = [
   {
-    title: 'Organization',
-    filterKey: 'org',
+    title: 'Publisher',
+    filterKey: 'publisher',
     options: [
       {
         id: 'helmOrg',
         name: 'Helm org',
+        filterKey: 'org',
         total: 256,
       },
       {
         id: 'falco',
         name: 'Falco',
+        filterKey: 'org',
         total: 22,
       },
-    ],
-  },
-  {
-    title: 'User',
-    filterKey: 'user',
-    options: [
       {
         id: 'testUser',
         name: 'testUser',
+        filterKey: 'user',
         total: 1,
       },
     ],
@@ -132,6 +129,7 @@ const onVerifiedPublisherChangeMock = jest.fn();
 const onOfficialChangeMock = jest.fn();
 
 const defaultProps = {
+  forceCollapseList: false,
   activeFilters: {},
   activeTsQuery: [],
   facets: FacetsMock,
@@ -301,7 +299,7 @@ describe('Filters', () => {
     it('renders component', () => {
       render(<Filters {...defaultProps} />);
 
-      expect(screen.getAllByRole('checkbox')).toHaveLength(23);
+      expect(screen.getAllByRole('checkbox')).toHaveLength(30);
       expect(screen.getByLabelText('Official')).toBeInTheDocument();
       expect(screen.getByLabelText('Verified publishers')).toBeInTheDocument();
       expect(screen.getByLabelText('Include deprecated')).toBeInTheDocument();
@@ -375,9 +373,9 @@ describe('Filters', () => {
 
       expect(titles[0]).toHaveTextContent('Kind');
       expect(titles[1]).toHaveTextContent('Category');
-      expect(titles[2]).toHaveTextContent('publisher');
-      expect(titles[3]).toHaveTextContent('repository');
-      expect(titles[4]).toHaveTextContent('license');
+      expect(titles[2]).toHaveTextContent('Publisher');
+      expect(titles[3]).toHaveTextContent('Repository');
+      expect(titles[4]).toHaveTextContent('License');
       expect(titles[5]).toHaveTextContent('Operator capabilities');
       expect(titles[6]).toHaveTextContent('Others');
     });
@@ -401,7 +399,7 @@ describe('Filters', () => {
     it('renders license', () => {
       render(<Filters {...defaultProps} />);
 
-      expect(screen.getByText('license')).toBeInTheDocument();
+      expect(screen.getByText('License')).toBeInTheDocument();
     });
 
     it('does not render license when no options', () => {

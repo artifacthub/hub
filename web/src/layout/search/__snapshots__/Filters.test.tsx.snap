@@ -158,7 +158,7 @@ exports[`Filters creates snapshot 1`] = `
             value="0"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-kind-0"
           >
@@ -191,7 +191,7 @@ exports[`Filters creates snapshot 1`] = `
             value="3"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-kind-3"
           >
@@ -224,7 +224,7 @@ exports[`Filters creates snapshot 1`] = `
             value="1"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-kind-1"
           >
@@ -257,7 +257,7 @@ exports[`Filters creates snapshot 1`] = `
             value="2"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-kind-2"
           >
@@ -315,7 +315,7 @@ exports[`Filters creates snapshot 1`] = `
             value="database"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-database"
           >
@@ -343,7 +343,7 @@ exports[`Filters creates snapshot 1`] = `
             value="integration-and-delivery"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-integration-and-delivery"
           >
@@ -371,7 +371,7 @@ exports[`Filters creates snapshot 1`] = `
             value="logging-and-tracing"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-logging-and-tracing"
           >
@@ -399,7 +399,7 @@ exports[`Filters creates snapshot 1`] = `
             value="machine-learning"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-machine-learning"
           >
@@ -427,7 +427,7 @@ exports[`Filters creates snapshot 1`] = `
             value="monitoring"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-monitoring"
           >
@@ -455,7 +455,7 @@ exports[`Filters creates snapshot 1`] = `
             value="networking"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-networking"
           >
@@ -483,7 +483,7 @@ exports[`Filters creates snapshot 1`] = `
             value="security"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-security"
           >
@@ -511,7 +511,7 @@ exports[`Filters creates snapshot 1`] = `
             value="storage"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-storage"
           >
@@ -539,7 +539,7 @@ exports[`Filters creates snapshot 1`] = `
             value="streaming-messaging"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-streaming-messaging"
           >
@@ -567,7 +567,7 @@ exports[`Filters creates snapshot 1`] = `
             value="web-applications"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-web-applications"
           >
@@ -585,163 +585,317 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="position-relative mt-2 mt-sm-3 pt-1"
+      class="mt-2 mt-sm-3 pt-1 facet"
+      role="menuitem"
     >
-      <button
-        aria-expanded="false"
-        aria-label="Typeahead for publisher"
-        class="btn text-left p-0 btn-block"
+      <div
+        class="mt-2 mb-1 undefined"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            aria-level="5"
+            class="text-dark font-weight-bold"
+            role="heading"
+          >
+            Publisher
+          </span>
+        </small>
+      </div>
+      <div
+        class="mt-3"
+        role="group"
       >
         <div
-          class="d-flex flex-row align-items-center justify-content-between"
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
         >
-          <div
-            class="mt-2 mb-1 undefined"
-            data-testid="smallTitle"
+          <input
+            aria-checked="false"
+            class="custom-control-input input"
+            id="desktop-org-helmOrg"
+            name="org"
+            tabindex="0"
+            type="checkbox"
+            value="helmOrg"
+          />
+          <label
+            class="custom-control-label label undefined"
+            data-testid="checkboxLabel"
+            for="desktop-org-helmOrg"
           >
-            <small
-              class="card-title text-muted text-uppercase"
+            <div
+              class="d-flex align-items-baseline mw-100"
             >
               <span
-                aria-level="5"
-                class="text-dark font-weight-bold pt-2"
-                role="heading"
+                class="d-inline-block text-truncate"
               >
-                publisher
+                Helm org
               </span>
-            </small>
-          </div>
-          <svg
-            class="mt-2 mb-1 text-dark"
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
-            />
-          </svg>
+              <small
+                class="pl-1"
+              >
+                (256)
+              </small>
+            </div>
+          </label>
         </div>
-        <div>
-          <div
-            class="placeholder option"
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            aria-checked="false"
+            class="custom-control-input input"
+            id="desktop-org-falco"
+            name="org"
+            tabindex="0"
+            type="checkbox"
+            value="falco"
+          />
+          <label
+            class="custom-control-label label undefined"
+            data-testid="checkboxLabel"
+            for="desktop-org-falco"
           >
-            <i>
-              No publisher selected
-            </i>
-          </div>
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Falco
+              </span>
+              <small
+                class="pl-1"
+              >
+                (22)
+              </small>
+            </div>
+          </label>
         </div>
-      </button>
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            aria-checked="false"
+            class="custom-control-input input"
+            id="desktop-user-testUser"
+            name="user"
+            tabindex="0"
+            type="checkbox"
+            value="testUser"
+          />
+          <label
+            class="custom-control-label label undefined"
+            data-testid="checkboxLabel"
+            for="desktop-user-testUser"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                testUser
+              </span>
+              <small
+                class="pl-1"
+              >
+                (1)
+              </small>
+            </div>
+          </label>
+        </div>
+      </div>
     </div>
     <div
-      class="position-relative mt-2 mt-sm-3 pt-1"
+      class="mt-2 mt-sm-3 pt-1 facet"
+      role="menuitem"
     >
-      <button
-        aria-expanded="false"
-        aria-label="Typeahead for repository"
-        class="btn text-left p-0 btn-block"
+      <div
+        class="mt-2 mb-1 undefined"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            aria-level="5"
+            class="text-dark font-weight-bold"
+            id="pkg-repo-desktop"
+            role="heading"
+          >
+            Repository
+          </span>
+        </small>
+      </div>
+      <div
+        aria-labelledby="pkg-repo-desktop"
+        class="mt-3"
+        role="group"
       >
         <div
-          class="d-flex flex-row align-items-center justify-content-between"
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
         >
-          <div
-            class="mt-2 mb-1 undefined"
-            data-testid="smallTitle"
+          <input
+            aria-checked="false"
+            class="custom-control-input input"
+            id="desktop-repo-stable"
+            name="repo"
+            tabindex="0"
+            type="checkbox"
+            value="stable"
+          />
+          <label
+            class="custom-control-label label undefined"
+            data-testid="checkboxLabel"
+            for="desktop-repo-stable"
           >
-            <small
-              class="card-title text-muted text-uppercase"
+            <div
+              class="d-flex align-items-baseline mw-100"
             >
               <span
-                aria-level="5"
-                class="text-dark font-weight-bold pt-2"
-                role="heading"
+                class="d-inline-block text-truncate"
               >
-                repository
+                Stable
               </span>
-            </small>
-          </div>
-          <svg
-            class="mt-2 mb-1 text-dark"
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
-            />
-          </svg>
+              <small
+                class="pl-1"
+              >
+                (203)
+              </small>
+            </div>
+          </label>
         </div>
-        <div>
-          <div
-            class="placeholder option"
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            aria-checked="false"
+            class="custom-control-input input"
+            id="desktop-repo-incubator"
+            name="repo"
+            tabindex="0"
+            type="checkbox"
+            value="incubator"
+          />
+          <label
+            class="custom-control-label label undefined"
+            data-testid="checkboxLabel"
+            for="desktop-repo-incubator"
           >
-            <i>
-              No repository selected
-            </i>
-          </div>
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Incubator
+              </span>
+              <small
+                class="pl-1"
+              >
+                (53)
+              </small>
+            </div>
+          </label>
         </div>
-      </button>
+      </div>
     </div>
     <div
-      class="position-relative mt-2 mt-sm-3 pt-1"
+      class="mt-2 mt-sm-3 pt-1 facet"
+      role="menuitem"
     >
-      <button
-        aria-expanded="false"
-        aria-label="Typeahead for license"
-        class="btn text-left p-0 btn-block"
+      <div
+        class="mt-2 mb-1 undefined"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            aria-level="5"
+            class="text-dark font-weight-bold"
+            id="pkg-license-desktop"
+            role="heading"
+          >
+            License
+          </span>
+        </small>
+      </div>
+      <div
+        aria-labelledby="pkg-license-desktop"
+        class="mt-3"
+        role="group"
       >
         <div
-          class="d-flex flex-row align-items-center justify-content-between"
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
         >
-          <div
-            class="mt-2 mb-1 undefined"
-            data-testid="smallTitle"
+          <input
+            aria-checked="false"
+            class="custom-control-input input"
+            id="desktop-license-Apache-2.0"
+            name="license"
+            tabindex="0"
+            type="checkbox"
+            value="Apache-2.0"
+          />
+          <label
+            class="custom-control-label label undefined"
+            data-testid="checkboxLabel"
+            for="desktop-license-Apache-2.0"
           >
-            <small
-              class="card-title text-muted text-uppercase"
+            <div
+              class="d-flex align-items-baseline mw-100"
             >
               <span
-                aria-level="5"
-                class="text-dark font-weight-bold pt-2"
-                role="heading"
+                class="d-inline-block text-truncate"
               >
-                license
+                Apache-2.0
               </span>
-            </small>
-          </div>
-          <svg
-            class="mt-2 mb-1 text-dark"
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
-            />
-          </svg>
+              <small
+                class="pl-1"
+              >
+                (3)
+              </small>
+            </div>
+          </label>
         </div>
-        <div>
-          <div
-            class="placeholder option"
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            aria-checked="false"
+            class="custom-control-input input"
+            id="desktop-license-MIT"
+            name="license"
+            tabindex="0"
+            type="checkbox"
+            value="MIT"
+          />
+          <label
+            class="custom-control-label label undefined"
+            data-testid="checkboxLabel"
+            for="desktop-license-MIT"
           >
-            <i>
-              No license selected
-            </i>
-          </div>
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                MIT
+              </span>
+              <small
+                class="pl-1"
+              >
+                (1)
+              </small>
+            </div>
+          </label>
         </div>
-      </button>
+      </div>
     </div>
     <div
       class="mt-2 mt-sm-3 pt-1 facet"
@@ -782,7 +936,7 @@ exports[`Filters creates snapshot 1`] = `
             value="basic install"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-capabilities-basic install"
           >
@@ -815,7 +969,7 @@ exports[`Filters creates snapshot 1`] = `
             value="seamless upgrades"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-capabilities-seamless upgrades"
           >
@@ -848,7 +1002,7 @@ exports[`Filters creates snapshot 1`] = `
             value="full lifecycle"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-capabilities-full lifecycle"
           >
@@ -881,7 +1035,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deep insights"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-capabilities-deep insights"
           >
@@ -914,7 +1068,7 @@ exports[`Filters creates snapshot 1`] = `
             value="auto pilot"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-capabilities-auto pilot"
           >
@@ -972,7 +1126,7 @@ exports[`Filters creates snapshot 1`] = `
             value="operators"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-operators-operators"
           >
@@ -1000,7 +1154,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deprecated"
           />
           <label
-            class="custom-control-label label w-100"
+            class="custom-control-label label undefined"
             data-testid="checkboxLabel"
             for="desktop-deprecated-deprecated"
           >

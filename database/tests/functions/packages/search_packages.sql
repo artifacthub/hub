@@ -322,24 +322,6 @@ select results_eq(
                 ],
                 "facets": [
                     {
-                        "title": "Organization",
-                        "filter_key": "org",
-                        "options": [{
-                            "id": "org1",
-                            "name": "Organization 1",
-                            "total": 2
-                        }]
-                    },
-                    {
-                        "title": "User",
-                        "filter_key": "user",
-                        "options": [{
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
@@ -353,19 +335,34 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Publisher",
+                        "filter_key": "publisher",
+                        "options": [{
+                            "filter_key": "org",
+                            "id": "org1",
+                            "name": "Organization 1",
+                            "total": 2
+                        }, {
+                            "filter_key": "user",
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "Repository",
                         "filter_key": "repo",
                         "options": [{
                             "id": "repo1",
-                            "name": "Repo1",
+                            "name": "Repo 1",
                             "total": 1
                         }, {
                             "id": "repo2",
-                            "name": "Repo2",
+                            "name": "Repo 2",
                             "total": 1
                         }, {
                             "id": "repo3",
-                            "name": "Repo3",
+                            "name": "Repo 3",
                             "total": 1
                         }]
                     },
@@ -788,24 +785,6 @@ select results_eq(
                 ],
                 "facets": [
                     {
-                        "title": "Organization",
-                        "filter_key": "org",
-                        "options": [{
-                            "id": "org1",
-                            "name": "Organization 1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "User",
-                        "filter_key": "user",
-                        "options": [{
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
@@ -815,15 +794,30 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Publisher",
+                        "filter_key": "publisher",
+                        "options": [{
+                            "filter_key": "org",
+                            "id": "org1",
+                            "name": "Organization 1",
+                            "total": 1
+                        }, {
+                            "filter_key": "user",
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "Repository",
                         "filter_key": "repo",
                         "options": [{
                             "id": "repo1",
-                            "name": "Repo1",
+                            "name": "Repo 1",
                             "total": 1
                         }, {
                             "id": "repo2",
-                            "name": "Repo2",
+                            "name": "Repo 2",
                             "total": 1
                         }]
                     },
@@ -891,20 +885,6 @@ select results_eq(
                 ],
                 "facets": [
                     {
-                        "title": "Organization",
-                        "filter_key": "org",
-                        "options": []
-                    },
-                    {
-                        "title": "User",
-                        "filter_key": "user",
-                        "options": [{
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
@@ -914,11 +894,21 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Publisher",
+                        "filter_key": "publisher",
+                        "options": [{
+                            "filter_key": "user",
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "Repository",
                         "filter_key": "repo",
                         "options": [{
                             "id": "repo1",
-                            "name": "Repo1",
+                            "name": "Repo 1",
                             "total": 1
                         }]
                     },
@@ -1055,24 +1045,6 @@ select results_eq(
                 ],
                 "facets": [
                     {
-                        "title": "Organization",
-                        "filter_key": "org",
-                        "options": [{
-                            "id": "org1",
-                            "name": "Organization 1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "User",
-                        "filter_key": "user",
-                        "options": [{
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
@@ -1082,15 +1054,30 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Publisher",
+                        "filter_key": "publisher",
+                        "options": [{
+                            "filter_key": "org",
+                            "id": "org1",
+                            "name": "Organization 1",
+                            "total": 1
+                        }, {
+                            "filter_key": "user",
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "Repository",
                         "filter_key": "repo",
                         "options": [{
                             "id": "repo2",
-                            "name": "Repo2",
+                            "name": "Repo 2",
                             "total": 1
                         }, {
                             "id": "repo1",
-                            "name": "Repo1",
+                            "name": "Repo 1",
                             "total": 1
                         }]
                     },
@@ -1136,20 +1123,6 @@ select results_eq(
                 "packages": [],
                 "facets": [
                     {
-                        "title": "Organization",
-                        "filter_key": "org",
-                        "options": []
-                    },
-                    {
-                        "title": "User",
-                        "filter_key": "user",
-                        "options": [{
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
@@ -1159,11 +1132,21 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Publisher",
+                        "filter_key": "publisher",
+                        "options": [{
+                            "filter_key": "user",
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "Repository",
                         "filter_key": "repo",
                         "options": [{
                             "id": "repo1",
-                            "name": "Repo1",
+                            "name": "Repo 1",
                             "total": 1
                         }]
                     },
@@ -1208,20 +1191,6 @@ select results_eq(
                 "packages": [],
                 "facets": [
                     {
-                        "title": "Organization",
-                        "filter_key": "org",
-                        "options": []
-                    },
-                    {
-                        "title": "User",
-                        "filter_key": "user",
-                        "options": [{
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
@@ -1231,11 +1200,21 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Publisher",
+                        "filter_key": "publisher",
+                        "options": [{
+                            "filter_key": "user",
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "Repository",
                         "filter_key": "repo",
                         "options": [{
                             "id": "repo1",
-                            "name": "Repo1",
+                            "name": "Repo 1",
                             "total": 1
                         }]
                     },
@@ -1280,20 +1259,6 @@ select results_eq(
                 "packages": [],
                 "facets": [
                     {
-                        "title": "Organization",
-                        "filter_key": "org",
-                        "options": []
-                    },
-                    {
-                        "title": "User",
-                        "filter_key": "user",
-                        "options": [{
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
@@ -1303,11 +1268,21 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Publisher",
+                        "filter_key": "publisher",
+                        "options": [{
+                            "filter_key": "user",
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "Repository",
                         "filter_key": "repo",
                         "options": [{
                             "id": "repo1",
-                            "name": "Repo1",
+                            "name": "Repo 1",
                             "total": 1
                         }]
                     },
@@ -1836,24 +1811,6 @@ select results_eq(
                 "packages": [],
                 "facets": [
                     {
-                        "title": "Organization",
-                        "filter_key": "org",
-                        "options": [{
-                            "id": "org1",
-                            "name": "Organization 1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "User",
-                        "filter_key": "user",
-                        "options": [{
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
@@ -1863,15 +1820,30 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Publisher",
+                        "filter_key": "publisher",
+                        "options": [{
+                            "filter_key": "org",
+                            "id": "org1",
+                            "name": "Organization 1",
+                            "total": 1
+                        }, {
+                            "filter_key": "user",
+                            "id": "user1",
+                            "name": "user1",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "Repository",
                         "filter_key": "repo",
                         "options": [{
                             "id": "repo1",
-                            "name": "Repo1",
+                            "name": "Repo 1",
                             "total": 1
                         }, {
                             "id": "repo2",
-                            "name": "Repo2",
+                            "name": "Repo 2",
                             "total": 1
                         }]
                     },
