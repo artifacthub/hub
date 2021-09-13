@@ -331,6 +331,14 @@ func (h *Handlers) setupRouter() {
 		// careful to not introduce breaking changes.
 		r.Get("/harbor-replication", h.Packages.GetHarborReplicationDump)
 		r.Get("/harborReplication", h.Packages.GetHarborReplicationDump) // Deprecated
+
+		// Helm exporter
+		//
+		// This endpoint is used by Helm exporter (*) to get the latest version
+		// available of all charts listed in Artifact Hub.
+		//
+		// (*) https://github.com/sstarcher/helm-exporter
+		r.Get("/helm-exporter", h.Packages.GetHelmExporterDump)
 	})
 
 	// Monocular compatible search API

@@ -16,6 +16,7 @@ import (
 const (
 	// Database queries
 	getHarborReplicationDumpDBQ     = `select get_harbor_replication_dump()`
+	getHelmExporterDumpDBQ          = `select get_helm_exporter_dump()`
 	getPkgDBQ                       = `select get_package($1::jsonb)`
 	getPkgChangeLogDBQ              = `select get_package_changelog($1::uuid)`
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
@@ -79,6 +80,12 @@ func (m *Manager) GetChangeLogJSON(ctx context.Context, pkgID string) ([]byte, e
 // of kind Helm available so that they can be synchronized in Harbor.
 func (m *Manager) GetHarborReplicationDumpJSON(ctx context.Context) ([]byte, error) {
 	return util.DBQueryJSON(ctx, m.db, getHarborReplicationDumpDBQ)
+}
+
+// GetHelmExporterDumpJSON returns a json list with the latest version of all
+// packages of kind Helm available so that they can be used by Helm exporter.
+func (m *Manager) GetHelmExporterDumpJSON(ctx context.Context) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getHelmExporterDumpDBQ)
 }
 
 // GetJSON returns the package identified by the input provided as a json

@@ -33,6 +33,7 @@
 {{ template "packages/are_all_containers_images_whitelisted.sql" }}
 {{ template "packages/generate_package_tsdoc.sql" }}
 {{ template "packages/get_harbor_replication_dump.sql" }}
+{{ template "packages/get_helm_exporter_dump.sql" }}
 {{ template "packages/get_package.sql" }}
 {{ template "packages/get_package_changelog.sql" }}
 {{ template "packages/get_package_summary.sql" }}

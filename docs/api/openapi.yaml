@@ -2693,6 +2693,67 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  /helm-exporter:
+    get:
+      tags:
+        - Integrations
+      summary: Get Helm exporter dump
+      description: Get the latest version available of all charts listed in Artifact Hub.
+      operationId: getHelmExporterDump
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - name
+                    - version
+                    - repository
+                properties:
+                  name:
+                    type: string
+                    nullable: false
+                  version:
+                    type: string
+                    nullable: false
+                  repository:
+                    type: object
+                    nullable: false
+                    required:
+                      - name
+                      - url
+                    properties:
+                      name:
+                        type: string
+                        nullable: false
+                      url:
+                        type: string
+                        format: uri
+                        nullable: false
+                example:
+                  - name: artifact-hub
+                    version: 1.2.0
+                    repository:
+                      name: artifact-hub
+                      url: https://artifacthub.github.io/helm-charts/
+                  - name: kube-prometheus-stack
+                    version: 18.0.6
+                    repository:
+                      url: https://prometheus-community.github.io/helm-charts
+                      name: prometheus-community
+                  - name: rabbitmq
+                    version: 8.22.0
+                    repository:
+                      url: https://charts.bitnami.com/bitnami
+                      name: bitnami
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 components:
   securitySchemes:
     ApiKeyId:
