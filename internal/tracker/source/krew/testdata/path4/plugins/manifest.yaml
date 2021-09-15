@@ -3,6 +3,9 @@ kind: Plugin
 metadata:
   name: test-plugin
   annotations:
+    artifacthub.io/changes: |
+      - Added cool feature
+      - Fixed minor bug
     artifacthub.io/displayName: My test plugin
     artifacthub.io/keywords: |
       - networking
