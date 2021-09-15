@@ -202,68 +202,6 @@ begin
                 select json_build_array(
                     (
                         select json_build_object(
-                            'title', 'Organization',
-                            'filter_key', 'org',
-                            'options', (
-                                select coalesce(json_agg(json_build_object(
-                                    'id', organization_name,
-                                    'name', coalesce(organization_display_name, organization_name),
-                                    'total', total
-                                )), '[]')
-                                from (
-                                    select organization_name, organization_display_name, total
-                                    from (
-                                        select 1 as pri, organization_name, organization_display_name, count(*) as total
-                                        from filtered_packages_excluding_facets_filters
-                                        where organization_name = any(v_orgs)
-                                        group by organization_name, organization_display_name
-                                        union
-                                        select 2 as pri, organization_name, organization_display_name, count(*) as total
-                                        from filtered_packages_excluding_facets_filters
-                                        where organization_name is not null
-                                        and
-                                            case when cardinality(v_orgs) > 0
-                                            then organization_name <> all(v_orgs) else true end
-                                        group by organization_name, organization_display_name
-                                    ) as orgs
-                                    order by pri asc, total desc, organization_name asc
-                                ) as orgs_breakdown
-                            )
-                        )
-                    ),
-                    (
-                        select json_build_object(
-                            'title', 'User',
-                            'filter_key', 'user',
-                            'options', (
-                                select coalesce(json_agg(json_build_object(
-                                    'id', user_alias,
-                                    'name', user_alias,
-                                    'total', total
-                                )), '[]')
-                                from (
-                                    select user_alias, total
-                                    from (
-                                        select 1 as pri, user_alias, count(*) as total
-                                        from filtered_packages_excluding_facets_filters
-                                        where user_alias = any(v_users)
-                                        group by user_alias
-                                        union
-                                        select 2 as pri, user_alias, count(*) as total
-                                        from filtered_packages_excluding_facets_filters
-                                        where user_alias is not null
-                                        and
-                                            case when cardinality(v_users) > 0
-                                            then user_alias <> all(v_users) else true end
-                                        group by user_alias
-                                    ) as users
-                                    order by pri asc, total desc, user_alias asc
-                                ) as users_breakdown
-                            )
-                        )
-                    ),
-                    (
-                        select json_build_object(
                             'title', 'Kind',
                             'filter_key', 'kind',
                             'options', (
@@ -286,31 +224,100 @@ begin
                     ),
                     (
                         select json_build_object(
+                            'title', 'Publisher',
+                            'filter_key', 'publisher',
+                            'options', (
+                                select coalesce(json_agg(json_build_object(
+                                    'filter_key', filter_key,
+                                    'id', id,
+                                    'name', name,
+                                    'total', total
+                                )), '[]')
+                                from (
+                                    select filter_key, id, name, total
+                                    from (
+                                        -- Organizations
+                                        select
+                                            1 as pri,
+                                            'org' as filter_key,
+                                            organization_name as id,
+                                            coalesce(organization_display_name, organization_name) as name,
+                                            count(*) as total
+                                        from filtered_packages_excluding_facets_filters
+                                        where organization_name = any(v_orgs)
+                                        group by organization_name, organization_display_name
+                                        union
+                                        select
+                                            2 as pri,
+                                            'org' as filter_key,
+                                            organization_name as id,
+                                            coalesce(organization_display_name, organization_name) as name,
+                                            count(*) as total
+                                        from filtered_packages_excluding_facets_filters
+                                        where organization_name is not null
+                                        and
+                                            case when cardinality(v_orgs) > 0
+                                            then organization_name <> all(v_orgs) else true end
+                                        group by organization_name, organization_display_name
+                                        union
+                                        -- Users
+                                        select
+                                            1 as pri,
+                                            'user' as filter_key,
+                                            user_alias as id,
+                                            user_alias as name,
+                                            count(*) as total
+                                        from filtered_packages_excluding_facets_filters
+                                        where user_alias = any(v_users)
+                                        group by user_alias
+                                        union
+                                        select
+                                            2 as pri,
+                                            'user' as filter_key,
+                                            user_alias as id,
+                                            user_alias as name,
+                                            count(*) as total
+                                        from filtered_packages_excluding_facets_filters
+                                        where user_alias is not null
+                                        and
+                                            case when cardinality(v_users) > 0
+                                            then user_alias <> all(v_users) else true end
+                                        group by user_alias
+                                    ) as publishers
+                                    order by pri asc, total desc, id asc
+                                    limit 10
+                                ) as publishers_breakdown
+                            )
+                        )
+                    ),
+                    (
+                        select json_build_object(
                             'title', 'Repository',
                             'filter_key', 'repo',
                             'options', (
                                 select coalesce(json_agg(json_build_object(
                                     'id', repository_name,
-                                    'name', initcap(repository_name),
+                                    'name', coalesce(repository_display_name, initcap(repository_name)),
                                     'total', total
                                 )), '[]')
                                 from (
-                                    select repository_name, total
+                                    select repository_name, repository_display_name, total
                                     from (
-                                        select 1 as pri, repository_name, count(*) as total
+                                        select 1 as pri, repository_name, repository_display_name, count(*) as total
                                         from filtered_packages_excluding_facets_filters
                                         where repository_name = any(v_repositories)
-                                        group by repository_name
+                                        group by repository_name, repository_display_name
                                         union
-                                        select 2 as pri, repository_name, count(*) as total
+                                        select 2 as pri, repository_name, repository_display_name, count(*) as total
                                         from filtered_packages_excluding_facets_filters
                                         where repository_name is not null
                                         and
                                             case when cardinality(v_repositories) > 0
                                             then repository_name <> all(v_repositories) else true end
-                                        group by repository_name
+                                        group by repository_name, repository_display_name
                                     ) as repos
                                     order by pri asc, total desc, repository_name asc
+                                    limit 10
                                 ) as repositories_breakdown
                             )
                         )
@@ -342,6 +349,7 @@ begin
                                         group by license
                                     ) as orgs
                                     order by pri asc, total desc, license asc
+                                    limit 10
                                 ) as licenses_breakdown
                             )
                         )

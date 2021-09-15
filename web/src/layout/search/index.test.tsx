@@ -455,7 +455,7 @@ describe('Search index', () => {
 
       expect(main).toBeInTheDocument();
       const checks = screen.getAllByRole('checkbox');
-      expect(checks).toHaveLength(28);
+      expect(checks).toHaveLength(38);
 
       rerender(
         <Router>
@@ -481,7 +481,7 @@ describe('Search index', () => {
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
-      expect(checks).toHaveLength(28);
+      expect(checks).toHaveLength(38);
     });
   });
 

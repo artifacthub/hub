@@ -2935,16 +2935,25 @@ components:
               total:
                 type: integer
                 nullable: false
+              filter_key:
+                type: string
+                nullable: false
       example:
-        title: Organization
-        filter_key: org
+        title: Publisher
+        filter_key: publisher
         options:
           - id: f41e7480-8d5c-40d3-9ba6-65ac0da8fc9c
             name: Helm
             total: 292
+            filter_key: org
           - id: b771c9a8-0076-444c-ad5e-927abe14173d
             name: Artifact Hub
             total: 1
+            filter_key: org
+          - id: a70u69a8-0326-324c-fd3e-0iu87e14173d
+            name: user1
+            total: 3
+            filter_key: user
     CoreDNSPackage:
       $ref: "#/components/schemas/Package"
     FalcoPackage:
