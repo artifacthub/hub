@@ -82,6 +82,22 @@ const tests: Test[] = [
       deprecated: false,
     },
   },
+  {
+    query: '?page=1&user=user1&modal=login&redirect=/',
+    result: {
+      pageNumber: 1,
+      filters: { user: ['user1'] },
+      deprecated: false,
+    },
+  },
+  {
+    query: '?page=1&user=user1&test=blabla&test1=blabla',
+    result: {
+      pageNumber: 1,
+      filters: { user: ['user1'] },
+      deprecated: false,
+    },
+  },
 ];
 
 describe('buildSearchParams', () => {

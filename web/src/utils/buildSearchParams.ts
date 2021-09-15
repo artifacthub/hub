@@ -2,15 +2,13 @@ import isNull from 'lodash/isNull';
 
 import { SearchFiltersURL } from '../types';
 
-const SPECIAL_KEYS = [
-  'ts_query_web',
-  'ts_query',
-  'page',
-  'deprecated',
-  'operators',
-  'verified_publisher',
-  'official',
-  'sort',
+const WHITELISTED_FILTER_KEYS = [
+  'org', // Organization as publisher
+  'user', // User as publisher
+  'capabilities', // Capability level: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights, Auto Pilot
+  'kind', // Repository kind
+  'repo', // Repository name
+  'license', // Package license
 ];
 
 interface F {
@@ -22,7 +20,7 @@ export default (query: string): SearchFiltersURL => {
   let filters: F = {};
 
   p.forEach((value, key) => {
-    if (!SPECIAL_KEYS.includes(key)) {
+    if (WHITELISTED_FILTER_KEYS.includes(key)) {
       const values = filters[key] || [];
       values.push(value);
       filters[key] = values;
