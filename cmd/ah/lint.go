@@ -582,13 +582,13 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 		case hub.Falco:
 			// Rules files
 			fmt.Fprintf(out, "%c Rules: %s\n", success, provided)
-			for name := range pkg.Data["rules"].(map[string]string) {
+			for name := range pkg.Data[generic.FalcoRulesKey].(map[string]string) {
 				fmt.Fprintf(out, "  - %s\n", name)
 			}
 		case hub.OPA:
 			// Policies files
 			fmt.Fprintf(out, "%c Policies: %s\n", success, provided)
-			for name := range pkg.Data["policies"].(map[string]string) {
+			for name := range pkg.Data[generic.OPAPoliciesKey].(map[string]string) {
 				fmt.Fprintf(out, "  - %s\n", name)
 			}
 		}
@@ -603,7 +603,7 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 		}
 	case hub.Krew:
 		// Platforms
-		if v, ok := pkg.Data["platforms"]; ok {
+		if v, ok := pkg.Data[krew.PlatformsKey]; ok {
 			platforms, ok := v.([]string)
 			if ok && len(platforms) > 0 {
 				fmt.Fprintf(out, "%c Platforms: %s\n", success, provided)

@@ -14,6 +14,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const (
+	rulesKey = "rules"
+)
+
 // TrackerSource is a hub.TrackerSource implementation for Falco repositories.
 type TrackerSource struct {
 	i *hub.TrackerSourceInput
@@ -119,7 +123,7 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *RulesMetadata, pkg
 		Readme:      md.Description,
 		Provider:    md.Vendor,
 		Data: map[string]interface{}{
-			"rules": md.Rules,
+			rulesKey: md.Rules,
 		},
 		Links: []*hub.Link{
 			{

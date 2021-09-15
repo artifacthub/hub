@@ -32,6 +32,16 @@ const (
 	arch = "arch"
 )
 
+const (
+	// PlatformsKey represents the key used in the package's data field that
+	// contains the supported platforms.
+	PlatformsKey = "platforms"
+
+	// RawManifestKey represents the key used in the package's data field that
+	// contains the raw manifest.
+	RawManifestKey = "manifestRaw"
+)
+
 var (
 	// errInvalidAnnotation indicates that the annotation provided is not valid.
 	errInvalidAnnotation = errors.New("invalid annotation")
@@ -176,8 +186,8 @@ func PreparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byt
 		Readme:      manifest.Spec.Description,
 		Repository:  r,
 		Data: map[string]interface{}{
-			"manifestRaw": string(manifestRaw),
-			"platforms":   platforms,
+			RawManifestKey: string(manifestRaw),
+			PlatformsKey:   platforms,
 		},
 	}
 

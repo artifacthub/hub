@@ -238,7 +238,7 @@ func TestTrackerSource(t *testing.T) {
 		p := source.ClonePackage(basePkg)
 		p.Repository = i.Repository
 		p.LogoImageID = "logoImageID"
-		p.Data["policies"] = map[string]string{
+		p.Data[OPAPoliciesKey] = map[string]string{
 			"policy1.rego": "policy content\n",
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
@@ -267,7 +267,7 @@ func TestTrackerSource(t *testing.T) {
 		p := source.ClonePackage(basePkg)
 		p.Repository = i.Repository
 		p.LogoImageID = "logoImageID"
-		p.Data["rules"] = map[string]string{
+		p.Data[FalcoRulesKey] = map[string]string{
 			"file1-rules.yaml": "falco rules\n",
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
@@ -297,7 +297,7 @@ func TestTrackerSource(t *testing.T) {
 		p.Repository = i.Repository
 		p.LogoURL = "https://logo.url/red-dot.png"
 		p.LogoImageID = "logoImageID"
-		p.Data["rules"] = map[string]string{
+		p.Data[FalcoRulesKey] = map[string]string{
 			"file1-rules.yaml": "falco rules\n",
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
@@ -326,7 +326,7 @@ func TestTrackerSource(t *testing.T) {
 		p := source.ClonePackage(basePkg)
 		p.Repository = i.Repository
 		p.LogoImageID = "logoImageID"
-		p.Data["policies"] = map[string]string{
+		p.Data[OPAPoliciesKey] = map[string]string{
 			"policy1.rego": "policy content\n",
 		}
 		p.Readme = "# Package documentation in markdown format\n"

@@ -113,8 +113,8 @@ func TestTrackerSource(t *testing.T) {
 				},
 			},
 			Data: map[string]interface{}{
-				"manifestRaw":          string(manifestRaw),
-				"pipelines.minVersion": "0.12.1",
+				RawManifestKey:         string(manifestRaw),
+				PipelinesMinVersionKey: "0.12.1",
 			},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
