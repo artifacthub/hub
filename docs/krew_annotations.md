@@ -6,6 +6,12 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 ## Supported annotations
 
+- **artifacthub.io/changes** *(yaml string, see example below)*
+
+This annotation is used to provide some details about the changes introduced by a given task version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your plugin versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
+
+This annotation can be provided using two different formats: using a plain list of strings with the description of the change or using a list of objects with some extra structured information (see example below). Please feel free to use the one that better suits your needs. The UI experience will be slightly different depending on the choice. When using the *list of objects* option the valid **supported kinds** are *added*, *changed*, *deprecated*, *removed*, *fixed* and *security*.
+
 - **artifacthub.io/displayName** *(string)*
 
 This annotations allows providing a nicely formatted name for the package.
@@ -47,6 +53,22 @@ Artifact Hub annotations in `plugin manifest` file:
 ```yaml
 metadata:
   annotations:
+    artifacthub.io/changes: |
+      - Added cool feature
+      - Fixed minor bug
+    artifacthub.io/changes: |
+      - kind: added
+        description: Cool feature
+        links:
+          - name: Github Issue
+            url: https://github.com/issue-url
+          - name: Github PR
+            url: https://github.com/pr-url
+      - kind: fixed
+        description: Minor bug
+        links:
+          - name: Github Issue
+            url: https://github.com/issue-url
     artifacthub.io/displayName: My plugin
     artifacthub.io/keywords: |
       - networking

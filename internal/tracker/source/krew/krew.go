@@ -10,6 +10,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/hashicorp/go-multierror"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/krew/pkg/index"
@@ -18,6 +19,7 @@ import (
 
 const (
 	// Annotations
+	changesAnnotation         = "artifacthub.io/changes"
 	displayNameAnnotation     = "artifacthub.io/displayName"
 	keywordsAnnotation        = "artifacthub.io/keywords"
 	licenseAnnotation         = "artifacthub.io/license"
@@ -203,6 +205,16 @@ func PreparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byt
 // the provided annotations.
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
 	var errs *multierror.Error
+
+	// Changes
+	if v, ok := annotations[changesAnnotation]; ok {
+		changes, err := source.ParseChangesAnnotation(v)
+		if err != nil {
+			errs = multierror.Append(errs, err)
+		} else {
+			p.Changes = changes
+		}
+	}
 
 	// Display name
 	p.DisplayName = annotations[displayNameAnnotation]

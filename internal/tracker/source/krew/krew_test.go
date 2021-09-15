@@ -113,6 +113,14 @@ func TestTrackerSource(t *testing.T) {
 					Email: "user2@email.com",
 				},
 			},
+			Changes: []*hub.Change{
+				{
+					Description: "Added cool feature",
+				},
+				{
+					Description: "Fixed minor bug",
+				},
+			},
 			Recommendations: []*hub.Recommendation{
 				{
 					URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
