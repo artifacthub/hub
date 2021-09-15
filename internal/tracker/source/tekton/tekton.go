@@ -19,6 +19,14 @@ import (
 )
 
 const (
+	// PipelinesMinVersionKey represents the key used in the package's data
+	// field that contains the minimum pipelines version supported.
+	PipelinesMinVersionKey = "pipelines.minVersion"
+
+	// RawManifestKey represents the key used in the package's data field that
+	// contains the raw manifest.
+	RawManifestKey = "manifestRaw"
+
 	changesAnnotation         = "artifacthub.io/changes"
 	licenseAnnotation         = "artifacthub.io/license"
 	linksAnnotation           = "artifacthub.io/links"
@@ -219,8 +227,8 @@ func PreparePackage(
 			},
 		},
 		Data: map[string]interface{}{
-			"manifestRaw":          string(manifestRaw),
-			"pipelines.minVersion": manifest.Annotations["tekton.dev/pipelines.minVersion"],
+			RawManifestKey:         string(manifestRaw),
+			PipelinesMinVersionKey: manifest.Annotations["tekton.dev/pipelines.minVersion"],
 		},
 	}
 

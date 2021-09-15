@@ -49,8 +49,8 @@ func TestTrackerSource(t *testing.T) {
 		},
 		CRDsExamples: []interface{}{
 			map[string]interface{}{
-				"apiVersion": "v1",
-				"kind":       "MyKind",
+				apiVersionKey: "v1",
+				"kind":        "MyKind",
 				"metadata": map[string]interface{}{
 					"name": "mykind",
 				},
@@ -58,9 +58,9 @@ func TestTrackerSource(t *testing.T) {
 			},
 		},
 		Data: map[string]interface{}{
-			"apiVersion":  "v2",
-			"kubeVersion": ">= 1.13.0 < 1.15.0",
-			"type":        "application",
+			apiVersionKey:  "v2",
+			kubeVersionKey: ">= 1.13.0 < 1.15.0",
+			typeKey:        "application",
 		},
 		Version:    "1.0.0",
 		AppVersion: "1.0.0",
@@ -493,8 +493,8 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			&hub.Package{
 				CRDsExamples: []interface{}{
 					map[string]interface{}{
-						"apiVersion": "v1",
-						"kind":       "MyKind",
+						apiVersionKey: "v1",
+						"kind":        "MyKind",
 						"metadata": map[string]interface{}{
 							"name": "mykind",
 						},

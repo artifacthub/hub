@@ -54,6 +54,11 @@ const (
 
 	helmChartConfigMediaType       = "application/vnd.cncf.helm.config.v1+json"
 	helmChartContentLayerMediaType = "application/tar+gzip"
+
+	apiVersionKey   = "apiVersion"
+	dependenciesKey = "dependencies"
+	kubeVersionKey  = "kubeVersion"
+	typeKey         = "type"
 )
 
 var (
@@ -432,7 +437,7 @@ func EnrichPackageFromChart(p *hub.Package, chrt *chart.Chart) {
 	p.Data = map[string]interface{}{}
 
 	// API version
-	p.Data["apiVersion"] = chrt.Metadata.APIVersion
+	p.Data[apiVersionKey] = chrt.Metadata.APIVersion
 
 	// Containers images
 	imagesRefs, err := extractContainersImages(chrt)
@@ -456,11 +461,11 @@ func EnrichPackageFromChart(p *hub.Package, chrt *chart.Chart) {
 		})
 	}
 	if len(dependencies) > 0 {
-		p.Data["dependencies"] = dependencies
+		p.Data[dependenciesKey] = dependencies
 	}
 
 	// Kubernetes version
-	p.Data["kubeVersion"] = chrt.Metadata.KubeVersion
+	p.Data[kubeVersionKey] = chrt.Metadata.KubeVersion
 
 	// License
 	licenseFile := getFile(chrt, "LICENSE")
@@ -506,7 +511,7 @@ func EnrichPackageFromChart(p *hub.Package, chrt *chart.Chart) {
 	}
 
 	// Type
-	p.Data["type"] = chrt.Metadata.Type
+	p.Data[typeKey] = chrt.Metadata.Type
 }
 
 // extractContainersImages extracts the containers images references found in

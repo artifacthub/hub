@@ -119,8 +119,8 @@ func TestTrackerSource(t *testing.T) {
 				},
 			},
 			Data: map[string]interface{}{
-				"manifestRaw": string(manifestRaw),
-				"platforms":   []string{"linux/amd64"},
+				RawManifestKey: string(manifestRaw),
+				PlatformsKey:   []string{"linux/amd64"},
 			},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()

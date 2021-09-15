@@ -28,6 +28,9 @@ const (
 	bundle          = "bundle"
 	packageManifest = "packageManifest"
 
+	formatKey           = "format"
+	isGlobalOperatorKey = "isGlobalOperator"
+
 	// Artifact Hub special annotations
 	changesAnnotation         = "artifacthub.io/changes"
 	imagesWhitelistAnnotation = "artifacthub.io/imagesWhitelist"
@@ -492,8 +495,8 @@ func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
 		}
 	}
 	p.Data = map[string]interface{}{
-		"format":           md.Format,
-		"isGlobalOperator": isGlobalOperator,
+		formatKey:           md.Format,
+		isGlobalOperatorKey: isGlobalOperator,
 	}
 
 	return p, nil
@@ -511,7 +514,7 @@ func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
 // available in all packages' versions.
 func preparePackagesChannels(packages map[string]*hub.Package) {
 	usesBundleFormat := func(p *hub.Package) bool {
-		format, ok := p.Data["format"].(string)
+		format, ok := p.Data[formatKey].(string)
 		return ok && format == bundle
 	}
 

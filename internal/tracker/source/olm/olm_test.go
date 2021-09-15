@@ -93,8 +93,8 @@ func TestTrackerSource(t *testing.T) {
 			},
 		},
 		Data: map[string]interface{}{
-			"format":           "packageManifest",
-			"isGlobalOperator": true,
+			formatKey:           "packageManifest",
+			isGlobalOperatorKey: true,
 		},
 	}
 	imageData, _ := ioutil.ReadFile("testdata/red-dot.png")
@@ -234,8 +234,8 @@ func TestTrackerSource(t *testing.T) {
 		}
 		p1.DefaultChannel = "stable"
 		p1.Data = map[string]interface{}{
-			"format":           "bundle",
-			"isGlobalOperator": true,
+			formatKey:           "bundle",
+			isGlobalOperatorKey: true,
 		}
 		p2 := source.ClonePackage(p1)
 		p2.Version = "0.2.0"

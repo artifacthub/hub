@@ -106,7 +106,7 @@ func TestTrackerSource(t *testing.T) {
 		p := source.ClonePackage(basePkg)
 		p.Repository = i.Repository
 		p.Data = map[string]interface{}{
-			"rules": []*Rule{{Raw: "Falco rules in YAML"}},
+			rulesKey: []*Rule{{Raw: "Falco rules in YAML"}},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
@@ -137,7 +137,7 @@ func TestTrackerSource(t *testing.T) {
 		p.LogoURL = logoImageURL
 		p.LogoImageID = "logoImageID"
 		p.Data = map[string]interface{}{
-			"rules": []*Rule{{Raw: "Falco rules in YAML"}},
+			rulesKey: []*Rule{{Raw: "Falco rules in YAML"}},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{

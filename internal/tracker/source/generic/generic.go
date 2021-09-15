@@ -14,6 +14,14 @@ import (
 )
 
 const (
+	// FalcoRulesKey represents the key used in the package's data field that
+	// contains the raw rules.
+	FalcoRulesKey = "rules"
+
+	// OPAPoliciesKey represents the key used in the package's data field that
+	// contains the raw policies.
+	OPAPoliciesKey = "policies"
+
 	// falcoRulesSuffix is the suffix that each of the rules files in the
 	// package must use.
 	falcoRulesSuffix = "-rules.yaml"
@@ -172,7 +180,7 @@ func prepareFalcoData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]i
 
 	// Return package data field
 	return map[string]interface{}{
-		"rules": files,
+		FalcoRulesKey: files,
 	}, nil
 }
 
@@ -187,7 +195,7 @@ func prepareOPAData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]int
 
 	// Return package data field
 	return map[string]interface{}{
-		"policies": files,
+		OPAPoliciesKey: files,
 	}, nil
 }
 
