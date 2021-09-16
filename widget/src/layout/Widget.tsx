@@ -70,6 +70,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'coredns';
     case RepositoryKind.Keptn:
       return 'keptn';
+    case RepositoryKind.TektonPipeline:
+      return 'tekton-pipeline';
     default:
       return null;
   }

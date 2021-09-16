@@ -111,6 +111,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       OPA policies
                     </option>
                     <option
+                      value="11"
+                    >
+                      Tekton pipelines
+                    </option>
+                    <option
                       value="7"
                     >
                       Tekton tasks

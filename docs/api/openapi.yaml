@@ -1344,6 +1344,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/tekton-pipeline/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getTektonPipelineDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TektonPipelinePackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/tekton-task/{repoName}/{packageName}":
     get:
       tags:
@@ -1601,6 +1624,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TBActionPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/tekton-pipeline/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getTektonPipelineVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TektonPipelinePackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3266,6 +3313,39 @@ components:
                         condition: (evt.num < 0)
     TBActionPackage:
       $ref: "#/components/schemas/Package"
+    TektonPipelinePackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                pipelines.minVersion:
+                  type: string
+                  example: 2.0.0
+                manifestRaw:
+                  type: string
+                  additionalProperties:
+                    type: string
+                  example: "apiVersion: tekton.dev/v1beta1"
+                tasks:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                      nullable: false
+                      example: task
+                    run_after:
+                      type: array
+                      nullable: false
+                      items:
+                        type: string
+                      example:
+                        - task1
+                        - task2
     TektonTaskPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -3608,6 +3688,7 @@ components:
           * `8` - KEDA scalers
           * `9` - Core DNS plugins
           * `10` - Keptn integrations
+          * `11` - Tekton pipelines
     RepositoryKindParam:
       type: string
       enum:
@@ -3622,6 +3703,7 @@ components:
         - keda-scaler
         - coredns
         - keptn
+        - tekton-pipeline
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -3635,6 +3717,7 @@ components:
         * `keda-scaler` - KEDA scalers
         * `coredns` - Core DNS plugins
         * `keptn` - Keptn integrations
+        * `tekton-pipeline` - Tekton pipelines
     RepositorySummary:
       type: object
       required:
@@ -4103,6 +4186,7 @@ components:
           * `8` - KEDA scalers
           * `9` - Core DNS plugins
           * `10` - Keptn integrations
+          * `11` - Tekton pipelines
     PackageNameParam:
       in: path
       name: packageName

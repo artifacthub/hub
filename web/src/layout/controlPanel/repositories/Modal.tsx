@@ -288,6 +288,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.TektonPipeline:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories#tekton-pipelines-repositories"
+            className="text-reset"
+            label="Open documentation"
+          >
+            <u>Tekton pipelines</u>
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -552,6 +563,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KedaScaler,
               RepositoryKind.CoreDNS,
               RepositoryKind.Keptn,
+              RepositoryKind.TektonPipeline,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -661,6 +673,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KedaScaler,
               RepositoryKind.CoreDNS,
               RepositoryKind.Keptn,
+              RepositoryKind.TektonPipeline,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="custom-control custom-switch pl-0">

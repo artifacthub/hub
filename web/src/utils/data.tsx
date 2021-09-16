@@ -171,6 +171,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     active: true,
   },
   {
+    kind: RepositoryKind.TektonPipeline,
+    label: 'tekton-pipeline',
+    name: 'Tekton pipelines',
+    singular: 'Tekton pipeline',
+    plural: 'Tekton pipelines',
+    icon: <RepositoryIcon kind={RepositoryKind.TektonPipeline} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.TektonTask,
     label: 'tekton-task',
     name: 'Tekton tasks',

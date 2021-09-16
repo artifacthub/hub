@@ -54,6 +54,9 @@ const (
 
 	// Keptn represents a repository with Keptn integrations.
 	Keptn RepositoryKind = 10
+
+	// TektonPipeline represents a repository with Tekton pipelines.
+	TektonPipeline RepositoryKind = 11
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -81,6 +84,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "tbaction"
 	case TektonTask:
 		return "tekton-task"
+	case TektonPipeline:
+		return "tekton-pipeline"
 	default:
 		return ""
 	}
@@ -112,6 +117,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return TBAction, nil
 	case "tekton-task":
 		return TektonTask, nil
+	case "tekton-pipeline":
+		return TektonPipeline, nil
 	default:
 		return -1, errors.New("invalid kind name")
 	}

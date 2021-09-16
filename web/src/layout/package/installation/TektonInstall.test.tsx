@@ -1,7 +1,22 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
+import { Repository, RepositoryKind } from '../../../types';
 import TektonInstall from './TektonInstall';
+
+const repo: Repository = {
+  kind: RepositoryKind.TektonTask,
+  name: 'repo',
+  displayName: 'Repo',
+  url: 'http://github.com/test/repo',
+  userAlias: 'user',
+  private: false,
+};
+
+const defaultProps = {
+  contentUrl: 'https://url.com',
+  repository: repo,
+};
 
 describe('TektonInstall', () => {
   afterEach(() => {
@@ -9,19 +24,27 @@ describe('TektonInstall', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<TektonInstall contentUrl="https://url.com" />);
+    const { asFragment } = render(<TektonInstall {...defaultProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<TektonInstall contentUrl="https://url.com" />);
+      render(<TektonInstall {...defaultProps} />);
 
+      expect(screen.getByText('Install the task:')).toBeInTheDocument();
+      expect(screen.getByText('kubectl apply -f https://url.com')).toBeInTheDocument();
+    });
+
+    it('when kind is TektonPipeline', () => {
+      render(<TektonInstall {...defaultProps} repository={{ ...repo, kind: RepositoryKind.TektonPipeline }} />);
+
+      expect(screen.getByText('Install the pipeline:')).toBeInTheDocument();
       expect(screen.getByText('kubectl apply -f https://url.com')).toBeInTheDocument();
     });
 
     it('renders private repo', () => {
-      render(<TektonInstall contentUrl="https://url.com" isPrivate />);
+      render(<TektonInstall {...defaultProps} isPrivate />);
 
       const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();

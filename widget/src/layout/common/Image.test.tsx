@@ -103,6 +103,13 @@ describe('Image', () => {
     expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_keptn.png');
   });
 
+  it('renders Tekton pipeline icon', () => {
+    render(<Image {...defaultProps} kind={RepositoryKind.TektonPipeline} />);
+    const image = screen.getByAltText('alt image');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_tekton-task.png');
+  });
+
   it('renders placeholder icon', () => {
     render(<Image {...defaultProps} placeholderIcon={<>icon</>} />);
     expect(screen.getByText('icon')).toBeInTheDocument();

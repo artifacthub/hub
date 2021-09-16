@@ -88,7 +88,7 @@ func newLintCmd() *cobra.Command {
 			return lint(opts, &output{cmd.OutOrStdout()})
 		},
 	}
-	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: coredns, falco, helm, helm-plugin, keda-scaler, keptn, krew, olm, opa, tbaction, tekton-task")
+	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: coredns, falco, helm, helm-plugin, keda-scaler, keptn, krew, olm, opa, tbaction, tekton-task, tekton-pipeline")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
 	return lintCmd
 }
@@ -122,8 +122,8 @@ func lint(opts *lintOptions, out *output) error {
 		report = lintKrew(opts.path)
 	case hub.OLM:
 		report = lintOLM(opts.path)
-	case hub.TektonTask:
-		report = lintTektonTask(opts.path)
+	case hub.TektonTask, hub.TektonPipeline:
+		report = lintTekton(opts.path, kind)
 	default:
 		return errors.New("kind not supported yet")
 	}
@@ -364,10 +364,10 @@ func lintOLM(basePath string) *lintReport {
 	return report
 }
 
-// lintTektonTask checks if the Tekton tasks available in the path provided are
-// ready to be processed by the Tekton tasks tracker source and listed on
-// Artifact Hub.
-func lintTektonTask(basePath string) *lintReport {
+// lintTekton checks if the Tekton tasks or pipelines available in the path
+// provided are ready to be processed by the Tekton tracker source and listed
+// on Artifact Hub.
+func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
 	report := &lintReport{}
 
 	// Walk the path provided looking for available Tekton tasks
@@ -385,7 +385,7 @@ func lintTektonTask(basePath string) *lintReport {
 		}
 
 		// Get manifest and prepare package
-		manifest, manifestRaw, err := tekton.GetManifest(pkgPath)
+		manifest, manifestRaw, err := tekton.GetManifest(kind, pkgPath)
 		switch {
 		case err != nil:
 			e.result = multierror.Append(e.result, err)
@@ -394,7 +394,7 @@ func lintTektonTask(basePath string) *lintReport {
 			return nil
 		default:
 			repo := &hub.Repository{
-				Kind: hub.TektonTask,
+				Kind: kind,
 				URL:  "https://github.com/user/repo/path",
 			}
 			e.pkg, err = tekton.PreparePackage(repo, manifest, manifestRaw, basePath, pkgPath)

@@ -25,6 +25,7 @@ import Links from './Links';
 import Maintainers from './Maintainers';
 import Platforms from './Platforms';
 import SecurityReport from './securityReport';
+import TasksInPipeline from './TasksInPipeline';
 import Version from './Version';
 import VersionInRow from './VersionInRow';
 
@@ -196,6 +197,7 @@ const Details = (props: Props) => {
               </>
             );
           case RepositoryKind.TektonTask:
+          case RepositoryKind.TektonPipeline:
             return (
               <>
                 {props.package.data && props.package.data.pipelinesMinVersion && (
@@ -205,6 +207,10 @@ const Details = (props: Props) => {
                       {props.package.data.pipelinesMinVersion}
                     </p>
                   </div>
+                )}
+
+                {props.package.data && (
+                  <TasksInPipeline tasks={props.package.data.tasks} kind={props.package.repository.kind} />
                 )}
               </>
             );

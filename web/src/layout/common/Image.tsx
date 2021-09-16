@@ -45,6 +45,7 @@ const Image = (props: Props) => {
         case RepositoryKind.Krew:
           return '/static/media/placeholder_pkg_krew.png';
         case RepositoryKind.TektonTask:
+        case RepositoryKind.TektonPipeline:
           return '/static/media/placeholder_pkg_tekton-task.png';
         case RepositoryKind.KedaScaler:
           return '/static/media/placeholder_pkg_keda-scaler.png';

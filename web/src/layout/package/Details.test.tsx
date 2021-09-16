@@ -345,4 +345,20 @@ describe('Details', () => {
       expect(screen.getByText('cli')).toBeInTheDocument();
     });
   });
+
+  describe('Tekton pipeline', () => {
+    it('renders component', () => {
+      const mockPackage = getMockPackage('19');
+      render(<Details package={mockPackage} {...defaultProps} />);
+
+      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getByText('Pipeline minimal version')).toBeInTheDocument();
+      expect(screen.getByText('Tasks')).toBeInTheDocument();
+      expect(screen.getAllByText('Run After:')).toHaveLength(2);
+      expect(screen.getByText('Keywords')).toBeInTheDocument();
+
+      expect(screen.getByText('tekton')).toBeInTheDocument();
+      expect(screen.getByText('pipeline')).toBeInTheDocument();
+    });
+  });
 });

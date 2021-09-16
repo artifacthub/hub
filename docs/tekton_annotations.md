@@ -1,14 +1,14 @@
-# Artifact Hub annotations in Tekton task manifest file
+# Artifact Hub annotations in Tekton manifest file
 
-Artifact Hub uses some data from the `task manifest file` to populate the information for a package of kind Tekton task. Usually most of the information needed is already there, so there is no extra work required by maintainers to list their tasks on Artifact Hub.
+Artifact Hub uses some data from the `Tekton manifest file` to populate the information for a package of kind Tekton task or pipeline. Usually most of the information needed is already there, so there is no extra work required by maintainers to list their tasks or pipelines on Artifact Hub.
 
-However, sometimes there might be cases in which it may be useful to provide some more context that helps improving users' experience in Artifact Hub. This can be done using some special **annotations** in the [task's manifest](https://github.com/tektoncd/catalog#catalog-structure) file.
+However, sometimes there might be cases in which it may be useful to provide some more context that helps improving users' experience in Artifact Hub. This can be done using some special **annotations** in the [manifest](https://github.com/tektoncd/catalog#catalog-structure) file.
 
 ## Supported annotations
 
 - **artifacthub.io/changes** *(yaml string, see example below)*
 
-This annotation is used to provide some details about the changes introduced by a given task version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your task versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
+This annotation is used to provide some details about the changes introduced by a given package version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your package versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
 
 This annotation can be provided using two different formats: using a plain list of strings with the description of the change or using a list of objects with some extra structured information (see example below). Please feel free to use the one that better suits your needs. The UI experience will be slightly different depending on the choice. When using the *list of objects* option the valid **supported kinds** are *added*, *changed*, *deprecated*, *removed*, *fixed* and *security*.
 
@@ -18,7 +18,7 @@ Use this annotation to indicate the package's license. It must be a valid [SPDX 
 
 - **artifacthub.io/links** *(yaml string, see example below)*
 
-This annotation allows including named links, which will be rendered nicely in Artifact Hub. By default, a link pointing to the source code of the task will be automatically added.
+This annotation allows including named links, which will be rendered nicely in Artifact Hub. By default, a link pointing to the source code of the package will be automatically added.
 
 - **artifacthub.io/maintainers** *(yaml string, see example below)*
 
@@ -34,7 +34,7 @@ This annotation allows recommending other related packages. Recommended packages
 
 ## Example
 
-Artifact Hub annotations in `task manifest` file:
+Artifact Hub annotations in `manifest` file:
 
 ```yaml
 metadata:
