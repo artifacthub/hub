@@ -63,7 +63,8 @@ const Filters = (props: Props) => {
           name={option.filterKey}
           device={props.device}
           value={option.id.toString()}
-          className={`text-capitalize ${styles.checkbox}`}
+          labelClassName="mw-100"
+          className={styles.checkbox}
           legend={option.total}
           label={option.name}
           checked={isChecked(option.id.toString(), option.filterKey)}
@@ -109,6 +110,7 @@ const Filters = (props: Props) => {
                 name={kind.filterKey!}
                 device={props.device}
                 value={option.id.toString()}
+                labelClassName="mw-100"
                 className={styles.checkbox}
                 legend={option.total}
                 label={option.name}
@@ -157,6 +159,7 @@ const Filters = (props: Props) => {
                 name={capabilities.filterKey!}
                 device={props.device}
                 value={option.id.toString()}
+                labelClassName="mw-100"
                 className={`text-capitalize ${styles.checkbox}`}
                 legend={option.total}
                 label={option.name}
@@ -193,7 +196,8 @@ const Filters = (props: Props) => {
           name={repo.filterKey!}
           device={props.device}
           value={option.id.toString()}
-          className={`text-capitalize ${styles.checkbox}`}
+          labelClassName="mw-100"
+          className={styles.checkbox}
           legend={option.total}
           label={option.name}
           checked={isChecked(option.id.toString())}
@@ -239,6 +243,7 @@ const Filters = (props: Props) => {
           name={license.filterKey!}
           device={props.device}
           value={option.id.toString()}
+          labelClassName="mw-100"
           className={`text-capitalize ${styles.checkbox}`}
           legend={option.total}
           label={option.name}
@@ -297,7 +302,7 @@ const Filters = (props: Props) => {
           value="official"
           device={props.device}
           className={styles.checkbox}
-          labelClassName="w-100"
+          labelClassName="mw-100"
           label="Official"
           checked={props.official || false}
           onChange={props.onOfficialChange}
@@ -322,7 +327,7 @@ const Filters = (props: Props) => {
           value="verifiedPublisher"
           device={props.device}
           className={styles.checkbox}
-          labelClassName="w-100"
+          labelClassName="mw-100"
           label="Verified publishers"
           checked={props.verifiedPublisher || false}
           onChange={props.onVerifiedPublisherChange}
@@ -356,6 +361,7 @@ const Filters = (props: Props) => {
             name="operators"
             value="operators"
             device={props.device}
+            labelClassName="mw-100"
             className={styles.checkbox}
             label="Only operators"
             checked={props.operators || false}
@@ -368,6 +374,7 @@ const Filters = (props: Props) => {
             device={props.device}
             className={styles.checkbox}
             label="Include deprecated"
+            labelClassName="mw-100"
             checked={props.deprecated || false}
             onChange={props.onDeprecatedChange}
           />
