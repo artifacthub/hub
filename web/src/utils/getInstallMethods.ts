@@ -93,7 +93,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
         if (pkg.repository.url.startsWith(OCI_PREFIX)) {
           output.methods.push({
             label: 'v3',
-            title: 'Helm v3 (OCI)',
+            title: 'Helm v3 (>=3.7)',
             kind: InstallMethodKind.HelmOCI,
             props: {
               name: pkg.name,

@@ -145,15 +145,13 @@ Once you have added your repository, you are all set up. As you add new versions
 
 ### OCI experimental support
 
-Artifact Hub is able to process chart repositories stored in [OCI registries](https://github.com/opencontainers/distribution-spec/blob/master/spec.md). This feature is experimental, and it's subject to change as [some changes to Helm OCI support are coming soon](https://github.com/helm/helm/pull/8843).
+Artifact Hub is able to process chart repositories stored in [OCI registries](https://github.com/opencontainers/distribution-spec/blob/master/spec.md). This feature is experimental and it's subject to change.
 
 To add a repository stored in a OCI registry, the url used **must** follow the following format:
 
-- `oci://ghcr.io/artifacthub/artifact-hub`
+- `oci://registry/namespace/chart-name`
 
-The chart name is expected to match the OCI reference basename (`artifact-hub` in this case), and each of the chart versions are expected to match an OCI reference tag, which are expected to be valid [semver](https://semver.org) versions. OCI specific installation instructions will be provided in the UI when appropriate (only for Helm v3).
-
-The sample URL shown above is actually valid, so you can give it a try yourself in your own Artifact Hub instance if you wish :)
+Each of the chart versions are expected to match an OCI reference tag, which are expected to be valid [semver](https://semver.org) versions. OCI specific installation instructions will be provided in the UI when appropriate (only for Helm >=3.7).
 
 Please note that there are some features that are not yet available for Helm repositories stored in OCI registries:
 
