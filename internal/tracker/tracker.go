@@ -159,15 +159,16 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 			tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 		}
 	case
+		hub.CoreDNS,
 		hub.Falco,
 		hub.HelmPlugin,
+		hub.KedaScaler,
+		hub.Keptn,
 		hub.Krew,
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonTask,
-		hub.KedaScaler,
-		hub.CoreDNS,
-		hub.Keptn:
+		hub.TektonPipeline:
 		tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 	}
 
@@ -187,16 +188,17 @@ func (t *Tracker) getRepositoryMetadata() *hub.RepositoryMetadata {
 			md, err = t.svc.Rm.GetMetadata(u.String())
 		}
 	case
+		hub.CoreDNS,
 		hub.Falco,
 		hub.HelmPlugin,
+		hub.KedaScaler,
+		hub.Keptn,
 		hub.Krew,
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonTask,
-		hub.KedaScaler,
-		hub.CoreDNS,
-		hub.Keptn:
+		hub.TektonPipeline:
 		md, err = t.svc.Rm.GetMetadata(filepath.Join(t.basePath, hub.RepositoryMetadataFile))
 	}
 	if err != nil && !errors.Is(err, repo.ErrMetadataNotFound) {

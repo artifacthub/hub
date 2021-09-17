@@ -45,7 +45,9 @@
 }
 
 .legendIcon {
-  font-size: 80%;
+  font-size: 70%;
+  line-height: 1rem;
+  margin-top: 0.5rem;
 }
 
 .socialBtn {

@@ -12,6 +12,7 @@ export enum RepositoryKind {
   KedaScaler,
   CoreDNS,
   Keptn,
+  TektonPipeline,
 }
 
 export enum KeptnData {
@@ -181,6 +182,12 @@ export interface PackageData {
   kubeVersion?: string;
   [KeptnData.Version]?: string;
   [KeptnData.Kind]?: string;
+  tasks?: TektonTaskInPipeline[];
+}
+
+export interface TektonTaskInPipeline {
+  name: string;
+  runAfter?: string[];
 }
 
 export interface OPAPolicies {

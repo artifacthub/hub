@@ -34,6 +34,7 @@ export enum RepositoryKind {
   KedaScaler,
   CoreDNS,
   Keptn,
+  TektonPipeline,
 }
 
 export interface SearchResults {

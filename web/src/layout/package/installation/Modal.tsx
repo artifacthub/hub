@@ -183,7 +183,11 @@ const InstallationModal = (props: Props) => {
                             return <HelmPluginInstall repository={method.props.repository!} />;
                           case InstallMethodKind.Tekton:
                             return (
-                              <TektonInstall contentUrl={method.props.contentUrl!} isPrivate={method.props.isPrivate} />
+                              <TektonInstall
+                                contentUrl={method.props.contentUrl!}
+                                isPrivate={method.props.isPrivate}
+                                repository={method.props.repository!}
+                              />
                             );
                           default:
                             return null;

@@ -212,6 +212,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
         }
         break;
       case RepositoryKind.TektonTask:
+      case RepositoryKind.TektonPipeline:
         if (isUndefined(pkg.install)) {
           output.methods.push({
             label: 'kubectl',
@@ -219,6 +220,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
             kind: InstallMethodKind.Tekton,
             props: {
               contentUrl: pkg.contentUrl,
+              repository: pkg.repository,
               isPrivate: pkg.repository!.private,
             },
           });

@@ -61,6 +61,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Keptn,
     name: 'Keptn integration',
   },
+  {
+    kind: RepositoryKind.TektonPipeline,
+    name: 'Tekton pipeline',
+  },
 ];
 
 const Wrapper = styled('span')`

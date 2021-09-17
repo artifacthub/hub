@@ -814,6 +814,7 @@ const PackageView = (props: Props) => {
                           {(() => {
                             switch (detail.repository.kind) {
                               case RepositoryKind.TektonTask:
+                              case RepositoryKind.TektonPipeline:
                                 return (
                                   <TektonManifestModal
                                     normalizedName={detail.normalizedName}

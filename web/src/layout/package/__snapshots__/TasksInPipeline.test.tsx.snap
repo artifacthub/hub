@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TasksInPipeline creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        role="heading"
+      >
+        Tasks
+      </span>
+    </small>
+  </div>
+  <div
+    class="mb-3"
+    role="list"
+  >
+    <div
+      data-testid="taskItem"
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-baseline mw-100"
+      >
+        <div
+          class="mr-1"
+        >
+          <svg
+            baseProfile="tiny"
+            class="text-muted icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            version="1.2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72z"
+            />
+          </svg>
+        </div>
+        <div
+          class="text-truncate task"
+        >
+          task1
+        </div>
+      </div>
+      <div />
+    </div>
+    <div
+      data-testid="taskItem"
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-baseline mw-100"
+      >
+        <div
+          class="mr-1"
+        >
+          <svg
+            baseProfile="tiny"
+            class="text-muted icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            version="1.2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72z"
+            />
+          </svg>
+        </div>
+        <div
+          class="text-truncate task"
+        >
+          task1a
+        </div>
+      </div>
+      <div>
+        <div
+          class="d-flex flex-row align-items-center taskParent"
+        >
+          <small
+            class="text-muted text-uppercase mr-1"
+          >
+            Run After:
+          </small>
+          task1
+        </div>
+      </div>
+    </div>
+    <div
+      data-testid="taskItem"
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-baseline mw-100"
+      >
+        <div
+          class="mr-1"
+        >
+          <svg
+            baseProfile="tiny"
+            class="text-muted icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            version="1.2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72z"
+            />
+          </svg>
+        </div>
+        <div
+          class="text-truncate task"
+        >
+          task2
+        </div>
+      </div>
+      <div />
+    </div>
+    <div
+      data-testid="taskItem"
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-baseline mw-100"
+      >
+        <div
+          class="mr-1"
+        >
+          <svg
+            baseProfile="tiny"
+            class="text-muted icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            version="1.2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72z"
+            />
+          </svg>
+        </div>
+        <div
+          class="text-truncate task"
+        >
+          task1-2a
+        </div>
+      </div>
+      <div>
+        <div
+          class="taskParent"
+        >
+          <div
+            class="d-flex flex-row"
+          >
+            <small
+              class="text-muted text-uppercase"
+            >
+              Run After:
+            </small>
+          </div>
+          <div
+            class="d-flex flex-row align-items-center mw-100 mt-1"
+          >
+            <div
+              class="pr-1"
+            >
+              <svg
+                class="icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 8 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 7v2h8V7H0z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="text-truncate flex-grow-1"
+            >
+              task1
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row align-items-center mw-100 mt-1"
+          >
+            <div
+              class="pr-1"
+            >
+              <svg
+                class="icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 8 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 7v2h8V7H0z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="text-truncate flex-grow-1"
+            >
+              task2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

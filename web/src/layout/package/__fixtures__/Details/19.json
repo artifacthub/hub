@@ -1,0 +1,65 @@
+{
+  "packageId": "da67b0af-29fc-4a99-90ea-aa6fa00b38e6",
+  "name": "buildpacks",
+  "normalizedName": "buildpacks",
+  "isOperator": false,
+  "displayName": "Buildpacks",
+  "description": "The Buildpacks pipeline builds source from a Git repository into a container image and pushes it to a registry, using Cloud Native Buildpacks.",
+  "keywords": ["tekton", "pipeline", "image-build"],
+  "readme": "# Buildpacks\n\nThis pipeline builds source into a container image using [Cloud Native Buildpacks](https://buildpacks.io). To do that, it uses [builders](https://buildpacks.io/docs/concepts/components/builder/#what-is-a-builder) to run buildpacks against your application source.\n\n> _**What are Cloud Native Buildpacks?**_\n> \n> _Cloud Native Buildpacks are pluggable, modular tools that transform application source code into OCI images. They replace Dockerfiles in the app development lifecycle, and enable for swift rebasing of images and modular control over images (through the use of builders), among other benefits._\n\n## Dependencies\n\n- [`git-clone` task](https://github.com/tektoncd/catalog/tree/main/task/git-clone) 0.3 or newer\n- [`buildpacks` task](https://github.com/tektoncd/catalog/tree/main/task/buildpacks/) 0.3 or newer\n- [`buildpacks-phases` task](https://github.com/tektoncd/catalog/tree/main/task/buildpacks-phases/) 0.2 or newer\n\n## Compatibility\n\n- **Tekton** v0.17.0 and above\n- **[Platform API][platform-api]** 0.4\n\n[platform-api]: https://buildpacks.io/docs/reference/spec/platform-api/\n\n## Install\n\n#### Install dependencies (if missing)\n\n```shell\nkubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.3/git-clone.yaml\nkubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/buildpacks/0.3/buildpacks.yaml\nkubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/buildpacks-phases/0.2/buildpacks-phases.yaml\n```\n\n#### Install pipeline\n\n```shell\nkubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/pipeline/buildpacks/0.1/buildpacks.yaml\n```\n\n## Workspaces\n\n - **`source-ws`**: Location where source is stored. _(REQUIRED)_\n - **`cache-ws`**: Location where cache is stored if CACHE_IMAGE is not provided. _(optional)_\n\n## Parameters\n\n - **`BUILDER_IMAGE`**: The image on which builds will run (must include lifecycle and compatible buildpacks). _(REQUIRED)_\n - **`TRUST_BUILDER`**: Whether the builder image is trusted. When false, each build phase is executed in isolation and credentials are only shared with trusted images. _(optional, default: \"false\")_\n - **`APP_IMAGE`**: The name of where to store the app image. _(REQUIRED)_\n - **`SOURCE_URL`**: A git repo url where the source code resides. _(REQUIRED)_\n - **`SOURCE_REFERENCE`**: The branch, tag or SHA to checkout. _(optional, default: \"\")_\n - **`SOURCE_SUBPATH`**: A subpath within checked out source where the source to build is located. _(optional, default: \"\")_\n - **`ENV_VARS`**: Environment variables to set during _build-time_. _(optional, default: [])_\n - **`PROCESS_TYPE`**: The default process type to set on the image. _(optional, default: \"web\")_\n - **`RUN_IMAGE`**: The name of the run image to use (defaults to image specified in builder). _(optional, default: \"\")_\n - **`CACHE_IMAGE`**: The name of the persistent cache image. _(optional, default: \"\")_\n - **`USER_ID`**: The user ID of the builder image user. _(optional, default: \"1000\")_\n - **`GROUP_ID`**: The group ID of the builder image user. _(optional, default: \"1000\")_\n\n## Builders\n\n_The following are the suggested [builders][builders] from the [Cloud Native Buildpacks][buildpacks-io] project. This is only a subset of builders available._\n\n - **`gcr.io/buildpacks/builder:v1`**: Ubuntu 18 base image with buildpacks for .NET, Go, Java, Node.js, and Python\n - **`heroku/buildpacks:18`**: Base builder for Heroku-18 stack, based on ubuntu:18.04 base image\n - **`heroku/buildpacks:20`**: Base builder for Heroku-20 stack, based on ubuntu:20.04 base image\n - **`paketobuildpacks/builder:base`**: Ubuntu bionic base image with buildpacks for Java, .NET Core, NodeJS, Go, Ruby, NGINX and Procfile\n - **`paketobuildpacks/builder:full`**: Ubuntu bionic base image with buildpacks for Java, .NET Core, NodeJS, Go, PHP, Ruby, Apache HTTPD, NGINX and Procfile\n - **`paketobuildpacks/builder:tiny`**: Tiny base image (bionic build image, distroless-like run image) with buildpacks for Java Native Image and Go\n\n[builders]: (https://buildpacks.io/docs/concepts/components/builder/)\n[buildpacks-io]: (https://buildpacks.io)\n\n## Usage\n\nSee the following samples for usage:\n\n - **[`cache-image.yaml`](samples/cache-image.yaml)**: A PipelineRun configured to cache build artifacts in an image.\n - **[`cache-volume.yaml`](samples/cache-volume.yaml)**: A PipelineRun configured to cache build artifacts in a volume.\n - **[`env-vars.yaml`](samples/env-vars.yaml)**: A PipelineRun configured to provide _build-time_ environment variables.\n - **[`run-image.yaml`](samples/run-image.yaml)**: A PipelineRun configured to specify an explicit run image.\n\n## Support\n\nThe [Buildpacks Community](http://buildpacks.io/community/) is always here to help. \n\nWe can be found in our [discussion board][discussion-board] or [slack][slack] (`#tekton`).\n\n[discussion-board]: https://github.com/buildpacks/community/discussions\n[slack]: https://slack.buildpacks.io\n\n## Contributing\n\nWe ❤ contributions.\n\nThis pipeline is maintained at [buildpacks/tekton-integration](https://github.com/buildpacks/tekton-integration). Issues, pull requests and other contributions can be made there. \n\nTo learn more, read the [CONTRIBUTING][contributing] and [DEVELOPMENT][development] documents.\n\n[contributing]: https://github.com/buildpacks/.github/blob/main/CONTRIBUTING.md\n[development]: https://github.com/buildpacks/tekton-integration/blob/main/DEVELOPMENT.md\n",
+  "links": [
+    {
+      "url": "https://github.com/tektoncd/catalog/blob/main/pipeline/buildpacks/0.1/buildpacks.yaml",
+      "name": "source"
+    }
+  ],
+  "data": {
+    "tasks": [
+      {
+        "name": "git-clone"
+      },
+      {
+        "name": "buildpacks",
+        "runAfter": ["fetch-from-git"]
+      },
+      {
+        "name": "buildpacks-phases",
+        "runAfter": ["fetch-from-git"]
+      }
+    ],
+    "manifestRaw": "---\napiVersion: tekton.dev/v1beta1\nkind: Pipeline\nmetadata:\n  name: buildpacks\n  labels:\n    app.kubernetes.io/version: \"0.1\"\n  annotations:\n    tekton.dev/pipelines.minVersion: \"0.17.0\"\n    tekton.dev/tags: image-build\n    tekton.dev/displayName: \"Buildpacks\"\nspec:\n  description: >-\n    The Buildpacks pipeline builds source from a Git repository into a container image and pushes it to a registry, using Cloud Native Buildpacks.\n\n  workspaces:\n    - name: source-ws\n      description: Location where source is stored.\n    - name: cache-ws\n      description: Location where cache is stored if CACHE_IMAGE is not provided.\n      optional: true\n\n  params:\n    - name: BUILDER_IMAGE\n      description: The image on which builds will run (must include lifecycle and compatible buildpacks).\n    - name: TRUST_BUILDER\n      description: >-\n        Whether the builder image is trusted.\n        When false, each build phase is executed in isolation and credentials are only shared with trusted images.\n      default: \"false\"\n    - name: APP_IMAGE\n      description: The name of where to store the app image.\n    - name: SOURCE_URL\n      description: A git repo url where the source code resides.\n    - name: SOURCE_REFERENCE\n      description: The branch, tag or SHA to checkout.\n      default: \"\"\n    - name: SOURCE_SUBPATH\n      description: A subpath within checked out source where the source to build is located.\n      default: \"\"\n    - name: ENV_VARS\n      type: array\n      description: Environment variables to set during _build-time_.\n      default: []\n    - name: PROCESS_TYPE\n      description: The default process type to set on the image.\n      default: \"web\"\n    - name: RUN_IMAGE\n      description: The name of the run image to use (defaults to image specified in builder).\n      default: \"\"\n    - name: CACHE_IMAGE\n      description: The name of the persistent cache image.\n      default: \"\"\n    - name: USER_ID\n      description: The user ID of the builder image user.\n      default: \"1000\"\n    - name: GROUP_ID\n      description: The group ID of the builder image user.\n      default: \"1000\"\n\n  tasks:\n    - name: fetch-from-git\n      taskRef:\n        name: git-clone\n      params:\n        - name: url\n          value: $(params.SOURCE_URL)\n        - name: revision\n          value: $(params.SOURCE_REFERENCE)\n      workspaces:\n        - name: output\n          workspace: source-ws\n    - name: build-trusted\n      runAfter:\n        - fetch-from-git\n      taskRef:\n        name: buildpacks\n      when:\n        - input: \"$(params.TRUST_BUILDER)\"\n          operator: in\n          values: [\"true\", \"yes\", \"TRUE\", \"True\"]\n      workspaces:\n        - name: source\n          workspace: source-ws\n        - name: cache\n          workspace: cache-ws\n      params:\n        - name: BUILDER_IMAGE\n          value: \"$(params.BUILDER_IMAGE)\"\n        - name: APP_IMAGE\n          value: \"$(params.APP_IMAGE)\"\n        - name: SOURCE_SUBPATH\n          value: \"$(params.SOURCE_SUBPATH)\"\n        - name: PROCESS_TYPE\n          value: \"$(params.PROCESS_TYPE)\"\n        - name: ENV_VARS\n          value: [\"$(params.ENV_VARS)\"]\n        - name: RUN_IMAGE\n          value: \"$(params.RUN_IMAGE)\"\n        - name: CACHE_IMAGE\n          value: \"$(params.CACHE_IMAGE)\"\n        - name: USER_ID\n          value: \"$(params.USER_ID)\"\n        - name: GROUP_ID\n          value: \"$(params.GROUP_ID)\"\n    - name: build-untrusted\n      runAfter:\n        - fetch-from-git\n      taskRef:\n        name: buildpacks-phases\n      when:\n        - input: \"$(params.TRUST_BUILDER)\"\n          operator: notin\n          values: [\"true\", \"yes\", \"TRUE\", \"True\"]\n      workspaces:\n        - name: source\n          workspace: source-ws\n        - name: cache\n          workspace: cache-ws\n      params:\n        - name: BUILDER_IMAGE\n          value: \"$(params.BUILDER_IMAGE)\"\n        - name: APP_IMAGE\n          value: \"$(params.APP_IMAGE)\"\n        - name: SOURCE_SUBPATH\n          value: \"$(params.SOURCE_SUBPATH)\"\n        - name: ENV_VARS\n          value: [\"$(params.ENV_VARS)\"]\n        - name: PROCESS_TYPE\n          value: \"$(params.PROCESS_TYPE)\"\n        - name: RUN_IMAGE\n          value: \"$(params.RUN_IMAGE)\"\n        - name: CACHE_IMAGE\n          value: \"$(params.CACHE_IMAGE)\"\n        - name: USER_ID\n          value: \"$(params.USER_ID)\"\n        - name: GROUP_ID\n          value: \"$(params.GROUP_ID)\"\n",
+    "pipelinesMinVersion": "0.17.0"
+  },
+  "version": "0.1.0",
+  "availableVersions": [
+    {
+      "version": "0.1.0",
+      "containsSecurityUpdates": false,
+      "prerelease": false,
+      "ts": 1631803193
+    }
+  ],
+  "deprecated": false,
+  "containsSecurityUpdates": false,
+  "prerelease": false,
+  "signed": false,
+  "contentUrl": "https://github.com/tektoncd/catalog/raw/main/pipeline/buildpacks/0.1/buildpacks.yaml",
+  "hasValuesSchema": false,
+  "hasChangelog": false,
+  "ts": 1631803193,
+  "repository": {
+    "repositoryId": "cd877108-6521-4e50-a710-7cdab430ff67",
+    "name": "tk-pipelines",
+    "url": "https://github.com/tektoncd/catalog/pipeline",
+    "private": false,
+    "kind": 11,
+    "verifiedPublisher": false,
+    "official": false,
+    "scannerDisabled": false,
+    "userAlias": "user1"
+  },
+  "stats": {
+    "subscriptions": 0,
+    "webhooks": 0
+  }
+}

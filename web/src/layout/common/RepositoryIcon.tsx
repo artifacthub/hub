@@ -54,6 +54,10 @@ const ICONS = {
     default: '/static/media/keptn-integrations.svg',
     white: '/static/media/keptn-integrations-light.svg',
   },
+  [RepositoryKind.TektonPipeline]: {
+    default: '/static/media/tekton-pkg.svg',
+    white: '/static/media/tekton-pkg-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

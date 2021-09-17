@@ -111,7 +111,7 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 		source = olm.NewTrackerSource(i)
 	case hub.OPA, hub.TBAction, hub.KedaScaler, hub.CoreDNS, hub.Keptn:
 		source = generic.NewTrackerSource(i)
-	case hub.TektonTask:
+	case hub.TektonTask, hub.TektonPipeline:
 		source = tekton.NewTrackerSource(i)
 	}
 	return source

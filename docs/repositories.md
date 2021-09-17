@@ -15,6 +15,7 @@ The following repositories kinds are supported at the moment:
 - [OPA policies repositories](#opa-policies-repositories)
 - [Tinkerbell actions repositories](#tinkerbell-actions-repositories)
 - [Tekton tasks repositories](#tekton-tasks-repositories)
+- [Tekton pipelines repositories](#tekton-pipelines-repositories)
 
 This guide also contains additional information about the following repositories topics:
 
@@ -478,7 +479,7 @@ By default the `master` branch is used, but it's possible to specify a different
 
 For more information about the structure of the Tekton catalog repository, please see the [Tekton catalog](https://github.com/tektoncd/catalog#catalog-structure) official documentation.
 
-Most of the metadata Artifact Hub needs is extracted from the task's manifest file. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `task manifest` file. For more information, please see the [Artifact Hub Tekton annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/tekton_annotations.md).
+Most of the metadata Artifact Hub needs is extracted from the task's manifest file. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `manifest` file. For more information, please see the [Artifact Hub Tekton annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/tekton_annotations.md).
 
 There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at the root of the repository.
 
@@ -486,6 +487,10 @@ There is an extra metadata file that you can add to your repository named [artif
 
 - Tasks source Github URL: [https://github.com/tektoncd/catalog/tree/main/task](https://github.com/tektoncd/catalog/tree/main/task)
 - Repository URL used in Artifact Hub: `https://github.com/tektoncd/catalog/task` (please note how the *tree/main* part is not used)
+
+## Tekton pipelines repositories
+
+Tekton pipelines repositories are expected to follow the same rules as Tekton tasks repositories. Please see the [Tekton tasks repositories](#tekton-tasks-repositories) documentation for more details.
 
 ## Verified Publisher
 

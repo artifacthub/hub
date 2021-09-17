@@ -59,7 +59,7 @@ describe('RepositoryIcon', () => {
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/helm-chart-light.svg');
   });
 
-  it('renders Tekton icon', () => {
+  it('renders Tekton task icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.TektonTask} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
@@ -85,6 +85,13 @@ describe('RepositoryIcon', () => {
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/keptn-integrations-light.svg');
+  });
+
+  it('renders Tekton pipeline icon', () => {
+    render(<RepositoryIcon kind={RepositoryKind.TektonPipeline} type="white" />);
+    const icon = screen.getByAltText('Icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/tekton-pkg-light.svg');
   });
 
   it('renders Chart icon - default type', () => {

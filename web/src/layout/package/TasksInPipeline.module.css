@@ -1,0 +1,14 @@
+.task {
+  word-break: break-all;
+  font-size: 0.9rem;
+}
+
+.taskParent {
+  font-size: 0.75rem;
+  margin-left: 1.15rem;
+  margin-top: 0.25rem;
+}
+
+.icon {
+  margin-left: -2px;
+}

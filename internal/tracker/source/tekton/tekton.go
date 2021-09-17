@@ -27,12 +27,18 @@ const (
 	// contains the raw manifest.
 	RawManifestKey = "manifestRaw"
 
+	// TasksKey represents the key used in the package's data field that
+	// contains a list with the pipeline's tasks.
+	TasksKey = "tasks"
+
 	changesAnnotation         = "artifacthub.io/changes"
 	licenseAnnotation         = "artifacthub.io/license"
 	linksAnnotation           = "artifacthub.io/links"
 	maintainersAnnotation     = "artifacthub.io/maintainers"
 	providerAnnotation        = "artifacthub.io/provider"
 	recommendationsAnnotation = "artifacthub.io/recommendations"
+
+	versionLabelKey = "app.kubernetes.io/version"
 )
 
 var (
@@ -70,7 +76,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		// Get package manifest
-		manifest, manifestRaw, err := GetManifest(pkgPath)
+		manifest, manifestRaw, err := GetManifest(s.i.Repository.Kind, pkgPath)
 		if err != nil {
 			s.warn(fmt.Errorf("error getting package manifest (path: %s): %w", pkgPath, err))
 			return nil
@@ -79,15 +85,20 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			// Package manifest not found, not a package path
 			return nil
 		}
+		var name, version string
+		switch m := manifest.(type) {
+		case *v1beta1.Task:
+			name = m.Name
+			version = m.Labels[versionLabelKey]
+		case *v1beta1.Pipeline:
+			name = m.Name
+			version = m.Labels[versionLabelKey]
+		}
 
 		// Prepare and store package version
 		p, err := PreparePackage(s.i.Repository, manifest, manifestRaw, s.i.BasePath, pkgPath)
 		if err != nil {
-			s.warn(fmt.Errorf("error preparing package %s version %s: %w",
-				manifest.Name,
-				manifest.Labels["app.kubernetes.io/version"],
-				err,
-			))
+			s.warn(fmt.Errorf("error preparing package %s version %s: %w", name, version, err))
 			return nil
 		}
 		packagesAvailable[pkg.BuildKey(p)] = p
@@ -108,8 +119,9 @@ func (s *TrackerSource) warn(err error) {
 	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 }
 
-// GetManifest reads and parses the package manifest.
-func GetManifest(pkgPath string) (*v1beta1.Task, []byte, error) {
+// GetManifest reads and parses the package manifest, which can be a Tekton
+// task or a pipeline manifest.
+func GetManifest(kind hub.RepositoryKind, pkgPath string) (interface{}, []byte, error) {
 	// Locate manifest file
 	matches, err := filepath.Glob(filepath.Join(pkgPath, "*.yaml"))
 	if err != nil {
@@ -126,12 +138,25 @@ func GetManifest(pkgPath string) (*v1beta1.Task, []byte, error) {
 		if err != nil {
 			continue
 		}
-		manifest := &v1beta1.Task{}
+		var manifest interface{}
+		switch kind {
+		case hub.TektonTask:
+			manifest = &v1beta1.Task{}
+		case hub.TektonPipeline:
+			manifest = &v1beta1.Pipeline{}
+		}
 		if err := yaml.Unmarshal(manifestData, &manifest); err != nil {
 			continue
 		}
-		if manifest.Kind != "Task" && manifest.Kind != "ClusterTask" {
-			continue
+		switch m := manifest.(type) {
+		case *v1beta1.Task:
+			if m.Kind != "Task" && m.Kind != "ClusterTask" {
+				continue
+			}
+		case *v1beta1.Pipeline:
+			if m.Kind != "Pipeline" {
+				continue
+			}
 		}
 		if err := validateManifest(manifest); err != nil {
 			return nil, nil, fmt.Errorf("error validating manifest: %w", err)
@@ -142,20 +167,33 @@ func GetManifest(pkgPath string) (*v1beta1.Task, []byte, error) {
 	return nil, nil, nil
 }
 
-// validateManifest checks if the Tekton task manifest provided is valid.
-func validateManifest(manifest *v1beta1.Task) error {
+// validateManifest checks if the Tekton manifest provided is valid.
+func validateManifest(manifest interface{}) error {
 	var errs *multierror.Error
 
-	if manifest.Name == "" {
+	// Extract some information from package manifest
+	var name, version, description string
+	switch m := manifest.(type) {
+	case *v1beta1.Task:
+		name = m.Name
+		version = m.Labels[versionLabelKey]
+		description = m.Spec.Description
+	case *v1beta1.Pipeline:
+		name = m.Name
+		version = m.Labels[versionLabelKey]
+		description = m.Spec.Description
+	}
+
+	// Validate manifest data
+	if name == "" {
 		errs = multierror.Append(errs, errors.New("name not provided"))
 	}
-	versionLabel := manifest.Labels["app.kubernetes.io/version"]
-	if versionLabel == "" {
+	if version == "" {
 		errs = multierror.Append(errs, errors.New("version not provided"))
-	} else if _, err := semver.NewVersion(versionLabel); err != nil {
+	} else if _, err := semver.NewVersion(version); err != nil {
 		errs = multierror.Append(errs, fmt.Errorf("invalid version (semver expected): %w", err))
 	}
-	if manifest.Spec.Description == "" {
+	if description == "" {
 		errs = multierror.Append(errs, errors.New("description not provided"))
 	}
 
@@ -166,14 +204,39 @@ func validateManifest(manifest *v1beta1.Task) error {
 // files in the path provided.
 func PreparePackage(
 	r *hub.Repository,
-	manifest *v1beta1.Task,
+	manifest interface{},
 	manifestRaw []byte,
 	basePath string,
 	pkgPath string,
 ) (*hub.Package, error) {
+	// Extract some information from package manifest
+	var name, version, description, tektonKind string
+	var annotations map[string]string
+	var tasks []map[string]interface{}
+	switch m := manifest.(type) {
+	case *v1beta1.Task:
+		tektonKind = "task"
+		name = m.Name
+		version = m.Labels[versionLabelKey]
+		description = m.Spec.Description
+		annotations = m.Annotations
+	case *v1beta1.Pipeline:
+		tektonKind = "pipeline"
+		name = m.Name
+		version = m.Labels[versionLabelKey]
+		description = m.Spec.Description
+		annotations = m.Annotations
+		for _, task := range m.Spec.Tasks {
+			tasks = append(tasks, map[string]interface{}{
+				"name":      task.TaskRef.Name,
+				"run_after": task.RunAfter,
+			})
+		}
+	}
+
 	// Parse version (previously validated)
-	sv, _ := semver.NewVersion(manifest.Labels["app.kubernetes.io/version"])
-	version := sv.String()
+	sv, _ := semver.NewVersion(version)
+	version = sv.String()
 
 	// Prepare content and source urls
 	var repoBaseURL, pkgsPath, provider string
@@ -197,26 +260,26 @@ func PreparePackage(
 	branch := repo.GetBranch(r)
 	pkgVersionPath := strings.TrimPrefix(pkgPath, basePath)
 	contentURL := fmt.Sprintf("%s/%s/%s/%s%s/%s.yaml",
-		repoBaseURL, rawPath, branch, pkgsPath, pkgVersionPath, manifest.Name)
+		repoBaseURL, rawPath, branch, pkgsPath, pkgVersionPath, name)
 	sourceURL := fmt.Sprintf("%s/%s/%s/%s%s/%s.yaml",
-		repoBaseURL, blobPath, branch, pkgsPath, pkgVersionPath, manifest.Name)
+		repoBaseURL, blobPath, branch, pkgsPath, pkgVersionPath, name)
 
 	// Prepare keywords
 	keywords := []string{
 		"tekton",
-		"task",
+		tektonKind,
 	}
-	tags := strings.Split(manifest.Annotations["tekton.dev/tags"], ",")
+	tags := strings.Split(annotations["tekton.dev/tags"], ",")
 	for _, tag := range tags {
 		keywords = append(keywords, strings.TrimSpace(tag))
 	}
 
 	// Prepare package from manifest
 	p := &hub.Package{
-		Name:        manifest.Name,
+		Name:        name,
 		Version:     version,
-		DisplayName: manifest.Annotations["tekton.dev/displayName"],
-		Description: manifest.Spec.Description,
+		DisplayName: annotations["tekton.dev/displayName"],
+		Description: description,
 		Keywords:    keywords,
 		ContentURL:  contentURL,
 		Repository:  r,
@@ -227,8 +290,9 @@ func PreparePackage(
 			},
 		},
 		Data: map[string]interface{}{
+			PipelinesMinVersionKey: annotations["tekton.dev/pipelines.minVersion"],
 			RawManifestKey:         string(manifestRaw),
-			PipelinesMinVersionKey: manifest.Annotations["tekton.dev/pipelines.minVersion"],
+			TasksKey:               tasks,
 		},
 	}
 
@@ -239,8 +303,8 @@ func PreparePackage(
 	}
 
 	// Enrich package with information from annotations
-	if err := enrichPackageFromAnnotations(p, manifest.Annotations); err != nil {
-		return nil, fmt.Errorf("error enriching package %s version %s: %w", manifest.Name, version, err)
+	if err := enrichPackageFromAnnotations(p, annotations); err != nil {
+		return nil, fmt.Errorf("error enriching package %s version %s: %w", name, version, err)
 	}
 
 	return p, nil

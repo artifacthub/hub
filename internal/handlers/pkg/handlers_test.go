@@ -1349,6 +1349,17 @@ func TestBuildPackageURL(t *testing.T) {
 			"2.0.0",
 			baseURL + "/packages/keptn/repo1/pkg1/2.0.0",
 		},
+		{
+			&hub.Package{
+				NormalizedName: "pkg1",
+				Repository: &hub.Repository{
+					Kind: hub.TektonPipeline,
+					Name: "repo1",
+				},
+			},
+			"2.0.0",
+			baseURL + "/packages/tekton-pipeline/repo1/pkg1/2.0.0",
+		},
 	}
 	for _, tc := range testCases {
 		tc := tc

@@ -21,7 +21,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [Kubectl plugins (Krew)](https://krew.sigs.k8s.io/)
 - [OLM operators](https://github.com/operator-framework)
 - [Open Policy Agent (OPA) policies](https://www.openpolicyagent.org/)
-- [Tekton tasks](https://tekton.dev/)
+- [Tekton tasks and pipelines](https://tekton.dev/)
 - [Tinkerbell actions](https://tinkerbell.org/)
 
 You can use Artifact Hub to:

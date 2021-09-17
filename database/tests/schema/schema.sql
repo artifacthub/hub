@@ -492,7 +492,8 @@ select results_eq(
         (7, 'Tekton tasks'),
         (8, 'KEDA scalers'),
         (9, 'CoreDNS plugins'),
-        (10, 'Keptn integrations')
+        (10, 'Keptn integrations'),
+        (11, 'Tekton pipelines')
     $$,
     'Repository kinds should exist'
 );

@@ -66,17 +66,18 @@ var (
 
 	// validRepositoryKinds contains the repository kinds supported.
 	validRepositoryKinds = []hub.RepositoryKind{
+		hub.CoreDNS,
 		hub.Falco,
 		hub.Helm,
 		hub.HelmPlugin,
+		hub.KedaScaler,
+		hub.Keptn,
 		hub.Krew,
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonTask,
-		hub.KedaScaler,
-		hub.CoreDNS,
-		hub.Keptn,
+		hub.TektonPipeline,
 	}
 )
 
@@ -231,16 +232,18 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		u, _ := url.Parse(r.URL)
 		u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
 		mdFile = u.String()
-	case hub.Falco,
+	case
+		hub.CoreDNS,
+		hub.Falco,
 		hub.HelmPlugin,
+		hub.KedaScaler,
+		hub.Keptn,
 		hub.Krew,
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonTask,
-		hub.KedaScaler,
-		hub.CoreDNS,
-		hub.Keptn:
+		hub.TektonPipeline:
 		tmpDir, packagesPath, err := m.rc.CloneRepository(ctx, r)
 		if err != nil {
 			return err
@@ -674,16 +677,18 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 				return errors.New("the url provided does not point to a valid Helm repository")
 			}
 		}
-	case hub.Falco,
+	case
+		hub.CoreDNS,
+		hub.Falco,
 		hub.HelmPlugin,
+		hub.KedaScaler,
+		hub.Keptn,
 		hub.Krew,
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonTask,
-		hub.KedaScaler,
-		hub.CoreDNS,
-		hub.Keptn:
+		hub.TektonPipeline:
 		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
 			return errors.New("invalid url format")
 		}
