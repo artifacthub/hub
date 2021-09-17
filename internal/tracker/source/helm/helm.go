@@ -53,7 +53,7 @@ const (
 	signKeyAnnotation              = "artifacthub.io/signKey"
 
 	helmChartConfigMediaType       = "application/vnd.cncf.helm.config.v1+json"
-	helmChartContentLayerMediaType = "application/tar+gzip"
+	helmChartContentLayerMediaType = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
 
 	apiVersionKey   = "apiVersion"
 	dependenciesKey = "dependencies"

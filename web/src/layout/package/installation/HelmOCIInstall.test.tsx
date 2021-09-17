@@ -35,11 +35,17 @@ describe('HelmOCIInstall', () => {
 
       expect(screen.getByText('Enable OCI support')).toBeInTheDocument();
       expect(screen.getByText('HELM_EXPERIMENTAL_OCI=1')).toBeInTheDocument();
-      expect(screen.getByText('Pull chart from remote')).toBeInTheDocument();
-      expect(screen.getAllByText(/ghcr.io\/artifacthub\/artifact-hub:1.0.0/g)).toHaveLength(2);
-      expect(screen.getByText('Export chart to directory')).toBeInTheDocument();
       expect(screen.getByText('Install chart')).toBeInTheDocument();
-      expect(screen.getByText('helm install my-packageName ./packageName')).toBeInTheDocument();
+      expect(screen.getByText('my-packageName')).toBeInTheDocument();
+      expect(screen.getByText('helm install')).toBeInTheDocument();
+      expect(
+        screen.getByText('helm install my-packageName oci://ghcr.io/artifacthub/artifact-hub --version 1.0.0')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          /corresponds to the release name, feel free to change it to suit your needs. You can also add additional flags to the/g
+        )
+      ).toBeInTheDocument();
     });
 
     it('renders private repo', () => {
