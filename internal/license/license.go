@@ -1,8 +1,8 @@
 package license
 
 import (
-	"gopkg.in/src-d/go-license-detector.v3/licensedb"
-	"gopkg.in/src-d/go-license-detector.v3/licensedb/filer"
+	"github.com/go-enry/go-license-detector/v4/licensedb"
+	"github.com/go-enry/go-license-detector/v4/licensedb/filer"
 )
 
 // Detect detects the license used in the file provided.

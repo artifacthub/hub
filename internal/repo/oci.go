@@ -24,16 +24,16 @@ func (tg *OCITagsGetter) Tags(ctx context.Context, r *hub.Repository) ([]string,
 	if err != nil {
 		return nil, err
 	}
-	var options []remote.Option
-	if r.AuthUser != "" || r.AuthPass != "" {
-		options = []remote.Option{
-			remote.WithAuth(&authn.Basic{
-				Username: r.AuthUser,
-				Password: r.AuthPass,
-			}),
-		}
+	options := []remote.Option{
+		remote.WithContext(ctx),
 	}
-	tags, err := remote.ListWithContext(ctx, ociRepo, options...)
+	if r.AuthUser != "" || r.AuthPass != "" {
+		options = append(options, remote.WithAuth(&authn.Basic{
+			Username: r.AuthUser,
+			Password: r.AuthPass,
+		}))
+	}
+	tags, err := remote.List(ociRepo, options...)
 	if err != nil {
 		return nil, err
 	}
