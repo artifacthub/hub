@@ -21,7 +21,6 @@ import (
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/artifacthub/hub/internal/util"
-	"github.com/containerd/containerd/remotes/docker"
 	"github.com/hashicorp/go-multierror"
 	"golang.org/x/time/rate"
 	"gopkg.in/yaml.v3"
@@ -30,9 +29,6 @@ import (
 	"helm.sh/helm/v3/pkg/chart/loader"
 	"helm.sh/helm/v3/pkg/chartutil"
 	helmrepo "helm.sh/helm/v3/pkg/repo"
-	"oras.land/oras-go/pkg/content"
-	ctxo "oras.land/oras-go/pkg/context"
-	"oras.land/oras-go/pkg/oras"
 )
 
 const (
@@ -52,7 +48,6 @@ const (
 	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
 	signKeyAnnotation              = "artifacthub.io/signKey"
 
-	helmChartConfigMediaType       = "application/vnd.cncf.helm.config.v1+json"
 	helmChartContentLayerMediaType = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
 
 	apiVersionKey   = "apiVersion"
@@ -376,42 +371,12 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 		}
 		r = resp.Body
 	case "oci":
-		// Pull reference layers from OCI registry
 		ref := strings.TrimPrefix(u.String(), hub.RepositoryOCIPrefix)
-		resolverOptions := docker.ResolverOptions{}
-		if o.Username != "" || o.Password != "" {
-			resolverOptions.Authorizer = docker.NewDockerAuthorizer(
-				docker.WithAuthCreds(func(string) (string, string, error) {
-					return o.Username, o.Password, nil
-				}),
-			)
-		}
-		store := content.NewMemoryStore()
-		_, layers, err := oras.Pull(
-			ctxo.WithLoggerDiscarded(ctx),
-			docker.NewResolver(resolverOptions),
-			ref,
-			store,
-			oras.WithPullEmptyNameAllowed(),
-			oras.WithAllowedMediaTypes([]string{helmChartConfigMediaType, helmChartContentLayerMediaType}),
-		)
+		_, data, err := util.OCIPullLayer(ctx, ref, helmChartContentLayerMediaType, o.Username, o.Password)
 		if err != nil {
 			return nil, err
 		}
-
-		// Create reader for Helm chart content layer, if available
-		for _, layer := range layers {
-			if layer.MediaType == helmChartContentLayerMediaType {
-				_, b, ok := store.Get(layer)
-				if ok {
-					r = bytes.NewReader(b)
-					break
-				}
-			}
-		}
-		if r == nil {
-			return nil, errors.New("content layer not found")
-		}
+		r = bytes.NewReader(data)
 	default:
 		return nil, repo.ErrSchemeNotSupported
 	}

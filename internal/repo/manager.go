@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
@@ -44,6 +45,14 @@ const (
 	transferRepoDBQ           = `select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)`
 	updateRepoDBQ             = `select update_repository($1::uuid, $2::jsonb)`
 	updateRepoDigestDBQ       = `update repository set digest = $2 where repository_id = $1`
+)
+
+const (
+	// MetadataLayerMediaType represents the media type used for the layer that
+	// contains the repository metadata in an OCI image.
+	MetadataLayerMediaType = "application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml"
+
+	artifacthubTag = "artifacthub.io"
 )
 
 var (
@@ -223,15 +232,17 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	if err != nil {
 		return err
 	}
-	if strings.HasPrefix(r.URL, hub.RepositoryOCIPrefix) {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "ownership claim not available for oci repos")
-	}
 	var mdFile string
 	switch r.Kind {
 	case hub.Helm:
 		u, _ := url.Parse(r.URL)
-		u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-		mdFile = u.String()
+		switch u.Scheme {
+		case "http", "https":
+			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
+			mdFile = u.String()
+		case "oci":
+			mdFile = r.URL
+		}
 	case
 		hub.CoreDNS,
 		hub.Falco,
@@ -342,22 +353,32 @@ func (m *Manager) GetByName(
 }
 
 // GetMetadata reads and parses the repository metadata file provided, which
-// can be a remote URL or a local file path. The .yml and .yaml extensions will
-// be implicitly appended to the given path.
+// can be a remote URL (http or oci) or a local file path.
 func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
 	var data []byte
 	var err error
 
-	for _, extension := range []string{".yml", ".yaml"} {
-		data, err = m.readMetadataFile(mdFile + extension)
-		if err == nil {
-			break
+	// Get metadata
+	if strings.HasPrefix(mdFile, hub.RepositoryOCIPrefix) {
+		// OCI image
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+		ref := fmt.Sprintf("%s:%s", strings.TrimPrefix(mdFile, hub.RepositoryOCIPrefix), artifacthubTag)
+		_, data, err = util.OCIPullLayer(ctx, ref, MetadataLayerMediaType, "", "")
+	} else {
+		// Remote HTTP url / local file path
+		for _, extension := range []string{".yml", ".yaml"} {
+			data, err = m.readMetadataFile(mdFile + extension)
+			if err == nil {
+				break
+			}
 		}
 	}
 	if err != nil {
 		return nil, err
 	}
 
+	// Parse and validate metadata
 	var md *hub.RepositoryMetadata
 	if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
 		return nil, fmt.Errorf("error unmarshaling repository metadata file: %w", err)

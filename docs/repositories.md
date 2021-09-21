@@ -152,16 +152,23 @@ To add a repository stored in a OCI registry, the url used **must** follow the f
 
 - `oci://registry/namespace/chart-name`
 
-Each of the chart versions are expected to match an OCI reference tag, which are expected to be valid [semver](https://semver.org) versions. OCI specific installation instructions will be provided in the UI when appropriate (only for Helm >=3.7).
+Each of the chart versions are expected to match an OCI reference tag, which are expected to be valid [semver](https://semver.org) versions. OCI specific installation instructions will be provided in the Artifact Hub UI when appropriate (only for Helm >=3.7). For additional information about Helm OCI support, please see the [HIP-0006](https://github.com/helm/community/blob/master/hips/hip-0006.md).
+
+There is an extra Artifact Hub specific metadata file named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). Once your repository metadata file is ready, you can push it to the OCI registry using [oras](https://oras.land/cli/):
+
+```bash
+oras push \
+  oci://registry/namespace/chart-name:artifacthub.io \
+  --manifest-config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
+  artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
+```
+
+The repository metadata file is pushed to the registry using a special tag named `artifacthub.io`. Artifact Hub will pull that image looking for the `application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml` layer when the repository metadata is needed.
 
 Please note that there are some features that are not yet available for Helm repositories stored in OCI registries:
 
-- [Verified publisher](#verified-publisher)
-- [Ownership claim](#ownership-claim)
 - Provenance files processing (signed label)
 - Force an existing version to be reindexed by changing its digest
-
-For additional information about Helm OCI support, please see the [HIP-0006](https://github.com/helm/community/blob/master/hips/hip-0006.md).
 
 ## Helm plugins repositories
 

@@ -11,7 +11,6 @@ import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, Repository, SearchQuery } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
-import { OCI_PREFIX } from '../../utils/data';
 import RepositoryIcon from './RepositoryIcon';
 import styles from './SearchRepositories.module.css';
 
@@ -94,10 +93,7 @@ const SearchRepositories = (props: Props) => {
 
   const checkIfRepoIsDisabled = (item: Repository): boolean => {
     let isDisabled = false;
-    // Claim ownership feature is not supported for OCI repos
-    if (props.label === 'claim-repo-ownership' && item.url.startsWith(OCI_PREFIX)) {
-      isDisabled = true;
-    } else if (!isUndefined(props.disabledRepositories)) {
+    if (!isUndefined(props.disabledRepositories)) {
       isDisabled =
         (!isUndefined(props.disabledRepositories.ids) && props.disabledRepositories.ids.includes(item.repositoryId!)) ||
         (!isUndefined(props.disabledRepositories.users) &&

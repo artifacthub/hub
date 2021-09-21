@@ -405,7 +405,6 @@ func TestClaimOwnership(t *testing.T) {
 	orgP := &org
 	helmRepoJSON := []byte(`{"kind": 0, "url": "http://repo.url"}`)
 	opaRepoJSON := []byte(`{"kind": 2, "url": "http://repo.url"}`)
-	ociRepoJSON := []byte(`{"kind": 0, "url": "oci://registry.io/repo/pkg"}`)
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
 	mdYmlReq, _ := http.NewRequest("GET", "http://repo.url/artifacthub-repo.yml", nil)
 	mdYamlReq, _ := http.NewRequest("GET", "http://repo.url/artifacthub-repo.yaml", nil)
@@ -468,17 +467,6 @@ func TestClaimOwnership(t *testing.T) {
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
 		assert.Error(t, err)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("ownership claim failed: oci repo", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(ociRepoJSON, nil)
-		m := NewManager(cfg, db, nil, nil)
-
-		err := m.ClaimOwnership(ctx, "repo1", org)
-		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 		db.AssertExpectations(t)
 	})
 

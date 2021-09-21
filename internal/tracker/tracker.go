@@ -177,15 +177,16 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 
 // getRepositoryMetadata returns the repository's metadata when available.
 func (t *Tracker) getRepositoryMetadata() *hub.RepositoryMetadata {
-	var md *hub.RepositoryMetadata
-	var err error
-
+	var mdFile string
 	u, _ := url.Parse(t.r.URL)
 	switch t.r.Kind {
 	case hub.Helm:
-		if repo.SchemeIsHTTP(u) {
+		switch u.Scheme {
+		case "http", "https":
 			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-			md, err = t.svc.Rm.GetMetadata(u.String())
+			mdFile = u.String()
+		case "oci":
+			mdFile = t.r.URL
 		}
 	case
 		hub.CoreDNS,
@@ -199,12 +200,17 @@ func (t *Tracker) getRepositoryMetadata() *hub.RepositoryMetadata {
 		hub.TBAction,
 		hub.TektonTask,
 		hub.TektonPipeline:
-		md, err = t.svc.Rm.GetMetadata(filepath.Join(t.basePath, hub.RepositoryMetadataFile))
-	}
-	if err != nil && !errors.Is(err, repo.ErrMetadataNotFound) {
-		t.warn(fmt.Errorf("error getting repository metadata: %w", err))
+		mdFile = filepath.Join(t.basePath, hub.RepositoryMetadataFile)
 	}
 
+	var md *hub.RepositoryMetadata
+	if mdFile != "" {
+		var err error
+		md, err = t.svc.Rm.GetMetadata(mdFile)
+		if err != nil && !errors.Is(err, repo.ErrMetadataNotFound) {
+			t.warn(fmt.Errorf("error getting repository metadata: %w", err))
+		}
+	}
 	return md
 }
 
