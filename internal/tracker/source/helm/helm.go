@@ -22,9 +22,6 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/containerd/containerd/remotes/docker"
-	"github.com/deislabs/oras/pkg/content"
-	ctxo "github.com/deislabs/oras/pkg/context"
-	"github.com/deislabs/oras/pkg/oras"
 	"github.com/hashicorp/go-multierror"
 	"golang.org/x/time/rate"
 	"gopkg.in/yaml.v3"
@@ -33,6 +30,9 @@ import (
 	"helm.sh/helm/v3/pkg/chart/loader"
 	"helm.sh/helm/v3/pkg/chartutil"
 	helmrepo "helm.sh/helm/v3/pkg/repo"
+	"oras.land/oras-go/pkg/content"
+	ctxo "oras.land/oras-go/pkg/context"
+	"oras.land/oras-go/pkg/oras"
 )
 
 const (
