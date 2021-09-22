@@ -54,9 +54,12 @@ describe('WidgetModal', () => {
           'The widget will try to use the width available on the parent container (between 350px and 650px).'
         )
       ).toBeInTheDocument();
+      expect(screen.getByText('Stars')).toBeInTheDocument();
+      expect(screen.getByRole('checkbox', { name: 'Stars' })).toBeChecked();
+      expect(screen.getByText('Display number of stars given to the package.')).toBeInTheDocument();
       expect(screen.getByText('Code')).toBeInTheDocument();
       expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
 
       waitFor(() => {
@@ -81,21 +84,21 @@ describe('WidgetModal', () => {
 
       expect(screen.getByText('Header')).toBeInTheDocument();
       expect(screen.getByRole('checkbox', { name: 'Header' })).toBeChecked();
-      expect(screen.getByText('Displays Artifact Hub header at the top of the widget.')).toBeInTheDocument();
+      expect(screen.getByText('Display Artifact Hub header at the top of the widget.')).toBeInTheDocument();
     });
 
     it('updates block content to change different options', () => {
       render(<WidgetModal {...defaultProps} />);
 
       expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
 
       userEvent.click(screen.getByText('dark'));
       userEvent.click(screen.getByText('Responsive'));
 
       expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="dark" data-header="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="dark" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
     });
   });

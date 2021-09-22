@@ -42,12 +42,15 @@ describe('WidgetsGroupModal', () => {
       expect(screen.getByRole('radio', { name: /fixed/ })).not.toBeChecked();
       expect(screen.getByRole('checkbox', { name: /Header/ })).not.toBeChecked();
       expect(screen.getByRole('checkbox', { name: /Loading spinner/ })).toBeChecked();
-      expect(screen.getByText('Displays loading spinner while waiting for search results.')).toBeInTheDocument();
+      expect(screen.getByText('Display loading spinner while waiting for search results.')).toBeInTheDocument();
       expect(screen.getByText('Color')).toBeInTheDocument();
       expect(screen.getByText('Color used for widgets border, header and loading spinner.')).toBeInTheDocument();
+      expect(screen.getByRole('checkbox', { name: 'Stars' })).toBeChecked();
+      expect(screen.getByText('Stars')).toBeInTheDocument();
+      expect(screen.getByText('Display number of stars given to the package.')).toBeInTheDocument();
       expect(screen.getByText('Code')).toBeInTheDocument();
       expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
     });
 
@@ -61,7 +64,7 @@ describe('WidgetsGroupModal', () => {
 
       expect(screen.getByText('Header')).toBeInTheDocument();
       expect(screen.getByRole('checkbox', { name: /Header/ })).not.toBeChecked();
-      expect(screen.getByText('Displays Artifact Hub header at the top of the widget.')).toBeInTheDocument();
+      expect(screen.getByText('Display Artifact Hub header at the top of the widget.')).toBeInTheDocument();
     });
 
     it('displays fixed width input', () => {
@@ -81,7 +84,7 @@ describe('WidgetsGroupModal', () => {
       render(<WidgetsGroupModal {...defaultProps} />);
 
       expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
 
       userEvent.click(screen.getByText('fixed'));
@@ -91,7 +94,7 @@ describe('WidgetsGroupModal', () => {
 
       waitFor(() => {
         expect(screen.getByTestId('block-content')).toHaveTextContent(
-          '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-color="#417598" data-responsive="false" data-width="1800" data-loading="false"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+          '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="false" data-width="1800" data-loading="false"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
         );
       });
     });

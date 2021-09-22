@@ -211,7 +211,33 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 <small
                   class="form-text text-muted mt-2"
                 >
-                  Displays Artifact Hub header at the top of the widget.
+                  Display Artifact Hub header at the top of the widget.
+                </small>
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="custom-control custom-switch pl-0"
+                >
+                  <input
+                    checked=""
+                    class="custom-control-input"
+                    id="stars"
+                    type="checkbox"
+                    value="true"
+                  />
+                  <label
+                    class="custom-control-label font-weight-bold label customControlRightLabel"
+                    for="stars"
+                  >
+                    Stars
+                  </label>
+                </div>
+                <small
+                  class="form-text text-muted mt-2"
+                >
+                  Display number of stars given to the package.
                 </small>
               </div>
               <div
@@ -359,7 +385,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 <small
                   class="form-text text-muted mt-2"
                 >
-                  Displays loading spinner while waiting for search results.
+                  Display loading spinner while waiting for search results.
                 </small>
               </div>
               <div
@@ -414,7 +440,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                       style="white-space: pre;"
                     >
                       <span>
-                        &lt;div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-color="#417598" data-responsive="true"  data-loading="true"&gt;&lt;/div&gt;&lt;script async src="http://localhost/artifacthub-widget.js"&gt;&lt;/script&gt;
+                        &lt;div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true"  data-loading="true"&gt;&lt;/div&gt;&lt;script async src="http://localhost/artifacthub-widget.js"&gt;&lt;/script&gt;
                       </span>
                     </code>
                   </pre>
