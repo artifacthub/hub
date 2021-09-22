@@ -3,6 +3,7 @@ package util
 import (
 	"context"
 	"errors"
+	"strings"
 
 	"github.com/containerd/containerd/remotes/docker"
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
@@ -12,13 +13,17 @@ import (
 )
 
 var (
+	// ErrArtifactNotFound indicates that the requested artifact was not found
+	// in the registry.
+	ErrArtifactNotFound = errors.New("artifact not found")
+
 	// ErrLayerNotFound indicates that the requested layer was not found in the
-	// OCI image provided.
+	// OCI artifact provided.
 	ErrLayerNotFound = errors.New("layer not found")
 )
 
 // OCIPullLayer pulls the first layer of the media type provided from the OCI
-// image at the given reference.
+// artifact at the given reference.
 func OCIPullLayer(
 	ctx context.Context,
 	ref,
@@ -45,6 +50,9 @@ func OCIPullLayer(
 		oras.WithAllowedMediaTypes([]string{mediaType}),
 	)
 	if err != nil {
+		if strings.HasSuffix(err.Error(), "not found") { // TODO: https://github.com/oras-project/oras-go/blob/a3ccc872651aac656c04c9a231423161f98e2f64/pkg/content/multireader.go#L55
+			err = ErrArtifactNotFound
+		}
 		return ocispec.Descriptor{}, nil, err
 	}
 
