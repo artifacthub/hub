@@ -167,7 +167,6 @@ The repository metadata file is pushed to the registry using a special tag named
 
 Please note that there are some features that are not yet available for Helm repositories stored in OCI registries:
 
-- Provenance files processing (signed label)
 - Force an existing version to be reindexed by changing its digest
 
 ## Helm plugins repositories

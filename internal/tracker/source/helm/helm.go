@@ -48,7 +48,8 @@ const (
 	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
 	signKeyAnnotation              = "artifacthub.io/signKey"
 
-	helmChartContentLayerMediaType = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+	helmChartContentLayerMediaType    = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+	helmChartProvenanceLayerMediaType = "application/vnd.cncf.helm.chart.provenance.v1.prov"
 
 	apiVersionKey   = "apiVersion"
 	dependenciesKey = "dependencies"
@@ -267,15 +268,11 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		}
 
 		// Check if the chart version is signed (has provenance file)
-		if repo.SchemeIsHTTP(chartURL) {
-			hasProvenanceFile, err := s.chartHasProvenanceFile(chartURL.String())
-			if err != nil {
-				s.warn(md, fmt.Errorf("error checking provenance file: %w", err))
-			}
-			if hasProvenanceFile {
-				p.Signed = hasProvenanceFile
-			}
+		hasProvenanceFile, err := s.chartHasProvenanceFile(chartURL)
+		if err != nil {
+			s.warn(md, fmt.Errorf("error checking provenance file: %w", err))
 		}
+		p.Signed = hasProvenanceFile
 
 		// Enrich package with data available in chart archive
 		EnrichPackageFromChart(p, chrt)
@@ -289,28 +286,49 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 	return p, nil
 }
 
-// chartHasProvenanceFile checks if a chart version has a provenance file
-// checking if a .prov file exists for the chart version url provided.
-func (s *TrackerSource) chartHasProvenanceFile(u string) (bool, error) {
-	req, _ := http.NewRequest("GET", u+".prov", nil)
-	if s.i.Repository.AuthUser != "" || s.i.Repository.AuthPass != "" {
-		req.SetBasicAuth(s.i.Repository.AuthUser, s.i.Repository.AuthPass)
-	}
-	resp, err := s.i.Svc.Hc.Do(req)
-	if err != nil {
-		return false, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
+// chartHasProvenanceFile checks if a chart version has a provenance file.
+func (s *TrackerSource) chartHasProvenanceFile(chartURL *url.URL) (bool, error) {
+	var data []byte
+
+	switch chartURL.Scheme {
+	case "http", "https":
+		req, _ := http.NewRequest("GET", chartURL.String()+".prov", nil)
+		req = req.WithContext(s.i.Svc.Ctx)
+		if s.i.Repository.AuthUser != "" || s.i.Repository.AuthPass != "" {
+			req.SetBasicAuth(s.i.Repository.AuthUser, s.i.Repository.AuthPass)
+		}
+		resp, err := s.i.Svc.Hc.Do(req)
+		if err != nil {
+			return false, err
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			return false, nil
+		}
+		data, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return false, fmt.Errorf("error reading provenance file: %w", err)
+		}
+	case "oci":
+		var err error
+		_, data, err = util.OCIPullLayer(
+			s.i.Svc.Ctx,
+			strings.TrimPrefix(chartURL.String(), hub.RepositoryOCIPrefix),
+			helmChartProvenanceLayerMediaType,
+			s.i.Repository.AuthUser,
+			s.i.Repository.AuthPass,
+		)
+		if err != nil {
+			return false, fmt.Errorf("error pulling provenance layer: %w", err)
+		}
+	default:
 		return false, nil
 	}
-	data, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return false, fmt.Errorf("error reading provenance file: %w", err)
-	}
+
 	if !bytes.Contains(data, []byte("PGP SIGNATURE")) {
 		return false, errors.New("invalid provenance file")
 	}
+
 	return true, nil
 }
 
