@@ -1,17 +1,13 @@
 import './App.css';
 import '../themes/default.scss';
 
-import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Router, Switch } from 'react-router-dom';
 
-import { AppCtxProvider, updateActiveStyleSheet } from '../context/AppCtx';
+import { AppCtxProvider } from '../context/AppCtx';
 import buildSearchParams from '../utils/buildSearchParams';
-import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import history from '../utils/history';
-import lsPreferences from '../utils/localStoragePreferences';
-import themeBuilder from '../utils/themeBuilder';
 import AlertController from './common/AlertController';
 import UserNotificationsController from './common/userNotifications';
 import ControlPanelView from './controlPanel';
@@ -38,21 +34,7 @@ const getQueryParam = (query: string, param: string): string | undefined => {
 
 export default function App() {
   const [isSearching, setIsSearching] = useState(false);
-  const [activeInitialTheme, setActiveInitialTheme] = useState<string | null>(null);
   const [scrollPosition, setScrollPosition] = useState<undefined | number>(undefined);
-
-  useEffect(() => {
-    themeBuilder.init();
-    const activeProfile = lsPreferences.getActiveProfile();
-    const theme =
-      activeProfile.theme.configured === 'automatic' ? detectActiveThemeMode() : activeProfile.theme.configured;
-    if (!isUndefined(theme)) {
-      updateActiveStyleSheet(theme);
-      setActiveInitialTheme(theme);
-    }
-  }, []);
-
-  if (isNull(activeInitialTheme)) return null;
 
   return (
     <AppCtxProvider>

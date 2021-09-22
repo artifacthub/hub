@@ -1,5 +1,6 @@
+import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useReducer, useState } from 'react';
 
 import API from '../api';
 import useSystemThemeMode from '../hooks/useSystemThemeMode';
@@ -8,7 +9,9 @@ import cleanLoginUrlParams from '../utils/cleanLoginUrlParams';
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import history from '../utils/history';
 import isControlPanelSectionAvailable from '../utils/isControlPanelSectionAvailable';
+import lsPreferences from '../utils/localStoragePreferences';
 import lsStorage from '../utils/localStoragePreferences';
+import themeBuilder from '../utils/themeBuilder';
 
 interface AppState {
   user: Profile | null | undefined;
@@ -278,13 +281,27 @@ export function appReducer(state: AppState, action: Action) {
 }
 
 function AppCtxProvider(props: Props) {
-  const [ctx, dispatch] = useReducer(appReducer, initialState);
+  const activeProfilePrefs = lsPreferences.getActiveProfile();
+  const [ctx, dispatch] = useReducer(appReducer, {
+    user: undefined,
+    prefs: activeProfilePrefs,
+  });
+  const [activeInitialTheme, setActiveInitialTheme] = useState<string | null>(null);
 
   useEffect(() => {
+    const theme =
+      activeProfilePrefs.theme.configured === 'automatic'
+        ? detectActiveThemeMode()
+        : activeProfilePrefs.theme.configured;
+    themeBuilder.init();
+    updateActiveStyleSheet(theme);
+    setActiveInitialTheme(theme);
     refreshUserProfile(dispatch);
-  }, []);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useSystemThemeMode(ctx.prefs.theme.configured === 'automatic', dispatch);
+
+  if (isNull(activeInitialTheme)) return null;
 
   return <AppCtx.Provider value={{ ctx, dispatch }}>{props.children}</AppCtx.Provider>;
 }
