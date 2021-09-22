@@ -39,6 +39,22 @@
   fill: var(--highlighted) !important;
 }
 
+:global(.apexcharts-zoomin-icon:not(.apexcharts-selected)):hover svg,
+:global(.apexcharts-zoomout-icon:not(.apexcharts-selected)):hover svg,
+:global(.apexcharts-zoom-icon:not(.apexcharts-selected)):hover svg,
+:global(.apexcharts-reset-icon:not(.apexcharts-selected)):hover svg {
+  fill: var(--color-1-900) !important;
+}
+
+.apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+.apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+.apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+.apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+.apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+.apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+  fill: #333;
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.5rem !important;
