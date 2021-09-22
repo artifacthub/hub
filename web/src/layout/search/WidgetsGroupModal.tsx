@@ -54,6 +54,7 @@ const WidgetsGroupModal = (props: Props) => {
   const whiteLabel = isWhiteLabel();
   const [theme, setTheme] = useState<string>(DEFAULT_THEME);
   const [header, setHeader] = useState<boolean>(false);
+  const [stars, setStars] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [color, setColor] = useState<string>(DEFAULT_COLOR);
   const [fixedWidth, setFixedWidth] = useState<string | undefined>();
@@ -70,11 +71,13 @@ const WidgetsGroupModal = (props: Props) => {
   const buildWidgetsGroupCode = (): string => {
     const code = `<div class="artifacthub-widget-group" data-url="${
       window.location.href
-    }" data-theme="${theme}" data-header="${!header ? 'false' : 'true'}" data-color="${color}" data-responsive="${
-      groupWrapperWidthOpt === 'responsive'
-    }" ${fixedWidth ? `data-width="${fixedWidth}"` : ''} data-loading="${
-      loading ? 'true' : 'false'
-    }"></div><script async src="${window.location.origin}/artifacthub-widget.js"></script>`;
+    }" data-theme="${theme}" data-header="${!header ? 'false' : 'true'}" data-stars="${
+      !stars ? 'false' : 'true'
+    }" data-color="${color}" data-responsive="${groupWrapperWidthOpt === 'responsive'}" ${
+      fixedWidth ? `data-width="${fixedWidth}"` : ''
+    } data-loading="${loading ? 'true' : 'false'}"></div><script async src="${
+      window.location.origin
+    }/artifacthub-widget.js"></script>`;
 
     return code;
   };
@@ -106,6 +109,7 @@ const WidgetsGroupModal = (props: Props) => {
   }, [
     theme,
     header,
+    stars,
     fixedWidth,
     groupWrapperWidthOpt,
     color,
@@ -177,10 +181,31 @@ const WidgetsGroupModal = (props: Props) => {
                 </div>
 
                 <small className="form-text text-muted mt-2">
-                  Displays Artifact Hub header at the top of the widget.
+                  Display Artifact Hub header at the top of the widget.
                 </small>
               </div>
             )}
+
+            <div className="mt-4 mb-3">
+              <div className="custom-control custom-switch pl-0">
+                <input
+                  id="stars"
+                  type="checkbox"
+                  className="custom-control-input"
+                  value="true"
+                  onChange={() => setStars(!stars)}
+                  checked={stars}
+                />
+                <label
+                  htmlFor="stars"
+                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
+                >
+                  Stars
+                </label>
+              </div>
+
+              <small className="form-text text-muted mt-2">Display number of stars given to the package.</small>
+            </div>
 
             <div className="d-flex flex-row">
               <div>
@@ -267,7 +292,7 @@ const WidgetsGroupModal = (props: Props) => {
               </div>
 
               <small className="form-text text-muted mt-2">
-                Displays loading spinner while waiting for search results.
+                Display loading spinner while waiting for search results.
               </small>
             </div>
 

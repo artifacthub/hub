@@ -20,6 +20,7 @@ const defaultProps = {
   responsive: false,
   header: true,
   inGroup: false,
+  stars: true,
 };
 
 const getMockPkg = (fixtureId: string): PackageSummary => {
@@ -101,6 +102,19 @@ describe('Widget', () => {
     });
 
     expect(screen.queryByTitle('logo')).toBeNull();
+  });
+
+  it('does not render stars', async () => {
+    const mockPkg = getMockPkg('12');
+    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+
+    render(<Widget {...defaultProps} stars={false} />);
+
+    await waitFor(() => {
+      expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
+    });
+
+    expect(screen.queryByText('13')).toBeNull();
   });
 
   it('renders responsive card', async () => {
