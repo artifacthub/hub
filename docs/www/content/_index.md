@@ -16,6 +16,7 @@ The documentation is organized in the following topics:
 | [OLM annotations](/docs/topics/annotations/olm)          | Describes some custom annotations that allow enriching the existing metadata in OLM operators to improve users' experience in Artifact Hub.             |
 | [Krew annotations](/docs/topics/annotations/krew)        | Describes some custom annotations that allow enriching the existing metadata in Krew kubectl plugins to improve users' experience in Artifact Hub.      |
 | [Tekton annotations](/docs/topics/annotations/tekton)    | Describes some custom annotations that allow enriching the existing metadata in Tekton tasks to improve users' experience in Artifact Hub.              |
+| [keptn annotations](/docs/topics/annotations/keptn)      | Describes some custom annotations that allow enriching the existing metadata in Keptn integrations to improve users' experience in Artifact Hub.        |
 | [Packages security report](/docs/topics/security_report) | Explains how packages are scanned for security vulnerabilities and the structure of the security report.                                                |
 | [Authorization](/docs/topics/authorization)              | Explains how the authorization mechanism that allows organizations to define what actions can be performed by their members works and how to set it up. |
 | [Architecture](/docs/topics/architecture)                | Describes the components that form Artifact Hub, what each of them do and the layout of the source repository.                                          |

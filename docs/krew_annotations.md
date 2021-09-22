@@ -14,7 +14,7 @@ This annotation can be provided using two different formats: using a plain list 
 
 - **artifacthub.io/displayName** *(string)*
 
-This annotations allows providing a nicely formatted name for the package.
+This annotation allows providing a nicely formatted name for the package.
 
 - **artifacthub.io/keywords** *(yaml string, see example below)*
 
