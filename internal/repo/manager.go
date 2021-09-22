@@ -365,6 +365,9 @@ func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
 		defer cancel()
 		ref := fmt.Sprintf("%s:%s", strings.TrimPrefix(mdFile, hub.RepositoryOCIPrefix), artifacthubTag)
 		_, data, err = util.OCIPullLayer(ctx, ref, MetadataLayerMediaType, "", "")
+		if errors.Is(err, util.ErrArtifactNotFound) || errors.Is(err, util.ErrLayerNotFound) {
+			err = ErrMetadataNotFound
+		}
 	} else {
 		// Remote HTTP url / local file path
 		for _, extension := range []string{".yml", ".yaml"} {

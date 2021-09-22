@@ -319,6 +319,9 @@ func (s *TrackerSource) chartHasProvenanceFile(chartURL *url.URL) (bool, error) 
 			s.i.Repository.AuthPass,
 		)
 		if err != nil {
+			if errors.Is(err, util.ErrLayerNotFound) {
+				return false, nil
+			}
 			return false, fmt.Errorf("error pulling provenance layer: %w", err)
 		}
 	default:
