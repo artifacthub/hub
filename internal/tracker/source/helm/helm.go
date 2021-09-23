@@ -49,8 +49,9 @@ const (
 	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
 	signKeyAnnotation              = "artifacthub.io/signKey"
 
-	ChartContentLayerMediaType    = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
-	ChartProvenanceLayerMediaType = "application/vnd.cncf.helm.chart.provenance.v1.prov"
+	legacyChartContentLayerMediaType = "application/tar+gzip"
+	ChartContentLayerMediaType       = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+	ChartProvenanceLayerMediaType    = "application/vnd.cncf.helm.chart.provenance.v1.prov"
 
 	apiVersionKey   = "apiVersion"
 	dependenciesKey = "dependencies"
@@ -402,7 +403,14 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 		ref := strings.TrimPrefix(u.String(), hub.RepositoryOCIPrefix)
 		_, data, err := op.PullLayer(ctx, ref, ChartContentLayerMediaType, o.Username, o.Password)
 		if err != nil {
-			return nil, err
+			if errors.Is(err, oci.ErrLayerNotFound) {
+				_, data, err = op.PullLayer(ctx, ref, legacyChartContentLayerMediaType, o.Username, o.Password)
+				if err != nil {
+					return nil, err
+				}
+			} else {
+				return nil, err
+			}
 		}
 		r = bytes.NewReader(data)
 	default:
