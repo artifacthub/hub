@@ -131,6 +131,9 @@ function updateSelectedOrg(currentPrefs: Prefs, name?: string): Prefs {
 
 export function updateActiveStyleSheet(current: string) {
   document.getElementsByTagName('html')[0].setAttribute('data-theme', current);
+  document
+    .querySelector(`meta[name='theme-color']`)!
+    .setAttribute('content', current === 'light' ? '#417598' : '#131216');
 }
 
 function getCurrentSystemActiveTheme(prefs: ThemePrefs): ThemePrefs {
