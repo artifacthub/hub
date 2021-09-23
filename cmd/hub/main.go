@@ -18,6 +18,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/artifacthub/hub/internal/notification"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/org"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
@@ -70,6 +71,7 @@ func main() {
 		ImageStore:          pg.NewImageStore(cfg, db, hc, nil),
 		Authorizer:          az,
 		HTTPClient:          hc,
+		OCIPuller:           &oci.Puller{},
 	}
 	h, err := handlers.Setup(ctx, cfg, hSvc)
 	if err != nil {

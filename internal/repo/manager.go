@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/config"
@@ -92,12 +93,13 @@ var (
 
 // Manager provides an API to manage repositories.
 type Manager struct {
-	cfg             *viper.Viper
-	db              hub.DB
-	hc              hub.HTTPClient
-	rc              hub.RepositoryCloner
-	helmIndexLoader hub.HelmIndexLoader
-	az              hub.Authorizer
+	cfg *viper.Viper
+	db  hub.DB
+	hc  hub.HTTPClient
+	rc  hub.RepositoryCloner
+	il  hub.HelmIndexLoader
+	op  hub.OCIPuller
+	az  hub.Authorizer
 }
 
 // NewManager creates a new Manager instance.
@@ -110,11 +112,12 @@ func NewManager(
 ) *Manager {
 	// Setup manager
 	m := &Manager{
-		cfg:             cfg,
-		db:              db,
-		helmIndexLoader: &HelmIndexLoader{},
-		az:              az,
-		hc:              hc,
+		cfg: cfg,
+		db:  db,
+		il:  &HelmIndexLoader{},
+		op:  &oci.Puller{},
+		az:  az,
+		hc:  hc,
 	}
 	for _, o := range opts {
 		o(m)
@@ -132,7 +135,15 @@ func NewManager(
 // implementation for a Manager instance.
 func WithHelmIndexLoader(l hub.HelmIndexLoader) func(m *Manager) {
 	return func(m *Manager) {
-		m.helmIndexLoader = l
+		m.il = l
+	}
+}
+
+// WithOCIPuller allows providing a specific OCIPuller implementation for a
+// Manager instance.
+func WithOCIPuller(p hub.OCIPuller) func(m *Manager) {
+	return func(m *Manager) {
+		m.op = p
 	}
 }
 
@@ -364,8 +375,8 @@ func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
 		ref := fmt.Sprintf("%s:%s", strings.TrimPrefix(mdFile, hub.RepositoryOCIPrefix), artifacthubTag)
-		_, data, err = util.OCIPullLayer(ctx, ref, MetadataLayerMediaType, "", "")
-		if errors.Is(err, util.ErrArtifactNotFound) || errors.Is(err, util.ErrLayerNotFound) {
+		_, data, err = m.op.PullLayer(ctx, ref, MetadataLayerMediaType, "", "")
+		if errors.Is(err, oci.ErrArtifactNotFound) || errors.Is(err, oci.ErrLayerNotFound) {
 			err = ErrMetadataNotFound
 		}
 	} else {
@@ -455,7 +466,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 	case r.Kind == hub.Helm && SchemeIsHTTP(u):
 		// Digest is obtained hashing the repository index.yaml file
 		var err error
-		_, digest, err = m.helmIndexLoader.LoadIndex(r)
+		_, digest, err = m.il.LoadIndex(r)
 		if err != nil {
 			return "", err
 		}
@@ -697,7 +708,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 	switch r.Kind {
 	case hub.Helm:
 		if SchemeIsHTTP(u) {
-			if _, _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
+			if _, _, err := m.il.LoadIndex(r); err != nil {
 				return errors.New("the url provided does not point to a valid Helm repository")
 			}
 		}

@@ -10,11 +10,14 @@ import (
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/tracker/source"
+	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
@@ -127,6 +130,7 @@ func TestTrackerSource(t *testing.T) {
 		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
 		assert.Nil(t, packages)
 		assert.True(t, errors.Is(err, tests.ErrFake))
+		il.AssertExpectations(t)
 		sw.AssertExpectations(t)
 	})
 
@@ -137,7 +141,7 @@ func TestTrackerSource(t *testing.T) {
 		sw := source.NewTestsServicesWrapper()
 		i := &hub.TrackerSourceInput{
 			Repository: &hub.Repository{
-				URL: "oci://repo.url",
+				URL: "oci://registry/namespace/chart",
 			},
 			Svc: sw.Svc,
 		}
@@ -148,6 +152,7 @@ func TestTrackerSource(t *testing.T) {
 		packages, err := NewTrackerSource(i, withOCITagsGetter(tg)).GetPackagesAvailable()
 		assert.Nil(t, packages)
 		assert.True(t, errors.Is(err, tests.ErrFake))
+		tg.AssertExpectations(t)
 		sw.AssertExpectations(t)
 	})
 
@@ -183,6 +188,7 @@ func TestTrackerSource(t *testing.T) {
 		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{}, packages)
 		assert.NoError(t, err)
+		il.AssertExpectations(t)
 		sw.AssertExpectations(t)
 	})
 
@@ -218,10 +224,11 @@ func TestTrackerSource(t *testing.T) {
 		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{}, packages)
 		assert.NoError(t, err)
+		il.AssertExpectations(t)
 		sw.AssertExpectations(t)
 	})
 
-	t.Run("error loading chart archive", func(t *testing.T) {
+	t.Run("error loading chart archive (http)", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup services and expectations
@@ -259,6 +266,34 @@ func TestTrackerSource(t *testing.T) {
 		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{}, packages)
 		assert.NoError(t, err)
+		il.AssertExpectations(t)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("error loading chart archive (oci)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				URL: "oci://registry/namespace/chart",
+			},
+			Svc: sw.Svc,
+		}
+		tg := &repo.OCITagsGetterMock{}
+		tg.On("Tags", i.Svc.Ctx, i.Repository).Return([]string{"1.0.0"}, nil)
+		ref := strings.TrimPrefix(i.Repository.URL, hub.RepositoryOCIPrefix) + ":1.0.0"
+		sw.Op.On("PullLayer", mock.Anything, ref, ChartContentLayerMediaType, "", "").
+			Return(ocispec.Descriptor{}, nil, oci.ErrArtifactNotFound)
+		expectedErr := "error preparing package: error loading chart (oci://registry/namespace/chart:1.0.0): artifact not found (package: chart version: 1.0.0)"
+		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i, withOCITagsGetter(tg)).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		tg.AssertExpectations(t)
 		sw.AssertExpectations(t)
 	})
 
@@ -315,10 +350,11 @@ func TestTrackerSource(t *testing.T) {
 			pkg.BuildKey(p): p,
 		}, packages)
 		assert.NoError(t, err)
+		il.AssertExpectations(t)
 		sw.AssertExpectations(t)
 	})
 
-	t.Run("one package returned, no errors", func(t *testing.T) {
+	t.Run("one package returned, no errors (http)", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup services and expectations
@@ -371,6 +407,43 @@ func TestTrackerSource(t *testing.T) {
 			pkg.BuildKey(p): p,
 		}, packages)
 		assert.NoError(t, err)
+		il.AssertExpectations(t)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("one package returned, no errors (oci)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				URL: "oci://registry/namespace/pkg1",
+			},
+			Svc: sw.Svc,
+		}
+		tg := &repo.OCITagsGetterMock{}
+		tg.On("Tags", i.Svc.Ctx, i.Repository).Return([]string{"1.0.0"}, nil)
+		ref := strings.TrimPrefix(i.Repository.URL, hub.RepositoryOCIPrefix) + ":1.0.0"
+		data, _ := os.ReadFile("testdata/pkg1-1.0.0.tgz")
+		sw.Op.On("PullLayer", mock.Anything, ref, ChartContentLayerMediaType, "", "").
+			Return(ocispec.Descriptor{}, data, nil)
+		sw.Op.On("PullLayer", mock.Anything, ref, ChartProvenanceLayerMediaType, "", "").
+			Return(ocispec.Descriptor{}, nil, oci.ErrLayerNotFound)
+		sw.Is.On("DownloadAndSaveImage", sw.Svc.Ctx, logoImageURL).Return("logoImageID", nil)
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i, withOCITagsGetter(tg)).GetPackagesAvailable()
+		p := source.ClonePackage(basePkg)
+		p.ContentURL = "oci://registry/namespace/pkg1:1.0.0"
+		p.Repository = i.Repository
+		p.LogoURL = logoImageURL
+		p.LogoImageID = "logoImageID"
+		assert.Equal(t, map[string]*hub.Package{
+			pkg.BuildKey(p): p,
+		}, packages)
+		assert.NoError(t, err)
+		tg.AssertExpectations(t)
 		sw.AssertExpectations(t)
 	})
 }

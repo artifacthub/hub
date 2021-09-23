@@ -1,4 +1,4 @@
-package util
+package oci
 
 import (
 	"context"
@@ -22,9 +22,12 @@ var (
 	ErrLayerNotFound = errors.New("layer not found")
 )
 
-// OCIPullLayer pulls the first layer of the media type provided from the OCI
+// Puller is a hub.OCIPuller implementation.
+type Puller struct{}
+
+// PullLayer pulls the first layer of the media type provided from the OCI
 // artifact at the given reference.
-func OCIPullLayer(
+func (p *Puller) PullLayer(
 	ctx context.Context,
 	ref,
 	mediaType,

@@ -15,10 +15,13 @@ import (
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/artifacthub/hub/internal/tracker/source/helm"
 	"github.com/go-chi/chi/v5"
+	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
@@ -153,28 +156,37 @@ func TestGetChartTemplates(t *testing.T) {
 	rctx := &chi.Context{
 		URLParams: chi.RouteParams{
 			Keys:   []string{"packageID", "version"},
-			Values: []string{"pkg1", "1.0.0"},
+			Values: []string{"pkg", "1.0.0"},
 		},
 	}
 	getPkgInput := &hub.GetPackageInput{
-		PackageID: "pkg1",
+		PackageID: "pkg",
 		Version:   "1.0.0",
 	}
-	contentURL := "https://content.url"
+	p1ContentURL := "https://content.url/p1.tgz"
 	p1 := &hub.Package{
-		ContentURL: contentURL,
+		ContentURL: p1ContentURL,
 		Repository: &hub.Repository{
 			Kind: hub.Helm,
 			URL:  "https://repo.url",
 		},
 	}
+	p2ContentURL := "https://content.url/p2.tgz"
 	p2 := &hub.Package{
-		ContentURL: contentURL,
+		ContentURL: p2ContentURL,
 		Repository: &hub.Repository{
 			RepositoryID: "repo2",
 			Kind:         hub.Helm,
 			URL:          "https://repo2.url",
 			Private:      true,
+		},
+	}
+	p3ContentURL := "oci://registry/namespace/chart:1.0.0"
+	p3 := &hub.Package{
+		ContentURL: p3ContentURL,
+		Repository: &hub.Repository{
+			Kind: hub.Helm,
+			URL:  "oci://registry/namespace/chart",
 		},
 	}
 
@@ -231,7 +243,7 @@ func TestGetChartTemplates(t *testing.T) {
 		hw.assertExpectations(t)
 	})
 
-	t.Run("error downloading chart package", func(t *testing.T) {
+	t.Run("error downloading chart package from http server", func(t *testing.T) {
 		testCases := []struct {
 			description string
 			resp        *http.Response
@@ -261,7 +273,7 @@ func TestGetChartTemplates(t *testing.T) {
 
 				hw := newHandlersWrapper()
 				hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
-				tgzReq, _ := http.NewRequest("GET", contentURL, nil)
+				tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
 				tgzReq = tgzReq.WithContext(r.Context())
 				tgzReq.Header.Set("Accept-Encoding", "*")
 				hw.hc.On("Do", tgzReq).Return(tc.resp, tc.err)
@@ -275,6 +287,25 @@ func TestGetChartTemplates(t *testing.T) {
 		}
 	})
 
+	t.Run("error pulling chart package from oci registry", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), getPkgInput).Return(p3, nil)
+		ref := strings.TrimPrefix(p3ContentURL, hub.RepositoryOCIPrefix)
+		hw.op.On("PullLayer", r.Context(), ref, helm.ChartContentLayerMediaType, "", "").
+			Return(ocispec.Descriptor{}, nil, tests.ErrFake)
+		hw.h.GetChartTemplates(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+
 	t.Run("error loading chart archive", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
@@ -283,7 +314,7 @@ func TestGetChartTemplates(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
-		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
+		tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
 		tgzReq.Header.Set("Accept-Encoding", "*")
 		hw.hc.On("Do", tgzReq).Return(&http.Response{
@@ -298,7 +329,7 @@ func TestGetChartTemplates(t *testing.T) {
 		hw.assertExpectations(t)
 	})
 
-	t.Run("package templates returned successfully", func(t *testing.T) {
+	t.Run("package templates returned successfully (http server)", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -306,7 +337,7 @@ func TestGetChartTemplates(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
-		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
+		tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
 		tgzReq.Header.Set("Accept-Encoding", "*")
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
@@ -325,7 +356,7 @@ func TestGetChartTemplates(t *testing.T) {
 		hw.assertExpectations(t)
 	})
 
-	t.Run("package templates returned successfully (private repository)", func(t *testing.T) {
+	t.Run("package templates returned successfully (http server, private repository)", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -337,7 +368,7 @@ func TestGetChartTemplates(t *testing.T) {
 			AuthUser: "user",
 			AuthPass: "pass",
 		}, nil)
-		tgzReq, _ := http.NewRequest("GET", contentURL, nil)
+		tgzReq, _ := http.NewRequest("GET", p2ContentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
 		tgzReq.SetBasicAuth("user", "pass")
 		tgzReq.Header.Set("Accept-Encoding", "*")
@@ -346,6 +377,29 @@ func TestGetChartTemplates(t *testing.T) {
 			Body:       f,
 			StatusCode: http.StatusOK,
 		}, nil)
+		hw.h.GetChartTemplates(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		expectedData := []byte(`{"templates":[{"name":"templates/template.yaml","data":"a2V5OiB7eyAuVmFsdWVzLmtleSB9fQo="}],"values":{"key":"value"}}`)
+		assert.Equal(t, expectedData, data)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("package templates returned successfully (oci registry)", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), getPkgInput).Return(p3, nil)
+		layerData, _ := os.ReadFile("testdata/pkg1-1.0.0.tgz")
+		ref := strings.TrimPrefix(p3ContentURL, hub.RepositoryOCIPrefix)
+		hw.op.On("PullLayer", r.Context(), ref, helm.ChartContentLayerMediaType, "", "").
+			Return(ocispec.Descriptor{}, layerData, nil)
 		hw.h.GetChartTemplates(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -1374,6 +1428,7 @@ type handlersWrapper struct {
 	pm *pkg.ManagerMock
 	rm *repo.ManagerMock
 	hc *tests.HTTPClientMock
+	op *oci.PullerMock
 	h  *Handlers
 }
 
@@ -1383,12 +1438,14 @@ func newHandlersWrapper() *handlersWrapper {
 	pm := &pkg.ManagerMock{}
 	rm := &repo.ManagerMock{}
 	hc := &tests.HTTPClientMock{}
+	op := &oci.PullerMock{}
 
 	return &handlersWrapper{
 		pm: pm,
 		rm: rm,
 		hc: hc,
-		h:  NewHandlers(pm, rm, cfg, hc),
+		op: op,
+		h:  NewHandlers(pm, rm, cfg, hc, op),
 	}
 }
 
@@ -1396,4 +1453,5 @@ func (hw *handlersWrapper) assertExpectations(t *testing.T) {
 	hw.pm.AssertExpectations(t)
 	hw.rm.AssertExpectations(t)
 	hw.hc.AssertExpectations(t)
+	hw.op.AssertExpectations(t)
 }

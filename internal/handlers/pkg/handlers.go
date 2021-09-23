@@ -33,6 +33,7 @@ type Handlers struct {
 	cfg         *viper.Viper
 	logger      zerolog.Logger
 	hc          hub.HTTPClient
+	op          hub.OCIPuller
 }
 
 // NewHandlers creates a new Handlers instance.
@@ -41,6 +42,7 @@ func NewHandlers(
 	repoManager hub.RepositoryManager,
 	cfg *viper.Viper,
 	hc hub.HTTPClient,
+	op hub.OCIPuller,
 ) *Handlers {
 	return &Handlers{
 		pkgManager:  pkgManager,
@@ -48,6 +50,7 @@ func NewHandlers(
 		cfg:         cfg,
 		logger:      log.With().Str("handlers", "pkg").Logger(),
 		hc:          hc,
+		op:          op,
 	}
 }
 
@@ -118,7 +121,8 @@ func (h *Handlers) GetChartTemplates(w http.ResponseWriter, r *http.Request) {
 		r.Context(),
 		u,
 		&helm.LoadChartArchiveOptions{
-			HC:       h.hc,
+			Hc:       h.hc,
+			Op:       h.op,
 			Username: username,
 			Password: password,
 		},

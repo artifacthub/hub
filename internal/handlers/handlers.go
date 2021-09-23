@@ -49,6 +49,7 @@ type Services struct {
 	ImageStore          img.Store
 	Authorizer          hub.Authorizer
 	HTTPClient          hub.HTTPClient
+	OCIPuller           hub.OCIPuller
 }
 
 // Metrics groups some metrics collected from a Handlers instance.
@@ -91,7 +92,7 @@ func Setup(ctx context.Context, cfg *viper.Viper, svc *Services) (*Handlers, err
 		Organizations: org.NewHandlers(svc.OrganizationManager, svc.Authorizer, cfg),
 		Users:         userHandlers,
 		Repositories:  repo.NewHandlers(cfg, svc.RepositoryManager),
-		Packages:      pkg.NewHandlers(svc.PackageManager, svc.RepositoryManager, cfg, svc.HTTPClient),
+		Packages:      pkg.NewHandlers(svc.PackageManager, svc.RepositoryManager, cfg, svc.HTTPClient, svc.OCIPuller),
 		Subscriptions: subscription.NewHandlers(svc.SubscriptionManager),
 		Webhooks:      webhook.NewHandlers(svc.WebhookManager, svc.HTTPClient),
 		APIKeys:       apikey.NewHandlers(svc.APIKeyManager),

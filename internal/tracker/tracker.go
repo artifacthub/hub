@@ -227,6 +227,7 @@ func (t *Tracker) getPackagesAvailable() (map[string]*hub.Package, error) {
 			Cfg:      t.svc.Cfg,
 			Ec:       t.svc.Ec,
 			Hc:       t.svc.Hc,
+			Op:       t.svc.Op,
 			Is:       t.svc.Is,
 			Logger:   t.logger,
 			GithubRL: t.svc.GithubRL,

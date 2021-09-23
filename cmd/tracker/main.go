@@ -13,6 +13,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
@@ -93,6 +94,7 @@ func main() {
 		Oe:                 &repo.OLMOCIExporter{},
 		Ec:                 ec,
 		Hc:                 hc,
+		Op:                 &oci.Puller{},
 		Is:                 is,
 		GithubRL:           githubRL,
 		SetupTrackerSource: tracker.SetupSource,

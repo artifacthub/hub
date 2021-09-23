@@ -7,6 +7,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/rs/zerolog"
@@ -19,6 +20,7 @@ import (
 type TestsServicesWrapper struct {
 	Ec  *repo.ErrorsCollectorMock
 	Hc  *tests.HTTPClientMock
+	Op  *oci.PullerMock
 	Is  *img.StoreMock
 	Svc *hub.TrackerSourceServices
 }
@@ -28,6 +30,7 @@ func NewTestsServicesWrapper() *TestsServicesWrapper {
 	// Setup mocks
 	ec := &repo.ErrorsCollectorMock{}
 	hc := &tests.HTTPClientMock{}
+	op := &oci.PullerMock{}
 	is := &img.StoreMock{}
 
 	// Setup tracker source services using mocks
@@ -36,6 +39,7 @@ func NewTestsServicesWrapper() *TestsServicesWrapper {
 		Cfg:      viper.New(),
 		Ec:       ec,
 		Hc:       hc,
+		Op:       op,
 		Is:       is,
 		Logger:   zerolog.Nop(),
 		GithubRL: rate.NewLimiter(rate.Inf, 0),
@@ -45,6 +49,7 @@ func NewTestsServicesWrapper() *TestsServicesWrapper {
 	return &TestsServicesWrapper{
 		Ec:  ec,
 		Hc:  hc,
+		Op:  op,
 		Is:  is,
 		Svc: svc,
 	}
@@ -55,6 +60,7 @@ func NewTestsServicesWrapper() *TestsServicesWrapper {
 func (sw *TestsServicesWrapper) AssertExpectations(t *testing.T) {
 	sw.Ec.AssertExpectations(t)
 	sw.Hc.AssertExpectations(t)
+	sw.Op.AssertExpectations(t)
 	sw.Is.AssertExpectations(t)
 }
 
