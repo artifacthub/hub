@@ -17,6 +17,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/license"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker/source"
@@ -48,8 +49,8 @@ const (
 	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
 	signKeyAnnotation              = "artifacthub.io/signKey"
 
-	helmChartContentLayerMediaType    = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
-	helmChartProvenanceLayerMediaType = "application/vnd.cncf.helm.chart.provenance.v1.prov"
+	ChartContentLayerMediaType    = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+	ChartProvenanceLayerMediaType = "application/vnd.cncf.helm.chart.provenance.v1.prov"
 
 	apiVersionKey   = "apiVersion"
 	dependenciesKey = "dependencies"
@@ -239,7 +240,8 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 			s.i.Svc.Ctx,
 			chartURL,
 			&LoadChartArchiveOptions{
-				HC:          s.i.Svc.Hc,
+				Hc:          s.i.Svc.Hc,
+				Op:          s.i.Svc.Op,
 				GithubToken: s.i.Svc.Cfg.GetString("creds.githubToken"),
 				GithubRL:    s.i.Svc.GithubRL,
 				Username:    s.i.Repository.AuthUser,
@@ -311,15 +313,15 @@ func (s *TrackerSource) chartHasProvenanceFile(chartURL *url.URL) (bool, error) 
 		}
 	case "oci":
 		var err error
-		_, data, err = util.OCIPullLayer(
+		_, data, err = s.i.Svc.Op.PullLayer(
 			s.i.Svc.Ctx,
 			strings.TrimPrefix(chartURL.String(), hub.RepositoryOCIPrefix),
-			helmChartProvenanceLayerMediaType,
+			ChartProvenanceLayerMediaType,
 			s.i.Repository.AuthUser,
 			s.i.Repository.AuthPass,
 		)
 		if err != nil {
-			if errors.Is(err, util.ErrLayerNotFound) {
+			if errors.Is(err, oci.ErrLayerNotFound) {
 				return false, nil
 			}
 			return false, fmt.Errorf("error pulling provenance layer: %w", err)
@@ -348,7 +350,8 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 // LoadChartArchiveOptions represents some options that can be provided to load
 // a chart archive from its remote location.
 type LoadChartArchiveOptions struct {
-	HC          hub.HTTPClient
+	Hc          hub.HTTPClient
+	Op          hub.OCIPuller
 	Username    string
 	Password    string
 	GithubToken string
@@ -378,7 +381,7 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 		if o.Username != "" || o.Password != "" {
 			req.SetBasicAuth(o.Username, o.Password)
 		}
-		hc := o.HC
+		hc := o.Hc
 		if hc == nil {
 			hc = util.SetupHTTPClient(false)
 		}
@@ -392,8 +395,12 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 		}
 		r = resp.Body
 	case "oci":
+		op := o.Op
+		if op == nil {
+			op = &oci.Puller{}
+		}
 		ref := strings.TrimPrefix(u.String(), hub.RepositoryOCIPrefix)
-		_, data, err := util.OCIPullLayer(ctx, ref, helmChartContentLayerMediaType, o.Username, o.Password)
+		_, data, err := op.PullLayer(ctx, ref, ChartContentLayerMediaType, o.Username, o.Password)
 		if err != nil {
 			return nil, err
 		}

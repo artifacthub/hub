@@ -8,6 +8,7 @@ import (
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
+	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 )
 
 // DB defines the methods the database handler must provide.
@@ -39,4 +40,15 @@ type JSONQueryResult struct {
 type Pagination struct {
 	Limit  int `json:"limit"`
 	Offset int `json:"offset"`
+}
+
+// OCIPuller defines the methods an OCIPuller implementation must provide.
+type OCIPuller interface {
+	PullLayer(
+		ctx context.Context,
+		ref,
+		mediaType,
+		username,
+		password string,
+	) (ocispec.Descriptor, []byte, error)
 }

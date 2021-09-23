@@ -434,6 +434,7 @@ func TestSearch(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.rm.AssertExpectations(t)
 	})
 
 	t.Run("valid request, search succeeded", func(t *testing.T) {

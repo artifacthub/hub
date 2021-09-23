@@ -20,6 +20,7 @@ type TrackerServices struct {
 	Oe                 OLMOCIExporter
 	Ec                 ErrorsCollector
 	Hc                 HTTPClient
+	Op                 OCIPuller
 	Is                 img.Store
 	GithubRL           *rate.Limiter
 	SetupTrackerSource TrackerSourceLoader
@@ -57,6 +58,7 @@ type TrackerSourceServices struct {
 	Cfg      *viper.Viper
 	Ec       ErrorsCollector
 	Hc       HTTPClient
+	Op       OCIPuller
 	Is       img.Store
 	Logger   zerolog.Logger
 	GithubRL *rate.Limiter
