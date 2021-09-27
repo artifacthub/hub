@@ -47,7 +47,7 @@ import SignedBadge from '../common/SignedBadge';
 import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
-import ChangelogModal from './ChangelogModal';
+import ChangelogModal from './changelog/Modal';
 import ChartTemplatesModal from './chartTemplates';
 import Details from './Details';
 import InstallationModal from './installation/Modal';

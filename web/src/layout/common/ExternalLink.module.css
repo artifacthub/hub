@@ -6,7 +6,7 @@
   color: inherit;
 }
 
-@media (hover: none) {
+@media (hover: hover) {
   .link:hover {
     text-decoration: none;
     color: var(--color-1-800);

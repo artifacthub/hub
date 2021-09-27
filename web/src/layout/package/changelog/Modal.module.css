@@ -1,0 +1,55 @@
+.versionsIndexWrapper {
+  z-index: 1;
+}
+
+.versionBtn {
+  font-size: 0.9rem;
+  margin: 0.4rem 0 0.3rem 0;
+  border-radius: 0;
+  line-height: 1.15rem;
+}
+
+.versionBtnWrapper {
+  min-width: 120px;
+  max-width: 150px;
+}
+
+.activeVersionBtnWrapper::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: var(--color-1-10);
+  border-left: 2px solid var(--color-1-500);
+}
+
+.tooltip {
+  width: 230px;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .modalDialog {
+    min-height: calc(100% - 10rem) !important;
+    max-height: calc(100% - 10rem) !important;
+    margin: 5rem auto !important;
+  }
+}
+
+@media (hover: hover) {
+  .versionBtnWrapper:not(.activeVersionBtnWrapper):hover {
+    background-color: var(--color-1-5);
+  }
+
+  .versionBtn:hover,
+  .versionBtn:focus {
+    text-decoration: none;
+  }
+}

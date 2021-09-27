@@ -1,0 +1,776 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Changelog content  creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="flex-grow-1 overflow-auto h-100"
+  >
+    <div
+      class=""
+      data-testid="changelogBlock"
+    >
+      <div
+        class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+        id="changelog-0"
+      >
+        <div
+          class="d-flex flex-row align-items-baseline versionWrapper"
+        >
+          <div
+            class="h5 text-dark text-truncate mb-0"
+            data-testid="changelogBlockTitle"
+          >
+            0.8.0
+          </div>
+          <button
+            aria-label="Open version 0.8.0"
+            class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="badgesWrapper"
+        >
+          <span
+            class="badge badge-sm badge-pill mr-2 position-relative badge"
+          >
+            Pre-release
+          </span>
+        </div>
+        <div
+          class="ml-auto pl-0 pl-md-2 text-nowrap"
+        >
+          <small
+            class="text-muted"
+          >
+            Released 3 hours ago
+          </small>
+        </div>
+      </div>
+      <div
+        class="d-flex flex-column mb-4 list"
+      >
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Add JSON schema for Artifact Hub Helm chart
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Some improvements in Artifact Hub Helm chart
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Track Helm charts values schema
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Add endpoint to get Helm charts values schema
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Bump Trivy to 0.12.0
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Display containers images in Helm packages
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Remove internal requests limiter
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Upgrade frontend dependencies to fix some security vulnerabilities
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Add packages security report documentation
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Some bugs fixes and improvements
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="lastVersion"
+      data-testid="changelogBlock"
+    >
+      <div
+        class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+        id="changelog-1"
+      >
+        <div
+          class="d-flex flex-row align-items-baseline versionWrapper"
+        >
+          <div
+            class="h5 text-dark text-truncate mb-0"
+            data-testid="changelogBlockTitle"
+          >
+            0.5.0
+          </div>
+          <button
+            aria-label="Open version 0.5.0"
+            class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="badgesWrapper"
+        >
+          <span
+            class="badge badge-sm badge-pill mr-2 position-relative badge"
+          >
+            Contains security updates
+          </span>
+        </div>
+        <div
+          class="ml-auto pl-0 pl-md-2 text-nowrap"
+        >
+          <small
+            class="text-muted"
+          >
+            Released 3 hours ago
+          </small>
+        </div>
+      </div>
+      <div
+        class="d-flex flex-column mb-4 list"
+      >
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Introduce verified publisher concept
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Add dark mode support
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Improve search facets filtering
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Notify repository owners of tracking errors
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Track and list Helm charts dependencies
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Display links to source in Helm packages
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Add repositories kind filter to tracker
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Add Monocular compatible search API
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-1 w-100 d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-start flex-row w-100"
+          >
+            <div
+              class="mr-1 mr-md-2"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="flex-grow-1"
+            >
+              <div>
+                Some bugs fixes and improvements
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
