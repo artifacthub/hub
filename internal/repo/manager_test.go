@@ -1050,6 +1050,11 @@ func TestGetRemoteDigest(t *testing.T) {
 		Name: "repo1",
 		URL:  "https://myrepo.url",
 	}
+	helmOCI := &hub.Repository{
+		Kind: hub.Helm,
+		Name: "repo1",
+		URL:  "oci://myrepo.url/chart",
+	}
 
 	t.Run("helm-http: error loading index", func(t *testing.T) {
 		t.Parallel()
@@ -1073,6 +1078,30 @@ func TestGetRemoteDigest(t *testing.T) {
 		assert.Equal(t, "digest", digest)
 		assert.Nil(t, err)
 		l.AssertExpectations(t)
+	})
+
+	t.Run("helm-oci: error getting tags", func(t *testing.T) {
+		t.Parallel()
+		tg := &OCITagsGetterMock{}
+		tg.On("Tags", ctx, helmOCI).Return(nil, tests.ErrFake)
+		m := NewManager(cfg, nil, nil, nil, WithOCITagsGetter(tg))
+
+		digest, err := m.GetRemoteDigest(ctx, helmOCI)
+		assert.Empty(t, digest)
+		assert.Equal(t, tests.ErrFake, err)
+		tg.AssertExpectations(t)
+	})
+
+	t.Run("helm-oci: success", func(t *testing.T) {
+		t.Parallel()
+		tg := &OCITagsGetterMock{}
+		tg.On("Tags", ctx, helmOCI).Return([]string{"2.0.0", "1.0.0"}, nil)
+		m := NewManager(cfg, nil, nil, nil, WithOCITagsGetter(tg))
+
+		digest, err := m.GetRemoteDigest(ctx, helmOCI)
+		assert.Equal(t, "32b4478532e3fbd46940cfaa0b288bc328817cec9ef38e81c9d19a803bcff285", digest)
+		assert.Nil(t, err)
+		tg.AssertExpectations(t)
 	})
 }
 
