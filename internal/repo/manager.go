@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -98,6 +99,7 @@ type Manager struct {
 	hc  hub.HTTPClient
 	rc  hub.RepositoryCloner
 	il  hub.HelmIndexLoader
+	tg  hub.OCITagsGetter
 	op  hub.OCIPuller
 	az  hub.Authorizer
 }
@@ -115,6 +117,7 @@ func NewManager(
 		cfg: cfg,
 		db:  db,
 		il:  &HelmIndexLoader{},
+		tg:  &OCITagsGetter{},
 		op:  &oci.Puller{},
 		az:  az,
 		hc:  hc,
@@ -136,6 +139,14 @@ func NewManager(
 func WithHelmIndexLoader(l hub.HelmIndexLoader) func(m *Manager) {
 	return func(m *Manager) {
 		m.il = l
+	}
+}
+
+// WithOCITagsGetter allows providing a specific OCITagsGetter implementation
+// for a Manager instance.
+func WithOCITagsGetter(tg hub.OCITagsGetter) func(m *Manager) {
+	return func(m *Manager) {
+		m.tg = tg
 	}
 }
 
@@ -463,12 +474,22 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 	u, _ := url.Parse(r.URL)
 
 	switch {
-	case r.Kind == hub.Helm && SchemeIsHTTP(u):
-		// Digest is obtained hashing the repository index.yaml file
-		var err error
-		_, digest, err = m.il.LoadIndex(r)
-		if err != nil {
-			return "", err
+	case r.Kind == hub.Helm:
+		switch u.Scheme {
+		case "http", "https":
+			// Digest is obtained by hashing the repository index.yaml file
+			var err error
+			_, digest, err = m.il.LoadIndex(r)
+			if err != nil {
+				return "", err
+			}
+		case "oci":
+			// Digest is obtained by hashing the list of versions available
+			versions, err := m.tg.Tags(ctx, r)
+			if err != nil {
+				return digest, err
+			}
+			digest = fmt.Sprintf("%x", sha256.Sum256([]byte(strings.Join(versions, ","))))
 		}
 
 	case r.Kind == hub.OLM && u.Scheme == "oci":
