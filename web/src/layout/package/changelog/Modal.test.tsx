@@ -3,31 +3,31 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import API from '../../api';
-import { ChangeLog } from '../../types';
-import ChangelogModal from './ChangelogModal';
-jest.mock('../../api');
+import API from '../../../api';
+import { ChangeLog } from '../../../types';
+import ChangelogModal from './Modal';
+jest.mock('../../../api');
 
 jest.mock('moment', () => ({
   ...(jest.requireActual('moment') as {}),
   unix: () => ({
     isAfter: () => false,
     fromNow: () => '3 hours ago',
+    format: () => '7 Oct, 2020',
   }),
 }));
 
-const getMockChangelog = (fixtureId: string): ChangeLog[] => {
-  return require(`./__fixtures__/ChangelogModal/${fixtureId}.json`) as ChangeLog[];
-};
-
 const mockHistoryReplace = jest.fn();
-
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     replace: mockHistoryReplace,
   }),
 }));
+
+const getMockChangelog = (fixtureId: string): ChangeLog[] => {
+  return require(`./__fixtures__/Modal/${fixtureId}.json`) as ChangeLog[];
+};
 
 const defaultProps = {
   packageId: 'id',

@@ -72,11 +72,11 @@
   top: -1px;
 }
 
-@media only screen and (max-width: 767.98px) {
-  .title {
-    font-size: 1.25rem;
-  }
+.lastVersion {
+  min-height: calc(100% - 1.25rem);
+}
 
+@media only screen and (max-width: 767.98px) {
   .list {
     font-size: 80%;
   }
@@ -89,13 +89,5 @@
   .changeBadge {
     width: 15px;
     padding: 0;
-  }
-}
-
-@media only screen and (min-width: 576px) {
-  .modalDialog {
-    min-height: calc(100% - 10rem) !important;
-    max-height: calc(100% - 10rem) !important;
-    margin: 5rem auto !important;
   }
 }
