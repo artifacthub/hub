@@ -77,6 +77,7 @@ interface Props {
   eventId?: string;
   visibleTemplate?: string;
   visibleFile?: string;
+  visibleVersion?: string;
 }
 
 const RELATED_PKGS_GAP = 400;
@@ -675,17 +676,25 @@ const PackageView = (props: Props) => {
 
                       {getInstallationModal(`col mt-3 ${styles.btnMobileWrapper}`)}
 
-                      <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
-                        <ChangelogModal
-                          packageId={detail.packageId}
-                          normalizedName={detail.normalizedName}
-                          repository={detail.repository}
-                          hasChangelog={detail.hasChangelog!}
-                          visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
-                          searchUrlReferer={props.searchUrlReferer}
-                          fromStarredPage={props.fromStarredPage}
-                        />
-                      </div>
+                      {point && ['xs', 'sm'].includes(point) && (
+                        <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
+                          <ChangelogModal
+                            packageId={detail.packageId}
+                            normalizedName={detail.normalizedName}
+                            repository={detail.repository}
+                            hasChangelog={detail.hasChangelog!}
+                            currentVersion={detail.version}
+                            visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
+                            visibleVersion={
+                              !isUndefined(props.visibleModal) && props.visibleModal === 'changelog'
+                                ? props.visibleVersion
+                                : undefined
+                            }
+                            searchUrlReferer={props.searchUrlReferer}
+                            fromStarredPage={props.fromStarredPage}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -853,17 +862,27 @@ const PackageView = (props: Props) => {
                                 return null;
                             }
                           })()}
-                          <div className="mb-2">
-                            <ChangelogModal
-                              packageId={detail.packageId}
-                              normalizedName={detail.normalizedName}
-                              repository={detail.repository}
-                              hasChangelog={detail.hasChangelog!}
-                              visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                            />
-                          </div>
+                          {point && !['xs', 'sm'].includes(point) && (
+                            <div className="mb-2">
+                              <ChangelogModal
+                                packageId={detail.packageId}
+                                normalizedName={detail.normalizedName}
+                                repository={detail.repository}
+                                hasChangelog={detail.hasChangelog!}
+                                currentVersion={detail.version}
+                                visibleChangelog={
+                                  !isUndefined(props.visibleModal) && props.visibleModal === 'changelog'
+                                }
+                                visibleVersion={
+                                  !isUndefined(props.visibleModal) && props.visibleModal === 'changelog'
+                                    ? props.visibleVersion
+                                    : undefined
+                                }
+                                searchUrlReferer={props.searchUrlReferer}
+                                fromStarredPage={props.fromStarredPage}
+                              />
+                            </div>
+                          )}
 
                           <div className={`card shadow-sm position-relative info ${styles.info}`}>
                             <div className={`card-body ${styles.detailsBody}`}>

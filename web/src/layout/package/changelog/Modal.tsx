@@ -20,11 +20,11 @@ interface Props {
   packageId: string;
   hasChangelog: boolean;
   visibleChangelog: boolean;
+  currentVersion?: string;
+  visibleVersion?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
 }
-
-const BTN_HEIGHT = 51;
 
 const ChangelogModal = (props: Props) => {
   const history = useHistory();
@@ -33,7 +33,20 @@ const ChangelogModal = (props: Props) => {
   const [changelog, setChangelog] = useState<ChangeLog[] | null | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
-  const [activeVersionIndex, setActiveVersionIndex] = useState<number>(0);
+  const [activeVersionIndex, setActiveVersionIndex] = useState<number | undefined>(undefined);
+
+  const updateVersionInQueryString = (currentVersion?: string) => {
+    let version = currentVersion;
+    if (changelog && changelog.length > 0 && !isUndefined(activeVersionIndex)) {
+      version = changelog[activeVersionIndex].version;
+    }
+    if (version) {
+      history.replace({
+        search: `?modal=changelog&version=${version}`,
+        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+      });
+    }
+  };
 
   useEffect(() => {
     if (props.visibleChangelog && !openStatus) {
@@ -55,15 +68,23 @@ const ChangelogModal = (props: Props) => {
   }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    if (btnsWrapper && btnsWrapper.current) {
-      const itemsOnScreen = Math.floor(btnsWrapper.current.clientHeight / BTN_HEIGHT) - 1;
-      if (activeVersionIndex + 1 > itemsOnScreen) {
-        btnsWrapper.current.scroll(0, (activeVersionIndex - itemsOnScreen) * BTN_HEIGHT);
-      } else {
-        btnsWrapper.current.scroll(0, 0);
+    if (btnsWrapper && btnsWrapper.current && !isUndefined(activeVersionIndex)) {
+      // Scroll to active button
+      btnsWrapper.current.children[activeVersionIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      // When changelog is defined, url with new active version is updated
+      if (changelog) {
+        updateVersionInQueryString(changelog[activeVersionIndex].version);
       }
     }
-  }, [activeVersionIndex]);
+  }, [activeVersionIndex]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    // We load correct active version after rendering modal
+    if (openStatus && changelog && isUndefined(activeVersionIndex)) {
+      const version = props.visibleVersion || props.currentVersion || changelog[0].version;
+      updateActiveVersion(changelog.findIndex((ch: ChangeLog) => ch.version === version));
+    }
+  }, [openStatus, changelog]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if ([RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(props.repository.kind))
     return null;
@@ -105,16 +126,12 @@ const ChangelogModal = (props: Props) => {
       } else {
         getChangelog();
       }
-      history.replace({
-        search: '?modal=changelog',
-        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-      });
     }
   };
 
   const onCloseModal = () => {
-    setActiveVersionIndex(0);
     setOpenStatus(false);
+    setActiveVersionIndex(undefined);
     history.replace({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
@@ -217,7 +234,7 @@ const ChangelogModal = (props: Props) => {
                 changelog={changelog}
                 setOpenStatus={setOpenStatus}
                 normalizedName={props.normalizedName}
-                activeVersionIndex={activeVersionIndex}
+                activeVersionIndex={activeVersionIndex || 0}
                 setActiveVersionIndex={setActiveVersionIndex}
                 repository={props.repository}
                 searchUrlReferer={props.searchUrlReferer}
