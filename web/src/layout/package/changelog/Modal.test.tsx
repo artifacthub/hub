@@ -25,6 +25,9 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+const scrollIntoViewMock = jest.fn();
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
+
 const getMockChangelog = (fixtureId: string): ChangeLog[] => {
   return require(`./__fixtures__/Modal/${fixtureId}.json`) as ChangeLog[];
 };
@@ -119,7 +122,7 @@ describe('ChangelogModal', () => {
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '?modal=changelog',
+        search: '?modal=changelog&version=0.8.0',
         state: {
           fromStarredPage: undefined,
           searchUrlReferer: undefined,
@@ -131,6 +134,33 @@ describe('ChangelogModal', () => {
 
       const blocks = screen.getAllByTestId('changelogBlock');
       expect(blocks).toHaveLength(Object.keys(mockChangelog).length);
+    });
+
+    it('selects correct version to open modal', async () => {
+      const mockChangelog = getMockChangelog('10');
+      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+
+      render(<ChangelogModal {...defaultProps} currentVersion="0.3.0" />);
+
+      const btn = screen.getByText('Changelog');
+      userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+      });
+
+      const els = screen.getAllByText(/0.3.0/);
+      expect(els).toHaveLength(2);
+      expect(els[0].parentElement).toHaveClass('activeVersionBtnWrapper');
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({
+        search: '?modal=changelog&version=0.3.0',
+        state: {
+          fromStarredPage: undefined,
+          searchUrlReferer: undefined,
+        },
+      });
     });
 
     it('closes modal', async () => {

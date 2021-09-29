@@ -21,7 +21,7 @@ interface Props {
   setOpenStatus: React.Dispatch<React.SetStateAction<boolean>>;
   normalizedName: string;
   activeVersionIndex: number;
-  setActiveVersionIndex: React.Dispatch<React.SetStateAction<number>>;
+  setActiveVersionIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
   repository: Repository;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -38,7 +38,7 @@ const Content = (props: Props) => {
       pathname: buildPackageURL(props.normalizedName, props.repository, newVersion, true),
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
-    props.setActiveVersionIndex(0);
+    props.setActiveVersionIndex(undefined);
     props.setOpenStatus(false);
   };
 

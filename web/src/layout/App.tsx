@@ -133,6 +133,7 @@ export default function App() {
                       visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       visibleTemplate={getQueryParam(location.search, 'template') || undefined}
                       visibleFile={getQueryParam(location.search, 'file') || undefined}
+                      visibleVersion={getQueryParam(location.search, 'version') || undefined}
                       visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
                       eventId={getQueryParam(location.search, 'event-id') || undefined}
                       {...location.state}
