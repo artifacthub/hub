@@ -2,6 +2,7 @@
   background-color: var(--color-1-500);
   padding: 1rem !important;
   min-height: 73px;
+  border-top: none !important;
 }
 
 .navbar:not(.homeNavbar) {
