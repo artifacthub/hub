@@ -145,7 +145,7 @@ const SubscriptionsButton = (props: Props) => {
         element={
           <button
             className={classnames('btn p-0 position-relative', styles.subsBtn, {
-              [`disabled ${styles.disabled}`]: isDisabled,
+              disabled: isDisabled,
             })}
             type="button"
             onClick={() => {
@@ -156,7 +156,6 @@ const SubscriptionsButton = (props: Props) => {
             }}
             aria-label="Open subscriptions menu"
             aria-expanded={openStatus}
-            // disabled={isNull(ctx.user) || isNull(activeSubscriptions) || isUndefined(activeSubscriptions)}
           >
             <div
               className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
