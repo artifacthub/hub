@@ -6,6 +6,10 @@
   width: 1%;
 }
 
+.icon {
+  width: 14px;
+}
+
 .tableTitle:hover {
   background-color: inherit !important;
 }
