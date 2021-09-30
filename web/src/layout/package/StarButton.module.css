@@ -14,7 +14,6 @@
 .starBtn:disabled,
 .disabled {
   opacity: 1 !important;
-  cursor: default;
 }
 
 .starBadge {

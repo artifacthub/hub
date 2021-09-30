@@ -32,14 +32,14 @@ const SignKeyInfo = (props: Props) => {
   };
 
   const onOpen = useCallback(() => {
-    if (props.signed && props.repoKind === RepositoryKind.Helm) {
+    if (props.signed && props.repoKind === RepositoryKind.Helm && !isUndefined(props.signKey)) {
       setOpenStatus(true);
       history.replace({
         search: '?modal=key-info',
         state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
       });
     }
-  }, [history, props.fromStarredPage, props.repoKind, props.searchUrlReferer, props.signed]);
+  }, [history, props.fromStarredPage, props.repoKind, props.searchUrlReferer, props.signKey, props.signed]);
 
   useEffect(() => {
     if (props.visibleKeyInfo && !openStatus) {

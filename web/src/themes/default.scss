@@ -28,6 +28,10 @@ $container-max-widths: (
   color: #636a6e !important;
 }
 
+button.disabled {
+  cursor: default !important;
+}
+
 .form-control:disabled,
 .form-control[readonly] {
   opacity: 0.75;
