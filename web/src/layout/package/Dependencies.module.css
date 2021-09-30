@@ -10,6 +10,12 @@
   width: 14px;
 }
 
+.pkgIcon {
+  min-width: 14px;
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
 .tableTitle:hover {
   background-color: inherit !important;
 }
@@ -25,4 +31,27 @@
 
 .textWrapper {
   table-layout: fixed;
+}
+
+.repoName {
+  font-size: 0.75rem;
+  margin-left: 1.4rem;
+}
+
+.repoNameInTable {
+  font-size: 0.75rem;
+  margin-top: 3px;
+}
+
+.copyBtn {
+  position: relative;
+  top: -2px;
+}
+
+.modal {
+  width: 800px !important;
+}
+
+.versionCol {
+  width: 15%;
 }

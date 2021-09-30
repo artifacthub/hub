@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Dependency } from '../../types';
 import Dependencies from './Dependencies';
@@ -57,6 +58,27 @@ describe('Dependencies', () => {
     it('does not render component when dependencies are undefined', () => {
       const { container } = render(<Dependencies {...defaultProps} />);
       expect(container).toBeEmptyDOMElement();
+    });
+
+    it('renders repo info', () => {
+      const mockDependencies = getMockDependencies('4');
+      render(<Dependencies dependencies={mockDependencies} {...defaultProps} />);
+      expect(screen.getAllByText('Repo:')).toHaveLength(3);
+      expect(screen.getAllByText('https://prometheus-community.github.io/helm-charts')).toHaveLength(2);
+      expect(screen.getByText('https://grafana.github.io/helm-charts')).toBeInTheDocument();
+    });
+
+    it('renders AH repo link', () => {
+      const mockDependencies = getMockDependencies('5');
+      render(
+        <Router>
+          <Dependencies dependencies={mockDependencies} {...defaultProps} />
+        </Router>
+      );
+
+      const link = screen.getByRole('link', { name: 'grafana' });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute('href', '/packages/helm/grafana/grafana');
     });
   });
 });
