@@ -154,6 +154,7 @@ export interface Dependency {
   name: string;
   version: string;
   repository?: string;
+  artifacthubRepositoryName?: string;
 }
 
 export interface Recommendation {
@@ -188,6 +189,7 @@ export interface PackageData {
 export interface TektonTaskInPipeline {
   name: string;
   runAfter?: string[];
+  artifacthubRepositoryName?: string;
 }
 
 export interface OPAPolicies {

@@ -4,13 +4,20 @@ create or replace function get_package(p_input jsonb)
 returns setof json as $$
 declare
     v_package_id uuid;
+    v_repository_kind_id int;
     v_package_name text := p_input->>'package_name';
     v_repository_name text := p_input->>'repository_name';
 begin
     if p_input->>'package_id' <> '' then
         v_package_id = p_input->>'package_id';
+
+        select r.repository_kind_id into v_repository_kind_id
+        from package p
+        join repository r using (repository_id)
+        where package_id = v_package_id;
     else
-        select p.package_id into v_package_id
+        select p.package_id, r.repository_kind_id
+        into v_package_id, v_repository_kind_id
         from package p
         join repository r using (repository_id)
         where p.normalized_name = v_package_name
@@ -39,7 +46,7 @@ begin
         'capabilities', s.capabilities,
         'security_report_summary', s.security_report_summary,
         'security_report_created_at', floor(extract(epoch from s.security_report_created_at)),
-        'data', s.data,
+        'data', enrich_package_data(v_repository_kind_id, s.data),
         'version', s.version,
         'available_versions', (
             select json_agg(json_build_object(

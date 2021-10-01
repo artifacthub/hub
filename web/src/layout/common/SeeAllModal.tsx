@@ -13,6 +13,7 @@ interface Props {
   items: JSX.Element[];
   itemsForModal?: JSX.Element[] | JSX.Element;
   open?: boolean;
+  modalClassName?: string;
 }
 
 const DEFAULT_VISIBLE_ITEMS = 5;
@@ -69,7 +70,7 @@ const SeeAllModal = (props: Props) => {
 
           <Modal
             modalDialogClassName={styles.modalDialog}
-            modalClassName={styles.modal}
+            modalClassName={`${props.modalClassName} ${styles.modal}`}
             header={<div className={`h3 m-2 flex-grow-1 text-truncate ${styles.title}`}>{props.title}</div>}
             open={openStatus}
             onClose={() => setOpenStatus(false)}

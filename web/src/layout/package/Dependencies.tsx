@@ -2,8 +2,11 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useCallback, useEffect, useState } from 'react';
 import { GoPackage } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
-import { Dependency } from '../../types';
+import { Dependency, RepositoryKind } from '../../types';
+import buildPackageURL from '../../utils/buildPackageURL';
+import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import SeeAllModal from '../common/SeeAllModal';
 import SmallTitle from '../common/SmallTitle';
 import styles from './Dependencies.module.css';
@@ -33,10 +36,39 @@ const Dependencies = (props: Props) => {
           data-testid="dependencyItem"
           role="listitem"
         >
-          <GoPackage className="text-muted mr-2 mb-0" />
-          {dependency.name}
-          <span className={styles.separator}>@</span>
-          {dependency.version}
+          <div className="d-flex flex-row align-items-center">
+            <GoPackage className={`text-muted mr-2 mb-0 ${styles.pkgIcon}`} />
+            <div className="text-truncate">
+              {!isUndefined(dependency.artifacthubRepositoryName) ? (
+                <Link
+                  to={{
+                    pathname: buildPackageURL(dependency.name, {
+                      kind: RepositoryKind.Helm,
+                      name: dependency.artifacthubRepositoryName,
+                    }),
+                  }}
+                  className="py-1 py-sm-0 text-primary"
+                >
+                  {dependency.name}
+                </Link>
+              ) : (
+                <>{dependency.name}</>
+              )}
+              <span className={styles.separator}>@</span>
+              {dependency.version}
+            </div>
+          </div>
+          {dependency.repository && (
+            <div className={`d-flex flex-row align-items-center ${styles.repoName}`}>
+              <small className="text-muted text-uppercase mr-1">Repo:</small>
+              <span className="text-truncate">{dependency.repository}</span>
+              <ButtonCopyToClipboard
+                text={dependency.repository}
+                className={`btn-link text-dark border-0 pb-0 ${styles.copyBtn}`}
+                label="Copy repository url to clipboard"
+              />
+            </div>
+          )}
         </div>
       );
 
@@ -47,14 +79,43 @@ const Dependencies = (props: Props) => {
           </td>
           <td className="border-left-0">
             <div className={`d-table w-100 h-100 px-1 ${styles.textWrapper}`}>
-              <div data-testid="containerImage" className="text-truncate">
-                {dependency.name}
-              </div>
+              {!isUndefined(dependency.artifacthubRepositoryName) ? (
+                <Link
+                  to={{
+                    pathname: buildPackageURL(dependency.name, {
+                      kind: RepositoryKind.Helm,
+                      name: dependency.artifacthubRepositoryName,
+                    }),
+                  }}
+                  className="py-1 py-sm-0 text-primary"
+                  aria-label={`Open ${dependency.name} package`}
+                >
+                  <div className={`text-truncate ${styles.linkText}`}>{dependency.name}</div>
+                </Link>
+              ) : (
+                <div data-testid="containerImage" className="text-truncate">
+                  {dependency.name}
+                </div>
+              )}
+            </div>
+          </td>
+          <td className={styles.versionCol}>
+            <div className={`d-table w-100 h-100 px-1 ${styles.textWrapper}`}>
+              <div className="text-truncate">{dependency.version}</div>
             </div>
           </td>
           <td>
             <div className={`d-table w-100 h-100 px-1 ${styles.textWrapper}`}>
-              <div className="text-truncate">{dependency.version}</div>
+              {dependency.repository && (
+                <div className={`d-flex flex-row align-items-center ${styles.repoNameInTable}`}>
+                  <span className="text-truncate">{dependency.repository}</span>
+                  <ButtonCopyToClipboard
+                    text={dependency.repository}
+                    className={`btn-link text-dark border-0 ${styles.copyBtn}`}
+                    label="Copy repository url to clipboard"
+                  />
+                </div>
+              )}
             </div>
           </td>
         </tr>
@@ -72,6 +133,9 @@ const Dependencies = (props: Props) => {
               </th>
               <th scope="col">
                 <span className="px-1">Version</span>
+              </th>
+              <th scope="col">
+                <span className="px-1">Repository</span>
               </th>
             </tr>
           </thead>
@@ -93,7 +157,7 @@ const Dependencies = (props: Props) => {
     <>
       <SmallTitle text="Dependencies" />
       <div className="mb-3">
-        <SeeAllModal title="Dependencies" {...dependencies} packageId={props.packageId} />
+        <SeeAllModal title="Dependencies" {...dependencies} packageId={props.packageId} modalClassName={styles.modal} />
       </div>
     </>
   );
