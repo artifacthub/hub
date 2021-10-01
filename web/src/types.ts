@@ -107,6 +107,12 @@ export interface Package {
   stats?: PackageStats;
   allContainersImagesWhitelisted?: boolean;
   signKey?: HelmChartSignKey;
+  screenshots?: Screenshot[];
+}
+
+export interface Screenshot {
+  title?: string;
+  url: string;
 }
 
 export interface HelmChartSignKey {

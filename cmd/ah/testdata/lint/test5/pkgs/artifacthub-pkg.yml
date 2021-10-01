@@ -34,6 +34,11 @@ provider:
   name: Provider
 recommendations:
   - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+screenshots:
+  - title: Sample screenshot 1
+    url: https://example.com/screenshot1.jpg
+  - title: Sample screenshot 2
+    url: https://example.com/screenshot2.jpg
 annotations:
   key1: value1
   key2: value2

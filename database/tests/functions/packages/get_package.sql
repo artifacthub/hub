@@ -100,6 +100,7 @@ insert into snapshot (
     contains_security_updates,
     prerelease,
     recommendations,
+    screenshots,
     sign_key,
     ts
 ) values (
@@ -138,6 +139,12 @@ insert into snapshot (
     true,
     true,
     '[{"url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"}]',
+    '[
+        {
+            "title": "Screenshot 1",
+            "url": "https://artifacthub.io/screenshot1.jpg"
+        }
+    ]'::jsonb,
     '{"fingerprint": "0011223344", "url": "https://key.url"}',
     '2020-06-16 11:20:34+02'
 );
@@ -336,6 +343,12 @@ select is(
                 "url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"
             }
         ],
+        "screenshots": [
+            {
+                "title": "Screenshot 1",
+                "url": "https://artifacthub.io/screenshot1.jpg"
+            }
+        ],
         "sign_key": {
             "fingerprint": "0011223344",
             "url": "https://key.url"
@@ -472,6 +485,12 @@ select is(
         "recommendations": [
             {
                 "url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"
+            }
+        ],
+        "screenshots": [
+            {
+                "title": "Screenshot 1",
+                "url": "https://artifacthub.io/screenshot1.jpg"
             }
         ],
         "sign_key": {

@@ -102,6 +102,12 @@ func TestTrackerSource(t *testing.T) {
 				URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
 			},
 		},
+		Screenshots: []*hub.Screenshot{
+			{
+				Title: "Screenshot 1",
+				URL:   "https://artifacthub.io/screenshot1.jpg",
+			},
+		},
 		SignKey: &hub.SignKey{
 			Fingerprint: "0011223344",
 			URL:         "https://key.url",
@@ -927,6 +933,25 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				Recommendations: []*hub.Recommendation{
 					{
 						URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+					},
+				},
+			},
+			"",
+		},
+		// Screenshots
+		{
+			&hub.Package{},
+			map[string]string{
+				screenshotsAnnotation: `
+- title: Screenshot 1
+  url: https://artifacthub.io/screenshot1.jpg
+`,
+			},
+			&hub.Package{
+				Screenshots: []*hub.Screenshot{
+					{
+						Title: "Screenshot 1",
+						URL:   "https://artifacthub.io/screenshot1.jpg",
 					},
 				},
 			},

@@ -24,6 +24,9 @@ metadata:
     artifacthub.io/provider: Some organization
     artifacthub.io/recommendations: |
       - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+    artifacthub.io/screenshots: |
+      - title: Screenshot 1
+        url: https://artifacthub.io/screenshot1.jpg
 spec:
   version: v0.1.0
   shortDescription: Test plugin

@@ -154,6 +154,7 @@ begin
         contains_security_updates,
         prerelease,
         recommendations,
+        screenshots,
         sign_key,
         ts
     ) values (
@@ -185,6 +186,7 @@ begin
         (p_pkg->>'contains_security_updates')::boolean,
         (p_pkg->>'prerelease')::boolean,
         nullif(p_pkg->'recommendations', 'null'),
+        nullif(p_pkg->'screenshots', 'null'),
         nullif(p_pkg->'sign_key', 'null'),
         v_ts
     )
@@ -216,6 +218,7 @@ begin
         contains_security_updates = excluded.contains_security_updates,
         prerelease = excluded.prerelease,
         recommendations = excluded.recommendations,
+        screenshots = excluded.screenshots,
         sign_key = excluded.sign_key,
         ts = v_ts;
 

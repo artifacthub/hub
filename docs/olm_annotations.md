@@ -36,6 +36,10 @@ Use this annotation to indicate that this operator version is a pre-release. Thi
 
 This annotation allows recommending other related packages. Recommended packages will be featured in the package detail view in Artifact Hub.
 
+- **artifacthub.io/screenshots** *(yaml string, see example below)*
+
+This annotation can be used to provide some screenshots that will be featured in the package detail view in Artifact Hub.
+
 ## Example
 
 Artifact Hub annotations in `CSV` file:
@@ -72,6 +76,11 @@ metadata:
     artifacthub.io/recommendations: |
       - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
       - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+    artifacthub.io/screenshots: |
+      - title: Sample screenshot 1
+        url: https://example.com/screenshot1.jpg
+      - title: Sample screenshot 2
+        url: https://example.com/screenshot2.jpg
 spec:
     ...
 ```

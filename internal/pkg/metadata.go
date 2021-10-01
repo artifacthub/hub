@@ -84,6 +84,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		ContainersImages:        md.ContainersImages,
 		Maintainers:             md.Maintainers,
 		Recommendations:         md.Recommendations,
+		Screenshots:             md.Screenshots,
 	}
 	if p.Data == nil && len(md.Annotations) > 0 {
 		p.Data = make(map[string]interface{})

@@ -126,6 +126,12 @@ func TestTrackerSource(t *testing.T) {
 					URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
 				},
 			},
+			Screenshots: []*hub.Screenshot{
+				{
+					Title: "Screenshot 1",
+					URL:   "https://artifacthub.io/screenshot1.jpg",
+				},
+			},
 			Data: map[string]interface{}{
 				RawManifestKey: string(manifestRaw),
 				PlatformsKey:   []string{"linux/amd64"},

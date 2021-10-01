@@ -46,6 +46,7 @@ const (
 	operatorCapabilitiesAnnotation = "artifacthub.io/operatorCapabilities"
 	prereleaseAnnotation           = "artifacthub.io/prerelease"
 	recommendationsAnnotation      = "artifacthub.io/recommendations"
+	screenshotsAnnotation          = "artifacthub.io/screenshots"
 	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
 	signKeyAnnotation              = "artifacthub.io/signKey"
 
@@ -677,6 +678,16 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 			errs = multierror.Append(errs, fmt.Errorf("%w: invalid recommendations value", errInvalidAnnotation))
 		} else {
 			p.Recommendations = recommendations
+		}
+	}
+
+	// Screenshots
+	if v, ok := annotations[screenshotsAnnotation]; ok {
+		var screenshots []*hub.Screenshot
+		if err := yaml.Unmarshal([]byte(v), &screenshots); err != nil {
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid screenshots value", errInvalidAnnotation))
+		} else {
+			p.Screenshots = screenshots
 		}
 	}
 
