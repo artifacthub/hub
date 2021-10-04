@@ -28,6 +28,37 @@ const tests: Test[] = [
     ],
   },
   {
+    input: '\n# **Title 1** \n## Subtitle 1',
+    output: [
+      {
+        depth: 1,
+        value: 'Title 1',
+        children: [
+          {
+            depth: 2,
+            value: 'Subtitle 1',
+            children: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    input: '\n# _Title 1_\n# Title 2',
+    output: [
+      {
+        depth: 1,
+        value: 'Title 1',
+        children: [],
+      },
+      {
+        depth: 1,
+        value: 'Title 2',
+        children: [],
+      },
+    ],
+  },
+  {
     input: '\n# Title 1\n## Subtitle 1\n# Title 2',
     output: [
       {
@@ -185,7 +216,7 @@ const tests: Test[] = [
         children: [
           {
             depth: 2,
-            value: '𝚂𝚞𝚋𝚝𝚒𝚝𝚕𝚎 𝟷',
+            value: 'Subtitle 1',
             children: [],
           },
         ],
