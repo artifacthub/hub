@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 
 import { TOCEntryItem } from '../types';
 
@@ -31,7 +31,13 @@ export const transformer = (ast: Node) => {
     const allContentValues =
       node.children && node.children.length > 0
         ? node.children.map((n: Node) => {
-            return n.value || '';
+            if (isUndefined(n.value) && n.children && n.children.length > 0) {
+              return n.children.map((subn: Node) => {
+                return subn.value || '';
+              });
+            } else {
+              return n.value || '';
+            }
           })
         : [''];
     return allContentValues.join('');
