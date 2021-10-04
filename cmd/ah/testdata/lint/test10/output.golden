@@ -34,6 +34,7 @@ Package lint SUCCEEDED!
 ! Changes: *** NOT PROVIDED ***
 ✓ Recommendations:
   - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+! Screenshots: *** NOT PROVIDED ***
 ✓ Operator: false
 ✓ Platforms: PROVIDED
   - linux/amd64

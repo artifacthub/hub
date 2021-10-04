@@ -35,6 +35,7 @@ Package lint SUCCEEDED!
   - Kind:  | Description: fix 1
 ✓ Recommendations:
   - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+! Screenshots: *** NOT PROVIDED ***
 ✓ Operator: true
 ✓ Operator capabilities: Basic Install
 ✓ Default channel: stable
@@ -78,6 +79,7 @@ Package lint SUCCEEDED!
   - Kind:  | Description: fix 1
 ✓ Recommendations:
   - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+! Screenshots: *** NOT PROVIDED ***
 ✓ Operator: true
 ✓ Operator capabilities: Basic Install
 ✓ Default channel: stable

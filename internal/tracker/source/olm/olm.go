@@ -39,6 +39,7 @@ const (
 	prereleaseAnnotation      = "artifacthub.io/prerelease"
 	recommendationsAnnotation = "artifacthub.io/recommendations"
 	securityUpdatesAnnotation = "artifacthub.io/containsSecurityUpdates"
+	screenshotsAnnotation     = "artifacthub.io/screenshots"
 )
 
 var (
@@ -476,6 +477,15 @@ func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
 			return nil, fmt.Errorf("invalid recommendations value: %s", v)
 		}
 		p.Recommendations = recommendations
+	}
+
+	// Screenshots
+	if v, ok := md.CSV.Annotations[screenshotsAnnotation]; ok {
+		var screenshots []*hub.Screenshot
+		if err := yaml.Unmarshal([]byte(v), &screenshots); err != nil {
+			return nil, fmt.Errorf("invalid screenshots value: %s", v)
+		}
+		p.Screenshots = screenshots
 	}
 
 	// Security updates

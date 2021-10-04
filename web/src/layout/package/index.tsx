@@ -57,6 +57,7 @@ import styles from './PackageView.module.css';
 import ReadmeWrapper from './readme';
 import RecommendedPackages from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
+import ScreenshotsModal from './screenshots/Modal';
 import SignKeyInfo from './SignKeyInfo';
 import StarButton from './StarButton';
 import Stats from './Stats';
@@ -695,6 +696,19 @@ const PackageView = (props: Props) => {
                           />
                         </div>
                       )}
+
+                      {!isUndefined(detail.screenshots) && (
+                        <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
+                          <ScreenshotsModal
+                            screenshots={detail.screenshots}
+                            visibleScreenshotsModal={
+                              !isUndefined(props.visibleModal) && props.visibleModal === 'screenshots'
+                            }
+                            searchUrlReferer={props.searchUrlReferer}
+                            fromStarredPage={props.fromStarredPage}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -882,6 +896,17 @@ const PackageView = (props: Props) => {
                                 fromStarredPage={props.fromStarredPage}
                               />
                             </div>
+                          )}
+
+                          {!isUndefined(detail.screenshots) && (
+                            <ScreenshotsModal
+                              screenshots={detail.screenshots}
+                              visibleScreenshotsModal={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'screenshots'
+                              }
+                              searchUrlReferer={props.searchUrlReferer}
+                              fromStarredPage={props.fromStarredPage}
+                            />
                           )}
 
                           <div className={`card shadow-sm position-relative info ${styles.info}`}>

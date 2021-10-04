@@ -213,6 +213,7 @@ select columns_are('snapshot', array[
     'ts',
     'created_at',
     'recommendations',
+    'screenshots',
     'sign_key'
 ]);
 select columns_are('subscription', array[

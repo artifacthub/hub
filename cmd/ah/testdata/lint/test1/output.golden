@@ -33,6 +33,7 @@ Package lint SUCCEEDED!
       - Name: Sample link | URL: https://sample.link
   - Kind: fixed | Description: Test fix
 ! Recommendations: *** NOT PROVIDED ***
+! Screenshots: *** NOT PROVIDED ***
 ✓ Operator: false
 ! Sign key: *** NOT PROVIDED ***
 ! Values schema: *** NOT PROVIDED ***

@@ -14,6 +14,9 @@ metadata:
     artifacthub.io/prerelease: "true"
     artifacthub.io/recommendations: |
       - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+    artifacthub.io/screenshots: |
+      - title: Screenshot 1
+        url: https://artifacthub.io/screenshot1.jpg
     capabilities: Basic Install
     categories: Application Runtime
     containerImage: repo.url:latest

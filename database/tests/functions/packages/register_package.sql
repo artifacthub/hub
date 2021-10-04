@@ -104,6 +104,12 @@ select register_package('
             "url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"
         }
     ],
+    "screenshots": [
+        {
+            "title": "Screenshot 1",
+            "url": "https://artifacthub.io/screenshot1.jpg"
+        }
+    ],
     "sign_key": {
         "fingerprint": "0011223344",
         "url": "https://key.url"
@@ -176,6 +182,7 @@ select results_eq(
             s.contains_security_updates,
             s.prerelease,
             s.recommendations,
+            s.screenshots,
             s.sign_key,
             s.ts
         from snapshot s
@@ -218,6 +225,12 @@ select results_eq(
             true,
             true,
             '[{"url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub"}]'::jsonb,
+            '[
+                {
+                    "title": "Screenshot 1",
+                    "url": "https://artifacthub.io/screenshot1.jpg"
+                }
+            ]'::jsonb,
             '{"fingerprint": "0011223344", "url": "https://key.url"}'::jsonb,
             '2020-06-16 11:20:34+02'::timestamptz
         )

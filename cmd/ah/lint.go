@@ -553,6 +553,16 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 		fmt.Fprintf(out, "%c Recommendations: %s\n", warning, notProvided)
 	}
 
+	// Screenshots
+	if len(pkg.Screenshots) > 0 {
+		fmt.Fprintf(out, "%c Screenshots:\n", success)
+		for _, s := range pkg.Screenshots {
+			fmt.Fprintf(out, "      - Title: %s | URL: %s\n", s.Title, s.URL)
+		}
+	} else {
+		fmt.Fprintf(out, "%c Screenshots: %s\n", warning, notProvided)
+	}
+
 	// Operator
 	out.print("Operator", strconv.FormatBool(pkg.IsOperator))
 	if pkg.IsOperator {

@@ -58,7 +58,7 @@ const TOC = (props: Props) => {
           role="listbox"
           aria-roledescription="Table of content links"
         >
-          <div className={`overflow-auto py-3 ${styles.list}`}>
+          <div className={`overflow-auto py-3 visible-scroll ${styles.list}`}>
             <TOCList {...props} setVisibleTOC={setVisibleTOC} />
           </div>
         </div>

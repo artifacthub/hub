@@ -58,6 +58,10 @@ Use this annotation to indicate that this chart version is a pre-release. This s
 
 This annotation allows recommending other related packages. Recommended packages will be featured in the package detail view in Artifact Hub.
 
+- **artifacthub.io/screenshots** *(yaml string, see example below)*
+
+This annotation can be used to provide some screenshots that will be featured in the package detail view in Artifact Hub.
+
 - **artifacthub.io/signKey** *(yaml string, see example below)*
 
 This annotation can be used to provide some information about the key used to sign a given chart version. This information will be displayed on the Artifact Hub UI, making it easier for users to get the information they need to verify the integrity and origin of your chart. The `url` field indicates where users can find the public key and it is mandatory when a sign key entry is provided.
@@ -121,6 +125,11 @@ annotations:
   artifacthub.io/recommendations: |
     - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
     - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+  artifacthub.io/screenshots: |
+    - title: Sample screenshot 1
+      url: https://example.com/screenshot1.jpg
+    - title: Sample screenshot 2
+      url: https://example.com/screenshot2.jpg
   artifacthub.io/signKey: |
     fingerprint: C874011F0AB405110D02105534365D9472D7468F
     url: https://keybase.io/hashicorp/pgp_keys.asc

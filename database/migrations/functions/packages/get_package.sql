@@ -85,6 +85,7 @@ begin
             where pm.package_id = v_package_id
         ),
         'recommendations', s.recommendations,
+        'screenshots', s.screenshots,
         'sign_key', s.sign_key,
         'repository', (select get_repository_summary(r.repository_id)),
         'stats', json_build_object(

@@ -22,6 +22,9 @@ metadata:
     artifacthub.io/provider: Some organization
     artifacthub.io/recommendations: |
       - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+    artifacthub.io/screenshots: |
+      - title: Screenshot 1
+        url: https://artifacthub.io/screenshot1.jpg
     tekton.dev/pipelines.minVersion: "0.12.1"
     tekton.dev/tags: tag1, tag2
     tekton.dev/displayName: "Task 1"

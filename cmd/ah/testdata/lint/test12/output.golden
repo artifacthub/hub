@@ -36,6 +36,7 @@ Package lint SUCCEEDED!
   - Kind:  | Description: Fixed minor bug
 ✓ Recommendations:
   - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+! Screenshots: *** NOT PROVIDED ***
 ✓ Operator: false
 
 ------------------------------------------------------------------------------------------------------------------------

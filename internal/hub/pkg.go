@@ -97,6 +97,7 @@ type Package struct {
 	Prerelease                     bool                   `json:"prerelease"`
 	Maintainers                    []*Maintainer          `json:"maintainers"`
 	Recommendations                []*Recommendation      `json:"recommendations"`
+	Screenshots                    []*Screenshot          `json:"screenshots"`
 	SignKey                        *SignKey               `json:"sign_key"`
 	Repository                     *Repository            `json:"repository"`
 	TS                             int64                  `json:"ts,omitempty"`
@@ -157,6 +158,7 @@ type PackageMetadata struct {
 	Provider                *Provider         `yaml:"provider"`
 	Ignore                  []string          `yaml:"ignore"`
 	Recommendations         []*Recommendation `yaml:"recommendations"`
+	Screenshots             []*Screenshot     `yaml:"screenshots"`
 	Annotations             map[string]string `yaml:"annotations"`
 }
 
@@ -174,6 +176,12 @@ type Provider struct {
 // Recommendation represents some information about a recommended package.
 type Recommendation struct {
 	URL string `json:"url" yaml:"url"`
+}
+
+// Screenshot represents a screenshot associated with a package.
+type Screenshot struct {
+	Title string `json:"title" yaml:"title"`
+	URL   string `json:"url" yaml:"url"`
 }
 
 // SnapshotSecurityReport represents some information about the security
