@@ -1,6 +1,6 @@
 -- enrich_package_data enriches the package's data provided with some extra
 -- information.
-create or replace function enrich_package_data(p_kind int, p_data jsonb)
+create or replace function enrich_package_data(p_package_id uuid, p_kind int, p_data jsonb)
 returns jsonb as $$
 declare
     v_data jsonb := p_data;
@@ -16,13 +16,31 @@ begin
                         select jsonb_agg(jsonb_strip_nulls(jsonb_set(
                             dep,
                             '{artifacthub_repository_name}',
-                            coalesce((
-                                select to_jsonb(r.name)
-                                from repository r
-                                join package p using (repository_id)
-                                where r.url = dep->>'repository'
-                                and p.name = dep->>'name'
-                            ), 'null'),
+                            coalesce(
+                                (
+                                    select
+                                    case when starts_with(dep->>'repository', 'file://') then (
+                                        select to_jsonb(r.name)
+                                        from repository r
+                                        join package p using (repository_id)
+                                        where p.name = dep->>'name'
+                                        and r.url = (
+                                            select r.url
+                                            from repository r
+                                            join package p using (repository_id)
+                                            where p.package_id = p_package_id
+                                        )
+                                    ) else (
+                                        select to_jsonb(r.name)
+                                        from repository r
+                                        join package p using (repository_id)
+                                        where r.url = dep->>'repository'
+                                        and p.name = dep->>'name'
+                                    )
+                                    end
+                                ),
+                                'null'
+                            ),
                             true
                         )))
                         from (

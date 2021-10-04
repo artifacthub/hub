@@ -46,7 +46,7 @@ begin
         'capabilities', s.capabilities,
         'security_report_summary', s.security_report_summary,
         'security_report_created_at', floor(extract(epoch from s.security_report_created_at)),
-        'data', enrich_package_data(v_repository_kind_id, s.data),
+        'data', enrich_package_data(v_package_id, v_repository_kind_id, s.data),
         'version', s.version,
         'available_versions', (
             select json_agg(json_build_object(
