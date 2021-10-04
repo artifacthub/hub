@@ -68,6 +68,9 @@
     "ts-jest": "^26.3.0",
     "typescript": "^3.9.7"
   },
+  "resolutions": {
+    "react-syntax-highlighter/**/prismjs": "^1.25.0"
+  },
   "scripts": {
     "start": "REACT_APP_HUB_BASE_URL=http://localhost:8000 react-scripts start",
     "build": "INLINE_RUNTIME_CHUNK=false IMAGE_INLINE_SIZE_LIMIT=0 react-scripts build",
