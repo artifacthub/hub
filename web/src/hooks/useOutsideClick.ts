@@ -1,3 +1,4 @@
+import { isNull } from 'lodash';
 import { RefObject, useCallback, useEffect, useState } from 'react';
 
 export default function useOutsideClick(
@@ -10,7 +11,8 @@ export default function useOutsideClick(
   const isOutside = useCallback(
     (e: MouseEvent) => {
       const test = refs.map((ref) => {
-        return ref.current !== null && !ref.current.contains(e.target as HTMLElement);
+        if (isNull(ref.current)) return true;
+        return !ref.current.contains(e.target as HTMLElement);
       });
 
       return test.every(Boolean);
