@@ -30,7 +30,7 @@ const ScreenshotsModal = (props: Props) => {
   const [activeScreenshot, setActiveScreenshot] = useState<number>(0);
   const [error, setError] = useState(false);
   const [onLoadedImage, setOnLoadedImage] = useState<boolean>(false);
-  useOutsideClick([img, leftBtn, rightBtn, dotsBtn, brokenImg], openStatus, () => {
+  useOutsideClick([img, brokenImg, leftBtn, rightBtn, dotsBtn], openStatus, () => {
     onCloseModal();
   });
 
@@ -78,9 +78,9 @@ const ScreenshotsModal = (props: Props) => {
         </div>
       </button>
 
-      <FullScreenModal onClose={onCloseModal} open={openStatus} activeClosableOutside={false}>
-        <div className="d-flex flex-column h-100 w-100 align-items-center">
-          <div className={`d-flex flex-grow-1 w-100 ${styles.imgWrapper}`}>
+      <FullScreenModal onClose={onCloseModal} open={openStatus}>
+        <div className="d-flex flex-column h-100 w-100 align-items-center unselectable">
+          <div className={`d-flex flex-grow-1 w-100 pt-3 ${styles.imgWrapper}`}>
             <div className="d-flex flex-row align-items-center justify-content-between p-3 p-md-4 h-100 w-100">
               <div className="mr-3" ref={leftBtn}>
                 <button
@@ -98,9 +98,9 @@ const ScreenshotsModal = (props: Props) => {
                 {!onLoadedImage && <Loading className={styles.loading} />}
 
                 {error ? (
-                  <div className="d-flex flex-column justify-content-center align-items-center h-100" ref={brokenImg}>
+                  <div className="d-flex flex-column justify-content-center align-items-center h-100">
                     <BiUnlink className={`mb-4 text-light ${styles.imgErrorIcon}`} />
-                    <div className="font-italic text-light">
+                    <div className="font-italic text-light" ref={brokenImg}>
                       Sorry, this{' '}
                       <ExternalLink
                         href={props.screenshots[activeScreenshot].url}
