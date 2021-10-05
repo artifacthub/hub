@@ -18,11 +18,11 @@ hub
 └── widget
 ```
 
-- **.github:** contains the Github Actions workflows as well as the issue templates.
+- **.github:** contains the Github Actions workflows as well as the issues templates.
 
 - **charts/artifact-hub:** contains the Artifact Hub Helm chart, which is the recommended installation method.
 
-- **cmd:** contains the source code of the backend applications: `hub`, `tracker` and `scanner`.
+- **cmd:** contains the source code of the backend applications and the CLI tool: `hub`, `tracker`, `scanner` and `ah`.
 
 - **database:** contains all code related to the database layer, such as the schema migrations, functions and tests.
 
@@ -45,6 +45,8 @@ Artifact Hub is structured in multiple layers, each of them providing a set of s
 - **Backend applications:** this layer represents the applications that form the backend: `hub`, `tracker` and `scanner`. These applications rely on the `Internal APIs` layer to perform their tasks. Please see the [backend applications](#backend-applications) section for more details.
 
 - **Web and widget applications:** this layer represents the Artifact Hub's web user interface. It uses the HTTP API exposed from the `hub` to interact with the backend. Please see the [web application](#web-application) section for more details.
+
+- **CLI tool:** Artifact Hub includes a CLI tool named `ah`. Please see its [documentation](https://github.com/artifacthub/hub/blob/master/docs/cli.md) for more details.
 
 ## Database
 
