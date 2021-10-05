@@ -66,7 +66,7 @@ select is(
             "dependencies": [{
                 "name": "pkg2",
                 "version": "1.0.0",
-                "repository": "https://repo1.url"
+                "repository": "https://repo1.url/"
             }]
         }'
     ),
@@ -74,7 +74,7 @@ select is(
         "dependencies": [{
             "name": "pkg2",
             "version": "1.0.0",
-            "repository": "https://repo1.url",
+            "repository": "https://repo1.url/",
             "artifacthub_repository_name": "repo1"
         }]
     }',

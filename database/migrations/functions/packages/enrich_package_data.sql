@@ -34,7 +34,7 @@ begin
                                         select to_jsonb(r.name)
                                         from repository r
                                         join package p using (repository_id)
-                                        where r.url = dep->>'repository'
+                                        where trim(trailing from r.url, '/') = trim(trailing from dep->>'repository', '/')
                                         and p.name = dep->>'name'
                                     )
                                     end
