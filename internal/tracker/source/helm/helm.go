@@ -1,6 +1,7 @@
 package helm
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"errors"
@@ -63,7 +64,7 @@ const (
 var (
 	// containersImagesRE is a regexp used to extract containers images from
 	// kubernetes manifests files.
-	containersImagesRE = regexp.MustCompile(`\simage:\s(\S+)`)
+	containersImagesRE = regexp.MustCompile(`^\s+image:\s+(\S+)`)
 
 	// errInvalidAnnotation indicates that the annotation provided is not valid.
 	errInvalidAnnotation = errors.New("invalid annotation")
@@ -537,9 +538,13 @@ func extractContainersImages(chrt *chart.Chart) ([]string, error) {
 	}
 
 	// Extract containers images from release manifest
-	results := containersImagesRE.FindAllStringSubmatch(release.Manifest, -1)
-	images := make([]string, 0, len(results))
-	for _, result := range results {
+	var images []string
+	s := bufio.NewScanner(strings.NewReader(release.Manifest))
+	for s.Scan() {
+		result := containersImagesRE.FindStringSubmatch(s.Text())
+		if result == nil {
+			continue
+		}
 		image := strings.Trim(result[1], `"'`)
 		if image != "" && !contains(images, image) {
 			images = append(images, image)
