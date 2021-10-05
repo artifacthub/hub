@@ -6,9 +6,11 @@ WORKDIR /go/src/github.com/artifacthub/ah
 COPY go.* ./
 COPY cmd/ah cmd/ah
 COPY internal internal
-RUN cd cmd/ah && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-X main.version=$VERSION -X main.gitCommit=$GIT_COMMIT" -o /ah .
+WORKDIR /go/src/github.com/artifacthub/ah/cmd/ah
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-X main.version=$VERSION -X main.gitCommit=$GIT_COMMIT" -o /ah .
 
 # Final stage
 FROM alpine:3.14
-RUN apk --no-cache add git
+RUN apk --no-cache add git && addgroup -S ah && adduser -S ah -G ah
+USER ah
 COPY --from=ah-builder /ah /usr/local/bin

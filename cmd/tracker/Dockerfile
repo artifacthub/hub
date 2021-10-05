@@ -4,7 +4,8 @@ WORKDIR /go/src/github.com/artifacthub/hub
 COPY go.* ./
 COPY cmd/tracker cmd/tracker
 COPY internal internal
-RUN cd cmd/tracker && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /tracker .
+WORKDIR /go/src/github.com/artifacthub/hub/cmd/tracker
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /tracker .
 
 # OPM installer
 FROM golang:1.17-alpine3.14 AS opm-installer

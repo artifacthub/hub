@@ -4,7 +4,8 @@ WORKDIR /go/src/github.com/artifacthub/hub
 COPY go.* ./
 COPY cmd/hub cmd/hub
 COPY internal internal
-RUN cd cmd/hub && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /hub .
+WORKDIR /go/src/github.com/artifacthub/hub/cmd/hub
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /hub .
 
 # Build frontend
 FROM node:14-alpine3.14 AS frontend-builder
@@ -16,8 +17,9 @@ RUN yarn install
 RUN yarn build
 # Generate a yarn.lock version that does not contain the dev dependencies
 RUN cp -R /web/node_modules /web/package.json /web/yarn.lock /tmp
-RUN cd /tmp && cat package.json | jq 'del(.devDependencies)' > tmp && mv tmp package.json
-RUN cd /tmp && yarn install
+WORKDIR /tmp
+RUN cat package.json | jq 'del(.devDependencies)' > tmp && mv tmp package.json
+RUN yarn install
 
 # Build widget
 FROM node:14-alpine3.14 AS widget-builder
@@ -33,7 +35,8 @@ WORKDIR /
 COPY scripts scripts
 COPY docs docs
 RUN scripts/prepare-docs.sh
-RUN cd docs/www && hugo
+WORKDIR /docs/www
+RUN hugo
 
 # Final stage
 FROM alpine:3.14

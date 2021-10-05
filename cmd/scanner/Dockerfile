@@ -4,7 +4,8 @@ WORKDIR /go/src/github.com/artifacthub/scanner
 COPY go.* ./
 COPY cmd/scanner cmd/scanner
 COPY internal internal
-RUN cd cmd/scanner && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /scanner .
+WORKDIR /go/src/github.com/artifacthub/scanner/cmd/scanner
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /scanner .
 
 # Trivy installer
 FROM alpine:3.14 AS trivy-installer
