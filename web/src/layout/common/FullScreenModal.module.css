@@ -8,8 +8,9 @@
 }
 
 .close {
-  font-size: 3rem;
-  opacity: 0.65;
+  font-size: 2.5rem;
+  color: #fcfcfc !important;
+  opacity: 1;
 }
 
 .closeWrapper {

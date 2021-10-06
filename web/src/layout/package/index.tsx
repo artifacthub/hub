@@ -696,19 +696,6 @@ const PackageView = (props: Props) => {
                           />
                         </div>
                       )}
-
-                      {!isUndefined(detail.screenshots) && (
-                        <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
-                          <ScreenshotsModal
-                            screenshots={detail.screenshots}
-                            visibleScreenshotsModal={
-                              !isUndefined(props.visibleModal) && props.visibleModal === 'screenshots'
-                            }
-                            searchUrlReferer={props.searchUrlReferer}
-                            fromStarredPage={props.fromStarredPage}
-                          />
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>

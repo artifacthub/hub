@@ -10,7 +10,7 @@
   font-size: 4rem;
 }
 
-.imgWrapper {
+.minHeight {
   height: 1%;
 }
 
@@ -35,6 +35,11 @@
 
 .loading {
   background-color: transparent;
+}
+
+.imgTitle {
+  color: #fcfcfc;
+  max-width: 600px;
 }
 
 @media only screen and (max-width: 767.98px) {
