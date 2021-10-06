@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { isUndefined } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { BiImages, BiUnlink } from 'react-icons/bi';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
@@ -22,6 +23,7 @@ interface Props {
 const ScreenshotsModal = (props: Props) => {
   const history = useHistory();
   const img = useRef<HTMLImageElement>(null);
+  const imgWrapper = useRef<HTMLDivElement>(null);
   const brokenImg = useRef<HTMLDivElement>(null);
   const leftBtn = useRef<HTMLDivElement>(null);
   const rightBtn = useRef<HTMLDivElement>(null);
@@ -43,6 +45,8 @@ const ScreenshotsModal = (props: Props) => {
   };
 
   const onCloseModal = () => {
+    setActiveScreenshot(0);
+    setError(false);
     setOpenStatus(false);
     history.replace({
       search: '',
@@ -80,8 +84,8 @@ const ScreenshotsModal = (props: Props) => {
 
       <FullScreenModal onClose={onCloseModal} open={openStatus}>
         <div className="d-flex flex-column h-100 w-100 align-items-center unselectable">
-          <div className={`d-flex flex-grow-1 w-100 pt-3 ${styles.imgWrapper}`}>
-            <div className="d-flex flex-row align-items-center justify-content-between p-3 p-md-4 h-100 w-100">
+          <div className={`d-flex flex-grow-1 w-100 pt-3 ${styles.minHeight}`}>
+            <div className="d-flex flex-row align-items-center justify-content-between px-3 pt-3 h-100 w-100">
               <div className="mr-3" ref={leftBtn}>
                 <button
                   className={classnames('btn btn-link', styles.arrowBtn, {
@@ -114,18 +118,35 @@ const ScreenshotsModal = (props: Props) => {
                   </div>
                 ) : (
                   <div className="d-flex flex-column justify-content-center align-items-center h-100 w-100">
-                    <img
-                      ref={img}
-                      src={props.screenshots[activeScreenshot].url}
-                      alt={`Screenshot: ${props.screenshots[activeScreenshot].title}`}
-                      className={`mh-100 mw-100 ${styles.image}`}
-                      onLoad={() => setOnLoadedImage(true)}
-                      onError={() => {
-                        setOnLoadedImage(true);
-                        setError(true);
-                      }}
-                      aria-hidden="true"
-                    />
+                    <div className="d-flex flex-column h-100 w-100 align-items-center">
+                      <div
+                        ref={imgWrapper}
+                        className={classnames(
+                          'flex-grow-1 d-flex align-items-center justify-content-center pb-1 position-relative',
+                          styles.minHeight,
+                          { 'pb-3': isUndefined(props.screenshots[activeScreenshot].title) }
+                        )}
+                      >
+                        <img
+                          ref={img}
+                          src={props.screenshots[activeScreenshot].url}
+                          alt={`Screenshot: ${props.screenshots[activeScreenshot].title}`}
+                          className={classnames('mh-100 mw-100', styles.image)}
+                          onLoad={() => setOnLoadedImage(true)}
+                          onError={() => {
+                            setOnLoadedImage(true);
+                            setError(true);
+                          }}
+                          aria-hidden="true"
+                        />
+                      </div>
+
+                      {!isUndefined(props.screenshots[activeScreenshot].title) && (
+                        <div className={`text-truncate text-center mt-4 ${styles.imgTitle}`}>
+                          {props.screenshots[activeScreenshot].title}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>

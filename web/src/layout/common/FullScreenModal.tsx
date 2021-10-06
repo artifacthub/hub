@@ -1,6 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
-import { IoMdClose } from 'react-icons/io';
+import { IoMdCloseCircle } from 'react-icons/io';
 
 import useBodyScroll from '../../hooks/useBodyScroll';
 import styles from './FullScreenModal.module.css';
@@ -55,7 +55,7 @@ const FullScreenModal = (props: Props) => {
           }}
           aria-label="Close"
         >
-          <IoMdClose className="text-light" />
+          <IoMdCloseCircle />
         </button>
       </div>
       <div className="d-flex flex-column h-100 w-100">{props.children}</div>
