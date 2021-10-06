@@ -26,7 +26,7 @@ returns setof json as $$
         and r.scanner_disabled = false
         and (
             security_report is null
-            or (security_report_created_at < (current_timestamp - '1 day'::interval) and s.version = p.latest_version )
+            or (security_report_created_at < (current_timestamp - '1 day'::interval) and s.version = p.latest_version)
             or security_report_created_at < (current_timestamp - '1 week'::interval)
         )
         order by s.created_at desc

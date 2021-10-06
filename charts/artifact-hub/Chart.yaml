@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.2.1-2
-appVersion: 1.2.0
+version: 1.3.0
+appVersion: 1.3.0
 kubeVersion: ">= 1.14.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -34,47 +34,43 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: ah lint now supports all repository kinds supported by Artifact Hub
+      description: Support for Tekton pipelines
     - kind: added
-      description: Docker images are now published to AWS ECR Public Gallery
+      description: Versions index to changelog modal
     - kind: added
-      description: SMTP auth login support (allows using Outlook.com SMTP servers)
+      description: Allow publishers to include screenshots in packages
     - kind: added
-      description: Allow skipping email verified check when using OIDC authentication
+      description: Repository metadata file is now supported in Helm OCI repositories
     - kind: added
-      description: Widgets are now re-rendered automatically when data attributes change
+      description: Support for provenance files in Helm OCI repositories
     - kind: added
-      description: Direct link to Tekton manifest modal
+      description: Changes annotation is now available for Krew plugins kind
     - kind: added
-      description: Some missing database indexes and update some queries to improve performance
+      description: Option to show/hide stars in widget
+    - kind: added
+      description: Link Helm charts dependencies to packages in the hub
+    - kind: added
+      description: API endpoint for helm-exporter tool
     - kind: changed
-      description: Improve stats page
+      description: Improve Helm OCI support (include HIP 6 changes)
     - kind: changed
-      description: Improve tracker metadata validation and error logging
+      description: Improve packages search results facets
     - kind: changed
-      description: Bump Go to 1.17
+      description: Bump Trivy to 0.20.0
     - kind: changed
-      description: Upgrade frontend dependencies
-    - kind: fixed
-      description: Issue rendering publisher provided installation instructions
-    - kind: fixed
-      description: Issue generating packages readme ToC
-    - kind: fixed
-      description: Issue in oauth redirection
-    - kind: fixed
-      description: Issue with site name and colors in development environment
+      description: Upgrade backend and frontend dependencies
     - kind: fixed
       description: Some bugs and other improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.2.0
+      image: artifacthub/db-migrator:v1.3.0
     - name: hub
-      image: artifacthub/hub:v1.2.0
+      image: artifacthub/hub:v1.3.0
     - name: tracker
-      image: artifacthub/tracker:v1.2.0
+      image: artifacthub/tracker:v1.3.0
     - name: scanner
-      image: artifacthub/scanner:v1.2.0
+      image: artifacthub/scanner:v1.3.0
     - name: trivy
       image: aquasec/trivy:0.20.0
   artifacthub.io/screenshots: |
