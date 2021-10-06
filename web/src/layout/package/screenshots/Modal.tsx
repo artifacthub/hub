@@ -127,18 +127,20 @@ const ScreenshotsModal = (props: Props) => {
                           { 'pb-3': isUndefined(props.screenshots[activeScreenshot].title) }
                         )}
                       >
-                        <img
-                          ref={img}
-                          src={props.screenshots[activeScreenshot].url}
-                          alt={`Screenshot: ${props.screenshots[activeScreenshot].title}`}
-                          className={classnames('mh-100 mw-100', styles.image)}
-                          onLoad={() => setOnLoadedImage(true)}
-                          onError={() => {
-                            setOnLoadedImage(true);
-                            setError(true);
-                          }}
-                          aria-hidden="true"
-                        />
+                        <div className="h-100 w-100 position-relative">
+                          <img
+                            ref={img}
+                            src={props.screenshots[activeScreenshot].url}
+                            alt={`Screenshot: ${props.screenshots[activeScreenshot].title}`}
+                            className={classnames('mh-100 mw-100', styles.image)}
+                            onLoad={() => setOnLoadedImage(true)}
+                            onError={() => {
+                              setOnLoadedImage(true);
+                              setError(true);
+                            }}
+                            aria-hidden="true"
+                          />
+                        </div>
                       </div>
 
                       {!isUndefined(props.screenshots[activeScreenshot].title) && (
@@ -169,9 +171,13 @@ const ScreenshotsModal = (props: Props) => {
             {Array.from(Array(props.screenshots.length).keys()).map((idx: number) => (
               <button
                 key={`botBtn_${idx}`}
-                className={classnames('btn btn-link px-1', styles.dotBtn, {
-                  [`disabled ${styles.disabled}`]: idx === activeScreenshot,
-                })}
+                className={classnames(
+                  'btn btn-link px-1',
+                  { [styles.dotBtn]: idx !== activeScreenshot },
+                  {
+                    [`disabled ${styles.disabledDotBtn}`]: idx === activeScreenshot,
+                  }
+                )}
                 onClick={() => onChangeActiveScreenshot(idx)}
                 disabled={idx === activeScreenshot}
               >
