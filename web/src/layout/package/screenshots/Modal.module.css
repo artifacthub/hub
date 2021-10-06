@@ -15,8 +15,11 @@
 }
 
 .image {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: relative;
   border: 3px solid var(--color-black-90);
-  object-fit: contain; /* Avoid shrink */
 }
 
 .externalLink {
@@ -25,8 +28,13 @@
   top: -1px;
 }
 
-.dotBtn:not(.disabled) {
+.disabledDotBtn {
   color: #fcfcfc !important;
+  opacity: 1 !important;
+}
+
+.dotBtn {
+  color: #6c757d !important;
 }
 
 .disabled {
