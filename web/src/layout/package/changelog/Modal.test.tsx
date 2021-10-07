@@ -209,6 +209,26 @@ describe('ChangelogModal', () => {
       });
     });
 
+    it("displays first version when selected one doesn't exist", async () => {
+      const mockChangelog = getMockChangelog('11');
+      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+
+      render(<ChangelogModal {...defaultProps} visibleChangelog visibleVersion="1.0.0" />);
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+        expect(mockHistoryReplace).toHaveBeenCalledWith({
+          search: '?modal=changelog&version=0.8.0',
+          state: {
+            fromStarredPage: undefined,
+            searchUrlReferer: undefined,
+          },
+        });
+      });
+    });
+
     it('renders changelog blocks in correct order', async () => {
       const mockChangelog = getMockChangelog('5');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
