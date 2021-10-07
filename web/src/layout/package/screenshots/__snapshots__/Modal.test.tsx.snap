@@ -1,0 +1,302 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScreenshotsModal creates snapshot 1`] = `
+<DocumentFragment>
+  <button
+    aria-label="Open screenshots modal"
+    class="btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap"
+    type="button"
+  >
+    <div
+      class="d-flex align-items-center justify-content-center"
+    >
+      <svg
+        class="mr-2"
+        fill="currentColor"
+        height="1em"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20,2H8C6.897,2,6,2.897,6,4v12c0,1.103,0.897,2,2,2h12c1.103,0,2-0.897,2-2V4C22,2.897,21.103,2,20,2z M8,16V4h12 l0.002,12H8z"
+        />
+        <path
+          d="M4,8H2v12c0,1.103,0.897,2,2,2h12v-2H4V8z"
+        />
+        <path
+          d="M12 12L11 11 9 14 19 14 15 8z"
+        />
+      </svg>
+      <span>
+        Screenshots
+      </span>
+    </div>
+  </button>
+  <div
+    class="position-fixed overflow-hidden p-3 modal"
+    role="dialog"
+  >
+    <div
+      class="position-absolute closeWrapper"
+    >
+      <button
+        aria-label="Close"
+        class="close close"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M256 48C140.559 48 48 140.559 48 256c0 115.436 92.559 208 208 208 115.435 0 208-92.564 208-208 0-115.441-92.564-208-208-208zm104.002 282.881l-29.12 29.117L256 285.117l-74.881 74.881-29.121-29.117L226.881 256l-74.883-74.881 29.121-29.116L256 226.881l74.881-74.878 29.12 29.116L285.119 256l74.883 74.881z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="d-flex flex-column h-100 w-100"
+    >
+      <div
+        class="d-flex flex-column h-100 w-100 align-items-center unselectable"
+      >
+        <div
+          class="d-flex flex-grow-1 w-100 pt-3 minHeight"
+        >
+          <div
+            class="d-flex flex-row align-items-center justify-content-between px-3 pt-3 h-100 w-100"
+          >
+            <div
+              class="mr-3"
+            >
+              <button
+                aria-label="Go to previous screenshot"
+                class="btn btn-link arrowBtn disabled disabled"
+                disabled=""
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zm28.9-143.6L209.4 288H392c13.3 0 24-10.7 24-24v-16c0-13.3-10.7-24-24-24H209.4l75.5-72.4c9.7-9.3 9.9-24.8.4-34.3l-11-10.9c-9.4-9.4-24.6-9.4-33.9 0L107.7 239c-9.4 9.4-9.4 24.6 0 33.9l132.7 132.7c9.4 9.4 24.6 9.4 33.9 0l11-10.9c9.5-9.5 9.3-25-.4-34.3z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="h-100 w-100"
+            >
+              <div
+                class="position-absolute p-5 wrapper loading"
+              >
+                <div
+                  class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                >
+                  <div
+                    class="spinner-border text-primary spinner undefined"
+                    role="status"
+                  >
+                    <span
+                      class="sr-only"
+                    >
+                      Loading...
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center align-items-center h-100 w-100"
+              >
+                <div
+                  class="d-flex flex-column h-100 w-100 align-items-center"
+                >
+                  <div
+                    class="flex-grow-1 d-flex align-items-center justify-content-center pb-1 position-relative w-100 minHeight"
+                  >
+                    <div
+                      class="h-100 w-100 position-relative"
+                    >
+                      <img
+                        alt="Screenshot: Home page"
+                        aria-hidden="true"
+                        class="mh-100 mw-100 image"
+                        src="https://artifacthub.github.io/hub/screenshots/screenshot1.jpg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="text-truncate text-center mt-4 imgTitle"
+                  >
+                    Home page
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ml-3"
+            >
+              <button
+                aria-label="Go to next screenshot"
+                class="btn btn-link arrowBtn"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm-28.9 143.6l75.5 72.4H120c-13.3 0-24 10.7-24 24v16c0 13.3 10.7 24 24 24h182.6l-75.5 72.4c-9.7 9.3-9.9 24.8-.4 34.3l11 10.9c9.4 9.4 24.6 9.4 33.9 0L404.3 273c9.4-9.4 9.4-24.6 0-33.9L271.6 106.3c-9.4-9.4-24.6-9.4-33.9 0l-11 10.9c-9.5 9.6-9.3 25.1.4 34.4z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="my-3 text-center"
+        >
+          <button
+            aria-label="Go to screenshot number 1"
+            class="btn btn-link px-1 disabled disabledDotBtn"
+            data-testid="dotBtn"
+            disabled=""
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 8 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Go to screenshot number 2"
+            class="btn btn-link px-1 dotBtn"
+            data-testid="dotBtn"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 8 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Go to screenshot number 3"
+            class="btn btn-link px-1 dotBtn"
+            data-testid="dotBtn"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 8 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Go to screenshot number 4"
+            class="btn btn-link px-1 dotBtn"
+            data-testid="dotBtn"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 8 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Go to screenshot number 5"
+            class="btn btn-link px-1 dotBtn"
+            data-testid="dotBtn"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 8 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Go to screenshot number 6"
+            class="btn btn-link px-1 dotBtn"
+            data-testid="dotBtn"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 8 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

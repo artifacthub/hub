@@ -23,6 +23,7 @@ interface Props {
 const ScreenshotsModal = (props: Props) => {
   const history = useHistory();
   const img = useRef<HTMLImageElement>(null);
+  const fullSizeImage = useRef<HTMLImageElement>(null);
   const imgWrapper = useRef<HTMLDivElement>(null);
   const brokenImg = useRef<HTMLDivElement>(null);
   const leftBtn = useRef<HTMLDivElement>(null);
@@ -32,7 +33,9 @@ const ScreenshotsModal = (props: Props) => {
   const [activeScreenshot, setActiveScreenshot] = useState<number>(0);
   const [error, setError] = useState(false);
   const [onLoadedImage, setOnLoadedImage] = useState<boolean>(false);
-  useOutsideClick([img, brokenImg, leftBtn, rightBtn, dotsBtn], openStatus, () => {
+  const [isBigImg, setIsBigImg] = useState<boolean>(false);
+  const [zoomed, setZoomed] = useState<boolean>(false);
+  useOutsideClick([img, brokenImg, fullSizeImage, leftBtn, rightBtn, dotsBtn], openStatus, () => {
     onCloseModal();
   });
 
@@ -45,6 +48,8 @@ const ScreenshotsModal = (props: Props) => {
   };
 
   const onCloseModal = () => {
+    setIsBigImg(false);
+    setZoomed(false);
     setActiveScreenshot(0);
     setError(false);
     setOpenStatus(false);
@@ -57,7 +62,20 @@ const ScreenshotsModal = (props: Props) => {
   const onChangeActiveScreenshot = (newIndex: number) => {
     setError(false);
     setOnLoadedImage(false);
+    setIsBigImg(false);
+    setZoomed(false);
     setActiveScreenshot(newIndex);
+  };
+
+  const calculateImgDimensions = () => {
+    if (fullSizeImage && fullSizeImage.current && imgWrapper && imgWrapper.current) {
+      if (
+        fullSizeImage.current.width > imgWrapper.current.clientWidth ||
+        fullSizeImage.current.height > imgWrapper.current.clientHeight
+      ) {
+        setIsBigImg(true);
+      }
+    }
   };
 
   useEffect(() => {
@@ -65,6 +83,8 @@ const ScreenshotsModal = (props: Props) => {
       onOpenModal();
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  if (props.screenshots.length === 0) return null;
 
   return (
     <>
@@ -93,6 +113,7 @@ const ScreenshotsModal = (props: Props) => {
                   })}
                   disabled={activeScreenshot === 0}
                   onClick={() => onChangeActiveScreenshot(activeScreenshot - 1)}
+                  aria-label="Go to previous screenshot"
                 >
                   <FaArrowCircleLeft />
                 </button>
@@ -122,7 +143,7 @@ const ScreenshotsModal = (props: Props) => {
                       <div
                         ref={imgWrapper}
                         className={classnames(
-                          'flex-grow-1 d-flex align-items-center justify-content-center pb-1 position-relative',
+                          'flex-grow-1 d-flex align-items-center justify-content-center pb-1 position-relative w-100',
                           styles.minHeight,
                           { 'pb-3': isUndefined(props.screenshots[activeScreenshot].title) }
                         )}
@@ -132,15 +153,46 @@ const ScreenshotsModal = (props: Props) => {
                             ref={img}
                             src={props.screenshots[activeScreenshot].url}
                             alt={`Screenshot: ${props.screenshots[activeScreenshot].title}`}
-                            className={classnames('mh-100 mw-100', styles.image)}
+                            className={classnames('mh-100 mw-100', styles.image, { [styles.bigImg]: isBigImg })}
                             onLoad={() => setOnLoadedImage(true)}
                             onError={() => {
                               setOnLoadedImage(true);
                               setError(true);
                             }}
+                            onClick={
+                              isBigImg
+                                ? () => {
+                                    setZoomed(true);
+                                  }
+                                : undefined
+                            }
                             aria-hidden="true"
                           />
                         </div>
+                        {onLoadedImage && (
+                          <div
+                            className={classnames(
+                              'position-absolute overflow-hidden',
+                              styles.bigImageView,
+                              {
+                                'd-none': !zoomed,
+                              },
+                              { [`d-block ${styles.isVisible}`]: zoomed }
+                            )}
+                            onClick={() => setZoomed(false)}
+                          >
+                            <div
+                              className={`position-absolute mw-100 mh-100 overflow-auto text-center ${styles.zoomedImgWrapper}`}
+                            >
+                              <img
+                                ref={fullSizeImage}
+                                alt={`Screenshot: ${props.screenshots[activeScreenshot].title}`}
+                                onLoad={() => calculateImgDimensions()}
+                                src={props.screenshots[activeScreenshot].url}
+                              />
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {!isUndefined(props.screenshots[activeScreenshot].title) && (
@@ -160,6 +212,7 @@ const ScreenshotsModal = (props: Props) => {
                   })}
                   disabled={activeScreenshot === props.screenshots.length - 1}
                   onClick={() => onChangeActiveScreenshot(activeScreenshot + 1)}
+                  aria-label="Go to next screenshot"
                 >
                   <FaArrowCircleRight />
                 </button>
@@ -170,6 +223,7 @@ const ScreenshotsModal = (props: Props) => {
           <div className="my-3 text-center" ref={dotsBtn}>
             {Array.from(Array(props.screenshots.length).keys()).map((idx: number) => (
               <button
+                data-testid="dotBtn"
                 key={`botBtn_${idx}`}
                 className={classnames(
                   'btn btn-link px-1',
@@ -180,6 +234,7 @@ const ScreenshotsModal = (props: Props) => {
                 )}
                 onClick={() => onChangeActiveScreenshot(idx)}
                 disabled={idx === activeScreenshot}
+                aria-label={`Go to screenshot number ${idx + 1}`}
               >
                 <GoPrimitiveDot />
               </button>

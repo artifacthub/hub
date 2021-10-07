@@ -44,7 +44,7 @@ const FullScreenModal = (props: Props) => {
   if (!openStatus) return null;
 
   return (
-    <div className={`position-fixed overflow-hidden p-3 ${styles.modal}`}>
+    <div className={`position-fixed overflow-hidden p-3 ${styles.modal}`} role="dialog">
       <div className={`position-absolute ${styles.closeWrapper}`}>
         <button
           type="button"

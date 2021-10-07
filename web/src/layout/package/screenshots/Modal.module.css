@@ -20,6 +20,8 @@
   transform: translate(-50%, -50%);
   position: relative;
   border: 3px solid var(--color-black-90);
+  background-image: url(/static/media/pattern-transparent.png);
+  background-repeat: repeat;
 }
 
 .externalLink {
@@ -48,6 +50,34 @@
 .imgTitle {
   color: #fcfcfc;
   max-width: 600px;
+}
+
+.bigImg {
+  cursor: zoom-in;
+}
+
+.bigImageView {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.bigImageView.isVisible {
+  z-index: 10;
+  cursor: zoom-out;
+}
+
+.zoomedImgWrapper {
+  vertical-align: middle;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overscroll-behavior: contain;
+  border: 3px solid var(--color-black-90);
+  background-image: url(/static/media/pattern-transparent.png);
+  background-repeat: repeat;
 }
 
 @media only screen and (max-width: 767.98px) {
