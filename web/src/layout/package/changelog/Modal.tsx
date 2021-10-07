@@ -69,8 +69,10 @@ const ChangelogModal = (props: Props) => {
 
   useEffect(() => {
     if (btnsWrapper && btnsWrapper.current && !isUndefined(activeVersionIndex)) {
-      // Scroll to active button
-      btnsWrapper.current.children[activeVersionIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      if (!isUndefined(btnsWrapper.current.children[activeVersionIndex])) {
+        // Scroll to active button
+        btnsWrapper.current.children[activeVersionIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
       // When changelog is defined, url with new active version is updated
       if (changelog) {
         updateVersionInQueryString(changelog[activeVersionIndex].version);
@@ -82,7 +84,13 @@ const ChangelogModal = (props: Props) => {
     // We load correct active version after rendering modal
     if (openStatus && changelog && isUndefined(activeVersionIndex)) {
       const version = props.visibleVersion || props.currentVersion || changelog[0].version;
-      updateActiveVersion(changelog.findIndex((ch: ChangeLog) => ch.version === version));
+      const currentIndex = changelog.findIndex((ch: ChangeLog) => ch.version === version);
+      if (currentIndex >= 0) {
+        updateActiveVersion(changelog.findIndex((ch: ChangeLog) => ch.version === version));
+        // If version doesn't exist
+      } else {
+        setActiveVersionIndex(0);
+      }
     }
   }, [openStatus, changelog]); /* eslint-disable-line react-hooks/exhaustive-deps */
 

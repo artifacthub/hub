@@ -29,6 +29,7 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: artifacthub/ah
+      options: --user root
     steps:
       - name: Checkout code
         uses: actions/checkout@master
