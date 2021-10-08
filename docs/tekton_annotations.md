@@ -20,6 +20,10 @@ Use this annotation to indicate the package's license. It must be a valid [SPDX 
 
 This annotation allows including named links, which will be rendered nicely in Artifact Hub. By default, a link pointing to the source code of the package will be automatically added.
 
+Some links names have a special meaning for Artifact Hub:
+
+**support**: when a link named *support* is provided, a link to report an issue will be displayed highlighted on the package view.
+
 - **artifacthub.io/maintainers** *(yaml string, see example below)*
 
 Use this annotation to list the maintainers of this package. Please note that the `email` field is *required* and entries that do not contain it will be silently ignored.

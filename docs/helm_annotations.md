@@ -38,6 +38,10 @@ Use this annotation to indicate the chart's license. By default, Artifact Hub tr
 
 This annotation allows including named links, which will be rendered nicely in Artifact Hub. You can use this annotation to include links not included previously in the Chart.yaml file, or you can use it to name links already present (in the sources section, for example).
 
+Some links names have a special meaning for Artifact Hub:
+
+**support**: when a link named *support* is provided, a link to report an issue will be displayed highlighted on the package view.
+
 - **artifacthub.io/maintainers** *(yaml string, see example below)*
 
 This annotation can be used if you want to display a different name for a given user in Artifact Hub than the one used in the Chart.yaml file. If the email used matches, the name used in the annotations entry will be displayed in Artifact Hub. It's also possible to include maintainers that should only be listed in Artifact Hub by adding additional entries.

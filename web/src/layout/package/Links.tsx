@@ -2,6 +2,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { IconType } from 'react-icons';
+import { BsFlagFill } from 'react-icons/bs';
 import { FaGithub, FaLink } from 'react-icons/fa';
 import { TiHome } from 'react-icons/ti';
 
@@ -22,6 +23,7 @@ interface IconTypeList {
 const ICONS: IconTypeList = {
   homepage: TiHome,
   source: FaGithub,
+  support: BsFlagFill,
   default: FaLink,
 };
 

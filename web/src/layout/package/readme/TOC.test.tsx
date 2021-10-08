@@ -93,6 +93,11 @@ describe('TOC', () => {
       expect(screen.queryByRole('listbox')).toBeNull();
     });
 
+    it('renders support button', () => {
+      render(<TOC {...defaultProps} supportLink="http://link.test" />);
+      expect(screen.getByRole('button', { name: 'Open support link' })).toBeInTheDocument();
+    });
+
     it('does not render component when list is empty', () => {
       const { container } = render(<TOC {...defaultProps} toc={[]} />);
       expect(container).toBeEmptyDOMElement();

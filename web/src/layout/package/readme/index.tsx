@@ -9,6 +9,7 @@ import TOC from './TOC';
 interface Props {
   packageName: string;
   markdownContent: string;
+  supportLink?: string;
   additionalTitles?: string;
   scrollIntoView: (id?: string) => void;
 }
@@ -66,7 +67,7 @@ const ReadmeWrapper = (props: Props) => {
       message="Something went wrong rendering the README file of this package."
     >
       <span data-testid="readme">
-        <TOC title={mainTitle} toc={toc} scrollIntoView={props.scrollIntoView} />
+        <TOC title={mainTitle} toc={toc} scrollIntoView={props.scrollIntoView} supportLink={props.supportLink} />
         <Readme readme={readme} scrollIntoView={props.scrollIntoView} />
       </span>
     </ErrorBoundary>
