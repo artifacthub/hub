@@ -58,6 +58,7 @@ hub:
         enabled: true
         redirectURL: https://artifacthub.io/oauth/google/callback
   theme:
+    reportURL: https://github.com/artifacthub/hub/issues/new?labels=abuse+report&template=report-abuse.md
     sampleQueries:
       - name: OLM operators for databases
         queryString: "kind=3&ts_query_web=database"

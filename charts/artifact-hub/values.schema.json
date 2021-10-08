@@ -588,6 +588,11 @@
                             },
                             "required": ["appleTouchIcon192", "appleTouchIcon512", "openGraphImage", "shortcutIcon", "websiteLogo"]
                         },
+                        "reportURL": {
+                            "title": "Abuse report URL",
+                            "description": "URL to report abuses.",
+                            "type": "string"
+                        },
                         "sampleQueries": {
                             "title": "Sample search queries used in home and no results found pages",
                             "type": "array",

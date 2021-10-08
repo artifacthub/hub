@@ -48,7 +48,7 @@ exports[`MoreActionsButton creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <svg
-            class="mr-2"
+            class="mr-2 position-relative icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
