@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
+import { RepositoryKind } from '../../../types';
 import Modal from './Modal';
 
 const mockHistoryReplace = jest.fn();
@@ -61,6 +62,26 @@ describe('HelmInstall', () => {
       const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveTextContent('This package version is a pre-release and it is not ready for production use.');
+    });
+
+    it('calls replace when install instructions are empty', () => {
+      render(
+        <Modal
+          {...defaultProps}
+          package={{
+            ...defaultProps.package,
+            repository: { ...defaultProps.package.repository, kind: RepositoryKind.KedaScaler },
+          }}
+        />
+      );
+
+      expect(screen.getByRole('button', { name: 'Open installation modal' })).toBeInTheDocument();
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({
+        search: '',
+        state: { fromStarredPage: undefined, searchUrlReferer: undefined },
+      });
     });
 
     it('closes modal when a new pkg is open', () => {

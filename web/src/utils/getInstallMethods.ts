@@ -44,6 +44,7 @@ export enum InstallMethodKind {
 }
 
 const SPECIAL_OLM = 'community-operators';
+const SPECIAL_FALCO = 'security-hub';
 
 export default (props: PackageInfo): InstallMethodOutput => {
   const { pkg } = { ...props };
@@ -68,6 +69,22 @@ export default (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.Helm:
           if (pkg.data && pkg.data.type && pkg.data.type === HelmChartType.Library) {
             output.errorMessage = 'A library chart is not installable';
+            hasError = true;
+          }
+          break;
+        case RepositoryKind.Falco:
+          if (isUndefined(pkg.install) && pkg.repository.name !== SPECIAL_FALCO) {
+            output.errorMessage = 'This package does not include installation instructions yet.';
+            hasError = true;
+          }
+          break;
+        case RepositoryKind.OPA:
+        case RepositoryKind.TBAction:
+        case RepositoryKind.KedaScaler:
+        case RepositoryKind.CoreDNS:
+        case RepositoryKind.Keptn:
+          if (isUndefined(pkg.install)) {
+            output.errorMessage = 'This package does not include installation instructions yet.';
             hasError = true;
           }
           break;
@@ -174,7 +191,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
         }
         break;
       case RepositoryKind.Falco:
-        if (isUndefined(pkg.install)) {
+        if (isUndefined(pkg.install) && pkg.repository.name === SPECIAL_FALCO) {
           output.methods.push({
             label: 'cli',
             title: 'Helm CLI',
