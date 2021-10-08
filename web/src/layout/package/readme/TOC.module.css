@@ -34,13 +34,25 @@
   font-size: 1.85rem;
 }
 
+.minWidth {
+  width: 1%;
+}
+
 .title p {
   margin-bottom: 0;
+}
+
+.supportLinkWrapper {
+  margin-top: 0.6rem;
 }
 
 @media only screen and (max-width: 575.98px) {
   .title {
     font-size: 1.35rem;
+  }
+
+  .supportLinkWrapper {
+    margin-top: 0.25rem;
   }
 
   /* .toc {

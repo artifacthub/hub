@@ -21,6 +21,7 @@ import {
   FileModalItem,
   FileModalKind,
   Package,
+  PackageLink,
   RepositoryKind,
   SearchFiltersURL,
   Version,
@@ -417,6 +418,19 @@ const PackageView = (props: Props) => {
     [props.hash, props.searchUrlReferer, props.fromStarredPage, history]
   );
 
+  const getSupportLink = (): string | undefined => {
+    if (detail && detail.links) {
+      const support = detail.links.find((link: PackageLink) => link.name.toLowerCase() === 'support');
+      if (support) {
+        return support.url;
+      } else {
+        return undefined;
+      }
+    }
+
+    return undefined;
+  };
+
   const getAdditionalPkgContent = (): { content: JSX.Element; titles: string } | null => {
     if (isNull(detail) || isUndefined(detail)) return null;
     let additionalTitles = '';
@@ -475,6 +489,8 @@ const PackageView = (props: Props) => {
 
     return { content: additionalContent, titles: additionalTitles };
   };
+
+  const supportLink: string | undefined = getSupportLink();
 
   const additionalInfo = getAdditionalPkgContent();
 
@@ -942,6 +958,7 @@ const PackageView = (props: Props) => {
                           ) : (
                             <ReadmeWrapper
                               packageName={detail.displayName || detail.name}
+                              supportLink={supportLink}
                               markdownContent={detail.readme}
                               scrollIntoView={scrollIntoView}
                               additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}

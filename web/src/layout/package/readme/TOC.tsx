@@ -1,16 +1,19 @@
 import React, { useRef, useState } from 'react';
+import { BsFlagFill } from 'react-icons/bs';
 import { FaListUl } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { TOCEntryItem } from '../../../types';
 import cleanTOCEntry from '../../../utils/cleanTOCEntry';
+import ExternalLink from '../../common/ExternalLink';
 import styles from './TOC.module.css';
 import TOCList from './TOCList';
 
 interface Props {
   title: string;
   toc: TOCEntryItem[];
+  supportLink?: string;
   scrollIntoView: (id?: string) => void;
 }
 
@@ -42,11 +45,21 @@ const TOC = (props: Props) => {
             <FaListUl className={`position-relative ${styles.icon}`} />
           </button>
         </div>
-        <div className="flex-grow-1">
+        <div className={`flex-grow-1 ${styles.minWidth}`}>
           <h1 className={`mb-0 ${styles.title}`}>
             <ReactMarkdown children={cleanTOCEntry(props.title)} linkTarget="_blank" skipHtml />
           </h1>
         </div>
+        {props.supportLink && (
+          <div className={`ml-2 ${styles.supportLinkWrapper}`}>
+            <ExternalLink href={props.supportLink} className="mr-0" label="Open support link">
+              <small className="d-flex flex-row align-items-center text-nowrap text-primary">
+                <BsFlagFill className="mr-1" />
+                Report issue
+              </small>
+            </ExternalLink>
+          </div>
+        )}
       </div>
 
       {visibleTOC && (
