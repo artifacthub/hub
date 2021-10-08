@@ -219,7 +219,7 @@ const tests: Tests[] = [
     },
   },
   {
-    title: 'Falco rules without custom install',
+    title: 'Falco rules without custom install - security-hub repo',
     input: {
       pkg: {
         packageId: '4da8202f-b881-4468-8db2-33fa1a77ca52',
@@ -241,6 +241,61 @@ const tests: Tests[] = [
         data: {
           rules: [
             {
+              Name: 'rules',
+              Raw: '- rule: Detect su or sudo\n  desc: detect sudo activities\n  condition:\n    spawned_process and proc.name in (sudo, su)\n  output: >\n    Detected sudo or su privilege escalation activity (user=%user.name command=%proc.cmdline)\n  priority: WARNING\n  tags: [process]\n- rule: Package Management Launched\n  desc: detect package management launched\n  condition: >\n    spawned_process and user.name != "_apt" and package_mgmt_procs and not package_mgmt_ancestor_procs\n  output: >\n    Package management process launched in container (user=%user.name\n    command=%proc.cmdline container_id=%container.id container_name=%container.name image=%container.image.repository:%container.image.tag)\n  priority: ERROR\n  tags: [process]\n',
+            },
+          ],
+        },
+        version: '1.0.1',
+        availableVersions: [{ version: '1.0.1', ts: 1607672795, containsSecurityUpdates: false, prerelease: false }],
+        deprecated: false,
+        signed: false,
+        provider: 'Sysdig',
+        hasValuesSchema: false,
+        hasChangelog: false,
+        ts: 1607672795,
+        repository: {
+          repositoryId: '93d200c1-3443-4dd9-aeeb-869c78ff770c',
+          name: 'security-hub',
+          url: 'https://github.com/falcosecurity/cloud-native-security-hub/resources/falco',
+          private: false,
+          kind: 1,
+          verifiedPublisher: false,
+          official: false,
+          userAlias: 'user',
+        },
+      },
+    },
+    output: {
+      methods: [
+        { label: 'cli', title: 'Helm CLI', kind: 5, props: { normalizedName: 'admin-activities', isPrivate: false } },
+      ],
+    },
+  },
+  {
+    title: 'Falco rules without custom install - not security-hub repo',
+    input: {
+      pkg: {
+        packageId: '4da8202f-b881-4468-8db2-33fa1a77ca52',
+        name: 'Admin activities',
+        normalizedName: 'admin-activities',
+        displayName: 'Admin',
+        isOperator: false,
+        logoImageId: '841e8335-f665-4451-bf6f-918129d858d5',
+        description: 'Falco rules for detecting admin activities',
+        keywords: ['usecase'],
+        readme:
+          '# Detecting admin activities Falco Rules\n\nA set of rules to detect admin activities\n\n## Detect su or sudo\nDetects su or sudo privilege escalation activity\n## Package Management Launched\nDetects when a package management process is launched in a container\n',
+        links: [
+          {
+            url: 'https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources/falco/admin.yaml',
+            name: 'source',
+          },
+        ],
+        data: {
+          rules: [
+            {
+              Name: 'rules',
               Raw: '- rule: Detect su or sudo\n  desc: detect sudo activities\n  condition:\n    spawned_process and proc.name in (sudo, su)\n  output: >\n    Detected sudo or su privilege escalation activity (user=%user.name command=%proc.cmdline)\n  priority: WARNING\n  tags: [process]\n- rule: Package Management Launched\n  desc: detect package management launched\n  condition: >\n    spawned_process and user.name != "_apt" and package_mgmt_procs and not package_mgmt_ancestor_procs\n  output: >\n    Package management process launched in container (user=%user.name\n    command=%proc.cmdline container_id=%container.id container_name=%container.name image=%container.image.repository:%container.image.tag)\n  priority: ERROR\n  tags: [process]\n',
             },
           ],
@@ -266,9 +321,8 @@ const tests: Tests[] = [
       },
     },
     output: {
-      methods: [
-        { label: 'cli', title: 'Helm CLI', kind: 5, props: { normalizedName: 'admin-activities', isPrivate: false } },
-      ],
+      errorMessage: 'This package does not include installation instructions yet.',
+      methods: [],
     },
   },
   {
@@ -962,6 +1016,7 @@ const tests: Tests[] = [
       },
     },
     output: {
+      errorMessage: 'This package does not include installation instructions yet.',
       methods: [],
     },
   },
@@ -1138,6 +1193,163 @@ const tests: Tests[] = [
       },
     },
     output: { methods: [], errorMessage: 'A library chart is not installable' },
+  },
+  {
+    title: 'Rest of repo kinds without install instructions',
+    input: {
+      pkg: {
+        packageId: '0d9d2238-d0d9-4e18-a6c6-b9c18a31774d',
+        name: 'keda-add-ons-http',
+        normalizedName: 'keda-add-ons-http',
+        isOperator: false,
+        displayName: 'KEDA HTTP',
+        description: 'Event-based autoscaler for HTTP workloads on Kubernetes',
+        keywords: ['keda', 'http', 'autoscaling'],
+        homeUrl: 'https://github.com/kedacore/http-add-on',
+        readme: '### readme',
+        links: [
+          {
+            url: 'https://github.com/kedacore/http-add-on',
+            name: 'GitHub',
+          },
+          {
+            url: 'https://github.com/kedacore/charts',
+            name: 'Helm Registry',
+          },
+        ],
+        version: '0.1.0',
+        availableVersions: [
+          {
+            version: '0.0.1',
+            containsSecurityUpdates: false,
+            prerelease: false,
+            ts: 1612864800,
+          },
+          {
+            version: '0.1.0',
+            containsSecurityUpdates: false,
+            prerelease: false,
+            ts: 1624528800,
+          },
+        ],
+        deprecated: false,
+        containsSecurityUpdates: false,
+        prerelease: false,
+        license: 'Apache-2.0',
+        signed: false,
+        provider: 'KEDA',
+        hasValuesSchema: false,
+        hasChangelog: false,
+        ts: 1624528800,
+        recommendations: [
+          {
+            url: 'https://artifacthub.io/packages/helm/kedacore/keda',
+          },
+        ],
+        repository: {
+          repositoryId: 'e74f4d4c-d492-4a7f-ba3a-0b746a20e702',
+          name: 'keda',
+          url: 'https://github.com/kedacore/external-scalers/artifacthub',
+          private: false,
+          kind: 8,
+          verifiedPublisher: false,
+          official: false,
+          scannerDisabled: false,
+          userAlias: 'cynthia-sg',
+        },
+        stats: {
+          subscriptions: 0,
+          webhooks: 0,
+        },
+      },
+    },
+    output: {
+      errorMessage: 'This package does not include installation instructions yet.',
+      methods: [],
+    },
+  },
+  {
+    title: 'Rest of repo kinds with install instructions',
+    input: {
+      pkg: {
+        packageId: '0d9d2238-d0d9-4e18-a6c6-b9c18a31774d',
+        name: 'keda-add-ons-http',
+        normalizedName: 'keda-add-ons-http',
+        isOperator: false,
+        install: '###Custom install',
+        displayName: 'KEDA HTTP',
+        description: 'Event-based autoscaler for HTTP workloads on Kubernetes',
+        keywords: ['keda', 'http', 'autoscaling'],
+        homeUrl: 'https://github.com/kedacore/http-add-on',
+        readme: '### readme',
+        links: [
+          {
+            url: 'https://github.com/kedacore/http-add-on',
+            name: 'GitHub',
+          },
+          {
+            url: 'https://github.com/kedacore/charts',
+            name: 'Helm Registry',
+          },
+        ],
+        version: '0.1.0',
+        availableVersions: [
+          {
+            version: '0.0.1',
+            containsSecurityUpdates: false,
+            prerelease: false,
+            ts: 1612864800,
+          },
+          {
+            version: '0.1.0',
+            containsSecurityUpdates: false,
+            prerelease: false,
+            ts: 1624528800,
+          },
+        ],
+        deprecated: false,
+        containsSecurityUpdates: false,
+        prerelease: false,
+        license: 'Apache-2.0',
+        signed: false,
+        provider: 'KEDA',
+        hasValuesSchema: false,
+        hasChangelog: false,
+        ts: 1624528800,
+        recommendations: [
+          {
+            url: 'https://artifacthub.io/packages/helm/kedacore/keda',
+          },
+        ],
+        repository: {
+          repositoryId: 'e74f4d4c-d492-4a7f-ba3a-0b746a20e702',
+          name: 'keda',
+          url: 'https://github.com/kedacore/external-scalers/artifacthub',
+          private: false,
+          kind: 8,
+          verifiedPublisher: false,
+          official: false,
+          scannerDisabled: false,
+          userAlias: 'cynthia-sg',
+        },
+        stats: {
+          subscriptions: 0,
+          webhooks: 0,
+        },
+      },
+    },
+    output: {
+      methods: [
+        {
+          label: 'publisher',
+          title: 'Publisher instructions',
+          kind: 0,
+          props: {
+            install: '###Custom install',
+          },
+        },
+      ],
+    },
   },
 ];
 

@@ -34,16 +34,18 @@ interface Props {
 const InstallationModal = (props: Props) => {
   const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
-  const [installMethods, setInstallMethods] = useState<InstallMethodOutput | null>(null);
+  const [installMethods, setInstallMethods] = useState<InstallMethodOutput | null>(null); // undefined ???
   const isDisabled = !isNull(installMethods) && !isUndefined(installMethods.errorMessage);
 
   const onOpenModal = () => {
-    if (!isDisabled) {
+    if (!isNull(installMethods) && installMethods.methods.length > 0) {
       setOpenStatus(true);
       history.replace({
         search: '?modal=install',
         state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
       });
+    } else {
+      onCloseModal();
     }
   };
 
@@ -56,12 +58,6 @@ const InstallationModal = (props: Props) => {
   };
 
   useEffect(() => {
-    if (props.visibleInstallationModal && !openStatus) {
-      onOpenModal();
-    }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
-
-  useEffect(() => {
     if (openStatus) {
       setOpenStatus(false);
     }
@@ -71,6 +67,15 @@ const InstallationModal = (props: Props) => {
       })
     );
   }, [props.package]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (props.visibleInstallationModal && !openStatus && installMethods && installMethods.methods.length > 0) {
+      onOpenModal();
+    }
+    if (props.visibleInstallationModal && installMethods && installMethods.methods.length === 0) {
+      onCloseModal();
+    }
+  }, [installMethods]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (isNull(installMethods) || (installMethods.methods.length === 0 && isUndefined(installMethods.errorMessage)))
     return null;
