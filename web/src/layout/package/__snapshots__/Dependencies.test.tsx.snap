@@ -24,7 +24,7 @@ exports[`Dependencies creates snapshot 1`] = `
       role="list"
     >
       <div
-        class="dependency text-truncate pb-1"
+        class="dependency pb-1"
         data-testid="dependencyItem"
         role="listitem"
       >
@@ -112,7 +112,7 @@ exports[`Dependencies creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="dependency text-truncate pb-1"
+        class="dependency pb-1"
         data-testid="dependencyItem"
         role="listitem"
       >

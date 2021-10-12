@@ -32,7 +32,7 @@ const Dependencies = (props: Props) => {
       items.push(
         <div
           key={`dependency_${index}`}
-          className={`${styles.dependency} text-truncate pb-1`}
+          className={`${styles.dependency} pb-1`}
           data-testid="dependencyItem"
           role="listitem"
         >
