@@ -20,9 +20,10 @@
 }
 
 .icon {
-  min-width: 14px;
-  font-size: 0.9rem;
+  min-width: 15px;
+  font-size: 0.85rem;
   margin-top: 6px;
+  padding-right: 1px;
 }
 
 .copyBtn {
