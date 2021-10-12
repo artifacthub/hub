@@ -156,6 +156,7 @@ func (h *Handlers) Index(w http.ResponseWriter, r *http.Request) {
 		"oidcAuth":                 h.cfg.IsSet("server.oauth.oidc"),
 		"openGraphImage":           openGraphImage,
 		"primaryColor":             h.cfg.GetString("theme.colors.primary"),
+		"reportURL":                h.cfg.GetString("theme.reportURL"),
 		"secondaryColor":           h.cfg.GetString("theme.colors.secondary"),
 		"shortcutIcon":             h.cfg.GetString("theme.images.shortcutIcon"),
 		"siteName":                 h.cfg.GetString("theme.siteName"),

@@ -18,6 +18,10 @@
   right: 0.3rem !important;
 }
 
+.icon {
+  margin-top: 2px;
+}
+
 @media only screen and (max-width: 767.98px) {
   .dropdown {
     width: 18rem;

@@ -1,10 +1,13 @@
 import classnames from 'classnames';
+import { isNull } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { BiCode } from 'react-icons/bi';
+import { GoStop } from 'react-icons/go';
 import { HiDotsVertical } from 'react-icons/hi';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { SearchFiltersURL } from '../../types';
+import getMetaTag from '../../utils/getMetaTag';
 import styles from './MoreActionsButton.module.css';
 import WidgetModal from './WidgetModal';
 
@@ -21,6 +24,7 @@ const MoreActionsButton = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [visibleWidget, setVisibleWidget] = useState<boolean>(props.visibleWidget);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
+  const reportURL = getMetaTag('reportURL');
 
   const ref = useRef(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
@@ -69,10 +73,28 @@ const MoreActionsButton = (props: Props) => {
             aria-label="Open embed widget modal"
           >
             <div className="d-flex flex-row align-items-center">
-              <BiCode className="mr-2" />
+              <BiCode className={`mr-2 position-relative ${styles.icon}`} />
               <div>Embed widget</div>
             </div>
           </button>
+
+          {!isNull(reportURL) && reportURL !== '' && (
+            <button
+              className="dropdown-item btn btn-sm rounded-0 text-dark"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                window.open(reportURL, '_blank');
+                setOpenStatus(false);
+              }}
+              aria-label="Open report abuse url"
+            >
+              <div className="d-flex flex-row align-items-center">
+                <GoStop className={`mr-2 position-relative ${styles.icon}`} />
+                <div>Report abuse</div>
+              </div>
+            </button>
+          )}
         </div>
       </div>
 
