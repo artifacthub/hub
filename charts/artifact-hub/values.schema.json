@@ -204,6 +204,11 @@
                             },
                             "required": ["repository"]
                         },
+                        "livenessProbe": {
+                            "title": "Hub pod liveness probe",
+                            "type": "object",
+                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
+                        },
                         "readinessGates": {
                             "title": "Hub pod readiness gates",
                             "type": "array",
@@ -212,6 +217,11 @@
                                 "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.PodReadinessGate"
                             },
                             "default": []
+                        },
+                        "readinessProbe": {
+                            "title": "Hub pod readiness probe",
+                            "type": "object",
+                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
                         },
                         "replicaCount": {
                             "title": "Number of Hub replicas",
