@@ -11,9 +11,10 @@
 }
 
 .pkgIcon {
-  min-width: 14px;
-  font-size: 0.9rem;
-  margin-top: 6px;
+  min-width: 15px;
+  font-size: 0.85rem;
+  margin-top: 3px;
+  padding-right: 1px;
 }
 
 .tableTitle:hover {
