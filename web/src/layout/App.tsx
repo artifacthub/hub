@@ -135,6 +135,7 @@ export default function App() {
                       visibleFile={getQueryParam(location.search, 'file') || undefined}
                       visibleVersion={getQueryParam(location.search, 'version') || undefined}
                       visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
+                      visibleTarget={getQueryParam(location.search, 'target') || undefined}
                       eventId={getQueryParam(location.search, 'event-id') || undefined}
                       {...location.state}
                       {...match.params}

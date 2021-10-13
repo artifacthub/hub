@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, isNull } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
@@ -21,6 +21,7 @@ interface Props {
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
+  visibleTarget?: string;
   eventId?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -34,7 +35,7 @@ const SecurityModal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [report, setReport] = useState<SecurityReport | null | undefined>();
-  const [expandedTarget, setExpandedTarget] = useState<string | null>(null);
+  const [expandedTarget, setExpandedTarget] = useState<string | null>(props.visibleTarget || null);
   const [hasOnlyOneTarget, setHasOnlyOneTarget] = useState<boolean>(false);
 
   const activateTargetWhenIsOnlyOne = (report: SecurityReport) => {
@@ -78,10 +79,7 @@ const SecurityModal = (props: Props) => {
     } else {
       getSecurityReports(props.eventId); // Send eventId, if defined, from security alert email
     }
-    history.replace({
-      search: '?modal=security-report',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    updateUrl();
   };
 
   const onCloseModal = () => {
@@ -92,6 +90,17 @@ const SecurityModal = (props: Props) => {
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
+
+  const updateUrl = () => {
+    history.replace({
+      search: `?modal=security-report${!isNull(expandedTarget) ? `&target=${encodeURIComponent(expandedTarget)}` : ''}`,
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
+  };
+
+  useEffect(() => {
+    updateUrl();
+  }, [expandedTarget]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (props.visibleSecurityReport && !openStatus) {
