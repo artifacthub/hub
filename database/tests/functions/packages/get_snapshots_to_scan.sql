@@ -12,6 +12,7 @@ select plan(2);
 \set package2ID '00000000-0000-0000-0000-000000000002'
 \set package3ID '00000000-0000-0000-0000-000000000003'
 \set package4ID '00000000-0000-0000-0000-000000000004'
+\set package5ID '00000000-0000-0000-0000-000000000005'
 
 -- No snapshots at this point
 select is(
@@ -165,6 +166,30 @@ insert into snapshot (
     '1.0.0',
     '[{"image": "quay.io/org/pkg4:1.0.0"}]',
     '2020-06-16 11:20:33+02'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package5ID',
+    'package5',
+    '1.0.0',
+    :'repo1ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    ts,
+    created_at
+) values (
+    :'package5ID',
+    '1.0.0',
+    '[{"image": "quay.io/org/pkg5:1.0.0"}]',
+    '2010-06-16 11:20:33+02',
+    '2010-06-16 11:20:33+02'
 );
 
 -- Run some tests
