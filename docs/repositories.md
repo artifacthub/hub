@@ -293,6 +293,10 @@ Each package version **needs** an `artifacthub-pkg.yml` metadata file. Please se
 
 Once you have added your repository, you are all set up. As you add new versions of your integrations packages or even new packages to your git repository, they'll be automatically indexed and listed in Artifact Hub.
 
+### Example repository: Keptn integrations
+
+- [https://github.com/keptn-sandbox/artifacthub](https://github.com/keptn-sandbox/artifacthub)
+
 ## Krew kubectl plugins repositories
 
 Artifact Hub is able to process kubectl plugins listed in [Krew index repositories](https://krew.sigs.k8s.io/docs/developer-guide/custom-indexes/). Repositories are expected to be hosted in Github or Gitlab. When adding your repository to Artifact Hub, the url used **must** follow the following format:
