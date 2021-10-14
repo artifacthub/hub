@@ -21,7 +21,9 @@ interface Props {
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
+  visibleImage?: string;
   visibleTarget?: string;
+  visibleSection?: string;
   eventId?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -132,7 +134,9 @@ const SecurityReport = (props: Props) => {
                 version={props.version}
                 createdAt={props.createdAt}
                 visibleSecurityReport={props.visibleSecurityReport}
+                visibleImage={props.visibleImage}
                 visibleTarget={props.visibleTarget}
+                visibleSection={props.visibleSection}
                 eventId={props.eventId}
                 searchUrlReferer={props.searchUrlReferer}
                 fromStarredPage={props.fromStarredPage}

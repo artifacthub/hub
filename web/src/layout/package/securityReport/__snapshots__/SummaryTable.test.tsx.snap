@@ -3,10 +3,10 @@
 exports[`SummaryTable creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="my-4 d-none d-lg-block"
+    class="w-100 my-4 tableWrapper"
   >
     <table
-      class="table table-bordered table-md table"
+      class="table table-bordered table-md mb-0 table"
     >
       <thead>
         <tr
@@ -74,19 +74,23 @@ exports[`SummaryTable creates snapshot 1`] = `
             class="text-center"
           >
             <div
-              class="position-relative undefined"
+              class="d-inline-block"
             >
               <div
-                data-testid="elementWithTooltip"
+                class="position-relative undefined"
               >
-                <small>
-                  <div
-                    class="badge badge-pill text-light font-weight-bold badge undefined"
-                    style="background-color: rgb(150, 0, 3);"
-                  >
-                    F
-                  </div>
-                </small>
+                <div
+                  data-testid="elementWithTooltip"
+                >
+                  <small>
+                    <div
+                      class="badge badge-pill text-light font-weight-bold badge undefined"
+                      style="background-color: rgb(150, 0, 3);"
+                    >
+                      F
+                    </div>
+                  </small>
+                </div>
               </div>
             </div>
           </td>

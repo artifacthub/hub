@@ -35,7 +35,9 @@ interface Props {
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
   visibleSecurityReport: boolean;
+  visibleImage?: string;
   visibleTarget?: string;
+  visibleSection?: string;
   channels?: Channel[] | null;
   eventId?: string;
 }
@@ -265,7 +267,9 @@ const Details = (props: Props) => {
         version={props.package.version!}
         createdAt={props.package.securityReportCreatedAt}
         visibleSecurityReport={props.visibleSecurityReport}
+        visibleImage={props.visibleImage}
         visibleTarget={props.visibleTarget}
+        visibleSection={props.visibleSection}
         eventId={props.eventId}
         searchUrlReferer={props.searchUrlReferer}
         fromStarredPage={props.fromStarredPage}

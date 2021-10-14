@@ -1,33 +1,40 @@
+import { isNull } from 'lodash';
 import React, { useEffect, useRef } from 'react';
+import { FaLink } from 'react-icons/fa';
+
+import styles from './Btns.module.css';
 
 interface Props {
   onClick: () => void;
+  isActive: boolean;
   isExpanded: boolean;
+  expandedTarget: null | string;
   children: JSX.Element;
-  disabled: boolean;
   hasOnlyOneTarget: boolean;
 }
 
 const TargetImageBtn = (props: Props) => {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // Scrolls content into view when a target is expanded
-    if (props.isExpanded && ref && ref.current && !props.hasOnlyOneTarget) {
-      ref.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    // Scrolls content into view when a target is active
+    if (ref && ref.current && !props.hasOnlyOneTarget) {
+      if (props.isExpanded || (props.isActive && isNull(props.expandedTarget))) {
+        ref.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      }
     }
-  }, [props.hasOnlyOneTarget, props.isExpanded]);
+  }, [props.expandedTarget, props.hasOnlyOneTarget, props.isActive, props.isExpanded]);
 
   return (
-    <button
-      ref={ref}
-      className="btn btn-link text-reset pl-0 btn-block position-relative"
-      onClick={props.onClick}
-      disabled={props.disabled}
-      aria-label="Open target image"
-    >
-      {props.children}
-    </button>
+    <div ref={ref} className={`position-relative ${styles.btnWrapper}`}>
+      <button
+        onClick={props.onClick}
+        className={`btn btn-link text-reset position-absolute ${styles.linkBtn} ${styles.inTarget}`}
+      >
+        <FaLink />
+      </button>
+      <div className="p-1 pl-0">{props.children}</div>
+    </div>
   );
 };
 

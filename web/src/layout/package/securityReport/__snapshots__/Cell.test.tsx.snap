@@ -26,7 +26,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           </svg>
         </td>
         <td
-          class="align-middle text-nowrap"
+          class="align-middle text-nowrap pr-3"
         >
           CVE-2020-8492
           <a
@@ -56,7 +56,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           </a>
         </td>
         <td
-          class="align-middle text-nowrap text-uppercase"
+          class="align-middle text-nowrap text-uppercase pr-3"
         >
           <div
             class="d-flex flex-row align-items-center"
@@ -74,20 +74,44 @@ exports[`SecuritySummary creates snapshot 1`] = `
           </div>
         </td>
         <td
-          class="align-middle text-nowrap"
+          class="align-middle text-nowrap pr-3 w-25"
         >
-          platform-python
+          <div
+            class="d-table w-100 wrapperCell"
+          >
+            <div
+              class="text-truncate"
+            >
+              platform-python
+            </div>
+          </div>
         </td>
         <td
-          class="align-middle text-nowrap"
+          class="align-middle text-nowrap pr-3 w-25"
         >
-          3.6.8-23.el8
+          <div
+            class="d-table w-100 wrapperCell"
+          >
+            <div
+              class="text-truncate"
+            >
+              3.6.8-23.el8
+            </div>
+          </div>
         </td>
         <td
-          class="align-middle text-nowrap"
+          class="align-middle text-nowrap pr-3 w-25"
           data-testid="fixedVersionCell"
         >
-          3.6.8-24.el8
+          <div
+            class="d-table w-100 wrapperCell"
+          >
+            <div
+              class="text-truncate"
+            >
+              3.6.8-24.el8
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>

@@ -213,22 +213,13 @@ describe('SecurityModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
 
-      await waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(3);
-        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
-          search: '?modal=security-report&target=rook%2Fceph%3Av1.1.1_rook%2Fceph%3Av1.1.1%20(centos%207.7.1908)',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+      waitFor(() => {
+        expect(screen.getByText('ID')).toBeInTheDocument();
+        expect(screen.getByText('Severity')).toBeInTheDocument();
+        expect(screen.getByText('Package')).toBeInTheDocument();
+        expect(screen.getByText('Version')).toBeInTheDocument();
+        expect(screen.getByText('Fixed in')).toBeInTheDocument();
       });
-
-      expect(screen.getByText('ID')).toBeInTheDocument();
-      expect(screen.getByText('Severity')).toBeInTheDocument();
-      expect(screen.getByText('Package')).toBeInTheDocument();
-      expect(screen.getByText('Version')).toBeInTheDocument();
-      expect(screen.getByText('Fixed in')).toBeInTheDocument();
     });
 
     it('does not activate target when report has only one image and one target, but not vulnerabilities', async () => {

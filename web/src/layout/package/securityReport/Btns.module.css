@@ -1,0 +1,49 @@
+.tableTitle {
+  font-size: 0.875rem;
+}
+
+.btnWrapper {
+  cursor: default;
+}
+
+.linkBtn {
+  float: left;
+  margin-left: -12px;
+  width: 35px;
+  opacity: 0;
+  line-height: 1;
+  padding-top: 4px;
+  background-color: var(--white);
+  transition: none;
+  z-index: 1;
+  text-align: center;
+}
+
+.inTarget {
+  margin-left: -36px;
+}
+
+.inSection {
+  margin-left: -34px;
+  margin-top: -3px;
+  width: 30px;
+}
+
+.linkBtn svg {
+  width: 12px;
+  height: 12px;
+}
+
+.btn:focus {
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    text-decoration: none;
+  }
+
+  .btnWrapper:hover .linkBtn {
+    opacity: 1;
+  }
+}

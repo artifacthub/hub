@@ -63,11 +63,11 @@ const SecurityCell = (props: Props) => {
         ref={ref}
       >
         <td className="align-middle text-primary">{props.isExpanded ? <FaCaretDown /> : <FaCaretRight />}</td>
-        <td className="align-middle text-nowrap">
+        <td className="align-middle text-nowrap pr-3">
           {props.vulnerability.VulnerabilityID}
           {getMainReference()}
         </td>
-        <td className="align-middle text-nowrap text-uppercase">
+        <td className="align-middle text-nowrap text-uppercase pr-3">
           <div className="d-flex flex-row align-items-center">
             <span
               data-testid="severityBadge"
@@ -81,11 +81,21 @@ const SecurityCell = (props: Props) => {
             <small>{props.vulnerability.Severity}</small>
           </div>
         </td>
-        <td className="align-middle text-nowrap">{props.vulnerability.PkgName}</td>
-        <td className="align-middle text-nowrap">{props.vulnerability.InstalledVersion}</td>
-        <td className="align-middle text-nowrap" data-testid="fixedVersionCell">
+        <td className="align-middle text-nowrap pr-3 w-25">
+          <div className={`d-table w-100 ${styles.wrapperCell}`}>
+            <div className="text-truncate">{props.vulnerability.PkgName}</div>
+          </div>
+        </td>
+        <td className="align-middle text-nowrap pr-3 w-25">
+          <div className={`d-table w-100 ${styles.wrapperCell}`}>
+            <div className="text-truncate">{props.vulnerability.InstalledVersion}</div>
+          </div>
+        </td>
+        <td className="align-middle text-nowrap pr-3 w-25" data-testid="fixedVersionCell">
           {props.vulnerability.FixedVersion ? (
-            <>{JSON.parse(`"${props.vulnerability.FixedVersion}"`)}</>
+            <div className={`d-table w-100 ${styles.wrapperCell}`}>
+              <div className="text-truncate">{JSON.parse(`"${props.vulnerability.FixedVersion}"`)}</div>
+            </div>
           ) : (
             <span className="text-muted">-</span>
           )}

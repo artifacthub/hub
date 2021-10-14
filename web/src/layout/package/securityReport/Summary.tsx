@@ -22,7 +22,7 @@ const SecuritySummary = (props: Props) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-5">
       <div className="h5 my-3 pt-2">
         {getVulnerabilitiesNumber()} vulnerabilities have been detected in the{' '}
         <span className="font-weight-bold">default images</span> used by this package.
