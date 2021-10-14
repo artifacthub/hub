@@ -1,5 +1,5 @@
 {{- if .Values.hub.ingress.enabled -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "chart.resourceNamePrefix" . }}hub
@@ -11,9 +11,11 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  backend:
-    serviceName: {{ include "chart.resourceNamePrefix" . }}hub
-    servicePort: {{ .Values.hub.service.port }}
+  defaultBackend:
+    service:
+      name: {{ include "chart.resourceNamePrefix" . }}hub
+      port:
+        number: {{ .Values.hub.service.port }}
   {{- with .Values.hub.ingress.rules }}
   rules:
     {{- toYaml . | nindent 4 }}

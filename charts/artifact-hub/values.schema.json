@@ -261,8 +261,7 @@
                             "title": "Hub ingress rules",
                             "type": "array",
                             "items": {
-                                "type": "object",
-                                "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.extensions.v1beta1.IngressRule"
+                                "type": "object"
                             },
                             "default": []
                         },
