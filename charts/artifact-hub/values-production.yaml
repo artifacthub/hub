@@ -24,23 +24,32 @@ hub:
       - host: hub.helm.sh
         http:
           paths:
-            - backend:
-                serviceName: artifacthub-redirect
-                servicePort: use-annotation
-              path: /*
+            - path: /*
+              pathType: Prefix
+              backend:
+                service:
+                  name: artifacthub-redirect
+                  port:
+                    name: use-annotation
       - http:
           paths:
             - path: /*
+              pathType: Prefix
               backend:
-                serviceName: ssl-redirect
-                servicePort: use-annotation
+                service:
+                  name: ssl-redirect
+                  port:
+                    name: use-annotation
             - path: /*
+              pathType: Prefix
               backend:
                 # This reference expects a static name of the service.
                 # If dynamicResourceNamePrefixEnabled=true, the serviceName needs to be changed to include the dynamic prefix.
                 # The "dynamic-prefix" is generated in the helper function `chart.resourceNamePrefix`.
-                serviceName: hub
-                servicePort: 80
+                service:
+                  name: hub
+                  port:
+                    number: 80
   deploy:
     replicaCount: 3
     resources:
