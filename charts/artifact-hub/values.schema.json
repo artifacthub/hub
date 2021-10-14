@@ -207,21 +207,21 @@
                         "livenessProbe": {
                             "title": "Hub pod liveness probe",
                             "type": "object",
-                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
                         },
                         "readinessGates": {
                             "title": "Hub pod readiness gates",
                             "type": "array",
                             "items": {
                                 "type": "object",
-                                "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.PodReadinessGate"
+                                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.PodReadinessGate"
                             },
                             "default": []
                         },
                         "readinessProbe": {
                             "title": "Hub pod readiness probe",
                             "type": "object",
-                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
                         },
                         "replicaCount": {
                             "title": "Number of Hub replicas",
@@ -232,7 +232,7 @@
                             "title": "Hub pod resource requirements",
                             "type": "object",
                             "default": {},
-                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
                     "required": ["image", "replicaCount", "resources"]
@@ -261,7 +261,8 @@
                             "title": "Hub ingress rules",
                             "type": "array",
                             "items": {
-                                "type": "object"
+                                "type": "object",
+                                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.networking.v1.IngressRule"
                             },
                             "default": []
                         },
@@ -270,7 +271,7 @@
                             "type": "array",
                             "items": {
                                 "type": "object",
-                                "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.extensions.v1beta1.IngressTLS"
+                                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.networking.v1.IngressTLS"
                             },
                             "default": []
                         }
@@ -709,7 +710,7 @@
                             "title": "Scanner pod resource requirements",
                             "type": "object",
                             "default": {},
-                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
                     "required": ["image", "resources"]
@@ -772,7 +773,7 @@
                             "title": "Tracker pod resource requirements",
                             "type": "object",
                             "default": {},
-                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
                     "required": ["image", "resources"]
@@ -815,7 +816,7 @@
                             "title": "Trivy pod resource requirements",
                             "type": "object",
                             "default": {},
-                            "$ref": "https://kubernetesjsonschema.dev/v1.14.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
                     "required": ["image", "resources"]

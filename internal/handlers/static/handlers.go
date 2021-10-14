@@ -26,7 +26,7 @@ import (
 const (
 	cspPolicy = `
 	default-src 'none';
-	connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev;
+	connect-src 'self' https://play.openpolicyagent.org https://www.google-analytics.com https://kubernetesjsonschema.dev https://raw.githubusercontent.com/yannh/kubernetes-json-schema/;
 	font-src 'self';
 	img-src 'self' data: https:;
 	manifest-src 'self';
