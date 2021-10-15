@@ -10,8 +10,10 @@ const scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
+  isActive: false,
   isExpanded: false,
   onClick: onClickMock,
+  expandedTarget: null,
   children: <>content</>,
   disabled: false,
   hasOnlyOneTarget: false,
@@ -31,14 +33,14 @@ describe('TargetImageBtn', () => {
     it('renders component', () => {
       render(<TargetImageBtn {...defaultProps} />);
 
-      expect(screen.getByRole('button', { name: 'Open target image' })).toBeInTheDocument();
+      expect(screen.getByRole('button')).toBeInTheDocument();
       expect(screen.getByText('content')).toBeInTheDocument();
     });
 
     it('calls onClick', () => {
       render(<TargetImageBtn {...defaultProps} />);
 
-      const btn = screen.getByRole('button', { name: 'Open target image' });
+      const btn = screen.getByRole('button');
       userEvent.click(btn);
 
       waitFor(() => {
@@ -46,15 +48,18 @@ describe('TargetImageBtn', () => {
       });
     });
 
-    it('renders disabled button', () => {
-      render(<TargetImageBtn {...defaultProps} disabled={true} />);
+    it('scrolls into view when target is active', () => {
+      const { rerender } = render(<TargetImageBtn {...defaultProps} isActive={false} />);
 
-      const btn = screen.getByRole('button', { name: 'Open target image' });
-      expect(btn).toBeDisabled();
+      rerender(<TargetImageBtn {...defaultProps} isActive={true} />);
+
+      waitFor(() => {
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('scrolls into view when target is expanded', () => {
-      const { rerender } = render(<TargetImageBtn {...defaultProps} isExpanded={false} />);
+      const { rerender } = render(<TargetImageBtn {...defaultProps} isActive={false} />);
 
       rerender(<TargetImageBtn {...defaultProps} isExpanded={true} />);
 
@@ -64,9 +69,9 @@ describe('TargetImageBtn', () => {
     });
 
     it('does not scrolls into view when target is expanded but is only one', () => {
-      const { rerender } = render(<TargetImageBtn {...defaultProps} isExpanded={false} hasOnlyOneTarget />);
+      const { rerender } = render(<TargetImageBtn {...defaultProps} isActive={false} hasOnlyOneTarget />);
 
-      rerender(<TargetImageBtn {...defaultProps} isExpanded={true} hasOnlyOneTarget />);
+      rerender(<TargetImageBtn {...defaultProps} isActive={true} hasOnlyOneTarget />);
 
       waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(0);

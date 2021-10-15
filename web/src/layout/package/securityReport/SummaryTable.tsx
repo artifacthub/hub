@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
 import { SecurityReport, SecurityReportResult, Vulnerability, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER } from '../../../utils/data';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
@@ -13,9 +14,21 @@ interface Props {
 }
 
 const SummaryTable = (props: Props) => {
+  const point = useBreakpointDetect();
+  const [visibleTooltip, setVisibleTooltip] = useState<boolean>(true);
+
+  useEffect(() => {
+    const checkTooltipInTable = () => {
+      if (point) {
+        setVisibleTooltip(['lg', 'xl'].includes(point));
+      }
+    };
+    checkTooltipInTable();
+  }, [point]);
+
   return (
-    <div className="my-4 d-none d-lg-block">
-      <table className={`table table-bordered table-md ${styles.table}`}>
+    <div className={`w-100 my-4 ${styles.tableWrapper}`}>
+      <table className={`table table-bordered table-md mb-0 ${styles.table}`}>
         <thead>
           <tr className={styles.tableTitle}>
             <th className={styles.image} scope="col">
@@ -35,7 +48,7 @@ const SummaryTable = (props: Props) => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(props.report).map((image: string, index: number) => {
+          {Object.keys(props.report).map((image: string) => {
             let vulnerabilitiesList: Vulnerability[] = [];
             props.report[image].Results.forEach((targetReport: SecurityReportResult) => {
               if (targetReport.Vulnerabilities) {
@@ -53,7 +66,15 @@ const SummaryTable = (props: Props) => {
                   </div>
                 </td>
                 <td className="text-center">
-                  <SecurityRating summary={summary} onlyBadge />
+                  <div className="d-inline-block">
+                    <SecurityRating
+                      summary={summary}
+                      onlyBadge
+                      tooltipAligment="left"
+                      tooltipClassName={styles.tooltip}
+                      withoutTooltip={!visibleTooltip}
+                    />
+                  </div>
                 </td>
                 {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
                   <td key={`col_${severity}_${image}`} className="text-center">

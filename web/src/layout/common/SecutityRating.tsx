@@ -11,10 +11,12 @@ import styles from './SecurityRating.module.css';
 interface Props {
   summary?: SecurityReportSummary | null;
   className?: string;
+  tooltipClassName?: string;
   onlyBadge: boolean;
   withLink?: string;
   withoutTooltip?: boolean;
   onlyIcon?: boolean;
+  tooltipAligment?: 'right' | 'left';
 }
 
 const SecurityRating = (props: Props) => {
@@ -63,8 +65,8 @@ const SecurityRating = (props: Props) => {
           />
         )
       }
-      alignmentTooltip="right"
-      tooltipClassName={styles.tooltip}
+      alignmentTooltip={props.tooltipAligment || 'right'}
+      tooltipClassName={`${styles.tooltip} ${props.tooltipClassName}`}
       tooltipArrowClassName={props.onlyBadge ? styles.onlyBadgeTooltipArrow : styles.tooltipArrow}
       tooltipMessage={
         <div className="d-flex flex-column">

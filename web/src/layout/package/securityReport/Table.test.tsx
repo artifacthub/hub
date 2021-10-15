@@ -9,6 +9,8 @@ const getMockSecurityReport = (fixtureId: string): SecurityReportResult[] => {
   return require(`./__fixtures__/Table/${fixtureId}.json`) as SecurityReportResult[];
 };
 
+const mockSetVisibleImage = jest.fn();
+const mockSetVisibleTarget = jest.fn();
 const mockSetExpandedTarget = jest.fn();
 const scrollIntoViewMock = jest.fn();
 
@@ -16,9 +18,14 @@ window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   image: 'imgName',
+  visibleTarget: null,
+  visibleImage: null,
   expandedTarget: null,
   hasOnlyOneTarget: false,
+  setVisibleImage: mockSetVisibleImage,
+  setVisibleTarget: mockSetVisibleTarget,
   setExpandedTarget: mockSetExpandedTarget,
+  lastReport: false,
 };
 
 describe('SecurityTable', () => {
@@ -65,7 +72,7 @@ describe('SecurityTable', () => {
       );
 
       expect(screen.getByTestId('securityReportInfo')).toBeInTheDocument();
-      const reportBtn = screen.getByRole('button', { name: 'Open target image' });
+      const reportBtn = screen.getByRole('button', { name: 'Close target image vulnerabilities' });
       userEvent.click(reportBtn);
 
       expect(mockSetExpandedTarget).toHaveBeenCalledTimes(1);
@@ -83,9 +90,9 @@ describe('SecurityTable', () => {
         />
       );
 
-      const reportBtn = screen.getByRole('button', { name: 'Open target image' });
+      const reportBtn = screen.getByRole('button', { name: 'Close target image vulnerabilities' });
       expect(reportBtn).toBeInTheDocument();
-      expect(reportBtn).toHaveTextContent('Target:centos 7.7.1908Rating:FHide vulnerabilities');
+      expect(reportBtn).toHaveTextContent('Hide vulnerabilities');
 
       expect(screen.getByText('ID')).toBeInTheDocument();
       expect(screen.getByText('Severity')).toBeInTheDocument();

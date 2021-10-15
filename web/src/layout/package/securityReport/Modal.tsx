@@ -1,6 +1,7 @@
-import { isEmpty, isNull } from 'lodash';
+import classnames from 'classnames';
+import { isEmpty, isNull, isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
@@ -10,6 +11,7 @@ import alertDispatcher from '../../../utils/alertDispatcher';
 import isFuture from '../../../utils/isFuture';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
+import SectionBtn from './SectionBtn';
 import SecuritySummary from './Summary';
 import SummaryTable from './SummaryTable';
 import SecurityTable from './Table';
@@ -21,7 +23,9 @@ interface Props {
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
+  visibleImage?: string;
   visibleTarget?: string;
+  visibleSection?: string;
   eventId?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -30,13 +34,18 @@ interface Props {
 
 const SecurityModal = (props: Props) => {
   const history = useHistory();
+  const contentWrapper = useRef<HTMLDivElement>(null);
   const [currentVersion, setCurrentVersion] = useState<string>(props.version);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [report, setReport] = useState<SecurityReport | null | undefined>();
-  const [expandedTarget, setExpandedTarget] = useState<string | null>(props.visibleTarget || null);
+  const [visibleImage, setVisibleImage] = useState<string | null>(props.visibleImage || null);
+  const [visibleTarget, setVisibleTarget] = useState<string | null>(props.visibleTarget || null);
+  const [visibleSection, setVisibleSection] = useState<string | null>(props.visibleSection || null);
+  const [expandedTarget, setExpandedTarget] = useState<string | null>(null);
   const [hasOnlyOneTarget, setHasOnlyOneTarget] = useState<boolean>(false);
+  const [contentHeight, setContentHeight] = useState<number | undefined>(undefined);
 
   const activateTargetWhenIsOnlyOne = (report: SecurityReport) => {
     const images = Object.keys(report);
@@ -63,6 +72,7 @@ const SecurityModal = (props: Props) => {
       setCurrentVersion(props.version);
       setIsLoading(false);
       setOpenStatus(true);
+      updateUrl();
     } catch {
       setReport(null);
       alertDispatcher.postAlert({
@@ -76,14 +86,17 @@ const SecurityModal = (props: Props) => {
   const onOpenModal = () => {
     if (report && props.version === currentVersion && props.packageId === currentPkgId) {
       setOpenStatus(true);
+      updateUrl();
     } else {
       getSecurityReports(props.eventId); // Send eventId, if defined, from security alert email
     }
-    updateUrl();
   };
 
   const onCloseModal = () => {
     setOpenStatus(false);
+    setVisibleImage(null);
+    setVisibleTarget(null);
+    setVisibleSection(null);
     setExpandedTarget(null);
     history.replace({
       search: '',
@@ -93,14 +106,34 @@ const SecurityModal = (props: Props) => {
 
   const updateUrl = () => {
     history.replace({
-      search: `?modal=security-report${!isNull(expandedTarget) ? `&target=${encodeURIComponent(expandedTarget)}` : ''}`,
+      search: `?modal=security-report${
+        !isNull(visibleSection) ? `&section=${encodeURIComponent(visibleSection)}` : ''
+      }${!isNull(visibleImage) ? `&image=${encodeURIComponent(visibleImage)}` : ''}${
+        !isNull(visibleTarget) ? `&target=${encodeURIComponent(visibleTarget)}` : ''
+      }`,
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
 
   useEffect(() => {
-    updateUrl();
-  }, [expandedTarget]); /* eslint-disable-line react-hooks/exhaustive-deps */
+    if (openStatus) {
+      updateUrl();
+    }
+  }, [visibleTarget, visibleImage, visibleSection]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (openStatus && report && contentWrapper && contentWrapper.current && isUndefined(contentHeight)) {
+      // Use modal-body height as padding to help scrolling to corrent position (targets and images)
+      setContentHeight(contentWrapper.current.offsetHeight);
+    }
+  }, [contentHeight, contentWrapper, openStatus, report]);
+
+  const onClickSection = (name: string) => {
+    setVisibleSection(name);
+    setVisibleImage(null);
+    setVisibleTarget(null);
+    setExpandedTarget(null);
+  };
 
   useEffect(() => {
     if (props.visibleSecurityReport && !openStatus) {
@@ -143,8 +176,15 @@ const SecurityModal = (props: Props) => {
           open={openStatus}
           breakPoint="md"
         >
-          <div className="m-3">
-            <div className="h5 mt-0 text-dark text-uppercase font-weight-bold pb-2">Summary</div>
+          <div ref={contentWrapper} className="m-3 h-100">
+            <SectionBtn
+              title="Summary"
+              name="summary"
+              className="mt-0 pb-2"
+              visibleSection={props.visibleSection}
+              onClick={() => onClickSection('summary')}
+            />
+
             {props.totalVulnerabilities > 0 && (
               <>
                 <SummaryTable report={report} hasWhitelistedContainers={props.hasWhitelistedContainers} />
@@ -153,20 +193,34 @@ const SecurityModal = (props: Props) => {
 
             <SecuritySummary summary={props.summary} totalVulnerabilities={props.totalVulnerabilities} />
 
-            {!isEmpty(report) && (
+            {/* We wait until contentHeight is defined to be sure the scroll goes to the correct position */}
+            {!isEmpty(report) && !isUndefined(contentHeight) && (
               <>
-                <div className="h5 pt-3 text-dark text-uppercase font-weight-bold pb-3">Vulnerabilities details</div>
-                <div className="mt-3">
-                  {Object.keys(report).map((image: string) => {
+                <SectionBtn
+                  title="Vulnerabilities details"
+                  name="vulnerabilities"
+                  className="mt-3"
+                  visibleSection={props.visibleSection}
+                  onClick={() => onClickSection('vulnerabilities')}
+                />
+                <div className="py-3">
+                  {Object.keys(report).map((image: string, index: number) => {
                     return (
-                      <SecurityTable
-                        image={image}
-                        reports={report[image].Results}
-                        key={`image_${image}`}
-                        expandedTarget={expandedTarget}
-                        setExpandedTarget={setExpandedTarget}
-                        hasOnlyOneTarget={hasOnlyOneTarget}
-                      />
+                      <div key={`image_${image}`} className={classnames({ 'mt-2': index !== 0 })}>
+                        <SecurityTable
+                          image={image}
+                          reports={report[image].Results}
+                          visibleImage={visibleImage}
+                          setVisibleImage={setVisibleImage}
+                          visibleTarget={visibleTarget}
+                          setVisibleTarget={setVisibleTarget}
+                          expandedTarget={expandedTarget}
+                          setExpandedTarget={setExpandedTarget}
+                          hasOnlyOneTarget={hasOnlyOneTarget}
+                          lastReport={index === Object.keys(report).length - 1}
+                          contentHeight={contentHeight}
+                        />
+                      </div>
                     );
                   })}
                 </div>

@@ -1,4 +1,9 @@
+.tableWrapper {
+  overflow: auto;
+}
+
 .table {
+  min-width: 874px;
   font-size: 0.9rem;
 }
 
@@ -20,7 +25,15 @@
   font-size: 75%;
 }
 
+.tooltip {
+  left: -5px;
+}
+
 @media only screen and (min-width: 1200px) {
+  .tableWrapper {
+    overflow: visible;
+  }
+
   .table {
     font-size: 1rem;
   }

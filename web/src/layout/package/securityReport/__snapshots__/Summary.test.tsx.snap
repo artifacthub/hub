@@ -3,7 +3,7 @@
 exports[`SecuritySummary creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="mb-4"
+    class="mb-5"
   >
     <div
       class="h5 my-3 pt-2"

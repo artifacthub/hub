@@ -76,7 +76,9 @@ interface Props {
   hash?: string;
   visibleModal?: string;
   visibleValuesSchemaPath?: string;
+  visibleImage?: string;
   visibleTarget?: string;
+  visibleSection?: string;
   eventId?: string;
   visibleTemplate?: string;
   visibleFile?: string;
@@ -924,7 +926,9 @@ const PackageView = (props: Props) => {
                                 visibleSecurityReport={
                                   !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
                                 }
+                                visibleImage={props.visibleImage}
                                 visibleTarget={props.visibleTarget}
+                                visibleSection={props.visibleSection}
                                 eventId={
                                   !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
                                     ? props.eventId

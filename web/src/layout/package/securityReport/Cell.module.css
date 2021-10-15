@@ -1,3 +1,7 @@
+.wrapperCell {
+  table-layout: fixed;
+}
+
 .btnExpand {
   line-height: 1rem;
 }
