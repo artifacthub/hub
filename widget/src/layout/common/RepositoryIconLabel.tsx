@@ -69,11 +69,11 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
 
 const Wrapper = styled('span')`
   background-color: var(--color-ah-primary-5);
-  border: 1px solid var(--color-ah-primary-10);
+  border: 1px solid var(--color-ah-black-15);
   border-radius: 50rem;
   display: flex;
   align-items: center;
-  padding: 0.1em 0.4em;
+  padding: 0.25em 0.4em;
   font-size: 75%;
   display: flex;
   align-items: center;
@@ -87,7 +87,7 @@ const RepoName = styled('div')`
 `;
 
 const Icon = styled(RepositoryIcon)`
-  height: 15px;
+  height: 12px;
 
   & svg:not(:root) {
     width: auto;

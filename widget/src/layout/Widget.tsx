@@ -105,12 +105,14 @@ const Wrapper = styled.div<WrapperProps>`
           --color-ah-primary-10: rgba(15, 14, 17, 0.9);
           --color-ah-primary-20: rgba(15, 14, 17, 0.8);
           --color-ah-secondary-10: rgba(15, 14, 17, 0.1);
+          --color-ah-black-15: rgba(255, 255, 255, 0.15);
           --color-ah-black-25: rgba(255, 255, 255, 0.25);
           --color-ah-black-75: rgba(255, 255, 255, 0.75);
-          --light-gray: #e9ecef;
+          --light-gray: #131216;
           --info: #131216;
           --success: #131216;
           --icon-color: #a3a3a6;
+          --dark: #a3a3a6;
         `
       : css`
           --color-ah-primary: #417598;
@@ -120,6 +122,7 @@ const Wrapper = styled.div<WrapperProps>`
           --color-ah-primary-10: rgba(65, 117, 152, 0.1);
           --color-ah-primary-20: rgba(65, 117, 152, 0.2);
           --color-ah-secondary-10: rgba(45, 72, 87, 0.1);
+          --color-ah-black-15: rgba(0, 0, 0, 0.15);
           --color-ah-black-25: rgba(0, 0, 0, 0.25);
           --color-ah-black-75: rgba(0, 0, 0, 0.75);
           --light-gray: #e9ecef;
@@ -127,6 +130,7 @@ const Wrapper = styled.div<WrapperProps>`
           --success: #28a745;
           --icon-color: #fff;
           --color-ah-black-25: rgba(0, 0, 0, 0.25);
+          --dark: #343a40;
         `}
   --color-ah-primary: ${(props) => (props.color && props.color !== DEFAULT_COLOR ? 'inherit' : props.color)};
   margin: 0.75rem;
@@ -211,7 +215,7 @@ const ImageWrapper = styled('div')`
   min-width: 60px;
   width: 60px;
   height: 60px;
-  background-color: ${(props) => (props.theme === 'dark' ? 'var(--color-ah-black-75)' : 'var(--white)')};
+  background-color: ${(props) => (props.theme === 'dark' ? 'var(--white)' : 'var(--white)')};
   border: 2px solid var(--color-ah-primary-10);
   box-shadow: 0px 0px 5px 0px var(--color-ah-primary-20);
   border-radius: 50%;
