@@ -72,29 +72,8 @@ func checkRestrictions(network string, address string, conn syscall.RawConn) err
 	if ip == nil {
 		return ErrRestrictedConnection
 	}
-	if !ip.IsGlobalUnicast() || isPrivate(ip) { // TODO: use ip.IsPrivate() when available
+	if !ip.IsGlobalUnicast() || ip.IsPrivate() {
 		return ErrRestrictedConnection
 	}
 	return nil
-}
-
-// isPrivate reports whether ip is a private address, according to
-// RFC 1918 (IPv4 addresses) and RFC 4193 (IPv6 addresses).
-//
-// Source: https://github.com/golang/go/blob/5963f0a332496a68f1eb2d0c6a5badd73c9f046d/src/net/ip.go#L131-L148
-func isPrivate(ip net.IP) bool {
-	if ip4 := ip.To4(); ip4 != nil {
-		// Following RFC 1918, Section 3. Private Address Space which says:
-		//   The Internet Assigned Numbers Authority (IANA) has reserved the
-		//   following three blocks of the IP address space for private internets:
-		//     10.0.0.0        -   10.255.255.255  (10/8 prefix)
-		//     172.16.0.0      -   172.31.255.255  (172.16/12 prefix)
-		//     192.168.0.0     -   192.168.255.255 (192.168/16 prefix)
-		return ip4[0] == 10 ||
-			(ip4[0] == 172 && ip4[1]&0xf0 == 16) ||
-			(ip4[0] == 192 && ip4[1] == 168)
-	}
-	// Following RFC 4193, Section 8. IANA Considerations which says:
-	//   The IANA has assigned the FC00::/7 prefix to "Unique Local Unicast".
-	return len(ip) == net.IPv6len && ip[0]&0xfe == 0xfc
 }
