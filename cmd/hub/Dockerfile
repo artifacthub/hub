@@ -15,11 +15,6 @@ COPY web .
 ENV NODE_OPTIONS=--max_old_space_size=4096
 RUN yarn install
 RUN yarn build
-# Generate a yarn.lock version that does not contain the dev dependencies
-RUN cp -R /web/node_modules /web/package.json /web/yarn.lock /tmp
-WORKDIR /tmp
-RUN cat package.json | jq 'del(.devDependencies)' > tmp && mv tmp package.json
-RUN yarn install
 
 # Build widget
 FROM node:14-alpine3.14 AS widget-builder
@@ -45,7 +40,7 @@ USER hub
 WORKDIR /home/hub
 COPY --from=backend-builder /hub ./
 COPY --from=frontend-builder /web/build ./web
-COPY --from=frontend-builder /tmp/yarn.lock ./web
+COPY --from=frontend-builder /web/package.json ./web
 COPY --from=widget-builder /widget/build ./widget
 COPY --from=docs-builder /web/build/docs ./web/docs
 COPY --from=docs-builder /docs/api ./web/docs/api
