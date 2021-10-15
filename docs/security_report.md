@@ -2,7 +2,7 @@
 
 Artifact Hub scans containers' images used by packages for security vulnerabilities. The scanner uses [Trivy](https://github.com/aquasecurity/trivy) to generate security reports for each of the package's versions. These reports are accessible from the package's detail view.
 
-Security reports are generated *periodically*. The scanner runs *twice an hour* and scans packages' versions **that haven't been scanned yet**. Packages' versions already scanned are revisited and **scanned again**, just in case new vulnerabilities have been discovered since the previous scan. The latest package version available is scanned **daily**, whereas previous versions are scanned **weekly**. This happens even if nothing has changed in the package version.
+Security reports are generated *periodically*. The scanner runs *twice an hour* and scans packages' versions **that haven't been scanned yet**. Packages' versions already scanned are revisited and **scanned again**, just in case new vulnerabilities have been discovered since the previous scan. The latest package version available is scanned **daily**, whereas previous versions are scanned **weekly**. This happens even if nothing has changed in the package version. Versions released more than **one year** ago won't be scanned anymore.
 
 The security report may contain multiple images sections, one for each of the images your package is listing. Within each image section, multiple targets can be listed as well. A common one is the OS used by the image, including the packages installed. But more targets can be scanned and displayed if files describing your [application dependencies](#application-dependencies) are found in the image.
 
@@ -18,37 +18,15 @@ Artifact Hub will try to extract the containers images used by Helm charts from 
 
 The images used by an OLM operator are extracted from the `containerImage` annotation in the [CSV file metadata section](https://github.com/operator-framework/community-operators/blob/master/docs/packaging-required-fields.md), as well as from the `related images` section in the CSV spec. Most of the OLM operators currently listed in Artifact Hub provide that information already, so security reports for them are already available in Artifact Hub with no extra effort required.
 
-### CoreDNS plugins, KEDA scalers, OPA policies and Tinkerbell actions
+### CoreDNS plugins, KEDA scalers, Keptn integrations, OPA policies and Tinkerbell actions
 
 Images used by these kinds of packages can be listed using the `containersImages` field in the package's `artifacthub-pkg.yml` [metadata file](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml).
 
 ## Application dependencies
 
-Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.20.0/vulnerability/detection/language/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used.
+Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.20.0/vulnerability/detection/language/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used. Please see the [language-specific packages](https://aquasecurity.github.io/trivy/v0.20.0/vulnerability/detection/language/) section in the Trivy documentation (image column) for a full list of the applications dependencies supported.
 
-The following dependencies files are supported at the moment:
-
-- Ruby
-  - Gemfile.lock
-- Python
-  - Pipfile.lock
-  - poetry.lock
-- PHP
-  - composer.lock
-- Node.js
-  - package-lock.json
-  - yarn.lock
-- Rust
-  - Cargo.lock
-- .NET
-  - packages.lock.json
-- Java
-  - JAR/WAR/EAR files (.jar, .war, and *.ear)
-- Go
-  - Binaries built by Go (UPX-compressed binaries don't work)
-  - go.sum
-
-If you want your application dependencies scanned, please make sure the relevant files are included in your final images. The security report will include a target for each of them. You can find an example of how this is done in one of the Artifact Hub images [here](https://github.com/artifacthub/hub/blob/a3ffcb7cee0aa3923c3e4cf9bcf8ac0f2f437a2b/cmd/hub/Dockerfile#L23).
+If you want your application dependencies scanned, please make sure the relevant files are included in your final images. The security report will include a target for each of them.
 
 ## FAQ
 
