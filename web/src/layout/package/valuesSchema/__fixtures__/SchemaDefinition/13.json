@@ -1,0 +1,21 @@
+{
+  "def": {
+    "active": 0,
+    "combinationType": null,
+    "options": [
+      {
+        "description": "List of additional environment variables that may be specified in the container",
+        "type": "array",
+        "items": null,
+        "minItems": 0,
+        "uniqueItems": true,
+        "additionalItems": false
+      }
+    ],
+    "error": false
+  },
+  "isRequired": true,
+  "defaultValue": null,
+  "isExpanded": false,
+  "path": "env"
+}

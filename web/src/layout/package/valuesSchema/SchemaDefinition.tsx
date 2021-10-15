@@ -215,7 +215,7 @@ const SchemaDefinition = (props: Props) => {
   };
 
   const getItemsDef = (value?: any): JSX.Element => {
-    if (isUndefined(value)) return <span className="ml-1">-</span>;
+    if (isUndefined(value) || isNull(value)) return <span className="ml-1">-</span>;
     const types = isArray(value) ? value.map((item: any) => item.type) : [value.type];
     return (
       <>
@@ -240,7 +240,8 @@ const SchemaDefinition = (props: Props) => {
         className={classnames('d-flex align-items-baseline', className, {
           'flex-column': typeof value === 'object' && item.value !== 'items',
           'flex-row': typeof value !== 'object',
-          'flex-wrap': item.value === 'items' && !isUndefined(value) && !isUndefined(value.properties),
+          'flex-wrap':
+            item.value === 'items' && !isUndefined(value) && !isNull(value) && !isUndefined(value.properties),
         })}
       >
         <div>
@@ -252,7 +253,7 @@ const SchemaDefinition = (props: Props) => {
               return (
                 <>
                   {getItemsDef(value)}
-                  {!isUndefined(value) && value.type === 'object' && !isUndefined(value.properties) && (
+                  {!isUndefined(value) && !isNull(value) && value.type === 'object' && !isUndefined(value.properties) && (
                     <div className="w-100">
                       <div>
                         <small className="text-muted text-uppercase">Properties</small>:
