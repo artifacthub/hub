@@ -265,5 +265,19 @@ describe('SchemaDefinition', () => {
         expect(screen.findByText('Raw')).toBeNull();
       });
     });
+
+    it('renders value as null', () => {
+      const props = getProps('13');
+      render(<SchemaDefinition {...props} {...defaultProps} />);
+
+      expect(screen.getByText('array')).toBeInTheDocument();
+      expect(screen.getByText('Annotations')).toBeInTheDocument();
+      expect(
+        screen.getByText('List of additional environment variables that may be specified in the container')
+      ).toBeInTheDocument();
+      expect(screen.getByText('Constraints')).toBeInTheDocument();
+      expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.getAllByText('-')).toHaveLength(3);
+    });
   });
 });
