@@ -20,7 +20,7 @@ const SummaryTable = (props: Props) => {
   useEffect(() => {
     const checkTooltipInTable = () => {
       if (point) {
-        setVisibleTooltip(point === 'xl');
+        setVisibleTooltip(['xl', 'xxl'].includes(point));
       }
     };
     checkTooltipInTable();

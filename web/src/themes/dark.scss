@@ -253,7 +253,7 @@
     }
   }
 
-  .btn {
+  .btn:not(.badge-secondary) {
     color: $font-color-light;
   }
 
@@ -264,6 +264,8 @@
   a.textLight,
   a.text-primary,
   .anchorHeader {
+    color: $font-color-light !important;
+
     &:hover,
     &:focus {
       color: $font-color;
@@ -276,7 +278,7 @@
 
   .text-primary,
   .text-secondary {
-    color: $font-color !important;
+    color: $font-color-light !important;
   }
 
   .anchorHeader {
@@ -288,7 +290,7 @@
   }
 
   .card a.text-primary {
-    color: $font-color !important;
+    color: $font-color-light !important;
 
     &:hover > *,
     &:focus > * {
@@ -370,9 +372,9 @@
   }
 
   .text-dark {
-    color: var(--color-font) !important;
+    color: $font-color-light !important;
     &:hover {
-      color: darken($font-color, 0.3) !important;
+      color: darken($font-color-light, 0.3) !important;
     }
   }
 
