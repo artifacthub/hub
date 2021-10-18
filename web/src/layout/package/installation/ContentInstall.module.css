@@ -21,6 +21,7 @@
 .md li,
 .md table {
   font-size: 0.875rem;
+  line-height: 1.75;
 }
 
 .mdHeader {
