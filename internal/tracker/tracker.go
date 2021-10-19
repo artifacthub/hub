@@ -143,7 +143,7 @@ func (t *Tracker) Run() error {
 	return nil
 }
 
-// cloneRepository creates a local cope of the repository provided to the
+// cloneRepository creates a local copy of the repository provided to the
 // tracker instance when applicable to the repository kind.
 func (t *Tracker) cloneRepository() (string, string, error) {
 	var tmpDir, packagesPath string

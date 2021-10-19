@@ -95,25 +95,6 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *RulesMetadata, pkg
 	}
 	version := sv.String()
 
-	// Prepare source link url
-	var repoBaseURL, pkgsPath, provider string
-	matches := repo.GitRepoURLRE.FindStringSubmatch(r.URL)
-	if len(matches) >= 3 {
-		repoBaseURL = matches[1]
-		provider = matches[2]
-	}
-	if len(matches) == 4 {
-		pkgsPath = strings.TrimSuffix(matches[3], "/")
-	}
-	var blobPath string
-	switch provider {
-	case "github":
-		blobPath = "blob"
-	case "gitlab":
-		blobPath = "-/blob"
-	}
-	sourceURL := fmt.Sprintf("%s/%s/%s/%s%s", repoBaseURL, blobPath, repo.GetBranch(r), pkgsPath, pkgPath)
-
 	// Prepare package from metadata
 	p := &hub.Package{
 		Name:        md.Name,
@@ -125,13 +106,31 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *RulesMetadata, pkg
 		Data: map[string]interface{}{
 			rulesKey: md.Rules,
 		},
-		Links: []*hub.Link{
-			{
-				Name: "source",
-				URL:  sourceURL,
-			},
-		},
 		Repository: r,
+	}
+
+	// Prepare source link url whenever possible
+	var repoBaseURL, host, pkgsPath string
+	matches := repo.GitRepoURLRE.FindStringSubmatch(r.URL)
+	if len(matches) >= 3 {
+		repoBaseURL = matches[1]
+		host = matches[2]
+	}
+	if len(matches) == 4 {
+		pkgsPath = strings.TrimSuffix(matches[3], "/")
+	}
+	var sourceURL string
+	switch host {
+	case "github.com":
+		sourceURL = fmt.Sprintf("%s/blob/%s/%s%s", repoBaseURL, repo.GetBranch(r), pkgsPath, pkgPath)
+	case "gitlab.com":
+		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s%s", repoBaseURL, repo.GetBranch(r), pkgsPath, pkgPath)
+	}
+	if sourceURL != "" {
+		p.Links = append(p.Links, &hub.Link{
+			Name: "source",
+			URL:  sourceURL,
+		})
 	}
 
 	// Register logo image if available

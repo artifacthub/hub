@@ -239,32 +239,6 @@ func PreparePackage(
 	sv, _ := semver.NewVersion(version)
 	version = sv.String()
 
-	// Prepare content and source urls
-	var repoBaseURL, pkgsPath, provider string
-	matches := repo.GitRepoURLRE.FindStringSubmatch(r.URL)
-	if len(matches) >= 3 {
-		repoBaseURL = matches[1]
-		provider = matches[2]
-	}
-	if len(matches) == 4 {
-		pkgsPath = strings.TrimSuffix(matches[3], "/")
-	}
-	var blobPath, rawPath string
-	switch provider {
-	case "github":
-		blobPath = "blob"
-		rawPath = "raw"
-	case "gitlab":
-		blobPath = "-/blob"
-		rawPath = "-/raw"
-	}
-	branch := repo.GetBranch(r)
-	pkgVersionPath := strings.TrimPrefix(pkgPath, basePath)
-	contentURL := fmt.Sprintf("%s/%s/%s/%s%s/%s.yaml",
-		repoBaseURL, rawPath, branch, pkgsPath, pkgVersionPath, name)
-	sourceURL := fmt.Sprintf("%s/%s/%s/%s%s/%s.yaml",
-		repoBaseURL, blobPath, branch, pkgsPath, pkgVersionPath, name)
-
 	// Prepare keywords
 	keywords := []string{
 		"tekton",
@@ -282,19 +256,46 @@ func PreparePackage(
 		DisplayName: annotations["tekton.dev/displayName"],
 		Description: description,
 		Keywords:    keywords,
-		ContentURL:  contentURL,
 		Repository:  r,
-		Links: []*hub.Link{
-			{
-				Name: "source",
-				URL:  sourceURL,
-			},
-		},
 		Data: map[string]interface{}{
 			PipelinesMinVersionKey: annotations["tekton.dev/pipelines.minVersion"],
 			RawManifestKey:         string(manifestRaw),
 			TasksKey:               tasks,
 		},
+	}
+
+	// Prepare content and source urls whenever possible
+	var repoBaseURL, host, pkgsPath string
+	matches := repo.GitRepoURLRE.FindStringSubmatch(r.URL)
+	if len(matches) >= 3 {
+		repoBaseURL = matches[1]
+		host = matches[2]
+	}
+	if len(matches) == 4 {
+		pkgsPath = strings.TrimSuffix(matches[3], "/")
+	}
+	var contentURL, sourceURL string
+	branch := repo.GetBranch(r)
+	pkgVersionPath := strings.TrimPrefix(pkgPath, basePath)
+	switch host {
+	case "bitbucket.org":
+		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
+		sourceURL = fmt.Sprintf("%s/src/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
+	case "github.com":
+		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
+		sourceURL = fmt.Sprintf("%s/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
+	case "gitlab.com":
+		contentURL = fmt.Sprintf("%s/-/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
+		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
+	}
+	if contentURL != "" {
+		p.ContentURL = contentURL
+	}
+	if sourceURL != "" {
+		p.Links = append(p.Links, &hub.Link{
+			Name: "source",
+			URL:  sourceURL,
+		})
 	}
 
 	// Include readme file if available

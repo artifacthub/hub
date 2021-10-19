@@ -334,9 +334,9 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Helm:
         return undefined;
       case RepositoryKind.OLM:
-        return `((https://(github|gitlab).com/|${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)`;
+        return `(^(https://([A-Za-z0-9_.-]+)/|${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$`;
       default:
-        return '(https://(github|gitlab).com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)';
+        return '^(https://([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$';
     }
   };
 

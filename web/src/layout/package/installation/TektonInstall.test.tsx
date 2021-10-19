@@ -50,5 +50,17 @@ describe('TektonInstall', () => {
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveTextContent('Important: This repository is private and requires some credentials.');
     });
+
+    describe('when contentUrl', () => {
+      it('is undefined', () => {
+        render(<TektonInstall {...defaultProps} contentUrl={undefined} />);
+        expect(screen.getByText('kubectl apply -f TASK_RAW_YAML_URL')).toBeInTheDocument();
+      });
+
+      it('is an empty string', () => {
+        render(<TektonInstall repository={{ ...repo, kind: RepositoryKind.TektonPipeline }} contentUrl="" />);
+        expect(screen.getByText('kubectl apply -f PIPELINE_RAW_YAML_URL')).toBeInTheDocument();
+      });
+    });
   });
 });
