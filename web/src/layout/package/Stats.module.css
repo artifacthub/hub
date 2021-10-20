@@ -1,3 +1,7 @@
 .icon {
   font-size: 70%;
 }
+
+.icon path {
+  stroke: inherit;
+}

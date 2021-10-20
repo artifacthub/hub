@@ -173,8 +173,13 @@
     border-color: var(--highlighted);
   }
 
-  .custom-select:focus {
+  .custom-select {
+    background-image: url('/static/media/bootstrap/bt_select_dark.svg');
     border-color: var(--border-md);
+  }
+
+  .custom-select:hover {
+    border-color: var(--color-black-25);
   }
 
   .custom-select:disabled {
