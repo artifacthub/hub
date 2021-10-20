@@ -248,6 +248,7 @@ func (h *Handlers) setupRouter() {
 				r.Get("/feed/rss", h.Packages.RssFeed)
 				r.With(corsMW).Get("/summary", h.Packages.GetSummary)
 				r.Get("/{version}", h.Packages.Get)
+				r.Get("/changelog.md", h.Packages.GenerateChangelogMD)
 				r.Get("/", h.Packages.Get)
 			})
 			r.Route("/{packageID}/stars", func(r chi.Router) {
@@ -257,7 +258,7 @@ func (h *Handlers) setupRouter() {
 			r.Get("/{packageID}/{version}/security-report", h.Packages.GetSnapshotSecurityReport)
 			r.Get("/{packageID}/{version}/values-schema", h.Packages.GetValuesSchema)
 			r.Get("/{packageID}/{version}/templates", h.Packages.GetChartTemplates)
-			r.Get("/{packageID}/changelog", h.Packages.GetChangeLog)
+			r.Get("/{packageID}/changelog", h.Packages.GetChangelog)
 		})
 
 		// Subscriptions

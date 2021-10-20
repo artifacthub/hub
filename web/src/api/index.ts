@@ -215,6 +215,7 @@ class API_CLASS {
 
     switch (response.headers.get('Content-Type')) {
       case 'text/plain; charset=utf-8':
+      case 'text/markdown':
         const text = await response.text();
         return text;
       case 'application/json':
@@ -911,6 +912,12 @@ class API_CLASS {
 
   public getChangelog(packageId: string): Promise<ChangeLog[]> {
     return this.apiFetch({ url: `${this.API_BASE_URL}/packages/${packageId}/changelog` });
+  }
+
+  public getChangelogMD(request: PackageRequest): Promise<string> {
+    return this.apiFetch({
+      url: `${this.API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}/changelog.md`,
+    });
   }
 
   public getChartTemplates(packageId: string, version: string): Promise<ChartTemplatesData | null> {

@@ -20,6 +20,9 @@ type Change struct {
 	Links       []*Link `json:"links,omitempty"`
 }
 
+// Changelog represents a package's changelog.
+type Changelog []*VersionChanges
+
 // Channel represents a package's channel.
 type Channel struct {
 	Name    string `json:"name"`
@@ -91,7 +94,7 @@ type Package struct {
 	Provider                       string                 `json:"provider"`
 	HasValuesSchema                bool                   `json:"has_values_schema"`
 	ValuesSchema                   json.RawMessage        `json:"values_schema,omitempty"`
-	HasChangeLog                   bool                   `json:"has_changelog"`
+	HasChangelog                   bool                   `json:"has_changelog"`
 	Changes                        []*Change              `json:"changes"`
 	ContainsSecurityUpdates        bool                   `json:"contains_security_updates"`
 	Prerelease                     bool                   `json:"prerelease"`
@@ -108,7 +111,8 @@ type Package struct {
 // provide.
 type PackageManager interface {
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
-	GetChangeLogJSON(ctx context.Context, pkgID string) ([]byte, error)
+	GetChangelog(ctx context.Context, pkgID string) (*Changelog, error)
+	GetChangelogJSON(ctx context.Context, pkgID string) ([]byte, error)
 	GetHarborReplicationDumpJSON(ctx context.Context) ([]byte, error)
 	GetHelmExporterDumpJSON(ctx context.Context) ([]byte, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
@@ -243,4 +247,14 @@ type SearchPackageInput struct {
 type Version struct {
 	Version string `json:"version"`
 	TS      int64  `json:"ts"`
+}
+
+// VersionChanges represents the changes introduced by a given package's
+// version along with some extra metadata.
+type VersionChanges struct {
+	Version                 string    `json:"version"`
+	Changes                 []*Change `json:"changes"`
+	TS                      int64     `json:"ts"`
+	ContainsSecurityUpdates bool      `json:"contains_security_updates"`
+	Prerelease              bool      `json:"prerelease"`
 }

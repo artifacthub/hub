@@ -3,12 +3,15 @@ import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { CgFileDocument } from 'react-icons/cg';
+import { FaMarkdown } from 'react-icons/fa';
+import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import semver from 'semver';
 
 import API from '../../../api';
 import { ChangeLog, Repository, RepositoryKind, SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import { getRepoKindName } from '../../../utils/repoKind';
 import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
 import Content from './Content';
@@ -34,6 +37,8 @@ const ChangelogModal = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
   const [activeVersionIndex, setActiveVersionIndex] = useState<number | undefined>(undefined);
+  const [isGettingMd, setIsGettingMd] = useState<boolean>(false);
+  const [changelogMD, setChangelogMD] = useState<string | undefined>();
 
   const updateVersionInQueryString = (currentVersion?: string) => {
     let version = currentVersion;
@@ -111,6 +116,7 @@ const ChangelogModal = (props: Props) => {
   async function getChangelog() {
     try {
       setIsLoading(true);
+      setChangelogMD(undefined);
       const changelog = await API.getChangelog(props.packageId);
       const sortedChangelog: ChangeLog[] = sortChangelog(changelog);
       setCurrentPkgId(props.packageId);
@@ -156,6 +162,41 @@ const ChangelogModal = (props: Props) => {
     }
   };
 
+  const getChangelogMarkdown = () => {
+    async function getChangelogMd() {
+      try {
+        setIsGettingMd(true);
+        let markdown = changelogMD;
+        if (isUndefined(markdown)) {
+          markdown = await API.getChangelogMD({
+            packageName: props.normalizedName,
+            repositoryKind: getRepoKindName(props.repository.kind)!,
+            repositoryName: props.repository.name,
+          });
+
+          setChangelogMD(markdown);
+        }
+        const blob = new Blob([markdown], {
+          type: 'text/markdown',
+        });
+        const link: HTMLAnchorElement = document.createElement('a');
+        link.download = 'changelog.md';
+        link.href = window.URL.createObjectURL(blob);
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        setIsGettingMd(false);
+      } catch {
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: 'An error occurred getting package changelog markodwn, please try again later.',
+        });
+        setIsGettingMd(false);
+      }
+    }
+    getChangelogMd();
+  };
+
   return (
     <>
       <ElementWithTooltip
@@ -196,6 +237,41 @@ const ChangelogModal = (props: Props) => {
           header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Changelog</div>}
           onClose={onCloseModal}
           open={openStatus}
+          closeButton={
+            <div className="w-100 d-flex flex-row align-items-center justify-content-between">
+              <button
+                className="btn btn-sm btn-outline-secondary"
+                onClick={getChangelogMarkdown}
+                disabled={isGettingMd}
+                aria-label="Get changelog markdown"
+              >
+                <div className="d-flex flex-row align-items-center">
+                  {isGettingMd ? (
+                    <>
+                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                      <span className="ml-2">Getting markdown</span>
+                    </>
+                  ) : (
+                    <>
+                      <FaMarkdown className="mr-2" />
+                      <div className="text-uppercase">Get markdown</div>
+                    </>
+                  )}
+                </div>
+              </button>
+
+              <button
+                className="btn btn-sm btn-outline-secondary text-uppercase"
+                onClick={onCloseModal}
+                aria-label="Close modal"
+              >
+                <div className="d-flex flex-row align-items-center">
+                  <MdClose className="mr-2" />
+                  <div>Close</div>
+                </div>
+              </button>
+            </div>
+          }
         >
           <div className="mw-100 h-100">
             <div className="d-flex flex-row h-100">

@@ -1678,6 +1678,50 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/{repoKindParam}/{repoName}/{packageName}/changelog.md":
+    get:
+      tags:
+        - Packages
+      summary: Get package's changelog in markdown format
+      description: Get package's changelog in markdown format
+      operationId: generateChangelogMD
+      parameters:
+        - $ref: "#/components/parameters/RepoKindParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            text/markdown:
+              schema:
+                type: string
+                example: |
+                  # Changelog
+                  ## 1.3.0 - 2021-10-06
+                  ### Added
+                  - Support for Tekton pipelines
+                  - Versions index to changelog modal
+                  - Allow publishers to include screenshots in packages
+                  - Repository metadata file is now supported in Helm OCI repositories
+                  - Support for provenance files in Helm OCI repositories
+                  - Changes annotation is now available for Krew plugins kind
+                  - Option to show/hide stars in widget
+                  - Link Helm charts dependencies to packages in the hub
+                  - API endpoint for helm-exporter tool
+                  ### Changed
+                  - Improve Helm OCI support (include HIP 6 changes)
+                  - Improve packages search results facets
+                  - Bump Trivy to 0.20.0
+                  - Upgrade backend and frontend dependencies
+                  ### Fixed
+                  - Some bugs and other improvements
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/{repoKindParam}/{repoName}/{packageName}/summary":
     get:
       tags:

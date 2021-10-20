@@ -18,7 +18,7 @@ const (
 	getHarborReplicationDumpDBQ     = `select get_harbor_replication_dump()`
 	getHelmExporterDumpDBQ          = `select get_helm_exporter_dump()`
 	getPkgDBQ                       = `select get_package($1::jsonb)`
-	getPkgChangeLogDBQ              = `select get_package_changelog($1::uuid)`
+	getPkgChangelogDBQ              = `select get_package_changelog($1::uuid)`
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
 	getPkgSummaryDBQ                = `select get_package_summary($1::jsonb)`
 	getPkgsStarredByUserDBQ         = `select * from get_packages_starred_by_user($1::uuid, $2::int, $3::int)`
@@ -70,10 +70,18 @@ func (m *Manager) Get(ctx context.Context, input *hub.GetPackageInput) (*hub.Pac
 	return p, nil
 }
 
-// GetChangeLogJSON returns the changelog for the package identified by the id
+// GetChangelog returns the changelog for the package identified by the id
 // provided.
-func (m *Manager) GetChangeLogJSON(ctx context.Context, pkgID string) ([]byte, error) {
-	return util.DBQueryJSON(ctx, m.db, getPkgChangeLogDBQ, pkgID)
+func (m *Manager) GetChangelog(ctx context.Context, pkgID string) (*hub.Changelog, error) {
+	var changelog *hub.Changelog
+	err := util.DBQueryUnmarshal(ctx, m.db, &changelog, getPkgChangelogDBQ, pkgID)
+	return changelog, err
+}
+
+// GetChangelogJSON returns the changelog for the package identified by the id
+// provided in json format.
+func (m *Manager) GetChangelogJSON(ctx context.Context, pkgID string) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getPkgChangelogDBQ, pkgID)
 }
 
 // GetHarborReplicationDumpJSON returns a json list with all packages versions
