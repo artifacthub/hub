@@ -2,7 +2,6 @@ package repo
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"strings"
@@ -26,31 +25,13 @@ type Cloner struct{}
 func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string, string, error) {
 	// Parse repository url
 	var repoBaseURL, packagesPath string
-	switch r.Kind {
-	case
-		hub.CoreDNS,
-		hub.Falco,
-		hub.HelmPlugin,
-		hub.KedaScaler,
-		hub.Keptn,
-		hub.Krew,
-		hub.OLM,
-		hub.OPA,
-		hub.TBAction,
-		hub.TektonPipeline,
-		hub.TektonTask:
-		matches := GitRepoURLRE.FindStringSubmatch(r.URL)
-		if len(matches) < 2 {
-			return "", "", fmt.Errorf("invalid repository url")
-		}
-		if len(matches) >= 3 {
-			repoBaseURL = matches[1]
-		}
-		if len(matches) == 4 {
-			packagesPath = strings.TrimSuffix(matches[3], "/")
-		}
-	default:
-		return "", "", errors.New("repository kind not supported")
+	matches := GitRepoURLRE.FindStringSubmatch(r.URL)
+	if len(matches) < 3 {
+		return "", "", fmt.Errorf("invalid repository url")
+	}
+	repoBaseURL = matches[1]
+	if len(matches) == 4 {
+		packagesPath = strings.TrimSuffix(matches[3], "/")
 	}
 
 	// Clone git repository

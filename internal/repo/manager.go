@@ -71,9 +71,9 @@ var (
 	// repository url is not supported.
 	ErrSchemeNotSupported = errors.New("scheme not supported")
 
-	// GitRepoURLRE is a regexp used to validate and parse a git based
+	// GitRepoURLRE is a regexp used to validate and parse an http based git
 	// repository URL.
-	GitRepoURLRE = regexp.MustCompile(`^(https:\/\/(github|gitlab)\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)\/?(.*)$`)
+	GitRepoURLRE = regexp.MustCompile(`^(https:\/\/([A-Za-z0-9_.-]+)\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)\/?(.*)$`)
 
 	// validRepositoryKinds contains the repository kinds supported.
 	validRepositoryKinds = []hub.RepositoryKind{
@@ -254,15 +254,21 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	if err != nil {
 		return err
 	}
+
+	// Some extra validation
+	u, _ := url.Parse(r.URL)
+	if r.Kind == hub.OLM && SchemeIsOCI(u) {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "ownership claim not available for olm oci repos")
+	}
+
 	var mdFile string
 	switch r.Kind {
 	case hub.Helm:
-		u, _ := url.Parse(r.URL)
-		switch u.Scheme {
-		case "http", "https":
+		switch {
+		case SchemeIsHTTP(u):
 			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
 			mdFile = u.String()
-		case "oci":
+		case SchemeIsOCI(u):
 			mdFile = r.URL
 		}
 	case
@@ -475,15 +481,15 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 
 	switch {
 	case r.Kind == hub.Helm:
-		switch u.Scheme {
-		case "http", "https":
+		switch {
+		case SchemeIsHTTP(u):
 			// Digest is obtained by hashing the repository index.yaml file
 			var err error
 			_, digest, err = m.il.LoadIndex(r)
 			if err != nil {
 				return "", err
 			}
-		case "oci":
+		case SchemeIsOCI(u):
 			// Digest is obtained by hashing the list of versions available
 			versions, err := m.tg.Tags(ctx, r)
 			if err != nil {
@@ -492,7 +498,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 			digest = fmt.Sprintf("%x", sha256.Sum256([]byte(strings.Join(versions, ","))))
 		}
 
-	case r.Kind == hub.OLM && u.Scheme == "oci":
+	case r.Kind == hub.OLM && SchemeIsOCI(u):
 		// Digest is obtained from the index image digest
 		refName := strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix)
 		ref, err := name.ParseReference(refName)
@@ -783,15 +789,15 @@ func SchemeIsHTTP(u *url.URL) bool {
 	return u.Scheme == "http" || u.Scheme == "https"
 }
 
+// SchemeIsOCI is a helper that checks if the scheme of the url provided is oci.
+func SchemeIsOCI(u *url.URL) bool {
+	return u.Scheme == "oci"
+}
+
 // isSchemeSupported is a helper that checks if the scheme of the url provided
 // is supported.
 func isSchemeSupported(u *url.URL) bool {
-	switch u.Scheme {
-	case "http", "https", "oci":
-		return true
-	default:
-		return false
-	}
+	return SchemeIsHTTP(u) || SchemeIsOCI(u)
 }
 
 // isValidKind checks if the provided repository kind is valid.

@@ -30,6 +30,7 @@ CoreDNS plugins repositories are expected to be hosted in Github or Gitlab repos
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://bitbucket.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -79,6 +80,7 @@ Falco rules repositories are expected to be hosted in Github or Gitlab repos. Wh
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://bitbucket.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -175,6 +177,7 @@ Artifact Hub is able to process Helm plugins available in git repositories. Repo
 
 - `https://github.com/user/repo`
 - `https://gitlab.com/user/repo`
+- `https://bitbucket.org/user/repo`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -196,6 +199,7 @@ KEDA scalers repositories are expected to be hosted in Github or Gitlab repos. W
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://bitbucket.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -250,6 +254,7 @@ Keptn integrations repositories are expected to be hosted in Github or Gitlab re
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://bitbucket.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -303,6 +308,7 @@ Artifact Hub is able to process kubectl plugins listed in [Krew index repositori
 
 - `https://github.com/user/repo`
 - `https://gitlab.com/user/repo`
+- `https://bitbucket.org/user/repo`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -322,6 +328,7 @@ OLM operators repositories are expected to be hosted in Github or Gitlab repos. 
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://bitbucket.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -362,6 +369,7 @@ OPA policies repositories are expected to be hosted in Github or Gitlab repos. W
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://bitbucket.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -431,6 +439,7 @@ Tinkerbell actions repositories are expected to be hosted in Github or Gitlab re
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://bitbucket.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
@@ -484,6 +493,7 @@ Artifact Hub is able to process Tekton tasks listed in [Tekton catalog repositor
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://bitbucket.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
