@@ -114,6 +114,8 @@ describe('Search index', () => {
       const results = screen.getByRole('status');
       expect(results).toBeInTheDocument();
       expect(screen.getByText(/(some filters applied)/i)).toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Remove filter: Repository - Stable' })).toBeInTheDocument();
     });
 
     it('renders error message when searchPackages call fails', async () => {
@@ -643,6 +645,72 @@ describe('Search index', () => {
         const sortOpts = await waitFor(() => screen.queryByLabelText('sort-options') as HTMLSelectElement);
         expect(sortOpts).toBeNull();
       });
+    });
+  });
+
+  describe('Filters badges', () => {
+    it('displays some common filters', async () => {
+      const mockSearchResults = getMockSearchResults('29');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} official verifiedPublisher />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      expect(screen.getByRole('button', { name: 'Remove filter: Only official' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Remove filter: Only verified publishers' })).toBeInTheDocument();
+    });
+
+    it('calls history push on filters change', async () => {
+      const mockSearchResults = getMockSearchResults('30');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} official verifiedPublisher />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      userEvent.click(screen.getByRole('button', { name: 'Remove filter: Only official' }));
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          tsQueryWeb: 'test',
+          pageNumber: 1,
+          deprecated: false,
+          verifiedPublisher: true,
+        }),
+      });
+    });
+
+    it('displays some categories filters', async () => {
+      const mockSearchResults = getMockSearchResults('29');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} tsQuery={['database', 'logging-and-tracing']} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      expect(screen.getByRole('button', { name: 'Remove filter: Category - Database' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Remove filter: Category - Logging and Tracing' })).toBeInTheDocument();
     });
   });
 });

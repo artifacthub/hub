@@ -8,7 +8,7 @@ const LabelWrapper = styled('div')`
 `;
 
 const LabelText = styled('div')`
-  background-color: var(--color-ah-primary-5);
+  background-color: var(--bg-badge);
   line-height: 18px;
   padding: 0 5px 0 10px;
   font-weight: 700;

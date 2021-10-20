@@ -11,7 +11,8 @@ import { useHistory } from 'react-router-dom';
 import API from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import { Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults } from '../../types';
+import { FacetOption, Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults, TsQuery } from '../../types';
+import { TS_QUERY } from '../../utils/data';
 import getSampleQueries from '../../utils/getSampleQueries';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
@@ -22,6 +23,7 @@ import SampleQueries from '../common/SampleQueries';
 import Sidebar from '../common/Sidebar';
 import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
+import FilterBadge from './FilterBadge';
 import Filters from './Filters';
 import MoreActionsButton from './MoreActionsButton';
 import PaginationLimit from './PaginationLimit';
@@ -52,6 +54,11 @@ interface Props {
 
 const DEFAULT_SORT = 'relevance';
 
+interface FilterLabel {
+  key: string;
+  name: string;
+}
+
 const SearchView = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const history = useHistory();
@@ -70,6 +77,33 @@ const SearchView = (props: Props) => {
   };
 
   const [offset, setOffset] = useState<number>(calculateOffset());
+
+  const getFilterName = (key: string, label: string): FilterLabel | null => {
+    const correctKey = ['user', 'org'].includes(key) ? 'publisher' : key;
+    if (searchResults.facets) {
+      const selectedKey = searchResults.facets.find((fac: Facets) => fac.filterKey === correctKey);
+      if (selectedKey) {
+        const selectedOpt = selectedKey.options.find((opt: FacetOption) => opt.id.toString() === label);
+        if (selectedOpt) {
+          return { key: selectedKey.title, name: selectedOpt.name };
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    }
+    return null;
+  };
+
+  const getTsQueryName = (ts: string): string | null => {
+    const selectedTsQuery = TS_QUERY.find((query: TsQuery) => query.label === ts);
+    if (selectedTsQuery) {
+      return selectedTsQuery.name;
+    } else {
+      return null;
+    }
+  };
 
   const isEmptyFacets = (): boolean => {
     if (searchResults.facets) {
@@ -159,8 +193,7 @@ const SearchView = (props: Props) => {
     });
   };
 
-  const onTsQueryChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { value, checked } = e.target;
+  const onTsQueryChange = (value: string, checked: boolean): void => {
     let query = isUndefined(props.tsQuery) ? [] : props.tsQuery.slice();
     if (checked) {
       query.push(value);
@@ -328,117 +361,178 @@ const SearchView = (props: Props) => {
 
   return (
     <>
-      <SubNavbar>
-        <div className="d-flex align-items-center text-truncate">
-          {!isNull(searchResults.packages) && (
-            <>
-              {/* Mobile filters */}
-              {!isEmptyFacets() && (
-                <Sidebar
-                  label="Filters"
-                  className="d-inline-block d-md-none mr-2"
-                  wrapperClassName="px-4"
-                  buttonType={classnames('btn-sm rounded-circle position-relative', styles.btnMobileFilters, {
-                    [styles.filtersBadge]: activeFilters,
-                  })}
-                  buttonIcon={<FaFilter />}
-                  closeButton={
-                    <>
-                      {isSearching ? (
+      <SubNavbar className={styles.subnavbar}>
+        <div className="d-flex flex-column w-100">
+          <div className="d-flex align-items-center justify-content-between flex-nowrap">
+            <div className="d-flex align-items-center text-truncate w-100">
+              {!isNull(searchResults.packages) && (
+                <>
+                  {/* Mobile filters */}
+                  {!isEmptyFacets() && (
+                    <Sidebar
+                      label="Filters"
+                      className="d-inline-block d-md-none mr-2"
+                      wrapperClassName="px-4"
+                      buttonType={classnames('btn-sm rounded-circle position-relative', styles.btnMobileFilters, {
+                        [styles.filtersBadge]: activeFilters,
+                      })}
+                      buttonIcon={<FaFilter />}
+                      closeButton={
                         <>
-                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                          <span className="ml-2">Loading...</span>
+                          {isSearching ? (
+                            <>
+                              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                              <span className="ml-2">Loading...</span>
+                            </>
+                          ) : (
+                            <>See {searchResults.paginationTotalCount} results</>
+                          )}
                         </>
-                      ) : (
-                        <>See {searchResults.paginationTotalCount} results</>
-                      )}
-                    </>
-                  }
-                  leftButton={
-                    <>
-                      <div className="d-flex align-items-center">
-                        <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
-                        <button
-                          className="btn btn-link btn-sm p-0 pl-1 text-dark"
-                          onClick={onResetFilters}
-                          aria-label="Reset filters"
-                        >
-                          Reset
-                        </button>
+                      }
+                      leftButton={
+                        <>
+                          <div className="d-flex align-items-center">
+                            <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
+                            <button
+                              className="btn btn-link btn-sm p-0 pl-1 text-dark"
+                              onClick={onResetFilters}
+                              aria-label="Reset filters"
+                            >
+                              Reset
+                            </button>
+                          </div>
+                        </>
+                      }
+                      header={<div className="h6 text-uppercase mb-0 flex-grow-1">Filters</div>}
+                    >
+                      <div role="menu">
+                        <Filters
+                          forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
+                          facets={searchResults.facets}
+                          activeFilters={props.filters || {}}
+                          activeTsQuery={props.tsQuery}
+                          onChange={onFiltersChange}
+                          onResetSomeFilters={onResetSomeFilters}
+                          onTsQueryChange={onTsQueryChange}
+                          deprecated={props.deprecated}
+                          operators={props.operators}
+                          verifiedPublisher={props.verifiedPublisher}
+                          official={props.official}
+                          onDeprecatedChange={onDeprecatedChange}
+                          onOperatorsChange={onOperatorsChange}
+                          onVerifiedPublisherChange={onVerifiedPublisherChange}
+                          onOfficialChange={onOfficialChange}
+                          onResetFilters={onResetFilters}
+                          visibleTitle={false}
+                          device="mobile"
+                        />
                       </div>
-                    </>
-                  }
-                  header={<div className="h6 text-uppercase mb-0 flex-grow-1">Filters</div>}
-                >
-                  <div role="menu">
-                    <Filters
-                      forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
-                      facets={searchResults.facets}
-                      activeFilters={props.filters || {}}
-                      activeTsQuery={props.tsQuery}
-                      onChange={onFiltersChange}
-                      onResetSomeFilters={onResetSomeFilters}
-                      onTsQueryChange={onTsQueryChange}
-                      deprecated={props.deprecated}
-                      operators={props.operators}
-                      verifiedPublisher={props.verifiedPublisher}
-                      official={props.official}
-                      onDeprecatedChange={onDeprecatedChange}
-                      onOperatorsChange={onOperatorsChange}
-                      onVerifiedPublisherChange={onVerifiedPublisherChange}
-                      onOfficialChange={onOfficialChange}
-                      onResetFilters={onResetFilters}
-                      visibleTitle={false}
-                      device="mobile"
-                    />
-                  </div>
-                </Sidebar>
-              )}
-
-              {!isSearching && (
-                <div className="text-truncate" role="status">
-                  {parseInt(searchResults.paginationTotalCount) > 0 && (
-                    <span className="pr-1">
-                      {offset + 1} -{' '}
-                      {parseInt(searchResults.paginationTotalCount) < ctx.prefs.search.limit * props.pageNumber
-                        ? searchResults.paginationTotalCount
-                        : ctx.prefs.search.limit * props.pageNumber}{' '}
-                      <span className="ml-1">of</span>{' '}
-                    </span>
+                    </Sidebar>
                   )}
-                  {searchResults.paginationTotalCount}
-                  <span className="pl-1"> results </span>
-                  {props.tsQueryWeb && props.tsQueryWeb !== '' && (
-                    <span className="d-none d-sm-inline pl-1">
-                      for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
-                    </span>
-                  )}
-                  {activeFilters && <small className="font-italic ml-1"> (some filters applied)</small>}
-                </div>
-              )}
-            </>
-          )}
-        </div>
 
-        <div className="ml-3">
-          <div className="d-flex flex-row">
-            {/* Only display sort options when ts_query_web is defined */}
-            {props.tsQueryWeb && props.tsQueryWeb !== '' && (
-              <SortOptions
-                activeSort={props.sort || DEFAULT_SORT}
-                updateSort={onSortChange}
-                disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
-              />
-            )}
-            <div className="d-none d-sm-flex">
-              <PaginationLimit
-                limit={ctx.prefs.search.limit}
-                updateLimit={onPaginationLimitChange}
-                disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
-              />
+                  {!isSearching && (
+                    <div className="d-flex flex-column w-100 text-truncate">
+                      <div className={`text-truncate ${styles.searchText}`} role="status">
+                        {parseInt(searchResults.paginationTotalCount) > 0 && (
+                          <span className="pr-1">
+                            {offset + 1} -{' '}
+                            {parseInt(searchResults.paginationTotalCount) < ctx.prefs.search.limit * props.pageNumber
+                              ? searchResults.paginationTotalCount
+                              : ctx.prefs.search.limit * props.pageNumber}{' '}
+                            <span className="ml-1">of</span>{' '}
+                          </span>
+                        )}
+                        {searchResults.paginationTotalCount}
+                        <span className="pl-1"> results </span>
+                        {props.tsQueryWeb && props.tsQueryWeb !== '' && (
+                          <span className="d-none d-sm-inline pl-1">
+                            for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
+                          </span>
+                        )}
+                        {activeFilters && (
+                          <small className="d-inline d-lg-none font-italic ml-1"> (some filters applied)</small>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-            <MoreActionsButton />
+
+            <div className="ml-3">
+              <div className="d-flex flex-row">
+                {/* Only display sort options when ts_query_web is defined */}
+                {props.tsQueryWeb && props.tsQueryWeb !== '' && (
+                  <SortOptions
+                    activeSort={props.sort || DEFAULT_SORT}
+                    updateSort={onSortChange}
+                    disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
+                  />
+                )}
+                <div className="d-none d-sm-flex">
+                  <PaginationLimit
+                    limit={ctx.prefs.search.limit}
+                    updateLimit={onPaginationLimitChange}
+                    disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
+                  />
+                </div>
+                <MoreActionsButton />
+              </div>
+            </div>
           </div>
+
+          {activeFilters && (
+            <div className="d-none d-lg-inline">
+              <div className="d-flex flex-row flex-wrap align-items-center pt-2">
+                <span className="mr-2 pr-1 mb-2">Filters:</span>
+                {props.official && <FilterBadge name="Only official" onClick={onOfficialChange} />}
+                {props.verifiedPublisher && (
+                  <FilterBadge name="Only verified publishers" onClick={onVerifiedPublisherChange} />
+                )}
+                {!isUndefined(props.filters) && (
+                  <>
+                    {Object.keys(props.filters).map((type: string) => {
+                      const opts = props.filters![type];
+                      return (
+                        <React.Fragment key={`opts_${type}`}>
+                          {opts.map((opt: string) => {
+                            const filter = getFilterName(type, opt);
+                            if (isNull(filter)) return null;
+                            return (
+                              <FilterBadge
+                                key={`btn_${type}_${opt}`}
+                                type={filter.key}
+                                name={filter.name}
+                                onClick={() => onFiltersChange(type, opt, false)}
+                              />
+                            );
+                          })}
+                        </React.Fragment>
+                      );
+                    })}
+                  </>
+                )}
+                {props.tsQuery && (
+                  <>
+                    {props.tsQuery.map((ts: string) => {
+                      const value = getTsQueryName(ts);
+                      if (isNull(value)) return null;
+                      return (
+                        <FilterBadge
+                          key={`btn_${ts}`}
+                          type="Category"
+                          name={value}
+                          onClick={() => onTsQueryChange(ts, false)}
+                        />
+                      );
+                    })}
+                  </>
+                )}
+                {props.operators && <FilterBadge name="Only operators" onClick={onOperatorsChange} />}
+                {props.deprecated && <FilterBadge name="Include deprecated" onClick={onDeprecatedChange} />}
+              </div>
+            </div>
+          )}
         </div>
       </SubNavbar>
 
