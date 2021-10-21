@@ -5,8 +5,10 @@ import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
 import { ChangeLog } from '../../../types';
+import alertDispatcher from '../../../utils/alertDispatcher';
 import ChangelogModal from './Modal';
 jest.mock('../../../api');
+jest.mock('../../../utils/alertDispatcher');
 
 jest.mock('moment', () => ({
   ...(jest.requireActual('moment') as {}),
@@ -25,12 +27,38 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+const createObjectMock = jest.fn();
+
+Object.defineProperty(window, 'URL', {
+  value: {
+    createObjectURL: createObjectMock,
+  },
+});
+
 const scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const getMockChangelog = (fixtureId: string): ChangeLog[] => {
   return require(`./__fixtures__/Modal/${fixtureId}.json`) as ChangeLog[];
 };
+
+const markdownMock = `
+# Changelog
+
+## 1.3.0 - 2021-10-06
+
+### Added
+
+- Support for Tekton pipelines
+- Versions index to changelog modal
+- Allow publishers to include screenshots in packages
+- Repository metadata file is now supported in Helm OCI repositories
+- Support for provenance files in Helm OCI repositories
+- Changes annotation is now available for Krew plugins kind
+- Option to show/hide stars in widget
+- Link Helm charts dependencies to packages in the hub
+- API endpoint for helm-exporter tool
+`;
 
 const defaultProps = {
   packageId: 'id',
@@ -86,6 +114,7 @@ describe('ChangelogModal', () => {
       });
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Get changelog markdown' })).toBeInTheDocument();
     });
 
     it('does not render component when repo kind is Krew, Falco or Helm plugin', async () => {
@@ -346,6 +375,77 @@ describe('ChangelogModal', () => {
       });
 
       expect(screen.getByText('Pre-release')).toBeInTheDocument();
+    });
+
+    it('calls getChangelogMD', async () => {
+      const mockChangelog = getMockChangelog('12');
+      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      mocked(API).getChangelogMD.mockResolvedValue(markdownMock);
+
+      render(<ChangelogModal {...defaultProps} />);
+
+      const btn = screen.getByText('Changelog');
+      userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+      });
+
+      const btnMD = screen.getByRole('button', { name: 'Get changelog markdown' });
+      userEvent.click(btnMD);
+
+      await waitFor(() => {
+        expect(API.getChangelogMD).toHaveBeenCalledTimes(1);
+        expect(API.getChangelogMD).toHaveBeenCalledWith({
+          packageName: 'test',
+          repositoryKind: 'helm',
+          repositoryName: 'stable',
+        });
+      });
+
+      const blob = new Blob([markdownMock], {
+        type: 'text/markdown',
+      });
+
+      expect(document.querySelector('a')).toBeInTheDocument();
+
+      expect(createObjectMock).toHaveBeenCalledTimes(1);
+      expect(createObjectMock).toHaveBeenCalledWith(blob);
+    });
+
+    it('when getChangelogMD call fails', async () => {
+      const mockChangelog = getMockChangelog('13');
+      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      mocked(API).getChangelogMD.mockRejectedValue('');
+
+      render(<ChangelogModal {...defaultProps} />);
+
+      const btn = screen.getByText('Changelog');
+      userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+      });
+
+      const btnMD = screen.getByRole('button', { name: 'Get changelog markdown' });
+      userEvent.click(btnMD);
+
+      await waitFor(() => {
+        expect(API.getChangelogMD).toHaveBeenCalledTimes(1);
+        expect(API.getChangelogMD).toHaveBeenCalledWith({
+          packageName: 'test',
+          repositoryKind: 'helm',
+          repositoryName: 'stable',
+        });
+      });
+
+      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+        type: 'danger',
+        message: 'An error occurred getting package changelog markodwn, please try again later.',
+      });
     });
   });
 });

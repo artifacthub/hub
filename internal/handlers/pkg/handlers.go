@@ -8,6 +8,8 @@ import (
 	"net/url"
 	"sort"
 	"strconv"
+	"strings"
+	"text/template"
 	"time"
 
 	"github.com/Masterminds/semver/v3"
@@ -28,12 +30,13 @@ const (
 // Handlers represents a group of http handlers in charge of handling packages
 // operations.
 type Handlers struct {
-	pkgManager  hub.PackageManager
-	repoManager hub.RepositoryManager
-	cfg         *viper.Viper
-	logger      zerolog.Logger
-	hc          hub.HTTPClient
-	op          hub.OCIPuller
+	pkgManager      hub.PackageManager
+	repoManager     hub.RepositoryManager
+	cfg             *viper.Viper
+	logger          zerolog.Logger
+	hc              hub.HTTPClient
+	op              hub.OCIPuller
+	tmplChangelogMD *template.Template
 }
 
 // NewHandlers creates a new Handlers instance.
@@ -45,12 +48,95 @@ func NewHandlers(
 	op hub.OCIPuller,
 ) *Handlers {
 	return &Handlers{
-		pkgManager:  pkgManager,
-		repoManager: repoManager,
-		cfg:         cfg,
-		logger:      log.With().Str("handlers", "pkg").Logger(),
-		hc:          hc,
-		op:          op,
+		pkgManager:      pkgManager,
+		repoManager:     repoManager,
+		cfg:             cfg,
+		logger:          log.With().Str("handlers", "pkg").Logger(),
+		hc:              hc,
+		op:              op,
+		tmplChangelogMD: setupChangelogMDTmpl(),
+	}
+}
+
+// setupChangelogMDTmpl prepares the template used to generate a package's
+// changelog in markdown format.
+func setupChangelogMDTmpl() *template.Template {
+	funcMap := template.FuncMap{
+		"Capitalize": strings.Title,
+		"GetChanges": func(versionChanges *hub.VersionChanges, kind string) []string {
+			var changes []string
+			for _, change := range versionChanges.Changes {
+				if change.Kind == kind {
+					changes = append(changes, change.Description)
+				}
+			}
+			return changes
+		},
+		"GetKinds": func(versionChanges *hub.VersionChanges) []string {
+			var kinds []string
+			for _, change := range versionChanges.Changes {
+				if !contains(kinds, change.Kind) {
+					kinds = append(kinds, change.Kind)
+				}
+			}
+			return kinds
+		},
+		"ToDate": func(ts int64) string {
+			t := time.Unix(ts, 0)
+			return t.Format("2006-01-02")
+		},
+	}
+
+	return template.Must(template.New("").Funcs(funcMap).Parse(`
+# Changelog
+
+{{ range $version := . -}}
+## {{ $version.Version }} - {{ $version.TS | ToDate }}
+{{ range $kind := GetKinds $version }}
+{{- if $kind }}
+### {{ $kind | Capitalize }}
+{{ end -}}
+{{ range $change := GetChanges $version $kind }}
+- {{ $change -}}
+{{ end }}
+{{ end }}
+{{ end -}}
+	`))
+}
+
+// GenerateChangelogMD is an http handler used to generate a changelog in
+// markdown format for a given package.
+func (h *Handlers) GenerateChangelogMD(w http.ResponseWriter, r *http.Request) {
+	// Get package details
+	input := &hub.GetPackageInput{
+		PackageName:    chi.URLParam(r, "packageName"),
+		RepositoryName: chi.URLParam(r, "repoName"),
+	}
+	p, err := h.pkgManager.Get(r.Context(), input)
+	if err != nil {
+		h.logger.Error().Err(err).Interface("input", input).Str("method", "GenerateChangelogMD").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+
+	// Get package changelog
+	changelog, err := h.pkgManager.GetChangelog(r.Context(), p.PackageID)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GenerateChangelogMD").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+
+	// Return changelog in markdown format if found
+	if len(*changelog) == 0 {
+		helpers.RenderErrorJSON(w, fmt.Errorf("changelog %w", hub.ErrNotFound))
+		return
+	}
+	w.Header().Set("Content-Type", "text/markdown")
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge))
+	if err := h.tmplChangelogMD.Execute(w, changelog); err != nil {
+		h.logger.Error().Err(err).Msg("error executing changelog markdown template")
+		http.Error(w, "", http.StatusInternalServerError)
 	}
 }
 
@@ -70,12 +156,12 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
-// GetChangeLog is an http handler used to get a package's changelog.
-func (h *Handlers) GetChangeLog(w http.ResponseWriter, r *http.Request) {
+// GetChangelog is an http handler used to get a package's changelog.
+func (h *Handlers) GetChangelog(w http.ResponseWriter, r *http.Request) {
 	packageID := chi.URLParam(r, "packageID")
-	dataJSON, err := h.pkgManager.GetChangeLogJSON(r.Context(), packageID)
+	dataJSON, err := h.pkgManager.GetChangelogJSON(r.Context(), packageID)
 	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetChangeLogJSON").Send()
+		h.logger.Error().Err(err).Str("method", "GetChangelogJSON").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
@@ -521,4 +607,14 @@ func BuildURL(baseURL string, p *hub.Package, version string) string {
 		pkgPath += "/" + version
 	}
 	return baseURL + pkgPath
+}
+
+// contains is a helper to check if a list contains the string provided.
+func contains(l []string, e string) bool {
+	for _, x := range l {
+		if x == e {
+			return true
+		}
+	}
+	return false
 }

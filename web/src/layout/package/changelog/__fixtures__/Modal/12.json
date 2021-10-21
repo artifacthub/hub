@@ -1,0 +1,110 @@
+[
+  {
+    "version": "0.5.0",
+    "ts": 1604048487,
+    "changes": [
+      { "description": "Introduce verified publisher concept" },
+      { "description": "Add dark mode support" },
+      { "description": "Improve search facets filtering" },
+      { "description": "Notify repository owners of tracking errors" },
+      { "description": "Track and list Helm charts dependencies" },
+      { "description": "Display links to source in Helm packages" },
+      { "description": "Add repositories kind filter to tracker" },
+      { "description": "Add Monocular compatible search API" },
+      { "description": "Some bugs fixes and improvements" }
+    ]
+  },
+  {
+    "version": "0.8.0",
+    "ts": 1604048487,
+    "changes": [
+      { "description": "Add JSON schema for Artifact Hub Helm chart" },
+      { "description": "Some improvements in Artifact Hub Helm chart" },
+      { "description": "Track Helm charts values schema" },
+      { "description": "Add endpoint to get Helm charts values schema" },
+      { "description": "Bump Trivy to 0.12.0" },
+      { "description": "Display containers images in Helm packages" },
+      { "description": "Remove internal requests limiter" },
+      { "description": "Upgrade frontend dependencies to fix some security vulnerabilities" },
+      { "description": "Add packages security report documentation" },
+      { "description": "Some bugs fixes and improvements" }
+    ]
+  },
+  {
+    "version": "0.3.0",
+    "ts": 1604048487,
+    "changes": [
+      { "description": "Added support for OLM operators repositories" },
+      { "description": "Added support for Falco rules repositories" },
+      { "description": "Added RSS feed for packages' new version releases" },
+      { "description": "Packages now always belong to a repository" },
+      { "description": "Reorganized some API routes (breaking changes)" },
+      { "description": "Added a link to browse all packages and some sample searches to home page" },
+      { "description": "Added CNCF Sandbox logo to home page" },
+      { "description": "Some minor improvements in search page filters" },
+      { "description": "Package creation time is now tracked and displayed" },
+      { "description": "Some bugs fixes" }
+    ]
+  },
+  {
+    "version": "0.6.0",
+    "ts": 1604048487,
+    "changes": [
+      { "description": "Introduce fine grained authorization mechanism based on OPA policies" },
+      { "description": "Allow enriching package information using Helm annotations" },
+      { "description": "Allow entities to claim repositories ownership" },
+      { "description": "Introduce official repository concept" },
+      { "description": "Add verified publisher and official repository search filters" },
+      { "description": "Artifact Hub repositories badges" },
+      { "description": "Test Artifact Hub Helm chart" },
+      { "description": "Improve package view on mobile devices" },
+      { "description": "Add API endpoint to get repositories by kind" },
+      { "description": "Some bugs fixes and improvements" }
+    ]
+  },
+  {
+    "version": "0.4.0",
+    "ts": 1604048487,
+    "changes": [
+      { "description": "Added support for OPA policies repositories (uses Artifact Hub metadata new spec draft)" },
+      { "description": "Trackers have been improved and consolidated into one" },
+      { "description": "Search filtering experience in UI has been improved" },
+      {
+        "description": "Now it's possible to search by the name of the repository and the name of the owning organization or user"
+      },
+      { "description": "Added support to allow filtering packages by category" },
+      { "description": "An operator flag has been added to the package entity, and it's possible to filter by it" },
+      { "description": "Repositories URL is now exposed to users in several places in the UI" },
+      { "description": "Some bugs fixes" }
+    ]
+  },
+  {
+    "version": "0.7.0",
+    "ts": 1604048487,
+    "changes": [
+      { "description": "Introduce packages security report" },
+      { "description": "Display packages' license in cards" },
+      { "description": "Allow filtering packages by license and operator capabilities" },
+      { "description": "Add support for some extra Helm and OLM annotations" },
+      { "description": "Add repositories guide" },
+      { "description": "Allow adding CRDs for operators in Helm packages" },
+      { "description": "Display search tips and add some extra sample searches" },
+      { "description": "Improve user experience in authorization configuration view" },
+      { "description": "Some bugs fixes and improvements" }
+    ]
+  },
+  {
+    "version": "0.2.0",
+    "ts": 1604048487,
+    "changes": [
+      { "description": "API docs" },
+      { "description": "Reorganize API routes" },
+      { "description": "Some HTTP handlers improvements" },
+      { "description": "Support for API keys" },
+      { "description": "API rate limiting" },
+      { "description": "Signed packages label (Helm provenance file)" },
+      { "description": "Home page updated" },
+      { "description": "Bug fixes" }
+    ]
+  }
+]

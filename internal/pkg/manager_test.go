@@ -266,16 +266,142 @@ func TestGet(t *testing.T) {
 	})
 }
 
-func TestGetChangeLogJSON(t *testing.T) {
+func TestGetChangelog(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getPkgChangelogDBQ, "pkg1").Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetChangelogJSON(ctx, "pkg1")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getPkgChangelogDBQ, "pkg1").Return([]byte(`
+		[
+			{
+				"version": "1.0.0",
+				"ts": 1592299234,
+				"changes": [
+					{
+						"kind": "added",
+						"description": "feature 3",
+						"links": [{"name": "github issue", "url": "https://issue.url"}]
+					},
+					{
+						"kind": "fixed",
+						"description": "fix 3",
+						"links": [{"name": "github issue", "url": "https://issue.url"}]
+					}
+				],
+				"contains_security_updates": true,
+				"prerelease": true
+			},
+			{
+				"version": "0.0.9",
+				"ts": 1592299233,
+				"changes": [
+					{
+						"kind": "added",
+						"description": "feature 2",
+						"links": [{"name": "github issue", "url": "https://issue.url"}]
+					},
+					{
+						"kind": "fixed",
+						"description": "fix 2",
+						"links": [{"name": "github issue", "url": "https://issue.url"}]
+					}
+				],
+				"contains_security_updates": false,
+				"prerelease": false
+			}
+		]
+		`), nil)
+		m := NewManager(db)
+
+		expectedChangelog := &hub.Changelog{
+			{
+				Version: "1.0.0",
+				TS:      1592299234,
+				Changes: []*hub.Change{
+					{
+						Kind:        "added",
+						Description: "feature 3",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+					{
+						Kind:        "fixed",
+						Description: "fix 3",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+				},
+				ContainsSecurityUpdates: true,
+				Prerelease:              true,
+			},
+			{
+				Version: "0.0.9",
+				TS:      1592299233,
+				Changes: []*hub.Change{
+					{
+						Kind:        "added",
+						Description: "feature 2",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+					{
+						Kind:        "fixed",
+						Description: "fix 2",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+				},
+				ContainsSecurityUpdates: false,
+				Prerelease:              false,
+			},
+		}
+		changelog, err := m.GetChangelog(ctx, "pkg1")
+		assert.NoError(t, err)
+		assert.Equal(t, expectedChangelog, changelog)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestGetChangelogJSON(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgChangeLogDBQ, "pkg1").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getPkgChangelogDBQ, "pkg1").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetChangeLogJSON(ctx, "pkg1")
+		dataJSON, err := m.GetChangelogJSON(ctx, "pkg1")
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -284,10 +410,10 @@ func TestGetChangeLogJSON(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgChangeLogDBQ, "pkg1").Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getPkgChangelogDBQ, "pkg1").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetChangeLogJSON(ctx, "pkg1")
+		dataJSON, err := m.GetChangelogJSON(ctx, "pkg1")
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)

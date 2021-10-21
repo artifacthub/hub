@@ -33,6 +33,195 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+func TestGenerateChangelogMD(t *testing.T) {
+	packageID := "packageID"
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"repoName", "packageName"},
+			Values: []string{"repo1", "pkg1"},
+		},
+	}
+	getPkgInput := &hub.GetPackageInput{
+		RepositoryName: "repo1",
+		PackageName:    "pkg1",
+	}
+
+	t.Run("error getting package", func(t *testing.T) {
+		testCases := []struct {
+			pmErr              error
+			expectedStatusCode int
+		}{
+			{
+				hub.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				hub.ErrNotFound,
+				http.StatusNotFound,
+			},
+			{
+				tests.ErrFakeDB,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.pmErr.Error(), func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.pm.On("Get", r.Context(), getPkgInput).Return(nil, tc.pmErr)
+				hw.h.GenerateChangelogMD(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.assertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("error getting package changelog", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), mock.Anything).Return(&hub.Package{PackageID: packageID}, nil)
+		hw.pm.On("GetChangelog", r.Context(), packageID).Return(nil, tests.ErrFake)
+		hw.h.GenerateChangelogMD(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("changelog not found", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), mock.Anything).Return(&hub.Package{PackageID: packageID}, nil)
+		hw.pm.On("GetChangelog", r.Context(), packageID).Return(&hub.Changelog{}, nil)
+		hw.h.GenerateChangelogMD(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("changelog returned formatted as markdown", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("Get", r.Context(), mock.Anything).Return(&hub.Package{PackageID: packageID}, nil)
+		hw.pm.On("GetChangelog", r.Context(), packageID).Return(&hub.Changelog{
+			{
+				Version: "1.0.0",
+				TS:      1592299234,
+				Changes: []*hub.Change{
+					{
+						Kind:        "added",
+						Description: "feature 3",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+					{
+						Kind:        "fixed",
+						Description: "fix 3",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+				},
+				ContainsSecurityUpdates: true,
+				Prerelease:              true,
+			},
+			{
+				Version: "0.0.9",
+				TS:      1592299233,
+				Changes: []*hub.Change{
+					{
+						Kind:        "added",
+						Description: "feature 2",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+					{
+						Kind:        "fixed",
+						Description: "fix 2",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+				},
+				ContainsSecurityUpdates: false,
+				Prerelease:              false,
+			},
+		}, nil)
+		hw.h.GenerateChangelogMD(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		expectedData := []byte(`
+# Changelog
+
+## 1.0.0 - 2020-06-16
+
+### Added
+
+- feature 3
+
+### Fixed
+
+- fix 3
+
+## 0.0.9 - 2020-06-16
+
+### Added
+
+- feature 2
+
+### Fixed
+
+- fix 2
+
+`)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "text/markdown", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, expectedData, data)
+		hw.assertExpectations(t)
+	})
+}
+
 func TestGet(t *testing.T) {
 	rctx := &chi.Context{
 		URLParams: chi.RouteParams{
@@ -106,7 +295,7 @@ func TestGet(t *testing.T) {
 	})
 }
 
-func TestGetChangeLog(t *testing.T) {
+func TestGetChangelog(t *testing.T) {
 	rctx := &chi.Context{
 		URLParams: chi.RouteParams{
 			Keys:   []string{"packageID"},
@@ -121,8 +310,8 @@ func TestGetChangeLog(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetChangeLogJSON", r.Context(), "pkg1").Return([]byte("dataJSON"), nil)
-		hw.h.GetChangeLog(w, r)
+		hw.pm.On("GetChangelogJSON", r.Context(), "pkg1").Return([]byte("dataJSON"), nil)
+		hw.h.GetChangelog(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -142,8 +331,8 @@ func TestGetChangeLog(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetChangeLogJSON", r.Context(), "pkg1").Return(nil, tests.ErrFakeDB)
-		hw.h.GetChangeLog(w, r)
+		hw.pm.On("GetChangelogJSON", r.Context(), "pkg1").Return(nil, tests.ErrFakeDB)
+		hw.h.GetChangelog(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

@@ -19,8 +19,15 @@ func (m *ManagerMock) Get(ctx context.Context, input *hub.GetPackageInput) (*hub
 	return data, args.Error(1)
 }
 
-// GetChangeLogJSON implements the PackageManager interface.
-func (m *ManagerMock) GetChangeLogJSON(ctx context.Context, pkgID string) ([]byte, error) {
+// GetChangelog implements the PackageManager interface.
+func (m *ManagerMock) GetChangelog(ctx context.Context, pkgID string) (*hub.Changelog, error) {
+	args := m.Called(ctx, pkgID)
+	data, _ := args.Get(0).(*hub.Changelog)
+	return data, args.Error(1)
+}
+
+// GetChangelogJSON implements the PackageManager interface.
+func (m *ManagerMock) GetChangelogJSON(ctx context.Context, pkgID string) ([]byte, error) {
 	args := m.Called(ctx, pkgID)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
