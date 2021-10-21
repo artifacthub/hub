@@ -288,24 +288,6 @@ func TestGetChangelog(t *testing.T) {
 		db.On("QueryRow", ctx, getPkgChangelogDBQ, "pkg1").Return([]byte(`
 		[
 			{
-				"version": "1.0.0",
-				"ts": 1592299234,
-				"changes": [
-					{
-						"kind": "added",
-						"description": "feature 3",
-						"links": [{"name": "github issue", "url": "https://issue.url"}]
-					},
-					{
-						"kind": "fixed",
-						"description": "fix 3",
-						"links": [{"name": "github issue", "url": "https://issue.url"}]
-					}
-				],
-				"contains_security_updates": true,
-				"prerelease": true
-			},
-			{
 				"version": "0.0.9",
 				"ts": 1592299233,
 				"changes": [
@@ -322,6 +304,24 @@ func TestGetChangelog(t *testing.T) {
 				],
 				"contains_security_updates": false,
 				"prerelease": false
+			},
+			{
+				"version": "1.0.0",
+				"ts": 1592299234,
+				"changes": [
+					{
+						"kind": "added",
+						"description": "feature 3",
+						"links": [{"name": "github issue", "url": "https://issue.url"}]
+					},
+					{
+						"kind": "fixed",
+						"description": "fix 3",
+						"links": [{"name": "github issue", "url": "https://issue.url"}]
+					}
+				],
+				"contains_security_updates": true,
+				"prerelease": true
 			}
 		]
 		`), nil)
