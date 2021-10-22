@@ -1,0 +1,21 @@
+.badgeFilter {
+  font-size: 85%;
+  background-color: var(--badge-bg);
+  border: 1px solid var(--gray);
+}
+
+.btn {
+  line-height: 1.15;
+  opacity: 0.5;
+}
+
+.btnIcon {
+  top: -1px;
+  color: var(--color-font);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    opacity: 1;
+  }
+}

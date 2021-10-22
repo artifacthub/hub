@@ -22,7 +22,9 @@
   --body-bg: #f9f9f9;
   --light-gray: #e9ecef;
   --extra-light-gray: #fcfcfc;
+  --gray: #c4c7ca;
   --mid-gray: #6c757d;
+  --badge-bg: #f3f6f9;
 
   // $theme-colors for Bootstrap
   $color1: #417598;
@@ -91,8 +93,8 @@
 
   .alert-primary {
     color: var(--dark);
-    background-color: var(--color-1-5);
-    border-color: var(--color-black-25);
+    background-color: var(--badge-bg);
+    border-color: var(--gray);
   }
 
   .table th {

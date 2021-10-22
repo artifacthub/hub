@@ -101,7 +101,7 @@ const Wrapper = styled.div<WrapperProps>`
           --color-ah-primary: #131216;
           --color-ah-font: #a3a3a6;
           --white: #222529;
-          --color-ah-primary-5: rgba(15, 14, 17, 0.95);
+          --bg-badge: #1a1c1f;
           --color-ah-primary-10: rgba(15, 14, 17, 0.9);
           --color-ah-primary-20: rgba(15, 14, 17, 0.8);
           --color-ah-secondary-10: rgba(15, 14, 17, 0.1);
@@ -118,7 +118,7 @@ const Wrapper = styled.div<WrapperProps>`
           --color-ah-primary: #417598;
           --color-ah-font: #38383f;
           --white: #fff;
-          --color-ah-primary-5: rgba(65, 117, 152, 0.05);
+          --bg-badge: #f3f6f9;
           --color-ah-primary-10: rgba(65, 117, 152, 0.1);
           --color-ah-primary-20: rgba(65, 117, 152, 0.2);
           --color-ah-secondary-10: rgba(45, 72, 87, 0.1);
@@ -324,7 +324,7 @@ const Badge = styled('div')`
   font-size: 75%;
   text-transform: none;
   height: 19px;
-  background-color: var(--color-ah-primary-5);
+  background-color: var(--bg-badge);
   border: 1px solid var(--color-ah-primary-10);
   display: flex;
   align-items: center;

@@ -8,7 +8,7 @@ import styles from './TsQuery.module.css';
 
 interface Props {
   active: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string, checked: boolean) => void;
   device: string;
 }
 
@@ -19,6 +19,11 @@ const TsQuery = (props: Props) => {
     },
     [props.active]
   );
+
+  const onTsQueryChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { value, checked } = e.target;
+    props.onChange(value, checked);
+  };
 
   return (
     <div role="menuitem" className="mt-2 mt-sm-3 pt-1">
@@ -34,7 +39,7 @@ const TsQuery = (props: Props) => {
             className={styles.checkbox}
             label={option.name}
             checked={isChecked(option.label)}
-            onChange={props.onChange}
+            onChange={onTsQueryChange}
           />
         ))}
       </div>

@@ -26,7 +26,7 @@ interface Props {
   visibleTitle: boolean;
   onChange: (name: string, value: string, checked: boolean) => void;
   onResetSomeFilters: (filterKeys: string[]) => void;
-  onTsQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onTsQueryChange: (value: string, checked: boolean) => void;
   onDeprecatedChange: () => void;
   onOperatorsChange: () => void;
   onVerifiedPublisherChange: () => void;

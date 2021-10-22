@@ -1,3 +1,9 @@
+.subnavbar {
+  height: auto;
+  min-height: 48px;
+  padding: 10px 0.5rem;
+}
+
 .sidebar {
   width: 250px;
   min-width: 250px;
@@ -8,6 +14,10 @@
   background-color: var(--color-black-5) !important;
   height: 32px;
   width: 32px;
+}
+
+.searchText {
+  line-height: 28px;
 }
 
 .filtersBadge::before {

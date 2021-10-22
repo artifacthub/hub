@@ -3,148 +3,156 @@
 exports[`Search index creates snapshot 1`] = `
 <DocumentFragment>
   <nav
-    class="navbar navbar-expand-sm navbar"
+    class="navbar navbar-expand-sm navbar subnavbar"
     role="navigation"
   >
     <div
-      class="container-lg px-sm-4 px-lg-0 d-flex justify-content-between flex-nowrap"
+      class="container-lg px-sm-4 px-lg-0 d-flex align-items-center justify-content-between flex-nowrap"
     >
       <div
-        class="d-flex align-items-center text-truncate"
-      />
-      <div
-        class="ml-3"
+        class="d-flex flex-column w-100"
       >
         <div
-          class="d-flex flex-row"
+          class="d-flex align-items-center justify-content-between flex-nowrap"
         >
           <div
-            class="form-inline flex-nowrap align-items-center"
-          >
-            <label
-              class="d-none d-sm-inline mb-0"
-            >
-              Sort:
-            </label>
-            <select
-              aria-label="sort-options"
-              class="custom-select custom-select-sm ml-2 select"
-              disabled=""
-            >
-              <option
-                class="option"
-                value="relevance"
-              >
-                Relevance
-              </option>
-              <option
-                class="option"
-                value="stars"
-              >
-                Stars
-              </option>
-              ;
-            </select>
-          </div>
+            class="d-flex align-items-center text-truncate w-100"
+          />
           <div
-            class="d-none d-sm-flex"
+            class="ml-3"
           >
             <div
-              class="form-inline flex-nowrap align-items-center ml-3"
-            >
-              <label
-                class="mr-2 mb-0"
-              >
-                Show:
-              </label>
-              <select
-                aria-label="pagination-limit"
-                class="custom-select custom-select-sm select"
-                disabled=""
-              >
-                <option
-                  value="20"
-                >
-                  20
-                </option>
-                <option
-                  value="40"
-                >
-                  40
-                </option>
-                <option
-                  value="60"
-                >
-                  60
-                </option>
-                ;
-              </select>
-            </div>
-          </div>
-          <div
-            class="d-none d-md-block position-relative ml-3"
-          >
-            <button
-              aria-expanded="false"
-              aria-label="Show menu"
-              class="btn p-0 position-relative"
-              type="button"
+              class="d-flex flex-row"
             >
               <div
-                class="d-flex flex-row align-items-center justify-content-center"
+                class="form-inline flex-nowrap align-items-center"
+              >
+                <label
+                  class="d-none d-sm-inline mb-0"
+                >
+                  Sort:
+                </label>
+                <select
+                  aria-label="sort-options"
+                  class="custom-select custom-select-sm ml-2 select"
+                  disabled=""
+                >
+                  <option
+                    class="option"
+                    value="relevance"
+                  >
+                    Relevance
+                  </option>
+                  <option
+                    class="option"
+                    value="stars"
+                  >
+                    Stars
+                  </option>
+                  ;
+                </select>
+              </div>
+              <div
+                class="d-none d-sm-flex"
               >
                 <div
-                  class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper iconWrapper"
+                  class="form-inline flex-nowrap align-items-center ml-3"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 20 20"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <label
+                    class="mr-2 mb-0"
                   >
-                    <path
-                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
-                    />
-                  </svg>
+                    Show:
+                  </label>
+                  <select
+                    aria-label="pagination-limit"
+                    class="custom-select custom-select-sm select"
+                    disabled=""
+                  >
+                    <option
+                      value="20"
+                    >
+                      20
+                    </option>
+                    <option
+                      value="40"
+                    >
+                      40
+                    </option>
+                    <option
+                      value="60"
+                    >
+                      60
+                    </option>
+                    ;
+                  </select>
                 </div>
               </div>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-right p-0 dropdown"
-              role="menu"
-            >
               <div
-                class="arrow arrow"
-              />
-              <button
-                aria-label="Open embed results modal"
-                class="dropdown-item btn btn-sm rounded-0 text-dark"
+                class="d-none d-md-block position-relative ml-3"
               >
-                <div
-                  class="d-flex flex-row align-items-center"
+                <button
+                  aria-expanded="false"
+                  aria-label="Show menu"
+                  class="btn p-0 position-relative"
+                  type="button"
                 >
-                  <svg
-                    class="mr-2"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center"
                   >
-                    <path
-                      d="M8.293 6.293L2.586 12 8.293 17.707 9.707 16.293 5.414 12 9.707 7.707zM15.707 17.707L21.414 12 15.707 6.293 14.293 7.707 18.586 12 14.293 16.293z"
-                    />
-                  </svg>
-                  <div>
-                    Embed results
+                    <div
+                      class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper iconWrapper"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 20 20"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                        />
+                      </svg>
+                    </div>
                   </div>
+                </button>
+                <div
+                  class="dropdown-menu dropdown-menu-right p-0 dropdown"
+                  role="menu"
+                >
+                  <div
+                    class="arrow arrow"
+                  />
+                  <button
+                    aria-label="Open embed results modal"
+                    class="dropdown-item btn btn-sm rounded-0 text-dark"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <svg
+                        class="mr-2"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8.293 6.293L2.586 12 8.293 17.707 9.707 16.293 5.414 12 9.707 7.707zM15.707 17.707L21.414 12 15.707 6.293 14.293 7.707 18.586 12 14.293 16.293z"
+                        />
+                      </svg>
+                      <div>
+                        Embed results
+                      </div>
+                    </div>
+                  </button>
                 </div>
-              </button>
+              </div>
             </div>
           </div>
         </div>
