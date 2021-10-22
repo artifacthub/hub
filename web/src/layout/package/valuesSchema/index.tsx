@@ -1,6 +1,7 @@
 import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import merger from 'json-schema-merge-allof';
+import { isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
@@ -29,19 +30,14 @@ const ValuesSchema = (props: Props) => {
   const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [valuesSchema, setValuesSchema] = useState<JSONSchema | undefined | null>();
+  const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentVersion, setCurrentVersion] = useState<string>(props.version);
-  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
 
   async function getValuesSchema() {
     try {
       setIsLoading(true);
-      setCurrentPkgId(props.packageId);
-      setCurrentVersion(props.version);
-
       const schema = await API.getValuesSchema(props.packageId, props.version);
       setCurrentPkgId(props.packageId);
-      setCurrentVersion(props.version);
 
       try {
         const values = merger(
@@ -56,7 +52,6 @@ const ValuesSchema = (props: Props) => {
       } catch (err) {
         setValuesSchema(schema);
       }
-
       setIsLoading(false);
       setOpenStatus(true);
     } catch {
@@ -71,11 +66,7 @@ const ValuesSchema = (props: Props) => {
 
   const onOpenModal = () => {
     if (props.hasValuesSchema) {
-      if (valuesSchema && props.version === currentVersion && props.packageId === currentPkgId) {
-        setOpenStatus(true);
-      } else {
-        getValuesSchema();
-      }
+      getValuesSchema();
       history.replace({
         search: `?modal=values-schema${props.visibleValuesSchemaPath ? `&path=${props.visibleValuesSchemaPath}` : ''}`,
         state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
@@ -91,6 +82,7 @@ const ValuesSchema = (props: Props) => {
   };
 
   const onCloseModal = () => {
+    setValuesSchema(undefined);
     setOpenStatus(false);
     history.replace({
       search: '',
@@ -99,7 +91,7 @@ const ValuesSchema = (props: Props) => {
   };
 
   useEffect(() => {
-    if (props.visibleValuesSchema && !openStatus) {
+    if (props.visibleValuesSchema && !openStatus && isUndefined(currentPkgId)) {
       if (props.hasValuesSchema) {
         onOpenModal();
       } else {
@@ -112,8 +104,8 @@ const ValuesSchema = (props: Props) => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    if (props.packageId !== currentPkgId && openStatus) {
-      setOpenStatus(false);
+    if ((openStatus || props.visibleValuesSchema) && !isUndefined(currentPkgId)) {
+      onCloseModal();
     }
   }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 

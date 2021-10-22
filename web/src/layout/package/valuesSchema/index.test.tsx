@@ -112,14 +112,15 @@ describe('ValuesSchema', () => {
 
       waitFor(() => {
         expect(screen.queryByRole('dialog')).toBeNull();
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
-          search: '',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+      });
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
+      expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+        search: '',
+        state: {
+          fromStarredPage: undefined,
+          searchUrlReferer: undefined,
+        },
       });
     });
 
@@ -180,36 +181,6 @@ describe('ValuesSchema', () => {
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(2);
         expect(API.getValuesSchema).toHaveBeenCalledWith('id2', defaultProps.version);
-      });
-
-      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
-    });
-
-    it('does not call again to getValuesSchema when package is the same', async () => {
-      const mockValuesSchema = getMockValuesSchema('7');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
-
-      render(<ValuesSchema {...defaultProps} />);
-
-      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
-      userEvent.click(btn);
-
-      await waitFor(() => {
-        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
-        expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
-      });
-
-      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
-
-      const close = screen.getByText('Close');
-      userEvent.click(close);
-
-      expect(screen.queryByRole('dialog')).toBeNull();
-
-      userEvent.click(btn);
-
-      await waitFor(() => {
-        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
       });
 
       expect(await screen.findByText('Values schema reference')).toBeInTheDocument();

@@ -142,7 +142,7 @@ describe('SecurityModal', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    it('calls again to getSnapshotSecurityReport when packageId is different', async () => {
+    it('calls to getSnapshotSecurityReport when packageId is different', async () => {
       const mockReport = getMockSecurityReport('5');
       mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
@@ -170,33 +170,6 @@ describe('SecurityModal', () => {
       });
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
-    });
-
-    it('does not call again to getSnapshotSecurityReport to open modal when packageId and version are the same', async () => {
-      const mockReport = getMockSecurityReport('6');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
-
-      render(<SecurityModal {...defaultProps} visibleSecurityReport />);
-
-      await waitFor(() => {
-        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
-        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(
-          defaultProps.packageId,
-          defaultProps.version,
-          undefined
-        );
-      });
-
-      const btn = screen.getByRole('button', { name: 'Close modal' });
-      userEvent.click(btn);
-
-      expect(screen.queryByRole('dialog')).toBeNull();
-
-      const openBtn = screen.getByText('Open full report');
-      userEvent.click(openBtn);
-
-      expect(await screen.findByRole('dialog')).toBeInTheDocument();
-      expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
     });
 
     it('activates target when report has only one image and one target', async () => {

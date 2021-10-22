@@ -17,8 +17,8 @@ import ExternalLink from '../../common/ExternalLink';
 import styles from './Content.module.css';
 
 interface Props {
+  onCloseModal: (replaceUrl: boolean) => void;
   changelog: ChangeLog[];
-  setOpenStatus: React.Dispatch<React.SetStateAction<boolean>>;
   normalizedName: string;
   activeVersionIndex: number;
   setActiveVersionIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
@@ -34,12 +34,11 @@ const Content = (props: Props) => {
   const [currentOffsets, setCurrentOffsets] = useState<number[]>([]);
 
   const openPackagePage = (newVersion: string) => {
+    props.onCloseModal(false);
     history.push({
       pathname: buildPackageURL(props.normalizedName, props.repository, newVersion, true),
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
-    props.setActiveVersionIndex(undefined);
-    props.setOpenStatus(false);
   };
 
   useLayoutEffect(() => {
