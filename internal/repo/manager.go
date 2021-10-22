@@ -261,6 +261,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "ownership claim not available for olm oci repos")
 	}
 
+	// Get repository metadata
 	var mdFile string
 	switch r.Kind {
 	case hub.Helm:
