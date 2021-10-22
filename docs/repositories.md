@@ -26,7 +26,7 @@ This guide also contains additional information about the following repositories
 
 ## CoreDNS plugins repositories
 
-CoreDNS plugins repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+CoreDNS plugins repositories are expected to be hosted in Github, Gitlab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
@@ -76,7 +76,7 @@ Once you have added your repository, you are all set up. As you add new versions
 
 ## Falco rules repositories
 
-Falco rules repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+Falco rules repositories are expected to be hosted in Github, Gitlab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
@@ -173,7 +173,7 @@ Please note that there are some features that are not yet available for Helm rep
 
 ## Helm plugins repositories
 
-Artifact Hub is able to process Helm plugins available in git repositories. Repositories are expected to be hosted in Github or Gitlab. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+Artifact Hub is able to process Helm plugins available in git repositories. Repositories are expected to be hosted in Github, Gitlab or Bitbucket. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo`
 - `https://gitlab.com/user/repo`
@@ -195,7 +195,7 @@ There is an extra metadata file that you can add to your repository named [artif
 
 ## KEDA scalers repositories
 
-KEDA scalers repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+KEDA scalers repositories are expected to be hosted in Github, Gitlab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
@@ -250,7 +250,7 @@ Once you have added your repository, you are all set up. As you add new versions
 
 ## Keptn integrations repositories
 
-Keptn integrations repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+Keptn integrations repositories are expected to be hosted in Github, Gitlab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
@@ -304,7 +304,7 @@ Once you have added your repository, you are all set up. As you add new versions
 
 ## Krew kubectl plugins repositories
 
-Artifact Hub is able to process kubectl plugins listed in [Krew index repositories](https://krew.sigs.k8s.io/docs/developer-guide/custom-indexes/). Repositories are expected to be hosted in Github or Gitlab. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+Artifact Hub is able to process kubectl plugins listed in [Krew index repositories](https://krew.sigs.k8s.io/docs/developer-guide/custom-indexes/). Repositories are expected to be hosted in Github, Gitlab or Bitbucket. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo`
 - `https://gitlab.com/user/repo`
@@ -324,7 +324,7 @@ There is an extra metadata file that you can add to your repository named [artif
 
 ## OLM operators repositories
 
-OLM operators repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+OLM operators repositories are expected to be hosted in Github, Gitlab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
@@ -365,7 +365,7 @@ Please note that there are some features that are not yet available for OLM repo
 
 ## OPA policies repositories
 
-OPA policies repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+OPA policies repositories are expected to be hosted in Github, Gitlab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
@@ -435,7 +435,7 @@ Once you have added your repository, you are all set up. As you add new versions
 
 ## Tinkerbell actions repositories
 
-Tinkerbell actions repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+Tinkerbell actions repositories are expected to be hosted in Github, Gitlab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
@@ -489,7 +489,7 @@ Once you have added your repository, you are all set up. As you add new versions
 
 ## Tekton tasks repositories
 
-Artifact Hub is able to process Tekton tasks listed in [Tekton catalog repositories](https://github.com/tektoncd/catalog#catalog-structure). Repositories are expected to be hosted in Github or Gitlab. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+Artifact Hub is able to process Tekton tasks listed in [Tekton catalog repositories](https://github.com/tektoncd/catalog#catalog-structure). Repositories are expected to be hosted in Github, Gitlab or Bitbucket. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
