@@ -204,3 +204,19 @@ button,
   background-color: #686868;
   border: 2px solid var(--white);
 }
+
+/* Popover */
+.popover {
+  background-color: var(--white);
+  color: var(--color-font);
+  border-color: var(--mid-gray);
+}
+
+.popover-header {
+  background-color: var(--light-gray);
+  border-color: var(--mid-gray);
+}
+
+.popover-body {
+  color: var(--color-font);
+}

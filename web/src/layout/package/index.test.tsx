@@ -39,6 +39,16 @@ const defaultProps = {
 };
 
 describe('Package index', () => {
+  let dateNowSpy: any;
+
+  beforeEach(() => {
+    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1634969145000);
+  });
+
+  afterAll(() => {
+    dateNowSpy.mockRestore();
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });
