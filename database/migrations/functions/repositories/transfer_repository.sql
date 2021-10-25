@@ -64,5 +64,32 @@ begin
             user_id = null
         where name = p_repository_name;
     end if;
+
+    -- Regenerate repository's packages text search document using new
+    -- publisher information
+    with new_tsdoc as (
+        select
+            p.package_id,
+            generate_package_tsdoc(
+                p.name,
+                s.display_name,
+                s.description,
+                s.keywords,
+                array[r.name, r.display_name],
+                array[u.alias, o.name, o.display_name, s.provider]
+            ) as tsdoc
+        from package p
+        join snapshot s using (package_id)
+        join repository r using (repository_id)
+        left join "user" u using (user_id)
+        left join organization o using (organization_id)
+        where s.version = p.latest_version
+        and r.name = p_repository_name
+    )
+    update package
+    set tsdoc = new_tsdoc.tsdoc
+    from new_tsdoc
+    where package.package_id = new_tsdoc.package_id;
+
 end
 $$ language plpgsql;
