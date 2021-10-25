@@ -481,7 +481,7 @@ exports[`PackageCard renders correctly 1`] = `
                       >
                         <div
                           aria-hidden="true"
-                          class="position-relative icon undefined"
+                          class="icon undefined"
                         >
                           <img
                             alt="Icon"
@@ -554,7 +554,7 @@ exports[`PackageCard renders correctly 1`] = `
                     >
                       <div
                         aria-hidden="true"
-                        class="position-relative icon undefined"
+                        class="icon undefined"
                       >
                         <img
                           alt="Icon"

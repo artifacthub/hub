@@ -467,7 +467,7 @@ exports[`PackageInfo creates snapshot 1`] = `
               >
                 <div
                   aria-hidden="true"
-                  class="position-relative icon undefined"
+                  class="icon undefined"
                 >
                   <img
                     alt="Icon"
@@ -540,7 +540,7 @@ exports[`PackageInfo creates snapshot 1`] = `
             >
               <div
                 aria-hidden="true"
-                class="position-relative icon undefined"
+                class="icon undefined"
               >
                 <img
                   alt="Icon"
