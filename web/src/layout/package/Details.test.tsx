@@ -33,6 +33,16 @@ const defaultProps = {
 };
 
 describe('Details', () => {
+  let dateNowSpy: any;
+
+  beforeEach(() => {
+    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1634969145000);
+  });
+
+  afterAll(() => {
+    dateNowSpy.mockRestore();
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -73,6 +83,7 @@ describe('Details', () => {
       expect(screen.getByText('Type')).toBeInTheDocument();
       expect(screen.getByText('Kubernetes version')).toBeInTheDocument();
       expect(screen.getByText('Chart versions')).toBeInTheDocument();
+      expect(screen.getByText('Last year activity')).toBeInTheDocument();
       expect(screen.queryByText('Links')).toBeNull();
       expect(screen.getByText('License')).toBeInTheDocument();
       expect(screen.getByText('Maintainers')).toBeInTheDocument();

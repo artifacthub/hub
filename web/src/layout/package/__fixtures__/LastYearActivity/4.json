@@ -1,0 +1,1232 @@
+[
+  {
+    "version": "12.12.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1610993596
+  },
+  {
+    "version": "12.8.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1608661585
+  },
+  {
+    "version": "12.3.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1606753865
+  },
+  {
+    "version": "15.3.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619731423
+  },
+  {
+    "version": "13.7.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1612975609
+  },
+  {
+    "version": "18.0.13",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1632469532
+  },
+  {
+    "version": "16.12.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1625171797
+  },
+  {
+    "version": "14.9.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618431211
+  },
+  {
+    "version": "18.1.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1632821219
+  },
+  {
+    "version": "13.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611005324
+  },
+  {
+    "version": "11.1.7",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605612605
+  },
+  {
+    "version": "10.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1602272264
+  },
+  {
+    "version": "16.6.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623406599
+  },
+  {
+    "version": "10.3.5",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604329633
+  },
+  {
+    "version": "16.15.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1626784141
+  },
+  {
+    "version": "18.0.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1630236898
+  },
+  {
+    "version": "16.7.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623688716
+  },
+  {
+    "version": "19.2.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1634650701
+  },
+  {
+    "version": "15.4.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1620086847
+  },
+  {
+    "version": "10.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1602609870
+  },
+  {
+    "version": "19.0.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1633366914
+  },
+  {
+    "version": "18.0.9",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1631871926
+  },
+  {
+    "version": "13.4.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611927215
+  },
+  {
+    "version": "17.0.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1627046024
+  },
+  {
+    "version": "10.3.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1603904386
+  },
+  {
+    "version": "16.9.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623941556
+  },
+  {
+    "version": "14.6.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1617986809
+  },
+  {
+    "version": "13.11.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1614064446
+  },
+  {
+    "version": "15.4.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1620157958
+  },
+  {
+    "version": "11.0.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604669875
+  },
+  {
+    "version": "16.9.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1624015170
+  },
+  {
+    "version": "13.5.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1612809188
+  },
+  {
+    "version": "9.4.9",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1602000768
+  },
+  {
+    "version": "10.3.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604251662
+  },
+  {
+    "version": "18.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1629832172
+  },
+  {
+    "version": "12.2.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1606550470
+  },
+  {
+    "version": "9.4.5",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1601490018
+  },
+  {
+    "version": "12.4.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1606943464
+  },
+  {
+    "version": "14.5.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1617388769
+  },
+  {
+    "version": "9.4.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1599738765
+  },
+  {
+    "version": "13.5.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1612461408
+  },
+  {
+    "version": "16.5.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623168998
+  },
+  {
+    "version": "15.4.6",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1620833902
+  },
+  {
+    "version": "12.0.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605710514
+  },
+  {
+    "version": "16.6.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623310723
+  },
+  {
+    "version": "13.9.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1613582983
+  },
+  {
+    "version": "16.6.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623255036
+  },
+  {
+    "version": "12.10.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609785051
+  },
+  {
+    "version": "14.7.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618417853
+  },
+  {
+    "version": "16.12.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1624730097
+  },
+  {
+    "version": "14.6.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618001159
+  },
+  {
+    "version": "19.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1632827022
+  },
+  {
+    "version": "13.6.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1612895608
+  },
+  {
+    "version": "18.0.11",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1632131243
+  },
+  {
+    "version": "18.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1632502940
+  },
+  {
+    "version": "16.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1622125487
+  },
+  {
+    "version": "11.0.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604685634
+  },
+  {
+    "version": "10.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1602271737
+  },
+  {
+    "version": "15.4.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1620095269
+  },
+  {
+    "version": "16.9.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1624029013
+  },
+  {
+    "version": "17.1.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1628345805
+  },
+  {
+    "version": "14.6.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1617998895
+  },
+  {
+    "version": "16.8.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623755844
+  },
+  {
+    "version": "13.3.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611757026
+  },
+  {
+    "version": "14.1.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1616086589
+  },
+  {
+    "version": "9.4.6",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1601727189
+  },
+  {
+    "version": "15.2.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619635012
+  },
+  {
+    "version": "11.1.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604945884
+  },
+  {
+    "version": "12.11.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1610296681
+  },
+  {
+    "version": "16.1.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1622391448
+  },
+  {
+    "version": "12.10.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609787626
+  },
+  {
+    "version": "9.3.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1599666746
+  },
+  {
+    "version": "18.0.8",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1631705491
+  },
+  {
+    "version": "12.8.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1607676926
+  },
+  {
+    "version": "17.2.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1628621205
+  },
+  {
+    "version": "16.1.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1622220065
+  },
+  {
+    "version": "11.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604583724
+  },
+  {
+    "version": "12.2.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1606152415
+  },
+  {
+    "version": "10.1.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1603704985
+  },
+  {
+    "version": "13.8.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1613580860
+  },
+  {
+    "version": "9.4.8",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1601912021
+  },
+  {
+    "version": "12.9.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609483889
+  },
+  {
+    "version": "9.4.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1599877100
+  },
+  {
+    "version": "13.0.5",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611175278
+  },
+  {
+    "version": "15.4.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1620092689
+  },
+  {
+    "version": "16.13.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1626129611
+  },
+  {
+    "version": "11.0.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604602529
+  },
+  {
+    "version": "9.4.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1600266101
+  },
+  {
+    "version": "15.1.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618964455
+  },
+  {
+    "version": "12.12.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1610640514
+  },
+  {
+    "version": "16.14.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1626342562
+  },
+  {
+    "version": "13.7.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1612970338
+  },
+  {
+    "version": "19.2.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1634647554
+  },
+  {
+    "version": "13.4.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611943164
+  },
+  {
+    "version": "12.10.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609794038
+  },
+  {
+    "version": "13.13.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1614098752
+  },
+  {
+    "version": "18.0.6",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1631282518
+  },
+  {
+    "version": "19.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1634191220
+  },
+  {
+    "version": "14.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1615218006
+  },
+  {
+    "version": "12.9.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609537582
+  },
+  {
+    "version": "18.0.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1630573223
+  },
+  {
+    "version": "17.0.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1627540604
+  },
+  {
+    "version": "17.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1627037412
+  },
+  {
+    "version": "16.7.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623423833
+  },
+  {
+    "version": "11.1.6",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605549996
+  },
+  {
+    "version": "16.11.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1624524532
+  },
+  {
+    "version": "15.1.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619044596
+  },
+  {
+    "version": "11.1.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605539183
+  },
+  {
+    "version": "14.7.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618417011
+  },
+  {
+    "version": "10.1.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1603815142
+  },
+  {
+    "version": "18.0.5",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1630825199
+  },
+  {
+    "version": "12.12.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1610553454
+  },
+  {
+    "version": "10.1.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1603296848
+  },
+  {
+    "version": "19.0.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1634022926
+  },
+  {
+    "version": "18.0.10",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1631894315
+  },
+  {
+    "version": "13.0.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611171347
+  },
+  {
+    "version": "13.1.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611178600
+  },
+  {
+    "version": "14.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1616085872
+  },
+  {
+    "version": "10.2.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1603837475
+  },
+  {
+    "version": "16.3.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1622995573
+  },
+  {
+    "version": "16.2.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1622927073
+  },
+  {
+    "version": "16.12.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1625946632
+  },
+  {
+    "version": "14.8.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618420411
+  },
+  {
+    "version": "12.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605802638
+  },
+  {
+    "version": "15.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618929044
+  },
+  {
+    "version": "13.13.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1614620149
+  },
+  {
+    "version": "10.1.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1603380232
+  },
+  {
+    "version": "9.4.10",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1602102095
+  },
+  {
+    "version": "16.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1621521291
+  },
+  {
+    "version": "17.2.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1628700414
+  },
+  {
+    "version": "18.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1629236474
+  },
+  {
+    "version": "11.1.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605453434
+  },
+  {
+    "version": "12.9.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609355682
+  },
+  {
+    "version": "10.3.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604077338
+  },
+  {
+    "version": "17.2.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1629038273
+  },
+  {
+    "version": "16.6.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623423395
+  },
+  {
+    "version": "14.1.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1616089260
+  },
+  {
+    "version": "17.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1626951176
+  },
+  {
+    "version": "13.1.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611240144
+  },
+  {
+    "version": "18.0.12",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1632153131
+  },
+  {
+    "version": "13.2.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611261211
+  },
+  {
+    "version": "16.14.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1626354206
+  },
+  {
+    "version": "12.10.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609790322
+  },
+  {
+    "version": "12.4.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1607330001
+  },
+  {
+    "version": "10.3.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604008434
+  },
+  {
+    "version": "10.0.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1602438089
+  },
+  {
+    "version": "12.5.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1607330534
+  },
+  {
+    "version": "14.7.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618416163
+  },
+  {
+    "version": "14.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1615260043
+  },
+  {
+    "version": "13.0.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611085528
+  },
+  {
+    "version": "15.2.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619722862
+  },
+  {
+    "version": "18.0.7",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1631613271
+  },
+  {
+    "version": "15.3.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619732214
+  },
+  {
+    "version": "15.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618936514
+  },
+  {
+    "version": "13.9.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1613582364
+  },
+  {
+    "version": "12.6.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1607363377
+  },
+  {
+    "version": "15.4.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1620175479
+  },
+  {
+    "version": "16.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1621607963
+  },
+  {
+    "version": "14.8.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618419651
+  },
+  {
+    "version": "16.3.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623078102
+  },
+  {
+    "version": "15.4.5",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1620767826
+  },
+  {
+    "version": "12.2.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1606129353
+  },
+  {
+    "version": "13.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611083799
+  },
+  {
+    "version": "12.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605620999
+  },
+  {
+    "version": "9.4.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1600105826
+  },
+  {
+    "version": "11.0.5",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604942333
+  },
+  {
+    "version": "9.4.7",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1601868951
+  },
+  {
+    "version": "12.10.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609786358
+  },
+  {
+    "version": "12.7.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1607380032
+  },
+  {
+    "version": "17.1.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1628110286
+  },
+  {
+    "version": "14.3.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1616277863
+  },
+  {
+    "version": "12.0.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605689340
+  },
+  {
+    "version": "13.12.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1614067067
+  },
+  {
+    "version": "16.6.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623340000
+  },
+  {
+    "version": "12.0.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605700831
+  },
+  {
+    "version": "12.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605614448
+  },
+  {
+    "version": "16.4.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623080345
+  },
+  {
+    "version": "15.2.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619652262
+  },
+  {
+    "version": "12.2.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605991548
+  },
+  {
+    "version": "16.4.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623078899
+  },
+  {
+    "version": "13.2.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611289625
+  },
+  {
+    "version": "17.1.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1628344077
+  },
+  {
+    "version": "15.2.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619414321
+  },
+  {
+    "version": "12.2.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1606231378
+  },
+  {
+    "version": "16.10.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1624041660
+  },
+  {
+    "version": "11.0.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604335489
+  },
+  {
+    "version": "15.2.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619119887
+  },
+  {
+    "version": "13.7.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1612978261
+  },
+  {
+    "version": "12.10.6",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609865558
+  },
+  {
+    "version": "14.4.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1616868904
+  },
+  {
+    "version": "14.2.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1616182482
+  },
+  {
+    "version": "12.10.5",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1609857494
+  },
+  {
+    "version": "14.8.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1618425896
+  },
+  {
+    "version": "12.11.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1610310707
+  },
+  {
+    "version": "11.1.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605408757
+  },
+  {
+    "version": "9.4.4",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1600718156
+  },
+  {
+    "version": "19.0.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1632959902
+  },
+  {
+    "version": "13.10.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1613662898
+  },
+  {
+    "version": "16.3.1",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1622996097
+  },
+  {
+    "version": "15.1.2",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1619033900
+  },
+  {
+    "version": "17.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1627917612
+  },
+  {
+    "version": "16.9.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1623851804
+  },
+  {
+    "version": "13.0.3",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1611162469
+  },
+  {
+    "version": "11.1.5",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1605548401
+  },
+  {
+    "version": "11.1.0",
+    "containsSecurityUpdates": false,
+    "prerelease": false,
+    "ts": 1604943384
+  }
+]

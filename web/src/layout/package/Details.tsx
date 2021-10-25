@@ -20,6 +20,7 @@ import ContainersImages from './ContainersImages';
 import Dependencies from './Dependencies';
 import styles from './Details.module.css';
 import Keywords from './Keywords';
+import LastYearActivity from './LastYearActivity';
 import License from './License';
 import Links from './Links';
 import Maintainers from './Maintainers';
@@ -168,6 +169,10 @@ const Details = (props: Props) => {
             />
           </div>
         )}
+      </div>
+
+      <div>
+        <LastYearActivity versions={props.sortedVersions} />
       </div>
 
       {(() => {
