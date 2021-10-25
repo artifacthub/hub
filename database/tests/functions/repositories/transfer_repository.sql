@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(13);
+select plan(16);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -10,6 +10,8 @@ select plan(13);
 \set org3ID '00000000-0000-0000-0000-000000000003'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
+\set package1ID '00000000-0000-0000-0000-000000000001'
+\set package2ID '00000000-0000-0000-0000-000000000002'
 
 -- Seed some data
 insert into "user" (user_id, alias, email)
@@ -28,6 +30,54 @@ insert into repository (repository_id, name, display_name, url, repository_kind_
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package1ID',
+    'package1',
+    '1.0.0',
+    :'repo1ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    app_version,
+    display_name,
+    description
+) values (
+    :'package1ID',
+    '1.0.0',
+    '12.0.0',
+    'Package 1',
+    'description'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package2ID',
+    'package2',
+    '1.0.0',
+    :'repo2ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    app_version,
+    display_name,
+    description
+) values (
+    :'package2ID',
+    '1.0.0',
+    '12.0.0',
+    'Package 2',
+    'description'
+);
 
 -- Transfers NOT part of an ownership claim request
 
@@ -97,12 +147,30 @@ select results_eq(
 );
 select is(count(*), 0::bigint, 'No repository ownership claim events should have been registered')
 from event where repository_id=:'repo2ID' and event_kind_id = 3;
+select is(
+    tsdoc,
+    '2:3A 2:7B description:4B package:2A package2:1A repo:6B repo2:5B user1:8B'::tsvector,
+    'Package 2 tsdoc should have been updated (user1 is now the publisher)'
+)
+from package where package_id=:'package2ID';
+select is(
+    tsdoc,
+    null,
+    'Package 1 tsdoc should not have been updated'
+)
+from package where package_id=:'package1ID';
 select transfer_repository(
     'repo2',
     '00000000-0000-0000-0000-000000000001',
     'org1',
     false
 );
+select is(
+    tsdoc,
+    '1:10B 2:3A,7B description:4B org1:8B organization:9B package:2A package2:1A repo:6B repo2:5B'::tsvector,
+    'Package 2 tsdoc should have been updated again (org1 is now the publisher)'
+)
+from package where package_id=:'package2ID';
 
 -- Transfer org owned repository to other org
 select transfer_repository(
@@ -155,7 +223,6 @@ select transfer_repository(
     null,
     true
 );
-select * from event;
 select results_eq(
     $$
         select user_id, organization_id
