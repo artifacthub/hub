@@ -35,8 +35,7 @@ interface Props {
 const SecurityModal = (props: Props) => {
   const history = useHistory();
   const contentWrapper = useRef<HTMLDivElement>(null);
-  const [currentVersion, setCurrentVersion] = useState<string>(props.version);
-  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
+  const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [report, setReport] = useState<SecurityReport | null | undefined>();
@@ -66,10 +65,9 @@ const SecurityModal = (props: Props) => {
     try {
       setIsLoading(true);
       const report = await API.getSnapshotSecurityReport(props.packageId, props.version, eventId);
+      setCurrentPkgId(props.packageId);
       setReport(report);
       activateTargetWhenIsOnlyOne(report);
-      setCurrentPkgId(props.packageId);
-      setCurrentVersion(props.version);
       setIsLoading(false);
       setOpenStatus(true);
       updateUrl();
@@ -84,16 +82,12 @@ const SecurityModal = (props: Props) => {
   }
 
   const onOpenModal = () => {
-    if (report && props.version === currentVersion && props.packageId === currentPkgId) {
-      setOpenStatus(true);
-      updateUrl();
-    } else {
-      getSecurityReports(props.eventId); // Send eventId, if defined, from security alert email
-    }
+    getSecurityReports(props.eventId);
   };
 
   const onCloseModal = () => {
     setOpenStatus(false);
+    setReport(undefined);
     setVisibleImage(null);
     setVisibleTarget(null);
     setVisibleSection(null);
@@ -115,6 +109,13 @@ const SecurityModal = (props: Props) => {
     });
   };
 
+  const onClickSection = (name: string) => {
+    setVisibleSection(name);
+    setVisibleImage(null);
+    setVisibleTarget(null);
+    setExpandedTarget(null);
+  };
+
   useEffect(() => {
     if (openStatus) {
       updateUrl();
@@ -128,15 +129,14 @@ const SecurityModal = (props: Props) => {
     }
   }, [contentHeight, contentWrapper, openStatus, report]);
 
-  const onClickSection = (name: string) => {
-    setVisibleSection(name);
-    setVisibleImage(null);
-    setVisibleTarget(null);
-    setExpandedTarget(null);
-  };
+  useEffect(() => {
+    if ((openStatus || props.visibleSecurityReport) && !isUndefined(currentPkgId)) {
+      onCloseModal();
+    }
+  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    if (props.visibleSecurityReport && !openStatus) {
+    if (props.visibleSecurityReport && !openStatus && isUndefined(currentPkgId)) {
       onOpenModal();
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */

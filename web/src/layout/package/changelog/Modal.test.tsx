@@ -27,14 +27,6 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const createObjectMock = jest.fn();
-
-Object.defineProperty(window, 'URL', {
-  value: {
-    createObjectURL: createObjectMock,
-  },
-});
-
 const scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
@@ -219,25 +211,6 @@ describe('ChangelogModal', () => {
       });
     });
 
-    it('closes modal when a new pkg is open', async () => {
-      const mockChangelog = getMockChangelog('10');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
-
-      const { rerender } = render(<ChangelogModal {...defaultProps} visibleChangelog />);
-
-      await waitFor(() => {
-        expect(API.getChangelog).toHaveBeenCalledTimes(1);
-      });
-
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-
-      rerender(<ChangelogModal {...defaultProps} packageId="id2" />);
-
-      waitFor(() => {
-        expect(screen.queryByRole('dialog')).toBeNull();
-      });
-    });
-
     it("displays first version when selected one doesn't exist", async () => {
       const mockChangelog = getMockChangelog('11');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
@@ -320,31 +293,6 @@ describe('ChangelogModal', () => {
       });
     });
 
-    it('does not call again to getChangelog to open modal when package is the same', async () => {
-      const mockReport = getMockChangelog('7');
-      mocked(API).getChangelog.mockResolvedValue(mockReport);
-
-      render(<ChangelogModal {...defaultProps} visibleChangelog />);
-
-      await waitFor(() => {
-        expect(API.getChangelog).toHaveBeenCalledTimes(1);
-        expect(API.getChangelog).toHaveBeenCalledWith('id');
-      });
-
-      const btn = screen.getByRole('button', { name: 'Close modal' });
-      userEvent.click(btn);
-
-      expect(screen.queryByRole('dialog')).toBeNull();
-
-      const openBtn = screen.getByText('Changelog');
-      userEvent.click(openBtn);
-
-      await waitFor(() => {
-        expect(screen.getByRole('dialog')).toBeInTheDocument();
-        expect(API.getChangelog).toHaveBeenCalledTimes(1);
-      });
-    });
-
     it('dislays security updates badge', async () => {
       const mockChangelog = getMockChangelog('8');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
@@ -389,7 +337,6 @@ describe('ChangelogModal', () => {
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
-        expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
       const btnMD = screen.getByRole('button', { name: 'Get changelog markdown' });
@@ -403,15 +350,6 @@ describe('ChangelogModal', () => {
           repositoryName: 'stable',
         });
       });
-
-      const blob = new Blob([markdownMock], {
-        type: 'text/markdown',
-      });
-
-      expect(document.querySelector('a')).toBeInTheDocument();
-
-      expect(createObjectMock).toHaveBeenCalledTimes(1);
-      expect(createObjectMock).toHaveBeenCalledWith(blob);
     });
 
     it('when getChangelogMD call fails', async () => {

@@ -35,10 +35,9 @@ const ChangelogModal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [changelog, setChangelog] = useState<ChangeLog[] | null | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
+  const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [activeVersionIndex, setActiveVersionIndex] = useState<number | undefined>(undefined);
   const [isGettingMd, setIsGettingMd] = useState<boolean>(false);
-  const [changelogMD, setChangelogMD] = useState<string | undefined>();
 
   const updateVersionInQueryString = (currentVersion?: string) => {
     let version = currentVersion;
@@ -54,23 +53,16 @@ const ChangelogModal = (props: Props) => {
   };
 
   useEffect(() => {
-    if (props.visibleChangelog && !openStatus) {
-      if (props.hasChangelog) {
-        onOpenModal();
-      } else {
-        history.replace({
-          search: '',
-        });
-      }
+    if (props.visibleChangelog && !openStatus && isUndefined(currentPkgId)) {
+      onOpenModal();
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    if (props.packageId !== currentPkgId && openStatus) {
-      setOpenStatus(false);
-      setActiveVersionIndex(0);
+    if ((openStatus || props.visibleChangelog) && !isUndefined(currentPkgId)) {
+      onCloseModal(true);
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId, props.currentVersion]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (btnsWrapper && btnsWrapper.current && !isUndefined(activeVersionIndex)) {
@@ -116,7 +108,6 @@ const ChangelogModal = (props: Props) => {
   async function getChangelog() {
     try {
       setIsLoading(true);
-      setChangelogMD(undefined);
       const changelog = await API.getChangelog(props.packageId);
       const sortedChangelog: ChangeLog[] = sortChangelog(changelog);
       setCurrentPkgId(props.packageId);
@@ -135,21 +126,25 @@ const ChangelogModal = (props: Props) => {
 
   const onOpenModal = () => {
     if (props.hasChangelog) {
-      if (changelog && props.packageId === currentPkgId) {
-        setOpenStatus(true);
-      } else {
-        getChangelog();
-      }
+      getChangelog();
+    } else {
+      history.replace({
+        search: '',
+        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+      });
     }
   };
 
-  const onCloseModal = () => {
+  const onCloseModal = (replaceUrl: boolean) => {
     setOpenStatus(false);
     setActiveVersionIndex(undefined);
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    setChangelog(undefined);
+    if (replaceUrl) {
+      history.replace({
+        search: '',
+        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+      });
+    }
   };
 
   const updateActiveVersion = (versionIndex: number) => {
@@ -166,16 +161,12 @@ const ChangelogModal = (props: Props) => {
     async function getChangelogMd() {
       try {
         setIsGettingMd(true);
-        let markdown = changelogMD;
-        if (isUndefined(markdown)) {
-          markdown = await API.getChangelogMD({
-            packageName: props.normalizedName,
-            repositoryKind: getRepoKindName(props.repository.kind)!,
-            repositoryName: props.repository.name,
-          });
+        const markdown = await API.getChangelogMD({
+          packageName: props.normalizedName,
+          repositoryKind: getRepoKindName(props.repository.kind)!,
+          repositoryName: props.repository.name,
+        });
 
-          setChangelogMD(markdown);
-        }
         const blob = new Blob([markdown], {
           type: 'text/markdown',
         });
@@ -235,7 +226,7 @@ const ChangelogModal = (props: Props) => {
           modalDialogClassName={styles.modalDialog}
           modalClassName="h-100"
           header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Changelog</div>}
-          onClose={onCloseModal}
+          onClose={() => onCloseModal(true)}
           open={openStatus}
           closeButton={
             <div className="w-100 d-flex flex-row align-items-center justify-content-between">
@@ -262,7 +253,7 @@ const ChangelogModal = (props: Props) => {
 
               <button
                 className="btn btn-sm btn-outline-secondary text-uppercase"
-                onClick={onCloseModal}
+                onClick={() => onCloseModal(true)}
                 aria-label="Close modal"
               >
                 <div className="d-flex flex-row align-items-center">
@@ -316,7 +307,7 @@ const ChangelogModal = (props: Props) => {
               </div>
               <Content
                 changelog={changelog}
-                setOpenStatus={setOpenStatus}
+                onCloseModal={onCloseModal}
                 normalizedName={props.normalizedName}
                 activeVersionIndex={activeVersionIndex || 0}
                 setActiveVersionIndex={setActiveVersionIndex}
