@@ -28,7 +28,7 @@ const CodeEditor: React.ElementType = (props: Props) => {
 
   return (
     <CodeMirror
-      className={classnames('border position-relative', styles.code, { [styles.disabled]: isDisabled })}
+      className={classnames('border position-relative h-100', styles.code, { [styles.disabled]: isDisabled })}
       value={props.value}
       options={{
         mode: {

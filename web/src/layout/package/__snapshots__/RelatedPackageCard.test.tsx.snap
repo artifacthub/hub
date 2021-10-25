@@ -51,7 +51,7 @@ exports[`RelatedPackageCard creates snapshot 1`] = `
                       >
                         <div
                           aria-hidden="true"
-                          class="position-relative icon badgeIcon"
+                          class="icon badgeIcon"
                         >
                           <img
                             alt="Icon"

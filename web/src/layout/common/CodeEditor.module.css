@@ -7,13 +7,10 @@
   opacity: 0.75;
 }
 
-.disabled > div::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--color-black-15);
-  z-index: 1;
+:global(.cm-s-material-darker.CodeMirror) {
+  background-color: var(--extra-light-gray);
+}
+
+.disabled :global(.cm-s-material-darker.CodeMirror) {
+  background-color: var(--light-gray);
 }
