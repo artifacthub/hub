@@ -64,7 +64,7 @@ const (
 var (
 	// containersImagesRE is a regexp used to extract containers images from
 	// kubernetes manifests files.
-	containersImagesRE = regexp.MustCompile(`^\s+image:\s+(\S+)`)
+	containersImagesRE = regexp.MustCompile(`^\s+(?:-\s+)?image:\s+(\S+)`)
 
 	// errInvalidAnnotation indicates that the annotation provided is not valid.
 	errInvalidAnnotation = errors.New("invalid annotation")
