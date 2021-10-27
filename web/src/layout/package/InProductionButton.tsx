@@ -28,6 +28,7 @@ const InProductionButton = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [organizations, setOrganizations] = useState<Organization[] | undefined | null>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
 
   const ref = useRef(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
@@ -58,13 +59,13 @@ const InProductionButton = (props: Props) => {
 
         if (visibleLoading) {
           setIsLoading(false);
-          if (err.kind !== ErrorKind.Unauthorized) {
-            alertDispatcher.postAlert({
-              type: 'danger',
-              message:
-                'Something went wrong checking if your organizations use this package in production, please try again later.',
-            });
-          }
+        }
+        if (err.kind !== ErrorKind.Unauthorized) {
+          alertDispatcher.postAlert({
+            type: 'danger',
+            message:
+              'Something went wrong checking if your organizations use this package in production, please try again later.',
+          });
         } else {
           dispatch(signOut());
           history.push(`${window.location.pathname}?modal=login&redirect=${window.location.pathname}`);
@@ -75,6 +76,7 @@ const InProductionButton = (props: Props) => {
 
   async function changeUsage(name: string, isActive: boolean) {
     try {
+      setUpdatingStatus(name);
       if (isActive) {
         await API.deleteProductionUsage(
           {
@@ -98,6 +100,7 @@ const InProductionButton = (props: Props) => {
         type: 'info',
         message: "Your change was applied successfully. It'll be visible across the site in a few minutes",
       });
+      setUpdatingStatus(null);
       // We don't need to get orgs after changing it due to we are closing the dropdown
       // and we get them again every time we open the dropdown
       setOpenStatus(false);
@@ -107,11 +110,12 @@ const InProductionButton = (props: Props) => {
           type: 'danger',
           message: `${
             isActive
-              ? 'Something went wrong adding the selected organization to the list of production users of this package'
-              : 'Something went wrong deleting the selected organization from the list of production users of this package'
-          } , please try again later.`,
+              ? 'Something went wrong deleting the selected organization from the list of production users of this package'
+              : 'Something went wrong adding the selected organization to the list of production users of this package'
+          }, please try again later.`,
         });
       }
+      setUpdatingStatus(null);
       setOpenStatus(false);
     }
   }
@@ -182,6 +186,8 @@ const InProductionButton = (props: Props) => {
             <div className={`overflow-auto ${styles.buttonsWrapper}`}>
               {organizations!.map((org: Organization) => {
                 const isActive = org.usedInProduction || false;
+                const isUpdating = !isNull(updatingStatus) && updatingStatus === org.name;
+
                 return (
                   <button
                     className={`${styles.dropdownItem} dropdownItem btn p-3 rounded-0 w-100`}
@@ -190,8 +196,15 @@ const InProductionButton = (props: Props) => {
                     aria-label={`Change ${org.displayName || org.name} organization using this package in production`}
                   >
                     <div className="d-flex flex-row align-items-start w-100 justify-content-between">
-                      <div className="mr-3">
-                        {isActive ? <FaRegCheckCircle className="text-success" /> : <FaRegCircle />}
+                      <div className="mr-3 position-relative">
+                        <span className={classnames({ 'd-none': isUpdating })}>
+                          {isActive ? <FaRegCheckCircle className="text-success" /> : <FaRegCircle />}
+                        </span>
+                        {isUpdating && (
+                          <div className={`text-secondary ${styles.miniLoading}`}>
+                            <span className="spinner-border spinner-border-sm" />
+                          </div>
+                        )}
                       </div>
                       <div className={`d-flex flex-column flex-grow-1 ${styles.growWidth}`}>
                         <div className="d-flex flex-row align-items-center">

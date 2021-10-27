@@ -15,7 +15,7 @@ const OrgCard = (props: Props) => {
   const renderLabel = (withIcon: boolean): JSX.Element => {
     return (
       <div
-        className={`badge badge-rounded badge-light rounded-pill d-flex flex-row border align-items-center pl-0 pr-3 ${styles.badge}`}
+        className={`badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 ${styles.badge}`}
       >
         <div className="mr-2">
           <div className={`${styles.imageWrapper} imageWrapper`}>
@@ -47,7 +47,7 @@ const OrgCard = (props: Props) => {
     <>
       {props.organization.homeUrl ? (
         <ExternalLink
-          href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
+          href={props.organization.homeUrl}
           className="d-inline-block text-decoration-none text-dark h5 mb-2 mr-3"
           label="Open organization url"
         >
