@@ -1,6 +1,7 @@
 .badge {
   height: 32px;
   max-width: 300px;
+  border: 1px solid var(--border-md) !important;
 }
 
 .badgeContent {

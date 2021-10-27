@@ -77,6 +77,10 @@
   max-height: calc(100% - 4px);
 }
 
+.miniLoading {
+  top: 0;
+}
+
 @media only screen and (max-width: 767.98px) {
   .dropdown {
     width: 18rem;
