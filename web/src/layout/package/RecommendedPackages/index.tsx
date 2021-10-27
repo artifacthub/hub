@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { Recommendation, RecommendedPackage, RepositoryKind } from '../../../types';
 import { getRepoKind } from '../../../utils/repoKind';
 import RecommendedPackageCard from './Card';
-import styles from './RecommendedPackages.module.css';
 
 interface Props {
   recommendations?: Recommendation[];
+  className?: string;
 }
 
 const URL_regex = /^https:\/\/([^\/?]+)\/packages\/([a-z-]+)\/([a-z0-9-]+)\/([a-z0-9-]+)$/; // eslint-disable-line
@@ -47,19 +47,17 @@ const RecommendedPackages = (props: Props) => {
   if (recommendations.length === 0) return null;
 
   return (
-    <div className={`d-none d-md-block ${styles.wrapper}`}>
-      <div className="container-lg px-lg-0 py-2">
-        <div className="mt-3 mb-2">
-          <small className="text-dark font-weight-bold">Other packages recommended by the publisher:</small>
-        </div>
-
-        <div className="flex flex-column pb-3 pt-2">
-          {recommendations.map((pkg: RecommendedPackage) => (
-            <RecommendedPackageCard key={`recommended_${pkg.normalizedName}`} recommendation={pkg} />
-          ))}
-        </div>
+    <>
+      <div className={`mb-2 ${props.className}`}>
+        <small className="text-dark font-weight-bold">Other packages recommended by the publisher:</small>
       </div>
-    </div>
+
+      <div className="flex flex-column pb-3 pt-2">
+        {recommendations.map((pkg: RecommendedPackage) => (
+          <RecommendedPackageCard key={`recommended_${pkg.normalizedName}`} recommendation={pkg} />
+        ))}
+      </div>
+    </>
   );
 };
 

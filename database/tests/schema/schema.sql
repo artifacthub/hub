@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(148);
+select plan(153);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -30,6 +30,7 @@ select tables_are(array[
     'package',
     'package__maintainer',
     'password_reset_code',
+    'production_usage',
     'repository',
     'repository_kind',
     'session',
@@ -120,6 +121,10 @@ select columns_are('organization', array[
     'predefined_policy',
     'custom_policy',
     'policy_data'
+]);
+select columns_are('production_usage', array[
+    'package_id',
+    'organization_id'
 ]);
 select columns_are('package', array[
     'package_id',
@@ -315,6 +320,9 @@ select indexes_are('organization', array[
     'organization_pkey',
     'organization_name_key'
 ]);
+select indexes_are('production_usage', array[
+    'production_usage_pkey'
+]);
 select indexes_are('package', array[
     'package_pkey',
     'package_tsdoc_idx',
@@ -409,7 +417,9 @@ select has_function('update_authorization_policy');
 select has_function('update_organization');
 select has_function('user_belongs_to_organization');
 -- Packages
+select has_function('add_production_usage');
 select has_function('are_all_containers_images_whitelisted');
+select has_function('delete_production_usage');
 select has_function('enrich_package_data');
 select has_function('generate_package_tsdoc');
 select has_function('get_harbor_replication_dump');
@@ -420,6 +430,7 @@ select has_function('get_package_summary');
 select has_function('get_packages_starred_by_user');
 select has_function('get_package_stars');
 select has_function('get_packages_stats');
+select has_function('get_production_usage');
 select has_function('get_random_packages');
 select has_function('get_snapshots_to_scan');
 select has_function('register_package');

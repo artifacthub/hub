@@ -1722,6 +1722,85 @@ paths:
           $ref: "#/components/responses/NotFoundResponse"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/{repoKindParam}/{repoName}/{packageName}/production-usage":
+    get:
+      tags:
+        - Packages
+      summary:  Get a summary of which of the organizations the user belongs to are using the package in production
+      description: Get a summary of which of the organizations the user belongs to are using the package in production
+      operationId: getProductionUsage
+      parameters:
+        - $ref: "#/components/parameters/RepoKindParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            text/markdown:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProductionUsageOrganization"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/{repoKindParam}/{repoName}/{packageName}/production-usage/${orgName}":
+    post:
+      tags:
+        - Packages
+      security:
+        - ApiKeyId: []
+          ApiKeySecret: []
+      summary: Add organization to package's production users list
+      description: Add organization to package's production users list
+      operationId: addProductionUsage
+      parameters:
+        - $ref: "#/components/parameters/RepoKindParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/OrgNameParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Packages
+      security:
+        - ApiKeyId: []
+          ApiKeySecret: []
+      summary: Delete organization from package's production usage list
+      description: Delete organization from package's production usage list
+      operationId: deleteProductionUsage
+      parameters:
+        - $ref: "#/components/parameters/RepoKindParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/OrgNameParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/{repoKindParam}/{repoName}/{packageName}/summary":
     get:
       tags:
@@ -3831,19 +3910,6 @@ components:
             confirmed:
               type: boolean
               nullable: false
-    ResourceKindName:
-      type: string
-      enum:
-        - repositoryName
-        - repositoryURL
-        - organizationName
-        - userAlias
-      description: |
-        Resource kind name:
-          * `repositoryName` - Repository name
-          * `repositoryURL` - Repository URL
-          * `organizationName` - Organization name
-          * `userAlias` - User alias
     OrganizationSummary:
       type: object
       required:
@@ -3870,6 +3936,44 @@ components:
           type: string
           nullable: false
           example: 12345abcde
+    ProductionUsageOrganization:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          nullable: false
+          example: org1
+        display_name:
+          type: string
+          nullable: false
+          example: Organization 1
+        home_url:
+          type: string
+          format: uri
+          nullable: false
+          example: "http://url"
+        logo_image_id:
+          type: string
+          nullable: false
+          example: 12345abcde
+        used_in_production:
+          type: boolean
+          nullable: false
+    ResourceKindName:
+      type: string
+      enum:
+        - repositoryName
+        - repositoryURL
+        - organizationName
+        - userAlias
+      description: |
+        Resource kind name:
+          * `repositoryName` - Repository name
+          * `repositoryURL` - Repository URL
+          * `organizationName` - Organization name
+          * `userAlias` - User alias
     User:
       type: object
       required:

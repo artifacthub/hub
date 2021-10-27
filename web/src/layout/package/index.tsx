@@ -51,9 +51,11 @@ import SubNavbar from '../navigation/SubNavbar';
 import ChangelogModal from './changelog/Modal';
 import ChartTemplatesModal from './chartTemplates';
 import Details from './Details';
+import InProductionButton from './InProductionButton';
 import InstallationModal from './installation/Modal';
 import ModalHeader from './ModalHeader';
 import MoreActionsButton from './MoreActionsButton';
+import OrgsUsingPackage from './OrgsUsingPackage';
 import styles from './PackageView.module.css';
 import ReadmeWrapper from './readme';
 import RecommendedPackages from './RecommendedPackages';
@@ -248,6 +250,33 @@ const PackageView = (props: Props) => {
   if (detail && detail.availableVersions) {
     sortedVersions = sortPackageVersions(detail.availableVersions);
   }
+
+  // Section for recommended packages and in production (orgs)
+  const renderMoreDetails = (): JSX.Element | null => {
+    if (detail) {
+      const recommendations = detail.recommendations && detail.recommendations.length > 0;
+      const orgsUsingPkg = detail.productionOrganizations && detail.productionOrganizations.length > 0;
+
+      if (recommendations || orgsUsingPkg) {
+        return (
+          <div className={`d-none d-md-block px-3 ${styles.moreDetailsSectionWrapper}`}>
+            <div className="container-lg px-sm-4 px-lg-0 py-2">
+              {orgsUsingPkg && <OrgsUsingPackage organizations={detail.productionOrganizations!} />}
+              {recommendations && (
+                <RecommendedPackages
+                  recommendations={detail.recommendations}
+                  className={orgsUsingPkg ? 'mt-2' : 'mt-3'}
+                />
+              )}
+            </div>
+          </div>
+        );
+      } else {
+        return null;
+      }
+    }
+    return null;
+  };
 
   const getInstallationModal = (wrapperClassName?: string): JSX.Element | null => (
     <div className={wrapperClassName}>
@@ -655,6 +684,7 @@ const PackageView = (props: Props) => {
                       )}
                       <StarButton packageId={detail.packageId} />
                       <SubscriptionsButton packageId={detail.packageId} />
+                      <InProductionButton normalizedName={detail.normalizedName} repository={detail.repository} />
                       <MoreActionsButton
                         packageId={detail.packageId}
                         packageName={detail.displayName || detail.name}
@@ -719,7 +749,7 @@ const PackageView = (props: Props) => {
                   </div>
                 </div>
 
-                <RecommendedPackages recommendations={detail.recommendations} />
+                {renderMoreDetails()}
               </>
             )}
 

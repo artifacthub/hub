@@ -1086,6 +1086,31 @@ class API_CLASS {
     );
   }
 
+  // Production usage
+  public getProductionUsage(request: PackageRequest): Promise<Organization[] | null> {
+    return this.apiFetch({
+      url: `${this.API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}/production-usage`,
+    });
+  }
+
+  public addProductionUsage(request: PackageRequest, orgName: string): Promise<string> {
+    return this.apiFetch({
+      url: `${this.API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}/production-usage/${orgName}`,
+      opts: {
+        method: 'POST',
+      },
+    });
+  }
+
+  public deleteProductionUsage(request: PackageRequest, orgName: string): Promise<string> {
+    return this.apiFetch({
+      url: `${this.API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}/production-usage/${orgName}`,
+      opts: {
+        method: 'DELETE',
+      },
+    });
+  }
+
   // External API call
   public triggerTestInRegoPlayground(data: RegoPlaygroundPolicy): Promise<RegoPlaygroundResult> {
     return this.apiFetch({

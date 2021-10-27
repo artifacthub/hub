@@ -91,6 +91,17 @@ begin
         'stats', json_build_object(
             'subscriptions', (select count(*) from subscription where package_id = v_package_id),
             'webhooks', (select count(*) from webhook__package where package_id = v_package_id)
+        ),
+        'production_organizations', (
+            select json_agg(json_build_object(
+                'name', o.name,
+                'display_name', o.display_name,
+                'home_url', o.home_url,
+                'logo_image_id', o.logo_image_id
+            ))
+            from production_usage pu
+            join organization o using (organization_id)
+            where pu.package_id = v_package_id
         )
     ))
     from package p

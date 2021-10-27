@@ -12,6 +12,18 @@ type ManagerMock struct {
 	mock.Mock
 }
 
+// AddProductionUsage implements the PackageManager interface.
+func (m *ManagerMock) AddProductionUsage(ctx context.Context, repoName, pkgName, orgName string) error {
+	args := m.Called(ctx, repoName, pkgName, orgName)
+	return args.Error(0)
+}
+
+// DeleteProductionUsage implements the PackageManager interface.
+func (m *ManagerMock) DeleteProductionUsage(ctx context.Context, repoName, pkgName, orgName string) error {
+	args := m.Called(ctx, repoName, pkgName, orgName)
+	return args.Error(0)
+}
+
 // Get implements the PackageManager interface.
 func (m *ManagerMock) Get(ctx context.Context, input *hub.GetPackageInput) (*hub.Package, error) {
 	args := m.Called(ctx, input)
@@ -50,6 +62,13 @@ func (m *ManagerMock) GetHelmExporterDumpJSON(ctx context.Context) ([]byte, erro
 // GetJSON implements the PackageManager interface.
 func (m *ManagerMock) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
 	args := m.Called(ctx, input)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
+// GetProductionUsageJSON implements the PackageManager interface.
+func (m *ManagerMock) GetProductionUsageJSON(ctx context.Context, repoName, pkgName string) ([]byte, error) {
+	args := m.Called(ctx, repoName, pkgName)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
