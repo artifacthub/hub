@@ -33,6 +33,92 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+func TestAddProductionUsage(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"repoName", "packageName", "orgName"},
+			Values: []string{"repo1", "pkg1", "org1"},
+		},
+	}
+
+	t.Run("error adding production usage entry", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("AddProductionUsage", r.Context(), "repo1", "pkg1", "org1").Return(tests.ErrFakeDB)
+		hw.h.AddProductionUsage(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("add production usage entry succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("AddProductionUsage", r.Context(), "repo1", "pkg1", "org1").Return(nil)
+		hw.h.AddProductionUsage(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusCreated, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+}
+
+func TestDeleteProductionUsage(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"repoName", "packageName", "orgName"},
+			Values: []string{"repo1", "pkg1", "org1"},
+		},
+	}
+
+	t.Run("error deleting production usage entry", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("DeleteProductionUsage", r.Context(), "repo1", "pkg1", "org1").Return(tests.ErrFakeDB)
+		hw.h.DeleteProductionUsage(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("delete production usage entry succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("DeleteProductionUsage", r.Context(), "repo1", "pkg1", "org1").Return(nil)
+		hw.h.DeleteProductionUsage(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+}
+
 func TestGenerateChangelogMD(t *testing.T) {
 	packageID := "packageID"
 	rctx := &chi.Context{
@@ -667,6 +753,52 @@ func TestGetHelmExporterDump(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.pm.On("GetHelmExporterDumpJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetHelmExporterDump(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+}
+
+func TestGetProductionUsage(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"repoName", "packageName"},
+			Values: []string{"repo1", "pkg1"},
+		},
+	}
+
+	t.Run("get production usage succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetProductionUsageJSON", r.Context(), "repo1", "pkg1").Return([]byte("dataJSON"), nil)
+		hw.h.GetProductionUsage(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("error getting production usage", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetProductionUsageJSON", r.Context(), "repo1", "pkg1").Return(nil, tests.ErrFakeDB)
+		hw.h.GetProductionUsage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

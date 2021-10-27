@@ -16,6 +16,8 @@ import (
 
 const (
 	// Database queries
+	addProductionUsageDBQ           = `select add_production_usage($1::uuid, $2::text, $3::text, $4::text)`
+	deleteProductionUsageDBQ        = `select delete_production_usage($1::uuid, $2::text, $3::text, $4::text)`
 	getHarborReplicationDumpDBQ     = `select get_harbor_replication_dump()`
 	getHelmExporterDumpDBQ          = `select get_helm_exporter_dump()`
 	getPkgDBQ                       = `select get_package($1::jsonb)`
@@ -24,6 +26,7 @@ const (
 	getPkgSummaryDBQ                = `select get_package_summary($1::jsonb)`
 	getPkgsStarredByUserDBQ         = `select * from get_packages_starred_by_user($1::uuid, $2::int, $3::int)`
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
+	getProductionUsageDBQ           = `select get_production_usage($1::uuid, $2::text, $3::text)`
 	getSnapshotSecurityReportDBQ    = `select security_report from snapshot where package_id = $1 and version = $2`
 	getSnapshotsToScanDBQ           = `select get_snapshots_to_scan()`
 	getRandomPkgsDBQ                = `select get_random_packages()`
@@ -56,6 +59,22 @@ func NewManager(db hub.DB) *Manager {
 	return &Manager{
 		db: db,
 	}
+}
+
+// AddProductionUsage adds the given organization to the list of production
+// users for the provided package.
+func (m *Manager) AddProductionUsage(ctx context.Context, repoName, pkgName, orgName string) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+	_, err := m.db.Exec(ctx, addProductionUsageDBQ, userID, repoName, pkgName, orgName)
+	return err
+}
+
+// DeleteProductionUsage deletes the given organization from the list of
+// production users for the provided package.
+func (m *Manager) DeleteProductionUsage(ctx context.Context, repoName, pkgName, orgName string) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+	_, err := m.db.Exec(ctx, deleteProductionUsageDBQ, userID, repoName, pkgName, orgName)
+	return err
 }
 
 // Get returns the package identified by the input provided.
@@ -113,6 +132,14 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	// Get package from database
 	inputJSON, _ := json.Marshal(input)
 	return util.DBQueryJSON(ctx, m.db, getPkgDBQ, inputJSON)
+}
+
+// GetProductionUsageJSON returns a json object describing which of the
+// organizations the user belongs to are using the package provided in
+// production.
+func (m *Manager) GetProductionUsageJSON(ctx context.Context, repoName, pkgName string) ([]byte, error) {
+	userID := ctx.Value(hub.UserIDKey).(string)
+	return util.DBQueryJSON(ctx, m.db, getProductionUsageDBQ, userID, repoName, pkgName)
 }
 
 // GetRandomJSON returns a json object with some random packages. The json

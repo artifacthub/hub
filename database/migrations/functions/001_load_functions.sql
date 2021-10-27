@@ -30,7 +30,9 @@
 {{ template "organizations/update_organization.sql" }}
 {{ template "organizations/user_belongs_to_organization.sql" }}
 
+{{ template "packages/add_production_usage.sql" }}
 {{ template "packages/are_all_containers_images_whitelisted.sql" }}
+{{ template "packages/delete_production_usage.sql" }}
 {{ template "packages/enrich_package_data.sql" }}
 {{ template "packages/generate_package_tsdoc.sql" }}
 {{ template "packages/get_harbor_replication_dump.sql" }}
@@ -41,6 +43,7 @@
 {{ template "packages/get_packages_starred_by_user.sql" }}
 {{ template "packages/get_package_stars.sql" }}
 {{ template "packages/get_packages_stats.sql" }}
+{{ template "packages/get_production_usage.sql" }}
 {{ template "packages/get_random_packages.sql" }}
 {{ template "packages/get_snapshots_to_scan.sql" }}
 {{ template "packages/register_package.sql" }}

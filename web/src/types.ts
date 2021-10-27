@@ -108,6 +108,7 @@ export interface Package {
   allContainersImagesWhitelisted?: boolean;
   signKey?: HelmChartSignKey;
   screenshots?: Screenshot[];
+  productionOrganizations?: Organization[];
 }
 
 export interface Screenshot {
@@ -327,6 +328,7 @@ export interface Organization {
   description?: string;
   membersCount?: number | null;
   confirmed?: boolean | null;
+  usedInProduction?: boolean;
 }
 
 export interface RefInputField {
@@ -348,7 +350,7 @@ export interface RefActionBtn {
 }
 
 export interface Alert {
-  type: 'success' | 'danger' | 'warning';
+  type: 'success' | 'danger' | 'warning' | 'info';
   message: string;
   dismissOn?: number;
   autoClose?: boolean;

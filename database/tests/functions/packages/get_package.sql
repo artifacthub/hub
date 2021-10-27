@@ -4,6 +4,7 @@ select plan(5);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
+\set org2ID '00000000-0000-0000-0000-000000000002'
 \set user1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
@@ -13,6 +14,7 @@ select plan(5);
 \set maintainer2ID '00000000-0000-0000-0000-000000000002'
 \set image1ID '00000000-0000-0000-0000-000000000001'
 \set image2ID '00000000-0000-0000-0000-000000000002'
+\set image3ID '00000000-0000-0000-0000-000000000003'
 \set webhook1ID '00000000-0000-0000-0000-000000000001'
 
 -- No packages at this point
@@ -29,6 +31,8 @@ select is_empty(
 -- Seed some data
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
+insert into organization (organization_id, name, display_name, description, home_url, logo_image_id)
+values (:'org2ID', 'org2', 'Organization 2', 'Description 2', 'https://org2.com', :'image3ID');
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
@@ -227,6 +231,7 @@ insert into webhook (webhook_id, name, url, user_id)
 values (:'webhook1ID', 'webhook1', 'http://webhook1.url', :'user1ID');
 insert into webhook__event_kind (webhook_id, event_kind_id) values (:'webhook1ID', 0);
 insert into webhook__package (webhook_id, package_id) values (:'webhook1ID', :'package2ID');
+insert into production_usage (package_id, organization_id) values (:'package1ID', :'org2ID');
 
 -- Run some tests
 select is(
@@ -368,7 +373,15 @@ select is(
         "stats": {
             "subscriptions": 1,
             "webhooks": 0
-        }
+        },
+        "production_organizations": [
+            {
+                "name": "org2",
+                "display_name": "Organization 2",
+                "home_url": "https://org2.com",
+                "logo_image_id": "00000000-0000-0000-0000-000000000003"
+            }
+        ]
     }'::jsonb,
     'Last package1 version is returned as a json object'
 );
@@ -512,7 +525,15 @@ select is(
         "stats": {
             "subscriptions": 1,
             "webhooks": 0
-        }
+        },
+        "production_organizations": [
+            {
+                "name": "org2",
+                "display_name": "Organization 2",
+                "home_url": "https://org2.com",
+                "logo_image_id": "00000000-0000-0000-0000-000000000003"
+            }
+        ]
     }'::jsonb,
     'Last package1 version is returned as a json object'
 );
@@ -607,7 +628,15 @@ select is(
         "stats": {
             "subscriptions": 1,
             "webhooks": 0
-        }
+        },
+        "production_organizations": [
+            {
+                "name": "org2",
+                "display_name": "Organization 2",
+                "home_url": "https://org2.com",
+                "logo_image_id": "00000000-0000-0000-0000-000000000003"
+            }
+        ]
     }'::jsonb,
     'Requested package version is returned as a json object'
 );

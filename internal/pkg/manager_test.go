@@ -14,6 +14,80 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestAddProductionUsage(t *testing.T) {
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	repoName := "repo1"
+	pkgName := "pkg1"
+	orgName := "org1"
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_ = m.AddProductionUsage(context.Background(), repoName, pkgName, orgName)
+		})
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, addProductionUsageDBQ, "userID", repoName, pkgName, orgName).Return(nil)
+		m := NewManager(db)
+
+		err := m.AddProductionUsage(ctx, repoName, pkgName, orgName)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, addProductionUsageDBQ, "userID", repoName, pkgName, orgName).Return(tests.ErrFakeDB)
+		m := NewManager(db)
+
+		err := m.AddProductionUsage(ctx, repoName, pkgName, orgName)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestDeleteProductionUsage(t *testing.T) {
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	repoName := "repo1"
+	pkgName := "pkg1"
+	orgName := "org1"
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_ = m.DeleteProductionUsage(context.Background(), repoName, pkgName, orgName)
+		})
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, deleteProductionUsageDBQ, "userID", repoName, pkgName, orgName).Return(nil)
+		m := NewManager(db)
+
+		err := m.DeleteProductionUsage(ctx, repoName, pkgName, orgName)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, deleteProductionUsageDBQ, "userID", repoName, pkgName, orgName).Return(tests.ErrFakeDB)
+		m := NewManager(db)
+
+		err := m.DeleteProductionUsage(ctx, repoName, pkgName, orgName)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGet(t *testing.T) {
 	ctx := context.Background()
 	input := &hub.GetPackageInput{
@@ -510,6 +584,45 @@ func TestGetJSON(t *testing.T) {
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(ctx, input)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestGetProductionUsageJSON(t *testing.T) {
+	userID := "userID"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
+	repoName := "repo1"
+	pkgName := "pkg1"
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_, _ = m.GetProductionUsageJSON(context.Background(), repoName, pkgName)
+		})
+	})
+
+	t.Run("production usage data returned successfully", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getProductionUsageDBQ, userID, repoName, pkgName).Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetProductionUsageJSON(ctx, repoName, pkgName)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getProductionUsageDBQ, userID, repoName, pkgName).Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetProductionUsageJSON(ctx, repoName, pkgName)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)

@@ -249,6 +249,12 @@ func (h *Handlers) setupRouter() {
 				r.With(corsMW).Get("/summary", h.Packages.GetSummary)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/changelog.md", h.Packages.GenerateChangelogMD)
+				r.Route("/production-usage", func(r chi.Router) {
+					r.Use(h.Users.RequireLogin)
+					r.Get("/", h.Packages.GetProductionUsage)
+					r.Post("/{orgName}", h.Packages.AddProductionUsage)
+					r.Delete("/{orgName}", h.Packages.DeleteProductionUsage)
+				})
 				r.Get("/", h.Packages.Get)
 			})
 			r.Route("/{packageID}/stars", func(r chi.Router) {

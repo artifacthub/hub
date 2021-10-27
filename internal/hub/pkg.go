@@ -105,17 +105,21 @@ type Package struct {
 	Repository                     *Repository            `json:"repository"`
 	TS                             int64                  `json:"ts,omitempty"`
 	Stats                          *PackageStats          `json:"stats"`
+	ProductionOrganizations        []*Organization        `json:"production_organizations"`
 }
 
 // PackageManager describes the methods a PackageManager implementation must
 // provide.
 type PackageManager interface {
+	AddProductionUsage(ctx context.Context, repoName, pkgName, orgName string) error
+	DeleteProductionUsage(ctx context.Context, repoName, pkgName, orgName string) error
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
 	GetChangelog(ctx context.Context, pkgID string) (*Changelog, error)
 	GetChangelogJSON(ctx context.Context, pkgID string) ([]byte, error)
 	GetHarborReplicationDumpJSON(ctx context.Context) ([]byte, error)
 	GetHelmExporterDumpJSON(ctx context.Context) ([]byte, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
+	GetProductionUsageJSON(ctx context.Context, repoName, pkgName string) ([]byte, error)
 	GetRandomJSON(ctx context.Context) ([]byte, error)
 	GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	GetSnapshotsToScan(ctx context.Context) ([]*SnapshotToScan, error)

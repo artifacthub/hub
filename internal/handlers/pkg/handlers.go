@@ -104,6 +104,36 @@ func setupChangelogMDTmpl() *template.Template {
 	`))
 }
 
+// AddProductionUsage is an http handler used to add the given organization to
+// the list of production users for the provided package.
+func (h *Handlers) AddProductionUsage(w http.ResponseWriter, r *http.Request) {
+	repoName := chi.URLParam(r, "repoName")
+	pkgName := chi.URLParam(r, "packageName")
+	orgName := chi.URLParam(r, "orgName")
+	err := h.pkgManager.AddProductionUsage(r.Context(), repoName, pkgName, orgName)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "AddProductionUsage").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+}
+
+// DeleteProductionUsage is an http handler used to add the given organization
+// from the list of production users for the provided package.
+func (h *Handlers) DeleteProductionUsage(w http.ResponseWriter, r *http.Request) {
+	repoName := chi.URLParam(r, "repoName")
+	pkgName := chi.URLParam(r, "packageName")
+	orgName := chi.URLParam(r, "orgName")
+	err := h.pkgManager.DeleteProductionUsage(r.Context(), repoName, pkgName, orgName)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "DeleteProductionUsage").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // GenerateChangelogMD is an http handler used to generate a changelog in
 // markdown format for a given package.
 func (h *Handlers) GenerateChangelogMD(w http.ResponseWriter, r *http.Request) {
@@ -252,6 +282,20 @@ func (h *Handlers) GetHelmExporterDump(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 1*time.Hour, http.StatusOK)
+}
+
+// GetProductionUsage is an http handler used to get a summary of which of the
+// organizations the user belongs to are using the package in production.
+func (h *Handlers) GetProductionUsage(w http.ResponseWriter, r *http.Request) {
+	repoName := chi.URLParam(r, "repoName")
+	pkgName := chi.URLParam(r, "packageName")
+	dataJSON, err := h.pkgManager.GetProductionUsageJSON(r.Context(), repoName, pkgName)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetProductionUsage").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetRandom is an http handler used to get some random packages from the hub
