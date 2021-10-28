@@ -259,7 +259,10 @@ const PackageView = (props: Props) => {
 
       if (recommendations || orgsUsingPkg) {
         return (
-          <div className={`d-none d-md-block px-3 ${styles.moreDetailsSectionWrapper}`}>
+          <div
+            data-testid="more-details-section"
+            className={`d-none d-md-block px-3 ${styles.moreDetailsSectionWrapper}`}
+          >
             <div className="container-lg px-sm-4 px-lg-0 py-2">
               {orgsUsingPkg && <OrgsUsingPackage organizations={detail.productionOrganizations!} />}
               {recommendations && (

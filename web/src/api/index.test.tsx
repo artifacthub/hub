@@ -1919,5 +1919,77 @@ describe('API', () => {
         expect(response).toEqual(API.toCamelCase([...members, ...members]));
       });
     });
+
+    describe('getProductionUsage', () => {
+      it('success', async () => {
+        const orgsList: Organization[] = getData('41') as Organization[];
+        fetchMock.mockResponse(JSON.stringify(orgsList), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.getProductionUsage({
+          packageName: 'pkgName',
+          repositoryKind: 'helm',
+          repositoryName: 'stable',
+        });
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/helm/stable/pkgName/production-usage');
+        expect(response).toEqual(API.toCamelCase(orgsList));
+      });
+    });
+
+    describe('addProductionUsage', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.addProductionUsage(
+          {
+            packageName: 'pkgName',
+            repositoryKind: 'helm',
+            repositoryName: 'stable',
+          },
+          'orgName'
+        );
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/helm/stable/pkgName/production-usage/orgName');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
+        expect(response).toBe('');
+      });
+    });
+
+    describe('deleteProductionUsage', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.deleteProductionUsage(
+          {
+            packageName: 'pkgName',
+            repositoryKind: 'helm',
+            repositoryName: 'stable',
+          },
+          'orgName'
+        );
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/helm/stable/pkgName/production-usage/orgName');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
+        expect(response).toBe('');
+      });
+    });
   });
 });

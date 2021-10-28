@@ -105,6 +105,9 @@ const InProductionButton = (props: Props) => {
       // and we get them again every time we open the dropdown
       setOpenStatus(false);
     } catch (err) {
+      setUpdatingStatus(null);
+      setOpenStatus(false);
+
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
@@ -114,9 +117,10 @@ const InProductionButton = (props: Props) => {
               : 'Something went wrong adding the selected organization to the list of production users of this package'
           }, please try again later.`,
         });
+      } else {
+        dispatch(signOut());
+        history.push(`${window.location.pathname}?modal=login&redirect=${window.location.pathname}`);
       }
-      setUpdatingStatus(null);
-      setOpenStatus(false);
     }
   }
 
@@ -193,7 +197,11 @@ const InProductionButton = (props: Props) => {
                     className={`${styles.dropdownItem} dropdownItem btn p-3 rounded-0 w-100`}
                     onClick={() => changeUsage(org.name, isActive)}
                     key={`subs_${org.name}`}
-                    aria-label={`Change ${org.displayName || org.name} organization using this package in production`}
+                    aria-label={
+                      isActive
+                        ? `Delete ${org.displayName || org.name} organization from package's production users list`
+                        : `Add ${org.displayName || org.name} organization to package's production users list`
+                    }
                   >
                     <div className="d-flex flex-row align-items-start w-100 justify-content-between">
                       <div className="mr-3 position-relative">
