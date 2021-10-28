@@ -99,9 +99,13 @@ begin
                 'home_url', o.home_url,
                 'logo_image_id', o.logo_image_id
             ))
-            from production_usage pu
-            join organization o using (organization_id)
-            where pu.package_id = v_package_id
+            from (
+                select o.name, o.display_name, o.home_url, o.logo_image_id
+                from production_usage pu
+                join organization o using (organization_id)
+                where pu.package_id = v_package_id
+                order by o.name asc
+            ) o
         )
     ))
     from package p
