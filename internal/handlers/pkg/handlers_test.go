@@ -29,6 +29,7 @@ import (
 )
 
 func TestMain(m *testing.M) {
+	os.Setenv("TZ", "")
 	zerolog.SetGlobalLevel(zerolog.Disabled)
 	os.Exit(m.Run())
 }
@@ -1233,8 +1234,6 @@ func TestInjectIndexMeta(t *testing.T) {
 }
 
 func TestRssFeed(t *testing.T) {
-	os.Setenv("TZ", "")
-
 	t.Run("error getting rss feed package", func(t *testing.T) {
 		testCases := []struct {
 			pmErr              error
