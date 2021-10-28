@@ -1,0 +1,19 @@
+[
+  {
+    "name": "artifact-hub",
+    "display_name": "Artifact Hub",
+    "home_url": "http://test.com",
+    "logo_image_id": "29a1adeb-4184-4ac1-8727-7307e14dd3e1",
+    "used_in_production": true
+  },
+  {
+    "name": "test",
+    "display_name": "Org test",
+    "logo_image_id": "e1414600-6bbf-48a2-bf2b-dd1089bae95c",
+    "used_in_production": false
+  },
+  {
+    "name": "test1",
+    "used_in_production": false
+  }
+]

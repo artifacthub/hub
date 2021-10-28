@@ -1093,7 +1093,7 @@ class API_CLASS {
     });
   }
 
-  public addProductionUsage(request: PackageRequest, orgName: string): Promise<string> {
+  public addProductionUsage(request: PackageRequest, orgName: string): Promise<null | string> {
     return this.apiFetch({
       url: `${this.API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}/production-usage/${orgName}`,
       opts: {
@@ -1102,7 +1102,7 @@ class API_CLASS {
     });
   }
 
-  public deleteProductionUsage(request: PackageRequest, orgName: string): Promise<string> {
+  public deleteProductionUsage(request: PackageRequest, orgName: string): Promise<null | string> {
     return this.apiFetch({
       url: `${this.API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}/production-usage/${orgName}`,
       opts: {

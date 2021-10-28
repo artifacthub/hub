@@ -508,4 +508,74 @@ describe('Package index', () => {
       });
     });
   });
+
+  describe('Special section', () => {
+    it('renders recommended pkgs', async () => {
+      const mockPackage = getMockPackage('16');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      expect(screen.getByTestId('more-details-section')).toBeInTheDocument();
+      expect(screen.getByText('Other packages recommended by the publisher:')).toBeInTheDocument();
+
+      const pkgs = screen.getAllByTestId('recommended-pkg');
+      expect(pkgs).toHaveLength(2);
+      expect(pkgs[0]).toHaveTextContent('Helm chartartifact-hubREPO: artifact-hub');
+      expect(pkgs[1]).toHaveTextContent('Helm chartkube-prometheus-stackREPO: prometheus-community');
+    });
+
+    it('renders orgs using package', async () => {
+      const mockPackage = getMockPackage('17');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      expect(screen.getByTestId('more-details-section')).toBeInTheDocument();
+      expect(screen.getByText('Organizations using this package in production:')).toBeInTheDocument();
+
+      const orgs = screen.getAllByTestId('org-using-pkg');
+      expect(orgs).toHaveLength(3);
+      expect(orgs[0]).toHaveTextContent('Artifact Hub');
+      expect(orgs[1]).toHaveTextContent('test');
+      expect(orgs[2]).toHaveTextContent('Organization');
+
+      const link = screen.getByRole('button', { name: 'Open organization url' });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute('href', 'https://artifacthub.io');
+    });
+
+    it('does not render when recommendes and production usage are undefined', async () => {
+      const mockPackage = getMockPackage('18');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      expect(screen.queryByTestId('more-details-section')).toBeNull();
+    });
+  });
 });

@@ -15,6 +15,7 @@ const OrgCard = (props: Props) => {
   const renderLabel = (withIcon: boolean): JSX.Element => {
     return (
       <div
+        data-testid="org-using-pkg"
         className={`badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 ${styles.badge}`}
       >
         <div className="mr-2">
