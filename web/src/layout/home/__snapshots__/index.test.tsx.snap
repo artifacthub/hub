@@ -135,12 +135,10 @@ exports[`Home index creates snapshot 1`] = `
           - or -
           <a
             aria-label="Browse all packages"
-            class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
+            class="btn btn-link textLighter font-weight-bold py-0 pb-1 pl-1 allPkgBtn"
             href="/packages/search"
           >
-            <u>
-              browse all packages
-            </u>
+            browse all packages
           </a>
         </div>
         <div
@@ -149,12 +147,10 @@ exports[`Home index creates snapshot 1`] = `
           Or you can also 
           <a
             aria-label="Browse all packages"
-            class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1 pr-0"
+            class="btn btn-link textLighter font-weight-bold py-0 pb-1 pl-1 pr-0"
             href="/packages/search"
           >
-            <u>
-              browse all packages
-            </u>
+            browse all packages
           </a>
            .
         </div>

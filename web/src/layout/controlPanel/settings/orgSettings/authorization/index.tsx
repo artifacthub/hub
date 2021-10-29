@@ -240,7 +240,7 @@ const AuthorizationSection = (props: Props) => {
             {error}. For more information please see the{' '}
             <ExternalLink
               href="https://github.com/artifacthub/hub/blob/master/docs/authorization.md"
-              className={`text-reset ${styles.link}`}
+              className="text-primary font-weight-bold"
               label="Open documentation"
             >
               documentation
@@ -402,7 +402,7 @@ const AuthorizationSection = (props: Props) => {
           polices are written in{' '}
           <ExternalLink
             href="https://www.openpolicyagent.org/docs/latest/#rego"
-            className={`text-reset ${styles.link}`}
+            className="text-primary font-weight-bold"
             label="Open rego documentation"
           >
             rego
@@ -410,14 +410,14 @@ const AuthorizationSection = (props: Props) => {
           and they are evaluated using the{' '}
           <ExternalLink
             href="https://www.openpolicyagent.org"
-            className={`text-reset ${styles.link}`}
+            className="text-primary font-weight-bold"
             label="Open Open Policy Agent documentation"
           >
             Open Policy Agent
           </ExternalLink>
           . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can
           provide your custom policy for maximum flexibility. For more information please see the{' '}
-          <ExternalLink href="/docs/authorization" className={`text-reset ${styles.link}`} label="Open documentation">
+          <ExternalLink href="/docs/authorization" className="text-primary font-weight-bold" label="Open documentation">
             documentation
           </ExternalLink>
           .

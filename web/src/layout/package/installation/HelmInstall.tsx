@@ -48,11 +48,11 @@ const HelmInstall = (props: Props) => {
                 You can also download this package's content directly using{' '}
                 <ExternalLink
                   href={props.contentUrl}
-                  className="text-reset"
+                  className="text-secondary font-weight-bold"
                   target="_self"
                   label="Download package link"
                 >
-                  <u>this link</u>
+                  this link
                 </ExternalLink>
                 .
               </small>

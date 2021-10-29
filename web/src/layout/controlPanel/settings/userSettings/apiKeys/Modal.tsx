@@ -222,8 +222,8 @@ const APIKeyModal = (props: Props) => {
                 <u>You will not be able to see the secret again when you close this window.</u>
               </b>{' '}
               For more information please see the authorize section in the{' '}
-              <ExternalLink className="text-muted" href="/docs/api" label="Open documentation">
-                <u>API docs</u>
+              <ExternalLink className="text-primary font-weight-bold" href="/docs/api" label="Open documentation">
+                API docs
               </ExternalLink>
               .
             </small>

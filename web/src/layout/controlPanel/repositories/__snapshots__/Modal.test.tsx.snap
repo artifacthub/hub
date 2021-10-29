@@ -252,30 +252,26 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       For more information about the url format and the repository structure, please see the 
                       <a
                         aria-label="Open documentation"
-                        class="link text-reset"
+                        class="link text-primary font-weight-bold"
                         href="/docs/topics/repositories#helm-charts-repositories"
                         rel="noopener noreferrer"
                         role="button"
                         tabindex="-1"
                         target="_blank"
                       >
-                        <u>
-                          Helm charts repositories
-                        </u>
+                        Helm charts repositories
                       </a>
                        section in the 
                       <a
                         aria-label="Open documentation"
-                        class="link text-reset"
+                        class="link text-primary font-weight-bold"
                         href="/docs/repositories"
                         rel="noopener noreferrer"
                         role="button"
                         tabindex="-1"
                         target="_blank"
                       >
-                        <u>
-                          repositories guide
-                        </u>
+                        repositories guide
                       </a>
                       .
                     </p>

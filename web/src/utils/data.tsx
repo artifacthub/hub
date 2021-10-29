@@ -384,7 +384,7 @@ export const SEARH_TIPS: SearchTipItem[] = [
   {
     content: (
       <>
-        Use <span className="font-weight-bold">multiple words</span> to refine your search.
+        Use <span className="font-weight-semibold">multiple words</span> to refine your search.
       </>
     ),
     example: 'kafka operator',
@@ -392,7 +392,7 @@ export const SEARH_TIPS: SearchTipItem[] = [
   {
     content: (
       <>
-        Use <span className="font-weight-bold">-</span> to exclude words from your search.
+        Use <span className="font-weight-semibold">-</span> to exclude words from your search.
       </>
     ),
     example: 'apache -solr -hadoop',
@@ -400,7 +400,7 @@ export const SEARH_TIPS: SearchTipItem[] = [
   {
     content: (
       <>
-        Put a phrase inside <span className="font-weight-bold">double quotes</span> for an exact match.
+        Put a phrase inside <span className="font-weight-semibold">double quotes</span> for an exact match.
       </>
     ),
     example: `"monitoring system"`,
@@ -408,7 +408,7 @@ export const SEARH_TIPS: SearchTipItem[] = [
   {
     content: (
       <>
-        Use <span className="font-weight-bold">or</span> to combine multiple searches.
+        Use <span className="font-weight-semibold">or</span> to combine multiple searches.
       </>
     ),
     example: 'postgresql or mysql',

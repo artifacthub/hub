@@ -171,10 +171,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#helm-charts-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>Helm charts repositories</u>
+            Helm charts repositories
           </ExternalLink>
         );
         break;
@@ -182,10 +182,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#olm-operators-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>OLM operators repositories</u>
+            OLM operators repositories
           </ExternalLink>
         );
         break;
@@ -193,10 +193,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#falco-rules-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>Falco rules repositories</u>
+            Falco rules repositories
           </ExternalLink>
         );
         break;
@@ -204,10 +204,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#opa-policies-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>OPA policies repositories</u>
+            OPA policies repositories
           </ExternalLink>
         );
         break;
@@ -215,10 +215,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#tinkerbell-actions-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>Tinkerbell actions</u>
+            Tinkerbell actions
           </ExternalLink>
         );
         break;
@@ -226,10 +226,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#krew-kubectl-plugins-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>Krew kubectl plugins</u>
+            Krew kubectl plugins
           </ExternalLink>
         );
         break;
@@ -237,10 +237,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#helm-plugins-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>Helm plugins</u>
+            Helm plugins
           </ExternalLink>
         );
         break;
@@ -248,7 +248,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#tekton-tasks-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
             <u>Tekton tasks</u>
@@ -259,10 +259,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#keda-scalers-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>KEDA scalers</u>
+            KEDA scalers
           </ExternalLink>
         );
         break;
@@ -270,10 +270,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#coredns-plugins-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>CoreDNS plugins</u>
+            CoreDNS plugins
           </ExternalLink>
         );
         break;
@@ -281,10 +281,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#keptn-integrations-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>Keptn integrations</u>
+            Keptn integrations
           </ExternalLink>
         );
         break;
@@ -292,10 +292,10 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#tekton-pipelines-repositories"
-            className="text-reset"
+            className="text-primary font-weight-bold"
             label="Open documentation"
           >
-            <u>Tekton pipelines</u>
+            Tekton pipelines
           </ExternalLink>
         );
         break;
@@ -319,8 +319,12 @@ const RepositoryModal = (props: Props) => {
           )}
           <p className="mb-0">
             For more information about the url format and the repository structure, please see the {link} section in the{' '}
-            <ExternalLink href="/docs/repositories" className="text-reset" label="Open documentation">
-              <u>repositories guide</u>
+            <ExternalLink
+              href="/docs/repositories"
+              className="text-primary font-weight-bold"
+              label="Open documentation"
+            >
+              repositories guide
             </ExternalLink>
             .
           </p>

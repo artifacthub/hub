@@ -97,26 +97,26 @@ const HomeView = (props: Props) => {
           <div className="d-inline-block d-md-none text-center mt-3">
             - or -
             <Link
-              className="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
+              className={`btn btn-link textLighter font-weight-bold py-0 pb-1 pl-1 ${styles.allPkgBtn}`}
               to={{
                 pathname: '/packages/search',
               }}
               aria-label="Browse all packages"
             >
-              <u>browse all packages</u>
+              browse all packages
             </Link>
           </div>
 
           <div className="d-none d-md-inline-block text-center mt-5">
             {sampleQueries.length > 0 ? <>You can also </> : <>Or you can also </>}
             <Link
-              className="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1 pr-0"
+              className="btn btn-link textLighter font-weight-bold py-0 pb-1 pl-1 pr-0"
               to={{
                 pathname: '/packages/search',
               }}
               aria-label="Browse all packages"
             >
-              <u>browse all packages</u>
+              browse all packages
             </Link>{' '}
             {sampleQueries.length > 0 ? (
               <span className="ml-3">

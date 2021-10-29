@@ -20,10 +20,10 @@ const SearchTip = () => {
       >
         <FaRegLightbulb className="mr-1" />
         <div>
-          <span className="font-weight-bold mr-1">Tip:</span>
+          <span className="font-weight-semibold mr-1">Tip:</span>
           {activeTip.content} Example:{' '}
           <Link
-            className="font-weight-bold textLight p-0"
+            className="font-weight-bold textLighter p-0"
             to={{
               pathname: '/packages/search',
               search: prepareQueryString({
@@ -32,7 +32,7 @@ const SearchTip = () => {
               }),
             }}
           >
-            <u>{activeTip.example}</u>
+            {activeTip.example}
           </Link>
         </div>
       </div>
