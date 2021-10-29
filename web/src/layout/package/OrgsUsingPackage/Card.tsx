@@ -19,7 +19,7 @@ const OrgCard = (props: Props) => {
         className={`badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 ${styles.badge}`}
       >
         <div className="mr-2">
-          <div className={`${styles.imageWrapper} imageWrapper`}>
+          <div className={`${styles.imageWrapper} imageWrapper overflow-hidden`}>
             <div className="d-flex align-items-center justify-content-center w-100 h-100">
               <Image
                 alt={props.organization.displayName || props.organization.name}

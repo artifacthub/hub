@@ -6,6 +6,7 @@ import styles from './Label.module.css';
 
 interface Props {
   icon?: JSX.Element;
+  iconLegend?: string | number;
   bgLeftIcon?: string;
   text: string;
   labelStyle?: string;
@@ -26,7 +27,7 @@ const Label = (props: Props) => (
         { [styles.default]: isUndefined(props.labelStyle) }
       )}
     >
-      {!isUndefined(props.icon) && (
+      {(!isUndefined(props.icon) || !isUndefined(props.iconLegend)) && (
         <div
           className={classnames('text-center labelIconWrapper', styles.iconWrapper, {
             [styles.onlyIcon]: props.onlyIcon,
@@ -35,10 +36,15 @@ const Label = (props: Props) => (
             backgroundColor: props.bgLeftIcon,
           }}
         >
-          {props.icon}
+          {props.icon && <span className={classnames({ 'ml-1': !isUndefined(props.iconLegend) })}>{props.icon}</span>}
+
+          {props.iconLegend && (
+            <span className={`ml-1 mr-2 font-weight-bold position-relative ${styles.iconLegend}`}>
+              {props.iconLegend}
+            </span>
+          )}
         </div>
       )}
-
       {(isUndefined(props.onlyIcon) || !props.onlyIcon) && (
         <div
           className={classnames(

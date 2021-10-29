@@ -109,6 +109,7 @@ export interface Package {
   signKey?: HelmChartSignKey;
   screenshots?: Screenshot[];
   productionOrganizations?: Organization[];
+  productionOrganizationsCount?: number;
 }
 
 export interface Screenshot {

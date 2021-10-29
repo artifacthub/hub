@@ -15,6 +15,7 @@ import Label from './Label';
 import OfficialBadge from './OfficialBadge';
 import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageInfo.module.css';
+import ProductionBadge from './ProductionBadge';
 import RepositoryIconLabel from './RepositoryIconLabel';
 import RepositoryInfo from './RepositoryInfo';
 import ScannerDisabledRepositoryBadge from './ScannerDisabledRepositoryBadge';
@@ -212,6 +213,10 @@ const PackageInfo = (props: Props) => {
 
       <div className={`d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto ${styles.labelsWrapper}`}>
         <OfficialBadge official={isPackageOfficial(props.package)} className="d-inline mt-3" type="package" />
+        <ProductionBadge
+          productionOrganizationsCount={props.package.productionOrganizationsCount}
+          className="d-inline mt-3"
+        />
         <VerifiedPublisherBadge
           verifiedPublisher={props.package.repository.verifiedPublisher}
           className="d-inline mt-3"

@@ -19,9 +19,13 @@ exports[`SecurityRating creates snapshot 1`] = `
             style="background-color: rgb(150, 0, 3);"
           >
             <span
-              class="position-relative ratingLetter"
+              class=""
             >
-              F
+              <span
+                class="position-relative ratingLetter"
+              >
+                F
+              </span>
             </span>
           </div>
           <div

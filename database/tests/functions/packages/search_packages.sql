@@ -225,6 +225,7 @@ insert into snapshot (
     '[{"image": "quay.io/org/img:1.0.0", "whitelisted": true}]',
     '2020-06-16 11:20:34+02'
 );
+insert into production_usage (package_id, organization_id) values(:'package1ID', :'org1ID');
 
 -- Some packages have just been seeded
 select results_eq(
@@ -252,6 +253,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -278,6 +280,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -305,6 +308,7 @@ select results_eq(
                             "medium": 1
                         },
                         "all_containers_images_whitelisted": true,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -416,6 +420,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -442,6 +447,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -469,6 +475,7 @@ select results_eq(
                             "medium": 1
                         },
                         "all_containers_images_whitelisted": true,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -512,6 +519,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -554,6 +562,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -599,6 +608,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -625,6 +635,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -671,6 +682,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -697,6 +709,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -741,6 +754,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -768,6 +782,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -869,6 +884,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -979,6 +995,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1028,6 +1045,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1357,6 +1375,7 @@ select results_eq(
                             "medium": 1
                         },
                         "all_containers_images_whitelisted": true,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -1402,6 +1421,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1449,6 +1469,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1476,6 +1497,7 @@ select results_eq(
                             "medium": 1
                         },
                         "all_containers_images_whitelisted": true,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -1523,6 +1545,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1569,6 +1592,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1616,6 +1640,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1643,6 +1668,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1689,6 +1715,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1755,6 +1782,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1898,6 +1926,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1925,6 +1954,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1972,6 +2002,7 @@ select results_eq(
                         "deprecated": true,
                         "signed": true,
                         "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1998,6 +2029,7 @@ select results_eq(
                         "version": "1.0.0",
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
+                        "production_organizations_count": 1,
                         "ts": 1592299234,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
