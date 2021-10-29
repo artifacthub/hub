@@ -1,8 +1,9 @@
 [
   {
-    "version": "0.5.0",
+    "version": "0.5.0-beta",
     "ts": 1604048487,
-    "containsSecurityUpdates": true,
+    "containsSecurityUpdates": false,
+    "prerelease": true,
     "changes": [
       { "description": "Introduce verified publisher concept" },
       { "description": "Add dark mode support" },

@@ -6,7 +6,6 @@ import { CgFileDocument } from 'react-icons/cg';
 import { FaMarkdown } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
-import semver from 'semver';
 
 import API from '../../../api';
 import { ChangeLog, Repository, RepositoryKind, SearchFiltersURL } from '../../../types';
@@ -97,24 +96,11 @@ const ChangelogModal = (props: Props) => {
   if ([RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(props.repository.kind))
     return null;
 
-  const sortChangelog = (items: ChangeLog[]): ChangeLog[] => {
-    const validVersions: ChangeLog[] = items.filter((item: ChangeLog) => semver.valid(item.version));
-    const invalidVersions: ChangeLog[] = items.filter((item: ChangeLog) => !semver.valid(item.version));
-    try {
-      const sortedValidVersions = validVersions.sort((a, b) => (semver.lt(a.version, b.version) ? 1 : -1));
-      return [...sortedValidVersions, ...invalidVersions];
-    } catch {
-      return items;
-    }
-  };
-
   async function getChangelog() {
     try {
       setIsLoading(true);
-      const changelog = await API.getChangelog(props.packageId);
-      const sortedChangelog: ChangeLog[] = sortChangelog(changelog);
       setCurrentPkgId(props.packageId);
-      setChangelog(sortedChangelog);
+      setChangelog(await API.getChangelog(props.packageId));
       setIsLoading(false);
       setOpenStatus(true);
     } catch {

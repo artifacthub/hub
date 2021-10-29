@@ -189,12 +189,13 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 // GetChangelog is an http handler used to get a package's changelog.
 func (h *Handlers) GetChangelog(w http.ResponseWriter, r *http.Request) {
 	packageID := chi.URLParam(r, "packageID")
-	dataJSON, err := h.pkgManager.GetChangelogJSON(r.Context(), packageID)
+	changelog, err := h.pkgManager.GetChangelog(r.Context(), packageID)
 	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetChangelogJSON").Send()
+		h.logger.Error().Err(err).Str("method", "GetChangelog").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
+	dataJSON, _ := json.Marshal(changelog)
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 

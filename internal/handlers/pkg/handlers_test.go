@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -397,17 +398,76 @@ func TestGetChangelog(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetChangelogJSON", r.Context(), "pkg1").Return([]byte("dataJSON"), nil)
+		changelog := &hub.Changelog{
+			{
+				Version: "1.0.0",
+				TS:      1592299234,
+				Changes: []*hub.Change{
+					{
+						Kind:        "added",
+						Description: "feature 3",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+					{
+						Kind:        "fixed",
+						Description: "fix 3",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+				},
+				ContainsSecurityUpdates: true,
+				Prerelease:              true,
+			},
+			{
+				Version: "0.0.9",
+				TS:      1592299233,
+				Changes: []*hub.Change{
+					{
+						Kind:        "added",
+						Description: "feature 2",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+					{
+						Kind:        "fixed",
+						Description: "fix 2",
+						Links: []*hub.Link{
+							{
+								Name: "github issue",
+								URL:  "https://issue.url",
+							},
+						},
+					},
+				},
+				ContainsSecurityUpdates: false,
+				Prerelease:              false,
+			},
+		}
+		hw.pm.On("GetChangelog", r.Context(), "pkg1").Return(changelog, nil)
 		hw.h.GetChangelog(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
 		data, _ := ioutil.ReadAll(resp.Body)
 
+		expectedData, _ := json.Marshal(changelog)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("dataJSON"), data)
+		assert.Equal(t, expectedData, data)
 		hw.assertExpectations(t)
 	})
 
@@ -418,7 +478,7 @@ func TestGetChangelog(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetChangelogJSON", r.Context(), "pkg1").Return(nil, tests.ErrFakeDB)
+		hw.pm.On("GetChangelog", r.Context(), "pkg1").Return(nil, tests.ErrFakeDB)
 		hw.h.GetChangelog(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
