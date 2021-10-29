@@ -159,6 +159,10 @@ begin
                     'signed', signed,
                     'security_report_summary', security_report_summary,
                     'all_containers_images_whitelisted', are_all_containers_images_whitelisted(containers_images),
+                    'production_organizations_count', (
+                        select count(*) from production_usage
+                        where package_id = filtered_packages_paginated.package_id
+                    ),
                     'ts', floor(extract(epoch from ts)),
                     'repository', jsonb_build_object(
                         'repository_id', repository_id,

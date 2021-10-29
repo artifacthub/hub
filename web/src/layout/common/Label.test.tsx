@@ -24,7 +24,7 @@ describe('Label', () => {
 
     const icon = screen.getByText('icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveStyle('background-color: #ffffff');
+    expect(icon.parentElement).toHaveStyle('background-color: #ffffff');
   });
 
   it('renders icon', () => {
@@ -32,6 +32,12 @@ describe('Label', () => {
 
     const icon = screen.getByText('icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveClass('labelIconWrapper');
+    expect(icon.parentElement).toHaveClass('labelIconWrapper');
+  });
+
+  it('renders icon legend', () => {
+    render(<Label {...defaultProps} iconLegend="legend" />);
+
+    expect(screen.getByText('legend')).toBeInTheDocument();
   });
 });

@@ -19,7 +19,7 @@ exports[`OrgCard creates snapshot 1`] = `
         class="mr-2"
       >
         <div
-          class="imageWrapper imageWrapper"
+          class="imageWrapper imageWrapper overflow-hidden"
         >
           <div
             class="d-flex align-items-center justify-content-center w-100 h-100"

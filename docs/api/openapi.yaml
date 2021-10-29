@@ -3752,6 +3752,9 @@ components:
         offical:
           type: boolean
           nullable: false
+        production_organizations_count:
+          type: number
+          nullable: false
     Repository:
       allOf:
         - $ref: "#/components/schemas/RepositorySummary"
