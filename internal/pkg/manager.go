@@ -95,18 +95,15 @@ func (m *Manager) Get(ctx context.Context, input *hub.GetPackageInput) (*hub.Pac
 func (m *Manager) GetChangelog(ctx context.Context, pkgID string) (*hub.Changelog, error) {
 	var changelog *hub.Changelog
 	err := util.DBQueryUnmarshal(ctx, m.db, &changelog, getPkgChangelogDBQ, pkgID)
+	if err != nil {
+		return nil, err
+	}
 	sort.Slice(*changelog, func(i, j int) bool {
 		vi, _ := semver.NewVersion((*changelog)[i].Version)
 		vj, _ := semver.NewVersion((*changelog)[j].Version)
 		return vj.LessThan(vi)
 	})
 	return changelog, err
-}
-
-// GetChangelogJSON returns the changelog for the package identified by the id
-// provided in json format.
-func (m *Manager) GetChangelogJSON(ctx context.Context, pkgID string) ([]byte, error) {
-	return util.DBQueryJSON(ctx, m.db, getPkgChangelogDBQ, pkgID)
 }
 
 // GetHarborReplicationDumpJSON returns a json list with all packages versions

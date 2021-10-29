@@ -185,7 +185,7 @@ describe('ChangelogModal', () => {
     });
 
     it("displays first version when selected one doesn't exist", async () => {
-      const mockChangelog = getMockChangelog('11');
+      const mockChangelog = getMockChangelog('10');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(<ChangelogModal {...defaultProps} visibleChangelog visibleVersion="1.0.0" />);
@@ -198,31 +198,8 @@ describe('ChangelogModal', () => {
       expect(versionBtns[0]).toHaveClass('activeVersionBtnWrapper');
     });
 
-    it('renders changelog blocks in correct order', async () => {
-      const mockChangelog = getMockChangelog('5');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
-
-      render(<ChangelogModal {...defaultProps} />);
-
-      const btn = screen.getByText('Changelog');
-      userEvent.click(btn);
-
-      await waitFor(() => {
-        expect(API.getChangelog).toHaveBeenCalledTimes(1);
-      });
-
-      const btnTitles = screen.getAllByRole('button', { name: /Open version/i });
-      expect(btnTitles[0]).toHaveTextContent('0.8.0');
-      expect(btnTitles[1]).toHaveTextContent('0.7.0');
-      expect(btnTitles[2]).toHaveTextContent('0.6.0');
-      expect(btnTitles[3]).toHaveTextContent('0.5.0');
-      expect(btnTitles[4]).toHaveTextContent('0.4.0');
-      expect(btnTitles[5]).toHaveTextContent('0.3.0');
-      expect(btnTitles[6]).toHaveTextContent('0.2.0');
-    });
-
     it('does not render blocks when changes is null', async () => {
-      const mockChangelog = getMockChangelog('6');
+      const mockChangelog = getMockChangelog('5');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(<ChangelogModal {...defaultProps} visibleChangelog />);
@@ -237,7 +214,7 @@ describe('ChangelogModal', () => {
     });
 
     it('calls again to getMockChangelog when packageId is different', async () => {
-      const mockChangelog = getMockChangelog('7');
+      const mockChangelog = getMockChangelog('6');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       const { rerender } = render(<ChangelogModal {...defaultProps} />);
@@ -261,7 +238,7 @@ describe('ChangelogModal', () => {
     });
 
     it('dislays security updates badge', async () => {
-      const mockChangelog = getMockChangelog('8');
+      const mockChangelog = getMockChangelog('7');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(<ChangelogModal {...defaultProps} />);
@@ -277,7 +254,7 @@ describe('ChangelogModal', () => {
     });
 
     it('dislays pre-release badge', async () => {
-      const mockChangelog = getMockChangelog('9');
+      const mockChangelog = getMockChangelog('8');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(<ChangelogModal {...defaultProps} />);
@@ -293,7 +270,7 @@ describe('ChangelogModal', () => {
     });
 
     it('calls getChangelogMD', async () => {
-      const mockChangelog = getMockChangelog('12');
+      const mockChangelog = getMockChangelog('11');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
       mocked(API).getChangelogMD.mockResolvedValue(markdownMock);
 
@@ -320,7 +297,7 @@ describe('ChangelogModal', () => {
     });
 
     it('when getChangelogMD call fails', async () => {
-      const mockChangelog = getMockChangelog('13');
+      const mockChangelog = getMockChangelog('12');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
       mocked(API).getChangelogMD.mockRejectedValue('');
 

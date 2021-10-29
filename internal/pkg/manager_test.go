@@ -349,7 +349,7 @@ func TestGetChangelog(t *testing.T) {
 		db.On("QueryRow", ctx, getPkgChangelogDBQ, "pkg1").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetChangelogJSON(ctx, "pkg1")
+		dataJSON, err := m.GetChangelog(ctx, "pkg1")
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -462,34 +462,6 @@ func TestGetChangelog(t *testing.T) {
 		changelog, err := m.GetChangelog(ctx, "pkg1")
 		assert.NoError(t, err)
 		assert.Equal(t, expectedChangelog, changelog)
-		db.AssertExpectations(t)
-	})
-}
-
-func TestGetChangelogJSON(t *testing.T) {
-	ctx := context.Background()
-
-	t.Run("database query succeeded", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgChangelogDBQ, "pkg1").Return([]byte("dataJSON"), nil)
-		m := NewManager(db)
-
-		dataJSON, err := m.GetChangelogJSON(ctx, "pkg1")
-		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("database error", func(t *testing.T) {
-		t.Parallel()
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgChangelogDBQ, "pkg1").Return(nil, tests.ErrFakeDB)
-		m := NewManager(db)
-
-		dataJSON, err := m.GetChangelogJSON(ctx, "pkg1")
-		assert.Equal(t, tests.ErrFakeDB, err)
-		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }

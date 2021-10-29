@@ -2,6 +2,7 @@
   {
     "version": "0.5.0",
     "ts": 1604048487,
+    "containsSecurityUpdates": true,
     "changes": [
       { "description": "Introduce verified publisher concept" },
       { "description": "Add dark mode support" },
@@ -16,6 +17,7 @@
   },
   {
     "version": "0.4.0",
+    "containsSecurityUpdates": false,
     "ts": 1604048487
   }
 ]

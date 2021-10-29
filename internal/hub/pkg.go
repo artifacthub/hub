@@ -115,7 +115,6 @@ type PackageManager interface {
 	DeleteProductionUsage(ctx context.Context, repoName, pkgName, orgName string) error
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
 	GetChangelog(ctx context.Context, pkgID string) (*Changelog, error)
-	GetChangelogJSON(ctx context.Context, pkgID string) ([]byte, error)
 	GetHarborReplicationDumpJSON(ctx context.Context) ([]byte, error)
 	GetHelmExporterDumpJSON(ctx context.Context) ([]byte, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
