@@ -18,6 +18,7 @@ import styles from './Content.module.css';
 
 interface Props {
   onCloseModal: (replaceUrl: boolean) => void;
+  updateVersionInQueryString: (version: string, index: number) => void;
   changelog: ChangeLog[];
   normalizedName: string;
   activeVersionIndex: number;
@@ -87,13 +88,17 @@ const Content = (props: Props) => {
                 ref={(el) => (versionsRef.current[index] = el)}
               >
                 <div className={`d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
-                  <div className="h5 text-dark text-truncate mb-0" data-testid="changelogBlockTitle">
-                    {item.version}
-                  </div>
                   <button
-                    className={`btn btn-link btn-sm text-dark py-0 position-relative ${styles.btnLink}`}
+                    className={`btn btn-link btn-sm text-dark text-truncate mb-0 p-0 ${styles.btnTitle}`}
                     onClick={() => openPackagePage(item.version)}
                     aria-label={`Open version ${item.version}`}
+                  >
+                    {item.version}
+                  </button>
+                  <button
+                    className={`btn btn-link btn-sm text-dark py-0 position-relative ${styles.btnLink}`}
+                    onClick={() => props.updateVersionInQueryString(item.version, index)}
+                    aria-label={`Update active version in querystring to ${item.version}`}
                   >
                     <FaLink />
                   </button>

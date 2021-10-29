@@ -141,15 +141,6 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '?modal=changelog&version=0.8.0',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
-      });
-
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(screen.getAllByText('Changelog')).toHaveLength(2);
 
@@ -173,15 +164,6 @@ describe('ChangelogModal', () => {
       const els = screen.getAllByText(/0.3.0/);
       expect(els).toHaveLength(2);
       expect(els[0].parentElement).toHaveClass('activeVersionBtnWrapper');
-
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '?modal=changelog&version=0.3.0',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
-      });
     });
 
     it('closes modal', async () => {
@@ -200,15 +182,6 @@ describe('ChangelogModal', () => {
       await waitFor(() => {
         expect(screen.queryByRole('dialog')).toBeNull();
       });
-
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-      expect(mockHistoryReplace).toHaveBeenLastCalledWith({
-        search: '',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
-      });
     });
 
     it("displays first version when selected one doesn't exist", async () => {
@@ -219,16 +192,10 @@ describe('ChangelogModal', () => {
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
-
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
-          search: '?modal=changelog&version=0.8.0',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
       });
+
+      const versionBtns = screen.getAllByTestId('versionBtnWrapper');
+      expect(versionBtns[0]).toHaveClass('activeVersionBtnWrapper');
     });
 
     it('renders changelog blocks in correct order', async () => {
@@ -244,14 +211,14 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const titles = screen.getAllByTestId('changelogBlockTitle');
-      expect(titles[0]).toHaveTextContent('0.8.0');
-      expect(titles[1]).toHaveTextContent('0.7.0');
-      expect(titles[2]).toHaveTextContent('0.6.0');
-      expect(titles[3]).toHaveTextContent('0.5.0');
-      expect(titles[4]).toHaveTextContent('0.4.0');
-      expect(titles[5]).toHaveTextContent('0.3.0');
-      expect(titles[6]).toHaveTextContent('0.2.0');
+      const btnTitles = screen.getAllByRole('button', { name: /Open version/i });
+      expect(btnTitles[0]).toHaveTextContent('0.8.0');
+      expect(btnTitles[1]).toHaveTextContent('0.7.0');
+      expect(btnTitles[2]).toHaveTextContent('0.6.0');
+      expect(btnTitles[3]).toHaveTextContent('0.5.0');
+      expect(btnTitles[4]).toHaveTextContent('0.4.0');
+      expect(btnTitles[5]).toHaveTextContent('0.3.0');
+      expect(btnTitles[6]).toHaveTextContent('0.2.0');
     });
 
     it('does not render blocks when changes is null', async () => {
@@ -264,8 +231,8 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const titles = screen.getAllByTestId('changelogBlockTitle');
-      expect(titles).toHaveLength(1);
+      const btnTitles = screen.getAllByRole('button', { name: /Open version/i });
+      expect(btnTitles).toHaveLength(1);
       expect(screen.queryByText('0.4.0')).toBeNull();
     });
 

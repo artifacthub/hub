@@ -736,7 +736,7 @@ const PackageView = (props: Props) => {
                             normalizedName={detail.normalizedName}
                             repository={detail.repository}
                             hasChangelog={detail.hasChangelog!}
-                            currentVersion={detail.version}
+                            currentVersion={props.version}
                             visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
                             visibleVersion={
                               !isUndefined(props.visibleModal) && props.visibleModal === 'changelog'
@@ -922,7 +922,7 @@ const PackageView = (props: Props) => {
                                 normalizedName={detail.normalizedName}
                                 repository={detail.repository}
                                 hasChangelog={detail.hasChangelog!}
-                                currentVersion={detail.version}
+                                currentVersion={props.version}
                                 visibleChangelog={
                                   !isUndefined(props.visibleModal) && props.visibleModal === 'changelog'
                                 }

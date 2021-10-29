@@ -39,17 +39,14 @@ const ChangelogModal = (props: Props) => {
   const [activeVersionIndex, setActiveVersionIndex] = useState<number | undefined>(undefined);
   const [isGettingMd, setIsGettingMd] = useState<boolean>(false);
 
-  const updateVersionInQueryString = (currentVersion?: string) => {
-    let version = currentVersion;
-    if (changelog && changelog.length > 0 && !isUndefined(activeVersionIndex)) {
-      version = changelog[activeVersionIndex].version;
+  const updateVersionInQueryString = (version?: string, index?: number) => {
+    if (index) {
+      updateActiveVersion(index);
     }
-    if (version) {
-      history.replace({
-        search: `?modal=changelog&version=${version}`,
-        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-      });
-    }
+    history.replace({
+      search: `?modal=changelog${version ? `&version=${version}` : ''}`,
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
   };
 
   useEffect(() => {
@@ -70,22 +67,28 @@ const ChangelogModal = (props: Props) => {
         // Scroll to active button
         btnsWrapper.current.children[activeVersionIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }
-      // When changelog is defined, url with new active version is updated
-      if (changelog) {
-        updateVersionInQueryString(changelog[activeVersionIndex].version);
-      }
     }
   }, [activeVersionIndex]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     // We load correct active version after rendering modal
     if (openStatus && changelog && isUndefined(activeVersionIndex)) {
-      const version = props.visibleVersion || props.currentVersion || changelog[0].version;
-      const currentIndex = changelog.findIndex((ch: ChangeLog) => ch.version === version);
-      if (currentIndex >= 0) {
-        updateActiveVersion(changelog.findIndex((ch: ChangeLog) => ch.version === version));
+      const version = props.visibleVersion || props.currentVersion;
+      if (version) {
+        const currentIndex = changelog.findIndex((ch: ChangeLog) => ch.version === version);
+        if (currentIndex >= 0) {
+          if (version === props.currentVersion) {
+            updateVersionInQueryString(version, currentIndex);
+          } else {
+            updateActiveVersion(currentIndex);
+          }
+        } else {
+          updateVersionInQueryString();
+          setActiveVersionIndex(0);
+        }
         // If version doesn't exist
       } else {
+        updateVersionInQueryString();
         setActiveVersionIndex(0);
       }
     }
@@ -275,6 +278,7 @@ const ChangelogModal = (props: Props) => {
                     if (isNull(item.changes) || isUndefined(item.changes)) return null;
                     return (
                       <div
+                        data-testid="versionBtnWrapper"
                         className={classnames(
                           'pr-4 pl-2 position-relative border-bottom',
                           styles.versionBtnWrapper,
@@ -308,6 +312,7 @@ const ChangelogModal = (props: Props) => {
               <Content
                 changelog={changelog}
                 onCloseModal={onCloseModal}
+                updateVersionInQueryString={updateVersionInQueryString}
                 normalizedName={props.normalizedName}
                 activeVersionIndex={activeVersionIndex || 0}
                 setActiveVersionIndex={setActiveVersionIndex}

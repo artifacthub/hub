@@ -16,14 +16,14 @@ exports[`Changelog content  creates snapshot 1`] = `
         <div
           class="d-flex flex-row align-items-baseline versionWrapper"
         >
-          <div
-            class="h5 text-dark text-truncate mb-0"
-            data-testid="changelogBlockTitle"
-          >
-            0.8.0
-          </div>
           <button
             aria-label="Open version 0.8.0"
+            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 btnTitle"
+          >
+            0.8.0
+          </button>
+          <button
+            aria-label="Update active version in querystring to 0.8.0"
             class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
           >
             <svg
@@ -416,14 +416,14 @@ exports[`Changelog content  creates snapshot 1`] = `
         <div
           class="d-flex flex-row align-items-baseline versionWrapper"
         >
-          <div
-            class="h5 text-dark text-truncate mb-0"
-            data-testid="changelogBlockTitle"
-          >
-            0.5.0
-          </div>
           <button
             aria-label="Open version 0.5.0"
+            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 btnTitle"
+          >
+            0.5.0
+          </button>
+          <button
+            aria-label="Update active version in querystring to 0.5.0"
             class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
           >
             <svg

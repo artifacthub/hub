@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Content from './Content';
@@ -59,6 +60,8 @@ const changelog = [
   },
 ];
 
+const updateVersionInQueryStringMock = jest.fn();
+
 const defaultProps = {
   changelog: changelog,
   normalizedName: 'test',
@@ -72,6 +75,8 @@ const defaultProps = {
   },
   setActiveVersionIndex: jest.fn(),
   setOpenStatus: jest.fn(),
+  onCloseModal: jest.fn(),
+  updateVersionInQueryString: updateVersionInQueryStringMock,
 };
 
 describe('Changelog content ', () => {
@@ -93,15 +98,25 @@ describe('Changelog content ', () => {
     it('renders component', async () => {
       render(<Content {...defaultProps} />);
 
-      const titles = screen.getAllByTestId('changelogBlockTitle');
-      expect(titles[0]).toHaveTextContent('0.8.0');
-      expect(titles[1]).toHaveTextContent('0.5.0');
+      const btnTitles = screen.getAllByRole('button', { name: /Open version/i });
+      expect(btnTitles[0]).toHaveTextContent('0.8.0');
+      expect(btnTitles[1]).toHaveTextContent('0.5.0');
 
-      expect(screen.getByLabelText('Open version 0.8.0')).toBeInTheDocument();
-      expect(screen.getByLabelText('Open version 0.5.0')).toBeInTheDocument();
+      expect(screen.getByLabelText('Update active version in querystring to 0.8.0')).toBeInTheDocument();
+      expect(screen.getByLabelText('Update active version in querystring to 0.5.0')).toBeInTheDocument();
 
       expect(screen.getByText('Contains security updates')).toBeInTheDocument();
       expect(screen.getByText('Pre-release')).toBeInTheDocument();
+    });
+
+    it('calls updateVersionInQueryString', async () => {
+      render(<Content {...defaultProps} />);
+
+      const btn = screen.getByLabelText('Update active version in querystring to 0.5.0');
+      userEvent.click(btn);
+
+      expect(updateVersionInQueryStringMock).toHaveBeenCalledTimes(1);
+      expect(updateVersionInQueryStringMock).toHaveBeenCalledWith('0.5.0', 1);
     });
   });
 });
