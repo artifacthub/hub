@@ -39,7 +39,7 @@ const ChangelogModal = (props: Props) => {
   const [isGettingMd, setIsGettingMd] = useState<boolean>(false);
 
   const updateVersionInQueryString = (version?: string, index?: number) => {
-    if (index) {
+    if (!isUndefined(index)) {
       updateActiveVersion(index);
     }
     history.replace({
@@ -49,22 +49,26 @@ const ChangelogModal = (props: Props) => {
   };
 
   useEffect(() => {
+    setActiveVersionIndex(undefined);
+    if (props.visibleChangelog && !isUndefined(currentPkgId)) {
+      getChangelog();
+    } else if (openStatus && !props.visibleChangelog) {
+      onCloseModal(false);
+    }
+  }, [props.packageId, props.currentVersion]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
     if (props.visibleChangelog && !openStatus && isUndefined(currentPkgId)) {
       onOpenModal();
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    if ((openStatus || props.visibleChangelog) && !isUndefined(currentPkgId)) {
-      onCloseModal(true);
-    }
-  }, [props.packageId, props.currentVersion]); /* eslint-disable-line react-hooks/exhaustive-deps */
-
-  useEffect(() => {
     if (btnsWrapper && btnsWrapper.current && !isUndefined(activeVersionIndex)) {
-      if (!isUndefined(btnsWrapper.current.children[activeVersionIndex])) {
+      const activeChild = btnsWrapper.current.children[activeVersionIndex];
+      if (!isUndefined(activeChild)) {
         // Scroll to active button
-        btnsWrapper.current.children[activeVersionIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        activeChild.scrollIntoView({ block: 'nearest' });
       }
     }
   }, [activeVersionIndex]); /* eslint-disable-line react-hooks/exhaustive-deps */
@@ -127,6 +131,8 @@ const ChangelogModal = (props: Props) => {
   const onCloseModal = (replaceUrl: boolean) => {
     setOpenStatus(false);
     setActiveVersionIndex(undefined);
+    setIsGettingMd(false);
+    setIsLoading(false);
     setChangelog(undefined);
     if (replaceUrl) {
       history.replace({
@@ -140,7 +146,7 @@ const ChangelogModal = (props: Props) => {
     if (versionIndex !== activeVersionIndex) {
       const element = document.getElementById(`changelog-${versionIndex}`);
       if (element) {
-        element.scrollIntoView({ block: 'start', inline: 'nearest' });
+        element.scrollIntoView({ block: 'start' });
       }
       setActiveVersionIndex(versionIndex);
     }
