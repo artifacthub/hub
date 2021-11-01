@@ -1,0 +1,217 @@
+{
+  "$ref": "#/definitions/CoreDumpValues",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Image": {
+      "type": "object",
+      "title": "Image",
+      "required": ["limit_cpu", "limit_mem", "pullPolicy", "repository", "request_cpu", "request_mem"],
+      "properties": {
+        "limit_cpu": {
+          "type": "string"
+        },
+        "limit_mem": {
+          "type": "string"
+        },
+        "pullPolicy": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "request_cpu": {
+          "type": "string"
+        },
+        "request_mem": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "Affinity": {
+      "type": "object",
+      "title": "Affinity",
+      "additionalProperties": true
+    },
+    "Daemonset": {
+      "type": "object",
+      "allOf": [
+        {
+          "if": {
+            "required": ["manageStoreSecret"],
+            "properties": {
+              "manageStoreSecret": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": ["s3AccessKey", "s3BucketName", "s3Region", "s3Secret"]
+          }
+        }
+      ],
+      "title": "Daemonset",
+      "required": [
+        "DeployCrioConfig",
+        "composerCrioImageCmd",
+        "composerIgnoreCrio",
+        "composerLogLevel",
+        "extraEnvVars",
+        "hostDirectory",
+        "includeCrioExe",
+        "interval",
+        "label",
+        "manageStoreSecret",
+        "name",
+        "suidDumpable",
+        "vendor"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "vendor": {
+          "type": "string"
+        },
+        "interval": {
+          "type": "integer",
+          "minimum": 1000
+        },
+        "s3Region": {
+          "type": "string"
+        },
+        "s3Secret": {
+          "type": "string"
+        },
+        "s3AccessKey": {
+          "type": "string"
+        },
+        "extraEnvVars": {
+          "type": "string"
+        },
+        "s3BucketName": {
+          "type": "string"
+        },
+        "suidDumpable": {
+          "type": "integer"
+        },
+        "hostDirectory": {
+          "type": "string"
+        },
+        "includeCrioExe": {
+          "type": "boolean"
+        },
+        "DeployCrioConfig": {
+          "type": "boolean"
+        },
+        "composerLogLevel": {
+          "type": "string"
+        },
+        "manageStoreSecret": {
+          "type": "boolean"
+        },
+        "composerIgnoreCrio": {
+          "type": "boolean"
+        },
+        "composerCrioImageCmd": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "ClusterRole": {
+      "type": "object",
+      "title": "ClusterRole",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "CoreDumpValues": {
+      "type": "object",
+      "title": "CoreDumpValues",
+      "required": [
+        "affinity",
+        "clusterRole",
+        "clusterRoleBinding",
+        "daemonset",
+        "fullnameOverride",
+        "image",
+        "imagePullSecrets",
+        "nameOverride",
+        "nodeSelector",
+        "replicaCount",
+        "serviceAccount",
+        "storage",
+        "storageClass",
+        "tolerations"
+      ],
+      "properties": {
+        "image": {
+          "$ref": "#/definitions/Image"
+        },
+        "storage": {
+          "type": "string"
+        },
+        "affinity": {
+          "$ref": "#/definitions/Affinity"
+        },
+        "daemonset": {
+          "$ref": "#/definitions/Daemonset"
+        },
+        "clusterRole": {
+          "$ref": "#/definitions/ClusterRole"
+        },
+        "tolerations": {
+          "$ref": "#/definitions/Affinity"
+        },
+        "nameOverride": {
+          "type": "string"
+        },
+        "nodeSelector": {
+          "$ref": "#/definitions/Affinity"
+        },
+        "replicaCount": {
+          "type": "integer"
+        },
+        "storageClass": {
+          "type": "string"
+        },
+        "serviceAccount": {
+          "$ref": "#/definitions/ServiceAccount"
+        },
+        "fullnameOverride": {
+          "type": "string"
+        },
+        "imagePullSecrets": {
+          "type": "array",
+          "items": {}
+        },
+        "clusterRoleBinding": {
+          "$ref": "#/definitions/ClusterRole"
+        }
+      },
+      "additionalProperties": true
+    },
+    "ServiceAccount": {
+      "type": "object",
+      "title": "ServiceAccount",
+      "required": ["create", "name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "create": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
