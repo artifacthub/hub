@@ -26,6 +26,37 @@ interface Props {
   visibleValuesSchemaPath?: string;
 }
 
+async function enrichValuesSchema(schema: JSONSchema) {
+  try {
+    let tmpSchema = { ...schema };
+    // When root is a $ref pointing to a definition inside itself, the method dereference (json-schema-ref-parser) doesn't work properly
+    // https://github.com/APIDevTools/json-schema-ref-parser/issues/172
+    if (tmpSchema['$ref'] && tmpSchema['$ref'].startsWith('#/definitions')) {
+      const topLevelObj = tmpSchema['$ref'].split('/').pop();
+      delete tmpSchema['$ref'];
+      if (topLevelObj && tmpSchema.definitions && tmpSchema.definitions[topLevelObj]) {
+        const entryPoint: any = tmpSchema.definitions[topLevelObj];
+        tmpSchema = { ...tmpSchema, ...entryPoint };
+      }
+    }
+
+    // Dereferences all $ref pointers in the JSON Schema, replacing each reference with its resolved value.
+    const dereferencedSchema = await $RefParser.dereference(tmpSchema, {
+      continueOnError: true,
+      dereference: {
+        circular: true,
+      },
+    });
+
+    // Merge schemas combined using allOf.
+    const mergedSchema = merger(dereferencedSchema);
+
+    return mergedSchema;
+  } catch (err) {
+    return schema;
+  }
+}
+
 const ValuesSchema = (props: Props) => {
   const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -38,20 +69,7 @@ const ValuesSchema = (props: Props) => {
       setIsLoading(true);
       const schema = await API.getValuesSchema(props.packageId, props.version);
       setCurrentPkgId(props.packageId);
-
-      try {
-        const values = merger(
-          await $RefParser.dereference(schema, {
-            continueOnError: true,
-            dereference: {
-              circular: true,
-            },
-          })
-        );
-        setValuesSchema(values);
-      } catch (err) {
-        setValuesSchema(schema);
-      }
+      setValuesSchema(await enrichValuesSchema(schema));
       setIsLoading(false);
       setOpenStatus(true);
     } catch {

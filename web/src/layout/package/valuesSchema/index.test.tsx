@@ -208,6 +208,7 @@ describe('ValuesSchema', () => {
       expect(screen.getAllByText(/\[\]/g)).toHaveLength(2);
     });
 
+    // cmak
     it('renders complex full JSON', async () => {
       const mockValuesSchema = getMockValuesSchema('9');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
@@ -323,6 +324,69 @@ describe('ValuesSchema', () => {
       expect(screen.getAllByText('boolean')).toHaveLength(17);
       expect(screen.getAllByText('integer')).toHaveLength(8);
       expect(screen.getAllByRole('combobox', { name: 'Type selection' })).toHaveLength(8);
+    });
+
+    // core-dump-handler
+    it('resolve JSON schema with refs - first level', async () => {
+      const mockValuesSchema = getMockValuesSchema('11');
+      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+
+      render(<ValuesSchema {...defaultProps} />);
+
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+        expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      expect(await screen.findByText('Values schema reference')).toBeInTheDocument();
+
+      expect(screen.getByText('# CoreDumpValues')).toBeInTheDocument();
+      expect(screen.getByText('# Image')).toBeInTheDocument();
+      expect(screen.getByText('image:')).toBeInTheDocument();
+      expect(screen.getByText('limit_cpu:')).toBeInTheDocument();
+      expect(screen.getByText('limit_mem:')).toBeInTheDocument();
+      expect(screen.getByText('pullPolicy:')).toBeInTheDocument();
+      expect(screen.getByText('repository:')).toBeInTheDocument();
+      expect(screen.getByText('request_cpu:')).toBeInTheDocument();
+      expect(screen.getByText('request_mem:')).toBeInTheDocument();
+      expect(screen.getByText('storage:')).toBeInTheDocument();
+      expect(screen.getAllByText('# Affinity')).toHaveLength(3);
+      expect(screen.getByText('affinity:')).toBeInTheDocument();
+      expect(screen.getByText('# Daemonset')).toBeInTheDocument();
+      expect(screen.getByText('daemonset:')).toBeInTheDocument();
+      expect(screen.getAllByText('name:')).toHaveLength(4);
+      expect(screen.getByText('label:')).toBeInTheDocument();
+      expect(screen.getByText('vendor:')).toBeInTheDocument();
+      expect(screen.getByText('interval:')).toBeInTheDocument();
+      expect(screen.getByText('s3Region:')).toBeInTheDocument();
+      expect(screen.getByText('s3Secret:')).toBeInTheDocument();
+      expect(screen.getByText('s3AccessKey:')).toBeInTheDocument();
+      expect(screen.getByText('extraEnvVars:')).toBeInTheDocument();
+      expect(screen.getByText('s3BucketName:')).toBeInTheDocument();
+      expect(screen.getByText('suidDumpable:')).toBeInTheDocument();
+      expect(screen.getByText('hostDirectory:')).toBeInTheDocument();
+      expect(screen.getByText('includeCrioExe:')).toBeInTheDocument();
+      expect(screen.getByText('DeployCrioConfig:')).toBeInTheDocument();
+      expect(screen.getByText('composerLogLevel:')).toBeInTheDocument();
+      expect(screen.getByText('manageStoreSecret:')).toBeInTheDocument();
+      expect(screen.getByText('composerIgnoreCrio:')).toBeInTheDocument();
+      expect(screen.getByText('composerCrioImageCmd:')).toBeInTheDocument();
+      expect(screen.getAllByText('# ClusterRole')).toHaveLength(2);
+      expect(screen.getByText('clusterRole:')).toBeInTheDocument();
+      expect(screen.getByText('tolerations:')).toBeInTheDocument();
+      expect(screen.getByText('nameOverride:')).toBeInTheDocument();
+      expect(screen.getByText('nodeSelector:')).toBeInTheDocument();
+      expect(screen.getByText('replicaCount:')).toBeInTheDocument();
+      expect(screen.getByText('storageClass:')).toBeInTheDocument();
+      expect(screen.getByText('# ServiceAccount')).toBeInTheDocument();
+      expect(screen.getByText('serviceAccount:')).toBeInTheDocument();
+      expect(screen.getByText('create:')).toBeInTheDocument();
+      expect(screen.getByText('fullnameOverride:')).toBeInTheDocument();
+      expect(screen.getByText('imagePullSecrets:')).toBeInTheDocument();
+      expect(screen.getByText('clusterRoleBinding:')).toBeInTheDocument();
     });
 
     it('closes modal when a new pkg is open', async () => {
