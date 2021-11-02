@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Artifact Hub
   description: "Find, install and publish Kubernetes packages"
-  version: 1.3.0
+  version: 1.4.0
   contact:
     name: Artifact Hub support
     url: https://cloud-native.slack.com/channels/artifact-hub
@@ -1726,7 +1726,7 @@ paths:
     get:
       tags:
         - Packages
-      summary:  Get a summary of which of the organizations the user belongs to are using the package in production
+      summary: Get a summary of which of the organizations the user belongs to are using the package in production
       description: Get a summary of which of the organizations the user belongs to are using the package in production
       operationId: getProductionUsage
       parameters:
