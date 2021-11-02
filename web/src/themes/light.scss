@@ -46,9 +46,18 @@
     color: #f8f9fa !important;
   }
 
+  .textLighter {
+    color: var(--white) !important;
+  }
+
   a.textLight:hover,
   a.textLight:focus {
     color: var(--color-1-200) !important;
+  }
+
+  a.textLighter:hover,
+  a.textLighter:focus {
+    color: #f8f9fa !important;
   }
 
   .dropdown-item {

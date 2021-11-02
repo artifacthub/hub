@@ -77,6 +77,11 @@
     background-color: var(--highlighted);
   }
 
+  .table th {
+    // This color has to be solid (not opacity) due to scrollable tables
+    background-color: var(--code-bg-md);
+  }
+
   .table {
     background-color: var(--color-1-700) !important;
     border-top: var(--border-md) !important;
@@ -287,6 +292,10 @@
 
   .textLight {
     color: $font-color-light !important;
+  }
+
+  .textLighter {
+    color: white !important;
   }
 
   .text-primary,

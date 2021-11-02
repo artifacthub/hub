@@ -169,7 +169,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                       class="d-flex flex-row"
                     >
                       <div
-                        class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
+                        class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar inputWrapper"
                       >
                         <div
                           class="d-none d-sm-flex align-items-center iconWrapper"

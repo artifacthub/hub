@@ -16,7 +16,9 @@ const ProductionBadge = (props: Props) => {
     <ElementWithTooltip
       className={props.className}
       element={<Label text="In Production" icon={<MdBusiness />} iconLegend={props.productionOrganizationsCount} />}
-      tooltipMessage={`${props.productionOrganizationsCount} organizations are using this package in production`}
+      tooltipMessage={`${props.productionOrganizationsCount} ${
+        props.productionOrganizationsCount === 1 ? 'organization is' : 'organizations are'
+      } using this package in production`}
       active
       visibleTooltip
     />

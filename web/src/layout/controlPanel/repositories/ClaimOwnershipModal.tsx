@@ -178,10 +178,10 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
             to add a{' '}
             <ExternalLink
               href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
-              className="text-reset"
+              className="text-primary font-weight-bold"
               label="Open documentation"
             >
-              <u>metadata file</u>
+              metadata file
             </ExternalLink>{' '}
             to your repository and include yourself (or the person who will do the request) as an owner. This will be
             checked during the ownership claim process. Please make sure the email used in the metatata file matches

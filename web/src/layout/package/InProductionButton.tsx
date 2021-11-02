@@ -218,7 +218,7 @@ const InProductionButton = (props: Props) => {
                         <div className="d-flex flex-row align-items-center">
                           <div className="mr-2">
                             <div
-                              className={`d-flex align-items-center justify-content-center ${styles.imageWrapper} imageWrapper`}
+                              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
                             >
                               <Image
                                 alt={org.displayName || org.name}

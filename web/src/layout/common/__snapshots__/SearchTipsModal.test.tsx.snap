@@ -68,7 +68,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Use 
                   <span
-                    class="font-weight-bold"
+                    class="font-weight-semibold"
                   >
                     multiple words
                   </span>
@@ -94,7 +94,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Use 
                   <span
-                    class="font-weight-bold"
+                    class="font-weight-semibold"
                   >
                     -
                   </span>
@@ -120,7 +120,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Put a phrase inside 
                   <span
-                    class="font-weight-bold"
+                    class="font-weight-semibold"
                   >
                     double quotes
                   </span>
@@ -146,7 +146,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Use 
                   <span
-                    class="font-weight-bold"
+                    class="font-weight-semibold"
                   >
                     or
                   </span>

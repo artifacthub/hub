@@ -51,16 +51,14 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                   Before claiming a repository ownership, we need to verify that you actually own it. To prove that, you need to add a 
                   <a
                     aria-label="Open documentation"
-                    class="link text-reset"
+                    class="link text-primary font-weight-bold"
                     href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
                     rel="noopener noreferrer"
                     role="button"
                     tabindex="-1"
                     target="_blank"
                   >
-                    <u>
-                      metadata file
-                    </u>
+                    metadata file
                   </a>
                    to your repository and include yourself (or the person who will do the request) as an owner. This will be checked during the ownership claim process. Please make sure the email used in the metatata file matches with the one you use in .
                 </p>
@@ -91,7 +89,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                           class="d-flex flex-row"
                         >
                           <div
-                            class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
+                            class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar inputWrapper"
                           >
                             <div
                               class="d-none d-sm-flex align-items-center iconWrapper"
