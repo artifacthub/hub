@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.3.1-7
-appVersion: 1.3.0
+version: 1.4.0
+appVersion: 1.4.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -34,43 +34,47 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for Tekton pipelines
+      description: List of organizations using a package in production
     - kind: added
-      description: Versions index to changelog modal
+      description: Packages last year activity view
     - kind: added
-      description: Allow publishers to include screenshots in packages
+      description: Applied search filters used are now highlighted in the top bar
     - kind: added
-      description: Repository metadata file is now supported in Helm OCI repositories
+      description: Publisher provided link to report issues with their content
     - kind: added
-      description: Support for provenance files in Helm OCI repositories
+      description: Endpoint to generate a changelog in markdown format
     - kind: added
-      description: Changes annotation is now available for Krew plugins kind
+      description: Links to specific targets and images in security report
     - kind: added
-      description: Option to show/hide stars in widget
+      description: Allow zooming in and out of screenshots images
     - kind: added
-      description: Link Helm charts dependencies to packages in the hub
+      description: Allow using any host on git based repositories urls
     - kind: added
-      description: API endpoint for helm-exporter tool
+      description: Liveness and readiness probe to hub deployment
     - kind: changed
-      description: Improve Helm OCI support (include HIP 6 changes)
+      description: Artifact Hub Helm chart now requires k8s version >=1.19
     - kind: changed
-      description: Improve packages search results facets
+      description: Versions released more than 1 year ago are not scanned anymore
     - kind: changed
-      description: Bump Trivy to 0.20.0
+      description: Bump Trivy to 0.20.2
     - kind: changed
       description: Upgrade backend and frontend dependencies
+    - kind: fixed
+      description: Issue handling $ref in schema top level object
+    - kind: fixed
+      description: Issue extracting containers images from Helm charts
     - kind: fixed
       description: Some bugs and other improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.3.0
+      image: artifacthub/db-migrator:v1.4.0
     - name: hub
-      image: artifacthub/hub:v1.3.0
+      image: artifacthub/hub:v1.4.0
     - name: tracker
-      image: artifacthub/tracker:v1.3.0
+      image: artifacthub/tracker:v1.4.0
     - name: scanner
-      image: artifacthub/scanner:v1.3.0
+      image: artifacthub/scanner:v1.4.0
     - name: trivy
       image: aquasec/trivy:0.20.2
   artifacthub.io/links: |
