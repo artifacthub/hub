@@ -41,7 +41,6 @@ const markdownMock = `
 
 ### Added
 
-- Support for Tekton pipelines
 - Versions index to changelog modal
 - Allow publishers to include screenshots in packages
 - Repository metadata file is now supported in Helm OCI repositories
@@ -267,6 +266,25 @@ describe('ChangelogModal', () => {
       });
 
       expect(screen.getByText('Pre-release')).toBeInTheDocument();
+    });
+
+    it('calls again to getChangelog to render a different version', async () => {
+      const mockChangelog = getMockChangelog('9');
+      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+
+      const { rerender } = render(<ChangelogModal {...defaultProps} visibleVersion="0.4.0" visibleChangelog />);
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+      });
+
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+      rerender(<ChangelogModal {...defaultProps} currentVersion="0.6.0" visibleChangelog />);
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(2);
+      });
     });
 
     it('calls getChangelogMD', async () => {
