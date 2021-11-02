@@ -3,14 +3,14 @@
 exports[`Group creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="sc-giImIA fFGSwi"
+    class="sc-giYglK cWOzih"
     data-testid="wrapper"
   >
     <div
-      class="sc-bdfBQB kZEkSl"
+      class="sc-bdvvtL ecgWzc"
     >
       <div
-        class="sc-gsTEea igekio size-lg"
+        class="sc-gsDKAQ hyYkGM size-lg"
         role="status"
       />
     </div>
