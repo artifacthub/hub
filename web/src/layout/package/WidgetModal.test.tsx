@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -18,6 +18,8 @@ jest.mock('react-router-dom', () => ({
     replace: mockHistoryReplace,
   }),
 }));
+
+jest.mock('react-syntax-highlighter', () => (props: any) => <div>{props.children}</div>);
 
 const defaultProps = {
   packageId: 'id',
@@ -61,17 +63,6 @@ describe('WidgetModal', () => {
       expect(screen.getByTestId('block-content')).toHaveTextContent(
         '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
-
-      waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
-          search: '?modal=widget',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
-      });
     });
 
     it('when not white label', () => {
@@ -98,7 +89,7 @@ describe('WidgetModal', () => {
       userEvent.click(screen.getByText('Responsive'));
 
       expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="dark" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="dark" data-header="true" data-stars="true" data-responsive="true"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
     });
   });

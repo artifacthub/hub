@@ -811,11 +811,9 @@ describe('WebhookForm', () => {
 
         rerender(component);
 
-        // await waitFor(() => {
         expect(
           await screen.findByText('An error occurred testing the webhook, please try again later.')
         ).toBeInTheDocument();
-        // });
       });
     });
   });

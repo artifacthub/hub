@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -12,6 +12,8 @@ jest.mock('react-router-dom', () => ({
     replace: mockHistoryReplace,
   }),
 }));
+
+jest.mock('react-syntax-highlighter', () => () => <div>content</div>);
 
 const defaultProps = {
   manifestRaw:
@@ -43,22 +45,19 @@ describe('TektonManifestModal', () => {
       expect(container).toBeEmptyDOMElement();
     });
 
-    it('opens manifest modal', () => {
+    it('opens manifest modal', async () => {
       render(<TektonManifestModal {...defaultProps} />);
 
-      const modal = screen.queryByRole('dialog');
-      expect(modal).toBeNull();
+      expect(screen.queryByRole('dialog')).toBeNull();
 
       const btn = screen.getByRole('button', { name: 'Open Manifest' });
       userEvent.click(btn);
 
-      waitFor(() => {
-        expect(modal).toBeInTheDocument();
-        expect(screen.getAllByText('Manifest')).toHaveLength(2);
-        expect(screen.getByText(/apiVersion: tekton.dev\/11abetv/g)).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
-      });
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
+      expect(screen.getAllByText('Manifest')).toHaveLength(2);
+      expect(screen.getByText('content')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
     });
 
     it('renders open modal', async () => {

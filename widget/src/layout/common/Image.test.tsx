@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { RepositoryKind } from '../../types';
@@ -130,16 +130,16 @@ describe('Image', () => {
       expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/package_placeholder.svg');
     });
 
-    it('on image error', () => {
+    it('on image error', async () => {
       render(<Image {...defaultProps} imageId="imgID" />);
       const image = screen.getByAltText(defaultProps.alt);
-      expect(image).toHaveProperty('src', 'https://localhost:8000/image/imgID');
+      expect(screen.getByAltText(defaultProps.alt)).toHaveProperty('src', 'https://localhost:8000/image/imgID');
 
       fireEvent.error(image);
 
-      waitFor(() => {
-        expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
-      });
+      const placeholder = await screen.findByTestId('placeholderImg');
+      expect(placeholder).toBeInTheDocument();
+      expect(placeholder).toHaveProperty('src', 'https://localhost:8000/static/media/package_placeholder.svg');
     });
   });
 });

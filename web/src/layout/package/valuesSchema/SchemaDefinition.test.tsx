@@ -252,7 +252,7 @@ describe('SchemaDefinition', () => {
       );
     });
 
-    it('updates combinationType', () => {
+    it('updates combinationType', async () => {
       const props = getProps('12a');
       const { rerender } = render(<SchemaDefinition {...props} {...defaultProps} />);
 
@@ -261,8 +261,8 @@ describe('SchemaDefinition', () => {
       const updatedProps = getProps('12b');
       rerender(<SchemaDefinition {...updatedProps} {...defaultProps} />);
 
-      waitFor(() => {
-        expect(screen.findByText('Raw')).toBeNull();
+      await waitFor(() => {
+        expect(screen.queryByText('Raw')).toBeNull();
       });
     });
 

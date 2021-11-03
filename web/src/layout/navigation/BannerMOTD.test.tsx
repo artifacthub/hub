@@ -84,7 +84,7 @@ describe('BannerMOTD', () => {
       expect(alert).toHaveClass('dangerAlert alert-danger');
     });
 
-    it('closes alert', () => {
+    it('closes alert', async () => {
       Object.defineProperty(document, 'querySelector', {
         value: (selector: any) => {
           switch (selector) {
@@ -107,7 +107,7 @@ describe('BannerMOTD', () => {
       const btn = screen.getByRole('button', { name: 'Close banner' });
       userEvent.click(btn);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(container).toBeEmptyDOMElement();
       });
     });

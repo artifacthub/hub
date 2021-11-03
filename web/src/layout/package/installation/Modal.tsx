@@ -60,12 +60,13 @@ const InstallationModal = (props: Props) => {
   useEffect(() => {
     if (openStatus) {
       setOpenStatus(false);
+    } else {
+      setInstallMethods(
+        getInstallMethods({
+          pkg: props.package,
+        })
+      );
     }
-    setInstallMethods(
-      getInstallMethods({
-        pkg: props.package,
-      })
-    );
   }, [props.package]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {

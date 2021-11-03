@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -36,7 +36,7 @@ describe('ContainersImages', () => {
       expect(containers).toHaveLength(mockContainers.length);
     });
 
-    it('renders 3 images max + see all modal', () => {
+    it('renders 3 images max + see all modal', async () => {
       const mockContainers = getMockImages('3');
       render(<ContainersImages containers={mockContainers} {...defaultProps} />);
 
@@ -46,10 +46,10 @@ describe('ContainersImages', () => {
       const btn = screen.getByRole('button', { name: 'See all entries' });
       userEvent.click(btn);
 
-      waitFor(() => {
-        expect(screen.getAllByTestId('containerImageItem')).toHaveLength(50);
-        expect(screen.getByText('Title')).toBeInTheDocument();
-      });
+      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+
+      expect(screen.getAllByTestId('containerImageItem')).toHaveLength(25 * 2 + 5 + 3);
+      expect(screen.getAllByText('Containers Images')).toHaveLength(2);
     });
 
     it('does not render component when containers are undefined', () => {

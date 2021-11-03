@@ -184,7 +184,7 @@ describe('Transfer Repository Modal - packages section', () => {
           });
         });
 
-        waitFor(() => {
+        await waitFor(() => {
           expect(onSuccessMock).toHaveBeenCalledTimes(1);
         });
       });
@@ -225,7 +225,7 @@ describe('Transfer Repository Modal - packages section', () => {
           });
         });
 
-        waitFor(() => {
+        await waitFor(() => {
           expect(onSuccessMock).toHaveBeenCalledTimes(1);
         });
       });
@@ -260,7 +260,7 @@ describe('Transfer Repository Modal - packages section', () => {
           });
         });
 
-        waitFor(() => {
+        await waitFor(() => {
           expect(onSuccessMock).toHaveBeenCalledTimes(1);
         });
       });

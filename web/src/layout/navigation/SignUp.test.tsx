@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -40,15 +40,13 @@ describe('SignUp', () => {
       expect(screen.getByText('OpenID Connect')).toBeInTheDocument();
     });
 
-    it('renders create an account form to click Sign up button', () => {
+    it('renders create an account form to click Sign up button', async () => {
       render(<SignUp {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: 'Open sign up form' });
       userEvent.click(btn);
 
-      waitFor(() => {
-        expect(screen.getByTestId('createAnAccountForm')).toBeInTheDocument();
-      });
+      expect(await screen.findByTestId('createAnAccountForm')).toBeInTheDocument();
     });
   });
 });

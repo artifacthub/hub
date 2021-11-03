@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -43,7 +43,7 @@ describe('Tabs', () => {
     expect(screen.getByText('Content 1')).toBeInTheDocument();
   });
 
-  it('activates another tab', () => {
+  it('activates another tab', async () => {
     render(<Tabs {...defaultProps} />);
 
     expect(screen.getByText('Content 1')).toBeInTheDocument();
@@ -53,9 +53,7 @@ describe('Tabs', () => {
 
     userEvent.click(btns[2]);
 
-    waitFor(() => {
-      expect(btns[2]).toHaveClass('active');
-      expect(screen.getByText('Content 3')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('Content 3')).toBeInTheDocument();
+    expect(btns[2]).toHaveClass('active');
   });
 });

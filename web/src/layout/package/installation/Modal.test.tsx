@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { RepositoryKind } from '../../../types';
@@ -84,22 +84,14 @@ describe('HelmInstall', () => {
       });
     });
 
-    it('closes modal when a new pkg is open', () => {
+    it('closes modal when a new pkg is open', async () => {
       const { rerender } = render(<Modal {...defaultProps} />);
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
 
-      rerender(
-        <Modal
-          {...defaultProps}
-          package={{ ...defaultProps.package, packageId: 'id2' }}
-          visibleInstallationModal={false}
-        />
-      );
+      rerender(<Modal package={{ ...defaultProps.package, packageId: 'id2' }} visibleInstallationModal />);
 
-      waitFor(() => {
-        expect(screen.queryByRole('dialog')).toBeNull();
-      });
+      expect(await screen.findByRole('dialog')).not.toHaveClass('active d-block');
     });
   });
 });

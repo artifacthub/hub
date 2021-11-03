@@ -70,7 +70,13 @@ const Image = (props: Props) => {
       {error || isNull(props.imageId) || isUndefined(props.imageId) ? (
         <>
           {isUndefined(props.placeholderIcon) ? (
-            <img alt={props.alt} src={getPlaceholder()} className={props.className} aria-hidden="true" />
+            <img
+              data-testid="placeholderImg"
+              alt={props.alt}
+              src={getPlaceholder()}
+              className={props.className}
+              aria-hidden="true"
+            />
           ) : (
             <>{props.placeholderIcon}</>
           )}

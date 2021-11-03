@@ -49,13 +49,11 @@ describe('ResetPassword visibleTitle', () => {
         expect(API.requestPasswordResetCode).toHaveBeenCalledWith('test@email.com');
       });
 
-      waitFor(() => {
-        expect(
-          screen.getByText(
-            'We have sent a password reset link to your email, please check your inbox (and the spam folder if needed).'
-          )
-        ).toBeInTheDocument();
-      });
+      expect(
+        await screen.findByText(
+          'We have sent a password reset link to your email, please check your inbox (and the spam folder if needed).'
+        )
+      ).toBeInTheDocument();
     });
 
     it('calls onFinish after requesting code if defined', async () => {

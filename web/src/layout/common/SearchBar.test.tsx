@@ -161,9 +161,7 @@ describe('SearchBar', () => {
       const icon = screen.getByTestId('searchBarIcon');
       userEvent.click(icon);
 
-      waitFor(() => {
-        expect(screen.getByPlaceholderText('Search packages')).toHaveFocus();
-      });
+      expect(screen.getByPlaceholderText('Search packages')).toHaveFocus();
     });
   });
 });

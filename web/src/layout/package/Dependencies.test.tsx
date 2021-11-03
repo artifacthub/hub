@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -39,7 +39,7 @@ describe('Dependencies', () => {
       expect(dependencies[1]).toHaveTextContent(`${mockDependencies[1].name}@${mockDependencies[1].version}`);
     });
 
-    it('renders 3 dependencies max + see all modal', () => {
+    it('renders 3 dependencies max + see all modal', async () => {
       const mockDependencies = getMockDependencies('3');
       render(<Dependencies dependencies={mockDependencies} {...defaultProps} />);
 
@@ -49,10 +49,10 @@ describe('Dependencies', () => {
       const btn = screen.getByRole('button', { name: 'See all entries' });
       userEvent.click(btn);
 
-      waitFor(() => {
-        expect(screen.getByText('Title'));
-        expect(screen.getAllByTestId('dependencyItem')).toHaveLength(7);
-      });
+      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+
+      expect(screen.getAllByText('Dependencies')).toHaveLength(2);
+      expect(screen.getAllByTestId('dependencyItem')).toHaveLength(15);
     });
 
     it('does not render component when dependencies are undefined', () => {

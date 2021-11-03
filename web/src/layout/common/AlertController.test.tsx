@@ -1,10 +1,8 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import alertDispatcher from '../../utils/alertDispatcher';
 import AlertController from './AlertController';
-jest.mock('../../utils/alertDispatcher');
 
 describe('AlertController', () => {
   afterEach(() => {
@@ -25,69 +23,50 @@ describe('AlertController', () => {
     expect(component).toHaveClass('fade');
   });
 
-  it('closes alert to click close button', () => {
+  it('renders warning alert', async () => {
     render(<AlertController />);
 
-    alertDispatcher.postAlert({
-      type: 'warning',
-      message: 'alert',
+    expect(screen.getByTestId('alertController')).not.toHaveClass('show active');
+
+    act(() => {
+      alertDispatcher.postAlert({
+        type: 'warning',
+        message: 'This is a warning alert',
+      });
     });
 
-    waitFor(() => {
-      userEvent.click(screen.getByText('×'));
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith(null);
-    });
+    expect(await screen.findByTestId('alertController')).toHaveClass('show active');
+    expect(screen.getByTestId('alertController')).toHaveClass('alert-warning');
+    expect(screen.getByText('This is a warning alert'));
   });
 
-  it('renders warning alert', () => {
+  it('renders success alert', async () => {
     render(<AlertController />);
 
-    alertDispatcher.postAlert({
-      type: 'warning',
-      message: 'This is a warning alert',
+    act(() => {
+      alertDispatcher.postAlert({
+        type: 'success',
+        message: 'This is a success alert',
+      });
     });
 
-    waitFor(() => {
-      const component = screen.getByTestId('alertController');
-      expect(component).toHaveClass('alert-warning');
-      expect(component).toHaveClass('show active');
-
-      expect(screen.getByText('This is a warning alert'));
-    });
+    expect(await screen.findByTestId('alertController')).toHaveClass('show active');
+    expect(screen.getByTestId('alertController')).toHaveClass('alert-success');
+    expect(screen.getByText('This is a success alert'));
   });
 
-  it('renders success alert', () => {
+  it('renders danger alert', async () => {
     render(<AlertController />);
 
-    alertDispatcher.postAlert({
-      type: 'success',
-      message: 'This is a success alert',
+    act(() => {
+      alertDispatcher.postAlert({
+        type: 'danger',
+        message: 'This is a danger alert',
+      });
     });
 
-    waitFor(() => {
-      const component = screen.getByTestId('alertController');
-      expect(component).toHaveClass('alert-success');
-      expect(component).toHaveClass('show active');
-
-      expect(screen.getByText('This is a success alert'));
-    });
-  });
-
-  it('renders danger alert', () => {
-    render(<AlertController />);
-
-    alertDispatcher.postAlert({
-      type: 'danger',
-      message: 'This is a danger alert',
-    });
-
-    waitFor(() => {
-      const component = screen.getByTestId('alertController');
-      expect(component).toHaveClass('alert-danger');
-      expect(component).toHaveClass('show active');
-
-      expect(screen.getByText('This is a danger alert'));
-    });
+    expect(await screen.findByTestId('alertController')).toHaveClass('show active');
+    expect(screen.getByTestId('alertController')).toHaveClass('alert-danger');
+    expect(screen.getByText('This is a danger alert'));
   });
 });

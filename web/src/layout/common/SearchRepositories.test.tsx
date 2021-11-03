@@ -148,9 +148,7 @@ describe('SearchRepositories', () => {
       const icon = screen.getByTestId('searchBarIcon');
       userEvent.click(icon);
 
-      waitFor(() => {
-        expect(screen.getByRole('textbox', { name: 'Search repositories' })).toHaveFocus();
-      });
+      expect(screen.getByRole('textbox', { name: 'Search repositories' })).toHaveFocus();
     });
   });
 });

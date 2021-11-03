@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -74,7 +74,7 @@ describe('ScreenshotsModal', () => {
       expect(screen.getByText('Packages search')).toBeInTheDocument();
     });
 
-    it('renders component', () => {
+    it('renders component', async () => {
       render(
         <Router>
           <ScreenshotsModal {...defaultProps} visibleScreenshotsModal={false} />
@@ -85,12 +85,7 @@ describe('ScreenshotsModal', () => {
       expect(btn).toBeInTheDocument();
       userEvent.click(btn);
 
-      waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({});
-      });
-
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getByText('Home page')).toBeInTheDocument();
 
       const prevBtn = screen.getByRole('button', { name: 'Go to previous screenshot' });

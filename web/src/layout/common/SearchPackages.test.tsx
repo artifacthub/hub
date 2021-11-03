@@ -122,9 +122,11 @@ describe('SearchPackages', () => {
       expect(mockOnSelection).toHaveBeenCalledTimes(0);
     });
 
-    it('cleans packages list after changing filled input', async () => {
+    it('calls again searchPackages', async () => {
       const mockSearch = getMockSearch('3');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      mocked(API)
+        .searchPackages.mockResolvedValue({ packages: [], facets: [], paginationTotalCount: '0' })
+        .mockResolvedValueOnce(mockSearch);
 
       render(<SearchPackages {...defaultProps} />);
 
@@ -142,9 +144,13 @@ describe('SearchPackages', () => {
 
       userEvent.type(input, '1{enter}');
 
-      waitFor(() => {
-        expect(screen.getAllByTestId('packageItem')).toHaveLength(0);
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(2);
       });
+
+      expect(
+        await screen.findByText(/We can't seem to find any packages that match your search for/)
+      ).toBeInTheDocument();
     });
   });
 });

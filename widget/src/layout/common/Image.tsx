@@ -64,7 +64,7 @@ const Image = (props: Props) => {
       {error || isNull(props.imageId) || isUndefined(props.imageId) ? (
         <>
           {isUndefined(props.placeholderIcon) ? (
-            <StyledImage alt={props.alt} src={`${props.baseUrl}${getPlaceholder()}`} />
+            <StyledImage data-testid="placeholderImg" alt={props.alt} src={`${props.baseUrl}${getPlaceholder()}`} />
           ) : (
             <>{props.placeholderIcon}</>
           )}

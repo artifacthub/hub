@@ -8,7 +8,6 @@ exports[`SubscriptionSwitch renders correctly 1`] = `
     <input
       class="custom-control-input checkbox"
       data-testid="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4_input"
-      disabled=""
       id="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4"
       type="checkbox"
     />

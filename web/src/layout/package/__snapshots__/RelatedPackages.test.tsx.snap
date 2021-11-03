@@ -158,6 +158,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                     alt="Logo kafka"
                     aria-hidden="true"
                     class="image"
+                    data-testid="placeholderImg"
                     src="/static/media/placeholder_pkg_helm.png"
                   />
                 </div>
@@ -687,6 +688,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                     alt="Logo schema-registry"
                     aria-hidden="true"
                     class="image"
+                    data-testid="placeholderImg"
                     src="/static/media/placeholder_pkg_helm.png"
                   />
                 </div>

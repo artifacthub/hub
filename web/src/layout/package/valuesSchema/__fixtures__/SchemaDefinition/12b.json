@@ -3,20 +3,15 @@
     "active": 0,
     "combinationType": "anyOf",
     "options": [
+      { "type": "string" },
       {
-        "anyOf": [
-          { "type": "string" },
-          {
-            "type": "object",
-            "title": "_StringSource",
-            "required": ["env"],
-            "properties": { "env": { "type": "string", "title": "Env" } },
-            "additionalProperties": false
-          },
-          { "type": "null" }
-        ],
-        "title": "Localdir"
-      }
+        "type": "object",
+        "title": "_StringSource",
+        "required": ["env"],
+        "properties": { "env": { "type": "string", "title": "Env" } },
+        "additionalProperties": false
+      },
+      { "type": "null" }
     ],
     "error": false
   },

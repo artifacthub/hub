@@ -19,7 +19,7 @@ const defaultProps = {
     official: false,
     userAlias: 'user1',
   },
-  enabled: false,
+  enabled: true,
   changeSubscription: changeSubscriptionMock,
 };
 
@@ -65,16 +65,21 @@ describe('SubscriptionSwitch', () => {
       expect(checkbox).toBeChecked();
     });
 
-    it('calls change subscription', () => {
+    it('calls change subscription', async () => {
       render(<SubscriptionSwitch {...defaultProps} />);
+
+      const checkbox = screen.getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`);
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox).not.toBeChecked();
+      expect(checkbox).toBeEnabled();
 
       const label = screen.getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_label`);
       expect(label).toBeInTheDocument();
       userEvent.click(label);
 
-      waitFor(() => {
-        expect(screen.getByRole('status')).toBeInTheDocument();
-        expect(screen.getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_input`)).toBeEnabled();
+      expect(await screen.findByRole('status')).toBeInTheDocument();
+
+      await waitFor(() => {
         expect(changeSubscriptionMock).toHaveBeenCalledTimes(1);
       });
     });
