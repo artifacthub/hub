@@ -455,28 +455,43 @@ func TestTrackerSource(t *testing.T) {
 }
 
 func TestExtractContainersImages(t *testing.T) {
-	t.Parallel()
+	t.Run("valid chart", func(t *testing.T) {
+		t.Parallel()
 
-	// Read test chart
-	f, err := os.Open("testdata/artifact-hub-0.19.0.tgz")
-	require.NoError(t, err)
-	chart, err := loader.LoadArchive(f)
-	require.NoError(t, err)
+		// Read test chart
+		f, err := os.Open("testdata/artifact-hub-0.19.0.tgz")
+		require.NoError(t, err)
+		chrt, err := loader.LoadArchive(f)
+		require.NoError(t, err)
 
-	// Extract container images and check expectations
-	containersImages, err := extractContainersImages(chart)
-	require.NoError(t, err)
-	assert.Equal(t, []string{
-		"postgres:12",
-		"bitnami/kubectl:1.20",
-		"artifacthub/hub:v0.19.0",
-		"aquasec/trivy:0.16.0",
-		"docker.io/bitnami/minideb:stretch",
-		"docker.io/postgres:12",
-		"artifacthub/db-migrator:v0.19.0",
-		"artifacthub/scanner:v0.19.0",
-		"artifacthub/tracker:v0.19.0",
-	}, containersImages)
+		// Extract container images and check expectations
+		containersImages, err := extractContainersImages(chrt)
+		require.NoError(t, err)
+		assert.Equal(t, []string{
+			"postgres:12",
+			"bitnami/kubectl:1.20",
+			"artifacthub/hub:v0.19.0",
+			"aquasec/trivy:0.16.0",
+			"docker.io/bitnami/minideb:stretch",
+			"docker.io/postgres:12",
+			"artifacthub/db-migrator:v0.19.0",
+			"artifacthub/scanner:v0.19.0",
+			"artifacthub/tracker:v0.19.0",
+		}, containersImages)
+	})
+
+	t.Run("panic running helm dry-run install", func(t *testing.T) {
+		t.Parallel()
+
+		chrt := &chart.Chart{
+			Values: map[string]interface{}{},
+		}
+
+		containersImages, err := extractContainersImages(chrt)
+		assert.Nil(t, containersImages)
+		assert.Error(t, err)
+		assert.True(t, strings.HasPrefix(err.Error(), "panic running helm dry-run install"))
+	})
 }
 
 func TestEnrichPackageFromAnnotations(t *testing.T) {

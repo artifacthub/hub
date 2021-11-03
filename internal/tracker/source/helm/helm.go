@@ -520,7 +520,13 @@ func EnrichPackageFromChart(p *hub.Package, chrt *chart.Chart) {
 // extractContainersImages extracts the containers images references found in
 // the manifest generated as a result of Helm dry-run install with the default
 // values.
-func extractContainersImages(chrt *chart.Chart) ([]string, error) {
+func extractContainersImages(chrt *chart.Chart) (images []string, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = fmt.Errorf("panic running helm dry-run install: %v", r)
+		}
+	}()
+
 	// Dry-run Helm install
 	install := action.NewInstall(&action.Configuration{
 		Log: func(string, ...interface{}) {},
@@ -538,7 +544,6 @@ func extractContainersImages(chrt *chart.Chart) ([]string, error) {
 	}
 
 	// Extract containers images from release manifest
-	var images []string
 	s := bufio.NewScanner(strings.NewReader(release.Manifest))
 	for s.Scan() {
 		result := containersImagesRE.FindStringSubmatch(s.Text())
