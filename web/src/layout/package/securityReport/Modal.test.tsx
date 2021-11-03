@@ -186,13 +186,11 @@ describe('SecurityModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
 
-      waitFor(() => {
-        expect(screen.getByText('ID')).toBeInTheDocument();
-        expect(screen.getByText('Severity')).toBeInTheDocument();
-        expect(screen.getByText('Package')).toBeInTheDocument();
-        expect(screen.getByText('Version')).toBeInTheDocument();
-        expect(screen.getByText('Fixed in')).toBeInTheDocument();
-      });
+      expect(screen.getByText('ID')).toBeInTheDocument();
+      expect(screen.getByText('Severity')).toBeInTheDocument();
+      expect(screen.getByText('Package')).toBeInTheDocument();
+      expect(screen.getByText('Version')).toBeInTheDocument();
+      expect(screen.getByText('Fixed in')).toBeInTheDocument();
     });
 
     it('does not activate target when report has only one image and one target, but not vulnerabilities', async () => {
@@ -209,13 +207,9 @@ describe('SecurityModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
 
-      waitFor(() => {
-        expect(screen.queryByText('ID')).toBeNull();
-        expect(screen.queryByText('Severity')).toBeNull();
-        expect(screen.queryByText('Package')).toBeNull();
-        expect(screen.queryByText('Version')).toBeNull();
-        expect(screen.queryByText('Fixed in')).toBeNull();
-      });
+      expect(
+        screen.queryByText('No vulnerabilities have been detected in the default images used by this package.')
+      ).toBeNull();
     });
 
     it('opens modal', async () => {

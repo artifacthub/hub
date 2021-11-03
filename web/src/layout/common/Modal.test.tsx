@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -56,7 +56,7 @@ describe('Modal', () => {
     expect(screen.getByText('api error')).toBeInTheDocument();
   });
 
-  it('opens Modal to click Open Modal btn', () => {
+  it('opens Modal to click Open Modal btn', async () => {
     render(<Modal {...defaultProps} buttonContent="Open modal" open={false} />);
 
     const modal = screen.getByRole('dialog');
@@ -65,9 +65,7 @@ describe('Modal', () => {
 
     userEvent.click(btn);
 
-    waitFor(() => {
-      expect(modal).toHaveClass('active d-block');
-    });
+    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
   });
 
   it('calls cleanErrorMock to click close button when error is not null', () => {

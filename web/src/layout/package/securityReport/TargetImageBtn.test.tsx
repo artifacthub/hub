@@ -37,43 +37,43 @@ describe('TargetImageBtn', () => {
       expect(screen.getByText('content')).toBeInTheDocument();
     });
 
-    it('calls onClick', () => {
+    it('calls onClick', async () => {
       render(<TargetImageBtn {...defaultProps} />);
 
       const btn = screen.getByRole('button');
       userEvent.click(btn);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(onClickMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    it('scrolls into view when target is active', () => {
+    it('scrolls into view when target is active', async () => {
       const { rerender } = render(<TargetImageBtn {...defaultProps} isActive={false} />);
 
       rerender(<TargetImageBtn {...defaultProps} isActive={true} />);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    it('scrolls into view when target is expanded', () => {
+    it('scrolls into view when target is expanded', async () => {
       const { rerender } = render(<TargetImageBtn {...defaultProps} isActive={false} />);
 
       rerender(<TargetImageBtn {...defaultProps} isExpanded={true} />);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    it('does not scrolls into view when target is expanded but is only one', () => {
+    it('does not scrolls into view when target is expanded but is only one', async () => {
       const { rerender } = render(<TargetImageBtn {...defaultProps} isActive={false} hasOnlyOneTarget />);
 
       rerender(<TargetImageBtn {...defaultProps} isActive={true} hasOnlyOneTarget />);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(0);
       });
     });

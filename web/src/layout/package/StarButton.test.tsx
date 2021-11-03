@@ -85,10 +85,6 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledWith(defaultProps.packageId);
         });
 
-        waitFor(() => {
-          expect(screen.getByRole('status')).toBeInTheDocument();
-        });
-
         expect(screen.getByText('Star')).toBeInTheDocument();
         expect(screen.getAllByText('4')).toHaveLength(1);
         expect(screen.queryByRole('status')).toBeNull();
@@ -129,8 +125,6 @@ describe('StarButton', () => {
           expect(API.toggleStar).toHaveBeenCalledTimes(1);
           expect(API.toggleStar).toHaveBeenCalledWith(defaultProps.packageId);
         });
-
-        expect(screen.getByRole('status')).toBeInTheDocument();
       });
     });
 

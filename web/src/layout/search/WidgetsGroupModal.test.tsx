@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -80,7 +80,7 @@ describe('WidgetsGroupModal', () => {
       expect(screen.getByTestId('fixedWidthInput')).toBeInTheDocument();
     });
 
-    it('updates block content to change different options', () => {
+    it('updates block content to change different options', async () => {
       render(<WidgetsGroupModal {...defaultProps} />);
 
       expect(screen.getByTestId('block-content')).toHaveTextContent(
@@ -89,14 +89,11 @@ describe('WidgetsGroupModal', () => {
 
       userEvent.click(screen.getByText('fixed'));
       userEvent.click(screen.getByRole('checkbox', { name: /Loading spinner/ }));
+      userEvent.type(screen.getByTestId('fixedWidthInput'), '0');
 
-      userEvent.type(screen.getByRole('spinbutton'), '1800');
-
-      waitFor(() => {
-        expect(screen.getByTestId('block-content')).toHaveTextContent(
-          '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="false" data-width="1800" data-loading="false"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
-        );
-      });
+      expect(await screen.findByTestId('block-content')).toHaveTextContent(
+        '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="false" data-width="7600" data-loading="false"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+      );
     });
   });
 });

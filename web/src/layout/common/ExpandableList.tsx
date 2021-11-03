@@ -28,7 +28,7 @@ const ExpandableList = (props: Props) => {
     if (!isUndefined(props.open) && open !== props.open) {
       setOpenStatus(props.open);
     }
-  }, [props.open, open]);
+  }, [props.open]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (props.forceCollapseList && open) {

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import { RepositoryKind } from '../../types';
@@ -39,16 +39,16 @@ describe('Image', () => {
     expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
   });
 
-  it('renders placeholder on error', () => {
+  it('renders placeholder on error', async () => {
     render(<Image {...defaultProps} />);
     const image = screen.getByAltText(defaultProps.alt);
     expect(image).toHaveProperty('src', `http://localhost/image/${defaultProps.imageId}`);
 
     fireEvent.error(image);
 
-    waitFor(() => {
-      expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
-    });
+    const placeholder = await screen.findByTestId('placeholderImg');
+    expect(placeholder).toBeInTheDocument();
+    expect(placeholder).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
   });
 
   it('renders default placeholder when kind is undefined', () => {

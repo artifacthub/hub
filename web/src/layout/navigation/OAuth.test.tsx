@@ -50,16 +50,16 @@ describe('OAuth', () => {
       expect(screen.getByText('OpenID Connect')).toBeInTheDocument();
     });
 
-    it('goes to correct route on Github btn click', () => {
+    it('goes to correct route on Github btn click', async () => {
       render(<OAuth {...defaultProps} />);
 
       const btn = screen.getByText('Github');
       userEvent.click(btn);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
         expect(setIsLoadingMock).toHaveBeenCalledWith({
-          name: 'github',
+          type: 'github',
           status: true,
         });
       });
@@ -67,16 +67,16 @@ describe('OAuth', () => {
       expect(window.location.href).toBe('/oauth/github?redirect_url=%2Fcontrol-panel');
     });
 
-    it('goes to correct route on Google btn click', () => {
+    it('goes to correct route on Google btn click', async () => {
       render(<OAuth {...defaultProps} />);
 
       const btn = screen.getByText('Google');
       userEvent.click(btn);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
         expect(setIsLoadingMock).toHaveBeenCalledWith({
-          name: 'google',
+          type: 'google',
           status: true,
         });
       });
@@ -84,16 +84,16 @@ describe('OAuth', () => {
       expect(window.location.href).toBe('/oauth/google?redirect_url=%2Fcontrol-panel');
     });
 
-    it('goes to correct route on OpenID btn click', () => {
+    it('goes to correct route on OpenID btn click', async () => {
       render(<OAuth {...defaultProps} />);
 
       const btn = screen.getByText('OpenID Connect');
       userEvent.click(btn);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
         expect(setIsLoadingMock).toHaveBeenCalledWith({
-          name: 'oidc',
+          type: 'oidc',
           status: true,
         });
       });
@@ -101,7 +101,7 @@ describe('OAuth', () => {
       expect(window.location.href).toBe('/oauth/oidc?redirect_url=%2Fcontrol-panel');
     });
 
-    it('goes to correct route with querystring on btn click', () => {
+    it('goes to correct route with querystring on btn click', async () => {
       Object.defineProperty(window, 'location', {
         value: {
           href: 'http://localhost',
@@ -116,10 +116,10 @@ describe('OAuth', () => {
       const btn = screen.getByText('Github');
       userEvent.click(btn);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
         expect(setIsLoadingMock).toHaveBeenCalledWith({
-          name: 'github',
+          type: 'github',
           status: true,
         });
       });
@@ -129,7 +129,7 @@ describe('OAuth', () => {
       );
     });
 
-    it('goes to correct route without wrong querystring on btn click', () => {
+    it('goes to correct route without wrong querystring on btn click', async () => {
       Object.defineProperty(window, 'location', {
         value: {
           href: 'http://localhost',
@@ -144,10 +144,10 @@ describe('OAuth', () => {
       const btn = screen.getByText('Github');
       userEvent.click(btn);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
         expect(setIsLoadingMock).toHaveBeenCalledWith({
-          name: 'github',
+          type: 'github',
           status: true,
         });
       });

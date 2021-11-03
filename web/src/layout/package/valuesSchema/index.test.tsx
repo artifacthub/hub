@@ -107,12 +107,10 @@ describe('ValuesSchema', () => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
       });
 
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
       const close = screen.getByRole('button', { name: 'Close modal' });
       userEvent.click(close);
-
-      waitFor(() => {
-        expect(screen.queryByRole('dialog')).toBeNull();
-      });
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
       expect(mockHistoryReplace).toHaveBeenLastCalledWith({
@@ -122,6 +120,8 @@ describe('ValuesSchema', () => {
           searchUrlReferer: undefined,
         },
       });
+
+      expect(screen.queryByRole('dialog')).toBeNull();
     });
 
     it('calls again to getValuesSchema when version is different', async () => {
@@ -403,9 +403,7 @@ describe('ValuesSchema', () => {
 
       rerender(<ValuesSchema {...defaultProps} packageId="id2" />);
 
-      waitFor(() => {
-        expect(screen.queryByRole('dialog')).toBeNull();
-      });
+      expect(screen.queryByRole('dialog')).toBeNull();
     });
   });
 });
