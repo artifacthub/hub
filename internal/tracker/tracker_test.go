@@ -16,7 +16,6 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
-	"golang.org/x/time/rate"
 )
 
 func TestTracker(t *testing.T) {
@@ -487,16 +486,15 @@ func newServicesWrapper() *servicesWrapper {
 
 	// Setup tracker services using mocks
 	svc := &hub.TrackerServices{
-		Ctx:      context.Background(),
-		Cfg:      viper.New(),
-		Rm:       rm,
-		Pm:       pm,
-		Rc:       rc,
-		Oe:       oe,
-		Ec:       ec,
-		Hc:       hc,
-		Is:       is,
-		GithubRL: rate.NewLimiter(rate.Inf, 0),
+		Ctx: context.Background(),
+		Cfg: viper.New(),
+		Rm:  rm,
+		Pm:  pm,
+		Rc:  rc,
+		Oe:  oe,
+		Ec:  ec,
+		Hc:  hc,
+		Is:  is,
 		SetupTrackerSource: func(i *hub.TrackerSourceInput) hub.TrackerSource {
 			return src
 		},

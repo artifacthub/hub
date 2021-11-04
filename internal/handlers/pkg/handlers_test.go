@@ -30,7 +30,6 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	os.Setenv("TZ", "")
 	zerolog.SetGlobalLevel(zerolog.Disabled)
 	os.Exit(m.Run())
 }

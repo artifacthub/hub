@@ -6,7 +6,6 @@ import (
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
-	"golang.org/x/time/rate"
 )
 
 // TrackerServices represents a set of services that must be provided to a
@@ -22,7 +21,6 @@ type TrackerServices struct {
 	Hc                 HTTPClient
 	Op                 OCIPuller
 	Is                 img.Store
-	GithubRL           *rate.Limiter
 	SetupTrackerSource TrackerSourceLoader
 }
 
@@ -54,12 +52,11 @@ type TrackerSourceLoader func(i *TrackerSourceInput) TrackerSource
 // TrackerSourceServices represents a set of services that will be provided to
 // a TrackerSource instance so that it can perform its tasks.
 type TrackerSourceServices struct {
-	Ctx      context.Context
-	Cfg      *viper.Viper
-	Ec       ErrorsCollector
-	Hc       HTTPClient
-	Op       OCIPuller
-	Is       img.Store
-	Logger   zerolog.Logger
-	GithubRL *rate.Limiter
+	Ctx    context.Context
+	Cfg    *viper.Viper
+	Ec     ErrorsCollector
+	Hc     HTTPClient
+	Op     OCIPuller
+	Is     img.Store
+	Logger zerolog.Logger
 }

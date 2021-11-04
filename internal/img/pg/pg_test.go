@@ -21,7 +21,7 @@ func TestNewImageStore(t *testing.T) {
 	t.Parallel()
 	db := &tests.DBMock{}
 	hc := &tests.HTTPClientMock{}
-	s := NewImageStore(nil, db, hc, nil)
+	s := NewImageStore(nil, db, hc)
 
 	assert.IsType(t, &ImageStore{}, s)
 	assert.Equal(t, db, s.db)
@@ -48,7 +48,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 			Body:       ioutil.NopCloser(bytes.NewReader(svgImgData)),
 			StatusCode: http.StatusOK,
 		}, nil)
-		s := NewImageStore(cfg, db, hc, nil)
+		s := NewImageStore(cfg, db, hc)
 
 		imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
 		assert.Equal(t, nil, err)
@@ -63,7 +63,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		hc := &tests.HTTPClientMock{}
 		req, _ := http.NewRequest("GET", svgImgURL, nil)
 		hc.On("Do", req).Return(nil, tests.ErrFake)
-		s := NewImageStore(cfg, db, hc, nil)
+		s := NewImageStore(cfg, db, hc)
 
 		imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
 		assert.Equal(t, tests.ErrFake, err)
@@ -78,7 +78,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows)
 		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil)
 		hc := &tests.HTTPClientMock{}
-		s := NewImageStore(cfg, db, hc, nil)
+		s := NewImageStore(cfg, db, hc)
 		s.imagesCache.Add(svgImgURL, svgImgData)
 
 		imageID, err := s.DownloadAndSaveImage(ctx, svgImgURL)
@@ -100,7 +100,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 			Body:       ioutil.NopCloser(bytes.NewReader(svgImgData)),
 			StatusCode: http.StatusOK,
 		}, nil).Once()
-		s := NewImageStore(cfg, db, hc, nil)
+		s := NewImageStore(cfg, db, hc)
 
 		var wg sync.WaitGroup
 		for i := 0; i < 3; i++ {
@@ -123,7 +123,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		hc := &tests.HTTPClientMock{}
 		req, _ := http.NewRequest("GET", svgImgURL, nil)
 		hc.On("Do", req).Return(nil, tests.ErrFake).Once()
-		s := NewImageStore(cfg, db, hc, nil)
+		s := NewImageStore(cfg, db, hc)
 
 		var wg sync.WaitGroup
 		for i := 0; i < 3; i++ {
@@ -148,7 +148,7 @@ func TestGetImage(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageDBQ, "imageID", "2x").Return([]byte("image2xData"), nil)
-		s := NewImageStore(nil, db, nil, nil)
+		s := NewImageStore(nil, db, nil)
 
 		data, err := s.GetImage(ctx, "imageID", "2x")
 		assert.Equal(t, nil, err)
@@ -160,7 +160,7 @@ func TestGetImage(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageDBQ, "imageID", "2x").Return(nil, tests.ErrFakeDB)
-		s := NewImageStore(nil, db, nil, nil)
+		s := NewImageStore(nil, db, nil)
 
 		data, err := s.GetImage(ctx, "imageID", "2x")
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -187,7 +187,7 @@ func TestSaveImage(t *testing.T) {
 		for _, version := range []string{"1x", "2x", "3x", "4x"} {
 			db.On("QueryRow", ctx, registerImageDBQ, pngImgHash, version, mock.Anything).Return("pngImgID", nil)
 		}
-		s := NewImageStore(nil, db, nil, nil)
+		s := NewImageStore(nil, db, nil)
 
 		imageID, err := s.SaveImage(ctx, pngImgData)
 		require.NoError(t, err)
@@ -200,7 +200,7 @@ func TestSaveImage(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows)
 		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil)
-		s := NewImageStore(nil, db, nil, nil)
+		s := NewImageStore(nil, db, nil)
 
 		imageID, err := s.SaveImage(ctx, svgImgData)
 		require.NoError(t, err)
@@ -212,7 +212,7 @@ func TestSaveImage(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, pngImgHash).Return("existingImageID", nil)
-		s := NewImageStore(nil, db, nil, nil)
+		s := NewImageStore(nil, db, nil)
 
 		imageID, err := s.SaveImage(ctx, pngImgData)
 		require.NoError(t, err)
@@ -224,7 +224,7 @@ func TestSaveImage(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, pngImgHash).Return(nil, tests.ErrFakeDB)
-		s := NewImageStore(nil, db, nil, nil)
+		s := NewImageStore(nil, db, nil)
 
 		imageID, err := s.SaveImage(ctx, pngImgData)
 		assert.Equal(t, tests.ErrFakeDB, err)
@@ -237,7 +237,7 @@ func TestSaveImage(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, pngImgHash).Return(nil, pgx.ErrNoRows)
 		db.On("QueryRow", ctx, registerImageDBQ, pngImgHash, "1x", mock.Anything).Return(nil, tests.ErrFakeDB)
-		s := NewImageStore(nil, db, nil, nil)
+		s := NewImageStore(nil, db, nil)
 
 		imageID, err := s.SaveImage(ctx, pngImgData)
 		assert.Equal(t, tests.ErrFakeDB, err)

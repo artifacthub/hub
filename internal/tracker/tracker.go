@@ -223,14 +223,13 @@ func (t *Tracker) getPackagesAvailable() (map[string]*hub.Package, error) {
 		PackagesRegistered: t.packagesRegistered,
 		BasePath:           t.basePath,
 		Svc: &hub.TrackerSourceServices{
-			Ctx:      t.svc.Ctx,
-			Cfg:      t.svc.Cfg,
-			Ec:       t.svc.Ec,
-			Hc:       t.svc.Hc,
-			Op:       t.svc.Op,
-			Is:       t.svc.Is,
-			Logger:   t.logger,
-			GithubRL: t.svc.GithubRL,
+			Ctx:    t.svc.Ctx,
+			Cfg:    t.svc.Cfg,
+			Ec:     t.svc.Ec,
+			Hc:     t.svc.Hc,
+			Op:     t.svc.Op,
+			Is:     t.svc.Is,
+			Logger: t.logger,
 		},
 	}
 	source := t.svc.SetupTrackerSource(i)

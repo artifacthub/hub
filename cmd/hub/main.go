@@ -68,7 +68,7 @@ func main() {
 		WebhookManager:      webhook.NewManager(db),
 		APIKeyManager:       apikey.NewManager(db),
 		StatsManager:        stats.NewManager(db),
-		ImageStore:          pg.NewImageStore(cfg, db, hc, nil),
+		ImageStore:          pg.NewImageStore(cfg, db, hc),
 		Authorizer:          az,
 		HTTPClient:          hc,
 		OCIPuller:           &oci.Puller{},
