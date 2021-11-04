@@ -12,7 +12,6 @@ import (
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/jackc/pgx/v4"
 	"github.com/spf13/viper"
-	"golang.org/x/time/rate"
 )
 
 const (
@@ -36,7 +35,6 @@ type ImageStore struct {
 	cfg         *viper.Viper
 	db          DB
 	hc          img.HTTPClient
-	githubRL    *rate.Limiter
 	imagesCache *lru.Cache
 	errorsCache *lru.Cache
 	mutexes     sync.Map
@@ -47,7 +45,6 @@ func NewImageStore(
 	cfg *viper.Viper,
 	db DB,
 	hc img.HTTPClient,
-	githubRL *rate.Limiter,
 ) *ImageStore {
 	imagesCache, _ := lru.New(cacheSize)
 	errorsCache, _ := lru.New(cacheSize)
@@ -55,7 +52,6 @@ func NewImageStore(
 		cfg:         cfg,
 		db:          db,
 		hc:          hc,
-		githubRL:    githubRL,
 		imagesCache: imagesCache,
 		errorsCache: errorsCache,
 	}
@@ -84,8 +80,7 @@ func (s *ImageStore) DownloadAndSaveImage(ctx context.Context, imageURL string) 
 		}
 
 		// Download it from source and store it in the cache.
-		githubToken := s.cfg.GetString("creds.githubToken")
-		data, err = img.Download(ctx, s.hc, githubToken, s.githubRL, imageURL)
+		data, err = img.Download(ctx, s.hc, imageURL)
 		if err != nil {
 			s.errorsCache.Add(imageURL, err)
 			return "", err

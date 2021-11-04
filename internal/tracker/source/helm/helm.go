@@ -24,7 +24,6 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/hashicorp/go-multierror"
-	"golang.org/x/time/rate"
 	"gopkg.in/yaml.v3"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
@@ -243,12 +242,10 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 			s.i.Svc.Ctx,
 			chartURL,
 			&LoadChartArchiveOptions{
-				Hc:          s.i.Svc.Hc,
-				Op:          s.i.Svc.Op,
-				GithubToken: s.i.Svc.Cfg.GetString("creds.githubToken"),
-				GithubRL:    s.i.Svc.GithubRL,
-				Username:    s.i.Repository.AuthUser,
-				Password:    s.i.Repository.AuthPass,
+				Hc:       s.i.Svc.Hc,
+				Op:       s.i.Svc.Op,
+				Username: s.i.Repository.AuthUser,
+				Password: s.i.Repository.AuthPass,
 			},
 		)
 		if err != nil {
@@ -353,12 +350,10 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 // LoadChartArchiveOptions represents some options that can be provided to load
 // a chart archive from its remote location.
 type LoadChartArchiveOptions struct {
-	Hc          hub.HTTPClient
-	Op          hub.OCIPuller
-	Username    string
-	Password    string
-	GithubToken string
-	GithubRL    *rate.Limiter
+	Hc       hub.HTTPClient
+	Op       hub.OCIPuller
+	Username string
+	Password string
 }
 
 // LoadChartArchive loads a chart from a remote archive located at the url
@@ -372,15 +367,6 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 		req, _ := http.NewRequest("GET", u.String(), nil)
 		req = req.WithContext(ctx)
 		req.Header.Set("Accept-Encoding", "*")
-		if u.Host == "github.com" || u.Host == "raw.githubusercontent.com" {
-			// Authenticate and rate limit requests to Github
-			if o.GithubToken != "" {
-				req.Header.Set("Authorization", fmt.Sprintf("token %s", o.GithubToken))
-			}
-			if o.GithubRL != nil {
-				_ = o.GithubRL.Wait(ctx)
-			}
-		}
 		if o.Username != "" || o.Password != "" {
 			req.SetBasicAuth(o.Username, o.Password)
 		}

@@ -11,7 +11,6 @@ import (
 
 	"github.com/disintegration/imaging"
 	"github.com/vincent-petithory/dataurl"
-	"golang.org/x/time/rate"
 )
 
 // HTTPClient defines the methods an HTTPClient implementation must provide.
@@ -43,8 +42,6 @@ type Version struct {
 func Download(
 	ctx context.Context,
 	hc HTTPClient,
-	githubToken string,
-	githubRL *rate.Limiter,
 	imageURL string,
 ) ([]byte, error) {
 	// Image in data url
@@ -58,18 +55,8 @@ func Download(
 
 	// Download image using url provided
 	req, _ := http.NewRequest("GET", imageURL, nil)
-	u, err := url.Parse(imageURL)
-	if err != nil {
+	if _, err := url.Parse(imageURL); err != nil {
 		return nil, err
-	}
-	if u.Host == "github.com" || u.Host == "raw.githubusercontent.com" {
-		// Authenticate and rate limit requests to Github
-		if githubToken != "" {
-			req.Header.Set("Authorization", fmt.Sprintf("token %s", githubToken))
-		}
-		if githubRL != nil {
-			_ = githubRL.Wait(ctx)
-		}
 	}
 	resp, err := hc.Do(req)
 	if err != nil {

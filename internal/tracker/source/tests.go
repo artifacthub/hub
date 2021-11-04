@@ -12,7 +12,6 @@ import (
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
-	"golang.org/x/time/rate"
 )
 
 // TestsServicesWrapper is wrapper around a TrackerSourceServices instance used
@@ -35,14 +34,13 @@ func NewTestsServicesWrapper() *TestsServicesWrapper {
 
 	// Setup tracker source services using mocks
 	svc := &hub.TrackerSourceServices{
-		Ctx:      context.Background(),
-		Cfg:      viper.New(),
-		Ec:       ec,
-		Hc:       hc,
-		Op:       op,
-		Is:       is,
-		Logger:   zerolog.Nop(),
-		GithubRL: rate.NewLimiter(rate.Inf, 0),
+		Ctx:    context.Background(),
+		Cfg:    viper.New(),
+		Ec:     ec,
+		Hc:     hc,
+		Op:     op,
+		Is:     is,
+		Logger: zerolog.Nop(),
 	}
 
 	// Setup tests services wrapper and return it

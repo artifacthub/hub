@@ -31,7 +31,6 @@ email:
 creds:
   dockerUsername: ""
   dockerPassword: ""
-  githubToken: ""
 
 images:
   store: pg

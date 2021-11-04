@@ -73,7 +73,6 @@ helm install \
   --set imageTag=<GIT_SHA> \
   --set creds.dockerUsername=<DOCKER_USERNAME> \
   --set creds.dockerPassword=<DOCKER_PASSWORD> \
-  --set creds.githubToken=<GITHUB_TOKEN> \
   --set db.user=<DB_USER> \
   --set db.host=<DB_HOST> \
   --set db.password=<DB_PASSWORD> \

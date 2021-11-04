@@ -57,7 +57,7 @@ func TestDownload(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
 
-		data, err := Download(ctx, hc, "", nil, "data:invalid")
+		data, err := Download(ctx, hc, "data:invalid")
 		assert.Nil(t, data)
 		assert.Error(t, err)
 		hc.AssertExpectations(t)
@@ -67,7 +67,7 @@ func TestDownload(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
 
-		data, err := Download(ctx, hc, "", nil, "invalid \n url")
+		data, err := Download(ctx, hc, "invalid \n url")
 		assert.Nil(t, data)
 		assert.Error(t, err)
 		hc.AssertExpectations(t)
@@ -79,7 +79,7 @@ func TestDownload(t *testing.T) {
 		req, _ := http.NewRequest("GET", imageURL, nil)
 		hc.On("Do", req).Return(nil, tests.ErrFake)
 
-		data, err := Download(ctx, hc, "", nil, imageURL)
+		data, err := Download(ctx, hc, imageURL)
 		assert.Nil(t, data)
 		assert.Equal(t, tests.ErrFake, err)
 		hc.AssertExpectations(t)
@@ -94,7 +94,7 @@ func TestDownload(t *testing.T) {
 			StatusCode: http.StatusNotFound,
 		}, nil)
 
-		data, err := Download(ctx, hc, "", nil, imageURL)
+		data, err := Download(ctx, hc, imageURL)
 		assert.Nil(t, data)
 		assert.Equal(t, errors.New("unexpected status code received: 404"), err)
 		hc.AssertExpectations(t)
@@ -109,7 +109,7 @@ func TestDownload(t *testing.T) {
 			StatusCode: http.StatusOK,
 		}, nil)
 
-		data, err := Download(ctx, hc, "", nil, imageURL)
+		data, err := Download(ctx, hc, imageURL)
 		assert.NotNil(t, data)
 		assert.Nil(t, err)
 		hc.AssertExpectations(t)

@@ -19,13 +19,10 @@ import (
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
-	"golang.org/x/time/rate"
 )
 
 const (
-	githubMaxRequestsPerHourUnauthenticated = 60
-	githubMaxRequestsPerHourAuthenticated   = 5000
-	repositoryTimeout                       = 10 * time.Minute
+	repositoryTimeout = 10 * time.Minute
 )
 
 var (
@@ -71,16 +68,7 @@ func main() {
 	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"))
 	rm := repo.NewManager(cfg, db, az, hc)
 	pm := pkg.NewManager(db)
-	githubMaxRequestsPerHour := githubMaxRequestsPerHourUnauthenticated
-	if cfg.GetString("creds.githubToken") != "" {
-		githubMaxRequestsPerHour = githubMaxRequestsPerHourAuthenticated
-	}
-	githubRL := rate.NewLimiter(rate.Every(1*time.Hour), githubMaxRequestsPerHour)
-	go func() {
-		<-time.After(1 * time.Hour)
-		githubRL.SetLimit(rate.Every(1 * time.Hour / time.Duration(githubMaxRequestsPerHour)))
-	}()
-	is, err := util.SetupImageStore(cfg, db, hc, githubRL)
+	is, err := util.SetupImageStore(cfg, db, hc)
 	if err != nil {
 		log.Fatal().Err(err).Msg("image store setup failed")
 	}
@@ -96,7 +84,6 @@ func main() {
 		Hc:                 hc,
 		Op:                 &oci.Puller{},
 		Is:                 is,
-		GithubRL:           githubRL,
 		SetupTrackerSource: tracker.SetupSource,
 	}
 
