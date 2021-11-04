@@ -21,6 +21,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"helm.sh/helm/v3/pkg/chart"
 )
 
 const (
@@ -200,49 +201,13 @@ func (h *Handlers) GetChangelog(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetChartTemplates is an http handler used to get the templates for a given
-// given Helm chart package snapshot.
+// Helm chart package snapshot.
 func (h *Handlers) GetChartTemplates(w http.ResponseWriter, r *http.Request) {
-	// Get package from database as we need the content url
-	input := &hub.GetPackageInput{
-		PackageID: chi.URLParam(r, "packageID"),
-		Version:   chi.URLParam(r, "version"),
-	}
-	p, err := h.pkgManager.Get(r.Context(), input)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
-		helpers.RenderErrorJSON(w, err)
-		return
-	}
-
-	// Only Helm charts packages can have templates
-	if p.Repository.Kind != hub.Helm {
-		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusBadRequest)
-		return
-	}
-
-	// Download chart package from remote source
-	var username, password string
-	if p.Repository.Private {
-		// Get credentials if the repository is private
-		repo, err := h.repoManager.GetByID(r.Context(), p.Repository.RepositoryID, true)
-		if err != nil {
-			h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
-			helpers.RenderErrorJSON(w, err)
-			return
-		}
-		username = repo.AuthUser
-		password = repo.AuthPass
-	}
-	u, _ := url.Parse(p.ContentURL)
-	chrt, err := helm.LoadChartArchive(
+	// Get chart's archive from original source
+	chrt, err := h.getChartArchive(
 		r.Context(),
-		u,
-		&helm.LoadChartArchiveOptions{
-			Hc:       h.hc,
-			Op:       h.op,
-			Username: username,
-			Password: password,
-		},
+		chi.URLParam(r, "packageID"),
+		chi.URLParam(r, "version"),
 	)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetChartTemplates").Send()
@@ -257,6 +222,37 @@ func (h *Handlers) GetChartTemplates(w http.ResponseWriter, r *http.Request) {
 	}
 	dataJSON, _ := json.Marshal(data)
 	helpers.RenderJSON(w, dataJSON, 24*time.Hour, http.StatusOK)
+}
+
+// GetChartValues is an http handler used to get the default values for a given
+// Helm chart package snapshot.
+func (h *Handlers) GetChartValues(w http.ResponseWriter, r *http.Request) {
+	// Get chart's archive from original source
+	chrt, err := h.getChartArchive(
+		r.Context(),
+		chi.URLParam(r, "packageID"),
+		chi.URLParam(r, "version"),
+	)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetChartValues").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+
+	// Get raw values from chart archive and return them if available
+	var data []byte
+	for _, file := range chrt.Raw {
+		if file.Name == "values.yaml" {
+			data = file.Data
+		}
+	}
+	if data == nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	w.Header().Set("Content-Type", "application/yaml")
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(24*time.Hour))
+	_, _ = w.Write(data)
 }
 
 // GetHarborReplicationDump is an http handler used to get a summary of all
@@ -534,6 +530,53 @@ func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// getChartArchive is a helper function used to download a chart's archive from
+// the original source.
+func (h *Handlers) getChartArchive(ctx context.Context, packageID, version string) (*chart.Chart, error) {
+	// Get package from database as we need the content url
+	input := &hub.GetPackageInput{
+		PackageID: packageID,
+		Version:   version,
+	}
+	p, err := h.pkgManager.Get(ctx, input)
+	if err != nil {
+		return nil, err
+	}
+
+	// Only Helm charts packages can have templates
+	if p.Repository.Kind != hub.Helm {
+		return nil, fmt.Errorf("%w: operation not supported for this repository kind", hub.ErrInvalidInput)
+	}
+
+	// Download chart package from remote source
+	var username, password string
+	if p.Repository.Private {
+		// Get credentials if the repository is private
+		repo, err := h.repoManager.GetByID(ctx, p.Repository.RepositoryID, true)
+		if err != nil {
+			return nil, err
+		}
+		username = repo.AuthUser
+		password = repo.AuthPass
+	}
+	u, _ := url.Parse(p.ContentURL)
+	chrt, err := helm.LoadChartArchive(
+		ctx,
+		u,
+		&helm.LoadChartArchiveOptions{
+			Hc:       h.hc,
+			Op:       h.op,
+			Username: username,
+			Password: password,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return chrt, nil
 }
 
 // buildSearchInput builds a packages search query from a map of query string
