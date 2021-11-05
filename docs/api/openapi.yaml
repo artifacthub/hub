@@ -1897,6 +1897,34 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/{version}/values":
+    get:
+      tags:
+        - Packages
+      summary: Get chart values
+      description: Get chart values
+      operationId: getChartValues
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/yaml:
+              schema:
+                type: string
+                nullable: false
+                example: |
+                  # Values
+                  global:
+                    image: ""
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/{packageID}/{version}/values-schema":
     get:
       tags:

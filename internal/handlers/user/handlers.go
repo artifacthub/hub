@@ -37,7 +37,7 @@ import (
 
 const (
 	// APIKeyIDHeader represents the header used to provide an API key ID.
-	APIKeyIDHeader = "X-API-KEY-ID"
+	APIKeyIDHeader = "X-API-KEY-ID" // #nosec
 
 	// APIKeySecretHeader represents the header used to provide an API key
 	// secret.

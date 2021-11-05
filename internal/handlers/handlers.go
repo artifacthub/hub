@@ -262,6 +262,7 @@ func (h *Handlers) setupRouter() {
 				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
 			r.Get("/{packageID}/{version}/security-report", h.Packages.GetSnapshotSecurityReport)
+			r.Get("/{packageID}/{version}/values", h.Packages.GetChartValues)
 			r.Get("/{packageID}/{version}/values-schema", h.Packages.GetValuesSchema)
 			r.Get("/{packageID}/{version}/templates", h.Packages.GetChartTemplates)
 			r.Get("/{packageID}/changelog", h.Packages.GetChangelog)
