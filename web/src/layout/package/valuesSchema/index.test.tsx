@@ -24,7 +24,6 @@ jest.mock('react-router-dom', () => ({
 const defaultProps = {
   packageId: 'id',
   version: '0.1.0',
-  hasValuesSchema: true,
   visibleValuesSchema: false,
   normalizedName: 'pkg',
 };
@@ -61,15 +60,6 @@ describe('ValuesSchema', () => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
-    });
-
-    it('renders disabled button when package has not ValuesSchema and does not call getValuesSchema', async () => {
-      render(<ValuesSchema {...defaultProps} hasValuesSchema={false} />);
-
-      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
-      expect(btn).toHaveClass('disabled');
-
-      expect(API.getValuesSchema).toHaveBeenCalledTimes(0);
     });
 
     it('opens modal', async () => {

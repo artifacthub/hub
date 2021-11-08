@@ -7,12 +7,21 @@
   right: 10px;
 }
 
-.tooltipArrow::before {
+.tooltip.isDark .tooltipArrow::before {
   border-bottom-color: var(--dark) !important;
 }
 
-.tooltipContent {
+.tooltip.isLight .tooltipArrow::before {
+  border-bottom-color: #a3a3a6 !important;
+}
+
+.tooltip.isDark .tooltipContent {
   background-color: var(--dark) !important;
+}
+
+.tooltip.isLight .tooltipContent {
+  background-color: #a3a3a6 !important;
+  color: #38383f;
 }
 
 .btn {

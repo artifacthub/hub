@@ -1,5 +1,4 @@
 import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import classnames from 'classnames';
 import merger from 'json-schema-merge-allof';
 import { isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
@@ -9,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 import API from '../../../api';
 import { SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
-import ElementWithTooltip from '../../common/ElementWithTooltip';
 import ErrorBoundary from '../../common/ErrorBoundary';
 import Modal from '../../common/Modal';
 import Schema from './Schema';
@@ -20,7 +18,6 @@ interface Props {
   version: string;
   normalizedName: string;
   visibleValuesSchema: boolean;
-  hasValuesSchema?: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
   visibleValuesSchemaPath?: string;
@@ -83,13 +80,11 @@ const ValuesSchema = (props: Props) => {
   }
 
   const onOpenModal = () => {
-    if (props.hasValuesSchema) {
-      getValuesSchema();
-      history.replace({
-        search: `?modal=values-schema${props.visibleValuesSchemaPath ? `&path=${props.visibleValuesSchemaPath}` : ''}`,
-        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-      });
-    }
+    getValuesSchema();
+    history.replace({
+      search: `?modal=values-schema${props.visibleValuesSchemaPath ? `&path=${props.visibleValuesSchemaPath}` : ''}`,
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
   };
 
   const onPathChange = (path?: string) => {
@@ -110,14 +105,7 @@ const ValuesSchema = (props: Props) => {
 
   useEffect(() => {
     if (props.visibleValuesSchema && !openStatus && isUndefined(currentPkgId)) {
-      if (props.hasValuesSchema) {
-        onOpenModal();
-      } else {
-        history.replace({
-          search: '',
-          state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-        });
-      }
+      onOpenModal();
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
@@ -129,36 +117,25 @@ const ValuesSchema = (props: Props) => {
 
   return (
     <>
-      <ElementWithTooltip
-        element={
-          <button
-            className={classnames('btn btn-outline-secondary btn-block btn-sm', {
-              disabled: !props.hasValuesSchema,
-            })}
-            onClick={onOpenModal}
-            aria-label="Open values schema modal"
-            aria-disabled={!props.hasValuesSchema}
-          >
-            <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
-              {isLoading ? (
-                <>
-                  <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                  <span className="ml-2 font-weight-bold">Getting schema...</span>
-                </>
-              ) : (
-                <>
-                  <CgListTree className="mr-2" />
-                  <span className="font-weight-bold">Values Schema</span>
-                </>
-              )}
-            </div>
-          </button>
-        }
-        visibleTooltip={!props.hasValuesSchema}
-        tooltipClassName={styles.tooltip}
-        tooltipMessage="This package version does not include a values.schema.json file."
-        active
-      />
+      <button
+        className="btn btn-outline-secondary btn-block btn-sm"
+        onClick={onOpenModal}
+        aria-label="Open values schema modal"
+      >
+        <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
+          {isLoading ? (
+            <>
+              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+              <span className="ml-2 font-weight-bold">Getting schema...</span>
+            </>
+          ) : (
+            <>
+              <CgListTree className="mr-2" />
+              <span className="font-weight-bold">Values Schema</span>
+            </>
+          )}
+        </div>
+      </button>
 
       {openStatus && valuesSchema && (
         <Modal

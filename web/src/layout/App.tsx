@@ -134,7 +134,7 @@ export default function App() {
                       visibleTemplate={getQueryParam(location.search, 'template') || undefined}
                       visibleFile={getQueryParam(location.search, 'file') || undefined}
                       visibleVersion={getQueryParam(location.search, 'version') || undefined}
-                      visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
+                      visibleValuesPath={getQueryParam(location.search, 'path') || undefined}
                       visibleImage={getQueryParam(location.search, 'image') || undefined}
                       visibleTarget={getQueryParam(location.search, 'target') || undefined}
                       visibleSection={getQueryParam(location.search, 'section') || undefined}

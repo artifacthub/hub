@@ -1,0 +1,42 @@
+:global(.linenumber) {
+  user-select: none;
+}
+
+:global(.customYAML .hljs-attr),
+:global(.customYAML .hljs-bullet) {
+  color: #f8f9fa;
+}
+
+:global(.customYAML .hljs-comment) {
+  color: #8e908c;
+}
+
+:global(.customYAML span),
+:global(.customYAML .hljs-string) {
+  line-height: 1.5rem;
+  color: #ffc107;
+}
+
+:global(.customYAML .hljs-literal),
+:global(.customYAML .hljs-number) {
+  color: #dc3545;
+}
+
+:global(.customYAML .hljs-number ~ .hljs-string) {
+  color: #ffc107;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .modalDialog {
+    max-width: 80% !important;
+    min-height: calc(100% - 10rem) !important;
+    max-height: calc(100% - 10rem) !important;
+    margin: 5rem auto !important;
+  }
+}
