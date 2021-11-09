@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ValuesSchema creates snapshot 1`] = `
+exports[`Values creates snapshot 1`] = `
 <DocumentFragment>
   <button
-    aria-label="Open values schema modal"
+    aria-label="Open default values modal"
     class="btn btn-outline-secondary btn-block btn-sm"
   >
     <div
@@ -17,7 +17,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
       <span
         class="ml-2 font-weight-bold"
       >
-        Getting schema...
+        Getting values...
       </span>
     </div>
   </button>

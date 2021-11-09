@@ -66,6 +66,7 @@ import StarButton from './StarButton';
 import Stats from './Stats';
 import SubscriptionsButton from './SubscriptionsButton';
 import TektonManifestModal from './TektonManifestModal';
+import Values from './values';
 import ValuesSchema from './valuesSchema';
 
 interface Props {
@@ -77,7 +78,7 @@ interface Props {
   repositoryName: string;
   hash?: string;
   visibleModal?: string;
-  visibleValuesSchemaPath?: string;
+  visibleValuesPath?: string;
   visibleImage?: string;
   visibleTarget?: string;
   visibleSection?: string;
@@ -891,24 +892,39 @@ const PackageView = (props: Props) => {
 
                               case RepositoryKind.Helm:
                                 return (
-                                  <div className="mb-2">
-                                    <ValuesSchema
-                                      hasValuesSchema={detail.hasValuesSchema}
-                                      packageId={detail.packageId}
-                                      version={detail.version!}
-                                      normalizedName={detail.normalizedName}
-                                      searchUrlReferer={props.searchUrlReferer}
-                                      fromStarredPage={props.fromStarredPage}
-                                      visibleValuesSchema={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                                      }
-                                      visibleValuesSchemaPath={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                                          ? props.visibleValuesSchemaPath
-                                          : undefined
-                                      }
-                                    />
-                                  </div>
+                                  <>
+                                    <div className="mb-2">
+                                      <Values
+                                        packageId={detail.packageId}
+                                        version={detail.version!}
+                                        normalizedName={detail.normalizedName}
+                                        searchUrlReferer={props.searchUrlReferer}
+                                        fromStarredPage={props.fromStarredPage}
+                                        visibleValues={
+                                          !isUndefined(props.visibleModal) && props.visibleModal === 'values'
+                                        }
+                                      />
+                                    </div>
+                                    {detail.hasValuesSchema && (
+                                      <div className="mb-2">
+                                        <ValuesSchema
+                                          packageId={detail.packageId}
+                                          version={detail.version!}
+                                          normalizedName={detail.normalizedName}
+                                          searchUrlReferer={props.searchUrlReferer}
+                                          fromStarredPage={props.fromStarredPage}
+                                          visibleValuesSchema={
+                                            !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                          }
+                                          visibleValuesSchemaPath={
+                                            !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                              ? props.visibleValuesPath
+                                              : undefined
+                                          }
+                                        />
+                                      </div>
+                                    )}
+                                  </>
                                 );
 
                               default:

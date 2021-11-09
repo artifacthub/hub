@@ -39,6 +39,20 @@ describe('ButtonCopyToClipboard', () => {
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
   });
 
+  it('renders light tooltip after clicking button', async () => {
+    render(<ButtonCopyToClipboard text="Text to copy" tooltipType="light" />);
+    expect(screen.queryByRole('tooltip')).toBeNull();
+
+    const btn = screen.getByRole('button', { name: 'Copy to clipboard' });
+    userEvent.click(btn);
+
+    expect(clipboardWriteTextMock).toHaveBeenCalledTimes(1);
+    expect(clipboardWriteTextMock).toHaveBeenCalledWith('Text to copy');
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(screen.getByRole('tooltip')).toHaveClass('isLight');
+  });
+
   it('renders tooltip after clicking button when navidator.clipboard is undefined', async () => {
     (navigator as any).clipboard = null;
     render(<ButtonCopyToClipboard text="Text to copy" />);

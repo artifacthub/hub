@@ -8,6 +8,7 @@ import styles from './SchemaValuesSearch.module.css';
 interface Props {
   paths: string[];
   activePath?: string;
+  wrapperClassName?: string;
   onSearch: (selectedPath?: string) => void;
 }
 
@@ -22,7 +23,7 @@ const SchemaValuesSearch = (props: Props) => {
 
   return (
     <div className="d-flex flex-row">
-      <div className={`position-relative ${styles.wrapper}`} ref={inputWrapper}>
+      <div className={`position-relative ${styles.wrapper} ${props.wrapperClassName}`} ref={inputWrapper}>
         <InputTypeahead
           ref={input}
           label="path"

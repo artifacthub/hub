@@ -11,6 +11,7 @@ interface Props {
   className?: string;
   boxShadowColor?: string;
   hiddenCopyBtn?: boolean;
+  tooltipType?: 'normal' | 'light';
 }
 
 const BlockCodeButtons = (props: Props) => {
@@ -37,7 +38,12 @@ const BlockCodeButtons = (props: Props) => {
   return (
     <div className={`position-absolute d-flex flex-row ${styles.wrapper} ${props.className}`}>
       {(isUndefined(props.hiddenCopyBtn) || !props.hiddenCopyBtn) && (
-        <ButtonCopyToClipboard wrapperClassName="mr-2" text={props.content} style={btnStyle} />
+        <ButtonCopyToClipboard
+          wrapperClassName="mr-2"
+          text={props.content}
+          style={btnStyle}
+          tooltipType={props.tooltipType}
+        />
       )}
 
       <button

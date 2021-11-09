@@ -63,6 +63,7 @@ const Schema = (props: Props) => {
               className={styles.btns}
               content={valuesYAML}
               filename={`values-${props.normalizedName}.yaml`}
+              tooltipType="light"
             />
           )}
         </div>

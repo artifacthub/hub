@@ -216,6 +216,7 @@ class API_CLASS {
     switch (response.headers.get('Content-Type')) {
       case 'text/plain; charset=utf-8':
       case 'text/markdown':
+      case 'application/yaml':
         const text = await response.text();
         return text;
       case 'application/json':
@@ -900,6 +901,12 @@ class API_CLASS {
         }
       });
       return newFormatReport;
+    });
+  }
+
+  public getChartValues(packageId: string, version: string): Promise<string> {
+    return this.apiFetch({
+      url: `${this.API_BASE_URL}/packages/${packageId}/${version}/values`,
     });
   }
 

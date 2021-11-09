@@ -17,6 +17,7 @@ interface Props {
   icon?: JSX.Element;
   disabled?: boolean;
   label?: string;
+  tooltipType?: 'normal' | 'light';
 }
 
 const ButtonCopyToClipboard = (props: Props) => {
@@ -62,7 +63,20 @@ const ButtonCopyToClipboard = (props: Props) => {
   return (
     <div className={`position-relative ${props.wrapperClassName}`}>
       {copyStatus && (
-        <div className={`tooltip bs-tooltip-bottom show ${styles.tooltip} ${props.tooltipClassName}`} role="tooltip">
+        <div
+          className={classnames(
+            'tooltip bs-tooltip-bottom show',
+            styles.tooltip,
+            props.tooltipClassName,
+            {
+              [styles.isDark]: isUndefined(props.tooltipType) || props.tooltipType !== 'light',
+            },
+            {
+              [styles.isLight]: !isUndefined(props.tooltipType) && props.tooltipType === 'light',
+            }
+          )}
+          role="tooltip"
+        >
           <div className={`arrow ${styles.tooltipArrow} ${props.arrowClassName}`} />
           <div className={`tooltip-inner ${styles.tooltipContent}`}>Copied!</div>
         </div>
