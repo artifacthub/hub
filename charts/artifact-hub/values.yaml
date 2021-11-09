@@ -1,15 +1,36 @@
-nameOverride: ""
-fullnameOverride: ""
+# Artifact Hub Chart default configuration values
+
 imagePullSecrets: []
 imageTag: ""
-dynamicResourceNamePrefixEnabled: false
+nameOverride: ""
 pullPolicy: IfNotPresent
+
+# Enable dynamic resource name prefix
+#
+# Enabling the dynamic resource name prefix ensures that the resources are named dynamically based on the Helm
+# installation's name. This allows multiple installations of this chart in a single Kubernetes namespace. The prefix
+# can be defined by using the `fullnameOverride`.
+dynamicResourceNamePrefixEnabled: false
+
+# Overwrites the installation's fullname generation (used for the dynamic resource name prefix)
+fullnameOverride: ""
+
+# Enable restricted HTTP client
+#
+# Artifact Hub makes external HTTP requests for several purposes, like getting repositories metadata, dispatching
+# webhooks, etc. When this option is enabled, requests to the private network space as well as to some other special
+# addresses won't be allowed.
 restrictedHTTPClient: false
 
+# Logging configuration
 log:
+  # Log level
+  # Options: "trace", "debug", "info", "warn", "error", "fatal", "panic"
   level: info
+  # Enable pretty logging
   pretty: false
 
+# Database configuration
 db:
   host: ""
   port: "5432"
@@ -17,35 +38,58 @@ db:
   user: postgres
   password: postgres
 
+# Email configuration
 email:
+  # From name used in emails
   fromName: ""
+  # From address used in emails. This field is required if you want to enable email sending in Artifact Hub
   from: ""
+  # Reply-to address used in emails
   replyTo: ""
+  # SMTP server configuration
   smtp:
+    # Authentication mechanism
+    # Options: "login", "plain"
     auth: plain
+    # SMTP host. This field is required if you want to enable email sending in Artifact Hub
     host: ""
+    # SMTP port. This field is required if you want to enable email sending in Artifact Hub
     port: 587
     username: ""
     password: ""
 
+# Credentials
 creds:
+  # Docker registry username
   dockerUsername: ""
+  # Docker registry password
   dockerPassword: ""
 
+# Images configuration
 images:
+  # Images store
+  # Options: "pg"
   store: pg
 
+# Events configuration
 events:
+  # Enable repository scanning errors events
   scanningErrors: false
+  # Enable repository tracking errors events
   trackingErrors: false
 
+# Database migrator configuration
 dbMigrator:
   job:
     image:
+      # Database migrator image repository (without the tag)
       repository: artifacthub/db-migrator
+  # Load demo user and sample repositories
   loadSampleData: true
+  # Directory path where the configuration files should be mounted
   configDir: "/home/db-migrator/.cfg"
 
+# Hub configuration
 hub:
   ingress:
     enabled: true
@@ -60,92 +104,163 @@ hub:
     readinessGates: []
     replicaCount: 1
     image:
+      # Hub image repository (without the tag)
       repository: artifacthub/hub
     resources: {}
   server:
+    # Allow adding private repositories to the Hub
     allowPrivateRepositories: false
+    # Cache directory path. If set, the cache directory for the Helm client will be explicitly set (otherwise
+    # defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
     cacheDir: ""
+    # Directory path where the configuration files should be mounted
     configDir: "/home/hub/.cfg"
+    # Hub server base url
     baseURL: ""
+    # Hub server shutdown timeout
     shutdownTimeout: 10s
+    # Message of the day. The message of the day will be displayed in a banner on the top of the Artifact Hub UI
     motd: ""
+    # Message of the day severity. The color used for the banner will be based on the severity selected
+    # Options: "info", "warning", "error"
     motdSeverity: info
     basicAuth:
+      # Enable Hub basic auth
       enabled: false
+      # Hub basic auth username
       username: hub
+      # Hub basic auth password
       password: changeme
     cookie:
+      # Hub cookie hash key
       hashKey: default-unsafe-key
+      # Enable Hub secure cookies
       secure: false
     csrf:
+      # CSRF authentication key
       authKey: default-unsafe-key
+      # CSRF secure cookie
       secure: false
     oauth:
       github:
+        # Enable Github oauth
         enabled: false
+        # Github oauth client id
         clientID: ""
+        # Github oauth client secret
         clientSecret: ""
+        # Github oauth redirect url
         redirectURL: ""
+        # Github oauth scopes
         scopes:
           - read:user
           - user:email
       google:
+        # Enable Google oauth
         enabled: false
+        # Google oauth client id
         clientID: ""
+        # Google oauth client secret
         clientSecret: ""
+        # Google oauth redirect url
         redirectURL: ""
+        # Google oauth scopes
         scopes:
           - https://www.googleapis.com/auth/userinfo.email
           - https://www.googleapis.com/auth/userinfo.profile
       oidc:
+        # Enable OIDC
         enabled: false
+        # OpenID connect issuer url
         issuerURL: ""
+        # OpenID connect oauth client id
         clientID: ""
+        # OpenID connect oauth client secret
         clientSecret: ""
+        # OpenID connect oauth redirect url
         redirectURL: ""
+        # OpenID connect oauth scopes
         scopes:
           - openid
           - profile
           - email
+        # Skip email verified check
         skipEmailVerifiedCheck: false
+    # X-Forwarded-For IP index
     xffIndex: 0
   analytics:
+    # Google Analytics tracking id
     gaTrackingID: ""
   theme:
+    # Colors used in the website
     colors:
+      # Primary color used in the website. For an optimal experience, it's better to use colors that play well with
+      # white fonts
       primary: "#417598"
+      # Secondary color used in the website, usually a darker version of the primary color. For an optimal experience,
+      # it's better to use colors that play well with white fonts
       secondary: "#2D4857"
+    # Images used in the website
     images:
+      # URL of the image used for the Apple touch icon (192x192)
       appleTouchIcon192: "/static/media/logo192_v2.png"
+      # URL of the image used for the Apple touch icon (512x512)
       appleTouchIcon512: "/static/media/logo512_v2.png"
+      # URL of the image used in the og:image tag. This image is displayed when an Artifact Hub link is shared in
+      # Twitter or Slack, for example. The URL must use `https`
       openGraphImage: "/static/media/artifactHub_v2.png"
+      # URL of the image used for the shortcut icon (also known as favicon)
       shortcutIcon: "/static/media/logo_v2.png"
+      # URL of the logo used in the website header. For an optimal experience, it's better to use a white logo with
+      # transparent background, with no margin around it. It'll be displayed using a maximum height of 20px and a
+      # maximum width of 185px
       websiteLogo: "/static/media/logo/artifacthub-brand-white.svg"
+    # Sample search queries used in home and no results found pages
     sampleQueries: []
+    # Name of the site. This name is displayed in some places in the website and email templates. When a different
+    # value than the default one (Artifact Hub) is provided, the site enters `white label` mode. In this mode, some
+    # sections of the website are displayed in a more generic way, omitting certain parts that are unique to Artifact Hub
     siteName: "Artifact hub"
 
+# Scanner configuration
 scanner:
   cronjob:
     image:
+      # Scanner image repository (without the tag)
       repository: artifacthub/scanner
     resources: {}
+  # Number of snapshots to process concurrently
   concurrency: 10
+  # Trivy server url. Defaults to the Trivy service's internal URL
   trivyURL: ""
+  # Cache directory path. If set, the cache directory for the Trivy client will be explicitly set (otherwise defaults
+  # to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
   cacheDir: ""
+  # Directory path where the configuration files should be mounted
   configDir: "/home/scanner/.cfg"
 
+# Tracker configuration
 tracker:
   cronjob:
     image:
+      # Tracker image repository (without the tag)
       repository: artifacthub/tracker
     resources: {}
+  # Cache directory path. If set, the cache directory for the Helm client will be explicitly set (otherwise defaults
+  # to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
   cacheDir: ""
+  # Directory path where the configuration files should be mounted
   configDir: "/home/tracker/.cfg"
+  # Number of repositories to process concurrently
   concurrency: 10
+  # Repositories names to process ([] = all)
   repositoriesNames: []
+  # Repositories kinds to process ([] = all)
   repositoriesKinds: []
+  # Bypass digest check. Use this option to force already indexed packages to be reprocessed (use with caution)
   bypassDigestCheck: false
 
+# Trivy configuration
 trivy:
   deploy:
     image: aquasec/trivy:0.20.2
