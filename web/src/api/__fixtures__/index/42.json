@@ -1,0 +1,876 @@
+{
+  "type": "object",
+  "title": "Artifact Hub Chart JSON Schema",
+  "$schema": "http://json-schema.org/schema#",
+  "required": [
+    "db",
+    "dbMigrator",
+    "hub",
+    "images",
+    "log",
+    "postgresql",
+    "pullPolicy",
+    "restrictedHTTPClient",
+    "tracker",
+    "trivy",
+    "scanner"
+  ],
+  "properties": {
+    "db": {
+      "type": "object",
+      "title": "Database configuration",
+      "required": ["database", "host", "password", "port", "user"],
+      "properties": {
+        "host": {
+          "type": "string",
+          "title": "Database host",
+          "default": ""
+        },
+        "port": {
+          "type": "string",
+          "title": "Database port",
+          "default": "5432"
+        },
+        "user": {
+          "type": "string",
+          "title": "Database user",
+          "default": "postgres"
+        },
+        "database": {
+          "type": "string",
+          "title": "Database name",
+          "default": "hub"
+        },
+        "password": {
+          "type": "string",
+          "title": "Database password",
+          "default": "postgres"
+        }
+      }
+    },
+    "hub": {
+      "type": "object",
+      "title": "Hub configuration",
+      "required": ["ingress", "service", "deploy", "server", "theme"],
+      "properties": {
+        "theme": {
+          "type": "object",
+          "required": ["colors", "images", "sampleQueries", "siteName"],
+          "properties": {
+            "colors": {
+              "type": "object",
+              "title": "Colors used in the website",
+              "required": ["primary", "secondary"],
+              "properties": {
+                "primary": {
+                  "type": "string",
+                  "title": "Primary color",
+                  "default": "#417598",
+                  "description": "Primary color used in the website. For an optimal experience, it's better to use colors that play well with white fonts."
+                },
+                "secondary": {
+                  "type": "string",
+                  "title": "Secondary color",
+                  "default": "#2D4857",
+                  "description": "Secondary color used in the website, usually a darker version of the primary color. For an optimal experience, it's better to use colors that play well with white fonts."
+                }
+              }
+            },
+            "images": {
+              "type": "object",
+              "title": "Images used in the website",
+              "required": ["appleTouchIcon192", "appleTouchIcon512", "openGraphImage", "shortcutIcon", "websiteLogo"],
+              "properties": {
+                "websiteLogo": {
+                  "type": "string",
+                  "title": "Website logo",
+                  "default": "/static/media/logo/artifacthub-brand-white.svg",
+                  "description": "URL of the logo used in the website header. For an optimal experience, it's better to use a white logo with transparent background, with no margin around it. It'll be displayed using a maximum height of 20px and a maximum width of 185px."
+                },
+                "shortcutIcon": {
+                  "type": "string",
+                  "title": "Shortcut icon",
+                  "default": "/static/media/logo_v2.png",
+                  "description": "URL of the image used for the shortcut icon (also known as favicon)."
+                },
+                "openGraphImage": {
+                  "type": "string",
+                  "title": "Open Graph image",
+                  "default": "/static/media/artifactHub_v2.png",
+                  "description": "URL of the image used in the og:image tag. This image is displayed when an Artifact Hub link is shared in Twitter or Slack, for example. The URL must use `https`."
+                },
+                "appleTouchIcon192": {
+                  "type": "string",
+                  "title": "Apple touch icon (192x192)",
+                  "default": "/static/media/logo192_v2.png",
+                  "description": "URL of the image used for the Apple touch icon (192x192)."
+                },
+                "appleTouchIcon512": {
+                  "type": "string",
+                  "title": "Apple touch icon (512x512)",
+                  "default": "/static/media/logo512_v2.png",
+                  "description": "URL of the image used for the Apple touch icon (512x512)."
+                }
+              }
+            },
+            "siteName": {
+              "type": "string",
+              "title": "Name of the site",
+              "default": "Artifact Hub",
+              "description": "This name is displayed in some places in the website and email templates. When a different value than the default one (Artifact Hub) is provided, the site enters `white label` mode. In this mode, some sections of the website are displayed in a more generic way, omitting certain parts that are unique to Artifact Hub."
+            },
+            "reportURL": {
+              "type": "string",
+              "title": "Abuse report URL",
+              "description": "URL to report abuses."
+            },
+            "sampleQueries": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/sampleQuery"
+              },
+              "title": "Sample search queries used in home and no results found pages",
+              "default": []
+            }
+          }
+        },
+        "deploy": {
+          "type": "object",
+          "required": ["image", "replicaCount", "resources"],
+          "properties": {
+            "image": {
+              "type": "object",
+              "required": ["repository"],
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "title": "Hub image repository (without the tag)",
+                  "default": "artifacthub/hub"
+                }
+              }
+            },
+            "resources": {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements",
+              "type": "object",
+              "title": "Hub pod resource requirements",
+              "default": {}
+            },
+            "replicaCount": {
+              "type": "integer",
+              "title": "Number of Hub replicas",
+              "default": 1
+            },
+            "livenessProbe": {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe",
+              "type": "object",
+              "title": "Hub pod liveness probe"
+            },
+            "readinessGates": {
+              "type": "array",
+              "items": {
+                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.PodReadinessGate",
+                "type": "object"
+              },
+              "title": "Hub pod readiness gates",
+              "default": []
+            },
+            "readinessProbe": {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe",
+              "type": "object",
+              "title": "Hub pod readiness probe"
+            }
+          }
+        },
+        "server": {
+          "type": "object",
+          "required": [
+            "allowPrivateRepositories",
+            "baseURL",
+            "basicAuth",
+            "configDir",
+            "cookie",
+            "csrf",
+            "shutdownTimeout",
+            "xffIndex"
+          ],
+          "properties": {
+            "csrf": {
+              "type": "object",
+              "required": ["authKey", "secure"],
+              "properties": {
+                "secure": {
+                  "type": "boolean",
+                  "title": "CSRF secure cookie",
+                  "default": false
+                },
+                "authKey": {
+                  "type": "string",
+                  "title": "CSRF authentication key",
+                  "default": "default-unsafe-key"
+                }
+              }
+            },
+            "motd": {
+              "type": "string",
+              "title": "Message of the day",
+              "default": "",
+              "description": "The message of the day will be displayed in a banner on the top of the Artifact Hub UI."
+            },
+            "oauth": {
+              "type": "object",
+              "properties": {
+                "oidc": {
+                  "type": "object",
+                  "properties": {
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "OpenID connect oauth scopes",
+                      "default": ["openid", "profile", "email"],
+                      "uniqueItems": true
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "title": "Enable OIDC",
+                      "default": false
+                    },
+                    "clientID": {
+                      "type": "string",
+                      "title": "OpenID connect oauth client id",
+                      "default": ""
+                    },
+                    "issuerURL": {
+                      "type": "string",
+                      "title": "OpenID connect issuer url",
+                      "default": ""
+                    },
+                    "redirectURL": {
+                      "type": "string",
+                      "title": "OpenID connect oauth redirect url",
+                      "default": ""
+                    },
+                    "clientSecret": {
+                      "type": "string",
+                      "title": "OpenID connect oauth client secret",
+                      "default": ""
+                    },
+                    "skipEmailVerifiedCheck": {
+                      "type": "boolean",
+                      "title": "Skip email verified check",
+                      "default": false
+                    }
+                  }
+                },
+                "github": {
+                  "type": "object",
+                  "properties": {
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "Github oauth scopes",
+                      "default": ["read:user", "user:email"],
+                      "uniqueItems": true
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "title": "Enable Github oauth",
+                      "default": false
+                    },
+                    "clientID": {
+                      "type": "string",
+                      "title": "Github oauth client id",
+                      "default": ""
+                    },
+                    "redirectURL": {
+                      "type": "string",
+                      "title": "Github oauth redirect url",
+                      "default": ""
+                    },
+                    "clientSecret": {
+                      "type": "string",
+                      "title": "Github oauth client secret",
+                      "default": ""
+                    }
+                  }
+                },
+                "google": {
+                  "type": "object",
+                  "properties": {
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "Google oauth scopes",
+                      "default": [
+                        "https://www.googleapis.com/auth/userinfo.email",
+                        "https://www.googleapis.com/auth/userinfo.profile"
+                      ],
+                      "uniqueItems": true
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "title": "Enable Google oauth",
+                      "default": false
+                    },
+                    "clientID": {
+                      "type": "string",
+                      "title": "Google oauth client id",
+                      "default": ""
+                    },
+                    "redirectURL": {
+                      "type": "string",
+                      "title": "Google oauth redirect url",
+                      "default": ""
+                    },
+                    "clientSecret": {
+                      "type": "string",
+                      "title": "Google oauth client secret",
+                      "default": ""
+                    }
+                  }
+                }
+              }
+            },
+            "cookie": {
+              "type": "object",
+              "required": ["secure"],
+              "properties": {
+                "secure": {
+                  "type": "boolean",
+                  "title": "Enable Hub secure cookies",
+                  "default": false
+                },
+                "hashKey": {
+                  "type": "string",
+                  "title": "Hub cookie hash key",
+                  "default": "default-unsafe-key"
+                }
+              }
+            },
+            "baseURL": {
+              "type": "string",
+              "title": "Hub server base url",
+              "default": ""
+            },
+            "cacheDir": {
+              "type": "string",
+              "title": "Cache directory path",
+              "default": "",
+              "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)."
+            },
+            "xffIndex": {
+              "type": "integer",
+              "title": "X-Forwarded-For IP index",
+              "default": 0
+            },
+            "basicAuth": {
+              "type": "object",
+              "required": ["enabled"],
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "title": "Enable Hub basic auth",
+                  "default": false
+                },
+                "password": {
+                  "type": "string",
+                  "title": "Hub basic auth password",
+                  "default": "hub"
+                },
+                "username": {
+                  "type": "string",
+                  "title": "Hub basic auth username",
+                  "default": "changeme"
+                }
+              }
+            },
+            "configDir": {
+              "enum": ["/home/hub/.cfg", "/artifacthub/.cfg"],
+              "type": "string",
+              "title": "Config directory path",
+              "default": "/home/hub/.cfg",
+              "description": "Directory path where the configuration files should be mounted."
+            },
+            "motdSeverity": {
+              "enum": ["info", "warning", "error"],
+              "type": "string",
+              "title": "Message of the day severity",
+              "default": "info",
+              "description": "The color used for the banner will be based on the severity selected."
+            },
+            "shutdownTimeout": {
+              "type": "string",
+              "title": "Hub server shutdown timeout",
+              "default": "10s"
+            },
+            "allowPrivateRepositories": {
+              "type": "boolean",
+              "title": "Allow adding private repositories to the Hub",
+              "default": false
+            }
+          }
+        },
+        "ingress": {
+          "type": "object",
+          "required": ["annotations", "enabled"],
+          "properties": {
+            "tls": {
+              "type": "array",
+              "items": {
+                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.networking.v1.IngressTLS",
+                "type": "object"
+              },
+              "title": "Hub ingress tls",
+              "default": []
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.networking.v1.IngressRule",
+                "type": "object"
+              },
+              "title": "Hub ingress rules",
+              "default": []
+            },
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable Hub ingress",
+              "default": true
+            },
+            "annotations": {
+              "type": "object",
+              "title": "Hub ingress annotations",
+              "required": ["kubernetes.io/ingress.class"],
+              "properties": {
+                "kubernetes.io/ingress.class": {
+                  "type": "string",
+                  "title": "Hub ingress class",
+                  "default": "nginx"
+                }
+              }
+            }
+          }
+        },
+        "service": {
+          "type": "object",
+          "required": ["port", "type"],
+          "properties": {
+            "port": {
+              "type": "integer",
+              "title": "Hub service port",
+              "default": 80
+            },
+            "type": {
+              "type": "string",
+              "title": "Hub service type",
+              "default": "NodePort"
+            }
+          }
+        },
+        "analytics": {
+          "type": "object",
+          "properties": {
+            "gaTrackingID": {
+              "type": "string",
+              "title": "Google Analytics tracking id",
+              "default": ""
+            }
+          }
+        }
+      }
+    },
+    "log": {
+      "type": "object",
+      "required": ["level", "pretty"],
+      "properties": {
+        "level": {
+          "enum": ["trace", "debug", "info", "warn", "error", "fatal", "panic"],
+          "type": "string",
+          "title": "Log level",
+          "default": "info"
+        },
+        "pretty": {
+          "type": "boolean",
+          "title": "Enable pretty logging",
+          "default": false
+        }
+      }
+    },
+    "creds": {
+      "type": "object",
+      "properties": {
+        "githubToken": {
+          "type": "string",
+          "title": "Authentication token used in Github requests (increases rate limit)",
+          "default": ""
+        },
+        "dockerPassword": {
+          "type": "string",
+          "title": "Docker registry password",
+          "default": ""
+        },
+        "dockerUsername": {
+          "type": "string",
+          "title": "Docker registry username",
+          "default": ""
+        }
+      }
+    },
+    "email": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "title": "From address used in emails",
+          "default": "",
+          "description": "This field is required if you want to enable email sending in Artifact Hub."
+        },
+        "smtp": {
+          "type": "object",
+          "properties": {
+            "auth": {
+              "enum": ["login", "plain"],
+              "type": "string",
+              "title": "Authentication mechanism",
+              "default": "plain"
+            },
+            "host": {
+              "type": "string",
+              "title": "SMTP host",
+              "default": "",
+              "description": "This field is required if you want to enable email sending in Artifact Hub."
+            },
+            "port": {
+              "type": "integer",
+              "title": "SMTP port",
+              "default": 587,
+              "description": "This field is required if you want to enable email sending in Artifact Hub."
+            },
+            "password": {
+              "type": "string",
+              "title": "SMTP password",
+              "default": ""
+            },
+            "username": {
+              "type": "string",
+              "title": "SMTP username",
+              "default": ""
+            }
+          }
+        },
+        "replyTo": {
+          "type": "string",
+          "title": "Reply-to address used in emails",
+          "default": ""
+        },
+        "fromName": {
+          "type": "string",
+          "title": "From name used in emails",
+          "default": ""
+        }
+      }
+    },
+    "trivy": {
+      "type": "object",
+      "title": "Trivy configuration",
+      "required": ["deploy", "persistence"],
+      "properties": {
+        "deploy": {
+          "type": "object",
+          "required": ["image", "resources"],
+          "properties": {
+            "image": {
+              "type": "string",
+              "title": "Trivy container image",
+              "default": "aquasec/trivy:0.20.2"
+            },
+            "resources": {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements",
+              "type": "object",
+              "title": "Trivy pod resource requirements",
+              "default": {}
+            }
+          }
+        },
+        "persistence": {
+          "type": "object",
+          "required": ["enabled"],
+          "properties": {
+            "size": {
+              "type": "string",
+              "title": "Size of persistent volume claim",
+              "default": "10Gi"
+            },
+            "enabled": {
+              "type": "boolean",
+              "title": "Use persistent volume to store data",
+              "default": false
+            },
+            "storageClassName": {
+              "type": "string",
+              "title": "Type of persistent volume claim",
+              "default": ""
+            }
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "object",
+      "required": ["scanningErrors", "trackingErrors"],
+      "properties": {
+        "scanningErrors": {
+          "type": "boolean",
+          "title": "Enable repository scanning errors events",
+          "default": false
+        },
+        "trackingErrors": {
+          "type": "boolean",
+          "title": "Enable repository tracking errors events",
+          "default": false
+        }
+      }
+    },
+    "images": {
+      "type": "object",
+      "required": ["store"],
+      "properties": {
+        "store": {
+          "enum": ["pg"],
+          "type": "string",
+          "title": "Store for images",
+          "default": "pg"
+        }
+      }
+    },
+    "scanner": {
+      "type": "object",
+      "title": "Scanner configuration",
+      "required": ["concurrency", "configDir", "cronjob", "trivyURL"],
+      "properties": {
+        "cronjob": {
+          "type": "object",
+          "required": ["image", "resources"],
+          "properties": {
+            "image": {
+              "type": "object",
+              "required": ["repository"],
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "title": "Scanner image repository (without the tag)",
+                  "default": "artifacthub/scanner"
+                }
+              }
+            },
+            "resources": {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements",
+              "type": "object",
+              "title": "Scanner pod resource requirements",
+              "default": {}
+            }
+          }
+        },
+        "cacheDir": {
+          "type": "string",
+          "title": "Cache directory path",
+          "default": "",
+          "description": "If set, the cache directory for the Trivy client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)."
+        },
+        "trivyURL": {
+          "type": "string",
+          "title": "Trivy server url",
+          "default": "",
+          "description": "Defaults to the Trivy service's internal URL."
+        },
+        "configDir": {
+          "enum": ["/home/scanner/.cfg", "/artifacthub/.cfg"],
+          "type": "string",
+          "title": "Config directory path",
+          "default": "/home/scanner/.cfg",
+          "description": "Directory path where the configuration files should be mounted."
+        },
+        "concurrency": {
+          "type": "integer",
+          "title": "Snapshots to process concurrently",
+          "default": 10,
+          "minimum": 1
+        }
+      }
+    },
+    "tracker": {
+      "type": "object",
+      "title": "Tracker configuration",
+      "required": [
+        "bypassDigestCheck",
+        "configDir",
+        "concurrency",
+        "cronjob",
+        "repositoriesKinds",
+        "repositoriesNames"
+      ],
+      "properties": {
+        "cronjob": {
+          "type": "object",
+          "required": ["image", "resources"],
+          "properties": {
+            "image": {
+              "type": "object",
+              "required": ["repository"],
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "title": "Tracker image repository (without the tag)",
+                  "default": "artifacthub/tracker"
+                }
+              }
+            },
+            "resources": {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements",
+              "type": "object",
+              "title": "Tracker pod resource requirements",
+              "default": {}
+            }
+          }
+        },
+        "cacheDir": {
+          "type": "string",
+          "title": "Cache directory path",
+          "default": "",
+          "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)."
+        },
+        "configDir": {
+          "enum": ["/home/tracker/.cfg", "/artifacthub/.cfg"],
+          "type": "string",
+          "title": "Config directory path",
+          "default": "/home/tracker/.cfg",
+          "description": "Directory path where the configuration files should be mounted."
+        },
+        "concurrency": {
+          "type": "integer",
+          "title": "Repositories to process concurrently",
+          "default": 10,
+          "minimum": 1
+        },
+        "bypassDigestCheck": {
+          "type": "boolean",
+          "title": "Bypass digest check",
+          "default": false
+        },
+        "repositoriesKinds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Repositories kinds to process ([] = all)",
+          "default": [],
+          "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task, keda-scaler, coredns, keptn, tekton-pipeline",
+          "uniqueItems": true
+        },
+        "repositoriesNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Repositories names to process ([] = all)",
+          "default": [],
+          "uniqueItems": true
+        }
+      }
+    },
+    "imageTag": {
+      "type": "string",
+      "title": "Tag used when pulling images",
+      "default": "",
+      "description": "Defaults to the Chart's appVersion, prefixed with a 'v'."
+    },
+    "dbMigrator": {
+      "type": "object",
+      "title": "Database migrator configuration",
+      "required": ["job", "loadSampleData", "configDir"],
+      "properties": {
+        "job": {
+          "type": "object",
+          "required": ["image"],
+          "properties": {
+            "image": {
+              "type": "object",
+              "required": ["repository"],
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "title": "Database migrator image repository (without the tag)",
+                  "default": "artifacthub/db-migrator"
+                }
+              }
+            }
+          }
+        },
+        "configDir": {
+          "enum": ["/home/db-migrator/.cfg", "/artifacthub/.cfg"],
+          "type": "string",
+          "title": "Config directory path",
+          "default": "/home/db-migrator/.cfg",
+          "description": "Directory path where the configuration files should be mounted."
+        },
+        "loadSampleData": {
+          "type": "boolean",
+          "title": "Load demo user and sample repositories",
+          "default": true
+        }
+      }
+    },
+    "pullPolicy": {
+      "type": "string",
+      "default": "IfNotPresent"
+    },
+    "nameOverride": {
+      "type": "string",
+      "default": ""
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "title": "Fullname override",
+      "default": "",
+      "description": "Overwrites the installation's fullname generation (used for the dynamic resource name prefix)."
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "default": []
+    },
+    "restrictedHTTPClient": {
+      "type": "boolean",
+      "title": "Enable restricted HTTP client",
+      "default": false,
+      "description": "Artifact Hub makes external HTTP requests for several purposes, like getting repositories metadata, dispatching webhooks, etc. When this option is enabled, requests to the private network space as well as to some other special addresses won't be allowed."
+    },
+    "dynamicResourceNamePrefixEnabled": {
+      "type": "boolean",
+      "title": "Enable dynamic resource name prefix",
+      "default": false,
+      "description": "Enabling the dynamic resource name prefix ensures that the resources are named dynamically based on the Helm installation's name. This allows multiple installations of this chart in a single Kubernetes namespace. The prefix can be defined by using the `fullnameOverride`."
+    }
+  },
+  "definitions": {
+    "sampleQuery": {
+      "type": "object",
+      "required": ["name", "queryString"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the search query. It will be displayed on the home and no results found pages."
+        },
+        "queryString": {
+          "type": "string",
+          "title": "Search query string",
+          "description": "Query string that defines the search filters to use. Example: ts_query_web=prometheus&official=true"
+        }
+      }
+    }
+  }
+}

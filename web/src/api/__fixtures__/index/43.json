@@ -1,0 +1,1170 @@
+[
+  {
+    "version": "1.4.0",
+    "changes": [
+      {
+        "kind": "added",
+        "description": "List of organizations using a package in production"
+      },
+      {
+        "kind": "added",
+        "description": "Packages last year activity view"
+      },
+      {
+        "kind": "added",
+        "description": "Applied search filters used are now highlighted in the top bar"
+      },
+      {
+        "kind": "added",
+        "description": "Publisher provided link to report issues with their content"
+      },
+      {
+        "kind": "added",
+        "description": "Endpoint to generate a changelog in markdown format"
+      },
+      {
+        "kind": "added",
+        "description": "Links to specific targets and images in security report"
+      },
+      {
+        "kind": "added",
+        "description": "Allow zooming in and out of screenshots images"
+      },
+      {
+        "kind": "added",
+        "description": "Allow using any host on git based repositories urls"
+      },
+      {
+        "kind": "added",
+        "description": "Liveness and readiness probe to hub deployment"
+      },
+      {
+        "kind": "changed",
+        "description": "Artifact Hub Helm chart now requires k8s version \u003e=1.19"
+      },
+      {
+        "kind": "changed",
+        "description": "Versions released more than 1 year ago are not scanned anymore"
+      },
+      {
+        "kind": "changed",
+        "description": "Bump Trivy to 0.20.2"
+      },
+      {
+        "kind": "changed",
+        "description": "Upgrade backend and frontend dependencies"
+      },
+      {
+        "kind": "fixed",
+        "description": "Issue handling $ref in schema top level object"
+      },
+      {
+        "kind": "fixed",
+        "description": "Issue extracting containers images from Helm charts"
+      },
+      {
+        "kind": "fixed",
+        "description": "Some bugs and other improvements"
+      }
+    ],
+    "ts": 1635860969,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "1.3.0",
+    "changes": [
+      {
+        "kind": "added",
+        "description": "Support for Tekton pipelines"
+      },
+      {
+        "kind": "added",
+        "description": "Versions index to changelog modal"
+      },
+      {
+        "kind": "added",
+        "description": "Allow publishers to include screenshots in packages"
+      },
+      {
+        "kind": "added",
+        "description": "Repository metadata file is now supported in Helm OCI repositories"
+      },
+      {
+        "kind": "added",
+        "description": "Support for provenance files in Helm OCI repositories"
+      },
+      {
+        "kind": "added",
+        "description": "Changes annotation is now available for Krew plugins kind"
+      },
+      {
+        "kind": "added",
+        "description": "Option to show/hide stars in widget"
+      },
+      {
+        "kind": "added",
+        "description": "Link Helm charts dependencies to packages in the hub"
+      },
+      {
+        "kind": "added",
+        "description": "API endpoint for helm-exporter tool"
+      },
+      {
+        "kind": "changed",
+        "description": "Improve Helm OCI support (include HIP 6 changes)"
+      },
+      {
+        "kind": "changed",
+        "description": "Improve packages search results facets"
+      },
+      {
+        "kind": "changed",
+        "description": "Bump Trivy to 0.20.0"
+      },
+      {
+        "kind": "changed",
+        "description": "Upgrade backend and frontend dependencies"
+      },
+      {
+        "kind": "fixed",
+        "description": "Some bugs and other improvements"
+      }
+    ],
+    "ts": 1633537368,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "1.2.0",
+    "changes": [
+      {
+        "kind": "added",
+        "description": "ah lint now supports all repository kinds supported by Artifact Hub"
+      },
+      {
+        "kind": "added",
+        "description": "Docker images are now published to AWS ECR Public Gallery"
+      },
+      {
+        "kind": "added",
+        "description": "SMTP auth login support (allows using Outlook.com SMTP servers)"
+      },
+      {
+        "kind": "added",
+        "description": "Allow skipping email verified check when using OIDC authentication"
+      },
+      {
+        "kind": "added",
+        "description": "Widgets are now re-rendered automatically when data attributes change"
+      },
+      {
+        "kind": "added",
+        "description": "Direct link to Tekton manifest modal"
+      },
+      {
+        "kind": "added",
+        "description": "Some missing database indexes and update some queries to improve performance"
+      },
+      {
+        "kind": "changed",
+        "description": "Improve stats page"
+      },
+      {
+        "kind": "changed",
+        "description": "Improve tracker metadata validation and error logging"
+      },
+      {
+        "kind": "changed",
+        "description": "Bump Go to 1.17"
+      },
+      {
+        "kind": "changed",
+        "description": "Upgrade frontend dependencies"
+      },
+      {
+        "kind": "fixed",
+        "description": "Issue rendering publisher provided installation instructions"
+      },
+      {
+        "kind": "fixed",
+        "description": "Issue generating packages readme ToC"
+      },
+      {
+        "kind": "fixed",
+        "description": "Issue in oauth redirection"
+      },
+      {
+        "kind": "fixed",
+        "description": "Issue with site name and colors in development environment"
+      },
+      {
+        "kind": "fixed",
+        "description": "Some bugs and other improvements"
+      }
+    ],
+    "ts": 1631261072,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "1.1.1",
+    "changes": [
+      {
+        "kind": "changed",
+        "description": "Helm charts repository moved to a new location",
+        "links": [
+          {
+            "name": "New location",
+            "url": "https://artifacthub.github.io/helm-charts/"
+          }
+        ]
+      },
+      {
+        "kind": "fixed",
+        "description": "Tracker and scanner containers resources were not being set properly"
+      },
+      {
+        "kind": "fixed",
+        "description": "Regression in logger middleware"
+      }
+    ],
+    "ts": 1629275496,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "1.1.0",
+    "changes": [
+      {
+        "kind": "added",
+        "description": "Add Artifact Hub CLI tool"
+      },
+      {
+        "kind": "added",
+        "description": "Add support for Keptn integrations"
+      },
+      {
+        "kind": "added",
+        "description": "Search results can now be sorted by relevance or stars"
+      },
+      {
+        "kind": "added",
+        "description": "Allow users deleting their accounts"
+      },
+      {
+        "kind": "added",
+        "description": "Allow users cropping their avatar image"
+      },
+      {
+        "kind": "changed",
+        "description": "Related packages are now displayed below the readme in some cases"
+      },
+      {
+        "kind": "changed",
+        "description": "Use third party library for readme ToC generation"
+      },
+      {
+        "kind": "changed",
+        "description": "Bump Alpine to 3.14"
+      },
+      {
+        "kind": "changed",
+        "description": "Bump Trivy to 0.19.2",
+        "links": [
+          {
+            "name": "Trivy migrating to new JSON schema",
+            "url": "https://github.com/artifacthub/hub/pull/1437#issue-689445316"
+          }
+        ]
+      },
+      {
+        "kind": "changed",
+        "description": "Bump OPM to 1.17.5"
+      },
+      {
+        "kind": "changed",
+        "description": "Upgrade backend dependencies"
+      },
+      {
+        "kind": "changed",
+        "description": "Upgrade frontend dependencies"
+      },
+      {
+        "kind": "fixed",
+        "description": "Some bugs and other improvements"
+      }
+    ],
+    "ts": 1628768586,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "1.0.0",
+    "changes": [
+      {
+        "kind": "added",
+        "description": "Display Helm charts sign key information"
+      },
+      {
+        "kind": "added",
+        "description": "Sample search queries can now be customized"
+      },
+      {
+        "kind": "changed",
+        "description": "Add pagination support to some endpoints",
+        "links": [
+          {
+            "name": "Github PR",
+            "url": "https://github.com/artifacthub/hub/pull/1386"
+          }
+        ]
+      },
+      {
+        "kind": "changed",
+        "description": "Consolidate some repositories API endpoints",
+        "links": [
+          {
+            "name": "Github PR",
+            "url": "https://github.com/artifacthub/hub/pull/1382"
+          }
+        ]
+      },
+      {
+        "kind": "changed",
+        "description": "Refactor packages search API endpoint",
+        "links": [
+          {
+            "name": "Github PR",
+            "url": "https://github.com/artifacthub/hub/pull/1379"
+          }
+        ]
+      },
+      {
+        "kind": "changed",
+        "description": "Update API documentation"
+      },
+      {
+        "kind": "changed",
+        "description": "Improve scanner errors handling"
+      },
+      {
+        "kind": "changed",
+        "description": "Upgrade backend dependencies"
+      },
+      {
+        "kind": "changed",
+        "description": "Upgrade frontend dependencies"
+      },
+      {
+        "kind": "removed",
+        "description": "Support for API keys hashed with bcrypt"
+      },
+      {
+        "kind": "fixed",
+        "description": "Some bugs and other improvements"
+      }
+    ],
+    "ts": 1624358420,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "0.20.0",
+    "changes": [
+      {
+        "kind": "added",
+        "description": "support for CoreDNS plugins",
+        "links": [
+          {
+            "name": "Documentation",
+            "url": "https://artifacthub.io/docs/topics/repositories/#coredns-plugins-repositories"
+          }
+        ]
+      },
+      {
+        "kind": "added",
+        "description": "Helm charts containers images are now extracted automatically"
+      },
+      {
+        "kind": "added",
+        "description": "operators CRDs, Falco rules and OPA policies explorer"
+      },
+      {
+        "kind": "added",
+        "description": "security vulnerabilities alerts"
+      },
+      {
+        "kind": "added",
+        "description": "changelog entries can now include a kind and links"
+      },
+      {
+        "kind": "added",
+        "description": "two-factor authentication support"
+      },
+      {
+        "kind": "added",
+        "description": "colors, site name and logo can now be customized",
+        "links": [
+          {
+            "name": "Documentation",
+            "url": "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema\u0026path=hub.theme"
+          }
+        ]
+      },
+      {
+        "kind": "added",
+        "description": "display subscriptions and webhooks stats on package view"
+      },
+      {
+        "kind": "added",
+        "description": "email templates now support dark mode"
+      },
+      {
+        "kind": "added",
+        "description": "generic tracker now supports README.md files"
+      },
+      {
+        "kind": "added",
+        "description": "display security scanner disabled information on packages"
+      },
+      {
+        "kind": "added",
+        "description": "support for OLM operators bundle format"
+      },
+      {
+        "kind": "changed",
+        "description": "adjust search results ranking"
+      },
+      {
+        "kind": "changed",
+        "description": "improve web application's accessibility"
+      },
+      {
+        "kind": "changed",
+        "description": "API docs are now served from the Hub"
+      },
+      {
+        "kind": "changed",
+        "description": "upgrade backend dependencies"
+      },
+      {
+        "kind": "changed",
+        "description": "upgrade frontend dependencies"
+      },
+      {
+        "kind": "changed",
+        "description": "bump Trivy to 0.18.3"
+      },
+      {
+        "kind": "fixed",
+        "description": "some bugs and other improvements"
+      }
+    ],
+    "ts": 1622630689,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "0.19.0",
+    "changes": [
+      {
+        "description": "Add support for KEDA scalers"
+      },
+      {
+        "description": "Allow embedding Artifact Hub items on other sites"
+      },
+      {
+        "description": "Add navigation view for packages' readme content"
+      },
+      {
+        "description": "Make navigation bar sticky in desktop browsers"
+      },
+      {
+        "description": "Enforce password strength"
+      },
+      {
+        "description": "Add OpenAPI spec linter"
+      },
+      {
+        "description": "Upgrade backend dependencies"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1619431781,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "0.18.0",
+    "changes": [
+      {
+        "description": "Add stats page"
+      },
+      {
+        "description": "Search bar now includes typeahead functionality"
+      },
+      {
+        "description": "Packages search now supports prefix matching"
+      },
+      {
+        "description": "Allow exploring templates in private Helm repos"
+      },
+      {
+        "description": "Allow starring packages from mobile devices"
+      },
+      {
+        "description": "Reorganize some configuration values (breaking changes, please see PR#1189)"
+      },
+      {
+        "description": "Upgrade backend dependencies"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1617098268,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.17.0",
+    "changes": [
+      {
+        "description": "Add Helm charts templates explorer"
+      },
+      {
+        "description": "Scan packages latest version images daily"
+      },
+      {
+        "description": "Enable strict transport security"
+      },
+      {
+        "description": "Add some CSRF protection"
+      },
+      {
+        "description": "Add content security policy"
+      },
+      {
+        "description": "Detect links in values schema descriptions"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1615828756,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.16.0",
+    "changes": [
+      {
+        "description": "Display usage tips and promote features available on UI"
+      },
+      {
+        "description": "Store and expose security scanner errors"
+      },
+      {
+        "description": "Add support for user password reset"
+      },
+      {
+        "description": "Allow setting official status at the package level"
+      },
+      {
+        "description": "Images using the latest tag are now scanned"
+      },
+      {
+        "description": "Add architecture and infrastructure documentation"
+      },
+      {
+        "description": "Improve charts metadata validation and errors tracking"
+      },
+      {
+        "description": "Update some API endpoints for consistency reasons"
+      },
+      {
+        "description": "Bump Go to 1.16"
+      },
+      {
+        "description": "Bump Alpine to 3.13.2 (openssl security update)"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1614337842,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "0.15.0",
+    "changes": [
+      {
+        "description": "Add support for publisher recommendations"
+      },
+      {
+        "description": "Add support for private git based repositories"
+      },
+      {
+        "description": "List supported platforms for krew kubectl plugins"
+      },
+      {
+        "description": "Display krew kubectl plugins manifest yaml"
+      },
+      {
+        "description": "Charts using API v2 now only display installation instructions for Helm v3"
+      },
+      {
+        "description": "Display stars in related packages cards"
+      },
+      {
+        "description": "Helm charts kubeVersion and type is now tracked and displayed on the UI"
+      },
+      {
+        "description": "Add banner to display message of the day"
+      },
+      {
+        "description": "Allow referencing external logo images in artifacthub-pkg.yaml file"
+      },
+      {
+        "description": "Allow dynamic resource names in Artifact Hub Helm chart"
+      },
+      {
+        "description": "Use chart's appVersion as default image tag"
+      },
+      {
+        "description": "Setup Gitlab rate limiter based on token presence"
+      },
+      {
+        "description": "Set timeout for each repository tracked"
+      },
+      {
+        "description": "Bump Alpine to 3.13"
+      },
+      {
+        "description": "Bump Trivy to 0.16.0"
+      },
+      {
+        "description": "Upgrade backend dependencies"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1613115038,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "0.14.0",
+    "changes": [
+      {
+        "description": "Add support for Helm plugins repositories"
+      },
+      {
+        "description": "Add support for Tekton tasks repositories"
+      },
+      {
+        "description": "Improve how versions, images and dependencies are displayed in package view"
+      },
+      {
+        "description": "Refactor trackers"
+      },
+      {
+        "description": "Allow deleting organizations"
+      },
+      {
+        "description": "Allow updating organizations' name"
+      },
+      {
+        "description": "Helm charts' license can now be overriding using annotations"
+      },
+      {
+        "description": "Allow disabling oauth providers using new `enabled` flag"
+      },
+      {
+        "description": "Components config and cache paths can now be configured from the chart"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1611848139,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "0.13.0",
+    "changes": [
+      {
+        "description": "Add support for Tinkerbell actions"
+      },
+      {
+        "description": "Add support for Krew index repositories"
+      },
+      {
+        "description": "Add experimental OpenID connect support"
+      },
+      {
+        "description": "Improve values schema view"
+      },
+      {
+        "description": "Add endpoint for Harbor replication adapter"
+      },
+      {
+        "description": "Allow setting the branch for git based repositories"
+      },
+      {
+        "description": "Bump Trivy to 0.15.0"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1610354051,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "0.12.0",
+    "changes": [
+      {
+        "description": "Display `contains security updates` status in UI and new release emails"
+      },
+      {
+        "description": "Display `pre-release` status in UI and new release emails"
+      },
+      {
+        "description": "Add buttons to download and copy configurations"
+      },
+      {
+        "description": "Trackers can now ignore selected packages or versions"
+      },
+      {
+        "description": "Add search capabilities to values schema modal"
+      },
+      {
+        "description": "Add support for combine keywords in values schema"
+      },
+      {
+        "description": "Enrich default webhook payload template with some extra fields"
+      },
+      {
+        "description": "Falco and OPA packages are now indexed by a generic tracker"
+      },
+      {
+        "description": "Add support for multiple rules files in Falco package UI view"
+      },
+      {
+        "description": "Add support for custom install section in UI"
+      },
+      {
+        "description": "Allow pkg metadata files to use either .yaml or .yml extension"
+      },
+      {
+        "description": "Improve repository URL uniqueness check"
+      },
+      {
+        "description": "Bump Trivy to 0.14.0"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1608276165,
+    "contains_security_updates": true,
+    "prerelease": false
+  },
+  {
+    "version": "0.11.0",
+    "changes": [
+      {
+        "description": "Allow disabling repositories from control panel"
+      },
+      {
+        "description": "Allow disabling security scanner per repository"
+      },
+      {
+        "description": "Gitpodify Artifact Hub git repository"
+      },
+      {
+        "description": "Improve Github rate limiting handling"
+      },
+      {
+        "description": "Add some extra protection to avoid deleting a repository or packages accidentally"
+      },
+      {
+        "description": "Tracker now only exports or clones repos when they have changed"
+      },
+      {
+        "description": "Improve repository ownership claim modal"
+      },
+      {
+        "description": "Improve package not found view"
+      },
+      {
+        "description": "Some refactoring in trackers"
+      },
+      {
+        "description": "Add support for legacy Helm Hub chart version url"
+      },
+      {
+        "description": "Cache dependencies in CI workflow"
+      },
+      {
+        "description": "Bump Trivy to 0.13.0"
+      },
+      {
+        "description": "Some bugs fixes and other improvements"
+      }
+    ],
+    "ts": 1607006504,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.10.0",
+    "changes": [
+      {
+        "description": "Add experimental OCI support for Helm repositories"
+      },
+      {
+        "description": "Add experimental OCI support for OLM repositories"
+      },
+      {
+        "description": "Add support for private Helm OCI repositories"
+      },
+      {
+        "description": "Display available documentation nicely formatted in UI"
+      },
+      {
+        "description": "Display containers images security rating in packages cards"
+      },
+      {
+        "description": "Display CVSS v3 score and vector in security report"
+      },
+      {
+        "description": "Display containers images summary at the top of the security report"
+      },
+      {
+        "description": "Improve packages search results ordering"
+      },
+      {
+        "description": "Optimize UI for larger resolution screens"
+      },
+      {
+        "description": "Add support for $ref pointers in values JSON schema"
+      },
+      {
+        "description": "Add maintenance mode page"
+      },
+      {
+        "description": "Display package content link in install modal"
+      },
+      {
+        "description": "Add index page to Artifact Hub Helm charts repository"
+      },
+      {
+        "description": "Allow whitelisting containers images"
+      },
+      {
+        "description": "Track OLM packages related containers images"
+      },
+      {
+        "description": "Some bugs fixes and improvements"
+      }
+    ],
+    "ts": 1605769323,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.9.0",
+    "changes": [
+      {
+        "description": "Display Helm chart reference doc in package view"
+      },
+      {
+        "description": "Display changelog in package view"
+      },
+      {
+        "description": "Add support for private Helm repositories"
+      },
+      {
+        "description": "Add API endpoint to get package changelog"
+      },
+      {
+        "description": "Include package version changes in new release notification email"
+      },
+      {
+        "description": "Add new `changes` annotation for Helm, OLM and OPA packages"
+      },
+      {
+        "description": "Add direct links for modals in package view"
+      },
+      {
+        "description": "Display security report generation time"
+      },
+      {
+        "description": "Upgrade frontend dependencies"
+      },
+      {
+        "description": "Some bugs fixes and improvements"
+      }
+    ],
+    "ts": 1604306438,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.8.0",
+    "changes": [
+      {
+        "description": "Add JSON schema for Artifact Hub Helm chart"
+      },
+      {
+        "description": "Some improvements in Artifact Hub Helm chart"
+      },
+      {
+        "description": "Track Helm charts values schema"
+      },
+      {
+        "description": "Add endpoint to get Helm charts values schema"
+      },
+      {
+        "description": "Bump Trivy to 0.12.0"
+      },
+      {
+        "description": "Display containers images in Helm packages"
+      },
+      {
+        "description": "Remove internal requests limiter"
+      },
+      {
+        "description": "Upgrade frontend dependencies to fix some security vulnerabilities"
+      },
+      {
+        "description": "Add packages security report documentation"
+      },
+      {
+        "description": "Some bugs fixes and improvements"
+      }
+    ],
+    "ts": 1603372486,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.7.0",
+    "changes": [
+      {
+        "description": "Introduce packages security report"
+      },
+      {
+        "description": "Display packages' license in cards"
+      },
+      {
+        "description": "Allow filtering packages by license and operator capabilities"
+      },
+      {
+        "description": "Add support for some extra Helm and OLM annotations"
+      },
+      {
+        "description": "Add repositories guide"
+      },
+      {
+        "description": "Allow adding CRDs for operators in Helm packages"
+      },
+      {
+        "description": "Display search tips and add some extra sample searches"
+      },
+      {
+        "description": "Improve user experience in authorization configuration view"
+      },
+      {
+        "description": "Some bugs fixes and improvements"
+      }
+    ],
+    "ts": 1602677027,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.6.0",
+    "changes": [
+      {
+        "description": "Introduce fine grained authorization mechanism based on OPA policies"
+      },
+      {
+        "description": "Allow enriching package information using Helm annotations"
+      },
+      {
+        "description": "Allow entities to claim repositories ownership"
+      },
+      {
+        "description": "Introduce official repository concept"
+      },
+      {
+        "description": "Add verified publisher and official repository search filters"
+      },
+      {
+        "description": "Artifact Hub repositories badges"
+      },
+      {
+        "description": "Test Artifact Hub Helm chart"
+      },
+      {
+        "description": "Improve package view on mobile devices"
+      },
+      {
+        "description": "Add API endpoint to get repositories by kind"
+      },
+      {
+        "description": "Some bugs fixes and improvements"
+      }
+    ],
+    "ts": 1600841229,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.5.0",
+    "changes": [
+      {
+        "description": "Introduce verified publisher concept"
+      },
+      {
+        "description": "Add dark mode support"
+      },
+      {
+        "description": "Improve search facets filtering"
+      },
+      {
+        "description": "Notify repository owners of tracking errors"
+      },
+      {
+        "description": "Track and list Helm charts dependencies"
+      },
+      {
+        "description": "Display links to source in Helm packages"
+      },
+      {
+        "description": "Add repositories kind filter to tracker"
+      },
+      {
+        "description": "Add Monocular compatible search API"
+      },
+      {
+        "description": "Some bugs fixes and improvements"
+      }
+    ],
+    "ts": 1599125273,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.4.0",
+    "changes": [
+      {
+        "description": "Added support for OPA policies repositories (uses Artifact Hub metadata new spec draft)"
+      },
+      {
+        "description": "Trackers have been improved and consolidated into one"
+      },
+      {
+        "description": "Search filtering experience in UI has been improved"
+      },
+      {
+        "description": "Now it's possible to search by the name of the repository and the name of the owning organization or user"
+      },
+      {
+        "description": "Added support to allow filtering packages by category"
+      },
+      {
+        "description": "An operator flag has been added to the package entity, and it's possible to filter by it"
+      },
+      {
+        "description": "Repositories URL is now exposed to users in several places in the UI"
+      },
+      {
+        "description": "Some bugs fixes"
+      }
+    ],
+    "ts": 1596724967,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.3.0",
+    "changes": [
+      {
+        "description": "Added support for OLM operators repositories"
+      },
+      {
+        "description": "Added support for Falco rules repositories"
+      },
+      {
+        "description": "Added RSS feed for packages' new version releases"
+      },
+      {
+        "description": "Packages now always belong to a repository"
+      },
+      {
+        "description": "Reorganized some API routes (breaking changes)"
+      },
+      {
+        "description": "Added a link to browse all packages and some sample searches to home page"
+      },
+      {
+        "description": "Added CNCF Sandbox logo to home page"
+      },
+      {
+        "description": "Some minor improvements in search page filters"
+      },
+      {
+        "description": "Package creation time is now tracked and displayed"
+      },
+      {
+        "description": "Some bugs fixes"
+      }
+    ],
+    "ts": 1593821100,
+    "contains_security_updates": false,
+    "prerelease": false
+  },
+  {
+    "version": "0.2.0",
+    "changes": [
+      {
+        "description": "API docs"
+      },
+      {
+        "description": "Reorganize API routes"
+      },
+      {
+        "description": "Some HTTP handlers improvements"
+      },
+      {
+        "description": "Support for API keys"
+      },
+      {
+        "description": "API rate limiting"
+      },
+      {
+        "description": "Signed packages label (Helm provenance file)"
+      },
+      {
+        "description": "Home page updated"
+      },
+      {
+        "description": "Bug fixes"
+      }
+    ],
+    "ts": 1593821100,
+    "contains_security_updates": false,
+    "prerelease": false
+  }
+]

@@ -1,9 +1,11 @@
+import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
 
 import {
   AHStats,
   APIKey,
   AuthorizationPolicy,
+  ChangeLog,
   ChartTemplatesData,
   CheckAvailabilityProps,
   ErrorKind,
@@ -1806,6 +1808,118 @@ describe('API', () => {
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.1.1/security-report');
         expect(response).toEqual(report);
+      });
+    });
+
+    describe('getValuesSchema', () => {
+      it('success', async () => {
+        const valuesSchema: JSONSchema = getData('42') as JSONSchema;
+        fetchMock.mockResponse(JSON.stringify(valuesSchema), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.getValuesSchema('id', '1.1.0');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/1.1.0/values-schema');
+        expect(response).toEqual(valuesSchema);
+      });
+    });
+
+    describe('getChartValues', () => {
+      it('success', async () => {
+        const YAMLSample = `nameOverride: ""
+        fullnameOverride: ""
+        imagePullSecrets: []
+        imageTag: ""
+        dynamicResourceNamePrefixEnabled: false
+        pullPolicy: IfNotPresent
+        restrictedHTTPClient: false`;
+
+        fetchMock.mockResponse(YAMLSample, {
+          headers: {
+            'content-type': 'application/yaml',
+          },
+          status: 200,
+        });
+
+        const response = await API.getChartValues('id', '1.1.0');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/1.1.0/values');
+        expect(response).toEqual(YAMLSample);
+      });
+    });
+
+    describe('getChangelog', () => {
+      it('success', async () => {
+        const changelog: string = `
+# Changelog
+
+## 1.4.0 - 2021-11-02
+
+### Added
+
+- List of organizations using a package in production
+- Packages last year activity view
+- Applied search filters used are now highlighted in the top bar
+- Publisher provided link to report issues with their content
+- Endpoint to generate a changelog in markdown format
+- Links to specific targets and images in security report
+- Allow zooming in and out of screenshots images
+- Allow using any host on git based repositories urls
+- Liveness and readiness probe to hub deployment
+
+### Changed
+
+- Artifact Hub Helm chart now requires k8s version >=1.19
+- Versions released more than 1 year ago are not scanned anymore
+- Bump Trivy to 0.20.2
+- Upgrade backend and frontend dependencies
+
+### Fixed
+
+- Issue handling $ref in schema top level object
+- Issue extracting containers images from Helm charts
+- Some bugs and other improvements
+`;
+        fetchMock.mockResponse(JSON.stringify(changelog), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.getChangelogMD({
+          packageName: 'name',
+          repositoryKind: 'helm',
+          repositoryName: 'repoName',
+        });
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/helm/repoName/name/changelog.md');
+        expect(response).toEqual(changelog);
+      });
+    });
+
+    describe('getChangelogMD', () => {
+      it('success', async () => {
+        const templateData: ChartTemplatesData = getData('37') as ChartTemplatesData;
+        fetchMock.mockResponse(JSON.stringify(templateData), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.getChartTemplates('id', '1.1.0');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/1.1.0/templates');
+        expect(response).toEqual(templateData);
       });
     });
 
