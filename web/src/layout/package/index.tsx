@@ -903,6 +903,11 @@ const PackageView = (props: Props) => {
                                         visibleValues={
                                           !isUndefined(props.visibleModal) && props.visibleModal === 'values'
                                         }
+                                        visibleValuesPath={
+                                          !isUndefined(props.visibleModal) && props.visibleModal === 'values'
+                                            ? props.visibleValuesPath
+                                            : undefined
+                                        }
                                       />
                                     </div>
                                     {detail.hasValuesSchema && (

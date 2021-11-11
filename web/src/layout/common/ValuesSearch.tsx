@@ -1,25 +1,50 @@
-import React, { useRef } from 'react';
+import { isUndefined } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 
-import useOutsideClick from '../../../hooks/useOutsideClick';
-import { Option, RefInputTypeaheadField } from '../../../types';
-import InputTypeahead from '../../common/InputTypeahead';
-import styles from './SchemaValuesSearch.module.css';
+import useOutsideClick from '../../hooks/useOutsideClick';
+import { Option, RefInputTypeaheadField } from '../../types';
+import InputTypeahead from './InputTypeahead';
+import styles from './ValuesSearch.module.css';
 
 interface Props {
-  paths: string[];
+  paths?: string[];
+  pathsObj?: { [key: number]: string };
   activePath?: string;
   wrapperClassName?: string;
   onSearch: (selectedPath?: string) => void;
 }
 
-const SchemaValuesSearch = (props: Props) => {
+const ValuesSearch = (props: Props) => {
+  const prepareOptions = (): undefined | Option[] => {
+    if (!isUndefined(props.pathsObj)) {
+      return Object.keys(props.pathsObj).map((line: string) => {
+        return {
+          id: line,
+          name: props.pathsObj![parseInt(line)],
+          filterKey: 'path',
+        };
+      });
+    } else if (!isUndefined(props.paths)) {
+      return props.paths.map((path: string) => ({ id: path, name: path, filterKey: 'path' }));
+    }
+
+    return;
+  };
+
   const inputWrapper = useRef<HTMLDivElement | null>(null);
   const input = useRef<RefInputTypeaheadField>(null);
   const isEmptyInput: boolean = input && input.current ? input.current!.getValue() === '' : false;
+  const [opts, setOpts] = useState<Option[] | undefined>(prepareOptions());
 
   useOutsideClick([inputWrapper], !isEmptyInput, () => input.current!.reset());
 
-  const opts: Option[] = props.paths.map((path: string) => ({ id: path, name: path, filterKey: 'path' }));
+  useEffect(() => {
+    if (isUndefined(opts) && !isUndefined(props.paths)) {
+      setOpts(props.paths.map((path: string) => ({ id: path, name: path, filterKey: 'path' })));
+    }
+  }, [props.paths]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  if (isUndefined(opts)) return null;
 
   return (
     <div className="d-flex flex-row">
@@ -52,4 +77,4 @@ const SchemaValuesSearch = (props: Props) => {
   );
 };
 
-export default SchemaValuesSearch;
+export default ValuesSearch;

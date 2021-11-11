@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import SchemaValuesSearch from './SchemaValuesSearch';
+import ValuesSearch from './ValuesSearch';
 
 Object.defineProperty(HTMLElement.prototype, 'scroll', { configurable: true, value: jest.fn() });
 
@@ -19,25 +19,33 @@ describe('SchemaValuesSearch', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<SchemaValuesSearch {...defaultProps} />);
+    const { asFragment } = render(<ValuesSearch {...defaultProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', () => {
-    render(<SchemaValuesSearch {...defaultProps} />);
+    render(<ValuesSearch {...defaultProps} />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('displays options', () => {
-    render(<SchemaValuesSearch {...defaultProps} />);
+    render(<ValuesSearch {...defaultProps} />);
 
     userEvent.type(screen.getByRole('textbox'), 'sub');
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
   });
 
+  it('renders component using pathsObj prop', () => {
+    render(<ValuesSearch onSearch={onSearchMock} pathsObj={{ 10: 'test', 12: 'test1', 15: 'other' }} />);
+
+    userEvent.type(screen.getByRole('textbox'), 'tes');
+
+    expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
+  });
+
   it('calls onSearch with selected path', () => {
-    render(<SchemaValuesSearch {...defaultProps} />);
+    render(<ValuesSearch {...defaultProps} />);
 
     userEvent.type(screen.getByRole('textbox'), 'sub');
 
@@ -49,7 +57,7 @@ describe('SchemaValuesSearch', () => {
   });
 
   it('calls onSearch twice', async () => {
-    render(<SchemaValuesSearch {...defaultProps} activePath="path1.subpath1" />);
+    render(<ValuesSearch {...defaultProps} activePath="path1.subpath1" />);
 
     userEvent.type(screen.getByRole('textbox'), 'sub');
 
