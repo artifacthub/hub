@@ -410,7 +410,8 @@ describe('Values', () => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
             type: 'danger',
             message:
-              'We could not find the default values for this chart version. Please check the chart tgz package as they might be missing.',
+              'We could not find the default values for this chart version. Please check that the chart tgz package still exists in the source repository as it might not be available anymore.',
+            dismissOn: 10000,
           });
         });
       });
@@ -431,7 +432,7 @@ describe('Values', () => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
           expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
             type: 'danger',
-            message: 'An error occurred getting the default values, please try again later.',
+            message: 'An error occurred getting chart default values, please try again later.',
           });
         });
       });

@@ -5,7 +5,7 @@ import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
-import { ChartTemplate, ChartTmplTypeFile, RepositoryKind, SearchFiltersURL } from '../../../types';
+import { ChartTemplate, ChartTmplTypeFile, ErrorKind, RepositoryKind, SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import BlockCodeButtons from '../../common/BlockCodeButtons';
 import ErrorBoundary from '../../common/ErrorBoundary';
@@ -186,13 +186,22 @@ const ChartTemplatesModal = (props: Props) => {
         cleanUrl();
       }
       setIsLoading(false);
-    } catch {
+    } catch (err) {
+      if (err.kind === ErrorKind.NotFound) {
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message:
+            'We could not find the templates for this chart version. Please check that the chart tgz package still exists in the source repository as it might not be available anymore.',
+          dismissOn: 10 * 1000, // 10s
+        });
+      } else {
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: 'An error occurred getting chart templates, please try again later.',
+        });
+      }
       setTemplates(null);
       setValues(null);
-      alertDispatcher.postAlert({
-        type: 'danger',
-        message: 'An error occurred getting chart templates, please try again later.',
-      });
       cleanUrl();
       setIsLoading(false);
     }
