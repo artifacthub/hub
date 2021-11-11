@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import YAML from 'yaml';
+import { stringify } from 'yaml';
 
 import { CustomResourcesDefinition, FileModalKind, SearchFiltersURL } from '../../types';
 import BlockCodeButtons from './BlockCodeButtons';
@@ -63,7 +63,7 @@ const FilesModal = (props: Props) => {
       switch (props.kind) {
         case FileModalKind.CustomResourcesDefinition:
           if (!isNull(file) && !isUndefined(file.example)) {
-            content = YAML.stringify(file.example, { sortMapEntries: true });
+            content = stringify(file.example, { sortMapEntries: true });
           }
           break;
         default:

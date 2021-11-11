@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react';
 import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import compoundJSONSchemaYAML from '../../../utils/compoundJSONSchemaYAML';
 import BlockCodeButtons from '../../common/BlockCodeButtons';
+import ValuesSearch from '../../common/ValuesSearch';
 import styles from './Schema.module.css';
 import SchemaLine from './SchemaLine';
-import SchemaValuesSearch from './SchemaValuesSearch';
 
 interface Props {
   schema: JSONSchema;
@@ -52,7 +52,14 @@ const Schema = (props: Props) => {
 
   return (
     <>
-      {availablePaths && <SchemaValuesSearch paths={availablePaths} activePath={activePath} onSearch={onSearch} />}
+      {availablePaths && (
+        <ValuesSearch
+          paths={availablePaths}
+          activePath={activePath}
+          onSearch={onSearch}
+          wrapperClassName={styles.search}
+        />
+      )}
       <div className="row">
         <div className="col-7 pt-3 bg-dark position-relative">
           {props.schema.title && (

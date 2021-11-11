@@ -1,3 +1,13 @@
+.content {
+  height: 1px;
+}
+
+.codeWrapper {
+  background-color: #343a40;
+  border-radius: 3px;
+  overscroll-behavior: contain;
+}
+
 :global(.linenumber) {
   user-select: none;
 }
@@ -22,8 +32,67 @@
   color: #dc3545;
 }
 
-:global(.customYAML .hljs-number ~ .hljs-string) {
+:global(.customYAML .hljs-string ~ .hljs-number) {
   color: #ffc107;
+}
+
+[data-line-number]::before {
+  content: attr(data-line-number);
+  position: absolute;
+  width: 4rem;
+  text-align: right;
+  left: -4.25rem;
+  padding-right: 1rem;
+  color: #f8f9fa;
+  opacity: 0.5;
+  user-select: none;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+}
+
+[data-clickable-line='true'] {
+  cursor: pointer;
+}
+
+[data-clickable-line='true']:hover::after {
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.1);
+  top: 0;
+  height: 1.5rem;
+  width: calc(100% + 2rem);
+  left: -0.5rem;
+}
+
+[data-clickable-line='true']:hover::before {
+  opacity: 1;
+}
+
+[data-line-number] {
+  display: block;
+}
+
+[data-active-line='true']::before {
+  opacity: 1;
+}
+
+[data-active-line='true']::after {
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.1);
+  top: 0;
+  height: 1.5rem;
+  width: calc(100% + 2rem);
+  left: -0.5rem;
+  border-left: 2px solid #f8f9fa;
+}
+
+.dropdown {
+  left: 4rem;
+}
+
+.arrow {
+  right: auto;
 }
 
 @media only screen and (max-width: 767.98px) {

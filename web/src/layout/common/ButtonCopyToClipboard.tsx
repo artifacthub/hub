@@ -18,6 +18,8 @@ interface Props {
   disabled?: boolean;
   label?: string;
   tooltipType?: 'normal' | 'light';
+  noTooltip?: boolean;
+  onClick?: () => void;
 }
 
 const ButtonCopyToClipboard = (props: Props) => {
@@ -32,14 +34,18 @@ const ButtonCopyToClipboard = (props: Props) => {
         textField.select();
         document.execCommand('copy');
         textField.remove();
-        setCopyStatus(true);
+        if (isUndefined(props.noTooltip) || !props.noTooltip) {
+          setCopyStatus(true);
+        }
       } catch {
         setCopyStatus(false);
       }
     } else {
       try {
         await navigator.clipboard.writeText(textToCopy);
-        setCopyStatus(true);
+        if (isUndefined(props.noTooltip) || !props.noTooltip) {
+          setCopyStatus(true);
+        }
       } catch {
         setCopyStatus(false);
       }
@@ -93,6 +99,9 @@ const ButtonCopyToClipboard = (props: Props) => {
           e.preventDefault();
           e.stopPropagation();
           copyToClipboard(props.text);
+          if (props.onClick) {
+            props.onClick();
+          }
         }}
         disabled={props.disabled}
         aria-label={props.label || 'Copy to clipboard'}
