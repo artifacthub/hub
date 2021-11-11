@@ -276,6 +276,51 @@ func TestTrackerSource(t *testing.T) {
 		sw.AssertExpectations(t)
 	})
 
+	t.Run("error loading chart archive - not found (http)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				URL: "https://repo.url",
+			},
+			Svc: sw.Svc,
+		}
+		il := &repo.HelmIndexLoaderMock{}
+		il.On("LoadIndex", i.Repository).Return(&helmrepo.IndexFile{
+			Entries: map[string]helmrepo.ChartVersions{
+				"pkg1": []*helmrepo.ChartVersion{
+					{
+						Metadata: &chart.Metadata{
+							APIVersion: "v2",
+							Name:       "pkg1",
+							Version:    "1.0.0",
+						},
+						URLs: []string{
+							"https://repo.url/pkg1-1.0.0.tgz",
+						},
+					},
+				},
+			},
+		}, "", nil)
+		req, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
+		req.Header.Set("Accept-Encoding", "*")
+		sw.Hc.On("Do", req).Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusNotFound,
+		}, nil)
+		expectedErr := "error preparing package: error loading chart (https://repo.url/pkg1-1.0.0.tgz): not found (package: pkg1 version: 1.0.0)"
+		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		il.AssertExpectations(t)
+		sw.AssertExpectations(t)
+	})
+
 	t.Run("error loading chart archive (oci)", func(t *testing.T) {
 		t.Parallel()
 

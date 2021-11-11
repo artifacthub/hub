@@ -379,7 +379,11 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 			return nil, err
 		}
 		defer resp.Body.Close()
-		if resp.StatusCode != http.StatusOK {
+		switch resp.StatusCode {
+		case http.StatusOK:
+		case http.StatusNotFound:
+			return nil, hub.ErrNotFound
+		default:
 			return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
 		}
 		r = resp.Body
