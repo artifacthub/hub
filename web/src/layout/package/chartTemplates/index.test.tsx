@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import API from '../../../api';
-import { ChartTemplatesData, RepositoryKind } from '../../../types';
+import { ChartTemplatesData, ErrorKind, RepositoryKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ChartTemplatesModal from './index';
 jest.mock('../../../utils/alertDispatcher');
@@ -226,22 +226,50 @@ describe('ChartTemplatesModal', () => {
       });
     });
 
-    it('when error occurred to get templates', async () => {
-      mocked(API).getChartTemplates.mockRejectedValue(null);
+    describe('when fails', () => {
+      it('on NotFound', async () => {
+        mocked(API).getChartTemplates.mockRejectedValue({
+          kind: ErrorKind.NotFound,
+        });
 
-      render(
-        <Router>
-          <ChartTemplatesModal {...defaultProps} visibleChartTemplates />
-        </Router>
-      );
+        render(
+          <Router>
+            <ChartTemplatesModal {...defaultProps} visibleChartTemplates />
+          </Router>
+        );
 
-      await waitFor(() => expect(API.getChartTemplates).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(API.getChartTemplates).toHaveBeenCalledTimes(1));
 
-      await waitFor(() => {
-        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-          type: 'danger',
-          message: 'An error occurred getting chart templates, please try again later.',
+        await waitFor(() => {
+          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+            type: 'danger',
+            message:
+              'We could not find the templates for this chart version. Please check that the chart tgz package still exists in the source repository as it might not be available anymore.',
+            dismissOn: 10000,
+          });
+        });
+      });
+
+      it('default error', async () => {
+        mocked(API).getChartTemplates.mockRejectedValue({
+          kind: ErrorKind.Other,
+        });
+
+        render(
+          <Router>
+            <ChartTemplatesModal {...defaultProps} visibleChartTemplates />
+          </Router>
+        );
+
+        await waitFor(() => expect(API.getChartTemplates).toHaveBeenCalledTimes(1));
+
+        await waitFor(() => {
+          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+            type: 'danger',
+            message: 'An error occurred getting chart templates, please try again later.',
+          });
         });
       });
     });
