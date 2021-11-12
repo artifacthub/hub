@@ -24,6 +24,8 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+jest.mock('react-syntax-highlighter', () => () => <div id="line_59">port:</div>);
+
 const defaultProps = {
   packageId: 'id',
   version: '0.1.0',
@@ -31,8 +33,7 @@ const defaultProps = {
   normalizedName: 'pkg',
 };
 
-const YAMLSample = `
-nameOverride: ""
+const YAMLSample = `nameOverride: ""
 fullnameOverride: ""
 imagePullSecrets: []
 imageTag: ""
@@ -387,6 +388,51 @@ describe('Values', () => {
         expect(opts[7]).toHaveTextContent('hub.theme.siteName');
         expect(opts[8]).toHaveTextContent('tracker.repositoriesNames');
         expect(opts[9]).toHaveTextContent('postgresql.postgresqlUsername');
+      });
+
+      it('clicks option after searching', async () => {
+        mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+
+        render(<Values {...defaultProps} visibleValues />);
+
+        await waitFor(() => {
+          expect(API.getChartValues).toHaveBeenCalledTimes(1);
+        });
+
+        expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+        userEvent.type(screen.getByRole('textbox'), 'name');
+
+        const opts = screen.getAllByTestId('typeaheadDropdownBtn');
+
+        userEvent.click(opts[8]);
+
+        await waitFor(() => {
+          expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
+          expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+            search: '?modal=values&path=tracker.repositoriesNames',
+            state: {
+              fromStarredPage: undefined,
+              searchUrlReferer: undefined,
+            },
+          });
+        });
+      });
+
+      it('goes to correct position when querystring path is defined', async () => {
+        mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+
+        render(<Values {...defaultProps} visibleValues visibleValuesPath="hub.service.port" />);
+
+        await waitFor(() => {
+          expect(API.getChartValues).toHaveBeenCalledTimes(1);
+        });
+
+        expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+        await waitFor(() => {
+          expect(scrollToMock).toHaveBeenCalledTimes(1);
+        });
       });
     });
 
