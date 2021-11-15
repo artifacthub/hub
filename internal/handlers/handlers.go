@@ -216,24 +216,26 @@ func (h *Handlers) setupRouter() {
 
 		// Repositories
 		r.Route("/repositories", func(r chi.Router) {
-			r.Use(h.Users.RequireLogin)
 			r.Get("/search", h.Repositories.Search)
-			r.Route("/user", func(r chi.Router) {
-				r.Post("/", h.Repositories.Add)
-				r.Route("/{repoName}", func(r chi.Router) {
-					r.Put("/claim-ownership", h.Repositories.ClaimOwnership)
-					r.Put("/transfer", h.Repositories.Transfer)
-					r.Put("/", h.Repositories.Update)
-					r.Delete("/", h.Repositories.Delete)
+			r.Group(func(r chi.Router) {
+				r.Use(h.Users.RequireLogin)
+				r.Route("/user", func(r chi.Router) {
+					r.Post("/", h.Repositories.Add)
+					r.Route("/{repoName}", func(r chi.Router) {
+						r.Put("/claim-ownership", h.Repositories.ClaimOwnership)
+						r.Put("/transfer", h.Repositories.Transfer)
+						r.Put("/", h.Repositories.Update)
+						r.Delete("/", h.Repositories.Delete)
+					})
 				})
-			})
-			r.Route("/org/{orgName}", func(r chi.Router) {
-				r.Post("/", h.Repositories.Add)
-				r.Route("/{repoName}", func(r chi.Router) {
-					r.Put("/claim-ownership", h.Repositories.ClaimOwnership)
-					r.Put("/transfer", h.Repositories.Transfer)
-					r.Put("/", h.Repositories.Update)
-					r.Delete("/", h.Repositories.Delete)
+				r.Route("/org/{orgName}", func(r chi.Router) {
+					r.Post("/", h.Repositories.Add)
+					r.Route("/{repoName}", func(r chi.Router) {
+						r.Put("/claim-ownership", h.Repositories.ClaimOwnership)
+						r.Put("/transfer", h.Repositories.Transfer)
+						r.Put("/", h.Repositories.Update)
+						r.Delete("/", h.Repositories.Delete)
+					})
 				})
 			})
 		})

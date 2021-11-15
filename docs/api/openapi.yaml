@@ -604,9 +604,6 @@ paths:
     get:
       tags:
         - Repositories
-      security:
-        - ApiKeyId: []
-          ApiKeySecret: []
       summary: Search repositories that meet the provided criteria
       description: Search repositories that meet the provided criteria
       operationId: searchRepositories
