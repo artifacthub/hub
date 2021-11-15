@@ -1856,6 +1856,24 @@ describe('API', () => {
 
     describe('getChangelog', () => {
       it('success', async () => {
+        const changelog: ChangeLog[] = getData('43') as Changelog[];
+        fetchMock.mockResponse(JSON.stringify(changelog), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.getChangelog('id');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/changelog');
+        expect(response).toEqual(API.toCamelCase(changelog));
+      });
+    });
+
+    describe('getChangelogMD', () => {
+      it('success', async () => {
         const changelog: string = `
 # Changelog
 
@@ -1902,24 +1920,6 @@ describe('API', () => {
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/helm/repoName/name/changelog.md');
         expect(response).toEqual(changelog);
-      });
-    });
-
-    describe('getChangelogMD', () => {
-      it('success', async () => {
-        const templateData: ChartTemplatesData = getData('37') as ChartTemplatesData;
-        fetchMock.mockResponse(JSON.stringify(templateData), {
-          headers: {
-            'content-type': 'application/json',
-          },
-          status: 200,
-        });
-
-        const response = await API.getChartTemplates('id', '1.1.0');
-
-        expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/1.1.0/templates');
-        expect(response).toEqual(templateData);
       });
     });
 

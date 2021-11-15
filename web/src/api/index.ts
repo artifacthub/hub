@@ -42,7 +42,6 @@ import {
   Webhook,
 } from '../types';
 import { TS_QUERY } from '../utils/data';
-import getHubBaseURL from '../utils/getHubBaseURL';
 import { getURLSearchParams, prepareAPIQueryString } from '../utils/prepareQueryString';
 import renameKeysInObject from '../utils/renameKeysInObject';
 
@@ -91,7 +90,7 @@ class API_CLASS {
     pagination: 'Pagination-Total-Count',
   };
   private csrfToken: string | null = null;
-  private API_BASE_URL = `${getHubBaseURL()}/api/v1`;
+  private API_BASE_URL = '/api/v1';
 
   private toCamelCase(r: any): any {
     if (isArray(r)) {

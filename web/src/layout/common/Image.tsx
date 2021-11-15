@@ -4,7 +4,6 @@ import isNull from 'lodash/isNull';
 import React, { useRef, useState } from 'react';
 
 import { RepositoryKind } from '../../types';
-import getHubBaseURL from '../../utils/getHubBaseURL';
 
 interface Props {
   imageId?: string | null;
@@ -23,7 +22,7 @@ const Image = (props: Props) => {
   const [isSquare, setIsSquare] = useState<boolean | undefined>();
 
   const getSrc = () => {
-    return `${getHubBaseURL()}/image/${props.imageId}`;
+    return `/image/${props.imageId}`;
   };
 
   const getPlaceholder = (): string => {
