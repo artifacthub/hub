@@ -3512,7 +3512,7 @@ components:
                   example: "apiVersion: tekton.dev/v1beta1"
     Package:
       allOf:
-        - $ref: "#/components/schemas/PackageSummary"
+        - $ref: "#/components/schemas/PackageBase"
         - type: object
           required:
             - repository
@@ -3524,9 +3524,6 @@ components:
             - contains_security_updates
             - prerelease
           properties:
-            signed:
-              type: boolean
-              nullable: false
             repository:
               $ref: "#/components/schemas/RepositorySummary"
             is_operator:
@@ -3685,7 +3682,7 @@ components:
                 webhooks:
                   type: integer
                   nullable: false
-    PackageSummary:
+    PackageBase:
       type: object
       required:
         - package_id
@@ -3712,10 +3709,6 @@ components:
           type: string
           nullable: false
           example: 12345abcde
-        stars:
-          type: integer
-          nullable: false
-          example: 3
         display_name:
           type: string
           nullable: false
@@ -3743,6 +3736,7 @@ components:
         signed:
           type: boolean
           nullable: false
+          example: false
         official:
           type: boolean
           nullable: false
@@ -3780,6 +3774,15 @@ components:
         production_organizations_count:
           type: number
           nullable: false
+    PackageSummary:
+      allOf:
+        - $ref: "#/components/schemas/PackageBase"
+        - type: object
+          properties:
+            stars:
+              type: integer
+              nullable: false
+              example: 3
     Repository:
       allOf:
         - $ref: "#/components/schemas/RepositorySummary"
