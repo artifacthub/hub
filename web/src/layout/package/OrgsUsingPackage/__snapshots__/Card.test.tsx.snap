@@ -4,7 +4,7 @@ exports[`OrgCard creates snapshot 1`] = `
 <DocumentFragment>
   <a
     aria-label="Open organization url"
-    class="link d-inline-block text-decoration-none text-dark h5 mb-2 mr-3"
+    class="link d-inline-block text-dark mr-3 mb-2"
     href="https://artifacthub.io"
     rel="noopener noreferrer"
     role="button"
@@ -12,11 +12,11 @@ exports[`OrgCard creates snapshot 1`] = `
     target="_blank"
   >
     <div
-      class="badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 badge"
+      class="d-flex flex-row align-items-center"
       data-testid="org-using-pkg"
     >
       <div
-        class="mr-2"
+        class="mr-1"
       >
         <div
           class="imageWrapper imageWrapper overflow-hidden"
@@ -35,40 +35,12 @@ exports[`OrgCard creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="text-truncate badgeContent"
+        class="text-truncate text-dark font-weight-bold badgeContent"
       >
         <span>
           Artifact Hub
         </span>
       </div>
-      <small
-        class="ml-2"
-      >
-        <svg
-          fill="none"
-          height="1em"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-          />
-          <polyline
-            points="15 3 21 3 21 9"
-          />
-          <line
-            x1="10"
-            x2="21"
-            y1="14"
-            y2="3"
-          />
-        </svg>
-      </small>
     </div>
   </a>
 </DocumentFragment>

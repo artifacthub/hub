@@ -38,7 +38,7 @@ describe('RecommendedPackageCard', () => {
 
       const pkg = screen.getByTestId('recommended-pkg');
       expect(pkg).toBeInTheDocument();
-      expect(pkg).toHaveTextContent('Helm chartartifact-hubREPO: artifact-hub');
+      expect(pkg).toHaveTextContent('artifact-hub');
     });
 
     it('opens package', () => {

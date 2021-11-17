@@ -1,9 +1,11 @@
 import { isNull, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { GoPackage } from 'react-icons/go';
 
 import { Recommendation, RecommendedPackage, RepositoryKind } from '../../../types';
 import { getRepoKind } from '../../../utils/repoKind';
 import RecommendedPackageCard from './Card';
+import styles from './RecommendedPackages.module.css';
 
 interface Props {
   recommendations?: Recommendation[];
@@ -39,23 +41,31 @@ const RecommendedPackages = (props: Props) => {
   const [recommendations, setRecommendations] = useState<RecommendedPackage[]>(
     prepareRecommendations(props.recommendations)
   );
-
   useEffect(() => {
-    setRecommendations(prepareRecommendations(props.recommendations));
+    const cleanRecommendations = prepareRecommendations(props.recommendations);
+    setRecommendations(cleanRecommendations);
   }, [props.recommendations]);
 
   if (recommendations.length === 0) return null;
 
   return (
     <>
-      <div className={`mb-2 ${props.className}`}>
-        <small className="text-dark font-weight-bold">Other packages recommended by the publisher:</small>
+      <div className={`mb-2 w-100 text-nowrap ${props.className}`}>
+        <span className={`position-relative ${styles.pkgIcon}`}>
+          <GoPackage />
+        </span>
+        <small className="text-muted ml-2">Other packages recommended by the publisher:</small>
+        <small className="text-dark font-weight-bold ml-2">{recommendations.length}</small>
       </div>
 
-      <div className="flex flex-column pb-3 pt-2">
-        {recommendations.map((pkg: RecommendedPackage) => (
-          <RecommendedPackageCard key={`recommended_${pkg.normalizedName}`} recommendation={pkg} />
-        ))}
+      <div className="d-flex flex-column pb-3 pt-2">
+        <div className={`position-relative w-100 overflow-hidden ${styles.content}`}>
+          <div className="w-100">
+            {recommendations.map((pkg: RecommendedPackage) => (
+              <RecommendedPackageCard key={`recommended_${pkg.normalizedName}`} recommendation={pkg} />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

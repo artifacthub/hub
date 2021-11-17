@@ -1,0 +1,66 @@
+.content {
+  max-height: 28px;
+}
+
+.seeAllbtn {
+  font-size: 80%;
+}
+
+.modal {
+  max-width: 80%;
+  width: 620px !important;
+}
+
+.table {
+  table-layout: fixed;
+}
+
+.table tbody {
+  background-color: var(--white);
+}
+
+.fitCell {
+  width: 1%;
+}
+
+.imageWrapper {
+  min-width: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 1px solid var(--color-1-10);
+  padding: 0.2rem;
+}
+
+.image {
+  max-width: calc(100% - 4px);
+  max-height: calc(100% - 4px);
+}
+
+.orgIcon {
+  font-size: 80%;
+  top: -1px;
+}
+
+.orgBtn {
+  font-size: 0.9rem;
+}
+
+.orgSeparator {
+  font-size: 0.9rem;
+}
+
+@media only screen and (min-width: 576px) {
+  .modalDialog {
+    max-width: 80% !important;
+    min-height: calc(100% - 10rem) !important;
+    max-height: calc(100% - 10rem) !important;
+    margin: 5rem auto !important;
+  }
+}
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}

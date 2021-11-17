@@ -37,12 +37,12 @@ describe('RecommendedPackages', () => {
         </Router>
       );
 
-      expect(screen.getByText('Other packages recommended by the publisher:')).toBeInTheDocument();
+      expect(screen.getByText(/recommended by the publisher/)).toBeInTheDocument();
 
       const pkgs = screen.getAllByTestId('recommended-pkg');
       expect(pkgs).toHaveLength(2);
-      expect(pkgs[0]).toHaveTextContent('Helm chartartifact-hubREPO: artifact-hub');
-      expect(pkgs[1]).toHaveTextContent('Helm chartkube-prometheus-stackREPO: prometheus-community');
+      expect(pkgs[0]).toHaveTextContent('artifact-hub');
+      expect(pkgs[1]).toHaveTextContent('kube-prometheus-stack');
     });
 
     it('renders component with clean pkgs', () => {
@@ -57,11 +57,11 @@ describe('RecommendedPackages', () => {
         </Router>
       );
 
-      expect(screen.getByText('Other packages recommended by the publisher:')).toBeInTheDocument();
+      expect(screen.getByText(/recommended by the publisher/)).toBeInTheDocument();
 
       const pkgs = screen.getAllByTestId('recommended-pkg');
       expect(pkgs).toHaveLength(1);
-      expect(pkgs[0]).toHaveTextContent('Helm chartartifact-hubREPO: artifact-hub');
+      expect(pkgs[0]).toHaveTextContent('artifact-hub');
     });
 
     describe('does not render component', () => {
