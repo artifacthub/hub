@@ -264,8 +264,13 @@ const PackageView = (props: Props) => {
             data-testid="more-details-section"
             className={`d-none d-md-block px-3 ${styles.moreDetailsSectionWrapper}`}
           >
-            <div className="container-lg px-sm-4 px-lg-0 py-2">
-              {orgsUsingPkg && <OrgsUsingPackage organizations={detail.productionOrganizations!} />}
+            <div className="container-lg px-sm-4 px-lg-0 py-2 d-flex flex-column position-relative">
+              {orgsUsingPkg && (
+                <OrgsUsingPackage
+                  organizations={detail.productionOrganizations!}
+                  className={recommendations ? 'mb-2' : 'mb-3'}
+                />
+              )}
               {recommendations && (
                 <RecommendedPackages
                   recommendations={detail.recommendations}

@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { RecommendedPackage } from '../../../types';
-import RepositoryIconLabel from '../../common/RepositoryIconLabel';
-import styles from './RecommendedPackageCard.module.css';
+import RepositoryIcon from '../../common/RepositoryIcon';
+import styles from './Card.module.css';
 
 interface Props {
   recommendation: RecommendedPackage;
@@ -17,14 +17,19 @@ const RecommendedPackageCard = (props: Props) => (
       pathname: props.recommendation.url,
     }}
   >
-    <div className="badge badge-rounded badge-light rounded-pill d-flex flex-row border align-items-center py-2 px-3">
-      <div className={`position-relative mr-3 ${styles.iconKind} ${styles.separator}`}>
-        <RepositoryIconLabel kind={props.recommendation.kind} noBackground />
+    <div
+      className={`badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 ${styles.badge}`}
+    >
+      <div className="mr-2">
+        <div className={`${styles.imageWrapper} imageWrapper overflow-hidden`}>
+          <div className="d-flex align-items-center justify-content-center w-100 h-100">
+            <RepositoryIcon kind={props.recommendation.kind} className={styles.image} />
+          </div>
+        </div>
       </div>
 
-      <div className={`ml-3 text-truncate ${styles.badgeContent}`}>
-        <span className="mr-3 font-weight-bold">{props.recommendation.normalizedName}</span>
-        <small className="text-muted">REPO:</small> <span>{props.recommendation.repoName}</span>
+      <div className={`text-truncate font-weight-bold ${styles.badgeContent}`}>
+        <span>{props.recommendation.normalizedName}</span>
       </div>
     </div>
   </Link>

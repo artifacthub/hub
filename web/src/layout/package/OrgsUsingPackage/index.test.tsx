@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import OrgsUsingPackage from './index';
+
+jest.mock('../../../hooks/useOverflowWrapper', () => () => true);
 
 const defaultProps = {
   organizations: [
@@ -45,7 +48,7 @@ describe('OrgsUsingPackage', () => {
         </Router>
       );
 
-      expect(screen.getByText('Organizations using this package in production:')).toBeInTheDocument();
+      expect(screen.getByText(/using this package in production/)).toBeInTheDocument();
 
       const orgs = screen.getAllByTestId('org-using-pkg');
       expect(orgs).toHaveLength(3);
@@ -56,6 +59,43 @@ describe('OrgsUsingPackage', () => {
       const link = screen.getByRole('button', { name: 'Open organization url' });
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('href', 'https://artifacthub.io');
+    });
+
+    it('opens modal after clicking see all btn', () => {
+      render(
+        <Router>
+          <OrgsUsingPackage {...defaultProps} />
+        </Router>
+      );
+
+      expect(screen.getByText(/using this package in production/)).toBeInTheDocument();
+
+      const btn = screen.getByRole('button', { name: 'See all organizations using this package in production' });
+      expect(btn).toBeInTheDocument();
+      userEvent.click(btn);
+
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('closes modal - see all', () => {
+      render(
+        <Router>
+          <OrgsUsingPackage {...defaultProps} />
+        </Router>
+      );
+
+      expect(screen.getByText(/using this package in production/)).toBeInTheDocument();
+
+      const btn = screen.getByRole('button', { name: 'See all organizations using this package in production' });
+      expect(btn).toBeInTheDocument();
+      userEvent.click(btn);
+
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+      const closeBtn = screen.getByRole('button', { name: 'Close' });
+      userEvent.click(closeBtn);
+
+      expect(screen.queryByRole('dialog')).toBeNull();
     });
 
     describe('does not render component', () => {

@@ -525,12 +525,12 @@ describe('Package index', () => {
       });
 
       expect(screen.getByTestId('more-details-section')).toBeInTheDocument();
-      expect(screen.getByText('Other packages recommended by the publisher:')).toBeInTheDocument();
+      expect(screen.getByText(/recommended by the publisher/)).toBeInTheDocument();
 
       const pkgs = screen.getAllByTestId('recommended-pkg');
       expect(pkgs).toHaveLength(2);
-      expect(pkgs[0]).toHaveTextContent('Helm chartartifact-hubREPO: artifact-hub');
-      expect(pkgs[1]).toHaveTextContent('Helm chartkube-prometheus-stackREPO: prometheus-community');
+      expect(pkgs[0]).toHaveTextContent('artifact-hub');
+      expect(pkgs[1]).toHaveTextContent('kube-prometheus-stack');
     });
 
     it('renders orgs using package', async () => {
@@ -548,7 +548,7 @@ describe('Package index', () => {
       });
 
       expect(screen.getByTestId('more-details-section')).toBeInTheDocument();
-      expect(screen.getByText('Organizations using this package in production:')).toBeInTheDocument();
+      expect(screen.getByText(/Organizations using this package in production/)).toBeInTheDocument();
 
       const orgs = screen.getAllByTestId('org-using-pkg');
       expect(orgs).toHaveLength(3);
