@@ -32,7 +32,7 @@ exports[`RecommendedPackages creates snapshot 1`] = `
         Other packages recommended by the publisher:
       </small>
       <small
-        class="text-dark font-weight-bold ml-2"
+        class="font-weight-bold ml-2"
       >
         2
       </small>

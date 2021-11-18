@@ -482,6 +482,10 @@
     border: 1px solid var(--border-md);
   }
 
+  .noReadmeAlert {
+    border-color: var(--mid-gray) !important;
+  }
+
   .home {
     background-color: var(--color-1-300);
   }

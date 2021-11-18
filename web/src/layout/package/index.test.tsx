@@ -243,7 +243,7 @@ describe('Package index', () => {
 
       const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent('No README file available for this package');
+      expect(noData).toHaveTextContent('This package version does not provide a README file');
       expect(screen.queryByTestId('readme')).toBeNull();
     });
 
