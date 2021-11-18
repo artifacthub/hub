@@ -35,7 +35,7 @@ const RepositoryIconLabel = (props: Props) => {
       )}
     >
       <div className="d-flex flex-row align-items-center">
-        <div className={`${styles.icon} ${props.iconClassName}`} aria-hidden="true">
+        <div className={`position-relative ${styles.icon} ${props.iconClassName}`} aria-hidden="true">
           {repo.icon}
         </div>
         <div className="ml-1">{props.isPlural ? repo.plural : repo.singular}</div>

@@ -4,7 +4,7 @@ exports[`OrgCard creates snapshot 1`] = `
 <DocumentFragment>
   <a
     aria-label="Open organization url"
-    class="link d-inline-block text-dark mr-3 mb-2"
+    class="link d-inline-block text-dark h5 mb-2 mr-3"
     href="https://artifacthub.io"
     rel="noopener noreferrer"
     role="button"
@@ -12,11 +12,11 @@ exports[`OrgCard creates snapshot 1`] = `
     target="_blank"
   >
     <div
-      class="d-flex flex-row align-items-center"
+      class="badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 badge"
       data-testid="org-using-pkg"
     >
       <div
-        class="mr-1"
+        class="mr-2"
       >
         <div
           class="imageWrapper imageWrapper overflow-hidden"

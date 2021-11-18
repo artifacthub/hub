@@ -344,7 +344,7 @@ const SearchBar = (props: Props) => {
                               className={`align-self-start d-flex align-items-center text-uppercase ml-auto pl-2 ${styles.midText}`}
                             >
                               <StarBadge className="mr-1" starsNumber={pkg.stars} />
-                              <RepositoryIconLabel kind={pkg.repository.kind} />
+                              <RepositoryIconLabel kind={pkg.repository.kind} iconClassName={styles.kindIcon} />
                             </div>
                           </div>
 

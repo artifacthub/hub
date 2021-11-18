@@ -10,7 +10,7 @@ exports[`RepositoryIconLabel creates snapshot 1`] = `
     >
       <div
         aria-hidden="true"
-        class="icon undefined"
+        class="position-relative icon undefined"
       >
         <img
           alt="Icon"

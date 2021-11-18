@@ -12,7 +12,7 @@ interface Props {
 const RecommendedPackageCard = (props: Props) => (
   <Link
     data-testid="recommended-pkg"
-    className="d-inline-block text-decoration-none text-dark h5 mb-2 mr-3"
+    className="d-inline-block text-dark h5 mb-2 mr-3"
     to={{
       pathname: props.recommendation.url,
     }}
@@ -28,7 +28,7 @@ const RecommendedPackageCard = (props: Props) => (
         </div>
       </div>
 
-      <div className={`text-truncate font-weight-bold ${styles.badgeContent}`}>
+      <div className={`text-truncate text-dark font-weight-bold ${styles.badgeContent}`}>
         <span>{props.recommendation.normalizedName}</span>
       </div>
     </div>

@@ -3,7 +3,7 @@
 exports[`RecommendedPackageCard creates snapshot 1`] = `
 <DocumentFragment>
   <a
-    class="d-inline-block text-decoration-none text-dark h5 mb-2 mr-3"
+    class="d-inline-block text-dark h5 mb-2 mr-3"
     data-testid="recommended-pkg"
     href="/packages/helm/artifact-hub/artifact-hub"
   >
@@ -33,7 +33,7 @@ exports[`RecommendedPackageCard creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="text-truncate font-weight-bold badgeContent"
+        class="text-truncate text-dark font-weight-bold badgeContent"
       >
         <span>
           artifact-hub

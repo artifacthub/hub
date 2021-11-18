@@ -49,8 +49,8 @@ const RecommendedPackages = (props: Props) => {
   if (recommendations.length === 0) return null;
 
   return (
-    <>
-      <div className={`mb-2 w-100 text-nowrap ${props.className}`}>
+    <div className={`w-100 ${props.className}`}>
+      <div className="w-100 text-nowrap mb-2">
         <span className={`position-relative ${styles.pkgIcon}`}>
           <GoPackage />
         </span>
@@ -58,7 +58,7 @@ const RecommendedPackages = (props: Props) => {
         <small className="text-dark font-weight-bold ml-2">{recommendations.length}</small>
       </div>
 
-      <div className="d-flex flex-column pb-3 pt-2">
+      <div className={`d-flex flex-column pb-3 pt-1 ${styles.content}`}>
         <div className={`position-relative w-100 overflow-hidden ${styles.content}`}>
           <div className="w-100">
             {recommendations.map((pkg: RecommendedPackage) => (
@@ -67,7 +67,7 @@ const RecommendedPackages = (props: Props) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

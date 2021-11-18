@@ -1,18 +1,17 @@
 .badge {
-  height: 32px;
+  height: 25px;
   max-width: 300px;
   border: 1px solid var(--border-md) !important;
 }
 
 .badgeContent {
-  font-size: 0.9rem;
-  line-height: 1.25;
+  font-size: 0.8rem;
 }
 
 .imageWrapper {
-  min-width: 20px;
-  width: 20px;
-  height: 20px;
+  min-width: 23px;
+  width: 23px;
+  height: 23px;
   border: 1px solid var(--color-1-20);
   border-radius: 50%;
   background-color: var(--white);
@@ -20,6 +19,6 @@
 }
 
 .image {
-  max-width: calc(100% - 2px);
-  max-height: calc(100% - 2px);
+  max-width: calc(100% - 4px);
+  max-height: calc(100% - 4px);
 }

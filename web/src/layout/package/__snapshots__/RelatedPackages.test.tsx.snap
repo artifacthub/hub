@@ -79,7 +79,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                             >
                               <div
                                 aria-hidden="true"
-                                class="icon badgeIcon"
+                                class="position-relative icon badgeIcon"
                               >
                                 <img
                                   alt="Icon"
@@ -185,7 +185,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                             >
                               <div
                                 aria-hidden="true"
-                                class="icon badgeIcon"
+                                class="position-relative icon badgeIcon"
                               >
                                 <img
                                   alt="Icon"
@@ -291,7 +291,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                             >
                               <div
                                 aria-hidden="true"
-                                class="icon badgeIcon"
+                                class="position-relative icon badgeIcon"
                               >
                                 <img
                                   alt="Icon"
@@ -397,7 +397,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                             >
                               <div
                                 aria-hidden="true"
-                                class="icon badgeIcon"
+                                class="position-relative icon badgeIcon"
                               >
                                 <img
                                   alt="Icon"
@@ -503,7 +503,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                             >
                               <div
                                 aria-hidden="true"
-                                class="icon badgeIcon"
+                                class="position-relative icon badgeIcon"
                               >
                                 <img
                                   alt="Icon"
@@ -609,7 +609,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                             >
                               <div
                                 aria-hidden="true"
-                                class="icon badgeIcon"
+                                class="position-relative icon badgeIcon"
                               >
                                 <img
                                   alt="Icon"
@@ -715,7 +715,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                             >
                               <div
                                 aria-hidden="true"
-                                class="icon badgeIcon"
+                                class="position-relative icon badgeIcon"
                               >
                                 <img
                                   alt="Icon"
