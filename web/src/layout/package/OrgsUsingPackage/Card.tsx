@@ -13,8 +13,11 @@ interface Props {
 const OrgCard = (props: Props) => {
   const renderLabel = (): JSX.Element => {
     return (
-      <div data-testid="org-using-pkg" className="d-flex flex-row align-items-center">
-        <div className="mr-1">
+      <div
+        data-testid="org-using-pkg"
+        className={`badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 ${styles.badge}`}
+      >
+        <div className="mr-2">
           <div className={`${styles.imageWrapper} imageWrapper overflow-hidden`}>
             <div className="d-flex align-items-center justify-content-center w-100 h-100">
               <Image
@@ -39,13 +42,13 @@ const OrgCard = (props: Props) => {
       {props.organization.homeUrl ? (
         <ExternalLink
           href={props.organization.homeUrl}
-          className="d-inline-block text-dark mr-3 mb-2"
+          className="d-inline-block text-dark h5 mb-2 mr-3"
           label="Open organization url"
         >
           {renderLabel()}
         </ExternalLink>
       ) : (
-        <div className="d-inline-block mr-3 mb-2">{renderLabel()}</div>
+        <div className="d-inline-block text-dark h5 mb-2 mr-3">{renderLabel()}</div>
       )}
     </>
   );

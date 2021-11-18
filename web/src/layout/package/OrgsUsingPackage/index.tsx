@@ -17,7 +17,7 @@ interface Props {
 }
 
 const MAX_HEIGHT = 35;
-const MAX_ITEMS_NUMBER = 20;
+const MAX_ITEMS_NUMBER = 16;
 
 const OrgsUsingPackage = (props: Props) => {
   const wrapper = useRef<HTMLDivElement | null>(null);
@@ -67,9 +67,7 @@ const OrgsUsingPackage = (props: Props) => {
         <span className={`position-relative ${styles.orgIcon}`}>
           <MdBusiness />
         </span>
-        <small className="text-muted ml-2">
-          {props.organizations.length === 1 ? 'Organization' : 'Organizations'} using this package in production:
-        </small>
+        <small className="text-muted ml-2">Organizations using this package in production:</small>
         <small className="text-dark font-weight-bold ml-2">{props.organizations.length}</small>
         {(overflow || props.organizations.length > MAX_ITEMS_NUMBER) && (
           <button
