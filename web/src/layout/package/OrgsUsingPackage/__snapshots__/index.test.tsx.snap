@@ -35,7 +35,7 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
         Organizations using this package in production:
       </small>
       <small
-        class="text-dark font-weight-bold ml-2"
+        class="font-weight-bold ml-2"
       >
         3
       </small>

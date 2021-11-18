@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiCode, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
+import { IoDocumentTextOutline } from 'react-icons/io5';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -1018,7 +1019,14 @@ const PackageView = (props: Props) => {
                         <div ref={contentWrapper}>
                           {isNull(detail.readme) || isUndefined(detail.readme) ? (
                             <div className={styles.contentWrapper}>
-                              <NoData>No README file available for this package</NoData>
+                              <NoData className={`w-100 noReadmeAlert ${styles.noReadmeAlert}`}>
+                                <div>
+                                  <div className={`mb-4 ${styles.fileIcon}`}>
+                                    <IoDocumentTextOutline />
+                                  </div>
+                                  <p className="h4 mb-3">This package version does not provide a README file</p>
+                                </div>
+                              </NoData>
                             </div>
                           ) : (
                             <ReadmeWrapper

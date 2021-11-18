@@ -140,7 +140,16 @@
 }
 
 .contentWrapper {
-  margin-right: 250px;
+  margin-right: 280px;
+}
+
+.noReadmeAlert {
+  background-color: transparent !important;
+}
+
+.fileIcon {
+  font-size: 5rem;
+  color: var(--mid-gray);
 }
 
 .relatedWrapper {

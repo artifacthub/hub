@@ -68,7 +68,7 @@ const OrgsUsingPackage = (props: Props) => {
           <MdBusiness />
         </span>
         <small className="text-muted ml-2">Organizations using this package in production:</small>
-        <small className="text-dark font-weight-bold ml-2">{props.organizations.length}</small>
+        <small className="font-weight-bold ml-2">{props.organizations.length}</small>
         {(overflow || props.organizations.length > MAX_ITEMS_NUMBER) && (
           <button
             className={`btn text-dark font-weight-bold btn-link btn-sm px-2 border-0 ${styles.seeAllbtn}`}
