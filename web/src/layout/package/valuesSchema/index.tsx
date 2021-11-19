@@ -49,7 +49,7 @@ async function enrichValuesSchema(schema: JSONSchema) {
     const mergedSchema = merger(dereferencedSchema);
 
     return mergedSchema;
-  } catch (err) {
+  } catch (err: any) {
     return schema;
   }
 }

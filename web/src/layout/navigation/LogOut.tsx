@@ -30,7 +30,7 @@ const LogOut = (props: Props) => {
       if (!isUndefined(props.privateRoute) && props.privateRoute) {
         history.push('/');
       }
-    } catch (err) {
+    } catch (err: any) {
       let error = 'An error occurred, please try again later.';
       if (!isUndefined(err.message)) {
         error = `Error: ${err.message}`;

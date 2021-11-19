@@ -38,7 +38,7 @@ const DeleteAccount = (props: Props) => {
       await API.registerDeleteUserCode();
       setIsDeleting(false);
       setDeleteSuccess(true);
-    } catch (err) {
+    } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {
         props.onAuthError();

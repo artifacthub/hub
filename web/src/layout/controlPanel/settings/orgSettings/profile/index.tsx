@@ -34,7 +34,7 @@ const ProfileSection = (props: Props) => {
         setApiError(null);
       }
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         if (err.kind === ErrorKind.NotFound) {

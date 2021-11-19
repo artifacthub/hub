@@ -1,6 +1,6 @@
 import { Error } from '../types';
 
-export default (error: Error, defaultMessage: string): string => {
+const compoundErrorMessage = (error: Error, defaultMessage: string): string => {
   let message: string = defaultMessage;
   if (error.message) {
     message += `: ${error.message}`;
@@ -10,3 +10,5 @@ export default (error: Error, defaultMessage: string): string => {
 
   return message || '';
 };
+
+export default compoundErrorMessage;

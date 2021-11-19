@@ -83,7 +83,7 @@ const PackagesSection = (props: Props) => {
         setTotal(total);
       }
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
@@ -107,7 +107,7 @@ const PackagesSection = (props: Props) => {
         await API.addSubscription(packageId, kind);
       }
       getSubscriptions();
-    } catch (err) {
+    } catch (err: any) {
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',

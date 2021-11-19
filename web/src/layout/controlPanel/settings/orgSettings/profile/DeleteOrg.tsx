@@ -33,7 +33,7 @@ const DeleteOrganization = (props: Props) => {
       dispatch(unselectOrg());
       window.scrollTo(0, 0); // Scroll to top when org is deleted
       setIsDeleting(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {
         props.onAuthError();

@@ -4,7 +4,11 @@ import some from 'lodash/some';
 import { Section } from '../types';
 import { CONTROL_PANEL_SECTIONS } from './data';
 
-export default (context: 'user' | 'org', sectionToCheck?: string, subsectionToCheck?: string): boolean => {
+const isControlPanelSectionAvailable = (
+  context: 'user' | 'org',
+  sectionToCheck?: string,
+  subsectionToCheck?: string
+): boolean => {
   if (isUndefined(sectionToCheck)) {
     return false;
   }
@@ -32,3 +36,5 @@ export default (context: 'user' | 'org', sectionToCheck?: string, subsectionToCh
 
   return true;
 };
+
+export default isControlPanelSectionAvailable;

@@ -100,7 +100,7 @@ const LogIn = (props: Props) => {
     try {
       await API.login(user);
       onLoginSuccess();
-    } catch (err) {
+    } catch (err: any) {
       if (err.kind === ErrorKind.NotApprovedSession) {
         setVisible2FACode(true);
       } else {
@@ -114,7 +114,7 @@ const LogIn = (props: Props) => {
       setIsApprovingSession(true);
       await API.approveSession(passcode);
       onLoginSuccess();
-    } catch (err) {
+    } catch (err: any) {
       onLoginError(err);
     }
   }

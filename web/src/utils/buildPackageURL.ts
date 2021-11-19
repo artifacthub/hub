@@ -6,7 +6,12 @@ interface MinRepository {
   name: string;
 }
 
-export default (normalizedName: string, repository: MinRepository, version?: string, withVersion?: boolean): string => {
+const buildPackageURL = (
+  normalizedName: string,
+  repository: MinRepository,
+  version?: string,
+  withVersion?: boolean
+): string => {
   let url = `/packages/${getRepoKindName(repository.kind)!}/${repository.name}/${normalizedName}`;
 
   if (version && withVersion) {
@@ -15,3 +20,5 @@ export default (normalizedName: string, repository: MinRepository, version?: str
 
   return url;
 };
+
+export default buildPackageURL;

@@ -4,7 +4,7 @@ interface RegoData {
   [key: string]: any;
 }
 
-export default (policy: string, data: RegoData, userAlias: string): RegoPlaygroundPolicy => {
+const prepareRegoPolicyForPlayground = (policy: string, data: RegoData, userAlias: string): RegoPlaygroundPolicy => {
   let formattedPolicy;
   try {
     formattedPolicy = policy.replaceAll('(\\r|\\n|\\r\\n)+', '\\\\n');
@@ -22,3 +22,5 @@ export default (policy: string, data: RegoData, userAlias: string): RegoPlaygrou
     data: data,
   };
 };
+
+export default prepareRegoPolicyForPlayground;

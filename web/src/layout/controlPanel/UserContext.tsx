@@ -50,7 +50,7 @@ const UserContext = () => {
       }
       setOrganizations(confirmedOrganizations);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setOrganizations([]);

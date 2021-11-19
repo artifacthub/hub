@@ -8,7 +8,7 @@ interface Keys {
   [key: string]: string;
 }
 
-export default (obj: any, keys: Keys): any => {
+const renameKeysInObject = (obj: any, keys: Keys): any => {
   forEach(Object.keys(keys), (key: string) => {
     if (has(obj, key)) {
       set(obj, keys[key], get(obj, key));
@@ -17,3 +17,5 @@ export default (obj: any, keys: Keys): any => {
   });
   return obj;
 };
+
+export default renameKeysInObject;

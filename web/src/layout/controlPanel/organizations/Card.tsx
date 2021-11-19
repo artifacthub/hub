@@ -17,11 +17,6 @@ import Image from '../../common/Image';
 import Modal from '../../common/Modal';
 import styles from './Card.module.css';
 
-interface ModalStatus {
-  open: boolean;
-  organization?: Organization;
-}
-
 interface Props {
   organization: Organization;
   onAuthError: () => void;
@@ -58,7 +53,7 @@ const OrganizationCard = (props: Props) => {
       ) {
         dispatch(unselectOrg());
       }
-    } catch (err) {
+    } catch (err: any) {
       setIsLeaving(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         closeDropdown();

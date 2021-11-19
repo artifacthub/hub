@@ -70,7 +70,7 @@ const APIKeysSection = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setApiError('An error occurred getting your API keys, please try again later.');

@@ -64,7 +64,7 @@ const SearchRepositories = (props: Props) => {
       const data = await API.searchRepositories(query);
       setRepositories(data.items);
       setIsSearching(false);
-    } catch (err) {
+    } catch (err: any) {
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',

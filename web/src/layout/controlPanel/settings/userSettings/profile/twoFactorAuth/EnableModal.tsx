@@ -52,7 +52,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
       setSetUp(await API.setUpTFA());
       setOpenStatus(true);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       setSetUp(null);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -73,7 +73,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
       await API.enableTFA(passcode);
       setApiError(null);
       setActiveStep(3);
-    } catch (err) {
+    } catch (err: any) {
       setIsProcessing(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(err, 'An error occurred turning on two-factor authentication');

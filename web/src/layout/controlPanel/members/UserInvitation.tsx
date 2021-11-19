@@ -26,7 +26,7 @@ const UserInvitation = (props: Props) => {
       try {
         await API.confirmOrganizationMembership(orgToConfirm!);
         setValidInvitation(true);
-      } catch (err) {
+      } catch (err: any) {
         let error = !isUndefined(err.message)
           ? err.message
           : 'An error occurred accepting your invitation, please contact us about this issue.';

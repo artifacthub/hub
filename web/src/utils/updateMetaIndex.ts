@@ -2,7 +2,7 @@ import getMetaTag from './getMetaTag';
 
 const siteName = getMetaTag('siteName');
 
-export default (
+const updateMetaIndex = (
   title: string = siteName,
   description: string = 'Find, install and publish Kubernetes package'
 ): void => {
@@ -13,3 +13,5 @@ export default (
   document.querySelector(`meta[property='og:description']`)!.setAttribute('content', description);
   document.querySelector(`meta[name='twitter:description']`)!.setAttribute('content', description);
 };
+
+export default updateMetaIndex;

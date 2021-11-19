@@ -51,7 +51,7 @@ const MemberModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let errorMessage = 'An error occurred adding the new member, please try again later.';

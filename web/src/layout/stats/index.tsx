@@ -210,7 +210,7 @@ const StatsView = (props: Props) => {
         scrollIntoView();
         setApiError(null);
         setIsLoading(false);
-      } catch (err) {
+      } catch (err: any) {
         setIsLoading(false);
         let error = compoundErrorMessage(err, `An error occurred getting ${siteName} stats`);
         setApiError(error);

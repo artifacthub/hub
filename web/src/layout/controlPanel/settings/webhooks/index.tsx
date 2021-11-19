@@ -72,7 +72,7 @@ const WebhooksSection = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsGettingWebhooks(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsGettingWebhooks(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setWebhooks([]);

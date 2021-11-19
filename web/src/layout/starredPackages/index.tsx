@@ -67,7 +67,7 @@ const StarredPackagesView = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setApiError('An error occurred getting your starred packages, please try again later.');

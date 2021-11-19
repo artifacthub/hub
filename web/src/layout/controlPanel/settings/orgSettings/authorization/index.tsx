@@ -175,7 +175,7 @@ const AuthorizationSection = (props: Props) => {
         });
       }
       setIsTesting(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsTesting(false);
       alertDispatcher.postAlert({
         type: 'danger',
@@ -205,7 +205,7 @@ const AuthorizationSection = (props: Props) => {
         })
       );
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind === ErrorKind.Unauthorized) {
         props.onAuthError();
@@ -231,7 +231,7 @@ const AuthorizationSection = (props: Props) => {
       // Update allowed actions and re-render button
       authorizer.getAllowedActionsList(() => updateActionBtn.current!.reRender());
       setIsSaving(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsSaving(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error: string | JSX.Element = compoundErrorMessage(err, 'An error occurred updating the policy');
@@ -263,7 +263,7 @@ const AuthorizationSection = (props: Props) => {
     try {
       const membersList: Member[] = await API.getAllOrganizationMembers(ctx.prefs.controlPanel.selectedOrg!);
       setMembers(membersList.map((member: Member) => member.alias));
-    } catch (err) {
+    } catch (err: any) {
       setMembers(undefined);
     }
   }

@@ -37,7 +37,7 @@ const OrganizationInfo = (props: Props) => {
   async function fetchOrganization() {
     try {
       setOrganization(await API.getOrganization(props.organizationName));
-    } catch (err) {
+    } catch (err: any) {
       setOrganization(null);
     }
   }

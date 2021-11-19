@@ -15,7 +15,7 @@ interface F {
   [key: string]: string[];
 }
 
-export default (query: string): SearchFiltersURL => {
+const buildSearchParams = (query: string): SearchFiltersURL => {
   const p = new URLSearchParams(query);
   let filters: F = {};
 
@@ -39,3 +39,5 @@ export default (query: string): SearchFiltersURL => {
     sort: p.has('sort') ? p.get('sort') : undefined,
   };
 };
+
+export default buildSearchParams;

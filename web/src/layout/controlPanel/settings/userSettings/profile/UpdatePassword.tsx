@@ -40,7 +40,7 @@ const UpdatePassword = () => {
       cleanForm();
       setIsSending(false);
       setIsValidated(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(err, 'An error occurred updating your password');

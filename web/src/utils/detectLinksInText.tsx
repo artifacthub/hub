@@ -2,7 +2,7 @@ import React from 'react';
 
 const URL_REGEX = /(\bhttps?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi; // eslint-disable-line
 
-export default (text: string, linkClass?: string): JSX.Element => {
+const detectLinksInText = (text: string, linkClass?: string): JSX.Element => {
   const matches = text.match(URL_REGEX);
   if (matches) {
     const parts = text.split(' ');
@@ -34,3 +34,5 @@ export default (text: string, linkClass?: string): JSX.Element => {
     return <>{text}</>;
   }
 };
+
+export default detectLinksInText;

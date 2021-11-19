@@ -85,7 +85,7 @@ const RepositoryModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(

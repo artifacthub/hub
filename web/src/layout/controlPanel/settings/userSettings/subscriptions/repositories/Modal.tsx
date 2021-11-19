@@ -59,7 +59,7 @@ const OptOutModal = (props: Props) => {
       const orgs = await API.getAllUserOrganizations();
       const orgsList = orgs.map((org: Organization) => org.name);
       setUserOrganizations(orgsList);
-    } catch (err) {
+    } catch (err: any) {
       setUserOrganizations([]);
     }
   }
@@ -76,7 +76,7 @@ const OptOutModal = (props: Props) => {
       setIsSending(false);
       props.onSuccess();
       props.onClose();
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({

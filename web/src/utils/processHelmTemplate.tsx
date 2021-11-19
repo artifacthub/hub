@@ -210,7 +210,7 @@ const isBuiltInObject = (code: string): boolean => {
   return false;
 };
 
-export default (code: string): ChartTemplateSpecialType | null => {
+const processHelmTemplate = (code: string): ChartTemplateSpecialType | null => {
   if (code.startsWith('.Values')) {
     return ChartTemplateSpecialType.ValuesBuiltInObject;
   } else if (code.startsWith('"')) {
@@ -227,3 +227,5 @@ export default (code: string): ChartTemplateSpecialType | null => {
 
   return null;
 };
+
+export default processHelmTemplate;

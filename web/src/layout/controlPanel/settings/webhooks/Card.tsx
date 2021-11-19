@@ -42,7 +42,7 @@ const WebhookCard = (props: Props) => {
       await API.deleteWebhook(props.webhook.webhookId!, ctx.prefs.controlPanel.selectedOrg);
       setIsDeleting(false);
       props.onDeletion();
-    } catch (err) {
+    } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {
         props.onAuthError();

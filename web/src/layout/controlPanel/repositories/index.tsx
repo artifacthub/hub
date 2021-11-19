@@ -104,7 +104,7 @@ const RepositoriesSection = (props: Props) => {
       }
       setApiError(null);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setApiError('An error occurred getting the repositories, please try again later.');

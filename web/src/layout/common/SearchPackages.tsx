@@ -47,7 +47,7 @@ const SearchPackages = (props: Props) => {
       );
       setPackages(searchResults.packages);
       setIsSearching(false);
-    } catch (err) {
+    } catch (err: any) {
       setPackages(null);
       alertDispatcher.postAlert({
         type: 'danger',

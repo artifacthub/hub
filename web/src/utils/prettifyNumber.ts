@@ -1,6 +1,6 @@
 const DEFAULT_DIGITS = 2;
 
-export default (num: number, digits?: number): string | number => {
+const prettifyNumber = (num: number, digits?: number): string | number => {
   if (num < 1000) {
     return num;
   }
@@ -23,3 +23,5 @@ export default (num: number, digits?: number): string | number => {
   }
   return (num / si[i].value).toFixed(digits || DEFAULT_DIGITS).replace(rx, '$1') + si[i].symbol;
 };
+
+export default prettifyNumber;

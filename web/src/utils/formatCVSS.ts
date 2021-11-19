@@ -1,4 +1,4 @@
-export default (vector: string): { [key: string]: string } => {
+const formatCVSS = (vector: string): { [key: string]: string } => {
   const values = vector.split('/');
   const cvss = {};
   values.forEach((metric: string) => {
@@ -8,3 +8,5 @@ export default (vector: string): { [key: string]: string } => {
 
   return cvss;
 };
+
+export default formatCVSS;

@@ -46,7 +46,7 @@ const InputFileField = (props: Props) => {
       if (!isUndefined(props.onImageChange)) {
         props.onImageChange(logo.imageId);
       }
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
