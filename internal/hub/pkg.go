@@ -88,6 +88,7 @@ type Package struct {
 	Deprecated                     bool                   `json:"deprecated"`
 	License                        string                 `json:"license"`
 	Signed                         bool                   `json:"signed"`
+	Signatures                     []string               `json:"signatures"`
 	ContentURL                     string                 `json:"content_url"`
 	ContainersImages               []*ContainerImage      `json:"containers_images"`
 	AllContainersImagesWhitelisted bool                   `json:"all_containers_images_whitelisted"`

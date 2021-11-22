@@ -6,13 +6,15 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/Masterminds/semver"
+	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/containerd/containerd/remotes/docker"
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
+	csremote "github.com/sigstore/cosign/pkg/oci/remote"
+	"github.com/sigstore/cosign/pkg/types"
 	"oras.land/oras-go/pkg/content"
 	ctxo "oras.land/oras-go/pkg/context"
 	"oras.land/oras-go/pkg/oras"
@@ -73,6 +75,34 @@ func (p *Puller) PullLayer(
 		}
 	}
 	return ocispec.Descriptor{}, nil, ErrLayerNotFound
+}
+
+// SignatureChecker is a hub.OCISignatureChecker implementation.
+type SignatureChecker struct{}
+
+// HasCosignSignature checks if the OCI artifact identified by the reference
+// provided has a cosign (sigstore) signature.
+func (c *SignatureChecker) HasCosignSignature(ctx context.Context, ref string) (bool, error) {
+	// Locate OCI artifact containing signature
+	artifactRef, err := name.ParseReference(ref)
+	if err != nil {
+		return false, err
+	}
+	signatureRef, err := csremote.SignatureTag(artifactRef)
+	if err != nil {
+		return false, err
+	}
+
+	// Check if the OCI artifact exists and contains a signature layer
+	p := &Puller{}
+	_, _, err = p.PullLayer(ctx, signatureRef.String(), types.SimpleSigningMediaType, "", "")
+	if err != nil {
+		if errors.Is(err, ErrArtifactNotFound) || errors.Is(err, ErrLayerNotFound) {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
 }
 
 // OCITagsGetter provides a mechanism to get all the version tags available for

@@ -282,6 +282,7 @@ select register_package('
     "digest": "digest-package1-2.0.0",
     "deprecated": true,
     "signed": true,
+    "signatures": ["prov", "cosign"],
     "is_operator": false,
     "capabilities": "seamless upgrades",
     "containers_images": [
@@ -330,6 +331,7 @@ select results_eq(
             s.capabilities,
             s.deprecated,
             s.signed,
+            s.signatures,
             s.containers_images,
             s.provider,
             s.values_schema,
@@ -359,6 +361,7 @@ select results_eq(
             'seamless upgrades',
             true,
             true,
+            '{"prov","cosign"}'::text[],
             '[{"image": "quay.io/org/img:2.0.0"}]'::jsonb,
             'Org Inc 2',
             null::jsonb,

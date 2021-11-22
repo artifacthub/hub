@@ -32,6 +32,7 @@ begin
         'license', s.license,
         'deprecated', s.deprecated,
         'signed', s.signed,
+        'signatures', s.signatures,
         'security_report_summary', s.security_report_summary,
         'all_containers_images_whitelisted', are_all_containers_images_whitelisted(s.containers_images),
         'ts', floor(extract(epoch from s.ts)),

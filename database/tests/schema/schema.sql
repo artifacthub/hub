@@ -219,7 +219,8 @@ select columns_are('snapshot', array[
     'created_at',
     'recommendations',
     'screenshots',
-    'sign_key'
+    'sign_key',
+    'signatures'
 ]);
 select columns_are('subscription', array[
     'user_id',

@@ -25,6 +25,11 @@ export enum HelmChartType {
   Application = 'application',
 }
 
+export enum Signature {
+  Prov = 'prov',
+  Cosign = 'cosign',
+}
+
 export interface Repository {
   repositoryId?: string;
   name: string;
@@ -107,6 +112,7 @@ export interface Package {
   stats?: PackageStats;
   allContainersImagesWhitelisted?: boolean;
   signKey?: HelmChartSignKey;
+  signatures?: Signature[];
   screenshots?: Screenshot[];
   productionOrganizations?: Organization[];
   productionOrganizationsCount?: number;

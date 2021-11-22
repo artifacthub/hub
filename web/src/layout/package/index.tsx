@@ -397,12 +397,14 @@ const PackageView = (props: Props) => {
       <SignedBadge
         repositoryKind={detail!.repository.kind}
         signed={detail!.signed}
+        signatures={detail!.signatures}
         className={`d-inline ${extraStyle}`}
       />
       <div className="d-none d-lg-inline">
         <SignKeyInfo
           visibleKeyInfo={!isUndefined(props.visibleModal) && props.visibleModal === 'key-info'}
           repoKind={detail!.repository.kind}
+          signatures={detail!.signatures}
           signed={detail!.signed}
           signKey={detail!.signKey}
           searchUrlReferer={props.searchUrlReferer}

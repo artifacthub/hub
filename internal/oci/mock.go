@@ -27,6 +27,18 @@ func (m *PullerMock) PullLayer(
 	return desc, data, args.Error(2)
 }
 
+// SignatureCheckerMock is a mock implementation of the hub.OCISignatureChecker
+// interface.
+type SignatureCheckerMock struct {
+	mock.Mock
+}
+
+// HasCosignSignature implements the OCITagsGetter interface.
+func (m *SignatureCheckerMock) HasCosignSignature(ctx context.Context, ref string) (bool, error) {
+	args := m.Called(ctx, ref)
+	return args.Bool(0), args.Error(1)
+}
+
 // TagsGetterMock is a mock implementation of the hub.OCITagsGetter interface.
 type TagsGetterMock struct {
 	mock.Mock
