@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { compact, isNull, isUndefined, orderBy } from 'lodash';
+import { compact, escapeRegExp, isNull, isUndefined, orderBy } from 'lodash';
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { IoIosCheckmark, IoIosClose } from 'react-icons/io';
@@ -141,7 +141,9 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
 
     setHighlightedItem(null);
     setInputValue(e.target.value);
-    setHightlightedText(e.target.value !== '' ? new RegExp(`(${e.target.value.toLowerCase()})`, 'gi') : null);
+
+    const escapedValue = escapeRegExp(e.target.value.toLowerCase());
+    setHightlightedText(e.target.value !== '' ? new RegExp(`(${escapedValue})`, 'gi') : null);
   };
 
   const onSelect = (filterKey: string, id: string, isSelected: boolean) => {
