@@ -61,6 +61,7 @@ begin
             s.capabilities,
             s.deprecated,
             s.signed,
+            s.signatures,
             s.security_report_summary,
             s.containers_images,
             s.ts,
@@ -157,6 +158,7 @@ begin
                     'license', license,
                     'deprecated', deprecated,
                     'signed', signed,
+                    'signatures', signatures,
                     'security_report_summary', security_report_summary,
                     'all_containers_images_whitelisted', are_all_containers_images_whitelisted(containers_images),
                     'production_organizations_count', (

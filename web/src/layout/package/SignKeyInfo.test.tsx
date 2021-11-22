@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { RepositoryKind } from '../../types';
+import { RepositoryKind, Signature } from '../../types';
 import SignKeyInfo from './SignKeyInfo';
 
 const defaultProps = {
@@ -100,6 +100,13 @@ describe('SignKeyInfo', () => {
     it('when repoKind is not Helm', () => {
       const { container } = render(
         <SignKeyInfo {...defaultProps} repoKind={RepositoryKind.OLM} visibleKeyInfo={false} />
+      );
+      expect(container).toBeEmptyDOMElement();
+    });
+
+    it('when signature is only Cosign and signKey is undefined', () => {
+      const { container } = render(
+        <SignKeyInfo {...defaultProps} signKey={undefined} signatures={[Signature.Cosign]} visibleKeyInfo={false} />
       );
       expect(container).toBeEmptyDOMElement();
     });

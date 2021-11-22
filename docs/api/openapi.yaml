@@ -3737,6 +3737,14 @@ components:
           type: boolean
           nullable: false
           example: false
+        signatures:
+          type: array
+          items:
+            type: string
+            enum:
+              - prov
+              - cosign
+            nullable: false
         official:
           type: boolean
           nullable: false

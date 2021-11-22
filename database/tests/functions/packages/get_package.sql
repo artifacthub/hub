@@ -96,6 +96,7 @@ insert into snapshot (
     deprecated,
     license,
     signed,
+    signatures,
     content_url,
     containers_images,
     provider,
@@ -129,6 +130,7 @@ insert into snapshot (
     true,
     'Apache-2.0',
     true,
+    '{"prov","cosign"}',
     'https://content.url/pkg1.tgz',
     '[{"image": "quay.io/org/img:1.0.0", "whitelisted": true}]',
     'Org Inc',
@@ -309,6 +311,7 @@ select is(
         "prerelease": true,
         "license": "Apache-2.0",
         "signed": true,
+        "signatures": ["prov", "cosign"],
         "content_url": "https://content.url/pkg1.tgz",
         "containers_images": [
             {
@@ -461,6 +464,7 @@ select is(
         "prerelease": true,
         "license": "Apache-2.0",
         "signed": true,
+        "signatures": ["prov", "cosign"],
         "content_url": "https://content.url/pkg1.tgz",
         "containers_images": [
             {

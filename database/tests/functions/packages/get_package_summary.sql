@@ -38,6 +38,7 @@ insert into snapshot (
     license,
     deprecated,
     signed,
+    signatures,
     containers_images,
     security_report_summary,
     ts
@@ -50,7 +51,8 @@ insert into snapshot (
     :'image1ID',
     'Apache-2.0',
     false,
-    false,
+    true,
+    '{"cosign"}',
     '[{"image": "quay.io/org/img:1.0.0", "whitelisted": true}]',
     '{"high": 2, "medium": 1}',
     '2020-06-16 11:20:34+02'
@@ -74,7 +76,8 @@ select is(
         "app_version": "12.0.0",
         "license": "Apache-2.0",
         "deprecated": false,
-        "signed": false,
+        "signed": true,
+        "signatures": ["cosign"],
         "security_report_summary": {
             "high": 2,
             "medium": 1
@@ -115,7 +118,8 @@ select is(
         "app_version": "12.0.0",
         "license": "Apache-2.0",
         "deprecated": false,
-        "signed": false,
+        "signed": true,
+        "signatures": ["cosign"],
         "security_report_summary": {
             "high": 2,
             "medium": 1

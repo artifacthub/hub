@@ -227,6 +227,7 @@ const PackageInfo = (props: Props) => {
         {props.package.signed && (
           <SignedBadge
             signed={props.package.signed}
+            signatures={props.package.signatures}
             repositoryKind={props.package.repository.kind}
             className="d-inline mt-3"
           />

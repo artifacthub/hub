@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FaKey } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
-import { HelmChartSignKey, RepositoryKind, SearchFiltersURL } from '../../types';
+import { HelmChartSignKey, RepositoryKind, SearchFiltersURL, Signature } from '../../types';
 import ElementWithTooltip from '../common/ElementWithTooltip';
 import Modal from '../common/Modal';
 import CommandBlock from './installation/CommandBlock';
@@ -14,6 +14,7 @@ interface Props {
   visibleKeyInfo: boolean;
   signed: boolean | null;
   repoKind: RepositoryKind;
+  signatures?: Signature[];
   signKey?: HelmChartSignKey;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -47,7 +48,16 @@ const SignKeyInfo = (props: Props) => {
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isNull(props.signed) || !props.signed || props.repoKind !== RepositoryKind.Helm) return null;
+  const onlyCosignSignature =
+    !isUndefined(props.signatures) && props.signatures.length === 1 && props.signatures[0] === Signature.Cosign;
+
+  if (
+    isNull(props.signed) ||
+    !props.signed ||
+    props.repoKind !== RepositoryKind.Helm ||
+    (isUndefined(props.signKey) && onlyCosignSignature)
+  )
+    return null;
 
   return (
     <>

@@ -58,6 +58,10 @@ const (
 	dependenciesKey = "dependencies"
 	kubeVersionKey  = "kubeVersion"
 	typeKey         = "type"
+
+	// Signatures kinds
+	prov   = "prov"
+	cosign = "cosign"
 )
 
 var (
@@ -83,6 +87,7 @@ var (
 type TrackerSource struct {
 	i  *hub.TrackerSourceInput
 	il hub.HelmIndexLoader
+	sc hub.OCISignatureChecker
 	tg hub.OCITagsGetter
 }
 
@@ -94,6 +99,9 @@ func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource))
 	}
 	if s.il == nil {
 		s.il = &repo.HelmIndexLoader{}
+	}
+	if s.sc == nil {
+		s.sc = &oci.SignatureChecker{}
 	}
 	if s.tg == nil {
 		s.tg = &oci.TagsGetter{}
@@ -269,12 +277,29 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 			}
 		}
 
-		// Check if the chart version is signed (has provenance file)
+		// Check if the chart version is signed
+		var signatures []string
 		hasProvenanceFile, err := s.chartHasProvenanceFile(chartURL)
 		if err != nil {
 			s.warn(md, fmt.Errorf("error checking provenance file: %w", err))
 		}
-		p.Signed = hasProvenanceFile
+		if hasProvenanceFile {
+			signatures = append(signatures, prov)
+		}
+		if repo.SchemeIsOCI(chartURL) {
+			ref := strings.TrimPrefix(chartURL.String(), hub.RepositoryOCIPrefix)
+			hasCosignSignature, err := s.sc.HasCosignSignature(s.i.Svc.Ctx, ref)
+			if err != nil {
+				s.warn(md, fmt.Errorf("error checking cosign signature: %w", err))
+			}
+			if hasCosignSignature {
+				signatures = append(signatures, cosign)
+			}
+		}
+		if len(signatures) > 0 {
+			p.Signed = true
+			p.Signatures = signatures
+		}
 
 		// Enrich package with data available in chart archive
 		EnrichPackageFromChart(p, chrt)

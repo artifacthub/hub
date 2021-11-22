@@ -65,6 +65,7 @@ begin
         'prerelease', s.prerelease,
         'license', s.license,
         'signed', s.signed,
+        'signatures', s.signatures,
         'content_url', s.content_url,
         'containers_images', s.containers_images,
         'all_containers_images_whitelisted', are_all_containers_images_whitelisted(s.containers_images),

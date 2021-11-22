@@ -21,6 +21,7 @@ declare
     v_ts_repository text[];
     v_ts_publisher text[];
     v_repository_disabled boolean;
+    v_signatures text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'signatures', 'null'::jsonb))), '{}'));
 begin
     -- Get some repository information (some of it for tsdoc)
     select r.disabled, array[r.name, r.display_name], array[u.alias, o.name, o.display_name, v_provider]
@@ -146,6 +147,7 @@ begin
         deprecated,
         license,
         signed,
+        signatures,
         content_url,
         containers_images,
         provider,
@@ -178,6 +180,7 @@ begin
         (p_pkg->>'deprecated')::boolean,
         nullif(p_pkg->>'license', ''),
         (p_pkg->>'signed')::boolean,
+        v_signatures,
         nullif(p_pkg->>'content_url', ''),
         nullif(p_pkg->'containers_images', 'null'),
         v_provider,
@@ -210,6 +213,7 @@ begin
         deprecated = excluded.deprecated,
         license = excluded.license,
         signed = excluded.signed,
+        signatures = excluded.signatures,
         content_url = excluded.content_url,
         containers_images = excluded.containers_images,
         provider = excluded.provider,
