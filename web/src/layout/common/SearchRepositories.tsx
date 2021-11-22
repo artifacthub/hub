@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import { escapeRegExp, isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
 import React, { useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
@@ -296,7 +296,7 @@ const SearchRepositories = (props: Props) => {
                           <div className={styles.truncateWrapper}>
                             <div className="text-truncate">
                               {regexifyString({
-                                pattern: new RegExp(searchName, 'gi'),
+                                pattern: new RegExp(escapeRegExp(searchName), 'gi'),
                                 decorator: (match: string, index: number) => {
                                   return (
                                     <span key={`match_${item.name}_${index}`} className="font-weight-bold hightlighted">
