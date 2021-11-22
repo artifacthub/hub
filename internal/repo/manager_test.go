@@ -1094,7 +1094,7 @@ func TestGetRemoteDigest(t *testing.T) {
 
 	t.Run("helm-oci: error getting tags", func(t *testing.T) {
 		t.Parallel()
-		tg := &OCITagsGetterMock{}
+		tg := &oci.TagsGetterMock{}
 		tg.On("Tags", ctx, helmOCI).Return(nil, tests.ErrFake)
 		m := NewManager(cfg, nil, nil, nil, WithOCITagsGetter(tg))
 
@@ -1106,7 +1106,7 @@ func TestGetRemoteDigest(t *testing.T) {
 
 	t.Run("helm-oci: success", func(t *testing.T) {
 		t.Parallel()
-		tg := &OCITagsGetterMock{}
+		tg := &oci.TagsGetterMock{}
 		tg.On("Tags", ctx, helmOCI).Return([]string{"2.0.0", "1.0.0"}, nil)
 		m := NewManager(cfg, nil, nil, nil, WithOCITagsGetter(tg))
 

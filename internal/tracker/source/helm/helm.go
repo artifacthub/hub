@@ -96,7 +96,7 @@ func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource))
 		s.il = &repo.HelmIndexLoader{}
 	}
 	if s.tg == nil {
-		s.tg = &repo.OCITagsGetter{}
+		s.tg = &oci.TagsGetter{}
 	}
 	return s
 }
