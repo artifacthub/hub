@@ -182,18 +182,6 @@ func (m *ManagerMock) UpdateDigest(ctx context.Context, repositoryID, digest str
 	return args.Error(0)
 }
 
-// OCITagsGetterMock is a mock implementation of the OCITagsGetter interface.
-type OCITagsGetterMock struct {
-	mock.Mock
-}
-
-// Tags implements the OCITagsGetter interface.
-func (m *OCITagsGetterMock) Tags(ctx context.Context, r *hub.Repository) ([]string, error) {
-	args := m.Called(ctx, r)
-	tags, _ := args.Get(0).([]string)
-	return tags, args.Error(1)
-}
-
 // OLMOCIExporterMock is a mock implementation of the OLMOCIExporter interface.
 type OLMOCIExporterMock struct {
 	mock.Mock

@@ -52,3 +52,9 @@ type OCIPuller interface {
 		password string,
 	) (ocispec.Descriptor, []byte, error)
 }
+
+// OCITagsGetter is the interface that wraps the Tags method, used to get all
+// the tags available for a given repository in a OCI registry.
+type OCITagsGetter interface {
+	Tags(ctx context.Context, r *Repository) ([]string, error)
+}

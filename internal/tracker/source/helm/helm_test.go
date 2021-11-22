@@ -151,7 +151,7 @@ func TestTrackerSource(t *testing.T) {
 			},
 			Svc: sw.Svc,
 		}
-		tg := &repo.OCITagsGetterMock{}
+		tg := &oci.TagsGetterMock{}
 		tg.On("Tags", i.Svc.Ctx, i.Repository).Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
@@ -332,7 +332,7 @@ func TestTrackerSource(t *testing.T) {
 			},
 			Svc: sw.Svc,
 		}
-		tg := &repo.OCITagsGetterMock{}
+		tg := &oci.TagsGetterMock{}
 		tg.On("Tags", i.Svc.Ctx, i.Repository).Return([]string{"1.0.0"}, nil)
 		ref := strings.TrimPrefix(i.Repository.URL, hub.RepositoryOCIPrefix) + ":1.0.0"
 		sw.Op.On("PullLayer", mock.Anything, ref, ChartContentLayerMediaType, "", "").
@@ -473,7 +473,7 @@ func TestTrackerSource(t *testing.T) {
 			},
 			Svc: sw.Svc,
 		}
-		tg := &repo.OCITagsGetterMock{}
+		tg := &oci.TagsGetterMock{}
 		tg.On("Tags", i.Svc.Ctx, i.Repository).Return([]string{"1.0.0"}, nil)
 		ref := strings.TrimPrefix(i.Repository.URL, hub.RepositoryOCIPrefix) + ":1.0.0"
 		data, _ := os.ReadFile("testdata/pkg1-1.0.0.tgz")
