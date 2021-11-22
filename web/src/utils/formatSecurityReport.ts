@@ -3,7 +3,9 @@ import { groupBy, orderBy } from 'lodash';
 import { SecurityReportSummary, Vulnerability, VulnerabilitySeverity } from '../types';
 import { SEVERITY_ORDER } from './data';
 
-export default (vulnerabilities: Vulnerability[] | null): { list: Vulnerability[]; summary: SecurityReportSummary } => {
+const formatSecurityReport = (
+  vulnerabilities: Vulnerability[] | null
+): { list: Vulnerability[]; summary: SecurityReportSummary } => {
   const list = vulnerabilities
     ? orderBy(
         vulnerabilities,
@@ -40,3 +42,5 @@ export default (vulnerabilities: Vulnerability[] | null): { list: Vulnerability[
 
   return { list: list, summary: summary };
 };
+
+export default formatSecurityReport;

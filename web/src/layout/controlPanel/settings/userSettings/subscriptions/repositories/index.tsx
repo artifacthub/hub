@@ -81,7 +81,7 @@ const RepositoriesSection = (props: Props) => {
         setTotal(total);
       }
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
@@ -108,7 +108,7 @@ const RepositoriesSection = (props: Props) => {
         await API.addOptOut(data.repoId, data.kind);
       }
       getOptOutList(callback);
-    } catch (err) {
+    } catch (err: any) {
       callback();
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({

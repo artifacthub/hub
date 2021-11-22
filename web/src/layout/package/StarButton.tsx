@@ -69,7 +69,7 @@ const StarButton = (props: Props) => {
       await API.toggleStar(props.packageId);
       getPackageStars();
       setIsSending(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
 
       // On unauthorized, we force sign out

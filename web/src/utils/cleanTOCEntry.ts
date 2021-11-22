@@ -1,6 +1,8 @@
 import removeEmojis from './removeEmojis';
 
-export default (title: string): string => {
+const cleanTOCEntry = (title: string): string => {
   // Remove backticks and emojis
   return title !== '' ? removeEmojis(title.replace(/`/g, '')) : title;
 };
+
+export default cleanTOCEntry;

@@ -46,7 +46,7 @@ export enum InstallMethodKind {
 const SPECIAL_OLM = 'community-operators';
 const SPECIAL_FALCO = 'security-hub';
 
-export default (props: PackageInfo): InstallMethodOutput => {
+const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
   const { pkg } = { ...props };
 
   const output: InstallMethodOutput = {
@@ -248,3 +248,5 @@ export default (props: PackageInfo): InstallMethodOutput => {
 
   return output;
 };
+
+export default getInstallMethods;

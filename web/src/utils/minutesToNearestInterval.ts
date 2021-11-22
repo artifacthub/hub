@@ -1,7 +1,7 @@
 import { isUndefined } from 'lodash';
 import moment from 'moment';
 
-export default (duration: number, decrement?: number): number => {
+const minutesToNearestInterval = (duration: number, decrement?: number): number => {
   const rounding = moment.duration(duration, 'minutes');
   const currentDate = moment();
   const nextInterval = moment(Math.ceil(+currentDate / +rounding) * +rounding);
@@ -16,3 +16,5 @@ export default (duration: number, decrement?: number): number => {
     return result;
   }
 };
+
+export default minutesToNearestInterval;

@@ -186,7 +186,7 @@ const ChartTemplatesModal = (props: Props) => {
         cleanUrl();
       }
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       if (err.kind === ErrorKind.NotFound) {
         alertDispatcher.postAlert({
           type: 'danger',

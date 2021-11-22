@@ -44,7 +44,7 @@ const MemberCard = (props: Props) => {
       } else {
         props.onSuccess();
       }
-    } catch (err) {
+    } catch (err: any) {
       setIsDeletingMember(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let errorMessage = 'An error occurred removing member from the organization, please try again later.';

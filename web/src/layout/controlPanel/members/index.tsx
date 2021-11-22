@@ -77,7 +77,7 @@ const MembersSection = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsGettingMembers(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsGettingMembers(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setMembers([]);

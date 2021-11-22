@@ -61,7 +61,7 @@ const ResetPasswordModal = (props: Props) => {
       await API.resetPassword(code!, password);
       setIsSuccess(true);
       setIsSending(false);
-    } catch (err) {
+    } catch (err: any) {
       let error = compoundErrorMessage(err, 'An error occurred resetting the password');
       setApiError(error);
       setIsSending(false);
@@ -110,7 +110,7 @@ const ResetPasswordModal = (props: Props) => {
       try {
         await API.verifyPasswordResetCode(code!);
         setValidCode(true);
-      } catch (err) {
+      } catch (err: any) {
         if (err.kind === ErrorKind.Gone) {
           setApiError('This password reset link is no longer valid, please get a new one.');
           setDisplayResetPwd(true);

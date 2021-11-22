@@ -148,7 +148,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
               input.current!.setCustomValidity('');
               setPwdStrengthError(null);
             }
-          } catch (e) {
+          } catch (e: any) {
             if (!isNull(input.current) && e.message) {
               setPwdStrengthError(e.message);
               input.current!.setCustomValidity(e.message);

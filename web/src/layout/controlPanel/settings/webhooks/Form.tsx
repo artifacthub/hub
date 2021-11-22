@@ -119,7 +119,7 @@ const WebhookForm = (props: Props) => {
       setIsSending(false);
       props.onSuccess();
       onCloseForm();
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(
@@ -145,7 +145,7 @@ const WebhookForm = (props: Props) => {
       await API.triggerWebhookTest(webhook);
       setIsTestSent(true);
       setIsSendingTest(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsSendingTest(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(err, `An error occurred testing the webhook`);

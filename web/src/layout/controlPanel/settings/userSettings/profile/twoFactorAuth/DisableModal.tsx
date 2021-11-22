@@ -34,7 +34,7 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
       setApiError(null);
       props.onChange();
       setOpenStatus(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsProcessing(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setApiError('An error occurred turning off two-factor authentication, please try again later.');

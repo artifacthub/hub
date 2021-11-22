@@ -72,7 +72,7 @@ const SubscriptionsButton = (props: Props) => {
         if (visibleLoading) {
           setIsLoading(false);
         }
-      } catch (err) {
+      } catch (err: any) {
         setActiveSubscriptions(null);
 
         if (visibleLoading) {
@@ -114,7 +114,7 @@ const SubscriptionsButton = (props: Props) => {
       // We don't need to get subscriptions after changing it due to we are closing the dropdown
       // and we get them again every time we open the dropdown
       setOpenStatus(false);
-    } catch (err) {
+    } catch (err: any) {
       if (err.kind !== ErrorKind.Unauthorized) {
         const notif = getNotification(kind);
         const title = !isUndefined(notif) ? notif.title : '';

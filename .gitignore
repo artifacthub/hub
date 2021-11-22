@@ -9,6 +9,7 @@ node_modules/
 web/build
 web/public/docs
 web/coverage
+web/src/static
 widget/build
 widget/coverage
 charts/artifact-hub/charts

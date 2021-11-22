@@ -101,7 +101,7 @@ const prepareContent = (content: any): string => {
   return yamlContent;
 };
 
-export default (schema: JSONSchema, savedOpts: { [key: string]: number }): FormattedValuesSchema => {
+const compoundJSONSchemaYAML = (schema: JSONSchema, savedOpts: { [key: string]: number }): FormattedValuesSchema => {
   const title = schema.title ? `# ${schema.title}` : '';
   let paths: string[] = [];
 
@@ -229,3 +229,4 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
     paths: paths,
   };
 };
+export default compoundJSONSchemaYAML;

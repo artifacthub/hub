@@ -60,7 +60,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
         }
       }
       props.setIsSending(false);
-    } catch (err) {
+    } catch (err: any) {
       props.setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(

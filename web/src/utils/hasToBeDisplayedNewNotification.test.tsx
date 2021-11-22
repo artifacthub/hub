@@ -35,18 +35,10 @@ const tests: Test[] = [
 ];
 
 describe('hasToBeDisplayedNewNotification', () => {
-  let dateNowSpy: any;
-
-  beforeAll(() => {
-    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1614344598966);
-  });
-
-  afterAll(() => {
-    dateNowSpy.mockRestore();
-  });
-
   for (let i = 0; i < tests.length; i++) {
     it(`checks if has to be displayed - ${tests[i].title}`, () => {
+      jest.spyOn(global.Date, 'now').mockImplementationOnce(() => 1614344598966);
+
       const actual = hasToBeDisplayedNewNotification(tests[i].dateLimit, tests[i].lastDisplayedTime);
       expect(actual).toEqual(tests[i].result);
     });

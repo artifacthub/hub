@@ -1,6 +1,6 @@
 import removeEmojis from './removeEmojis';
 
-export default (str: string): string => {
+const getAnchorValue = (str: string): string => {
   return removeEmojis(
     str
       .trim()
@@ -13,3 +13,5 @@ export default (str: string): string => {
       .replace(/-+$/, '')
   );
 };
+
+export default getAnchorValue;

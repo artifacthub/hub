@@ -1,4 +1,4 @@
-export default (str: string): boolean => {
+const isValidJSON = (str: string): boolean => {
   try {
     JSON.parse(str);
   } catch (e) {
@@ -6,3 +6,5 @@ export default (str: string): boolean => {
   }
   return true;
 };
+
+export default isValidJSON;

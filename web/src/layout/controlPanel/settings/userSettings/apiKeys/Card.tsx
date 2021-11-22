@@ -43,7 +43,7 @@ const APIKeyCard = (props: Props) => {
       await API.deleteAPIKey(props.apiKey.apiKeyId!);
       setIsDeleting(false);
       props.onSuccess();
-    } catch (err) {
+    } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {
         props.onAuthError();

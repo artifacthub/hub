@@ -36,7 +36,7 @@ const ResetPassword = (props: Props) => {
       await API.requestPasswordResetCode(email);
       setIsSuccess(true);
       setIsSending(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
     } finally {
       if (props.onFinish) {

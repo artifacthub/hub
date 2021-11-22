@@ -98,7 +98,7 @@ export async function refreshUserProfile(dispatch: React.Dispatch<any>, redirect
         history.push(redirectUrl);
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     dispatch({ type: 'signOut' });
     if (err.message === 'invalid session') {
       history.push(

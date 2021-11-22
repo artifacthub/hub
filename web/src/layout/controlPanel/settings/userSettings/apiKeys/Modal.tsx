@@ -69,7 +69,7 @@ const APIKeyModal = (props: Props) => {
       if (props.apiKey) {
         onCloseModal();
       }
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setApiError(
@@ -123,7 +123,7 @@ const APIKeyModal = (props: Props) => {
         const currentAPIKey = await API.getAPIKey(props.apiKey!.apiKeyId!);
         setApiKey(currentAPIKey);
         nameInput.current!.updateValue(currentAPIKey.name);
-      } catch (err) {
+      } catch (err: any) {
         if (err.kind === ErrorKind.Unauthorized) {
           props.onAuthError();
         }

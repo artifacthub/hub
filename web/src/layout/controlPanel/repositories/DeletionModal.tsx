@@ -32,7 +32,7 @@ const DeletionModal = (props: Props) => {
       await API.deleteRepository(props.repository.name, props.organizationName);
       setIsDeleting(false);
       props.onSuccess();
-    } catch (err) {
+    } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {
         props.onAuthError();

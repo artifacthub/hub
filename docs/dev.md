@@ -197,7 +197,7 @@ hub_frontend_dev
 
 That alias will launch an http server that will listen on the port 3000. Once it's running, you can point your browser to [http://localhost:3000](http://localhost:3000) and you should see the Artifact Hub web application. The page will be automatically reloaded everytime you make a change in the code. Build errors and build warnings will be visible in the console.
 
-API calls will go to [http://localhost:8000](http://localhost:8000), so the `hub` server is expected to be up and running. *Please note that you'll also need to disable cross-origin restrictions in your browser.*
+API calls will go to [http://localhost:8000](http://localhost:8000), so the `hub` server is expected to be up and running.
 
 ### Frontend tests and linter
 

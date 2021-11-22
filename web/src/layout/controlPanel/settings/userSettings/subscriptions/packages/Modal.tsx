@@ -81,7 +81,7 @@ const SubscriptionModal = (props: Props) => {
         props.onSuccess();
         props.onClose();
       }
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({

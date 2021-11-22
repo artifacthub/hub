@@ -1,12 +1,12 @@
 // @ts-ignore
 import googleAnalytics from '@analytics/google-analytics';
-import Analytics from 'analytics';
+import Analytics, { AnalyticsPlugin } from 'analytics';
 import { isNull } from 'lodash';
 
 import getMetaTag from '../utils/getMetaTag';
 
-const getPlugins = (): object[] => {
-  let plugins: object[] = [];
+const getPlugins = (): AnalyticsPlugin[] => {
+  let plugins: AnalyticsPlugin[] = [];
   const analyticsConfig: string | null = getMetaTag('gaTrackingID');
 
   if (!isNull(analyticsConfig) && analyticsConfig !== '' && analyticsConfig !== '{{ .gaTrackingID }}') {

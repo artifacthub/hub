@@ -2,7 +2,7 @@ import semver from 'semver';
 
 import { Version } from '../types';
 
-export default (availableVersions: Version[]): Version[] => {
+const sortPackageVersions = (availableVersions: Version[]): Version[] => {
   if (availableVersions) {
     const validVersions: Version[] = availableVersions.filter((version: Version) => semver.valid(version.version));
     const invalidVersions: Version[] = availableVersions.filter((version: Version) => !semver.valid(version.version));
@@ -15,3 +15,5 @@ export default (availableVersions: Version[]): Version[] => {
   }
   return [];
 };
+
+export default sortPackageVersions;

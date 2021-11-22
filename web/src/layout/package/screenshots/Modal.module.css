@@ -20,7 +20,7 @@
   transform: translate(-50%, -50%);
   position: relative;
   border: 3px solid var(--color-black-90);
-  background-image: url(/static/media/pattern-transparent.png);
+  background-image: url(../../../static/media/pattern-transparent.png);
   background-repeat: repeat;
 }
 
@@ -76,7 +76,7 @@
   transform: translate(-50%, -50%);
   overscroll-behavior: contain;
   border: 3px solid var(--color-black-90);
-  background-image: url(/static/media/pattern-transparent.png);
+  background-image: url(../../../static/media/pattern-transparent.png);
   background-repeat: repeat;
 }
 

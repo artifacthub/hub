@@ -58,7 +58,7 @@ export class Authorizer {
           this.pendingActions.forEach((action: () => void) => action());
           this.pendingActions = [];
         }
-      } catch (err) {
+      } catch (err: any) {
         this.allowedActions = ['all'];
         this.gettingActions = false;
       }

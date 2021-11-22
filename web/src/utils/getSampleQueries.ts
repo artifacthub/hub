@@ -2,7 +2,7 @@ import { isArray } from 'lodash';
 
 import getMetaTag from './getMetaTag';
 
-export default (): any[] => {
+const getSampleQueries = (): any[] => {
   const sampleQueries = getMetaTag('sampleQueries');
   if (sampleQueries) {
     try {
@@ -16,3 +16,5 @@ export default (): any[] => {
   }
   return [];
 };
+
+export default getSampleQueries;

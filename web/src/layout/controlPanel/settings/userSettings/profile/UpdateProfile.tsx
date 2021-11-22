@@ -52,7 +52,7 @@ const UpdateProfile = (props: Props) => {
       await API.updateUserProfile(user);
       dispatch(updateUser(formattedUser));
       setIsSending(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(err, 'An error occurred updating your profile');

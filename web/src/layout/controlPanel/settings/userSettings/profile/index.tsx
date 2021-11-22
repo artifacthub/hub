@@ -20,7 +20,7 @@ const ProfileSection = (props: Props) => {
   async function fetchProfile() {
     try {
       setProfile(await API.getUserProfile());
-    } catch (err) {
+    } catch (err: any) {
       if (err.kind !== ErrorKind.Unauthorized) {
         setProfile(null);
       } else {

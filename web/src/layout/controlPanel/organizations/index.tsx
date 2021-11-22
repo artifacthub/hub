@@ -71,7 +71,7 @@ const OrganizationsSection = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         setOrganizations([]);

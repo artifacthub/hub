@@ -60,7 +60,7 @@ const TransferRepositoryModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
-    } catch (err) {
+    } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(err, 'An error occurred transfering the repository');
@@ -100,7 +100,7 @@ const TransferRepositoryModal = (props: Props) => {
         setOrganizations(orgs);
         setApiError(null);
         setIsFetchingOrgs(false);
-      } catch (err) {
+      } catch (err: any) {
         setIsFetchingOrgs(false);
         if (err.kind !== ErrorKind.Unauthorized) {
           setOrganizations([]);

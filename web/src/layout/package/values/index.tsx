@@ -102,7 +102,7 @@ const Values = (props: Props) => {
       setCurrentPkgId(props.packageId);
       setIsLoading(false);
       setOpenStatus(true);
-    } catch (err) {
+    } catch (err: any) {
       if (err.kind === ErrorKind.NotFound) {
         alertDispatcher.postAlert({
           type: 'danger',

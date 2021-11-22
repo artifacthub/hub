@@ -57,7 +57,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
       await API.register(user);
       props.setSuccess(true);
       props.setIsLoading({ status: false });
-    } catch (err) {
+    } catch (err: any) {
       let error = compoundErrorMessage(err, 'An error occurred registering the user');
       props.setApiError(error);
       props.setIsLoading({ status: false });

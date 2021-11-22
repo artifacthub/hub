@@ -185,7 +185,7 @@ const SearchBar = (props: Props) => {
       } else {
         cleanSearch();
       }
-    } catch (err) {
+    } catch (err: any) {
       cleanSearch();
     }
   }
