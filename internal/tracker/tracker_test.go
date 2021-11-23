@@ -83,6 +83,7 @@ func TestTracker(t *testing.T) {
 		sw.svc.Cfg.Set("tracker.bypassDigestCheck", true)
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r).Return(r.Digest, nil)
 		sw.ec.On("Init", r.RepositoryID)
+		sw.rm.On("GetMetadata", r, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
@@ -143,7 +144,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
@@ -159,7 +160,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
 		sw.src.On("GetPackagesAvailable").Return(nil, tests.ErrFake)
 
@@ -176,7 +177,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{}, nil)
 
@@ -193,7 +194,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
 			pkg.BuildKey(p1v1): p1v1,
@@ -215,7 +216,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
 			pkg.BuildKey(p1v1): "",
 		}, nil)
@@ -236,7 +237,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(&hub.RepositoryMetadata{
+		sw.rm.On("GetMetadata", r1, "").Return(&hub.RepositoryMetadata{
 			Ignore: []*hub.RepositoryIgnoreEntry{
 				{
 					Name: p1v1.Name,
@@ -261,8 +262,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).
-			Return(nil, fmt.Errorf("error: %w", repo.ErrMetadataNotFound))
+		sw.rm.On("GetMetadata", r1, "").Return(nil, fmt.Errorf("error: %w", repo.ErrMetadataNotFound))
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
 			pkg.BuildKey(p1v1): p1v1,
@@ -282,7 +282,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, tests.ErrFake)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, tests.ErrFake)
 		expectedErr := "error getting repository metadata: fake error for tests"
 		sw.ec.On("Append", r1.RepositoryID, expectedErr).Return()
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
@@ -306,7 +306,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
 			pkg.BuildKey(p1v1): p1v1,
@@ -328,7 +328,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
 			pkg.BuildKey(p1v1): "",
 			pkg.BuildKey(p1v2): "",
@@ -353,7 +353,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
 			pkg.BuildKey(p1v1): "",
 			pkg.BuildKey(p1v2): "",
@@ -373,7 +373,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
 			pkg.BuildKey(p1v1): "",
 			pkg.BuildKey(p1v2): "",
@@ -396,7 +396,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(&hub.RepositoryMetadata{
+		sw.rm.On("GetMetadata", r1, "").Return(&hub.RepositoryMetadata{
 			Ignore: []*hub.RepositoryIgnoreEntry{
 				{
 					Name:    p1v1.Name,
@@ -427,7 +427,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(&hub.RepositoryMetadata{
+		sw.rm.On("GetMetadata", r1, "").Return(&hub.RepositoryMetadata{
 			RepositoryID: r1.RepositoryID,
 		}, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
@@ -449,7 +449,7 @@ func TestTracker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("digest", nil)
 		sw.ec.On("Init", r1.RepositoryID)
-		sw.rm.On("GetMetadata", r1.URL+"/"+hub.RepositoryMetadataFile).Return(nil, nil)
+		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{}, nil)
 		sw.rm.On("UpdateDigest", sw.svc.Ctx, r1.RepositoryID, "digest").Return(tests.ErrFake)

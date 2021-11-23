@@ -186,7 +186,7 @@ type RepositoryManager interface {
 	Delete(ctx context.Context, name string) error
 	GetByID(ctx context.Context, repositoryID string, includeCredentials bool) (*Repository, error)
 	GetByName(ctx context.Context, name string, includeCredentials bool) (*Repository, error)
-	GetMetadata(mdFile string) (*RepositoryMetadata, error)
+	GetMetadata(r *Repository, basePath string) (*RepositoryMetadata, error)
 	GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)
 	GetRemoteDigest(ctx context.Context, r *Repository) (string, error)
 	Search(ctx context.Context, input *SearchRepositoryInput) (*SearchRepositoryResult, error)
@@ -204,8 +204,8 @@ type RepositoryManager interface {
 // about the repository they'd like to publish.
 type RepositoryMetadata struct {
 	RepositoryID string                   `yaml:"repositoryID"`
-	Owners       []*Owner                 `yaml:"owners"`
-	Ignore       []*RepositoryIgnoreEntry `yaml:"ignore"`
+	Owners       []*Owner                 `yaml:"owners,omitempty"`
+	Ignore       []*RepositoryIgnoreEntry `yaml:"ignore,omitempty"`
 }
 
 // RepositoryIgnoreEntry represents an entry in the ignore list. This list is

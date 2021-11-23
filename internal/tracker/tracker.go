@@ -3,9 +3,7 @@ package tracker
 import (
 	"errors"
 	"fmt"
-	"net/url"
 	"os"
-	"path"
 	"path/filepath"
 	"strings"
 
@@ -60,7 +58,10 @@ func (t *Tracker) Run() error {
 		defer os.RemoveAll(tmpDir)
 	}
 	t.basePath = filepath.Join(tmpDir, packagesPath)
-	t.md = t.getRepositoryMetadata()
+	t.md, err = t.svc.Rm.GetMetadata(t.r, t.basePath)
+	if err != nil && !errors.Is(err, repo.ErrMetadataNotFound) {
+		t.warn(fmt.Errorf("error getting repository metadata: %w", err))
+	}
 
 	// Load packages already registered from this repository
 	t.packagesRegistered, err = t.svc.Rm.GetPackagesDigest(t.svc.Ctx, t.r.RepositoryID)
@@ -173,45 +174,6 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 	}
 
 	return tmpDir, packagesPath, err
-}
-
-// getRepositoryMetadata returns the repository's metadata when available.
-func (t *Tracker) getRepositoryMetadata() *hub.RepositoryMetadata {
-	var mdFile string
-	u, _ := url.Parse(t.r.URL)
-	switch t.r.Kind {
-	case hub.Helm:
-		switch u.Scheme {
-		case "http", "https":
-			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-			mdFile = u.String()
-		case "oci":
-			mdFile = t.r.URL
-		}
-	case
-		hub.CoreDNS,
-		hub.Falco,
-		hub.HelmPlugin,
-		hub.KedaScaler,
-		hub.Keptn,
-		hub.Krew,
-		hub.OLM,
-		hub.OPA,
-		hub.TBAction,
-		hub.TektonTask,
-		hub.TektonPipeline:
-		mdFile = filepath.Join(t.basePath, hub.RepositoryMetadataFile)
-	}
-
-	var md *hub.RepositoryMetadata
-	if mdFile != "" {
-		var err error
-		md, err = t.svc.Rm.GetMetadata(mdFile)
-		if err != nil && !errors.Is(err, repo.ErrMetadataNotFound) {
-			t.warn(fmt.Errorf("error getting repository metadata: %w", err))
-		}
-	}
-	return md
 }
 
 // getPackagesAvailable returns the packages available in the repository. The
