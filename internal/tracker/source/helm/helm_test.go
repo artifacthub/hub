@@ -477,7 +477,7 @@ func TestTrackerSource(t *testing.T) {
 		tg := &oci.TagsGetterMock{}
 		tg.On("Tags", i.Svc.Ctx, i.Repository).Return([]string{"1.0.0"}, nil)
 		sc := &oci.SignatureCheckerMock{}
-		sc.On("HasCosignSignature", i.Svc.Ctx, ref).Return(true, nil)
+		sc.On("HasCosignSignature", i.Svc.Ctx, ref, "", "").Return(true, nil)
 		data, _ := os.ReadFile("testdata/pkg1-1.0.0.tgz")
 		sw.Op.On("PullLayer", mock.Anything, ref, ChartContentLayerMediaType, "", "").
 			Return(ocispec.Descriptor{}, data, nil)

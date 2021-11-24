@@ -57,7 +57,7 @@ type OCIPuller interface {
 // used to check if the OCI artifact identified by the reference provided has a
 // cosign (sigstore) signature.
 type OCISignatureChecker interface {
-	HasCosignSignature(ctx context.Context, ref string) (bool, error)
+	HasCosignSignature(ctx context.Context, ref, username, password string) (bool, error)
 }
 
 // OCITagsGetter is the interface that wraps the Tags method, used to get all
