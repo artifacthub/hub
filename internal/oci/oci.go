@@ -82,7 +82,12 @@ type SignatureChecker struct{}
 
 // HasCosignSignature checks if the OCI artifact identified by the reference
 // provided has a cosign (sigstore) signature.
-func (c *SignatureChecker) HasCosignSignature(ctx context.Context, ref string) (bool, error) {
+func (c *SignatureChecker) HasCosignSignature(
+	ctx context.Context,
+	ref,
+	username,
+	password string,
+) (bool, error) {
 	// Locate OCI artifact containing signature
 	artifactRef, err := name.ParseReference(ref)
 	if err != nil {
@@ -95,7 +100,7 @@ func (c *SignatureChecker) HasCosignSignature(ctx context.Context, ref string) (
 
 	// Check if the OCI artifact exists and contains a signature layer
 	p := &Puller{}
-	_, _, err = p.PullLayer(ctx, signatureRef.String(), types.SimpleSigningMediaType, "", "")
+	_, _, err = p.PullLayer(ctx, signatureRef.String(), types.SimpleSigningMediaType, username, password)
 	if err != nil {
 		if errors.Is(err, ErrArtifactNotFound) || errors.Is(err, ErrLayerNotFound) {
 			return false, nil

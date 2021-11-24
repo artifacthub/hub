@@ -34,8 +34,13 @@ type SignatureCheckerMock struct {
 }
 
 // HasCosignSignature implements the OCITagsGetter interface.
-func (m *SignatureCheckerMock) HasCosignSignature(ctx context.Context, ref string) (bool, error) {
-	args := m.Called(ctx, ref)
+func (m *SignatureCheckerMock) HasCosignSignature(
+	ctx context.Context,
+	ref,
+	username,
+	password string,
+) (bool, error) {
+	args := m.Called(ctx, ref, username, password)
 	return args.Bool(0), args.Error(1)
 }
 

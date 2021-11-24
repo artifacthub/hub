@@ -288,7 +288,12 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		}
 		if repo.SchemeIsOCI(chartURL) {
 			ref := strings.TrimPrefix(chartURL.String(), hub.RepositoryOCIPrefix)
-			hasCosignSignature, err := s.sc.HasCosignSignature(s.i.Svc.Ctx, ref)
+			hasCosignSignature, err := s.sc.HasCosignSignature(
+				s.i.Svc.Ctx,
+				ref,
+				s.i.Repository.AuthUser,
+				s.i.Repository.AuthPass,
+			)
 			if err != nil {
 				s.warn(md, fmt.Errorf("error checking cosign signature: %w", err))
 			}
