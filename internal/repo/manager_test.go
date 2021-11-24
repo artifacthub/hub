@@ -1,6 +1,7 @@
 package repo
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -22,6 +23,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"gopkg.in/yaml.v2"
 )
 
 const repoID = "00000000-0000-0000-0000-000000000001"
@@ -446,7 +448,7 @@ func TestClaimOwnership(t *testing.T) {
 	t.Run("ownership claim failed: database error getting repository", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil, nil)
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
@@ -457,7 +459,7 @@ func TestClaimOwnership(t *testing.T) {
 	t.Run("ownership claim failed: error getting repository metadata", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(helmRepoJSON, nil)
 		hc := &tests.HTTPClientMock{}
 		hc.On("Do", mdYmlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
@@ -478,7 +480,7 @@ func TestClaimOwnership(t *testing.T) {
 	t.Run("ownership claim failed: database error getting user email", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("", tests.ErrFakeDB)
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
 		hc := &tests.HTTPClientMock{}
@@ -497,7 +499,7 @@ func TestClaimOwnership(t *testing.T) {
 	t.Run("ownership claim failed: user not in repository owners list", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("user1@email.com", nil)
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
 		hc := &tests.HTTPClientMock{}
@@ -516,7 +518,7 @@ func TestClaimOwnership(t *testing.T) {
 	t.Run("ownership claim failed: olm oci repo", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(olmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(olmRepoJSON, nil)
 		m := NewManager(cfg, db, nil, nil)
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
@@ -527,7 +529,7 @@ func TestClaimOwnership(t *testing.T) {
 	t.Run("ownership claim succeeded (helm)", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("owner1@email.com", nil)
 		db.On("Exec", ctx, transferRepoDBQ, "repo1", userIDP, orgP, true).Return(nil)
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
@@ -547,7 +549,7 @@ func TestClaimOwnership(t *testing.T) {
 	t.Run("ownership claim failed (opa): error cloning repository", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(opaRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(opaRepoJSON, nil)
 		rc := &ClonerMock{}
 		var r *hub.Repository
 		_ = json.Unmarshal(opaRepoJSON, &r)
@@ -562,7 +564,7 @@ func TestClaimOwnership(t *testing.T) {
 	t.Run("ownership claim succeeded (opa)", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(opaRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(opaRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("owner1@email.com", nil)
 		db.On("Exec", ctx, transferRepoDBQ, "repo1", userIDP, orgP, true).Return(nil)
 		rc := &ClonerMock{}
@@ -819,19 +821,30 @@ func TestGetByName(t *testing.T) {
 }
 
 func TestGetMetadata(t *testing.T) {
-	mdYmlReq, _ := http.NewRequest("GET", "http://url.test/ok.yml", nil)
-	mdYamlReq, _ := http.NewRequest("GET", "http://url.test/ok.yaml", nil)
-	mdNotFoundYmlReq, _ := http.NewRequest("GET", "http://url.test/not-found.yml", nil)
-	mdNotFoundYamlReq, _ := http.NewRequest("GET", "http://url.test/not-found.yaml", nil)
+	repoURL := "http://url.test"
+	ymlReq, _ := http.NewRequest("GET", "http://url.test/artifacthub-repo.yml", nil)
+	yamlReq, _ := http.NewRequest("GET", "http://url.test/artifacthub-repo.yaml", nil)
 	ociRepoURL := "oci://registry/namespace/repo"
 	ociRef := fmt.Sprintf("%s:%s", strings.TrimPrefix(ociRepoURL, hub.RepositoryOCIPrefix), artifacthubTag)
-	repositoryID := "00000000-0000-0000-0000-000000000001"
+	expectedMetadata := &hub.RepositoryMetadata{
+		RepositoryID: "00000000-0000-0000-0000-000000000001",
+		Owners: []*hub.Owner{
+			{
+				Name:  "owner1",
+				Email: "owner1@email.com",
+			},
+		},
+	}
+	expectedMetadataYaml, _ := yaml.Marshal(expectedMetadata)
 
 	t.Run("local file: metadata file not found", func(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 
-		_, err := m.GetMetadata("testdata/not-exists.yaml")
+		r := &hub.Repository{
+			Kind: hub.OPA,
+		}
+		_, err := m.GetMetadata(r, "testdata/not-exists")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "metadata not found")
 	})
@@ -840,7 +853,10 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 
-		_, err := m.GetMetadata("testdata/invalid")
+		r := &hub.Repository{
+			Kind: hub.OPA,
+		}
+		_, err := m.GetMetadata(r, "testdata/invalid")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "error unmarshaling repository metadata file")
 	})
@@ -849,7 +865,10 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 
-		_, err := m.GetMetadata("testdata/invalid-repo-id")
+		r := &hub.Repository{
+			Kind: hub.OPA,
+		}
+		_, err := m.GetMetadata(r, "testdata/invalid-repo-id")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "invalid repository id")
 	})
@@ -858,7 +877,11 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 
-		_, err := m.GetMetadata("testdata/artifacthub-repo")
+		r := &hub.Repository{
+			Kind: hub.OPA,
+		}
+		md, err := m.GetMetadata(r, "testdata/valid-yml")
+		assert.Equal(t, expectedMetadata, md)
 		assert.NoError(t, err)
 	})
 
@@ -866,18 +889,26 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		m := NewManager(cfg, nil, nil, nil)
 
-		_, err := m.GetMetadata("testdata/test-yaml-repo")
+		r := &hub.Repository{
+			Kind: hub.OPA,
+		}
+		md, err := m.GetMetadata(r, "testdata/valid-yaml")
+		assert.Equal(t, expectedMetadata, md)
 		assert.NoError(t, err)
 	})
 
 	t.Run("remote file (http): error downloading repository metadata file", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		hc.On("Do", mdNotFoundYmlReq).Return(nil, tests.ErrFake)
-		hc.On("Do", mdNotFoundYamlReq).Return(nil, tests.ErrFake)
+		hc.On("Do", ymlReq).Return(nil, tests.ErrFake)
+		hc.On("Do", yamlReq).Return(nil, tests.ErrFake)
 		m := NewManager(cfg, nil, nil, hc)
 
-		_, err := m.GetMetadata("http://url.test/not-found")
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  repoURL,
+		}
+		_, err := m.GetMetadata(r, "")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "error downloading repository metadata file")
 		hc.AssertExpectations(t)
@@ -886,17 +917,21 @@ func TestGetMetadata(t *testing.T) {
 	t.Run("remote file (http): metadata file not found", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		hc.On("Do", mdNotFoundYmlReq).Return(&http.Response{
+		hc.On("Do", ymlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
-		hc.On("Do", mdNotFoundYamlReq).Return(&http.Response{
+		hc.On("Do", yamlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
 
-		_, err := m.GetMetadata("http://url.test/not-found")
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  repoURL,
+		}
+		_, err := m.GetMetadata(r, "")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "metadata not found")
 		hc.AssertExpectations(t)
@@ -905,17 +940,21 @@ func TestGetMetadata(t *testing.T) {
 	t.Run("remote file (http): unexpected status code received", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		hc.On("Do", mdNotFoundYmlReq).Return(&http.Response{
+		hc.On("Do", ymlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusForbidden,
 		}, nil)
-		hc.On("Do", mdNotFoundYamlReq).Return(&http.Response{
+		hc.On("Do", yamlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusForbidden,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
 
-		_, err := m.GetMetadata("http://url.test/not-found")
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  repoURL,
+		}
+		_, err := m.GetMetadata(r, "")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "unexpected status code received")
 		hc.AssertExpectations(t)
@@ -924,17 +963,21 @@ func TestGetMetadata(t *testing.T) {
 	t.Run("remote file (http): error reading repository metadata file", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		hc.On("Do", mdNotFoundYmlReq).Return(&http.Response{
+		hc.On("Do", ymlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(tests.ErrReader(0)),
 			StatusCode: http.StatusOK,
 		}, nil)
-		hc.On("Do", mdNotFoundYamlReq).Return(&http.Response{
+		hc.On("Do", yamlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(tests.ErrReader(0)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
 
-		_, err := m.GetMetadata("http://url.test/not-found")
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  repoURL,
+		}
+		_, err := m.GetMetadata(r, "")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "error reading repository metadata file")
 		hc.AssertExpectations(t)
@@ -943,38 +986,65 @@ func TestGetMetadata(t *testing.T) {
 	t.Run("remote file (http): success", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		hc.On("Do", mdYmlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader(fmt.Sprintf("repositoryID: %s", repositoryID))),
+		hc.On("Do", ymlReq).Return(&http.Response{
+			Body:       ioutil.NopCloser(bytes.NewReader(expectedMetadataYaml)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
 
-		md, err := m.GetMetadata("http://url.test/ok")
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  repoURL,
+		}
+		md, err := m.GetMetadata(r, "")
+		assert.Equal(t, expectedMetadata, md)
 		assert.NoError(t, err)
-		assert.Equal(t, &hub.RepositoryMetadata{
-			RepositoryID: repositoryID,
-		}, md)
+		hc.AssertExpectations(t)
+	})
+
+	t.Run("remote file (http - with creds): success", func(t *testing.T) {
+		t.Parallel()
+		hc := &tests.HTTPClientMock{}
+		ymlReqWithCreds := ymlReq.Clone(ymlReq.Context())
+		ymlReqWithCreds.SetBasicAuth("user", "pass")
+		hc.On("Do", ymlReqWithCreds).Return(&http.Response{
+			Body:       ioutil.NopCloser(bytes.NewReader(expectedMetadataYaml)),
+			StatusCode: http.StatusOK,
+		}, nil)
+		m := NewManager(cfg, nil, nil, hc)
+
+		r := &hub.Repository{
+			Kind:     hub.Helm,
+			URL:      repoURL,
+			AuthUser: "user",
+			AuthPass: "pass",
+		}
+		md, err := m.GetMetadata(r, "")
+		assert.Equal(t, expectedMetadata, md)
+		assert.NoError(t, err)
 		hc.AssertExpectations(t)
 	})
 
 	t.Run("remote file (http): success on yaml", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		hc.On("Do", mdYmlReq).Return(&http.Response{
+		hc.On("Do", ymlReq).Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
-		hc.On("Do", mdYamlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader(fmt.Sprintf("repositoryID: %s", repositoryID))),
+		hc.On("Do", yamlReq).Return(&http.Response{
+			Body:       ioutil.NopCloser(bytes.NewReader(expectedMetadataYaml)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
 
-		md, err := m.GetMetadata("http://url.test/ok")
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  repoURL,
+		}
+		md, err := m.GetMetadata(r, "")
+		assert.Equal(t, expectedMetadata, md)
 		assert.NoError(t, err)
-		assert.Equal(t, &hub.RepositoryMetadata{
-			RepositoryID: repositoryID,
-		}, md)
 		hc.AssertExpectations(t)
 	})
 
@@ -985,7 +1055,11 @@ func TestGetMetadata(t *testing.T) {
 			Return(ocispec.Descriptor{}, nil, tests.ErrFake)
 		m := NewManager(cfg, nil, nil, nil, WithOCIPuller(op))
 
-		md, err := m.GetMetadata(ociRepoURL)
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  ociRepoURL,
+		}
+		md, err := m.GetMetadata(r, "")
 		assert.Equal(t, tests.ErrFake, err)
 		assert.Nil(t, md)
 		op.AssertExpectations(t)
@@ -998,7 +1072,11 @@ func TestGetMetadata(t *testing.T) {
 			Return(ocispec.Descriptor{}, nil, oci.ErrLayerNotFound)
 		m := NewManager(cfg, nil, nil, nil, WithOCIPuller(op))
 
-		md, err := m.GetMetadata(ociRepoURL)
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  ociRepoURL,
+		}
+		md, err := m.GetMetadata(r, "")
 		assert.Equal(t, ErrMetadataNotFound, err)
 		assert.Nil(t, md)
 		op.AssertExpectations(t)
@@ -1007,16 +1085,36 @@ func TestGetMetadata(t *testing.T) {
 	t.Run("remote file (oci): success", func(t *testing.T) {
 		t.Parallel()
 		op := &oci.PullerMock{}
-		data := []byte(fmt.Sprintf(`repositoryID: %s`, repositoryID))
 		op.On("PullLayer", mock.Anything, ociRef, MetadataLayerMediaType, "", "").
-			Return(ocispec.Descriptor{}, data, nil)
+			Return(ocispec.Descriptor{}, expectedMetadataYaml, nil)
 		m := NewManager(cfg, nil, nil, nil, WithOCIPuller(op))
 
-		md, err := m.GetMetadata(ociRepoURL)
+		r := &hub.Repository{
+			Kind: hub.Helm,
+			URL:  ociRepoURL,
+		}
+		md, err := m.GetMetadata(r, "")
+		assert.Equal(t, expectedMetadata, md)
 		assert.NoError(t, err)
-		assert.Equal(t, &hub.RepositoryMetadata{
-			RepositoryID: repositoryID,
-		}, md)
+		op.AssertExpectations(t)
+	})
+
+	t.Run("remote file (oci - with creds): success", func(t *testing.T) {
+		t.Parallel()
+		op := &oci.PullerMock{}
+		op.On("PullLayer", mock.Anything, ociRef, MetadataLayerMediaType, "user", "pass").
+			Return(ocispec.Descriptor{}, expectedMetadataYaml, nil)
+		m := NewManager(cfg, nil, nil, nil, WithOCIPuller(op))
+
+		r := &hub.Repository{
+			Kind:     hub.Helm,
+			URL:      ociRepoURL,
+			AuthUser: "user",
+			AuthPass: "pass",
+		}
+		md, err := m.GetMetadata(r, "")
+		assert.Equal(t, expectedMetadata, md)
+		assert.NoError(t, err)
 		op.AssertExpectations(t)
 	})
 }

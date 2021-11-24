@@ -104,8 +104,8 @@ func (m *ManagerMock) GetByName(
 }
 
 // GetMetadata implements the RepositoryManager interface.
-func (m *ManagerMock) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
-	args := m.Called(mdFile)
+func (m *ManagerMock) GetMetadata(r *hub.Repository, basePath string) (*hub.RepositoryMetadata, error) {
+	args := m.Called(r, basePath)
 	data, _ := args.Get(0).(*hub.RepositoryMetadata)
 	return data, args.Error(1)
 }

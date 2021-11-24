@@ -249,8 +249,8 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository name not provided")
 	}
 
-	// Get repository metadata
-	r, err := m.GetByName(ctx, repoName, false)
+	// Get repository information
+	r, err := m.GetByName(ctx, repoName, true)
 	if err != nil {
 		return err
 	}
@@ -262,16 +262,8 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	}
 
 	// Get repository metadata
-	var mdFile string
+	var basePath string
 	switch r.Kind {
-	case hub.Helm:
-		switch {
-		case SchemeIsHTTP(u):
-			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-			mdFile = u.String()
-		case SchemeIsOCI(u):
-			mdFile = r.URL
-		}
 	case
 		hub.CoreDNS,
 		hub.Falco,
@@ -289,9 +281,9 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 			return err
 		}
 		defer os.RemoveAll(tmpDir)
-		mdFile = filepath.Join(tmpDir, packagesPath, hub.RepositoryMetadataFile)
+		basePath = filepath.Join(tmpDir, packagesPath)
 	}
-	md, err := m.GetMetadata(mdFile)
+	md, err := m.GetMetadata(r, basePath)
 	if err != nil {
 		return fmt.Errorf("%w: error getting repository metadata: %v", hub.ErrInsufficientPrivilege, err)
 	}
@@ -381,26 +373,28 @@ func (m *Manager) GetByName(
 	return r, err
 }
 
-// GetMetadata reads and parses the repository metadata file provided, which
-// can be a remote URL (http or oci) or a local file path.
-func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
+// GetMetadata reads and parses the metadata file of the repository provided.
+// When needed, the repository must be previously cloned and the path pointing
+// to the location of the packages must be provided (basePath).
+func (m *Manager) GetMetadata(r *hub.Repository, basePath string) (*hub.RepositoryMetadata, error) {
 	var data []byte
 	var err error
 
 	// Get metadata
+	mdFile := m.locateMetadataFile(r, basePath)
 	if strings.HasPrefix(mdFile, hub.RepositoryOCIPrefix) {
 		// OCI image
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
 		ref := fmt.Sprintf("%s:%s", strings.TrimPrefix(mdFile, hub.RepositoryOCIPrefix), artifacthubTag)
-		_, data, err = m.op.PullLayer(ctx, ref, MetadataLayerMediaType, "", "")
+		_, data, err = m.op.PullLayer(ctx, ref, MetadataLayerMediaType, r.AuthUser, r.AuthPass)
 		if errors.Is(err, oci.ErrArtifactNotFound) || errors.Is(err, oci.ErrLayerNotFound) {
 			err = ErrMetadataNotFound
 		}
 	} else {
 		// Remote HTTP url / local file path
 		for _, extension := range []string{".yml", ".yaml"} {
-			data, err = m.readMetadataFile(mdFile + extension)
+			data, err = m.readMetadataFile(mdFile+extension, r.AuthUser, r.AuthPass)
 			if err == nil {
 				break
 			}
@@ -424,8 +418,39 @@ func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
 	return md, nil
 }
 
+// locateMetadataFile returns the location of the metadata file for the
+// repository provided.
+func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string {
+	var mdFile string
+	u, _ := url.Parse(r.URL)
+	switch r.Kind {
+	case hub.Helm:
+		switch u.Scheme {
+		case "http", "https":
+			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
+			mdFile = u.String()
+		case "oci":
+			mdFile = r.URL
+		}
+	case
+		hub.CoreDNS,
+		hub.Falco,
+		hub.HelmPlugin,
+		hub.KedaScaler,
+		hub.Keptn,
+		hub.Krew,
+		hub.OLM,
+		hub.OPA,
+		hub.TBAction,
+		hub.TektonTask,
+		hub.TektonPipeline:
+		mdFile = filepath.Join(basePath, hub.RepositoryMetadataFile)
+	}
+	return mdFile
+}
+
 // readMetadataFile reads the repository metadata from the provided file.
-func (m *Manager) readMetadataFile(mdFile string) ([]byte, error) {
+func (m *Manager) readMetadataFile(mdFile, username, password string) ([]byte, error) {
 	var data []byte
 	u, err := url.Parse(mdFile)
 	if err != nil || u.Scheme == "" || u.Host == "" {
@@ -438,6 +463,9 @@ func (m *Manager) readMetadataFile(mdFile string) ([]byte, error) {
 		}
 	} else {
 		req, _ := http.NewRequest("GET", mdFile, nil)
+		if username != "" || password != "" {
+			req.SetBasicAuth(username, password)
+		}
 		resp, err := m.hc.Do(req)
 		if err != nil {
 			return nil, fmt.Errorf("error downloading repository metadata file: %w", err)
