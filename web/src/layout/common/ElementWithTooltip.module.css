@@ -1,6 +1,12 @@
 .tooltip {
-  width: 150px;
   top: 0;
+}
+
+.centerAligned {
+  left: 50%;
+}
+
+.leftAligned {
   left: 0;
 }
 
@@ -13,7 +19,11 @@
   right: 0;
 }
 
-.tooltipArrow {
+.centerAligned .tooltipArrow {
+  left: calc(50% - 3px);
+}
+
+.leftAligned .tooltipArrow {
   left: 10px;
 }
 
@@ -29,10 +39,4 @@
 .tooltipContent {
   background-color: var(--dark) !important;
   max-width: 100%;
-}
-
-@media (hover: hover) {
-  .tooltip {
-    opacity: 0.9;
-  }
 }

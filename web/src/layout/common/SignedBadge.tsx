@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 import { BsDot } from 'react-icons/bs';
 import { FaAward } from 'react-icons/fa';
 
@@ -63,7 +62,7 @@ const SignedBadge = (props: Props) => {
       active={props.signed}
       className={props.className}
       element={<Label text="Signed" icon={<FaAward />} />}
-      tooltipClassName={styles.tooltip}
+      tooltipWidth={340}
       tooltipMessage={message}
       visibleTooltip={
         !isUndefined(props.repositoryKind) && props.repositoryKind === RepositoryKind.Helm && message !== ''

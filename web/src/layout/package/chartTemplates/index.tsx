@@ -1,5 +1,5 @@
 import { compact, isNull, uniq } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ImInsertTemplate } from 'react-icons/im';
 import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';

@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React, { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
+import { forwardRef, MouseEvent, Ref, useContext, useEffect, useImperativeHandle, useState } from 'react';
 
 import { AppCtx } from '../../context/AppCtx';
 import { AuthorizerAction, RefActionBtn } from '../../types';
@@ -8,7 +8,7 @@ import authorizer from '../../utils/authorizer';
 import styles from './ActionBtn.module.css';
 
 interface Props {
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
   children: JSX.Element;
   className?: string;
   contentClassName?: string;
@@ -17,7 +17,7 @@ interface Props {
   label?: string;
 }
 
-const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
+const ActionBtn = forwardRef((props: Props, ref: Ref<RefActionBtn>) => {
   const { ctx } = useContext(AppCtx);
   const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
   const [onBtnHover, setOnBtnHover] = useState<boolean>(false);
@@ -84,7 +84,7 @@ const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
         className={classnames(props.className, {
           [`disabled ${styles.disabled}`]: !isAuthorized || (!isUndefined(props.disabled) && props.disabled),
         })}
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) => (isAuthorized ? props.onClick(e) : null)}
+        onClick={(e: MouseEvent<HTMLButtonElement>) => (isAuthorized ? props.onClick(e) : null)}
         aria-label={props.label || 'Action'}
       >
         <div className={`d-flex flex-row align-items-center ${props.contentClassName}`}>{props.children}</div>

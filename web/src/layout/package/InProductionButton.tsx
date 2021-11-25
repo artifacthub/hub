@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdBusiness } from 'react-icons/md';
 import { RiMedalLine } from 'react-icons/ri';
@@ -131,7 +131,6 @@ const InProductionButton = (props: Props) => {
       <ElementWithTooltip
         active
         tooltipClassName={styles.tooltip}
-        tooltipArrowClassName={styles.tooltipArrow}
         element={
           <button
             className={classnames('btn p-0 position-relative', {

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FaKey } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
@@ -78,7 +78,7 @@ const SignKeyInfo = (props: Props) => {
           </button>
         }
         visibleTooltip={isUndefined(props.signKey)}
-        tooltipClassName={styles.tooltip}
+        tooltipWidth={230}
         tooltipMessage="The publisher hasn't provided any information for this key yet"
         active
       />

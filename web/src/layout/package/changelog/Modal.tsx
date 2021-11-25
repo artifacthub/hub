@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CgFileDocument } from 'react-icons/cg';
 import { FaMarkdown } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
@@ -211,6 +211,7 @@ const ChangelogModal = (props: Props) => {
           </button>
         }
         visibleTooltip={!props.hasChangelog}
+        tooltipWidth={230}
         tooltipClassName={styles.tooltip}
         tooltipMessage="No versions of this package include an annotation with information about the changes it introduces."
         active

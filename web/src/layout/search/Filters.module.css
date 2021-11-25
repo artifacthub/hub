@@ -31,7 +31,7 @@
 }
 
 .tooltipMessage {
-  left: -10px;
+  margin-left: -3px;
 }
 
 .icon {
@@ -52,13 +52,5 @@
 
   .tooltipIcon {
     left: 5px;
-  }
-
-  .tooltipMessage {
-    left: -50px;
-  }
-
-  .arrowTooltipMessage {
-    left: 50px;
   }
 }

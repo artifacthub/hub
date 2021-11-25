@@ -31,12 +31,7 @@
 }
 
 .tooltip {
-  left: -115px;
-}
-
-.tooltipArrow {
-  right: 12px;
-  left: auto;
+  margin-left: -3px;
 }
 
 @media only screen and (max-width: 767.98px) {

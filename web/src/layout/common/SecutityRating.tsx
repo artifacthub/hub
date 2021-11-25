@@ -1,5 +1,5 @@
 import { isNull, isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SecurityReportSummary, SeverityRating as SRating, VulnerabilitySeverity } from '../../types';
@@ -65,9 +65,8 @@ const SecurityRating = (props: Props) => {
           />
         )
       }
-      alignmentTooltip={props.tooltipAligment || 'right'}
-      tooltipClassName={`${styles.tooltip} ${props.tooltipClassName}`}
-      tooltipArrowClassName={props.onlyBadge ? styles.onlyBadgeTooltipArrow : styles.tooltipArrow}
+      tooltipWidth={285}
+      tooltipClassName={`${styles.tooltip} ${props.tooltipClassName} ${props.onlyBadge ? styles.onlyBadgeTooltip : ''}`}
       tooltipMessage={
         <div className="d-flex flex-column">
           <div className="d-flex flex-row align-items-center my-1">
