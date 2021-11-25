@@ -48,4 +48,8 @@
   .modal {
     margin-top: 3rem;
   }
+
+  .packageWrapper {
+    font-size: 0.9rem;
+  }
 }

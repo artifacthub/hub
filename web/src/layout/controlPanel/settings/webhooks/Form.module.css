@@ -2,6 +2,10 @@
   font-size: 0.875rem;
 }
 
+.tableWrapper {
+  min-width: 550px;
+}
+
 .table {
   background-color: var(--white);
   border: 1px solid var(--border-md);
@@ -31,6 +35,16 @@
   max-width: 100%;
   max-height: 100%;
   font-size: 1.5rem;
+}
+
+.cellWrapper {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.legend {
+  font-size: 85%;
 }
 
 .icon {
@@ -69,6 +83,10 @@
   opacity: 1;
 }
 
+.packageCell {
+  width: 50%;
+}
+
 @media (hover: hover) {
   .closeBtn {
     opacity: 0;
@@ -83,5 +101,11 @@
   .btnWrapper {
     max-width: 66.66667%;
     padding-right: 5px;
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .packageCell {
+    width: 100%;
   }
 }

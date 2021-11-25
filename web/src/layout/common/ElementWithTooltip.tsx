@@ -33,6 +33,7 @@ const ElementWithTooltip = (props: Props) => {
       if (wrapper && wrapper.current) {
         const windowWidth = window.innerWidth;
         const bounding = wrapper.current.getBoundingClientRect();
+        setElWidth(bounding.width);
         const overflowTooltip = (tooltipWidth - elWidth) / 2;
         if (
           DEFAULT_MARGIN + bounding.right + overflowTooltip < windowWidth &&

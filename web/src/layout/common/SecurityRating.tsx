@@ -58,6 +58,7 @@ const SecurityRating = (props: Props) => {
           <Label
             className={`font-weight-bold ${className}`}
             text="Images Security Rating"
+            textForSmallDevices="Security Rating"
             bgLeftIcon={severity.color}
             labelStyle="custom"
             icon={<span className={`position-relative ${styles.ratingLetter}`}>{severity.level}</span>}

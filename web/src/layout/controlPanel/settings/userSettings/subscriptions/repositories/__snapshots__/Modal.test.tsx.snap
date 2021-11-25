@@ -172,7 +172,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                         class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar inputWrapper"
                       >
                         <div
-                          class="d-none d-sm-flex align-items-center iconWrapper"
+                          class="d-flex align-items-center iconWrapper"
                           data-testid="searchBarIcon"
                         >
                           <svg

@@ -38,7 +38,7 @@ exports[`Home index creates snapshot 1`] = `
             role="combobox"
           >
             <div
-              class="d-none d-sm-flex align-items-center iconWrapper"
+              class="d-flex align-items-center iconWrapper"
               data-testid="searchBarIcon"
             >
               <svg
@@ -70,7 +70,7 @@ exports[`Home index creates snapshot 1`] = `
               autocapitalize="none"
               autocomplete="off"
               autocorrect="off"
-              class="flex-grow-1 pl-sm-0 pl-3 input"
+              class="flex-grow-1 pl-2 pl-md-0 input"
               disabled=""
               placeholder="Search packages"
               spellcheck="false"

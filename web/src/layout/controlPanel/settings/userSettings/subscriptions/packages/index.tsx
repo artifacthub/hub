@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
@@ -24,6 +24,7 @@ interface Props {
 const DEFAULT_LIMIT = 10;
 
 const PackagesSection = (props: Props) => {
+  const title = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
@@ -39,6 +40,9 @@ const PackagesSection = (props: Props) => {
   const onPageNumberChange = (pageNumber: number): void => {
     setOffset(calculateOffset(pageNumber));
     setActivePage(pageNumber);
+    if (title && title.current) {
+      title.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    }
   };
 
   const getNotificationTitle = (kind: EventKind): string => {
@@ -131,7 +135,9 @@ const PackagesSection = (props: Props) => {
       {(isUndefined(packages) || isLoading) && <Loading />}
 
       <div className="d-flex flex-row align-items-start justify-content-between pb-2 mt-5">
-        <div className={`h4 mb-0 ${styles.title}`}>Packages</div>
+        <div ref={title} className={`h4 mb-0 ${styles.title}`}>
+          Packages
+        </div>
         <div>
           <button
             className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}

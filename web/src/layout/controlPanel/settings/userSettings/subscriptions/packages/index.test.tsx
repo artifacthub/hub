@@ -16,6 +16,9 @@ const getMockSubscriptions = (fixtureId: string) => {
 };
 
 const mockOnAuthError = jest.fn();
+const scrollIntoViewMock = jest.fn();
+
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   onAuthError: mockOnAuthError,

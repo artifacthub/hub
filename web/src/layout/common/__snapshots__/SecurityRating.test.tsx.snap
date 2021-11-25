@@ -31,7 +31,16 @@ exports[`SecurityRating creates snapshot 1`] = `
           <div
             class="text-nowrap labelText"
           >
-            Images Security Rating
+            <span
+              class="d-none d-sm-inline"
+            >
+              Images Security Rating
+            </span>
+            <span
+              class="d-inline d-sm-none"
+            >
+              Security Rating
+            </span>
           </div>
         </div>
       </div>

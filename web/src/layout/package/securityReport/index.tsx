@@ -6,7 +6,7 @@ import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
 import prettifyNumber from '../../../utils/prettifyNumber';
 import sumObjectValues from '../../../utils/sumObjectValues';
 import ScannerDisabledRepositoryBadge from '../../common/ScannerDisabledRepositoryBadge';
-import SecurityRating from '../../common/SecutityRating';
+import SecurityRating from '../../common/SecurityRating';
 import SmallTitle from '../../common/SmallTitle';
 import SecurityModal from './Modal';
 import styles from './SecurityReport.module.css';

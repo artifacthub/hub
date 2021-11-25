@@ -139,3 +139,10 @@
     right: -37px;
   }
 }
+
+@media only screen and (max-width: 575.98px) {
+  .iconWrapper {
+    padding-left: 0.5rem;
+    padding-right: 0;
+  }
+}

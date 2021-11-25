@@ -278,6 +278,19 @@ const WebhookForm = (props: Props) => {
     checkTestAvailability();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  const getPublisher = (pkg: Package): JSX.Element => {
+    return (
+      <>
+        {pkg.repository.userAlias || pkg.repository.organizationDisplayName || pkg.repository.organizationName}
+
+        <small className="ml-2">
+          (<span className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>Repo: </span>
+          <span className="text-dark">{pkg.repository.displayName || pkg.repository.name}</span>)
+        </small>
+      </>
+    );
+  };
+
   return (
     <div>
       <div className="mb-4 pb-2 border-bottom">
@@ -452,10 +465,10 @@ const WebhookForm = (props: Props) => {
                     <thead>
                       <tr className={styles.tableTitle}>
                         <th scope="col" className={`align-middle d-none d-sm-table-cell ${styles.fitCell}`}></th>
-                        <th scope="col" className="align-middle w-50">
+                        <th scope="col" className={`align-middle ${styles.packageCell}`}>
                           Package
                         </th>
-                        <th scope="col" className="align-middle w-50">
+                        <th scope="col" className="align-middle w-50 d-none d-sm-table-cell">
                           Publisher
                         </th>
                         <th scope="col" className={`align-middle ${styles.fitCell}`}></th>
@@ -479,21 +492,21 @@ const WebhookForm = (props: Props) => {
                                 />
                               </div>
 
-                              <div className="ml-2 text-dark">{item.displayName || item.name}</div>
+                              <div className={`ml-2 text-dark ${styles.cellWrapper}`}>
+                                <div className="text-truncate">
+                                  {item.displayName || item.name}
+                                  <span className={`d-inline d-sm-none ${styles.legend}`}>
+                                    <span className="mx-2">/</span>
+                                    {getPublisher(item)}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </td>
-                          <td className="align-middle position-relative text-dark">
-                            {item.repository.userAlias ||
-                              item.repository.organizationDisplayName ||
-                              item.repository.organizationName}
-
-                            <small className="ml-2">
-                              (
-                              <span className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
-                                Repo:{' '}
-                              </span>
-                              <span className="text-dark">{item.repository.displayName || item.repository.name}</span>)
-                            </small>
+                          <td className="align-middle position-relative text-dark d-none d-sm-table-cell">
+                            <div className={styles.cellWrapper}>
+                              <div className="text-truncate">{getPublisher(item)}</div>
+                            </div>
                           </td>
 
                           <td className="align-middle">
@@ -636,8 +649,8 @@ const WebhookForm = (props: Props) => {
               Variables reference
             </label>
             <div className="form-row">
-              <div className="col-xxl-8">
-                <small className="form-text text-muted">
+              <div className="col-xxl-8 overflow-auto">
+                <small className={`form-text text-muted ${styles.tableWrapper}`}>
                   <table className={`table table-sm ${styles.variablesTable}`}>
                     <tbody>
                       <tr>

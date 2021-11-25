@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness, MdClose } from 'react-icons/md';
@@ -89,6 +89,16 @@ const OptOutModal = (props: Props) => {
     }
   }
 
+  const getPublisher = (repo: Repository) => (
+    <small className="ml-0 ml-sm-2">
+      <span className="d-none d-sm-inline">(</span>
+      <small className={`d-none d-md-inline text-muted mr-1 text-uppercase ${styles.legend}`}>Publisher: </small>
+      <div className={`d-inline mr-1 ${styles.tinyIcon}`}>{repo.userAlias ? <FaUser /> : <MdBusiness />}</div>
+      <span>{repo.userAlias || repo.organizationDisplayName || repo.organizationName}</span>
+      <span className="d-none d-sm-inline">)</span>
+    </small>
+  );
+
   return (
     <Modal
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Add opt-out entry</div>}
@@ -171,21 +181,16 @@ const OptOutModal = (props: Props) => {
                       <RepositoryIcon kind={repoItem.kind} className={`mx-3 ${styles.icon}`} />
                     </div>
 
-                    <div className="ml-2 font-weight-bold mb-0 text-truncate text-capitalize">{repoItem.name}</div>
+                    <div className="ml-2 mr-2 mr-sm-0 font-weight-bold mb-0 text-truncate">
+                      {repoItem.name}
+                      <span className={`d-inline d-sm-none ${styles.legend}`}>
+                        <span className="mx-2">/</span>
+                        {getPublisher(repoItem)}
+                      </span>
+                    </div>
 
-                    <div className="px-2 ml-auto w-50 text-dark text-truncate">
-                      <small className="d-flex flex-row align-items-baseline ml-2">
-                        (
-                        <small className={`d-none d-md-inline text-uppercase text-muted mr-1 ${styles.legend}`}>
-                          Publisher:{' '}
-                        </small>
-                        <div className={`mr-1 ${styles.tinyIcon}`}>
-                          {repoItem.userAlias ? <FaUser /> : <MdBusiness />}
-                        </div>
-                        <span>
-                          {repoItem.userAlias || repoItem.organizationDisplayName || repoItem.organizationName})
-                        </span>
-                      </small>
+                    <div className="px-2 ml-auto w-50 text-dark text-truncate d-none d-sm-inline">
+                      {getPublisher(repoItem)}
                     </div>
                   </div>
                 </div>

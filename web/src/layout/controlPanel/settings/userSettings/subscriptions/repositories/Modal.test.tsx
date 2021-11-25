@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import API from '../../../../../../api';
@@ -147,7 +146,7 @@ describe('OptOutModal', () => {
       const activeRepo = await screen.findByTestId('activeRepoItem');
 
       expect(activeRepo).toBeInTheDocument();
-      expect(activeRepo).toHaveTextContent('security-hub(Publisher: test)');
+      expect(activeRepo).toHaveTextContent('security-hub/(Publisher: test)(Publisher: test)');
 
       expect(screen.queryByTestId('searchRepositoriesInput')).toBeNull();
 
@@ -194,7 +193,7 @@ describe('OptOutModal', () => {
       const activeRepo = await screen.findByTestId('activeRepoItem');
 
       expect(activeRepo).toBeInTheDocument();
-      expect(activeRepo).toHaveTextContent('security-hub(Publisher: test)');
+      expect(activeRepo).toHaveTextContent('security-hub/(Publisher: test)(Publisher: test)');
 
       expect(screen.queryByRole('textbox', { name: 'Search repositories' })).toBeNull();
 
