@@ -15,10 +15,6 @@
   top: -3px;
 }
 
-.tooltip {
-  width: 230px;
-}
-
 .badge {
   top: -3px;
   border: 1px solid var(--orange);

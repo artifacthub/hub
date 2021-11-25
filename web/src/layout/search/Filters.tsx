@@ -3,7 +3,7 @@ import { sortBy } from 'lodash';
 import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { MdInfoOutline } from 'react-icons/md';
 
@@ -68,7 +68,7 @@ const Filters = (props: Props) => {
           legend={option.total}
           label={option.name}
           checked={isChecked(option.id.toString(), option.filterKey)}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             props.onChange(e.target.name, e.target.value, e.target.checked)
           }
         />
@@ -115,7 +115,7 @@ const Filters = (props: Props) => {
                 legend={option.total}
                 label={option.name}
                 checked={isChecked(option.id.toString())}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   props.onChange(e.target.name, e.target.value, e.target.checked)
                 }
               />
@@ -164,7 +164,7 @@ const Filters = (props: Props) => {
                 legend={option.total}
                 label={option.name}
                 checked={isChecked(option.id.toString())}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   props.onChange(e.target.name, e.target.value, e.target.checked)
                 }
               />
@@ -201,7 +201,7 @@ const Filters = (props: Props) => {
           legend={option.total}
           label={option.name}
           checked={isChecked(option.id.toString())}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             props.onChange(e.target.name, e.target.value, e.target.checked)
           }
         />
@@ -248,7 +248,7 @@ const Filters = (props: Props) => {
           legend={option.total}
           label={option.name}
           checked={isChecked(option.id.toString())}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
             props.onChange(e.target.name, e.target.value, e.target.checked)
           }
         />
@@ -310,9 +310,8 @@ const Filters = (props: Props) => {
 
         <div className="d-none d-md-block">
           <ElementWithTooltip
-            className={styles.tooltipIcon}
             tooltipClassName={styles.tooltipMessage}
-            tooltipArrowClassName={styles.arrowTooltipMessage}
+            className={styles.tooltipIcon}
             element={<MdInfoOutline />}
             tooltipMessage="The publisher owns the software deployed by the packages"
             visibleTooltip
@@ -335,9 +334,8 @@ const Filters = (props: Props) => {
 
         <div className="d-none d-md-block">
           <ElementWithTooltip
-            className={styles.tooltipIcon}
             tooltipClassName={styles.tooltipMessage}
-            tooltipArrowClassName={styles.arrowTooltipMessage}
+            className={styles.tooltipIcon}
             element={<MdInfoOutline />}
             tooltipMessage="The publisher owns the repository"
             visibleTooltip

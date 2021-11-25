@@ -30,12 +30,6 @@
   z-index: 1;
 }
 
-@media (hover: hover) {
-  .wrapper:hover .tooltip {
-    opacity: 1;
-  }
-}
-
 .spinner {
   left: -30px;
 }

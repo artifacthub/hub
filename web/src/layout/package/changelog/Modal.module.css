@@ -25,10 +25,6 @@
   border-left: 2px solid var(--color-1-500);
 }
 
-.tooltip {
-  width: 230px;
-}
-
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;

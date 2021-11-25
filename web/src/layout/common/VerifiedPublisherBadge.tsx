@@ -1,5 +1,4 @@
 import { isUndefined } from 'lodash';
-import React from 'react';
 import { MdVerifiedUser } from 'react-icons/md';
 
 import ElementWithTooltip from './ElementWithTooltip';

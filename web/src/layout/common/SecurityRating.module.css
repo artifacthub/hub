@@ -6,15 +6,10 @@
 
 .tooltip {
   font-size: 0.75rem;
-  width: 285px;
 }
 
-.tooltipArrow {
-  right: 138px !important;
-}
-
-.onlyBadgeTooltipArrow {
-  right: 5px !important;
+.onlyBadgeTooltip {
+  margin-right: -5px;
 }
 
 .ratingLetter {

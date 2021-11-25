@@ -19,7 +19,7 @@ const UpdateOrganization = (props: Props) => {
 
   const submitForm = () => {
     if (form.current) {
-      form.current.dispatchEvent(new Event('submit', { cancelable: true }));
+      form.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
   };
 

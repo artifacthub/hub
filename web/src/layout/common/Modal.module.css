@@ -43,29 +43,6 @@
   padding: 1rem !important;
 }
 
-.tooltip {
-  top: 40px;
-  right: 0;
-  left: 0;
-}
-
-.tooltipArrow {
-  right: calc(50% - 4px);
-}
-
-.tooltipArrow::before {
-  border-bottom-color: var(--color-1-900) !important;
-}
-
-.tooltipContent {
-  background-color: var(--color-1-900) !important;
-  max-width: 100%;
-}
-
-.buttonWrapper:hover .tooltip {
-  opacity: 0.9;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;

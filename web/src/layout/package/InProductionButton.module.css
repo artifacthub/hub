@@ -14,12 +14,7 @@
 }
 
 .tooltip {
-  left: -115px;
-}
-
-.tooltipArrow {
-  right: 12px;
-  left: auto;
+  margin-left: -3px;
 }
 
 .dropdown {

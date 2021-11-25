@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { GoPackage } from 'react-icons/go';
 
 import { ContainerImage } from '../../types';
@@ -25,7 +25,7 @@ const ContainersImages = (props: Props) => {
     <ElementWithTooltip
       className={styles.tooltipIcon}
       element={<span className={`badge badge-pill my-1 ${styles.badge}`}>Whitelisted</span>}
-      tooltipMessage="This image has been whitelisted by the publisher and it won’t be scanned for security vulnerabilities."
+      tooltipMessage="This image has been whitelisted by the publisher and it won't be scanned for security vulnerabilities."
       visibleTooltip
       active
     />
@@ -128,4 +128,4 @@ const ContainersImages = (props: Props) => {
   );
 };
 
-export default React.memo(ContainersImages);
+export default memo(ContainersImages);

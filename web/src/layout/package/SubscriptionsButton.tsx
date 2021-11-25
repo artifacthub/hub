@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md';
 import { useHistory } from 'react-router';
@@ -141,7 +141,6 @@ const SubscriptionsButton = (props: Props) => {
       <ElementWithTooltip
         active
         tooltipClassName={styles.tooltip}
-        tooltipArrowClassName={styles.tooltipArrow}
         element={
           <button
             className={classnames('btn p-0 position-relative', styles.subsBtn, {

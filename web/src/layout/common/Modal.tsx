@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { isNull } from 'lodash';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useRef, useState } from 'react';
+import { MouseEvent, MutableRefObject, useEffect, useRef, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 
 import useBodyScroll from '../../hooks/useBodyScroll';
@@ -28,8 +28,7 @@ interface Props {
   noFooter?: boolean;
   noScrollable?: boolean;
   disabledOpenBtn?: boolean;
-  tooltipMessage?: string;
-  excludedRefs?: React.MutableRefObject<HTMLDivElement | null>[];
+  excludedRefs?: MutableRefObject<HTMLDivElement | null>[];
   breakPoint?: string;
   size?: string;
   unclosable?: boolean;
@@ -80,7 +79,7 @@ const Modal = (props: Props) => {
               { 'btn-primary': isUndefined(props.buttonType) },
               { disabled: !isUndefined(props.disabledOpenBtn) && props.disabledOpenBtn }
             )}
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
               if (isUndefined(props.disabledOpenBtn) || !props.disabledOpenBtn) {
                 setOpenStatus(true);
@@ -90,12 +89,6 @@ const Modal = (props: Props) => {
           >
             <div className="d-flex align-items-center justify-content-center">{props.buttonContent}</div>
           </button>
-          {!isUndefined(props.tooltipMessage) && (
-            <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
-              <div className={`arrow ${styles.tooltipArrow}`} />
-              <div className={`tooltip-inner ${styles.tooltipContent}`}>{props.tooltipMessage}</div>
-            </div>
-          )}
         </div>
       )}
 
@@ -130,7 +123,7 @@ const Modal = (props: Props) => {
                   <button
                     type="button"
                     className="close"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    onClick={(e: MouseEvent<HTMLButtonElement>) => {
                       e.preventDefault();
                       closeModal();
                     }}
@@ -156,7 +149,7 @@ const Modal = (props: Props) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-outline-secondary text-uppercase"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    onClick={(e: MouseEvent<HTMLButtonElement>) => {
                       e.preventDefault();
                       closeModal();
                     }}
