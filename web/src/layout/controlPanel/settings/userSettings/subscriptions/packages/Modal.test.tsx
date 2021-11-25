@@ -172,11 +172,7 @@ describe('SubscriptionModal', () => {
       const activePackage = screen.getByTestId('activePackageItem');
 
       expect(activePackage).toBeInTheDocument();
-      expect(activePackage).toHaveTextContent(
-        `${mockSearch.packages![0].name}${mockSearch.packages![0].repository.organizationDisplayName}(Repo: ${
-          mockSearch.packages![0].repository.displayName
-        })`
-      );
+      expect(activePackage).toHaveTextContent('airflow/Helm(Repo: Stable)Helm(Repo: Stable)');
 
       expect(screen.queryByRole('textbox', { name: 'Search packages' })).toBeNull();
 
@@ -217,11 +213,7 @@ describe('SubscriptionModal', () => {
       const activePackage = screen.getByTestId('activePackageItem');
 
       expect(activePackage).toBeInTheDocument();
-      expect(activePackage).toHaveTextContent(
-        `${mockSearch.packages![0].name}${mockSearch.packages![0].repository.organizationDisplayName}(Repo: ${
-          mockSearch.packages![0].repository.displayName
-        })`
-      );
+      expect(activePackage).toHaveTextContent('airflow/Helm(Repo: Stable)Helm(Repo: Stable)');
 
       expect(screen.queryByRole('textbox', { name: 'Search packages' })).toBeNull();
 
@@ -236,9 +228,7 @@ describe('SubscriptionModal', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: `An error occurred subscribing to new releases notification for ${
-          mockSearch.packages![0].name
-        } package, please try again later.`,
+        message: `An error occurred subscribing to new releases notification for airflow package, please try again later.`,
       });
     });
   });

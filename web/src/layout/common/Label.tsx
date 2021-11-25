@@ -9,6 +9,7 @@ interface Props {
   iconLegend?: string | number;
   bgLeftIcon?: string;
   text: string;
+  textForSmallDevices?: string;
   labelStyle?: string;
   className?: string;
   labelClassName?: string;
@@ -54,7 +55,14 @@ const Label = (props: Props) => (
             props.labelClassName
           )}
         >
-          {props.text}
+          {props.textForSmallDevices ? (
+            <>
+              <span className="d-none d-sm-inline">{props.text}</span>
+              <span className="d-inline d-sm-none">{props.textForSmallDevices}</span>
+            </>
+          ) : (
+            <>{props.text}</>
+          )}
         </div>
       )}
     </div>

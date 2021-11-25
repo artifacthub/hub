@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import React, { useEffect, useRef, useState } from 'react';
+import { FiSearch } from 'react-icons/fi';
 
 import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -141,6 +142,12 @@ const SearchPackages = (props: Props) => {
     }
   };
 
+  const forceFocus = (): void => {
+    if (!isNull(inputEl) && !isNull(inputEl.current)) {
+      inputEl.current.focus();
+    }
+  };
+
   useEffect(() => {
     const isInputFocused = inputEl.current === document.activeElement;
     if (searchQuery.length >= MIN_CHARACTERS_SEARCH && isInputFocused) {
@@ -167,10 +174,18 @@ const SearchPackages = (props: Props) => {
         <div
           className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative ${styles.inputWrapper}`}
         >
+          <div
+            data-testid="searchBarIcon"
+            className={`d-flex align-items-center ${styles.iconWrapper}`}
+            onClick={forceFocus}
+          >
+            <FiSearch />
+          </div>
+
           <input
             ref={inputEl}
             type="text"
-            className={`flex-grow-1 px-3 ${styles.input}`}
+            className={`flex-grow-1 pr-4 pl-2 pl-md-0 ${styles.input}`}
             name="searchInput"
             autoComplete="new-input"
             onKeyDown={handleOnKeyDown}

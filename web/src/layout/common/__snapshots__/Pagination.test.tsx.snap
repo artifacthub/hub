@@ -24,7 +24,7 @@ exports[`Pagination creates snapshot 1`] = `
             Previous
           </span>
           <span
-            class="d-block d-sm-none"
+            class="d-block d-sm-none btnIcon"
           >
             <svg
               fill="currentColor"
@@ -89,7 +89,7 @@ exports[`Pagination creates snapshot 1`] = `
             Next
           </span>
           <span
-            class="d-block d-sm-none"
+            class="d-block d-sm-none btnIcon"
           >
             <svg
               fill="currentColor"

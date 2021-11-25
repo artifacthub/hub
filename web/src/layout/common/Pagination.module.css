@@ -6,4 +6,8 @@
   .pagination {
     font-size: 0.9rem;
   }
+
+  .btnIcon {
+    line-height: 1rem;
+  }
 }

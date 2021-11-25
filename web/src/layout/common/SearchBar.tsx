@@ -227,7 +227,7 @@ const SearchBar = (props: Props) => {
         >
           <div
             data-testid="searchBarIcon"
-            className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
+            className={`d-flex align-items-center ${styles.iconWrapper}`}
             onClick={forceFocus}
           >
             <FiSearch />
@@ -235,7 +235,7 @@ const SearchBar = (props: Props) => {
 
           <input
             ref={inputEl}
-            className={`flex-grow-1 pl-sm-0 pl-3 ${styles.input}`}
+            className={`flex-grow-1 pl-2 pl-md-0 ${styles.input}`}
             type="text"
             autoComplete="off"
             autoCorrect="off"

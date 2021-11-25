@@ -19,7 +19,7 @@ import ProductionBadge from './ProductionBadge';
 import RepositoryIconLabel from './RepositoryIconLabel';
 import RepositoryInfo from './RepositoryInfo';
 import ScannerDisabledRepositoryBadge from './ScannerDisabledRepositoryBadge';
-import SecurityRating from './SecutityRating';
+import SecurityRating from './SecurityRating';
 import SignedBadge from './SignedBadge';
 import StarBadge from './StarBadge';
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';

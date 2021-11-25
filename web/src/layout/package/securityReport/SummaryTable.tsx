@@ -5,7 +5,7 @@ import { SecurityReport, SecurityReportResult, Vulnerability, VulnerabilitySever
 import { SEVERITY_ORDER } from '../../../utils/data';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
 import sumObjectValues from '../../../utils/sumObjectValues';
-import SecurityRating from '../../common/SecutityRating';
+import SecurityRating from '../../common/SecurityRating';
 import styles from './SummaryTable.module.css';
 
 interface Props {

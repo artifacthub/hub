@@ -1,5 +1,5 @@
 import { groupBy, isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness } from 'react-icons/md';
@@ -38,6 +38,7 @@ interface ChangeSubsProps {
 }
 
 const RepositoriesSection = (props: Props) => {
+  const title = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [optOutList, setOptOutList] = useState<OptOutItemList | undefined>(undefined);
   const [optOutItems, setOptOutItems] = useState<OptOutItem[] | undefined>(undefined);
@@ -54,6 +55,9 @@ const RepositoriesSection = (props: Props) => {
   const onPageNumberChange = (pageNumber: number): void => {
     setOffset(calculateOffset(pageNumber));
     setActivePage(pageNumber);
+    if (title && title.current) {
+      title.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    }
   };
 
   const getNotificationTitle = (kind: EventKind): string => {
@@ -134,7 +138,9 @@ const RepositoriesSection = (props: Props) => {
     <div className="mt-5 pt-3">
       {(isUndefined(optOutList) || isLoading) && <Loading />}
       <div className="d-flex flex-row align-items-start justify-content-between pb-2">
-        <div className={`h4 pb-0 ${styles.title}`}>Repositories</div>
+        <div ref={title} className={`h4 pb-0 ${styles.title}`}>
+          Repositories
+        </div>
         <div>
           <button
             className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}

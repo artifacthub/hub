@@ -211,7 +211,7 @@ const SearchRepositories = (props: Props) => {
         >
           <div
             data-testid="searchBarIcon"
-            className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
+            className={`d-flex align-items-center ${styles.iconWrapper}`}
             onClick={forceFocus}
           >
             <FiSearch />

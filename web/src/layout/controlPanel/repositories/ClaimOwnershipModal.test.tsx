@@ -236,7 +236,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
         expect(activeRepo).toBeInTheDocument();
         expect(activeRepo).toHaveTextContent(
-          'community-operators (https://github.com/operator-framework/community-operators/upstream-community-operators)(Publisher: demo)'
+          'community-operators (https://github.com/operator-framework/community-operators/upstream-community-operators)/(Publisher: demo)(Publisher: demo)'
         );
 
         const btn = screen.getByRole('button', { name: 'Claim ownership' });

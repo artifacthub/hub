@@ -94,6 +94,19 @@ const SubscriptionModal = (props: Props) => {
     }
   }
 
+  const getPublisher = (pkg: Package): JSX.Element => {
+    return (
+      <>
+        {pkg.repository.userAlias || pkg.repository.organizationDisplayName || pkg.repository.organizationName}
+
+        <small className="ml-2">
+          (<small className={`d-none d-md-inline text-uppercase text-muted ${styles.legend}`}>Repo: </small>
+          {pkg.repository.displayName || pkg.repository.name})
+        </small>
+      </>
+    );
+  };
+
   return (
     <Modal
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Add subscription</div>}
@@ -181,21 +194,16 @@ const SubscriptionModal = (props: Props) => {
                       />
                     </div>
 
-                    <div className="ml-2 font-weight-bold mb-0 text-truncate">
+                    <div className="ml-2 mr-2 mr-sm-0 font-weight-bold mb-0 text-truncate">
                       {packageItem.displayName || packageItem.name}
+                      <span className={`d-inline d-sm-none ${styles.legend}`}>
+                        <span className="mx-2">/</span>
+                        {getPublisher(packageItem)}
+                      </span>
                     </div>
 
-                    <div className="px-2 ml-auto w-50 text-dark text-truncate">
-                      {packageItem.repository.userAlias ||
-                        packageItem.repository.organizationDisplayName ||
-                        packageItem.repository.organizationName}
-                      <small className="ml-2">
-                        (
-                        <small className={`d-none d-md-inline text-uppercase text-muted ${styles.legend}`}>
-                          Repo:{' '}
-                        </small>
-                        {packageItem.repository.displayName || packageItem.repository.name})
-                      </small>
+                    <div className="px-2 ml-auto w-50 text-dark text-truncate d-none d-sm-inline">
+                      {getPublisher(packageItem)}
                     </div>
                   </div>
                 </div>

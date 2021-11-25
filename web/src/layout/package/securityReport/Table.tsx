@@ -5,7 +5,7 @@ import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import { SecurityReportResult, Vulnerability } from '../../../types';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
 import getTextBetweenParenthesis from '../../../utils/getTextBetweenParenthesis';
-import SecurityRating from '../../common/SecutityRating';
+import SecurityRating from '../../common/SecurityRating';
 import SecurityCell from './Cell';
 import ImageBtn from './ImageBtn';
 import styles from './Table.module.css';
