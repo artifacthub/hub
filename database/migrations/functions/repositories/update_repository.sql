@@ -7,9 +7,22 @@ declare
     v_owner_organization_name text;
     v_disabled boolean;
     v_scanner_disabled boolean;
+    v_auth_user text;
+    v_auth_pass text;
 begin
     -- Get some information about the repository
-    select repository_id, disabled, scanner_disabled into v_repository_id, v_disabled, v_scanner_disabled
+    select
+        repository_id,
+        disabled,
+        scanner_disabled,
+        auth_user,
+        auth_pass
+    into
+        v_repository_id,
+        v_disabled,
+        v_scanner_disabled,
+        v_auth_user,
+        v_auth_pass
     from repository r
     where r.name = p_repository->>'name'
     for update;
@@ -35,8 +48,20 @@ begin
         display_name = nullif(p_repository->>'display_name', ''),
         url = p_repository->>'url',
         branch = nullif(p_repository->>'branch', ''),
-        auth_user = nullif(p_repository->>'auth_user', ''),
-        auth_pass = nullif(p_repository->>'auth_pass', ''),
+        auth_user = (
+            case
+                -- If this logic is updated, it should be updated in get_repository_by_id as well
+                when (p_repository->>'auth_user' = repeat('*', length(v_auth_user))) then v_auth_user
+                else nullif(p_repository->>'auth_user', '')
+            end
+        ),
+        auth_pass = (
+            case
+                -- If this logic is updated, it should be updated in get_repository_by_id as well
+                when (p_repository->>'auth_pass' = repeat('*', length(v_auth_pass))) then v_auth_pass
+                else nullif(p_repository->>'auth_pass', '')
+            end
+        ),
         disabled = (p_repository->>'disabled')::boolean,
         scanner_disabled = (p_repository->>'scanner_disabled')::boolean
     where repository_id = v_repository_id;

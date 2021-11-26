@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(7);
+select plan(10);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -126,6 +126,81 @@ select results_eq(
 select is_empty(
     $$ select * from package where repository_id = '00000000-0000-0000-0000-000000000001' $$,
     'Packages belonging to repo1 should have been deleted'
+);
+
+-- Update same repository again providing shadowed credentials
+select update_repository(:'user1ID', '
+{
+    "name": "repo1",
+    "display_name": "Repo 1 updated",
+    "url": "https://repo1.com/updated",
+    "branch": "main",
+    "auth_user": "*****",
+    "auth_pass": "*****",
+    "disabled": true,
+    "scanner_disabled": false
+}
+'::jsonb);
+select results_eq(
+    $$
+        select name, display_name, url, branch, auth_user, auth_pass, disabled, digest
+        from repository
+        where name = 'repo1'
+    $$,
+    $$
+        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', 'user1', 'pass1', true, null)
+    $$,
+    'Repository credentials should not have been updated'
+);
+
+-- Update same repository again providing shadowed credentials (wrong number of asterisks in user)
+select update_repository(:'user1ID', '
+{
+    "name": "repo1",
+    "display_name": "Repo 1 updated",
+    "url": "https://repo1.com/updated",
+    "branch": "main",
+    "auth_user": "****",
+    "auth_pass": "*****",
+    "disabled": true,
+    "scanner_disabled": false
+}
+'::jsonb);
+select results_eq(
+    $$
+        select name, display_name, url, branch, auth_user, auth_pass, disabled, digest
+        from repository
+        where name = 'repo1'
+    $$,
+    $$
+        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', '****', 'pass1', true, null)
+    $$,
+    'Repository credentials should have been updated (username updated)'
+);
+
+-- Update same repository again removing credentials
+select update_repository(:'user1ID', '
+{
+    "name": "repo1",
+    "display_name": "Repo 1 updated",
+    "url": "https://repo1.com/updated",
+    "branch": "main",
+    "auth_user": "",
+    "auth_pass": "",
+    "disabled": true,
+    "scanner_disabled": false
+}
+'::jsonb);
+select results_eq(
+    $$
+        select name, display_name, url, branch, auth_user, auth_pass, disabled, digest
+        from repository
+        where name = 'repo1'
+    $$,
+    $$
+        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', null, null, true, null)
+    $$,
+    'Repository credentials should have been removed'
 );
 
 -- Update repository owned by organization (requesting user belongs to
