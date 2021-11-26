@@ -10,6 +10,7 @@ exports[`DisabledRepositoryBadge creates snapshot 1`] = `
     >
       <div
         class="text-center labelIconWrapper iconWrapper"
+        data-testid="label-wrapper"
       >
         <span
           class=""

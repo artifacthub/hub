@@ -15,7 +15,8 @@ exports[`OfficialBadge creates snapshot 1`] = `
           class="d-flex flex-row align-items-center overflow-hidden labelWrapper success"
         >
           <div
-            class="text-center labelIconWrapper iconWrapper"
+            class="text-center iconWrapper"
+            data-testid="label-wrapper"
           >
             <span
               class=""
