@@ -115,6 +115,8 @@ select results_eq(
                     "name": "repo1",
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
+                    "auth_user": "****",
+                    "auth_pass": "****",
                     "kind": 0,
                     "verified_publisher": false,
                     "official": false,

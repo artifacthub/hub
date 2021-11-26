@@ -1,10 +1,11 @@
 -- Start transaction and plan tests
 begin;
-select plan(3);
+select plan(5);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
+\set repo2ID '00000000-0000-0000-0000-000000000002'
 
 -- Non existing repository
 select is_empty(
@@ -47,8 +48,36 @@ values (
     '2020-06-16 11:20:34+02',
     'error1\nerror2\n'
 );
+insert into repository (
+    repository_id,
+    name,
+    display_name,
+    url,
+    branch,
+    digest,
+    repository_kind_id,
+    user_id,
+    last_scanning_ts,
+    last_scanning_errors,
+    last_tracking_ts,
+    last_tracking_errors
+)
+values (
+    :'repo2ID',
+    'repo2',
+    'Repo 2',
+    'https://repo2.com',
+    'main',
+    'digest',
+    0,
+    :'user1ID',
+    '2020-06-16 11:20:34+02',
+    'error1\nerror2\n',
+    '2020-06-16 11:20:34+02',
+    'error1\nerror2\n'
+);
 
--- One repository has just been seeded
+-- Run some tests
 select is(
     get_repository_by_id('00000000-0000-0000-0000-000000000001', false)::jsonb,
     '{
@@ -57,6 +86,8 @@ select is(
         "display_name": "Repo 1",
         "url": "https://repo1.com",
         "branch": "main",
+        "auth_user": "*****",
+        "auth_pass": "*****",
         "kind": 0,
         "verified_publisher": false,
         "official": false,
@@ -69,7 +100,7 @@ select is(
         "last_tracking_errors": "error1\\nerror2\\n",
         "user_alias": "user1"
     }'::jsonb,
-    'Repository just seeded is returned as a json object'
+    'Repository 1 returned as a json object (without credentials)'
 );
 select is(
     get_repository_by_id('00000000-0000-0000-0000-000000000001', true)::jsonb,
@@ -93,7 +124,51 @@ select is(
         "last_tracking_errors": "error1\\nerror2\\n",
         "user_alias": "user1"
     }'::jsonb,
-    'Repository just seeded is returned as a json object which includes the credentials'
+    'Repository 1 is returned as a json object (with credentials)'
+);
+select is(
+    get_repository_by_id('00000000-0000-0000-0000-000000000002', false)::jsonb,
+    '{
+        "repository_id": "00000000-0000-0000-0000-000000000002",
+        "name": "repo2",
+        "display_name": "Repo 2",
+        "url": "https://repo2.com",
+        "branch": "main",
+        "kind": 0,
+        "verified_publisher": false,
+        "official": false,
+        "disabled": false,
+        "scanner_disabled": false,
+        "digest": "digest",
+        "last_scanning_ts": 1592299234,
+        "last_scanning_errors": "error1\\nerror2\\n",
+        "last_tracking_ts": 1592299234,
+        "last_tracking_errors": "error1\\nerror2\\n",
+        "user_alias": "user1"
+    }'::jsonb,
+    'Repository 2 is returned as a json object (no credentials)'
+);
+select is(
+    get_repository_by_id('00000000-0000-0000-0000-000000000002', true)::jsonb,
+    '{
+        "repository_id": "00000000-0000-0000-0000-000000000002",
+        "name": "repo2",
+        "display_name": "Repo 2",
+        "url": "https://repo2.com",
+        "branch": "main",
+        "kind": 0,
+        "verified_publisher": false,
+        "official": false,
+        "disabled": false,
+        "scanner_disabled": false,
+        "digest": "digest",
+        "last_scanning_ts": 1592299234,
+        "last_scanning_errors": "error1\\nerror2\\n",
+        "last_tracking_ts": 1592299234,
+        "last_tracking_errors": "error1\\nerror2\\n",
+        "user_alias": "user1"
+    }'::jsonb,
+    'Repository 2 is returned as a json object (no credentials)'
 );
 
 -- Finish tests and rollback transaction
