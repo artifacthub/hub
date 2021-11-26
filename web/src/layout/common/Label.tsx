@@ -30,9 +30,18 @@ const Label = (props: Props) => (
     >
       {(!isUndefined(props.icon) || !isUndefined(props.iconLegend)) && (
         <div
-          className={classnames('text-center labelIconWrapper', styles.iconWrapper, {
-            [styles.onlyIcon]: props.onlyIcon,
-          })}
+          data-testid="label-wrapper"
+          className={classnames(
+            'text-center',
+            {
+              labelIconWrapper:
+                isUndefined(props.labelStyle) || (!isUndefined(props.labelStyle) && props.labelStyle !== 'success'),
+            },
+            styles.iconWrapper,
+            {
+              [styles.onlyIcon]: props.onlyIcon,
+            }
+          )}
           style={{
             backgroundColor: props.bgLeftIcon,
           }}

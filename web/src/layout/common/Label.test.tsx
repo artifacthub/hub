@@ -32,12 +32,19 @@ describe('Label', () => {
 
     const icon = screen.getByText('icon');
     expect(icon).toBeInTheDocument();
-    expect(icon.parentElement).toHaveClass('labelIconWrapper');
+    expect(screen.getByTestId('label-wrapper')).toHaveClass('labelIconWrapper');
   });
 
   it('renders icon legend', () => {
     render(<Label {...defaultProps} iconLegend="legend" />);
 
     expect(screen.getByText('legend')).toBeInTheDocument();
+  });
+
+  it('renders success label', () => {
+    render(<Label {...defaultProps} icon={<>icon</>} labelStyle="success" />);
+
+    expect(screen.getByText('Label text')).toBeInTheDocument();
+    expect(screen.getByTestId('label-wrapper')).not.toHaveClass('labelIconWrapper');
   });
 });

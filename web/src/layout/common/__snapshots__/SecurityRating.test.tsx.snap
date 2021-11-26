@@ -16,6 +16,7 @@ exports[`SecurityRating creates snapshot 1`] = `
         >
           <div
             class="text-center labelIconWrapper iconWrapper"
+            data-testid="label-wrapper"
             style="background-color: rgb(150, 0, 3);"
           >
             <span
