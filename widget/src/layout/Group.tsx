@@ -1,5 +1,5 @@
 import { isNull, isUndefined, some } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import API from '../api';
@@ -128,7 +128,7 @@ const Group = (props: Props) => {
           {packagesList && (
             <List>
               {packagesList.map((packageSummary: PackageSummary) => (
-                <React.Fragment key={`pkg_${packageSummary.packageId}`}>
+                <Fragment key={`pkg_${packageSummary.packageId}`}>
                   <Widget
                     url={props.url}
                     theme={props.theme}
@@ -140,7 +140,7 @@ const Group = (props: Props) => {
                     withBadges={pkgsWithBadges}
                     inGroup
                   />
-                </React.Fragment>
+                </Fragment>
               ))}
             </List>
           )}
