@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import NoData from '../common/NoData';
 import styles from './Tabs.module.css';

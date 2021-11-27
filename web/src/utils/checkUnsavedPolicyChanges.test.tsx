@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { OrganizationPolicy } from '../types';
 import { checkUnsavedPolicyChanges, PolicyChangeAction } from './checkUnsavedPolicyChanges';
 import stringifyPolicyData from './stringifyPolicyData';

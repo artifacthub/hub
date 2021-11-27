@@ -34,11 +34,6 @@
   margin-left: -3px;
 }
 
-.icon {
-  font-size: 0.5rem;
-  top: -2px;
-}
-
 @media only screen and (max-width: 767.98px) {
   .filters {
     font-size: 1rem;

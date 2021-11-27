@@ -1,5 +1,5 @@
 import { isNull } from 'lodash';
-import React, { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FaLock } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { MdDone, MdNavigateNext } from 'react-icons/md';
@@ -28,7 +28,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
   const [passcode, setPasscode] = useState<string>('');
   const [apiError, setApiError] = useState<null | string>(null);
 
-  const onPasscodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPasscodeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPasscode(e.target.value);
     if (!isNull(apiError)) {
       setApiError(null);
@@ -103,7 +103,6 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
       </button>
 
       <Modal
-        modalDialogClassName={styles.modalDialog}
         modalClassName={styles.modal}
         header={<div className={`h3 m-2 flex-grow-1 text-truncate ${styles.title}`}>Setup 2FA</div>}
         open={openStatus}

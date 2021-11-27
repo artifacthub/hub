@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { TOCEntryItem } from '../../../types';
 import prepareMarkdownTOC from '../../../utils/prepareMarkdownTOC';

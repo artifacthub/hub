@@ -40,7 +40,7 @@ exports[`Details renders correctly 1`] = `
       </div>
       <small>
         <a
-          class="badge badge-pill badge-secondary rssBadge ml-3 badge"
+          class="badge badge-pill badge-secondary rssBadge ml-3"
           href="/api/v1/packages/helm/incubator/undefined/feed/rss"
           rel="alternate noopener noreferrer"
           role="button"

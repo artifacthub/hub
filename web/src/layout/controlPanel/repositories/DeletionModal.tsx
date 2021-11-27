@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import React, { useState } from 'react';
+import { ChangeEvent, SetStateAction, useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 
@@ -13,7 +13,7 @@ import styles from './Modal.module.css';
 interface Props {
   repository: Repository;
   organizationName?: string;
-  setDeletionModalStatus: (value: React.SetStateAction<boolean>) => void;
+  setDeletionModalStatus: (value: SetStateAction<boolean>) => void;
   onSuccess: () => void;
   onAuthError: () => void;
 }
@@ -22,7 +22,7 @@ const DeletionModal = (props: Props) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsValidInput(e.target.value === props.repository.name);
   };
 

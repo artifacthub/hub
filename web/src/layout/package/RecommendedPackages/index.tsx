@@ -1,5 +1,5 @@
 import { isNull, isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { GoPackage } from 'react-icons/go';
 
 import { Recommendation, RecommendedPackage, RepositoryKind } from '../../../types';
@@ -71,4 +71,4 @@ const RecommendedPackages = (props: Props) => {
   );
 };
 
-export default React.memo(RecommendedPackages);
+export default memo(RecommendedPackages);

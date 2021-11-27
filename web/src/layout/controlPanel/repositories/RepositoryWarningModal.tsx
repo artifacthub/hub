@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaRegQuestionCircle } from 'react-icons/fa';
 
 import Modal from '../../common/Modal';

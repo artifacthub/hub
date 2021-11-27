@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { ElementType, useEffect, useRef, useState } from 'react';
 
 import styles from './Alert.module.css';
 
@@ -12,7 +12,7 @@ interface Props {
 
 const DEFAULT_ALERT_TYPE = 'warning';
 
-const Alert: React.ElementType = (props: Props) => {
+const Alert: ElementType = (props: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const errorWrapper = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);

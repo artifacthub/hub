@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { FaCaretDown, FaCog, FaStar, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 

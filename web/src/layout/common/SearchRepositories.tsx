@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { escapeRegExp, isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
-import React, { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { MdBusiness } from 'react-icons/md';
@@ -86,7 +86,7 @@ const SearchRepositories = (props: Props) => {
     setHighlightedItem(null);
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchName(e.target.value);
     setHighlightedItem(null);
   };
@@ -108,7 +108,7 @@ const SearchRepositories = (props: Props) => {
     return isDisabled;
   };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     switch (e.key) {
       case 'Escape':
         cleanSearch();
@@ -253,12 +253,12 @@ const SearchRepositories = (props: Props) => {
               >
                 <thead>
                   <tr>
-                    <th scope="col" className={`${styles.fitCell} ${styles.iconCell} d-none d-sm-table-cell`}></th>
+                    <th scope="col" className={`${styles.fitCell} d-none d-sm-table-cell`}></th>
                     <th scope="col" className={styles.repoCell}>
                       Repository
                     </th>
                     {props.visibleUrl && (
-                      <th scope="col" className={`d-none d-md-table-cell ${styles.urlCell}`}>
+                      <th scope="col" className="d-none d-md-table-cell">
                         Url
                       </th>
                     )}

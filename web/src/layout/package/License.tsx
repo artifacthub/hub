@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 import { FiExternalLink } from 'react-icons/fi';
 import { GoLaw } from 'react-icons/go';
 

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaEnvelopeOpenText, FaSignOutAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -133,7 +133,7 @@ const OrganizationCard = (props: Props) => {
                       {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
                         <button
                           className="dropdown-item btn btn-sm rounded-0 text-dark"
-                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                          onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                             e.preventDefault();
                             closeDropdown();
                             setLeaveModalStatus(true);
@@ -151,7 +151,7 @@ const OrganizationCard = (props: Props) => {
                     <div>
                       <button
                         className="dropdown-item btn btn-sm rounded-0 text-dark"
-                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                           e.preventDefault();
                           confirmOrganizationMembership();
                           closeDropdown();

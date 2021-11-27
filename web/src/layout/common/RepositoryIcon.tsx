@@ -1,5 +1,4 @@
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 
 import { RepositoryKind } from '../../types';
 

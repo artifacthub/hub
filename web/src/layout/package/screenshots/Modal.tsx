@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BiImages, BiUnlink } from 'react-icons/bi';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import { GoPrimitiveDot } from 'react-icons/go';

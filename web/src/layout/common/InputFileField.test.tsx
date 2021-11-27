@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import { MdImage } from 'react-icons/md';
 import { mocked } from 'ts-jest/utils';
 

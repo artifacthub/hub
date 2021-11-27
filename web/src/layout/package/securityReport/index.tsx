@@ -1,5 +1,5 @@
 import { isEmpty, isNull, isUndefined } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { ContainerImage, SearchFiltersURL, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';

@@ -1,5 +1,4 @@
 import { isUndefined } from 'lodash';
-import React from 'react';
 import { HiBadgeCheck } from 'react-icons/hi';
 
 import ElementWithTooltip from './ElementWithTooltip';

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { FaCaretDown, FaUser } from 'react-icons/fa';
 import { GoCheck } from 'react-icons/go';
 import { MdBusiness } from 'react-icons/md';

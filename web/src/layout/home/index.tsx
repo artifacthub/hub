@@ -1,5 +1,5 @@
 import isNull from 'lodash/isNull';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 

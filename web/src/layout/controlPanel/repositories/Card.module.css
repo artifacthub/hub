@@ -22,11 +22,6 @@
   right: 3px;
 }
 
-.btnLight {
-  background-color: var(--color-1-20) !important;
-  border-color: var(--color-1-20) !important;
-}
-
 .copyBtnWrapper {
   margin-top: -18px;
 }

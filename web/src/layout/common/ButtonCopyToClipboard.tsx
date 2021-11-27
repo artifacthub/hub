@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useEffect, useState } from 'react';
 import { FiCopy } from 'react-icons/fi';
 
 import styles from './ButtonCopyToClipboard.module.css';
@@ -95,7 +95,7 @@ const ButtonCopyToClipboard = (props: Props) => {
           props.className
         )}
         style={props.style}
-        onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        onClick={(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
           e.preventDefault();
           e.stopPropagation();
           copyToClipboard(props.text);

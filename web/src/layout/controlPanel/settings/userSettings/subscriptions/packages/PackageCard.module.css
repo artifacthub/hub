@@ -15,10 +15,6 @@
   padding: 1.75rem !important;
 }
 
-.legend {
-  font-size: 0.5rem;
-}
-
 .icon {
   height: auto;
   width: 18px;
@@ -68,10 +64,6 @@
 
 .truncateWrapper {
   min-width: 0;
-}
-
-.btn:disabled {
-  cursor: auto;
 }
 
 .checkbox,

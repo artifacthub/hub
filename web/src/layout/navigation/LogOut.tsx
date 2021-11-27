@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 

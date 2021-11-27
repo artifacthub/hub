@@ -1,6 +1,6 @@
 import { groupBy, isUndefined, rangeRight } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Version } from '../../types';
 import SmallTitle from '../common/SmallTitle';

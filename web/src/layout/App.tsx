@@ -2,7 +2,7 @@ import './App.css';
 import '../themes/default.scss';
 
 import isNull from 'lodash/isNull';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Route, Router, Switch } from 'react-router-dom';
 
 import { AppCtxProvider } from '../context/AppCtx';

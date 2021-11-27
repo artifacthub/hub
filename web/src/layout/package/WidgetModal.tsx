@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -18,7 +18,7 @@ interface Props {
   visibleWidget: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
-  setOpenStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenStatus: Dispatch<SetStateAction<boolean>>;
 }
 
 interface WidgetTheme {
@@ -96,7 +96,6 @@ const WidgetModal = (props: Props) => {
     <>
       {props.visibleWidget && (
         <Modal
-          modalDialogClassName={styles.modalDialog}
           header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Widget</div>}
           onClose={onCloseModal}
           open={props.visibleWidget}

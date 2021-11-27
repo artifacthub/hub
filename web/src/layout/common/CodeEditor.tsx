@@ -7,7 +7,7 @@ import 'codemirror-rego/mode';
 
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React, { useContext } from 'react';
+import { ElementType, useContext } from 'react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -20,7 +20,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const CodeEditor: React.ElementType = (props: Props) => {
+const CodeEditor: ElementType = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const { effective } = ctx.prefs.theme;
 

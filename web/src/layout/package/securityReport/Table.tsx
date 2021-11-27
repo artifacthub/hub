@@ -1,5 +1,5 @@
 import { isNull, isUndefined, slice } from 'lodash';
-import React, { useState } from 'react';
+import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 
 import { SecurityReportResult, Vulnerability } from '../../../types';
@@ -13,11 +13,11 @@ import TargetImageBtn from './TargetImageBtn';
 
 interface Props {
   visibleImage: string | null;
-  setVisibleImage: React.Dispatch<React.SetStateAction<string | null>>;
+  setVisibleImage: Dispatch<SetStateAction<string | null>>;
   visibleTarget: string | null;
-  setVisibleTarget: React.Dispatch<React.SetStateAction<string | null>>;
+  setVisibleTarget: Dispatch<SetStateAction<string | null>>;
   expandedTarget: string | null;
-  setExpandedTarget: React.Dispatch<React.SetStateAction<string | null>>;
+  setExpandedTarget: Dispatch<SetStateAction<string | null>>;
   image: string;
   reports: SecurityReportResult[];
   hasOnlyOneTarget: boolean;
@@ -66,7 +66,7 @@ const SecurityTable = (props: Props) => {
               const isLastTarget = props.lastReport && index === props.reports.length - 1;
 
               return (
-                <React.Fragment key={`table_${targetImageName}`}>
+                <Fragment key={`table_${targetImageName}`}>
                   <div
                     className="ml-4"
                     style={{
@@ -165,7 +165,7 @@ const SecurityTable = (props: Props) => {
                       </div>
                     )}
                   </div>
-                </React.Fragment>
+                </Fragment>
               );
             })}
           </>

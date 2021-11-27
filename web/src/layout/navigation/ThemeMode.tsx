@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { GoBrowser } from 'react-icons/go';
 

@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useRef, useState } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
@@ -30,7 +30,7 @@ interface Loading {
 
 interface Props {
   openLogIn: boolean;
-  setOpenLogIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenLogIn: Dispatch<SetStateAction<boolean>>;
   redirect?: string;
   visibleModal?: string;
 }
@@ -50,7 +50,7 @@ const LogIn = (props: Props) => {
   const [passcode, setPasscode] = useState<string>('');
   const [isApprovingSession, setIsApprovingSession] = useState<boolean>(false);
 
-  const onPasscodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPasscodeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPasscode(e.target.value);
   };
 
@@ -61,7 +61,7 @@ const LogIn = (props: Props) => {
     }
   };
 
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
@@ -157,7 +157,7 @@ const LogIn = (props: Props) => {
     );
   };
 
-  const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleOnReturnKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && !isNull(loginForm)) {
       submitForm();
     }

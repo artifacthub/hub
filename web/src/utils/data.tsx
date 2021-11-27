@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaKey, FaScroll, FaUserFriends } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import { GrConnect } from 'react-icons/gr';

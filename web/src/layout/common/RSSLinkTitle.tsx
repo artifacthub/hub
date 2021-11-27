@@ -1,9 +1,7 @@
-import React from 'react';
 import { FaRss } from 'react-icons/fa';
 
 import { Repository } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
-import styles from './RSSLinkTitle.module.css';
 
 interface Props {
   title: string;
@@ -20,7 +18,7 @@ const RSSLinkTitle = (props: Props) => (
 
     <small>
       <a
-        className={`badge badge-pill badge-secondary rssBadge ml-3 ${styles.badge}`}
+        className="badge badge-pill badge-secondary rssBadge ml-3"
         rel="alternate noopener noreferrer"
         role="button"
         target="_blank"

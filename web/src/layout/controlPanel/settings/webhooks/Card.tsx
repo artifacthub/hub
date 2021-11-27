@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React, { useContext, useRef, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -141,7 +141,7 @@ const WebhookCard = (props: Props) => {
 
                 <button
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     props.onEdition();
@@ -156,7 +156,7 @@ const WebhookCard = (props: Props) => {
 
                 <button
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     setDeletionModalStatus(true);

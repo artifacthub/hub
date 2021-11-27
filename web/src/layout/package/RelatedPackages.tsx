@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 
 import { Package } from '../../types';
 import SmallTitle from '../common/SmallTitle';

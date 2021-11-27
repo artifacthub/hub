@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { BiCode } from 'react-icons/bi';
 import { HiDotsVertical } from 'react-icons/hi';
 

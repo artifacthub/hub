@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Repository } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';

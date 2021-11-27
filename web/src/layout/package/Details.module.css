@@ -6,10 +6,6 @@
   background-color: var(--white);
 }
 
-.fitCell {
-  width: 1%;
-}
-
 .releasedCell {
   width: 30%;
 }
@@ -20,16 +16,4 @@
 
 .text {
   font-size: 0.9rem;
-}
-
-.select {
-  height: 25px !important;
-  line-height: 1rem !important;
-  padding-left: 0.75rem !important;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 767.98px) {
-  .select:active {
-    font-size: 16px !important;
-  }
 }

@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useContext, useEffect, useState } from 'react';
 import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
@@ -186,7 +186,7 @@ const RepositoriesSection = (props: Props) => {
               <ActionBtn
                 className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 contentClassName="justify-content-center"
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
                   setModalStatus({ open: true });
                 }}
@@ -249,7 +249,7 @@ const RepositoriesSection = (props: Props) => {
 
                     <ActionBtn
                       className="btn btn-sm btn-outline-secondary"
-                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                         e.preventDefault();
                         setModalStatus({ open: true });
                       }}

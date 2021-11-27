@@ -1,6 +1,6 @@
 import { compact } from 'lodash';
 import uniq from 'lodash/uniq';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import SmallTitle from '../common/SmallTitle';
 import styles from './Platforms.module.css';

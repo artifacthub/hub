@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import styles from './AutoresizeTextarea.module.css';
 
@@ -11,7 +11,7 @@ interface Props {
   invalidText?: string;
   minRows?: number;
   maxRows?: number;
-  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const DEFAULT_MIN_ROWS = 3;
@@ -46,7 +46,7 @@ const AutoresizeTextarea = (props: Props) => {
         value={textValue}
         disabled={props.disabled}
         required={props.required}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
           calculateHeight(e.target.value);
           setTextValue(e.target.value);
           if (!isUndefined(props.onChange)) {

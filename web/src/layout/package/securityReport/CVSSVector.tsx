@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React from 'react';
 
 import { CVSSVectorMetric, CVSSVectorOpt, VulnerabilitySeverity } from '../../../types';
 import { CVSS_V2_VECTORS, CVSS_V3_VECTORS } from '../../../utils/data';

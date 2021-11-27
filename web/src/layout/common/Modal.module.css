@@ -28,19 +28,8 @@
   animation: fadeIn50 0.15s 1 ease-in-out forwards;
 }
 
-.errorAlert {
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1;
-}
-
 .btn:disabled {
   cursor: auto;
-}
-
-.closeBtn {
-  padding: 1rem !important;
 }
 
 @keyframes fadeIn {

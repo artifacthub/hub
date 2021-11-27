@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 
 import BannerMOTD from './BannerMOTD';
 
@@ -147,7 +146,7 @@ describe('BannerMOTD', () => {
             switch (selector) {
               case `meta[name='artifacthub:motd']`:
                 return {
-                  // This is important for dev
+                  // When variable is not updated
                   getAttribute: () => '{{ .motd }}',
                 };
               default:

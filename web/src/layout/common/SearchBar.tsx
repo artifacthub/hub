@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import React, { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FaRegQuestionCircle } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
@@ -47,7 +47,7 @@ const SearchBar = (props: Props) => {
     cleanSearch();
   });
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
 
@@ -96,7 +96,7 @@ const SearchBar = (props: Props) => {
     setHighlightedItem(null);
   };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     switch (e.key) {
       case 'Escape':
         cleanSearch();

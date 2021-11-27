@@ -1,5 +1,5 @@
 import { isUndefined, sample } from 'lodash';
-import React, { useState } from 'react';
+import { memo, useState } from 'react';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -40,4 +40,4 @@ const SearchTip = () => {
   );
 };
 
-export default React.memo(SearchTip);
+export default memo(SearchTip);

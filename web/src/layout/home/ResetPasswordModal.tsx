@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { every, isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { CgLastpass } from 'react-icons/cg';
 import { MdClose, MdDone } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
@@ -45,7 +45,7 @@ const ResetPasswordModal = (props: Props) => {
   const [apiPwdError, setApiPwdError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword({ value: e.target.value, isValid: e.currentTarget.checkValidity() });
   };
 

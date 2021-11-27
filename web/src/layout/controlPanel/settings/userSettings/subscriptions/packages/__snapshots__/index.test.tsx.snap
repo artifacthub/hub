@@ -97,7 +97,7 @@ exports[`PackagesSection creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="mx-auto mt-3 mt-md-3 wrapper"
+          class="mx-auto mt-3 mt-md-3"
         >
           <p
             class="m-0"

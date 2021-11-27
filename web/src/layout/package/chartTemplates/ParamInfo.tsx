@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isArray } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useRef, useState } from 'react';
+import { ElementType, useEffect, useRef, useState } from 'react';
 import { FiExternalLink } from 'react-icons/fi';
 import ReactMarkdown from 'react-markdown';
 
@@ -27,12 +27,12 @@ interface LinkProps {
   children: any;
 }
 
-const Heading: React.ElementType = (data: HeadingProps) => {
+const Heading: ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   return <Tag className={`text-dark ${styles.header}`}>{data.children}</Tag>;
 };
 
-const Link: React.ElementType = (data: LinkProps) => {
+const Link: ElementType = (data: LinkProps) => {
   const linkIcon =
     data.children && isArray(data.children) && data.children[0] === 'iconLink' ? (
       <FiExternalLink className={`position-relative ${styles.linkIcon}`} />

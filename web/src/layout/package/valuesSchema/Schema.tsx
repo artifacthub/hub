@@ -1,6 +1,6 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import compoundJSONSchemaYAML from '../../../utils/compoundJSONSchemaYAML';
@@ -83,7 +83,7 @@ const Schema = (props: Props) => {
             const isRequired = checkIfPropIsRequiredInSchema(propName, props.schema.required);
 
             return (
-              <React.Fragment key={propName}>
+              <Fragment key={propName}>
                 <SchemaLine
                   definitions={props.schema.definitions}
                   value={value}
@@ -95,7 +95,7 @@ const Schema = (props: Props) => {
                   onActivePathChange={onPathChange}
                   saveSelectedOption={saveSelectedOption}
                 />
-              </React.Fragment>
+              </Fragment>
             );
           })}
         </>

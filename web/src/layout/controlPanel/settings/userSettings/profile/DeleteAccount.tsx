@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { CgUserRemove } from 'react-icons/cg';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -22,7 +22,7 @@ const DeleteAccount = (props: Props) => {
   const [deleteSuccess, setDeleteSuccess] = useState<boolean>(false);
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsValidInput(e.target.value === ctx.user!.alias);
   };
 

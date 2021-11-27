@@ -6,13 +6,6 @@
   box-shadow: 0 0 0 0.3rem var(--color-black-15);
 }
 
-.searchBtn {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  line-height: 0.75rem;
-}
-
 .iconWrapper {
   color: var(--color-1-700);
   padding: 0.375rem 0.75rem;

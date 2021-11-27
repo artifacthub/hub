@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import ExternalLink from './ExternalLink';
 import NoData from './NoData';
@@ -13,7 +13,7 @@ interface State {
   hasError: boolean;
 }
 
-class ErrorBoundary extends React.Component<Props, State> {
+class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };

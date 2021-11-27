@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useState } from 'react';
+import { ElementType, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
@@ -37,7 +37,7 @@ interface TableProps {
 }
 
 const PublisherInstructionsInstall = (props: Props) => {
-  const Code: React.ElementType = (props: CodeProps) => {
+  const Code: ElementType = (props: CodeProps) => {
     if (props.inline) {
       return <code className={styles.inlineCode}>{props.children}</code>;
     }
@@ -49,11 +49,11 @@ const PublisherInstructionsInstall = (props: Props) => {
     }
   };
 
-  const Pre: React.ElementType = (props: CodeProps) => {
+  const Pre: ElementType = (props: CodeProps) => {
     return <>{props.children}</>;
   };
 
-  const Heading: React.ElementType = (props: HeadingProps) => (
+  const Heading: ElementType = (props: HeadingProps) => (
     <div className="my-2">
       <div className={`h${props.level} text-muted pt-2 pb-1`}>
         <div className={styles.mdHeader}>{props.children}</div>
@@ -61,13 +61,13 @@ const PublisherInstructionsInstall = (props: Props) => {
     </div>
   );
 
-  const Table: React.ElementType = (data: TableProps) => (
+  const Table: ElementType = (data: TableProps) => (
     <div className="w-100 overflow-auto">
       <table>{data.children}</table>
     </div>
   );
 
-  const Image: React.ElementType = (data: ImageProps) => {
+  const Image: ElementType = (data: ImageProps) => {
     const [error, setError] = useState<boolean>(false);
 
     // Only absolute path
@@ -82,7 +82,7 @@ const PublisherInstructionsInstall = (props: Props) => {
   };
 
   // Only for external links and anchors
-  const Link: React.ElementType = (data: LinkProps) => {
+  const Link: ElementType = (data: LinkProps) => {
     // Only absolute link
     return /^https?:/.test(data.href) ? (
       <a href={data.href} target={data.target} rel="noopener noreferrer" className="text-primary">

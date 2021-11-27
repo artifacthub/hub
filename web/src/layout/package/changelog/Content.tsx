@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BsDot } from 'react-icons/bs';
 import { FaLink, FaTrash, FaWrench } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
@@ -22,7 +22,7 @@ interface Props {
   changelog: ChangeLog[];
   normalizedName: string;
   activeVersionIndex: number;
-  setActiveVersionIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setActiveVersionIndex: Dispatch<SetStateAction<number | undefined>>;
   repository: Repository;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;

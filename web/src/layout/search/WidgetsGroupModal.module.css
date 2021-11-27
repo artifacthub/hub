@@ -2,17 +2,6 @@
   font-size: 1rem;
 }
 
-.iconWrapper {
-  width: 2rem;
-  height: 2rem;
-  background-color: var(--white);
-  border: 1px solid var(--color-1-500);
-  padding: 2px;
-  overflow: hidden;
-  line-height: 1;
-  font-size: 1.25rem !important;
-}
-
 .label {
   font-size: 0.875rem;
 }

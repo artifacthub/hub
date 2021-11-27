@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import { Dispatch, FormEvent, forwardRef, SetStateAction, useContext, useRef, useState } from 'react';
 import { MdBusiness } from 'react-icons/md';
 
 import API from '../../../api';
@@ -23,10 +23,10 @@ interface Props {
   onSuccess?: () => void;
   onAuthError: () => void;
   setIsSending: (status: boolean) => void;
-  setApiError?: React.Dispatch<React.SetStateAction<null | string>>;
+  setApiError?: Dispatch<SetStateAction<null | string>>;
 }
 
-const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
+const OrganizationForm = forwardRef<HTMLFormElement, Props>((props, ref) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const [imageId, setImageId] = useState<string | undefined>(
     props.organization ? props.organization.logoImageId : undefined
@@ -80,7 +80,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
     }
   }
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -134,7 +134,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
       onFocus={cleanApiError}
       autoComplete="on"
-      onSubmit={(e: React.FormEvent<HTMLFormElement>) => submitForm(e)}
+      onSubmit={(e: FormEvent<HTMLFormElement>) => submitForm(e)}
       noValidate
     >
       <InputFileField

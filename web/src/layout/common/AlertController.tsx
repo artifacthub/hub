@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { Alert } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { ChangeEvent, forwardRef, KeyboardEvent, Ref, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import API from '../../api';
@@ -29,8 +29,8 @@ export interface Props {
   max?: number;
   pattern?: string;
   labelLegend?: JSX.Element;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   validateOnBlur?: boolean;
   validateOnChange?: boolean;
   checkAvailability?: AvailabilityInfo;
@@ -47,7 +47,7 @@ export interface Props {
 
 const VALIDATION_DELAY = 3 * 100; // 300ms
 
-const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
+const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
   const input = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [inputValue, setInputValue] = useState(props.value || '');
@@ -172,7 +172,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
     }
   };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.target.value);
     if (!isUndefined(props.onChange)) {
       props.onChange(e);

@@ -9,7 +9,7 @@ exports[`FilterBadge creates snapshot 1`] = `
       class="d-flex flex-row align-items-center"
     >
       <div
-        class="position-relative badgeContent"
+        class="position-relative"
       >
         <small
           class="mr-1 text-uppercase"

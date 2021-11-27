@@ -1,5 +1,4 @@
 import { act, render, screen } from '@testing-library/react';
-import React from 'react';
 
 import alertDispatcher from '../../utils/alertDispatcher';
 import AlertController from './AlertController';

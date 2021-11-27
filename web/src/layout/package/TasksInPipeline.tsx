@@ -1,5 +1,4 @@
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 import { GoDash } from 'react-icons/go';
 import { TiTick } from 'react-icons/ti';
 

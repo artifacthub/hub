@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, MouseEvent as ReactMouseEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FaCheck, FaPencilAlt } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
 import { MdAddCircle, MdClose } from 'react-icons/md';
@@ -104,7 +104,7 @@ const WebhookForm = (props: Props) => {
     props.onClose();
   };
 
-  const onContentTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onContentTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setContentType(e.target.value);
   };
 
@@ -242,7 +242,7 @@ const WebhookForm = (props: Props) => {
     }
   };
 
-  const updateTemplate = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const updateTemplate = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTemplate(e.target.value);
     checkTestAvailability();
   };
@@ -513,7 +513,7 @@ const WebhookForm = (props: Props) => {
                             <button
                               className={`close text-danger mx-2 ${styles.closeBtn}`}
                               type="button"
-                              onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                              onClick={(event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
                                 event.preventDefault();
                                 event.stopPropagation();
                                 deletePackage(item.packageId);
@@ -600,7 +600,7 @@ const WebhookForm = (props: Props) => {
                 invalidText={{
                   default: 'This field is required',
                 }}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   onContentTypeChange(e);
                   checkTestAvailability();
                 }}

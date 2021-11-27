@@ -1,8 +1,8 @@
 import { throttle } from 'lodash';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useLayoutEffect, useState } from 'react';
 
 const useOverflowWrapper = (
-  wrapperRef: React.MutableRefObject<HTMLDivElement | null>,
+  wrapperRef: MutableRefObject<HTMLDivElement | null>,
   maxHeight: number,
   itemsLength: number
 ) => {

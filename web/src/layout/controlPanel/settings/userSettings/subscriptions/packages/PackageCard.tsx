@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { EventKind, Package } from '../../../../../../types';
@@ -99,7 +99,7 @@ const PackageCard = (props: Props) => {
                       type="checkbox"
                       className={`custom-control-input ${styles.checkbox}`}
                       disabled={!subs.enabled}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         e.preventDefault();
                         e.stopPropagation();
 

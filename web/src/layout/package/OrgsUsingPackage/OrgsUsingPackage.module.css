@@ -19,10 +19,6 @@
   background-color: var(--white);
 }
 
-.fitCell {
-  width: 1%;
-}
-
 .imageWrapper {
   min-width: 30px;
   width: 30px;
@@ -41,14 +37,6 @@
 .orgIcon {
   font-size: 80%;
   top: -1px;
-}
-
-.orgBtn {
-  font-size: 0.9rem;
-}
-
-.orgSeparator {
-  font-size: 0.9rem;
 }
 
 @media only screen and (min-width: 576px) {

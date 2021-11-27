@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import moment from 'moment';
-import React, { useRef, useState } from 'react';
+import { Dispatch, MouseEvent as ReactMouseEvent, SetStateAction, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -20,7 +20,7 @@ interface ModalStatus {
 
 interface Props {
   apiKey: APIKey;
-  setModalStatus: React.Dispatch<React.SetStateAction<ModalStatus>>;
+  setModalStatus: Dispatch<SetStateAction<ModalStatus>>;
   onSuccess: () => void;
   onAuthError: () => void;
 }
@@ -125,7 +125,7 @@ const APIKeyCard = (props: Props) => {
 
                 <button
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     props.setModalStatus({
@@ -143,7 +143,7 @@ const APIKeyCard = (props: Props) => {
 
                 <button
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     setDeletionModalStatus(true);

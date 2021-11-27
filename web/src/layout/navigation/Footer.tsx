@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import React from 'react';
 import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { FiExternalLink, FiHexagon } from 'react-icons/fi';
 import { Link } from 'react-router-dom';

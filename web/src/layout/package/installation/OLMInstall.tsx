@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { Channel } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
@@ -39,7 +39,7 @@ const OLMInstall = (props: Props) => {
           className="custom-select custom-select-sm"
           aria-label="channel-select"
           value={activeChannel}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setActiveChannel(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => setActiveChannel(e.target.value)}
         >
           {props.channels!.map((channel: Channel) => (
             <option key={`channel_${channel.name}`} value={channel.name}>

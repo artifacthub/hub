@@ -1,5 +1,5 @@
 import { isNull, isUndefined, trim } from 'lodash';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, MouseEvent as ReactMouseEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { RiTestTubeFill } from 'react-icons/ri';
 import { Prompt } from 'react-router-dom';
@@ -97,7 +97,7 @@ const AuthorizationSection = (props: Props) => {
     return policy;
   };
 
-  const onPayloadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPayloadChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     let updatedOrgPolicy: OrganizationPolicy | undefined = undefined;
     if (value === 'predefined') {
@@ -308,7 +308,7 @@ const AuthorizationSection = (props: Props) => {
     }
   };
 
-  const onPredefinedPolicyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onPredefinedPolicyChange = (e: ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     const activePredefinedPolicy = getPredefinedPolicy(e.target.value);
     const updatedOrgPolicy = {
@@ -578,7 +578,7 @@ const AuthorizationSection = (props: Props) => {
                 <ActionBtn
                   ref={updateActionBtn}
                   className="btn btn-sm btn-outline-secondary"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     onSaveAuthorizationPolicy();
                   }}

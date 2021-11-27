@@ -1,5 +1,4 @@
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 
 import { Section } from '../../../../types';
 import { CONTROL_PANEL_SECTIONS } from '../../../../utils/data';

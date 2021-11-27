@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import { isNumber, isUndefined } from 'lodash';
-import React from 'react';
 import { FaStar } from 'react-icons/fa';
 
 import prettifyNumber from '../../utils/prettifyNumber';

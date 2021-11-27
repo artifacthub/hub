@@ -10,7 +10,7 @@ exports[`PackageCard renders correctly 1`] = `
       class="card cardWithHover h-100 card"
     >
       <a
-        class="text-decoration-none text-reset h-100 link"
+        class="text-decoration-none text-reset h-100"
         href="/packages/helm/stable/test"
       >
         <div

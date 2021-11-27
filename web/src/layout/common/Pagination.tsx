@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isString } from 'lodash';
 import isNumber from 'lodash/isNumber';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 
 import styles from './Pagination.module.css';

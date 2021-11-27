@@ -1,5 +1,4 @@
 import { isUndefined } from 'lodash';
-import React from 'react';
 import { FaEyeSlash } from 'react-icons/fa';
 
 import ElementWithTooltip from './ElementWithTooltip';

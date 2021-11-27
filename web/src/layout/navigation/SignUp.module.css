@@ -1,29 +1,11 @@
-.button {
-  letter-spacing: 2px;
-  color: var(--white) !important;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.button:focus {
-  box-shadow: 0;
-}
-
-@media (hover: hover) {
-  .button:hover::before {
-    content: '';
-    position: absolute;
-    top: -18px;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background-color: var(--white);
-    opacity: 0.5;
-  }
-}
-
 .modal {
   max-width: 90%;
   width: 620px !important;
   height: 795px;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
 }

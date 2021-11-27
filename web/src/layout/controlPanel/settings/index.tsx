@@ -1,5 +1,3 @@
-import React from 'react';
-
 import OrganizationSettingsSection from './orgSettings';
 import UserSettingsSection from './userSettings';
 

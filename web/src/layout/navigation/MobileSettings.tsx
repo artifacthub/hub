@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { FaCog, FaEdit, FaSignInAlt, FaStar, FaUserCircle } from 'react-icons/fa';
 import { GoThreeBars } from 'react-icons/go';
 import { HiChartSquareBar } from 'react-icons/hi';
@@ -15,8 +15,8 @@ import styles from './MobileSettings.module.css';
 import ThemeMode from './ThemeMode';
 
 interface Props {
-  setOpenSignUp: React.Dispatch<React.SetStateAction<boolean>>;
-  setOpenLogIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSignUp: Dispatch<SetStateAction<boolean>>;
+  setOpenLogIn: Dispatch<SetStateAction<boolean>>;
   privateRoute?: boolean;
 }
 

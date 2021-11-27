@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { ChangeEvent, MouseEvent as ReactMouseEvent, useContext, useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 
@@ -22,7 +22,7 @@ const DeleteOrganization = (props: Props) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsValidInput(e.target.value === props.organization.name);
   };
 
@@ -60,7 +60,7 @@ const DeleteOrganization = (props: Props) => {
 
         <ActionBtn
           className="btn btn-sm btn-danger"
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             setOpenStatus(true);
           }}

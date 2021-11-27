@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { RepositoryKind } from '../../types';
 import Image from '../common/Image';
 import styles from './ModalHeader.module.css';

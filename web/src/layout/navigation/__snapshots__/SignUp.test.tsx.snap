@@ -22,7 +22,7 @@ exports[`SignUp creates snapshot 1`] = `
             class="modal-header d-flex flex-row align-items-center header undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1"
+              class="h3 m-2 flex-grow-1 text-truncate title"
             >
               Sign up
             </div>

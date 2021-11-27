@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -89,7 +89,7 @@ const FilesModal = (props: Props) => {
     setIsChangingSelectedItem(false);
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -254,7 +254,7 @@ const FilesModal = (props: Props) => {
 
                 {visibleFiles.length === 0 ? (
                   <div
-                    className={`alert alert-dark p-2 text-center ${styles.alert}`}
+                    className="alert alert-dark p-2 text-center"
                     role="alert"
                     aria-live="assertive"
                     aria-atomic="true"

@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import every from 'lodash/every';
-import React, { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 
 import API from '../../../../../api';
@@ -29,7 +29,7 @@ const UpdatePassword = () => {
   const [password, setPassword] = useState<Password>({ value: '', isValid: false });
   const [isValidated, setIsValidated] = useState(false);
 
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword({ value: e.target.value, isValid: e.currentTarget.checkValidity() });
   };
 

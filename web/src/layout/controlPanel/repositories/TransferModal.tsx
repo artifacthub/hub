@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 
 import API from '../../../api';
@@ -33,7 +33,7 @@ const TransferRepositoryModal = (props: Props) => {
   const [orgToTransfer, setOrgToTransfer] = useState<string | undefined>(undefined);
   const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
 
-  const handleOrgChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleOrgChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setOrgToTransfer(event.target.value || undefined);
   };
 

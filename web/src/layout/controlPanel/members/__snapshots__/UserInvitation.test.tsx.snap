@@ -16,13 +16,13 @@ exports[`UserInvitation creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content modal"
+          class="modal-content content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
           >
             <div
-              class="h6 text-uppercase mb-0 flex-grow-1"
+              class="h3 m-2 flex-grow-1 title"
             >
               Membership confirmation
             </div>

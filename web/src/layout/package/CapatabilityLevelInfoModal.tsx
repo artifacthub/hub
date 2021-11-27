@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 
 import Loading from '../common/Loading';

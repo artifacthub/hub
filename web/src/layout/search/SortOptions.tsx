@@ -1,5 +1,5 @@
 import { isNull } from 'lodash';
-import React, { useEffect, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 
 import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 import styles from './SortOptions.module.css';
@@ -16,7 +16,7 @@ const SORT_OPTS = [DEFAULT_SORT, 'stars'];
 const SortOptions = (props: Props) => {
   const selectEl = useRef<HTMLSelectElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     props.updateSort(event.target.value);
     forceBlur();
   };
@@ -45,7 +45,7 @@ const SortOptions = (props: Props) => {
         disabled={props.disabled}
       >
         {SORT_OPTS.map((value: string) => (
-          <option key={`sort_${value}`} value={value} className={styles.option}>
+          <option key={`sort_${value}`} value={value}>
             {capitalizeFirstLetter(value)}
           </option>
         ))}

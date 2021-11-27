@@ -1,5 +1,4 @@
 import { isEqual, isNull, isUndefined } from 'lodash';
-import React from 'react';
 
 import { OrganizationPolicy } from '../types';
 import isValidJSON from './isValidJSON';

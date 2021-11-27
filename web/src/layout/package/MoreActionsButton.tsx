@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isNull } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BiCode } from 'react-icons/bi';
 import { GoStop } from 'react-icons/go';
 import { HiDotsVertical } from 'react-icons/hi';

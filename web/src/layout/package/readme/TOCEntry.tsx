@@ -1,4 +1,4 @@
-import React from 'react';
+import { Dispatch, MouseEvent as ReactMouseEvent, SetStateAction } from 'react';
 
 import { TOCEntryItem } from '../../../types';
 import cleanTOCEntry from '../../../utils/cleanTOCEntry';
@@ -9,7 +9,7 @@ import styles from './TOCEntry.module.css';
 interface Props {
   entry: TOCEntryItem;
   level: number;
-  setVisibleTOC: React.Dispatch<React.SetStateAction<boolean>>;
+  setVisibleTOC: Dispatch<SetStateAction<boolean>>;
   scrollIntoView: (id?: string) => void;
 }
 
@@ -26,7 +26,7 @@ const TOCEntry = (props: Props) => {
           styles[`level${props.level}`]
         }`}
         href={`${history.location.pathname}#${link}`}
-        onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        onClick={(e: ReactMouseEvent<HTMLAnchorElement, MouseEvent>) => {
           e.preventDefault();
           e.stopPropagation();
           props.setVisibleTOC(false);

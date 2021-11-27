@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useEffect, useState } from 'react';
 import { IoMdCloseCircle } from 'react-icons/io';
 
 import useBodyScroll from '../../hooks/useBodyScroll';
@@ -49,7 +49,7 @@ const FullScreenModal = (props: Props) => {
         <button
           type="button"
           className={`close ${styles.close}`}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             closeModal();
           }}

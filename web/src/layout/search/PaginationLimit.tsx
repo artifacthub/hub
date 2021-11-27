@@ -1,5 +1,5 @@
 import { isNull } from 'lodash';
-import React, { useEffect, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 
 import { DEFAULT_SEARCH_LIMIT } from '../../utils/localStoragePreferences';
 import styles from './PaginationLimit.module.css';
@@ -15,7 +15,7 @@ const LIMIT_VALUES: number[] = [20, 40, 60];
 const PaginationLimit = (props: Props) => {
   const selectEl = useRef<HTMLSelectElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     props.updateLimit(parseInt(event.target.value));
     forceBlur();
   };

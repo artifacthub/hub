@@ -1,5 +1,5 @@
 import { sortBy } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FiExternalLink } from 'react-icons/fi';
 import { MdBusiness } from 'react-icons/md';
 

@@ -10,19 +10,9 @@
   font-size: 80%;
 }
 
-.dropdownMenu {
-  top: 25px;
-  left: -10px;
-  min-width: calc(100% + 20px);
-}
-
 .content {
   margin-top: 1px;
   min-width: 0px;
-}
-
-.arrow {
-  left: 5px;
 }
 
 .badge {

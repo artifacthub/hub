@@ -2,36 +2,6 @@
   min-height: 28px;
 }
 
-.seeAllbtn {
-  font-size: 80%;
-}
-
-.modal {
-  max-width: 80%;
-  width: 620px !important;
-}
-
-.table {
-  table-layout: fixed;
-}
-
-.table tbody {
-  background-color: var(--white);
-}
-
-.kindCell {
-  width: 50px;
-}
-
-.tableTitle:hover {
-  background-color: inherit !important;
-}
-
-.icon {
-  height: auto;
-  width: 21px;
-}
-
 .pkgIcon {
   top: -1px;
   min-width: 15px;
@@ -40,18 +10,4 @@
 
 .pkgIcon svg {
   min-width: 15px;
-}
-
-@media only screen and (min-width: 576px) {
-  .modalDialog {
-    max-width: 80% !important;
-    min-height: calc(100% - 10rem) !important;
-    max-height: calc(100% - 10rem) !important;
-    margin: 5rem auto !important;
-  }
-}
-@media only screen and (max-width: 767.98px) {
-  .title {
-    font-size: 1.25rem;
-  }
 }

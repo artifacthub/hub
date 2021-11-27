@@ -1,7 +1,7 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import { isArray, isEmpty, isNull, isString, isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { ActiveJSONSchemaValue } from '../../../types';
 import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
@@ -184,7 +184,7 @@ const SchemaLine = (props: Props) => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div className={`row position-relative ${styles.wrapper}`} data-testid="schemaLine">
         <div
           data-testid="lineContent"
@@ -228,7 +228,7 @@ const SchemaLine = (props: Props) => {
                 ((props.value.items! as JSONSchema).required as string[]).includes(propName);
             }
             return (
-              <React.Fragment key={`${props.name}_${propName}`}>
+              <Fragment key={`${props.name}_${propName}`}>
                 <SchemaLine
                   definitions={props.definitions}
                   value={currentValue}
@@ -242,12 +242,12 @@ const SchemaLine = (props: Props) => {
                   hasDecorator={isArrayParent && index === 0}
                   isArrayParent={isArrayParent}
                 />
-              </React.Fragment>
+              </Fragment>
             );
           })}
         </>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

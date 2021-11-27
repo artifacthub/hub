@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { get, isEmpty, isNull, isObject, isString } from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import { Dispatch, Fragment, memo, SetStateAction, useContext, useEffect, useState } from 'react';
 import regexifyString from 'regexify-string';
 
 import { AppCtx } from '../../../context/AppCtx';
@@ -12,7 +12,7 @@ import styles from './Template.module.css';
 
 interface Props {
   template: ChartTemplate;
-  setIsChangingTemplate: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingTemplate: Dispatch<SetStateAction<boolean>>;
   values?: any;
 }
 
@@ -145,7 +145,7 @@ const Template = (props: Props) => {
         {parts.map((word: string, idx: number) => {
           if (word === ')' || word === '|' || word.startsWith(`"`))
             return (
-              <React.Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
+              <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
                 <span
                   className={classnames(
                     'd-inline-flex',
@@ -155,15 +155,15 @@ const Template = (props: Props) => {
                 >
                   {word}
                 </span>{' '}
-              </React.Fragment>
+              </Fragment>
             );
           return (
-            <React.Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
+            <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
               {regexifyString({
                 pattern: SPECIAL_CHARACTERS,
                 decorator: (match, index) => {
                   return (
-                    <React.Fragment key={`helmTmplReg_${lineNumber}_${index}`}>
+                    <Fragment key={`helmTmplReg_${lineNumber}_${index}`}>
                       {(() => {
                         switch (processHelmTemplate(match)) {
                           case ChartTemplateSpecialType.BuiltInObject:
@@ -186,13 +186,13 @@ const Template = (props: Props) => {
                             return <>{word}</>;
                         }
                       })()}
-                    </React.Fragment>
+                    </Fragment>
                   );
                 },
                 input: word,
               })}
               {idx === parts.length - 1 ? '' : ' '}
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </span>
@@ -216,4 +216,4 @@ const Template = (props: Props) => {
   return <span data-testid="activeTmpl">{processActiveTemplate(activeTemplate.data)}</span>;
 };
 
-export default React.memo(Template);
+export default memo(Template);

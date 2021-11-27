@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 
 import { TsQuery as TsQueryType } from '../../types';
 import { TS_QUERY } from '../../utils/data';
@@ -20,7 +20,7 @@ const TsQuery = (props: Props) => {
     [props.active]
   );
 
-  const onTsQueryChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const onTsQueryChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value, checked } = e.target;
     props.onChange(value, checked);
   };

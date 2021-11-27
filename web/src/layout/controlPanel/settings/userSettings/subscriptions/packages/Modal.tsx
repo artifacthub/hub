@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { MdAddCircle, MdClose } from 'react-icons/md';
 
 import API from '../../../../../../api';

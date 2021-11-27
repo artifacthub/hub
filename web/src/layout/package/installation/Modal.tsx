@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
