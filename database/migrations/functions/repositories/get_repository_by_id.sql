@@ -8,20 +8,9 @@ returns setof json as $$
         'display_name', r.display_name,
         'url', r.url,
         'branch', r.branch,
-        'auth_user', (
-            case
-                when p_include_credentials then r.auth_user
-                -- If this logic is updated, it should be updated in update_repository as well
-                else (case when r.auth_user is not null then repeat('*', length(r.auth_user)) else null end)
-            end
-        ),
-        'auth_pass', (
-            case
-                when p_include_credentials then r.auth_pass
-                -- If this logic is updated, it should be updated in update_repository as well
-                else (case when r.auth_pass is not null then repeat('*', length(r.auth_pass)) else null end)
-            end
-        ),
+        'private', (case when r.auth_user is not null or r.auth_pass is not null then true else null end),
+        'auth_user', (case when p_include_credentials then r.auth_user else null end),
+        'auth_pass', (case when p_include_credentials then r.auth_pass else null end),
         'kind', r.repository_kind_id,
         'verified_publisher', verified_publisher,
         'official', r.official,

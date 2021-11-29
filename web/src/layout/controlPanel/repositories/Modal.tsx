@@ -50,6 +50,9 @@ const RepositoryModal = (props: Props) => {
   );
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [urlContainsTreeTxt, setUrlContainsTreeTxt] = useState<boolean>(false);
+  const [resetFields, setResetFields] = useState<boolean>(false);
+  const [authUser, setAuthUser] = useState<string | null>(props.repository ? props.repository.authUser || null : null);
+  const [authPass, setAuthPass] = useState<string | null>(props.repository ? props.repository.authPass || null : null);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsValidInput(e.target.value === props.repository!.name);
@@ -134,8 +137,14 @@ const RepositoryModal = (props: Props) => {
           displayName: formData.get('displayName') as string,
           disabled: isDisabled,
           scannerDisabled: isScannerDisabled,
-          authUser: formData.get('authUser') as string,
-          authPass: formData.get('authPass') as string,
+          authUser:
+            !isUndefined(props.repository) &&
+            props.repository.private &&
+            !resetFields &&
+            selectedKind === RepositoryKind.Helm
+              ? '='
+              : authUser,
+          authPass: !isUndefined(props.repository) && props.repository.private && !resetFields ? '=' : authPass,
         };
       }
       setIsValidated(true);
@@ -342,6 +351,72 @@ const RepositoryModal = (props: Props) => {
       default:
         return '^(https://([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$';
     }
+  };
+
+  const renderPrivateFields = (): JSX.Element => (
+    <>
+      {(() => {
+        switch (selectedKind) {
+          case RepositoryKind.Helm:
+            return (
+              <div className="form-row">
+                <InputField
+                  className="col-sm-12 col-md-6"
+                  type="text"
+                  label="Username"
+                  name="authUser"
+                  autoComplete="off"
+                  value={authUser || ''}
+                  onChange={onAuthUserChange}
+                />
+
+                <InputField
+                  className="col-sm-12 col-md-6"
+                  type="password"
+                  label="Password"
+                  name="authPass"
+                  autoComplete="new-password"
+                  value={authPass || ''}
+                  onChange={onAuthPassChange}
+                  visiblePassword
+                />
+              </div>
+            );
+
+          default:
+            return (
+              <div>
+                <InputField
+                  type="text"
+                  label="Authentication token"
+                  name="authPass"
+                  additionalInfo={
+                    <small className="text-muted text-break mt-1">
+                      <p className="mb-0">Authentication token used in private git based repositories.</p>
+                    </small>
+                  }
+                  value={authPass || ''}
+                  onChange={onAuthPassChange}
+                />
+              </div>
+            );
+        }
+      })()}
+    </>
+  );
+
+  const resetAuthFields = () => {
+    setResetFields(true);
+    setAuthPass(null);
+    setAuthUser(null);
+  };
+
+  const onAuthUserChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setAuthUser(e.target.value);
+  };
+
+  const onAuthPassChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setAuthPass(e.target.value);
   };
 
   return (
@@ -590,50 +665,34 @@ const RepositoryModal = (props: Props) => {
 
             {allowPrivateRepositories && (
               <>
-                {(() => {
-                  switch (selectedKind) {
-                    case RepositoryKind.Helm:
-                      return (
-                        <div className="form-row">
-                          <InputField
-                            className="col-sm-12 col-md-6"
-                            type="text"
-                            label="Username"
-                            name="authUser"
-                            autoComplete="off"
-                            value={props.repository ? props.repository.authUser || '' : ''}
-                          />
-
-                          <InputField
-                            className="col-sm-12 col-md-6"
-                            type="password"
-                            label="Password"
-                            name="authPass"
-                            autoComplete="new-password"
-                            value={props.repository ? props.repository.authPass || '' : ''}
-                            visiblePassword
-                          />
-                        </div>
-                      );
-
-                    default:
-                      return (
-                        <div>
-                          <InputField
-                            type="text"
-                            label="Authentication token"
-                            name="authPass"
-                            additionalInfo={
-                              <small className="text-muted text-break mt-1">
-                                <p className="mb-0">Authentication token used in private git based repositories.</p>
-                              </small>
-                            }
-                            value={props.repository ? props.repository.authPass || '' : ''}
-                          />
-                        </div>
-                      );
-                  }
-                })()}
+                {props.repository && props.repository.private ? (
+                  <>
+                    {!resetFields ? (
+                      <div className="mt-1 mb-4">
+                        <div className={`font-weight-bold mb-2 ${styles.label}`}>Credentials</div>
+                        <small>
+                          <p className="mb-0 text-muted text-break">
+                            This repository is private and has some credentials set. Current credentials cannot be
+                            viewed, but you can{' '}
+                            <button
+                              type="button"
+                              className={`btn btn-link btn-sm p-0 m-0 text-primary font-weight-bold position-relative d-inline-block ${styles.btnInline}`}
+                              onClick={resetAuthFields}
+                              aria-label="Reset credentials"
+                            >
+                              reset them
+                            </button>
+                            .
+                          </p>
+                        </small>
+                      </div>
+                    ) : (
+                      <>{renderPrivateFields()}</>
+                    )}
+                  </>
+                ) : (
+                  <>{renderPrivateFields()}</>
+                )}
               </>
             )}
 

@@ -50,15 +50,13 @@ begin
         branch = nullif(p_repository->>'branch', ''),
         auth_user = (
             case
-                -- If this logic is updated, it should be updated in get_repository_by_id as well
-                when (p_repository->>'auth_user' = repeat('*', length(v_auth_user))) then v_auth_user
+                when (p_repository->>'auth_user' = '=') then v_auth_user
                 else nullif(p_repository->>'auth_user', '')
             end
         ),
         auth_pass = (
             case
-                -- If this logic is updated, it should be updated in get_repository_by_id as well
-                when (p_repository->>'auth_pass' = repeat('*', length(v_auth_pass))) then v_auth_pass
+                when (p_repository->>'auth_pass' = '=') then v_auth_pass
                 else nullif(p_repository->>'auth_pass', '')
             end
         ),
