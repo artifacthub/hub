@@ -40,13 +40,13 @@ jobs:
   tests-database:
     runs-on: ubuntu-20.04
     container:
-      image: tegioz/db-tests
+      image: artifacthub/db-tests
     services:
       postgres:
-        image: tegioz/postgres-pgtap
+        image: artifacthub/postgres-pgtap
         env:
           POSTGRES_USER: tests
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: tests
           POSTGRES_DB: tests
         ports:
           - 5432:5432
@@ -58,10 +58,10 @@ jobs:
         working-directory: ./database/migrations
         run: TERN_CONF=../../../.github/workflows/tern.conf PGPORT=${{ job.services.postgres.ports[5432] }} ./migrate.sh
       - name: Install pgtap database extension
-        run: psql -h postgres -p ${{ job.services.postgres.ports[5432] }} -U tests tests -c 'create extension pgtap;'
+        run: PGPASSWORD=tests psql -h postgres -p ${{ job.services.postgres.ports[5432] }} -U tests tests -c 'create extension pgtap;'
       - name: Run database tests
         working-directory: ./database/tests
-        run: pg_prove --host postgres --dbname tests --username tests --verbose schema/*.sql functions/*/*.sql
+        run: PGPASSWORD=tests pg_prove --host postgres --dbname tests --username tests --verbose schema/*.sql functions/*/*.sql
 
   tests-backend:
     runs-on: ubuntu-20.04

@@ -73,7 +73,7 @@ hub_db_recreate_tests && hub_db_tests
 
 ### Docker
 
-If you opt for running PostgreSQL locally using Docker, [this Dockerfile](https://github.com/artifacthub/hub/blob/master/database/tests/Dockerfile-postgres-pgtap) used to build the images used by the [CI workflow](https://github.com/artifacthub/hub/blob/master/.github/workflows/ci.yml) can be helpful as a starting point. Image used by the CI workflow can be found in the Docker Hub as [tegioz/postgres-pgtap](https://hub.docker.com/r/tegioz/postgres-pgtap).
+If you opt for running PostgreSQL locally using Docker, [this Dockerfile](https://github.com/artifacthub/hub/blob/master/database/tests/Dockerfile-postgres-pgtap) used to build the images used by the [CI workflow](https://github.com/artifacthub/hub/blob/master/.github/workflows/ci.yml) can be helpful as a starting point. Image used by the CI workflow can be found in the Docker Hub as [artifacthub/postgres-pgtap](https://hub.docker.com/r/artifacthub/postgres-pgtap).
 
 ## Backend
 
