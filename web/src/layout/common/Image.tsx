@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { RepositoryKind } from '../../types';
 

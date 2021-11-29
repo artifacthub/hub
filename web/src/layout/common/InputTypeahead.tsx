@@ -1,6 +1,16 @@
 import classnames from 'classnames';
 import { compact, escapeRegExp, isNull, isUndefined, orderBy } from 'lodash';
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  forwardRef,
+  KeyboardEvent,
+  Ref,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { IoIosCheckmark, IoIosClose } from 'react-icons/io';
 
@@ -28,7 +38,7 @@ interface Props {
 
 const ITEM_HEIGHT = 37;
 
-const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeaheadField>) => {
+const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField>) => {
   const inputEl = useRef<HTMLInputElement>(null);
   const itemsWrapper = useRef<HTMLDivElement | null>(null);
   const [inputValue, setInputValue] = useState('');
@@ -135,7 +145,7 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
     setSelectedItems(getSelectedItems());
   }, [getSelectedItems, props.selected]);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -154,7 +164,7 @@ const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeahea
     }
   };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     switch (e.key) {
       case 'ArrowDown':
         updateHighlightedItem('down');

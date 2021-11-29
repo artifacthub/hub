@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 
 import { AuthorizerAction, Organization } from '../../../../../types';
@@ -38,7 +38,7 @@ const UpdateOrganization = (props: Props) => {
       <div className="mt-4">
         <ActionBtn
           className="btn btn-sm btn-outline-secondary"
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             submitForm();
           }}

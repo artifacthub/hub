@@ -1,6 +1,5 @@
 import isNull from 'lodash/isNull';
 import moment from 'moment';
-import React from 'react';
 import { FaCheck, FaExclamation, FaTimes } from 'react-icons/fa';
 import { GrConnect } from 'react-icons/gr';
 
@@ -34,7 +33,7 @@ const LastNotificationsModal = (props: Props) => {
         <div className="m-3">
           <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
             <thead>
-              <tr className={styles.tableTitle}>
+              <tr>
                 <th scope="col">Notification id</th>
                 <th scope="col">Created at</th>
                 <th scope="col">Processed</th>
@@ -75,7 +74,7 @@ const LastNotificationsModal = (props: Props) => {
 
               <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
                 <thead>
-                  <tr className={styles.tableTitle}>
+                  <tr>
                     <th scope="col">Notification id</th>
                     <th scope="col">Error</th>
                   </tr>

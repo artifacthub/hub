@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdClose, MdDone } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
@@ -55,9 +55,8 @@ const UserInvitation = (props: Props) => {
   return (
     <Modal
       data-testid="userInvitationModal"
-      header={<div className="h6 text-uppercase mb-0 flex-grow-1">Membership confirmation</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Membership confirmation</div>}
       disabledClose={isAccepting}
-      modalClassName={styles.modal}
       open={!isUndefined(orgToConfirm)}
     >
       <div

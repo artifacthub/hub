@@ -22,11 +22,6 @@
   bottom: 0px;
 }
 
-.lineNumber {
-  width: 25px;
-  font-size: 75%;
-}
-
 .line {
   word-break: break-word;
 }

@@ -1,5 +1,5 @@
 import { isUndefined, sampleSize } from 'lodash';
-import React, { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import getSampleQueries from '../../utils/getSampleQueries';
@@ -46,4 +46,4 @@ const SampleQueries = (props: Props) => {
   );
 };
 
-export default React.memo(SampleQueries);
+export default memo(SampleQueries);

@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Option, RefInputTypeaheadField } from '../../types';

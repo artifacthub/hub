@@ -1,5 +1,4 @@
 .link {
-  /* color: var(--gray-dark); */
   background-color: transparent;
   position: relative;
   top: -1px;
@@ -18,26 +17,6 @@
 
 .content {
   padding: 0.75rem 1.25rem;
-}
-
-.imageWrapper {
-  min-width: 30px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: var(--white);
-  border: 2px solid var(--color-1-10);
-  box-shadow: 0px 0px 5px 0px var(--color-1-20);
-}
-
-.image {
-  max-width: calc(100% - 2px);
-  max-height: calc(100% - 2px);
-  font-size: 1.5rem;
-}
-
-.description {
-  font-size: 0.75rem;
 }
 
 .labelContent {

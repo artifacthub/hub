@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';

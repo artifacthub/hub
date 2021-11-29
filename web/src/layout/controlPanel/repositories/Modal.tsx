@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useContext, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 
@@ -51,11 +51,11 @@ const RepositoryModal = (props: Props) => {
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [urlContainsTreeTxt, setUrlContainsTreeTxt] = useState<boolean>(false);
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsValidInput(e.target.value === props.repository!.name);
   };
 
-  const onUrlInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onUrlInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUrlContainsTreeTxt(e.target.value.includes('/tree/'));
   };
 
@@ -149,13 +149,13 @@ const RepositoryModal = (props: Props) => {
     });
   };
 
-  const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleOnReturnKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && !isNull(form)) {
       submitForm();
     }
   };
 
-  const handleKindChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleKindChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedKind(parseInt(event.target.value));
     // URL is validated when value has been entered previously
     if (urlInput.current!.getValue() !== '') {

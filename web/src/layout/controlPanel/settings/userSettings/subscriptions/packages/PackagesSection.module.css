@@ -46,14 +46,6 @@
   width: 21px;
 }
 
-.link u {
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
-}
-
 .legend {
   font-size: 85%;
 }

@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import React, { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { Channel, Repository } from '../../../types';
 import { OCI_PREFIX } from '../../../utils/data';
@@ -63,7 +63,7 @@ spec:
           className="custom-select custom-select-sm mb-1"
           aria-label="channel-select"
           value={activeChannel}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setActiveChannel(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => setActiveChannel(e.target.value)}
         >
           {props.channels!.map((channel: Channel) => (
             <option key={`channel_${channel.name}`} value={channel.name}>

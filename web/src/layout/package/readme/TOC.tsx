@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { BsFlagFill } from 'react-icons/bs';
 import { FaListUl } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';

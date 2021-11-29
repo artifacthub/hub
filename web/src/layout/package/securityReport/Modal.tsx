@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isEmpty, isNull, isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 

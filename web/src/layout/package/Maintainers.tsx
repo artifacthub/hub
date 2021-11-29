@@ -1,6 +1,5 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 import { GiEnvelope } from 'react-icons/gi';
 
 import { Maintainer } from '../../types';

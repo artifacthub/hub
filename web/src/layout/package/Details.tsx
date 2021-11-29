@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   Channel,

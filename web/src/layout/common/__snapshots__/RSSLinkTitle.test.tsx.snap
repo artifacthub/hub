@@ -16,7 +16,7 @@ exports[`RSSLinkTitle creates snapshot 1`] = `
     </div>
     <small>
       <a
-        class="badge badge-pill badge-secondary rssBadge ml-3 badge"
+        class="badge badge-pill badge-secondary rssBadge ml-3"
         href="/api/v1/packages/helm/stable/test/feed/rss"
         rel="alternate noopener noreferrer"
         role="button"

@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 

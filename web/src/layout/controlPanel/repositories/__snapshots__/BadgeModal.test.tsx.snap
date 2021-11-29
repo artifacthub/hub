@@ -16,7 +16,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content modal"
+          class="modal-content content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"

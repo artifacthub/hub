@@ -1,5 +1,4 @@
 import isNull from 'lodash/isNull';
-import React from 'react';
 
 import styles from './Counter.module.css';
 

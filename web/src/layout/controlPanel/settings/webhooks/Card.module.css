@@ -36,11 +36,6 @@
   font-size: 0.65rem;
 }
 
-.btnLight {
-  background-color: var(--color-1-20) !important;
-  border-color: var(--color-1-20) !important;
-}
-
 .badgeNoPackages {
   cursor: pointer;
 }
@@ -50,25 +45,7 @@
     padding: 1rem !important;
   }
 
-  .subtitle {
-    flex-direction: column !important;
-  }
-
   .badge {
     font-size: 0.6rem !important;
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .subtitle {
-    font-size: 0.95rem;
-  }
-}
-
-@media only screen and (max-width: 575.98px) {
-  .btn {
-    padding: 0.25em 0.4em;
-    font-size: 85%;
-    line-height: 1.05rem;
   }
 }

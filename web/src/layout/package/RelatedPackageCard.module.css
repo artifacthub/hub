@@ -1,15 +1,3 @@
-.card {
-  background-color: var(--white) !important;
-  box-shadow: 0px 0px 5px 0px var(--light);
-}
-
-@media (hover: hover) {
-  .card:hover {
-    border-color: var(--color-black-50);
-    box-shadow: 0px 0px 5px 0px var(--color-black-75);
-  }
-}
-
 .body {
   padding: 0.75rem 0.5em !important;
 }
@@ -29,12 +17,6 @@
   max-height: calc(100% - 1px);
 }
 
-.icon {
-  height: auto;
-  width: 14px;
-  max-height: 14px;
-}
-
 .link {
   color: var(--gray-dark);
   background-color: transparent;
@@ -42,12 +24,6 @@
 
 .link:hover {
   color: inherit;
-}
-
-.mx50 {
-  max-width: 50%;
-  text-align: left;
-  width: auto;
 }
 
 .title {
@@ -65,21 +41,12 @@
   font-size: 0.65rem;
 }
 
-.kind {
-  font-size: 0.8rem;
-}
-
 .legend {
   margin-bottom: 0.15rem;
 }
 
 .truncateWrapper {
   min-width: 0;
-}
-
-.starBadge {
-  background-color: var(--badge-bg);
-  border: 1px solid var(--gray);
 }
 
 .badge {

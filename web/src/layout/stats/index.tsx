@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useHistory } from 'react-router-dom';
 

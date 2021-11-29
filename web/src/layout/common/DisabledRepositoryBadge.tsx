@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaEyeSlash } from 'react-icons/fa';
 
 import Label from './Label';

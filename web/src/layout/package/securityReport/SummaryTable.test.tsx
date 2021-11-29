@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 
 import { SecurityReport } from '../../../types';
 import SummaryTable from './SummaryTable';

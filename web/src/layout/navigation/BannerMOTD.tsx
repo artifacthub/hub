@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isNull } from 'lodash';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import getMetaTag from '../../utils/getMetaTag';
 import styles from './BannerMOTD.module.css';

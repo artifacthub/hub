@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styles from './ContentInstall.module.css';
 
 const PrivateRepoWarning = () => (

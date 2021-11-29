@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { FaCaretDown, FaCaretRight, FaLink } from 'react-icons/fa';
 
 import { Vulnerability, VulnerabilitySeverity } from '../../../types';
@@ -14,7 +14,7 @@ interface Props {
   name: string;
   vulnerability: Vulnerability;
   isExpanded: boolean;
-  setVisibleVulnerability: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setVisibleVulnerability: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const SecurityCell = (props: Props) => {

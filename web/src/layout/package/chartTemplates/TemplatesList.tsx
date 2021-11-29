@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 import { ChartTemplate, ChartTmplTypeFile } from '../../../types';
@@ -17,7 +17,7 @@ const TemplatesList = (props: Props) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [visibleTemplates, setVisibleTemplates] = useState<ChartTemplate[]>(props.templates);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation();
     e.preventDefault();
 

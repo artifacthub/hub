@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isArray, isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ElementType, memo, useCallback, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -243,7 +243,7 @@ const checkCodeLanguage = (language: string | null): string => {
 };
 
 const Readme = (props: Props) => {
-  const Code: React.ElementType = ({ inline, className, children }: CodeProps) => {
+  const Code: ElementType = ({ inline, className, children }: CodeProps) => {
     const match = /language-(\w+)/.exec(className || '');
     if (inline) {
       return <code className={className}>{children}</code>;
@@ -256,7 +256,7 @@ const Readme = (props: Props) => {
     }
   };
 
-  const Image: React.ElementType = (data: ImageProps) => {
+  const Image: ElementType = (data: ImageProps) => {
     const img = useRef<HTMLImageElement>(null);
     const [error, setError] = useState<boolean>(false);
     const [isBigImage, setIsBigImage] = useState<boolean>(false);
@@ -287,7 +287,7 @@ const Readme = (props: Props) => {
   };
 
   // Only for external links and anchors
-  const Link: React.ElementType = (data: LinkProps) => {
+  const Link: ElementType = (data: LinkProps) => {
     const isContentImage =
       data.children && isArray(data.children) && data.children.length > 0 && !isUndefined(data.children[0].props)
         ? !isUndefined(data.children[0].props.src)
@@ -324,23 +324,23 @@ const Readme = (props: Props) => {
     }
   };
 
-  const Table: React.ElementType = (data: BasicProps) => (
+  const Table: ElementType = (data: BasicProps) => (
     <div className="mw-100 overflow-auto">
       <table>{data.children}</table>
     </div>
   );
 
-  const Paragraph: React.ElementType = (data: BasicProps) => {
+  const Paragraph: ElementType = (data: BasicProps) => {
     const isOneChild = data.children && isArray(data.children) && data.children.length === 1;
     if (isUndefined(data.children)) return null;
     return <p className={classnames({ 'd-block w-100 h-100': isOneChild }, styles.paragraph)}>{data.children}</p>;
   };
 
-  const Blockquote: React.ElementType = (data: BasicProps) => {
+  const Blockquote: ElementType = (data: BasicProps) => {
     return <blockquote className={`text-muted ${styles.quote}`}>{data.children}</blockquote>;
   };
 
-  const Heading: React.ElementType = (data: any) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
+  const Heading: ElementType = (data: any) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
 
   const isElementInView = (id: string) => {
     try {
@@ -351,7 +351,7 @@ const Readme = (props: Props) => {
     }
   };
 
-  const Pre: React.ElementType = (props: CodeProps) => {
+  const Pre: ElementType = (props: CodeProps) => {
     return <>{props.children}</>;
   };
 
@@ -382,7 +382,7 @@ const Readme = (props: Props) => {
   );
 };
 
-export default React.memo(Readme, (prevProps: Props, nextProps: Props) => {
+export default memo(Readme, (prevProps: Props, nextProps: Props) => {
   // Only refreshes when readme changes
   if (prevProps.readme !== nextProps.readme) {
     return false;

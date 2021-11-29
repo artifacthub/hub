@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { CgLastpass } from 'react-icons/cg';
 import { MdDone } from 'react-icons/md';
 
@@ -27,7 +27,7 @@ const ResetPassword = (props: Props) => {
   const [isSending, setIsSending] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const onResetPwdEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onResetPwdEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setResetPwdEmail(e.target.value);
   };
 

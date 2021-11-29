@@ -2,7 +2,15 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  MouseEvent as ReactMouseEvent,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { HiExclamation } from 'react-icons/hi';
@@ -39,7 +47,7 @@ interface ModalStatus {
 interface Props {
   repository: Repository;
   visibleModal?: string;
-  setModalStatus: React.Dispatch<React.SetStateAction<ModalStatus>>;
+  setModalStatus: Dispatch<SetStateAction<ModalStatus>>;
   onSuccess: () => void;
   onAuthError: () => void;
 }
@@ -345,7 +353,7 @@ const RepositoryCard = (props: Props) => {
 
                 <button
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     setBadgeModalStatus(true);
@@ -360,7 +368,7 @@ const RepositoryCard = (props: Props) => {
 
                 <ActionBtn
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     setTransferModalStatus(true);
@@ -376,7 +384,7 @@ const RepositoryCard = (props: Props) => {
 
                 <ActionBtn
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     props.setModalStatus({
@@ -395,7 +403,7 @@ const RepositoryCard = (props: Props) => {
 
                 <ActionBtn
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
                     setDeletionModalStatus(true);

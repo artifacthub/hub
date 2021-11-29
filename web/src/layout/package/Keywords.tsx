@@ -2,7 +2,6 @@ import { compact } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import uniq from 'lodash/uniq';
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { prepareQueryString } from '../../utils/prepareQueryString';

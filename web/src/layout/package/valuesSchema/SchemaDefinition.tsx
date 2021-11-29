@@ -1,7 +1,7 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, Fragment, MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from 'react';
 import { BsFillCaretDownFill, BsFillCaretRightFill } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -300,8 +300,8 @@ const SchemaDefinition = (props: Props) => {
                         <select
                           className={classnames('w-50', { 'my-2': def.title }, { 'mb-2': isUndefined(def.title) })}
                           value={props.def.active}
-                          onClick={(e: React.MouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
-                          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                          onClick={(e: ReactMouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
+                          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                             props.setValue({
                               ...props.def,
                               active: parseInt(e.target.value),
@@ -327,8 +327,8 @@ const SchemaDefinition = (props: Props) => {
                           <select
                             aria-label="Type selection"
                             value={activeType}
-                            onClick={(e: React.MouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
-                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                            onClick={(e: ReactMouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
+                            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                               setActiveType(e.target.value as string);
                               if (!props.isExpanded) {
                                 changeActivePath();
@@ -423,21 +423,21 @@ const SchemaDefinition = (props: Props) => {
                     <>
                       <div className="font-weight-bold mt-2 mb-1">Constraints</div>
                       {typeDef.map((keyword: KeywordProp) => (
-                        <React.Fragment key={keyword.label}>
+                        <Fragment key={keyword.label}>
                           {isArray(keyword.value) ? (
                             <>
                               <div className="d-flex flex-row">
                                 {keyword.value.map((subKeyword: KeywordProp) => (
-                                  <React.Fragment key={subKeyword.label}>
+                                  <Fragment key={subKeyword.label}>
                                     {getTypeSpecificKeyword(subKeyword, 'mr-3')}
-                                  </React.Fragment>
+                                  </Fragment>
                                 ))}
                               </div>
                             </>
                           ) : (
                             <>{getTypeSpecificKeyword(keyword)}</>
                           )}
-                        </React.Fragment>
+                        </Fragment>
                       ))}
                       <div>
                         <small className="text-muted text-uppercase">Enum</small>: {formatPropValue(def.enum)}

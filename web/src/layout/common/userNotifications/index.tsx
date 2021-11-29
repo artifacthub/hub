@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import { ElementType, useContext, useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { addNewDisplayedNotification, AppCtx, enabledDisplayedNotifications } from '../../../context/AppCtx';
@@ -14,14 +14,14 @@ interface HeadingProps {
   children?: JSX.Element[];
 }
 
-const Heading: React.ElementType = (data: HeadingProps) => {
+const Heading: ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   return <Tag className={`text-dark ${styles.header}`}>{data.children}</Tag>;
 };
 
 const ANIMATION_TIME = 300; //300ms
 
-const UserNotificationsController: React.ElementType = () => {
+const UserNotificationsController: ElementType = () => {
   const { dispatch, ctx } = useContext(AppCtx);
   const [notification, setNotification] = useState<UserNotification | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);

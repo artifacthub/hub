@@ -1,12 +1,12 @@
 import { isUndefined } from 'lodash';
-import React from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { TOCEntryItem } from '../../../types';
 import TOCEntry from './TOCEntry';
 
 interface Props {
   index?: number;
-  setVisibleTOC: React.Dispatch<React.SetStateAction<boolean>>;
+  setVisibleTOC: Dispatch<SetStateAction<boolean>>;
   toc: TOCEntryItem[];
   scrollIntoView: (id?: string) => void;
 }

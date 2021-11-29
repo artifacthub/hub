@@ -1,5 +1,4 @@
 import { isUndefined } from 'lodash';
-import React from 'react';
 
 import { Repository, RepositoryKind } from '../../../types';
 import CommandBlock from './CommandBlock';

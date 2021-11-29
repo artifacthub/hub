@@ -15,30 +15,6 @@
   padding: 1.75rem !important;
 }
 
-.legend {
-  font-size: 0.5rem;
-}
-
-.icon {
-  height: auto;
-  width: 18px;
-}
-
-.imageWrapper {
-  min-width: 60px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: var(--white);
-  border: 2px solid var(--color-1-10);
-  box-shadow: 0px 0px 5px 0px var(--color-1-20);
-}
-
-.image {
-  max-width: calc(100% - 8px);
-  max-height: calc(100% - 8px);
-}
-
 .link {
   color: var(--gray-dark);
   background-color: transparent;
@@ -48,55 +24,7 @@
   color: inherit;
 }
 
-.headerInfo {
-  margin: 0.35rem 1rem;
-}
-
-.title {
-  margin-top: -0.2rem;
-}
-
-.kind {
-  font-size: 0.75rem;
-  color: var(--color-1-500);
-}
-
-.description {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-}
-
-.truncateWrapper {
-  min-width: 0;
-}
-
-.starBadge {
-  font-size: 90%;
-  background-color: var(--color-1-5);
-  border: 1px solid var(--color-1-10);
-}
-
-.starBadgeNumber {
-  margin-bottom: 1px;
-}
-
-.date {
-  font-size: 70%;
-}
-
 @media only screen and (max-width: 767.98px) {
-  .imageWrapper {
-    min-width: 40px;
-    width: 40px;
-    height: 40px;
-  }
-
-  .image {
-    max-width: calc(100% - 4px);
-    max-height: calc(100% - 4px);
-  }
-
   .body {
     padding: 1rem !important;
   }

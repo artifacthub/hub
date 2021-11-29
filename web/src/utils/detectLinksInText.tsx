@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 
 const URL_REGEX = /(\bhttps?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi; // eslint-disable-line
 
@@ -10,7 +10,7 @@ const detectLinksInText = (text: string, linkClass?: string): JSX.Element => {
       <>
         {parts.map((part: string, index: number) => {
           return (
-            <React.Fragment key={`part_${index}`}>
+            <Fragment key={`part_${index}`}>
               {matches.includes(part) ? (
                 <>
                   <a
@@ -25,7 +25,7 @@ const detectLinksInText = (text: string, linkClass?: string): JSX.Element => {
               ) : (
                 <>{part} </>
               )}
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </>

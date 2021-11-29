@@ -38,13 +38,11 @@ exports[`Search index creates snapshot 1`] = `
                   disabled=""
                 >
                   <option
-                    class="option"
                     value="relevance"
                   >
                     Relevance
                   </option>
                   <option
-                    class="option"
                     value="stars"
                   >
                     Stars

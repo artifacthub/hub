@@ -1,5 +1,3 @@
-import React from 'react';
-
 import PackagesSection from './packages';
 import RepositoriesSection from './repositories';
 import styles from './SubscriptionsSection.module.css';

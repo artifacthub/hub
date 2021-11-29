@@ -1,4 +1,3 @@
-import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
@@ -30,7 +29,6 @@ const BadgeModal = (props: Props) => {
     <Modal
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Get badge</div>}
       open={props.open}
-      modalClassName={styles.modal}
       onClose={onCloseModal}
     >
       <div data-testid="badgeModalContent">

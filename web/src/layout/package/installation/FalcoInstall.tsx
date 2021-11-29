@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
 import PrivateRepoWarning from './PrivateRepoWarning';

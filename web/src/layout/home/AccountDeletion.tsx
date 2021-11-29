@@ -1,6 +1,6 @@
 import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CgUserRemove } from 'react-icons/cg';
 import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
@@ -61,7 +61,7 @@ const AccountDeletion = (props: Props) => {
   return (
     <Modal
       data-testid="accountDeletionModal"
-      header={<div className="h6 text-uppercase mb-0 flex-grow-1">Account deletion</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Account deletion</div>}
       disabledClose={deleting}
       modalClassName={styles.modal}
       open={!isUndefined(code)}

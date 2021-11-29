@@ -3,7 +3,7 @@ import every from 'lodash/every';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import { Dispatch, Fragment, SetStateAction, useContext, useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
@@ -494,7 +494,7 @@ const SearchView = (props: Props) => {
                     {Object.keys(props.filters).map((type: string) => {
                       const opts = props.filters![type];
                       return (
-                        <React.Fragment key={`opts_${type}`}>
+                        <Fragment key={`opts_${type}`}>
                           {opts.map((opt: string) => {
                             const filter = getFilterName(type, opt);
                             if (isNull(filter)) return null;
@@ -507,7 +507,7 @@ const SearchView = (props: Props) => {
                               />
                             );
                           })}
-                        </React.Fragment>
+                        </Fragment>
                       );
                     })}
                   </>

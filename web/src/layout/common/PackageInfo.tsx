@@ -1,5 +1,4 @@
 import moment from 'moment';
-import React from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 

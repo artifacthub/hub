@@ -2,7 +2,7 @@ import { isArray } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiCode, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';

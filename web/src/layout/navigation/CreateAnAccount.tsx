@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
-import React, { useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, forwardRef, SetStateAction, useRef, useState } from 'react';
 import { MdDone } from 'react-icons/md';
 
 import API from '../../api';
@@ -25,14 +25,14 @@ interface Password {
 
 interface Props {
   apiError: string | null;
-  setApiError: React.Dispatch<React.SetStateAction<string | null>>;
+  setApiError: Dispatch<SetStateAction<string | null>>;
   success: boolean;
-  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  setSuccess: Dispatch<SetStateAction<boolean>>;
   isLoading: Loading;
-  setIsLoading: React.Dispatch<React.SetStateAction<Loading>>;
+  setIsLoading: Dispatch<SetStateAction<Loading>>;
 }
 
-const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
+const CreateAnAccount = forwardRef<HTMLFormElement, Props>((props, ref) => {
   const usernameInput = useRef<RefInputField>(null);
   const emailInput = useRef<RefInputField>(null);
   const passwordInput = useRef<RefInputField>(null);
@@ -41,7 +41,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
   const [isValidatingField, setIsValidatingField] = useState(false);
   const [password, setPassword] = useState<Password>({ value: '', isValid: false });
 
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword({ value: e.target.value, isValid: e.currentTarget.checkValidity() });
   };
 
@@ -64,7 +64,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
     }
   }
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -149,7 +149,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
             data-testid="createAnAccountForm"
             className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
             onFocus={cleanApiError}
-            onSubmit={(e: React.FormEvent<HTMLFormElement>) => submitForm(e)}
+            onSubmit={(e: FormEvent<HTMLFormElement>) => submitForm(e)}
             autoComplete="on"
             noValidate
           >

@@ -3,7 +3,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { BiCrop, BiImageAlt } from 'react-icons/bi';
 import { MdAddAPhoto } from 'react-icons/md';
 import ReactCrop from 'react-image-crop';

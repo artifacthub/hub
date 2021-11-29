@@ -1,9 +1,9 @@
 import { isNull } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import { Dispatch, useCallback, useEffect, useState } from 'react';
 
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 
-export default function useSystemThemeMode(enabled: boolean, dispatch: React.Dispatch<any>) {
+export default function useSystemThemeMode(enabled: boolean, dispatch: Dispatch<any>) {
   const [mediaQuery, setMediaQuery] = useState<MediaQueryList | null>(null);
   const themeDarkModeFn = useCallback(() => {
     dispatch({ type: 'updateEffectiveTheme', theme: detectActiveThemeMode() });

@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { VscListTree } from 'react-icons/vsc';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';

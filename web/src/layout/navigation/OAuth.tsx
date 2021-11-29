@@ -1,4 +1,4 @@
-import React from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import cleanLoginUrlParams from '../../utils/cleanLoginUrlParams';
 import getMetaTag from '../../utils/getMetaTag';
@@ -12,7 +12,7 @@ interface Loading {
 interface Props {
   separatorClassName?: string;
   isLoading: Loading;
-  setIsLoading: React.Dispatch<React.SetStateAction<Loading>>;
+  setIsLoading: Dispatch<SetStateAction<Loading>>;
 }
 
 const GITHUB_LOGO = '/static/media/github-mark.svg';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import DisableTwoFactorAuthenticationModal from './DisableModal';
 import EnableTwoFactorAuthenticationModal from './EnableModal';
 

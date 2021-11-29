@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdBusiness } from 'react-icons/md';
 
 import { Organization } from '../../../types';

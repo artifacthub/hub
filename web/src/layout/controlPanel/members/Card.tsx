@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaSignOutAlt, FaUser, FaUserMinus } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -103,7 +103,7 @@ const MemberCard = (props: Props) => {
               <>
                 {modalStatus && (
                   <Modal
-                    className={`d-inline-block ${styles.modal}`}
+                    className="d-inline-block"
                     closeButton={
                       <>
                         <button
@@ -171,12 +171,12 @@ const MemberCard = (props: Props) => {
                       show: dropdownMenuStatus,
                     })}
                   >
-                    <div className={`arrow ${styles.arrow}`} />
+                    <div className="arrow" />
 
                     {isUser ? (
                       <button
                         className="dropdown-item btn btn-sm rounded-0 text-dark"
-                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                           e.preventDefault();
                           closeDropdown();
                           setModalStatus(true);
@@ -191,7 +191,7 @@ const MemberCard = (props: Props) => {
                     ) : (
                       <ActionBtn
                         className="dropdown-item btn btn-sm rounded-0 text-dark"
-                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                           e.preventDefault();
                           closeDropdown();
                           setModalStatus(true);

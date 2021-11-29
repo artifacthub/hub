@@ -27,11 +27,6 @@
   max-height: calc(100% - 5px);
 }
 
-.icon {
-  height: auto;
-  width: 18px;
-}
-
 .link {
   color: var(--gray-dark);
   background-color: transparent;
@@ -43,12 +38,6 @@
 
 .mx50 {
   max-width: 50%;
-  text-align: left;
-  width: auto;
-}
-
-.mx100 {
-  max-width: 90%;
   text-align: left;
   width: auto;
 }

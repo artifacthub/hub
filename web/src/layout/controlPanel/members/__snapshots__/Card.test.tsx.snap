@@ -58,7 +58,7 @@ exports[`Member Card - members section creates snapshot 1`] = `
               class="dropdown-menu dropdown-menu-right p-0 dropdownMenu"
             >
               <div
-                class="arrow arrow"
+                class="arrow"
               />
               <span
                 class="position-relative"

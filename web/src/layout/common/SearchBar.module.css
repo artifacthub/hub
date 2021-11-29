@@ -76,12 +76,6 @@
   min-width: 0;
 }
 
-.mx50 {
-  max-width: 50%;
-  text-align: left;
-  width: auto;
-}
-
 .title {
   font-size: 0.95rem;
   line-height: 1.2;

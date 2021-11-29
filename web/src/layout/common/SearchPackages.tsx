@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import React, { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 
 import API from '../../api';
@@ -58,7 +58,7 @@ const SearchPackages = (props: Props) => {
     }
   }
 
-  const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     switch (e.key) {
       case 'Escape':
         cleanSearch();
@@ -111,7 +111,7 @@ const SearchPackages = (props: Props) => {
     setHighlightedItem(null);
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     if (packages) {
       setPackages(null);

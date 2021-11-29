@@ -1,6 +1,6 @@
 import { isObject, isString } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
+import { ElementType, MouseEvent as ReactMouseEvent } from 'react';
 import { GoLink } from 'react-icons/go';
 
 import getAnchorValue from '../../utils/getAnchorValue';
@@ -14,7 +14,7 @@ interface Props {
   scrollIntoView: (id?: string) => void;
 }
 
-const AnchorHeader: React.ElementType = (props: Props) => {
+const AnchorHeader: ElementType = (props: Props) => {
   let value = props.title;
   if (isUndefined(value) && props.children && props.children.length > 0) {
     const allContentValues = props.children.map((n: any) => {
@@ -40,7 +40,7 @@ const AnchorHeader: React.ElementType = (props: Props) => {
         <div data-testid="anchor" className={`position-absolute ${styles.headerAnchor}`} id={anchor} />
         <a
           href={`${history.location.pathname}#${anchor}`}
-          onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+          onClick={(e: ReactMouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
             e.stopPropagation();
             props.scrollIntoView(`#${anchor}`);

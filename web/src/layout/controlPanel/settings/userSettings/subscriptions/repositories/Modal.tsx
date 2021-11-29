@@ -92,7 +92,7 @@ const OptOutModal = (props: Props) => {
   const getPublisher = (repo: Repository) => (
     <small className="ml-0 ml-sm-2">
       <span className="d-none d-sm-inline">(</span>
-      <small className={`d-none d-md-inline text-muted mr-1 text-uppercase ${styles.legend}`}>Publisher: </small>
+      <small className="d-none d-md-inline text-muted mr-1 text-uppercase">Publisher: </small>
       <div className={`d-inline mr-1 ${styles.tinyIcon}`}>{repo.userAlias ? <FaUser /> : <MdBusiness />}</div>
       <span>{repo.userAlias || repo.organizationDisplayName || repo.organizationName}</span>
       <span className="d-none d-sm-inline">)</span>
@@ -183,7 +183,7 @@ const OptOutModal = (props: Props) => {
 
                     <div className="ml-2 mr-2 mr-sm-0 font-weight-bold mb-0 text-truncate">
                       {repoItem.name}
-                      <span className={`d-inline d-sm-none ${styles.legend}`}>
+                      <span className="d-inline d-sm-none">
                         <span className="mx-2">/</span>
                         {getPublisher(repoItem)}
                       </span>

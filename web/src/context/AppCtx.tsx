@@ -1,6 +1,6 @@
 import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
-import React, { createContext, useContext, useEffect, useReducer, useState } from 'react';
+import { createContext, Dispatch, useContext, useEffect, useReducer, useState } from 'react';
 
 import API from '../api';
 import useSystemThemeMode from '../hooks/useSystemThemeMode';
@@ -41,7 +41,7 @@ type Action =
 
 export const AppCtx = createContext<{
   ctx: AppState;
-  dispatch: React.Dispatch<any>;
+  dispatch: Dispatch<any>;
 }>({
   ctx: initialState,
   dispatch: () => null,
@@ -83,7 +83,7 @@ export function addNewDisplayedNotification(id: string) {
   return { type: 'addNewDisplayedNotification', id };
 }
 
-export async function refreshUserProfile(dispatch: React.Dispatch<any>, redirectUrl?: string) {
+export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: string) {
   try {
     const profile: Profile = await API.getUserProfile();
     dispatch({ type: 'signIn', profile });

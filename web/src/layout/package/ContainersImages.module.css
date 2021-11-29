@@ -6,10 +6,6 @@
   background-color: var(--white);
 }
 
-.fitCell {
-  width: 1%;
-}
-
 .tableTitle:hover {
   background-color: inherit !important;
 }
@@ -29,12 +25,6 @@
 .copyBtn {
   position: relative;
   top: -2px;
-}
-
-.textWrapper {
-  table-layout: fixed;
-  font-size: 90%;
-  line-height: 1.75rem;
 }
 
 .badgesWrapper {

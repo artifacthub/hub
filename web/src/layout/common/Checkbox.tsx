@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 
 import styles from './Checkbox.module.css';
 

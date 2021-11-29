@@ -1,5 +1,4 @@
 import { isUndefined } from 'lodash';
-import React from 'react';
 
 import { VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';

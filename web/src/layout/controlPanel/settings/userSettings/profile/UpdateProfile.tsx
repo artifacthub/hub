@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 
 import API from '../../../../../api';

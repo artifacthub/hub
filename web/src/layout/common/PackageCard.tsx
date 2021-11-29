@@ -1,5 +1,4 @@
 import isUndefined from 'lodash/isUndefined';
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Package, SearchFiltersURL } from '../../types';

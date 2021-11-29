@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -109,7 +109,7 @@ const APIKeyModal = (props: Props) => {
     return { isValid, apiKey };
   };
 
-  const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleOnReturnKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && form) {
       event.preventDefault();
       event.stopPropagation();

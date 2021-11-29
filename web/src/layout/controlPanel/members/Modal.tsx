@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import { KeyboardEvent, useContext, useRef, useState } from 'react';
 import { MdAddCircle } from 'react-icons/md';
 
 import API from '../../../api';
@@ -92,7 +92,7 @@ const MemberModal = (props: Props) => {
     });
   };
 
-  const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleOnReturnKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && !isNull(form)) {
       event.preventDefault();
       event.stopPropagation();

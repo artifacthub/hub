@@ -1,7 +1,7 @@
 import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import merger from 'json-schema-merge-allof';
 import { isUndefined } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
 

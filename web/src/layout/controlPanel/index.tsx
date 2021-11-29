@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { AppCtx, signOut, unselectOrg, updateOrg } from '../../context/AppCtx';

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import { AiOutlineColumnWidth } from 'react-icons/ai';
 import { BsArrowsFullscreen } from 'react-icons/bs';
@@ -17,7 +17,7 @@ import styles from './WidgetsGroupModal.module.css';
 
 interface Props {
   visibleWidget: boolean;
-  setOpenStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenStatus: Dispatch<SetStateAction<boolean>>;
 }
 
 interface RadioProps {
@@ -61,7 +61,7 @@ const WidgetsGroupModal = (props: Props) => {
   const [groupWrapperWidthOpt, setGroupWrapperWidthOpt] = useState<string>(DEFAULT_WRAPPER_OPTION);
   const [isValidCode, setIsValidCode] = useState<boolean>(true);
 
-  const onFixedWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFixedWidthChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFixedWidth(e.target.value);
     widthInput.current!.checkIsValid().then((res: boolean) => {
       setIsValidCode(res);

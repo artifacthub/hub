@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { FaLink } from 'react-icons/fa';
 
 import styles from './Btns.module.css';

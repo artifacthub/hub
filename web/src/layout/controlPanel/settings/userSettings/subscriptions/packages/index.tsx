@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
@@ -153,7 +153,7 @@ const PackagesSection = (props: Props) => {
         </div>
       </div>
 
-      <div className={`mx-auto mt-3 mt-md-3 ${styles.wrapper}`}>
+      <div className="mx-auto mt-3 mt-md-3">
         <p className="m-0">
           You will receive an email notification when an event that matches any of the subscriptions in the list is
           fired.

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { MdBusiness, MdClose } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
@@ -42,7 +42,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
   const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
   const [repoItem, setRepoItem] = useState<Repository | null>(null);
 
-  const handleOrgChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleOrgChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setClaimingOrg(event.target.value);
     setSelectedClaimOption(event.target.value === '' ? 'user' : 'org');
   };

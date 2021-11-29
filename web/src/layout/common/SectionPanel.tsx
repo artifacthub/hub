@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { AuthorizerAction, Section } from '../../types';
@@ -69,7 +69,7 @@ const SectionPanel = (props: Props) => {
                           <ActionBtn
                             className={className}
                             contentClassName="flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
-                            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                               e.preventDefault();
                               history.push(`${props.pathPrefix || ''}/${section.name}`);
                             }}

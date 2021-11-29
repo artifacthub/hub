@@ -1,4 +1,3 @@
-import React from 'react';
 import { IoMdCloseCircle } from 'react-icons/io';
 
 import styles from './FilterBadge.module.css';
@@ -13,7 +12,7 @@ const FilterBadge = (props: Props) => {
   return (
     <div className={`badge badge-light badge-pill mr-2 mb-2 p-0 pl-2 ${styles.badgeFilter}`}>
       <div className="d-flex flex-row align-items-center">
-        <div className={`position-relative ${styles.badgeContent}`}>
+        <div className="position-relative">
           {props.type && <small className="mr-1 text-uppercase">{props.type}:</small>}
           {props.name}
         </div>

@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { FaEnvelope } from 'react-icons/fa';
 
 import Modal from '../common/Modal';
@@ -15,7 +15,7 @@ interface Loading {
 
 interface Props {
   openSignUp: boolean;
-  setOpenSignUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSignUp: Dispatch<SetStateAction<boolean>>;
 }
 
 const SignUp = (props: Props) => {
@@ -68,7 +68,7 @@ const SignUp = (props: Props) => {
 
   return (
     <Modal
-      header={<div className="h3 m-2 flex-grow-1">Sign up</div>}
+      header={<div className={`h3 m-2 flex-grow-1 text-truncate ${styles.title}`}>Sign up</div>}
       modalClassName={styles.modal}
       open={props.openSignUp}
       onClose={onCloseModal}

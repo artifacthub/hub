@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { isNumber } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 

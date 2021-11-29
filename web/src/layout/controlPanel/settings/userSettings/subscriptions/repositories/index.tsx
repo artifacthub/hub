@@ -1,5 +1,5 @@
 import { groupBy, isUndefined } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness } from 'react-icons/md';

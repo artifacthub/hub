@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 

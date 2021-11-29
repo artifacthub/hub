@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { EventKind, OptOutItem, Repository } from '../../../../../../types';
 import styles from '../SubscriptionsSection.module.css';

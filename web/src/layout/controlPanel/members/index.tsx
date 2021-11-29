@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
@@ -130,7 +130,7 @@ const MembersSection = (props: Props) => {
               <ActionBtn
                 className={`btn btn-outline-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 contentClassName="justify-content-center"
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
                   setModalMemberOpen(true);
                 }}

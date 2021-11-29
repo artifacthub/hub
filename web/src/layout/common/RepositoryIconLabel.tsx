@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { RepositoryKind } from '../../types';

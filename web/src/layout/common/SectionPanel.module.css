@@ -1,11 +1,3 @@
-.listTitle {
-  background-color: var(--color-1-5) !important;
-}
-
-.packagesList {
-  min-width: 0;
-}
-
 .listItem {
   z-index: 1;
   color: var(--color-font);
