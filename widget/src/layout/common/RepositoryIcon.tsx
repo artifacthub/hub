@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { RepositoryKind } from '../../types';
 import SVGIcons from './SVGIcons';
 

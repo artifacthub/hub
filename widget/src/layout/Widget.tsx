@@ -1,6 +1,6 @@
 import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import API from '../api';
