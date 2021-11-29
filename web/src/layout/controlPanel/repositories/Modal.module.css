@@ -33,6 +33,12 @@
   transform-origin: center bottom;
 }
 
+.btnInline {
+  line-height: 1rem;
+  font-size: 0.8rem;
+  top: -1px;
+}
+
 @keyframes bounce {
   from,
   20%,

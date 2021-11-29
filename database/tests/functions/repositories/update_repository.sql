@@ -135,8 +135,8 @@ select update_repository(:'user1ID', '
     "display_name": "Repo 1 updated",
     "url": "https://repo1.com/updated",
     "branch": "main",
-    "auth_user": "*****",
-    "auth_pass": "*****",
+    "auth_user": "=",
+    "auth_pass": "=",
     "disabled": true,
     "scanner_disabled": false
 }
@@ -160,8 +160,8 @@ select update_repository(:'user1ID', '
     "display_name": "Repo 1 updated",
     "url": "https://repo1.com/updated",
     "branch": "main",
-    "auth_user": "****",
-    "auth_pass": "*****",
+    "auth_user": "updated",
+    "auth_pass": "=",
     "disabled": true,
     "scanner_disabled": false
 }
@@ -173,7 +173,7 @@ select results_eq(
         where name = 'repo1'
     $$,
     $$
-        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', '****', 'pass1', true, null)
+        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', 'updated', 'pass1', true, null)
     $$,
     'Repository credentials should have been updated (username updated)'
 );

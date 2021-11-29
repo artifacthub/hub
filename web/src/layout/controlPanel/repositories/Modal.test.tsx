@@ -33,6 +33,18 @@ const repoMock: Repository = {
   authPass: null,
 };
 
+const repoMock1: Repository = {
+  kind: 1,
+  name: 'repoTest',
+  displayName: 'Repo test',
+  url: 'https://github.com/repo/test',
+  branch: '',
+  disabled: false,
+  scannerDisabled: false,
+  authUser: null,
+  authPass: null,
+};
+
 const mockCtx = {
   user: { alias: 'test', email: 'test@test.com', passwordSet: true },
   prefs: {
@@ -632,37 +644,278 @@ describe('Repository Modal - repositories section', () => {
         expect(onSuccessMock).toHaveBeenCalledTimes(1);
       });
 
-      it('calls update repository for Helm charts', async () => {
-        Object.defineProperty(document, 'querySelector', {
-          value: () => ({
-            getAttribute: () => 'true',
-          }),
-          writable: true,
+      describe('Update repo with credentials', () => {
+        it('when not reset credentials', async () => {
+          Object.defineProperty(document, 'querySelector', {
+            value: () => ({
+              getAttribute: () => 'true',
+            }),
+            writable: true,
+          });
+
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+          render(<Modal {...defaultProps} repository={{ ...repoMock, private: true }} />);
+
+          expect(screen.getByText('Update repository')).toBeInTheDocument();
+          expect(screen.getByText('Update')).toBeInTheDocument();
+
+          expect(
+            screen.getByText(
+              /This repository is private and has some credentials set\. Current credentials cannot be viewed, but you can/
+            )
+          ).toBeInTheDocument();
+
+          const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
+          expect(resetBtn).toBeInTheDocument();
+
+          userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
+          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+
+          await waitFor(() => {
+            expect(API.updateRepository).toHaveBeenCalledTimes(1);
+            expect(API.updateRepository).toHaveBeenCalledWith(
+              {
+                ...repoMock,
+                displayName: 'Repo test1',
+                authUser: '=',
+                authPass: '=',
+              },
+              undefined
+            );
+          });
+
+          expect(onSuccessMock).toHaveBeenCalledTimes(1);
         });
 
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).updateRepository.mockResolvedValue(null);
-        render(<Modal {...defaultProps} repository={{ ...repoMock, authUser: 'username', authPass: 'pass123' }} />);
+        it('when reset credentials with empty values', async () => {
+          Object.defineProperty(document, 'querySelector', {
+            value: () => ({
+              getAttribute: () => 'true',
+            }),
+            writable: true,
+          });
 
-        expect(screen.getByText('Update repository')).toBeInTheDocument();
-        expect(screen.getByText('Update')).toBeInTheDocument();
-        userEvent.type(screen.getByTestId('authPassInput'), '4');
-        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+          render(<Modal {...defaultProps} repository={{ ...repoMock, private: true }} />);
 
-        await waitFor(() => {
-          expect(API.updateRepository).toHaveBeenCalledTimes(1);
-          expect(API.updateRepository).toHaveBeenCalledWith(
-            {
-              ...repoMock,
-              authUser: 'username',
-              authPass: 'pass1234',
-            },
-            undefined
-          );
+          expect(screen.getByText('Update repository')).toBeInTheDocument();
+          expect(screen.getByText('Update')).toBeInTheDocument();
+
+          expect(
+            screen.getByText(
+              /This repository is private and has some credentials set\. Current credentials cannot be viewed, but you can/
+            )
+          ).toBeInTheDocument();
+
+          const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
+          expect(resetBtn).toBeInTheDocument();
+
+          userEvent.click(resetBtn);
+          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+
+          await waitFor(() => {
+            expect(API.updateRepository).toHaveBeenCalledTimes(1);
+            expect(API.updateRepository).toHaveBeenCalledWith(
+              {
+                ...repoMock,
+                authUser: null,
+                authPass: null,
+              },
+              undefined
+            );
+          });
+
+          expect(onSuccessMock).toHaveBeenCalledTimes(1);
         });
 
-        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        it('when reset credentials with new values', async () => {
+          Object.defineProperty(document, 'querySelector', {
+            value: () => ({
+              getAttribute: () => 'true',
+            }),
+            writable: true,
+          });
+
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+          render(<Modal {...defaultProps} repository={{ ...repoMock, private: true }} />);
+
+          expect(screen.getByText('Update repository')).toBeInTheDocument();
+          expect(screen.getByText('Update')).toBeInTheDocument();
+
+          expect(
+            screen.getByText(
+              /This repository is private and has some credentials set\. Current credentials cannot be viewed, but you can/
+            )
+          ).toBeInTheDocument();
+
+          const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
+          expect(resetBtn).toBeInTheDocument();
+
+          userEvent.click(resetBtn);
+
+          userEvent.type(screen.getByTestId('authUserInput'), 'new-user');
+          userEvent.type(screen.getByTestId('authPassInput'), 'new-pass');
+
+          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+
+          await waitFor(() => {
+            expect(API.updateRepository).toHaveBeenCalledTimes(1);
+            expect(API.updateRepository).toHaveBeenCalledWith(
+              {
+                ...repoMock,
+                authUser: 'new-user',
+                authPass: 'new-pass',
+              },
+              undefined
+            );
+          });
+
+          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        });
+
+        it('when credentials with token pass after resetting pass', async () => {
+          Object.defineProperty(document, 'querySelector', {
+            value: () => ({
+              getAttribute: () => 'true',
+            }),
+            writable: true,
+          });
+
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+          render(<Modal {...defaultProps} repository={{ ...repoMock1, private: true }} />);
+
+          expect(screen.getByText('Update repository')).toBeInTheDocument();
+          expect(screen.getByText('Update')).toBeInTheDocument();
+
+          expect(
+            screen.getByText(
+              /This repository is private and has some credentials set\. Current credentials cannot be viewed, but you can/
+            )
+          ).toBeInTheDocument();
+
+          const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
+          expect(resetBtn).toBeInTheDocument();
+
+          userEvent.click(resetBtn);
+
+          expect(screen.getByText('Authentication token')).toBeInTheDocument();
+          expect(screen.getByText('Authentication token used in private git based repositories.')).toBeInTheDocument();
+
+          userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
+          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+
+          await waitFor(() => {
+            expect(API.updateRepository).toHaveBeenCalledTimes(1);
+            expect(API.updateRepository).toHaveBeenCalledWith(
+              {
+                ...repoMock1,
+                displayName: 'Repo test1',
+                authUser: null,
+                authPass: null,
+              },
+              undefined
+            );
+          });
+
+          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        });
+
+        it('when credentials with same token pass', async () => {
+          Object.defineProperty(document, 'querySelector', {
+            value: () => ({
+              getAttribute: () => 'true',
+            }),
+            writable: true,
+          });
+
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+          render(<Modal {...defaultProps} repository={{ ...repoMock1, private: true }} />);
+
+          expect(screen.getByText('Update repository')).toBeInTheDocument();
+          expect(screen.getByText('Update')).toBeInTheDocument();
+
+          expect(
+            screen.getByText(
+              /This repository is private and has some credentials set\. Current credentials cannot be viewed, but you can/
+            )
+          ).toBeInTheDocument();
+
+          userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
+          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+
+          await waitFor(() => {
+            expect(API.updateRepository).toHaveBeenCalledTimes(1);
+            expect(API.updateRepository).toHaveBeenCalledWith(
+              {
+                ...repoMock1,
+                displayName: 'Repo test1',
+                authUser: null,
+                authPass: '=',
+              },
+              undefined
+            );
+          });
+
+          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        });
+
+        it('when credentials with token pass after resetting pass and add a new pass', async () => {
+          Object.defineProperty(document, 'querySelector', {
+            value: () => ({
+              getAttribute: () => 'true',
+            }),
+            writable: true,
+          });
+
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+          render(<Modal {...defaultProps} repository={{ ...repoMock1, private: true }} />);
+
+          expect(screen.getByText('Update repository')).toBeInTheDocument();
+          expect(screen.getByText('Update')).toBeInTheDocument();
+
+          expect(
+            screen.getByText(
+              /This repository is private and has some credentials set\. Current credentials cannot be viewed, but you can/
+            )
+          ).toBeInTheDocument();
+
+          const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
+          expect(resetBtn).toBeInTheDocument();
+
+          userEvent.click(resetBtn);
+
+          expect(screen.getByText('Authentication token')).toBeInTheDocument();
+          expect(screen.getByText('Authentication token used in private git based repositories.')).toBeInTheDocument();
+
+          userEvent.type(screen.getByTestId('authPassInput'), 'new-pass');
+          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+
+          await waitFor(() => {
+            expect(API.updateRepository).toHaveBeenCalledTimes(1);
+            expect(API.updateRepository).toHaveBeenCalledWith(
+              {
+                ...repoMock1,
+                authUser: null,
+                authPass: 'new-pass',
+              },
+              undefined
+            );
+          });
+
+          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        });
       });
     });
   });
