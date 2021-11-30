@@ -1,0 +1,4 @@
+contact_links:
+  - name: Question or support request
+    url: https://github.com/artifacthub/hub/discussions/new
+    about: Question or support request relating to Artifact Hub
