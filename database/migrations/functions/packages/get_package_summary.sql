@@ -35,6 +35,9 @@ begin
         'signatures', s.signatures,
         'security_report_summary', s.security_report_summary,
         'all_containers_images_whitelisted', are_all_containers_images_whitelisted(s.containers_images),
+        'production_organizations_count', (select nullif(
+            (select count(*) from production_usage where package_id = v_package_id), 0
+        )),
         'ts', floor(extract(epoch from s.ts)),
         'repository', (select get_repository_summary(r.repository_id))
     ))

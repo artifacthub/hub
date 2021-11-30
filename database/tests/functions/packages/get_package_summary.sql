@@ -57,6 +57,7 @@ insert into snapshot (
     '{"high": 2, "medium": 1}',
     '2020-06-16 11:20:34+02'
 );
+insert into production_usage (package_id, organization_id) values(:'package1ID', :'org1ID');
 
 -- Run some tests
 select is(
@@ -83,6 +84,7 @@ select is(
             "medium": 1
         },
         "all_containers_images_whitelisted": true,
+        "production_organizations_count": 1,
         "ts": 1592299234,
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -125,6 +127,7 @@ select is(
             "medium": 1
         },
         "all_containers_images_whitelisted": true,
+        "production_organizations_count": 1,
         "ts": 1592299234,
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
