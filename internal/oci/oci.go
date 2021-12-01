@@ -51,14 +51,20 @@ func (p *Puller) PullLayer(
 			}),
 		)
 	}
-	store := content.NewMemoryStore()
-	_, layers, err := oras.Pull(
+	registryStore := content.Registry{Resolver: docker.NewResolver(resolverOptions)}
+	memoryStore := content.NewMemory()
+	var layers []ocispec.Descriptor
+	_, err := oras.Copy(
 		ctxo.WithLoggerDiscarded(ctx),
-		docker.NewResolver(resolverOptions),
+		registryStore,
 		ref,
-		store,
+		memoryStore,
+		"",
 		oras.WithPullEmptyNameAllowed(),
 		oras.WithAllowedMediaTypes([]string{mediaType}),
+		oras.WithLayerDescriptors(func(l []ocispec.Descriptor) {
+			layers = l
+		}),
 	)
 	if err != nil {
 		if strings.HasSuffix(err.Error(), "not found") { // TODO: https://github.com/oras-project/oras-go/blob/a3ccc872651aac656c04c9a231423161f98e2f64/pkg/content/multireader.go#L55
@@ -70,7 +76,7 @@ func (p *Puller) PullLayer(
 	// Return requested layer (if available)
 	for _, layer := range layers {
 		if layer.MediaType == mediaType {
-			desc, data, _ := store.Get(layer)
+			desc, data, _ := memoryStore.Get(layer)
 			return desc, data, nil
 		}
 	}
