@@ -83,7 +83,7 @@ type SecurityReportRaw = {
 };
 
 class API_CLASS {
-  private EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples'];
+  private EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples', 'crds_examples'];
   private HEADERS = {
     csrf: 'X-Csrf-Token',
     sessionApproved: 'X-Session-Approved',
@@ -96,13 +96,12 @@ class API_CLASS {
     if (isArray(r)) {
       return r.map((v) => this.toCamelCase(v));
     } else if (isObject(r)) {
-      return Object.keys(r).reduce(
-        (result, key) => ({
+      return Object.keys(r).reduce((result, key) => {
+        return {
           ...result,
           [camelCase(key)]: this.EXCEPTIONS.includes(key) ? (r as Result)[key] : this.toCamelCase((r as Result)[key]),
-        }),
-        {}
-      );
+        };
+      }, {});
     }
     return r;
   }
