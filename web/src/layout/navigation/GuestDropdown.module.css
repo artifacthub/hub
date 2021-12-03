@@ -1,10 +1,7 @@
 .imageWrapper {
   width: 2rem;
   height: 2rem;
-  border: 2px solid var(--white);
-  overflow: hidden;
-  line-height: 1;
-  font-size: 1.25rem !important;
+  border-color: var(--bs-white) !important;
 }
 
 .btn {

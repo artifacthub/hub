@@ -24,7 +24,7 @@ exports[`StatsView creates snapshot 1`] = `
         >
           <small>
             <span
-              class="text-muted mr-2"
+              class="text-muted me-2"
             >
               Report generated at:
             </span>
@@ -42,7 +42,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mb-4 font-weight-bold title"
+            class="position-relative anchorHeader headingWrapper mb-4 fw-bold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -51,7 +51,7 @@ exports[`StatsView creates snapshot 1`] = `
             />
             <a
               aria-label="Packages and releases"
-              class="text-reset text-center d-none d-md-block headingLink"
+              class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
               href="/#packages-and-releases"
               role="button"
             >
@@ -80,13 +80,13 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0"
+              class="pe-0 pe-lg-3 pe-xxl-4 mt-4 mb-4 mb-lg-0"
             >
               <div
                 class="card chartWrapper"
               >
                 <div
-                  class="position-absolute p-5 wrapper undefined"
+                  class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -96,7 +96,7 @@ exports[`StatsView creates snapshot 1`] = `
                       role="status"
                     >
                       <span
-                        class="sr-only"
+                        class="visually-hidden"
                       >
                         Loading...
                       </span>
@@ -113,13 +113,13 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="pl-0 pl-lg-3 pl-xxl-4 mt-4"
+              class="ps-0 ps-lg-3 ps-xxl-4 mt-4"
             >
               <div
                 class="card chartWrapper"
               >
                 <div
-                  class="position-absolute p-5 wrapper undefined"
+                  class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -129,7 +129,7 @@ exports[`StatsView creates snapshot 1`] = `
                       role="status"
                     >
                       <span
-                        class="sr-only"
+                        class="visually-hidden"
                       >
                         Loading...
                       </span>
@@ -147,7 +147,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper my-4 font-weight-bold title"
+            class="position-relative anchorHeader headingWrapper my-4 fw-bold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -156,7 +156,7 @@ exports[`StatsView creates snapshot 1`] = `
             />
             <a
               aria-label="Repositories"
-              class="text-reset text-center d-none d-md-block headingLink"
+              class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
               href="/#repositories"
               role="button"
             >
@@ -188,7 +188,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="card chartWrapper"
             >
               <div
-                class="position-absolute p-5 wrapper undefined"
+                class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
               >
                 <div
                   class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -198,7 +198,7 @@ exports[`StatsView creates snapshot 1`] = `
                     role="status"
                   >
                     <span
-                      class="sr-only"
+                      class="visually-hidden"
                     >
                       Loading...
                     </span>
@@ -215,7 +215,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mt-4 font-weight-bold title"
+            class="position-relative anchorHeader headingWrapper mt-4 fw-bold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -224,7 +224,7 @@ exports[`StatsView creates snapshot 1`] = `
             />
             <a
               aria-label="Organizations and users"
-              class="text-reset text-center d-none d-md-block headingLink"
+              class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
               href="/#organizations-and-users"
               role="button"
             >
@@ -253,13 +253,13 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="pr-0 pr-lg-3 pr-xxl-4 pt-4"
+              class="pe-0 pe-lg-3 pe-xxl-4 pt-4"
             >
               <div
                 class="card chartWrapper"
               >
                 <div
-                  class="position-absolute p-5 wrapper undefined"
+                  class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -269,7 +269,7 @@ exports[`StatsView creates snapshot 1`] = `
                       role="status"
                     >
                       <span
-                        class="sr-only"
+                        class="visually-hidden"
                       >
                         Loading...
                       </span>
@@ -286,13 +286,13 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="pl-0 pl-lg-3 pl-xxl-4 pt-4"
+              class="ps-0 ps-lg-3 ps-xxl-4 pt-4"
             >
               <div
                 class="card chartWrapper"
               >
                 <div
-                  class="position-absolute p-5 wrapper undefined"
+                  class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -302,7 +302,7 @@ exports[`StatsView creates snapshot 1`] = `
                       role="status"
                     >
                       <span
-                        class="sr-only"
+                        class="visually-hidden"
                       >
                         Loading...
                       </span>

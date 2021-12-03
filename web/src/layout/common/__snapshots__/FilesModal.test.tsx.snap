@@ -10,7 +10,7 @@ exports[`Files modal creates snapshot 1`] = `
     >
       <button
         aria-label="Open CRDs modal"
-        class="btn btn-outline-secondary btn-sm text-nowrap btn-block"
+        class="btn btn-outline-secondary btn-sm text-nowrap w-100"
       >
         Btn
       </button>

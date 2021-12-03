@@ -31,7 +31,7 @@ const SummaryTable = (props: Props) => {
       <table className={`table table-bordered table-md mb-0 ${styles.table}`}>
         <thead>
           <tr className={styles.tableTitle}>
-            <th className={styles.image} scope="col">
+            <th className="w-auto" scope="col">
               Image
             </th>
             <th scope="col" className="text-center">
@@ -61,7 +61,7 @@ const SummaryTable = (props: Props) => {
             return (
               <tr key={`tr_${image}`}>
                 <td>
-                  <div className={styles.imageNameWrapper}>
+                  <div className={`d-table w-100 ${styles.imageNameWrapper}`}>
                     <div className="text-truncate">{image}</div>
                   </div>
                 </td>
@@ -81,7 +81,7 @@ const SummaryTable = (props: Props) => {
                     {summary[severity] || 0}
                   </td>
                 ))}
-                <td className="text-center font-weight-bold">{total}</td>
+                <td className="text-center fw-bold">{total}</td>
               </tr>
             );
           })}

@@ -33,7 +33,7 @@ const UserAuthDropdown = (props: Props) => {
         <div className="d-flex flex-row align-items-center justify-content-center">
           <div
             className={classnames(
-              'rounded-circle d-flex align-items-center justify-content-center textLight userAuth overflow-hidden position-relative',
+              'rounded-circle d-flex align-items-center justify-content-center textLight userAuth overflow-hidden position-relative border border-2 overflow-hidden lh-1 fs-5 bg-white',
               styles.imageWrapper,
               { [styles.iconWrapper]: isUndefined(ctx.user!.profileImageId) || isNull(ctx.user!.profileImageId) }
             )}
@@ -42,24 +42,24 @@ const UserAuthDropdown = (props: Props) => {
               <Image
                 imageId={ctx.user.profileImageId}
                 alt="User profile"
-                className={styles.image}
-                classNameForSquare={styles.imageAsBg}
+                className="mw-100 mh-100"
+                classNameForSquare={`position-absolute top-0 start-0 w-100 h-100 ${styles.imageAsBg}`}
               />
             ) : (
               <FaUser data-testid="profileIcon" className="rounded-circle" />
             )}
           </div>
-          <small className="ml-1 textLight">
+          <small className="ms-1 textLight">
             <FaCaretDown />
           </small>
         </div>
       </button>
 
-      <div ref={ref} className={classnames('dropdown-menu dropdown-menu-right', styles.dropdown, { show: openStatus })}>
-        <div className={`arrow ${styles.arrow}`} />
+      <div ref={ref} className={classnames('dropdown-menu dropdown-menu-end', styles.dropdown, { show: openStatus })}>
+        <div className={`dropdown-arrow ${styles.arrow}`} />
 
-        <p className={`mt-2 mb-0 ${styles.signedInText}`}>
-          Signed in as <span className="font-weight-bold">{ctx.user!.alias}</span>
+        <p className={`mt-2 mb-0 text-break ${styles.signedInText}`}>
+          Signed in as <span className="fw-bold">{ctx.user!.alias}</span>
         </p>
 
         <div className="dropdown-divider my-3" />
@@ -76,7 +76,7 @@ const UserAuthDropdown = (props: Props) => {
           onClick={() => setOpenStatus(false)}
         >
           <div className="d-flex align-items-center">
-            <FaStar className="mr-2" />
+            <FaStar className="me-2" />
             <div>Starred packages</div>
           </div>
         </Link>
@@ -89,7 +89,7 @@ const UserAuthDropdown = (props: Props) => {
           onClick={() => setOpenStatus(false)}
         >
           <div className="d-flex align-items-center">
-            <FaCog className="mr-2" />
+            <FaCog className="me-2" />
             <div>Control Panel</div>
           </div>
         </Link>

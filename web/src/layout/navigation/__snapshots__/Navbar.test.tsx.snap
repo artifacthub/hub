@@ -3,7 +3,7 @@
 exports[`Navbar creates snapshot 1`] = `
 <DocumentFragment>
   <nav
-    class="navbar navbar-top navbar-expand-lg navbar-dark navbar homeNavbar"
+    class="navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-3 navbar bg-transparent w-100 position-absolute homeNavbar"
   >
     <div
       class="container-lg px-sm-4 px-lg-0"
@@ -21,7 +21,7 @@ exports[`Navbar creates snapshot 1`] = `
           >
             <img
               alt="Logo null"
-              class="logo"
+              class="w-auto logo"
             />
           </div>
         </a>
@@ -32,20 +32,20 @@ exports[`Navbar creates snapshot 1`] = `
         id="navbarNav"
       >
         <ul
-          class="navbar-nav align-items-center ml-auto"
+          class="navbar-nav align-items-center ms-auto"
         >
           <li
-            class="nav-item ml-4 position-relative"
+            class="nav-item ms-4 position-relative"
           >
             <a
-              class="btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap button"
+              class="btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white button"
               href="/stats"
             >
               Stats
             </a>
           </li>
           <li
-            class="nav-item ml-4 position-relative"
+            class="nav-item ms-4 position-relative"
           >
             <div
               class="btn-group"
@@ -59,7 +59,7 @@ exports[`Navbar creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center justify-content-center"
                 >
                   <div
-                    class="rounded-circle d-flex align-items-center justify-content-center textLight userAuth overflow-hidden position-relative imageWrapper iconWrapper"
+                    class="rounded-circle d-flex align-items-center justify-content-center textLight userAuth overflow-hidden position-relative border border-2 overflow-hidden lh-1 fs-5 bg-white imageWrapper iconWrapper"
                   >
                     <svg
                       class="rounded-circle"
@@ -78,7 +78,7 @@ exports[`Navbar creates snapshot 1`] = `
                     </svg>
                   </div>
                   <small
-                    class="ml-1 textLight"
+                    class="ms-1 textLight"
                   >
                     <svg
                       fill="currentColor"
@@ -97,17 +97,17 @@ exports[`Navbar creates snapshot 1`] = `
                 </div>
               </button>
               <div
-                class="dropdown-menu dropdown-menu-right dropdown"
+                class="dropdown-menu dropdown-menu-end dropdown"
               >
                 <div
-                  class="arrow arrow"
+                  class="dropdown-arrow arrow"
                 />
                 <p
-                  class="mt-2 mb-0 signedInText"
+                  class="mt-2 mb-0 text-break signedInText"
                 >
                   Signed in as 
                   <span
-                    class="font-weight-bold"
+                    class="fw-bold"
                   >
                     test
                   </span>
@@ -138,11 +138,11 @@ exports[`Navbar creates snapshot 1`] = `
                     class="dropdown-item"
                   >
                     <div
-                      class="custom-control custom-radio"
+                      class="form-check"
                     >
                       <input
                         aria-checked="false"
-                        class="custom-control-input input"
+                        class="form-check-input input"
                         id="desktop-automatic"
                         name="automatic"
                         readonly=""
@@ -151,7 +151,7 @@ exports[`Navbar creates snapshot 1`] = `
                         value="automatic"
                       />
                       <label
-                        class="custom-control-label font-weight-bold label"
+                        class="form-check-label fw-bold lh-base w-100 label"
                         for="desktop-automatic"
                       >
                         <svg
@@ -177,12 +177,12 @@ exports[`Navbar creates snapshot 1`] = `
                     class="dropdown-item"
                   >
                     <div
-                      class="custom-control custom-radio"
+                      class="form-check"
                     >
                       <input
                         aria-checked="true"
                         checked=""
-                        class="custom-control-input input"
+                        class="form-check-input input"
                         id="desktop-light"
                         name="light"
                         readonly=""
@@ -191,7 +191,7 @@ exports[`Navbar creates snapshot 1`] = `
                         value="light"
                       />
                       <label
-                        class="custom-control-label font-weight-bold label"
+                        class="form-check-label fw-bold lh-base w-100 label"
                         for="desktop-light"
                       >
                         <svg
@@ -268,11 +268,11 @@ exports[`Navbar creates snapshot 1`] = `
                     class="dropdown-item"
                   >
                     <div
-                      class="custom-control custom-radio"
+                      class="form-check"
                     >
                       <input
                         aria-checked="false"
-                        class="custom-control-input input"
+                        class="form-check-input input"
                         id="desktop-dark"
                         name="dark"
                         readonly=""
@@ -281,7 +281,7 @@ exports[`Navbar creates snapshot 1`] = `
                         value="dark"
                       />
                       <label
-                        class="custom-control-label font-weight-bold label"
+                        class="form-check-label fw-bold lh-base w-100 label"
                         for="desktop-dark"
                       >
                         <svg
@@ -316,7 +316,7 @@ exports[`Navbar creates snapshot 1`] = `
                     class="d-flex align-items-center"
                   >
                     <svg
-                      class="mr-2"
+                      class="me-2"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -342,7 +342,7 @@ exports[`Navbar creates snapshot 1`] = `
                     class="d-flex align-items-center"
                   >
                     <svg
-                      class="mr-2"
+                      class="me-2"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -368,7 +368,7 @@ exports[`Navbar creates snapshot 1`] = `
                     class="d-flex align-items-center"
                   >
                     <svg
-                      class="mr-2"
+                      class="me-2"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"

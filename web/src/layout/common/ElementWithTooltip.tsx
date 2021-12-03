@@ -105,8 +105,8 @@ const ElementWithTooltip = (props: Props) => {
             role="tooltip"
             style={{ width: `${tooltipWidth}px` }}
           >
-            <div className={`arrow ${styles.tooltipArrow} ${props.tooltipArrowClassName}`} />
-            <div className={`tooltip-inner ${styles.tooltipContent}`}>
+            <div className={`tooltip-arrow ${styles.tooltipArrow} ${props.tooltipArrowClassName}`} />
+            <div className={`tooltip-inner mw-100 ${styles.tooltipContent}`}>
               <>{props.tooltipMessage}</>
             </div>
           </div>

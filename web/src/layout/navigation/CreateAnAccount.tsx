@@ -125,7 +125,7 @@ const CreateAnAccount = forwardRef<HTMLFormElement, Props>((props, ref) => {
         <div className="d-flex h-100 w-100 align-items-center justify-content-center">
           <div className="alert" role="alert" aria-live="assertive" aria-atomic="true">
             <div className="d-flex flex-sm-column flex-md-row align-items-center">
-              <div className="mr-3">
+              <div className="me-3">
                 <MdDone className="h1 text-success mb-3 mb-md-0" />
               </div>
               <h4 className="alert-heading">A verification link has been sent to your email account</h4>
@@ -136,9 +136,8 @@ const CreateAnAccount = forwardRef<HTMLFormElement, Props>((props, ref) => {
               registration process.
             </p>
             <p className="mb-0">
-              Please note that the verification code{' '}
-              <span className="font-weight-bold">is only valid for 24 hours</span>. If you haven't verified your account
-              by then you'll need to sign up again.
+              Please note that the verification code <span className="fw-bold">is only valid for 24 hours</span>. If you
+              haven't verified your account by then you'll need to sign up again.
             </p>
           </div>
         </div>
@@ -157,7 +156,7 @@ const CreateAnAccount = forwardRef<HTMLFormElement, Props>((props, ref) => {
               ref={usernameInput}
               type="text"
               label="Username"
-              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
               name="alias"
               invalidText={{
                 default: 'This field is required',
@@ -178,7 +177,7 @@ const CreateAnAccount = forwardRef<HTMLFormElement, Props>((props, ref) => {
               ref={emailInput}
               type="email"
               label="Email"
-              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
               name="email"
               invalidText={{
                 default: 'This field is required',
@@ -214,7 +213,7 @@ const CreateAnAccount = forwardRef<HTMLFormElement, Props>((props, ref) => {
               ref={repeatPasswordInput}
               type="password"
               label="Confirm password"
-              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
               name="confirmPassword"
               pattern={password.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}
               invalidText={{

@@ -1,25 +1,9 @@
-.modalDialog {
-  font-size: 1rem;
-}
-
 .label {
   font-size: 0.875rem;
 }
 
-.customControlRightLabel::before {
-  right: -2.25rem;
-  left: auto !important;
-}
-
-.customControlRightLabel::after {
-  right: -1.38rem;
-  left: auto !important;
-}
-
 .colorInputWrapper {
-  padding: 0.25rem;
-  border: 1px solid var(--border-md);
-  margin-left: 0.5rem;
+  border-color: var(--border-md) !important;
 }
 
 .colorInput {
@@ -41,14 +25,9 @@
   height: 28px;
 }
 
-.copyBtn {
-  padding: 0.25rem 0.5rem;
-  text-transform: uppercase;
-}
-
 .copyBtnTooltip {
   top: -0.4rem;
-  left: 15rem;
+  left: 14.5rem;
   right: auto;
 }
 

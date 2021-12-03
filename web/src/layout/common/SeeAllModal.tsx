@@ -54,16 +54,16 @@ const SeeAllModal = (props: Props) => {
           <div role="list">{visibleItems}</div>
 
           <div className={`d-block d-md-none ${styles.legend}`}>
-            <small className="text-muted font-italic">Displaying only the first 5 entries</small>
+            <small className="text-muted fst-italic">Displaying only the first 5 entries</small>
           </div>
 
           <button
-            className={`btn btn-link pl-0 d-none d-md-block position-relative text-primary ${styles.btn}`}
+            className={`btn btn-link ps-0 d-none d-md-block position-relative text-primary ${styles.btn}`}
             onClick={() => setOpenStatus(true)}
             aria-label="See all entries"
           >
             <div className="d-flex flex-row align-items-center">
-              <HiPlusCircle className="mr-1" />
+              <HiPlusCircle className="me-1" />
               <span>See all</span>
             </div>
           </button>

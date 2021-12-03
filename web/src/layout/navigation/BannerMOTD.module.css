@@ -6,8 +6,6 @@
 }
 
 .close {
-  top: 0;
-  bottom: 0;
   right: 10px;
   color: black !important;
 }

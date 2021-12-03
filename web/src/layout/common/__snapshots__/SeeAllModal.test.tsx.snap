@@ -58,20 +58,20 @@ exports[`SeeAllModal creates snapshot 1`] = `
     class="d-block d-md-none legend"
   >
     <small
-      class="text-muted font-italic"
+      class="text-muted fst-italic"
     >
       Displaying only the first 5 entries
     </small>
   </div>
   <button
     aria-label="See all entries"
-    class="btn btn-link pl-0 d-none d-md-block position-relative text-primary btn"
+    class="btn btn-link ps-0 d-none d-md-block position-relative text-primary btn"
   >
     <div
       class="d-flex flex-row align-items-center"
     >
       <svg
-        class="mr-1"
+        class="me-1"
         fill="currentColor"
         height="1em"
         stroke="currentColor"
@@ -101,7 +101,7 @@ exports[`SeeAllModal creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
       >
         <div
-          class="modal-content content undefined modal"
+          class="modal-content border border-3 mx-auto content undefined modal"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -113,22 +113,16 @@ exports[`SeeAllModal creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
           >
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -145,7 +139,7 @@ exports[`SeeAllModal creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

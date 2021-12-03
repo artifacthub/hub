@@ -254,7 +254,7 @@ const StatsView = (props: Props) => {
             <>
               <div className="text-center mb-5">
                 <small>
-                  <span className="text-muted mr-2">Report generated at:</span>
+                  <span className="text-muted me-2">Report generated at:</span>
                   {!isUndefined(stats.generatedAt) ? (
                     moment(stats.generatedAt).format('YYYY/MM/DD HH:mm:ss (Z)')
                   ) : (
@@ -279,7 +279,7 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`mb-4 font-weight-bold ${styles.title}`}
+                    className={`mb-4 fw-bold ${styles.title}`}
                     title="Packages and releases"
                   />
 
@@ -287,7 +287,7 @@ const StatsView = (props: Props) => {
                     <div className="row my-4 pb-0 pb-lg-4">
                       {stats.packages.runningTotal && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.runningTotal })}>
-                          <div className="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0">
+                          <div className="pe-0 pe-lg-3 pe-xxl-4 mt-4 mb-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.snapshots.runningTotal!.length === 0 || isLoading) && <Loading />}
                               <ReactApexChart
@@ -303,7 +303,7 @@ const StatsView = (props: Props) => {
 
                       {stats.snapshots.runningTotal && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.runningTotal })}>
-                          <div className="pl-0 pl-lg-3 pl-xxl-4 mt-4">
+                          <div className="ps-0 ps-lg-3 ps-xxl-4 mt-4">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.packages.runningTotal!.length === 0 || isLoading) && <Loading />}
                               <ReactApexChart
@@ -323,7 +323,7 @@ const StatsView = (props: Props) => {
                     <div className="row my-4 pb-4">
                       {stats.packages.createdMonthly && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.createdMonthly })}>
-                          <div className="pr-0 pr-lg-3 pr-xxl-4 mt-4 mb-4 mb-lg-0">
+                          <div className="pe-0 pe-lg-3 pe-xxl-4 mt-4 mb-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.packages.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
@@ -339,7 +339,7 @@ const StatsView = (props: Props) => {
 
                       {stats.snapshots.createdMonthly && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.createdMonthly })}>
-                          <div className="pl-0 pl-lg-3 pl-xxl-4 mt-4">
+                          <div className="ps-0 ps-lg-3 ps-xxl-4 mt-4">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.snapshots.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
@@ -362,7 +362,7 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`my-4 font-weight-bold ${styles.title}`}
+                    className={`my-4 fw-bold ${styles.title}`}
                     title="Repositories"
                   />
 
@@ -387,13 +387,13 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`mt-4 font-weight-bold ${styles.title}`}
+                    className={`mt-4 fw-bold ${styles.title}`}
                     title="Organizations and users"
                   />
                   <div className="row my-4">
                     {stats.organizations.runningTotal && (
                       <div className={classnames('col-12', { 'col-lg-6': stats.users.runningTotal })}>
-                        <div className="pr-0 pr-lg-3 pr-xxl-4 pt-4">
+                        <div className="pe-0 pe-lg-3 pe-xxl-4 pt-4">
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.organizations.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
@@ -414,7 +414,7 @@ const StatsView = (props: Props) => {
 
                     {stats.users.runningTotal && (
                       <div className={classnames('col-12', { 'col-lg-6': stats.organizations.runningTotal })}>
-                        <div className="pl-0 pl-lg-3 pl-xxl-4 pt-4">
+                        <div className="ps-0 ps-lg-3 ps-xxl-4 pt-4">
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.users.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart

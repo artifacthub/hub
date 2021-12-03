@@ -7,14 +7,14 @@ exports[`PackageCard creates snapshot 1`] = `
     role="listitem"
   >
     <div
-      class="card cardWithHover h-100 card"
+      class="card cardWithHover h-100 bg-white mw-100 card"
     >
       <div>
         <div
           class="card-body position-relative body"
         >
           <a
-            class="text-decoration-none text-reset link"
+            class="text-decoration-none text-reset bg-transparent link"
             data-testid="packageCardLink"
             href="/packages/helm/stable/airflow"
           >
@@ -25,7 +25,7 @@ exports[`PackageCard creates snapshot 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
                 >
                   <img
                     alt="Logo airflow"
@@ -36,10 +36,10 @@ exports[`PackageCard creates snapshot 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-3 flex-grow-1 truncateWrapper"
+                  class="ms-3 flex-grow-1 truncateWrapper"
                 >
                   <div
-                    class="card-title font-weight-bolder mb-2 title"
+                    class="card-title fw-bolder mb-2 lh-1"
                   >
                     <div
                       class="h5 d-flex flex-row align-items-center"
@@ -51,10 +51,10 @@ exports[`PackageCard creates snapshot 1`] = `
                     class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
                   >
                     <div
-                      class="mr-2 text-truncate"
+                      class="me-2 text-truncate"
                     >
                       <span
-                        class="text-muted text-uppercase mr-1"
+                        class="text-muted text-uppercase me-1"
                       >
                         Org:
                       </span>
@@ -65,10 +65,10 @@ exports[`PackageCard creates snapshot 1`] = `
                       </p>
                     </div>
                     <div
-                      class="mr-2 text-truncate"
+                      class="me-2 text-truncate"
                     >
                       <span
-                        class="text-muted text-uppercase mr-1"
+                        class="text-muted text-uppercase me-1"
                       >
                         Repo:
                       </span>
@@ -86,12 +86,12 @@ exports[`PackageCard creates snapshot 1`] = `
               >
                 <img
                   alt="Icon"
-                  class="icon iconLight"
+                  class="h-auto icon iconLight"
                   src="/static/media/helm-chart.svg"
                 />
                 <img
                   alt="Icon"
-                  class="icon iconDark"
+                  class="h-auto icon iconDark"
                   src="/static/media/helm-chart-light.svg"
                 />
               </div>
@@ -101,16 +101,17 @@ exports[`PackageCard creates snapshot 1`] = `
             class="d-flex flex-row align-items-center"
           >
             <div
-              class="custom-control custom-switch clickable"
+              class="form-check form-switch clickable"
             >
               <input
                 checked=""
-                class="custom-control-input checkbox"
+                class="form-check-input checkbox"
                 id="airflow_newRelease"
+                role="switch"
                 type="checkbox"
               />
               <label
-                class="custom-control-label"
+                class="form-check-label"
                 data-testid="newRelease_label"
                 for="airflow_newRelease"
               >
@@ -136,7 +137,7 @@ exports[`PackageCard creates snapshot 1`] = `
                   </svg>
                    
                   <span
-                    class="ml-1"
+                    class="ms-1"
                   >
                     New releases
                   </span>
@@ -148,15 +149,16 @@ exports[`PackageCard creates snapshot 1`] = `
             class="d-flex flex-row align-items-center"
           >
             <div
-              class="custom-control custom-switch clickable"
+              class="form-check form-switch clickable"
             >
               <input
-                class="custom-control-input checkbox"
+                class="form-check-input checkbox"
                 id="airflow_securityAlert"
+                role="switch"
                 type="checkbox"
               />
               <label
-                class="custom-control-label"
+                class="form-check-label"
                 data-testid="securityAlert_label"
                 for="airflow_securityAlert"
               >
@@ -182,7 +184,7 @@ exports[`PackageCard creates snapshot 1`] = `
                   </svg>
                    
                   <span
-                    class="ml-1"
+                    class="ms-1"
                   >
                     Security alerts
                   </span>

@@ -1,7 +1,5 @@
 .card {
-  max-width: 100%;
-  background-color: var(--white) !important;
-  box-shadow: 0px 0px 5px 0px var(--light);
+  box-shadow: 0px 0px 5px 0px var(--bs-light);
 }
 
 @media (hover: hover) {
@@ -24,9 +22,8 @@
   min-width: 60px;
   width: 60px;
   height: 60px;
-  border-radius: 50%;
-  background-color: var(--white);
-  border: 2px solid var(--color-1-10);
+  border-color: var(--color-1-10) !important;
+
   box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }
 
@@ -37,15 +34,10 @@
 
 .link {
   color: var(--gray-dark);
-  background-color: transparent;
 }
 
 .link:hover {
   color: inherit;
-}
-
-.title {
-  line-height: 1;
 }
 
 .subtitle {

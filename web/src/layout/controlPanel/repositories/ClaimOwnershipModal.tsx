@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
-import { MdBusiness, MdClose } from 'react-icons/md';
+import { MdBusiness } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 
 import API from '../../../api';
@@ -140,10 +140,10 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
   }, [organizationName, props]);
 
   const getPublisher = (repo: Repository) => (
-    <small className="ml-0 ml-sm-2">
+    <small className="ms-0 ms-sm-2">
       <span className="d-none d-sm-inline">(</span>
-      <small className={`d-none d-md-inline text-muted mr-1 text-uppercase ${styles.legend}`}>Publisher: </small>
-      <div className={`d-inline mr-1 ${styles.tinyIcon}`}>{repo.userAlias ? <FaUser /> : <MdBusiness />}</div>
+      <small className={`d-none d-md-inline text-muted me-1 text-uppercase ${styles.legend}`}>Publisher: </small>
+      <div className={`d-inline me-1 ${styles.tinyIcon}`}>{repo.userAlias ? <FaUser /> : <MdBusiness />}</div>
       <span>{repo.userAlias || repo.organizationDisplayName || repo.organizationName}</span>
       <span className="d-none d-sm-inline">)</span>
     </small>
@@ -166,11 +166,11 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Claiming ownership...</span>
+              <span className="ms-2">Claiming ownership...</span>
             </>
           ) : (
             <div className="text-uppercase d-flex flex-row align-items-center">
-              <RiArrowLeftRightLine className="mr-2" />
+              <RiArrowLeftRightLine className="me-2" />
               <div>Claim ownership</div>
             </div>
           )}
@@ -188,7 +188,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
             to add a{' '}
             <ExternalLink
               href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
-              className="text-primary font-weight-bold"
+              className="text-primary fw-bold"
               label="Open documentation"
             >
               metadata file
@@ -208,7 +208,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
         >
           <div>
             <div className="d-flex flex-column my-3">
-              <label className={`font-weight-bold ${styles.label}`} htmlFor="description">
+              <label className={`form-label fw-bold ${styles.label}`} htmlFor="description">
                 Repository:
               </label>
 
@@ -221,10 +221,10 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                     <div className="flex-grow-1 text-truncate py-2">
                       <div className="d-flex flex-row align-items-center h-100 text-truncate">
                         <div className="d-none d-md-inline">
-                          <RepositoryIcon kind={repoItem.kind} className={`mx-3 ${styles.icon}`} />
+                          <RepositoryIcon kind={repoItem.kind} className={`mx-3 w-auto ${styles.icon}`} />
                         </div>
 
-                        <div className="ml-2 font-weight-bold mb-0 text-truncate text-muted">
+                        <div className="ms-2 fw-bold mb-0 text-truncate text-muted">
                           <span className="text-dark">{repoItem.name}</span>{' '}
                           <small className="text-muted">({repoItem.url})</small>
                           <span className={`d-inline d-sm-none ${styles.legend}`}>
@@ -233,7 +233,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                           </span>
                         </div>
 
-                        <div className="px-2 ml-auto w-50 text-dark text-truncate d-none d-sm-inline">
+                        <div className="px-2 ms-auto w-50 text-dark text-truncate d-none d-sm-inline">
                           {getPublisher(repoItem)}
                         </div>
                       </div>
@@ -241,12 +241,10 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
 
                     <div>
                       <button
-                        className={`btn h-100 rounded-0 ${styles.closeButton}`}
+                        className={`btn btn-close btn-sm h-100 rounded-0 border-start px-3 py-0 ${styles.closeButton}`}
                         onClick={() => setRepoItem(null)}
                         aria-label="Close"
-                      >
-                        <MdClose />
-                      </button>
+                      ></button>
                     </div>
                   </div>
                 </div>
@@ -266,13 +264,13 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
               )}
             </div>
 
-            <label id="claiming" className={`font-weight-bold ${styles.label}`}>
+            <label id="claiming" className={`form-label fw-bold ${styles.label}`}>
               Transfer to:
             </label>
-            <div className="custom-control custom-radio mb-2">
+            <div className="form-check mb-2">
               <input
                 aria-labelledby="claiming user"
-                className="custom-control-input"
+                className="form-check-input"
                 type="radio"
                 name="claim"
                 id="user"
@@ -281,15 +279,15 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                 onChange={() => handleClaimingFromOpt('user')}
                 required
               />
-              <label id="user" className={`custom-control-label ${styles.label}`} htmlFor="user">
+              <label id="user" className={`form-check-label ${styles.label}`} htmlFor="user">
                 My user
               </label>
             </div>
 
-            <div className="custom-control custom-radio mb-3">
+            <div className="form-check mb-3">
               <input
                 aria-labelledby="claiming org"
-                className="custom-control-input"
+                className="form-check-input"
                 type="radio"
                 name="claim"
                 id="org"
@@ -298,16 +296,16 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                 onChange={() => handleClaimingFromOpt('org')}
                 required
               />
-              <label id="org" className={`custom-control-label ${styles.label}`} htmlFor="org">
+              <label id="org" className={`form-check-label ${styles.label}`} htmlFor="org">
                 Organization
               </label>
             </div>
           </div>
 
           <div className="d-flex flex-row align-items-center position-relative mb-3">
-            <div className="form-group w-75 mb-2">
+            <div className=" w-75 mb-2">
               <select
-                className="custom-select"
+                className="form-select"
                 aria-label="org-select"
                 value={claimingOrg}
                 onChange={handleOrgChange}
@@ -327,7 +325,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
               <div className={`invalid-feedback ${styles.fieldFeedback}`}>This field is required</div>
             </div>
             {isFetchingOrgs && (
-              <div className="d-inline ml-3">
+              <div className="d-inline ms-3">
                 <span className="spinner-border spinner-border-sm text-primary" />
               </div>
             )}

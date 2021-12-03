@@ -4,9 +4,11 @@
 }
 
 .isActive {
-  font-weight: bold;
-  background-color: var(--white) !important;
   cursor: default !important;
+}
+
+:global(.noScroll-sidebar) .listItem {
+  z-index: -1;
 }
 
 .isActive::before {
@@ -20,10 +22,9 @@
 }
 
 .icon {
-  height: auto;
   width: 16px;
-  line-height: 1rem;
   color: var(--color-font);
+  line-height: 1rem;
 }
 
 @media only screen and (min-width: 768px) {

@@ -3,17 +3,17 @@
 exports[`InputFileField creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="form-group mb-4 undefined"
+    class=" mb-4 undefined"
   >
     <div
       class="d-flex flex-column"
     >
       <label
-        class="label"
+        class="form-label label"
         for="test"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           message
         </span>
@@ -23,7 +23,7 @@ exports[`InputFileField creates snapshot 1`] = `
       >
         <button
           aria-label="Add image"
-          class="btn p-0 overflow-hidden position-relative btn"
+          class="btn p-0 overflow-hidden position-relative border border-3 lh-1 rounded-circle fs-2 bg-white btn"
           type="button"
         >
           <svg

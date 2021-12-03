@@ -1,7 +1,3 @@
-.table tbody {
-  background-color: var(--white);
-}
-
 .fitCell {
   width: 1%;
 }
@@ -23,7 +19,6 @@
 
 .dependency {
   font-size: 0.9rem;
-  overflow-wrap: break-word;
 }
 
 .separator {
@@ -45,7 +40,6 @@
 }
 
 .copyBtn {
-  position: relative;
   top: -2px;
 }
 

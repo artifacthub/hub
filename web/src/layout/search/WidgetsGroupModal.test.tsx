@@ -39,12 +39,12 @@ describe('WidgetsGroupModal', () => {
       expect(screen.getByText('fixed')).toBeInTheDocument();
       expect(screen.getByRole('radio', { name: /responsive/ })).toBeChecked();
       expect(screen.getByRole('radio', { name: /fixed/ })).not.toBeChecked();
-      expect(screen.getByRole('checkbox', { name: /Header/ })).not.toBeChecked();
-      expect(screen.getByRole('checkbox', { name: /Loading spinner/ })).toBeChecked();
+      expect(screen.getByRole('switch', { name: /Header/ })).not.toBeChecked();
+      expect(screen.getByRole('switch', { name: /Loading spinner/ })).toBeChecked();
       expect(screen.getByText('Display loading spinner while waiting for search results.')).toBeInTheDocument();
       expect(screen.getByText('Color')).toBeInTheDocument();
       expect(screen.getByText('Color used for widgets border, header and loading spinner.')).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: 'Stars' })).toBeChecked();
+      expect(screen.getByRole('switch', { name: 'Stars' })).toBeChecked();
       expect(screen.getByText('Stars')).toBeInTheDocument();
       expect(screen.getByText('Display number of stars given to the package.')).toBeInTheDocument();
       expect(screen.getByText('Code')).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('WidgetsGroupModal', () => {
       );
     });
 
-    it('when not white label', () => {
+    it('when not header', () => {
       render(
         <>
           <meta name="artifacthub:siteName" content="artifact hub" />
@@ -62,7 +62,7 @@ describe('WidgetsGroupModal', () => {
       );
 
       expect(screen.getByText('Header')).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: /Header/ })).not.toBeChecked();
+      expect(screen.getByRole('switch', { name: /Header/ })).not.toBeChecked();
       expect(screen.getByText('Display Artifact Hub header at the top of the widget.')).toBeInTheDocument();
     });
 
@@ -87,7 +87,7 @@ describe('WidgetsGroupModal', () => {
       );
 
       userEvent.click(screen.getByText('fixed'));
-      userEvent.click(screen.getByRole('checkbox', { name: /Loading spinner/ }));
+      userEvent.click(screen.getByRole('switch', { name: /Loading spinner/ }));
       userEvent.type(screen.getByTestId('fixedWidthInput'), '0');
 
       expect(await screen.findByTestId('block-content')).toHaveTextContent(

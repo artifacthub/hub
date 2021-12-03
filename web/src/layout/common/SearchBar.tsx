@@ -218,7 +218,9 @@ const SearchBar = (props: Props) => {
     <>
       <div className={`position-relative ${props.formClassName}`}>
         <div
-          className={`d-flex align-items-strecht overflow-hidden searchBar ${styles.searchBar} ${styles[props.size]}`}
+          className={`d-flex align-items-center overflow-hidden searchBar lh-base bg-white ${styles.searchBar} ${
+            styles[props.size]
+          }`}
           role="combobox"
           aria-haspopup="listbox"
           aria-owns="search-list"
@@ -235,7 +237,7 @@ const SearchBar = (props: Props) => {
 
           <input
             ref={inputEl}
-            className={`flex-grow-1 pl-2 pl-md-0 ${styles.input}`}
+            className={`flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent ${styles.input}`}
             type="text"
             autoComplete="off"
             autoCorrect="off"
@@ -265,12 +267,12 @@ const SearchBar = (props: Props) => {
 
           <button
             type="button"
-            className={classnames('close', styles.inputClean, { invisible: value === '' || props.isSearching })}
-            aria-label="Close"
+            className={classnames('btn-close lh-lg ps-2 pe-3', styles.inputClean, {
+              invisible: value === '' || props.isSearching,
+            })}
             onClick={cleanSearchBox}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
+            aria-label="Close"
+          ></button>
 
           <div
             className={classnames('position-absolute text-dark', styles.tipIcon, {
@@ -311,8 +313,7 @@ const SearchBar = (props: Props) => {
                       <button
                         type="button"
                         className={classnames(
-                          'btn btn-link btn-block border-bottom rounded-0 d-flex flex-row align-items-stretch text-decoration-none text-dark',
-                          styles.dropdownItem,
+                          'btn btn-link w-100 border-bottom rounded-0 d-flex flex-row align-items-stretch text-decoration-none text-dark p-3',
                           { [styles.activeDropdownItem]: index === highlightedItem }
                         )}
                         onClick={() => {
@@ -324,7 +325,7 @@ const SearchBar = (props: Props) => {
                         id={`sl-opt${index}`}
                       >
                         <div
-                          className={`d-none d-md-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 ${styles.imageWrapper} imageWrapper`}
+                          className={`d-none d-md-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 border border-2 bg-white position-relative ${styles.imageWrapper} imageWrapper`}
                         >
                           <Image
                             imageId={pkg.logoImageId}
@@ -334,16 +335,14 @@ const SearchBar = (props: Props) => {
                           />
                         </div>
 
-                        <div className={`ml-0 ml-md-3 flex-grow-1 ${styles.truncateWrapper}`}>
+                        <div className={`ms-0 ms-md-3 flex-grow-1 ${styles.truncateWrapper}`}>
                           <div className="d-flex flex-row align-items-center">
-                            <div className={`text-truncate font-weight-bold ${styles.title}`}>
-                              {pkg.displayName || pkg.name}
-                            </div>
+                            <div className={`text-truncate fw-bold ${styles.title}`}>{pkg.displayName || pkg.name}</div>
 
                             <div
-                              className={`align-self-start d-flex align-items-center text-uppercase ml-auto pl-2 ${styles.midText}`}
+                              className={`align-self-start d-flex align-items-center text-uppercase ms-auto ps-2 ${styles.midText}`}
                             >
-                              <StarBadge className="mr-1" starsNumber={pkg.stars} />
+                              <StarBadge className="me-1" starsNumber={pkg.stars} />
                               <RepositoryIconLabel kind={pkg.repository.kind} iconClassName={styles.kindIcon} />
                             </div>
                           </div>
@@ -353,17 +352,17 @@ const SearchBar = (props: Props) => {
                               <small className="text-muted text-uppercase">
                                 {pkg.repository.userAlias ? 'User' : 'Org'}:
                               </small>
-                              <span className="ml-1 mr-2">
+                              <span className="ms-1 me-2">
                                 {pkg.repository.userAlias ||
                                   pkg.repository.organizationDisplayName ||
                                   pkg.repository.organizationName}
                               </span>
 
                               <small className="text-muted text-uppercase">Repo:</small>
-                              <span className="text-truncate ml-1">{pkg.repository.name}</span>
+                              <span className="text-truncate ms-1">{pkg.repository.name}</span>
                             </div>
 
-                            <div className={`ml-auto d-flex flex-nowrap pl-2 ${styles.labelsWrapper}`}>
+                            <div className="ms-auto d-flex flex-nowrap ps-2">
                               <OfficialBadge
                                 official={isPackageOfficial(pkg)}
                                 className="d-inline"
@@ -384,7 +383,7 @@ const SearchBar = (props: Props) => {
                 >
                   <button
                     type="button"
-                    className={classnames('btn btn-lint btn-block text-dark p-2', styles.dropdownItem, {
+                    className={classnames('btn btn-link w-100 text-dark p-2', styles.dropdownItem, {
                       [styles.activeDropdownItem]: packages.length === highlightedItem,
                     })}
                     onClick={goToSearch}

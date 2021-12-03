@@ -25,12 +25,12 @@ const SectionBtn = (props: Props) => {
     <div ref={ref} className={`position-relative ${styles.btnWrapper} `}>
       <button
         onClick={props.onClick}
-        className={`btn btn-link text-reset position-absolute ${styles.linkBtn} ${styles.inSection}`}
+        className={`btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white ${styles.linkBtn} ${styles.inSection}`}
       >
         <FaLink />
       </button>
 
-      <div className={`h5 text-dark text-uppercase font-weight-bold ${props.className}`}>{props.title}</div>
+      <div className={`h5 text-dark text-uppercase fw-bold ${props.className}`}>{props.title}</div>
     </div>
   );
 };

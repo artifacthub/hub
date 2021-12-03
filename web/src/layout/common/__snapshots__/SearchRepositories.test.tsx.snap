@@ -9,7 +9,7 @@ exports[`SearchRepositories creates snapshot 1`] = `
       class="d-flex flex-row"
     >
       <div
-        class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar inputWrapper"
+        class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar lh-base bg-white inputWrapper"
       >
         <div
           class="d-flex align-items-center iconWrapper"
@@ -42,7 +42,7 @@ exports[`SearchRepositories creates snapshot 1`] = `
         <input
           aria-label="Search repositories"
           autocomplete="new-input"
-          class="flex-grow-1 pr-4 pl-2 pl-md-0 input"
+          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
           name="searchRepositoriesInput"
           spellcheck="false"
           type="text"

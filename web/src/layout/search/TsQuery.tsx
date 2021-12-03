@@ -27,7 +27,7 @@ const TsQuery = (props: Props) => {
 
   return (
     <div role="menuitem" className="mt-2 mt-sm-3 pt-1">
-      <SmallTitle text="Category" className="text-dark font-weight-bold" />
+      <SmallTitle text="Category" className="text-dark fw-bold" />
       <div className="mt-3">
         {TS_QUERY.map((option: TsQueryType) => (
           <CheckBox

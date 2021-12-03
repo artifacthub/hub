@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
-import { MdBusiness, MdClose } from 'react-icons/md';
+import { MdBusiness } from 'react-icons/md';
 
 import API from '../../../../../../api';
 import { AppCtx } from '../../../../../../context/AppCtx';
@@ -90,10 +90,10 @@ const OptOutModal = (props: Props) => {
   }
 
   const getPublisher = (repo: Repository) => (
-    <small className="ml-0 ml-sm-2">
+    <small className="ms-0 ms-sm-2">
       <span className="d-none d-sm-inline">(</span>
-      <small className="d-none d-md-inline text-muted mr-1 text-uppercase">Publisher: </small>
-      <div className={`d-inline mr-1 ${styles.tinyIcon}`}>{repo.userAlias ? <FaUser /> : <MdBusiness />}</div>
+      <small className="d-none d-md-inline text-muted me-1 text-uppercase">Publisher: </small>
+      <div className={`d-inline me-1 ${styles.tinyIcon}`}>{repo.userAlias ? <FaUser /> : <MdBusiness />}</div>
       <span>{repo.userAlias || repo.organizationDisplayName || repo.organizationName}</span>
       <span className="d-none d-sm-inline">)</span>
     </small>
@@ -115,11 +115,11 @@ const OptOutModal = (props: Props) => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Opting out</span>
+              <span className="ms-2">Opting out</span>
             </>
           ) : (
             <div className="d-flex flex-row align-items-center text-uppercase">
-              <IoMdLogOut className="mr-2" />
+              <IoMdLogOut className="me-2" />
               <div>Opt-out</div>
             </div>
           )}
@@ -131,16 +131,16 @@ const OptOutModal = (props: Props) => {
       noScrollable
     >
       <div className="w-100 position-relative">
-        <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
+        <label className={`form-label fw-bold ${styles.label}`} htmlFor="kind">
           Events
         </label>
         <div className="d-flex flex-column flex-wrap pb-2">
           {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
             return (
               <div className="mb-2" key={`radio_${subs.name}`}>
-                <div className="custom-control custom-radio text-nowrap my-1 my-md-0">
+                <div className="form-check text-nowrap my-1 my-md-0">
                   <input
-                    className="custom-control-input"
+                    className="form-check-input"
                     type="radio"
                     name="kind"
                     id={subs.name}
@@ -150,10 +150,10 @@ const OptOutModal = (props: Props) => {
                     onChange={() => setEventKind(subs.kind)}
                     required
                   />
-                  <label className="custom-control-label" htmlFor={subs.name}>
-                    <div className="d-flex flex-row align-items-center ml-2">
+                  <label className="form-check-label" htmlFor={subs.name}>
+                    <div className="d-flex flex-row align-items-center ms-2">
                       {subs.icon}
-                      <div className="ml-1">{subs.title}</div>
+                      <div className="ms-1">{subs.title}</div>
                     </div>
                   </label>
                 </div>
@@ -163,7 +163,7 @@ const OptOutModal = (props: Props) => {
         </div>
 
         <div className="d-flex flex-column mb-3">
-          <label className={`font-weight-bold ${styles.label}`} htmlFor="description">
+          <label className={`form-label fw-bold ${styles.label}`} htmlFor="description">
             Repository
           </label>
 
@@ -181,7 +181,7 @@ const OptOutModal = (props: Props) => {
                       <RepositoryIcon kind={repoItem.kind} className={`mx-3 ${styles.icon}`} />
                     </div>
 
-                    <div className="ml-2 mr-2 mr-sm-0 font-weight-bold mb-0 text-truncate">
+                    <div className="ms-2 me-2 me-sm-0 fw-bold mb-0 text-truncate">
                       {repoItem.name}
                       <span className="d-inline d-sm-none">
                         <span className="mx-2">/</span>
@@ -189,7 +189,7 @@ const OptOutModal = (props: Props) => {
                       </span>
                     </div>
 
-                    <div className="px-2 ml-auto w-50 text-dark text-truncate d-none d-sm-inline">
+                    <div className="px-2 ms-auto w-50 text-dark text-truncate d-none d-sm-inline">
                       {getPublisher(repoItem)}
                     </div>
                   </div>
@@ -197,12 +197,10 @@ const OptOutModal = (props: Props) => {
 
                 <div>
                   <button
-                    className={`btn h-100 rounded-0 ${styles.closeButton}`}
+                    className={`btn btn-close h-100 rounded-0 border-start px-3 py-0 ${styles.closeButton}`}
                     onClick={() => setRepoItem(null)}
                     aria-label="Close"
-                  >
-                    <MdClose />
-                  </button>
+                  ></button>
                 </div>
               </div>
             </div>

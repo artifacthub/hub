@@ -32,7 +32,7 @@ const Links = (props: Props) => {
     if (!isUndefined(name) && name.toLowerCase() in ICONS) {
       Icon = ICONS[name.toLowerCase()];
     }
-    return <Icon className={`text-muted mr-2 ${styles.icon}`} />;
+    return <Icon className={`text-muted me-2 ${styles.icon}`} />;
   };
 
   if (
@@ -69,7 +69,7 @@ const Links = (props: Props) => {
             >
               <div className="d-flex flex-row align-items-start mw-100">
                 {getIconLink('homepage')}
-                <div className={`flex-grow-1 ${styles.linkText}`}>Homepage</div>
+                <div className={`flex-grow-1 text-break ${styles.linkText}`}>Homepage</div>
               </div>
             </ExternalLink>
           </div>

@@ -48,8 +48,8 @@ const Version = (props: Props) => {
           {props.linkedChannel && (
             <div className="d-flex flex-row align-items-center">
               <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-              <span className={`badge badge-pill my-1 text-truncate ${styles.badge} ${styles.isHighlighted}`}>
-                <small className="text-uppercase mr-1">Channel:</small>
+              <span className={`badge rounded-pill my-1 text-truncate border ${styles.badge} ${styles.isHighlighted}`}>
+                <small className="text-uppercase me-1">Channel:</small>
                 {props.linkedChannel}
               </span>
             </div>
@@ -58,14 +58,14 @@ const Version = (props: Props) => {
           {props.prerelease && (
             <div className="d-flex flex-row align-items-center">
               <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-              <span className={`badge badge-pill my-1 ${styles.badge}`}>Pre-release</span>
+              <span className={`badge rounded-pill my-1 border ${styles.badge}`}>Pre-release</span>
             </div>
           )}
 
           {props.containsSecurityUpdates && (
             <div className="d-flex flex-row align-items-center">
               <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-              <span className={`badge badge-pill my-1 ${styles.badge}`}>Contains security updates</span>
+              <span className={`badge rounded-pill my-1 border ${styles.badge}`}>Contains security updates</span>
             </div>
           )}
         </div>
@@ -88,13 +88,13 @@ const Version = (props: Props) => {
           <div className="d-flex flex-row align-items-baseline">
             <button
               onClick={() => openPackagePage()}
-              className="btn btn-link text-primary pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
+              className="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-start"
               aria-label={`Open version ${props.version}`}
             >
               {props.version}
             </button>
             <small className="text-muted">({formattedDate})</small>
-            {isLoading && <span className="spinner-border spinner-border-sm ml-2" role="status" />}
+            {isLoading && <span className="spinner-border spinner-border-sm ms-2" role="status" />}
           </div>
 
           {getBadges()}

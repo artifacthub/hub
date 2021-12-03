@@ -9,7 +9,7 @@ exports[`PackageInfo creates snapshot 1`] = `
       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
     >
       <div
-        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 imageWrapper imageWrapper"
+        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border position-relative bg-white imageWrapper imageWrapper"
       >
         <img
           alt="Logo Pretty name"
@@ -20,7 +20,7 @@ exports[`PackageInfo creates snapshot 1`] = `
         />
       </div>
       <div
-        class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+        class="d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
       >
         <div
           class="text-truncate card-title mb-0"
@@ -48,7 +48,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                 class="position-absolute"
               >
                 <div
-                  class="dropdown-menu dropdown-menu-left dropdown"
+                  class="dropdown-menu dropdown-menu-left text-wrap dropdown"
                   role="complementary"
                 >
                   <div
@@ -61,18 +61,18 @@ exports[`PackageInfo creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <small
-                          class="text-muted text-uppercase mr-1"
+                          class="text-muted text-uppercase me-1"
                         >
                           Repo: 
                         </small>
                         <img
                           alt="Icon"
-                          class="mr-1 repoIconMini iconLight"
+                          class="me-1 w-auto repoIconMini iconLight"
                           src="/static/media/helm-chart.svg"
                         />
                         <img
                           alt="Icon"
-                          class="mr-1 repoIconMini iconDark"
+                          class="me-1 w-auto repoIconMini iconDark"
                           src="/static/media/helm-chart-light.svg"
                         />
                         <div
@@ -85,12 +85,12 @@ exports[`PackageInfo creates snapshot 1`] = `
                         class="mt-2 d-flex flex-row align-items-baseline"
                       >
                         <small
-                          class="text-muted text-uppercase mr-1"
+                          class="text-muted text-uppercase me-1"
                         >
                           Url: 
                         </small>
                         <div
-                          class="text-reset urlContent labelContent"
+                          class="text-reset text-break labelContent"
                           data-testid="repoUrl"
                         >
                           <div
@@ -140,7 +140,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                               >
                                 <button
                                   aria-label="Copy repository url to clipboard"
-                                  class="btn btn-sm miniBtn"
+                                  class="btn btn-sm bg-transparent"
                                   type="button"
                                 >
                                   <div
@@ -185,14 +185,14 @@ exports[`PackageInfo creates snapshot 1`] = `
                 class="d-flex flex-row aling-items-baseline text-truncate"
               >
                 <div
-                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                  class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
                 >
                   <small>
                     Repo:
                   </small>
                 </div>
                 <span
-                  class="sr-only"
+                  class="visually-hidden"
                 >
                   stable
                 </span>
@@ -200,7 +200,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                   aria-expanded="false"
                   aria-hidden="true"
                   aria-label="Filter by repo stable"
-                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                  class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
                   data-testid="repoLink"
                   tabindex="-1"
                 >
@@ -221,19 +221,19 @@ exports[`PackageInfo creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline"
           >
             <span
-              class="text-muted text-uppercase mr-1"
+              class="text-muted text-uppercase me-1"
             >
               User: 
             </span>
             <span
-              class="sr-only"
+              class="visually-hidden"
             >
               user
             </span>
             <button
               aria-hidden="true"
               aria-label="Filter by user"
-              class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
+              class="p-0 border-0 text-truncate text-dark mw-100 bg-transparent link mx50"
               data-testid="userLink"
               tabindex="-1"
             >
@@ -247,13 +247,13 @@ exports[`PackageInfo creates snapshot 1`] = `
               class="mx50"
             >
               <div
-                class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
               >
                 <div
                   class="position-absolute"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-left dropdown"
+                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
                     role="complementary"
                   >
                     <div
@@ -266,18 +266,18 @@ exports[`PackageInfo creates snapshot 1`] = `
                           class="d-flex flex-row align-items-center"
                         >
                           <small
-                            class="text-muted text-uppercase mr-1"
+                            class="text-muted text-uppercase me-1"
                           >
                             Repo: 
                           </small>
                           <img
                             alt="Icon"
-                            class="mr-1 repoIconMini iconLight"
+                            class="me-1 w-auto repoIconMini iconLight"
                             src="/static/media/helm-chart.svg"
                           />
                           <img
                             alt="Icon"
-                            class="mr-1 repoIconMini iconDark"
+                            class="me-1 w-auto repoIconMini iconDark"
                             src="/static/media/helm-chart-light.svg"
                           />
                           <div
@@ -290,12 +290,12 @@ exports[`PackageInfo creates snapshot 1`] = `
                           class="mt-2 d-flex flex-row align-items-baseline"
                         >
                           <small
-                            class="text-muted text-uppercase mr-1"
+                            class="text-muted text-uppercase me-1"
                           >
                             Url: 
                           </small>
                           <div
-                            class="text-reset urlContent labelContent"
+                            class="text-reset text-break labelContent"
                             data-testid="repoUrl"
                           >
                             <div
@@ -345,7 +345,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                                 >
                                   <button
                                     aria-label="Copy repository url to clipboard"
-                                    class="btn btn-sm miniBtn"
+                                    class="btn btn-sm bg-transparent"
                                     type="button"
                                   >
                                     <div
@@ -390,14 +390,14 @@ exports[`PackageInfo creates snapshot 1`] = `
                   class="d-flex flex-row aling-items-baseline text-truncate"
                 >
                   <div
-                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                    class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
                   >
                     <small>
                       Repo:
                     </small>
                   </div>
                   <span
-                    class="sr-only"
+                    class="visually-hidden"
                   >
                     stable
                   </span>
@@ -405,7 +405,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                     aria-expanded="false"
                     aria-hidden="true"
                     aria-label="Filter by repo stable"
-                    class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                    class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
                     data-testid="repoLink"
                     tabindex="-1"
                   >
@@ -421,19 +421,19 @@ exports[`PackageInfo creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+          class="d-none d-md-block card-subtitle text-truncate align-items-baseline position-relative subtitle lastLine"
         >
           <div
             class="d-flex flex-row align-items-baseline text-truncate"
           >
             <span
-              class="text-muted text-uppercase mr-1"
+              class="text-muted text-uppercase me-1"
             >
               Version: 
             </span>
             -
             <span
-              class="text-muted text-uppercase mr-1 ml-3"
+              class="text-muted text-uppercase me-1 ms-3"
             >
               App Version: 
             </span>
@@ -442,13 +442,13 @@ exports[`PackageInfo creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="d-none d-md-flex flex-column align-items-end mb-auto ml-2"
+        class="d-none d-md-flex flex-column align-items-end mb-auto ms-2"
       >
         <div
-          class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
         >
           <span
-            class="sr-only"
+            class="visually-hidden"
           >
             Helm chart
           </span>
@@ -460,7 +460,7 @@ exports[`PackageInfo creates snapshot 1`] = `
             tabindex="-1"
           >
             <span
-              class="badge badge-light rounded-pill bg badge"
+              class="badge bg-light text-dark rounded-pill border bg badge"
             >
               <div
                 class="d-flex flex-row align-items-center"
@@ -481,7 +481,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-1"
+                  class="ms-1"
                 >
                   Helm chart
                 </div>
@@ -502,7 +502,7 @@ exports[`PackageInfo creates snapshot 1`] = `
     </div>
   </div>
   <div
-    class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
+    class="mb-0 mb-md-1 mt-3 overflow-hidden description text-truncate"
   >
     desc
   </div>
@@ -518,10 +518,10 @@ exports[`PackageInfo creates snapshot 1`] = `
       class="mt-1"
     >
       <div
-        class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+        class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
       >
         <span
-          class="sr-only"
+          class="visually-hidden"
         >
           Helm chart
         </span>
@@ -533,7 +533,7 @@ exports[`PackageInfo creates snapshot 1`] = `
           tabindex="-1"
         >
           <span
-            class="badge badge-light rounded-pill bg badge"
+            class="badge bg-light text-dark rounded-pill border bg badge"
           >
             <div
               class="d-flex flex-row align-items-center"
@@ -554,7 +554,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                 />
               </div>
               <div
-                class="ml-1"
+                class="ms-1"
               >
                 Helm chart
               </div>
@@ -573,7 +573,7 @@ exports[`PackageInfo creates snapshot 1`] = `
       <button
         aria-hidden="true"
         aria-label="Open security report"
-        class="btn btn-link text-reset p-0 link"
+        class="btn btn-link text-reset p-0 position-relative link"
         tabindex="-1"
       >
         <div
@@ -583,13 +583,13 @@ exports[`PackageInfo creates snapshot 1`] = `
             data-testid="elementWithTooltip"
           >
             <div
-              class="font-weight-bold undefined"
+              class="fw-bold undefined"
             >
               <div
                 class="d-flex flex-row align-items-center overflow-hidden labelWrapper custom"
               >
                 <div
-                  class="text-center labelIconWrapper iconWrapper"
+                  class="text-center border border-end-0 position-relative labelIconWrapper iconWrapper"
                   data-testid="label-wrapper"
                   style="background-color: rgb(150, 0, 3);"
                 >
@@ -604,7 +604,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                   </span>
                 </div>
                 <div
-                  class="text-nowrap labelText"
+                  class="text-nowrap border fw-bold labelText"
                 >
                   <span
                     class="d-none d-sm-inline"

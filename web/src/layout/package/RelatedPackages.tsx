@@ -20,7 +20,7 @@ const RelatedPackages = (props: Props) => {
   return (
     <div className={`mt-4 ${props.className}`} role="list" aria-describedby="related-list">
       {props.title || <SmallTitle text="Related packages" id="related-list" className={styles.title} />}
-      <div className={classnames('pt-1 row no-gutters', { [`${styles.cardsWrapper} mb-5`]: props.in === 'content' })}>
+      <div className={classnames('pt-1 row g-0', { [`${styles.cardsWrapper} mb-5`]: props.in === 'content' })}>
         {props.packages.map((item: Package) => (
           <div
             key={`relatedCard_${item.packageId}`}

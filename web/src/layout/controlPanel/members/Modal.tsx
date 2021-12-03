@@ -124,11 +124,11 @@ const MemberModal = (props: Props) => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Inviting member</span>
+              <span className="ms-2">Inviting member</span>
             </>
           ) : (
             <div className="d-flex flex-row align-items-center text-uppercase">
-              <MdAddCircle className="mr-2" />
+              <MdAddCircle className="me-2" />
               <div>Invite</div>
             </div>
           )}
@@ -151,7 +151,7 @@ const MemberModal = (props: Props) => {
             ref={aliasInput}
             type="text"
             label="Username"
-            labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+            labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
             name="alias"
             value=""
             invalidText={{

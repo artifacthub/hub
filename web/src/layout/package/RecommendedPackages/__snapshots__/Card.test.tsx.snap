@@ -3,18 +3,18 @@
 exports[`RecommendedPackageCard creates snapshot 1`] = `
 <DocumentFragment>
   <a
-    class="d-inline-block text-dark h5 mb-2 mr-3"
+    class="d-inline-block text-dark h5 mb-2 me-3"
     data-testid="recommended-pkg"
     href="/packages/helm/artifact-hub/artifact-hub"
   >
     <div
-      class="badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 badge"
+      class="badge badge-rounded bg-light text-dark rounded-pill d-flex flex-row align-items-center ps-0 pe-3 border badge"
     >
       <div
-        class="mr-2"
+        class="me-2"
       >
         <div
-          class="imageWrapper imageWrapper overflow-hidden"
+          class="rounded-circle border bg-white imageWrapper imageWrapper overflow-hidden"
         >
           <div
             class="d-flex align-items-center justify-content-center w-100 h-100"
@@ -33,7 +33,7 @@ exports[`RecommendedPackageCard creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="text-truncate text-dark font-weight-bold badgeContent"
+        class="text-truncate text-dark fw-bold badgeContent"
       >
         <span>
           artifact-hub

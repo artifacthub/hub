@@ -2,10 +2,6 @@
   table-layout: fixed;
 }
 
-.btnExpand {
-  line-height: 1rem;
-}
-
 .badge {
   box-shadow: inset 0 0 2px var(--color-black-15);
 }
@@ -18,6 +14,8 @@
   cursor: pointer;
 }
 
-.noClickableCell:hover {
-  background-color: var(--white) !important;
+.noClickableCell:hover,
+.noClickableCell:hover td {
+  background-color: var(--bs-white) !important;
+  box-shadow: none;
 }

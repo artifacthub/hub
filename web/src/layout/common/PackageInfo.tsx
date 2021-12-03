@@ -42,15 +42,15 @@ const PackageInfo = (props: Props) => {
   );
 
   const starsAndKindInfo = (
-    <div className={`align-self-start d-flex align-items-center text-uppercase ml-auto ${styles.kind}`}>
-      <StarBadge className="mr-2" starsNumber={props.package.stars} />
+    <div className={`align-self-start d-flex align-items-center text-uppercase ms-auto ${styles.kind}`}>
+      <StarBadge className="me-2" starsNumber={props.package.stars} />
       <RepositoryIconLabel kind={props.package.repository.kind} deprecated={props.package.deprecated} clickable />
     </div>
   );
 
   const packageImage = (
     <div
-      className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 ${styles.imageWrapper} imageWrapper`}
+      className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border position-relative bg-white ${styles.imageWrapper} imageWrapper`}
     >
       <Image
         imageId={props.package.logoImageId}
@@ -68,7 +68,7 @@ const PackageInfo = (props: Props) => {
           {packageImage}
 
           <div
-            className={`d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 ${styles.truncateWrapper} ${styles.titleWrapper}`}
+            className={`d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 ${styles.truncateWrapper} ${styles.titleWrapper}`}
           >
             <div className="text-truncate card-title mb-0">
               <div className="d-flex flex-row align-items-center">
@@ -92,7 +92,7 @@ const PackageInfo = (props: Props) => {
               <div className="d-flex flex-row align-items-baseline">
                 {props.package.repository.organizationName && (
                   <OrganizationInfo
-                    className={`mr-0 d-flex flex-row align-items-baseline ${styles.mx50} `}
+                    className={`me-0 d-flex flex-row align-items-baseline text-left w-auto ${styles.mx50} `}
                     btnClassName="text-truncate mw-100"
                     organizationName={props.package.repository.organizationName}
                     organizationDisplayName={props.package.repository.organizationDisplayName}
@@ -103,12 +103,12 @@ const PackageInfo = (props: Props) => {
 
                 {props.package.repository.userAlias && (
                   <>
-                    <span className="text-muted text-uppercase mr-1">User: </span>
-                    <span className="sr-only">{props.package.repository.userAlias}</span>
+                    <span className="text-muted text-uppercase me-1">User: </span>
+                    <span className="visually-hidden">{props.package.repository.userAlias}</span>
 
                     <button
                       data-testid="userLink"
-                      className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link} ${styles.mx50}`}
+                      className={`p-0 border-0 text-truncate text-dark mw-100 bg-transparent ${styles.link} ${styles.mx50}`}
                       onClick={(e) => {
                         e.preventDefault();
                         history.push({
@@ -135,7 +135,7 @@ const PackageInfo = (props: Props) => {
                   <RepositoryInfo
                     repository={props.package.repository}
                     deprecated={props.package.deprecated}
-                    className={`d-flex flex-row align-items-baseline ml-3 ${styles.truncateWrapper}`}
+                    className={`d-flex flex-row align-items-baseline ms-3 ${styles.truncateWrapper}`}
                     repoLabelClassName="d-none d-lg-inline"
                     withLabels={false}
                   />
@@ -144,10 +144,10 @@ const PackageInfo = (props: Props) => {
             </div>
 
             <div
-              className={`d-none d-md-block card-subtitle text-truncate align-items-baseline ${styles.subtitle} ${styles.lastLine}`}
+              className={`d-none d-md-block card-subtitle text-truncate align-items-baseline position-relative ${styles.subtitle} ${styles.lastLine}`}
             >
               <div className="d-flex flex-row align-items-baseline text-truncate">
-                <span className="text-muted text-uppercase mr-1">Version: </span>
+                <span className="text-muted text-uppercase me-1">Version: </span>
                 {cutString(props.package.version || '-')}
 
                 {(() => {
@@ -157,7 +157,7 @@ const PackageInfo = (props: Props) => {
                         <>
                           {props.package.appVersion && (
                             <>
-                              <span className="text-muted text-uppercase mr-1 ml-3">App Version: </span>
+                              <span className="text-muted text-uppercase me-1 ms-3">App Version: </span>
                               {cutString(props.package.appVersion)}
                             </>
                           )}
@@ -171,11 +171,11 @@ const PackageInfo = (props: Props) => {
 
                 {props.package.license && (
                   <div className={`d-none d-lg-flex flex-row aling-items-baseline text-truncate ${styles.mx50}`}>
-                    <span className="text-muted text-uppercase mr-1 ml-3">License:</span>
+                    <span className="text-muted text-uppercase me-1 ms-3">License:</span>
                     <License
                       license={props.package.license}
                       className="text-truncate"
-                      linkClassName={`${styles.link} ${styles.subtitle} ${styles.licenseBtn} text-truncate mw-100`}
+                      linkClassName={`${styles.link} ${styles.subtitle} ${styles.licenseBtn} position-relative text-truncate mw-100`}
                       visibleIcon={false}
                       btnType
                     />
@@ -188,14 +188,14 @@ const PackageInfo = (props: Props) => {
           <div
             className={`d-none d-${
               props.breakpointForInfoSection || 'md'
-            }-flex flex-column align-items-end mb-auto ml-2`}
+            }-flex flex-column align-items-end mb-auto ms-2`}
           >
             {starsAndKindInfo}
             <div className="mt-1">{pkgTS}</div>
           </div>
         </div>
       </div>
-      <div className={`mb-0 mb-md-1 mt-3 overflow-hidden ${styles.description} ${styles.lineClamp}`}>
+      <div className={`mb-0 mb-md-1 mt-3 overflow-hidden ${styles.description} text-truncate`}>
         {props.package.description}
       </div>
 

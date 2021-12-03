@@ -18,7 +18,7 @@ exports[`ControlPanelView renders correctly 1`] = `
           class="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column-reverse flex-sm-row justify-content-between align-items-end"
         >
           <ul
-            class="mr-auto mr-md-0 nav nav-tabs"
+            class="me-auto me-md-0 nav nav-tabs"
             role="tablist"
           >
             <li
@@ -52,7 +52,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     </svg>
                   </span>
                   <span
-                    class="d-none d-md-inline ml-2 navTitle"
+                    class="d-none d-md-inline ms-2 navTitle"
                   >
                     Repositories
                   </span>
@@ -93,7 +93,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     </svg>
                   </span>
                   <span
-                    class="d-none d-md-inline ml-2 navTitle"
+                    class="d-none d-md-inline ms-2 navTitle"
                   >
                     Organizations
                   </span>
@@ -134,7 +134,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     </svg>
                   </span>
                   <span
-                    class="d-none d-md-inline ml-2 navTitle"
+                    class="d-none d-md-inline ms-2 navTitle"
                   >
                     Settings
                   </span>
@@ -159,14 +159,14 @@ exports[`ControlPanelView renders correctly 1`] = `
                 <button
                   aria-expanded="false"
                   aria-label="Open context"
-                  class="btn btn-primary badge-pill btn-sm pr-3 position-relative ctxBtn"
+                  class="btn btn-primary rounded-pill btn-sm pe-3 position-relative lh-1 ctxBtn"
                   type="button"
                 >
                   <div
                     class="d-flex flex-row align-items-center"
                   >
                     <div
-                      class="badge badge-light badge-pill mr-2 p-0 badgeIcon"
+                      class="badge bg-light text-dark rounded-pill me-2 p-0 badgeIcon"
                     >
                       <svg
                         fill="currentColor"
@@ -183,7 +183,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                       </svg>
                     </div>
                     <div
-                      class="flex-grow-1 text-left mr-1 text-truncate"
+                      class="flex-grow-1 text-start me-1 text-truncate badgeContent"
                     >
                       test
                     </div>
@@ -217,11 +217,11 @@ exports[`ControlPanelView renders correctly 1`] = `
               </div>
             </div>
             <div
-              class="dropdown-menu dropdown-menu-right dropdown"
+              class="dropdown-menu dropdown-menu-end dropdown"
               role="menu"
             >
               <div
-                class="arrow arrow"
+                class="dropdown-arrow arrow"
               />
               <button
                 aria-label="Activate user context"
@@ -231,7 +231,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                   class="d-flex flex-row align-items-center text-truncate"
                 >
                   <svg
-                    class="mr-2 icon"
+                    class="me-2 icon"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -250,7 +250,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     test
                   </div>
                   <svg
-                    class="ml-2 text-success icon"
+                    class="ms-2 text-success icon"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

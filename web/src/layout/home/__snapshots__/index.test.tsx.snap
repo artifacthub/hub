@@ -3,14 +3,14 @@
 exports[`Home index creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-flex flex-column flex-grow-1 home home"
+    class="d-flex flex-column flex-grow-1 bg-white home"
   >
     <div
-      class="jumbotron mb-0 text-center jumbotron"
+      class="jumbotron mb-0 text-center border-0 jumbotron"
     >
       <div
         aria-label="Find, install and publisher Kubernetes packages"
-        class="display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center noFocus mainTitle"
+        class="display-4 text-center fw-light d-block d-xxl-flex justify-content-center noFocus mainTitle"
         id="content"
         role="banner"
         tabindex="-1"
@@ -34,7 +34,7 @@ exports[`Home index creates snapshot 1`] = `
             aria-expanded="false"
             aria-haspopup="listbox"
             aria-owns="search-list"
-            class="d-flex align-items-strecht overflow-hidden searchBar searchBar big"
+            class="d-flex align-items-center overflow-hidden searchBar lh-base bg-white searchBar big"
             role="combobox"
           >
             <div
@@ -70,7 +70,7 @@ exports[`Home index creates snapshot 1`] = `
               autocapitalize="none"
               autocomplete="off"
               autocorrect="off"
-              class="flex-grow-1 pl-2 pl-md-0 input"
+              class="flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
               disabled=""
               placeholder="Search packages"
               spellcheck="false"
@@ -95,15 +95,9 @@ exports[`Home index creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close inputClean invisible"
+              class="btn-close lh-lg ps-2 pe-3 inputClean invisible"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
             <div
               class="position-absolute text-dark tipIcon bigTipIcon"
             >
@@ -135,7 +129,7 @@ exports[`Home index creates snapshot 1`] = `
           - or -
           <a
             aria-label="Browse all packages"
-            class="btn btn-link textLighter font-weight-bold py-0 pb-1 pl-1 allPkgBtn"
+            class="btn btn-link textLighter fw-bold py-0 pb-1 ps-1 allPkgBtn"
             href="/packages/search"
           >
             browse all packages
@@ -147,7 +141,7 @@ exports[`Home index creates snapshot 1`] = `
           Or you can also 
           <a
             aria-label="Browse all packages"
-            class="btn btn-link textLighter font-weight-bold py-0 pb-1 pl-1 pr-0"
+            class="btn btn-link textLighter fw-bold py-0 pb-1 ps-1 pe-0"
             href="/packages/search"
           >
             browse all packages
@@ -226,7 +220,7 @@ exports[`Home index creates snapshot 1`] = `
             class="d-flex align-items-center justify-content-center"
           >
             <svg
-              class="mr-2"
+              class="me-2"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -244,7 +238,7 @@ exports[`Home index creates snapshot 1`] = `
         </a>
         <a
           aria-label="Open Slack channel"
-          class="link btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 socialBtn"
+          class="link btn btn-secondary ms-2 ms-md-3 mb-4 mb-md-2 socialBtn"
           href="https://cloud-native.slack.com/channels/artifact-hub"
           rel="noopener noreferrer"
           role="button"
@@ -255,7 +249,7 @@ exports[`Home index creates snapshot 1`] = `
             class="d-flex align-items-center justify-content-center"
           >
             <svg
-              class="mr-2"
+              class="me-2"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -273,7 +267,7 @@ exports[`Home index creates snapshot 1`] = `
         </a>
         <a
           aria-label="Open Twitter link"
-          class="link btn btn-secondary ml-2 ml-md-3 mb-4 mb-md-2 socialBtn"
+          class="link btn btn-secondary ms-2 ms-md-3 mb-4 mb-md-2 socialBtn"
           href="https://twitter.com/cncfartifacthub"
           rel="noopener noreferrer"
           role="button"
@@ -284,7 +278,7 @@ exports[`Home index creates snapshot 1`] = `
             class="d-flex align-items-center justify-content-center"
           >
             <svg
-              class="mr-2"
+              class="me-2"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -302,12 +296,12 @@ exports[`Home index creates snapshot 1`] = `
         </a>
       </div>
       <div
-        class="text-center mx-3 mt-md-4 mb-4 repoGuideText"
+        class="text-center mx-3 mt-md-4 mb-4 fw-light repoGuideText"
       >
         Please see the 
         <a
           aria-label="Open documentation"
-          class="link btn btn-link text-light font-weight-bold textLight p-0 inlineLink"
+          class="link btn btn-link text-light fw-bold textLight p-0 align-baseline inlineLink"
           href="/docs/topics/repositories"
           rel="noopener noreferrer"
           role="button"
@@ -321,7 +315,7 @@ exports[`Home index creates snapshot 1`] = `
     </div>
     <div />
     <div
-      class="py-5 textLight about"
+      class="py-5 textLight fs-4 fw-light about"
     >
       <div
         class="container-lg px-4 px-sm-0 py-0 py-md-5"
@@ -351,7 +345,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/helm-chart-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small
                     class="text-nowrap"
@@ -379,7 +373,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/falco-rules-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     Falco rules
@@ -405,7 +399,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/opa-policies-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     OPA policies
@@ -431,7 +425,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/olm-operators-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     OLM operators
@@ -457,7 +451,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/tinkerbell-actions-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     Tinkerbell actions
@@ -487,7 +481,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/krew-plugins-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     Kubectl plugins
@@ -513,7 +507,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/tekton-pkg-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     Tekton tasks and pipelines
@@ -539,7 +533,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/keda-scaler-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     KEDA scalers
@@ -565,7 +559,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/coredns-plugin-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     CoreDNS plugins
@@ -591,7 +585,7 @@ exports[`Home index creates snapshot 1`] = `
                   src="/static/media/keptn-integrations-light.svg"
                 />
                 <div
-                  class="d-none d-sm-block text-light legendIcon"
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
                 >
                   <small>
                     Keptn integrations
@@ -605,7 +599,7 @@ exports[`Home index creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="py-5 text-dark extraInfo"
+      class="py-5 text-dark fs-4 fw-light"
     >
       <div
         class="container-lg px-sm-4 px-lg-0 py-0 py-md-5"
@@ -624,7 +618,7 @@ exports[`Home index creates snapshot 1`] = `
             Artifact Hub is a 
             <a
               aria-label="Open CNCF sandbox projects site"
-              class="link font-weight-bold text-dark"
+              class="link fw-bold text-dark"
               href="https://www.cncf.io/sandbox-projects/"
               rel="noopener noreferrer"
               role="button"

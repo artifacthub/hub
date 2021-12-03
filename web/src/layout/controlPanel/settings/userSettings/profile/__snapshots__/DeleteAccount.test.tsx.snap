@@ -18,7 +18,7 @@ exports[`DeleteAccount creates snapshot 1`] = `
         class="d-flex flex-row align-items-center text-uppercase"
       >
         <svg
-          class="mr-2"
+          class="me-2"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -49,7 +49,7 @@ exports[`DeleteAccount creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content modal"
+          class="modal-content border border-3 mx-auto content modal"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -61,22 +61,16 @@ exports[`DeleteAccount creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
           >
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -92,7 +86,7 @@ exports[`DeleteAccount creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -112,14 +106,14 @@ exports[`DeleteAccount creates snapshot 1`] = `
             </button>
             <button
               aria-label="Delete account"
-              class="btn btn-sm btn-danger ml-3"
+              class="btn btn-sm btn-danger ms-3"
               disabled=""
             >
               <div
                 class="d-flex flex-row align-items-center text-uppercase"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

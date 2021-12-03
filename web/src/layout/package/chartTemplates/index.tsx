@@ -24,7 +24,6 @@ interface Props {
   visibleTemplate?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
-  btnClassName?: string;
 }
 
 interface FileProps {
@@ -229,7 +228,7 @@ const ChartTemplatesModal = (props: Props) => {
     <div className="mb-2">
       <div className="text-center">
         <button
-          className={`btn btn-outline-secondary btn-sm text-nowrap ${props.btnClassName}`}
+          className="btn btn-outline-secondary btn-sm text-nowrap w-100"
           onClick={onOpenModal}
           aria-label="Open templates modal"
         >
@@ -237,12 +236,12 @@ const ChartTemplatesModal = (props: Props) => {
             {isLoading ? (
               <>
                 <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                <span className="d-none d-md-inline ml-2 font-weight-bold">Loading templates...</span>
+                <span className="d-none d-md-inline ms-2 fw-bold">Loading templates...</span>
               </>
             ) : (
               <>
                 <ImInsertTemplate />
-                <span className="ml-2 font-weight-bold text-uppercase">Templates</span>
+                <span className="ms-2 fw-bold text-uppercase">Templates</span>
               </>
             )}
           </div>
@@ -257,10 +256,10 @@ const ChartTemplatesModal = (props: Props) => {
           onClose={onCloseModal}
           closeButton={
             <div className="w-100 d-flex flex-row align-items-center justify-content-between">
-              <small className="mr-3">
-                <span className="font-weight-bold">TIP:</span> some extra info may be displayed when hovering over{' '}
-                <span className="font-weight-bold">values</span> entries and other{' '}
-                <span className="font-weight-bold">built-in objects and functions</span>.
+              <small className="me-3">
+                <span className="fw-bold">TIP:</span> some extra info may be displayed when hovering over{' '}
+                <span className="fw-bold">values</span> entries and other{' '}
+                <span className="fw-bold">built-in objects and functions</span>.
               </small>
               <button
                 className="btn btn-sm btn-outline-secondary text-uppercase"
@@ -268,7 +267,7 @@ const ChartTemplatesModal = (props: Props) => {
                 aria-label="Close"
               >
                 <div className="d-flex flex-row align-items-center">
-                  <MdClose className="mr-2" />
+                  <MdClose className="me-2" />
                   <div>Close</div>
                 </div>
               </button>
@@ -278,7 +277,7 @@ const ChartTemplatesModal = (props: Props) => {
           breakPoint="md"
         >
           <div className="h-100 mw-100">
-            <div className="d-flex flex-row align-items-strecht no-gutters h-100 mh-100">
+            <div className="d-flex flex-row align-items-strecht g-0 h-100 mh-100">
               <div className="col-3 h-100">
                 <TemplatesList
                   templates={templates}
@@ -287,8 +286,8 @@ const ChartTemplatesModal = (props: Props) => {
                 />
               </div>
 
-              <div className="col-9 pl-3 h-100">
-                <div className={`position-relative h-100 mh-100 ${styles.templateWrapper}`}>
+              <div className="col-9 ps-3 h-100">
+                <div className={`position-relative h-100 mh-100 border ${styles.templateWrapper}`}>
                   {isChangingTemplate && activeTemplate && <Loading />}
                   {activeTemplate && (
                     <BlockCodeButtons

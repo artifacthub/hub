@@ -22,14 +22,14 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         </small>
       </div>
       <div
-        class="d-none d-lg-inline-block mt-1 ml-2"
+        class="d-none d-lg-inline-block mt-1 ms-2"
       >
         <div
           class="position-relative buttonWrapper"
         >
           <button
             aria-label="Open modal"
-            class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-dark btn"
+            class="fw-bold text-uppercase position-relative btn w-100 btn btn-link btn-sm px-0 pb-0 text-dark btn"
             type="button"
           >
             <div
@@ -64,7 +64,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
             class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
           >
             <div
-              class="modal-content content"
+              class="modal-content border border-3 mx-auto content"
             >
               <div
                 class="modal-header d-flex flex-row align-items-center header undefined"
@@ -76,22 +76,16 @@ exports[`CapabilityLevel creates snapshot 1`] = `
                 </div>
                 <button
                   aria-label="Close"
-                  class="close"
+                  class="btn-close"
                   type="button"
-                >
-                  <span
-                    aria-hidden="true"
-                  >
-                    ×
-                  </span>
-                </button>
+                />
               </div>
               <div
                 class="modal-body p-4 h-100 d-flex flex-column"
               >
                 <div>
                   <div
-                    class="alertWrapper"
+                    class="overflow-hidden alertWrapper"
                     data-testid="alertWrapper"
                   />
                 </div>
@@ -108,7 +102,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center"
                   >
                     <svg
-                      class="mr-2"
+                      class="me-2"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -143,7 +137,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center mr-2 textLight step step activeStep activeStep"
+          class="rounded-circle text-center me-2 textLight step border bg-white step activeStep activeStep"
           data-testid="capabilityLevelStep"
         >
           <svg
@@ -170,7 +164,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center mr-2 textLight step step activeStep activeStep"
+          class="rounded-circle text-center me-2 textLight step border bg-white step activeStep activeStep"
           data-testid="capabilityLevelStep"
         >
           <svg
@@ -197,7 +191,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center mr-2 textLight step step activeStep activeStep"
+          class="rounded-circle text-center me-2 textLight step border bg-white step activeStep activeStep"
           data-testid="capabilityLevelStep"
         >
           <svg
@@ -224,7 +218,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center mr-2 textLight step step activeStep activeStep"
+          class="rounded-circle text-center me-2 textLight step border bg-white step activeStep activeStep"
           data-testid="capabilityLevelStep"
         >
           <svg
@@ -251,7 +245,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center mr-2 textLight step step"
+          class="rounded-circle text-center me-2 textLight step border bg-white step"
           data-testid="capabilityLevelStep"
         />
         <small

@@ -207,7 +207,7 @@ const SearchRepositories = (props: Props) => {
     <div className="position-relative">
       <div className="d-flex flex-row">
         <div
-          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar ${styles.inputWrapper}`}
+          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar lh-base bg-white ${styles.inputWrapper}`}
         >
           <div
             data-testid="searchBarIcon"
@@ -220,7 +220,7 @@ const SearchRepositories = (props: Props) => {
           <input
             ref={inputEl}
             type="text"
-            className={`flex-grow-1 pr-4 pl-2 pl-md-0 ${styles.input}`}
+            className={`flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent ${styles.input}`}
             name="searchRepositoriesInput"
             aria-label="Search repositories"
             autoComplete="new-input"
@@ -242,12 +242,12 @@ const SearchRepositories = (props: Props) => {
           {repositories.length === 0 ? (
             <p className="m-3 text-center">
               We can't seem to find any repositores that match your search for{' '}
-              <span className="font-weight-bold">{searchName}</span>
+              <span className="fw-bold">{searchName}</span>
             </p>
           ) : (
-            <div className={styles.tableWrapper} ref={itemsWrapper}>
+            <div className={`overflow-scroll ${styles.tableWrapper}`} ref={itemsWrapper}>
               <table
-                className={`table table-hover table-sm mb-0 ${styles.table}`}
+                className={`table table-hover table-sm mb-0 text-break ${styles.table}`}
                 role="grid"
                 aria-labelledby={props.label}
               >
@@ -289,7 +289,7 @@ const SearchRepositories = (props: Props) => {
                       >
                         <td className="align-middle text-center d-none d-sm-table-cell">
                           <div className="mx-2">
-                            <RepositoryIcon kind={item.kind} className={styles.icon} />
+                            <RepositoryIcon kind={item.kind} className={`w-auto ${styles.icon}`} />
                           </div>
                         </td>
                         <td className="align-middle">
@@ -299,7 +299,7 @@ const SearchRepositories = (props: Props) => {
                                 pattern: new RegExp(escapeRegExp(searchName), 'gi'),
                                 decorator: (match: string, index: number) => {
                                   return (
-                                    <span key={`match_${item.name}_${index}`} className="font-weight-bold hightlighted">
+                                    <span key={`match_${item.name}_${index}`} className="fw-bold hightlighted">
                                       {match}
                                     </span>
                                   );
@@ -320,7 +320,7 @@ const SearchRepositories = (props: Props) => {
                         )}
                         <td className="align-middle">
                           <div className="text-dark d-flex flex-row align-items-center">
-                            <span className={`mr-1 ${styles.tinyIcon}`}>
+                            <span className={`me-1 ${styles.tinyIcon}`}>
                               {item.userAlias ? <FaUser /> : <MdBusiness />}
                             </span>
                             {item.userAlias || item.organizationDisplayName || item.organizationName}

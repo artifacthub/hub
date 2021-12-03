@@ -27,7 +27,8 @@ const RepositoryIconLabel = (props: Props) => {
     <span
       className={classnames(
         {
-          [`badge badge-light rounded-pill ${styles.bg}`]: isUndefined(props.noBackground) || !props.noBackground,
+          [`badge bg-light text-dark rounded-pill border ${styles.bg}`]:
+            isUndefined(props.noBackground) || !props.noBackground,
         },
         styles.badge,
         props.className
@@ -37,7 +38,7 @@ const RepositoryIconLabel = (props: Props) => {
         <div className={`position-relative ${styles.icon} ${props.iconClassName}`} aria-hidden="true">
           {repo.icon}
         </div>
-        <div className="ml-1">{props.isPlural ? repo.plural : repo.singular}</div>
+        <div className="ms-1">{props.isPlural ? repo.plural : repo.singular}</div>
       </div>
     </span>
   );
@@ -46,7 +47,7 @@ const RepositoryIconLabel = (props: Props) => {
     <>
       {!isUndefined(props.clickable) && props.clickable ? (
         <>
-          <span className="sr-only">{props.isPlural ? repo.plural : repo.singular}</span>
+          <span className="visually-hidden">{props.isPlural ? repo.plural : repo.singular}</span>
 
           <button
             data-testid="repoIconLabelLink"

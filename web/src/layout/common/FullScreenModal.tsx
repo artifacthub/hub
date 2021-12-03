@@ -1,6 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
 import { MouseEvent as ReactMouseEvent, useEffect, useState } from 'react';
-import { IoMdCloseCircle } from 'react-icons/io';
 
 import useBodyScroll from '../../hooks/useBodyScroll';
 import styles from './FullScreenModal.module.css';
@@ -44,19 +43,17 @@ const FullScreenModal = (props: Props) => {
   if (!openStatus) return null;
 
   return (
-    <div className={`position-fixed overflow-hidden p-3 ${styles.modal}`} role="dialog">
+    <div className={`position-fixed overflow-hidden p-3 top-0 bottom-0 start-0 end-0 ${styles.modal}`} role="dialog">
       <div className={`position-absolute ${styles.closeWrapper}`}>
         <button
           type="button"
-          className={`close ${styles.close}`}
+          className={`btn-close btn-close-white opacity-100 fs-5 ${styles.close}`}
           onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             closeModal();
           }}
           aria-label="Close"
-        >
-          <IoMdCloseCircle />
-        </button>
+        ></button>
       </div>
       <div className="d-flex flex-column h-100 w-100">{props.children}</div>
     </div>

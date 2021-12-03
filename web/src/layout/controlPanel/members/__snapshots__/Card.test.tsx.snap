@@ -16,10 +16,10 @@ exports[`Member Card - members section creates snapshot 1`] = `
           class="d-flex flex-row w-100 justify-content-between align-items-start"
         >
           <div
-            class="d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 imageWrapper imageWrapper"
+            class="d-flex align-items-center justify-content-center p-1 overflow-hidden me-2 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
           >
             <svg
-              class="image"
+              class="fs-4 image"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -46,19 +46,19 @@ exports[`Member Card - members section creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="h6 text-muted mr-1 font-italic"
+              class="h6 text-muted me-1 fst-italic"
             >
               test
             </div>
           </div>
           <div
-            class="ml-auto"
+            class="ms-auto"
           >
             <div
-              class="dropdown-menu dropdown-menu-right p-0 dropdownMenu"
+              class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
             >
               <div
-                class="arrow"
+                class="dropdown-arrow"
               />
               <span
                 class="position-relative"
@@ -72,7 +72,7 @@ exports[`Member Card - members section creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center undefined"
                   >
                     <svg
-                      class="mr-2 btnIcon"
+                      class="me-2 btnIcon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"

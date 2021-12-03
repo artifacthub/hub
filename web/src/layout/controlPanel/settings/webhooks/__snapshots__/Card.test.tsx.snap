@@ -7,16 +7,16 @@ exports[`WebhookCard creates snapshot 1`] = `
     role="listitem"
   >
     <div
-      class="card cardWithHover w-100 h-100 card"
+      class="card cardWithHover w-100 h-100 mw-100 bg-white card"
     >
       <div
-        class="card-body p-0 position-relative body"
+        class="card-body position-relative"
       >
         <div
           class="d-flex flex-row"
         >
           <div
-            class="h5 card-title mb-3 mr-3 title"
+            class="h5 card-title mb-3 me-3 lh-1 text-break"
           >
             <div
               class="d-flex flex-row align-items-start"
@@ -25,20 +25,20 @@ exports[`WebhookCard creates snapshot 1`] = `
                 Webhook name
               </div>
               <span
-                class="ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase badge"
+                class="ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase badge"
               >
                 Active
               </span>
             </div>
           </div>
           <div
-            class="ml-auto"
+            class="ms-auto"
           >
             <div
-              class="dropdown-menu dropdown-menu-right p-0 dropdownMenu"
+              class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
             >
               <div
-                class="arrow arrow"
+                class="dropdown-arrow arrow"
               />
               <button
                 aria-label="Edit webhook"
@@ -48,7 +48,7 @@ exports[`WebhookCard creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <svg
-                    class="mr-2 btnIcon"
+                    class="me-2 btnIcon"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -74,7 +74,7 @@ exports[`WebhookCard creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <svg
-                    class="mr-2 btnIcon"
+                    class="me-2 btnIcon"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -130,7 +130,7 @@ exports[`WebhookCard creates snapshot 1`] = `
             class="text-truncate"
           >
             <small
-              class="text-muted text-uppercase mr-2"
+              class="text-muted text-uppercase me-2"
             >
               Url:
             </small>

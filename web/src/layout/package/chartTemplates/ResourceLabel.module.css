@@ -3,7 +3,6 @@
   background-color: var(--badge-bg);
   line-height: 18px;
   padding: 0 5px;
-  font-weight: 700;
-  border: 1px solid var(--gray);
+  border-color: var(--gray) !important;
   border-radius: 3px;
 }

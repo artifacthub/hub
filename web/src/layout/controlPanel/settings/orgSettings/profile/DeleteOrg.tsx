@@ -55,7 +55,7 @@ const DeleteOrganization = (props: Props) => {
       <div className="mt-4 mt-md-5">
         <p className="mb-4">
           Deleting your organization will also delete all the content that belongs to it. Please be certain as{' '}
-          <span className="font-weight-bold">this operation cannot be undone</span>.
+          <span className="fw-bold">this operation cannot be undone</span>.
         </p>
 
         <ActionBtn
@@ -68,7 +68,7 @@ const DeleteOrganization = (props: Props) => {
           label="Open delete organization modal"
         >
           <div className="d-flex flex-row align-items-center text-uppercase">
-            <FaTrashAlt className="mr-2" />
+            <FaTrashAlt className="me-2" />
             <div>Delete organization</div>
           </div>
         </ActionBtn>
@@ -84,13 +84,13 @@ const DeleteOrganization = (props: Props) => {
               aria-label="Close"
             >
               <div className="d-flex flex-row align-items-center">
-                <IoMdCloseCircle className="mr-2" />
+                <IoMdCloseCircle className="me-2" />
                 <span>Cancel</span>
               </div>
             </button>
 
             <button
-              className="btn btn-sm btn-danger ml-3"
+              className="btn btn-sm btn-danger ms-3"
               onClick={(e) => {
                 e.preventDefault();
                 deleteOrganization();
@@ -102,11 +102,11 @@ const DeleteOrganization = (props: Props) => {
                 {isDeleting ? (
                   <>
                     <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                    <span className="ml-2">Deleting...</span>
+                    <span className="ms-2">Deleting...</span>
                   </>
                 ) : (
                   <>
-                    <FaTrashAlt className="mr-2" />
+                    <FaTrashAlt className="me-2" />
                     <span>Delete</span>
                   </>
                 )}
@@ -120,7 +120,7 @@ const DeleteOrganization = (props: Props) => {
       >
         <div className="mw-100">
           <div className="alert alert-warning my-4">
-            <span className="font-weight-bold text-uppercase">Important:</span> Please read this carefully.
+            <span className="fw-bold text-uppercase">Important:</span> Please read this carefully.
           </div>
 
           <p>
@@ -134,11 +134,11 @@ const DeleteOrganization = (props: Props) => {
           </p>
 
           <p>
-            <span className="font-weight-bold">This operation cannot be undone</span>.
+            <span className="fw-bold">This operation cannot be undone</span>.
           </p>
 
           <p data-testid="confirmationText">
-            Please type <span className="font-weight-bold">{props.organization.name}</span> to confirm:
+            Please type <span className="fw-bold">{props.organization.name}</span> to confirm:
           </p>
 
           <InputField type="text" name="orgName" autoComplete="off" value="" onChange={onInputChange} />

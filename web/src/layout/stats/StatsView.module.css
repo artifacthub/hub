@@ -1,8 +1,8 @@
 .chartWrapper {
-  background-color: var(--white) !important;
-  box-shadow: 0px 0px 5px 0px var(--light);
+  background-color: var(--bs-white) !important;
+  box-shadow: 0px 0px 5px 0px var(--bs-light);
   padding: 1rem;
-  padding-bottom: calc(1rem - 15px);
+  padding-bottom: calc(1rem - 15px) !important;
 }
 
 .title {
@@ -14,7 +14,7 @@
 }
 
 :global(.apexcharts-tooltip) {
-  background-color: var(--white) !important;
+  background-color: var(--bs-white) !important;
   border-color: var(--color-1-900) !important;
   color: var(--font-color) !important;
 }
@@ -25,7 +25,7 @@
 }
 
 :global(.apexcharts-xaxistooltip) {
-  background-color: var(--white) !important;
+  background-color: var(--bs-white) !important;
   color: var(--font-color) !important;
   border-color: var(--color-1-900) !important;
 }

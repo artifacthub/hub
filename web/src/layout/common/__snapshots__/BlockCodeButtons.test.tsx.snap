@@ -6,7 +6,7 @@ exports[`BlockCodeButtons creates snapshot 1`] = `
     class="position-absolute d-flex flex-row wrapper undefined"
   >
     <div
-      class="position-relative mr-2"
+      class="position-relative me-2"
     >
       <button
         aria-label="Copy to clipboard"
@@ -45,7 +45,7 @@ exports[`BlockCodeButtons creates snapshot 1`] = `
     </div>
     <button
       aria-label="Download"
-      class="btn btn-sm btn-primary rounded-circle btn"
+      class="btn btn-sm btn-primary rounded-circle fs-5 btn"
     >
       <svg
         aria-hidden="true"

@@ -32,7 +32,7 @@ const CapabilityLevel = (props: Props) => {
           >
             <div
               data-testid="capabilityLevelStep"
-              className={classnames('rounded-circle text-center mr-2 textLight step', styles.step, {
+              className={classnames('rounded-circle text-center me-2 textLight step border bg-white', styles.step, {
                 [`activeStep ${styles.activeStep}`]: activeLevel >= index,
               })}
             >

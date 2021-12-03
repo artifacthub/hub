@@ -16,13 +16,13 @@ exports[`SearchTipsModal creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content"
+          class="modal-content border border-3 mx-auto content"
         >
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
           >
             <div
-              class="mw-100 text-left text-dark"
+              class="mw-100 text-start text-dark"
             >
               <div
                 class="d-flex flex-row justify-content-between mb-4"
@@ -32,7 +32,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Search tips
                   <svg
-                    class="ml-2"
+                    class="ms-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -49,15 +49,9 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 <div>
                   <button
                     aria-label="Close"
-                    class="close closeModalBtn"
+                    class="btn-close p-3 closeModalBtn"
                     type="button"
-                  >
-                    <span
-                      aria-hidden="true"
-                    >
-                      ×
-                    </span>
-                  </button>
+                  />
                 </div>
               </div>
               <ul
@@ -68,7 +62,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Use 
                   <span
-                    class="font-weight-semibold"
+                    class="fw-semibold"
                   >
                     multiple words
                   </span>
@@ -81,7 +75,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                    
                   <a
                     aria-label="Filter by kafka operator"
-                    class="font-weight-bold text-dark p-0"
+                    class="fw-bold text-dark p-0"
                     href="/packages/search?ts_query_web=kafka+operator&sort=relevance&page=1"
                   >
                     <u>
@@ -94,7 +88,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Use 
                   <span
-                    class="font-weight-semibold"
+                    class="fw-semibold"
                   >
                     -
                   </span>
@@ -107,7 +101,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                    
                   <a
                     aria-label="Filter by apache -solr -hadoop"
-                    class="font-weight-bold text-dark p-0"
+                    class="fw-bold text-dark p-0"
                     href="/packages/search?ts_query_web=apache+-solr+-hadoop&sort=relevance&page=1"
                   >
                     <u>
@@ -120,7 +114,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Put a phrase inside 
                   <span
-                    class="font-weight-semibold"
+                    class="fw-semibold"
                   >
                     double quotes
                   </span>
@@ -133,7 +127,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                    
                   <a
                     aria-label="Filter by \\"monitoring system\\""
-                    class="font-weight-bold text-dark p-0"
+                    class="fw-bold text-dark p-0"
                     href="/packages/search?ts_query_web=%22monitoring+system%22&sort=relevance&page=1"
                   >
                     <u>
@@ -146,7 +140,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 >
                   Use 
                   <span
-                    class="font-weight-semibold"
+                    class="fw-semibold"
                   >
                     or
                   </span>
@@ -159,7 +153,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                    
                   <a
                     aria-label="Filter by postgresql or mysql"
-                    class="font-weight-bold text-dark p-0"
+                    class="fw-bold text-dark p-0"
                     href="/packages/search?ts_query_web=postgresql+or+mysql&sort=relevance&page=1"
                   >
                     <u>
@@ -171,7 +165,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>

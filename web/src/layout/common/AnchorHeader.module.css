@@ -38,11 +38,9 @@
 }
 
 .headingLink {
-  float: left;
   margin-left: -35px;
   width: 35px;
   opacity: 0;
-  line-height: 1;
   padding-top: 4px;
 }
 

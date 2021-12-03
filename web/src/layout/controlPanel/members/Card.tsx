@@ -80,9 +80,9 @@ const MemberCard = (props: Props) => {
         <div className="card-body d-flex flex-column h-100">
           <div className="d-flex flex-row w-100 justify-content-between align-items-start">
             <div
-              className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
+              className={`d-flex align-items-center justify-content-center p-1 overflow-hidden me-2 border border-2 rounded-circle bg-white ${styles.imageWrapper} imageWrapper`}
             >
-              <FaUser className={styles.image} />
+              <FaUser className={`fs-4 ${styles.image}`} />
             </div>
 
             <div className="flex-grow-1">
@@ -91,12 +91,12 @@ const MemberCard = (props: Props) => {
                   {props.member.firstName || props.member.lastName ? getFullName() : props.member.alias}
                 </div>
                 {!isUndefined(props.member.confirmed) && !props.member.confirmed && (
-                  <div className={classnames('ml-3', { 'mr-3': props.membersNumber > 1 })}>
-                    <span className="badge badge-warning">Invitation not accepted yet</span>
+                  <div className={classnames('ms-3', { 'me-3': props.membersNumber > 1 })}>
+                    <span className="badge bg-warning">Invitation not accepted yet</span>
                   </div>
                 )}
               </div>
-              <div className="h6 text-muted mr-1 font-italic">{props.member.alias}</div>
+              <div className="h6 text-muted me-1 fst-italic">{props.member.alias}</div>
             </div>
 
             {props.membersNumber > 1 && (
@@ -112,13 +112,13 @@ const MemberCard = (props: Props) => {
                           aria-label="Cancel"
                         >
                           <div className="d-flex flex-row align-items-center">
-                            <IoMdCloseCircle className="mr-2" />
+                            <IoMdCloseCircle className="me-2" />
                             <span>Cancel</span>
                           </div>
                         </button>
 
                         <button
-                          className="btn btn-sm btn-danger ml-3"
+                          className="btn btn-sm btn-danger ms-3"
                           onClick={(e) => {
                             e.preventDefault();
                             deleteMember();
@@ -130,14 +130,14 @@ const MemberCard = (props: Props) => {
                             {isDeletingMember ? (
                               <>
                                 <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                                <span className="ml-2">{isUser ? 'Leaving...' : 'Removing...'}</span>
+                                <span className="ms-2">{isUser ? 'Leaving...' : 'Removing...'}</span>
                               </>
                             ) : (
                               <>
                                 {isUser ? (
-                                  <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                                  <FaSignOutAlt className={`me-2 ${styles.btnIcon}`} />
                                 ) : (
-                                  <FaUserMinus className={`mr-2 ${styles.btnIcon}`} />
+                                  <FaUserMinus className={`me-2 ${styles.btnIcon}`} />
                                 )}
                                 <span>{isUser ? 'Leave' : 'Remove'}</span>
                               </>
@@ -164,14 +164,14 @@ const MemberCard = (props: Props) => {
                   </Modal>
                 )}
 
-                <div className="ml-auto">
+                <div className="ms-auto">
                   <div
                     ref={dropdownMenu}
-                    className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                    className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdownMenu, {
                       show: dropdownMenuStatus,
                     })}
                   >
-                    <div className="arrow" />
+                    <div className="dropdown-arrow" />
 
                     {isUser ? (
                       <button
@@ -184,7 +184,7 @@ const MemberCard = (props: Props) => {
                         aria-label="Open leave organization modal"
                       >
                         <div className="d-flex flex-row align-items-center">
-                          <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                          <FaSignOutAlt className={`me-2 ${styles.btnIcon}`} />
                           <span>Leave</span>
                         </div>
                       </button>
@@ -200,7 +200,7 @@ const MemberCard = (props: Props) => {
                         label="Open leave organization modal"
                       >
                         <>
-                          <FaUserMinus className={`mr-2 ${styles.btnIcon}`} />
+                          <FaUserMinus className={`me-2 ${styles.btnIcon}`} />
                           <span>Remove</span>
                         </>
                       </ActionBtn>

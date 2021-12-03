@@ -88,7 +88,7 @@ const InstallationModal = (props: Props) => {
           <button
             type="button"
             className={classnames(
-              'btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap',
+              'btn fw-bold text-uppercase position-relative btn-outline-secondary btn-sm text-nowrap w-100',
               { disabled: isDisabled }
             )}
             onClick={onOpenModal}
@@ -96,7 +96,7 @@ const InstallationModal = (props: Props) => {
             aria-disabled={isDisabled}
           >
             <div className="d-flex align-items-center justify-content-center">
-              <FiDownload className="mr-2" />
+              <FiDownload className="me-2" />
               <span>Install</span>
             </div>
           </button>
@@ -123,8 +123,8 @@ const InstallationModal = (props: Props) => {
             <>
               {props.package && props.package.prerelease && (
                 <div className="alert alert-warning mt-1 mb-4" role="alert">
-                  This package version is a <span className="font-weight-bold">pre-release</span> and it is not ready
-                  for production use.
+                  This package version is a <span className="fw-bold">pre-release</span> and it is not ready for
+                  production use.
                 </div>
               )}
 

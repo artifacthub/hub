@@ -38,7 +38,7 @@ const BlockCodeButtons = (props: Props) => {
     <div className={`position-absolute d-flex flex-row ${styles.wrapper} ${props.className}`}>
       {(isUndefined(props.hiddenCopyBtn) || !props.hiddenCopyBtn) && (
         <ButtonCopyToClipboard
-          wrapperClassName="mr-2"
+          wrapperClassName="me-2"
           text={props.content}
           style={btnStyle}
           tooltipType={props.tooltipType}
@@ -46,7 +46,7 @@ const BlockCodeButtons = (props: Props) => {
       )}
 
       <button
-        className={`btn btn-sm btn-primary rounded-circle ${styles.btn}`}
+        className={`btn btn-sm btn-primary rounded-circle fs-5 ${styles.btn}`}
         style={btnStyle}
         onClick={downloadFile}
         aria-label="Download"

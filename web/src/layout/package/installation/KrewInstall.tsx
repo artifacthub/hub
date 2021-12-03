@@ -33,7 +33,7 @@ const KrewInstall = (props: Props) => {
       <div className="mt-2 d-flex flex-row justify-content-between align-items-baseline">
         <ExternalLink
           href="https://krew.sigs.k8s.io/docs/user-guide/setup/install/"
-          className="btn btn-link pl-0"
+          className="btn btn-link ps-0"
           label="Download Krew"
         >
           Need Krew?

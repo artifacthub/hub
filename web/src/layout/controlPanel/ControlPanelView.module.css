@@ -45,3 +45,9 @@
     margin-bottom: -2px !important;
   }
 }
+
+@media only screen and (min-width: 768px) {
+  .activeSection {
+    margin-bottom: -2px !important;
+  }
+}

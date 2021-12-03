@@ -16,7 +16,7 @@ exports[`SignUp creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content modal"
+          class="modal-content border border-3 mx-auto content modal"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -28,15 +28,9 @@ exports[`SignUp creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -49,116 +43,124 @@ exports[`SignUp creates snapshot 1`] = `
               >
                 Create your account using your email
               </div>
-              <button
-                aria-label="Open sign up form"
-                class="btn btn-outline-secondary btn-block"
-                type="button"
+              <div
+                class="d-grid"
               >
-                <div
-                  class="d-flex align-items-center"
+                <button
+                  aria-label="Open sign up form"
+                  class="btn btn-outline-secondary"
+                  type="button"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"
-                    />
-                  </svg>
                   <div
-                    class="flex-grow-1 text-center"
+                    class="d-flex align-items-center"
                   >
-                    Sign up
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"
+                      />
+                    </svg>
+                    <div
+                      class="flex-grow-1 text-center"
+                    >
+                      Sign up
+                    </div>
                   </div>
-                </div>
-              </button>
+                </button>
+              </div>
               <div
                 class="my-5 my-4 position-relative text-center separator"
               >
                 <span
-                  class="p-3 m-auto separatorContent"
+                  class="p-3 m-auto bg-white"
                 >
                   or sign in with
                 </span>
                 <div
-                  class="divider"
+                  class="position-absolute top-50 start-0 end-0 divider"
                 />
               </div>
               <div>
                 <div
                   class="d-flex flex-column mb-1"
                 >
-                  <button
-                    aria-label="Sign in with Github"
-                    class="btn btn-outline-secondary mb-3 btn-block btn"
-                    type="button"
+                  <div
+                    class="d-grid gap-4"
                   >
-                    <div
-                      class="d-flex align-items-center"
+                    <button
+                      aria-label="Sign in with Github"
+                      class="btn btn-outline-secondary btn"
+                      type="button"
                     >
-                      <img
-                        alt="Github Logo"
-                        class="logo"
-                        src="/static/media/github-mark.svg"
-                      />
                       <div
-                        class="flex-grow-1 text-center"
+                        class="d-flex align-items-center"
                       >
-                        Github
+                        <img
+                          alt="Github Logo"
+                          class="lh-base logo"
+                          src="/static/media/github-mark.svg"
+                        />
+                        <div
+                          class="flex-grow-1 text-center"
+                        >
+                          Github
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                  <button
-                    aria-label="Sign in with Google"
-                    class="btn btn-outline-secondary mb-3 btn-block btn"
-                    type="button"
-                  >
-                    <div
-                      class="d-flex align-items-center"
+                    </button>
+                    <button
+                      aria-label="Sign in with Google"
+                      class="btn btn-outline-secondary btn"
+                      type="button"
                     >
-                      <img
-                        alt="Google Logo"
-                        class="logo"
-                        src="/static/media/google.svg"
-                      />
                       <div
-                        class="flex-grow-1 text-center"
+                        class="d-flex align-items-center"
                       >
-                        Google
+                        <img
+                          alt="Google Logo"
+                          class="lh-base logo"
+                          src="/static/media/google.svg"
+                        />
+                        <div
+                          class="flex-grow-1 text-center"
+                        >
+                          Google
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                  <button
-                    aria-label="Sign in with OpenID Connect"
-                    class="btn btn-outline-secondary mb-3 btn-block btn"
-                    type="button"
-                  >
-                    <div
-                      class="d-flex align-items-center"
+                    </button>
+                    <button
+                      aria-label="Sign in with OpenID Connect"
+                      class="btn btn-outline-secondary  btn"
+                      type="button"
                     >
-                      <img
-                        alt="OpenID Logo"
-                        class="logo"
-                        src="/static/media/openid.svg"
-                      />
                       <div
-                        class="flex-grow-1 text-center"
+                        class="d-flex align-items-center"
                       >
-                        OpenID Connect
+                        <img
+                          alt="OpenID Logo"
+                          class="lh-base logo"
+                          src="/static/media/openid.svg"
+                        />
+                        <div
+                          class="flex-grow-1 text-center"
+                        >
+                          OpenID Connect
+                        </div>
                       </div>
-                    </div>
-                  </button>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -175,7 +177,7 @@ exports[`SignUp creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

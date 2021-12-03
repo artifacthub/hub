@@ -9,22 +9,22 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
     novalidate=""
   >
     <div
-      class="form-group mb-4 undefined"
+      class=" mb-4 undefined"
     >
       <div
         class="d-flex flex-column"
       >
         <label
-          class="label"
+          class="form-label label"
           for="logo"
         >
           <span
-            class="font-weight-bold"
+            class="fw-bold"
           >
             Logo
           </span>
           <small
-            class="ml-1 font-italic"
+            class="ms-1 fst-italic"
           >
             (Click on the image to update)
           </small>
@@ -34,7 +34,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         >
           <button
             aria-label="Add image"
-            class="btn p-0 overflow-hidden position-relative btn"
+            class="btn p-0 overflow-hidden position-relative border border-3 lh-1 rounded-circle fs-2 bg-white btn"
             type="button"
           >
             <svg
@@ -65,19 +65,19 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="name"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Name
         </span>
         <small
-          class="ml-1 font-italic"
+          class="ms-1 fst-italic"
         >
           (Required)
         </small>
@@ -101,14 +101,14 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="displayName"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Display name
         </span>
@@ -127,14 +127,14 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="homeUrl"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Home URL
         </span>
@@ -155,10 +155,10 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="form-group"
+      class=""
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="description"
       >
         Description

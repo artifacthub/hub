@@ -9,10 +9,10 @@ exports[`SchemaValuesSearch creates snapshot 1`] = `
       class="position-relative wrapper undefined"
     >
       <div
-        class="form-group input-group-sm inputWrapper undefined"
+        class="mb-3 input-group-sm inputWrapper undefined"
       >
         <input
-          class="flex-grow-1 form-control input pl-3 pr-4"
+          class="flex-grow-1 form-control input ps-3 pe-4"
           name="inputTypeahead_path"
           placeholder="Search path"
           spellcheck="false"

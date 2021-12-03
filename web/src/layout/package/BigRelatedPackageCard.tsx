@@ -22,7 +22,7 @@ const BigRelatedPackageCard = (props: Props) => {
 
   return (
     <div
-      className={`card cardWithHover mt-3 mt-xxl-0 w-100 relatedCard ${styles.card}`}
+      className={`card cardWithHover mt-3 mt-xxl-0 w-100 relatedCard bg-white ${styles.card}`}
       data-testid="relatedPackageLink"
     >
       <Link
@@ -31,11 +31,11 @@ const BigRelatedPackageCard = (props: Props) => {
           pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),
         }}
       >
-        <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
+        <div className="card-body d-flex flex-column h-100 p-3">
           <div className="d-flex align-items-start justify-content-between mw-100">
             <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
               <div
-                className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 ${styles.imageWrapper} imageWrapper`}
+                className={`position-relative d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border border-2 bg-white ${styles.imageWrapper} imageWrapper`}
               >
                 <Image
                   imageId={props.package.logoImageId}
@@ -46,7 +46,7 @@ const BigRelatedPackageCard = (props: Props) => {
               </div>
 
               <div
-                className={`d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 ${styles.truncateWrapper} ${styles.titleWrapper}`}
+                className={`d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 ${styles.truncateWrapper} ${styles.titleWrapper}`}
               >
                 <div className="text-truncate card-title mb-0">
                   <div className="d-flex flex-row align-items-center">
@@ -71,7 +71,7 @@ const BigRelatedPackageCard = (props: Props) => {
                   <div className="d-flex flex-row align-items-baseline">
                     {props.package.repository.organizationName && (
                       <OrganizationInfo
-                        className={`mr-0 d-flex flex-row align-items-baseline ${styles.mx50} `}
+                        className={`me-0 d-flex flex-row align-items-baseline text-left w-auto ${styles.mx50} `}
                         btnClassName="text-truncate mw-100"
                         organizationName={props.package.repository.organizationName}
                         organizationDisplayName={props.package.repository.organizationDisplayName}
@@ -81,11 +81,11 @@ const BigRelatedPackageCard = (props: Props) => {
 
                     {props.package.repository.userAlias && (
                       <>
-                        <span className="text-muted text-uppercase mr-1">User: </span>
-                        <span className="sr-only">{props.package.repository.userAlias}</span>
+                        <span className="text-muted text-uppercase me-1">User: </span>
+                        <span className="visually-hidden">{props.package.repository.userAlias}</span>
 
                         <button
-                          className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link} ${styles.mx50}`}
+                          className={`p-0 border-0 text-truncate text-dark mw-100 bg-transparent text-left w-auto ${styles.link} ${styles.mx50}`}
                           onClick={(e) => {
                             e.preventDefault();
                             history.push({
@@ -107,10 +107,10 @@ const BigRelatedPackageCard = (props: Props) => {
                       </>
                     )}
 
-                    <div className={styles.mx50}>
+                    <div className={`text-left w-auto ${styles.mx50}`}>
                       <RepositoryInfo
                         repository={props.package.repository}
-                        className={`d-flex flex-row align-items-baseline ml-3 ${styles.truncateWrapper}`}
+                        className={`d-flex flex-row align-items-baseline ms-3 ${styles.truncateWrapper}`}
                         repoLabelClassName="d-none d-lg-inline"
                         withLabels={false}
                       />
@@ -119,9 +119,9 @@ const BigRelatedPackageCard = (props: Props) => {
                 </div>
               </div>
 
-              <div className={`d-flex flex-column align-items-end mb-auto ml-2`}>
-                <div className={`align-self-start d-flex align-items-center text-uppercase ml-auto ${styles.kind}`}>
-                  <StarBadge className="mr-2" starsNumber={props.package.stars} />
+              <div className={`d-flex flex-column align-items-end mb-auto ms-2`}>
+                <div className={`align-self-start d-flex align-items-center text-uppercase ms-auto ${styles.kind}`}>
+                  <StarBadge className="me-2" starsNumber={props.package.stars} />
                   <RepositoryIconLabel kind={props.package.repository.kind} clickable />
                 </div>
                 <div className="mt-1">

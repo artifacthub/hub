@@ -44,12 +44,12 @@ const ExpandableList = (props: Props) => {
         <button data-testid="expandableListBtn" className="btn btn-link btn-sm p-0" onClick={() => onBtnClick()}>
           {open ? (
             <div className="d-flex align-items-center">
-              <FaCaretUp className="mr-1" />
+              <FaCaretUp className="me-1" />
               Show less...
             </div>
           ) : (
             <div className="d-flex align-items-center">
-              <FaCaretDown className="mr-1" />
+              <FaCaretDown className="me-1" />
               Show more...
             </div>
           )}

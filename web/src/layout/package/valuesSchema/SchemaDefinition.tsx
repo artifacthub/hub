@@ -148,14 +148,14 @@ const SchemaDefinition = (props: Props) => {
 
   const formatPropValue = (value?: any, required?: string[]): JSX.Element => {
     if (isUndefined(value) || isNull(value)) {
-      return <span className="ml-1">-</span>;
+      return <span className="ms-1">-</span>;
     }
 
     switch (typeof value) {
       case 'object':
         if (isArray(value)) {
           return (
-            <div className="d-flex flex-column ml-3" role="list">
+            <div className="d-flex flex-column ms-3" role="list">
               {value.map((el: string) => (
                 <div key={`it_${el}`} className={`${styles.listItem} position-relative`} role="listitem">
                   {el}
@@ -165,7 +165,7 @@ const SchemaDefinition = (props: Props) => {
           );
         } else {
           return (
-            <div className="ml-3" role="list">
+            <div className="ms-3" role="list">
               {Object.keys(value).map((el: string) => (
                 <div key={`it_${el}`} className={`${styles.listItem} position-relative`} role="listitem">
                   {el}:{' '}
@@ -177,9 +177,7 @@ const SchemaDefinition = (props: Props) => {
                       : '-'}
                   </span>{' '}
                   {(checkIfPropIsRequiredInSchema(el, def.required) || checkIfPropIsRequiredInSchema(el, required)) && (
-                    <span
-                      className={`text-success text-uppercase position-relative ml-2 font-weight-bold ${styles.xsBadge}`}
-                    >
+                    <span className={`text-success text-uppercase position-relative ms-2 fw-bold ${styles.xsBadge}`}>
                       Required
                     </span>
                   )}
@@ -189,9 +187,9 @@ const SchemaDefinition = (props: Props) => {
           );
         }
       case 'boolean':
-        return <span className="ml-1">{value.toString()}</span>;
+        return <span className="ms-1">{value.toString()}</span>;
       default:
-        return <span className="ml-1">{value}</span>;
+        return <span className="ms-1">{value}</span>;
     }
   };
 
@@ -200,37 +198,37 @@ const SchemaDefinition = (props: Props) => {
     switch (typeof def.default) {
       case 'object':
         if (isEmpty(def.default)) {
-          return <span className="ml-1">{props.defaultValue}</span>;
+          return <span className="ms-1">{props.defaultValue}</span>;
         } else {
           return (
             <>
-              <FaCheck className="mr-1 text-success" />
+              <FaCheck className="me-1 text-success" />
               <small>(please expand for more details)</small>
             </>
           );
         }
       default:
-        return <span className="ml-1">{props.defaultValue}</span>;
+        return <span className="ms-1">{props.defaultValue}</span>;
     }
   };
 
   const getItemsDef = (value?: any): JSX.Element => {
-    if (isUndefined(value) || isNull(value)) return <span className="ml-1">-</span>;
+    if (isUndefined(value) || isNull(value)) return <span className="ms-1">-</span>;
     const types = isArray(value) ? value.map((item: any) => item.type) : [value.type];
     return (
       <>
-        <span className="ml-1">
+        <span className="ms-1">
           {`[${types.join(',')}] `}
-          {def.uniqueItems && <span className="ml-1">(unique)</span>}
+          {def.uniqueItems && <span className="ms-1">(unique)</span>}
         </span>
       </>
     );
   };
 
   const getArrayDesc = (value?: any): JSX.Element => {
-    if (isUndefined(value)) return <span className="ml-1">-</span>;
+    if (isUndefined(value)) return <span className="ms-1">-</span>;
     const desc = isArray(value) ? value.map((item: any) => item.description) : [value.description];
-    return <span>{detectLinksInText(desc.join('. '), styles.descriptionLink) || '-'}</span>;
+    return <span>{detectLinksInText(desc.join('. '), 'text-break') || '-'}</span>;
   };
 
   const getTypeSpecificKeyword = (item: KeywordProp, className?: string): JSX.Element | null => {
@@ -279,13 +277,13 @@ const SchemaDefinition = (props: Props) => {
     <div className="position-relative w-100" ref={ref}>
       <div className={styles.contentWrapper}>
         <button
-          className={`btn btn-block text-reset text-left p-0 position-relative ${styles.btn}`}
+          className={`btn text-reset text-start p-0 position-relative w-100 ${styles.btn}`}
           onClick={changeActivePath}
           aria-label={`${props.isExpanded ? 'Hide' : 'Show'} detail`}
         >
           <div className="d-flex flex-column">
             <div className="d-flex flex-row align-items-start">
-              <div className={`pr-2 text-secondary ${styles.icon}`}>
+              <div className={`pe-2 text-secondary ${styles.icon}`}>
                 {props.isExpanded ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
               </div>
               <div className={`d-flex flex-column flex-grow-1 ${styles.content}`}>
@@ -293,7 +291,7 @@ const SchemaDefinition = (props: Props) => {
                   <small className={`text-muted text-uppercase ${styles.errorMsg}`}>Raw</small>
                 ) : (
                   <>
-                    {def.title && <div className="font-weight-bold text-truncate">{def.title}</div>}
+                    {def.title && <div className="fw-bold text-truncate">{def.title}</div>}
 
                     {!isNull(props.def.combinationType) && (
                       <>
@@ -342,22 +340,22 @@ const SchemaDefinition = (props: Props) => {
                             ))}
                           </select>
                         ) : (
-                          <span className="ml-1 font-weight-bold">{activeType}</span>
+                          <span className="ms-1 fw-bold">{activeType}</span>
                         )}
                         {activeType === 'array' && def.items && <>{getItemsDef(def.items)}</>}
                       </div>
 
                       {!isUndefined(def.default) && (
-                        <div className="ml-3 text-truncate">
+                        <div className="ms-3 text-truncate">
                           <small className="text-muted text-uppercase">Default</small>:{' '}
                           <span className={`text-truncate ${styles.default}`}>{formatDefaultResume()}</span>
                         </div>
                       )}
 
-                      <div className="ml-auto pl-2">
+                      <div className="ms-auto ps-2">
                         {props.isRequired && (
                           <span
-                            className={`badge badge-sm badge-pill badge-success text-uppercase position-relative ${styles.badge}`}
+                            className={`badge badge-sm rounded-pill bg-success text-uppercase position-relative ${styles.badge}`}
                           >
                             Required
                           </span>
@@ -383,8 +381,8 @@ const SchemaDefinition = (props: Props) => {
               ) : (
                 <>
                   <div className="d-flex flex-row align-items-between">
-                    <div className="font-weight-bold mb-1">Annotations</div>
-                    <div className="ml-auto">
+                    <div className="fw-bold mb-1">Annotations</div>
+                    <div className="ms-auto">
                       <ButtonCopyToClipboard
                         text={props.path}
                         contentBtn="Copy path to clipboard"
@@ -396,11 +394,9 @@ const SchemaDefinition = (props: Props) => {
                   </div>
                   <div>
                     <small className="text-muted text-uppercase">Description</small>:{' '}
-                    <span className="ml-1">
+                    <span className="ms-1">
                       {def.description ? (
-                        <span className={styles.wordBreak}>
-                          {detectLinksInText(def.description, styles.descriptionLink)}
-                        </span>
+                        <span className="text-break">{detectLinksInText(def.description, styles.descriptionLink)}</span>
                       ) : (
                         <>
                           {def.type === 'array' && def.items ? (
@@ -421,7 +417,7 @@ const SchemaDefinition = (props: Props) => {
 
                   {!isUndefined(typeDef) && (
                     <>
-                      <div className="font-weight-bold mt-2 mb-1">Constraints</div>
+                      <div className="fw-bold mt-2 mb-1">Constraints</div>
                       {typeDef.map((keyword: KeywordProp) => (
                         <Fragment key={keyword.label}>
                           {isArray(keyword.value) ? (
@@ -429,7 +425,7 @@ const SchemaDefinition = (props: Props) => {
                               <div className="d-flex flex-row">
                                 {keyword.value.map((subKeyword: KeywordProp) => (
                                   <Fragment key={subKeyword.label}>
-                                    {getTypeSpecificKeyword(subKeyword, 'mr-3')}
+                                    {getTypeSpecificKeyword(subKeyword, 'me-3')}
                                   </Fragment>
                                 ))}
                               </div>

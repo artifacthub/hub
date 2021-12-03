@@ -11,7 +11,7 @@ exports[`SignKeyInfo creates snapshot 1`] = `
       <button
         aria-disabled="false"
         aria-label="Open sign key modal"
-        class="btn btn-outline-secondary btn-sm ml-2 btn"
+        class="btn btn-outline-secondary btn-sm ms-2 px-2 py-0 btn"
       >
         <small
           class="d-flex flex-row align-items-center text-uppercase"
@@ -30,7 +30,7 @@ exports[`SignKeyInfo creates snapshot 1`] = `
             />
           </svg>
           <span
-            class="ml-2 font-weight-bold"
+            class="ms-2 fw-bold"
           >
             View key info
           </span>
@@ -48,7 +48,7 @@ exports[`SignKeyInfo creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
       >
         <div
-          class="modal-content content"
+          class="modal-content border border-3 mx-auto content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -60,22 +60,16 @@ exports[`SignKeyInfo creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
           >
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -92,7 +86,7 @@ exports[`SignKeyInfo creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

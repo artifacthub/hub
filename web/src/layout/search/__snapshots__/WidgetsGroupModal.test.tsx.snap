@@ -13,10 +13,10 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable fs-6"
       >
         <div
-          class="modal-content content"
+          class="modal-content border border-3 mx-auto content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -28,15 +28,9 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -45,7 +39,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
               class="w-100 position-relative"
             >
               <label
-                class="font-weight-bold label"
+                class="form-label fw-bold label"
                 for="theme"
               >
                 Theme
@@ -54,11 +48,11 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 class="d-flex flex-row mb-3"
               >
                 <div
-                  class="custom-control custom-radio mr-4"
+                  class="form-check me-4"
                 >
                   <input
                     checked=""
-                    class="custom-control-input"
+                    class="form-check-input"
                     id="light"
                     name="theme"
                     readonly=""
@@ -67,7 +61,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                     value="light"
                   />
                   <label
-                    class="text-capitalize custom-control-label"
+                    class="form-label text-capitalize form-check-label"
                     for="light"
                   >
                     <div
@@ -139,7 +133,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                         />
                       </svg>
                       <span
-                        class="ml-1"
+                        class="ms-1"
                       >
                         light
                       </span>
@@ -147,10 +141,10 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   </label>
                 </div>
                 <div
-                  class="custom-control custom-radio mr-4"
+                  class="form-check me-4"
                 >
                   <input
-                    class="custom-control-input"
+                    class="form-check-input"
                     id="dark"
                     name="theme"
                     readonly=""
@@ -159,7 +153,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                     value="dark"
                   />
                   <label
-                    class="text-capitalize custom-control-label"
+                    class="form-label text-capitalize form-check-label"
                     for="dark"
                   >
                     <div
@@ -181,7 +175,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                         />
                       </svg>
                       <span
-                        class="ml-1"
+                        class="ms-1"
                       >
                         dark
                       </span>
@@ -193,59 +187,61 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 class="mt-4 mb-3"
               >
                 <div
-                  class="custom-control custom-switch pl-0"
+                  class="form-check form-switch ps-0"
                 >
-                  <input
-                    class="custom-control-input"
-                    id="header"
-                    type="checkbox"
-                    value="true"
-                  />
                   <label
-                    class="custom-control-label font-weight-bold label customControlRightLabel"
+                    class="form-check-label fw-bold label"
                     for="header"
                   >
                     Header
                   </label>
+                  <input
+                    class="form-check-input position-absolute ms-2"
+                    id="header"
+                    role="switch"
+                    type="checkbox"
+                    value="true"
+                  />
                 </div>
-                <small
+                <div
                   class="form-text text-muted mt-2"
                 >
                   Display Artifact Hub header at the top of the widget.
-                </small>
+                </div>
               </div>
               <div
                 class="mt-4 mb-3"
               >
                 <div
-                  class="custom-control custom-switch pl-0"
+                  class="form-check form-switch ps-0"
                 >
-                  <input
-                    checked=""
-                    class="custom-control-input"
-                    id="stars"
-                    type="checkbox"
-                    value="true"
-                  />
                   <label
-                    class="custom-control-label font-weight-bold label customControlRightLabel"
+                    class="form-check-label fw-bold label"
                     for="stars"
                   >
                     Stars
                   </label>
+                  <input
+                    checked=""
+                    class="form-check-input position-absolute ms-2"
+                    id="stars"
+                    role="switch"
+                    type="checkbox"
+                    value="true"
+                  />
                 </div>
-                <small
+                <div
                   class="form-text text-muted mt-2"
                 >
                   Display number of stars given to the package.
-                </small>
+                </div>
               </div>
               <div
                 class="d-flex flex-row"
               >
                 <div>
                   <label
-                    class="font-weight-bold label"
+                    class="form-label fw-bold label"
                     for="groupWrapperWidthOpt"
                   >
                     Container width
@@ -254,11 +250,11 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                     class="d-flex flex-row"
                   >
                     <div
-                      class="custom-control custom-radio mr-4"
+                      class="form-check me-4"
                     >
                       <input
                         checked=""
-                        class="custom-control-input"
+                        class="form-check-input"
                         id="responsive"
                         name="groupWrapperWidthOpt"
                         readonly=""
@@ -267,7 +263,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                         value="responsive"
                       />
                       <label
-                        class="text-capitalize custom-control-label"
+                        class="text-capitalize form-check-label"
                         for="responsive"
                       >
                         <div
@@ -288,7 +284,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                             />
                           </svg>
                           <span
-                            class="ml-1"
+                            class="ms-1"
                           >
                             responsive
                           </span>
@@ -296,10 +292,10 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                       </label>
                     </div>
                     <div
-                      class="custom-control custom-radio mr-4"
+                      class="form-check me-4"
                     >
                       <input
-                        class="custom-control-input"
+                        class="form-check-input"
                         id="fixed"
                         name="groupWrapperWidthOpt"
                         readonly=""
@@ -308,7 +304,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                         value="fixed"
                       />
                       <label
-                        class="text-capitalize custom-control-label"
+                        class="text-capitalize form-check-label"
                         for="fixed"
                       >
                         <div
@@ -328,7 +324,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                             />
                           </svg>
                           <span
-                            class="ml-1"
+                            class="ms-1"
                           >
                             fixed
                           </span>
@@ -345,27 +341,28 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 class="mt-4 mb-3"
               >
                 <div
-                  class="custom-control custom-switch pl-0"
+                  class="form-check form-switch ps-0"
                 >
-                  <input
-                    checked=""
-                    class="custom-control-input"
-                    id="loading"
-                    type="checkbox"
-                    value="true"
-                  />
                   <label
-                    class="custom-control-label font-weight-bold label customControlRightLabel"
+                    class="form-check-label fw-bold label"
                     for="loading"
                   >
                     Loading spinner
                   </label>
+                  <input
+                    checked=""
+                    class="form-check-input position-absolute ms-2"
+                    id="loading"
+                    role="switch"
+                    type="checkbox"
+                    value="true"
+                  />
                 </div>
-                <small
+                <div
                   class="form-text text-muted mt-2"
                 >
                   Display loading spinner while waiting for search results.
-                </small>
+                </div>
               </div>
               <div
                 class="mt-4 mb-3"
@@ -374,13 +371,13 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <label
-                    class="font-weight-bold mb-0 label"
+                    class="form-label fw-bold mb-0 label"
                     for="color"
                   >
                     Color
                   </label>
                   <div
-                    class="btn btn-sm btn-light colorInputWrapper"
+                    class="btn btn-sm btn-light border p-1 ms-2 colorInputWrapper"
                   >
                     <div
                       class="colorInput"
@@ -388,11 +385,11 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                     />
                   </div>
                 </div>
-                <small
+                <div
                   class="form-text text-muted mt-3 mb-2"
                 >
                   Color used for widgets border, header and loading spinner.
-                </small>
+                </div>
                 <div
                   class="pb-2 colorPickerWrapper"
                 >
@@ -403,12 +400,12 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 class="mt-3 mb-2"
               >
                 <label
-                  class="font-weight-bold label"
+                  class="form-label fw-bold label"
                 >
                   Code
                 </label>
                 <div
-                  class="flex-grow-1 mr-3 user-select-none blockWrapper"
+                  class="flex-grow-1 me-3 user-select-none blockWrapper"
                   data-testid="block-content"
                 >
                   <pre
@@ -429,7 +426,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 >
                   <button
                     aria-label="Copy code to clipboard"
-                    class="btn btn-sm btn-outline-secondary copyBtn"
+                    class="btn btn-sm btn-outline-secondary px-2 py-1 text-uppercase"
                     type="button"
                   >
                     <div
@@ -437,7 +434,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                       class="d-flex flex-row align-items-center"
                     >
                       <div
-                        class="mr-2"
+                        class="me-2"
                       >
                         Copy code to clipboard
                       </div>
@@ -471,7 +468,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -488,7 +485,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

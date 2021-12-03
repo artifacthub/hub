@@ -37,7 +37,7 @@ exports[`Maintainers creates snapshot 1`] = `
           class="d-flex align-items-center"
         >
           <svg
-            class="text-muted mr-2 h6 mb-0"
+            class="text-muted me-2 h6 mb-0"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -74,7 +74,7 @@ exports[`Maintainers creates snapshot 1`] = `
           class="d-flex align-items-center"
         >
           <svg
-            class="text-muted mr-2 h6 mb-0"
+            class="text-muted me-2 h6 mb-0"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -111,7 +111,7 @@ exports[`Maintainers creates snapshot 1`] = `
           class="d-flex align-items-center"
         >
           <svg
-            class="text-muted mr-2 h6 mb-0"
+            class="text-muted me-2 h6 mb-0"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

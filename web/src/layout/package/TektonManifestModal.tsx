@@ -51,13 +51,13 @@ const TektonManifestModal = (props: Props) => {
   return (
     <div className="mb-2">
       <button
-        className="btn btn-outline-secondary btn-block btn-sm text-nowrap"
+        className="btn btn-outline-secondary btn-sm text-nowrap w-100"
         onClick={onOpenModal}
         aria-label="Open Manifest"
       >
         <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
           <GoFileCode />
-          <span className="ml-2 font-weight-bold">Manifest</span>
+          <span className="ms-2 fw-bold">Manifest</span>
         </div>
       </button>
 
@@ -70,7 +70,7 @@ const TektonManifestModal = (props: Props) => {
         >
           <div className="mw-100 h-100">
             <>
-              <div className={`position-relative h-100 overflow-auto ${styles.syntaxWrapper}`}>
+              <div className={`position-relative h-100 overflow-auto border ${styles.syntaxWrapper}`}>
                 <BlockCodeButtons filename={`${props.normalizedName}.yaml`} content={props.manifestRaw} />
 
                 <SyntaxHighlighter

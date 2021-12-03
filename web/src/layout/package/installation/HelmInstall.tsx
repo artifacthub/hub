@@ -25,16 +25,16 @@ const HelmInstall = (props: Props) => {
 
         <CommandBlock command={installCmd} title="Install chart" />
 
-        <div className={`font-italic text-muted ${styles.legend}`}>
-          <span className="font-weight-bold">my-{props.name}</span> corresponds to the release name, feel free to change
-          it to suit your needs. You can also add additional flags to the{' '}
-          <span className="font-weight-bold">helm install</span> command if you need to.
+        <div className={`fst-italic text-muted ${styles.legend}`}>
+          <span className="fw-bold">my-{props.name}</span> corresponds to the release name, feel free to change it to
+          suit your needs. You can also add additional flags to the <span className="fw-bold">helm install</span>{' '}
+          command if you need to.
         </div>
 
         <div className="mt-2 d-flex flex-row justify-content-between align-items-baseline">
           <ExternalLink
             href="https://helm.sh/docs/intro/quickstart/"
-            className="btn btn-link pl-0"
+            className="btn btn-link ps-0"
             label="Download Helm"
           >
             Need Helm?
@@ -42,11 +42,11 @@ const HelmInstall = (props: Props) => {
 
           {props.contentUrl && (
             <div className="d-none d-lg-block">
-              <small className="text-muted pl-2">
+              <small className="text-muted ps-2">
                 You can also download this package's content directly using{' '}
                 <ExternalLink
                   href={props.contentUrl}
-                  className="text-secondary font-weight-bold"
+                  className="text-secondary fw-bold"
                   target="_self"
                   label="Download package link"
                 >

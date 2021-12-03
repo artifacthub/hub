@@ -21,19 +21,19 @@ exports[`Platforms creates snapshot 1`] = `
     class="mb-3 d-flex flex-row flex-wrap"
   >
     <div
-      class="d-inline badge font-weight-normal mr-2 mb-1 mw-100 text-truncate badge"
+      class="d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate badge"
       data-testid="platformBadge"
     >
       darwin
     </div>
     <div
-      class="d-inline badge font-weight-normal mr-2 mb-1 mw-100 text-truncate badge"
+      class="d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate badge"
       data-testid="platformBadge"
     >
       linux
     </div>
     <div
-      class="d-inline badge font-weight-normal mr-2 mb-1 mw-100 text-truncate badge"
+      class="d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate badge"
       data-testid="platformBadge"
     >
       windows

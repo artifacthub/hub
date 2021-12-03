@@ -71,7 +71,7 @@ const ButtonCopyToClipboard = (props: Props) => {
       {copyStatus && (
         <div
           className={classnames(
-            'tooltip bs-tooltip-bottom show',
+            'tooltip bs-tooltip-bottom show end-0',
             styles.tooltip,
             props.tooltipClassName,
             {
@@ -83,7 +83,7 @@ const ButtonCopyToClipboard = (props: Props) => {
           )}
           role="tooltip"
         >
-          <div className={`arrow ${styles.tooltipArrow} ${props.arrowClassName}`} />
+          <div className={`tooltip-arrow ${styles.tooltipArrow} ${props.arrowClassName}`} />
           <div className={`tooltip-inner ${styles.tooltipContent}`}>Copied!</div>
         </div>
       )}
@@ -108,11 +108,11 @@ const ButtonCopyToClipboard = (props: Props) => {
       >
         <div className="d-flex flex-row align-items-center" aria-hidden="true">
           {!isUndefined(props.visibleBtnText) && props.visibleBtnText && props.contentBtn && (
-            <div className="mr-2">{props.contentBtn}</div>
+            <div className="me-2">{props.contentBtn}</div>
           )}
           {props.icon ? <>{props.icon}</> : <FiCopy />}
           {!isUndefined(props.visibleBtnText) && props.visibleBtnText && isUndefined(props.contentBtn) && (
-            <div className="ml-2">Copy to clipboard</div>
+            <div className="ms-2">Copy to clipboard</div>
           )}
         </div>
       </button>

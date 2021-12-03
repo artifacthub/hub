@@ -1,5 +1,4 @@
 .subnavbar {
-  height: auto;
   min-height: 48px;
   padding: 10px 0.5rem;
 }
@@ -39,14 +38,6 @@
 
 .list {
   max-width: 100%;
-}
-
-.noDataMessage {
-  line-height: 1.5rem;
-}
-
-.spinner {
-  top: 50%;
 }
 
 @media only screen and (min-width: 768px) {

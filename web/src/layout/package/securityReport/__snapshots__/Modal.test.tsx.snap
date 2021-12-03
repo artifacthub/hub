@@ -16,7 +16,7 @@ exports[`SecurityModal creates snapshot 1`] = `
           role="status"
         />
         <span
-          class="ml-2"
+          class="ms-2"
         >
           Getting report...
         </span>

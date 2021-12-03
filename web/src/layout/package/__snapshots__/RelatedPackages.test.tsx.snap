@@ -25,7 +25,7 @@ exports[`RelatedPackages renders correctly 1`] = `
       </small>
     </div>
     <div
-      class="pt-1 row no-gutters"
+      class="pt-1 row g-0"
     >
       <div
         class="col-12"
@@ -35,7 +35,7 @@ exports[`RelatedPackages renders correctly 1`] = `
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset link"
+            class="text-decoration-none text-reset bg-transparent link"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/test"
           >
@@ -46,7 +46,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
                 >
                   <img
                     alt="Logo centrifugo"
@@ -57,7 +57,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -72,7 +72,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="kind"
                         >
                           <span
-                            class="badge font-weight-bold badge"
+                            class="badge fw-bold badge"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
@@ -93,7 +93,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ml-1"
+                                class="ms-1"
                               >
                                 Helm chart
                               </div>
@@ -141,7 +141,7 @@ exports[`RelatedPackages renders correctly 1`] = `
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset link"
+            class="text-decoration-none text-reset bg-transparent link"
             data-testid="relatedPackageLink"
             href="/packages/helm/incubator/test"
           >
@@ -152,7 +152,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
                 >
                   <img
                     alt="Logo kafka"
@@ -163,7 +163,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -178,7 +178,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="kind"
                         >
                           <span
-                            class="badge font-weight-bold badge"
+                            class="badge fw-bold badge"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
@@ -199,7 +199,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ml-1"
+                                class="ms-1"
                               >
                                 Helm chart
                               </div>
@@ -247,7 +247,7 @@ exports[`RelatedPackages renders correctly 1`] = `
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset link"
+            class="text-decoration-none text-reset bg-transparent link"
             data-testid="relatedPackageLink"
             href="/packages/helm/dhiatn/test"
           >
@@ -258,7 +258,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
                 >
                   <img
                     alt="Logo kafka-topics-ui"
@@ -269,7 +269,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -284,7 +284,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="kind"
                         >
                           <span
-                            class="badge font-weight-bold badge"
+                            class="badge fw-bold badge"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
@@ -305,7 +305,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ml-1"
+                                class="ms-1"
                               >
                                 Helm chart
                               </div>
@@ -353,7 +353,7 @@ exports[`RelatedPackages renders correctly 1`] = `
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset link"
+            class="text-decoration-none text-reset bg-transparent link"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/test"
           >
@@ -364,7 +364,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
                 >
                   <img
                     alt="Logo nats"
@@ -375,7 +375,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -390,7 +390,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="kind"
                         >
                           <span
-                            class="badge font-weight-bold badge"
+                            class="badge fw-bold badge"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
@@ -411,7 +411,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ml-1"
+                                class="ms-1"
                               >
                                 Helm chart
                               </div>
@@ -459,7 +459,7 @@ exports[`RelatedPackages renders correctly 1`] = `
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset link"
+            class="text-decoration-none text-reset bg-transparent link"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/test"
           >
@@ -470,7 +470,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
                 >
                   <img
                     alt="Logo rabbitmq"
@@ -481,7 +481,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -496,7 +496,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="kind"
                         >
                           <span
-                            class="badge font-weight-bold badge"
+                            class="badge fw-bold badge"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
@@ -517,7 +517,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ml-1"
+                                class="ms-1"
                               >
                                 Helm chart
                               </div>
@@ -565,7 +565,7 @@ exports[`RelatedPackages renders correctly 1`] = `
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset link"
+            class="text-decoration-none text-reset bg-transparent link"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/test"
           >
@@ -576,7 +576,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
                 >
                   <img
                     alt="Logo rabbitmq-ha"
@@ -587,7 +587,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -602,7 +602,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="kind"
                         >
                           <span
-                            class="badge font-weight-bold badge"
+                            class="badge fw-bold badge"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
@@ -623,7 +623,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ml-1"
+                                class="ms-1"
                               >
                                 Helm chart
                               </div>
@@ -671,7 +671,7 @@ exports[`RelatedPackages renders correctly 1`] = `
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset link"
+            class="text-decoration-none text-reset bg-transparent link"
             data-testid="relatedPackageLink"
             href="/packages/helm/incubator/test"
           >
@@ -682,7 +682,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
                 >
                   <img
                     alt="Logo schema-registry"
@@ -693,7 +693,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -708,7 +708,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="kind"
                         >
                           <span
-                            class="badge font-weight-bold badge"
+                            class="badge fw-bold badge"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
@@ -729,7 +729,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ml-1"
+                                class="ms-1"
                               >
                                 Helm chart
                               </div>

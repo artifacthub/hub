@@ -3,18 +3,14 @@
 exports[`SubscriptionSwitch renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="custom-control custom-switch ml-2 position-relative"
+    class="form-switch"
   >
     <input
-      class="custom-control-input checkbox"
+      class="form-check-input checkbox"
       data-testid="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4_input"
       id="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4"
+      role="switch"
       type="checkbox"
-    />
-    <label
-      class="custom-control-label"
-      data-testid="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4_label"
-      for="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4"
     />
   </div>
 </DocumentFragment>

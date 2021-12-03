@@ -176,13 +176,13 @@ const LogIn = (props: Props) => {
         <div className="h-100 d-flex flex-column">
           <div>
             <button
-              className="btn btn-sm btn-link pl-0 mb-2 text-no-decoration"
+              className="btn btn-sm btn-link ps-0 mb-2 text-no-decoration"
               type="button"
               onClick={() => setVisibleResetPassword(false)}
               aria-label="Back to Sign in"
             >
               <div className="d-flex flex-row align-items-center">
-                <IoIosArrowBack className="mr-2" />
+                <IoIosArrowBack className="me-2" />
                 Back to Sign in
               </div>
             </button>
@@ -198,13 +198,13 @@ const LogIn = (props: Props) => {
             <div className="h-100 d-flex flex-column">
               <div>
                 <button
-                  className="btn btn-sm btn-link pl-0 mb-2 text-no-decoration"
+                  className="btn btn-sm btn-link ps-0 mb-2 text-no-decoration"
                   type="button"
                   onClick={() => setVisible2FACode(false)}
                   aria-label="Back to Sign in"
                 >
                   <div className="d-flex flex-row align-items-center">
-                    <IoIosArrowBack className="mr-2" />
+                    <IoIosArrowBack className="me-2" />
                     Back to Sign in
                   </div>
                 </button>
@@ -235,7 +235,7 @@ const LogIn = (props: Props) => {
                     {isApprovingSession ? (
                       <>
                         <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">Verifying...</span>
+                        <span className="ms-2">Verifying...</span>
                       </>
                     ) : (
                       <>Verify</>
@@ -287,7 +287,7 @@ const LogIn = (props: Props) => {
 
                 <div className="d-flex flex-row align-items-row justify-content-between">
                   <button
-                    className="btn btn-sm btn-link pl-0 text-no-decoration"
+                    className="btn btn-sm btn-link ps-0 text-no-decoration"
                     type="button"
                     onClick={() => setVisibleResetPassword(true)}
                     aria-label="Open reset password"
@@ -306,11 +306,11 @@ const LogIn = (props: Props) => {
                       {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
                         <>
                           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                          <span className="ml-2">Singing in...</span>
+                          <span className="ms-2">Singing in...</span>
                         </>
                       ) : (
                         <>
-                          <FaSignInAlt className="mr-2" />
+                          <FaSignInAlt className="me-2" />
                           <>Sign in</>
                         </>
                       )}

@@ -23,14 +23,14 @@ const GuestDropdown = () => {
         <div className="d-flex flex-row align-items-center justify-content-center">
           <div
             className={classnames(
-              'rounded-circle d-flex align-items-center justify-content-center textLight',
+              'rounded-circle d-flex align-items-center justify-content-center textLight border border-2 overflow-hidden lh-1 fs-5',
               styles.imageWrapper,
               styles.iconWrapper
             )}
           >
             <FaCog data-testid="settingsIcon" className="rounded-circle" />
           </div>
-          <small className="ml-1 textLight">
+          <small className="ms-1 textLight">
             <FaCaretDown />
           </small>
         </div>
@@ -39,9 +39,9 @@ const GuestDropdown = () => {
       <div
         role="menu"
         ref={ref}
-        className={classnames('dropdown-menu dropdown-menu-right', styles.dropdown, { show: openStatus })}
+        className={classnames('dropdown-menu dropdown-menu-end', styles.dropdown, { show: openStatus })}
       >
-        <div className={`arrow ${styles.arrow}`} />
+        <div className={`dropdown-arrow ${styles.arrow}`} />
 
         <div className="my-3">
           <ThemeMode device="desktop" onSelection={() => setOpenStatus(false)} />

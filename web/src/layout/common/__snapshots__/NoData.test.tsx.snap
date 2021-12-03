@@ -3,7 +3,7 @@
 exports[`NoData creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="alert alert-primary ml-auto mr-auto my-5 text-center p-4 p-sm-5 border wrapper undefined"
+    class="alert alert-primary ms-auto me-auto my-5 text-center p-4 p-sm-5 border wrapper undefined"
     role="alert"
   >
     <div

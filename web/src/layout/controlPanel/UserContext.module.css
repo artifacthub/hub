@@ -5,9 +5,12 @@
   line-height: 1rem;
 }
 
+.badgeContent {
+  line-height: 1rem;
+}
+
 .ctxBtn {
   width: 210px;
-  line-height: 1rem;
   border-color: var(--color-1-500);
 }
 
@@ -54,7 +57,7 @@
 
 @media only screen and (max-width: 767.98px) {
   .ctxBtn {
-    line-height: 1.5rem;
+    line-height: 1.5rem !important;
   }
 
   .loading {

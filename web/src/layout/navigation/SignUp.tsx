@@ -54,11 +54,11 @@ const SignUp = (props: Props) => {
         {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
           <>
             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-            <span className="ml-2">Signing up...</span>
+            <span className="ms-2">Signing up...</span>
           </>
         ) : (
           <>
-            <FaEnvelope className="mr-2" />
+            <FaEnvelope className="me-2" />
             <>Sign up</>
           </>
         )}
@@ -90,18 +90,20 @@ const SignUp = (props: Props) => {
         <div className="my-auto">
           <div className="h5 mb-5 text-center">Create your account using your email</div>
 
-          <button
-            type="button"
-            onClick={() => setActiveSignUp(true)}
-            className="btn btn-outline-secondary btn-block"
-            disabled={isLoading.status}
-            aria-label="Open sign up form"
-          >
-            <div className="d-flex align-items-center">
-              <FaEnvelope />
-              <div className="flex-grow-1 text-center">Sign up</div>
-            </div>
-          </button>
+          <div className="d-grid">
+            <button
+              type="button"
+              onClick={() => setActiveSignUp(true)}
+              className="btn btn-outline-secondary"
+              disabled={isLoading.status}
+              aria-label="Open sign up form"
+            >
+              <div className="d-flex align-items-center">
+                <FaEnvelope />
+                <div className="flex-grow-1 text-center">Sign up</div>
+              </div>
+            </button>
+          </div>
 
           <OAuth separatorClassName="my-5" isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>

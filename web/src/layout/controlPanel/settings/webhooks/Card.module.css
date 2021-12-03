@@ -1,16 +1,5 @@
 .card {
-  max-width: 100%;
-  background-color: var(--white) !important;
-  box-shadow: 0px 0px 5px 0px var(--light);
-}
-
-.body {
-  padding: 1.75rem !important;
-}
-
-.title {
-  line-height: 1;
-  word-break: break-word;
+  box-shadow: 0px 0px 5px 0px var(--bs-light);
 }
 
 .badge {
@@ -29,7 +18,7 @@
 
 .dropdownMenu {
   top: 55px;
-  right: 3px;
+  right: 4px;
 }
 
 .btnIcon {

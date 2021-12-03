@@ -9,7 +9,7 @@ exports[`SearchTip creates snapshot 1`] = `
       class="d-flex mt-2 pt-1 flex-row align-items-center justify-content-center textLight tipText"
     >
       <svg
-        class="mr-1"
+        class="me-1"
         fill="currentColor"
         height="1em"
         stroke="currentColor"
@@ -24,19 +24,19 @@ exports[`SearchTip creates snapshot 1`] = `
       </svg>
       <div>
         <span
-          class="font-weight-semibold mr-1"
+          class="fw-semibold me-1"
         >
           Tip:
         </span>
         Use 
         <span
-          class="font-weight-semibold"
+          class="fw-semibold"
         >
           multiple words
         </span>
          to refine your search. Example: 
         <a
-          class="font-weight-bold textLighter p-0"
+          class="fw-bold textLighter p-0"
           href="/packages/search?ts_query_web=kafka+operator&sort=relevance&page=1"
         >
           kafka operator

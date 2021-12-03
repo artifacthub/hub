@@ -17,7 +17,7 @@ const Footer = (props: Props) => {
   return (
     <footer
       role="contentinfo"
-      className={classnames('position-relative', styles.footer, {
+      className={classnames('position-relative text-white', styles.footer, {
         [styles.invisibleFooter]: props.isHidden,
       })}
     >
@@ -27,8 +27,8 @@ const Footer = (props: Props) => {
             className={`d-flex flex-row flex-wrap align-items-stretch justify-content-between ${styles.footerContent}`}
           >
             <div>
-              <div className="h6 font-weight-bold text-uppercase">Project</div>
-              <div className="d-flex flex-column text-left">
+              <div className="h6 fw-bold text-uppercase">Project</div>
+              <div className="d-flex flex-column text-start">
                 <ExternalLink className={`mb-1 ${styles.link}`} href="/docs" label="Open documentation" target="_self">
                   Documentation
                 </ExternalLink>
@@ -51,11 +51,11 @@ const Footer = (props: Props) => {
             </div>
 
             <div>
-              <div className="h6 font-weight-bold text-uppercase">Community</div>
-              <div className="d-flex flex-column text-left">
+              <div className="h6 fw-bold text-uppercase">Community</div>
+              <div className="d-flex flex-column text-start">
                 <ExternalLink className={`mb-1 ${styles.link}`} href="https://github.com/cncf/hub" label="Open Github">
                   <div className="d-flex align-items-center">
-                    <FaGithub className="mr-2" />
+                    <FaGithub className="me-2" />
                     GitHub
                   </div>
                 </ExternalLink>
@@ -65,7 +65,7 @@ const Footer = (props: Props) => {
                   label="Open Slack channel"
                 >
                   <div className="d-flex align-items-center">
-                    <FaSlack className="mr-2" />
+                    <FaSlack className="me-2" />
                     Slack
                   </div>
                 </ExternalLink>
@@ -75,7 +75,7 @@ const Footer = (props: Props) => {
                   label="Open Twitter"
                 >
                   <div className="d-flex align-items-center">
-                    <FaTwitter className="mr-2" />
+                    <FaTwitter className="me-2" />
                     Twitter
                   </div>
                 </ExternalLink>
@@ -83,7 +83,7 @@ const Footer = (props: Props) => {
             </div>
 
             <div className={styles.fullMobileSection}>
-              <div className="h6 font-weight-bold text-uppercase">About</div>
+              <div className="h6 fw-bold text-uppercase">About</div>
               <div className={styles.copyrightContent}>
                 Artifact Hub is an <b className="d-inline-block">Open Source</b> project licensed under the{' '}
                 <ExternalLink
@@ -94,28 +94,28 @@ const Footer = (props: Props) => {
                   <div className="d-flex align-items-center">
                     Apache License 2.0
                     <span className={styles.smallIcon}>
-                      <FiExternalLink className="ml-1" />
+                      <FiExternalLink className="ms-1" />
                     </span>
                   </div>
                 </ExternalLink>
               </div>
             </div>
 
-            <div className={`ml-0 ml-lg-auto mt-3 mt-lg-0 text-center ${styles.fullMobileSection}`}>
+            <div className={`ms-0 ms-lg-auto mt-3 mt-lg-0 text-center ${styles.fullMobileSection}`}>
               <div className="d-flex flex-column align-items-center h-100">
                 <div className={styles.hexagon}>
                   <FiHexagon />
                 </div>
                 <div className="mt-2 mt-lg-4">
                   <small>
-                    <span className="d-none d-sm-inline mr-1">Copyright</span>© The Artifact Hub Authors
+                    <span className="d-none d-sm-inline me-1">Copyright</span>© The Artifact Hub Authors
                   </small>
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <ExternalLink className={styles.AHlink} href="https://artifacthub.io" label="Artifact Hub site">
+          <ExternalLink href="https://artifacthub.io" label="Artifact Hub site">
             <div className="d-flex flex-column align-items-center">
               <small className="mb-2 text-light">Powered by</small>
               <img

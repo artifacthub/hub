@@ -20,7 +20,7 @@ const TasksInPipeline = (props: Props) => {
     if (task.runAfter.length === 1) {
       return (
         <div className={`d-flex flex-row align-items-center ${styles.taskParent}`}>
-          <small className="text-muted text-uppercase mr-1">Run After:</small>
+          <small className="text-muted text-uppercase me-1">Run After:</small>
           {task.runAfter[0]}
         </div>
       );
@@ -32,7 +32,7 @@ const TasksInPipeline = (props: Props) => {
           </div>
           {task.runAfter.map((parent: string) => (
             <div className="d-flex flex-row align-items-center mw-100 mt-1" key={`${index}_parent_${parent}`}>
-              <div className="pr-1">
+              <div className="pe-1">
                 <GoDash className={styles.icon} />
               </div>
               <div className="text-truncate flex-grow-1">{parent}</div>
@@ -50,10 +50,10 @@ const TasksInPipeline = (props: Props) => {
         {props.tasks.map((task: TektonTaskInPipeline, index: number) => (
           <div data-testid="taskItem" key={`task_${task.name}`} role="listitem">
             <div className="d-flex flex-row align-items-baseline mw-100">
-              <div className="mr-1">
+              <div className="me-1">
                 <TiTick className={`text-muted ${styles.icon}`} />
               </div>
-              <div className={`text-truncate ${styles.task}`}>{task.name}</div>
+              <div className={`text-truncate text-break ${styles.task}`}>{task.name}</div>
             </div>
             <div>{getParents(task, index)}</div>
           </div>

@@ -146,7 +146,7 @@ const UpdatePassword = () => {
         ref={repeatPasswordInput}
         type="password"
         label="Confirm new password"
-        labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+        labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
         name="confirmPassword"
         pattern={password.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}
         invalidText={{
@@ -169,11 +169,11 @@ const UpdatePassword = () => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Changing password</span>
+              <span className="ms-2">Changing password</span>
             </>
           ) : (
             <div className="d-flex flex-row align-items-center text-uppercase">
-              <FaPencilAlt className="mr-2" />
+              <FaPencilAlt className="me-2" />
               <div>Change</div>
             </div>
           )}

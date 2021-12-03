@@ -46,7 +46,7 @@ const AnchorHeader: ElementType = (props: Props) => {
             props.scrollIntoView(`#${anchor}`);
           }}
           role="button"
-          className={`text-reset text-center d-none d-md-block ${styles.headingLink}`}
+          className={`text-reset text-center d-none d-md-block lh-1 float-start ${styles.headingLink}`}
           aria-label={value}
         >
           <GoLink />

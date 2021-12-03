@@ -180,7 +180,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#helm-charts-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             Helm charts repositories
@@ -191,7 +191,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#olm-operators-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             OLM operators repositories
@@ -202,7 +202,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#falco-rules-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             Falco rules repositories
@@ -213,7 +213,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#opa-policies-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             OPA policies repositories
@@ -224,7 +224,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#tinkerbell-actions-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             Tinkerbell actions
@@ -235,7 +235,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#krew-kubectl-plugins-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             Krew kubectl plugins
@@ -246,7 +246,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#helm-plugins-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             Helm plugins
@@ -257,7 +257,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#tekton-tasks-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             <u>Tekton tasks</u>
@@ -268,7 +268,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#keda-scalers-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             KEDA scalers
@@ -279,7 +279,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#coredns-plugins-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             CoreDNS plugins
@@ -290,7 +290,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#keptn-integrations-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             Keptn integrations
@@ -301,7 +301,7 @@ const RepositoryModal = (props: Props) => {
         link = (
           <ExternalLink
             href="/docs/topics/repositories#tekton-pipelines-repositories"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open documentation"
           >
             Tekton pipelines
@@ -317,22 +317,18 @@ const RepositoryModal = (props: Props) => {
         <small>
           {selectedKind !== RepositoryKind.Helm && (
             <p
-              className={classnames('mb-2', styles.repoInfo, {
+              className={classnames('mb-2 opacity-100', {
                 [styles.animatedWarning]: urlContainsTreeTxt,
               })}
             >
               Please DO NOT include the git hosting platform specific parts, like 
-              <span className="font-weight-bold">tree/branch</span>, just the path to your packages like it would show
-              in the filesystem.
+              <span className="fw-bold">tree/branch</span>, just the path to your packages like it would show in the
+              filesystem.
             </p>
           )}
           <p className="mb-0">
             For more information about the url format and the repository structure, please see the {link} section in the{' '}
-            <ExternalLink
-              href="/docs/repositories"
-              className="text-primary font-weight-bold"
-              label="Open documentation"
-            >
+            <ExternalLink href="/docs/repositories" className="text-primary fw-bold" label="Open documentation">
               repositories guide
             </ExternalLink>
             .
@@ -359,7 +355,7 @@ const RepositoryModal = (props: Props) => {
         switch (selectedKind) {
           case RepositoryKind.Helm:
             return (
-              <div className="form-row">
+              <div className="row">
                 <InputField
                   className="col-sm-12 col-md-6"
                   type="text"
@@ -451,7 +447,7 @@ const RepositoryModal = (props: Props) => {
               <button
                 type="button"
                 className={classnames(
-                  'btn btn-sm ml-3',
+                  'btn btn-sm ms-3',
                   { 'btn-outline-secondary': !isValidInput },
                   { 'btn-danger': isValidInput }
                 )}
@@ -477,18 +473,18 @@ const RepositoryModal = (props: Props) => {
               {isSending ? (
                 <>
                   <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                  <span className="ml-2">Validating repository...</span>
+                  <span className="ms-2">Validating repository...</span>
                 </>
               ) : (
                 <div className="d-flex flex-row align-items-center text-uppercase">
                   {isUndefined(props.repository) ? (
                     <>
-                      <MdAddCircle className="mr-2" />
+                      <MdAddCircle className="me-2" />
                       <div>Add</div>
                     </>
                   ) : (
                     <>
-                      <FaPencilAlt className="mr-2" />
+                      <FaPencilAlt className="me-2" />
                       <div>Update</div>
                     </>
                   )}
@@ -506,7 +502,7 @@ const RepositoryModal = (props: Props) => {
         {visibleDisabledConfirmation ? (
           <>
             <div className="alert alert-warning my-4">
-              <span className="font-weight-bold text-uppercase">Important:</span> Please read this carefully.
+              <span className="fw-bold text-uppercase">Important:</span> Please read this carefully.
             </div>
 
             <p>If you disable this repository all packages belonging to it will be deleted.</p>
@@ -514,7 +510,7 @@ const RepositoryModal = (props: Props) => {
             <p>
               All information related to the packages in your repository will be permanently deleted as well. This
               includes packages' stars, subscriptions, webhooks, events and notifications.{' '}
-              <span className="font-weight-bold">This operation cannot be undone.</span>
+              <span className="fw-bold">This operation cannot be undone.</span>
             </p>
 
             <p>
@@ -523,7 +519,7 @@ const RepositoryModal = (props: Props) => {
             </p>
 
             <p>
-              Please type <span className="font-weight-bold">{props.repository!.name}</span> to confirm:
+              Please type <span className="fw-bold">{props.repository!.name}</span> to confirm:
             </p>
 
             <InputField type="text" name="repoName" autoComplete="off" value="" onChange={onInputChange} />
@@ -537,12 +533,12 @@ const RepositoryModal = (props: Props) => {
             autoComplete="on"
             noValidate
           >
-            <div className="form-group w-75 mb-4">
-              <label className={`font-weight-bold ${styles.label}`} htmlFor="repoKind">
+            <div className=" w-75 mb-4">
+              <label className={`form-label fw-bold ${styles.label}`} htmlFor="repoKind">
                 Kind
               </label>
               <select
-                className="custom-select"
+                className="form-select"
                 aria-label="kind-select"
                 name="repoKind"
                 value={selectedKind.toString()}
@@ -564,7 +560,7 @@ const RepositoryModal = (props: Props) => {
               ref={nameInput}
               type="text"
               label="Name"
-              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
               name="name"
               value={!isUndefined(props.repository) ? props.repository.name : ''}
               readOnly={!isUndefined(props.repository)}
@@ -585,8 +581,8 @@ const RepositoryModal = (props: Props) => {
               additionalInfo={
                 <small className="text-muted text-break mt-1">
                   <p className="mb-0">
-                    This name will appear in your packages' urls and{' '}
-                    <span className="font-weight-bold">cannot be updated</span> once is saved.
+                    This name will appear in your packages' urls and <span className="fw-bold">cannot be updated</span>{' '}
+                    once is saved.
                   </p>
                 </small>
               }
@@ -608,7 +604,7 @@ const RepositoryModal = (props: Props) => {
               ref={urlInput}
               type="url"
               label="Url"
-              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
               name="url"
               value={props.repository ? props.repository.url || '' : ''}
               invalidText={{
@@ -653,8 +649,8 @@ const RepositoryModal = (props: Props) => {
                   additionalInfo={
                     <small className="text-muted text-break mt-1">
                       <p className="mb-0">
-                        Branch used in git based repositories. The <span className="font-weight-bold">master</span>{' '}
-                        branch is used by default when none is provided.
+                        Branch used in git based repositories. The <span className="fw-bold">master</span> branch is
+                        used by default when none is provided.
                       </p>
                     </small>
                   }
@@ -669,14 +665,14 @@ const RepositoryModal = (props: Props) => {
                   <>
                     {!resetFields ? (
                       <div className="mt-1 mb-4">
-                        <div className={`font-weight-bold mb-2 ${styles.label}`}>Credentials</div>
+                        <div className={`fw-bold mb-2 ${styles.label}`}>Credentials</div>
                         <small>
                           <p className="mb-0 text-muted text-break">
                             This repository is private and has some credentials set. Current credentials cannot be
                             viewed, but you can{' '}
                             <button
                               type="button"
-                              className={`btn btn-link btn-sm p-0 m-0 text-primary font-weight-bold position-relative d-inline-block ${styles.btnInline}`}
+                              className={`btn btn-link btn-sm p-0 m-0 text-primary fw-bold position-relative d-inline-block ${styles.btnInline}`}
                               onClick={resetAuthFields}
                               aria-label="Reset credentials"
                             >
@@ -697,11 +693,15 @@ const RepositoryModal = (props: Props) => {
             )}
 
             <div className="mb-4">
-              <div className="custom-control custom-switch pl-0">
+              <div className="form-check form-switch ps-0">
+                <label htmlFor="disabledRepo" className={`form-check-label fw-bold ${styles.label}`}>
+                  Disabled
+                </label>
                 <input
                   id="disabledRepo"
                   type="checkbox"
-                  className="custom-control-input"
+                  className="form-check-input position-absolute ms-2"
+                  role="switch"
                   value="true"
                   onChange={() => {
                     // Confirmation content is displayed when an existing repo is going to be disabled and it was not disabled before
@@ -713,17 +713,11 @@ const RepositoryModal = (props: Props) => {
                   }}
                   checked={isDisabled}
                 />
-                <label
-                  htmlFor="disabledRepo"
-                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                >
-                  Disabled
-                </label>
               </div>
 
-              <small className="form-text text-muted mt-2">
+              <div className="form-text text-muted mt-2">
                 Use this switch to disable the repository temporarily or permanently.
-              </small>
+              </div>
             </div>
 
             {[
@@ -739,26 +733,24 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TektonPipeline,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
-                <div className="custom-control custom-switch pl-0">
+                <div className="form-check form-switch ps-0">
+                  <label htmlFor="scannerDisabledRepo" className={`form-check-label fw-bold ${styles.label}`}>
+                    Security scanner disabled
+                  </label>{' '}
                   <input
                     id="scannerDisabledRepo"
                     type="checkbox"
-                    className="custom-control-input"
+                    className="form-check-input position-absolute ms-2"
                     value="true"
+                    role="switch"
                     onChange={() => setIsScannerDisabled(!isScannerDisabled)}
                     checked={isScannerDisabled}
                   />
-                  <label
-                    htmlFor="scannerDisabledRepo"
-                    className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                  >
-                    Security scanner disabled
-                  </label>
                 </div>
 
-                <small className="form-text text-muted mt-2">
+                <div className="form-text text-muted mt-2">
                   Use this switch to disable the security scanning of the packages in this repository.
-                </small>
+                </div>
               </div>
             )}
           </form>

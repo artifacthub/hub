@@ -14,7 +14,7 @@ const TwoFactorAuth = (props: Props) => {
 
       <div className="mb-4">
         <small className="text-uppercase text-muted">Status:</small>{' '}
-        <span className="font-weight-bold">{props.tfaEnabled ? 'Enabled' : 'Disabled'}</span>
+        <span className="fw-bold">{props.tfaEnabled ? 'Enabled' : 'Disabled'}</span>
       </div>
 
       {props.tfaEnabled ? (

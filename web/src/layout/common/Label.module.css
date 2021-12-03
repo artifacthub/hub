@@ -6,8 +6,7 @@
   background-color: var(--body-light-bg);
   line-height: 18px;
   padding: 0 5px 0 10px;
-  font-weight: 700;
-  border: 1px solid var(--color-black-15);
+  border-color: var(--color-black-15) !important;
   border-radius: 3px;
 }
 
@@ -16,15 +15,12 @@
 }
 
 .iconWrapper {
-  position: relative;
-  border: 1px solid var(--color-black-15);
-  border-radius: 3px;
+  border-color: var(--color-black-15) !important;
   height: 20px;
   line-height: 1rem;
   color: var(--light-gray);
-  border-right: none;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
   box-shadow: inset -1px 0 var(--color-black-25);
   margin-right: -3px;
   min-width: 20px;
@@ -35,7 +31,6 @@
 }
 
 .onlyIcon {
-  margin-right: 0;
   border-radius: 3px !important;
   width: 21px;
 }
@@ -57,7 +52,7 @@
 
 .default .iconWrapper {
   background-color: var(--light-gray);
-  color: var(--dark);
+  color: var(--bs-dark);
 }
 
 .default .iconWrapper::before {
@@ -65,27 +60,27 @@
 }
 
 .warning .iconWrapper {
-  background-color: var(--orange);
+  background-color: var(--bs-orange);
 }
 
 .warning .iconWrapper::before {
-  background-color: var(--orange);
+  background-color: var(--bs-orange);
 }
 
 .success .iconWrapper {
-  background-color: var(--success);
+  background-color: var(--bs-success);
 }
 
 .success .iconWrapper::before {
-  background-color: var(--success);
+  background-color: var(--bs-success);
 }
 
 .danger .iconWrapper {
-  background-color: var(--danger);
+  background-color: var(--bs-danger);
 }
 
 .danger .iconWrapper::before {
-  background-color: var(--danger);
+  background-color: var(--bs-danger);
 }
 
 .custom .iconWrapper {

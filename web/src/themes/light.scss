@@ -37,6 +37,8 @@
   $color2: #2d4857;
   $color3: #6c757d;
 
+  --bs-secondary-rgb: $color2;
+
   body {
     background-color: var(--body-bg);
     color: var(--color-font);
@@ -47,7 +49,7 @@
   }
 
   .textLighter {
-    color: var(--white) !important;
+    color: var(--bs-white) !important;
   }
 
   a.textLight:hover,
@@ -71,13 +73,13 @@
 
   .was-validated .form-check-input:valid ~ .form-check-label,
   .form-check-input.is-valid ~ .form-check-label,
-  .was-validated .custom-control-input:valid ~ .custom-control-label,
-  .custom-control-input.is-valid ~ .custom-control-label {
+  .was-validated .form-check-input:valid ~ .form-check-label,
+  .form-check-input.is-valid ~ .form-check-label {
     color: var(--color-font);
   }
 
-  .was-validated .custom-control-input:valid:checked ~ .custom-control-label::before,
-  .custom-control-input.is-valid:checked ~ .custom-control-label::before {
+  .was-validated .form-check-input:valid:checked ~ .form-check-label::before,
+  .form-check-input.is-valid:checked ~ .form-check-label::before {
     border-color: var(--color-1-500);
     background-color: var(--color-1-500);
   }
@@ -107,7 +109,7 @@
   }
 
   .alert-primary {
-    color: var(--dark);
+    color: var(--bs-dark);
     background-color: var(--badge-bg);
     border-color: var(--gray);
   }
@@ -140,17 +142,17 @@
     }
   }
 
-  .custom-control-input:checked ~ .custom-control-label::before {
+  .form-check-input:checked ~ .form-check-label::before {
     background-color: var(--color-1-500);
     border-color: var(--color-1-500);
   }
 
-  .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+  .form-switch .form-check-input:checked ~ .form-check-label::before {
     background-color: $color1;
     border-color: $color1;
   }
 
-  .custom-select:focus,
+  .form-select:focus,
   .form-control:focus {
     border-color: $color3;
   }
@@ -177,7 +179,7 @@
   .btn-primary {
     background-color: var(--color-1-500) !important;
     border-color: var(--color-1-500);
-    color: var(--white) !important;
+    color: var(--bs-white) !important;
 
     &:not(.disabled):not(:disabled):hover,
     &:focus,
@@ -185,27 +187,27 @@
     &.active {
       background-color: var(--color-1-600) !important;
       border-color: var(--color-1-700);
-      color: var(--white);
+      color: var(--bs-white);
     }
   }
 
   .btn-secondary,
-  .badge-secondary {
+  .badge.bg-secondary {
     background-color: var(--color-1-700) !important;
     border-color: var(--color-1-700);
-    color: var(--white) !important;
+    color: var(--bs-white) !important;
 
     &:not(.disabled):not(:disabled):hover,
     &:focus,
     &:active {
       background-color: var(--color-1-800) !important;
       border-color: var(--color-1-900);
-      color: var(--white);
+      color: var(--bs-white);
     }
   }
 
   .btn-outline-secondary {
-    background-color: var(--white);
+    background-color: var(--bs-white);
     border-color: var(--color-1-700);
     color: var(--color-1-700);
 
@@ -214,7 +216,7 @@
     &:active {
       background-color: var(--color-1-700) !important;
       border-color: var(--color-1-700) !important;
-      color: var(--white);
+      color: var(--bs-white);
     }
   }
 }

@@ -143,7 +143,7 @@ describe('Authorization settings index', () => {
       ).toBeInTheDocument();
       expect(screen.getAllByRole('button')).toHaveLength(4);
 
-      const swicthAccessControl = screen.getByRole('checkbox', { name: 'Fine-grained access control' });
+      const swicthAccessControl = screen.getByRole('switch', { name: 'Fine-grained access control' });
       expect(swicthAccessControl).toBeInTheDocument();
       expect(swicthAccessControl).not.toBeChecked();
 
@@ -172,7 +172,7 @@ describe('Authorization settings index', () => {
         expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
-      const swicthAccessControl = screen.getByRole('checkbox', { name: 'Fine-grained access control' });
+      const swicthAccessControl = screen.getByRole('switch', { name: 'Fine-grained access control' });
       expect(swicthAccessControl).toBeInTheDocument();
       expect(swicthAccessControl).toBeChecked();
 
@@ -212,7 +212,7 @@ describe('Authorization settings index', () => {
         expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
       });
 
-      const swicthAccessControl = screen.getByRole('checkbox', { name: 'Fine-grained access control' });
+      const swicthAccessControl = screen.getByRole('switch', { name: 'Fine-grained access control' });
       expect(swicthAccessControl).toBeInTheDocument();
       expect(swicthAccessControl).toBeChecked();
 

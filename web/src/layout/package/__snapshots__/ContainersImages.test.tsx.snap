@@ -32,7 +32,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           class="d-flex flex-row align-items-start mw-100"
         >
           <svg
-            class="text-muted mr-2 icon"
+            class="text-muted me-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -47,7 +47,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             />
           </svg>
           <div
-            class="text-truncate containerImage"
+            class="text-truncate text-break containerImage"
             data-testid="containerImage"
           >
             db-migrator
@@ -57,7 +57,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           >
             <button
               aria-label="Copy db-migrator container image to clipboard"
-              class="btn btn-sm btn-link text-dark border-0 copyBtn"
+              class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
               type="button"
             >
               <div
@@ -101,7 +101,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           class="d-flex flex-row align-items-start mw-100"
         >
           <svg
-            class="text-muted mr-2 icon"
+            class="text-muted me-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -116,7 +116,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             />
           </svg>
           <div
-            class="text-truncate containerImage"
+            class="text-truncate text-break containerImage"
             data-testid="containerImage"
           >
             hub
@@ -126,7 +126,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           >
             <button
               aria-label="Copy hub container image to clipboard"
-              class="btn btn-sm btn-link text-dark border-0 copyBtn"
+              class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
               type="button"
             >
               <div
@@ -170,7 +170,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           class="d-flex flex-row align-items-start mw-100"
         >
           <svg
-            class="text-muted mr-2 icon"
+            class="text-muted me-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -185,7 +185,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             />
           </svg>
           <div
-            class="text-truncate containerImage"
+            class="text-truncate text-break containerImage"
             data-testid="containerImage"
           >
             tracker
@@ -195,7 +195,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           >
             <button
               aria-label="Copy tracker container image to clipboard"
-              class="btn btn-sm btn-link text-dark border-0 copyBtn"
+              class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
               type="button"
             >
               <div
@@ -239,7 +239,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           class="d-flex flex-row align-items-start mw-100"
         >
           <svg
-            class="text-muted mr-2 icon"
+            class="text-muted me-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -254,7 +254,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             />
           </svg>
           <div
-            class="text-truncate containerImage"
+            class="text-truncate text-break containerImage"
             data-testid="containerImage"
           >
             scanner
@@ -264,7 +264,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           >
             <button
               aria-label="Copy scanner container image to clipboard"
-              class="btn btn-sm btn-link text-dark border-0 copyBtn"
+              class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
               type="button"
             >
               <div

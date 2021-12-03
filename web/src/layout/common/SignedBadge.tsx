@@ -23,7 +23,7 @@ const signMessages: Messages = {
   [Signature.Prov]: <>This chart has a provenance file</>,
   [Signature.Cosign]: (
     <span>
-      This chart has been signed with <span className="font-weight-bold">cosign</span> (Sigstore)
+      This chart has been signed with <span className="fw-bold">cosign</span> (Sigstore)
     </span>
   ),
 };
@@ -43,7 +43,7 @@ const SignedBadge = (props: Props) => {
                   key={`message_${sign}`}
                 >
                   <BsDot className={`mt-1 position-relative ${styles.iconDot}`} />
-                  <div className="text-left">{signMessages[sign]}</div>
+                  <div className="text-start">{signMessages[sign]}</div>
                 </div>
               );
             })}

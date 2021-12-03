@@ -127,7 +127,7 @@ const InProductionButton = (props: Props) => {
   const isDisabled = isNull(ctx.user) || isUndefined(ctx.user);
 
   return (
-    <div className="d-none d-md-block position-relative ml-2">
+    <div className="d-none d-md-block position-relative ms-2">
       <ElementWithTooltip
         active
         tooltipClassName={styles.tooltip}
@@ -146,12 +146,12 @@ const InProductionButton = (props: Props) => {
             aria-expanded={openStatus}
           >
             <div
-              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
+              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 fs-5 bg-white ${styles.iconWrapper}`}
             >
               {isLoading && (
                 <div className={styles.loading}>
                   <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
-                    <span className="sr-only">Loading...</span>
+                    <span className="visually-hidden">Loading...</span>
                   </div>
                 </div>
               )}
@@ -166,12 +166,12 @@ const InProductionButton = (props: Props) => {
       <div
         ref={ref}
         role="menu"
-        className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, {
+        className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdown, {
           show: openStatus,
         })}
       >
         <div
-          className={classnames('arrow', styles.arrow, {
+          className={classnames('dropdown-arrow', styles.arrow, {
             [styles.darkArrow]: organizations && organizations.length > 0,
           })}
         />
@@ -203,21 +203,21 @@ const InProductionButton = (props: Props) => {
                     }
                   >
                     <div className="d-flex flex-row align-items-start w-100 justify-content-between">
-                      <div className="mr-3 position-relative">
+                      <div className="me-3 position-relative">
                         <span className={classnames({ 'd-none': isUpdating })}>
                           {isActive ? <FaRegCheckCircle className="text-success" /> : <FaRegCircle />}
                         </span>
                         {isUpdating && (
-                          <div className={`text-secondary ${styles.miniLoading}`}>
+                          <div className="text-secondary top-0">
                             <span className="spinner-border spinner-border-sm" />
                           </div>
                         )}
                       </div>
                       <div className={`d-flex flex-column flex-grow-1 ${styles.growWidth}`}>
                         <div className="d-flex flex-row align-items-center">
-                          <div className="mr-2">
+                          <div className="me-2">
                             <div
-                              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                              className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle border bg-white ${styles.imageWrapper} imageWrapper`}
                             >
                               <Image
                                 alt={org.displayName || org.name}

@@ -16,13 +16,13 @@ const StarBadge = (props: Props) => {
   return (
     <div
       data-testid="starBadge"
-      className={classnames('badge badge-pill badge-light', styles.badge, props.className, {
+      className={classnames('badge rounded-pill bg-light text-dark border', styles.badge, props.className, {
         [styles[`size-${props.size}`]]: !isUndefined(props.size),
       })}
       aria-label={`${props.starsNumber} stars`}
     >
       <div className="d-flex align-items-center">
-        <FaStar className={`mr-1 ${styles.icon}`} />
+        <FaStar className={`me-1 ${styles.icon}`} />
         <div>{prettifyNumber(props.starsNumber)}</div>
       </div>
     </div>

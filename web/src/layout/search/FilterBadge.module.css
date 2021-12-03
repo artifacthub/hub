@@ -1,7 +1,7 @@
 .badgeFilter {
   font-size: 85%;
   background-color: var(--badge-bg);
-  border: 1px solid var(--gray);
+  border-color: var(--gray) !important;
 }
 
 .btn {

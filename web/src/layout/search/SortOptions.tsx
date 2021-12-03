@@ -34,11 +34,11 @@ const SortOptions = (props: Props) => {
   }, [props]);
 
   return (
-    <div className="form-inline flex-nowrap align-items-center">
-      <label className="d-none d-sm-inline mb-0">Sort:</label>
+    <div className="d-inline flex-nowrap align-items-center">
+      <label className="form-label d-none d-sm-inline mb-0">Sort:</label>
       <select
         ref={selectEl}
-        className={`custom-select custom-select-sm ml-2 ${styles.select}`}
+        className={`form-select form-select-sm ms-2 ${styles.select}`}
         aria-label="sort-options"
         value={props.activeSort}
         onChange={handleChange}

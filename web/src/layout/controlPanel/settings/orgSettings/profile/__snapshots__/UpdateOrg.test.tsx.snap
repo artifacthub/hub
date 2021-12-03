@@ -9,22 +9,22 @@ exports[`Organization settings index creates snapshot 1`] = `
     novalidate=""
   >
     <div
-      class="form-group mb-4 undefined"
+      class=" mb-4 undefined"
     >
       <div
         class="d-flex flex-column"
       >
         <label
-          class="label"
+          class="form-label label"
           for="logo"
         >
           <span
-            class="font-weight-bold"
+            class="fw-bold"
           >
             Logo
           </span>
           <small
-            class="ml-1 font-italic"
+            class="ms-1 fst-italic"
           >
             (Click on the image to update)
           </small>
@@ -34,13 +34,13 @@ exports[`Organization settings index creates snapshot 1`] = `
         >
           <button
             aria-label="Add image"
-            class="btn p-0 overflow-hidden position-relative btn"
+            class="btn p-0 overflow-hidden position-relative border border-3 lh-1 rounded-circle fs-2 bg-white btn"
             type="button"
           >
             <img
               alt="Logo"
               aria-hidden="true"
-              class="image"
+              class="mh-100 mw-100"
               src="/image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2"
               srcset="/image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@1x 1x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@2x 2x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@3x 3x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@4x 4x"
             />
@@ -55,19 +55,19 @@ exports[`Organization settings index creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="name"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Name
         </span>
         <small
-          class="ml-1 font-italic"
+          class="ms-1 fst-italic"
         >
           (Required)
         </small>
@@ -91,14 +91,14 @@ exports[`Organization settings index creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="displayName"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Display name
         </span>
@@ -117,14 +117,14 @@ exports[`Organization settings index creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="homeUrl"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Home URL
         </span>
@@ -145,10 +145,10 @@ exports[`Organization settings index creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="form-group"
+      class=""
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="description"
       >
         Description
@@ -181,7 +181,7 @@ exports[`Organization settings index creates snapshot 1`] = `
             class="d-flex flex-row align-items-center text-uppercase"
           >
             <svg
-              class="mr-2"
+              class="me-2"
               fill="currentColor"
               height="1em"
               stroke="currentColor"

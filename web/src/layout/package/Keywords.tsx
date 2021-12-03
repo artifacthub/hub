@@ -35,7 +35,7 @@ const Keywords = (props: Props) => {
         <span data-testid="keywords">
           {cleanKeywords().map((keyword: string) => (
             <button
-              className={`btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 ${styles.badge}`}
+              className={`btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 ${styles.badge}`}
               key={keyword}
               onClick={() => {
                 history.push({

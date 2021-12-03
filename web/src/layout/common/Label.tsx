@@ -31,33 +31,31 @@ const Label = (props: Props) => (
         <div
           data-testid="label-wrapper"
           className={classnames(
-            'text-center',
+            'text-center border border-end-0 position-relative',
             {
               labelIconWrapper:
                 isUndefined(props.labelStyle) || (!isUndefined(props.labelStyle) && props.labelStyle !== 'success'),
             },
             styles.iconWrapper,
             {
-              [styles.onlyIcon]: props.onlyIcon,
+              [`${styles.onlyIcon} me-0`]: props.onlyIcon,
             }
           )}
           style={{
             backgroundColor: props.bgLeftIcon,
           }}
         >
-          {props.icon && <span className={classnames({ 'ml-1': !isUndefined(props.iconLegend) })}>{props.icon}</span>}
+          {props.icon && <span className={classnames({ 'ms-1': !isUndefined(props.iconLegend) })}>{props.icon}</span>}
 
           {props.iconLegend && (
-            <span className={`ml-1 mr-2 font-weight-bold position-relative ${styles.iconLegend}`}>
-              {props.iconLegend}
-            </span>
+            <span className={`ms-1 me-2 fw-bold position-relative ${styles.iconLegend}`}>{props.iconLegend}</span>
           )}
         </div>
       )}
       {(isUndefined(props.onlyIcon) || !props.onlyIcon) && (
         <div
           className={classnames(
-            'text-nowrap',
+            'text-nowrap border fw-bold',
             styles.labelText,
             { [styles.labelTextNoIcon]: isUndefined(props.icon) },
             props.labelClassName

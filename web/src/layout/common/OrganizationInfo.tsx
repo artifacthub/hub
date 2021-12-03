@@ -86,7 +86,7 @@ const OrganizationInfo = (props: Props) => {
         <div
           ref={ref}
           role="complementary"
-          className={classnames('dropdown-menu dropdown-menu-left', styles.dropdown, {
+          className={classnames('dropdown-menu dropdown-menu-left text-wrap', styles.dropdown, {
             show: openStatus,
           })}
           onMouseEnter={() => setOnDropdownHover(true)}
@@ -96,17 +96,17 @@ const OrganizationInfo = (props: Props) => {
             <div className={styles.content}>
               <div className="d-flex flex-row align-items-center">
                 <div
-                  className={`d-flex align-items-center justify-content-center overflow-hidden mr-2 p-1 position-relative ${styles.imageWrapper} imageWrapper`}
+                  className={`d-flex align-items-center justify-content-center overflow-hidden me-2 p-1 position-relative border border-2 rounded-circle bg-white ${styles.imageWrapper} imageWrapper`}
                 >
                   {organization.logoImageId ? (
                     <Image
                       alt={organization.displayName || organization.name}
                       imageId={organization.logoImageId}
-                      className={styles.image}
+                      className={`fs-4 ${styles.image}`}
                       placeholderIcon={<MdBusiness />}
                     />
                   ) : (
-                    <MdBusiness className={styles.image} />
+                    <MdBusiness className={`fs-4 ${styles.image}`} />
                   )}
                 </div>
 
@@ -117,10 +117,10 @@ const OrganizationInfo = (props: Props) => {
 
               {organization.homeUrl && (
                 <div className="mt-1 text-truncate d-flex flex-row align-items-baseline">
-                  <small className="text-muted text-uppercase mr-1">Homepage: </small>
+                  <small className="text-muted text-uppercase me-1">Homepage: </small>
                   <ExternalLink
                     href={organization.homeUrl}
-                    className={`text-reset text-truncate ${styles.externalLink}`}
+                    className={`text-reset text-truncate lh-1 bg-transparent ${styles.externalLink}`}
                     label={`Open link ${organization.homeUrl}`}
                     btnType
                   >
@@ -139,13 +139,13 @@ const OrganizationInfo = (props: Props) => {
 
       <div className="d-flex flex-row aling-items-start text-truncate">
         {props.visibleLegend && (
-          <div className="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase">
+          <div className="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase">
             <small>Org:</small>
           </div>
         )}
 
         <button
-          className={`p-0 border-0 text-dark text-truncate flex-grow-1 ${styles.link} ${props.btnClassName}`}
+          className={`p-0 border-0 text-dark text-truncate flex-grow-1 bg-transparent position-relative ${styles.link} ${props.btnClassName}`}
           onClick={(e) => {
             e.preventDefault();
             history.push({

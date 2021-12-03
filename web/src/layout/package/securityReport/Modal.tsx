@@ -155,11 +155,11 @@ const SecurityModal = (props: Props) => {
             {isLoading ? (
               <>
                 <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                <span className="ml-2">Getting report...</span>
+                <span className="ms-2">Getting report...</span>
               </>
             ) : (
               <>
-                <HiClipboardList className="mr-2" />
+                <HiClipboardList className="me-2" />
                 <span>Open full report</span>
               </>
             )}

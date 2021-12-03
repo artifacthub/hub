@@ -3,7 +3,7 @@
 exports[`InputTypeahead creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="form-group input-group-sm inputWrapper undefined"
+    class="mb-3 input-group-sm inputWrapper undefined"
   >
     <input
       class="flex-grow-1 form-control input px-3"
@@ -19,7 +19,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
   >
     <button
       aria-label="Clear all"
-      class="btn btn-sm btn-block"
+      class="btn btn-sm w-100"
     >
       <div
         class="d-flex flex-row align-items-center text-muted"
@@ -38,7 +38,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
           />
         </svg>
         <small
-          class="ml-2"
+          class="ms-2"
         >
           Clear all
         </small>
@@ -81,7 +81,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
         <div>
            
           <small
-            class="ml-1"
+            class="ms-1"
           >
             (12)
           </small>
@@ -138,7 +138,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
         <div>
            
           <small
-            class="ml-1"
+            class="ms-1"
           >
             (7)
           </small>
@@ -178,7 +178,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
         <div>
            
           <small
-            class="ml-1"
+            class="ms-1"
           >
             (19)
           </small>
@@ -201,7 +201,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
         <div>
            
           <small
-            class="ml-1"
+            class="ms-1"
           >
             (17)
           </small>

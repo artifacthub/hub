@@ -18,7 +18,7 @@ const RSSLinkTitle = (props: Props) => (
 
     <small>
       <a
-        className="badge badge-pill badge-secondary rssBadge ml-3"
+        className="badge rounded-pill bg-secondary rssBadge ms-3"
         rel="alternate noopener noreferrer"
         role="button"
         target="_blank"
@@ -26,7 +26,7 @@ const RSSLinkTitle = (props: Props) => (
         href={`/api/v1${buildPackageURL(props.normalizedName, props.repository, props.version)}/feed/rss`}
       >
         <div className="d-flex flex-row align-items-center">
-          <FaRss className="mr-1" />
+          <FaRss className="me-1" />
           <div>RSS</div>
         </div>
       </a>

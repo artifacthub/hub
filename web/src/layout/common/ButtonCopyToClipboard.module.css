@@ -1,6 +1,5 @@
 .tooltip {
   bottom: -40px;
-  right: 0;
 }
 
 .tooltipArrow {
@@ -8,15 +7,15 @@
 }
 
 .tooltip.isDark .tooltipArrow::before {
-  border-bottom-color: var(--dark) !important;
+  border-bottom-color: var(--bs-dark);
 }
 
 .tooltip.isLight .tooltipArrow::before {
-  border-bottom-color: #a3a3a6 !important;
+  border-bottom-color: #a3a3a6;
 }
 
 .tooltip.isDark .tooltipContent {
-  background-color: var(--dark) !important;
+  background-color: var(--bs-dark) !important;
 }
 
 .tooltip.isLight .tooltipContent {

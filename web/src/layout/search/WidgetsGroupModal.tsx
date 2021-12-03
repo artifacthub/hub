@@ -121,21 +121,21 @@ const WidgetsGroupModal = (props: Props) => {
     <>
       {props.visibleWidget && (
         <Modal
-          modalDialogClassName={styles.modalDialog}
+          modalDialogClassName="fs-6"
           header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Widgets group</div>}
           onClose={onCloseModal}
           open={props.visibleWidget}
         >
           <div className="w-100 position-relative">
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="theme">
+            <label className={`form-label fw-bold ${styles.label}`} htmlFor="theme">
               Theme
             </label>
             <div className="d-flex flex-row mb-3">
               {THEMES.map((themeOpt: RadioProps) => {
                 return (
-                  <div className="custom-control custom-radio mr-4" key={`radio_theme_${themeOpt.name}`}>
+                  <div className="form-check me-4" key={`radio_theme_${themeOpt.name}`}>
                     <input
-                      className="custom-control-input"
+                      className="form-check-input"
                       type="radio"
                       name="theme"
                       id={themeOpt.name}
@@ -145,7 +145,7 @@ const WidgetsGroupModal = (props: Props) => {
                       readOnly
                     />
                     <label
-                      className="text-capitalize custom-control-label"
+                      className="form-label text-capitalize form-check-label"
                       htmlFor={themeOpt.name}
                       onClick={() => {
                         setTheme(themeOpt.name);
@@ -153,7 +153,7 @@ const WidgetsGroupModal = (props: Props) => {
                     >
                       <div className="d-flex flex-row align-items-center">
                         {themeOpt.icon}
-                        <span className="ml-1">{themeOpt.name}</span>
+                        <span className="ms-1">{themeOpt.name}</span>
                       </div>
                     </label>
                   </div>
@@ -163,61 +163,55 @@ const WidgetsGroupModal = (props: Props) => {
 
             {!whiteLabel && (
               <div className="mt-4 mb-3">
-                <div className="custom-control custom-switch pl-0">
+                <div className="form-check form-switch ps-0">
+                  <label htmlFor="header" className={`form-check-label fw-bold ${styles.label}`}>
+                    Header
+                  </label>
                   <input
                     id="header"
                     type="checkbox"
-                    className="custom-control-input"
+                    className="form-check-input position-absolute ms-2"
                     value="true"
+                    role="switch"
                     onChange={() => setHeader(!header)}
                     checked={header}
                   />
-                  <label
-                    htmlFor="header"
-                    className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                  >
-                    Header
-                  </label>
                 </div>
 
-                <small className="form-text text-muted mt-2">
-                  Display Artifact Hub header at the top of the widget.
-                </small>
+                <div className="form-text text-muted mt-2">Display Artifact Hub header at the top of the widget.</div>
               </div>
             )}
 
             <div className="mt-4 mb-3">
-              <div className="custom-control custom-switch pl-0">
+              <div className="form-check form-switch ps-0">
+                <label htmlFor="stars" className={`form-check-label fw-bold ${styles.label}`}>
+                  Stars
+                </label>
                 <input
                   id="stars"
                   type="checkbox"
-                  className="custom-control-input"
+                  className="form-check-input position-absolute ms-2"
                   value="true"
+                  role="switch"
                   onChange={() => setStars(!stars)}
                   checked={stars}
                 />
-                <label
-                  htmlFor="stars"
-                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                >
-                  Stars
-                </label>
               </div>
 
-              <small className="form-text text-muted mt-2">Display number of stars given to the package.</small>
+              <div className="form-text text-muted mt-2">Display number of stars given to the package.</div>
             </div>
 
             <div className="d-flex flex-row">
               <div>
-                <label className={`font-weight-bold ${styles.label}`} htmlFor="groupWrapperWidthOpt">
+                <label className={`form-label fw-bold ${styles.label}`} htmlFor="groupWrapperWidthOpt">
                   Container width
                 </label>
                 <div className="d-flex flex-row">
                   {WRAPPER_OPTIONS.map((wrapperOpt: RadioProps) => {
                     return (
-                      <div className="custom-control custom-radio mr-4" key={`radio_wrapperOpt_${wrapperOpt.name}`}>
+                      <div className="form-check me-4" key={`radio_wrapperOpt_${wrapperOpt.name}`}>
                         <input
-                          className="custom-control-input"
+                          className="form-check-input"
                           type="radio"
                           name="groupWrapperWidthOpt"
                           id={wrapperOpt.name}
@@ -227,7 +221,7 @@ const WidgetsGroupModal = (props: Props) => {
                           readOnly
                         />
                         <label
-                          className="text-capitalize custom-control-label"
+                          className="text-capitalize form-check-label"
                           htmlFor={wrapperOpt.name}
                           onClick={() => {
                             if (wrapperOpt.name === 'fixed') {
@@ -241,7 +235,7 @@ const WidgetsGroupModal = (props: Props) => {
                         >
                           <div className="d-flex flex-row align-items-center">
                             {wrapperOpt.icon}
-                            <span className="ml-1">{wrapperOpt.name}</span>
+                            <span className="ms-1">{wrapperOpt.name}</span>
                           </div>
                         </label>
                       </div>
@@ -268,40 +262,36 @@ const WidgetsGroupModal = (props: Props) => {
                       validateOnBlur
                       required
                     />
-                    <div className="mt-1 text-muted ml-2">px</div>
+                    <div className="mt-1 text-muted ms-2">px</div>
                   </div>
                 )}
               </div>
             </div>
             <div className="mt-4 mb-3">
-              <div className="custom-control custom-switch pl-0">
+              <div className="form-check form-switch ps-0">
+                <label htmlFor="loading" className={`form-check-label fw-bold ${styles.label}`}>
+                  Loading spinner
+                </label>
                 <input
                   id="loading"
                   type="checkbox"
-                  className="custom-control-input"
+                  role="switch"
+                  className="form-check-input position-absolute ms-2"
                   value="true"
                   onChange={() => setLoading(!loading)}
                   checked={loading}
                 />
-                <label
-                  htmlFor="loading"
-                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                >
-                  Loading spinner
-                </label>
               </div>
 
-              <small className="form-text text-muted mt-2">
-                Display loading spinner while waiting for search results.
-              </small>
+              <div className="form-text text-muted mt-2">Display loading spinner while waiting for search results.</div>
             </div>
 
             <div className="mt-4 mb-3">
               <div className="d-flex flex-row align-items-center">
-                <label htmlFor="color" className={`font-weight-bold mb-0 ${styles.label}`}>
+                <label htmlFor="color" className={`form-label fw-bold mb-0 ${styles.label}`}>
                   Color
                 </label>
-                <div className={`btn btn-sm btn-light ${styles.colorInputWrapper}`}>
+                <div className={`btn btn-sm btn-light border p-1 ms-2 ${styles.colorInputWrapper}`}>
                   <div
                     className={styles.colorInput}
                     style={{
@@ -320,9 +310,9 @@ const WidgetsGroupModal = (props: Props) => {
                   </button>
                 )}
               </div>
-              <small className="form-text text-muted mt-3 mb-2">
+              <div className="form-text text-muted mt-3 mb-2">
                 Color used for widgets border, header and loading spinner.
-              </small>
+              </div>
               <div className={`pb-2 ${styles.colorPickerWrapper}`}>
                 <SketchPicker
                   color={color}
@@ -334,9 +324,9 @@ const WidgetsGroupModal = (props: Props) => {
             </div>
 
             <div className="mt-3 mb-2">
-              <label className={`font-weight-bold ${styles.label}`}>Code</label>
+              <label className={`form-label fw-bold ${styles.label}`}>Code</label>
 
-              <div data-testid="block-content" className={`flex-grow-1 mr-3 user-select-none ${styles.blockWrapper}`}>
+              <div data-testid="block-content" className={`flex-grow-1 me-3 user-select-none ${styles.blockWrapper}`}>
                 <SyntaxHighlighter
                   language="text"
                   style={docco}
@@ -350,11 +340,11 @@ const WidgetsGroupModal = (props: Props) => {
 
               <ButtonCopyToClipboard
                 text={widgetCode}
-                tooltipClassName={`bs-tooltip-right ${styles.copyBtnTooltip}`}
+                tooltipClassName={`bs-tooltip-end ${styles.copyBtnTooltip}`}
                 arrowClassName={styles.copyBtnArrow}
                 visibleBtnText
                 contentBtn="Copy code to clipboard"
-                className={`btn-outline-secondary ${styles.copyBtn}`}
+                className="btn-outline-secondary px-2 py-1 text-uppercase"
                 disabled={!isValidCode}
                 label="Copy code to clipboard"
               />

@@ -50,11 +50,11 @@ const UpdateOrganization = (props: Props) => {
             {isSending ? (
               <>
                 <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                <span className="ml-2">Updating organization</span>
+                <span className="ms-2">Updating organization</span>
               </>
             ) : (
               <div className="d-flex flex-row align-items-center text-uppercase">
-                <FaPencilAlt className="mr-2" />
+                <FaPencilAlt className="me-2" />
                 <div>Update</div>
               </div>
             )}

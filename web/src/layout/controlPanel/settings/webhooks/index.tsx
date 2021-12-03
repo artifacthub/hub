@@ -118,7 +118,7 @@ const WebhooksSection = (props: Props) => {
                     >
                       <div className="d-flex flex-row align-items-center justify-content-center">
                         <MdAdd className="d-inline d-md-none" />
-                        <MdAddCircle className="d-none d-md-inline mr-2" />
+                        <MdAddCircle className="d-none d-md-inline me-2" />
                         <span className="d-none d-md-inline">Add</span>
                       </div>
                     </button>
@@ -137,7 +137,7 @@ const WebhooksSection = (props: Props) => {
                       <NoData issuesLinkVisible={!isNull(apiError)}>
                         {isNull(apiError) ? (
                           <>
-                            <p className={`h6 my-4 ${styles.noDataMessage}`}>
+                            <p className="h6 my-4 lh-base">
                               You have not created any webhook yet. You can create your first one by clicking on the
                               button below.
                             </p>
@@ -149,7 +149,7 @@ const WebhooksSection = (props: Props) => {
                               aria-label="Open form for creating your first webhook"
                             >
                               <div className="d-flex flex-row align-items-center text-uppercase">
-                                <MdAddCircle className="mr-2" />
+                                <MdAddCircle className="me-2" />
                                 <span>Add webhook</span>
                               </div>
                             </button>

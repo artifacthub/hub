@@ -15,11 +15,6 @@
   background-color: var(--color-black-5);
 }
 
-.active {
-  opacity: 1;
-  font-weight: bold;
-}
-
 .active0 {
   border-color: #4f8500;
 }

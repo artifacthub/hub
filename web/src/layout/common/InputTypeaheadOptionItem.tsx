@@ -9,12 +9,12 @@ interface Props {
 
 const InputTypeaheadOptionItem = (props: Props) => (
   <>
-    {props.opt.icon && <div className={`mr-2 ${props.iconClassName}`}>{props.opt.icon}</div>}
+    {props.opt.icon && <div className={`me-2 ${props.iconClassName}`}>{props.opt.icon}</div>}
     <div className="text-truncate">{props.name}</div>
     {props.opt.total && (
       <div>
         {' '}
-        <small className="ml-1">({props.opt.total})</small>
+        <small className="ms-1">({props.opt.total})</small>
       </div>
     )}
   </>

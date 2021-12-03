@@ -44,7 +44,7 @@ const Alert: ElementType = (props: Props) => {
   return (
     <div
       data-testid="alertWrapper"
-      className={classnames(styles.alertWrapper, { [styles.isAlertActive]: isVisible })}
+      className={classnames('overflow-hidden', styles.alertWrapper, { [styles.isAlertActive]: isVisible })}
       ref={errorWrapper}
     >
       {isVisible && (
@@ -55,7 +55,7 @@ const Alert: ElementType = (props: Props) => {
               <button
                 data-testid="closeAlertBtn"
                 type="button"
-                className="close ml-3"
+                className="close ms-3"
                 onClick={props.onClose}
                 aria-label="Close alert"
               >

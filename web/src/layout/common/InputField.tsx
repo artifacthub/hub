@@ -205,10 +205,10 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
   }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <div className={`form-group mb-4 position-relative ${props.className}`}>
+    <div className={` mb-4 position-relative ${props.className}`}>
       {!isUndefined(props.label) && (
-        <label htmlFor={props.name} className={`font-weight-bold ${styles.label}`}>
-          <span className="font-weight-bold">{props.label}</span>
+        <label htmlFor={props.name} className={`form-label fw-bold ${styles.label}`}>
+          <span className="fw-bold">{props.label}</span>
           {!isUndefined(props.labelLegend) && <>{props.labelLegend}</>}
         </label>
       )}
@@ -241,7 +241,7 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
       {props.type === 'password' && props.visiblePassword && (
         <button
           type="button"
-          className={classnames('btn btn-link position-absolute', styles.revealBtn, {
+          className={classnames('btn btn-link position-absolute bottom-0', styles.revealBtn, {
             'text-muted': activeType === 'password',
             'text-secondary': activeType !== 'password',
           })}

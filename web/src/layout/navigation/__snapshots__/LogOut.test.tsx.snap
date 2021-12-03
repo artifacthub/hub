@@ -10,7 +10,7 @@ exports[`LogOut creates snapshot 1`] = `
       class="d-flex align-items-center"
     >
       <svg
-        class="mr-2"
+        class="me-2"
         fill="currentColor"
         height="1em"
         stroke="currentColor"

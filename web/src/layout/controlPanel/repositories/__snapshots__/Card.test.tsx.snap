@@ -21,10 +21,10 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
             Repo test
           </div>
           <div
-            class="ml-auto pl-3"
+            class="ms-auto ps-3"
           >
             <span
-              class="badge badge-light rounded-pill bg badge"
+              class="badge bg-light text-dark rounded-pill border bg badge"
             >
               <div
                 class="d-flex flex-row align-items-center"
@@ -45,7 +45,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                   />
                 </div>
                 <div
-                  class="ml-1"
+                  class="ms-1"
                 >
                   Helm charts
                 </div>
@@ -53,13 +53,13 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="ml-3"
+            class="ms-3"
           >
             <div
-              class="dropdown-menu dropdown-menu-right p-0 dropdownMenu"
+              class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
             >
               <div
-                class="arrow arrow"
+                class="dropdown-arrow arrow"
               />
               <button
                 aria-label="Open badge modal"
@@ -69,7 +69,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <svg
-                    class="mr-2 btnIcon"
+                    class="me-2 btnIcon"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -103,7 +103,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center undefined"
                   >
                     <svg
-                      class="mr-2 btnIcon"
+                      class="me-2 btnIcon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -140,7 +140,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center undefined"
                   >
                     <svg
-                      class="mr-2 btnIcon"
+                      class="me-2 btnIcon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -171,7 +171,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center undefined"
                   >
                     <svg
-                      class="mr-2 btnIcon"
+                      class="me-2 btnIcon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -216,7 +216,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
           class="text-truncate"
         >
           <small
-            class="text-muted text-uppercase mr-1"
+            class="text-muted text-uppercase me-1"
           >
             Url: 
           </small>
@@ -226,7 +226,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
         </div>
         <div>
           <small
-            class="text-muted text-uppercase mr-1"
+            class="text-muted text-uppercase me-1"
           >
             Last processed: 
           </small>
@@ -236,7 +236,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
         </div>
         <div>
           <small
-            class="text-muted text-uppercase mr-1"
+            class="text-muted text-uppercase me-1"
           >
             Last security scan: 
           </small>

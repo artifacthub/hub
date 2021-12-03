@@ -40,7 +40,7 @@
 .md code {
   word-wrap: normal;
   white-space: pre;
-  color: var(--dark);
+  color: var(--bs-dark);
 }
 
 .md *:not(pre):not(td) > code {
@@ -58,7 +58,7 @@
 }
 
 .md pre code {
-  color: var(--dark);
+  color: var(--bs-dark);
 }
 
 .md p code {
@@ -106,7 +106,6 @@
 }
 
 .quote {
-  position: relative;
   padding-left: 0.75rem;
 }
 

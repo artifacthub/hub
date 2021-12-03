@@ -16,7 +16,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
         class="modal-dialog modal-lg modal"
       >
         <div
-          class="modal-content content"
+          class="modal-content border border-3 mx-auto content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -28,15 +28,9 @@ exports[`SubscriptionModal creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -45,7 +39,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
               class="w-100 position-relative"
             >
               <label
-                class="font-weight-bold label"
+                class="form-label fw-bold label"
                 for="kind"
                 id="events-group"
               >
@@ -60,12 +54,12 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                   class="mb-2"
                 >
                   <div
-                    class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                    class="form-check me-sm-2 mb-2 undefined"
                   >
                     <input
                       aria-checked="true"
                       checked=""
-                      class="custom-control-input input"
+                      class="form-check-input input"
                       id="desktop-eventKind-0"
                       name="eventKind"
                       tabindex="0"
@@ -73,7 +67,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       value="0"
                     />
                     <label
-                      class="custom-control-label label undefined"
+                      class="form-check-label label undefined"
                       data-testid="checkboxLabel"
                       for="desktop-eventKind-0"
                     >
@@ -81,7 +75,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                         class="d-flex align-items-baseline mw-100"
                       >
                         <span
-                          class="mr-2 position-relative icon"
+                          class="me-2 position-relative icon"
                         >
                           <svg
                             fill="currentColor"
@@ -114,11 +108,11 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                   class="mb-2"
                 >
                   <div
-                    class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                    class="form-check me-sm-2 mb-2 undefined"
                   >
                     <input
                       aria-checked="false"
-                      class="custom-control-input input"
+                      class="form-check-input input"
                       id="desktop-eventKind-1"
                       name="eventKind"
                       tabindex="0"
@@ -126,7 +120,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       value="1"
                     />
                     <label
-                      class="custom-control-label label undefined"
+                      class="form-check-label label undefined"
                       data-testid="checkboxLabel"
                       for="desktop-eventKind-1"
                     >
@@ -134,7 +128,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                         class="d-flex align-items-baseline mw-100"
                       >
                         <span
-                          class="mr-2 position-relative icon"
+                          class="me-2 position-relative icon"
                         >
                           <svg
                             fill="currentColor"
@@ -168,7 +162,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                 class="d-flex flex-column mb-3"
               >
                 <label
-                  class="font-weight-bold label"
+                  class="form-label fw-bold label"
                   for="description"
                   id="subscriptions-pkg-list"
                 >
@@ -189,7 +183,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       class="d-flex flex-row"
                     >
                       <div
-                        class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
+                        class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white inputWrapper"
                       >
                         <div
                           class="d-flex align-items-center iconWrapper"
@@ -222,7 +216,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                         <input
                           aria-label="Search packages"
                           autocomplete="new-input"
-                          class="flex-grow-1 pr-4 pl-2 pl-md-0 input"
+                          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
                           name="searchInput"
                           spellcheck="false"
                           type="text"
@@ -235,7 +229,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -253,7 +247,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center text-uppercase"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

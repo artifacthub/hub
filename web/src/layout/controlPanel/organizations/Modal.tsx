@@ -51,7 +51,7 @@ const OrganizationModal = (props: Props) => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">
+              <span className="ms-2">
                 {isUndefined(props.organization) ? <>Adding organization</> : <>Updating organization</>}
               </span>
             </>
@@ -59,12 +59,12 @@ const OrganizationModal = (props: Props) => {
             <div className="d-flex flex-row align-items-center text-uppercase">
               {isUndefined(props.organization) ? (
                 <>
-                  <MdAddCircle className="mr-2" />
+                  <MdAddCircle className="me-2" />
                   <div>Add</div>
                 </>
               ) : (
                 <>
-                  <FaPencilAlt className="mr-2" />
+                  <FaPencilAlt className="me-2" />
                   <div>Update</div>
                 </>
               )}

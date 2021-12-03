@@ -3,7 +3,7 @@
 exports[`Search index creates snapshot 1`] = `
 <DocumentFragment>
   <nav
-    class="navbar navbar-expand-sm navbar subnavbar"
+    class="navbar navbar-expand-sm navbar h-auto subnavbar"
     role="navigation"
   >
     <div
@@ -19,22 +19,22 @@ exports[`Search index creates snapshot 1`] = `
             class="d-flex align-items-center text-truncate w-100"
           />
           <div
-            class="ml-3"
+            class="ms-3"
           >
             <div
               class="d-flex flex-row"
             >
               <div
-                class="form-inline flex-nowrap align-items-center"
+                class="d-inline flex-nowrap align-items-center"
               >
                 <label
-                  class="d-none d-sm-inline mb-0"
+                  class="form-label d-none d-sm-inline mb-0"
                 >
                   Sort:
                 </label>
                 <select
                   aria-label="sort-options"
-                  class="custom-select custom-select-sm ml-2 select"
+                  class="form-select form-select-sm ms-2 select"
                   disabled=""
                 >
                   <option
@@ -54,16 +54,16 @@ exports[`Search index creates snapshot 1`] = `
                 class="d-none d-sm-flex"
               >
                 <div
-                  class="form-inline flex-nowrap align-items-center ml-3"
+                  class="d-flex flex-nowrap align-items-center ms-3"
                 >
                   <label
-                    class="mr-2 mb-0"
+                    class="form-label me-2 mb-0"
                   >
                     Show:
                   </label>
                   <select
                     aria-label="pagination-limit"
-                    class="custom-select custom-select-sm select"
+                    class="form-select form-select-sm pe-2 select"
                     disabled=""
                   >
                     <option
@@ -86,7 +86,7 @@ exports[`Search index creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-none d-md-block position-relative ml-3"
+                class="d-none d-md-block position-relative ms-3"
               >
                 <button
                   aria-expanded="false"
@@ -98,7 +98,7 @@ exports[`Search index creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center justify-content-center"
                   >
                     <div
-                      class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper iconWrapper"
+                      class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 bg-white iconWrapper"
                     >
                       <svg
                         fill="currentColor"
@@ -117,11 +117,11 @@ exports[`Search index creates snapshot 1`] = `
                   </div>
                 </button>
                 <div
-                  class="dropdown-menu dropdown-menu-right p-0 dropdown"
+                  class="dropdown-menu dropdown-menu-end p-0 dropdown"
                   role="menu"
                 >
                   <div
-                    class="arrow arrow"
+                    class="dropdown-arrow arrow"
                   />
                   <button
                     aria-label="Open embed results modal"
@@ -131,7 +131,7 @@ exports[`Search index creates snapshot 1`] = `
                       class="d-flex flex-row align-items-center"
                     >
                       <svg
-                        class="mr-2"
+                        class="me-2"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -161,17 +161,17 @@ exports[`Search index creates snapshot 1`] = `
     class="d-flex position-relative pt-3 pb-3 flex-grow-1"
   >
     <div
-      class="position-absolute p-5 wrapper undefined"
+      class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
     >
       <div
         class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
       >
         <div
-          class="spinner-border text-primary spinner position-fixed spinner"
+          class="spinner-border text-primary spinner position-fixed top-50"
           role="status"
         >
           <span
-            class="sr-only"
+            class="visually-hidden"
           >
             Loading...
           </span>
@@ -188,7 +188,7 @@ exports[`Search index creates snapshot 1`] = `
     </main>
   </div>
   <footer
-    class="position-relative footer invisibleFooter"
+    class="position-relative text-white footer invisibleFooter"
     role="contentinfo"
   >
     <div
@@ -199,12 +199,12 @@ exports[`Search index creates snapshot 1`] = `
       >
         <div>
           <div
-            class="h6 font-weight-bold text-uppercase"
+            class="h6 fw-bold text-uppercase"
           >
             Project
           </div>
           <div
-            class="d-flex flex-column text-left"
+            class="d-flex flex-column text-start"
           >
             <a
               aria-label="Open documentation"
@@ -238,12 +238,12 @@ exports[`Search index creates snapshot 1`] = `
         </div>
         <div>
           <div
-            class="h6 font-weight-bold text-uppercase"
+            class="h6 fw-bold text-uppercase"
           >
             Community
           </div>
           <div
-            class="d-flex flex-column text-left"
+            class="d-flex flex-column text-start"
           >
             <a
               aria-label="Open Github"
@@ -258,7 +258,7 @@ exports[`Search index creates snapshot 1`] = `
                 class="d-flex align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -287,7 +287,7 @@ exports[`Search index creates snapshot 1`] = `
                 class="d-flex align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -316,7 +316,7 @@ exports[`Search index creates snapshot 1`] = `
                 class="d-flex align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -338,7 +338,7 @@ exports[`Search index creates snapshot 1`] = `
           class="fullMobileSection"
         >
           <div
-            class="h6 font-weight-bold text-uppercase"
+            class="h6 fw-bold text-uppercase"
           >
             About
           </div>
@@ -369,7 +369,7 @@ exports[`Search index creates snapshot 1`] = `
                   class="smallIcon"
                 >
                   <svg
-                    class="ml-1"
+                    class="ms-1"
                     fill="none"
                     height="1em"
                     stroke="currentColor"
@@ -399,7 +399,7 @@ exports[`Search index creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="ml-0 ml-lg-auto mt-3 mt-lg-0 text-center fullMobileSection"
+          class="ms-0 ms-lg-auto mt-3 mt-lg-0 text-center fullMobileSection"
         >
           <div
             class="d-flex flex-column align-items-center h-100"
@@ -428,7 +428,7 @@ exports[`Search index creates snapshot 1`] = `
             >
               <small>
                 <span
-                  class="d-none d-sm-inline mr-1"
+                  class="d-none d-sm-inline me-1"
                 >
                   Copyright
                 </span>

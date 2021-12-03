@@ -6,7 +6,7 @@ exports[`TargetImageBtn creates snapshot 1`] = `
     class="position-relative btnWrapper"
   >
     <button
-      class="btn btn-link text-reset position-absolute linkBtn inTarget"
+      class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inTarget"
     >
       <svg
         fill="currentColor"
@@ -23,7 +23,7 @@ exports[`TargetImageBtn creates snapshot 1`] = `
       </svg>
     </button>
     <div
-      class="p-1 pl-0"
+      class="p-1 ps-0"
     >
       content
     </div>

@@ -72,9 +72,7 @@ describe('SubscriptionSwitch', () => {
       expect(checkbox).not.toBeChecked();
       expect(checkbox).toBeEnabled();
 
-      const label = screen.getByTestId(`subs_${defaultProps.repoInfo.repositoryId}_4_label`);
-      expect(label).toBeInTheDocument();
-      userEvent.click(label);
+      userEvent.click(checkbox);
 
       expect(await screen.findByRole('status')).toBeInTheDocument();
 

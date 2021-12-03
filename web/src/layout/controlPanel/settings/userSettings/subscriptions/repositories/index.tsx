@@ -149,7 +149,7 @@ const RepositoriesSection = (props: Props) => {
           >
             <div className="d-flex flex-row align-items-center justify-content-center">
               <IoMdLogOut />
-              <span className="d-none d-md-inline ml-2">Opt-out</span>
+              <span className="d-none d-md-inline ms-2">Opt-out</span>
             </div>
           </button>
         </div>
@@ -157,13 +157,13 @@ const RepositoriesSection = (props: Props) => {
 
       <div className="mt-3 mt-md-3">
         <p>
-          Repositories notifications are <span className="font-weight-bold">enabled by default</span>. However, you can
-          opt-out of notifications for certain kinds of events that happen in any of the repositories you can manage.
+          Repositories notifications are <span className="fw-bold">enabled by default</span>. However, you can opt-out
+          of notifications for certain kinds of events that happen in any of the repositories you can manage.
         </p>
 
         <p>
-          You will <span className="font-weight-bold">NOT</span> receive notifications when an event that matches any of
-          the repositories in the list is fired.
+          You will <span className="fw-bold">NOT</span> receive notifications when an event that matches any of the
+          repositories in the list is fired.
         </p>
 
         <div className="mt-4 mt-md-5">
@@ -190,20 +190,20 @@ const RepositoriesSection = (props: Props) => {
                         >
                           <div className="d-flex flex-row align-items-center justify-content-center">
                             {subs.icon}
-                            {subs.shortTitle && <span className="d-inline d-lg-none ml-2">{subs.shortTitle}</span>}
-                            <span className="d-none d-lg-inline ml-2">{subs.title}</span>
+                            {subs.shortTitle && <span className="d-inline d-lg-none ms-2">{subs.shortTitle}</span>}
+                            <span className="d-none d-lg-inline ms-2">{subs.title}</span>
                           </div>
                         </th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="bg-white">
                     {Object.keys(optOutList).map((repoId: string) => {
                       const repoInfo: Repository = optOutList[repoId][0].repository;
                       return (
                         <tr key={`subs_${repoId}`} data-testid="optOutRow">
                           <td className="align-middle text-center d-none d-sm-table-cell">
-                            <RepositoryIcon kind={repoInfo.kind} className={styles.icon} />
+                            <RepositoryIcon kind={repoInfo.kind} className={`h-auto ${styles.icon}`} />
                           </td>
                           <td className="align-middle">
                             <div className="d-flex flex-row align-items-center">
@@ -267,13 +267,15 @@ const RepositoriesSection = (props: Props) => {
 
                             return (
                               <td className="align-middle text-center" key={`td_${repoInfo.name}_${subs.kind}`}>
-                                <SubscriptionSwitch
-                                  repoInfo={repoInfo}
-                                  kind={subs.kind}
-                                  enabled={subs.enabled}
-                                  optOutItem={optItem}
-                                  changeSubscription={changeSubscription}
-                                />
+                                <div className="text-center position-relative">
+                                  <SubscriptionSwitch
+                                    repoInfo={repoInfo}
+                                    kind={subs.kind}
+                                    enabled={subs.enabled}
+                                    optOutItem={optItem}
+                                    changeSubscription={changeSubscription}
+                                  />
+                                </div>
                               </td>
                             );
                           })}

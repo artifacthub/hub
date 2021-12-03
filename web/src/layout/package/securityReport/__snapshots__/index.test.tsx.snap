@@ -27,7 +27,7 @@ exports[`SecurityReport creates snapshot 1`] = `
         <div>
           <small>
             <span
-              class="font-weight-bold mr-1"
+              class="fw-bold me-1"
             >
               179
             </span>
@@ -35,14 +35,14 @@ exports[`SecurityReport creates snapshot 1`] = `
           </small>
         </div>
         <div
-          class="position-relative position-relative ml-1"
+          class="position-relative position-relative ms-1"
         >
           <div
             data-testid="elementWithTooltip"
           >
             <small>
               <div
-                class="badge badge-pill text-light font-weight-bold badge position-relative ml-1"
+                class="badge rounded-pill text-light fw-bold badge position-relative ms-1"
                 style="background-color: rgb(150, 0, 3);"
               >
                 F
@@ -59,7 +59,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative mr-2 badge"
+            class="badge position-relative me-2 badge"
             data-testid="summaryBadge"
             style="background-color: rgb(150, 0, 3);"
           >
@@ -72,7 +72,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           </span>
         </div>
         <span
-          class="badge badge-pill badgeItems"
+          class="badge text-dark rounded-pill badgeItems"
         >
           2
         </span>
@@ -85,7 +85,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative mr-2 badge"
+            class="badge position-relative me-2 badge"
             data-testid="summaryBadge"
             style="background-color: rgb(223, 42, 25);"
           >
@@ -98,7 +98,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           </span>
         </div>
         <span
-          class="badge badge-pill badgeItems"
+          class="badge text-dark rounded-pill badgeItems"
         >
           10
         </span>
@@ -111,7 +111,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative mr-2 badge"
+            class="badge position-relative me-2 badge"
             data-testid="summaryBadge"
             style="background-color: rgb(247, 134, 15);"
           >
@@ -124,7 +124,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           </span>
         </div>
         <span
-          class="badge badge-pill badgeItems"
+          class="badge text-dark rounded-pill badgeItems"
         >
           105
         </span>
@@ -137,7 +137,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative mr-2 badge"
+            class="badge position-relative me-2 badge"
             data-testid="summaryBadge"
             style="background-color: rgb(244, 189, 12);"
           >
@@ -150,7 +150,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           </span>
         </div>
         <span
-          class="badge badge-pill badgeItems"
+          class="badge text-dark rounded-pill badgeItems"
         >
           53
         </span>
@@ -163,7 +163,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative mr-2 badge"
+            class="badge position-relative me-2 badge"
             data-testid="summaryBadge"
             style="background-color: rgb(178, 178, 178);"
           >
@@ -176,7 +176,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           </span>
         </div>
         <span
-          class="badge badge-pill badgeItems"
+          class="badge text-dark rounded-pill badgeItems"
         >
           9
         </span>
@@ -193,7 +193,7 @@ exports[`SecurityReport creates snapshot 1`] = `
               class="d-flex flex-row align-items-center text-uppercase"
             >
               <svg
-                class="mr-2"
+                class="me-2"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"

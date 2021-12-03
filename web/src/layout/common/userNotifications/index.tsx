@@ -16,7 +16,7 @@ interface HeadingProps {
 
 const Heading: ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className={`text-dark ${styles.header}`}>{data.children}</Tag>;
+  return <Tag className={`text-dark lh-1 fw-bold ${styles.header}`}>{data.children}</Tag>;
 };
 
 const ANIMATION_TIME = 300; //300ms
@@ -92,10 +92,10 @@ const UserNotificationsController: ElementType = () => {
     <div className="d-none d-md-flex justify-content-center align-items-center w-100">
       <div
         className={classnames(
-          'position-fixed toast fade',
+          'position-fixed toast fade border border-3 bg-white opacity-0',
           styles.toast,
           {
-            [`show ${styles.isVisible}`]: !isNull(notification) && isVisible,
+            [`show opacity-100 ${styles.isVisible}`]: !isNull(notification) && isVisible,
           },
           'notificationCard'
         )}
@@ -106,11 +106,11 @@ const UserNotificationsController: ElementType = () => {
         {!isNull(notification) && (
           <div className="toast-body" data-testid="notificationContent">
             <div>
-              <div className="float-right">
-                <div className="d-flex flex-row align-items-start">
+              <div className={`float-end ${styles.btnsWrapper}`}>
+                <div className="d-flex flex-row align-items-center">
                   <button
                     type="button"
-                    className={`btn btn-link text-dark py-0 position-relative ${styles.btn}`}
+                    className={`btn btn-link text-dark py-0 ${styles.btn}`}
                     onClick={onChangeNotificationsPrefs}
                     aria-label="Disable usage tips"
                   >
@@ -118,12 +118,10 @@ const UserNotificationsController: ElementType = () => {
                   </button>
                   <button
                     type="button"
-                    className={`close position-relative ${styles.closeBtn}`}
+                    className={`btn-close ${styles.closeBtn}`}
                     onClick={onClose}
                     aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                  ></button>
                 </div>
               </div>
               <span>

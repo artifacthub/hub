@@ -76,7 +76,7 @@ const Filters = (props: Props) => {
 
       crElement = (
         <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
-          <SmallTitle text="Publisher" className="text-dark font-weight-bold" />
+          <SmallTitle text="Publisher" className="text-dark fw-bold" />
           <div className="mt-3" role="group">
             <ExpandableList visibleItems={5} items={publisherOptions} forceCollapseList={props.forceCollapseList} />
           </div>
@@ -98,11 +98,7 @@ const Filters = (props: Props) => {
 
       kindElement = (
         <div role="menuitem" className={`mt-1 mt-sm-2 pt-1 ${styles.facet}`}>
-          <SmallTitle
-            text={kind.title}
-            className="text-dark font-weight-bold"
-            id={`repo-${kind.filterKey}-${props.device}`}
-          />
+          <SmallTitle text={kind.title} className="text-dark fw-bold" id={`repo-${kind.filterKey}-${props.device}`} />
           <div className="mt-3" role="group" aria-labelledby={`repo-${kind.filterKey}-${props.device}`}>
             {kind.options.map((option: FacetOption) => (
               <CheckBox
@@ -149,7 +145,7 @@ const Filters = (props: Props) => {
         <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
           <SmallTitle
             text={capabilities.title}
-            className="text-dark font-weight-bold"
+            className="text-dark fw-bold"
             id={`pkg-${capabilities.filterKey}-${props.device}`}
           />
           <div className="mt-3" role="group" aria-labelledby={`pkg-${capabilities.filterKey}-${props.device}`}>
@@ -209,11 +205,7 @@ const Filters = (props: Props) => {
 
       crElement = (
         <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
-          <SmallTitle
-            text={repo.title}
-            className="text-dark font-weight-bold"
-            id={`pkg-${repo.filterKey}-${props.device}`}
-          />
+          <SmallTitle text={repo.title} className="text-dark fw-bold" id={`pkg-${repo.filterKey}-${props.device}`} />
           <div className="mt-3" role="group" aria-labelledby={`pkg-${repo.filterKey}-${props.device}`}>
             <ExpandableList visibleItems={5} items={repoOptions} forceCollapseList={props.forceCollapseList} />
           </div>
@@ -258,7 +250,7 @@ const Filters = (props: Props) => {
         <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
           <SmallTitle
             text={license.title}
-            className="text-dark font-weight-bold"
+            className="text-dark fw-bold"
             id={`pkg-${license.filterKey}-${props.device}`}
           />
           <div className="mt-3" role="group" aria-labelledby={`pkg-${license.filterKey}-${props.device}`}>
@@ -275,7 +267,7 @@ const Filters = (props: Props) => {
     <div className={classnames(styles.filters, { 'pt-2 mt-3 mb-5': props.visibleTitle })}>
       {props.visibleTitle && (
         <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom">
-          <div className={`h6 text-uppercase mb-0 ${styles.title}`}>Filters</div>
+          <div className="h6 text-uppercase mb-0 lh-base">Filters</div>
           {(!isEmpty(props.activeFilters) ||
             props.deprecated ||
             props.operators ||
@@ -285,7 +277,7 @@ const Filters = (props: Props) => {
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
               <button
-                className={`btn btn-link btn-sm p-0 pl-1 text-dark ${styles.resetBtn}`}
+                className={`btn btn-link btn-sm p-0 ps-1 text-dark ${styles.resetBtn}`}
                 onClick={props.onResetFilters}
                 aria-label="Reset filters"
               >
@@ -311,7 +303,7 @@ const Filters = (props: Props) => {
         <div className="d-none d-md-block">
           <ElementWithTooltip
             tooltipClassName={styles.tooltipMessage}
-            className={styles.tooltipIcon}
+            className={`position-relative ${styles.tooltipIcon}`}
             element={<MdInfoOutline />}
             tooltipMessage="The publisher owns the software deployed by the packages"
             visibleTooltip
@@ -352,7 +344,7 @@ const Filters = (props: Props) => {
       {getCapabilitiesFacets()}
 
       <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
-        <SmallTitle text="Others" className="text-dark font-weight-bold" />
+        <SmallTitle text="Others" className="text-dark fw-bold" />
 
         <div className="mt-3">
           <CheckBox

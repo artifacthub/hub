@@ -7,7 +7,7 @@ exports[`RepositoryInfo creates snapshot 1`] = `
       class="position-absolute"
     >
       <div
-        class="dropdown-menu dropdown-menu-left dropdown"
+        class="dropdown-menu dropdown-menu-left text-wrap dropdown"
         role="complementary"
       >
         <div
@@ -20,18 +20,18 @@ exports[`RepositoryInfo creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <small
-                class="text-muted text-uppercase mr-1"
+                class="text-muted text-uppercase me-1"
               >
                 Repo: 
               </small>
               <img
                 alt="Icon"
-                class="mr-1 repoIconMini iconLight"
+                class="me-1 w-auto repoIconMini iconLight"
                 src="/static/media/helm-chart.svg"
               />
               <img
                 alt="Icon"
-                class="mr-1 repoIconMini iconDark"
+                class="me-1 w-auto repoIconMini iconDark"
                 src="/static/media/helm-chart-light.svg"
               />
               <div
@@ -44,12 +44,12 @@ exports[`RepositoryInfo creates snapshot 1`] = `
               class="mt-2 d-flex flex-row align-items-baseline"
             >
               <small
-                class="text-muted text-uppercase mr-1"
+                class="text-muted text-uppercase me-1"
               >
                 Url: 
               </small>
               <div
-                class="text-reset urlContent labelContent"
+                class="text-reset text-break labelContent"
                 data-testid="repoUrl"
               >
                 <div
@@ -154,7 +154,7 @@ exports[`RepositoryInfo creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Copy repository url to clipboard"
-                        class="btn btn-sm miniBtn"
+                        class="btn btn-sm bg-transparent"
                         type="button"
                       >
                         <div
@@ -199,14 +199,14 @@ exports[`RepositoryInfo creates snapshot 1`] = `
       class="d-flex flex-row aling-items-baseline text-truncate"
     >
       <div
-        class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+        class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
       >
         <small>
           Repo:
         </small>
       </div>
       <span
-        class="sr-only"
+        class="visually-hidden"
       >
         stable
       </span>
@@ -214,7 +214,7 @@ exports[`RepositoryInfo creates snapshot 1`] = `
         aria-expanded="false"
         aria-hidden="true"
         aria-label="Filter by repo Stable"
-        class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+        class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
         data-testid="repoLink"
         tabindex="-1"
       >

@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { groupBy, isUndefined, rangeRight } from 'lodash';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
@@ -59,17 +60,18 @@ const LastYearActivity = (props: Props) => {
               <div key={`activity_${month}`} className="position-relative">
                 <div
                   data-testid="heatMapCell"
-                  className={`position-relative ${styles.heatMapCell} ${styles[`level${level}`]}`}
+                  className={classnames('position-relative border', styles.heatMapCell, styles[`level${level}`], {
+                    border: level === 0,
+                  })}
                 />
-                <div data-testid="heatMapPopover" className={`popover ${styles.popover}`} role="tooltip">
-                  <div className={`popover-header ${styles.popoverHeader}`}>
+                <div data-testid="heatMapPopover" className={`popover end-0 ${styles.popover}`} role="tooltip">
+                  <div className={`popover-header lh-1 p-2 ${styles.popoverHeader}`}>
                     {moment(month, 'MM/YY').format("MMM'YY")}
                   </div>
                   <div className="popover-body text-nowrap">
                     <div className="d-flex flex-row align-items-center">
-                      <div className={`mr-2 ${styles.marker} ${styles[`level${level}`]}`} />
-                      Releases:{' '}
-                      <span className="font-weight-bold ml-2">{versions[month] ? versions[month].length : 0}</span>
+                      <div className={`me-2 border rounded-circle top-0 ${styles.marker} ${styles[`level${level}`]}`} />
+                      Releases: <span className="fw-bold ms-2">{versions[month] ? versions[month].length : 0}</span>
                     </div>
                   </div>
                 </div>

@@ -34,9 +34,9 @@ const OLMInstall = (props: Props) => {
         <small className="text-muted mt-2 mb-1">Channel</small>
       </div>
 
-      <div className="form-group w-50">
+      <div className=" w-50">
         <select
-          className="custom-select custom-select-sm"
+          className="form-select form-select-sm"
           aria-label="channel-select"
           value={activeChannel}
           onChange={(e: ChangeEvent<HTMLSelectElement>) => setActiveChannel(e.target.value)}
@@ -55,8 +55,8 @@ const OLMInstall = (props: Props) => {
       />
 
       <small>
-        This Operator will be installed in the "<span className="font-weight-bold">{namespace}</span>" namespace and
-        will be usable from all namespaces in the cluster.
+        This Operator will be installed in the "<span className="fw-bold">{namespace}</span>" namespace and will be
+        usable from all namespaces in the cluster.
       </small>
 
       <CommandBlock
@@ -70,15 +70,15 @@ const OLMInstall = (props: Props) => {
 
       {props.isPrivate && (
         <div className={`alert alert-warning my-4 ${styles.alert}`} role="alert">
-          <span className="font-weight-bold text-uppercase">Important:</span> This repository is{' '}
-          <span className="font-weight-bold">private</span> and requires some credentials.
+          <span className="fw-bold text-uppercase">Important:</span> This repository is{' '}
+          <span className="fw-bold">private</span> and requires some credentials.
         </div>
       )}
 
       <div className="mt-2">
         <ExternalLink
           href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md"
-          className="btn btn-link pl-0"
+          className="btn btn-link ps-0"
           label="Download OLM"
         >
           Need OLM?

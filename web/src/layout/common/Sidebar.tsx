@@ -49,7 +49,7 @@ const Sidebar = (props: Props) => {
       <button
         type="button"
         className={classnames(
-          'font-weight-bold text-uppercase position-relative btn',
+          'fw-bold text-uppercase position-relative btn',
           { [`${props.buttonType}`]: !isUndefined(props.buttonType) },
           { 'btn-primary': isUndefined(props.buttonType) }
         )}
@@ -69,7 +69,9 @@ const Sidebar = (props: Props) => {
         role="complementary"
         aria-label="Sidebar"
         ref={ref}
-        className={classnames('sidebar', styles.sidebar, styles[direction], { [styles.active]: openStatus })}
+        className={classnames('sidebar position-fixed top-0 bottom-0 w-75', styles.sidebar, styles[direction], {
+          [styles.active]: openStatus,
+        })}
       >
         <div className="d-flex flex-column h-100">
           <div className="border-bottom p-4 pb-3">
@@ -79,12 +81,10 @@ const Sidebar = (props: Props) => {
               <div>
                 <button
                   type="button"
-                  className="close"
+                  className={`btn-close ${styles.closeBtn}`}
                   onClick={() => openStatusChange(false)}
                   aria-label="Close sidebar"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
+                ></button>
               </div>
             </div>
           </div>
@@ -98,7 +98,7 @@ const Sidebar = (props: Props) => {
               {!isUndefined(props.leftButton) && <>{props.leftButton}</>}
               <button
                 type="button"
-                className="ml-auto btn btn-sm btn-outline-secondary"
+                className="ms-auto btn btn-sm btn-outline-secondary text-uppercase"
                 onClick={() => openStatusChange(false)}
                 aria-label="Close"
               >

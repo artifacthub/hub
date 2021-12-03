@@ -1,10 +1,8 @@
 .dropdown {
   min-width: 150px;
   max-width: 500px;
-  white-space: normal;
   font-size: 0.85rem;
   margin-top: 22px;
-  visibility: hidden;
   background-color: var(--light-gray);
   border-color: var(--mid-gray);
 }
@@ -27,10 +25,6 @@
   width: 320px;
 }
 
-.visible {
-  visibility: visible;
-}
-
 .content {
   font-size: 80%;
   line-height: 1rem;
@@ -41,9 +35,7 @@
 }
 
 .content .header {
-  font-weight: bold;
   font-size: 0.75rem;
-  line-height: 1rem;
 }
 
 .content p {

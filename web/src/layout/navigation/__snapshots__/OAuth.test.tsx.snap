@@ -6,78 +6,82 @@ exports[`OAuth creates snapshot 1`] = `
     class="undefined my-4 position-relative text-center separator"
   >
     <span
-      class="p-3 m-auto separatorContent"
+      class="p-3 m-auto bg-white"
     >
       or sign in with
     </span>
     <div
-      class="divider"
+      class="position-absolute top-50 start-0 end-0 divider"
     />
   </div>
   <div>
     <div
       class="d-flex flex-column mb-1"
     >
-      <button
-        aria-label="Sign in with Github"
-        class="btn btn-outline-secondary mb-3 btn-block btn"
-        type="button"
+      <div
+        class="d-grid gap-4"
       >
-        <div
-          class="d-flex align-items-center"
+        <button
+          aria-label="Sign in with Github"
+          class="btn btn-outline-secondary btn"
+          type="button"
         >
-          <img
-            alt="Github Logo"
-            class="logo"
-            src="/static/media/github-mark.svg"
-          />
           <div
-            class="flex-grow-1 text-center"
+            class="d-flex align-items-center"
           >
-            Github
+            <img
+              alt="Github Logo"
+              class="lh-base logo"
+              src="/static/media/github-mark.svg"
+            />
+            <div
+              class="flex-grow-1 text-center"
+            >
+              Github
+            </div>
           </div>
-        </div>
-      </button>
-      <button
-        aria-label="Sign in with Google"
-        class="btn btn-outline-secondary mb-3 btn-block btn"
-        type="button"
-      >
-        <div
-          class="d-flex align-items-center"
+        </button>
+        <button
+          aria-label="Sign in with Google"
+          class="btn btn-outline-secondary btn"
+          type="button"
         >
-          <img
-            alt="Google Logo"
-            class="logo"
-            src="/static/media/google.svg"
-          />
           <div
-            class="flex-grow-1 text-center"
+            class="d-flex align-items-center"
           >
-            Google
+            <img
+              alt="Google Logo"
+              class="lh-base logo"
+              src="/static/media/google.svg"
+            />
+            <div
+              class="flex-grow-1 text-center"
+            >
+              Google
+            </div>
           </div>
-        </div>
-      </button>
-      <button
-        aria-label="Sign in with OpenID Connect"
-        class="btn btn-outline-secondary mb-3 btn-block btn"
-        type="button"
-      >
-        <div
-          class="d-flex align-items-center"
+        </button>
+        <button
+          aria-label="Sign in with OpenID Connect"
+          class="btn btn-outline-secondary  btn"
+          type="button"
         >
-          <img
-            alt="OpenID Logo"
-            class="logo"
-            src="/static/media/openid.svg"
-          />
           <div
-            class="flex-grow-1 text-center"
+            class="d-flex align-items-center"
           >
-            OpenID Connect
+            <img
+              alt="OpenID Logo"
+              class="lh-base logo"
+              src="/static/media/openid.svg"
+            />
+            <div
+              class="flex-grow-1 text-center"
+            >
+              OpenID Connect
+            </div>
           </div>
-        </div>
-      </button>
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>

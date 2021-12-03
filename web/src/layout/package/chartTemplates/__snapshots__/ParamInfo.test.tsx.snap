@@ -9,7 +9,7 @@ exports[`ParamInfo creates snapshot 1`] = `
       class="position-absolute"
     >
       <div
-        class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+        class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
         data-testid="infoDropdown"
       >
         <div

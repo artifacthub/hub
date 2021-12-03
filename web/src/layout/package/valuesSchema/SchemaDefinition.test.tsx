@@ -153,7 +153,7 @@ describe('SchemaDefinition', () => {
       render(<SchemaDefinition {...props} {...defaultProps} isRequired />);
 
       expect(screen.getByText('Required')).toBeInTheDocument();
-      expect(screen.getByText('Required')).toHaveClass('badge-success');
+      expect(screen.getByText('Required')).toHaveClass('bg-success');
     });
 
     it('renders value with different options', () => {

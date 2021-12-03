@@ -3,7 +3,7 @@
 exports[`Footer creates snapshot 1`] = `
 <DocumentFragment>
   <footer
-    class="position-relative footer"
+    class="position-relative text-white footer"
     role="contentinfo"
   >
     <div
@@ -14,12 +14,12 @@ exports[`Footer creates snapshot 1`] = `
       >
         <div>
           <div
-            class="h6 font-weight-bold text-uppercase"
+            class="h6 fw-bold text-uppercase"
           >
             Project
           </div>
           <div
-            class="d-flex flex-column text-left"
+            class="d-flex flex-column text-start"
           >
             <a
               aria-label="Open documentation"
@@ -53,12 +53,12 @@ exports[`Footer creates snapshot 1`] = `
         </div>
         <div>
           <div
-            class="h6 font-weight-bold text-uppercase"
+            class="h6 fw-bold text-uppercase"
           >
             Community
           </div>
           <div
-            class="d-flex flex-column text-left"
+            class="d-flex flex-column text-start"
           >
             <a
               aria-label="Open Github"
@@ -73,7 +73,7 @@ exports[`Footer creates snapshot 1`] = `
                 class="d-flex align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -102,7 +102,7 @@ exports[`Footer creates snapshot 1`] = `
                 class="d-flex align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -131,7 +131,7 @@ exports[`Footer creates snapshot 1`] = `
                 class="d-flex align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -153,7 +153,7 @@ exports[`Footer creates snapshot 1`] = `
           class="fullMobileSection"
         >
           <div
-            class="h6 font-weight-bold text-uppercase"
+            class="h6 fw-bold text-uppercase"
           >
             About
           </div>
@@ -184,7 +184,7 @@ exports[`Footer creates snapshot 1`] = `
                   class="smallIcon"
                 >
                   <svg
-                    class="ml-1"
+                    class="ms-1"
                     fill="none"
                     height="1em"
                     stroke="currentColor"
@@ -214,7 +214,7 @@ exports[`Footer creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="ml-0 ml-lg-auto mt-3 mt-lg-0 text-center fullMobileSection"
+          class="ms-0 ms-lg-auto mt-3 mt-lg-0 text-center fullMobileSection"
         >
           <div
             class="d-flex flex-column align-items-center h-100"
@@ -243,7 +243,7 @@ exports[`Footer creates snapshot 1`] = `
             >
               <small>
                 <span
-                  class="d-none d-sm-inline mr-1"
+                  class="d-none d-sm-inline me-1"
                 >
                   Copyright
                 </span>

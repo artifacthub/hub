@@ -13,7 +13,7 @@ exports[`SummaryTable creates snapshot 1`] = `
           class="tableTitle"
         >
           <th
-            class="image"
+            class="w-auto"
             scope="col"
           >
             Image
@@ -61,7 +61,7 @@ exports[`SummaryTable creates snapshot 1`] = `
         <tr>
           <td>
             <div
-              class="imageNameWrapper"
+              class="d-table w-100 imageNameWrapper"
             >
               <div
                 class="text-truncate"
@@ -84,7 +84,7 @@ exports[`SummaryTable creates snapshot 1`] = `
                 >
                   <small>
                     <div
-                      class="badge badge-pill text-light font-weight-bold badge undefined"
+                      class="badge rounded-pill text-light fw-bold badge undefined"
                       style="background-color: rgb(150, 0, 3);"
                     >
                       F
@@ -120,7 +120,7 @@ exports[`SummaryTable creates snapshot 1`] = `
             0
           </td>
           <td
-            class="text-center font-weight-bold"
+            class="text-center fw-bold"
           >
             942
           </td>

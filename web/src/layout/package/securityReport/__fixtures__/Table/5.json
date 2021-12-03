@@ -29175,7 +29175,7 @@
         "PkgName": "python",
         "Severity": "MEDIUM",
         "References": [
-          "http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html",
+          "http://blog.python.org/2013/02/announcing-defusedxms-fixes-for-xml.html",
           "http://bugs.python.org/issue17239",
           "http://lists.openstack.org/pipermail/openstack-announce/2013-February/000078.html",
           "http://rhn.redhat.com/errata/RHSA-2013-0657.html",
@@ -29216,7 +29216,7 @@
         "PkgName": "python",
         "Severity": "MEDIUM",
         "References": [
-          "http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html",
+          "http://blog.python.org/2013/02/announcing-defusedxms-fixes-for-xml.html",
           "http://bugs.python.org/issue17239",
           "http://lists.openstack.org/pipermail/openstack-announce/2013-February/000078.html",
           "http://rhn.redhat.com/errata/RHSA-2013-0657.html",
@@ -29776,7 +29776,7 @@
         "PkgName": "python-devel",
         "Severity": "MEDIUM",
         "References": [
-          "http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html",
+          "http://blog.python.org/2013/02/announcing-defusedxms-fixes-for-xml.html",
           "http://bugs.python.org/issue17239",
           "http://lists.openstack.org/pipermail/openstack-announce/2013-February/000078.html",
           "http://rhn.redhat.com/errata/RHSA-2013-0657.html",
@@ -29817,7 +29817,7 @@
         "PkgName": "python-devel",
         "Severity": "MEDIUM",
         "References": [
-          "http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html",
+          "http://blog.python.org/2013/02/announcing-defusedxms-fixes-for-xml.html",
           "http://bugs.python.org/issue17239",
           "http://lists.openstack.org/pipermail/openstack-announce/2013-February/000078.html",
           "http://rhn.redhat.com/errata/RHSA-2013-0657.html",
@@ -30397,7 +30397,7 @@
         "PkgName": "python-libs",
         "Severity": "MEDIUM",
         "References": [
-          "http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html",
+          "http://blog.python.org/2013/02/announcing-defusedxms-fixes-for-xml.html",
           "http://bugs.python.org/issue17239",
           "http://lists.openstack.org/pipermail/openstack-announce/2013-February/000078.html",
           "http://rhn.redhat.com/errata/RHSA-2013-0657.html",
@@ -30438,7 +30438,7 @@
         "PkgName": "python-libs",
         "Severity": "MEDIUM",
         "References": [
-          "http://blog.python.org/2013/02/announcing-defusedxml-fixes-for-xml.html",
+          "http://blog.python.org/2013/02/announcing-defusedxms-fixes-for-xml.html",
           "http://bugs.python.org/issue17239",
           "http://lists.openstack.org/pipermail/openstack-announce/2013-February/000078.html",
           "http://rhn.redhat.com/errata/RHSA-2013-0657.html",

@@ -9,19 +9,19 @@ exports[`CreateAnAccount creates snapshot 1`] = `
     novalidate=""
   >
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="alias"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Username
         </span>
         <small
-          class="ml-1 font-italic"
+          class="ms-1 fst-italic"
         >
           (Required)
         </small>
@@ -44,19 +44,19 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="email"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Email
         </span>
         <small
-          class="ml-1 font-italic"
+          class="ms-1 fst-italic"
         >
           (Required)
         </small>
@@ -79,14 +79,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="firstName"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           First Name
         </span>
@@ -106,14 +106,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="lastName"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Last Name
         </span>
@@ -133,14 +133,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="password"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Password
         </span>
@@ -163,19 +163,19 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="confirmPassword"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Confirm password
         </span>
         <small
-          class="ml-1 font-italic"
+          class="ms-1 fst-italic"
         >
           (Required)
         </small>

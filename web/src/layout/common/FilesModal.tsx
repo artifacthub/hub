@@ -206,7 +206,7 @@ const FilesModal = (props: Props) => {
     <div className="mb-2">
       <div className="text-center">
         <button
-          className="btn btn-outline-secondary btn-sm text-nowrap btn-block"
+          className="btn btn-outline-secondary btn-sm text-nowrap w-100"
           onClick={onOpenModal}
           aria-label={`Open ${props.title} modal`}
           disabled={isUndefined(props.files) || props.files.length === 0}
@@ -225,16 +225,16 @@ const FilesModal = (props: Props) => {
           breakPoint="md"
         >
           <div className="h-100 mw-100">
-            <div className="d-flex flex-row align-items-strecht no-gutters h-100 mh-100">
+            <div className="d-flex flex-row align-items-strecht g-0 h-100 mh-100">
               <div className="col-3 h-100 overflow-auto">
-                <div className="position-relative w-100 pr-2">
-                  <div className="form-group input-group-sm">
+                <div className="position-relative w-100 pe-2">
+                  <div className="mb-3 input-group-sm">
                     <input
                       type="text"
                       placeholder={`Search by name ${
                         props.kind === FileModalKind.CustomResourcesDefinition ? 'or resource kind' : ''
                       }`}
-                      className={`flex-grow-1 form-control pl-3 pr-4 ${styles.input}`}
+                      className={`flex-grow-1 form-control ps-3 pe-4 ${styles.input}`}
                       name="fileModalInput"
                       value={inputValue}
                       onChange={onChange}
@@ -244,8 +244,8 @@ const FilesModal = (props: Props) => {
                     <FaSearch className={`text-muted position-absolute ${styles.searchIcon}`} />
 
                     <div className="alert p-0 mt-3">
-                      <small className="text-muted text-break font-italic">
-                        This package version contains <span className="font-weight-bold">{props.files.length}</span>{' '}
+                      <small className="text-muted text-break fst-italic">
+                        This package version contains <span className="fw-bold">{props.files.length}</span>{' '}
                         {FILE_TYPE[props.kind][props.files.length === 1 ? 'singular' : 'plural']}
                       </small>
                     </div>
@@ -262,13 +262,13 @@ const FilesModal = (props: Props) => {
                     <small className="text-muted">Sorry, no matches found</small>
                   </div>
                 ) : (
-                  <div className="pr-2">
+                  <div className="pe-2">
                     {visibleFiles.map((file: any, index: number) => {
                       const isActive = selectedItem === file;
                       return (
                         <button
                           key={`file_${file.name}_${index}`}
-                          className={classnames('btn btn-light btn-sm mb-2 text-left w-100', styles.btn, {
+                          className={classnames('btn btn-light btn-sm mb-2 text-start w-100', styles.btn, {
                             [`activeTemplate ${styles.active}`]: isActive,
                           })}
                           onClick={() => {
@@ -290,7 +290,9 @@ const FilesModal = (props: Props) => {
                                         <div className={styles.legend}>
                                           <small className="text-muted text-uppercase">Kind:</small>
                                         </div>
-                                        <span className={`text-truncate ${styles.label}`}>{resource.kind}</span>
+                                        <span className={`text-truncate border fw-bold ${styles.label}`}>
+                                          {resource.kind}
+                                        </span>
                                       </div>
 
                                       <div className="d-flex flex-row align-items-baseline mb-1">
@@ -308,7 +310,7 @@ const FilesModal = (props: Props) => {
                                   return (
                                     <div className="d-flex flex-row align-items-baseline mb-1">
                                       <div>
-                                        <small className="text-muted text-uppercase mr-2">Name:</small>
+                                        <small className="text-muted text-uppercase me-2">Name:</small>
                                       </div>
                                       <div className={`text-truncate ${styles.btnItemContent}`}>{file.name}</div>
                                     </div>
@@ -323,8 +325,8 @@ const FilesModal = (props: Props) => {
                 )}
               </div>
 
-              <div className="col-9 pl-3 h-100">
-                <div className={`position-relative h-100 mh-100 ${styles.templateWrapper}`}>
+              <div className="col-9 ps-3 h-100">
+                <div className={`position-relative h-100 mh-100 border ${styles.templateWrapper}`}>
                   {isChangingSelectedItem && <Loading />}
 
                   <div className="d-flex flex-column h-100">
@@ -335,9 +337,7 @@ const FilesModal = (props: Props) => {
                             case FileModalKind.CustomResourcesDefinition:
                               return (
                                 <div className={`p-3 border-bottom ${styles.extraInfo}`}>
-                                  <div className="h6 font-weight-bold">
-                                    {selectedItem.displayName || selectedItem.name}
-                                  </div>
+                                  <div className="h6 fw-bold">{selectedItem.displayName || selectedItem.name}</div>
                                   <div className="d-flex flex-row align-items-baseline mb-1">
                                     <div className={styles.legend}>
                                       <small className="text-muted text-uppercase">Name:</small>
@@ -396,7 +396,7 @@ const FilesModal = (props: Props) => {
                               </div>
                             </>
                           ) : (
-                            <div className="font-italic d-flex align-items-center justify-content-center h-100 h3">
+                            <div className="fst-italic d-flex align-items-center justify-content-center h-100 h3">
                               No example provided
                             </div>
                           )}

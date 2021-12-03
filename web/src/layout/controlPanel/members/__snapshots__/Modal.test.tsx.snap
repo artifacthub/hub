@@ -16,7 +16,7 @@ exports[`Members Modal - members section creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content modal"
+          class="modal-content border border-3 mx-auto content modal"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -28,15 +28,9 @@ exports[`Members Modal - members section creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -51,19 +45,19 @@ exports[`Members Modal - members section creates snapshot 1`] = `
                 novalidate=""
               >
                 <div
-                  class="form-group mb-4 position-relative undefined"
+                  class=" mb-4 position-relative undefined"
                 >
                   <label
-                    class="font-weight-bold label"
+                    class="form-label fw-bold label"
                     for="alias"
                   >
                     <span
-                      class="font-weight-bold"
+                      class="fw-bold"
                     >
                       Username
                     </span>
                     <small
-                      class="ml-1 font-italic"
+                      class="ms-1 fst-italic"
                     >
                       (Required)
                     </small>
@@ -100,7 +94,7 @@ exports[`Members Modal - members section creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -117,7 +111,7 @@ exports[`Members Modal - members section creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center text-uppercase"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

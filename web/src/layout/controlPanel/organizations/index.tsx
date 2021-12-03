@@ -110,7 +110,7 @@ const OrganizationsSection = (props: Props) => {
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <MdAdd className="d-inline d-md-none" />
-                  <MdAddCircle className="d-none d-md-inline mr-2" />
+                  <MdAddCircle className="d-none d-md-inline me-2" />
                   <span className="d-none d-md-inline">Add</span>
                 </div>
               </button>
@@ -125,7 +125,7 @@ const OrganizationsSection = (props: Props) => {
                 <NoData issuesLinkVisible={!isNull(apiError)}>
                   {isNull(apiError) ? (
                     <>
-                      <p className={`h6 my-4 ${styles.noDataMessage}`}>Do you need to create a organization?</p>
+                      <p className="h6 my-4 lh-base">Do you need to create a organization?</p>
 
                       <button
                         type="button"
@@ -134,7 +134,7 @@ const OrganizationsSection = (props: Props) => {
                         aria-label="Open modal for adding first organization"
                       >
                         <div className="d-flex flex-row align-items-center text-uppercase">
-                          <MdAddCircle className="mr-2" />
+                          <MdAddCircle className="me-2" />
                           <span>Add new organization</span>
                         </div>
                       </button>

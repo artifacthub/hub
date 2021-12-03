@@ -18,12 +18,12 @@ const SearchTip = () => {
       <div
         className={`d-flex mt-2 pt-1 flex-row align-items-center justify-content-center textLight ${styles.tipText}`}
       >
-        <FaRegLightbulb className="mr-1" />
+        <FaRegLightbulb className="me-1" />
         <div>
-          <span className="font-weight-semibold mr-1">Tip:</span>
+          <span className="fw-semibold me-1">Tip:</span>
           {activeTip.content} Example:{' '}
           <Link
-            className="font-weight-bold textLighter p-0"
+            className="fw-bold textLighter p-0"
             to={{
               pathname: '/packages/search',
               search: prepareQueryString({

@@ -93,7 +93,7 @@ const ResetPassword = (props: Props) => {
           noValidate
         >
           <div className="my-auto">
-            {props.visibleTitle && <div className="h6 mb-3 font-weight-bold">Forgot Password?</div>}
+            {props.visibleTitle && <div className="h6 mb-3 fw-bold">Forgot Password?</div>}
             <p>Please enter your email address and we will send you a password reset link.</p>
             <InputField
               ref={resetPwdEmailInput}
@@ -111,7 +111,7 @@ const ResetPassword = (props: Props) => {
               required
             />
 
-            <div className="text-right">
+            <div className="text-end">
               <button
                 className="btn btn-sm btn-outline-secondary"
                 type="button"
@@ -123,11 +123,11 @@ const ResetPassword = (props: Props) => {
                   {isSending ? (
                     <>
                       <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">Sending email...</span>
+                      <span className="ms-2">Sending email...</span>
                     </>
                   ) : (
                     <>
-                      <CgLastpass className="mr-2" />
+                      <CgLastpass className="me-2" />
                       <>Send password reset email</>
                     </>
                   )}

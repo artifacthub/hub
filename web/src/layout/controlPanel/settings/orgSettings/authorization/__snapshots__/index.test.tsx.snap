@@ -7,7 +7,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
     role="main"
   >
     <div
-      class="position-absolute p-5 wrapper undefined"
+      class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
     >
       <div
         class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -17,7 +17,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
           role="status"
         >
           <span
-            class="sr-only"
+            class="visually-hidden"
           >
             Loading...
           </span>
@@ -36,7 +36,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
          allows you to setup fine-grained access control based on authorization policies. Authorization polices are written in 
         <a
           aria-label="Open rego documentation"
-          class="link text-primary font-weight-bold"
+          class="link text-primary fw-bold"
           href="https://www.openpolicyagent.org/docs/latest/#rego"
           rel="noopener noreferrer"
           role="button"
@@ -48,7 +48,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
          and they are evaluated using the 
         <a
           aria-label="Open Open Policy Agent documentation"
-          class="link text-primary font-weight-bold"
+          class="link text-primary fw-bold"
           href="https://www.openpolicyagent.org"
           rel="noopener noreferrer"
           role="button"
@@ -60,7 +60,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
         . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can provide your custom policy for maximum flexibility. For more information please see the 
         <a
           aria-label="Open documentation"
-          class="link text-primary font-weight-bold"
+          class="link text-primary fw-bold"
           href="/docs/authorization"
           rel="noopener noreferrer"
           role="button"

@@ -101,15 +101,15 @@ const WidgetModal = (props: Props) => {
           open={props.visibleWidget}
         >
           <div className="w-100 position-relative">
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="theme">
+            <label className={`form-label fw-bold ${styles.label}`} htmlFor="theme">
               Theme
             </label>
             <div className="d-flex flex-row mb-3">
               {THEMES.map((themeOpt: WidgetTheme) => {
                 return (
-                  <div className="custom-control custom-radio mr-4" key={`radio_theme_${themeOpt.name}`}>
+                  <div className="form-check me-4" key={`radio_theme_${themeOpt.name}`}>
                     <input
-                      className="custom-control-input"
+                      className="form-check-input"
                       type="radio"
                       name="theme"
                       id={themeOpt.name}
@@ -119,7 +119,7 @@ const WidgetModal = (props: Props) => {
                       readOnly
                     />
                     <label
-                      className="text-capitalize custom-control-label"
+                      className="form-label text-capitalize form-check-label"
                       htmlFor={themeOpt.name}
                       onClick={() => {
                         setTheme(themeOpt.name);
@@ -127,7 +127,7 @@ const WidgetModal = (props: Props) => {
                     >
                       <div className="d-flex flex-row align-items-center">
                         {themeOpt.icon}
-                        <span className="ml-1">{themeOpt.name}</span>
+                        <span className="ms-1">{themeOpt.name}</span>
                       </div>
                     </label>
                   </div>
@@ -137,77 +137,69 @@ const WidgetModal = (props: Props) => {
 
             {!whiteLabel && (
               <div className="mt-4 mb-3">
-                <div className="custom-control custom-switch pl-0">
+                <div className="form-check form-switch ps-0">
+                  <label htmlFor="header" className={`form-check-label fw-bold ${styles.label}`}>
+                    Header
+                  </label>{' '}
                   <input
                     id="header"
                     type="checkbox"
-                    className="custom-control-input"
+                    className="form-check-input position-absolute ms-2"
                     value="true"
+                    role="switch"
                     onChange={() => setHeader(!header)}
                     checked={header}
                   />
-                  <label
-                    htmlFor="header"
-                    className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                  >
-                    Header
-                  </label>
                 </div>
 
-                <small className="form-text text-muted mt-2">
-                  Display Artifact Hub header at the top of the widget.
-                </small>
+                <div className="form-text text-muted mt-2">Display Artifact Hub header at the top of the widget.</div>
               </div>
             )}
 
             <div className="mt-4 mb-3">
-              <div className="custom-control custom-switch pl-0">
+              <div className="form-check form-switch ps-0">
+                <label htmlFor="stars" className={`form-check-label fw-bold ${styles.label}`}>
+                  Stars
+                </label>
                 <input
                   id="stars"
                   type="checkbox"
-                  className="custom-control-input"
+                  role="switch"
+                  className="form-check-input position-absolute ms-2"
                   value="true"
                   onChange={() => setStars(!stars)}
                   checked={stars}
                 />
-                <label
-                  htmlFor="stars"
-                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                >
-                  Stars
-                </label>
               </div>
 
-              <small className="form-text text-muted mt-2">Display number of stars given to the package.</small>
+              <div className="form-text text-muted mt-2">Display number of stars given to the package.</div>
             </div>
 
             <div className="mt-4 mb-3">
-              <div className="custom-control custom-switch pl-0">
+              <div className="form-check form-switch ps-0">
+                <label htmlFor="responsive" className={`form-check-label fw-bold ${styles.label}`}>
+                  Responsive
+                </label>
                 <input
                   id="responsive"
                   type="checkbox"
-                  className="custom-control-input"
+                  role="switch"
+                  className="form-check-input position-absolute ms-2"
                   value="true"
                   onChange={() => setRepsonsive(!responsive)}
                   checked={responsive}
                 />
-                <label
-                  htmlFor="responsive"
-                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                >
-                  Responsive
-                </label>
               </div>
 
-              <small className="form-text text-muted mt-2">
+              <div className="form-text text-muted mt-2">
                 The widget will try to use the width available on the parent container (between 350px and 650px).
-              </small>
+              </div>
             </div>
 
             <div className="mt-3 mb-2">
-              <label className={`font-weight-bold ${styles.label}`}>Code</label>
+              <label className={`form-label fw-bold ${styles.label}`}>Code</label>
 
-              <div data-testid="block-content" className={`flex-grow-1 mr-3 user-select-none ${styles.blockWrapper}`}>
+              <div data-testid="block-content" className={`flex-grow-1 me-3 user-select-none ${styles.blockWrapper}`}>
                 <SyntaxHighlighter
                   language="text"
                   style={docco}
@@ -221,11 +213,11 @@ const WidgetModal = (props: Props) => {
 
               <ButtonCopyToClipboard
                 text={widgetCode}
-                tooltipClassName={`bs-tooltip-right ${styles.copyBtnTooltip}`}
+                tooltipClassName={`bs-tooltip-end ${styles.copyBtnTooltip}`}
                 arrowClassName={styles.copyBtnArrow}
                 visibleBtnText
                 contentBtn="Copy code to clipboard"
-                className={`btn-outline-secondary ${styles.copyBtn}`}
+                className="btn-outline-secondary text-uppercase px-2 py-1"
                 label="Copy code to clipboard"
               />
             </div>

@@ -7,9 +7,7 @@
 }
 
 .table {
-  background-color: var(--white);
-  border: 1px solid var(--border-md);
-  word-break: break-word;
+  border-color: var(--border-md) !important;
 }
 
 .tableTitle th {
@@ -25,22 +23,13 @@
   min-width: 25px;
   width: 25px;
   height: 25px;
-  border-radius: 50%;
-  background-color: var(--white);
-  border: 2px solid var(--color-1-10);
+  border-color: var(--color-1-10) !important;
+
   box-shadow: 0px 0px 2px 0px var(--color-1-20);
 }
 
-.image {
-  max-width: 100%;
-  max-height: 100%;
-  font-size: 1.5rem;
-}
-
 .cellWrapper {
-  display: table;
   table-layout: fixed;
-  width: 100%;
 }
 
 .legend {
@@ -48,7 +37,6 @@
 }
 
 .icon {
-  height: auto;
   width: 15px;
 }
 
@@ -64,19 +52,8 @@
   overflow-x: auto;
 }
 
-.customControlRightLabel::before {
-  right: -2.25rem;
-  left: auto !important;
-}
-
-.customControlRightLabel::after {
-  right: -1.38rem;
-  left: auto !important;
-}
-
 .variablesTable {
-  background-color: var(--white);
-  border: 1px solid var(--border-md);
+  border-color: var(--border-md) !important;
 }
 
 .closeBtn {

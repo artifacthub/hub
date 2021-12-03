@@ -172,7 +172,7 @@ const SearchPackages = (props: Props) => {
     <div className="position-relative">
       <div className="d-flex flex-row">
         <div
-          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative ${styles.inputWrapper}`}
+          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white ${styles.inputWrapper}`}
         >
           <div
             data-testid="searchBarIcon"
@@ -185,7 +185,7 @@ const SearchPackages = (props: Props) => {
           <input
             ref={inputEl}
             type="text"
-            className={`flex-grow-1 pr-4 pl-2 pl-md-0 ${styles.input}`}
+            className={`flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent ${styles.input}`}
             name="searchInput"
             autoComplete="new-input"
             onKeyDown={handleOnKeyDown}
@@ -207,12 +207,12 @@ const SearchPackages = (props: Props) => {
           {packages.length === 0 ? (
             <p className="m-3 text-center">
               We can't seem to find any packages that match your search for{' '}
-              <span className="font-weight-bold">{searchQuery}</span>
+              <span className="fw-bold">{searchQuery}</span>
             </p>
           ) : (
-            <div className={styles.tableWrapper} ref={itemsWrapper}>
+            <div className={`overflow-scroll ${styles.tableWrapper}`} ref={itemsWrapper}>
               <table
-                className={`table table-hover table-sm mb-0 ${styles.table}`}
+                className={`table table-hover table-sm mb-0 tex-break ${styles.table}`}
                 role="grid"
                 aria-labelledby={props.label}
               >
@@ -250,22 +250,22 @@ const SearchPackages = (props: Props) => {
                         onMouseOut={() => setHighlightedItem(null)}
                       >
                         <td className="align-middle text-center d-none d-sm-table-cell">
-                          <RepositoryIcon kind={item.repository.kind} className={`mx-2 ${styles.icon}`} />
+                          <RepositoryIcon kind={item.repository.kind} className={`mx-2 w-auto ${styles.icon}`} />
                         </td>
                         <td className="align-middle">
                           <div className="d-flex flex-row align-items-center">
                             <div
-                              className={`d-none d-sm-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper} imageWrapper`}
+                              className={`d-none d-sm-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white rounded-circle ${styles.imageWrapper} imageWrapper`}
                             >
                               <Image
                                 imageId={item.logoImageId}
                                 alt={`Logo ${item.displayName || item.name}`}
-                                className={styles.image}
+                                className={`fs-4 ${styles.image}`}
                                 kind={item.repository.kind}
                               />
                             </div>
 
-                            <div className="text-dark ml-2">{item.displayName || item.name}</div>
+                            <div className="text-dark ms-2">{item.displayName || item.name}</div>
                           </div>
                         </td>
                         <td className="align-middle">
@@ -273,7 +273,7 @@ const SearchPackages = (props: Props) => {
                             {item.repository.userAlias ||
                               item.repository.organizationDisplayName ||
                               item.repository.organizationName}
-                            <small className="ml-2 d-none d-sm-inline">
+                            <small className="ms-2 d-none d-sm-inline">
                               (
                               <small className={`text-uppercase d-none d-md-inline text-muted ${styles.legend}`}>
                                 Repo:{' '}

@@ -64,7 +64,7 @@ const UserInvitation = (props: Props) => {
       >
         {isAccepting ? (
           <>
-            <Loading className={styles.loading} spinnerClassName="mt-0" />
+            <Loading className="position-relative" spinnerClassName="mt-0" />
             <small className="text-muted">Your are accepting the invitation...</small>
           </>
         ) : (

@@ -27,10 +27,10 @@ const CheckBox = (props: Props) => {
   const id = `${props.device}-${props.name}-${props.value}`;
 
   return (
-    <div className={`custom-control custom-checkbox mr-sm-2 mb-2 ${props.className}`}>
+    <div className={`form-check me-sm-2 mb-2 ${props.className}`}>
       <input
         type="checkbox"
-        className={`custom-control-input ${styles.input}`}
+        className={`form-check-input ${styles.input}`}
         name={props.name}
         value={props.value}
         id={id}
@@ -41,14 +41,14 @@ const CheckBox = (props: Props) => {
         tabIndex={0}
       />
       <label
-        className={`custom-control-label ${styles.label} ${props.labelClassName}`}
+        className={`form-check-label ${styles.label} ${props.labelClassName}`}
         htmlFor={id}
         data-testid="checkboxLabel"
       >
         <div className="d-flex align-items-baseline mw-100">
-          {props.icon && <span className={`mr-2 position-relative ${styles.icon}`}>{props.icon}</span>}
+          {props.icon && <span className={`me-2 position-relative ${styles.icon}`}>{props.icon}</span>}
           <span className="d-inline-block text-truncate">{props.label}</span>
-          {!isUndefined(props.legend) && <small className="pl-1">({props.legend})</small>}
+          {!isUndefined(props.legend) && <small className="ps-1">({props.legend})</small>}
         </div>
       </label>
     </div>

@@ -19,7 +19,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
             class="d-flex flex-row align-items-center w-100"
           >
             <div
-              class="d-flex align-items-center justify-content-center overflow-hidden p-1 mr-2 position-relative imageWrapper imageWrapper"
+              class="d-flex align-items-center justify-content-center overflow-hidden p-1 me-2 position-relative border border-3 bg-white rounded-circle imageWrapper imageWrapper"
             >
               <svg
                 class="image"
@@ -50,13 +50,13 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ml-auto"
+              class="ms-auto"
             >
               <div
-                class="dropdown-menu dropdown-menu-right p-0 dropdownMenu"
+                class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
               >
                 <div
-                  class="arrow arrow"
+                  class="dropdown-arrow arrow"
                 />
                 <button
                   aria-label="Open modal"
@@ -66,7 +66,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center"
                   >
                     <svg
-                      class="mr-2 btnIcon"
+                      class="me-2 btnIcon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -88,7 +88,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
               <button
                 aria-expanded="false"
                 aria-label="Open menu"
-                class="ml-3 mb-2 btn btn-outline-secondary rounded-circle p-0 text-center iconSubsWrapper btnDropdown"
+                class="ms-3 mb-2 btn btn-outline-secondary rounded-circle p-0 text-center iconSubsWrapper btnDropdown"
               >
                 <svg
                   fill="currentColor"
@@ -111,7 +111,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
           class="mt-3 text-truncate"
         >
           <small
-            class="text-muted text-uppercase mr-1"
+            class="text-muted text-uppercase me-1"
           >
             Homepage: 
           </small>

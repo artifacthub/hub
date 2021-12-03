@@ -4,14 +4,14 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
 <DocumentFragment>
   <button
     aria-label="Open screenshots modal"
-    class="btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap"
+    class="btn fw-bold text-uppercase position-relative btn-outline-secondary btn-sm text-nowrap w-100"
     type="button"
   >
     <div
       class="d-flex align-items-center justify-content-center"
     >
       <svg
-        class="mr-2"
+        class="me-2"
         fill="currentColor"
         height="1em"
         stroke="currentColor"
@@ -36,7 +36,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
     </div>
   </button>
   <div
-    class="position-fixed overflow-hidden p-3 modal"
+    class="position-fixed overflow-hidden p-3 top-0 bottom-0 start-0 end-0 modal"
     role="dialog"
   >
     <div
@@ -44,23 +44,9 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
     >
       <button
         aria-label="Close"
-        class="close close"
+        class="btn-close btn-close-white opacity-100 fs-5 close"
         type="button"
-      >
-        <svg
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M256 48C140.559 48 48 140.559 48 256c0 115.436 92.559 208 208 208 115.435 0 208-92.564 208-208 0-115.441-92.564-208-208-208zm104.002 282.881l-29.12 29.117L256 285.117l-74.881 74.881-29.121-29.117L226.881 256l-74.883-74.881 29.121-29.116L256 226.881l74.881-74.878 29.12 29.116L285.119 256l74.883 74.881z"
-          />
-        </svg>
-      </button>
+      />
     </div>
     <div
       class="d-flex flex-column h-100 w-100"
@@ -75,11 +61,11 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
             class="d-flex flex-row align-items-center justify-content-between px-3 pt-3 h-100 w-100"
           >
             <div
-              class="mr-3"
+              class="me-3"
             >
               <button
                 aria-label="Go to previous screenshot"
-                class="btn btn-link arrowBtn disabled disabled"
+                class="btn btn-link fs-2 arrowBtn disabled disabled"
                 disabled=""
               >
                 <svg
@@ -101,7 +87,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               class="h-100 w-100"
             >
               <div
-                class="position-absolute p-5 wrapper loading"
+                class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper bg-transparent"
               >
                 <div
                   class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -111,7 +97,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
                     role="status"
                   >
                     <span
-                      class="sr-only"
+                      class="visually-hidden"
                     >
                       Loading...
                     </span>
@@ -133,7 +119,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
                       <img
                         alt="Screenshot: Home page"
                         aria-hidden="true"
-                        class="mh-100 mw-100 image"
+                        class="mh-100 mw-100 border border-3 position-relative top-50 start-50 translate-middle image"
                         src="https://artifacthub.github.io/hub/screenshots/screenshot1.jpg"
                       />
                     </div>
@@ -147,11 +133,11 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ml-3"
+              class="ms-3"
             >
               <button
                 aria-label="Go to next screenshot"
-                class="btn btn-link arrowBtn"
+                class="btn btn-link fs-2 arrowBtn"
               >
                 <svg
                   fill="currentColor"
@@ -175,7 +161,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
         >
           <button
             aria-label="Go to screenshot number 1"
-            class="btn btn-link px-1 disabled disabledDotBtn"
+            class="btn btn-link px-1 disabled opacity-100 disabledDotBtn"
             data-testid="dotBtn"
             disabled=""
           >

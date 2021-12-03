@@ -283,7 +283,7 @@ const WebhookForm = (props: Props) => {
       <>
         {pkg.repository.userAlias || pkg.repository.organizationDisplayName || pkg.repository.organizationName}
 
-        <small className="ml-2">
+        <small className="ms-2">
           (<span className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>Repo: </span>
           <span className="text-dark">{pkg.repository.displayName || pkg.repository.name}</span>)
         </small>
@@ -295,11 +295,11 @@ const WebhookForm = (props: Props) => {
     <div>
       <div className="mb-4 pb-2 border-bottom">
         <button
-          className={`btn btn-link text-dark btn-sm pl-0 d-flex align-items-center ${styles.link}`}
+          className={`btn btn-link text-dark btn-sm ps-0 d-flex align-items-center ${styles.link}`}
           onClick={onCloseForm}
           aria-label="Back to webhooks list"
         >
-          <IoIosArrowBack className="mr-2" />
+          <IoIosArrowBack className="me-2" />
           Back to webhooks list
         </button>
       </div>
@@ -313,12 +313,12 @@ const WebhookForm = (props: Props) => {
           autoComplete="off"
           noValidate
         >
-          <div className="form-row">
+          <div className="d-flex">
             <div className="col-md-8">
               <InputField
                 type="text"
                 label="Name"
-                labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+                labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
                 name="name"
                 value={!isUndefined(props.webhook) ? props.webhook.name : ''}
                 invalidText={{
@@ -330,7 +330,7 @@ const WebhookForm = (props: Props) => {
             </div>
           </div>
 
-          <div className="form-row">
+          <div className="d-flex">
             <div className="col-md-8">
               <InputField
                 type="text"
@@ -342,16 +342,14 @@ const WebhookForm = (props: Props) => {
           </div>
 
           <div>
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="url">
-              Url<small className="ml-1 font-italic">(Required)</small>
+            <label className={`form-label fw-bold ${styles.label}`} htmlFor="url">
+              Url<small className="ms-1 fst-italic">(Required)</small>
             </label>
-            <div>
-              <small className="form-text text-muted mb-2 mt-0">
-                A POST request will be sent to the provided URL when any of the events selected in the triggers section
-                happens.
-              </small>
+            <div className="form-text text-muted mb-2 mt-0">
+              A POST request will be sent to the provided URL when any of the events selected in the triggers section
+              happens.
             </div>
-            <div className="form-row">
+            <div className="d-flex">
               <div className="col-md-8">
                 <InputField
                   ref={urlInput}
@@ -371,17 +369,14 @@ const WebhookForm = (props: Props) => {
           </div>
 
           <div>
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="secret">
+            <label className={`form-label fw-bold ${styles.label}`} htmlFor="secret">
               Secret
             </label>
-            <div>
-              <small className="form-text text-muted mb-2 mt-0">
-                If you provide a secret, we'll send it to you in the{' '}
-                <span className="font-weight-bold">X-ArtifactHub-Secret</span> header on each request. This will allow
-                you to validate that the request comes from ArtifactHub.
-              </small>
+            <div className="form-text text-muted mb-2 mt-0">
+              If you provide a secret, we'll send it to you in the <span className="fw-bold">X-ArtifactHub-Secret</span>{' '}
+              header on each request. This will allow you to validate that the request comes from ArtifactHub.
             </div>
-            <div className="form-row">
+            <div className="d-flex">
               <div className="col-md-8">
                 <InputField type="text" name="secret" value={!isUndefined(props.webhook) ? props.webhook.secret : ''} />
               </div>
@@ -389,32 +384,30 @@ const WebhookForm = (props: Props) => {
           </div>
 
           <div className="mb-3">
-            <div className="custom-control custom-switch pl-0">
+            <div className="form-check form-switch ps-0">
+              <label htmlFor="active" className={`form-check-label fw-bold ${styles.label}`}>
+                Active
+              </label>
               <input
                 id="active"
                 type="checkbox"
-                className={`custom-control-input ${styles.checkbox}`}
+                role="switch"
+                className={`position-absolute ms-2 form-check-input ${styles.checkbox}`}
                 value="true"
                 onChange={() => setIsActive(!isActive)}
                 checked={isActive}
               />
-              <label
-                htmlFor="active"
-                className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-              >
-                Active
-              </label>
             </div>
 
-            <small className="form-text text-muted mt-2">
+            <div className="form-text text-muted mt-2">
               This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.
-            </small>
+            </div>
           </div>
 
           <div className="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom">Triggers</div>
 
           <div className="my-4">
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="kind" id="events-group">
+            <label className={`form-label fw-bold ${styles.label}`} htmlFor="kind" id="events-group">
               Events
             </label>
 
@@ -439,14 +432,12 @@ const WebhookForm = (props: Props) => {
           </div>
 
           <div className="mb-4">
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="packages" id="webhook-pkg-list">
-              Packages<small className="ml-1 font-italic">(Required)</small>
+            <label className={`form-label fw-bold ${styles.label}`} htmlFor="packages" id="webhook-pkg-list">
+              Packages<small className="ms-1 fst-italic">(Required)</small>
             </label>
-            <div>
-              <small className="form-text text-muted mb-4 mt-0">
-                When the events selected happen for any of the packages you've chosen, a notification will be triggered
-                and the configured url will be called. At least one package must be selected.
-              </small>
+            <div className="form-text text-muted mb-4 mt-0">
+              When the events selected happen for any of the packages you've chosen, a notification will be triggered
+              and the configured url will be called. At least one package must be selected.
             </div>
             <div className="mb-3 row">
               <div className="col-12 col-xxl-8">
@@ -461,7 +452,7 @@ const WebhookForm = (props: Props) => {
             {selectedPackages.length > 0 && (
               <div className="row">
                 <div className="col-12 col-xxl-8">
-                  <table className={`table table-hover table-sm ${styles.table}`}>
+                  <table className={`table table-hover table-sm border bg-white text-break ${styles.table}`}>
                     <thead>
                       <tr className={styles.tableTitle}>
                         <th scope="col" className={`align-middle d-none d-sm-table-cell ${styles.fitCell}`}></th>
@@ -478,21 +469,21 @@ const WebhookForm = (props: Props) => {
                       {selectedPackages.map((item: Package) => (
                         <tr key={`subs_${item.packageId}`} data-testid="packageTableCell">
                           <td className="align-middle text-center d-none d-sm-table-cell">
-                            <RepositoryIcon kind={item.repository.kind} className={`${styles.icon} mx-2`} />
+                            <RepositoryIcon kind={item.repository.kind} className={`${styles.icon} h-auto mx-2`} />
                           </td>
                           <td className="align-middle">
                             <div className="d-flex flex-row align-items-center">
                               <div
-                                className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper} imageWrapper`}
+                                className={`d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white ${styles.imageWrapper} imageWrapper`}
                               >
                                 <Image
                                   alt={item.displayName || item.name}
                                   imageId={item.logoImageId}
-                                  className={styles.image}
+                                  className="mw-100 mh-100 fs-4"
                                 />
                               </div>
 
-                              <div className={`ml-2 text-dark ${styles.cellWrapper}`}>
+                              <div className={`ms-2 text-dark ${styles.cellWrapper}`}>
                                 <div className="text-truncate">
                                   {item.displayName || item.name}
                                   <span className={`d-inline d-sm-none ${styles.legend}`}>
@@ -504,7 +495,7 @@ const WebhookForm = (props: Props) => {
                             </div>
                           </td>
                           <td className="align-middle position-relative text-dark d-none d-sm-table-cell">
-                            <div className={styles.cellWrapper}>
+                            <div className={`d-table w-100 ${styles.cellWrapper}`}>
                               <div className="text-truncate">{getPublisher(item)}</div>
                             </div>
                           </td>
@@ -537,9 +528,9 @@ const WebhookForm = (props: Props) => {
           <div className="d-flex flex-row mb-3">
             {PAYLOAD_KINDS_LIST.map((item: PayloadKindsItem) => {
               return (
-                <div className="custom-control custom-radio mr-4" key={`payload_${item.kind}`}>
+                <div className="form-check me-4" key={`payload_${item.kind}`}>
                   <input
-                    className="custom-control-input"
+                    className="form-check-input"
                     type="radio"
                     id={`payload_${item.kind}`}
                     name="payloadKind"
@@ -551,7 +542,7 @@ const WebhookForm = (props: Props) => {
                       checkTestAvailability();
                     }}
                   />
-                  <label className="custom-control-label" htmlFor={`payload_${item.kind}`}>
+                  <label className="form-check-label" htmlFor={`payload_${item.kind}`}>
                     {item.title}
                   </label>
                 </div>
@@ -560,33 +551,36 @@ const WebhookForm = (props: Props) => {
           </div>
 
           {payloadKind === PayloadKind.custom && (
-            <small className="form-text text-muted mb-3">
-              It's possible to customize the payload used to notify your service. This may help integrating ArtifactHub
-              webhooks with other services without requiring you to write any code. To integrate ArtifactHub webhooks
-              with Slack, for example, you could use a custom payload using the following template:
-              <div className="my-3 w-100">
-                <div
-                  className={`alert alert-light text-nowrap ${styles.codeWrapper}`}
-                  role="alert"
-                  aria-live="off"
-                  aria-atomic="true"
-                >
-                  {'{'}
-                  <br />
-                  <span className="ml-3">
-                    {`"text": "Package`} <span className="font-weight-bold">{`{{ .Package.Name }}`}</span> {`version`}{' '}
-                    <span className="font-weight-bold">{`{{ .Package.Version }}`}</span> released!{' '}
-                    <span className="font-weight-bold">{`{{ .Package.URL }}`}</span>
-                    {`"`}
+            <div className="lh-base">
+              <div className="form-text text-muted mb-3">
+                It's possible to customize the payload used to notify your service. This may help integrating
+                ArtifactHub webhooks with other services without requiring you to write any code. To integrate
+                ArtifactHub webhooks with Slack, for example, you could use a custom payload using the following
+                template:
+                <div className="my-3 w-100">
+                  <div
+                    className={`alert alert-light text-nowrap ${styles.codeWrapper}`}
+                    role="alert"
+                    aria-live="off"
+                    aria-atomic="true"
+                  >
+                    {'{'}
                     <br />
-                    {'}'}
-                  </span>
+                    <span className="ms-3">
+                      {`"text": "Package`} <span className="fw-bold">{`{{ .Package.Name }}`}</span> {`version`}{' '}
+                      <span className="fw-bold">{`{{ .Package.Version }}`}</span> released!{' '}
+                      <span className="fw-bold">{`{{ .Package.URL }}`}</span>
+                      {`"`}
+                      <br />
+                      {'}'}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </small>
+            </div>
           )}
 
-          <div className="form-row">
+          <div className="d-flex">
             <div className="col-md-8">
               <InputField
                 ref={contentTypeInput}
@@ -608,28 +602,26 @@ const WebhookForm = (props: Props) => {
             </div>
           </div>
 
-          <div className="form-group mb-4">
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="template">
+          <div className=" mb-4">
+            <label className={`form-label fw-bold ${styles.label}`} htmlFor="template">
               Template
             </label>
 
             {payloadKind === PayloadKind.custom && (
-              <div>
-                <small className="form-text text-muted mb-4 mt-0">
-                  Custom payloads are generated using{' '}
-                  <ExternalLink
-                    href="https://golang.org/pkg/text/template/"
-                    className="font-weight-bold text-dark"
-                    label="Open Go templates documentation"
-                  >
-                    Go templates
-                  </ExternalLink>
-                  . Below you will find a list of the variables available for use in your template.
-                </small>
+              <div className="form-text text-muted mb-4 mt-0">
+                Custom payloads are generated using{' '}
+                <ExternalLink
+                  href="https://golang.org/pkg/text/template/"
+                  className="fw-bold text-dark"
+                  label="Open Go templates documentation"
+                >
+                  Go templates
+                </ExternalLink>
+                . Below you will find a list of the variables available for use in your template.
               </div>
             )}
 
-            <div className="form-row">
+            <div className="row">
               <div className="col-xxl-8">
                 <AutoresizeTextarea
                   name="template"
@@ -645,13 +637,13 @@ const WebhookForm = (props: Props) => {
           </div>
 
           <div className="mb-3">
-            <label className={`font-weight-bold ${styles.label}`} htmlFor="template">
+            <label className={`form-label fw-bold ${styles.label}`} htmlFor="template">
               Variables reference
             </label>
-            <div className="form-row">
+            <div className="row">
               <div className="col-xxl-8 overflow-auto">
-                <small className={`form-text text-muted ${styles.tableWrapper}`}>
-                  <table className={`table table-sm ${styles.variablesTable}`}>
+                <small className={`text-muted ${styles.tableWrapper}`}>
+                  <table className={`table table-sm border bg-white ${styles.variablesTable}`}>
                     <tbody>
                       <tr>
                         <th scope="row">
@@ -671,8 +663,8 @@ const WebhookForm = (props: Props) => {
                         </th>
                         <td>
                           Kind of the event triggering notification. Possible values are{' '}
-                          <span className="font-weight-bold">package.new-release</span> and{' '}
-                          <span className="font-weight-bold">package.security-alert</span>.
+                          <span className="fw-bold">package.new-release</span> and{' '}
+                          <span className="fw-bold">package.security-alert</span>.
                         </td>
                       </tr>
                       <tr>
@@ -704,13 +696,11 @@ const WebhookForm = (props: Props) => {
                           <span className="text-nowrap">{`{{ .Package.Changes[i].Kind }}`}</span>
                         </th>
                         <td>
-                          Kind of the change. Possible values are <span className="font-weight-bold">added</span>,{' '}
-                          <span className="font-weight-bold">changed</span>,{' '}
-                          <span className="font-weight-bold">deprecated</span>,{' '}
-                          <span className="font-weight-bold">removed</span>,{' '}
-                          <span className="font-weight-bold">fixed</span> and{' '}
-                          <span className="font-weight-bold">security</span>. When the change kind is not provided, the
-                          value will be empty.
+                          Kind of the change. Possible values are <span className="fw-bold">added</span>,{' '}
+                          <span className="fw-bold">changed</span>, <span className="fw-bold">deprecated</span>,{' '}
+                          <span className="fw-bold">removed</span>, <span className="fw-bold">fixed</span> and{' '}
+                          <span className="fw-bold">security</span>. When the change kind is not provided, the value
+                          will be empty.
                         </td>
                       </tr>
                       <tr>
@@ -755,9 +745,8 @@ const WebhookForm = (props: Props) => {
                         </th>
                         <td>
                           Kind of the repository associated with the notification. Possible values are{' '}
-                          <span className="font-weight-bold">falco</span>,{' '}
-                          <span className="font-weight-bold">helm</span>, <span className="font-weight-bold">olm</span>{' '}
-                          and <span className="font-weight-bold">opa</span>.
+                          <span className="fw-bold">falco</span>, <span className="fw-bold">helm</span>,{' '}
+                          <span className="fw-bold">olm</span> and <span className="fw-bold">opa</span>.
                         </td>
                       </tr>
                       <tr>
@@ -784,7 +773,7 @@ const WebhookForm = (props: Props) => {
 
           <div className={`mt-4 mt-md-5 ${styles.btnWrapper}`}>
             <div className="d-flex flex-row justify-content-between">
-              <div className="d-flex flex-row align-items-center mr-3">
+              <div className="d-flex flex-row align-items-center me-3">
                 <button
                   type="button"
                   className="btn btn-sm btn-success"
@@ -795,13 +784,13 @@ const WebhookForm = (props: Props) => {
                   {isSendingTest ? (
                     <>
                       <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">
+                      <span className="ms-2">
                         Testing <span className="d-none d-md-inline"> webhook</span>
                       </span>
                     </>
                   ) : (
                     <div className="d-flex flex-row align-items-center text-uppercase">
-                      <RiTestTubeFill className="mr-2" />{' '}
+                      <RiTestTubeFill className="me-2" />{' '}
                       <div>
                         Test <span className="d-none d-sm-inline-block">webhook</span>
                       </div>
@@ -810,21 +799,21 @@ const WebhookForm = (props: Props) => {
                 </button>
 
                 {isTestSent && (
-                  <span className="text-success ml-2" data-testid="testWebhookTick">
+                  <span className="text-success ms-2" data-testid="testWebhookTick">
                     <FaCheck />
                   </span>
                 )}
               </div>
 
-              <div className="ml-auto">
+              <div className="ms-auto">
                 <button
                   type="button"
-                  className="btn btn-sm btn-outline-secondary mr-3"
+                  className="btn btn-sm btn-outline-secondary me-3"
                   onClick={onCloseForm}
                   aria-label="Cancel"
                 >
                   <div className="d-flex flex-row align-items-center text-uppercase">
-                    <MdClose className="mr-2" />
+                    <MdClose className="me-2" />
                     <div>Cancel</div>
                   </div>
                 </button>
@@ -839,18 +828,18 @@ const WebhookForm = (props: Props) => {
                   {isSending ? (
                     <>
                       <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">{isUndefined(props.webhook) ? 'Adding' : 'Updating'} webhook</span>
+                      <span className="ms-2">{isUndefined(props.webhook) ? 'Adding' : 'Updating'} webhook</span>
                     </>
                   ) : (
                     <div className="d-flex flex-row align-items-center text-uppercase">
                       {isUndefined(props.webhook) ? (
                         <>
-                          <MdAddCircle className="mr-2" />
+                          <MdAddCircle className="me-2" />
                           <span>Add</span>
                         </>
                       ) : (
                         <>
-                          <FaPencilAlt className="mr-2" />
+                          <FaPencilAlt className="me-2" />
                           <div>Save</div>
                         </>
                       )}

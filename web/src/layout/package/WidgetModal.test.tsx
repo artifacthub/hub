@@ -49,14 +49,14 @@ describe('WidgetModal', () => {
       expect(screen.getByRole('radio', { name: 'light' })).toBeChecked();
       expect(screen.getByRole('radio', { name: 'dark' })).not.toBeChecked();
       expect(screen.getByText('Responsive')).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: 'Responsive' })).not.toBeChecked();
+      expect(screen.getByRole('switch', { name: 'Responsive' })).not.toBeChecked();
       expect(
         screen.getByText(
           'The widget will try to use the width available on the parent container (between 350px and 650px).'
         )
       ).toBeInTheDocument();
       expect(screen.getByText('Stars')).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: 'Stars' })).toBeChecked();
+      expect(screen.getByRole('switch', { name: 'Stars' })).toBeChecked();
       expect(screen.getByText('Display number of stars given to the package.')).toBeInTheDocument();
       expect(screen.getByText('Code')).toBeInTheDocument();
       expect(screen.getByTestId('block-content')).toHaveTextContent(
@@ -73,7 +73,7 @@ describe('WidgetModal', () => {
       );
 
       expect(screen.getByText('Header')).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: 'Header' })).toBeChecked();
+      expect(screen.getByRole('switch', { name: 'Header' })).toBeChecked();
       expect(screen.getByText('Display Artifact Hub header at the top of the widget.')).toBeInTheDocument();
     });
 

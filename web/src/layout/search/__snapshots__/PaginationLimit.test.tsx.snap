@@ -3,16 +3,16 @@
 exports[`Filters creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="form-inline flex-nowrap align-items-center ml-3"
+    class="d-flex flex-nowrap align-items-center ms-3"
   >
     <label
-      class="mr-2 mb-0"
+      class="form-label me-2 mb-0"
     >
       Show:
     </label>
     <select
       aria-label="pagination-limit"
-      class="custom-select custom-select-sm select"
+      class="form-select form-select-sm pe-2 select"
     >
       <option
         value="20"

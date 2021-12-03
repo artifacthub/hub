@@ -12,11 +12,11 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
     </small>
   </div>
   <div
-    class="form-group w-50"
+    class=" w-50"
   >
     <select
       aria-label="channel-select"
-      class="custom-select custom-select-sm mb-1"
+      class="form-select form-select-sm mb-1"
     >
       <option
         value="stable"
@@ -46,7 +46,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
       class="badge badge-dark badge-sm"
     >
       <small
-        class="text-uppercase mr-2"
+        class="text-uppercase me-2"
       >
         File:
       </small>
@@ -57,7 +57,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="flex-grow-1 me-3 blockWrapper"
     >
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -285,7 +285,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="flex-grow-1 me-3 blockWrapper"
     >
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -357,7 +357,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
       class="badge badge-dark badge-sm"
     >
       <small
-        class="text-uppercase mr-2"
+        class="text-uppercase me-2"
       >
         File:
       </small>
@@ -368,7 +368,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="flex-grow-1 me-3 blockWrapper"
     >
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -596,7 +596,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="flex-grow-1 me-3 blockWrapper"
     >
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -657,7 +657,7 @@ exports[`OLMOCIInstall creates snapshot 1`] = `
   >
     <a
       aria-label="Download OLM"
-      class="link btn btn-link pl-0"
+      class="link btn btn-link ps-0"
       href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md"
       rel="noopener noreferrer"
       role="button"

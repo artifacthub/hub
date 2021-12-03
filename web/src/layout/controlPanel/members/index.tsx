@@ -139,7 +139,7 @@ const MembersSection = (props: Props) => {
               >
                 <div className="d-flex flex-row align-items-center">
                   <MdAdd className="d-inline d-md-none" />
-                  <MdAddCircle className="d-none d-md-inline mr-2" />
+                  <MdAddCircle className="d-none d-md-inline me-2" />
                   <span className="d-none d-md-inline">Invite</span>
                 </div>
               </ActionBtn>
@@ -156,7 +156,7 @@ const MembersSection = (props: Props) => {
                 <NoData issuesLinkVisible={!isNull(apiError)}>
                   {isNull(apiError) ? (
                     <>
-                      <p className={`h6 my-4 ${styles.noDataMessage}`}>Do you want to add a member?</p>
+                      <p className="h6 my-4 lh-base">Do you want to add a member?</p>
 
                       <button
                         type="button"
@@ -165,7 +165,7 @@ const MembersSection = (props: Props) => {
                         aria-label="Open modal"
                       >
                         <div className="d-flex flex-row align-items-center text-uppercase">
-                          <MdAddCircle className="mr-2" />
+                          <MdAddCircle className="me-2" />
                           <span>Add member</span>
                         </div>
                       </button>

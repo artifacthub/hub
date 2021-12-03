@@ -16,7 +16,7 @@ const FalcoInstall = (props: Props) => (
     {props.isPrivate && <PrivateRepoWarning />}
 
     <div className="mt-2">
-      <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0" label="Download Helm">
+      <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link ps-0" label="Download Helm">
         Need Helm?
       </ExternalLink>
     </div>

@@ -9,11 +9,11 @@ exports[`Filters creates snapshot 1`] = `
       class="d-flex flex-row align-items-baseline"
     >
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-official-official"
           name="official"
           tabindex="0"
@@ -21,7 +21,7 @@ exports[`Filters creates snapshot 1`] = `
           value="official"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-official-official"
         >
@@ -40,7 +40,7 @@ exports[`Filters creates snapshot 1`] = `
         class="d-none d-md-block"
       >
         <div
-          class="position-relative tooltipIcon"
+          class="position-relative position-relative tooltipIcon"
         >
           <div
             data-testid="elementWithTooltip"
@@ -70,11 +70,11 @@ exports[`Filters creates snapshot 1`] = `
       class="d-flex flex-row align-items-baseline"
     >
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-verifiedPublisher-verifiedPublisher"
           name="verifiedPublisher"
           tabindex="0"
@@ -82,7 +82,7 @@ exports[`Filters creates snapshot 1`] = `
           value="verifiedPublisher"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-verifiedPublisher-verifiedPublisher"
         >
@@ -140,7 +140,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-dark font-weight-bold"
+            class="text-dark fw-bold"
             id="repo-kind-desktop"
             role="heading"
           >
@@ -154,11 +154,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-kind-0"
             name="kind"
             tabindex="0"
@@ -166,7 +166,7 @@ exports[`Filters creates snapshot 1`] = `
             value="0"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-kind-0"
           >
@@ -179,7 +179,7 @@ exports[`Filters creates snapshot 1`] = `
                 Helm charts
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (1520)
               </small>
@@ -187,11 +187,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-kind-3"
             name="kind"
             tabindex="0"
@@ -199,7 +199,7 @@ exports[`Filters creates snapshot 1`] = `
             value="3"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-kind-3"
           >
@@ -212,7 +212,7 @@ exports[`Filters creates snapshot 1`] = `
                 OLM operators
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (152)
               </small>
@@ -220,11 +220,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-kind-1"
             name="kind"
             tabindex="0"
@@ -232,7 +232,7 @@ exports[`Filters creates snapshot 1`] = `
             value="1"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-kind-1"
           >
@@ -245,7 +245,7 @@ exports[`Filters creates snapshot 1`] = `
                 Falco rules
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (21)
               </small>
@@ -253,11 +253,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-kind-2"
             name="kind"
             tabindex="0"
@@ -265,7 +265,7 @@ exports[`Filters creates snapshot 1`] = `
             value="2"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-kind-2"
           >
@@ -278,7 +278,7 @@ exports[`Filters creates snapshot 1`] = `
                 OPA policies
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (1)
               </small>
@@ -300,7 +300,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-dark font-weight-bold"
+            class="text-dark fw-bold"
             role="heading"
           >
             Category
@@ -311,11 +311,11 @@ exports[`Filters creates snapshot 1`] = `
         class="mt-3"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-database"
             name="tsQuery"
             tabindex="0"
@@ -323,7 +323,7 @@ exports[`Filters creates snapshot 1`] = `
             value="database"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-database"
           >
@@ -339,11 +339,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-integration-and-delivery"
             name="tsQuery"
             tabindex="0"
@@ -351,7 +351,7 @@ exports[`Filters creates snapshot 1`] = `
             value="integration-and-delivery"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-integration-and-delivery"
           >
@@ -367,11 +367,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-logging-and-tracing"
             name="tsQuery"
             tabindex="0"
@@ -379,7 +379,7 @@ exports[`Filters creates snapshot 1`] = `
             value="logging-and-tracing"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-logging-and-tracing"
           >
@@ -395,11 +395,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-machine-learning"
             name="tsQuery"
             tabindex="0"
@@ -407,7 +407,7 @@ exports[`Filters creates snapshot 1`] = `
             value="machine-learning"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-machine-learning"
           >
@@ -423,11 +423,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-monitoring"
             name="tsQuery"
             tabindex="0"
@@ -435,7 +435,7 @@ exports[`Filters creates snapshot 1`] = `
             value="monitoring"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-monitoring"
           >
@@ -451,11 +451,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-networking"
             name="tsQuery"
             tabindex="0"
@@ -463,7 +463,7 @@ exports[`Filters creates snapshot 1`] = `
             value="networking"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-networking"
           >
@@ -479,11 +479,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-security"
             name="tsQuery"
             tabindex="0"
@@ -491,7 +491,7 @@ exports[`Filters creates snapshot 1`] = `
             value="security"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-security"
           >
@@ -507,11 +507,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-storage"
             name="tsQuery"
             tabindex="0"
@@ -519,7 +519,7 @@ exports[`Filters creates snapshot 1`] = `
             value="storage"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-storage"
           >
@@ -535,11 +535,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-streaming-messaging"
             name="tsQuery"
             tabindex="0"
@@ -547,7 +547,7 @@ exports[`Filters creates snapshot 1`] = `
             value="streaming-messaging"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-streaming-messaging"
           >
@@ -563,11 +563,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-tsQuery-web-applications"
             name="tsQuery"
             tabindex="0"
@@ -575,7 +575,7 @@ exports[`Filters creates snapshot 1`] = `
             value="web-applications"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-web-applications"
           >
@@ -605,7 +605,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-dark font-weight-bold"
+            class="text-dark fw-bold"
             role="heading"
           >
             Publisher
@@ -617,11 +617,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-org-helmOrg"
             name="org"
             tabindex="0"
@@ -629,7 +629,7 @@ exports[`Filters creates snapshot 1`] = `
             value="helmOrg"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-org-helmOrg"
           >
@@ -642,7 +642,7 @@ exports[`Filters creates snapshot 1`] = `
                 Helm org
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (256)
               </small>
@@ -650,11 +650,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-org-falco"
             name="org"
             tabindex="0"
@@ -662,7 +662,7 @@ exports[`Filters creates snapshot 1`] = `
             value="falco"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-org-falco"
           >
@@ -675,7 +675,7 @@ exports[`Filters creates snapshot 1`] = `
                 Falco
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (22)
               </small>
@@ -683,11 +683,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-user-testUser"
             name="user"
             tabindex="0"
@@ -695,7 +695,7 @@ exports[`Filters creates snapshot 1`] = `
             value="testUser"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-user-testUser"
           >
@@ -708,7 +708,7 @@ exports[`Filters creates snapshot 1`] = `
                 testUser
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (1)
               </small>
@@ -730,7 +730,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-dark font-weight-bold"
+            class="text-dark fw-bold"
             id="pkg-repo-desktop"
             role="heading"
           >
@@ -744,11 +744,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-repo-stable"
             name="repo"
             tabindex="0"
@@ -756,7 +756,7 @@ exports[`Filters creates snapshot 1`] = `
             value="stable"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-repo-stable"
           >
@@ -769,7 +769,7 @@ exports[`Filters creates snapshot 1`] = `
                 Stable
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (203)
               </small>
@@ -777,11 +777,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-repo-incubator"
             name="repo"
             tabindex="0"
@@ -789,7 +789,7 @@ exports[`Filters creates snapshot 1`] = `
             value="incubator"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-repo-incubator"
           >
@@ -802,7 +802,7 @@ exports[`Filters creates snapshot 1`] = `
                 Incubator
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (53)
               </small>
@@ -824,7 +824,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-dark font-weight-bold"
+            class="text-dark fw-bold"
             id="pkg-license-desktop"
             role="heading"
           >
@@ -838,11 +838,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-license-Apache-2.0"
             name="license"
             tabindex="0"
@@ -850,7 +850,7 @@ exports[`Filters creates snapshot 1`] = `
             value="Apache-2.0"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-license-Apache-2.0"
           >
@@ -863,7 +863,7 @@ exports[`Filters creates snapshot 1`] = `
                 Apache-2.0
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (3)
               </small>
@@ -871,11 +871,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-license-MIT"
             name="license"
             tabindex="0"
@@ -883,7 +883,7 @@ exports[`Filters creates snapshot 1`] = `
             value="MIT"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-license-MIT"
           >
@@ -896,7 +896,7 @@ exports[`Filters creates snapshot 1`] = `
                 MIT
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (1)
               </small>
@@ -918,7 +918,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-dark font-weight-bold"
+            class="text-dark fw-bold"
             id="pkg-capabilities-desktop"
             role="heading"
           >
@@ -932,11 +932,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-capabilities-basic install"
             name="capabilities"
             tabindex="0"
@@ -944,7 +944,7 @@ exports[`Filters creates snapshot 1`] = `
             value="basic install"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-capabilities-basic install"
           >
@@ -957,7 +957,7 @@ exports[`Filters creates snapshot 1`] = `
                 basic install
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (73)
               </small>
@@ -965,11 +965,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-capabilities-seamless upgrades"
             name="capabilities"
             tabindex="0"
@@ -977,7 +977,7 @@ exports[`Filters creates snapshot 1`] = `
             value="seamless upgrades"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-capabilities-seamless upgrades"
           >
@@ -990,7 +990,7 @@ exports[`Filters creates snapshot 1`] = `
                 seamless upgrades
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (33)
               </small>
@@ -998,11 +998,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-capabilities-full lifecycle"
             name="capabilities"
             tabindex="0"
@@ -1010,7 +1010,7 @@ exports[`Filters creates snapshot 1`] = `
             value="full lifecycle"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-capabilities-full lifecycle"
           >
@@ -1023,7 +1023,7 @@ exports[`Filters creates snapshot 1`] = `
                 full lifecycle
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (25)
               </small>
@@ -1031,11 +1031,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-capabilities-deep insights"
             name="capabilities"
             tabindex="0"
@@ -1043,7 +1043,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deep insights"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-capabilities-deep insights"
           >
@@ -1056,7 +1056,7 @@ exports[`Filters creates snapshot 1`] = `
                 deep insights
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (17)
               </small>
@@ -1064,11 +1064,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-capabilities-auto pilot"
             name="capabilities"
             tabindex="0"
@@ -1076,7 +1076,7 @@ exports[`Filters creates snapshot 1`] = `
             value="auto pilot"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-capabilities-auto pilot"
           >
@@ -1089,7 +1089,7 @@ exports[`Filters creates snapshot 1`] = `
                 auto pilot
               </span>
               <small
-                class="pl-1"
+                class="ps-1"
               >
                 (9)
               </small>
@@ -1111,7 +1111,7 @@ exports[`Filters creates snapshot 1`] = `
         >
           <span
             aria-level="5"
-            class="text-dark font-weight-bold"
+            class="text-dark fw-bold"
             role="heading"
           >
             Others
@@ -1122,11 +1122,11 @@ exports[`Filters creates snapshot 1`] = `
         class="mt-3"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-operators-operators"
             name="operators"
             tabindex="0"
@@ -1134,7 +1134,7 @@ exports[`Filters creates snapshot 1`] = `
             value="operators"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-operators-operators"
           >
@@ -1150,11 +1150,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 checkbox"
         >
           <input
             aria-checked="false"
-            class="custom-control-input input"
+            class="form-check-input input"
             id="desktop-deprecated-deprecated"
             name="deprecated"
             tabindex="0"
@@ -1162,7 +1162,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deprecated"
           />
           <label
-            class="custom-control-label label mw-100"
+            class="form-check-label label mw-100"
             data-testid="checkboxLabel"
             for="desktop-deprecated-deprecated"
           >
