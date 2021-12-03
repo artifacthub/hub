@@ -25,7 +25,7 @@ const Maintainers = (props: Props) => {
               label={`Mail to: ${maintainer.email}`}
             >
               <div className="d-flex align-items-center">
-                <GiEnvelope className="text-muted mr-2 h6 mb-0" />
+                <GiEnvelope className="text-muted me-2 h6 mb-0" />
                 <div className={`text-truncate ${styles.linkText}`}>{maintainer.name || maintainer.email}</div>
               </div>
             </ExternalLink>

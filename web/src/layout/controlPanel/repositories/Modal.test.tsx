@@ -84,7 +84,7 @@ describe('Repository Modal - repositories section', () => {
       expect(screen.getByRole('textbox', { name: /Name/ })).toBeInTheDocument();
       expect(screen.getByRole('textbox', { name: 'Display name' })).toBeInTheDocument();
       expect(screen.getByRole('textbox', { name: /Url/ })).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: 'Disabled' })).toBeInTheDocument();
+      expect(screen.getByRole('switch', { name: 'Disabled' })).toBeInTheDocument();
     });
 
     it('renders component with existing repo', () => {
@@ -95,7 +95,7 @@ describe('Repository Modal - repositories section', () => {
       expect(screen.getByDisplayValue(repoMock.name)).toBeInTheDocument();
       expect(screen.getByDisplayValue(repoMock.displayName!)).toBeInTheDocument();
       expect(screen.getByDisplayValue(repoMock.url)).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: 'Disabled' })).toBeInTheDocument();
+      expect(screen.getByRole('switch', { name: 'Disabled' })).toBeInTheDocument();
     });
 
     it('renders private not Helm charts repo', () => {
@@ -430,7 +430,7 @@ describe('Repository Modal - repositories section', () => {
         const urlInput = screen.getByRole('textbox', { name: /Url/ });
         userEvent.type(urlInput, 'http://test.com');
 
-        const toggle = screen.getByRole('checkbox', { name: 'Disabled' });
+        const toggle = screen.getByRole('switch', { name: 'Disabled' });
         expect(toggle).toBeInTheDocument();
         expect(toggle).not.toBeChecked();
         userEvent.click(toggle);
@@ -470,7 +470,7 @@ describe('Repository Modal - repositories section', () => {
             </AppCtx.Provider>
           );
 
-          const toggle = screen.getByRole('checkbox', { name: 'Disabled' });
+          const toggle = screen.getByRole('switch', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).not.toBeChecked();
           userEvent.click(toggle);
@@ -515,7 +515,7 @@ describe('Repository Modal - repositories section', () => {
             </AppCtx.Provider>
           );
 
-          const toggle = screen.getByRole('checkbox', { name: 'Disabled' });
+          const toggle = screen.getByRole('switch', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).not.toBeChecked();
           userEvent.click(toggle);
@@ -566,7 +566,7 @@ describe('Repository Modal - repositories section', () => {
             </AppCtx.Provider>
           );
 
-          const toggle = screen.getByRole('checkbox', { name: 'Disabled' });
+          const toggle = screen.getByRole('switch', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).toBeChecked();
           userEvent.click(toggle);

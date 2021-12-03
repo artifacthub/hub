@@ -73,7 +73,7 @@ const Modal = (props: Props) => {
           <button
             type="button"
             className={classnames(
-              'font-weight-bold text-uppercase position-relative btn btn-block',
+              'fw-bold text-uppercase position-relative btn w-100',
               styles.btn,
               { [`${props.buttonType}`]: !isUndefined(props.buttonType) },
               { 'btn-primary': isUndefined(props.buttonType) },
@@ -108,7 +108,7 @@ const Modal = (props: Props) => {
           ref={ref}
         >
           <div
-            className={classnames('modal-content', styles.content, props.modalClassName, {
+            className={classnames('modal-content border border-3 mx-auto', styles.content, props.modalClassName, {
               [`position-relative ${styles.visibleContentBackdrop}`]:
                 !isUndefined(props.visibleContentBackdrop) && props.visibleContentBackdrop,
             })}
@@ -122,16 +122,14 @@ const Modal = (props: Props) => {
                 {!unclosable && (
                   <button
                     type="button"
-                    className="close"
+                    className="btn-close"
                     onClick={(e: MouseEvent<HTMLButtonElement>) => {
                       e.preventDefault();
                       closeModal();
                     }}
                     disabled={props.disabledClose}
                     aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                  ></button>
                 )}
               </div>
             )}
@@ -157,7 +155,7 @@ const Modal = (props: Props) => {
                     aria-label="Close modal"
                   >
                     <div className="d-flex flex-row align-items-center">
-                      <MdClose className="mr-2" />
+                      <MdClose className="me-2" />
                       <div>Close</div>
                     </div>
                   </button>

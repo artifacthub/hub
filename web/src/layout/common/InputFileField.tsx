@@ -212,18 +212,20 @@ const InputFileField = (props: Props) => {
 
   return (
     <>
-      <div className={`form-group mb-4 ${props.className}`}>
+      <div className={` mb-4 ${props.className}`}>
         <div className="d-flex flex-column">
-          <label className={styles.label} htmlFor={props.name}>
-            <span className="font-weight-bold">{props.label}</span>
+          <label className={`form-label ${styles.label}`} htmlFor={props.name}>
+            <span className="fw-bold">{props.label}</span>
             {props.labelLegend && <>{props.labelLegend}</>}
           </label>
 
           <div className="position-relative">
             <button
-              className={classnames('btn p-0 overflow-hidden position-relative', styles.btn, {
-                [styles.isLoading]: isSending,
-              })}
+              className={classnames(
+                'btn p-0 overflow-hidden position-relative border border-3 lh-1 rounded-circle fs-2 bg-white',
+                styles.btn,
+                { 'opacity-50': isSending }
+              )}
               type="button"
               onClick={onClick}
               aria-label="Add image"
@@ -232,8 +234,8 @@ const InputFileField = (props: Props) => {
               {props.value ? (
                 <Image
                   imageId={props.value}
-                  className={styles.image}
-                  classNameForSquare={styles.imageAsBg}
+                  className="mh-100 mw-100"
+                  classNameForSquare={`position-absolute w-100 h-100 top-0 start-0 ${styles.imageAsBg}`}
                   alt="Logo"
                 />
               ) : (
@@ -276,19 +278,19 @@ const InputFileField = (props: Props) => {
                 aria-label="Save original"
               >
                 <div className="d-flex flex-row align-items-center">
-                  <BiImageAlt className="mr-2" />
+                  <BiImageAlt className="me-2" />
                   <span>Save original</span>
                 </div>
               </button>
 
               <button
                 type="button"
-                className="btn btn-sm btn-secondary ml-3"
+                className="btn btn-sm btn-secondary ms-3"
                 disabled={!completedCrop?.width || !completedCrop?.height}
                 onClick={() => saveCroppedImage(previewCanvasRef.current, completedCrop)}
               >
                 <div className="d-flex flex-row align-items-center">
-                  <BiCrop className="mr-2" />
+                  <BiCrop className="me-2" />
                   <span>Save cropped image</span>
                 </div>
               </button>
@@ -311,9 +313,11 @@ const InputFileField = (props: Props) => {
               </div>
             </div>
             <div className="d-flex flex-row align-items-center mt-3">
-              <div className="font-weight-bold mr-3 text-uppercase">Preview</div>
-              <div className={`overflow-hidden position-relative ${styles.imageWrapper}`}>
-                <canvas className={`${styles.canvas} ${styles.imageAsBg}`} ref={previewCanvasRef} />
+              <div className="fw-bold me-3 text-uppercase">Preview</div>
+              <div
+                className={`overflow-hidden position-relative border border-3 rounded-circle bg-white ${styles.imageWrapper}`}
+              >
+                <canvas className={`rounded-circle mw-100 mh-100 ${styles.imageAsBg}`} ref={previewCanvasRef} />
               </div>
             </div>
           </div>

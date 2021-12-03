@@ -44,15 +44,15 @@ const Navbar = (props: Props) => {
   return (
     <>
       <nav
-        className={classnames('navbar navbar-top navbar-expand-lg navbar-dark', styles.navbar, {
-          [styles.homeNavbar]: props.fromHome,
+        className={classnames('navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-3', styles.navbar, {
+          [`bg-transparent w-100 position-absolute ${styles.homeNavbar}`]: props.fromHome,
         })}
       >
         <div className="container-lg px-sm-4 px-lg-0">
           <div className={`d-flex flex-row ${styles.mobileWrapper}`}>
             <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
               <div className="d-flex align-items-start">
-                <img className={styles.logo} src={logo} alt={`Logo ${siteName}`} />
+                <img className={`w-auto ${styles.logo}`} src={logo} alt={`Logo ${siteName}`} />
               </div>
             </Link>
 
@@ -66,7 +66,7 @@ const Navbar = (props: Props) => {
           {isUndefined(props.fromHome) && (
             <SearchBar
               size="normal"
-              formClassName={`mx-2 mr-md-auto my-3 my-md-0 flex-grow-1 pr-4 ${styles.search}`}
+              formClassName={`mx-2 me-md-auto my-3 my-md-0 flex-grow-1 pe-4 ${styles.search}`}
               isSearching={props.isSearching}
               tsQueryWeb={props.searchText}
               openTips={openTips}
@@ -75,11 +75,11 @@ const Navbar = (props: Props) => {
           )}
 
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav align-items-center ml-auto">
-              <li className="nav-item ml-4 position-relative">
+            <ul className="navbar-nav align-items-center ms-auto">
+              <li className="nav-item ms-4 position-relative">
                 <Link
                   className={classnames(
-                    'btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
+                    'btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white',
                     styles.button
                   )}
                   to={{
@@ -91,18 +91,18 @@ const Navbar = (props: Props) => {
               </li>
 
               {isUndefined(ctx) || isUndefined(ctx.user) ? (
-                <div className="spinner-grow spinner-grow-sm textLight pt-1 ml-4" role="status">
-                  <span className="sr-only">Loading...</span>
+                <div className="spinner-grow spinner-grow-sm textLight pt-1 ms-4" role="status">
+                  <span className="visually-hidden">Loading...</span>
                 </div>
               ) : (
                 <>
                   {isNull(ctx.user) ? (
                     <>
-                      <li className="nav-item position-relative ml-4">
+                      <li className="nav-item position-relative ms-4">
                         <button
                           type="button"
                           className={classnames(
-                            'btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
+                            'btn navbarBtn ps-0 pe-0 fw-bold text-uppercase text-white position-relative text-nowrap',
                             styles.button
                           )}
                           onClick={() => setOpenSignUp(true)}
@@ -112,11 +112,11 @@ const Navbar = (props: Props) => {
                         </button>
                       </li>
 
-                      <li className="nav-item ml-4 position-relative">
+                      <li className="nav-item ms-4 position-relative">
                         <button
                           type="button"
                           className={classnames(
-                            'btn navbarBtn font-weight-bold pr-0 pl-0 text-uppercase position-relative text-nowrap',
+                            'btn navbarBtn fw-bold pe-0 ps-0 text-uppercase text-white position-relative text-nowrap',
                             styles.button
                           )}
                           onClick={() => setOpenLogIn(true)}
@@ -126,12 +126,12 @@ const Navbar = (props: Props) => {
                         </button>
                       </li>
 
-                      <li className="nav-item ml-4 position-relative">
+                      <li className="nav-item ms-4 position-relative">
                         <GuestDropdown />
                       </li>
                     </>
                   ) : (
-                    <li className="nav-item ml-4 position-relative">
+                    <li className="nav-item ms-4 position-relative">
                       <UserAuthDropdown privateRoute={props.privateRoute} />
                     </li>
                   )}

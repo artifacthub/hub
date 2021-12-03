@@ -52,8 +52,8 @@ const ValuesSearch = (props: Props) => {
         <InputTypeahead
           ref={input}
           label="path"
-          listClassName={`position-absolute w-100 ${styles.list}`}
-          optClassName={styles.option}
+          listClassName={`position-absolute w-100 border border-top-0 bg-white end-0 ${styles.list}`}
+          optClassName="px-3 py-2"
           options={opts}
           selected={{ path: [] }}
           onChange={(name: string, value: string) => {

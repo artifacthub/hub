@@ -15,7 +15,7 @@ const HelmPluginInstall = (props: Props) => {
       {props.repository.private && <PrivateRepoWarning />}
 
       <div className="mt-2 d-flex flex-row justify-content-between align-items-baseline">
-        <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0" label="Download Helm">
+        <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link ps-0" label="Download Helm">
           Need Helm?
         </ExternalLink>
       </div>

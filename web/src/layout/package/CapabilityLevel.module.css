@@ -1,6 +1,5 @@
 .step {
-  border: 1px solid var(--color-1-900);
-  background-color: var(--color-white);
+  border-color: var(--color-1-900) !important;
   height: 12px;
   width: 12px;
   line-height: 8px;
@@ -23,5 +22,5 @@
 }
 
 .activeStep {
-  background-color: var(--color-1-700);
+  background-color: var(--color-1-700) !important;
 }

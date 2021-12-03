@@ -3,7 +3,7 @@
 exports[`Repository index creates snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="pr-xs-0 pr-sm-3 pr-md-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
+    class="pe-xs-0 pe-sm-3 pe-md-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
     role="main"
   >
     <div
@@ -21,7 +21,7 @@ exports[`Repository index creates snapshot 1`] = `
           <div>
             <button
               aria-label="Refresh repositories list"
-              class="btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase me-0 me-md-2 btnAction"
             >
               <div
                 class="d-flex flex-row align-items-center justify-content-center"
@@ -41,7 +41,7 @@ exports[`Repository index creates snapshot 1`] = `
                   />
                 </svg>
                 <svg
-                  class="d-none d-md-inline mr-2"
+                  class="d-none d-md-inline me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -63,13 +63,13 @@ exports[`Repository index creates snapshot 1`] = `
             </button>
             <button
               aria-label="Open claim repository modal"
-              class="btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase me-0 me-md-2 btnAction"
             >
               <div
                 class="d-flex flex-row align-items-center justify-content-center"
               >
                 <svg
-                  class="mr-md-2"
+                  class="me-md-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -125,7 +125,7 @@ exports[`Repository index creates snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="d-none d-md-inline mr-2"
+                    class="d-none d-md-inline me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -154,7 +154,7 @@ exports[`Repository index creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="position-absolute p-5 wrapper undefined"
+        class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
       >
         <div
           class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -164,7 +164,7 @@ exports[`Repository index creates snapshot 1`] = `
             role="status"
           >
             <span
-              class="sr-only"
+              class="visually-hidden"
             >
               Loading...
             </span>
@@ -176,7 +176,7 @@ exports[`Repository index creates snapshot 1`] = `
       >
         If you want your repositories to be labeled as 
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Verified Publisher
         </span>

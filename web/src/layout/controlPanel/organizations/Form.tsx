@@ -140,7 +140,7 @@ const OrganizationForm = forwardRef<HTMLFormElement, Props>((props, ref) => {
       <InputFileField
         name="logo"
         label="Logo"
-        labelLegend={<small className="ml-1 font-italic">(Click on the image to update)</small>}
+        labelLegend={<small className="ms-1 fst-italic">(Click on the image to update)</small>}
         value={imageId}
         placeholderIcon={<MdBusiness />}
         onImageChange={(imageId: string) => setImageId(imageId)}
@@ -151,7 +151,7 @@ const OrganizationForm = forwardRef<HTMLFormElement, Props>((props, ref) => {
         ref={nameInput}
         type="text"
         label="Name"
-        labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+        labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
         name="name"
         value={props.organization ? props.organization.name : ''}
         invalidText={{
@@ -189,8 +189,8 @@ const OrganizationForm = forwardRef<HTMLFormElement, Props>((props, ref) => {
         value={props.organization ? props.organization.homeUrl || '' : ''}
       />
 
-      <div className="form-group">
-        <label className={`font-weight-bold ${styles.label}`} htmlFor="description">
+      <div className="">
+        <label className={`form-label fw-bold ${styles.label}`} htmlFor="description">
           Description
         </label>
         <textarea

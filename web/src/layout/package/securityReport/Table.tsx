@@ -30,7 +30,7 @@ const MAX_VULNERABILITY_NUMBER = 100;
 const SecurityTable = (props: Props) => {
   const [visibleVulnerability, setVisibleVulnerability] = useState<string | undefined>();
 
-  const getEmptyMessage = (): JSX.Element => <span className="font-italic text-muted">No vulnerabilities found</span>;
+  const getEmptyMessage = (): JSX.Element => <span className="fst-italic text-muted">No vulnerabilities found</span>;
   const getTargetName = (target: string): string => {
     return getTextBetweenParenthesis(target) || target;
   };
@@ -52,7 +52,7 @@ const SecurityTable = (props: Props) => {
 
       <div data-testid="securityReportInfo">
         {isNull(props.reports) ? (
-          <div className="ml-4 mb-4">{getEmptyMessage()}</div>
+          <div className="ms-4 mb-4">{getEmptyMessage()}</div>
         ) : (
           <>
             {props.reports.map((item: SecurityReportResult, index: number) => {
@@ -68,7 +68,7 @@ const SecurityTable = (props: Props) => {
               return (
                 <Fragment key={`table_${targetImageName}`}>
                   <div
-                    className="ml-4"
+                    className="ms-4"
                     style={{
                       minHeight: isLastTarget && !isUndefined(props.contentHeight) ? props.contentHeight + 40 : 'auto',
                     }}
@@ -88,24 +88,22 @@ const SecurityTable = (props: Props) => {
                         {isExpanded ? <FaCaretDown /> : <FaCaretRight />}
                         <div
                           data-testid="targetTitle"
-                          className={`${styles.tableTitle} font-weight-bold mr-3 ml-1 text-truncate`}
+                          className={`${styles.tableTitle} fw-bold me-3 ms-1 text-truncate`}
                         >
-                          <span className="text-uppercase text-muted mr-2">Target:</span>
-                          <span className="font-weight-bold">{getTargetName(item.Target)}</span>
+                          <span className="text-uppercase text-muted me-2">Target:</span>
+                          <span className="fw-bold">{getTargetName(item.Target)}</span>
                         </div>
-                        <div
-                          className={`${styles.tableTitle} d-flex flex-row align-items-center font-weight-bold text-nowrap`}
-                        >
+                        <div className={`${styles.tableTitle} d-flex flex-row align-items-center fw-bold text-nowrap`}>
                           <span className="text-uppercase text-muted">Rating:</span>
                           <SecurityRating
                             summary={summary}
-                            className={`ml-2 ${styles.securityRatingBadge}`}
+                            className={`ms-2 ${styles.securityRatingBadge}`}
                             onlyBadge
                           />
                         </div>
                         {visibleVulnerabilities.length > 0 && (
                           <button
-                            className={`btn badge badge-secondary ml-3 ${styles.badge}`}
+                            className={`btn badge bg-secondary ms-3 ${styles.badge}`}
                             onClick={() => props.setExpandedTarget(isExpanded ? null : targetImageName)}
                             aria-label={`${isExpanded ? 'Close' : 'Open'} target image vulnerabilities`}
                           >
@@ -138,7 +136,7 @@ const SecurityTable = (props: Props) => {
                               </th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody className="bg-white">
                             {visibleVulnerabilities.map((item: Vulnerability, index: number) => {
                               const vulnerabilityName = `${item.VulnerabilityID}_${index}`;
                               return (
@@ -153,8 +151,8 @@ const SecurityTable = (props: Props) => {
                             })}
                             {list.length > visibleVulnerabilities.length && (
                               <tr>
-                                <td colSpan={6} className="align-middle text-right pt-3">
-                                  <span className="text-muted font-italic">
+                                <td colSpan={6} className="align-middle text-end pt-3">
+                                  <span className="text-muted fst-italic">
                                     Displaying only the first {MAX_VULNERABILITY_NUMBER} entries
                                   </span>
                                 </td>

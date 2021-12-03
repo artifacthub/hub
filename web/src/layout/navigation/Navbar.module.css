@@ -1,24 +1,15 @@
 .navbar {
   background-color: var(--color-1-500);
-  padding: 1rem !important;
   min-height: 73px;
-  border-top: none !important;
 }
 
 .navbar:not(.homeNavbar) {
   box-shadow: 0 8px 6px -6px var(--color-black-15);
 }
 
-.homeNavbar {
-  background-color: transparent;
-  position: absolute !important;
-  width: 100%;
-}
-
 .logo {
   max-height: 20px;
   height: 20px;
-  width: auto;
   max-width: 185px;
 }
 
@@ -28,8 +19,6 @@
 
 .button {
   letter-spacing: 2px;
-  color: var(--white) !important;
-  text-decoration: none;
   transition: all 0.3s ease-in-out;
 }
 
@@ -73,7 +62,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background-color: var(--white);
+    background-color: var(--bs-white);
     opacity: 0.5;
   }
 }

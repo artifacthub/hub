@@ -12,7 +12,7 @@ interface Props {
 const ModalHeader = (props: Props) => (
   <div className="d-flex align-items-center flex-grow-1">
     <div
-      className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper} imageWrapper`}
+      className={`d-flex align-items-center justify-content-center p-1 overflow-hidden border border-2 bg-white rounded-circle ${styles.imageWrapper} imageWrapper`}
     >
       <Image
         className={styles.image}
@@ -22,7 +22,7 @@ const ModalHeader = (props: Props) => (
       />
     </div>
 
-    <div className="ml-3 flex-grow-1">
+    <div className="ms-3 flex-grow-1">
       <div className="h5 mb-0">{props.displayName || props.name}</div>
     </div>
   </div>

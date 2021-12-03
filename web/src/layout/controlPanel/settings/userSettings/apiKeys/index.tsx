@@ -107,7 +107,7 @@ const APIKeysSection = (props: Props) => {
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <MdAdd className="d-inline d-md-none" />
-                  <MdAddCircle className="d-none d-md-inline mr-2" />
+                  <MdAddCircle className="d-none d-md-inline me-2" />
                   <span className="d-none d-md-inline">Add</span>
                 </div>
               </button>
@@ -130,7 +130,7 @@ const APIKeysSection = (props: Props) => {
                           aria-label="Open API key modal to add the first one"
                         >
                           <div className="d-flex flex-row align-items-center text-uppercase">
-                            <MdAddCircle className="mr-2" />
+                            <MdAddCircle className="me-2" />
                             <span>Add API key</span>
                           </div>
                         </button>

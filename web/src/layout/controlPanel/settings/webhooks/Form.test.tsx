@@ -118,6 +118,9 @@ describe('WebhookForm', () => {
       expect(screen.getByRole('textbox', { name: 'Secret' })).toHaveValue(mockWebhook.secret!);
 
       expect(screen.getByText('Active')).toBeInTheDocument();
+      expect(screen.getByRole('switch')).toBeInTheDocument();
+      expect(screen.getByRole('switch')).not.toBeChecked();
+
       expect(
         screen.getByText(
           'This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.'
@@ -128,10 +131,9 @@ describe('WebhookForm', () => {
 
       expect(screen.getByText('Events')).toBeInTheDocument();
       const checkboxes = screen.getAllByRole('checkbox');
-      expect(checkboxes).toHaveLength(3);
-      expect(checkboxes[0]).not.toBeChecked();
+      expect(checkboxes).toHaveLength(2);
+      expect(checkboxes[0]).toBeChecked();
       expect(checkboxes[1]).toBeChecked();
-      expect(checkboxes[2]).toBeChecked();
 
       expect(screen.getByText('Packages')).toBeInTheDocument();
       expect(
@@ -209,6 +211,9 @@ describe('WebhookForm', () => {
       expect(screen.getByRole('textbox', { name: 'Secret' })).toHaveValue('');
 
       expect(screen.getByText('Active')).toBeInTheDocument();
+      expect(screen.getByRole('switch')).toBeInTheDocument();
+      expect(screen.getByRole('switch')).toBeChecked();
+
       expect(
         screen.getByText(
           'This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.'
@@ -220,10 +225,9 @@ describe('WebhookForm', () => {
       expect(screen.getByText('Events')).toBeInTheDocument();
 
       const checkboxes = screen.getAllByRole('checkbox');
-      expect(checkboxes).toHaveLength(3);
+      expect(checkboxes).toHaveLength(2);
       expect(checkboxes[0]).toBeChecked();
-      expect(checkboxes[1]).toBeChecked();
-      expect(checkboxes[2]).not.toBeChecked();
+      expect(checkboxes[1]).not.toBeChecked();
 
       expect(screen.getByText('Packages')).toBeInTheDocument();
       expect(
@@ -416,10 +420,10 @@ describe('WebhookForm', () => {
       );
 
       const checkboxes = screen.getAllByRole('checkbox');
-      expect(checkboxes).toHaveLength(3);
-      expect(checkboxes[2]).not.toBeChecked();
-      userEvent.click(checkboxes[2]);
-      expect(checkboxes[2]).toBeChecked();
+      expect(checkboxes).toHaveLength(2);
+      expect(checkboxes[1]).not.toBeChecked();
+      userEvent.click(checkboxes[1]);
+      expect(checkboxes[1]).toBeChecked();
 
       const btn = screen.getByRole('button', { name: 'Add webhook' });
       userEvent.click(btn);

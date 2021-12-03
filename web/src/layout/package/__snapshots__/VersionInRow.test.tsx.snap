@@ -6,14 +6,14 @@ exports[`VersionInRow creates snapshot 1`] = `
     <tbody>
       <tr>
         <td
-          class="versionCell"
+          class="w-75 versionCell"
         >
           <div
             class="d-flex flex-row align-items-center px-1"
           >
             <button
               aria-label="Open version 1.0.1"
-              class="btn btn-link text-primary pl-0 pt-0 pb-0 border-0 text-truncate d-block text-left"
+              class="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block text-start"
             >
               1.0.1
             </button>

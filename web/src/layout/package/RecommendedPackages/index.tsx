@@ -54,8 +54,8 @@ const RecommendedPackages = (props: Props) => {
         <span className={`position-relative ${styles.pkgIcon}`}>
           <GoPackage />
         </span>
-        <small className="text-muted ml-2">Other packages recommended by the publisher:</small>
-        <small className="font-weight-bold ml-2">{recommendations.length}</small>
+        <small className="text-muted ms-2">Other packages recommended by the publisher:</small>
+        <small className="fw-bold ms-2">{recommendations.length}</small>
       </div>
 
       <div className={`d-flex flex-column pb-3 pt-1 ${styles.content}`}>

@@ -15,7 +15,7 @@ exports[`KrewInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="flex-grow-1 me-3 blockWrapper"
     >
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -84,7 +84,7 @@ exports[`KrewInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="flex-grow-1 me-3 blockWrapper"
     >
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -145,7 +145,7 @@ exports[`KrewInstall creates snapshot 1`] = `
   >
     <a
       aria-label="Download Krew"
-      class="link btn btn-link pl-0"
+      class="link btn btn-link ps-0"
       href="https://krew.sigs.k8s.io/docs/user-guide/setup/install/"
       rel="noopener noreferrer"
       role="button"

@@ -211,11 +211,10 @@ const PackageView = (props: Props) => {
               discovering other alternatives.
             </p>
 
-            <p className={`h6 ${styles.noDataContent}`}>
-              NOTE: The official Helm <span className="font-weight-bold">stable</span> and{' '}
-              <span className="font-weight-bold">incubator</span> repositories were removed from Artifact Hub on
-              November 6th as part of the deprecation plan announced by the Helm project. For more information please
-              see{' '}
+            <p className="h6 lh-base">
+              NOTE: The official Helm <span className="fw-bold">stable</span> and{' '}
+              <span className="fw-bold">incubator</span> repositories were removed from Artifact Hub on November 6th as
+              part of the deprecation plan announced by the Helm project. For more information please see{' '}
               <ExternalLink href="https://helm.sh/blog/charts-repo-deprecation/" label="Open Helm documentation">
                 this blog post
               </ExternalLink>{' '}
@@ -379,11 +378,11 @@ const PackageView = (props: Props) => {
 
   const getBadges = (withRepoInfo: boolean, extraStyle?: string): JSX.Element => (
     <>
-      <OfficialBadge official={isPackageOfficial(detail)} className={`d-inline mr-3 ${extraStyle}`} type="package" />
+      <OfficialBadge official={isPackageOfficial(detail)} className={`d-inline me-3 ${extraStyle}`} type="package" />
       {withRepoInfo && (
         <VerifiedPublisherBadge
           verifiedPublisher={detail!.repository.verifiedPublisher}
-          className={`d-inline mr-3 ${extraStyle}`}
+          className={`d-inline me-3 ${extraStyle}`}
         />
       )}
       {detail!.deprecated && (
@@ -391,7 +390,7 @@ const PackageView = (props: Props) => {
           text="Deprecated"
           icon={<AiOutlineStop />}
           labelStyle="danger"
-          className={`d-inline mr-3 ${extraStyle}`}
+          className={`d-inline me-3 ${extraStyle}`}
         />
       )}
       <SignedBadge
@@ -494,7 +493,7 @@ const PackageView = (props: Props) => {
                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Manifest" />
 
                       <div
-                        className={`d-flex d-xxl-inline-block mw-100 position-relative overflow-hidden ${styles.manifestWrapper}`}
+                        className={`d-flex d-xxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={manifest} filename={`${detail.normalizedName}-rules.yaml`} />
                         <SyntaxHighlighter
@@ -543,7 +542,7 @@ const PackageView = (props: Props) => {
       {!isUndefined(props.searchUrlReferer) && (
         <SubNavbar>
           <button
-            className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
+            className={`btn btn-link btn-sm ps-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
               history.push({
                 pathname: '/packages/search',
@@ -563,15 +562,15 @@ const PackageView = (props: Props) => {
             }}
             aria-label="Back to results"
           >
-            <IoIosArrowBack className="mr-2" />
+            <IoIosArrowBack className="me-2" />
             {tsQueryWeb ? (
               <>
-                Back to "<span className="font-weight-bold">{tsQueryWeb}</span>" results
+                Back to "<span className="fw-bold">{tsQueryWeb}</span>" results
               </>
             ) : (
               <>
                 Back to
-                <span className={`font-weight-bold ${styles.extraSpace}`}> search results</span>
+                <span className={`fw-bold ${styles.extraSpace}`}> search results</span>
               </>
             )}
           </button>
@@ -581,7 +580,7 @@ const PackageView = (props: Props) => {
       {!isUndefined(props.fromStarredPage) && props.fromStarredPage && (
         <SubNavbar>
           <button
-            className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
+            className={`btn btn-link btn-sm ps-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
               history.push({
                 pathname: '/packages/starred',
@@ -590,27 +589,27 @@ const PackageView = (props: Props) => {
             }}
             aria-label="Back to starred packages"
           >
-            <IoIosArrowBack className="mr-2" />
+            <IoIosArrowBack className="me-2" />
             <div>
-              Back to <span className="font-weight-bold">starred packages</span>
+              Back to <span className="fw-bold">starred packages</span>
             </div>
           </button>
         </SubNavbar>
       )}
 
       <div data-testid="mainPackage" className="position-relative flex-grow-1">
-        {isLoadingPackage && <Loading spinnerClassName={`position-fixed ${styles.spinner}`} />}
+        {isLoadingPackage && <Loading spinnerClassName="position-fixed top-50" />}
 
         {!isUndefined(detail) && (
           <>
             {!isNull(detail) && (
               <>
-                <div className={`jumbotron package-detail-jumbotron ${styles.jumbotron}`}>
+                <div className={`jumbotron package-detail-jumbotron rounded-0 mb-2 ${styles.jumbotron}`}>
                   <div className="container-lg px-sm-4 px-lg-0 position-relative">
                     <div className="d-flex align-items-start w-100 mb-3">
                       <div className="d-flex align-items-center flex-grow-1 mw-100">
                         <div
-                          className={`d-flex align-items-center justify-content-center p-1 p-md-2 overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                          className={`d-flex align-items-center justify-content-center p-1 p-md-2 overflow-hidden border border-2 rounded-circle bg-white ${styles.imageWrapper} imageWrapper`}
                         >
                           <Image
                             className={styles.image}
@@ -620,18 +619,18 @@ const PackageView = (props: Props) => {
                           />
                         </div>
 
-                        <div className={`ml-3 flex-grow-1 ${styles.wrapperWithContentEllipsis}`}>
+                        <div className={`ms-3 flex-grow-1 ${styles.wrapperWithContentEllipsis}`}>
                           <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
                             <div className={`h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
                               {detail.displayName || detail.name}
                             </div>
-                            <div className="d-none d-md-flex ml-3">{getBadges(false, 'mt-1')}</div>
+                            <div className="d-none d-md-flex ms-3">{getBadges(false, 'mt-1')}</div>
                           </div>
 
                           <div className={`d-flex d-md-none text-truncate mt-2 w-100 ${styles.mobileSubtitle}`}>
                             <small className="text-muted text-uppercase">Repo: </small>
                             <div className={`mx-1 d-inline ${styles.mobileIcon}`}>
-                              <RepositoryIcon kind={detail.repository.kind} className={styles.repoIcon} />
+                              <RepositoryIcon kind={detail.repository.kind} className={`w-auto ${styles.repoIcon}`} />
                             </div>
                             <span className={`text-dark d-inline-block text-truncate mw-100 ${styles.mobileVersion}`}>
                               {detail.repository.displayName || detail.repository.name}
@@ -640,8 +639,8 @@ const PackageView = (props: Props) => {
 
                           <div className={`d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}>
                             {detail.repository.userAlias ? (
-                              <div className={`mr-2 text-truncate ${styles.mw50}`}>
-                                <small className="mr-1 text-uppercase text-muted">User: </small>
+                              <div className={`me-2 text-truncate ${styles.mw50}`}>
+                                <small className="me-1 text-uppercase text-muted">User: </small>
 
                                 <Link
                                   className="text-dark"
@@ -661,7 +660,7 @@ const PackageView = (props: Props) => {
                               </div>
                             ) : (
                               <OrganizationInfo
-                                className={`mr-2 text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
+                                className={`me-2 text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
                                 organizationName={detail.repository.organizationName!}
                                 organizationDisplayName={detail.repository.organizationDisplayName}
                                 deprecated={detail.deprecated}
@@ -682,13 +681,15 @@ const PackageView = (props: Props) => {
                       </div>
                     </div>
 
-                    <p className={`mb-0 overflow-hidden ${styles.description}`}>{detail.description}</p>
+                    <p className={`mb-0 overflow-hidden text-break ${styles.description}`}>{detail.description}</p>
 
                     <Stats packageStats={detail.stats} />
 
                     <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
 
-                    <div className={`position-absolute d-flex flex-row align-items-center ${styles.optsWrapper}`}>
+                    <div
+                      className={`position-absolute d-flex flex-row align-items-center top-0 end-0 ${styles.optsWrapper}`}
+                    >
                       {detail!.ts && !isFuture(detail!.ts) && (
                         <span className={`d-block d-md-none text-muted text-nowrap ${styles.date}`}>
                           Updated {moment.unix(detail!.ts).fromNow()}
@@ -712,7 +713,7 @@ const PackageView = (props: Props) => {
                         buttonType="btn-outline-secondary btn-sm text-nowrap"
                         buttonContent={
                           <>
-                            <FiPlus className="mr-2" />
+                            <FiPlus className="me-2" />
                             <span>Info</span>
                           </>
                         }
@@ -777,7 +778,7 @@ const PackageView = (props: Props) => {
               ) : (
                 <div className="d-flex flex-column-reverse d-md-block px-xs-0 px-sm-3 px-lg-0">
                   <div
-                    className={`ml-0 ml-md-5 mb-5 position-relative float-none float-md-right ${styles.additionalInfo}`}
+                    className={`ms-0 ms-md-5 mb-5 position-relative float-none float-md-end ${styles.additionalInfo}`}
                   >
                     {!isNull(detail) && (
                       <div ref={columnWrapper} className={styles.rightColumnWrapper}>
@@ -786,7 +787,6 @@ const PackageView = (props: Props) => {
 
                           <div className="d-none d-lg-block">
                             <ChartTemplatesModal
-                              btnClassName="btn-block"
                               normalizedName={detail.normalizedName}
                               packageId={detail.packageId}
                               version={detail.version!}
@@ -819,7 +819,7 @@ const PackageView = (props: Props) => {
                               btnModalContent={
                                 <div className="d-flex flex-row align-items-center justify-content-center">
                                   <FiCode />
-                                  <span className="ml-2 font-weight-bold text-uppercase">CRDs</span>
+                                  <span className="ms-2 fw-bold text-uppercase">CRDs</span>
                                 </div>
                               }
                               normalizedName={detail.normalizedName}
@@ -845,7 +845,7 @@ const PackageView = (props: Props) => {
                               btnModalContent={
                                 <div className="d-flex flex-row align-items-center justify-content-center">
                                   <FiCode />
-                                  <span className="ml-2 font-weight-bold text-uppercase">Rules</span>
+                                  <span className="ms-2 fw-bold text-uppercase">Rules</span>
                                 </div>
                               }
                               normalizedName={detail.normalizedName}
@@ -871,7 +871,7 @@ const PackageView = (props: Props) => {
                               btnModalContent={
                                 <div className="d-flex flex-row align-items-center justify-content-center">
                                   <FiCode />
-                                  <span className="ml-2 font-weight-bold text-uppercase">Policies</span>
+                                  <span className="ms-2 fw-bold text-uppercase">Policies</span>
                                 </div>
                               }
                               normalizedName={detail.normalizedName}
@@ -1021,7 +1021,7 @@ const PackageView = (props: Props) => {
                         <div ref={contentWrapper}>
                           {isNull(detail.readme) || isUndefined(detail.readme) ? (
                             <div className={styles.contentWrapper}>
-                              <NoData className={`w-100 noReadmeAlert ${styles.noReadmeAlert}`}>
+                              <NoData className="w-100 noReadmeAlert bg-transparent">
                                 <div>
                                   <div className={`mb-4 ${styles.fileIcon}`}>
                                     <IoDocumentTextOutline />

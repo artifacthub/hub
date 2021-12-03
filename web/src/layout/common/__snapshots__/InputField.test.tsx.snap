@@ -3,14 +3,14 @@
 exports[`InputField creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="form-group mb-4 position-relative undefined"
+    class=" mb-4 position-relative undefined"
   >
     <label
-      class="font-weight-bold label"
+      class="form-label fw-bold label"
       for="name"
     >
       <span
-        class="font-weight-bold"
+        class="fw-bold"
       >
         label
       </span>

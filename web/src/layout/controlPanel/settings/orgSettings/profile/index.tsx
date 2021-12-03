@@ -65,7 +65,7 @@ const ProfileSection = (props: Props) => {
       <div className={`h3 pb-2 border-bottom ${styles.title}`}>Profile information</div>
 
       <div
-        className={classnames('mt-4 mt-md-5 mb-5', {
+        className={classnames('mt-4 mt-md-5 mb-5 mw-100', {
           [styles.form]: !isNull(organization),
         })}
       >

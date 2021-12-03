@@ -65,7 +65,7 @@ const getValue = (newValue: any): ValueProp => {
                 ) : (
                   <>
                     {(valueToCheck.default as string[]).map((listItem: any) => (
-                      <div className={`level1 ${styles.line} ${styles.listItem} position-relative`} key={listItem}>
+                      <div className={`level1 text-break ${styles.listItem} position-relative`} key={listItem}>
                         {isString(listItem) ? listItem : JSON.stringify(listItem)}
                       </div>
                     ))}
@@ -96,7 +96,7 @@ const getValue = (newValue: any): ValueProp => {
             <>
               |-
               <br />
-              <div className={`${styles.line} level1`}>{valueToCheck.default}</div>
+              <div className="text-break level1">{valueToCheck.default}</div>
             </>
           ),
           className: 'text-warning',
@@ -192,12 +192,12 @@ const SchemaLine = (props: Props) => {
           onClick={() => props.onActivePathChange(!isExpanded ? currentPath : undefined)}
           role="button"
         >
-          <div className={`level${props.level} text-monospace`}>
+          <div className={`level${props.level} font-monospace`}>
             {activeValue.title && <div className={`text-truncate ${styles.comment}`}># {activeValue.title}</div>}
             <span className={classnames({ [`position-relative ${styles.hasDecorator}`]: props.hasDecorator })}>
               {props.name}:{' '}
             </span>
-            <span data-testid="defaultValue" className={`${className} ${styles.line}`}>
+            <span data-testid="defaultValue" className={`${className} text-break`}>
               {content}
             </span>
           </div>

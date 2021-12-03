@@ -1,8 +1,4 @@
 .sidebar {
-  position: fixed;
-  top: 0;
-  width: 75%;
-  bottom: 0;
   transition: all 0.15s linear;
   -webkit-transition: all 0.15s linear;
   z-index: 1050;
@@ -26,6 +22,10 @@
 .active {
   -webkit-transform: none;
   transform: none;
+}
+
+.closeBtn {
+  font-size: 0.75rem;
 }
 
 .activeBackdrop {

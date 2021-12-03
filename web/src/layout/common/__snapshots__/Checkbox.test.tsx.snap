@@ -3,11 +3,11 @@
 exports[`Checkbox creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+    class="form-check me-sm-2 mb-2 undefined"
   >
     <input
       aria-checked="false"
-      class="custom-control-input input"
+      class="form-check-input input"
       id="all-checkbox-val"
       name="checkbox"
       tabindex="0"
@@ -15,7 +15,7 @@ exports[`Checkbox creates snapshot 1`] = `
       value="val"
     />
     <label
-      class="custom-control-label label undefined"
+      class="form-check-label label undefined"
       data-testid="checkboxLabel"
       for="all-checkbox-val"
     >

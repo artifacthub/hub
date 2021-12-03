@@ -109,7 +109,7 @@ const Details = (props: Props) => {
               </th>
             </tr>
           </thead>
-          <tbody>{itemsForModal}</tbody>
+          <tbody className="bg-white">{itemsForModal}</tbody>
         </table>
       ),
     };

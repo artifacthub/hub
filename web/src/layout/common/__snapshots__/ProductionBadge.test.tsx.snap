@@ -15,11 +15,11 @@ exports[`VerifiedPublisherBadge creates snapshot 1`] = `
           class="d-flex flex-row align-items-center overflow-hidden labelWrapper default"
         >
           <div
-            class="text-center labelIconWrapper iconWrapper"
+            class="text-center border border-end-0 position-relative labelIconWrapper iconWrapper"
             data-testid="label-wrapper"
           >
             <span
-              class="ml-1"
+              class="ms-1"
             >
               <svg
                 fill="currentColor"
@@ -40,13 +40,13 @@ exports[`VerifiedPublisherBadge creates snapshot 1`] = `
               </svg>
             </span>
             <span
-              class="ml-1 mr-2 font-weight-bold position-relative iconLegend"
+              class="ms-1 me-2 fw-bold position-relative iconLegend"
             >
               3
             </span>
           </div>
           <div
-            class="text-nowrap labelText"
+            class="text-nowrap border fw-bold labelText"
           >
             In Production
           </div>

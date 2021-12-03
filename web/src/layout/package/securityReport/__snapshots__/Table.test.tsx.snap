@@ -6,10 +6,10 @@ exports[`SecurityTable creates snapshot 1`] = `
     class="my-1"
   >
     <div
-      class="d-flex flex-row align-items-center font-weight-bold mb-2 btnWrapper"
+      class="d-flex flex-row align-items-center fw-bold mb-2 btnWrapper"
     >
       <button
-        class="btn btn-link text-reset position-absolute linkBtn"
+        class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn"
       >
         <svg
           fill="currentColor"
@@ -40,10 +40,10 @@ exports[`SecurityTable creates snapshot 1`] = `
         />
       </svg>
       <div
-        class="pl-2 text-truncate"
+        class="ps-2 text-truncate"
       >
         <span
-          class="text-uppercase text-muted mr-2 tableTitle"
+          class="text-uppercase text-muted me-2 tableTitle"
         >
           Image:
         </span>
@@ -54,14 +54,14 @@ exports[`SecurityTable creates snapshot 1`] = `
       data-testid="securityReportInfo"
     >
       <div
-        class="ml-4"
+        class="ms-4"
         style="min-height: auto;"
       >
         <div
           class="position-relative btnWrapper"
         >
           <button
-            class="btn btn-link text-reset position-absolute linkBtn inTarget"
+            class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inTarget"
           >
             <svg
               fill="currentColor"
@@ -78,7 +78,7 @@ exports[`SecurityTable creates snapshot 1`] = `
             </svg>
           </button>
           <div
-            class="p-1 pl-0"
+            class="p-1 ps-0"
           >
             <div
               class="d-flex flex-row align-items-center mb-2"
@@ -97,22 +97,22 @@ exports[`SecurityTable creates snapshot 1`] = `
                 />
               </svg>
               <div
-                class="tableTitle font-weight-bold mr-3 ml-1 text-truncate"
+                class="tableTitle fw-bold me-3 ms-1 text-truncate"
                 data-testid="targetTitle"
               >
                 <span
-                  class="text-uppercase text-muted mr-2"
+                  class="text-uppercase text-muted me-2"
                 >
                   Target:
                 </span>
                 <span
-                  class="font-weight-bold"
+                  class="fw-bold"
                 >
                   centos 7.7.1908
                 </span>
               </div>
               <div
-                class="tableTitle d-flex flex-row align-items-center font-weight-bold text-nowrap"
+                class="tableTitle d-flex flex-row align-items-center fw-bold text-nowrap"
               >
                 <span
                   class="text-uppercase text-muted"
@@ -120,14 +120,14 @@ exports[`SecurityTable creates snapshot 1`] = `
                   Rating:
                 </span>
                 <div
-                  class="position-relative ml-2 securityRatingBadge"
+                  class="position-relative ms-2 securityRatingBadge"
                 >
                   <div
                     data-testid="elementWithTooltip"
                   >
                     <small>
                       <div
-                        class="badge badge-pill text-light font-weight-bold badge ml-2 securityRatingBadge"
+                        class="badge rounded-pill text-light fw-bold badge ms-2 securityRatingBadge"
                         style="background-color: rgb(150, 0, 3);"
                       >
                         F
@@ -138,7 +138,7 @@ exports[`SecurityTable creates snapshot 1`] = `
               </div>
               <button
                 aria-label="Open target image vulnerabilities"
-                class="btn badge badge-secondary ml-3 badge"
+                class="btn badge bg-secondary ms-3 badge"
               >
                 Show vulnerabilities
               </button>
@@ -147,14 +147,14 @@ exports[`SecurityTable creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="ml-4"
+        class="ms-4"
         style="min-height: auto;"
       >
         <div
           class="position-relative btnWrapper"
         >
           <button
-            class="btn btn-link text-reset position-absolute linkBtn inTarget"
+            class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inTarget"
           >
             <svg
               fill="currentColor"
@@ -171,7 +171,7 @@ exports[`SecurityTable creates snapshot 1`] = `
             </svg>
           </button>
           <div
-            class="p-1 pl-0"
+            class="p-1 ps-0"
           >
             <div
               class="d-flex flex-row align-items-center mb-2"
@@ -190,22 +190,22 @@ exports[`SecurityTable creates snapshot 1`] = `
                 />
               </svg>
               <div
-                class="tableTitle font-weight-bold mr-3 ml-1 text-truncate"
+                class="tableTitle fw-bold me-3 ms-1 text-truncate"
                 data-testid="targetTitle"
               >
                 <span
-                  class="text-uppercase text-muted mr-2"
+                  class="text-uppercase text-muted me-2"
                 >
                   Target:
                 </span>
                 <span
-                  class="font-weight-bold"
+                  class="fw-bold"
                 >
                   usr/share/ceph/mgr/dashboard/frontend/package-lock.json
                 </span>
               </div>
               <div
-                class="tableTitle d-flex flex-row align-items-center font-weight-bold text-nowrap"
+                class="tableTitle d-flex flex-row align-items-center fw-bold text-nowrap"
               >
                 <span
                   class="text-uppercase text-muted"
@@ -213,14 +213,14 @@ exports[`SecurityTable creates snapshot 1`] = `
                   Rating:
                 </span>
                 <div
-                  class="position-relative ml-2 securityRatingBadge"
+                  class="position-relative ms-2 securityRatingBadge"
                 >
                   <div
                     data-testid="elementWithTooltip"
                   >
                     <small>
                       <div
-                        class="badge badge-pill text-light font-weight-bold badge ml-2 securityRatingBadge"
+                        class="badge rounded-pill text-light fw-bold badge ms-2 securityRatingBadge"
                         style="background-color: rgb(247, 134, 15);"
                       >
                         C
@@ -231,7 +231,7 @@ exports[`SecurityTable creates snapshot 1`] = `
               </div>
               <button
                 aria-label="Open target image vulnerabilities"
-                class="btn badge badge-secondary ml-3 badge"
+                class="btn badge bg-secondary ms-3 badge"
               >
                 Show vulnerabilities
               </button>

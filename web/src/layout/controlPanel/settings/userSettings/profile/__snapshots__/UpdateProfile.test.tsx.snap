@@ -9,22 +9,22 @@ exports[`Update profile - user settings creates snapshot 1`] = `
     novalidate=""
   >
     <div
-      class="form-group mb-4 undefined"
+      class=" mb-4 undefined"
     >
       <div
         class="d-flex flex-column"
       >
         <label
-          class="label"
+          class="form-label label"
           for="image"
         >
           <span
-            class="font-weight-bold"
+            class="fw-bold"
           >
             Profile image
           </span>
           <small
-            class="ml-1 font-italic"
+            class="ms-1 fst-italic"
           >
             (Click on the image to update)
           </small>
@@ -34,13 +34,13 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         >
           <button
             aria-label="Add image"
-            class="btn p-0 overflow-hidden position-relative btn"
+            class="btn p-0 overflow-hidden position-relative border border-3 lh-1 rounded-circle fs-2 bg-white btn"
             type="button"
           >
             <img
               alt="Logo"
               aria-hidden="true"
-              class="image"
+              class="mh-100 mw-100"
               src="/image/123"
               srcset="/image/123@1x 1x, /image/123@2x 2x, /image/123@3x 3x, /image/123@4x 4x"
             />
@@ -55,14 +55,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="email"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Email
         </span>
@@ -82,19 +82,19 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="alias"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Username
         </span>
         <small
-          class="ml-1 font-italic"
+          class="ms-1 fst-italic"
         >
           (Required)
         </small>
@@ -117,14 +117,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="firstName"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           First Name
         </span>
@@ -144,14 +144,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       />
     </div>
     <div
-      class="form-group mb-4 position-relative undefined"
+      class=" mb-4 position-relative undefined"
     >
       <label
-        class="font-weight-bold label"
+        class="form-label fw-bold label"
         for="lastName"
       >
         <span
-          class="font-weight-bold"
+          class="fw-bold"
         >
           Last Name
         </span>
@@ -182,7 +182,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
           class="d-flex flex-row align-items-center text-uppercase"
         >
           <svg
-            class="mr-2"
+            class="me-2"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

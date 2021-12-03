@@ -30,18 +30,18 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
         </svg>
       </span>
       <small
-        class="text-muted ml-2"
+        class="text-muted ms-2"
       >
         Organizations using this package in production:
       </small>
       <small
-        class="font-weight-bold ml-2"
+        class="fw-bold ms-2"
       >
         3
       </small>
       <button
         aria-label="See all organizations using this package in production"
-        class="btn text-dark font-weight-bold btn-link btn-sm px-2 border-0 seeAllbtn"
+        class="btn text-dark fw-bold btn-link btn-sm px-2 border-0 seeAllbtn"
       >
         (see all)
       </button>
@@ -57,7 +57,7 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
         >
           <a
             aria-label="Open organization url"
-            class="link d-inline-block text-dark h5 mb-2 mr-3"
+            class="link d-inline-block text-dark h5 mb-2 me-3"
             href="https://artifacthub.io"
             rel="noopener noreferrer"
             role="button"
@@ -65,14 +65,14 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
             target="_blank"
           >
             <div
-              class="badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 badge"
+              class="badge badge-rounded bg-light text-dark rounded-pill d-flex flex-row align-items-center ps-0 pe-3 border badge"
               data-testid="org-using-pkg"
             >
               <div
-                class="mr-2"
+                class="me-2"
               >
                 <div
-                  class="imageWrapper imageWrapper overflow-hidden"
+                  class="rounded-circle border bg-white imageWrapper imageWrapper overflow-hidden"
                 >
                   <div
                     class="d-flex align-items-center justify-content-center w-100 h-100"
@@ -88,7 +88,7 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="text-truncate text-dark font-weight-bold badgeContent"
+                class="text-truncate text-dark fw-bold badgeContent"
               >
                 <span>
                   Artifact Hub
@@ -97,17 +97,17 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
             </div>
           </a>
           <div
-            class="d-inline-block text-dark h5 mb-2 mr-3"
+            class="d-inline-block text-dark h5 mb-2 me-3"
           >
             <div
-              class="badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 badge"
+              class="badge badge-rounded bg-light text-dark rounded-pill d-flex flex-row align-items-center ps-0 pe-3 border badge"
               data-testid="org-using-pkg"
             >
               <div
-                class="mr-2"
+                class="me-2"
               >
                 <div
-                  class="imageWrapper imageWrapper overflow-hidden"
+                  class="rounded-circle border bg-white imageWrapper imageWrapper overflow-hidden"
                 >
                   <div
                     class="d-flex align-items-center justify-content-center w-100 h-100"
@@ -133,7 +133,7 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="text-truncate text-dark font-weight-bold badgeContent"
+                class="text-truncate text-dark fw-bold badgeContent"
               >
                 <span>
                   test
@@ -142,17 +142,17 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="d-inline-block text-dark h5 mb-2 mr-3"
+            class="d-inline-block text-dark h5 mb-2 me-3"
           >
             <div
-              class="badge badge-rounded badge-light rounded-pill d-flex flex-row align-items-center pl-0 pr-3 badge"
+              class="badge badge-rounded bg-light text-dark rounded-pill d-flex flex-row align-items-center ps-0 pe-3 border badge"
               data-testid="org-using-pkg"
             >
               <div
-                class="mr-2"
+                class="me-2"
               >
                 <div
-                  class="imageWrapper imageWrapper overflow-hidden"
+                  class="rounded-circle border bg-white imageWrapper imageWrapper overflow-hidden"
                 >
                   <div
                     class="d-flex align-items-center justify-content-center w-100 h-100"
@@ -168,7 +168,7 @@ exports[`OrgsUsingPackage creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="text-truncate text-dark font-weight-bold badgeContent"
+                class="text-truncate text-dark fw-bold badgeContent"
               >
                 <span>
                   Organization

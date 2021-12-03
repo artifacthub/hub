@@ -24,7 +24,7 @@ const ContainersImages = (props: Props) => {
   const getBadge = (): JSX.Element => (
     <ElementWithTooltip
       className={styles.tooltipIcon}
-      element={<span className={`badge badge-pill my-1 ${styles.badge}`}>Whitelisted</span>}
+      element={<span className={`badge rounded-pill my-1 border ${styles.badge}`}>Whitelisted</span>}
       tooltipMessage="This image has been whitelisted by the publisher and it won't be scanned for security vulnerabilities."
       visibleTooltip
       active
@@ -43,7 +43,7 @@ const ContainersImages = (props: Props) => {
           {!isUndefined(containerImage.image) && (
             <ButtonCopyToClipboard
               text={containerImage.image}
-              className={`btn-link text-dark border-0 ${styles.copyBtn}`}
+              className={`btn-link text-dark border-0 position-relative ${styles.copyBtn}`}
               label={`Copy ${containerImage.name || containerImage.image} container image to clipboard`}
             />
           )}
@@ -58,8 +58,8 @@ const ContainersImages = (props: Props) => {
           role="listitem"
         >
           <div className="d-flex flex-row align-items-start mw-100">
-            <GoPackage className={`text-muted mr-2 ${styles.icon}`} />
-            <div data-testid="containerImage" className={`text-truncate ${styles.containerImage}`}>
+            <GoPackage className={`text-muted me-2 ${styles.icon}`} />
+            <div data-testid="containerImage" className={`text-truncate text-break ${styles.containerImage}`}>
               {containerImage.name || containerImage.image}
             </div>
             {copyBtn}
@@ -67,7 +67,7 @@ const ContainersImages = (props: Props) => {
           {containerImage.whitelisted && (
             <div className={`d-flex flex-column mb-1 ${styles.badgesWrapper}`}>
               <div className="d-flex flex-row align-items-center">
-                <div className={`${styles.badgeDecorator} position-relative mx-1`} />
+                <div className={`border border-top-0 border-end-0 ${styles.badgeDecorator} position-relative mx-1`} />
                 {getBadge()}
               </div>
             </div>
@@ -82,11 +82,11 @@ const ContainersImages = (props: Props) => {
               <div className="mx-1">
                 <GoPackage className="text-muted" />
               </div>
-              <div data-testid="containerImage" className="text-truncate pl-1">
+              <div data-testid="containerImage" className="text-truncate ps-1">
                 {containerImage.name || containerImage.image}
               </div>
               {copyBtn}
-              {containerImage.whitelisted && <div className="ml-2 mr-1">{getBadge()}</div>}
+              {containerImage.whitelisted && <div className="ms-2 me-1">{getBadge()}</div>}
             </div>
           </td>
         </tr>
@@ -104,7 +104,7 @@ const ContainersImages = (props: Props) => {
               </th>
             </tr>
           </thead>
-          <tbody>{itemsForModal}</tbody>
+          <tbody className="bg-white">{itemsForModal}</tbody>
         </table>
       ),
     };

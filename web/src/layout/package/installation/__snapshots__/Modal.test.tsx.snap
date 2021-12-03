@@ -11,14 +11,14 @@ exports[`HelmInstall creates snapshot 1`] = `
       <button
         aria-disabled="false"
         aria-label="Open installation modal"
-        class="btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap"
+        class="btn fw-bold text-uppercase position-relative btn-outline-secondary btn-sm text-nowrap w-100"
         type="button"
       >
         <div
           class="d-flex align-items-center justify-content-center"
         >
           <svg
-            class="mr-2"
+            class="me-2"
             fill="none"
             height="1em"
             stroke="currentColor"
@@ -63,7 +63,7 @@ exports[`HelmInstall creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content"
+          class="modal-content border border-3 mx-auto content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -72,7 +72,7 @@ exports[`HelmInstall creates snapshot 1`] = `
               class="d-flex align-items-center flex-grow-1"
             >
               <div
-                class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper imageWrapper"
+                class="d-flex align-items-center justify-content-center p-1 overflow-hidden border border-2 bg-white rounded-circle imageWrapper imageWrapper"
               >
                 <img
                   alt="Pretty name"
@@ -83,7 +83,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                 />
               </div>
               <div
-                class="ml-3 flex-grow-1"
+                class="ms-3 flex-grow-1"
               >
                 <div
                   class="h5 mb-0"
@@ -94,15 +94,9 @@ exports[`HelmInstall creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -113,7 +107,7 @@ exports[`HelmInstall creates snapshot 1`] = `
             >
               This package version is a 
               <span
-                class="font-weight-bold"
+                class="fw-bold"
               >
                 pre-release
               </span>
@@ -182,7 +176,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                   class="d-flex align-items-start"
                 >
                   <div
-                    class="flex-grow-1 mr-3 blockWrapper"
+                    class="flex-grow-1 me-3 blockWrapper"
                   >
                     <pre
                       style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -251,7 +245,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                   class="d-flex align-items-start"
                 >
                   <div
-                    class="flex-grow-1 mr-3 blockWrapper"
+                    class="flex-grow-1 me-3 blockWrapper"
                   >
                     <pre
                       style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -316,16 +310,16 @@ exports[`HelmInstall creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="font-italic text-muted legend"
+                  class="fst-italic text-muted legend"
                 >
                   <span
-                    class="font-weight-bold"
+                    class="fw-bold"
                   >
                     my-test
                   </span>
                    corresponds to the release name, feel free to change it to suit your needs. You can also add additional flags to the 
                   <span
-                    class="font-weight-bold"
+                    class="fw-bold"
                   >
                     helm install
                   </span>
@@ -336,7 +330,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                 >
                   <a
                     aria-label="Download Helm"
-                    class="link btn btn-link pl-0"
+                    class="link btn btn-link ps-0"
                     href="https://helm.sh/docs/intro/quickstart/"
                     rel="noopener noreferrer"
                     role="button"
@@ -350,7 +344,7 @@ exports[`HelmInstall creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -367,7 +361,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

@@ -219,7 +219,7 @@ const Values = (props: Props) => {
   return (
     <>
       <button
-        className="btn btn-outline-secondary btn-block btn-sm"
+        className="btn btn-outline-secondary btn-sm w-100"
         onClick={onOpenModal}
         aria-label="Open default values modal"
       >
@@ -227,12 +227,12 @@ const Values = (props: Props) => {
           {isLoading ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2 font-weight-bold">Getting values...</span>
+              <span className="ms-2 fw-bold">Getting values...</span>
             </>
           ) : (
             <>
-              <VscListTree className="mr-2" />
-              <span className="font-weight-bold">Default values</span>
+              <VscListTree className="me-2" />
+              <span className="fw-bold">Default values</span>
             </>
           )}
         </div>
@@ -260,7 +260,10 @@ const Values = (props: Props) => {
                   tooltipType="light"
                 />
 
-                <div ref={code} className={`overflow-auto h-100 position-relative ${styles.codeWrapper}`}>
+                <div
+                  ref={code}
+                  className={`overflow-auto h-100 position-relative ${styles.codeWrapper} templateWrapper`}
+                >
                   {!isUndefined(lines) && !isUndefined(clickedLine) && !isUndefined(topPositionMenu) && (
                     <div
                       role="complementary"
@@ -268,7 +271,7 @@ const Values = (props: Props) => {
                       style={{ top: topPositionMenu }}
                     >
                       <div
-                        className={`arrow ${styles.arrow}`}
+                        className={`dropdown-arrow ${styles.arrow}`}
                         style={{ left: arrowLeftMargin ? `${arrowLeftMargin}px` : '1rem' }}
                       />
 

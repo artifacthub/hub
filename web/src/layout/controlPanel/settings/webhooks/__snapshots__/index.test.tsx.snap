@@ -48,7 +48,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="d-none d-md-inline mr-2"
+                    class="d-none d-md-inline me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -76,7 +76,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="position-absolute p-5 wrapper undefined"
+          class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
         >
           <div
             class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -86,7 +86,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
               role="status"
             >
               <span
-                class="sr-only"
+                class="visually-hidden"
               >
                 Loading...
               </span>

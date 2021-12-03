@@ -1,7 +1,3 @@
-.noDataMessage {
-  line-height: 1.5rem;
-}
-
 @media only screen and (max-width: 767.98px) {
   .btnAction {
     margin-left: 0.5rem;

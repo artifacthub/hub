@@ -89,7 +89,7 @@ const Content = (props: Props) => {
               >
                 <div className={`d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
                   <button
-                    className={`btn btn-link btn-sm text-dark text-truncate mb-0 p-0 ${styles.btnTitle}`}
+                    className={`btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 ${styles.btnTitle}`}
                     onClick={() => openPackagePage(item.version)}
                     aria-label={`Open version ${item.version}`}
                   >
@@ -107,12 +107,12 @@ const Content = (props: Props) => {
                 {(item.containsSecurityUpdates || item.prerelease) && (
                   <div className={styles.badgesWrapper}>
                     {item.prerelease && (
-                      <span className={`badge badge-sm badge-pill mr-2 position-relative ${styles.badge}`}>
+                      <span className={`badge badge-sm rounded-pill me-2 position-relative border ${styles.badge}`}>
                         Pre-release
                       </span>
                     )}
                     {item.containsSecurityUpdates && (
-                      <span className={`badge badge-sm badge-pill mr-2 position-relative ${styles.badge}`}>
+                      <span className={`badge badge-sm rounded-pill me-2 position-relative border ${styles.badge}`}>
                         Contains security updates
                       </span>
                     )}
@@ -120,7 +120,7 @@ const Content = (props: Props) => {
                 )}
 
                 {!isFuture(item.ts) && (
-                  <div className="ml-auto pl-0 pl-md-2 text-nowrap">
+                  <div className="ms-auto ps-0 ps-md-2 text-nowrap">
                     <small className="text-muted">Released {moment.unix(item.ts).fromNow()}</small>
                   </div>
                 )}
@@ -134,7 +134,7 @@ const Content = (props: Props) => {
                         <div className={`position-relative ${styles.changeBadgeWrapper}`}>
                           <div
                             className={classnames(
-                              'd-flex flex-row align-items-center justify-content-center text-uppercase badge badge-pill mr-2',
+                              'd-flex flex-row align-items-center justify-content-center text-uppercase badge rounded-pill me-2 fw-normal text-white px-1 py-0',
                               styles.changeBadge,
                               styles[`${change.kind.toString()}ChangeBadge`]
                             )}
@@ -159,7 +159,7 @@ const Content = (props: Props) => {
                                 }
                               })()}
                             </span>
-                            <span className="d-none d-md-block ml-1">{change.kind.toString()}</span>
+                            <span className="d-none d-md-block ms-1">{change.kind.toString()}</span>
                           </div>
                         </div>
                       ) : (
@@ -168,7 +168,7 @@ const Content = (props: Props) => {
                             <div className={`position-relative ${styles.changeBadgeWrapper}`}>
                               <div
                                 className={classnames(
-                                  'd-flex flex-row align-items-center justify-content-center text-uppercase badge badge-pill mr-2',
+                                  'd-flex flex-row align-items-center justify-content-center text-uppercase badge rounded-pill me-2',
                                   styles.changeBadge
                                 )}
                               >
@@ -176,7 +176,7 @@ const Content = (props: Props) => {
                               </div>
                             </div>
                           ) : (
-                            <div className="mr-1 mr-md-2">
+                            <div className="me-1 me-md-2">
                               <BsDot />
                             </div>
                           )}
@@ -190,7 +190,7 @@ const Content = (props: Props) => {
                               return (
                                 <div key={`change_${index}_link${idx}`}>
                                   <ExternalLink
-                                    className={`text-muted ${styles.link}`}
+                                    className={`text-muted text-decoration-underline ${styles.link}`}
                                     href={link.url}
                                     label={`Open link ${link.name}`}
                                   >

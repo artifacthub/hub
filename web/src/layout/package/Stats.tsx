@@ -17,10 +17,10 @@ const Stats = (props: Props) => {
   return (
     <div className="d-flex flex-row align-items-baseline mt-2">
       {props.packageStats.subscriptions > 0 && (
-        <div className="d-flex flex-row align-items-baseline mr-3">
+        <div className="d-flex flex-row align-items-baseline me-3">
           <FaUser className={styles.icon} />
           <small className="text-muted text-uppercase mx-1">Subscriptions:</small>
-          <span className="font-weight-bold">{prettifyNumber(props.packageStats.subscriptions)}</span>
+          <span className="fw-bold">{prettifyNumber(props.packageStats.subscriptions)}</span>
         </div>
       )}
 
@@ -28,7 +28,7 @@ const Stats = (props: Props) => {
         <div className="d-flex flex-row align-items-baseline">
           <GrConnect className={styles.icon} />
           <small className="text-muted text-uppercase mx-1">Webhooks:</small>
-          <span className="font-weight-bold">{prettifyNumber(props.packageStats.webhooks)}</span>
+          <span className="fw-bold">{prettifyNumber(props.packageStats.webhooks)}</span>
         </div>
       )}
     </div>

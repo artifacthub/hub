@@ -29,11 +29,11 @@ const TargetImageBtn = (props: Props) => {
     <div ref={ref} className={`position-relative ${styles.btnWrapper}`}>
       <button
         onClick={props.onClick}
-        className={`btn btn-link text-reset position-absolute ${styles.linkBtn} ${styles.inTarget}`}
+        className={`btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white ${styles.linkBtn} ${styles.inTarget}`}
       >
         <FaLink />
       </button>
-      <div className="p-1 pl-0">{props.children}</div>
+      <div className="p-1 ps-0">{props.children}</div>
     </div>
   );
 };

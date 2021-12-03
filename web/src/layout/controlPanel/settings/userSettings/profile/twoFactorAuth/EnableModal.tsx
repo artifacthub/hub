@@ -91,11 +91,11 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
           {isLoading ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Enabling two-factor authentication...</span>
+              <span className="ms-2">Enabling two-factor authentication...</span>
             </>
           ) : (
             <>
-              <FaLock className="mr-2" />
+              <FaLock className="me-2" />
               <span>Enable two-factor authentication</span>
             </>
           )}
@@ -115,7 +115,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
               aria-label={activeStep === 3 ? 'Close' : 'Cancel'}
             >
               <div className="d-flex flex-row align-items-center">
-                <IoMdCloseCircle className="mr-2" />
+                <IoMdCloseCircle className="me-2" />
                 <span>{activeStep === 3 ? 'Close' : 'Cancel'}</span>
               </div>
             </button>
@@ -125,7 +125,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                 case 1:
                   return (
                     <button
-                      className="btn btn-sm btn-outline-secondary ml-3"
+                      className="btn btn-sm btn-outline-secondary ms-3"
                       onClick={(e) => {
                         e.preventDefault();
                         setActiveStep(2);
@@ -133,7 +133,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                       aria-label="Open next step"
                     >
                       <div className="d-flex flex-row align-items-center text-uppercase">
-                        <MdNavigateNext className="mr-2" />
+                        <MdNavigateNext className="me-2" />
                         <span>Next</span>
                       </div>
                     </button>
@@ -141,7 +141,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                 case 2:
                   return (
                     <button
-                      className="btn btn-sm btn-success ml-3"
+                      className="btn btn-sm btn-success ms-3"
                       onClick={(e) => {
                         e.preventDefault();
                         enableTFA();
@@ -153,11 +153,11 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                         {isProcessing ? (
                           <>
                             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                            <span className="ml-2">Enabling...</span>
+                            <span className="ms-2">Enabling...</span>
                           </>
                         ) : (
                           <>
-                            <FaLock className="mr-2" />
+                            <FaLock className="me-2" />
                             <span>Enable</span>
                           </>
                         )}
@@ -185,8 +185,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                         <div className={`mt-3 mb-4 ${styles.label}`}>
                           These codes can be used if you lose access to your 2FA credentials. Each of the codes can only
                           be used once.{' '}
-                          <span className="font-weight-bold">Please treat them as passwords and store them safely</span>
-                          .
+                          <span className="fw-bold">Please treat them as passwords and store them safely</span>.
                         </div>
                         <div className={`border rounded position-relative p-2 p-sm-4 ${styles.codesWrapper}`}>
                           <BlockCodeButtons
@@ -197,7 +196,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
 
                           <div className="d-flex flex-column align-items-center overflow-auto">
                             {setUp.recoveryCodes.map((code: string) => (
-                              <div className={`text-monospace ${styles.code}`} key={`code_${code}`}>
+                              <div className={`font-monospace ${styles.code}`} key={`code_${code}`}>
                                 {code}
                               </div>
                             ))}
@@ -223,7 +222,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                             icon={<></>}
                             visibleBtnText
                             contentBtn="this text code"
-                            className={`btn-link text-reset p-0 ${styles.copyBtn}`}
+                            className={`btn-link text-reset p-0 text-decoration-underline ${styles.copyBtn}`}
                             label="Copy 2FA code to clipboard"
                           />
                           to set it up manually.

@@ -146,7 +146,7 @@ const PackagesSection = (props: Props) => {
           >
             <div className="d-flex flex-row align-items-center justify-content-center">
               <MdAdd className="d-inline d-md-none" />
-              <MdAddCircle className="d-none d-md-inline mr-2" />
+              <MdAddCircle className="d-none d-md-inline me-2" />
               <span className="d-none d-md-inline">Add</span>
             </div>
           </button>
@@ -188,34 +188,34 @@ const PackagesSection = (props: Props) => {
                             >
                               <div className="d-flex flex-row align-items-center justify-content-center">
                                 {subs.icon}
-                                <span className="d-none d-lg-inline ml-2">{subs.title}</span>
+                                <span className="d-none d-lg-inline ms-2">{subs.title}</span>
                               </div>
                             </th>
                           ))}
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody className="bg-white">
                         {packages.map((item: Package) => (
                           <tr key={`subs_${item.packageId}`} data-testid="subsTableCell">
                             <td className="align-middle text-center d-none d-sm-table-cell">
-                              <RepositoryIcon kind={item.repository.kind} className={styles.icon} />
+                              <RepositoryIcon kind={item.repository.kind} className={`h-auto ${styles.icon}`} />
                             </td>
                             <td className="align-middle">
                               <div className="d-flex flex-row align-items-center">
                                 <div
-                                  className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper} imageWrapper`}
+                                  className={`d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white ${styles.imageWrapper} imageWrapper`}
                                 >
                                   <Image
                                     alt={item.displayName || item.name}
                                     imageId={item.logoImageId}
-                                    className={styles.image}
+                                    className={`fs-4 ${styles.image}`}
                                     kind={item.repository.kind}
                                   />
                                 </div>
 
                                 <Link
                                   data-testid="packageLink"
-                                  className="ml-2 text-dark"
+                                  className="ms-2 text-dark"
                                   to={{
                                     pathname: buildPackageURL(item.normalizedName, item.repository, item.version!),
                                   }}
@@ -264,7 +264,7 @@ const PackagesSection = (props: Props) => {
                                 </Link>
                               )}
 
-                              <small className="ml-2">
+                              <small className="ms-2">
                                 (<span className={`text-uppercase text-muted ${styles.legend}`}>Repo: </span>
                                 <Link
                                   data-testid="repoLink"
@@ -293,28 +293,26 @@ const PackagesSection = (props: Props) => {
 
                               return (
                                 <td className="align-middle text-center" key={`td_${item.normalizedName}_${subs.kind}`}>
-                                  <div className="custom-control custom-switch ml-2">
-                                    <input
-                                      data-testid={`${item.name}_${subs.name}_input`}
-                                      id={id}
-                                      type="checkbox"
-                                      className={`custom-control-input ${styles.checkbox}`}
-                                      disabled={!subs.enabled}
-                                      onChange={() =>
-                                        changeSubscription(
-                                          item.packageId,
-                                          subs.kind,
-                                          isActive,
-                                          item.displayName || item.name
-                                        )
-                                      }
-                                      checked={isActive}
-                                    />
-                                    <label
-                                      data-testid={`${item.name}_${subs.name}_label`}
-                                      className="custom-control-label"
-                                      htmlFor={id}
-                                    />
+                                  <div className="text-center">
+                                    <div className="form-switch">
+                                      <input
+                                        data-testid={`${item.name}_${subs.name}_input`}
+                                        id={id}
+                                        type="checkbox"
+                                        role="switch"
+                                        className={`form-check-input ${styles.checkbox}`}
+                                        disabled={!subs.enabled}
+                                        onChange={() =>
+                                          changeSubscription(
+                                            item.packageId,
+                                            subs.kind,
+                                            isActive,
+                                            item.displayName || item.name
+                                          )
+                                        }
+                                        checked={isActive}
+                                      />
+                                    </div>
                                   </div>
                                 </td>
                               );

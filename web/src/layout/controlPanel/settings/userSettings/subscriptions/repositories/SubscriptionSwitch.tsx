@@ -27,35 +27,36 @@ const SubscriptionSwitch = (props: Props) => {
   const id = `subs_${props.repoInfo.repositoryId}_${props.kind}`;
 
   return (
-    <div className="custom-control custom-switch ml-2 position-relative">
-      <input
-        data-testid={`${id}_input`}
-        id={id}
-        type="checkbox"
-        className={`custom-control-input ${styles.checkbox}`}
-        disabled={!props.enabled || isLoading}
-        onChange={() => {
-          setIsLoading(true);
-          props.changeSubscription({
-            data: {
-              repoId: props.repoInfo.repositoryId!,
-              kind: props.kind,
-              repoName: props.repoInfo.name,
-              optOutId: props.optOutItem ? props.optOutItem.optOutId : undefined,
-            },
-            callback: () => setIsLoading(false),
-          });
-        }}
-        checked={isUndefined(props.optOutItem) ? false : true}
-      />
-      <label data-testid={`${id}_label`} className="custom-control-label" htmlFor={id} />
-
+    <>
+      <div className="form-switch">
+        <input
+          data-testid={`${id}_input`}
+          id={id}
+          type="checkbox"
+          role="switch"
+          className={`form-check-input ${styles.checkbox}`}
+          disabled={!props.enabled || isLoading}
+          onChange={() => {
+            setIsLoading(true);
+            props.changeSubscription({
+              data: {
+                repoId: props.repoInfo.repositoryId!,
+                kind: props.kind,
+                repoName: props.repoInfo.name,
+                optOutId: props.optOutItem ? props.optOutItem.optOutId : undefined,
+              },
+              callback: () => setIsLoading(false),
+            });
+          }}
+          checked={isUndefined(props.optOutItem) ? false : true}
+        />
+      </div>
       {isLoading && (
-        <div className={`position-absolute text-secondary ${styles.switchLoading}`}>
+        <div className={`position-absolute text-secondary top-0 ${styles.switchLoading}`}>
           <span className="spinner-border spinner-border-sm" role="status" />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

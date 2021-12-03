@@ -28,11 +28,11 @@ const ThemeMode = (props: Props) => {
       <SmallTitle text="Theme" className="px-4" />
       <div data-testid="themeOptions">
         <div className="dropdown-item">
-          <div className="custom-control custom-radio">
+          <div className="form-check">
             <input
               id={`${props.device}-automatic`}
               name="automatic"
-              className={`custom-control-input ${styles.input}`}
+              className={`form-check-input ${styles.input}`}
               type="radio"
               value="automatic"
               aria-checked={configured === 'automatic'}
@@ -41,7 +41,7 @@ const ThemeMode = (props: Props) => {
               readOnly
             />
             <label
-              className={`custom-control-label font-weight-bold ${styles.label}`}
+              className={`form-check-label fw-bold lh-base w-100 ${styles.label}`}
               htmlFor={`${props.device}-automatic`}
               onClick={() => onHandleChange('automatic')}
             >
@@ -52,11 +52,11 @@ const ThemeMode = (props: Props) => {
         </div>
 
         <div className="dropdown-item">
-          <div className="custom-control custom-radio">
+          <div className="form-check">
             <input
               id={`${props.device}-light`}
               name="light"
-              className={`custom-control-input ${styles.input}`}
+              className={`form-check-input ${styles.input}`}
               type="radio"
               value="light"
               aria-checked={configured === 'light'}
@@ -65,7 +65,7 @@ const ThemeMode = (props: Props) => {
               readOnly
             />
             <label
-              className={`custom-control-label font-weight-bold ${styles.label}`}
+              className={`form-check-label fw-bold lh-base w-100 ${styles.label}`}
               htmlFor={`${props.device}-light`}
               onClick={() => onHandleChange('light')}
             >
@@ -75,11 +75,11 @@ const ThemeMode = (props: Props) => {
         </div>
 
         <div className="dropdown-item">
-          <div className="custom-control custom-radio">
+          <div className="form-check">
             <input
               id={`${props.device}-dark`}
               name="dark"
-              className={`custom-control-input ${styles.input}`}
+              className={`form-check-input ${styles.input}`}
               type="radio"
               value="dark"
               aria-checked={configured === 'dark'}
@@ -88,7 +88,7 @@ const ThemeMode = (props: Props) => {
               readOnly
             />
             <label
-              className={`custom-control-label font-weight-bold ${styles.label}`}
+              className={`form-check-label fw-bold lh-base w-100 ${styles.label}`}
               htmlFor={`${props.device}-dark`}
               onClick={() => onHandleChange('dark')}
             >

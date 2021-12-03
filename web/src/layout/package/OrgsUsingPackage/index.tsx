@@ -40,7 +40,7 @@ const OrgsUsingPackage = (props: Props) => {
   const getInfoCell = (org: Organization) => {
     return (
       <div className="d-flex flex-row align-items-center">
-        <div className={`${styles.imageWrapper} imageWrapper overflow-hidden mr-2`}>
+        <div className={`rounded-circle border bg-white ${styles.imageWrapper} imageWrapper overflow-hidden me-2`}>
           <div className="d-flex align-items-center justify-content-center w-100 h-100">
             <Image
               alt={org.displayName || org.name}
@@ -50,10 +50,10 @@ const OrgsUsingPackage = (props: Props) => {
             />
           </div>
         </div>
-        <div className="text-truncate pl-1">{org.displayName || org.name}</div>
+        <div className="text-truncate ps-1">{org.displayName || org.name}</div>
 
         {org.homeUrl && (
-          <small className="ml-2">
+          <small className="ms-2">
             <FiExternalLink />
           </small>
         )}
@@ -67,11 +67,11 @@ const OrgsUsingPackage = (props: Props) => {
         <span className={`position-relative ${styles.orgIcon}`}>
           <MdBusiness />
         </span>
-        <small className="text-muted ml-2">Organizations using this package in production:</small>
-        <small className="font-weight-bold ml-2">{props.organizations.length}</small>
+        <small className="text-muted ms-2">Organizations using this package in production:</small>
+        <small className="fw-bold ms-2">{props.organizations.length}</small>
         {(overflow || props.organizations.length > MAX_ITEMS_NUMBER) && (
           <button
-            className={`btn text-dark font-weight-bold btn-link btn-sm px-2 border-0 ${styles.seeAllbtn}`}
+            className={`btn text-dark fw-bold btn-link btn-sm px-2 border-0 ${styles.seeAllbtn}`}
             onClick={() => setOpenStatus(true)}
             aria-label="See all organizations using this package in production"
           >
@@ -100,7 +100,7 @@ const OrgsUsingPackage = (props: Props) => {
         >
           <div className="my-3 mw-100">
             <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
-              <tbody>
+              <tbody className="bg-white">
                 {sortedOrgs.map((org: Organization) => {
                   return (
                     <tr key={`org-${org.name}`}>

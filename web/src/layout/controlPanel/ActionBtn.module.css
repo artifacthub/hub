@@ -1,7 +1,5 @@
 .tooltip {
   width: 150px;
-  top: 0;
-  left: 0;
 }
 
 .tooltipArrow {
@@ -9,11 +7,11 @@
 }
 
 .tooltipArrow::before {
-  border-bottom-color: var(--dark) !important;
+  border-bottom-color: var(--bs-dark) !important;
 }
 
 .tooltipContent {
-  background-color: var(--dark) !important;
+  background-color: var(--bs-dark) !important;
 }
 
 .disabled {

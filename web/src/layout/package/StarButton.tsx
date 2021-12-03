@@ -106,7 +106,7 @@ const StarButton = (props: Props) => {
 
   return (
     <>
-      <div className={`ml-auto d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
+      <div className={`ms-auto d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
         <ElementWithTooltip
           active
           className={styles.starBtnWrapper}
@@ -131,7 +131,7 @@ const StarButton = (props: Props) => {
             >
               <div className="d-flex align-items-center">
                 {notStarred ? <FaRegStar className={styles.icon} /> : <FaStar className={styles.icon} />}
-                <span className="ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
+                <span className="ms-2">{notStarred ? 'Star' : 'Unstar'}</span>
               </div>
             </button>
           }
@@ -139,7 +139,7 @@ const StarButton = (props: Props) => {
           visibleTooltip={isNull(ctx.user)}
         />
 
-        <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>
+        <span className={`badge bg-light text-dark text-center px-3 border border-start-0 lh-base ${styles.starBadge}`}>
           {isNumber(packageStars.stars) ? prettifyNumber(packageStars.stars) : '-'}
         </span>
 

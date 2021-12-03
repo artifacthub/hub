@@ -38,7 +38,7 @@ const MoreActionsButton = (props: Props) => {
 
   return (
     <>
-      <div className="d-none d-md-block position-relative ml-2">
+      <div className="d-none d-md-block position-relative ms-2">
         <button
           className="btn p-0 position-relative"
           type="button"
@@ -50,7 +50,7 @@ const MoreActionsButton = (props: Props) => {
         >
           <div className="d-flex flex-row align-items-center justify-content-center">
             <div
-              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
+              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 fs-5 bg-white ${styles.iconWrapper}`}
             >
               <HiDotsVertical />
             </div>
@@ -60,9 +60,9 @@ const MoreActionsButton = (props: Props) => {
         <div
           ref={ref}
           role="menu"
-          className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, { show: openStatus })}
+          className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdown, { show: openStatus })}
         >
-          <div className={`arrow ${styles.arrow}`} />
+          <div className={`dropdown-arrow ${styles.arrow}`} />
 
           <button
             className="dropdown-item btn btn-sm rounded-0 text-dark"
@@ -73,7 +73,7 @@ const MoreActionsButton = (props: Props) => {
             aria-label="Open embed widget modal"
           >
             <div className="d-flex flex-row align-items-center">
-              <BiCode className={`mr-2 position-relative ${styles.icon}`} />
+              <BiCode className={`me-2 position-relative ${styles.icon}`} />
               <div>Embed widget</div>
             </div>
           </button>
@@ -90,7 +90,7 @@ const MoreActionsButton = (props: Props) => {
               aria-label="Open report abuse url"
             >
               <div className="d-flex flex-row align-items-center">
-                <GoStop className={`mr-2 position-relative ${styles.icon}`} />
+                <GoStop className={`me-2 position-relative ${styles.icon}`} />
                 <div>Report abuse</div>
               </div>
             </button>

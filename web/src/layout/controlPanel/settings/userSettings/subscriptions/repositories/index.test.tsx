@@ -183,8 +183,8 @@ describe('RepositoriesSection', () => {
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
 
-      const label = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_label`);
-      userEvent.click(label);
+      // const label = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_label`);
+      userEvent.click(checkbox);
 
       await waitFor(() => {
         expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
@@ -228,8 +228,8 @@ describe('RepositoriesSection', () => {
         expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 10 });
       });
 
-      const label = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_label`);
-      userEvent.click(label);
+      const input = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_input`);
+      userEvent.click(input);
 
       await waitFor(() => {
         expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
@@ -256,10 +256,9 @@ describe('RepositoriesSection', () => {
         expect(API.getOptOutList).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
-
-      const label = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_label`);
-      userEvent.click(label);
+      const input = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_input`);
+      expect(input).toBeInTheDocument();
+      userEvent.click(input);
 
       // Loading
       await waitFor(() => {
@@ -301,11 +300,11 @@ describe('RepositoriesSection', () => {
         expect(API.getOptOutList).toHaveBeenCalledTimes(1);
       });
 
-      const label = screen.getByTestId(`subs_${mockOptOut.items[1].repository.repositoryId}_2_label`);
-      userEvent.click(label);
+      const input = screen.getByTestId(`subs_${mockOptOut.items[1].repository.repositoryId}_2_input`);
+      userEvent.click(input);
 
       await waitFor(() => {
-        expect(screen.getByTestId(`subs_${mockOptOut.items[1].repository.repositoryId}_2_input`)).toBeDisabled();
+        expect(input).toBeDisabled();
       });
 
       await waitFor(() => {
@@ -430,9 +429,7 @@ describe('RepositoriesSection', () => {
 
       const input = screen.getByTestId('subs_38b8d828-27a9-42a2-81ce-19b24d3e2fad_4_input');
       expect(input).not.toBeChecked();
-
-      const label = screen.getByTestId('subs_38b8d828-27a9-42a2-81ce-19b24d3e2fad_4_label');
-      userEvent.click(label);
+      userEvent.click(input);
 
       // Loading
       await waitFor(() => {

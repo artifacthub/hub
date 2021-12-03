@@ -4,6 +4,8 @@ interface Props {
   text: string;
 }
 
-const ResourceLabel = (props: Props) => <span className={`text-truncate ${styles.label}`}>{props.text}</span>;
+const ResourceLabel = (props: Props) => (
+  <span className={`text-truncate border fw-bold ${styles.label}`}>{props.text}</span>
+);
 
 export default ResourceLabel;

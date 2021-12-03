@@ -29,8 +29,7 @@
   --color-white-50: rgba(0, 0, 0, 0.5);
   --color-white-95: rgba(0, 0, 0, 0.95);
 
-  --white: var(--body-bg);
-  --black: var(--color-1-100);
+  --bs-white: var(--body-bg);
   --light: var(--color-1-900);
 
   --color-font: #a3a3a6;
@@ -60,20 +59,22 @@
   $color1: #1a1d21;
   $color2: #8c96a1;
 
+  --bs-secondary-rgb: $color1;
+
   $font-color: #a3a3a6;
   $font-color-light: #cbd3da;
   $font-color-lighter: #f8f9fa;
 
   .was-validated .form-check-input:valid ~ .form-check-label,
   .form-check-input.is-valid ~ .form-check-label,
-  .was-validated .custom-control-input:valid ~ .custom-control-label,
-  .custom-control-input.is-valid ~ .custom-control-label {
+  .was-validated .form-check-input:valid ~ .form-check-label,
+  .form-check-input.is-valid ~ .form-check-label {
     color: var(--color-font);
   }
 
-  .was-validated .custom-control-input:valid:checked ~ .custom-control-label::before,
-  .custom-control-input.is-valid:checked ~ .custom-control-label::before {
-    border-color: var(--highlighted);
+  .was-validated .form-check-input:valid:checked ~ .form-check-label::before,
+  .form-check-input.is-valid:checked ~ .form-check-label::before {
+    border-color: var(--highlighted) !important;
     background-color: var(--highlighted);
   }
 
@@ -84,12 +85,12 @@
 
   .table {
     background-color: var(--color-1-700) !important;
-    border-top: var(--border-md) !important;
+    border-color: $border-solid !important;
     color: var(--color-font);
 
     th,
     td {
-      border-color: $border-solid;
+      border-color: $border-solid !important;
     }
   }
 
@@ -105,15 +106,21 @@
   .table-hover .table-primary:hover > td,
   .table-hover .table-primary:hover > th {
     background-color: var(--color-1-2);
+    color: var(--color-font);
   }
 
-  .table-bordered td {
-    border-color: $border-solid !important;
+  .table-bordered td,
+  .table > :not(:first-child) {
+    border-color: #737475 !important;
   }
 
   .table-hover tbody tr:hover {
     background-color: var(--color-black-5);
-    color: inherit;
+    color: var(--color-font);
+  }
+
+  .table-hover > tbody > tr:hover > * {
+    color: var(--color-font);
   }
 
   .border-bottom {
@@ -131,12 +138,13 @@
   .btn-primary,
   .btn-secondary,
   .btn-light,
-  a.badge-secondary {
+  a.bg-secondary {
     @include button-variant($color1, $border-solid);
 
     &:hover,
     &:focus {
       color: $font-color-light;
+      background-color: #090a0c !important;
     }
   }
 
@@ -144,9 +152,17 @@
     @include button-variant(#275000, $border-solid);
   }
 
-  .badge-secondary {
+  .border-light {
     border-color: var(--border-md) !important;
-    background-color: var(--color-font);
+  }
+
+  .btn-close:not(.btn-close-white) {
+    filter: invert(1) grayscale(100%) brightness(200%);
+  }
+
+  button.badge.bg-secondary {
+    border-color: var(--border-md) !important;
+    background-color: var(--color-font) !important;
     color: var(--color-1-500);
   }
 
@@ -172,30 +188,30 @@
     }
   }
 
-  .custom-control-label::before,
+  .form-check-label::before,
   select,
   input,
   .form-control {
     background-color: var(--body-bg);
-    border-color: $color2;
+    border-color: $color2 !important;
     color: $font-color;
   }
 
-  .custom-control-input:checked ~ .custom-control-label::before {
+  .form-check-input:checked ~ .form-check-label::before {
     background-color: var(--highlighted);
-    border-color: var(--highlighted);
+    border-color: var(--highlighted) !important;
   }
 
-  .custom-select {
+  .form-select {
     background-image: url('/static/media/bootstrap/bt_select_dark.svg');
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
-  .custom-select:hover {
-    border-color: var(--color-black-25);
+  .form-select:hover {
+    border-color: var(--color-black-25) !important;
   }
 
-  .custom-select:disabled {
+  .form-select:disabled {
     background-color: var(--color-1-500);
     opacity: 0.75;
   }
@@ -204,13 +220,22 @@
     border-color: var(--color2) !important;
   }
 
-  .was-validated .custom-control-input:valid ~ .custom-control-label::before,
-  .custom-control-input.is-valid ~ .custom-control-label::before,
-  .was-validated .custom-select:valid,
-  .custom-select.is-valid,
-  .was-validated .custom-select:valid:focus,
-  .custom-select.is-valid:focus {
-    border-color: var(--color2);
+  .was-validated .form-check-input:valid ~ .form-check-label::before,
+  .form-check-input.is-valid ~ .form-check-label::before,
+  .was-validated .form-select:valid,
+  .form-select.is-valid,
+  .was-validated .form-select:valid:focus,
+  .form-select.is-valid:focus {
+    border-color: var(--color2) !important;
+  }
+
+  // Update switch color
+  .form-switch .form-check-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%238c96a1'/%3e%3c/svg%3e");
+  }
+
+  .form-switch .form-check-input:checked {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
   }
 
   .dropdown-item,
@@ -245,6 +270,7 @@
   }
 
   .card,
+  .card.bg-white,
   .list-group-item {
     background-color: var(--color-1-500) !important;
     border-color: var(--border-md) !important;
@@ -265,13 +291,17 @@
     background-color: #090a0c;
   }
 
+  .templateWrapper {
+    background-color: var(--extra-light-gray);
+  }
+
   @media (hover: hover) {
     .cardWithHover:hover {
       border-color: var(--color-black-25) !important;
     }
   }
 
-  .btn:not(.badge-secondary) {
+  .btn:not(.bg-secondary) {
     color: $font-color-light;
   }
 
@@ -320,10 +350,10 @@
     }
   }
 
-  .btn-link,
+  .btn-link:not(.textLighter):not(.textLight),
   a.text-secondary,
-  a:not(.navbar-brand) {
-    color: $font-color;
+  a:not(.navbar-brand):not(.textLighter):not(.textLight):not(.rssBadge) {
+    color: $font-color !important;
 
     &:hover,
     &:focus {
@@ -334,25 +364,25 @@
   .page-link {
     background-color: var(--color-1-300);
     color: $font-color;
-    border-color: $font-color;
+    border-color: $font-color !important;
   }
 
   .page-item {
     &.disabled .page-link {
       background-color: var(--color-black-15) !important;
       color: $font-color;
-      border-color: $font-color;
+      border-color: $font-color !important;
     }
 
     &.active .page-link {
       background-color: var(--highlighted);
-      border-color: #a3a3a6;
+      border-color: #a3a3a6 !important;
     }
   }
 
   .dropdown-menu {
     background-color: rgba(0, 0, 0, 0.95);
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
     color: $font-color;
 
     & > .arrow {
@@ -364,7 +394,7 @@
   }
 
   .dropdown-divider {
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
   .dropdown-item,
@@ -381,7 +411,6 @@
     color: $font-color !important;
   }
 
-  .badge-light,
   .bg-light {
     background-color: var(--body-bg) !important;
     color: var(--color-font) !important;
@@ -409,7 +438,7 @@
   .alert-light {
     background-color: var(--color-1-900);
     color: var(--color-font);
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
   .alert-danger {
@@ -431,7 +460,7 @@
   }
 
   .homeCard:not(:last-child) {
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
   .homeLogo {
@@ -477,9 +506,12 @@
     display: inline;
   }
 
+  .bg-white {
+    background-color: var(--bs-white) !important;
+  }
+
   .imageWrapper {
-    background-color: var(--white);
-    border: 1px solid var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
   .noReadmeAlert {
@@ -492,7 +524,7 @@
 
   .info {
     background-color: var(--color-1-500) !important;
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
   .activeSection {
@@ -519,7 +551,7 @@
   footer,
   .navbar {
     border-top: 1px solid var(--border-md);
-    color: var(--color-font);
+    color: var(--color-font) !important;
     box-shadow: none !important;
   }
 
@@ -551,7 +583,7 @@
 
   .modal-header,
   .modal-footer {
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
   .modal-header {
@@ -565,7 +597,7 @@
   }
 
   .nav-tabs {
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
   .separator {
@@ -583,7 +615,7 @@
 
     .step {
       background-color: var(--color-black-25) !important;
-      border-color: $border-solid;
+      border-color: $border-solid !important;
 
       &.activeStep {
         background-color: var(--highlighted) !important;
@@ -593,7 +625,7 @@
 
   .iconSubsWrapper,
   .userAuth {
-    border-color: var(--border-md);
+    border-color: var(--border-md) !important;
   }
 
   .tooltip {

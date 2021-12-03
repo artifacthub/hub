@@ -11,7 +11,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
       <button
         aria-disabled="false"
         aria-label="Open Changelog modal"
-        class="btn btn-outline-secondary btn-block btn-sm text-nowrap"
+        class="btn btn-outline-secondary btn-sm text-nowrap w-100"
       >
         <div
           class="d-flex flex-row align-items-center justify-content-center text-uppercase"
@@ -22,7 +22,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
             role="status"
           />
           <span
-            class="d-none d-md-inline ml-2 font-weight-bold"
+            class="d-none d-md-inline ms-2 fw-bold"
           >
             Getting changelog...
           </span>

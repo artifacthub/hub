@@ -1,7 +1,6 @@
 .footer {
   padding: 3.5rem 1.5rem;
   background-color: var(--color-1-900);
-  color: var(--white);
 }
 
 .invisibleFooter {
@@ -26,10 +25,6 @@
 
 .linkInText {
   color: var(--font-color) !important;
-}
-
-.AHlink {
-  color: var(--white) !important;
 }
 
 .AHlogo {

@@ -1,11 +1,6 @@
-.home {
-  background-color: var(--white);
-}
-
 .jumbotron {
-  border-radius: 0 !important;
   background-color: var(--color-1-500);
-  color: var(--white);
+  color: var(--bs-white);
   padding-top: 7rem !important;
 }
 
@@ -31,13 +26,6 @@
 
 .about {
   background-color: var(--color-1-600);
-  font-weight: 300;
-  font-size: 1.5rem;
-}
-
-.extraInfo {
-  font-weight: 300;
-  font-size: 1.5rem;
 }
 
 .aboutIcon {
@@ -47,7 +35,6 @@
 .legendIcon {
   font-size: 70%;
   line-height: 1rem;
-  margin-top: 0.5rem;
 }
 
 .socialBtn {
@@ -56,12 +43,10 @@
 
 .repoGuideText {
   font-size: 80%;
-  font-weight: 300;
 }
 
 .inlineLink {
   font-size: inherit;
-  vertical-align: baseline;
   line-height: 1.15rem;
 }
 

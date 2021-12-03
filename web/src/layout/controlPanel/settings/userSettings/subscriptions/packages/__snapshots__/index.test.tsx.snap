@@ -18,7 +18,7 @@ exports[`PackagesSection creates snapshot 1`] = `
           Your subscriptions
         </div>
         <div
-          class="position-absolute p-5 wrapper undefined"
+          class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
         >
           <div
             class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -28,7 +28,7 @@ exports[`PackagesSection creates snapshot 1`] = `
               role="status"
             >
               <span
-                class="sr-only"
+                class="visually-hidden"
               >
                 Loading...
               </span>
@@ -70,7 +70,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                   />
                 </svg>
                 <svg
-                  class="d-none d-md-inline mr-2"
+                  class="d-none d-md-inline me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -118,7 +118,7 @@ exports[`PackagesSection creates snapshot 1`] = `
               class="modal-dialog modal-lg modal"
             >
               <div
-                class="modal-content content"
+                class="modal-content border border-3 mx-auto content"
               >
                 <div
                   class="modal-header d-flex flex-row align-items-center header undefined"
@@ -130,22 +130,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                   </div>
                   <button
                     aria-label="Close"
-                    class="close"
+                    class="btn-close"
                     type="button"
-                  >
-                    <span
-                      aria-hidden="true"
-                    >
-                      ×
-                    </span>
-                  </button>
+                  />
                 </div>
                 <div
                   class="modal-body p-4 h-100 d-flex flex-column"
                 >
                   <div>
                     <div
-                      class="alertWrapper"
+                      class="overflow-hidden alertWrapper"
                       data-testid="alertWrapper"
                     />
                   </div>
@@ -163,7 +157,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                       class="d-flex flex-row align-items-center text-uppercase"
                     >
                       <svg
-                        class="mr-2"
+                        class="me-2"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -194,7 +188,7 @@ exports[`PackagesSection creates snapshot 1`] = `
           class="mt-5 pt-3"
         >
           <div
-            class="position-absolute p-5 wrapper undefined"
+            class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
           >
             <div
               class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -204,7 +198,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="status"
               >
                 <span
-                  class="sr-only"
+                  class="visually-hidden"
                 >
                   Loading...
                 </span>
@@ -244,7 +238,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                     />
                   </svg>
                   <span
-                    class="d-none d-md-inline ml-2"
+                    class="d-none d-md-inline ms-2"
                   >
                     Opt-out
                   </span>
@@ -258,7 +252,7 @@ exports[`PackagesSection creates snapshot 1`] = `
             <p>
               Repositories notifications are 
               <span
-                class="font-weight-bold"
+                class="fw-bold"
               >
                 enabled by default
               </span>
@@ -267,7 +261,7 @@ exports[`PackagesSection creates snapshot 1`] = `
             <p>
               You will 
               <span
-                class="font-weight-bold"
+                class="fw-bold"
               >
                 NOT
               </span>

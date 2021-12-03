@@ -142,7 +142,7 @@ describe('CVSSVector', () => {
         for (let j = 0; j < activeMetrics[i].active.length; j++) {
           const metric = screen.getByTestId(`metric_${activeMetrics[i].active[j]}`);
           expect(metric).toBeInTheDocument();
-          expect(metric).toHaveClass('active');
+          expect(metric).toHaveClass('opacity-100');
         }
       });
     }

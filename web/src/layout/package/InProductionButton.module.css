@@ -1,12 +1,8 @@
 .iconWrapper {
   width: 2rem;
   height: 2rem;
-  background-color: var(--white);
-  border: 1px solid var(--color-1-500);
+  border-color: var(--color-1-500) !important;
   padding: 2px;
-  overflow: hidden;
-  line-height: 1;
-  font-size: 1.25rem !important;
 }
 
 .isDisabled {
@@ -61,9 +57,7 @@
   min-width: 28px;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  background-color: var(--white);
-  border: 1px solid var(--color-1-10);
+  border-color: var(--color-1-10) !important;
   box-shadow: 0px 0px 1px 0px var(--color-1-20);
   padding: 0.15rem;
 }
@@ -71,10 +65,6 @@
 .image {
   max-width: calc(100% - 4px);
   max-height: calc(100% - 4px);
-}
-
-.miniLoading {
-  top: 0;
 }
 
 @media only screen and (max-width: 767.98px) {

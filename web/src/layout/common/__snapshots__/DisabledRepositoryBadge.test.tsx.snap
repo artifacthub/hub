@@ -9,7 +9,7 @@ exports[`DisabledRepositoryBadge creates snapshot 1`] = `
       class="d-flex flex-row align-items-center overflow-hidden labelWrapper warning"
     >
       <div
-        class="text-center labelIconWrapper iconWrapper"
+        class="text-center border border-end-0 position-relative labelIconWrapper iconWrapper"
         data-testid="label-wrapper"
       >
         <span
@@ -31,7 +31,7 @@ exports[`DisabledRepositoryBadge creates snapshot 1`] = `
         </span>
       </div>
       <div
-        class="text-nowrap labelText"
+        class="text-nowrap border fw-bold labelText"
       >
         Disabled
       </div>

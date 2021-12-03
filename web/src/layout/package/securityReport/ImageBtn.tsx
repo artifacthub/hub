@@ -21,14 +21,17 @@ const ImageBtn = (props: Props) => {
   }, [props.isActive]);
 
   return (
-    <div ref={ref} className={`d-flex flex-row align-items-center font-weight-bold mb-2 ${styles.btnWrapper}`}>
-      <button onClick={props.onClick} className={`btn btn-link text-reset position-absolute ${styles.linkBtn}`}>
+    <div ref={ref} className={`d-flex flex-row align-items-center fw-bold mb-2 ${styles.btnWrapper}`}>
+      <button
+        onClick={props.onClick}
+        className={`btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white ${styles.linkBtn}`}
+      >
         <FaLink />
       </button>
 
       <GoPackage />
-      <div className="pl-2 text-truncate">
-        <span className={`text-uppercase text-muted mr-2 ${styles.tableTitle}`}>Image:</span>
+      <div className="ps-2 text-truncate">
+        <span className={`text-uppercase text-muted me-2 ${styles.tableTitle}`}>Image:</span>
         {props.image}
       </div>
     </div>

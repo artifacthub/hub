@@ -14,7 +14,7 @@ interface Props {
 const SecuritySummary = (props: Props) => {
   const getVulnerabilitiesNumber = (): JSX.Element => {
     if (props.totalVulnerabilities > 0) {
-      return <span className="font-weight-bold">{props.totalVulnerabilities}</span>;
+      return <span className="fw-bold">{props.totalVulnerabilities}</span>;
     } else {
       return <>No</>;
     }
@@ -24,7 +24,7 @@ const SecuritySummary = (props: Props) => {
     <div className="mb-5">
       <div className="h5 my-3 pt-2">
         {getVulnerabilitiesNumber()} vulnerabilities have been detected in the{' '}
-        <span className="font-weight-bold">default images</span> used by this package.
+        <span className="fw-bold">default images</span> used by this package.
       </div>
 
       {props.totalVulnerabilities > 0 && (
@@ -39,7 +39,7 @@ const SecuritySummary = (props: Props) => {
             return (
               <div
                 key={`summary_${severity}`}
-                className={`progress-bar text-dark px-1 font-weight-bold ${styles.progressBar}`}
+                className={`progress-bar text-dark px-1 fw-bold ${styles.progressBar}`}
                 role="progressbar"
                 style={{
                   width: `${(props.summary[severity]! * 100) / props.totalVulnerabilities}%`,
@@ -47,7 +47,7 @@ const SecuritySummary = (props: Props) => {
                 }}
                 aria-label={`Vulnerabilites number - ${severity}`}
               >
-                <span className={`badge badge-pill badge-light text-center ${styles.badgeSummary}`}>
+                <span className={`badge rounded-pill bg-light text-dark text-center ${styles.badgeSummary}`}>
                   {props.summary[severity]}
                 </span>
               </div>

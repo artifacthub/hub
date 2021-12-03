@@ -19,7 +19,7 @@ exports[`PublisherInstructionsInstall creates snapshot 1`] = `
           >
             Install using Helm\\n\\n
             <code
-              class="inlineCode"
+              class="border inlineCode"
             >
               \\nhelm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/cve-2019-11246/custom-rules.yaml stable/falco\\n
             </code>

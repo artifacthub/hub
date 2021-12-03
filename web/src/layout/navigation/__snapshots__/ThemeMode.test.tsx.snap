@@ -25,11 +25,11 @@ exports[`ThemeMode creates snapshot 1`] = `
       class="dropdown-item"
     >
       <div
-        class="custom-control custom-radio"
+        class="form-check"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-automatic"
           name="automatic"
           readonly=""
@@ -38,7 +38,7 @@ exports[`ThemeMode creates snapshot 1`] = `
           value="automatic"
         />
         <label
-          class="custom-control-label font-weight-bold label"
+          class="form-check-label fw-bold lh-base w-100 label"
           for="desktop-automatic"
         >
           <svg
@@ -64,12 +64,12 @@ exports[`ThemeMode creates snapshot 1`] = `
       class="dropdown-item"
     >
       <div
-        class="custom-control custom-radio"
+        class="form-check"
       >
         <input
           aria-checked="true"
           checked=""
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-light"
           name="light"
           readonly=""
@@ -78,7 +78,7 @@ exports[`ThemeMode creates snapshot 1`] = `
           value="light"
         />
         <label
-          class="custom-control-label font-weight-bold label"
+          class="form-check-label fw-bold lh-base w-100 label"
           for="desktop-light"
         >
           <svg
@@ -155,11 +155,11 @@ exports[`ThemeMode creates snapshot 1`] = `
       class="dropdown-item"
     >
       <div
-        class="custom-control custom-radio"
+        class="form-check"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-dark"
           name="dark"
           readonly=""
@@ -168,7 +168,7 @@ exports[`ThemeMode creates snapshot 1`] = `
           value="dark"
         />
         <label
-          class="custom-control-label font-weight-bold label"
+          class="form-check-label fw-bold lh-base w-100 label"
           for="desktop-dark"
         >
           <svg

@@ -16,7 +16,7 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content modal"
+          class="modal-content border border-3 mx-auto content modal"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -28,15 +28,9 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -51,11 +45,11 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                 novalidate=""
               >
                 <div
-                  class="custom-control custom-radio mb-3"
+                  class="form-check mb-3"
                 >
                   <input
                     checked=""
-                    class="custom-control-input"
+                    class="form-check-input"
                     id="user"
                     name="transfer"
                     required=""
@@ -63,17 +57,17 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                     value="user"
                   />
                   <label
-                    class="custom-control-label font-weight-bold label"
+                    class="form-check-label fw-bold label"
                     for="user"
                   >
                     Transfer to my user
                   </label>
                 </div>
                 <div
-                  class="custom-control custom-radio mb-3"
+                  class="form-check mb-3"
                 >
                   <input
-                    class="custom-control-input"
+                    class="form-check-input"
                     id="org"
                     name="transfer"
                     required=""
@@ -81,7 +75,7 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                     value="org"
                   />
                   <label
-                    class="custom-control-label font-weight-bold label"
+                    class="form-check-label fw-bold label"
                     for="org"
                   >
                     Transfer to organization
@@ -92,11 +86,11 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                   data-testid="selectOrgsWrapper"
                 >
                   <div
-                    class="form-group w-75 mb-2"
+                    class=" w-75 mb-2"
                   >
                     <select
                       aria-label="org-select"
-                      class="custom-select"
+                      class="form-select"
                     />
                     <div
                       class="invalid-feedback fieldFeedback"
@@ -105,7 +99,7 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="d-inline ml-3"
+                    class="d-inline ms-3"
                   >
                     <span
                       class="spinner-border spinner-border-sm text-primary"
@@ -123,7 +117,7 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -140,7 +134,7 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center text-uppercase"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

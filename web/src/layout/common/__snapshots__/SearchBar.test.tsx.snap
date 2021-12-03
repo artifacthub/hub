@@ -10,7 +10,7 @@ exports[`SearchBar creates snapshot 1`] = `
       aria-expanded="false"
       aria-haspopup="listbox"
       aria-owns="search-list"
-      class="d-flex align-items-strecht overflow-hidden searchBar searchBar big"
+      class="d-flex align-items-center overflow-hidden searchBar lh-base bg-white searchBar big"
       role="combobox"
     >
       <div
@@ -46,7 +46,7 @@ exports[`SearchBar creates snapshot 1`] = `
         autocapitalize="none"
         autocomplete="off"
         autocorrect="off"
-        class="flex-grow-1 pl-2 pl-md-0 input"
+        class="flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
         placeholder="Search packages"
         spellcheck="false"
         type="text"
@@ -62,15 +62,9 @@ exports[`SearchBar creates snapshot 1`] = `
       </div>
       <button
         aria-label="Close"
-        class="close inputClean"
+        class="btn-close lh-lg ps-2 pe-3 inputClean"
         type="button"
-      >
-        <span
-          aria-hidden="true"
-        >
-          ×
-        </span>
-      </button>
+      />
       <div
         class="position-absolute text-dark tipIcon bigTipIcon"
       >

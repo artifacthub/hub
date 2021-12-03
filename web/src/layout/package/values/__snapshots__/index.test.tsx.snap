@@ -4,7 +4,7 @@ exports[`Values creates snapshot 1`] = `
 <DocumentFragment>
   <button
     aria-label="Open default values modal"
-    class="btn btn-outline-secondary btn-block btn-sm"
+    class="btn btn-outline-secondary btn-sm w-100"
   >
     <div
       class="d-flex flex-row align-items-center justify-content-center text-uppercase"
@@ -15,7 +15,7 @@ exports[`Values creates snapshot 1`] = `
         role="status"
       />
       <span
-        class="ml-2 font-weight-bold"
+        class="ms-2 fw-bold"
       >
         Getting values...
       </span>

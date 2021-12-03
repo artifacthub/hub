@@ -28,7 +28,7 @@ const SampleQueries = (props: Props) => {
       {queries.map((query: SampleQuery, index: number) => (
         <Fragment key={`sampleQuery_${index}`}>
           <Link
-            className={`badge badge-pill border font-weight-normal mx-2 mt-3 ${props.className}`}
+            className={`badge rounded-pill border fw-normal mx-2 mt-3 ${props.className}`}
             to={{
               pathname: '/packages/search',
               search: `?${query.queryString}`,

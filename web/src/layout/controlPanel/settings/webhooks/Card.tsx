@@ -57,21 +57,21 @@ const WebhookCard = (props: Props) => {
 
   return (
     <div className="col-12 col-xxl-6 py-sm-3 py-2" role="listitem">
-      <div className={`card cardWithHover w-100 h-100 ${styles.card}`}>
-        <div className={`card-body p-0 position-relative ${styles.body}`}>
+      <div className={`card cardWithHover w-100 h-100 mw-100 bg-white ${styles.card}`}>
+        <div className="card-body position-relative">
           <div className="d-flex flex-row">
-            <div className={`h5 card-title mb-3 mr-3 ${styles.title}`}>
+            <div className="h5 card-title mb-3 me-3 lh-1 text-break">
               <div className="d-flex flex-row align-items-start">
                 <div>{props.webhook.name}</div>
                 {props.webhook.active ? (
                   <span
-                    className={`ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase ${styles.badge}`}
+                    className={`ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase ${styles.badge}`}
                   >
                     Active
                   </span>
                 ) : (
                   <span
-                    className={`ml-3 mt-1 font-weight-bold badge badge-pill border border-dark text-dark text-uppercase ${styles.badge} ${styles.inactiveBadge}`}
+                    className={`ms-3 mt-1 fw-bold badge rounded-pill border border-dark text-dark text-uppercase ${styles.badge} ${styles.inactiveBadge}`}
                   >
                     Inactive
                   </span>
@@ -90,13 +90,13 @@ const WebhookCard = (props: Props) => {
                       aria-label="Close deletion modal"
                     >
                       <div className="d-flex flex-row align-items-center">
-                        <IoMdCloseCircle className="mr-2" />
+                        <IoMdCloseCircle className="me-2" />
                         <span>Cancel</span>
                       </div>
                     </button>
 
                     <button
-                      className="btn btn-sm btn-danger ml-3"
+                      className="btn btn-sm btn-danger ms-3"
                       onClick={(e) => {
                         e.preventDefault();
                         deleteWebhook();
@@ -108,11 +108,11 @@ const WebhookCard = (props: Props) => {
                         {isDeleting ? (
                           <>
                             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                            <span className="ml-2">Deleting...</span>
+                            <span className="ms-2">Deleting...</span>
                           </>
                         ) : (
                           <>
-                            <FaTrashAlt className={`mr-2 ${styles.btnDeleteIcon}`} />
+                            <FaTrashAlt className={`me-2 ${styles.btnDeleteIcon}`} />
                             <span>Delete</span>
                           </>
                         )}
@@ -130,14 +130,14 @@ const WebhookCard = (props: Props) => {
               </Modal>
             )}
 
-            <div className="ml-auto">
+            <div className="ms-auto">
               <div
                 ref={dropdownMenu}
-                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdownMenu, {
                   show: dropdownMenuStatus,
                 })}
               >
-                <div className={`arrow ${styles.arrow}`} />
+                <div className={`dropdown-arrow ${styles.arrow}`} />
 
                 <button
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
@@ -149,7 +149,7 @@ const WebhookCard = (props: Props) => {
                   aria-label="Edit webhook"
                 >
                   <div className="d-flex flex-row align-items-center">
-                    <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <FaPencilAlt className={`me-2 ${styles.btnIcon}`} />
                     <span>Edit</span>
                   </div>
                 </button>
@@ -164,7 +164,7 @@ const WebhookCard = (props: Props) => {
                   aria-label="Open deletion webhook modal"
                 >
                   <div className="d-flex flex-row align-items-center">
-                    <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <FaTrashAlt className={`me-2 ${styles.btnIcon}`} />
                     <span>Delete</span>
                   </div>
                 </button>
@@ -187,7 +187,7 @@ const WebhookCard = (props: Props) => {
             </div>
 
             <div className="text-truncate">
-              <small className="text-muted text-uppercase mr-2">Url:</small>
+              <small className="text-muted text-uppercase me-2">Url:</small>
               <small>{props.webhook.url}</small>
             </div>
 
@@ -199,14 +199,14 @@ const WebhookCard = (props: Props) => {
               )}
 
               {(isUndefined(props.webhook.packages) || props.webhook.packages.length === 0) && (
-                <div className="ml-auto mt-2">
+                <div className="ms-auto mt-2">
                   <ElementWithTooltip
                     element={
                       <span
-                        className={`d-flex flex-row align-items-center badge badge-warning badge-pill ${styles.badgeNoPackages}`}
+                        className={`d-flex flex-row align-items-center badge bg-warning rounded-pill ${styles.badgeNoPackages}`}
                       >
                         <TiWarningOutline />
-                        <span className="ml-1">No packages</span>
+                        <span className="ms-1">No packages</span>
                       </span>
                     }
                     tooltipMessage="This webhook is not associated to any packages."

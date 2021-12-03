@@ -1,11 +1,8 @@
 .iconWrapper {
   width: 1.65rem;
   height: 1.65rem;
-  background-color: var(--white);
-  border: 1px solid var(--color-1-500);
+  border-color: var(--color-1-500) !important;
   padding: 2px;
-  overflow: hidden;
-  line-height: 1;
   font-size: 1.15rem !important;
 }
 

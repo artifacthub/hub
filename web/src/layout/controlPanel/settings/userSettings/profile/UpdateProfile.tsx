@@ -122,7 +122,7 @@ const UpdateProfile = (props: Props) => {
       <InputFileField
         name="image"
         label="Profile image"
-        labelLegend={<small className="ml-1 font-italic">(Click on the image to update)</small>}
+        labelLegend={<small className="ms-1 fst-italic">(Click on the image to update)</small>}
         value={imageId}
         onImageChange={(imageId: string) => setImageId(imageId)}
         onAuthError={props.onAuthError}
@@ -140,7 +140,7 @@ const UpdateProfile = (props: Props) => {
         ref={usernameInput}
         type="text"
         label="Username"
-        labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+        labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
         name="alias"
         value={!isUndefined(profile) && !isNull(profile) ? profile.alias : ''}
         invalidText={{
@@ -184,11 +184,11 @@ const UpdateProfile = (props: Props) => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Updating profile</span>
+              <span className="ms-2">Updating profile</span>
             </>
           ) : (
             <div className="d-flex flex-row align-items-center text-uppercase">
-              <FaPencilAlt className="mr-2" />
+              <FaPencilAlt className="me-2" />
               <div>Update</div>
             </div>
           )}

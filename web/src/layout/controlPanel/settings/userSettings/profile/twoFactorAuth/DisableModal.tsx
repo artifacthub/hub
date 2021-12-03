@@ -52,7 +52,7 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
         aria-label="Open disable two-factor authentication modal"
       >
         <div className="d-flex flex-row align-items-center">
-          <FaUnlock className="mr-2" />
+          <FaUnlock className="me-2" />
           <span>Disable two-factor authentication</span>
         </div>
       </button>
@@ -70,13 +70,13 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
               aria-label="Cancel"
             >
               <div className="d-flex flex-row align-items-center">
-                <IoMdCloseCircle className="mr-2" />
+                <IoMdCloseCircle className="me-2" />
                 <span>Cancel</span>
               </div>
             </button>
 
             <button
-              className="btn btn-sm btn-danger ml-3"
+              className="btn btn-sm btn-danger ms-3"
               onClick={(e) => {
                 e.preventDefault();
                 disableTFA();
@@ -88,11 +88,11 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
                 {isProcessing ? (
                   <>
                     <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                    <span className="ml-2">Disabling...</span>
+                    <span className="ms-2">Disabling...</span>
                   </>
                 ) : (
                   <>
-                    <FaUnlock className="mr-2" />
+                    <FaUnlock className="me-2" />
                     <span>Disable</span>
                   </>
                 )}

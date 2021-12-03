@@ -9,7 +9,7 @@ exports[`Label creates snapshot 1`] = `
       class="d-flex flex-row align-items-center overflow-hidden labelWrapper default"
     >
       <div
-        class="text-nowrap labelText labelTextNoIcon"
+        class="text-nowrap border fw-bold labelText labelTextNoIcon"
       >
         Label text
       </div>

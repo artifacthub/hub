@@ -59,7 +59,7 @@ const RepositoryInfo = (props: Props) => {
           <div
             ref={ref}
             role="complementary"
-            className={classnames('dropdown-menu dropdown-menu-left', styles.dropdown, {
+            className={classnames('dropdown-menu dropdown-menu-left text-wrap', styles.dropdown, {
               show: openStatus,
             })}
             onMouseEnter={() => setOnDropdownHover(true)}
@@ -68,8 +68,8 @@ const RepositoryInfo = (props: Props) => {
             <div className={styles.content}>
               <div className="d-flex flex-column">
                 <div className="d-flex flex-row align-items-center">
-                  <small className="text-muted text-uppercase mr-1">Repo: </small>
-                  <RepositoryIcon kind={props.repository.kind} className={`mr-1 ${styles.repoIconMini}`} />
+                  <small className="text-muted text-uppercase me-1">Repo: </small>
+                  <RepositoryIcon kind={props.repository.kind} className={`me-1 w-auto ${styles.repoIconMini}`} />
                   <div className={`text-reset text-truncate ${styles.labelContent}`}>
                     {props.repository.displayName || props.repository.name}
                   </div>
@@ -77,15 +77,15 @@ const RepositoryInfo = (props: Props) => {
 
                 {!isUndefined(props.repository.url) && (
                   <div className="mt-2 d-flex flex-row align-items-baseline">
-                    <small className="text-muted text-uppercase mr-1">Url: </small>
-                    <div data-testid="repoUrl" className={`text-reset ${styles.urlContent} ${styles.labelContent}`}>
+                    <small className="text-muted text-uppercase me-1">Url: </small>
+                    <div data-testid="repoUrl" className={`text-reset text-break ${styles.labelContent}`}>
                       <AttachedIconToText
                         text={props.repository.url}
                         isVisible={openStatus}
                         icon={
                           <ButtonCopyToClipboard
                             text={props.repository.url}
-                            className={styles.miniBtn}
+                            className="bg-transparent"
                             wrapperClassName="d-inline"
                             arrowClassName={styles.arrow}
                             tooltipClassName="p-0"
@@ -102,24 +102,28 @@ const RepositoryInfo = (props: Props) => {
         </div>
 
         <div className="d-flex flex-row aling-items-baseline text-truncate">
-          <div className="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase">
+          <div className="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase">
             <small>Repo:</small>
             {props.visibleIcon && (
               <RepositoryIconLabel
                 kind={props.repository.kind}
                 deprecated={props.deprecated}
-                className="ml-1"
+                className="ms-1"
                 clickable
               />
             )}
           </div>
-          <span className="sr-only">{props.repository.name}</span>
+          <span className="visually-hidden">{props.repository.name}</span>
 
           <button
             data-testid="repoLink"
-            className={classnames('d-flex flex-row p-0 border-0 text-dark text-truncate', styles.link, {
-              [styles.moreMarginTop]: props.visibleIcon,
-            })}
+            className={classnames(
+              'd-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative',
+              styles.link,
+              {
+                [styles.moreMarginTop]: props.visibleIcon,
+              }
+            )}
             onClick={(e) => {
               e.preventDefault();
               history.push({
@@ -149,7 +153,7 @@ const RepositoryInfo = (props: Props) => {
               <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
 
               {props.repository.url && props.visibleInfoIcon && (
-                <MdInfoOutline className={`d-none d-sm-inline-block ml-1 ${styles.infoIcon}`} />
+                <MdInfoOutline className={`d-none d-sm-inline-block ms-1 position-relative ${styles.infoIcon}`} />
               )}
             </>
           </button>
@@ -158,7 +162,7 @@ const RepositoryInfo = (props: Props) => {
       {props.withLabels && (
         <VerifiedPublisherBadge
           verifiedPublisher={props.repository.verifiedPublisher}
-          className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
+          className={`ms-3 position-relative ${styles.repoLabel} ${props.repoLabelClassName}`}
         />
       )}
     </>

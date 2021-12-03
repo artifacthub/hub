@@ -146,18 +146,18 @@ const APIKeyModal = (props: Props) => {
       {isSending ? (
         <>
           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-          <span className="ml-2">{`${props.apiKey ? 'Updating' : 'Adding'} API key`}</span>
+          <span className="ms-2">{`${props.apiKey ? 'Updating' : 'Adding'} API key`}</span>
         </>
       ) : (
         <div className="d-flex flex-row align-items-center text-uppercase">
           {isUndefined(props.apiKey) ? (
             <>
-              <MdAddCircle className="mr-2" />
+              <MdAddCircle className="me-2" />
               <div>Add</div>
             </>
           ) : (
             <>
-              <FaPencilAlt className="mr-2" />
+              <FaPencilAlt className="me-2" />
               <div>Update</div>
             </>
           )}
@@ -222,16 +222,16 @@ const APIKeyModal = (props: Props) => {
                 <u>You will not be able to see the secret again when you close this window.</u>
               </b>{' '}
               For more information please see the authorize section in the{' '}
-              <ExternalLink className="text-primary font-weight-bold" href="/docs/api" label="Open documentation">
+              <ExternalLink className="text-primary fw-bold" href="/docs/api" label="Open documentation">
                 API docs
               </ExternalLink>
               .
             </small>
 
             <div className={`alert alert-warning mt-4 mb-2 ${styles.alert}`}>
-              <span className="font-weight-bold text-uppercase">Important:</span> the API key you've just generated can
-              be used to perform <u className="font-weight-bold">ANY</u> operation you can, so please store it safely
-              and don't share it with others.
+              <span className="fw-bold text-uppercase">Important:</span> the API key you've just generated can be used
+              to perform <u className="fw-bold">ANY</u> operation you can, so please store it safely and don't share it
+              with others.
             </div>
           </>
         ) : (
@@ -247,7 +247,7 @@ const APIKeyModal = (props: Props) => {
               ref={nameInput}
               type="text"
               label="Name"
-              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
               name="name"
               value={isUndefined(apiKey) ? '' : apiKey.name}
               invalidText={{

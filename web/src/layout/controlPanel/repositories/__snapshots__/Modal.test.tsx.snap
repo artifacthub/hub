@@ -16,7 +16,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content modal"
+          class="modal-content border border-3 mx-auto content modal"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -28,15 +28,9 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -51,17 +45,17 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                 novalidate=""
               >
                 <div
-                  class="form-group w-75 mb-4"
+                  class=" w-75 mb-4"
                 >
                   <label
-                    class="font-weight-bold label"
+                    class="form-label fw-bold label"
                     for="repoKind"
                   >
                     Kind
                   </label>
                   <select
                     aria-label="kind-select"
-                    class="custom-select"
+                    class="form-select"
                     name="repoKind"
                     required=""
                   >
@@ -128,19 +122,19 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   </select>
                 </div>
                 <div
-                  class="form-group mb-4 position-relative undefined"
+                  class=" mb-4 position-relative undefined"
                 >
                   <label
-                    class="font-weight-bold label"
+                    class="form-label fw-bold label"
                     for="name"
                   >
                     <span
-                      class="font-weight-bold"
+                      class="fw-bold"
                     >
                       Name
                     </span>
                     <small
-                      class="ml-1 font-italic"
+                      class="ms-1 fst-italic"
                     >
                       (Required)
                     </small>
@@ -173,7 +167,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       >
                         This name will appear in your packages' urls and 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           cannot be updated
                         </span>
@@ -183,14 +177,14 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="form-group mb-4 position-relative undefined"
+                  class=" mb-4 position-relative undefined"
                 >
                   <label
-                    class="font-weight-bold label"
+                    class="form-label fw-bold label"
                     for="displayName"
                   >
                     <span
-                      class="font-weight-bold"
+                      class="fw-bold"
                     >
                       Display name
                     </span>
@@ -209,19 +203,19 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   />
                 </div>
                 <div
-                  class="form-group mb-4 position-relative undefined"
+                  class=" mb-4 position-relative undefined"
                 >
                   <label
-                    class="font-weight-bold label"
+                    class="form-label fw-bold label"
                     for="url"
                   >
                     <span
-                      class="font-weight-bold"
+                      class="fw-bold"
                     >
                       Url
                     </span>
                     <small
-                      class="ml-1 font-italic"
+                      class="ms-1 fst-italic"
                     >
                       (Required)
                     </small>
@@ -252,7 +246,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       For more information about the url format and the repository structure, please see the 
                       <a
                         aria-label="Open documentation"
-                        class="link text-primary font-weight-bold"
+                        class="link text-primary fw-bold"
                         href="/docs/topics/repositories#helm-charts-repositories"
                         rel="noopener noreferrer"
                         role="button"
@@ -264,7 +258,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                        section in the 
                       <a
                         aria-label="Open documentation"
-                        class="link text-primary font-weight-bold"
+                        class="link text-primary fw-bold"
                         href="/docs/repositories"
                         rel="noopener noreferrer"
                         role="button"
@@ -281,57 +275,60 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   class="mb-4"
                 >
                   <div
-                    class="custom-control custom-switch pl-0"
+                    class="form-check form-switch ps-0"
                   >
-                    <input
-                      class="custom-control-input"
-                      id="disabledRepo"
-                      type="checkbox"
-                      value="true"
-                    />
                     <label
-                      class="custom-control-label font-weight-bold label customControlRightLabel"
+                      class="form-check-label fw-bold label"
                       for="disabledRepo"
                     >
                       Disabled
                     </label>
+                    <input
+                      class="form-check-input position-absolute ms-2"
+                      id="disabledRepo"
+                      role="switch"
+                      type="checkbox"
+                      value="true"
+                    />
                   </div>
-                  <small
+                  <div
                     class="form-text text-muted mt-2"
                   >
                     Use this switch to disable the repository temporarily or permanently.
-                  </small>
+                  </div>
                 </div>
                 <div
                   class="mt-4 mb-3"
                 >
                   <div
-                    class="custom-control custom-switch pl-0"
+                    class="form-check form-switch ps-0"
                   >
-                    <input
-                      class="custom-control-input"
-                      id="scannerDisabledRepo"
-                      type="checkbox"
-                      value="true"
-                    />
                     <label
-                      class="custom-control-label font-weight-bold label customControlRightLabel"
+                      class="form-check-label fw-bold label"
                       for="scannerDisabledRepo"
                     >
                       Security scanner disabled
                     </label>
+                     
+                    <input
+                      class="form-check-input position-absolute ms-2"
+                      id="scannerDisabledRepo"
+                      role="switch"
+                      type="checkbox"
+                      value="true"
+                    />
                   </div>
-                  <small
+                  <div
                     class="form-text text-muted mt-2"
                   >
                     Use this switch to disable the security scanning of the packages in this repository.
-                  </small>
+                  </div>
                 </div>
               </form>
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -348,7 +345,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center text-uppercase"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

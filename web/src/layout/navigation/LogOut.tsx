@@ -49,11 +49,11 @@ const LogOut = (props: Props) => {
         {isLoggingOut ? (
           <>
             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-            <span className="ml-2">Signing out...</span>
+            <span className="ms-2">Signing out...</span>
           </>
         ) : (
           <div className="d-flex align-items-center">
-            <FaSignOutAlt className="mr-2" />
+            <FaSignOutAlt className="me-2" />
             <div>Sign out</div>
           </div>
         )}

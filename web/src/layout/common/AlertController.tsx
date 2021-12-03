@@ -35,9 +35,7 @@ const AlertController = () => {
         {!isNull(alert) && (
           <>
             {alert.message}
-            <button type="button" className="close" onClick={onClose} aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
           </>
         )}
       </div>

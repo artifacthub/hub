@@ -69,7 +69,7 @@ const UserContext = () => {
         <small className={`text-uppercase text-muted ${styles.legendCtx}`}>Control panel context</small>
         <div className="d-flex flex-row align-items-center">
           <button
-            className={`btn btn-primary badge-pill btn-sm pr-3 position-relative ${styles.ctxBtn}`}
+            className={`btn btn-primary rounded-pill btn-sm pe-3 position-relative lh-1 ${styles.ctxBtn}`}
             type="button"
             onClick={() => {
               fetchOrganizations();
@@ -81,17 +81,19 @@ const UserContext = () => {
             <div className="d-flex flex-row align-items-center">
               {!isUndefined(ctx.prefs.controlPanel.selectedOrg) ? (
                 <>
-                  <div className={`badge badge-light badge-pill mr-2 p-0 ${styles.badgeIcon}`}>
+                  <div className={`badge bg-light text-dark rounded-pill me-2 p-0 ${styles.badgeIcon}`}>
                     <MdBusiness />
                   </div>
-                  <div className="flex-grow-1 text-left mr-1 text-truncate">{ctx.prefs.controlPanel.selectedOrg}</div>
+                  <div className={`flex-grow-1 text-start me-1 text-truncate ${styles.badgeContent}`}>
+                    {ctx.prefs.controlPanel.selectedOrg}
+                  </div>
                 </>
               ) : (
                 <>
-                  <div className={`badge badge-light badge-pill mr-2 p-0 ${styles.badgeIcon}`}>
+                  <div className={`badge bg-light text-dark rounded-pill me-2 p-0 ${styles.badgeIcon}`}>
                     <FaUser />
                   </div>
-                  <div className="flex-grow-1 text-left mr-1 text-truncate">{alias}</div>
+                  <div className={`flex-grow-1 text-start me-1 text-truncate ${styles.badgeContent}`}>{alias}</div>
                 </>
               )}
             </div>
@@ -111,16 +113,16 @@ const UserContext = () => {
       <div
         ref={ref}
         role="menu"
-        className={classnames('dropdown-menu dropdown-menu-right', styles.dropdown, { show: openStatus })}
+        className={classnames('dropdown-menu dropdown-menu-end', styles.dropdown, { show: openStatus })}
       >
-        <div className={`arrow ${styles.arrow}`} />
+        <div className={`dropdown-arrow ${styles.arrow}`} />
 
         <button className="dropdown-item mw-100" onClick={() => handleChange(alias)} aria-label="Activate user context">
           <div className="d-flex flex-row align-items-center text-truncate">
-            <FaUser className={`mr-2 ${styles.icon}`} />
+            <FaUser className={`me-2 ${styles.icon}`} />
             <div className="flex-grow-1 text-truncate">{alias}</div>
             {isUndefined(ctx.prefs.controlPanel.selectedOrg) && (
-              <GoCheck className={`ml-2 text-success ${styles.icon}`} />
+              <GoCheck className={`ms-2 text-success ${styles.icon}`} />
             )}
           </div>
         </button>
@@ -134,11 +136,11 @@ const UserContext = () => {
                 aria-label={`Activate org ${org.name} context`}
               >
                 <div className="d-flex flex-row align-items-center text-truncate">
-                  <MdBusiness className={`mr-2 ${styles.icon}`} />
+                  <MdBusiness className={`me-2 ${styles.icon}`} />
                   <div className="flex-grow-1 text-truncate">{org.name}</div>
                   {!isUndefined(ctx.prefs.controlPanel.selectedOrg) &&
                     org.name === ctx.prefs.controlPanel.selectedOrg && (
-                      <GoCheck className={`ml-2 text-success ${styles.icon}`} />
+                      <GoCheck className={`ms-2 text-success ${styles.icon}`} />
                     )}
                 </div>
               </button>

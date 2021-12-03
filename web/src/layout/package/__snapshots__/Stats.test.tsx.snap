@@ -6,7 +6,7 @@ exports[`Stats creates snapshot 1`] = `
     class="d-flex flex-row align-items-baseline mt-2"
   >
     <div
-      class="d-flex flex-row align-items-baseline mr-3"
+      class="d-flex flex-row align-items-baseline me-3"
     >
       <svg
         class="icon"
@@ -28,7 +28,7 @@ exports[`Stats creates snapshot 1`] = `
         Subscriptions:
       </small>
       <span
-        class="font-weight-bold"
+        class="fw-bold"
       >
         12
       </span>
@@ -59,7 +59,7 @@ exports[`Stats creates snapshot 1`] = `
         Webhooks:
       </small>
       <span
-        class="font-weight-bold"
+        class="fw-bold"
       >
         8
       </span>

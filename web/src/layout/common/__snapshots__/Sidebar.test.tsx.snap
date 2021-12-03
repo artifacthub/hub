@@ -8,7 +8,7 @@ exports[`Sidebar creates snapshot 1`] = `
     <button
       aria-expanded="false"
       aria-label="Open sidebar"
-      class="font-weight-bold text-uppercase position-relative btn btn-primary"
+      class="fw-bold text-uppercase position-relative btn btn-primary"
       type="button"
     >
       <div
@@ -17,7 +17,7 @@ exports[`Sidebar creates snapshot 1`] = `
     </button>
     <div
       aria-label="Sidebar"
-      class="sidebar sidebar left"
+      class="sidebar position-fixed top-0 bottom-0 w-75 sidebar left"
       role="complementary"
     >
       <div
@@ -35,15 +35,9 @@ exports[`Sidebar creates snapshot 1`] = `
             <div>
               <button
                 aria-label="Close sidebar"
-                class="close"
+                class="btn-close closeBtn"
                 type="button"
-              >
-                <span
-                  aria-hidden="true"
-                >
-                  ×
-                </span>
-              </button>
+              />
             </div>
           </div>
         </div>
@@ -66,7 +60,7 @@ exports[`Sidebar creates snapshot 1`] = `
           >
             <button
               aria-label="Close"
-              class="ml-auto btn btn-sm btn-outline-secondary"
+              class="ms-auto btn btn-sm btn-outline-secondary text-uppercase"
               type="button"
             >
               Close

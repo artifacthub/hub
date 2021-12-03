@@ -10,23 +10,20 @@
 
 .dropdownMenu {
   top: 55px;
-  right: 3px;
+  right: 4px;
 }
 
 .imageWrapper {
   min-width: 40px;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background-color: var(--white);
-  border: 3px solid var(--color-1-10);
+  border-color: var(--color-1-10) !important;
   box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }
 
 .image {
   max-width: calc(100% - 2px);
   max-height: calc(100% - 2px);
-  font-size: 1.5rem;
 }
 
 .link {

@@ -8,10 +8,10 @@ exports[`WebhookForm creates snapshot 1`] = `
     >
       <button
         aria-label="Back to webhooks list"
-        class="btn btn-link text-dark btn-sm pl-0 d-flex align-items-center link"
+        class="btn btn-link text-dark btn-sm ps-0 d-flex align-items-center link"
       >
         <svg
-          class="mr-2"
+          class="me-2"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -37,25 +37,25 @@ exports[`WebhookForm creates snapshot 1`] = `
         novalidate=""
       >
         <div
-          class="form-row"
+          class="d-flex"
         >
           <div
             class="col-md-8"
           >
             <div
-              class="form-group mb-4 position-relative undefined"
+              class=" mb-4 position-relative undefined"
             >
               <label
-                class="font-weight-bold label"
+                class="form-label fw-bold label"
                 for="name"
               >
                 <span
-                  class="font-weight-bold"
+                  class="fw-bold"
                 >
                   Name
                 </span>
                 <small
-                  class="ml-1 font-italic"
+                  class="ms-1 fst-italic"
                 >
                   (Required)
                 </small>
@@ -79,20 +79,20 @@ exports[`WebhookForm creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="form-row"
+          class="d-flex"
         >
           <div
             class="col-md-8"
           >
             <div
-              class="form-group mb-4 position-relative undefined"
+              class=" mb-4 position-relative undefined"
             >
               <label
-                class="font-weight-bold label"
+                class="form-label fw-bold label"
                 for="description"
               >
                 <span
-                  class="font-weight-bold"
+                  class="fw-bold"
                 >
                   Description
                 </span>
@@ -114,31 +114,29 @@ exports[`WebhookForm creates snapshot 1`] = `
         </div>
         <div>
           <label
-            class="font-weight-bold label"
+            class="form-label fw-bold label"
             for="url"
           >
             Url
             <small
-              class="ml-1 font-italic"
+              class="ms-1 fst-italic"
             >
               (Required)
             </small>
           </label>
-          <div>
-            <small
-              class="form-text text-muted mb-2 mt-0"
-            >
-              A POST request will be sent to the provided URL when any of the events selected in the triggers section happens.
-            </small>
+          <div
+            class="form-text text-muted mb-2 mt-0"
+          >
+            A POST request will be sent to the provided URL when any of the events selected in the triggers section happens.
           </div>
           <div
-            class="form-row"
+            class="d-flex"
           >
             <div
               class="col-md-8"
             >
               <div
-                class="form-group mb-4 position-relative undefined"
+                class=" mb-4 position-relative undefined"
               >
                 <input
                   class="form-control"
@@ -161,32 +159,30 @@ exports[`WebhookForm creates snapshot 1`] = `
         </div>
         <div>
           <label
-            class="font-weight-bold label"
+            class="form-label fw-bold label"
             for="secret"
           >
             Secret
           </label>
-          <div>
-            <small
-              class="form-text text-muted mb-2 mt-0"
+          <div
+            class="form-text text-muted mb-2 mt-0"
+          >
+            If you provide a secret, we'll send it to you in the 
+            <span
+              class="fw-bold"
             >
-              If you provide a secret, we'll send it to you in the 
-              <span
-                class="font-weight-bold"
-              >
-                X-ArtifactHub-Secret
-              </span>
-               header on each request. This will allow you to validate that the request comes from ArtifactHub.
-            </small>
+              X-ArtifactHub-Secret
+            </span>
+             header on each request. This will allow you to validate that the request comes from ArtifactHub.
           </div>
           <div
-            class="form-row"
+            class="d-flex"
           >
             <div
               class="col-md-8"
             >
               <div
-                class="form-group mb-4 position-relative undefined"
+                class=" mb-4 position-relative undefined"
               >
                 <input
                   class="form-control"
@@ -208,27 +204,28 @@ exports[`WebhookForm creates snapshot 1`] = `
           class="mb-3"
         >
           <div
-            class="custom-control custom-switch pl-0"
+            class="form-check form-switch ps-0"
           >
-            <input
-              checked=""
-              class="custom-control-input checkbox"
-              id="active"
-              type="checkbox"
-              value="true"
-            />
             <label
-              class="custom-control-label font-weight-bold label customControlRightLabel"
+              class="form-check-label fw-bold label"
               for="active"
             >
               Active
             </label>
+            <input
+              checked=""
+              class="position-absolute ms-2 form-check-input checkbox"
+              id="active"
+              role="switch"
+              type="checkbox"
+              value="true"
+            />
           </div>
-          <small
+          <div
             class="form-text text-muted mt-2"
           >
             This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.
-          </small>
+          </div>
         </div>
         <div
           class="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom"
@@ -239,7 +236,7 @@ exports[`WebhookForm creates snapshot 1`] = `
           class="my-4"
         >
           <label
-            class="font-weight-bold label"
+            class="form-label fw-bold label"
             for="kind"
             id="events-group"
           >
@@ -250,12 +247,12 @@ exports[`WebhookForm creates snapshot 1`] = `
             role="group"
           >
             <div
-              class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+              class="form-check me-sm-2 mb-2 undefined"
             >
               <input
                 aria-checked="true"
                 checked=""
-                class="custom-control-input input"
+                class="form-check-input input"
                 id="all-eventKind-0"
                 name="eventKind"
                 tabindex="0"
@@ -263,7 +260,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                 value="0"
               />
               <label
-                class="custom-control-label label undefined"
+                class="form-check-label label undefined"
                 data-testid="checkboxLabel"
                 for="all-eventKind-0"
               >
@@ -279,11 +276,11 @@ exports[`WebhookForm creates snapshot 1`] = `
               </label>
             </div>
             <div
-              class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+              class="form-check me-sm-2 mb-2 undefined"
             >
               <input
                 aria-checked="false"
-                class="custom-control-input input"
+                class="form-check-input input"
                 id="all-eventKind-1"
                 name="eventKind"
                 tabindex="0"
@@ -291,7 +288,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                 value="1"
               />
               <label
-                class="custom-control-label label undefined"
+                class="form-check-label label undefined"
                 data-testid="checkboxLabel"
                 for="all-eventKind-1"
               >
@@ -312,23 +309,21 @@ exports[`WebhookForm creates snapshot 1`] = `
           class="mb-4"
         >
           <label
-            class="font-weight-bold label"
+            class="form-label fw-bold label"
             for="packages"
             id="webhook-pkg-list"
           >
             Packages
             <small
-              class="ml-1 font-italic"
+              class="ms-1 fst-italic"
             >
               (Required)
             </small>
           </label>
-          <div>
-            <small
-              class="form-text text-muted mb-4 mt-0"
-            >
-              When the events selected happen for any of the packages you've chosen, a notification will be triggered and the configured url will be called. At least one package must be selected.
-            </small>
+          <div
+            class="form-text text-muted mb-4 mt-0"
+          >
+            When the events selected happen for any of the packages you've chosen, a notification will be triggered and the configured url will be called. At least one package must be selected.
           </div>
           <div
             class="mb-3 row"
@@ -343,7 +338,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                   class="d-flex flex-row"
                 >
                   <div
-                    class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
+                    class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white inputWrapper"
                   >
                     <div
                       class="d-flex align-items-center iconWrapper"
@@ -376,7 +371,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                     <input
                       aria-label="Search packages"
                       autocomplete="new-input"
-                      class="flex-grow-1 pr-4 pl-2 pl-md-0 input"
+                      class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
                       name="searchInput"
                       spellcheck="false"
                       type="text"
@@ -393,7 +388,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="col-12 col-xxl-8"
             >
               <table
-                class="table table-hover table-sm table"
+                class="table table-hover table-sm border bg-white text-break table"
               >
                 <thead>
                   <tr
@@ -430,12 +425,12 @@ exports[`WebhookForm creates snapshot 1`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon mx-2 iconLight"
+                        class="icon h-auto mx-2 iconLight"
                         src="/static/media/helm-chart.svg"
                       />
                       <img
                         alt="Icon"
-                        class="icon mx-2 iconDark"
+                        class="icon h-auto mx-2 iconDark"
                         src="/static/media/helm-chart-light.svg"
                       />
                     </td>
@@ -446,18 +441,18 @@ exports[`WebhookForm creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
                         >
                           <img
                             alt="envoy"
                             aria-hidden="true"
-                            class="image"
+                            class="mw-100 mh-100 fs-4"
                             src="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc"
                             srcset="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@1x 1x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@2x 2x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@3x 3x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@4x 4x"
                           />
                         </div>
                         <div
-                          class="ml-2 text-dark cellWrapper"
+                          class="ms-2 text-dark cellWrapper"
                         >
                           <div
                             class="text-truncate"
@@ -473,7 +468,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                               </span>
                               Helm
                               <small
-                                class="ml-2"
+                                class="ms-2"
                               >
                                 (
                                 <span
@@ -497,14 +492,14 @@ exports[`WebhookForm creates snapshot 1`] = `
                       class="align-middle position-relative text-dark d-none d-sm-table-cell"
                     >
                       <div
-                        class="cellWrapper"
+                        class="d-table w-100 cellWrapper"
                       >
                         <div
                           class="text-truncate"
                         >
                           Helm
                           <small
-                            class="ml-2"
+                            class="ms-2"
                           >
                             (
                             <span
@@ -552,99 +547,103 @@ exports[`WebhookForm creates snapshot 1`] = `
           class="d-flex flex-row mb-3"
         >
           <div
-            class="custom-control custom-radio mr-4"
+            class="form-check me-4"
           >
             <input
-              class="custom-control-input"
+              class="form-check-input"
               id="payload_0"
               name="payloadKind"
               type="radio"
               value="defaultPayload"
             />
             <label
-              class="custom-control-label"
+              class="form-check-label"
               for="payload_0"
             >
               Default payload
             </label>
           </div>
           <div
-            class="custom-control custom-radio mr-4"
+            class="form-check me-4"
           >
             <input
               checked=""
-              class="custom-control-input"
+              class="form-check-input"
               id="payload_1"
               name="payloadKind"
               type="radio"
               value="customPayload"
             />
             <label
-              class="custom-control-label"
+              class="form-check-label"
               for="payload_1"
             >
               Custom payload
             </label>
           </div>
         </div>
-        <small
-          class="form-text text-muted mb-3"
+        <div
+          class="lh-base"
         >
-          It's possible to customize the payload used to notify your service. This may help integrating ArtifactHub webhooks with other services without requiring you to write any code. To integrate ArtifactHub webhooks with Slack, for example, you could use a custom payload using the following template:
           <div
-            class="my-3 w-100"
+            class="form-text text-muted mb-3"
           >
+            It's possible to customize the payload used to notify your service. This may help integrating ArtifactHub webhooks with other services without requiring you to write any code. To integrate ArtifactHub webhooks with Slack, for example, you could use a custom payload using the following template:
             <div
-              aria-atomic="true"
-              aria-live="off"
-              class="alert alert-light text-nowrap codeWrapper"
-              role="alert"
+              class="my-3 w-100"
             >
-              {
-              <br />
-              <span
-                class="ml-3"
+              <div
+                aria-atomic="true"
+                aria-live="off"
+                class="alert alert-light text-nowrap codeWrapper"
+                role="alert"
               >
-                "text": "Package 
-                <span
-                  class="font-weight-bold"
-                >
-                  {{ .Package.Name }}
-                </span>
-                 version 
-                <span
-                  class="font-weight-bold"
-                >
-                  {{ .Package.Version }}
-                </span>
-                 released! 
-                <span
-                  class="font-weight-bold"
-                >
-                  {{ .Package.URL }}
-                </span>
-                "
+                {
                 <br />
-                }
-              </span>
+                <span
+                  class="ms-3"
+                >
+                  "text": "Package 
+                  <span
+                    class="fw-bold"
+                  >
+                    {{ .Package.Name }}
+                  </span>
+                   version 
+                  <span
+                    class="fw-bold"
+                  >
+                    {{ .Package.Version }}
+                  </span>
+                   released! 
+                  <span
+                    class="fw-bold"
+                  >
+                    {{ .Package.URL }}
+                  </span>
+                  "
+                  <br />
+                  }
+                </span>
+              </div>
             </div>
           </div>
-        </small>
+        </div>
         <div
-          class="form-row"
+          class="d-flex"
         >
           <div
             class="col-md-8"
           >
             <div
-              class="form-group mb-4 position-relative undefined"
+              class=" mb-4 position-relative undefined"
             >
               <label
-                class="font-weight-bold label"
+                class="form-label fw-bold label"
                 for="contentType"
               >
                 <span
-                  class="font-weight-bold"
+                  class="fw-bold"
                 >
                   Request Content-Type
                 </span>
@@ -669,35 +668,33 @@ exports[`WebhookForm creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="form-group mb-4"
+          class=" mb-4"
         >
           <label
-            class="font-weight-bold label"
+            class="form-label fw-bold label"
             for="template"
           >
             Template
           </label>
-          <div>
-            <small
-              class="form-text text-muted mb-4 mt-0"
+          <div
+            class="form-text text-muted mb-4 mt-0"
+          >
+            Custom payloads are generated using 
+            <a
+              aria-label="Open Go templates documentation"
+              class="link fw-bold text-dark"
+              href="https://golang.org/pkg/text/template/"
+              rel="noopener noreferrer"
+              role="button"
+              tabindex="-1"
+              target="_blank"
             >
-              Custom payloads are generated using 
-              <a
-                aria-label="Open Go templates documentation"
-                class="link font-weight-bold text-dark"
-                href="https://golang.org/pkg/text/template/"
-                rel="noopener noreferrer"
-                role="button"
-                tabindex="-1"
-                target="_blank"
-              >
-                Go templates
-              </a>
-              . Below you will find a list of the variables available for use in your template.
-            </small>
+              Go templates
+            </a>
+            . Below you will find a list of the variables available for use in your template.
           </div>
           <div
-            class="form-row"
+            class="row"
           >
             <div
               class="col-xxl-8"
@@ -737,22 +734,22 @@ exports[`WebhookForm creates snapshot 1`] = `
           class="mb-3"
         >
           <label
-            class="font-weight-bold label"
+            class="form-label fw-bold label"
             for="template"
           >
             Variables reference
           </label>
           <div
-            class="form-row"
+            class="row"
           >
             <div
               class="col-xxl-8 overflow-auto"
             >
               <small
-                class="form-text text-muted tableWrapper"
+                class="text-muted tableWrapper"
               >
                 <table
-                  class="table table-sm variablesTable"
+                  class="table table-sm border bg-white variablesTable"
                 >
                   <tbody>
                     <tr>
@@ -796,13 +793,13 @@ exports[`WebhookForm creates snapshot 1`] = `
                       <td>
                         Kind of the event triggering notification. Possible values are 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           package.new-release
                         </span>
                          and 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           package.security-alert
                         </span>
@@ -878,37 +875,37 @@ exports[`WebhookForm creates snapshot 1`] = `
                       <td>
                         Kind of the change. Possible values are 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           added
                         </span>
                         , 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           changed
                         </span>
                         , 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           deprecated
                         </span>
                         , 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           removed
                         </span>
                         , 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           fixed
                         </span>
                          and 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           security
                         </span>
@@ -1012,25 +1009,25 @@ exports[`WebhookForm creates snapshot 1`] = `
                       <td>
                         Kind of the repository associated with the notification. Possible values are 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           falco
                         </span>
                         , 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           helm
                         </span>
                         , 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           olm
                         </span>
                          and 
                         <span
-                          class="font-weight-bold"
+                          class="fw-bold"
                         >
                           opa
                         </span>
@@ -1078,7 +1075,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="d-flex flex-row justify-content-between"
           >
             <div
-              class="d-flex flex-row align-items-center mr-3"
+              class="d-flex flex-row align-items-center me-3"
             >
               <button
                 aria-label="Test webhook"
@@ -1089,7 +1086,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center text-uppercase"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1121,18 +1118,18 @@ exports[`WebhookForm creates snapshot 1`] = `
               </button>
             </div>
             <div
-              class="ml-auto"
+              class="ms-auto"
             >
               <button
                 aria-label="Cancel"
-                class="btn btn-sm btn-outline-secondary mr-3"
+                class="btn btn-sm btn-outline-secondary me-3"
                 type="button"
               >
                 <div
                   class="d-flex flex-row align-items-center text-uppercase"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1163,7 +1160,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center text-uppercase"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

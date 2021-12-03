@@ -35,7 +35,7 @@ const SecurityCell = (props: Props) => {
     return (
       <ExternalLink
         href={reference}
-        className={`ml-2 text-dark position-relative ${styles.link}`}
+        className={`ms-2 text-dark position-relative ${styles.link}`}
         label={`Link to ${props.vulnerability.VulnerabilityID} vulnerability`}
       >
         <small>
@@ -63,15 +63,15 @@ const SecurityCell = (props: Props) => {
         ref={ref}
       >
         <td className="align-middle text-primary">{props.isExpanded ? <FaCaretDown /> : <FaCaretRight />}</td>
-        <td className="align-middle text-nowrap pr-3">
+        <td className="align-middle text-nowrap pe-3">
           {props.vulnerability.VulnerabilityID}
           {getMainReference()}
         </td>
-        <td className="align-middle text-nowrap text-uppercase pr-3">
+        <td className="align-middle text-nowrap text-uppercase pe-3">
           <div className="d-flex flex-row align-items-center">
             <span
               data-testid="severityBadge"
-              className={`badge p-2 mr-2 ${styles.badge}`}
+              className={`badge p-2 me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[severity]!.color,
               }}
@@ -81,17 +81,17 @@ const SecurityCell = (props: Props) => {
             <small>{props.vulnerability.Severity}</small>
           </div>
         </td>
-        <td className="align-middle text-nowrap pr-3 w-25">
+        <td className="align-middle text-nowrap pe-3 w-25">
           <div className={`d-table w-100 ${styles.wrapperCell}`}>
             <div className="text-truncate">{props.vulnerability.PkgName}</div>
           </div>
         </td>
-        <td className="align-middle text-nowrap pr-3 w-25">
+        <td className="align-middle text-nowrap pe-3 w-25">
           <div className={`d-table w-100 ${styles.wrapperCell}`}>
             <div className="text-truncate">{props.vulnerability.InstalledVersion}</div>
           </div>
         </td>
-        <td className="align-middle text-nowrap pr-3 w-25" data-testid="fixedVersionCell">
+        <td className="align-middle text-nowrap pe-3 w-25" data-testid="fixedVersionCell">
           {props.vulnerability.FixedVersion ? (
             <div className={`d-table w-100 ${styles.wrapperCell}`}>
               <div className="text-truncate">{JSON.parse(`"${props.vulnerability.FixedVersion}"`)}</div>
@@ -107,17 +107,17 @@ const SecurityCell = (props: Props) => {
           <td colSpan={6}>
             <div className="m-3">
               {isUndefined(props.vulnerability.title) && isUndefined(props.vulnerability.Description) ? (
-                <div className="font-italic">Any information about this vulnerability</div>
+                <div className="fst-italic">Any information about this vulnerability</div>
               ) : (
                 <>
                   <div className="h6">{props.vulnerability.Title}</div>
                   {props.vulnerability.Description && (
                     <p className="text-muted mb-1">{props.vulnerability.Description}</p>
                   )}
-                  <div className="d-flex flex-column text-right">
+                  <div className="d-flex flex-column text-end">
                     {!isUndefined(props.vulnerability.LastModifiedDate) &&
                       !isFuture(props.vulnerability.LastModifiedDate, false) && (
-                        <small className="font-italic">
+                        <small className="fst-italic">
                           Updated {moment(props.vulnerability.LastModifiedDate).fromNow()}
                         </small>
                       )}

@@ -16,7 +16,7 @@ exports[`OptOutModal creates snapshot 1`] = `
         class="modal-dialog modal-lg modal"
       >
         <div
-          class="modal-content content"
+          class="modal-content border border-3 mx-auto content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -28,15 +28,9 @@ exports[`OptOutModal creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -45,7 +39,7 @@ exports[`OptOutModal creates snapshot 1`] = `
               class="w-100 position-relative"
             >
               <label
-                class="font-weight-bold label"
+                class="form-label fw-bold label"
                 for="kind"
               >
                 Events
@@ -57,11 +51,11 @@ exports[`OptOutModal creates snapshot 1`] = `
                   class="mb-2"
                 >
                   <div
-                    class="custom-control custom-radio text-nowrap my-1 my-md-0"
+                    class="form-check text-nowrap my-1 my-md-0"
                   >
                     <input
                       checked=""
-                      class="custom-control-input"
+                      class="form-check-input"
                       id="trackingErrors"
                       name="kind"
                       required=""
@@ -69,11 +63,11 @@ exports[`OptOutModal creates snapshot 1`] = `
                       value="2"
                     />
                     <label
-                      class="custom-control-label"
+                      class="form-check-label"
                       for="trackingErrors"
                     >
                       <div
-                        class="d-flex flex-row align-items-center ml-2"
+                        class="d-flex flex-row align-items-center ms-2"
                       >
                         <svg
                           baseProfile="tiny"
@@ -91,7 +85,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                           />
                         </svg>
                         <div
-                          class="ml-1"
+                          class="ms-1"
                         >
                           Tracking errors
                         </div>
@@ -103,10 +97,10 @@ exports[`OptOutModal creates snapshot 1`] = `
                   class="mb-2"
                 >
                   <div
-                    class="custom-control custom-radio text-nowrap my-1 my-md-0"
+                    class="form-check text-nowrap my-1 my-md-0"
                   >
                     <input
-                      class="custom-control-input"
+                      class="form-check-input"
                       id="scanningErrors"
                       name="kind"
                       required=""
@@ -114,11 +108,11 @@ exports[`OptOutModal creates snapshot 1`] = `
                       value="4"
                     />
                     <label
-                      class="custom-control-label"
+                      class="form-check-label"
                       for="scanningErrors"
                     >
                       <div
-                        class="d-flex flex-row align-items-center ml-2"
+                        class="d-flex flex-row align-items-center ms-2"
                       >
                         <svg
                           baseProfile="tiny"
@@ -136,7 +130,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                           />
                         </svg>
                         <div
-                          class="ml-1"
+                          class="ms-1"
                         >
                           Scanning errors
                         </div>
@@ -149,7 +143,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                 class="d-flex flex-column mb-3"
               >
                 <label
-                  class="font-weight-bold label"
+                  class="form-label fw-bold label"
                   for="description"
                 >
                   Repository
@@ -169,7 +163,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                       class="d-flex flex-row"
                     >
                       <div
-                        class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar inputWrapper"
+                        class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar lh-base bg-white inputWrapper"
                       >
                         <div
                           class="d-flex align-items-center iconWrapper"
@@ -202,7 +196,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                         <input
                           aria-label="Search repositories"
                           autocomplete="new-input"
-                          class="flex-grow-1 pr-4 pl-2 pl-md-0 input"
+                          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
                           name="searchRepositoriesInput"
                           spellcheck="false"
                           type="text"
@@ -215,7 +209,7 @@ exports[`OptOutModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -233,7 +227,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center text-uppercase"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

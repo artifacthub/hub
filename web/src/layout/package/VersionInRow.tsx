@@ -32,28 +32,28 @@ const VersionInRow = (props: Props) => {
 
   return (
     <tr>
-      <td className={styles.versionCell}>
+      <td className={`w-75 ${styles.versionCell}`}>
         <div className="d-flex flex-row align-items-center px-1">
           {props.isActive ? (
             <div className={`${styles.activeVersion} text-truncate`}>{props.version}</div>
           ) : (
             <button
               onClick={() => openPackagePage()}
-              className="btn btn-link text-primary pl-0 pt-0 pb-0 border-0 text-truncate d-block text-left"
+              className="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block text-start"
               aria-label={`Open version ${props.version}`}
             >
               {props.version}
             </button>
           )}
           {props.linkedChannel && (
-            <span className={`badge badge-pill mr-2 ${styles.badge} ${styles.isHighlighted}`}>
-              <small className="text-uppercase mr-1">Channel:</small>
+            <span className={`badge rounded-pill me-2 border ${styles.badge} ${styles.isHighlighted}`}>
+              <small className="text-uppercase me-1">Channel:</small>
               {props.linkedChannel}
             </span>
           )}
-          {props.prerelease && <span className={`badge badge-pill mr-2 ${styles.badge}`}>Pre-release</span>}
+          {props.prerelease && <span className={`badge rounded-pill me-2 border ${styles.badge}`}>Pre-release</span>}
           {props.containsSecurityUpdates && (
-            <span className={`badge badge-pill ${styles.badge}`}>Contains security updates</span>
+            <span className={`badge rounded-pill border ${styles.badge}`}>Contains security updates</span>
           )}
         </div>
       </td>

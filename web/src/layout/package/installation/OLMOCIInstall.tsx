@@ -58,9 +58,9 @@ spec:
         <small className="text-muted mt-2 mb-1">Channel</small>
       </div>
 
-      <div className="form-group w-50">
+      <div className=" w-50">
         <select
-          className="custom-select custom-select-sm mb-1"
+          className="form-select form-select-sm mb-1"
           aria-label="channel-select"
           value={activeChannel}
           onChange={(e: ChangeEvent<HTMLSelectElement>) => setActiveChannel(e.target.value)}
@@ -93,15 +93,15 @@ spec:
 
       {props.repository.private && (
         <div className={`alert alert-warning my-4 ${styles.alert}`} role="alert">
-          <span className="font-weight-bold text-uppercase">Important:</span> This repository is{' '}
-          <span className="font-weight-bold">private</span> and requires some credentials.
+          <span className="fw-bold text-uppercase">Important:</span> This repository is{' '}
+          <span className="fw-bold">private</span> and requires some credentials.
         </div>
       )}
 
       <div className="mt-2">
         <ExternalLink
           href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md"
-          className="btn btn-link pl-0"
+          className="btn btn-link ps-0"
           label="Download OLM"
         >
           Need OLM?

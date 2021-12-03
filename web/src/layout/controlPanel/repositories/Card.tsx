@@ -109,7 +109,7 @@ const RepositoryCard = (props: Props) => {
         )}
         {hasErrors ? (
           <>
-            <FaExclamation className="ml-2 text-warning" />
+            <FaExclamation className="ms-2 text-warning" />
             <RepositoryWarningModal />
           </>
         ) : (
@@ -130,10 +130,10 @@ const RepositoryCard = (props: Props) => {
           <Modal
             modalDialogClassName={styles.modalDialog}
             className={`d-inline-block ${styles.modal}`}
-            buttonType={`ml-1 btn badge btn-outline-secondary ${styles.btn}`}
+            buttonType={`ms-1 btn badge btn-outline-secondary ${styles.btn}`}
             buttonContent={
               <div className="d-flex flex-row align-items-center">
-                <HiExclamation className="mr-2" />
+                <HiExclamation className="me-2" />
                 <span className="d-none d-sm-inline">Show tracking errors log</span>
                 <span className="d-inline d-sm-none">Logs</span>
               </div>
@@ -153,7 +153,7 @@ const RepositoryCard = (props: Props) => {
               </SyntaxHighlighter>
             </div>
           </Modal>
-          <span className="ml-3 font-italic text-muted">{nextCheckMsg}</span>
+          <span className="ms-3 fst-italic text-muted">{nextCheckMsg}</span>
         </>
       );
     } else {
@@ -175,7 +175,7 @@ const RepositoryCard = (props: Props) => {
               </div>
             </Modal>
           )}
-          <span className="ml-1 font-italic text-muted">{nextCheckMsg}</span>
+          <span className="ms-1 fst-italic text-muted">{nextCheckMsg}</span>
         </>
       );
     }
@@ -229,10 +229,10 @@ const RepositoryCard = (props: Props) => {
           <Modal
             modalDialogClassName={styles.modalDialog}
             className={`d-inline-block ${styles.modal}`}
-            buttonType={`ml-1 btn badge btn-outline-secondary ${styles.btn}`}
+            buttonType={`ms-1 btn badge btn-outline-secondary ${styles.btn}`}
             buttonContent={
               <div className="d-flex flex-row align-items-center">
-                <HiExclamation className="mr-2" />
+                <HiExclamation className="me-2" />
                 <span className="d-none d-sm-inline">Show scanning errors log</span>
                 <span className="d-inline d-sm-none">Logs</span>
               </div>
@@ -251,7 +251,7 @@ const RepositoryCard = (props: Props) => {
               </SyntaxHighlighter>
             </div>
           </Modal>
-          <span className="ml-3 font-italic text-muted">{nextCheckMsg}</span>
+          <span className="ms-3 fst-italic text-muted">{nextCheckMsg}</span>
         </>
       );
     } else {
@@ -274,7 +274,7 @@ const RepositoryCard = (props: Props) => {
               </div>
             </Modal>
           )}
-          <span className="ml-1 font-italic text-muted">{nextCheckMsg}</span>
+          <span className="ms-1 fst-italic text-muted">{nextCheckMsg}</span>
         </>
       );
     }
@@ -291,23 +291,23 @@ const RepositoryCard = (props: Props) => {
 
             <OfficialBadge
               official={props.repository.official}
-              className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+              className={`ms-3 d-none d-md-inline ${styles.labelWrapper}`}
               type="repo"
             />
 
             <VerifiedPublisherBadge
               verifiedPublisher={props.repository.verifiedPublisher}
-              className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+              className={`ms-3 d-none d-md-inline ${styles.labelWrapper}`}
             />
 
             <DisabledRepositoryBadge
               disabled={props.repository.disabled!}
-              className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+              className={`ms-3 d-none d-md-inline ${styles.labelWrapper}`}
             />
 
             <ScannerDisabledRepositoryBadge
               scannerDisabled={props.repository.scannerDisabled!}
-              className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+              className={`ms-3 d-none d-md-inline ${styles.labelWrapper}`}
             />
 
             {transferModalStatus && (
@@ -338,18 +338,18 @@ const RepositoryCard = (props: Props) => {
               />
             )}
 
-            <div className="ml-auto pl-3">
+            <div className="ms-auto ps-3">
               <RepositoryIconLabel kind={props.repository.kind} isPlural />
             </div>
 
-            <div className="ml-3">
+            <div className="ms-3">
               <div
                 ref={dropdownMenu}
-                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdownMenu, {
                   show: dropdownMenuStatus,
                 })}
               >
-                <div className={`arrow ${styles.arrow}`} />
+                <div className={`dropdown-arrow ${styles.arrow}`} />
 
                 <button
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
@@ -361,7 +361,7 @@ const RepositoryCard = (props: Props) => {
                   aria-label="Open badge modal"
                 >
                   <div className="d-flex flex-row align-items-center">
-                    <MdLabel className={`mr-2 ${styles.btnIcon}`} />
+                    <MdLabel className={`me-2 ${styles.btnIcon}`} />
                     <span>Get badge</span>
                   </div>
                 </button>
@@ -377,7 +377,7 @@ const RepositoryCard = (props: Props) => {
                   label="Open transfer repository modal"
                 >
                   <>
-                    <RiArrowLeftRightLine className={`mr-2 ${styles.btnIcon}`} />
+                    <RiArrowLeftRightLine className={`me-2 ${styles.btnIcon}`} />
                     <span>Transfer</span>
                   </>
                 </ActionBtn>
@@ -396,7 +396,7 @@ const RepositoryCard = (props: Props) => {
                   label="Open update repository modal"
                 >
                   <>
-                    <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <FaPencilAlt className={`me-2 ${styles.btnIcon}`} />
                     <span>Edit</span>
                   </>
                 </ActionBtn>
@@ -412,7 +412,7 @@ const RepositoryCard = (props: Props) => {
                   label="Open delete repository modal"
                 >
                   <>
-                    <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <FaTrashAlt className={`me-2 ${styles.btnIcon}`} />
                     <span>Delete</span>
                   </>
                 </ActionBtn>
@@ -431,14 +431,14 @@ const RepositoryCard = (props: Props) => {
           {props.repository.repositoryId && (
             <div className="mt-2 d-flex flex-row align-items-baseline">
               <div className="text-truncate">
-                <small className="text-muted text-uppercase mr-1">ID: </small>
+                <small className="text-muted text-uppercase me-1">ID: </small>
                 <small>{props.repository.repositoryId}</small>
               </div>
-              <div className={`ml-1 ${styles.copyBtn}`}>
+              <div className={`ms-1 ${styles.copyBtn}`}>
                 <div className={`position-absolute ${styles.copyBtnWrapper}`}>
                   <ButtonCopyToClipboard
                     text={props.repository.repositoryId}
-                    className="btn-link border-0 text-dark font-weight-bold"
+                    className="btn-link border-0 text-dark fw-bold"
                     label="Copy repository ID to clipboard"
                   />
                 </div>
@@ -446,21 +446,21 @@ const RepositoryCard = (props: Props) => {
             </div>
           )}
           <div className="text-truncate">
-            <small className="text-muted text-uppercase mr-1">Url: </small>
+            <small className="text-muted text-uppercase me-1">Url: </small>
             <small>{props.repository.url}</small>
           </div>
           <div>
-            <small className="text-muted text-uppercase mr-1">Last processed: </small>
+            <small className="text-muted text-uppercase me-1">Last processed: </small>
             <small>{getLastTracking()}</small>
           </div>
           <div>
-            <small className="text-muted text-uppercase mr-1">Last security scan: </small>
+            <small className="text-muted text-uppercase me-1">Last security scan: </small>
             <small>{getLastScanning()}</small>
           </div>
 
           <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
-            <OfficialBadge official={props.repository.official} className="mr-3" type="repo" />
-            <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} className="mr-3" />
+            <OfficialBadge official={props.repository.official} className="me-3" type="repo" />
+            <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} className="me-3" />
             <DisabledRepositoryBadge disabled={props.repository.disabled!} />
           </div>
         </div>

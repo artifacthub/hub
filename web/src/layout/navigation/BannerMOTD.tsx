@@ -37,7 +37,7 @@ const BannerMOTD = () => {
 
       <button
         type="button"
-        className={`close position-absolute ${styles.close}`}
+        className={`close position-absolute top-0 bottom-0 ${styles.close}`}
         onClick={() => setOpenStatus(false)}
         aria-label="Close banner"
       >

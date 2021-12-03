@@ -1,6 +1,4 @@
 .link {
-  background-color: transparent;
-  position: relative;
   top: -1px;
 }
 
@@ -10,7 +8,6 @@
 
 .dropdown {
   width: 350px;
-  white-space: normal;
   font-size: 0.85rem;
   margin-top: 23px;
 }
@@ -24,23 +21,13 @@
   font-size: 0.85rem;
 }
 
-.urlContent {
-  word-break: break-all;
-}
-
 .infoIcon {
   min-width: 1rem;
-  position: relative;
   top: 2px;
 }
 
 .repoIconMini {
   height: 12px;
-  width: auto;
-}
-
-.miniBtn {
-  background-color: transparent;
 }
 
 .arrow {
@@ -59,7 +46,6 @@
 }
 
 .repoLabel {
-  position: relative;
   top: -1px;
 }
 

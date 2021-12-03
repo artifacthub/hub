@@ -118,7 +118,7 @@ const ValuesSchema = (props: Props) => {
   return (
     <>
       <button
-        className="btn btn-outline-secondary btn-block btn-sm"
+        className="btn btn-outline-secondary btn-sm w-100"
         onClick={onOpenModal}
         aria-label="Open values schema modal"
       >
@@ -126,12 +126,12 @@ const ValuesSchema = (props: Props) => {
           {isLoading ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2 font-weight-bold">Getting schema...</span>
+              <span className="ms-2 fw-bold">Getting schema...</span>
             </>
           ) : (
             <>
-              <CgListTree className="mr-2" />
-              <span className="font-weight-bold">Values Schema</span>
+              <CgListTree className="me-2" />
+              <span className="fw-bold">Values Schema</span>
             </>
           )}
         </div>

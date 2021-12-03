@@ -34,7 +34,7 @@ const TOC = (props: Props) => {
         <div className="mt-0 mt-sm-2">
           <button
             ref={buttonRef}
-            className={`btn btn-sm mr-2 btn-outline-dark ${styles.btn}`}
+            className={`btn btn-sm me-2 btn-outline-dark ${styles.btn}`}
             onClick={() => setVisibleTOC(!visibleTOC)}
             aria-label="Table of contents"
             aria-expanded={visibleTOC}
@@ -46,15 +46,15 @@ const TOC = (props: Props) => {
           </button>
         </div>
         <div className={`flex-grow-1 ${styles.minWidth}`}>
-          <h1 className={`mb-0 ${styles.title}`}>
+          <h1 className={`mb-0 lh-base ${styles.title}`}>
             <ReactMarkdown children={cleanTOCEntry(props.title)} linkTarget="_blank" skipHtml />
           </h1>
         </div>
         {props.supportLink && (
-          <div className={`ml-2 ${styles.supportLinkWrapper}`}>
-            <ExternalLink href={props.supportLink} className="mr-0" label="Open support link">
+          <div className={`ms-2 ${styles.supportLinkWrapper}`}>
+            <ExternalLink href={props.supportLink} className="me-0" label="Open support link">
               <small className="d-flex flex-row align-items-center text-nowrap text-primary">
-                <BsFlagFill className="mr-1" />
+                <BsFlagFill className="me-1" />
                 Report issue
               </small>
             </ExternalLink>

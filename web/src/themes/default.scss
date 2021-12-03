@@ -20,6 +20,9 @@ $container-max-widths: (
   xxl: 1860px,
 );
 
+$form-check-input-checked-bg-color: var(--highlighted);
+$dark: #343a40;
+
 @import '~bootstrap/scss/bootstrap.scss';
 @import './light.scss';
 @import './dark.scss';
@@ -46,11 +49,11 @@ button.disabled {
   padding-right: 0.75rem !important;
 }
 
-.was-validated .custom-control-input:valid ~ .custom-control-label::before {
+.was-validated .form-check-input:valid ~ .form-check-label::before {
   border-color: inherit;
 }
 
-.was-validated .custom-control-input:valid ~ .custom-control-label {
+.was-validated .form-check-input:valid ~ .form-check-label {
   color: inherit;
 }
 
@@ -58,12 +61,12 @@ button.disabled {
   border-color: #ced4da !important;
 }
 
-.was-validated .custom-control-input:valid ~ .custom-control-label::before,
-.custom-control-input.is-valid ~ .custom-control-label::before,
-.was-validated .custom-select:valid,
-.custom-select.is-valid,
-.was-validated .custom-select:valid:focus,
-.custom-select.is-valid:focus {
+.was-validated .form-check-input:valid ~ .form-check-label::before,
+.form-check-input.is-valid ~ .form-check-label::before,
+.was-validated .form-select:valid,
+.form-select.is-valid,
+.was-validated .form-select:valid:focus,
+.form-select.is-valid:focus {
   border-color: #adb5bd;
 }
 
@@ -175,22 +178,22 @@ button,
   background-image: url('/static/media/bootstrap/bt_input_error.svg');
 }
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label:after {
+.form-check .form-check-input:checked ~ .form-check-label:after {
   background-image: url('/static/media/bootstrap/bt_check.svg');
 }
 
-.custom-radio .custom-control-input:checked ~ .custom-control-label:after {
+.custom-radio .form-check-input:checked ~ .form-check-label:after {
   background-image: url('/static/media/bootstrap/bt_dot.svg');
 }
 
-.was-validated .custom-select:valid,
-.custom-select.is-valid,
-.was-validated .custom-select:valid:focus,
-.custom-select.is-valid:focus {
+.was-validated .form-select:valid,
+.form-select.is-valid,
+.was-validated .form-select:valid:focus,
+.form-select.is-valid:focus {
   background: url('/static/media/bootstrap/bt_input_success.svg') no-repeat right 0.75rem center/8px 10px;
 }
 
-.custom-select {
+.form-select {
   background: #fff url('/static/media/bootstrap/bt_select.svg') right 0.75rem center/8px 10px no-repeat;
 }
 
@@ -198,7 +201,7 @@ button,
   outline: none !important;
 }
 
-.font-weight-semibold {
+.fw-semibold {
   font-weight: 500 !important;
 }
 
@@ -210,12 +213,12 @@ button,
 .visible-scroll::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #686868;
-  border: 2px solid var(--white);
+  border: 2px solid var(--bs-white);
 }
 
 /* Popover */
 .popover {
-  background-color: var(--white);
+  background-color: var(--bs-white);
   color: var(--color-font);
   border-color: var(--mid-gray);
 }
@@ -227,4 +230,127 @@ button,
 
 .popover-body {
   color: var(--color-font);
+}
+
+// Bootstrap 5
+
+.btn-link,
+a {
+  text-decoration: none;
+}
+
+a:not(.badge):not(.btn):hover,
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.badge {
+  padding: 0.25em 0.4em;
+}
+
+.form-check {
+  padding-left: 1.5rem;
+  margin-bottom: 0;
+}
+
+.form-check .form-check-input {
+  margin-left: -1.5rem;
+}
+
+.form-check-input {
+  width: 1rem;
+  height: 1rem;
+}
+
+.form-text {
+  font-size: 80%;
+}
+
+.table > :not(:first-child) {
+  border-color: var(--border-md);
+}
+
+.rounded-pill {
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+}
+
+.jumbotron {
+  padding: 2rem 1rem;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.dropdown-menu {
+  margin: 0.125rem 0 0;
+}
+
+.dropdown-menu-end {
+  right: 0;
+}
+
+.dropdown-menu .dropdown-arrow {
+  position: absolute;
+  display: block;
+  width: 1rem;
+  height: 0.5rem;
+  margin: 0 0.3rem;
+  top: calc(-0.5rem - 1px);
+  right: 1rem;
+}
+
+.dropdown-menu > .dropdown-arrow:after,
+.dropdown-menu > .dropdown-arrow:before {
+  position: absolute;
+  display: block;
+  content: '';
+  border-color: transparent;
+  border-style: solid;
+}
+
+.dropdown-menu > .dropdown-arrow:after {
+  top: 1px;
+  border-width: 0 0.5rem 0.5rem;
+  border-bottom-color: var(--bs-white);
+}
+
+.dropdown-menu > .dropdown-arrow:before {
+  top: 0;
+  border-width: 0 0.5rem 0.5rem;
+  border-bottom-color: var(--color-black-25);
+}
+
+.small,
+small {
+  font-size: 80%;
+  font-weight: 400;
+}
+
+.text-dark {
+  color: $dark;
+}
+
+.table > :not(caption) > * > * {
+  padding: 0.75rem;
+}
+
+.table-sm td,
+.table-sm th {
+  padding: 0.3rem;
+}
+
+.list-group-item {
+  padding: 0.75rem 1.25rem;
+}
+
+.popover-body {
+  padding: 0.5rem 0.75rem;
+}
+
+@media only screen and (min-width: 576px) {
+  .jumbotron {
+    padding: 4rem 2rem;
+  }
 }

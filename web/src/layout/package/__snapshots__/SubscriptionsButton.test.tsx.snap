@@ -3,7 +3,7 @@
 exports[`SubscriptionsButton creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-none d-md-block position-relative ml-2"
+    class="d-none d-md-block position-relative ms-2"
   >
     <div
       class="position-relative undefined"
@@ -18,7 +18,7 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
           type="button"
         >
           <div
-            class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper iconWrapper"
+            class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 fs-5 bg-white iconWrapper"
           >
             <svg
               class="rounded-circle text-muted"
@@ -43,11 +43,11 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="dropdown-menu dropdown-menu-right p-0 dropdown"
+      class="dropdown-menu dropdown-menu-end p-0 dropdown"
       role="menu"
     >
       <div
-        class="arrow arrow"
+        class="dropdown-arrow arrow"
       />
       <button
         aria-label="Change New releases subscription"
@@ -57,7 +57,7 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
           class="d-flex flex-row align-items-center w-100 justify-content-between"
         >
           <div
-            class="mr-3"
+            class="me-3"
           >
             <svg
               data-testid="uncheckedSubsBtn"
@@ -98,13 +98,13 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
                 />
               </svg>
               <span
-                class="ml-2"
+                class="ms-2"
               >
                 New releases
               </span>
             </div>
             <small
-              class="text-muted text-left"
+              class="text-muted text-start"
             >
               Receive a notification when a new version of this package is released.
             </small>
@@ -119,7 +119,7 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
           class="d-flex flex-row align-items-center w-100 justify-content-between"
         >
           <div
-            class="mr-3"
+            class="me-3"
           >
             <svg
               data-testid="uncheckedSubsBtn"
@@ -160,13 +160,13 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
                 />
               </svg>
               <span
-                class="ml-2"
+                class="ms-2"
               >
                 Security alerts
               </span>
             </div>
             <small
-              class="text-muted text-left"
+              class="text-muted text-start"
             >
               Receive a notification when important security vulnerabilities are found in the latest version of this package.
             </small>

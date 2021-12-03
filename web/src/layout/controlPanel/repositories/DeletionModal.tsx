@@ -60,13 +60,13 @@ const DeletionModal = (props: Props) => {
             aria-label="Cancel"
           >
             <div className="d-flex flex-row align-items-center">
-              <IoMdCloseCircle className="mr-2" />
+              <IoMdCloseCircle className="me-2" />
               <span>Cancel</span>
             </div>
           </button>
 
           <button
-            className="btn btn-sm btn-danger ml-3"
+            className="btn btn-sm btn-danger ms-3"
             onClick={(e) => {
               e.preventDefault();
               deleteRepository();
@@ -78,11 +78,11 @@ const DeletionModal = (props: Props) => {
               {isDeleting ? (
                 <>
                   <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                  <span className="ml-2">Deleting...</span>
+                  <span className="ms-2">Deleting...</span>
                 </>
               ) : (
                 <>
-                  <FaTrashAlt className="mr-2" />
+                  <FaTrashAlt className="me-2" />
                   <span>Delete</span>
                 </>
               )}
@@ -96,7 +96,7 @@ const DeletionModal = (props: Props) => {
     >
       <div className="mw-100">
         <div className="alert alert-warning my-4">
-          <span className="font-weight-bold text-uppercase">Important:</span> Please read this carefully.
+          <span className="fw-bold text-uppercase">Important:</span> Please read this carefully.
         </div>
 
         <p>If you delete this repository all packages belonging to it will be deleted.</p>
@@ -107,11 +107,11 @@ const DeletionModal = (props: Props) => {
         </p>
 
         <p>
-          <span className="font-weight-bold">This operation cannot be undone</span>.
+          <span className="fw-bold">This operation cannot be undone</span>.
         </p>
 
         <p>
-          Please type <span className="font-weight-bold">{props.repository.name}</span> to confirm:
+          Please type <span className="fw-bold">{props.repository.name}</span> to confirm:
         </p>
 
         <InputField type="text" name="repoName" autoComplete="off" value="" onChange={onInputChange} />

@@ -152,7 +152,7 @@ const RepositoriesSection = (props: Props) => {
   return (
     <main
       role="main"
-      className="pr-xs-0 pr-sm-3 pr-md-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
+      className="pe-xs-0 pe-sm-3 pe-md-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
     >
       <div className="flex-grow-1 w-100">
         <div>
@@ -161,24 +161,24 @@ const RepositoriesSection = (props: Props) => {
 
             <div>
               <button
-                className={`btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
+                className={`btn btn-outline-secondary btn-sm text-uppercase me-0 me-md-2 ${styles.btnAction}`}
                 onClick={fetchRepositories}
                 aria-label="Refresh repositories list"
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <IoMdRefresh className="d-inline d-md-none" />
-                  <IoMdRefreshCircle className="d-none d-md-inline mr-2" />
+                  <IoMdRefreshCircle className="d-none d-md-inline me-2" />
                   <span className="d-none d-md-inline">Refresh</span>
                 </div>
               </button>
 
               <button
-                className={`btn btn-outline-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
+                className={`btn btn-outline-secondary btn-sm text-uppercase me-0 me-md-2 ${styles.btnAction}`}
                 onClick={() => setOpenClaimRepo(true)}
                 aria-label="Open claim repository modal"
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
-                  <RiArrowLeftRightLine className="mr-md-2" />
+                  <RiArrowLeftRightLine className="me-md-2" />
                   <span className="d-none d-md-inline">Claim ownership</span>
                 </div>
               </button>
@@ -195,7 +195,7 @@ const RepositoriesSection = (props: Props) => {
               >
                 <>
                   <MdAdd className="d-inline d-md-none" />
-                  <MdAddCircle className="d-none d-md-inline mr-2" />
+                  <MdAddCircle className="d-none d-md-inline me-2" />
                   <span className="d-none d-md-inline">Add</span>
                 </>
               </ActionBtn>
@@ -225,8 +225,8 @@ const RepositoriesSection = (props: Props) => {
         {(isLoading || isUndefined(repositories)) && <Loading />}
 
         <p className="mt-5">
-          If you want your repositories to be labeled as <span className="font-weight-bold">Verified Publisher</span>,
-          you can add a{' '}
+          If you want your repositories to be labeled as <span className="fw-bold">Verified Publisher</span>, you can
+          add a{' '}
           <ExternalLink
             href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
             className="text-reset"
@@ -257,7 +257,7 @@ const RepositoriesSection = (props: Props) => {
                       label="Open add first repository modal"
                     >
                       <div className="d-flex flex-row align-items-center text-uppercase">
-                        <MdAddCircle className="mr-2" />
+                        <MdAddCircle className="me-2" />
                         <span>Add repository</span>
                       </div>
                     </ActionBtn>

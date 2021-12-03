@@ -18,24 +18,22 @@ const SearchTipsModal = (props: Props) => {
 
   return (
     <Modal noFooter onClose={() => props.setOpenTips(false)} open={props.openTips}>
-      <div className="mw-100 text-left text-dark">
+      <div className="mw-100 text-start text-dark">
         <div className="d-flex flex-row justify-content-between mb-4">
           <div className={`h3 d-flex flex-row align-items-baseline ${styles.title}`}>
             Search tips
-            <FaRegLightbulb className="ml-2" />
+            <FaRegLightbulb className="ms-2" />
           </div>
 
           <div>
             <button
               type="button"
-              className={`close ${styles.closeModalBtn}`}
+              className={`btn-close p-3 ${styles.closeModalBtn}`}
               onClick={() => {
                 props.setOpenTips(false);
               }}
               aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+            ></button>
           </div>
         </div>
 
@@ -44,7 +42,7 @@ const SearchTipsModal = (props: Props) => {
             <li className="my-1" key={`searchBarTip_${index}`}>
               {tip.content} <small className="text-muted">Example:</small>{' '}
               <Link
-                className="font-weight-bold text-dark p-0"
+                className="fw-bold text-dark p-0"
                 onClick={() => props.setOpenTips(false)}
                 to={{
                   pathname: '/packages/search',

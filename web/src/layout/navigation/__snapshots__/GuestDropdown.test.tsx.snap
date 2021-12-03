@@ -15,7 +15,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
         class="d-flex flex-row align-items-center justify-content-center"
       >
         <div
-          class="rounded-circle d-flex align-items-center justify-content-center textLight imageWrapper iconWrapper"
+          class="rounded-circle d-flex align-items-center justify-content-center textLight border border-2 overflow-hidden lh-1 fs-5 imageWrapper iconWrapper"
         >
           <svg
             class="rounded-circle"
@@ -34,7 +34,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
           </svg>
         </div>
         <small
-          class="ml-1 textLight"
+          class="ms-1 textLight"
         >
           <svg
             fill="currentColor"
@@ -53,11 +53,11 @@ exports[`GuestDropdown creates snapshot 1`] = `
       </div>
     </button>
     <div
-      class="dropdown-menu dropdown-menu-right dropdown"
+      class="dropdown-menu dropdown-menu-end dropdown"
       role="menu"
     >
       <div
-        class="arrow arrow"
+        class="dropdown-arrow arrow"
       />
       <div
         class="my-3"
@@ -85,11 +85,11 @@ exports[`GuestDropdown creates snapshot 1`] = `
             class="dropdown-item"
           >
             <div
-              class="custom-control custom-radio"
+              class="form-check"
             >
               <input
                 aria-checked="false"
-                class="custom-control-input input"
+                class="form-check-input input"
                 id="desktop-automatic"
                 name="automatic"
                 readonly=""
@@ -98,7 +98,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
                 value="automatic"
               />
               <label
-                class="custom-control-label font-weight-bold label"
+                class="form-check-label fw-bold lh-base w-100 label"
                 for="desktop-automatic"
               >
                 <svg
@@ -124,12 +124,12 @@ exports[`GuestDropdown creates snapshot 1`] = `
             class="dropdown-item"
           >
             <div
-              class="custom-control custom-radio"
+              class="form-check"
             >
               <input
                 aria-checked="true"
                 checked=""
-                class="custom-control-input input"
+                class="form-check-input input"
                 id="desktop-light"
                 name="light"
                 readonly=""
@@ -138,7 +138,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
                 value="light"
               />
               <label
-                class="custom-control-label font-weight-bold label"
+                class="form-check-label fw-bold lh-base w-100 label"
                 for="desktop-light"
               >
                 <svg
@@ -215,11 +215,11 @@ exports[`GuestDropdown creates snapshot 1`] = `
             class="dropdown-item"
           >
             <div
-              class="custom-control custom-radio"
+              class="form-check"
             >
               <input
                 aria-checked="false"
-                class="custom-control-input input"
+                class="form-check-input input"
                 id="desktop-dark"
                 name="dark"
                 readonly=""
@@ -228,7 +228,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
                 value="dark"
               />
               <label
-                class="custom-control-label font-weight-bold label"
+                class="form-check-label fw-bold lh-base w-100 label"
                 for="desktop-dark"
               >
                 <svg

@@ -16,7 +16,7 @@ exports[`RSSLinkTitle creates snapshot 1`] = `
     </div>
     <small>
       <a
-        class="badge badge-pill badge-secondary rssBadge ml-3"
+        class="badge rounded-pill bg-secondary rssBadge ms-3"
         href="/api/v1/packages/helm/stable/test/feed/rss"
         rel="alternate noopener noreferrer"
         role="button"
@@ -27,7 +27,7 @@ exports[`RSSLinkTitle creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <svg
-            class="mr-1"
+            class="me-1"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

@@ -33,11 +33,11 @@ const PaginationLimit = (props: Props) => {
   }, [props]);
 
   return (
-    <div className="form-inline flex-nowrap align-items-center ml-3">
-      <label className="mr-2 mb-0">Show:</label>
+    <div className="d-flex flex-nowrap align-items-center ms-3">
+      <label className="form-label me-2 mb-0">Show:</label>
       <select
         ref={selectEl}
-        className={`custom-select custom-select-sm ${styles.select}`}
+        className={`form-select form-select-sm pe-2 ${styles.select}`}
         aria-label="pagination-limit"
         value={props.limit}
         onChange={handleChange}

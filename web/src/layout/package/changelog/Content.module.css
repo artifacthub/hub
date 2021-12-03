@@ -7,7 +7,6 @@
 }
 
 .btnTitle {
-  font-size: 1.25rem;
   line-height: 1.2;
 }
 
@@ -17,8 +16,8 @@
 
 .badge {
   top: -3px;
-  border: 1px solid var(--orange);
-  color: var(--orange);
+  border-color: var(--bs-orange) !important;
+  color: var(--bs-orange);
 }
 
 .linksWrapper {
@@ -27,7 +26,6 @@
 
 .link {
   font-size: 0.7rem;
-  text-decoration: underline;
 }
 
 .changeBadgeWrapper {
@@ -35,12 +33,9 @@
 }
 
 .changeBadge {
-  color: var(--white);
-  padding: 0 0.25rem;
   width: 90px;
   height: 15px;
   line-height: 15px;
-  font-weight: 400;
   font-size: 60%;
   background-color: var(--color-black-50);
 }

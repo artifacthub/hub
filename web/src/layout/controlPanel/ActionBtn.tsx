@@ -92,8 +92,8 @@ const ActionBtn = forwardRef((props: Props, ref: Ref<RefActionBtn>) => {
 
       {!isAuthorized && visibleTooltipStatus && (
         <div className="position-absolute">
-          <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
-            <div className={`arrow ${styles.tooltipArrow}`} />
+          <div className={`tooltip bs-tooltip-bottom top-0 start-0 ${styles.tooltip}`} role="tooltip">
+            <div className={`tooltip-arrow ${styles.tooltipArrow}`} />
             <div className={`tooltip-inner ${styles.tooltipContent}`}>You are not allowed to perform this action</div>
           </div>
         </div>

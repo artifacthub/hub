@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useRef, useState } from 'react';
-import { MdAddCircle, MdClose } from 'react-icons/md';
+import { MdAddCircle } from 'react-icons/md';
 
 import API from '../../../../../../api';
 import { ErrorKind, EventKind, Package } from '../../../../../../types';
@@ -99,7 +99,7 @@ const SubscriptionModal = (props: Props) => {
       <>
         {pkg.repository.userAlias || pkg.repository.organizationDisplayName || pkg.repository.organizationName}
 
-        <small className="ml-2">
+        <small className="ms-2">
           (<small className={`d-none d-md-inline text-uppercase text-muted ${styles.legend}`}>Repo: </small>
           {pkg.repository.displayName || pkg.repository.name})
         </small>
@@ -123,11 +123,11 @@ const SubscriptionModal = (props: Props) => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Adding subscription</span>
+              <span className="ms-2">Adding subscription</span>
             </>
           ) : (
             <div className="d-flex flex-row align-items-center text-uppercase">
-              <MdAddCircle className="mr-2" />
+              <MdAddCircle className="me-2" />
               <div>Add</div>
             </div>
           )}
@@ -140,7 +140,7 @@ const SubscriptionModal = (props: Props) => {
       noScrollable
     >
       <div className="w-100 position-relative">
-        <label className={`font-weight-bold ${styles.label}`} htmlFor="kind" id="events-group">
+        <label className={`form-label fw-bold ${styles.label}`} htmlFor="kind" id="events-group">
           Events
         </label>
         <div role="group" aria-labelledby="events-group" className="pb-2">
@@ -165,7 +165,7 @@ const SubscriptionModal = (props: Props) => {
         </div>
 
         <div className="d-flex flex-column mb-3">
-          <label className={`font-weight-bold ${styles.label}`} htmlFor="description" id="subscriptions-pkg-list">
+          <label className={`form-label fw-bold ${styles.label}`} htmlFor="description" id="subscriptions-pkg-list">
             Package
           </label>
 
@@ -180,21 +180,21 @@ const SubscriptionModal = (props: Props) => {
                 <div className="flex-grow-1 text-truncate py-2">
                   <div className="d-flex flex-row align-items-center h-100 text-truncate">
                     <div className="d-none d-md-inline">
-                      <RepositoryIcon kind={packageItem.repository.kind} className={`mx-3 ${styles.icon}`} />
+                      <RepositoryIcon kind={packageItem.repository.kind} className={`mx-3 w-auto ${styles.icon}`} />
                     </div>
 
                     <div
-                      className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ml-2 ml-md-0 ${styles.imageWrapper} imageWrapper`}
+                      className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ms-2 ms-md-0 rounded-circle border border-2 bg-white ${styles.imageWrapper} imageWrapper`}
                     >
                       <Image
                         alt={packageItem.displayName || packageItem.name}
                         imageId={packageItem.logoImageId}
-                        className={styles.image}
+                        className={`fs-4 ${styles.image}`}
                         kind={packageItem.repository.kind}
                       />
                     </div>
 
-                    <div className="ml-2 mr-2 mr-sm-0 font-weight-bold mb-0 text-truncate">
+                    <div className="ms-2 me-2 me-sm-0 fw-bold mb-0 text-truncate">
                       {packageItem.displayName || packageItem.name}
                       <span className={`d-inline d-sm-none ${styles.legend}`}>
                         <span className="mx-2">/</span>
@@ -202,7 +202,7 @@ const SubscriptionModal = (props: Props) => {
                       </span>
                     </div>
 
-                    <div className="px-2 ml-auto w-50 text-dark text-truncate d-none d-sm-inline">
+                    <div className="px-2 ms-auto w-50 text-dark text-truncate d-none d-sm-inline">
                       {getPublisher(packageItem)}
                     </div>
                   </div>
@@ -210,12 +210,10 @@ const SubscriptionModal = (props: Props) => {
 
                 <div>
                   <button
-                    className={`btn h-100 rounded-0 ${styles.closeButton}`}
+                    className={`btn btn-close h-100 rounded-0 border-start px-3 py-0 ${styles.closeButton}`}
                     onClick={() => setPackageItem(null)}
                     aria-label="Close"
-                  >
-                    <MdClose />
-                  </button>
+                  ></button>
                 </div>
               </div>
             </div>

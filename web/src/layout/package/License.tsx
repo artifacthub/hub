@@ -20,7 +20,7 @@ interface Props {
 const LICENSES_LIST: string[] = [
   '0bsd',
   'afl-3.0',
-  'agpl-3.0',
+  'agps-3.0',
   'apache-2.0',
   'artistic-2.0',
   'bsd-2-clause',
@@ -33,18 +33,18 @@ const LICENSES_LIST: string[] = [
   'cc0-1.0',
   'cecill-2.1',
   'ecl-2.0',
-  'epl-1.0',
-  'epl-2.0',
-  'eupl-1.1',
-  'eupl-1.2',
-  'gpl-2.0',
-  'gpl-3.0',
+  'eps-1.0',
+  'eps-2.0',
+  'eups-1.1',
+  'eups-1.2',
+  'gps-2.0',
+  'gps-3.0',
   'isc',
-  'lgpl-2.1',
-  'lgpl-3.0',
-  'lppl-1.3c',
+  'lgps-2.1',
+  'lgps-3.0',
+  'lpps-1.3c',
   'mit',
-  'mpl-2.0',
+  'mps-2.0',
   'ms-pl',
   'ms-rl',
   'ncsa',
@@ -53,7 +53,7 @@ const LICENSES_LIST: string[] = [
   'osl-3.0',
   'postgresql',
   'unlicense',
-  'upl-1.0',
+  'ups-1.0',
   'vim',
   'wtfpl',
   'zlib',
@@ -66,7 +66,7 @@ const License = (props: Props) => {
     <div className={props.className}>
       {LICENSES_LIST.includes(props.license.toLowerCase()) ? (
         <>
-          <span className="sr-only">{props.license}</span>
+          <span className="visually-hidden">{props.license}</span>
 
           <ExternalLink
             href={`https://choosealicense.com/licenses/${props.license.toLowerCase()}/`}
@@ -76,21 +76,21 @@ const License = (props: Props) => {
             ariaHidden
           >
             <div className="d-flex align-items-center mw-100 text-truncate">
-              {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
+              {props.visibleIcon && <GoLaw className="text-muted me-2 h6 mb-0" />}
               <div className={`mw-100 text-truncate ${props.linkContentClassName}`}>{props.license}</div>
               <span
                 className={classnames(styles.smallIcon, {
                   [styles.alignedSmallIcon]: isUndefined(props.visibleIcon) || !props.visibleIcon,
                 })}
               >
-                <FiExternalLink className="ml-1" />
+                <FiExternalLink className="ms-1" />
               </span>
             </div>
           </ExternalLink>
         </>
       ) : (
         <div className="d-flex align-items-center">
-          {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
+          {props.visibleIcon && <GoLaw className="text-muted me-2 h6 mb-0" />}
           <>{props.license}</>
         </div>
       )}

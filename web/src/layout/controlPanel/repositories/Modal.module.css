@@ -12,29 +12,13 @@
   font-size: 0.875rem;
 }
 
-.customControlRightLabel::before {
-  right: -2.25rem;
-  left: auto !important;
-}
-
-.customControlRightLabel::after {
-  right: -1.38rem;
-  left: auto !important;
-}
-
-.repoInfo {
-  opacity: 1;
-}
-
 .animatedWarning {
-  color: var(--orange);
-  font-weight: 700;
+  color: var(--bs-orange);
   animation: bounce 1s both;
   transform-origin: center bottom;
 }
 
 .btnInline {
-  line-height: 1rem;
   font-size: 0.8rem;
   top: -1px;
 }

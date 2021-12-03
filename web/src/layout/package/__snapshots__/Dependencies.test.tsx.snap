@@ -24,7 +24,7 @@ exports[`Dependencies creates snapshot 1`] = `
       role="list"
     >
       <div
-        class="dependency pb-1"
+        class="dependency text-break pb-1"
         data-testid="dependencyItem"
         role="listitem"
       >
@@ -32,7 +32,7 @@ exports[`Dependencies creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <svg
-            class="text-muted mr-2 mb-0 pkgIcon"
+            class="text-muted me-2 mb-0 pkgIcon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -62,7 +62,7 @@ exports[`Dependencies creates snapshot 1`] = `
           class="d-flex flex-row align-items-center repoName"
         >
           <small
-            class="text-muted text-uppercase mr-1"
+            class="text-muted text-uppercase me-1 text-nowrap"
           >
             Repo:
           </small>
@@ -76,7 +76,7 @@ exports[`Dependencies creates snapshot 1`] = `
           >
             <button
               aria-label="Copy repository url to clipboard"
-              class="btn btn-sm btn-link text-dark border-0 pb-0 copyBtn"
+              class="btn btn-sm btn-link text-dark border-0 pb-0 position-relative copyBtn"
               type="button"
             >
               <div
@@ -112,7 +112,7 @@ exports[`Dependencies creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="dependency pb-1"
+        class="dependency text-break pb-1"
         data-testid="dependencyItem"
         role="listitem"
       >
@@ -120,7 +120,7 @@ exports[`Dependencies creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <svg
-            class="text-muted mr-2 mb-0 pkgIcon"
+            class="text-muted me-2 mb-0 pkgIcon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -150,7 +150,7 @@ exports[`Dependencies creates snapshot 1`] = `
           class="d-flex flex-row align-items-center repoName"
         >
           <small
-            class="text-muted text-uppercase mr-1"
+            class="text-muted text-uppercase me-1 text-nowrap"
           >
             Repo:
           </small>
@@ -164,7 +164,7 @@ exports[`Dependencies creates snapshot 1`] = `
           >
             <button
               aria-label="Copy repository url to clipboard"
-              class="btn btn-sm btn-link text-dark border-0 pb-0 copyBtn"
+              class="btn btn-sm btn-link text-dark border-0 pb-0 position-relative copyBtn"
               type="button"
             >
               <div

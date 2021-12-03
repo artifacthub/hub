@@ -17,7 +17,7 @@ exports[`TOC creates snapshot 1`] = `
           aria-label="Table of contents"
           aria-owns="TOC-list"
           aria-pressed="false"
-          class="btn btn-sm mr-2 btn-outline-dark btn"
+          class="btn btn-sm me-2 btn-outline-dark btn"
         >
           <svg
             class="position-relative icon"
@@ -39,7 +39,7 @@ exports[`TOC creates snapshot 1`] = `
         class="flex-grow-1 minWidth"
       >
         <h1
-          class="mb-0 title"
+          class="mb-0 lh-base title"
         >
           <p>
             Readme

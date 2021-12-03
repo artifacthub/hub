@@ -2,10 +2,6 @@
   table-layout: fixed;
 }
 
-.table tbody {
-  background-color: var(--white);
-}
-
 .releasedCell {
   width: 30%;
 }

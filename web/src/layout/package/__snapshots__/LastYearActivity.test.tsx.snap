@@ -28,16 +28,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level3"
+          class="position-relative border heatMapCell level3"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Nov'20
           </div>
@@ -48,11 +48,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level3"
+                class="me-2 border rounded-circle top-0 marker level3"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 3
               </span>
@@ -64,16 +64,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level1"
+          class="position-relative border heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Dec'20
           </div>
@@ -84,11 +84,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level1"
+                class="me-2 border rounded-circle top-0 marker level1"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 1
               </span>
@@ -100,16 +100,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level3"
+          class="position-relative border heatMapCell level3"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Jan'21
           </div>
@@ -120,11 +120,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level3"
+                class="me-2 border rounded-circle top-0 marker level3"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 3
               </span>
@@ -136,16 +136,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level2"
+          class="position-relative border heatMapCell level2"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Feb'21
           </div>
@@ -156,11 +156,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level2"
+                class="me-2 border rounded-circle top-0 marker level2"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 2
               </span>
@@ -172,16 +172,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level3"
+          class="position-relative border heatMapCell level3"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Mar'21
           </div>
@@ -192,11 +192,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level3"
+                class="me-2 border rounded-circle top-0 marker level3"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 3
               </span>
@@ -208,16 +208,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level1"
+          class="position-relative border heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Apr'21
           </div>
@@ -228,11 +228,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level1"
+                class="me-2 border rounded-circle top-0 marker level1"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 1
               </span>
@@ -244,16 +244,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level3"
+          class="position-relative border heatMapCell level3"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             May'21
           </div>
@@ -264,11 +264,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level3"
+                class="me-2 border rounded-circle top-0 marker level3"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 4
               </span>
@@ -280,16 +280,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level1"
+          class="position-relative border heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Jun'21
           </div>
@@ -300,11 +300,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level1"
+                class="me-2 border rounded-circle top-0 marker level1"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 1
               </span>
@@ -316,16 +316,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level0"
+          class="position-relative border heatMapCell level0 border"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Jul'21
           </div>
@@ -336,11 +336,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level0"
+                class="me-2 border rounded-circle top-0 marker level0"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 0
               </span>
@@ -352,16 +352,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level1"
+          class="position-relative border heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Aug'21
           </div>
@@ -372,11 +372,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level1"
+                class="me-2 border rounded-circle top-0 marker level1"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 1
               </span>
@@ -388,16 +388,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level1"
+          class="position-relative border heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Sep'21
           </div>
@@ -408,11 +408,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level1"
+                class="me-2 border rounded-circle top-0 marker level1"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 1
               </span>
@@ -424,16 +424,16 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative heatMapCell level0"
+          class="position-relative border heatMapCell level0 border"
           data-testid="heatMapCell"
         />
         <div
-          class="popover popover"
+          class="popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
           <div
-            class="popover-header popoverHeader"
+            class="popover-header lh-1 p-2 popoverHeader"
           >
             Oct'21
           </div>
@@ -444,11 +444,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="mr-2 marker level0"
+                class="me-2 border rounded-circle top-0 marker level0"
               />
               Releases: 
               <span
-                class="font-weight-bold ml-2"
+                class="fw-bold ms-2"
               >
                 0
               </span>

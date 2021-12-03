@@ -7,7 +7,7 @@ exports[`Organization profile settings index creates snapshot 1`] = `
     role="main"
   >
     <div
-      class="position-absolute p-5 wrapper undefined"
+      class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
     >
       <div
         class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
@@ -17,7 +17,7 @@ exports[`Organization profile settings index creates snapshot 1`] = `
           role="status"
         >
           <span
-            class="sr-only"
+            class="visually-hidden"
           >
             Loading...
           </span>
@@ -30,7 +30,7 @@ exports[`Organization profile settings index creates snapshot 1`] = `
       Profile information
     </div>
     <div
-      class="mt-4 mt-md-5 mb-5 form"
+      class="mt-4 mt-md-5 mb-5 mw-100 form"
     />
     <div
       class="h3 mb-4 pb-2 border-bottom title"

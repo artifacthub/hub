@@ -240,7 +240,7 @@ const AuthorizationSection = (props: Props) => {
             {error}. For more information please see the{' '}
             <ExternalLink
               href="https://github.com/artifacthub/hub/blob/master/docs/authorization.md"
-              className="text-primary font-weight-bold"
+              className="text-primary fw-bold"
               label="Open documentation"
             >
               documentation
@@ -402,7 +402,7 @@ const AuthorizationSection = (props: Props) => {
           polices are written in{' '}
           <ExternalLink
             href="https://www.openpolicyagent.org/docs/latest/#rego"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open rego documentation"
           >
             rego
@@ -410,14 +410,14 @@ const AuthorizationSection = (props: Props) => {
           and they are evaluated using the{' '}
           <ExternalLink
             href="https://www.openpolicyagent.org"
-            className="text-primary font-weight-bold"
+            className="text-primary fw-bold"
             label="Open Open Policy Agent documentation"
           >
             Open Policy Agent
           </ExternalLink>
           . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can
           provide your custom policy for maximum flexibility. For more information please see the{' '}
-          <ExternalLink href="/docs/authorization" className="text-primary font-weight-bold" label="Open documentation">
+          <ExternalLink href="/docs/authorization" className="text-primary fw-bold" label="Open documentation">
             documentation
           </ExternalLink>
           .
@@ -429,33 +429,34 @@ const AuthorizationSection = (props: Props) => {
 
         {orgPolicy && (
           <>
-            <div className="custom-control custom-switch mb-4">
+            <div className="form-check form-switch mb-4">
               <input
                 id="activeAuthorization"
                 type="checkbox"
-                className="custom-control-input"
+                className="form-check-input"
                 value="true"
+                role="switch"
                 onChange={onAuthorizationEnabledChange}
                 checked={orgPolicy.authorizationEnabled}
                 disabled={!updatePolicyAllowed}
               />
-              <label className="custom-control-label" htmlFor="activeAuthorization">
+              <label className="form-check-label" htmlFor="activeAuthorization">
                 Fine-grained access control
               </label>
             </div>
 
             {orgPolicy.authorizationEnabled && (
               <>
-                <label className={styles.label} htmlFor="payload">
-                  <span className="font-weight-bold">Select authorization policy:</span>
+                <label className={`form-label ${styles.label}`} htmlFor="payload">
+                  <span className="fw-bold">Select authorization policy:</span>
                 </label>
                 <div className="d-flex flex-row mb-2">
                   {PAYLOAD_OPTION.map((item: Option) => {
                     const activeOption = !isNull(orgPolicy.predefinedPolicy) ? 'predefined' : 'custom';
                     return (
-                      <div className="custom-control custom-radio mr-4 mb-2" key={`payload_${item.name}`}>
+                      <div className="form-check me-4 mb-2" key={`payload_${item.name}`}>
                         <input
-                          className="custom-control-input"
+                          className="form-check-input"
                           type="radio"
                           id={item.name}
                           name="payload"
@@ -464,7 +465,7 @@ const AuthorizationSection = (props: Props) => {
                           onChange={onPayloadChange}
                           disabled={!updatePolicyAllowed}
                         />
-                        <label className="custom-control-label" htmlFor={item.name}>
+                        <label className="form-check-label" htmlFor={item.name}>
                           {item.label}
                         </label>
                       </div>
@@ -472,9 +473,9 @@ const AuthorizationSection = (props: Props) => {
                   })}
                 </div>
                 {orgPolicy.predefinedPolicy && (
-                  <div className="form-group w-75 mb-4">
+                  <div className=" w-75 mb-4">
                     <select
-                      className="custom-select"
+                      className="form-select"
                       aria-label="org-select"
                       value={orgPolicy.predefinedPolicy || ''}
                       onChange={onPredefinedPolicyChange}
@@ -494,7 +495,7 @@ const AuthorizationSection = (props: Props) => {
                   </div>
                 )}
                 <div className="d-flex flex-row align-self-stretch">
-                  <div className="d-flex flex-column w-50 pr-2">
+                  <div className="d-flex flex-column w-50 pe-2">
                     <div className="text-uppercase text-muted mb-2">Policy</div>
 
                     <div className="flex-grow-1">
@@ -518,13 +519,13 @@ const AuthorizationSection = (props: Props) => {
                       />
                       {invalidPolicy && (
                         <small className="text-danger">
-                          <span className="font-weight-bold">Error: </span> This field is required
+                          <span className="fw-bold">Error: </span> This field is required
                         </small>
                       )}
                     </div>
                   </div>
 
-                  <div className="d-flex flex-column w-50 pl-2">
+                  <div className="d-flex flex-column w-50 ps-2">
                     <div className="text-uppercase text-muted mb-2">Data</div>
 
                     <div className="flex-grow-1">
@@ -544,7 +545,7 @@ const AuthorizationSection = (props: Props) => {
                       />
                       {invalidPolicyDataJSON && (
                         <small className="text-danger">
-                          <span className="font-weight-bold">Error: </span> Invalid JSON format
+                          <span className="fw-bold">Error: </span> Invalid JSON format
                         </small>
                       )}
                     </div>
@@ -564,17 +565,17 @@ const AuthorizationSection = (props: Props) => {
                   {isTesting ? (
                     <>
                       <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">Preparing Playground...</span>
+                      <span className="ms-2">Preparing Playground...</span>
                     </>
                   ) : (
                     <div className="d-flex flex-row align-items-center text-uppercase">
-                      <RiTestTubeFill className="mr-2" /> <div>Test in Playground</div>
+                      <RiTestTubeFill className="me-2" /> <div>Test in Playground</div>
                     </div>
                   )}
                 </button>
               )}
 
-              <div className="ml-auto">
+              <div className="ms-auto">
                 <ActionBtn
                   ref={updateActionBtn}
                   className="btn btn-sm btn-outline-secondary"
@@ -590,11 +591,11 @@ const AuthorizationSection = (props: Props) => {
                     {isSaving ? (
                       <>
                         <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">Saving</span>
+                        <span className="ms-2">Saving</span>
                       </>
                     ) : (
                       <div className="d-flex flex-row align-items-center text-uppercase">
-                        <FaPencilAlt className="mr-2" />
+                        <FaPencilAlt className="me-2" />
                         <div>Save</div>
                       </div>
                     )}
@@ -622,7 +623,7 @@ const AuthorizationSection = (props: Props) => {
               </button>
 
               <button
-                className="btn btn-sm btn-outline-secondary text-uppercase ml-3"
+                className="btn btn-sm btn-outline-secondary text-uppercase ms-3"
                 onClick={(e) => {
                   e.preventDefault();
                   confirmationModal.onConfirm!();

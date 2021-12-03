@@ -7,7 +7,7 @@ exports[`TektonManifestModal creates snapshot 1`] = `
   >
     <button
       aria-label="Open Manifest"
-      class="btn btn-outline-secondary btn-block btn-sm text-nowrap"
+      class="btn btn-outline-secondary btn-sm text-nowrap w-100"
     >
       <div
         class="d-flex flex-row align-items-center justify-content-center text-uppercase"
@@ -27,7 +27,7 @@ exports[`TektonManifestModal creates snapshot 1`] = `
           />
         </svg>
         <span
-          class="ml-2 font-weight-bold"
+          class="ms-2 fw-bold"
         >
           Manifest
         </span>

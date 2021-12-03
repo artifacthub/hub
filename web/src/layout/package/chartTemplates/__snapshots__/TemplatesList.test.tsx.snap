@@ -3,16 +3,16 @@
 exports[`TemplatesList creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="h-100 d-flex flex-column overflow-auto pr-2"
+    class="h-100 d-flex flex-column overflow-auto pe-2"
   >
     <div
       class="position-relative w-100"
     >
       <div
-        class="form-group input-group-sm"
+        class="mb-3 input-group-sm"
       >
         <input
-          class="flex-grow-1 form-control pl-3 pr-4 input"
+          class="flex-grow-1 form-control ps-3 pe-4 input"
           name="chartTemplateInput"
           placeholder="Search by template or resource kind"
           spellcheck="false"
@@ -37,11 +37,11 @@ exports[`TemplatesList creates snapshot 1`] = `
           class="alert p-0 mt-3"
         >
           <small
-            class="text-muted text-break font-italic"
+            class="text-muted text-break fst-italic"
           >
             This chart version contains 
             <span
-              class="font-weight-bold"
+              class="fw-bold"
             >
               16
             </span>
@@ -54,7 +54,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template db_migrator_install_job.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -90,7 +90,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Job
             </span>
@@ -102,7 +102,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template db_migrator_secret.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -138,7 +138,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Secret
             </span>
@@ -150,7 +150,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template db_migrator_upgrade_job.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -186,7 +186,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Job
             </span>
@@ -198,7 +198,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template hub_deployment.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -234,7 +234,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Deployment
             </span>
@@ -246,7 +246,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template hub_ingress.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -282,7 +282,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Ingress
             </span>
@@ -294,7 +294,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template hub_secret.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -330,7 +330,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Secret
             </span>
@@ -342,7 +342,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template hub_service.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -378,7 +378,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Service
             </span>
@@ -390,7 +390,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template hub_serviceaccount.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -426,7 +426,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Multiple kinds
             </span>
@@ -438,7 +438,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template scanner_cronjob.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -474,7 +474,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               CronJob
             </span>
@@ -486,7 +486,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template scanner_secret.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -522,7 +522,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Secret
             </span>
@@ -534,7 +534,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template tracker_cronjob.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -570,7 +570,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               CronJob
             </span>
@@ -582,7 +582,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template tracker_secret.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -618,7 +618,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Secret
             </span>
@@ -630,7 +630,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template trivy_deployment.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -666,7 +666,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Deployment
             </span>
@@ -678,7 +678,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template trivy_pvc.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -714,7 +714,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               PersistentVolumeClaim
             </span>
@@ -726,7 +726,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template trivy_service.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"
@@ -762,7 +762,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate label"
+              class="text-truncate border fw-bold label"
             >
               Service
             </span>
@@ -774,7 +774,7 @@ exports[`TemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template _helpers.tpl"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-left w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
       >
         <div
           class="d-flex flex-column"

@@ -3,7 +3,7 @@
 exports[`RepositoryIconLabel creates snapshot 1`] = `
 <DocumentFragment>
   <span
-    class="badge badge-light rounded-pill bg badge"
+    class="badge bg-light text-dark rounded-pill border bg badge"
   >
     <div
       class="d-flex flex-row align-items-center"
@@ -24,7 +24,7 @@ exports[`RepositoryIconLabel creates snapshot 1`] = `
         />
       </div>
       <div
-        class="ml-1"
+        class="ms-1"
       >
         Helm chart
       </div>

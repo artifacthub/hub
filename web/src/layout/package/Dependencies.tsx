@@ -32,12 +32,12 @@ const Dependencies = (props: Props) => {
       items.push(
         <div
           key={`dependency_${index}`}
-          className={`${styles.dependency} pb-1`}
+          className={`${styles.dependency} text-break pb-1`}
           data-testid="dependencyItem"
           role="listitem"
         >
           <div className="d-flex flex-row align-items-center">
-            <GoPackage className={`text-muted mr-2 mb-0 ${styles.pkgIcon}`} />
+            <GoPackage className={`text-muted me-2 mb-0 ${styles.pkgIcon}`} />
             <div className="text-truncate">
               {!isUndefined(dependency.artifacthubRepositoryName) ? (
                 <Link
@@ -60,11 +60,11 @@ const Dependencies = (props: Props) => {
           </div>
           {dependency.repository && (
             <div className={`d-flex flex-row align-items-center ${styles.repoName}`}>
-              <small className="text-muted text-uppercase mr-1">Repo:</small>
+              <small className="text-muted text-uppercase me-1 text-nowrap">Repo:</small>
               <span className="text-truncate">{dependency.repository}</span>
               <ButtonCopyToClipboard
                 text={dependency.repository}
-                className={`btn-link text-dark border-0 pb-0 ${styles.copyBtn}`}
+                className={`btn-link text-dark border-0 pb-0 position-relative ${styles.copyBtn}`}
                 label="Copy repository url to clipboard"
               />
             </div>
@@ -74,10 +74,10 @@ const Dependencies = (props: Props) => {
 
       itemsForModal.push(
         <tr key={`dependency_row_${index}`}>
-          <td className={`border-right-0 ${styles.fitCell}`}>
-            <GoPackage className={`text-muted ml-1 ${styles.icon}`} />
+          <td className={`border-end-0 ${styles.fitCell}`}>
+            <GoPackage className={`text-muted ms-1 ${styles.icon}`} />
           </td>
-          <td className="border-left-0">
+          <td className="border-start-0">
             <div className={`d-table w-100 h-100 px-1 ${styles.textWrapper}`}>
               {!isUndefined(dependency.artifacthubRepositoryName) ? (
                 <Link
@@ -139,7 +139,7 @@ const Dependencies = (props: Props) => {
               </th>
             </tr>
           </thead>
-          <tbody>{itemsForModal}</tbody>
+          <tbody className="bg-white">{itemsForModal}</tbody>
         </table>
       ),
     };

@@ -61,7 +61,7 @@ const APIKeyCard = (props: Props) => {
       <div className="card h-100">
         <div className="card-body d-flex flex-column h-100">
           <div className="d-flex flex-row w-100 justify-content-between">
-            <div className={`h5 mb-1 mr-2 ${styles.titleCard}`}>{props.apiKey.name}</div>
+            <div className={`h5 mb-1 me-2 text-break ${styles.titleCard}`}>{props.apiKey.name}</div>
             {deletionModalStatus && (
               <Modal
                 className={`d-inline-block ${styles.modal}`}
@@ -73,13 +73,13 @@ const APIKeyCard = (props: Props) => {
                       aria-label="Cancel"
                     >
                       <div className="d-flex flex-row align-items-center">
-                        <IoMdCloseCircle className="mr-2" />
+                        <IoMdCloseCircle className="me-2" />
                         <span>Cancel</span>
                       </div>
                     </button>
 
                     <button
-                      className="btn btn-sm btn-danger ml-3"
+                      className="btn btn-sm btn-danger ms-3"
                       onClick={(e) => {
                         e.preventDefault();
                         closeDropdown();
@@ -92,11 +92,11 @@ const APIKeyCard = (props: Props) => {
                         {isDeleting ? (
                           <>
                             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                            <span className="ml-2">Deleting...</span>
+                            <span className="ms-2">Deleting...</span>
                           </>
                         ) : (
                           <>
-                            <FaTrashAlt className={`mr-2 ${styles.btnDeleteIcon}`} />
+                            <FaTrashAlt className={`me-2 ${styles.btnDeleteIcon}`} />
                             <span>Delete</span>
                           </>
                         )}
@@ -114,14 +114,14 @@ const APIKeyCard = (props: Props) => {
               </Modal>
             )}
 
-            <div className="ml-auto">
+            <div className="ms-auto">
               <div
                 ref={dropdownMenu}
-                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdownMenu, {
                   show: dropdownMenuStatus,
                 })}
               >
-                <div className={`arrow ${styles.arrow}`} />
+                <div className={`dropdown-arrow ${styles.arrow}`} />
 
                 <button
                   className="dropdown-item btn btn-sm rounded-0 text-dark"
@@ -136,7 +136,7 @@ const APIKeyCard = (props: Props) => {
                   aria-label="Open API key modal"
                 >
                   <div className="d-flex flex-row align-items-center">
-                    <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <FaPencilAlt className={`me-2 ${styles.btnIcon}`} />
                     <span>Edit</span>
                   </div>
                 </button>
@@ -151,7 +151,7 @@ const APIKeyCard = (props: Props) => {
                   aria-label="Open deletion modal"
                 >
                   <div className="d-flex flex-row align-items-center">
-                    <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <FaTrashAlt className={`me-2 ${styles.btnIcon}`} />
                     <span>Delete</span>
                   </div>
                 </button>
@@ -170,21 +170,21 @@ const APIKeyCard = (props: Props) => {
 
           <div className="mt-2 d-flex flex-row align-items-baseline">
             <div className="text-truncate">
-              <small className="text-muted text-uppercase mr-1">API-KEY-ID: </small>
+              <small className="text-muted text-uppercase me-1">API-KEY-ID: </small>
               <small>{props.apiKey.apiKeyId}</small>
             </div>
-            <div className={`ml-1 ${styles.copyBtn}`}>
+            <div className={`ms-1 ${styles.copyBtn}`}>
               <div className={`position-absolute ${styles.copyBtnWrapper}`}>
                 <ButtonCopyToClipboard
                   text={props.apiKey.apiKeyId!}
-                  className="btn-link border-0 text-dark font-weight-bold"
+                  className="btn-link border-0 text-dark fw-bold"
                   label="Copy API key ID to clipboard"
                 />
               </div>
             </div>
           </div>
           <div className="text-truncate">
-            <small className="text-muted text-uppercase mr-1">Created at: </small>
+            <small className="text-muted text-uppercase me-1">Created at: </small>
             <small>{moment.unix(props.apiKey.createdAt!).format('YYYY/MM/DD HH:mm:ss (Z)')}</small>
           </div>
         </div>

@@ -1,20 +1,14 @@
 .navbarToggler {
-  border: 0 !important;
   transition: all 0.3s ease-in-out;
-  background-color: transparent !important;
-  font-size: 1rem;
 }
 
 .iconWrapper {
   width: 2rem;
   height: 2rem;
-  background-color: var(--white);
-  line-height: 1;
-  font-size: 1.75rem !important;
 }
 
 .profileImage {
   width: 2rem;
   height: 2rem;
-  border: 2px solid var(--white);
+  border-color: var(--bs-white) !important;
 }

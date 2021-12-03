@@ -194,8 +194,8 @@ describe('PackagesSection', () => {
       expect(API.getUserSubscriptions).toHaveBeenCalledWith({ limit: 10, offset: 10 });
     });
 
-    const label = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
-    userEvent.click(label);
+    const input = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`);
+    userEvent.click(input);
 
     await waitFor(() => {
       expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
@@ -227,8 +227,7 @@ describe('PackagesSection', () => {
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
 
-      const label = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
-      userEvent.click(label);
+      userEvent.click(checkbox);
 
       await waitFor(() => {
         expect(API.deleteSubscription).toHaveBeenCalledTimes(1);
@@ -257,10 +256,9 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.queryByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
-
-      const label = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_label`);
-      userEvent.click(label);
+      const checkbox = screen.getByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`);
+      expect(checkbox).toBeInTheDocument();
+      userEvent.click(checkbox);
 
       // Remove it optimistically from document
       await waitFor(() => {
@@ -300,8 +298,8 @@ describe('PackagesSection', () => {
         expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
       });
 
-      const label = screen.getByTestId(`${mockSubscriptions.items[1].name}_newRelease_label`);
-      userEvent.click(label);
+      const checkbox = screen.getByTestId(`${mockSubscriptions.items[1].name}_newRelease_input`);
+      userEvent.click(checkbox);
 
       await waitFor(() => {
         expect(screen.queryByTestId(`${mockSubscriptions.items[1].name}_newRelease_input`)).toBeNull();

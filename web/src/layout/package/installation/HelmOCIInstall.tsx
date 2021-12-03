@@ -19,16 +19,16 @@ const HelmOCIInstall = (props: Props) => (
       title="Install chart"
     />
 
-    <div className={`font-italic text-muted ${styles.legend}`}>
-      <span className="font-weight-bold">my-{props.name}</span> corresponds to the release name, feel free to change it
-      to suit your needs. You can also add additional flags to the{' '}
-      <span className="font-weight-bold">helm install</span> command if you need to.
+    <div className={`fst-italic text-muted ${styles.legend}`}>
+      <span className="fw-bold">my-{props.name}</span> corresponds to the release name, feel free to change it to suit
+      your needs. You can also add additional flags to the <span className="fw-bold">helm install</span> command if you
+      need to.
     </div>
 
     {props.repository.private && <PrivateRepoWarning />}
 
     <div className="mt-2">
-      <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0" label="Download Helm">
+      <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link ps-0" label="Download Helm">
         Need Helm?
       </ExternalLink>
     </div>

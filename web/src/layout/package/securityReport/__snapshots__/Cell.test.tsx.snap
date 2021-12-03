@@ -26,12 +26,12 @@ exports[`SecuritySummary creates snapshot 1`] = `
           </svg>
         </td>
         <td
-          class="align-middle text-nowrap pr-3"
+          class="align-middle text-nowrap pe-3"
         >
           CVE-2020-8492
           <a
             aria-label="Link to CVE-2020-8492 vulnerability"
-            class="link ml-2 text-dark position-relative link"
+            class="link ms-2 text-dark position-relative link"
             href="http://linux.oracle.com/cve/CVE-2020-8492.html"
             rel="noopener noreferrer"
             role="button"
@@ -56,13 +56,13 @@ exports[`SecuritySummary creates snapshot 1`] = `
           </a>
         </td>
         <td
-          class="align-middle text-nowrap text-uppercase pr-3"
+          class="align-middle text-nowrap text-uppercase pe-3"
         >
           <div
             class="d-flex flex-row align-items-center"
           >
             <span
-              class="badge p-2 mr-2 badge"
+              class="badge p-2 me-2 badge"
               data-testid="severityBadge"
               style="background-color: rgb(247, 134, 15);"
             >
@@ -74,7 +74,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           </div>
         </td>
         <td
-          class="align-middle text-nowrap pr-3 w-25"
+          class="align-middle text-nowrap pe-3 w-25"
         >
           <div
             class="d-table w-100 wrapperCell"
@@ -87,7 +87,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           </div>
         </td>
         <td
-          class="align-middle text-nowrap pr-3 w-25"
+          class="align-middle text-nowrap pe-3 w-25"
         >
           <div
             class="d-table w-100 wrapperCell"
@@ -100,7 +100,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           </div>
         </td>
         <td
-          class="align-middle text-nowrap pr-3 w-25"
+          class="align-middle text-nowrap pe-3 w-25"
           data-testid="fixedVersionCell"
         >
           <div

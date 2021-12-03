@@ -37,7 +37,7 @@ exports[`Links creates snapshot 1`] = `
         >
           <svg
             baseProfile="tiny"
-            class="text-muted mr-2 icon"
+            class="text-muted me-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -52,7 +52,7 @@ exports[`Links creates snapshot 1`] = `
             />
           </svg>
           <div
-            class="flex-grow-1 linkText"
+            class="flex-grow-1 text-break linkText"
           >
             Homepage
           </div>
@@ -75,7 +75,7 @@ exports[`Links creates snapshot 1`] = `
           class="d-flex flex-row align-items-start mw-100"
         >
           <svg
-            class="text-muted mr-2 icon"
+            class="text-muted me-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -112,7 +112,7 @@ exports[`Links creates snapshot 1`] = `
           class="d-flex flex-row align-items-start mw-100"
         >
           <svg
-            class="text-muted mr-2 icon"
+            class="text-muted me-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

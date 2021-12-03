@@ -153,11 +153,11 @@ const ResetPasswordModal = (props: Props) => {
         {isSending ? (
           <>
             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-            <span className="ml-2">Resetting password...</span>
+            <span className="ms-2">Resetting password...</span>
           </>
         ) : (
           <>
-            <CgLastpass className="mr-2" />
+            <CgLastpass className="me-2" />
             <span className="text-uppercase">Reset password</span>
           </>
         )}
@@ -181,11 +181,11 @@ const ResetPasswordModal = (props: Props) => {
       >
         {verifying ? (
           <>
-            <Loading className={styles.loading} spinnerClassName="mt-0" />
+            <Loading className="position-relative" spinnerClassName="mt-0" />
             <small className="text-muted">We are verifying your code...</small>
           </>
         ) : (
-          <div className="text-left w-100">
+          <div className="text-start w-100">
             {validCode ? (
               <>
                 {isSuccess ? (
@@ -230,7 +230,7 @@ const ResetPasswordModal = (props: Props) => {
                       ref={repeatPasswordInput}
                       type="password"
                       label="Confirm password"
-                      labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+                      labelLegend={<small className="ms-1 fst-italic">(Required)</small>}
                       name="confirmPassword"
                       pattern={password.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}
                       invalidText={{

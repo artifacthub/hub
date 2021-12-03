@@ -312,7 +312,7 @@ const Readme = (props: Props) => {
     } else if (data.href.startsWith('#') && isElementInView(data.href)) {
       return (
         <button
-          className={classnames('btn btn-link text-primary text-left border-0 p-0', styles.btnLink)}
+          className={classnames('btn btn-link text-primary text-start border-0 p-0', styles.btnLink)}
           onClick={() => props.scrollIntoView(data.href)}
           aria-label="Go to element"
         >
@@ -337,7 +337,7 @@ const Readme = (props: Props) => {
   };
 
   const Blockquote: ElementType = (data: BasicProps) => {
-    return <blockquote className={`text-muted ${styles.quote}`}>{data.children}</blockquote>;
+    return <blockquote className={`text-muted position-relative ${styles.quote}`}>{data.children}</blockquote>;
   };
 
   const Heading: ElementType = (data: any) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;

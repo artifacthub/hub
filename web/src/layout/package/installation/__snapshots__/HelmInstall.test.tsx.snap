@@ -15,7 +15,7 @@ exports[`HelmInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="flex-grow-1 me-3 blockWrapper"
     >
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -84,7 +84,7 @@ exports[`HelmInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="flex-grow-1 me-3 blockWrapper"
     >
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
@@ -141,16 +141,16 @@ exports[`HelmInstall creates snapshot 1`] = `
     </div>
   </div>
   <div
-    class="font-italic text-muted legend"
+    class="fst-italic text-muted legend"
   >
     <span
-      class="font-weight-bold"
+      class="fw-bold"
     >
       my-packageName
     </span>
      corresponds to the release name, feel free to change it to suit your needs. You can also add additional flags to the 
     <span
-      class="font-weight-bold"
+      class="fw-bold"
     >
       helm install
     </span>
@@ -161,7 +161,7 @@ exports[`HelmInstall creates snapshot 1`] = `
   >
     <a
       aria-label="Download Helm"
-      class="link btn btn-link pl-0"
+      class="link btn btn-link ps-0"
       href="https://helm.sh/docs/intro/quickstart/"
       rel="noopener noreferrer"
       role="button"

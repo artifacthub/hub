@@ -3,7 +3,7 @@
 exports[`MobileSettings creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="btn-group navbar-toggler pr-0 ml-auto navbarToggler"
+    class="btn-group navbar-toggler pe-0 ms-auto border-0 fs-6 bg-transparent navbarToggler"
   >
     <aside
       aria-label="User settings"
@@ -12,14 +12,14 @@ exports[`MobileSettings creates snapshot 1`] = `
       <button
         aria-expanded="false"
         aria-label="Open sidebar"
-        class="font-weight-bold text-uppercase position-relative btn position-relative btn text-secondary pr-0 pl-3"
+        class="fw-bold text-uppercase position-relative btn position-relative btn text-secondary pe-0 ps-3"
         type="button"
       >
         <div
           class="d-flex align-items-center justify-content-center"
         >
           <div
-            class="rounded-circle d-flex align-items-center justify-content-center iconWrapper"
+            class="rounded-circle d-flex align-items-center justify-content-center lh-1 fs-3 bg-white iconWrapper"
           >
             <svg
               fill="currentColor"
@@ -39,7 +39,7 @@ exports[`MobileSettings creates snapshot 1`] = `
       </button>
       <div
         aria-label="Sidebar"
-        class="sidebar sidebar right"
+        class="sidebar position-fixed top-0 bottom-0 w-75 sidebar right"
         role="complementary"
       >
         <div
@@ -57,7 +57,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                 >
                   Signed in as 
                   <span
-                    class="font-weight-bold"
+                    class="fw-bold"
                   >
                     test
                   </span>
@@ -66,15 +66,9 @@ exports[`MobileSettings creates snapshot 1`] = `
               <div>
                 <button
                   aria-label="Close sidebar"
-                  class="close"
+                  class="btn-close closeBtn"
                   type="button"
-                >
-                  <span
-                    aria-hidden="true"
-                  >
-                    ×
-                  </span>
-                </button>
+                />
               </div>
             </div>
           </div>
@@ -107,11 +101,11 @@ exports[`MobileSettings creates snapshot 1`] = `
                   class="dropdown-item"
                 >
                   <div
-                    class="custom-control custom-radio"
+                    class="form-check"
                   >
                     <input
                       aria-checked="false"
-                      class="custom-control-input input"
+                      class="form-check-input input"
                       id="mobile-automatic"
                       name="automatic"
                       readonly=""
@@ -120,7 +114,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="automatic"
                     />
                     <label
-                      class="custom-control-label font-weight-bold label"
+                      class="form-check-label fw-bold lh-base w-100 label"
                       for="mobile-automatic"
                     >
                       <svg
@@ -146,12 +140,12 @@ exports[`MobileSettings creates snapshot 1`] = `
                   class="dropdown-item"
                 >
                   <div
-                    class="custom-control custom-radio"
+                    class="form-check"
                   >
                     <input
                       aria-checked="true"
                       checked=""
-                      class="custom-control-input input"
+                      class="form-check-input input"
                       id="mobile-light"
                       name="light"
                       readonly=""
@@ -160,7 +154,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="light"
                     />
                     <label
-                      class="custom-control-label font-weight-bold label"
+                      class="form-check-label fw-bold lh-base w-100 label"
                       for="mobile-light"
                     >
                       <svg
@@ -237,11 +231,11 @@ exports[`MobileSettings creates snapshot 1`] = `
                   class="dropdown-item"
                 >
                   <div
-                    class="custom-control custom-radio"
+                    class="form-check"
                   >
                     <input
                       aria-checked="false"
-                      class="custom-control-input input"
+                      class="form-check-input input"
                       id="mobile-dark"
                       name="dark"
                       readonly=""
@@ -250,7 +244,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="dark"
                     />
                     <label
-                      class="custom-control-label font-weight-bold label"
+                      class="form-check-label fw-bold lh-base w-100 label"
                       for="mobile-dark"
                     >
                       <svg
@@ -285,7 +279,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                   class="d-flex align-items-center"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -313,7 +307,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                   class="d-flex align-items-center"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -339,7 +333,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                   class="d-flex align-items-center"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -365,7 +359,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                   class="d-flex align-items-center"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -393,7 +387,7 @@ exports[`MobileSettings creates snapshot 1`] = `
             >
               <button
                 aria-label="Close"
-                class="ml-auto btn btn-sm btn-outline-secondary"
+                class="ms-auto btn btn-sm btn-outline-secondary text-uppercase"
                 type="button"
               >
                 Close

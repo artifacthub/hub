@@ -22,14 +22,14 @@ const CommandBlock = (props: Props) => (
     {props.filename && (
       <div className="mb-2">
         <span className="badge badge-dark badge-sm">
-          <small className="text-uppercase mr-2">File:</small>
+          <small className="text-uppercase me-2">File:</small>
           {props.filename}
         </span>
       </div>
     )}
 
     <div className="d-flex align-items-start">
-      <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
+      <div className={`flex-grow-1 me-3 ${styles.blockWrapper}`}>
         <SyntaxHighlighter
           language={props.language || 'bash'}
           style={docco}

@@ -23,8 +23,8 @@ const TektonInstall = (props: Props) => {
 
       {props.isPrivate && (
         <div className={`alert alert-warning my-4 ${styles.alert}`} role="alert">
-          <span className="font-weight-bold text-uppercase">Important:</span> This repository is{' '}
-          <span className="font-weight-bold">private</span> and requires some credentials.
+          <span className="fw-bold text-uppercase">Important:</span> This repository is{' '}
+          <span className="fw-bold">private</span> and requires some credentials.
         </div>
       )}
     </div>

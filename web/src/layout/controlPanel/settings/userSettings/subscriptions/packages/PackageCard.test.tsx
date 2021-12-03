@@ -115,7 +115,7 @@ describe('PackageCard', () => {
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const btn = screen.getByRole('checkbox', { name: 'New releases' });
+      const btn = screen.getByRole('switch', { name: 'New releases' });
       expect(btn).toBeInTheDocument();
       userEvent.click(btn);
       expect(mockChangeSubscription).toHaveBeenCalledTimes(1);

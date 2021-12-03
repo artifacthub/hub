@@ -3,7 +3,7 @@
 exports[`Alert creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="alertWrapper isAlertActive"
+    class="overflow-hidden alertWrapper isAlertActive"
     data-testid="alertWrapper"
   >
     <div
@@ -18,7 +18,7 @@ exports[`Alert creates snapshot 1`] = `
         </div>
         <button
           aria-label="Close alert"
-          class="close ml-3"
+          class="close ms-3"
           data-testid="closeAlertBtn"
           type="button"
         >

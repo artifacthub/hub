@@ -18,7 +18,7 @@ exports[`Changelog content  creates snapshot 1`] = `
         >
           <button
             aria-label="Open version 0.8.0"
-            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 btnTitle"
+            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
           >
             0.8.0
           </button>
@@ -45,13 +45,13 @@ exports[`Changelog content  creates snapshot 1`] = `
           class="badgesWrapper"
         >
           <span
-            class="badge badge-sm badge-pill mr-2 position-relative badge"
+            class="badge badge-sm rounded-pill me-2 position-relative border badge"
           >
             Pre-release
           </span>
         </div>
         <div
-          class="ml-auto pl-0 pl-md-2 text-nowrap"
+          class="ms-auto ps-0 ps-md-2 text-nowrap"
         >
           <small
             class="text-muted"
@@ -70,7 +70,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -102,7 +102,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -134,7 +134,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -166,7 +166,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -198,7 +198,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -230,7 +230,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -262,7 +262,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -294,7 +294,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -326,7 +326,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -358,7 +358,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -398,7 +398,7 @@ exports[`Changelog content  creates snapshot 1`] = `
         >
           <button
             aria-label="Open version 0.5.0"
-            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 btnTitle"
+            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
           >
             0.5.0
           </button>
@@ -425,13 +425,13 @@ exports[`Changelog content  creates snapshot 1`] = `
           class="badgesWrapper"
         >
           <span
-            class="badge badge-sm badge-pill mr-2 position-relative badge"
+            class="badge badge-sm rounded-pill me-2 position-relative border badge"
           >
             Contains security updates
           </span>
         </div>
         <div
-          class="ml-auto pl-0 pl-md-2 text-nowrap"
+          class="ms-auto ps-0 ps-md-2 text-nowrap"
         >
           <small
             class="text-muted"
@@ -450,7 +450,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -482,7 +482,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -514,7 +514,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -546,7 +546,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -578,7 +578,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -610,7 +610,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -642,7 +642,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -674,7 +674,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"
@@ -706,7 +706,7 @@ exports[`Changelog content  creates snapshot 1`] = `
             class="d-flex align-items-start flex-row w-100"
           >
             <div
-              class="mr-1 mr-md-2"
+              class="me-1 me-md-2"
             >
               <svg
                 fill="currentColor"

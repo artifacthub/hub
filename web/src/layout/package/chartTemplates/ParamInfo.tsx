@@ -29,7 +29,7 @@ interface LinkProps {
 
 const Heading: ElementType = (data: HeadingProps) => {
   const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className={`text-dark ${styles.header}`}>{data.children}</Tag>;
+  return <Tag className={`text-dark lh-1 fw-bold ${styles.header}`}>{data.children}</Tag>;
 };
 
 const Link: ElementType = (data: LinkProps) => {
@@ -79,11 +79,10 @@ const ParamInfo = (props: Props) => {
           ref={ref}
           data-testid="infoDropdown"
           className={classnames(
-            'dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1',
+            'dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap',
             styles.dropdown,
-            {
-              [styles.visible]: openStatus,
-            },
+            { invisible: !openStatus },
+            { visible: openStatus },
             { [styles.fixedWidth]: !isUndefined(props.fixedWidth) && props.fixedWidth }
           )}
           onMouseEnter={() => setOnDropdownHover(true)}

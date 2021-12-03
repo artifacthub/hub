@@ -188,7 +188,7 @@ const ChangelogModal = (props: Props) => {
       <ElementWithTooltip
         element={
           <button
-            className={classnames('btn btn-outline-secondary btn-block btn-sm text-nowrap', {
+            className={classnames('btn btn-outline-secondary btn-sm text-nowrap w-100', {
               disabled: !props.hasChangelog,
             })}
             onClick={onOpenModal}
@@ -199,12 +199,12 @@ const ChangelogModal = (props: Props) => {
               {isLoading ? (
                 <>
                   <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                  <span className="d-none d-md-inline ml-2 font-weight-bold">Getting changelog...</span>
+                  <span className="d-none d-md-inline ms-2 fw-bold">Getting changelog...</span>
                 </>
               ) : (
                 <>
                   <CgFileDocument />
-                  <span className="ml-2 font-weight-bold">Changelog</span>
+                  <span className="ms-2 fw-bold">Changelog</span>
                 </>
               )}
             </div>
@@ -236,11 +236,11 @@ const ChangelogModal = (props: Props) => {
                   {isGettingMd ? (
                     <>
                       <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">Getting markdown</span>
+                      <span className="ms-2">Getting markdown</span>
                     </>
                   ) : (
                     <>
-                      <FaMarkdown className="mr-2" />
+                      <FaMarkdown className="me-2" />
                       <div className="text-uppercase">Get markdown</div>
                     </>
                   )}
@@ -253,7 +253,7 @@ const ChangelogModal = (props: Props) => {
                 aria-label="Close modal"
               >
                 <div className="d-flex flex-row align-items-center">
-                  <MdClose className="mr-2" />
+                  <MdClose className="me-2" />
                   <div>Close</div>
                 </div>
               </button>
@@ -264,7 +264,7 @@ const ChangelogModal = (props: Props) => {
             <div className="d-flex flex-row h-100">
               <div className="h-100 d-none d-lg-flex">
                 <div
-                  className={`d-flex flex-column mr-4 border-right overflow-auto ${styles.versionsIndexWrapper}`}
+                  className={`d-flex flex-column me-4 border-end overflow-auto ${styles.versionsIndexWrapper}`}
                   ref={btnsWrapper}
                 >
                   {changelog.map((item: ChangeLog, index: number) => {
@@ -273,7 +273,7 @@ const ChangelogModal = (props: Props) => {
                       <div
                         data-testid="versionBtnWrapper"
                         className={classnames(
-                          'pr-4 pl-2 position-relative border-bottom',
+                          'pe-4 ps-2 position-relative border-bottom',
                           styles.versionBtnWrapper,
                           {
                             [styles.activeVersionBtnWrapper]: index === activeVersionIndex,
@@ -286,7 +286,7 @@ const ChangelogModal = (props: Props) => {
                       >
                         <button
                           className={classnames(
-                            'btn btn-link text-dark text-left p-0 text-truncate position-relative w-100',
+                            'btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0',
                             styles.versionBtn
                           )}
                           onClick={() => updateActiveVersion(index)}

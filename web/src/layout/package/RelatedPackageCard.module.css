@@ -6,9 +6,8 @@
   min-width: 30px;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  background-color: var(--white);
-  border: 2px solid var(--color-1-10);
+  border-color: (--color-1-10) !important;
+
   box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }
 
@@ -19,7 +18,6 @@
 
 .link {
   color: var(--gray-dark);
-  background-color: transparent;
 }
 
 .link:hover {
@@ -27,14 +25,14 @@
 }
 
 .title {
-  line-height: 1rem;
   font-size: 0.8rem;
+  line-height: 1rem;
 }
 
 .subtitle {
   font-size: 0.7rem;
-  line-height: 1rem;
   margin-top: -0.275rem;
+  line-height: 1rem;
 }
 
 .subtitle span {

@@ -64,7 +64,7 @@ const SignKeyInfo = (props: Props) => {
       <ElementWithTooltip
         element={
           <button
-            className={classNames('btn btn-outline-secondary btn-sm ml-2', styles.btn, {
+            className={classNames('btn btn-outline-secondary btn-sm ms-2 px-2 py-0', styles.btn, {
               disabled: isUndefined(props.signKey),
             })}
             onClick={onOpen}
@@ -73,7 +73,7 @@ const SignKeyInfo = (props: Props) => {
           >
             <small className="d-flex flex-row align-items-center text-uppercase">
               <FaKey />
-              <span className="ml-2 font-weight-bold">View key info</span>
+              <span className="ms-2 fw-bold">View key info</span>
             </small>
           </button>
         }

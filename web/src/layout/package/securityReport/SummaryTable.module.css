@@ -8,17 +8,11 @@
 }
 
 .imageNameWrapper {
-  display: table;
   table-layout: fixed;
-  width: 100%;
 }
 
 .tableTitle th {
   width: 100px;
-}
-
-.tableTitle th.image {
-  width: auto;
 }
 
 .legend {

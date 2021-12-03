@@ -15,17 +15,11 @@
   table-layout: fixed;
 }
 
-.table tbody {
-  background-color: var(--white);
-}
-
 .imageWrapper {
   min-width: 30px;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  background-color: var(--white);
-  border: 1px solid var(--color-1-10);
+  border-color: var(--color-1-10) !important;
   padding: 0.2rem;
 }
 

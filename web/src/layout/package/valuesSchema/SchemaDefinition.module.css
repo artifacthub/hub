@@ -23,10 +23,6 @@
   font-size: 0.5rem;
 }
 
-.wordBreak {
-  word-break: break-word;
-}
-
 .icon {
   width: 20px;
 }
@@ -47,8 +43,4 @@
 
 .errorMsg {
   line-height: 1.15rem;
-}
-
-.descriptionLink {
-  word-break: break-all;
 }

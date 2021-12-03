@@ -13,21 +13,21 @@ exports[`SectionPanel creates snapshot 1`] = `
         class="mb-4 sidebar"
       >
         <div
-          class="list-group my-4 my-md-0 mr-md-5 listGroup"
+          class="list-group my-4 my-md-0 me-md-5 listGroup"
         >
           <span
             class="w-100"
           >
             <button
               aria-label="Go to section opt0"
-              class="btn btn-link text-reset d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem listItem isActive isActive"
+              class="btn btn-link text-reset d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem listItem isActive fw-bold isActive bg-white"
               type="button"
             >
               <div
                 class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
               >
                 <div
-                  class="d-none d-sm-inline ml-1 ml-sm-2"
+                  class="d-none d-sm-inline ms-1 ms-sm-2"
                 >
                   <span
                     class="d-none d-md-inline"
@@ -55,7 +55,7 @@ exports[`SectionPanel creates snapshot 1`] = `
                 class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
               >
                 <div
-                  class="d-none d-sm-inline ml-1 ml-sm-2"
+                  class="d-none d-sm-inline ms-1 ms-sm-2"
                 >
                   <span
                     class="d-none d-md-inline"
@@ -84,7 +84,7 @@ exports[`SectionPanel creates snapshot 1`] = `
                 class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
               >
                 <div
-                  class="d-none d-sm-inline ml-1 ml-sm-2"
+                  class="d-none d-sm-inline ms-1 ms-sm-2"
                 >
                   <span
                     class="d-none d-md-inline"

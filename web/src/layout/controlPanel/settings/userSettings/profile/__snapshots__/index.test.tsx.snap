@@ -24,22 +24,22 @@ exports[`User settings index creates snapshot 1`] = `
           novalidate=""
         >
           <div
-            class="form-group mb-4 undefined"
+            class=" mb-4 undefined"
           >
             <div
               class="d-flex flex-column"
             >
               <label
-                class="label"
+                class="form-label label"
                 for="image"
               >
                 <span
-                  class="font-weight-bold"
+                  class="fw-bold"
                 >
                   Profile image
                 </span>
                 <small
-                  class="ml-1 font-italic"
+                  class="ms-1 fst-italic"
                 >
                   (Click on the image to update)
                 </small>
@@ -49,7 +49,7 @@ exports[`User settings index creates snapshot 1`] = `
               >
                 <button
                   aria-label="Add image"
-                  class="btn p-0 overflow-hidden position-relative btn"
+                  class="btn p-0 overflow-hidden position-relative border border-3 lh-1 rounded-circle fs-2 bg-white btn"
                   type="button"
                 >
                   <svg
@@ -81,14 +81,14 @@ exports[`User settings index creates snapshot 1`] = `
             />
           </div>
           <div
-            class="form-group mb-4 position-relative undefined"
+            class=" mb-4 position-relative undefined"
           >
             <label
-              class="font-weight-bold label"
+              class="form-label fw-bold label"
               for="email"
             >
               <span
-                class="font-weight-bold"
+                class="fw-bold"
               >
                 Email
               </span>
@@ -108,19 +108,19 @@ exports[`User settings index creates snapshot 1`] = `
             />
           </div>
           <div
-            class="form-group mb-4 position-relative undefined"
+            class=" mb-4 position-relative undefined"
           >
             <label
-              class="font-weight-bold label"
+              class="form-label fw-bold label"
               for="alias"
             >
               <span
-                class="font-weight-bold"
+                class="fw-bold"
               >
                 Username
               </span>
               <small
-                class="ml-1 font-italic"
+                class="ms-1 fst-italic"
               >
                 (Required)
               </small>
@@ -143,14 +143,14 @@ exports[`User settings index creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="form-group mb-4 position-relative undefined"
+            class=" mb-4 position-relative undefined"
           >
             <label
-              class="font-weight-bold label"
+              class="form-label fw-bold label"
               for="firstName"
             >
               <span
-                class="font-weight-bold"
+                class="fw-bold"
               >
                 First Name
               </span>
@@ -170,14 +170,14 @@ exports[`User settings index creates snapshot 1`] = `
             />
           </div>
           <div
-            class="form-group mb-4 position-relative undefined"
+            class=" mb-4 position-relative undefined"
           >
             <label
-              class="font-weight-bold label"
+              class="form-label fw-bold label"
               for="lastName"
             >
               <span
-                class="font-weight-bold"
+                class="fw-bold"
               >
                 Last Name
               </span>
@@ -208,7 +208,7 @@ exports[`User settings index creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center text-uppercase"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -251,7 +251,7 @@ exports[`User settings index creates snapshot 1`] = `
           class="d-flex flex-row align-items-center text-uppercase"
         >
           <svg
-            class="mr-2"
+            class="me-2"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -282,7 +282,7 @@ exports[`User settings index creates snapshot 1`] = `
           class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
         >
           <div
-            class="modal-content content modal"
+            class="modal-content border border-3 mx-auto content modal"
           >
             <div
               class="modal-header d-flex flex-row align-items-center header undefined"
@@ -294,22 +294,16 @@ exports[`User settings index creates snapshot 1`] = `
               </div>
               <button
                 aria-label="Close"
-                class="close"
+                class="btn-close"
                 type="button"
-              >
-                <span
-                  aria-hidden="true"
-                >
-                  ×
-                </span>
-              </button>
+              />
             </div>
             <div
               class="modal-body p-4 h-100 d-flex flex-column"
             >
               <div>
                 <div
-                  class="alertWrapper"
+                  class="overflow-hidden alertWrapper"
                   data-testid="alertWrapper"
                 />
               </div>
@@ -325,7 +319,7 @@ exports[`User settings index creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -345,14 +339,14 @@ exports[`User settings index creates snapshot 1`] = `
               </button>
               <button
                 aria-label="Delete account"
-                class="btn btn-sm btn-danger ml-3"
+                class="btn btn-sm btn-danger ms-3"
                 disabled=""
               >
                 <div
                   class="d-flex flex-row align-items-center text-uppercase"
                 >
                   <svg
-                    class="mr-2"
+                    class="me-2"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

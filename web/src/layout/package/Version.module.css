@@ -15,11 +15,11 @@
 }
 
 .badge {
-  border: 1px solid var(--orange);
-  color: var(--orange);
+  border-color: var(--bs-orange) !important;
+  color: var(--bs-orange);
 }
 
 .badge.isHighlighted {
-  border-color: var(--highlighted);
+  border-color: var(--highlighted) !important;
   color: var(--highlighted);
 }

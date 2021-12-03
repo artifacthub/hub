@@ -46,7 +46,7 @@ const SecurityRating = (props: Props) => {
         props.onlyBadge ? (
           <small>
             <div
-              className={`badge badge-pill text-light font-weight-bold ${styles.badge} ${className}`}
+              className={`badge rounded-pill text-light fw-bold ${styles.badge} ${className}`}
               style={{
                 backgroundColor: severity.color,
               }}
@@ -56,7 +56,7 @@ const SecurityRating = (props: Props) => {
           </small>
         ) : (
           <Label
-            className={`font-weight-bold ${className}`}
+            className={`fw-bold ${className}`}
             text="Images Security Rating"
             textForSmallDevices="Security Rating"
             bgLeftIcon={severity.color}
@@ -72,7 +72,7 @@ const SecurityRating = (props: Props) => {
         <div className="d-flex flex-column">
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge badge-pill text-light font-weight-bold mr-2 ${styles.badge}`}
+              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING.default!.color,
               }}
@@ -83,7 +83,7 @@ const SecurityRating = (props: Props) => {
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge badge-pill text-light font-weight-bold mr-2 ${styles.badge}`}
+              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.Low]!.color,
               }}
@@ -91,12 +91,12 @@ const SecurityRating = (props: Props) => {
               {SEVERITY_RATING[VulnerabilitySeverity.Low]!.level}
             </span>
             <div>
-              Vulnerabilities of severity <span className="font-weight-bold">LOW</span> found
+              Vulnerabilities of severity <span className="fw-bold">LOW</span> found
             </div>
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge badge-pill text-light font-weight-bold mr-2 ${styles.badge}`}
+              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.Medium]!.color,
               }}
@@ -104,12 +104,12 @@ const SecurityRating = (props: Props) => {
               {SEVERITY_RATING[VulnerabilitySeverity.Medium]!.level}
             </span>
             <div>
-              Vulnerabilities of severity <span className="font-weight-bold">MEDIUM</span> found
+              Vulnerabilities of severity <span className="fw-bold">MEDIUM</span> found
             </div>
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge badge-pill text-light font-weight-bold mr-2 ${styles.badge}`}
+              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.High]!.color,
               }}
@@ -117,12 +117,12 @@ const SecurityRating = (props: Props) => {
               {SEVERITY_RATING[VulnerabilitySeverity.High]!.level}
             </span>
             <div>
-              Vulnerabilities of severity <span className="font-weight-bold">HIGH</span> found
+              Vulnerabilities of severity <span className="fw-bold">HIGH</span> found
             </div>
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge badge-pill text-light font-weight-bold mr-2 ${styles.badge}`}
+              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.Critical]!.color,
               }}
@@ -130,12 +130,12 @@ const SecurityRating = (props: Props) => {
               {SEVERITY_RATING[VulnerabilitySeverity.Critical]!.level}
             </span>
             <div>
-              Vulnerabilities of severity <span className="font-weight-bold">CRITICAL</span> found
+              Vulnerabilities of severity <span className="fw-bold">CRITICAL</span> found
             </div>
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge badge-pill text-light font-weight-bold mr-2 ${styles.badge}`}
+              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.UnKnown]!.color,
               }}
@@ -143,7 +143,7 @@ const SecurityRating = (props: Props) => {
               {SEVERITY_RATING[VulnerabilitySeverity.UnKnown]!.level}
             </span>
             <div>
-              Vulnerabilities of severity <span className="font-weight-bold">UNKNOWN</span> found
+              Vulnerabilities of severity <span className="fw-bold">UNKNOWN</span> found
             </div>
           </div>
         </div>
@@ -158,7 +158,7 @@ const SecurityRating = (props: Props) => {
       {props.withLink ? (
         <div className={props.className}>
           <button
-            className={`btn btn-link text-reset p-0 ${styles.link}`}
+            className={`btn btn-link text-reset p-0 position-relative ${styles.link}`}
             onClick={(e) => {
               e.preventDefault();
               history.push({

@@ -107,7 +107,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
         return (
           <span
             className={classnames({
-              'font-weight-bold hightlighted': name.toLowerCase() === inputValue.toLowerCase(),
+              'fw-bold hightlighted': name.toLowerCase() === inputValue.toLowerCase(),
             })}
           >
             {name}
@@ -121,7 +121,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
             <span
               key={`${name}_${index}`}
               className={classnames({
-                'font-weight-bold hightlighted': str.toLowerCase() === inputValue.toLowerCase(),
+                'fw-bold hightlighted': str.toLowerCase() === inputValue.toLowerCase(),
               })}
             >
               {str}
@@ -221,7 +221,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
 
   return (
     <>
-      <div className={`form-group input-group-sm ${styles.inputWrapper} ${props.inputWrapperClassName}`}>
+      <div className={`mb-3 input-group-sm ${styles.inputWrapper} ${props.inputWrapperClassName}`}>
         <input
           ref={inputEl}
           type="text"
@@ -229,7 +229,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
           className={classnames(
             'flex-grow-1 form-control',
             styles.input,
-            { 'pl-3 pr-4': props.searchIcon },
+            { 'ps-3 pe-4': props.searchIcon },
             { 'px-3': isUndefined(props.searchIcon) || !props.searchIcon }
           )}
           name={`inputTypeahead_${props.label}`}
@@ -248,7 +248,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
       {selectedItems.length > 0 && props.visibleClear && (
         <div className="py-1 border-bottom">
           <button
-            className="btn btn-sm btn-block"
+            className="btn btn-sm w-100"
             onClick={() => {
               if (props.onClear) {
                 props.onClear();
@@ -258,7 +258,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
           >
             <div className="d-flex flex-row align-items-center text-muted">
               <IoIosClose />
-              <small className="ml-2">Clear all</small>
+              <small className="ms-2">Clear all</small>
             </div>
           </button>
         </div>

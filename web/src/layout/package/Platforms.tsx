@@ -34,7 +34,7 @@ const Platforms = (props: Props) => {
         {platforms.map((platform: string) => (
           <div
             data-testid="platformBadge"
-            className={`d-inline badge font-weight-normal mr-2 mb-1 mw-100 text-truncate ${styles.badge}`}
+            className={`d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate ${styles.badge}`}
             key={platform}
           >
             {platform}

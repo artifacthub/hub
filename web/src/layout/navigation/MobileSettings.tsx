@@ -31,7 +31,7 @@ const MobileSettings = (props: Props) => {
           <Image
             imageId={ctx.user.profileImageId}
             alt="User profile"
-            className={`rounded-circle mw-100 mh-100 ${styles.profileImage}`}
+            className={`rounded-circle mw-100 mh-100 border border-2 ${styles.profileImage}`}
             placeholderIcon={<FaUserCircle />}
           />
         );
@@ -44,20 +44,20 @@ const MobileSettings = (props: Props) => {
   };
 
   return (
-    <div className={`btn-group navbar-toggler pr-0 ml-auto ${styles.navbarToggler}`}>
+    <div className={`btn-group navbar-toggler pe-0 ms-auto border-0 fs-6 bg-transparent ${styles.navbarToggler}`}>
       {isUndefined(ctx.user) ? (
         <div className="spinner-grow spinner-grow-sm textLight pt-2" role="status">
-          <span className="sr-only">Loading...</span>
+          <span className="visually-hidden">Loading...</span>
         </div>
       ) : (
         <Sidebar
           label="User settings"
           className="d-inline-block d-lg-none"
-          buttonType="position-relative btn text-secondary pr-0 pl-3"
+          buttonType="position-relative btn text-secondary pe-0 ps-3"
           buttonIcon={
             <div
               className={classnames(
-                'rounded-circle d-flex align-items-center justify-content-center',
+                'rounded-circle d-flex align-items-center justify-content-center lh-1 fs-3 bg-white',
                 styles.iconWrapper
               )}
             >
@@ -69,7 +69,7 @@ const MobileSettings = (props: Props) => {
             <>
               {!isNull(ctx.user) && (
                 <div className="h6 mb-0 text-dark flex-grow-1">
-                  Signed in as <span className="font-weight-bold">{ctx.user.alias}</span>
+                  Signed in as <span className="fw-bold">{ctx.user.alias}</span>
                 </div>
               )}
             </>
@@ -96,7 +96,7 @@ const MobileSettings = (props: Props) => {
                       }}
                     >
                       <div className="d-flex align-items-center">
-                        <HiChartSquareBar className="mr-2" />
+                        <HiChartSquareBar className="me-2" />
                         <div>Stats</div>
                       </div>
                     </Link>
@@ -109,7 +109,7 @@ const MobileSettings = (props: Props) => {
                       onClick={() => setOpenSideBarStatus(false)}
                     >
                       <div className="d-flex align-items-center">
-                        <FaStar className="mr-2" />
+                        <FaStar className="me-2" />
                         <div>Starred packages</div>
                       </div>
                     </Link>
@@ -122,7 +122,7 @@ const MobileSettings = (props: Props) => {
                       onClick={() => setOpenSideBarStatus(false)}
                     >
                       <div className="d-flex align-items-center">
-                        <FaCog className="mr-2" />
+                        <FaCog className="me-2" />
                         <div>Control Panel</div>
                       </div>
                     </Link>
@@ -149,7 +149,7 @@ const MobileSettings = (props: Props) => {
                       }}
                     >
                       <div className="d-flex align-items-center">
-                        <HiChartSquareBar className="mr-2" />
+                        <HiChartSquareBar className="me-2" />
                         <div>Stats</div>
                       </div>
                     </Link>
@@ -163,7 +163,7 @@ const MobileSettings = (props: Props) => {
                       aria-label="Open sign in modal"
                     >
                       <div className="d-flex align-items-center">
-                        <FaSignInAlt className="mr-2" />
+                        <FaSignInAlt className="me-2" />
                         <div>Sign in</div>
                       </div>
                     </button>
@@ -177,7 +177,7 @@ const MobileSettings = (props: Props) => {
                       aria-label="Open sign up modal"
                     >
                       <div className="d-flex align-items-center">
-                        <FaEdit className="mr-2" />
+                        <FaEdit className="me-2" />
                         <div>Sign up</div>
                       </div>
                     </button>

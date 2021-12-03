@@ -65,7 +65,7 @@ const DeleteAccount = (props: Props) => {
           aria-label="Open deletion account modal"
         >
           <div className="d-flex flex-row align-items-center text-uppercase">
-            <FaTrashAlt className="mr-2" />
+            <FaTrashAlt className="me-2" />
             <div>Delete account</div>
           </div>
         </button>
@@ -83,13 +83,13 @@ const DeleteAccount = (props: Props) => {
                 aria-label="Close"
               >
                 <div className="d-flex flex-row align-items-center">
-                  <IoMdCloseCircle className="mr-2" />
+                  <IoMdCloseCircle className="me-2" />
                   <span>Cancel</span>
                 </div>
               </button>
 
               <button
-                className="btn btn-sm btn-danger ml-3"
+                className="btn btn-sm btn-danger ms-3"
                 onClick={(e) => {
                   e.preventDefault();
                   registerDeleteUserCode();
@@ -101,11 +101,11 @@ const DeleteAccount = (props: Props) => {
                   {isDeleting ? (
                     <>
                       <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">Deleting...</span>
+                      <span className="ms-2">Deleting...</span>
                     </>
                   ) : (
                     <>
-                      <FaTrashAlt className="mr-2" />
+                      <FaTrashAlt className="me-2" />
                       <span>Delete account</span>
                     </>
                   )}
@@ -123,7 +123,7 @@ const DeleteAccount = (props: Props) => {
             <div className="d-flex h-100 w-100 align-items-center justify-content-center">
               <div className="alert" role="alert" aria-live="assertive" aria-atomic="true">
                 <div className="d-flex flex-sm-column flex-md-row align-items-center">
-                  <div className="mr-3">
+                  <div className="me-3">
                     <CgUserRemove className="h1 text-dark mb-3 mb-md-0" />
                   </div>
                   <h4 className="alert-heading mb-0">We've just sent you a confirmation email</h4>
@@ -134,15 +134,15 @@ const DeleteAccount = (props: Props) => {
                   complete the process.
                 </p>
                 <p className="mb-0">
-                  Please note that the link <span className="font-weight-bold">is only valid for 15 minures</span>. If
-                  you haven't clicked the link by then you'll need to start the process from the beginning.
+                  Please note that the link <span className="fw-bold">is only valid for 15 minures</span>. If you
+                  haven't clicked the link by then you'll need to start the process from the beginning.
                 </p>
               </div>
             </div>
           ) : (
             <>
               <div className="alert alert-warning my-4">
-                <span className="font-weight-bold text-uppercase">Important:</span> Please read this carefully.
+                <span className="fw-bold text-uppercase">Important:</span> Please read this carefully.
               </div>
 
               <p>
@@ -157,11 +157,11 @@ const DeleteAccount = (props: Props) => {
               </p>
 
               <p>
-                <span className="font-weight-bold">This operation cannot be undone</span>.
+                <span className="fw-bold">This operation cannot be undone</span>.
               </p>
 
               <p data-testid="confirmationText">
-                Please type <span className="font-weight-bold">{ctx.user!.alias}</span> to confirm:
+                Please type <span className="fw-bold">{ctx.user!.alias}</span> to confirm:
               </p>
 
               <div className="pb-3">

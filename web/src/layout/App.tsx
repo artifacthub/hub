@@ -40,7 +40,7 @@ export default function App() {
     <AppCtxProvider>
       <Router history={history}>
         <div className="d-flex flex-column min-vh-100 position-relative whiteBranded">
-          <div className="sr-only sr-only-focusable">
+          <div className="visually-hidden visually-hidden-focusable">
             <a href="#content">Skip to Main Content</a>
           </div>
           <ScrollMemory />

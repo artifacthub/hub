@@ -35,9 +35,9 @@
 
 .inlineCode {
   hyphens: none;
-  color: var(--dark);
+  color: var(--bs-dark);
   background-color: var(--code-bg-md);
-  border: 1px solid var(--color-1-20);
+  border-color: var(--color-1-20) !important;
   border-radius: 3px;
   padding: 0 0.15rem;
 }

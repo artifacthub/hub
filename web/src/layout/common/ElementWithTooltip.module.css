@@ -33,10 +33,9 @@
 }
 
 .tooltipArrow::before {
-  border-bottom-color: var(--dark) !important;
+  border-bottom-color: var(--bs-dark) !important;
 }
 
 .tooltipContent {
-  background-color: var(--dark) !important;
-  max-width: 100%;
+  background-color: var(--bs-dark) !important;
 }

@@ -19,14 +19,14 @@ exports[`UserContext creates snapshot 1`] = `
         <button
           aria-expanded="false"
           aria-label="Open context"
-          class="btn btn-primary badge-pill btn-sm pr-3 position-relative ctxBtn"
+          class="btn btn-primary rounded-pill btn-sm pe-3 position-relative lh-1 ctxBtn"
           type="button"
         >
           <div
             class="d-flex flex-row align-items-center"
           >
             <div
-              class="badge badge-light badge-pill mr-2 p-0 badgeIcon"
+              class="badge bg-light text-dark rounded-pill me-2 p-0 badgeIcon"
             >
               <svg
                 fill="currentColor"
@@ -43,7 +43,7 @@ exports[`UserContext creates snapshot 1`] = `
               </svg>
             </div>
             <div
-              class="flex-grow-1 text-left mr-1 text-truncate"
+              class="flex-grow-1 text-start me-1 text-truncate badgeContent"
             >
               userAlias
             </div>
@@ -77,11 +77,11 @@ exports[`UserContext creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="dropdown-menu dropdown-menu-right dropdown"
+      class="dropdown-menu dropdown-menu-end dropdown"
       role="menu"
     >
       <div
-        class="arrow arrow"
+        class="dropdown-arrow arrow"
       />
       <button
         aria-label="Activate user context"
@@ -91,7 +91,7 @@ exports[`UserContext creates snapshot 1`] = `
           class="d-flex flex-row align-items-center text-truncate"
         >
           <svg
-            class="mr-2 icon"
+            class="me-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -110,7 +110,7 @@ exports[`UserContext creates snapshot 1`] = `
             userAlias
           </div>
           <svg
-            class="ml-2 text-success icon"
+            class="ms-2 text-success icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

@@ -361,7 +361,7 @@ const SearchView = (props: Props) => {
 
   return (
     <>
-      <SubNavbar className={styles.subnavbar}>
+      <SubNavbar className={`h-auto ${styles.subnavbar}`}>
         <div className="d-flex flex-column w-100">
           <div className="d-flex align-items-center justify-content-between flex-nowrap">
             <div className="d-flex align-items-center text-truncate w-100">
@@ -371,7 +371,7 @@ const SearchView = (props: Props) => {
                   {!isEmptyFacets() && (
                     <Sidebar
                       label="Filters"
-                      className="d-inline-block d-md-none mr-2"
+                      className="d-inline-block d-md-none me-2"
                       wrapperClassName="px-4"
                       buttonType={classnames('btn-sm rounded-circle position-relative', styles.btnMobileFilters, {
                         [styles.filtersBadge]: activeFilters,
@@ -382,7 +382,7 @@ const SearchView = (props: Props) => {
                           {isSearching ? (
                             <>
                               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                              <span className="ml-2">Loading...</span>
+                              <span className="ms-2">Loading...</span>
                             </>
                           ) : (
                             <>See {searchResults.paginationTotalCount} results</>
@@ -394,7 +394,7 @@ const SearchView = (props: Props) => {
                           <div className="d-flex align-items-center">
                             <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
                             <button
-                              className="btn btn-link btn-sm p-0 pl-1 text-dark"
+                              className="btn btn-link btn-sm p-0 ps-1 text-dark"
                               onClick={onResetFilters}
                               aria-label="Reset filters"
                             >
@@ -434,23 +434,23 @@ const SearchView = (props: Props) => {
                     <div className="d-flex flex-column w-100 text-truncate">
                       <div className={`text-truncate ${styles.searchText}`} role="status">
                         {parseInt(searchResults.paginationTotalCount) > 0 && (
-                          <span className="pr-1">
+                          <span className="pe-1">
                             {offset + 1} -{' '}
                             {parseInt(searchResults.paginationTotalCount) < ctx.prefs.search.limit * props.pageNumber
                               ? searchResults.paginationTotalCount
                               : ctx.prefs.search.limit * props.pageNumber}{' '}
-                            <span className="ml-1">of</span>{' '}
+                            <span className="ms-1">of</span>{' '}
                           </span>
                         )}
                         {searchResults.paginationTotalCount}
-                        <span className="pl-1"> results </span>
+                        <span className="ps-1"> results </span>
                         {props.tsQueryWeb && props.tsQueryWeb !== '' && (
-                          <span className="d-none d-sm-inline pl-1">
-                            for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
+                          <span className="d-none d-sm-inline ps-1">
+                            for "<span className="fw-bold">{props.tsQueryWeb}</span>"
                           </span>
                         )}
                         {activeFilters && (
-                          <small className="d-inline d-lg-none font-italic ml-1"> (some filters applied)</small>
+                          <small className="d-inline d-lg-none fst-italic ms-1"> (some filters applied)</small>
                         )}
                       </div>
                     </div>
@@ -459,7 +459,7 @@ const SearchView = (props: Props) => {
               )}
             </div>
 
-            <div className="ml-3">
+            <div className="ms-3">
               <div className="d-flex flex-row">
                 {/* Only display sort options when ts_query_web is defined */}
                 {props.tsQueryWeb && props.tsQueryWeb !== '' && (
@@ -484,7 +484,7 @@ const SearchView = (props: Props) => {
           {activeFilters && (
             <div className="d-none d-lg-inline">
               <div className="d-flex flex-row flex-wrap align-items-center pt-2">
-                <span className="mr-2 pr-1 mb-2">Filters:</span>
+                <span className="me-2 pe-1 mb-2">Filters:</span>
                 {props.official && <FilterBadge name="Only official" onClick={onOfficialChange} />}
                 {props.verifiedPublisher && (
                   <FilterBadge name="Only verified publishers" onClick={onVerifiedPublisherChange} />
@@ -537,9 +537,7 @@ const SearchView = (props: Props) => {
       </SubNavbar>
 
       <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
-        {(isSearching || isNull(searchResults.packages)) && (
-          <Loading spinnerClassName={`position-fixed ${styles.spinner}`} />
-        )}
+        {(isSearching || isNull(searchResults.packages)) && <Loading spinnerClassName="position-fixed top-50" />}
 
         <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between">
           {!isEmptyFacets() && (
@@ -547,7 +545,7 @@ const SearchView = (props: Props) => {
               className={`px-xs-0 px-sm-3 px-lg-0 d-none d-md-block position-relative ${styles.sidebar}`}
               aria-label="Filters"
             >
-              <div className="mr-5" role="menu">
+              <div className="me-5" role="menu">
                 <Filters
                   forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
                   facets={searchResults.facets}
@@ -584,20 +582,20 @@ const SearchView = (props: Props) => {
                     {isNull(apiError) ? (
                       <>
                         We're sorry!
-                        <p className={`h6 mb-0 mt-3 ${styles.noDataMessage}`}>
+                        <p className="h6 mb-0 mt-3 lh-base">
                           <span> We can't seem to find any packages that match your search </span>
                           {props.tsQueryWeb && (
-                            <span className="pl-1">
-                              for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
+                            <span className="ps-1">
+                              for "<span className="fw-bold">{props.tsQueryWeb}</span>"
                             </span>
                           )}
-                          {!isEmpty(props.filters) && <span className="pl-1">with the selected filters</span>}
+                          {!isEmpty(props.filters) && <span className="ps-1">with the selected filters</span>}
                         </p>
-                        <p className={`h6 mb-0 mt-5 ${styles.noDataMessage}`}>
+                        <p className="h6 mb-0 mt-5 lh-base">
                           You can{' '}
                           {!isEmpty(props.filters) ? (
                             <button
-                              className="btn btn-link text-dark font-weight-bold py-0 pb-1 px-0"
+                              className="btn btn-link text-dark fw-bold py-0 pb-1 px-0"
                               onClick={onResetFilters}
                               aria-label="Reset filters"
                             >
@@ -605,7 +603,7 @@ const SearchView = (props: Props) => {
                             </button>
                           ) : (
                             <button
-                              className="btn btn-link text-dark font-weight-bold py-0 pb-1 px-0"
+                              className="btn btn-link text-dark fw-bold py-0 pb-1 px-0"
                               onClick={() => {
                                 history.push({
                                   pathname: '/packages/search',
@@ -629,7 +627,7 @@ const SearchView = (props: Props) => {
                           )}
                         </p>
                         <div className="h5 d-flex flex-row align-items-end justify-content-center flex-wrap">
-                          <SampleQueries className="badge-light border-secondary text-dark" />
+                          <SampleQueries className="bg-light text-dark border-secondary text-dark" />
                         </div>
                       </>
                     ) : (

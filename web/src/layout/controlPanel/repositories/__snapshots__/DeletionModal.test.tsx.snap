@@ -18,7 +18,7 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content content"
+          class="modal-content border border-3 mx-auto content"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
@@ -30,15 +30,9 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="close"
+              class="btn-close"
               type="button"
-            >
-              <span
-                aria-hidden="true"
-              >
-                ×
-              </span>
-            </button>
+            />
           </div>
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -50,7 +44,7 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
                 class="alert alert-warning my-4"
               >
                 <span
-                  class="font-weight-bold text-uppercase"
+                  class="fw-bold text-uppercase"
                 >
                   Important:
                 </span>
@@ -64,7 +58,7 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
               </p>
               <p>
                 <span
-                  class="font-weight-bold"
+                  class="fw-bold"
                 >
                   This operation cannot be undone
                 </span>
@@ -73,14 +67,14 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
               <p>
                 Please type 
                 <span
-                  class="font-weight-bold"
+                  class="fw-bold"
                 >
                   repoTest
                 </span>
                  to confirm:
               </p>
               <div
-                class="form-group mb-4 position-relative undefined"
+                class=" mb-4 position-relative undefined"
               >
                 <input
                   autocomplete="off"
@@ -99,7 +93,7 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="alertWrapper"
+                class="overflow-hidden alertWrapper"
                 data-testid="alertWrapper"
               />
             </div>
@@ -115,7 +109,7 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -135,14 +129,14 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
             </button>
             <button
               aria-label="Delete repository"
-              class="btn btn-sm btn-danger ml-3"
+              class="btn btn-sm btn-danger ms-3"
               disabled=""
             >
               <div
                 class="d-flex flex-row align-items-center text-uppercase"
               >
                 <svg
-                  class="mr-2"
+                  class="me-2"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

@@ -51,8 +51,8 @@ const Template = (props: Props) => {
 
     const rowsContent = cleanRows.map((line: string, index: number) => {
       return (
-        <div className="d-flex flex-row my-1" key={`active-tmpl-${index}`}>
-          <div className={`text-right mr-3 ${styles.lineNumber}`}>{index + 1}</div>
+        <div className="d-flex flex-row my-1" key={`active-tmps-${index}`}>
+          <div className={`text-end me-3 ${styles.lineNumber}`}>{index + 1}</div>
           <div className="flex-grow-1">
             {line.startsWith('#') ? (
               <span className={`${styles.tmplComment} ${styles[`${effective}Theme`]}`}>{line}</span>
@@ -60,7 +60,7 @@ const Template = (props: Props) => {
               <>{processLine(line)}</>
             )}
           </div>
-          <div className="pl-2" />
+          <div className="ps-2" />
         </div>
       );
     });
@@ -83,7 +83,7 @@ const Template = (props: Props) => {
         element={<span className={`${styles.tmplValue} ${styles[`${effective}Theme`]}`}>{word}</span>}
         info={
           <div className="p-2 text-truncate">
-            <span className="text-muted mr-2 normalOpacityFont">DEFAULT:</span>
+            <span className="text-muted me-2 normalOpacityFont">DEFAULT:</span>
 
             {isDefaultObject ? (
               <>
@@ -141,7 +141,7 @@ const Template = (props: Props) => {
     const parts = str.match(TOKENIZE_RE);
     if (isNull(parts)) return null;
     return (
-      <span className={`badge font-weight-normal ${styles.badge}`}>
+      <span className={`badge fw-normal border bg-white ${styles.badge}`}>
         {parts.map((word: string, idx: number) => {
           if (word === ')' || word === '|' || word.startsWith(`"`))
             return (

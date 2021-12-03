@@ -137,7 +137,7 @@ const SubscriptionsButton = (props: Props) => {
   const isDisabled = isNull(ctx.user) || isNull(activeSubscriptions) || isUndefined(activeSubscriptions);
 
   return (
-    <div className="d-none d-md-block position-relative ml-2">
+    <div className="d-none d-md-block position-relative ms-2">
       <ElementWithTooltip
         active
         tooltipClassName={styles.tooltip}
@@ -157,12 +157,12 @@ const SubscriptionsButton = (props: Props) => {
             aria-expanded={openStatus}
           >
             <div
-              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
+              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 fs-5 bg-white ${styles.iconWrapper}`}
             >
               {isLoading && (
                 <div className={styles.loading}>
                   <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
-                    <span className="sr-only">Loading...</span>
+                    <span className="visually-hidden">Loading...</span>
                   </div>
                 </div>
               )}
@@ -181,9 +181,9 @@ const SubscriptionsButton = (props: Props) => {
       <div
         ref={ref}
         role="menu"
-        className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, { show: openStatus })}
+        className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdown, { show: openStatus })}
       >
-        <div className={`arrow ${styles.arrow}`} />
+        <div className={`dropdown-arrow ${styles.arrow}`} />
 
         {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
           const isActive = isActiveNotification(subs.kind);
@@ -197,7 +197,7 @@ const SubscriptionsButton = (props: Props) => {
               aria-label={`Change ${subs.title} subscription`}
             >
               <div className="d-flex flex-row align-items-center w-100 justify-content-between">
-                <div className="mr-3">
+                <div className="me-3">
                   {isActive ? (
                     <FaRegCheckCircle className="text-success" data-testid="checkedSubsBtn" />
                   ) : (
@@ -207,9 +207,9 @@ const SubscriptionsButton = (props: Props) => {
                 <div className="d-flex flex-column flex-grow-1">
                   <div className="h6 mb-2 d-flex flex-row align-items-center">
                     {subs.icon}
-                    <span className="ml-2">{subs.title}</span>
+                    <span className="ms-2">{subs.title}</span>
                   </div>
-                  <small className="text-muted text-left">
+                  <small className="text-muted text-start">
                     {subs.description}
                     {!subs.enabled && (
                       <i>

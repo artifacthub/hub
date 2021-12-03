@@ -77,18 +77,18 @@ const SecurityReport = (props: Props) => {
                 <div>
                   <small>No vulnerabilities found</small>
                 </div>
-                <SecurityRating summary={props.summary} className="position-relative ml-2" onlyBadge />
-                {hasWhitelistedContainers && <span className="font-weight-bold ml-1">*</span>}
+                <SecurityRating summary={props.summary} className="position-relative ms-2" onlyBadge />
+                {hasWhitelistedContainers && <span className="fw-bold ms-1">*</span>}
               </div>
             ) : (
               <div className="d-flex flex-row align-items-center mb-2">
                 <div>
                   <small>
-                    <span className="font-weight-bold mr-1">{prettifyNumber(total, 1)}</span>vulnerabilities found
+                    <span className="fw-bold me-1">{prettifyNumber(total, 1)}</span>vulnerabilities found
                   </small>
                 </div>
-                <SecurityRating summary={props.summary} className="position-relative ml-1" onlyBadge />
-                {hasWhitelistedContainers && <span className="font-weight-bold ml-1">*</span>}
+                <SecurityRating summary={props.summary} className="position-relative ms-1" onlyBadge />
+                {hasWhitelistedContainers && <span className="fw-bold ms-1">*</span>}
               </div>
             )}
 
@@ -112,14 +112,16 @@ const SecurityReport = (props: Props) => {
                       <div className="d-flex flex-row align-items-center">
                         <span
                           data-testid="summaryBadge"
-                          className={`badge position-relative mr-2 ${styles.badge}`}
+                          className={`badge position-relative me-2 ${styles.badge}`}
                           style={{ backgroundColor: SEVERITY_RATING[severity]!.color }}
                         >
                           {' '}
                         </span>
                         <span className={`text-uppercase ${styles.title}`}>{severity}</span>
                       </div>
-                      <span className={`badge badge-pill ${styles.badgeItems}`}>{props.summary![severity]}</span>
+                      <span className={`badge text-dark rounded-pill ${styles.badgeItems}`}>
+                        {props.summary![severity]}
+                      </span>
                     </div>
                   );
                 })}

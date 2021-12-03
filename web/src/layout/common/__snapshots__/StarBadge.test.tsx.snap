@@ -4,14 +4,14 @@ exports[`StarBadge creates snapshot 1`] = `
 <DocumentFragment>
   <div
     aria-label="1 stars"
-    class="badge badge-pill badge-light badge"
+    class="badge rounded-pill bg-light text-dark border badge"
     data-testid="starBadge"
   >
     <div
       class="d-flex align-items-center"
     >
       <svg
-        class="mr-1 icon"
+        class="me-1 icon"
         fill="currentColor"
         height="1em"
         stroke="currentColor"

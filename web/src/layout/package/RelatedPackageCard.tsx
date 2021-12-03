@@ -29,7 +29,7 @@ const RelatedPackageCard = (props: Props) => {
     <div className={`card cardWithHover mt-2 w-100 relatedCard ${styles.card}`} role="listitem">
       <Link
         data-testid="relatedPackageLink"
-        className={`text-decoration-none text-reset ${styles.link}`}
+        className={`text-decoration-none text-reset bg-transparent ${styles.link}`}
         to={{
           pathname: buildPackageURL(props.normalizedName, props.repository, props.version),
         }}
@@ -37,7 +37,7 @@ const RelatedPackageCard = (props: Props) => {
         <div className={`card-body d-flex flex-column ${styles.body}`}>
           <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
             <div
-              className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper} imageWrapper`}
+              className={`d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white ${styles.imageWrapper} imageWrapper`}
             >
               <Image
                 imageId={props.logoImageId}
@@ -47,14 +47,14 @@ const RelatedPackageCard = (props: Props) => {
               />
             </div>
 
-            <div className={`ml-2 h-100 flex-grow-1 ${styles.truncateWrapper}`}>
+            <div className={`ms-2 h-100 flex-grow-1 ${styles.truncateWrapper}`}>
               <div className="d-flex flex-row justify-content-between">
                 <div className="text-truncate w-100">
                   <div className={`d-flex flex-row align-items-center justify-content-between ${styles.legend}`}>
                     <div className={styles.kind}>
                       <RepositoryIconLabel
                         kind={props.repository.kind}
-                        className={`font-weight-bold ${styles.badge}`}
+                        className={`fw-bold ${styles.badge}`}
                         iconClassName={styles.badgeIcon}
                         noBackground
                       />

@@ -91,13 +91,13 @@ const ScreenshotsModal = (props: Props) => {
       <button
         type="button"
         className={classnames(
-          'btn font-weight-bold text-uppercase position-relative btn-block btn-outline-secondary btn-sm text-nowrap'
+          'btn fw-bold text-uppercase position-relative btn-outline-secondary btn-sm text-nowrap w-100'
         )}
         onClick={onOpenModal}
         aria-label="Open screenshots modal"
       >
         <div className="d-flex align-items-center justify-content-center">
-          <BiImages className="mr-2" />
+          <BiImages className="me-2" />
           <span>Screenshots</span>
         </div>
       </button>
@@ -106,9 +106,9 @@ const ScreenshotsModal = (props: Props) => {
         <div className="d-flex flex-column h-100 w-100 align-items-center unselectable">
           <div className={`d-flex flex-grow-1 w-100 pt-3 ${styles.minHeight}`}>
             <div className="d-flex flex-row align-items-center justify-content-between px-3 pt-3 h-100 w-100">
-              <div className="mr-3" ref={leftBtn}>
+              <div className="me-3" ref={leftBtn}>
                 <button
-                  className={classnames('btn btn-link', styles.arrowBtn, {
+                  className={classnames('btn btn-link fs-2', styles.arrowBtn, {
                     [`disabled ${styles.disabled}`]: activeScreenshot === 0,
                   })}
                   disabled={activeScreenshot === 0}
@@ -120,16 +120,16 @@ const ScreenshotsModal = (props: Props) => {
               </div>
 
               <div className="h-100 w-100">
-                {!onLoadedImage && <Loading className={styles.loading} />}
+                {!onLoadedImage && <Loading className="bg-transparent" />}
 
                 {error ? (
                   <div className="d-flex flex-column justify-content-center align-items-center h-100">
                     <BiUnlink className={`mb-4 text-light ${styles.imgErrorIcon}`} />
-                    <div className="font-italic text-light" ref={brokenImg}>
+                    <div className="fst-italic text-light" ref={brokenImg}>
                       Sorry, this{' '}
                       <ExternalLink
                         href={props.screenshots[activeScreenshot].url}
-                        className={`text-reset font-italic position-relative ${styles.externalLink}`}
+                        className={`text-reset fst-italic position-relative bg-transparent text-decoration-underline ${styles.externalLink}`}
                         btnType
                       >
                         image link
@@ -153,7 +153,13 @@ const ScreenshotsModal = (props: Props) => {
                             ref={img}
                             src={props.screenshots[activeScreenshot].url}
                             alt={`Screenshot: ${props.screenshots[activeScreenshot].title}`}
-                            className={classnames('mh-100 mw-100', styles.image, { [styles.bigImg]: isBigImg })}
+                            className={classnames(
+                              'mh-100 mw-100 border border-3 position-relative top-50 start-50 translate-middle',
+                              styles.image,
+                              {
+                                [styles.bigImg]: isBigImg,
+                              }
+                            )}
                             onLoad={() => setOnLoadedImage(true)}
                             onError={() => {
                               setOnLoadedImage(true);
@@ -172,7 +178,7 @@ const ScreenshotsModal = (props: Props) => {
                         {onLoadedImage && (
                           <div
                             className={classnames(
-                              'position-absolute overflow-hidden',
+                              'position-absolute overflow-hidden top-0 bottom-0 start-0 end-0',
                               styles.bigImageView,
                               {
                                 'd-none': !zoomed,
@@ -182,7 +188,7 @@ const ScreenshotsModal = (props: Props) => {
                             onClick={() => setZoomed(false)}
                           >
                             <div
-                              className={`position-absolute mw-100 mh-100 overflow-auto text-center ${styles.zoomedImgWrapper}`}
+                              className={`position-absolute mw-100 mh-100 overflow-auto text-center border border-3 align-middle top-50 start-50 translate-middle ${styles.zoomedImgWrapper}`}
                             >
                               <img
                                 ref={fullSizeImage}
@@ -205,9 +211,9 @@ const ScreenshotsModal = (props: Props) => {
                 )}
               </div>
 
-              <div className="ml-3" ref={rightBtn}>
+              <div className="ms-3" ref={rightBtn}>
                 <button
-                  className={classnames('btn btn-link', styles.arrowBtn, {
+                  className={classnames('btn btn-link fs-2', styles.arrowBtn, {
                     [`disabled ${styles.disabled}`]: activeScreenshot === props.screenshots.length - 1,
                   })}
                   disabled={activeScreenshot === props.screenshots.length - 1}
@@ -229,7 +235,7 @@ const ScreenshotsModal = (props: Props) => {
                   'btn btn-link px-1',
                   { [styles.dotBtn]: idx !== activeScreenshot },
                   {
-                    [`disabled ${styles.disabledDotBtn}`]: idx === activeScreenshot,
+                    [`disabled opacity-100 ${styles.disabledDotBtn}`]: idx === activeScreenshot,
                   }
                 )}
                 onClick={() => onChangeActiveScreenshot(idx)}

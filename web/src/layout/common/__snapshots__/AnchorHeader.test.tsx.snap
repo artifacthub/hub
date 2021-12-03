@@ -15,7 +15,7 @@ exports[`AnchorHeader creates snapshot 1`] = `
       />
       <a
         aria-label="Header"
-        class="text-reset text-center d-none d-md-block headingLink"
+        class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
         href="/#header"
         role="button"
       >

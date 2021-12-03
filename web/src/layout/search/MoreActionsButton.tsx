@@ -16,7 +16,7 @@ const MoreActionsButton = () => {
 
   return (
     <>
-      <div className="d-none d-md-block position-relative ml-3">
+      <div className="d-none d-md-block position-relative ms-3">
         <button
           className="btn p-0 position-relative"
           type="button"
@@ -28,7 +28,7 @@ const MoreActionsButton = () => {
         >
           <div className="d-flex flex-row align-items-center justify-content-center">
             <div
-              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
+              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 bg-white ${styles.iconWrapper}`}
             >
               <HiDotsVertical />
             </div>
@@ -38,9 +38,9 @@ const MoreActionsButton = () => {
         <div
           ref={ref}
           role="menu"
-          className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, { show: openStatus })}
+          className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdown, { show: openStatus })}
         >
-          <div className={`arrow ${styles.arrow}`} />
+          <div className={`dropdown-arrow ${styles.arrow}`} />
 
           <button
             className="dropdown-item btn btn-sm rounded-0 text-dark"
@@ -51,7 +51,7 @@ const MoreActionsButton = () => {
             aria-label="Open embed results modal"
           >
             <div className="d-flex flex-row align-items-center">
-              <BiCode className="mr-2" />
+              <BiCode className="me-2" />
               <div>Embed results</div>
             </div>
           </button>

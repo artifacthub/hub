@@ -11,7 +11,7 @@ exports[`CVSSVector creates snapshot 1`] = `
       CVSS v3 Vector
     </div>
     <div
-      class="ml-2"
+      class="ms-2"
     >
       (
       <small
@@ -26,12 +26,12 @@ exports[`CVSSVector creates snapshot 1`] = `
     class="d-flex flex-row align-items-baseline mt-2"
   >
     <div
-      class="font-weight-bold text-muted text-uppercase mr-2"
+      class="fw-bold text-muted text-uppercase me-2"
     >
       Score:
     </div>
     <div
-      class="font-weight-bold"
+      class="fw-bold"
     >
       9.8
     </div>
@@ -40,10 +40,10 @@ exports[`CVSSVector creates snapshot 1`] = `
     class="d-flex flex-row flex-wrap"
   >
     <div
-      class="mt-3 metrics pr-4"
+      class="mt-3 metrics pe-4"
     >
       <div
-        class="font-weight-bold text-muted text-uppercase mb-3"
+        class="fw-bold text-muted text-uppercase mb-3"
       >
         Exploitability Metrics
       </div>
@@ -56,25 +56,25 @@ exports[`CVSSVector creates snapshot 1`] = `
           Attack Vector: 
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_AV_P"
         >
           Physical
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_AV_L"
         >
           Local
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_AV_A"
         >
           Adjacent Network
         </div>
         <div
-          class="ml-2 text-center px-1 badge active active4"
+          class="ms-2 text-center px-1 badge fw-bold opacity-100 active4"
           data-testid="metric_AV_N"
         >
           Network
@@ -89,13 +89,13 @@ exports[`CVSSVector creates snapshot 1`] = `
           Attack Complexity: 
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_AC_H"
         >
           High
         </div>
         <div
-          class="ml-2 text-center px-1 badge active active3"
+          class="ms-2 text-center px-1 badge fw-bold opacity-100 active3"
           data-testid="metric_AC_L"
         >
           Low
@@ -110,19 +110,19 @@ exports[`CVSSVector creates snapshot 1`] = `
           Privileges Required: 
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_PR_H"
         >
           High
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_PR_L"
         >
           Low
         </div>
         <div
-          class="ml-2 text-center px-1 badge active active3"
+          class="ms-2 text-center px-1 badge fw-bold opacity-100 active3"
           data-testid="metric_PR_N"
         >
           None
@@ -137,13 +137,13 @@ exports[`CVSSVector creates snapshot 1`] = `
           User Interaction: 
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_UI_R"
         >
           Required
         </div>
         <div
-          class="ml-2 text-center px-1 badge active active3"
+          class="ms-2 text-center px-1 badge fw-bold opacity-100 active3"
           data-testid="metric_UI_N"
         >
           None
@@ -158,13 +158,13 @@ exports[`CVSSVector creates snapshot 1`] = `
           Scope: 
         </div>
         <div
-          class="ml-2 text-center px-1 badge active active1"
+          class="ms-2 text-center px-1 badge fw-bold opacity-100 active1"
           data-testid="metric_S_U"
         >
           Unchanged
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_S_C"
         >
           Changed
@@ -175,7 +175,7 @@ exports[`CVSSVector creates snapshot 1`] = `
       class="mt-3 metrics"
     >
       <div
-        class="font-weight-bold text-muted text-uppercase mb-3"
+        class="fw-bold text-muted text-uppercase mb-3"
       >
         Impact Metrics
       </div>
@@ -188,19 +188,19 @@ exports[`CVSSVector creates snapshot 1`] = `
           Confidentiality: 
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_C_N"
         >
           None
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_C_L"
         >
           Low
         </div>
         <div
-          class="ml-2 text-center px-1 badge active active3"
+          class="ms-2 text-center px-1 badge fw-bold opacity-100 active3"
           data-testid="metric_C_H"
         >
           High
@@ -215,19 +215,19 @@ exports[`CVSSVector creates snapshot 1`] = `
           Integrity: 
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_I_N"
         >
           None
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_I_L"
         >
           Low
         </div>
         <div
-          class="ml-2 text-center px-1 badge active active3"
+          class="ms-2 text-center px-1 badge fw-bold opacity-100 active3"
           data-testid="metric_I_H"
         >
           High
@@ -242,19 +242,19 @@ exports[`CVSSVector creates snapshot 1`] = `
           Availability: 
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_A_N"
         >
           None
         </div>
         <div
-          class="ml-2 text-center px-1 badge"
+          class="ms-2 text-center px-1 badge"
           data-testid="metric_A_L"
         >
           Low
         </div>
         <div
-          class="ml-2 text-center px-1 badge active active3"
+          class="ms-2 text-center px-1 badge fw-bold opacity-100 active3"
           data-testid="metric_A_H"
         >
           High

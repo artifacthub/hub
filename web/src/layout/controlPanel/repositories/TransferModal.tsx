@@ -130,11 +130,11 @@ const TransferRepositoryModal = (props: Props) => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Transfering repository...</span>
+              <span className="ms-2">Transfering repository...</span>
             </>
           ) : (
             <div className="d-flex flex-row align-items-center text-uppercase">
-              <RiArrowLeftRightLine className="mr-2" />
+              <RiArrowLeftRightLine className="me-2" />
               <span>Transfer</span>
             </div>
           )}
@@ -155,9 +155,9 @@ const TransferRepositoryModal = (props: Props) => {
         >
           {!isUndefined(organizationName) ? (
             <>
-              <div className="custom-control custom-radio mb-3">
+              <div className="form-check mb-3">
                 <input
-                  className="custom-control-input"
+                  className="form-check-input"
                   type="radio"
                   name="transfer"
                   id="user"
@@ -166,14 +166,14 @@ const TransferRepositoryModal = (props: Props) => {
                   onChange={() => setSelectedTransferOption('user')}
                   required
                 />
-                <label className={`custom-control-label font-weight-bold ${styles.label}`} htmlFor="user">
+                <label className={`form-check-label fw-bold ${styles.label}`} htmlFor="user">
                   Transfer to my user
                 </label>
               </div>
 
-              <div className="custom-control custom-radio mb-3">
+              <div className="form-check mb-3">
                 <input
-                  className="custom-control-input"
+                  className="form-check-input"
                   type="radio"
                   name="transfer"
                   id="org"
@@ -182,13 +182,13 @@ const TransferRepositoryModal = (props: Props) => {
                   onChange={() => setSelectedTransferOption('org')}
                   required
                 />
-                <label className={`custom-control-label font-weight-bold ${styles.label}`} htmlFor="org">
+                <label className={`form-check-label fw-bold ${styles.label}`} htmlFor="org">
                   Transfer to organization
                 </label>
               </div>
             </>
           ) : (
-            <label className={`font-weight-bold ${styles.label}`}>Transfer to organization</label>
+            <label className={`form-label fw-bold ${styles.label}`}>Transfer to organization</label>
           )}
 
           <div
@@ -197,9 +197,9 @@ const TransferRepositoryModal = (props: Props) => {
               invisible: selectedTransferOption === 'user',
             })}
           >
-            <div className="form-group w-75 mb-2">
+            <div className=" w-75 mb-2">
               <select
-                className="custom-select"
+                className="form-select"
                 aria-label="org-select"
                 value={orgToTransfer}
                 onChange={handleOrgChange}
@@ -219,7 +219,7 @@ const TransferRepositoryModal = (props: Props) => {
               <div className={`invalid-feedback ${styles.fieldFeedback}`}>This field is required</div>
             </div>
             {isFetchingOrgs && (
-              <div className="d-inline ml-3">
+              <div className="d-inline ms-3">
                 <span className="spinner-border spinner-border-sm text-primary" />
               </div>
             )}

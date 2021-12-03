@@ -23,7 +23,7 @@ const LastNotificationsModal = (props: Props) => {
         buttonType="btn badge btn-outline-secondary"
         buttonContent={
           <>
-            <GrConnect className={`mr-2 ${styles.icon}`} />
+            <GrConnect className={`me-2 ${styles.icon}`} />
             <span>Show last notifications</span>
           </>
         }
@@ -70,7 +70,7 @@ const LastNotificationsModal = (props: Props) => {
 
           {notificationsWithErrors.length > 0 && (
             <>
-              <div className="h5 mt-5 mb-4 text-upercase font-weight-bold">Errors logs</div>
+              <div className="h5 mt-5 mb-4 text-upercase fw-bold">Errors logs</div>
 
               <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
                 <thead>
@@ -94,7 +94,7 @@ const LastNotificationsModal = (props: Props) => {
         </div>
       </Modal>
       {notificationsWithErrors.length > 0 && (
-        <FaExclamation className="ml-1 text-warning" data-testid="lastNotifAlert" />
+        <FaExclamation className="ms-1 text-warning" data-testid="lastNotifAlert" />
       )}
     </>
   );

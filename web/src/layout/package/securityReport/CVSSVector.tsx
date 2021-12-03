@@ -30,7 +30,7 @@ const CVSSVector = (props: Props) => {
     <>
       <div className="d-flex flex-row align-items-baseline mt-3">
         <div className="h6">CVSS {isUndefined(vectorSource.V3Vector) ? 'v2' : 'v3'} Vector</div>
-        <div className="ml-2">
+        <div className="ms-2">
           (<small className="text-muted text-uppercase">Source: </small>
           {activeSource})
         </div>
@@ -38,15 +38,15 @@ const CVSSVector = (props: Props) => {
 
       {score && (
         <div className="d-flex flex-row align-items-baseline mt-2">
-          <div className="font-weight-bold text-muted text-uppercase mr-2">Score:</div>
-          <div className="font-weight-bold">{score}</div>
+          <div className="fw-bold text-muted text-uppercase me-2">Score:</div>
+          <div className="fw-bold">{score}</div>
         </div>
       )}
 
       <div className="d-flex flex-row flex-wrap">
         {Object.keys(vectors).map((metric: string, index: number) => (
-          <div className={classnames('mt-3', styles.metrics, { 'pr-4': index === 0 })} key={`metrics_${index}`}>
-            <div className="font-weight-bold text-muted text-uppercase mb-3">{metric}</div>
+          <div className={classnames('mt-3', styles.metrics, { 'pe-4': index === 0 })} key={`metrics_${index}`}>
+            <div className="fw-bold text-muted text-uppercase mb-3">{metric}</div>
             {vectors[metric].map((item: CVSSVectorMetric) => {
               return (
                 <div className="d-flex flex-row flex-nowrap mb-2" key={`metric_${index}_${item.value}`}>
@@ -57,8 +57,8 @@ const CVSSVector = (props: Props) => {
                       <div
                         key={`metric_${index}_${item.value}_${opt.value}`}
                         data-testid={`metric_${item.value}_${opt.value}`}
-                        className={classnames('ml-2 text-center px-1', styles.badge, {
-                          [`${styles.active} ${styles[`active${opt.level}`]}`]: isActive,
+                        className={classnames('ms-2 text-center px-1', styles.badge, {
+                          [`fw-bold opacity-100 ${styles[`active${opt.level}`]}`]: isActive,
                         })}
                       >
                         {opt.label}

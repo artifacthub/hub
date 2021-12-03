@@ -134,7 +134,7 @@ const ControlPanelView = (props: Props) => {
       <div className={`pt-3 position-relative navWrapper ${styles.navWrapper}`}>
         <div className="container-lg px-sm-4 px-lg-0">
           <div className="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column-reverse flex-sm-row justify-content-between align-items-end">
-            <ul className="mr-auto mr-md-0 nav nav-tabs" role="tablist">
+            <ul className="me-auto me-md-0 nav nav-tabs" role="tablist">
               {CONTROL_PANEL_SECTIONS[context].map((section: Section) => {
                 return (
                   <li key={`section_${section.name}`} className={`nav-item ${styles.navItem}`} role="tab">
@@ -152,7 +152,7 @@ const ControlPanelView = (props: Props) => {
                     >
                       <div className="d-flex flex-row align-items-center">
                         <span className={styles.icon}>{section.icon}</span>
-                        <span className={`d-none d-md-inline ml-2 ${styles.navTitle}`}>{section.displayName}</span>
+                        <span className={`d-none d-md-inline ms-2 ${styles.navTitle}`}>{section.displayName}</span>
                       </div>
                     </Link>
                   </li>

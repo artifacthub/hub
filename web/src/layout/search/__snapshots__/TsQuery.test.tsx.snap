@@ -15,7 +15,7 @@ exports[`TsQuery creates snapshot 1`] = `
       >
         <span
           aria-level="5"
-          class="text-dark font-weight-bold"
+          class="text-dark fw-bold"
           role="heading"
         >
           Category
@@ -26,11 +26,11 @@ exports[`TsQuery creates snapshot 1`] = `
       class="mt-3"
     >
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-database"
           name="tsQuery"
           tabindex="0"
@@ -38,7 +38,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="database"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-database"
         >
@@ -54,11 +54,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-integration-and-delivery"
           name="tsQuery"
           tabindex="0"
@@ -66,7 +66,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="integration-and-delivery"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-integration-and-delivery"
         >
@@ -82,11 +82,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-logging-and-tracing"
           name="tsQuery"
           tabindex="0"
@@ -94,7 +94,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="logging-and-tracing"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-logging-and-tracing"
         >
@@ -110,11 +110,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-machine-learning"
           name="tsQuery"
           tabindex="0"
@@ -122,7 +122,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="machine-learning"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-machine-learning"
         >
@@ -138,11 +138,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-monitoring"
           name="tsQuery"
           tabindex="0"
@@ -150,7 +150,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="monitoring"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-monitoring"
         >
@@ -166,11 +166,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-networking"
           name="tsQuery"
           tabindex="0"
@@ -178,7 +178,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="networking"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-networking"
         >
@@ -194,11 +194,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-security"
           name="tsQuery"
           tabindex="0"
@@ -206,7 +206,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="security"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-security"
         >
@@ -222,11 +222,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-storage"
           name="tsQuery"
           tabindex="0"
@@ -234,7 +234,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="storage"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-storage"
         >
@@ -250,11 +250,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-streaming-messaging"
           name="tsQuery"
           tabindex="0"
@@ -262,7 +262,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="streaming-messaging"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-streaming-messaging"
         >
@@ -278,11 +278,11 @@ exports[`TsQuery creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 checkbox"
       >
         <input
           aria-checked="false"
-          class="custom-control-input input"
+          class="form-check-input input"
           id="desktop-tsQuery-web-applications"
           name="tsQuery"
           tabindex="0"
@@ -290,7 +290,7 @@ exports[`TsQuery creates snapshot 1`] = `
           value="web-applications"
         />
         <label
-          class="custom-control-label label mw-100"
+          class="form-check-label label mw-100"
           data-testid="checkboxLabel"
           for="desktop-tsQuery-web-applications"
         >

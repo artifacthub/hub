@@ -4,35 +4,35 @@ exports[`SampleQueries creates snapshot 1`] = `
 <DocumentFragment>
   <a
     aria-label="Filter by OLM operators for databases"
-    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    class="badge rounded-pill border fw-normal mx-2 mt-3 undefined"
     href="/packages/search?kind=3&ts_query_web=database"
   >
     OLM operators for databases
   </a>
   <a
     aria-label="Filter by Helm Charts provided by Bitnami"
-    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    class="badge rounded-pill border fw-normal mx-2 mt-3 undefined"
     href="/packages/search?kind=0&org=bitnami"
   >
     Helm Charts provided by Bitnami
   </a>
   <a
     aria-label="Filter by Packages of any kind related to etcd"
-    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    class="badge rounded-pill border fw-normal mx-2 mt-3 undefined"
     href="/packages/search?ts_query_web=etcd"
   >
     Packages of any kind related to etcd
   </a>
   <a
     aria-label="Filter by Falco rules for CVE"
-    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    class="badge rounded-pill border fw-normal mx-2 mt-3 undefined"
     href="/packages/search?kind=1&ts_query_web=cve"
   >
     Falco rules for CVE
   </a>
   <a
     aria-label="Filter by OLM operators in the monitoring category"
-    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    class="badge rounded-pill border fw-normal mx-2 mt-3 undefined"
     href="/packages/search?kind=3&ts_query=monitoring"
   >
     OLM operators in the monitoring category

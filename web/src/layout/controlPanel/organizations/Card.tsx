@@ -93,13 +93,13 @@ const OrganizationCard = (props: Props) => {
           <div className="d-flex flex-row w-100 justify-content-between align-items-start">
             <div className="d-flex flex-row align-items-center w-100">
               <div
-                className={`d-flex align-items-center justify-content-center overflow-hidden p-1 mr-2 position-relative ${styles.imageWrapper} imageWrapper`}
+                className={`d-flex align-items-center justify-content-center overflow-hidden p-1 me-2 position-relative border border-3 bg-white rounded-circle ${styles.imageWrapper} imageWrapper`}
               >
                 {!isUndefined(props.organization.logoImageId) ? (
                   <Image
                     alt={props.organization.displayName || props.organization.name}
                     imageId={props.organization.logoImageId}
-                    className={styles.image}
+                    className={`fs-4 ${styles.image}`}
                     placeholderIcon={<MdBusiness />}
                   />
                 ) : (
@@ -114,19 +114,19 @@ const OrganizationCard = (props: Props) => {
               </div>
 
               {!isMember && (
-                <div className="ml-3">
-                  <span className="badge badge-warning">Invitation not accepted yet</span>
+                <div className="ms-3">
+                  <span className="badge bg-warning">Invitation not accepted yet</span>
                 </div>
               )}
 
-              <div className="ml-auto">
+              <div className="ms-auto">
                 <div
                   ref={dropdownMenu}
-                  className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                  className={classnames('dropdown-menu dropdown-menu-end p-0', styles.dropdownMenu, {
                     show: dropdownMenuStatus,
                   })}
                 >
-                  <div className={`arrow ${styles.arrow}`} />
+                  <div className={`dropdown-arrow ${styles.arrow}`} />
 
                   {props.organization.confirmed ? (
                     <>
@@ -141,7 +141,7 @@ const OrganizationCard = (props: Props) => {
                           aria-label="Open modal"
                         >
                           <div className="d-flex flex-row align-items-center">
-                            <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                            <FaSignOutAlt className={`me-2 ${styles.btnIcon}`} />
                             <span>Leave</span>
                           </div>
                         </button>
@@ -163,11 +163,11 @@ const OrganizationCard = (props: Props) => {
                           {isAccepting ? (
                             <>
                               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                              <span className="ml-2">Accepting invitation...</span>
+                              <span className="ms-2">Accepting invitation...</span>
                             </>
                           ) : (
                             <>
-                              <FaEnvelopeOpenText className={`mr-2 ${styles.btnIcon}`} />
+                              <FaEnvelopeOpenText className={`me-2 ${styles.btnIcon}`} />
                               <span>Accept invitation</span>
                             </>
                           )}
@@ -179,7 +179,7 @@ const OrganizationCard = (props: Props) => {
 
                 {hasDropdownContent && (
                   <button
-                    className={`ml-3 mb-2 btn btn-outline-secondary rounded-circle p-0 text-center iconSubsWrapper ${styles.btnDropdown}`}
+                    className={`ms-3 mb-2 btn btn-outline-secondary rounded-circle p-0 text-center iconSubsWrapper ${styles.btnDropdown}`}
                     onClick={() => setDropdownMenuStatus(true)}
                     aria-label="Open menu"
                     aria-expanded={dropdownMenuStatus}
@@ -201,13 +201,13 @@ const OrganizationCard = (props: Props) => {
                       aria-label="Close modal"
                     >
                       <div className="d-flex flex-row align-items-center">
-                        <IoMdCloseCircle className="mr-2" />
+                        <IoMdCloseCircle className="me-2" />
                         <span>Cancel</span>
                       </div>
                     </button>
 
                     <button
-                      className="btn btn-sm btn-danger ml-3"
+                      className="btn btn-sm btn-danger ms-3"
                       onClick={(e) => {
                         e.preventDefault();
                         leaveOrganization();
@@ -219,11 +219,11 @@ const OrganizationCard = (props: Props) => {
                         {isLeaving ? (
                           <>
                             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                            <span className="ml-2">Leaving...</span>
+                            <span className="ms-2">Leaving...</span>
                           </>
                         ) : (
                           <>
-                            <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                            <FaSignOutAlt className={`me-2 ${styles.btnIcon}`} />
                             <span>Leave</span>
                           </>
                         )}
@@ -244,7 +244,7 @@ const OrganizationCard = (props: Props) => {
 
           {props.organization.homeUrl && (
             <div className="mt-3 text-truncate">
-              <small className="text-muted text-uppercase mr-1">Homepage: </small>
+              <small className="text-muted text-uppercase me-1">Homepage: </small>
               <ExternalLink
                 href={props.organization.homeUrl}
                 className={`text-reset ${styles.link}`}

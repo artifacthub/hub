@@ -62,13 +62,13 @@ const TemplatesList = (props: Props) => {
   }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <div className="h-100 d-flex flex-column overflow-auto pr-2">
+    <div className="h-100 d-flex flex-column overflow-auto pe-2">
       <div className="position-relative w-100">
-        <div className="form-group input-group-sm">
+        <div className="mb-3 input-group-sm">
           <input
             type="text"
             placeholder="Search by template or resource kind"
-            className={`flex-grow-1 form-control pl-3 pr-4 ${styles.input}`}
+            className={`flex-grow-1 form-control ps-3 pe-4 ${styles.input}`}
             name="chartTemplateInput"
             value={inputValue}
             onChange={onChange}
@@ -78,8 +78,8 @@ const TemplatesList = (props: Props) => {
           <FaSearch className={`text-muted position-absolute ${styles.searchIcon}`} />
 
           <div className="alert p-0 mt-3">
-            <small className="text-muted text-break font-italic">
-              This chart version contains <span className="font-weight-bold">{props.templates.length}</span>{' '}
+            <small className="text-muted text-break fst-italic">
+              This chart version contains <span className="fw-bold">{props.templates.length}</span>{' '}
               {props.templates.length === 1 ? 'template' : 'templates'}
             </small>
           </div>
@@ -103,7 +103,7 @@ const TemplatesList = (props: Props) => {
             return (
               <div key={`template_${index}`}>
                 <button
-                  className={classnames('btn btn-light btn-sm mb-2 text-left w-100', styles.btn, {
+                  className={classnames('btn btn-light btn-sm mb-2 text-start w-100', styles.btn, {
                     [`activeTemplate ${styles.active}`]: isActive,
                   })}
                   onClick={() => {

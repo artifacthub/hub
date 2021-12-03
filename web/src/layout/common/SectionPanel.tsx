@@ -30,14 +30,14 @@ const SectionPanel = (props: Props) => {
   const getBtnContent = (section: Section): JSX.Element => {
     return (
       <>
-        {section.icon && <div className={`${styles.icon} sectionIcon`}>{section.icon}</div>}
+        {section.icon && <div className={`${styles.icon} h-auto sectionIcon`}>{section.icon}</div>}
         {section.shortName ? (
-          <div className="d-none d-sm-inline ml-1 ml-sm-2">
+          <div className="d-none d-sm-inline ms-1 ms-sm-2">
             <span className="d-none d-md-inline">{section.displayName}</span>
             <span className="d-inline d-md-none">{section.shortName}</span>
           </div>
         ) : (
-          <div className="d-none d-sm-inline ml-1 ml-sm-2">{section.displayName}</div>
+          <div className="d-none d-sm-inline ms-1 ms-sm-2">{section.displayName}</div>
         )}
       </>
     );
@@ -47,12 +47,12 @@ const SectionPanel = (props: Props) => {
     <main role="main" className="px-xs-0 px-sm-3 px-lg-0 my-md-4">
       <div className="d-flex flex-column flex-md-row justify-content-between">
         <nav className={`mb-4 ${styles.sidebar}`}>
-          <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
+          <div className={`list-group my-4 my-md-0 me-md-5 ${styles.listGroup}`}>
             {props.sections.map((section: Section) => {
               const className = classnames(
                 'd-flex list-group-item list-group-item-action flex-row align-items-center sectionItem',
                 styles.listItem,
-                { [`${styles.isActive} isActive`]: section.name === activeSection },
+                { [`${styles.isActive} fw-bold isActive bg-white`]: section.name === activeSection },
                 { disabled: section.disabled }
               );
               return (

@@ -39,7 +39,7 @@ const RandomPackages = () => {
                 </div>
 
                 {packages.length > 0 ? (
-                  <div className="pt-2 row no-gutters justify-content-center" role="list">
+                  <div className="pt-2 row g-0 justify-content-center" role="list">
                     {packages.map((item: Package, index: number) => {
                       return (
                         <PackageCard

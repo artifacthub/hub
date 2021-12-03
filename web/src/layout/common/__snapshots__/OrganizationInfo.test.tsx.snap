@@ -7,7 +7,7 @@ exports[`OrganizationInfo creates snapshot 1`] = `
       class="position-absolute"
     >
       <div
-        class="dropdown-menu dropdown-menu-left dropdown"
+        class="dropdown-menu dropdown-menu-left text-wrap dropdown"
         role="complementary"
       />
     </div>
@@ -18,7 +18,7 @@ exports[`OrganizationInfo creates snapshot 1`] = `
         aria-expanded="false"
         aria-hidden="true"
         aria-label="Organization info"
-        class="p-0 border-0 text-dark text-truncate flex-grow-1 link undefined"
+        class="p-0 border-0 text-dark text-truncate flex-grow-1 bg-transparent position-relative link undefined"
         tabindex="-1"
       >
         <div

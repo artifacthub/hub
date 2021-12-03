@@ -13,7 +13,7 @@ exports[`Template creates snapshot 1`] = `
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             1
           </div>
@@ -24,7 +24,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -40,7 +40,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -50,7 +50,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2 text-truncate"
                         >
                           <span
-                            class="text-muted mr-2 normalOpacityFont"
+                            class="text-muted me-2 normalOpacityFont"
                           >
                             DEFAULT:
                           </span>
@@ -77,14 +77,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             2
           </div>
@@ -94,14 +94,14 @@ exports[`Template creates snapshot 1`] = `
             apiVersion: networking.k8s.io/v1beta1
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             3
           </div>
@@ -111,14 +111,14 @@ exports[`Template creates snapshot 1`] = `
             kind: Ingress
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             4
           </div>
@@ -128,14 +128,14 @@ exports[`Template creates snapshot 1`] = `
             metadata:
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             5
           </div>
@@ -147,7 +147,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{ 
                 <span
@@ -167,14 +167,14 @@ exports[`Template creates snapshot 1`] = `
             hub
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             6
           </div>
@@ -184,14 +184,14 @@ exports[`Template creates snapshot 1`] = `
               labels:
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             7
           </div>
@@ -201,14 +201,14 @@ exports[`Template creates snapshot 1`] = `
                 app.kubernetes.io/component: hub
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             8
           </div>
@@ -220,7 +220,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -248,7 +248,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -258,7 +258,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2"
                         >
                           <h1
-                            class="text-dark header"
+                            class="text-dark lh-1 fw-bold header"
                           >
                             nindent function 
                             <a
@@ -323,14 +323,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             9
           </div>
@@ -342,7 +342,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -358,7 +358,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -368,7 +368,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2 text-truncate"
                         >
                           <span
-                            class="text-muted mr-2 normalOpacityFont"
+                            class="text-muted me-2 normalOpacityFont"
                           >
                             DEFAULT:
                           </span>
@@ -409,14 +409,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             10
           </div>
@@ -426,14 +426,14 @@ exports[`Template creates snapshot 1`] = `
               annotations:
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             11
           </div>
@@ -445,7 +445,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -467,7 +467,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -477,7 +477,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2"
                         >
                           <h1
-                            class="text-dark header"
+                            class="text-dark lh-1 fw-bold header"
                           >
                             nindent function 
                             <a
@@ -542,14 +542,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             12
           </div>
@@ -561,7 +561,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -574,14 +574,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             13
           </div>
@@ -591,14 +591,14 @@ exports[`Template creates snapshot 1`] = `
             spec:
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             14
           </div>
@@ -608,14 +608,14 @@ exports[`Template creates snapshot 1`] = `
               backend:
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             15
           </div>
@@ -627,7 +627,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{ 
                 <span
@@ -647,14 +647,14 @@ exports[`Template creates snapshot 1`] = `
             hub
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             16
           </div>
@@ -666,7 +666,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{ 
                 <div
@@ -676,7 +676,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -686,7 +686,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2 text-truncate"
                         >
                           <span
-                            class="text-muted mr-2 normalOpacityFont"
+                            class="text-muted me-2 normalOpacityFont"
                           >
                             DEFAULT:
                           </span>
@@ -713,14 +713,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             17
           </div>
@@ -732,7 +732,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -748,7 +748,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -758,7 +758,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2 text-truncate"
                         >
                           <span
-                            class="text-muted mr-2 normalOpacityFont"
+                            class="text-muted me-2 normalOpacityFont"
                           >
                             DEFAULT:
                           </span>
@@ -787,14 +787,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             18
           </div>
@@ -804,14 +804,14 @@ exports[`Template creates snapshot 1`] = `
               rules:
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             19
           </div>
@@ -823,7 +823,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -845,7 +845,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -855,7 +855,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2"
                         >
                           <h1
-                            class="text-dark header"
+                            class="text-dark lh-1 fw-bold header"
                           >
                             nindent function 
                             <a
@@ -920,14 +920,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             20
           </div>
@@ -939,7 +939,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -952,14 +952,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             21
           </div>
@@ -971,7 +971,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -987,7 +987,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -997,7 +997,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2 text-truncate"
                         >
                           <span
-                            class="text-muted mr-2 normalOpacityFont"
+                            class="text-muted me-2 normalOpacityFont"
                           >
                             DEFAULT:
                           </span>
@@ -1026,14 +1026,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             22
           </div>
@@ -1043,14 +1043,14 @@ exports[`Template creates snapshot 1`] = `
               tls:
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             23
           </div>
@@ -1062,7 +1062,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -1084,7 +1084,7 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block mr-1 mb-1 dropdown fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
                       data-testid="infoDropdown"
                     >
                       <div
@@ -1094,7 +1094,7 @@ exports[`Template creates snapshot 1`] = `
                           class="p-2"
                         >
                           <h1
-                            class="text-dark header"
+                            class="text-dark lh-1 fw-bold header"
                           >
                             nindent function 
                             <a
@@ -1159,14 +1159,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             24
           </div>
@@ -1178,7 +1178,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -1191,14 +1191,14 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
         <div
           class="d-flex flex-row my-1"
         >
           <div
-            class="text-right mr-3 lineNumber"
+            class="text-end me-3 lineNumber"
           >
             25
           </div>
@@ -1209,7 +1209,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge font-weight-normal badge"
+                class="badge fw-normal border bg-white badge"
               >
                 {{- 
                 <span
@@ -1222,7 +1222,7 @@ exports[`Template creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="pl-2"
+            class="ps-2"
           />
         </div>
       </div>
