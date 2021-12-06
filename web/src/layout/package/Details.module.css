@@ -2,6 +2,10 @@
   table-layout: fixed;
 }
 
+.body {
+  background-color: var(--bs-white);
+}
+
 .releasedCell {
   width: 30%;
 }

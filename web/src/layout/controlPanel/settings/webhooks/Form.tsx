@@ -452,7 +452,7 @@ const WebhookForm = (props: Props) => {
             {selectedPackages.length > 0 && (
               <div className="row">
                 <div className="col-12 col-xxl-8">
-                  <table className={`table table-hover table-sm border bg-white text-break ${styles.table}`}>
+                  <table className={`table table-hover table-sm border transparentBorder text-break ${styles.table}`}>
                     <thead>
                       <tr className={styles.tableTitle}>
                         <th scope="col" className={`align-middle d-none d-sm-table-cell ${styles.fitCell}`}></th>
@@ -465,7 +465,7 @@ const WebhookForm = (props: Props) => {
                         <th scope="col" className={`align-middle ${styles.fitCell}`}></th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody className={styles.body}>
                       {selectedPackages.map((item: Package) => (
                         <tr key={`subs_${item.packageId}`} data-testid="packageTableCell">
                           <td className="align-middle text-center d-none d-sm-table-cell">
@@ -480,6 +480,7 @@ const WebhookForm = (props: Props) => {
                                   alt={item.displayName || item.name}
                                   imageId={item.logoImageId}
                                   className="mw-100 mh-100 fs-4"
+                                  kind={item.repository.kind}
                                 />
                               </div>
 
@@ -502,7 +503,7 @@ const WebhookForm = (props: Props) => {
 
                           <td className="align-middle">
                             <button
-                              className={`close text-danger mx-2 ${styles.closeBtn}`}
+                              className={`btn btn-link btn-sm mx-2 ${styles.closeBtn}`}
                               type="button"
                               onClick={(event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
                                 event.preventDefault();
@@ -511,7 +512,7 @@ const WebhookForm = (props: Props) => {
                               }}
                               aria-label="Delete package from webhook"
                             >
-                              <span aria-hidden="true">&times;</span>
+                              <MdClose className="text-danger fs-5" />
                             </button>
                           </td>
                         </tr>
@@ -643,7 +644,7 @@ const WebhookForm = (props: Props) => {
             <div className="row">
               <div className="col-xxl-8 overflow-auto">
                 <small className={`text-muted ${styles.tableWrapper}`}>
-                  <table className={`table table-sm border bg-white ${styles.variablesTable}`}>
+                  <table className={`table table-sm border ${styles.variablesTable}`}>
                     <tbody>
                       <tr>
                         <th scope="row">

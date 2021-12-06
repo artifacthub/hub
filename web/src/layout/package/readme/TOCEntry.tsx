@@ -22,9 +22,9 @@ const TOCEntry = (props: Props) => {
   return (
     <div className={`${styles.dropdownItem} dropdownItem`}>
       <a
-        className={`btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 ${
-          styles.btn
-        } ${styles[`level${props.level}`]}`}
+        className={`btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start ${styles.btn} ${
+          styles[`level${props.level}`]
+        }`}
         href={`${history.location.pathname}#${link}`}
         onClick={(e: ReactMouseEvent<HTMLAnchorElement, MouseEvent>) => {
           e.preventDefault();

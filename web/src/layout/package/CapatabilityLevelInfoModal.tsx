@@ -10,7 +10,7 @@ const CapatabilityLevelInfoModal = () => {
 
   return (
     <Modal
-      className="d-none d-lg-inline-block mt-1 ms-2"
+      className="d-none d-lg-inline-block ms-2"
       buttonContent={<MdInfoOutline />}
       buttonType={`btn-link btn-sm px-0 pb-0 text-dark ${styles.btn}`}
       header={<div className="h5 m-0 flex-grow-1">Capability level</div>}

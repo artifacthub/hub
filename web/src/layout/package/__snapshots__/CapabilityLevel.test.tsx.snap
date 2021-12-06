@@ -22,7 +22,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         </small>
       </div>
       <div
-        class="d-none d-lg-inline-block mt-1 ms-2"
+        class="d-none d-lg-inline-block ms-2"
       >
         <div
           class="position-relative buttonWrapper"

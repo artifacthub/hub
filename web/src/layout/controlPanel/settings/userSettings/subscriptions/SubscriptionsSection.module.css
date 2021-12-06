@@ -46,6 +46,10 @@
   left: calc(50% + 1.5rem);
 }
 
+.body {
+  background-color: var(--bs-white);
+}
+
 @media only screen and (max-width: 767.98px) {
   .btnAction {
     margin-left: 0.6rem;

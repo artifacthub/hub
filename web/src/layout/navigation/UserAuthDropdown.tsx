@@ -42,7 +42,7 @@ const UserAuthDropdown = (props: Props) => {
               <Image
                 imageId={ctx.user.profileImageId}
                 alt="User profile"
-                className="mw-100 mh-100"
+                className="mw-100 h-auto"
                 classNameForSquare={`position-absolute top-0 start-0 w-100 h-100 ${styles.imageAsBg}`}
               />
             ) : (

@@ -197,7 +197,7 @@ const RepositoriesSection = (props: Props) => {
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="bg-white">
+                  <tbody className={styles.body}>
                     {Object.keys(optOutList).map((repoId: string) => {
                       const repoInfo: Repository = optOutList[repoId][0].repository;
                       return (

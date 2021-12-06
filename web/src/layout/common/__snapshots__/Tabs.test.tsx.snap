@@ -11,7 +11,7 @@ exports[`Tabs creates snapshot 1`] = `
       >
         <button
           aria-label="Open tab tab1"
-          class="btn btn-link nav-item btn active btn-primary active"
+          class="btn nav-item btn active btn-primary active"
         >
           <span
             class="d-none d-sm-block"
@@ -30,7 +30,7 @@ exports[`Tabs creates snapshot 1`] = `
       >
         <button
           aria-label="Open tab tab2"
-          class="btn btn-link nav-item btn"
+          class="btn nav-item btn"
         >
           <span
             class="d-none d-sm-block"
@@ -49,7 +49,7 @@ exports[`Tabs creates snapshot 1`] = `
       >
         <button
           aria-label="Open tab tab3"
-          class="btn btn-link nav-item btn"
+          class="btn nav-item btn"
         >
           <span
             class="d-none d-sm-block"

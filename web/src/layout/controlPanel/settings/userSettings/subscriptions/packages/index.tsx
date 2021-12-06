@@ -194,7 +194,7 @@ const PackagesSection = (props: Props) => {
                           ))}
                         </tr>
                       </thead>
-                      <tbody className="bg-white">
+                      <tbody className={styles.body}>
                         {packages.map((item: Package) => (
                           <tr key={`subs_${item.packageId}`} data-testid="subsTableCell">
                             <td className="align-middle text-center d-none d-sm-table-cell">

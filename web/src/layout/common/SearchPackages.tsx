@@ -172,10 +172,10 @@ const SearchPackages = (props: Props) => {
     <div className="position-relative">
       <div className="d-flex flex-row">
         <div
-          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white ${styles.inputWrapper}`}
+          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white searchBar ${styles.inputWrapper}`}
         >
           <div
-            data-testid="searchBarIcon"
+            data-testid="searchPkgIcon"
             className={`d-flex align-items-center ${styles.iconWrapper}`}
             onClick={forceFocus}
           >

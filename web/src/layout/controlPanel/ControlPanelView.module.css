@@ -18,6 +18,10 @@
   border-top-right-radius: 0.25rem !important;
 }
 
+.section:hover {
+  text-decoration: none;
+}
+
 .activeSection {
   border-color: var(--color-1-20) !important;
   border-bottom-color: transparent !important;

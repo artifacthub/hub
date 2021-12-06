@@ -10,7 +10,7 @@ interface Props {
 
 const FilterBadge = (props: Props) => {
   return (
-    <div className={`badge bg-light text-dark rounded-pill me-2 mb-2 p-0 ps-2 border ${styles.badgeFilter}`}>
+    <div className={`badge bg-light rounded-pill me-2 mb-2 p-0 ps-2 border ${styles.badgeFilter}`}>
       <div className="d-flex flex-row align-items-center">
         <div className="position-relative">
           {props.type && <small className="fw-normal me-1 text-uppercase">{props.type}:</small>}

@@ -1,5 +1,10 @@
 .label {
   font-size: 0.875rem;
+  line-height: 1rem;
+}
+
+.icon {
+  top: -1px;
 }
 
 .input,

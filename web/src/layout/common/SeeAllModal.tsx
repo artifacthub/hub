@@ -62,7 +62,7 @@ const SeeAllModal = (props: Props) => {
             onClick={() => setOpenStatus(true)}
             aria-label="See all entries"
           >
-            <div className="d-flex flex-row align-items-center">
+            <div className="d-flex flex-row align-items-center textLight">
               <HiPlusCircle className="me-1" />
               <span>See all</span>
             </div>
