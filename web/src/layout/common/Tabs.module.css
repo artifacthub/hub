@@ -6,6 +6,10 @@
   margin-bottom: -1px;
 }
 
+.btn:hover {
+  text-decoration: none;
+}
+
 .active {
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;

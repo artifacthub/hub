@@ -67,7 +67,7 @@ const SectionPanel = (props: Props) => {
                       case 'authorization':
                         return (
                           <ActionBtn
-                            className={className}
+                            className={`${styles.link} ${className}`}
                             contentClassName="flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
                             onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                               e.preventDefault();
@@ -83,7 +83,7 @@ const SectionPanel = (props: Props) => {
                         return (
                           <button
                             type="button"
-                            className={`btn btn-link text-reset ${className}`}
+                            className={`btn btn-link text-reset ${styles.link} ${className}`}
                             disabled={section.disabled}
                             onClick={() => {
                               history.push(`${props.pathPrefix || ''}/${section.name}`);

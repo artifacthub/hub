@@ -47,7 +47,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                   >
                     <button
                       aria-label="Open tab markdown"
-                      class="btn btn-link nav-item btn active btn-primary active"
+                      class="btn nav-item btn active btn-primary active"
                     >
                       <span
                         class="d-none d-sm-block"
@@ -66,7 +66,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                   >
                     <button
                       aria-label="Open tab ascii"
-                      class="btn btn-link nav-item btn"
+                      class="btn nav-item btn"
                     >
                       <span
                         class="d-none d-sm-block"

@@ -114,11 +114,11 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="automatic"
                     />
                     <label
-                      class="form-check-label fw-bold lh-base w-100 label"
+                      class="form-check-label fw-bold w-100 label"
                       for="mobile-automatic"
                     >
                       <svg
-                        class="mx-1"
+                        class="mx-1 position-relative icon"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -154,11 +154,11 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="light"
                     />
                     <label
-                      class="form-check-label fw-bold lh-base w-100 label"
+                      class="form-check-label fw-bold w-100 label"
                       for="mobile-light"
                     >
                       <svg
-                        class="mx-1"
+                        class="mx-1 position-relative icon"
                         fill="none"
                         height="1em"
                         stroke="currentColor"
@@ -223,7 +223,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                           y2="4.22"
                         />
                       </svg>
-                       Light
+                      Light
                     </label>
                   </div>
                 </div>
@@ -244,11 +244,11 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="dark"
                     />
                     <label
-                      class="form-check-label fw-bold lh-base w-100 label"
+                      class="form-check-label fw-bold w-100 label"
                       for="mobile-dark"
                     >
                       <svg
-                        class="mx-1"
+                        class="mx-1 position-relative icon"
                         fill="none"
                         height="1em"
                         stroke="currentColor"
@@ -263,7 +263,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                           d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
                         />
                       </svg>
-                       Dark
+                      Dark
                     </label>
                   </div>
                 </div>

@@ -260,10 +260,7 @@ const Values = (props: Props) => {
                   tooltipType="light"
                 />
 
-                <div
-                  ref={code}
-                  className={`overflow-auto h-100 position-relative ${styles.codeWrapper} templateWrapper`}
-                >
+                <div ref={code} className={`overflow-auto h-100 position-relative ${styles.codeWrapper}`}>
                   {!isUndefined(lines) && !isUndefined(clickedLine) && !isUndefined(topPositionMenu) && (
                     <div
                       role="complementary"

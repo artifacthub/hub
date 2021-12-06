@@ -19,6 +19,10 @@
   background-color: inherit !important;
 }
 
+.body {
+  background-color: var(--bs-white);
+}
+
 .imageWrapper {
   min-width: 25px;
   width: 25px;
@@ -54,6 +58,7 @@
 
 .variablesTable {
   border-color: var(--border-md) !important;
+  background-color: var(--bs-white);
 }
 
 .closeBtn {

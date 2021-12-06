@@ -139,7 +139,7 @@ const Dependencies = (props: Props) => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white">{itemsForModal}</tbody>
+          <tbody className={styles.body}>{itemsForModal}</tbody>
         </table>
       ),
     };

@@ -71,10 +71,6 @@
 }
 
 @media (hover: hover) and (min-width: 768px) {
-  .heatMapCell {
-    cursor: pointer;
-  }
-
   .heatMapCell:hover + .popover {
     opacity: 1;
     z-index: 1;

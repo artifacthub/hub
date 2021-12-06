@@ -114,6 +114,10 @@
     border-color: #737475 !important;
   }
 
+  .table-hover tbody {
+    background-color: var(--color-1-700);
+  }
+
   .table-hover tbody tr:hover {
     background-color: var(--color-black-5);
     color: var(--color-font);
@@ -135,11 +139,24 @@
     }
   }
 
+  .btn-link:not(.textLighter):not(.textLight),
+  a.text-secondary,
+  a:not(.navbar-brand):not(.textLighter):not(.textLight):not(.rssBadge):not(.text-dark):not(.text-primary) {
+    color: $font-color !important;
+
+    &:hover,
+    &:focus {
+      color: $font-color-light !important;
+    }
+  }
+
   .btn-primary,
   .btn-secondary,
   .btn-light,
   a.bg-secondary {
-    @include button-variant($color1, $border-solid);
+    color: #fff !important;
+    background-color: #040404;
+    border-color: #737475;
 
     &:hover,
     &:focus {
@@ -185,6 +202,8 @@
     &:hover,
     &:focus {
       color: $font-color-light;
+      border-color: #5a5b5b !important;
+      background-color: #090a0c !important;
     }
   }
 
@@ -333,6 +352,10 @@
     color: $font-color-light !important;
   }
 
+  .transparentBorder {
+    border-color: transparent !important;
+  }
+
   .anchorHeader {
     color: $font-color-light !important;
   }
@@ -347,17 +370,6 @@
     &:hover > *,
     &:focus > * {
       color: $font-color-light !important;
-    }
-  }
-
-  .btn-link:not(.textLighter):not(.textLight),
-  a.text-secondary,
-  a:not(.navbar-brand):not(.textLighter):not(.textLight):not(.rssBadge) {
-    color: $font-color !important;
-
-    &:hover,
-    &:focus {
-      color: $font-color-light;
     }
   }
 
@@ -596,10 +608,6 @@
     text-shadow: none;
   }
 
-  .nav-tabs {
-    border-color: var(--border-md) !important;
-  }
-
   .separator {
     background-color: var(--border-md);
   }
@@ -629,14 +637,12 @@
   }
 
   .tooltip {
-    &.bs-tooltip-bottom .arrow::before,
-    &.bs-tooltip-auto[x-placement^='bottom'] .arrow::before {
-      border-bottom-color: var(--color-font) !important;
+    &.bs-tooltip-bottom .tooltip-arrow::before {
+      border-bottom-color: var(--bs-dark) !important;
     }
 
-    .tooltip-inner {
+    & .tooltip-inner {
       background-color: var(--color-font) !important;
-      color: var(--color-1-500) !important;
     }
   }
 }

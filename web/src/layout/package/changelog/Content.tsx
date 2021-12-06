@@ -134,7 +134,7 @@ const Content = (props: Props) => {
                         <div className={`position-relative ${styles.changeBadgeWrapper}`}>
                           <div
                             className={classnames(
-                              'd-flex flex-row align-items-center justify-content-center text-uppercase badge rounded-pill me-2 fw-normal text-white px-1 py-0',
+                              'd-flex flex-row align-items-center justify-content-center text-uppercase badge rounded-pill me-2 fw-normal px-1 py-0',
                               styles.changeBadge,
                               styles[`${change.kind.toString()}ChangeBadge`]
                             )}

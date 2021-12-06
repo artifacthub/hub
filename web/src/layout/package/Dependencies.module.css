@@ -6,6 +6,10 @@
   width: 14px;
 }
 
+.body {
+  background-color: var(--bs-white);
+}
+
 .pkgIcon {
   min-width: 15px;
   font-size: 0.85rem;

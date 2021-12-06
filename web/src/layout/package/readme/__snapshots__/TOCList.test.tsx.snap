@@ -10,7 +10,7 @@ exports[`TOCList creates snapshot 1`] = `
         <a
           aria-label="Go to Title 1"
           aria-selected="false"
-          class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 btn level0"
+          class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start btn level0"
           href="/#title-1"
           role="option"
           tabindex="-1"
@@ -26,7 +26,7 @@ exports[`TOCList creates snapshot 1`] = `
             <a
               aria-label="Go to Subtitle 1a"
               aria-selected="false"
-              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 btn level1"
+              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start btn level1"
               href="/#subtitle-1a"
               role="option"
               tabindex="-1"
@@ -42,7 +42,7 @@ exports[`TOCList creates snapshot 1`] = `
                 <a
                   aria-label="Go to Opt 1"
                   aria-selected="false"
-                  class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 btn level2"
+                  class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start btn level2"
                   href="/#opt-1"
                   role="option"
                   tabindex="-1"
@@ -58,7 +58,7 @@ exports[`TOCList creates snapshot 1`] = `
                 <a
                   aria-label="Go to Opt 2"
                   aria-selected="false"
-                  class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 btn level2"
+                  class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start btn level2"
                   href="/#opt-2"
                   role="option"
                   tabindex="-1"
@@ -76,7 +76,7 @@ exports[`TOCList creates snapshot 1`] = `
             <a
               aria-label="Go to Subtitle 1b"
               aria-selected="false"
-              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 btn level1"
+              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start btn level1"
               href="/#subtitle-1b"
               role="option"
               tabindex="-1"
@@ -94,7 +94,7 @@ exports[`TOCList creates snapshot 1`] = `
         <a
           aria-label="Go to Title 2"
           aria-selected="false"
-          class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 btn level0"
+          class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start btn level0"
           href="/#title-2"
           role="option"
           tabindex="-1"
@@ -110,7 +110,7 @@ exports[`TOCList creates snapshot 1`] = `
             <a
               aria-label="Go to Subtitle 2"
               aria-selected="false"
-              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 btn level1"
+              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start btn level1"
               href="/#subtitle-2"
               role="option"
               tabindex="-1"

@@ -41,11 +41,11 @@ const ThemeMode = (props: Props) => {
               readOnly
             />
             <label
-              className={`form-check-label fw-bold lh-base w-100 ${styles.label}`}
+              className={`form-check-label fw-bold w-100 ${styles.label}`}
               htmlFor={`${props.device}-automatic`}
               onClick={() => onHandleChange('automatic')}
             >
-              <GoBrowser className="mx-1" />
+              <GoBrowser className={`mx-1 position-relative ${styles.icon}`} />
               Automatic
             </label>
           </div>
@@ -65,11 +65,12 @@ const ThemeMode = (props: Props) => {
               readOnly
             />
             <label
-              className={`form-check-label fw-bold lh-base w-100 ${styles.label}`}
+              className={`form-check-label fw-bold w-100 ${styles.label}`}
               htmlFor={`${props.device}-light`}
               onClick={() => onHandleChange('light')}
             >
-              <FiSun className="mx-1" /> Light
+              <FiSun className={`mx-1 position-relative ${styles.icon}`} />
+              Light
             </label>
           </div>
         </div>
@@ -88,11 +89,12 @@ const ThemeMode = (props: Props) => {
               readOnly
             />
             <label
-              className={`form-check-label fw-bold lh-base w-100 ${styles.label}`}
+              className={`form-check-label fw-bold w-100 ${styles.label}`}
               htmlFor={`${props.device}-dark`}
               onClick={() => onHandleChange('dark')}
             >
-              <FiMoon className="mx-1" /> Dark
+              <FiMoon className={`mx-1 position-relative ${styles.icon}`} />
+              Dark
             </label>
           </div>
         </div>

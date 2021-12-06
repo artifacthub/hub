@@ -27,6 +27,10 @@
   line-height: 1rem;
 }
 
+.link:hover {
+  text-decoration: none;
+}
+
 @media only screen and (min-width: 768px) {
   .sidebar {
     width: 300px;

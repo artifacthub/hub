@@ -6,6 +6,10 @@
   background-color: inherit !important;
 }
 
+.body {
+  background-color: var(--bs-white);
+}
+
 .containerImage {
   font-size: 0.9rem;
 }

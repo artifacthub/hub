@@ -20,7 +20,7 @@ exports[`SectionPanel creates snapshot 1`] = `
           >
             <button
               aria-label="Go to section opt0"
-              class="btn btn-link text-reset d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem listItem isActive fw-bold isActive bg-white"
+              class="btn btn-link text-reset link d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem listItem isActive fw-bold isActive bg-white"
               type="button"
             >
               <div
@@ -48,7 +48,7 @@ exports[`SectionPanel creates snapshot 1`] = `
           >
             <button
               aria-label="Go to section opt1"
-              class="btn btn-link text-reset d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem listItem"
+              class="btn btn-link text-reset link d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem listItem"
               type="button"
             >
               <div
@@ -76,7 +76,7 @@ exports[`SectionPanel creates snapshot 1`] = `
           >
             <button
               aria-label="Go to section opt2"
-              class="btn btn-link text-reset d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem listItem disabled"
+              class="btn btn-link text-reset link d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem listItem disabled"
               disabled=""
               type="button"
             >

@@ -8,7 +8,7 @@ exports[`TOCEntry creates snapshot 1`] = `
     <a
       aria-label="Go to Installing the Chart"
       aria-selected="false"
-      class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start px-4 py-2 btn level1"
+      class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start btn level1"
       href="/#installing-the-chart"
       role="option"
       tabindex="-1"

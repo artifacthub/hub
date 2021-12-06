@@ -3,7 +3,7 @@
 exports[`FilterBadge creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="badge bg-light text-dark rounded-pill me-2 mb-2 p-0 ps-2 border badgeFilter"
+    class="badge bg-light rounded-pill me-2 mb-2 p-0 ps-2 border badgeFilter"
   >
     <div
       class="d-flex flex-row align-items-center"

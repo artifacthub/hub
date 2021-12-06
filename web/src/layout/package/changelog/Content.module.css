@@ -38,6 +38,7 @@
   line-height: 15px;
   font-size: 60%;
   background-color: var(--color-black-50);
+  color: var(--bs-white);
 }
 
 .addedChangeBadge {

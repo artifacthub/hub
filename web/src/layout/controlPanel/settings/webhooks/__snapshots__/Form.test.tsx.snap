@@ -338,11 +338,11 @@ exports[`WebhookForm creates snapshot 1`] = `
                   class="d-flex flex-row"
                 >
                   <div
-                    class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white inputWrapper"
+                    class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white searchBar inputWrapper"
                   >
                     <div
                       class="d-flex align-items-center iconWrapper"
-                      data-testid="searchBarIcon"
+                      data-testid="searchPkgIcon"
                     >
                       <svg
                         fill="none"
@@ -388,7 +388,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="col-12 col-xxl-8"
             >
               <table
-                class="table table-hover table-sm border bg-white text-break table"
+                class="table table-hover table-sm border transparentBorder text-break table"
               >
                 <thead>
                   <tr
@@ -416,7 +416,9 @@ exports[`WebhookForm creates snapshot 1`] = `
                     />
                   </tr>
                 </thead>
-                <tbody>
+                <tbody
+                  class="body"
+                >
                   <tr
                     data-testid="packageTableCell"
                   >
@@ -522,14 +524,27 @@ exports[`WebhookForm creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Delete package from webhook"
-                        class="close text-danger mx-2 closeBtn"
+                        class="btn btn-link btn-sm mx-2 closeBtn"
                         type="button"
                       >
-                        <span
-                          aria-hidden="true"
+                        <svg
+                          class="text-danger fs-5"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          ×
-                        </span>
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
                       </button>
                     </td>
                   </tr>
@@ -749,7 +764,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                 class="text-muted tableWrapper"
               >
                 <table
-                  class="table table-sm border bg-white variablesTable"
+                  class="table table-sm border variablesTable"
                 >
                   <tbody>
                     <tr>

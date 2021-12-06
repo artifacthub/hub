@@ -100,7 +100,7 @@ const OrgsUsingPackage = (props: Props) => {
         >
           <div className="my-3 mw-100">
             <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
-              <tbody className="bg-white">
+              <tbody className={styles.body}>
                 {sortedOrgs.map((org: Organization) => {
                   return (
                     <tr key={`org-${org.name}`}>

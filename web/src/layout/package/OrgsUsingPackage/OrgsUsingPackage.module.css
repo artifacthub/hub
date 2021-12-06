@@ -15,6 +15,10 @@
   table-layout: fixed;
 }
 
+.body {
+  background-color: var(--bs-white);
+}
+
 .imageWrapper {
   min-width: 30px;
   width: 30px;

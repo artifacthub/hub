@@ -2,6 +2,7 @@
   font-size: 85%;
   background-color: var(--badge-bg);
   border-color: var(--gray) !important;
+  color: var(--color-font);
 }
 
 .btn {
