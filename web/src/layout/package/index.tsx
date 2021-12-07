@@ -174,6 +174,14 @@ const PackageView = (props: Props) => {
     }
   }, [currentPkgId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  async function trackView(pkgID: string, version: string) {
+    try {
+      API.trackView(pkgID, version);
+    } catch {
+      // Do not do anything
+    }
+  }
+
   async function fetchPackageDetail() {
     try {
       setRelatedPosition(null);
@@ -188,6 +196,8 @@ const PackageView = (props: Props) => {
       }/${detailPkg.repository.name}`;
       updateMetaIndex(metaTitle, detailPkg.description);
       setDetail(detailPkg);
+      // Track view
+      trackView(detailPkg.packageId, detailPkg.version!);
       if (currentHash) {
         setCurrentHash(undefined);
       }

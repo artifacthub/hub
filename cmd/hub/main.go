@@ -56,6 +56,7 @@ func main() {
 		log.Fatal().Err(err).Msg("authorizer setup failed")
 	}
 	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"))
+	vt := pkg.NewViewsTracker(db)
 
 	// Setup and launch http server
 	ctx, stop := context.WithCancel(context.Background())
@@ -72,6 +73,7 @@ func main() {
 		Authorizer:          az,
 		HTTPClient:          hc,
 		OCIPuller:           &oci.Puller{},
+		ViewsTracker:        vt,
 	}
 	h, err := handlers.Setup(ctx, cfg, hSvc)
 	if err != nil {
@@ -101,8 +103,12 @@ func main() {
 		}
 	}()
 
-	// Setup and launch events dispatcher
+	// Launch views tracker flusher
 	var wg sync.WaitGroup
+	wg.Add(1)
+	go vt.Flusher(ctx, &wg)
+
+	// Setup and launch events dispatcher
 	eSvc := &event.Services{
 		DB:                  db,
 		EventManager:        event.NewManager(),

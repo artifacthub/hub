@@ -915,6 +915,15 @@ class API_CLASS {
     });
   }
 
+  public trackView(packageId: string, version: string): Promise<null> {
+    return this.apiFetch({
+      url: `${this.API_BASE_URL}/packages/${packageId}/${version}/views`,
+      opts: {
+        method: 'POST',
+      },
+    });
+  }
+
   public getChangelog(packageId: string): Promise<ChangeLog[]> {
     return this.apiFetch({ url: `${this.API_BASE_URL}/packages/${packageId}/changelog` });
   }

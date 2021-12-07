@@ -43,7 +43,7 @@ jobs:
       image: artifacthub/db-tests
     services:
       postgres:
-        image: artifacthub/postgres-pgtap
+        image: artifacthub/postgres
         env:
           POSTGRES_USER: tests
           POSTGRES_PASSWORD: tests

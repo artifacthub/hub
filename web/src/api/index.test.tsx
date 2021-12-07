@@ -1854,9 +1854,27 @@ describe('API', () => {
       });
     });
 
+    describe('trackView', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.trackView('pkgID', '1.0.0');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.0.0/views');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
+        expect(response).toBe('');
+      });
+    });
+
     describe('getChangelog', () => {
       it('success', async () => {
-        const changelog: ChangeLog[] = getData('43') as Changelog[];
+        const changelog: ChangeLog[] = getData('43') as ChangeLog[];
         fetchMock.mockResponse(JSON.stringify(changelog), {
           headers: {
             'content-type': 'application/json',

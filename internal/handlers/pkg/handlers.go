@@ -37,6 +37,7 @@ type Handlers struct {
 	logger          zerolog.Logger
 	hc              hub.HTTPClient
 	op              hub.OCIPuller
+	vt              hub.ViewsTracker
 	tmplChangelogMD *template.Template
 }
 
@@ -47,6 +48,7 @@ func NewHandlers(
 	cfg *viper.Viper,
 	hc hub.HTTPClient,
 	op hub.OCIPuller,
+	vt hub.ViewsTracker,
 ) *Handlers {
 	return &Handlers{
 		pkgManager:      pkgManager,
@@ -55,6 +57,7 @@ func NewHandlers(
 		logger:          log.With().Str("handlers", "pkg").Logger(),
 		hc:              hc,
 		op:              op,
+		vt:              vt,
 		tmplChangelogMD: setupChangelogMDTmpl(),
 	}
 }
@@ -526,6 +529,17 @@ func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
 	err := h.pkgManager.ToggleStar(r.Context(), packageID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "ToggleStar").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// TrackView is an http handler used to track a view of a given package version.
+func (h *Handlers) TrackView(w http.ResponseWriter, r *http.Request) {
+	packageID := chi.URLParam(r, "packageID")
+	version := chi.URLParam(r, "version")
+	if err := h.vt.TrackView(packageID, version); err != nil {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
