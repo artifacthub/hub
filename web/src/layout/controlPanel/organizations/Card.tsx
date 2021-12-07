@@ -87,7 +87,7 @@ const OrganizationCard = (props: Props) => {
         props.organization.membersCount > 1));
 
   return (
-    <div className="col-12 col-xxl-6 py-sm-3 py-2" data-testid="organizationCard">
+    <div className="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3" data-testid="organizationCard">
       <div className="card h-100">
         <div className="card-body d-flex flex-column h-100">
           <div className="d-flex flex-row w-100 justify-content-between align-items-start">

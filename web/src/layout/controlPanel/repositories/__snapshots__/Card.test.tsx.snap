@@ -3,7 +3,7 @@
 exports[`Repository Card - packages section creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="col-12 col-xxl-6 py-sm-3 py-2"
+    class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
     data-testid="repoCard"
   >
     <div

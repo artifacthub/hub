@@ -168,7 +168,7 @@ const ResetPasswordModal = (props: Props) => {
   return (
     <Modal
       data-testid="resetPwdModal"
-      header={<div className="h6 text-uppercase mb-0 flex-grow-1">Reset password</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Reset password</div>}
       disabledClose={verifying}
       modalClassName={styles.modal}
       open={!isUndefined(code)}

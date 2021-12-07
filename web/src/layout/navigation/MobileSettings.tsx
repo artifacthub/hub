@@ -31,7 +31,7 @@ const MobileSettings = (props: Props) => {
           <Image
             imageId={ctx.user.profileImageId}
             alt="User profile"
-            className={`rounded-circle mw-100 mh-100 border border-2 ${styles.profileImage}`}
+            className={`rounded-circle mw-100 mh-100 h-auto border border-2 ${styles.profileImage}`}
             placeholderIcon={<FaUserCircle />}
           />
         );

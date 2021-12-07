@@ -4,7 +4,7 @@ exports[`RepositoryWarningModal creates snapshot 1`] = `
 <DocumentFragment>
   <button
     aria-label="Open repository warning modal"
-    class="d-inline-block ps-0 pe-1 py-0 btn btn-link btn-sm fs-6 trackingWarningBtn"
+    class="d-inline-block ps-0 pe-1 py-0 btn btn-link btn-sm fs-6 textLighter trackingWarningBtn"
   >
     <small>
       <svg
