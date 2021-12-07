@@ -139,29 +139,32 @@
     }
   }
 
-  .btn-link:not(.textLighter):not(.textLight),
-  a.text-secondary,
-  a:not(.navbar-brand):not(.textLighter):not(.textLight):not(.rssBadge):not(.text-dark):not(.text-primary) {
-    color: $font-color !important;
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline-secondary,
+  .btn-light,
+  a.bg-secondary {
+    color: var(--color-font) !important;
+    background-color: #1a1d21;
+    border-color: var(--border-solid);
+
+    img {
+      filter: grayscale(100%) invert(1) brightness(2);
+    }
 
     &:hover,
     &:focus {
       color: $font-color-light !important;
+      background-color: #090a0c !important;
     }
   }
 
-  .btn-primary,
-  .btn-secondary,
-  .btn-light,
-  a.bg-secondary {
-    color: #fff !important;
-    background-color: #040404;
-    border-color: #737475;
+  .btn-link {
+    color: var(--color-font) !important;
 
     &:hover,
     &:focus {
-      color: $font-color-light;
-      background-color: #090a0c !important;
+      color: $font-color-light !important;
     }
   }
 
@@ -192,20 +195,20 @@
     }
   }
 
-  .btn-outline-secondary {
-    @include button-variant($color1, $border-solid);
+  // .btn-outline-secondary {
+  //   @include button-variant($color1, $border-solid);
 
-    img {
-      filter: grayscale(100%) invert(1) brightness(2);
-    }
+  //   img {
+  //     filter: grayscale(100%) invert(1) brightness(2);
+  //   }
 
-    &:hover,
-    &:focus {
-      color: $font-color-light;
-      border-color: #5a5b5b !important;
-      background-color: #090a0c !important;
-    }
-  }
+  //   &:hover,
+  //   &:focus {
+  //     color: $font-color-light;
+  //     border-color: #5a5b5b !important;
+  //     background-color: #090a0c !important;
+  //   }
+  // }
 
   .form-check-label::before,
   select,
@@ -339,14 +342,6 @@
     }
   }
 
-  .textLight {
-    color: $font-color-light !important;
-  }
-
-  .textLighter {
-    color: white !important;
-  }
-
   .text-primary,
   .text-secondary {
     color: $font-color-light !important;
@@ -434,11 +429,17 @@
     color: $font-color !important;
   }
 
-  .text-dark {
+  .text-dark:not(.textLighter) {
     color: $font-color-light !important;
-    &:hover {
-      color: darken($font-color-light, 0.3) !important;
-    }
+  }
+
+  .textLight {
+    color: $font-color-light !important;
+  }
+
+  .textLighter,
+  .btn-link.text-dark {
+    color: white !important;
   }
 
   .alert-primary {
@@ -638,11 +639,13 @@
 
   .tooltip {
     &.bs-tooltip-bottom .tooltip-arrow::before {
-      border-bottom-color: var(--bs-dark) !important;
+      border-bottom-color: var(--gray) !important;
     }
 
     & .tooltip-inner {
-      background-color: var(--color-font) !important;
+      background-color: var(--light) !important;
+      border: 1px solid var(--gray) !important;
+      color: var(--color-font) !important;
     }
   }
 }

@@ -53,7 +53,7 @@ const UserConfirmation = (props: Props) => {
   return (
     <Modal
       data-testid="userConfirmationModal"
-      header={<div className="h6 text-uppercase mb-0 flex-grow-1">Email confirmation</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Email confirmation</div>}
       disabledClose={verifying}
       modalClassName={styles.modal}
       open={!isUndefined(emailCode)}

@@ -119,7 +119,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
               >
                 <button
                   aria-label="Copy path to clipboard"
-                  class="btn btn-sm btn-link text-muted p-0 btnClip"
+                  class="btn btn-sm btn-link textLighter text-muted p-0 btnClip"
                   type="button"
                 >
                   <div

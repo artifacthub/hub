@@ -222,7 +222,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                             icon={<></>}
                             visibleBtnText
                             contentBtn="this text code"
-                            className={`btn-link text-reset p-0 text-decoration-underline ${styles.copyBtn}`}
+                            className={`btn-link text-reset p-0 text-secondary fw-bold ${styles.copyBtn}`}
                             label="Copy 2FA code to clipboard"
                           />
                           to set it up manually.
