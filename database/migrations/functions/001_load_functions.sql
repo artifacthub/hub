@@ -52,8 +52,9 @@
 {{ template "packages/semver_gt.sql" }}
 {{ template "packages/semver_gte.sql" }}
 {{ template "packages/toggle_star.sql" }}
-{{ template "packages/update_snapshot_security_report.sql" }}
 {{ template "packages/unregister_package.sql" }}
+{{ template "packages/update_packages_views.sql" }}
+{{ template "packages/update_snapshot_security_report.sql" }}
 
 {{ template "repositories/add_repository.sql" }}
 {{ template "repositories/delete_repository.sql" }}

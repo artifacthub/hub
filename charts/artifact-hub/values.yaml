@@ -273,8 +273,8 @@ trivy:
 postgresql:
   enabled: true
   image:
-    repository: postgres
-    tag: 12
+    repository: artifacthub/postgres
+    tag: latest
   persistence:
     mountPath: /data
   postgresqlUsername: postgres

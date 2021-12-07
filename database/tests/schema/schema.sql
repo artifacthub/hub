@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(153);
+select plan(184);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -13,38 +13,38 @@ select results_eq(
 select has_extension('pgcrypto');
 select has_extension('pg_trgm');
 select has_extension('tsm_system_rows');
+select has_extension('pg_partman');
 
 -- Check expected tables exist
-select tables_are(array[
-    'api_key',
-    'delete_user_code',
-    'email_verification_code',
-    'event',
-    'event_kind',
-    'image',
-    'image_version',
-    'maintainer',
-    'notification',
-    'opt_out',
-    'organization',
-    'package',
-    'package__maintainer',
-    'password_reset_code',
-    'production_usage',
-    'repository',
-    'repository_kind',
-    'session',
-    'snapshot',
-    'subscription',
-    'user',
-    'user_starred_package',
-    'user__organization',
-    'version_functions',
-    'version_schema',
-    'webhook',
-    'webhook__event_kind',
-    'webhook__package'
-]);
+select has_table('api_key');
+select has_table('delete_user_code');
+select has_table('email_verification_code');
+select has_table('event');
+select has_table('event_kind');
+select has_table('image');
+select has_table('image_version');
+select has_table('maintainer');
+select has_table('notification');
+select has_table('opt_out');
+select has_table('organization');
+select has_table('package');
+select has_table('package_views');
+select has_table('package__maintainer');
+select has_table('password_reset_code');
+select has_table('production_usage');
+select has_table('repository');
+select has_table('repository_kind');
+select has_table('session');
+select has_table('snapshot');
+select has_table('subscription');
+select has_table('user');
+select has_table('user_starred_package');
+select has_table('user__organization');
+select has_table('version_functions');
+select has_table('version_schema');
+select has_table('webhook');
+select has_table('webhook__event_kind');
+select has_table('webhook__package');
 
 -- Check tables have expected columns
 select columns_are('api_key', array[
@@ -139,6 +139,12 @@ select columns_are('package', array[
     'default_channel',
     'created_at',
     'repository_id'
+]);
+select columns_are('package_views', array[
+    'package_id',
+    'version',
+    'day',
+    'total'
 ]);
 select columns_are('package__maintainer', array[
     'package_id',
@@ -329,6 +335,9 @@ select indexes_are('package', array[
     'package_tsdoc_idx',
     'package_repository_id_idx',
     'package_repository_id_name_key'
+]);
+select indexes_are('package_views', array[
+    'package_views_package_id_version_day_key'
 ]);
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'

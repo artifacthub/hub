@@ -8,7 +8,7 @@ To start, please clone the [Artifact Hub repository](https://github.com/artifact
 
 ## Database
 
-The datastore used by Artifact Hub is PostgreSQL. You can install it locally using your favorite OS package manager.
+The datastore used by Artifact Hub is PostgreSQL. You can install it locally using your favorite OS package manager. The [pg_partman](https://github.com/pgpartman/pg_partman) extension must be installed as well.
 
 Once PostgreSQL is installed and its binaries are available in your `PATH`, we can initialize the database cluster and launch the database server:
 

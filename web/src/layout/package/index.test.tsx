@@ -72,6 +72,7 @@ describe('Package index', () => {
     it('renders component', async () => {
       const mockPackage = getMockPackage('2');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
+      mocked(API).trackView.mockResolvedValue(null);
 
       render(
         <Router>
@@ -81,6 +82,23 @@ describe('Package index', () => {
 
       await waitFor(() => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it('calls track view', async () => {
+      const mockPackage = getMockPackage('19');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+        expect(API.trackView).toHaveBeenCalledTimes(1);
+        expect(API.trackView).toHaveBeenCalledWith('id', '1.0.0');
       });
     });
 

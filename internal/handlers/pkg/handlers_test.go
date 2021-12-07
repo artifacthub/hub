@@ -1538,6 +1538,49 @@ func TestToggleStar(t *testing.T) {
 	})
 }
 
+func TestTrackView(t *testing.T) {
+	packageID := "00000000-0000-0000-0000-000000000001"
+	version := "1.0.0"
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"packageID", "version"},
+			Values: []string{packageID, version},
+		},
+	}
+
+	t.Run("track view succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.vt.On("TrackView", packageID, version).Return(nil)
+		hw.h.TrackView(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("error tracking view", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.vt.On("TrackView", packageID, version).Return(hub.ErrInvalidInput)
+		hw.h.TrackView(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+}
+
 func TestGetChartArchive(t *testing.T) {
 	ctx := context.Background()
 	packageID := "packageID"
@@ -1918,6 +1961,7 @@ type handlersWrapper struct {
 	rm *repo.ManagerMock
 	hc *tests.HTTPClientMock
 	op *oci.PullerMock
+	vt *pkg.ViewsTrackerMock
 	h  *Handlers
 }
 
@@ -1928,13 +1972,15 @@ func newHandlersWrapper() *handlersWrapper {
 	rm := &repo.ManagerMock{}
 	hc := &tests.HTTPClientMock{}
 	op := &oci.PullerMock{}
+	vt := &pkg.ViewsTrackerMock{}
 
 	return &handlersWrapper{
 		pm: pm,
 		rm: rm,
 		hc: hc,
 		op: op,
-		h:  NewHandlers(pm, rm, cfg, hc, op),
+		vt: vt,
+		h:  NewHandlers(pm, rm, cfg, hc, op, vt),
 	}
 }
 

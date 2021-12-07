@@ -262,3 +262,9 @@ type VersionChanges struct {
 	ContainsSecurityUpdates bool      `json:"contains_security_updates"`
 	Prerelease              bool      `json:"prerelease"`
 }
+
+// ViewsTracker describes the methods a ViewsTracker implementation must
+// provide.
+type ViewsTracker interface {
+	TrackView(packageID, version string) error
+}

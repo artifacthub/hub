@@ -159,3 +159,14 @@ func (m *ManagerMock) Unregister(ctx context.Context, pkg *hub.Package) error {
 	args := m.Called(ctx, pkg)
 	return args.Error(0)
 }
+
+// ViewsTrackerMock is a mock implementation of the ViewsTracker interface.
+type ViewsTrackerMock struct {
+	mock.Mock
+}
+
+// TrackView implements the ViewsTracker interface.
+func (m *ViewsTrackerMock) TrackView(packageID, version string) error {
+	args := m.Called(packageID, version)
+	return args.Error(0)
+}
