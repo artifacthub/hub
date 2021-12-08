@@ -7,6 +7,8 @@ db:
   port: "5432"
   database: hub
   user: gitpod
+images:
+  store: pg
 tracker:
   concurrency: 1
   repositoriesNames: []
