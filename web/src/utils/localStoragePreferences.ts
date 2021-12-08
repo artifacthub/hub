@@ -1,3 +1,5 @@
+import { isEmpty, sortBy } from 'lodash';
+
 import { Prefs, ThemePrefs } from '../types';
 import detectActiveThemeMode from './detectActiveThemeMode';
 
@@ -12,14 +14,15 @@ export interface OldThemePrefs extends ThemePrefs {
 }
 
 const LS_ITEM = 'prefs';
+const APPLIED_MIGRATION = 'appliedAHMigration';
 export const DEFAULT_SEARCH_LIMIT = 20;
-const DEFAULT_THEME = 'light';
+const DEFAULT_THEME = 'automatic';
 const LS_ACTIVE_PROFILE = 'activeProfile';
 
 const DEFAULT_PREFS: Prefs = {
   search: { limit: DEFAULT_SEARCH_LIMIT },
   controlPanel: {},
-  theme: { configured: DEFAULT_THEME, effective: DEFAULT_THEME },
+  theme: { configured: DEFAULT_THEME, effective: detectActiveThemeMode() },
   notifications: {
     lastDisplayedTime: null,
     enabled: true,
@@ -27,26 +30,86 @@ const DEFAULT_PREFS: Prefs = {
   },
 };
 
-export const fixTheme = (prefsList: PreferencesList): PreferencesList => {
-  let formattedList: PreferencesList = {};
-  Object.keys(prefsList).forEach((user: string) => {
-    const oldThemePrefs = { ...prefsList[user].theme } as OldThemePrefs;
-    let themePrefs: ThemePrefs = {
-      configured: oldThemePrefs.configured,
-      effective: oldThemePrefs.configured,
-    };
-    if (oldThemePrefs.automatic === true) {
-      themePrefs.configured = 'automatic';
-    }
-    themePrefs.effective = themePrefs.configured === 'automatic' ? detectActiveThemeMode() : themePrefs.effective;
+interface Migration {
+  key: number;
+  description: string;
+  method: (lsActual: PreferencesList) => PreferencesList;
+}
 
-    const currentPrefs = { ...prefsList[user] };
-    currentPrefs.theme = themePrefs;
-    formattedList[user] = currentPrefs;
+const migrations: Migration[] = [
+  {
+    key: 1,
+    description: "Fix typo: efective -> effective and use 'automatic' as configured option",
+    method: (lsActual: PreferencesList): PreferencesList => {
+      let lsUpdated: PreferencesList = {};
+      Object.keys(lsActual).forEach((user: string) => {
+        const oldThemePrefs = { ...lsActual[user].theme } as OldThemePrefs;
+        let themePrefs: ThemePrefs = {
+          configured: oldThemePrefs.configured,
+          effective: oldThemePrefs.configured,
+        };
+        if (oldThemePrefs.automatic === true) {
+          themePrefs.configured = 'automatic';
+        }
+        themePrefs.effective = themePrefs.configured === 'automatic' ? detectActiveThemeMode() : themePrefs.effective;
+
+        const currentPrefs = { ...lsActual[user] };
+        currentPrefs.theme = themePrefs;
+        lsUpdated[user] = currentPrefs;
+      });
+      return lsUpdated;
+    },
+  },
+  {
+    key: 2,
+    description: "Update default guest theme prefs when the configured theme is 'light'",
+    method: (lsActual: PreferencesList): PreferencesList => {
+      let lsUpdated: PreferencesList = { ...lsActual };
+      let guestPrefs: Prefs = lsUpdated.guest ? { ...lsUpdated.guest } : DEFAULT_PREFS;
+      if (guestPrefs.theme.configured === 'light') {
+        guestPrefs.theme = DEFAULT_PREFS.theme;
+      }
+      return { ...lsUpdated, guest: { ...guestPrefs } };
+    },
+  },
+];
+
+export const applyMigrations = (lsActual: PreferencesList): PreferencesList => {
+  let lsUpdated: PreferencesList = { ...lsActual };
+  if (isEmpty(lsUpdated)) {
+    return { guest: DEFAULT_PREFS };
+  }
+  const sortedMigrations: Migration[] = sortBy(migrations, 'key');
+  let migrationsToApply = [...sortedMigrations];
+  const migrationApplied = window.localStorage.getItem(APPLIED_MIGRATION);
+  const lastMigration = getLastMigrationNumber();
+
+  if (migrationApplied) {
+    // If latest migration has been applied, we don't do anything
+    if (lastMigration === parseInt(migrationApplied)) {
+      migrationsToApply = [];
+    } else {
+      // Migrations newest than current one are applied to prefs
+      migrationsToApply = sortedMigrations.filter((migration: Migration) => migration.key > parseInt(migrationApplied));
+    }
+  }
+
+  migrationsToApply.forEach((migration: Migration, index: number) => {
+    lsUpdated = migration.method(lsUpdated);
   });
-  // Save fixed prefs to ls
-  window.localStorage.setItem(LS_ITEM, JSON.stringify(formattedList));
-  return formattedList;
+
+  // Saved last migration
+  try {
+    window.localStorage.setItem(APPLIED_MIGRATION, lastMigration.toString());
+  } catch {
+    // Incognite mode
+  }
+  return lsUpdated;
+};
+
+const getLastMigrationNumber = (): number => {
+  const sortedMigrations = sortBy(migrations, 'key');
+  return sortedMigrations[sortedMigrations.length - 1].key;
 };
 
 export class LocalStoragePreferences {
@@ -56,7 +119,7 @@ export class LocalStoragePreferences {
     try {
       const preferences = window.localStorage.getItem(LS_ITEM);
       if (preferences) {
-        this.savedPreferences = fixTheme(JSON.parse(preferences));
+        this.savedPreferences = applyMigrations(JSON.parse(preferences));
       } else {
         this.setPrefs(DEFAULT_PREFS);
       }

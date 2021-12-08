@@ -1,11 +1,13 @@
+import { isUndefined } from 'lodash';
+
 import { Prefs } from '../types';
-import lsPreferences, { fixTheme, OldThemePrefs, PreferencesList } from './localStoragePreferences';
+import lsPreferences, { applyMigrations, OldThemePrefs, PreferencesList } from './localStoragePreferences';
 
 const defaultPrefs: Prefs = {
   controlPanel: {},
   search: { limit: 20 },
   theme: {
-    configured: 'light',
+    configured: 'automatic',
     effective: 'light',
   },
   notifications: {
@@ -29,17 +31,19 @@ const initialUserPrefs: Prefs = {
   },
 };
 
-interface FixThemeTests {
+interface ApplyMigrationsTests {
+  appliedMigration?: string;
   list: PreferencesList;
   result: PreferencesList;
 }
 
-const fixThemeTests: FixThemeTests[] = [
+const applyMigrationsTests: ApplyMigrationsTests[] = [
   {
     list: {},
-    result: {},
+    result: { guest: { ...defaultPrefs } },
   },
   {
+    appliedMigration: '0',
     list: {
       guest: {
         search: { limit: 20 },
@@ -56,7 +60,7 @@ const fixThemeTests: FixThemeTests[] = [
       guest: {
         search: { limit: 20 },
         controlPanel: {},
-        theme: { configured: 'light', effective: 'light' },
+        theme: { configured: 'automatic', effective: 'light' },
         notifications: {
           lastDisplayedTime: 1616418551259,
           enabled: true,
@@ -66,6 +70,7 @@ const fixThemeTests: FixThemeTests[] = [
     },
   },
   {
+    appliedMigration: '0',
     list: {
       guest: {
         search: { limit: 20 },
@@ -92,6 +97,7 @@ const fixThemeTests: FixThemeTests[] = [
     },
   },
   {
+    appliedMigration: '0',
     list: {
       guest: {
         search: { limit: 20 },
@@ -138,6 +144,7 @@ const fixThemeTests: FixThemeTests[] = [
     },
   },
   {
+    appliedMigration: '0',
     list: {
       guest: {
         search: { limit: 20 },
@@ -185,6 +192,155 @@ const fixThemeTests: FixThemeTests[] = [
         theme: { configured: 'automatic', effective: 'light' },
         notifications: {
           lastDisplayedTime: 1615798893643,
+          enabled: true,
+          displayed: ['789ca4669063535df55ccff943ed09b3'],
+        },
+      },
+    },
+  },
+  {
+    appliedMigration: '1',
+    list: {
+      guest: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'dark', automatic: false } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1616418551259,
+          enabled: true,
+          displayed: ['ac040137e34c699c365216db58a1a24b', '789ca4669063535df55ccff943ed09b3'],
+        },
+      },
+    },
+    result: {
+      guest: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'dark', automatic: false } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1616418551259,
+          enabled: true,
+          displayed: ['ac040137e34c699c365216db58a1a24b', '789ca4669063535df55ccff943ed09b3'],
+        },
+      },
+    },
+  },
+  {
+    appliedMigration: '1',
+    list: {
+      cin: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'dark', automatic: false } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1616418551259,
+          enabled: true,
+          displayed: ['ac040137e34c699c365216db58a1a24b', '789ca4669063535df55ccff943ed09b3'],
+        },
+      },
+    },
+    result: {
+      guest: { ...defaultPrefs },
+      cin: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'dark', automatic: false } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1616418551259,
+          enabled: true,
+          displayed: ['ac040137e34c699c365216db58a1a24b', '789ca4669063535df55ccff943ed09b3'],
+        },
+      },
+    },
+  },
+  {
+    appliedMigration: '1',
+    list: {
+      guest: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'light', efective: 'light', automatic: true } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1616488221213,
+          enabled: true,
+          displayed: ['789ca4669063535df55ccff943ed09b3', 'eaf6e39382a29763e0be2220ee0b16f5'],
+        },
+      },
+      cin: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'light', automatic: true } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1615798776666,
+          enabled: true,
+          displayed: ['789ca4669063535df55ccff943ed09b3'],
+        },
+      },
+    },
+    result: {
+      guest: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'automatic', effective: 'light' },
+        notifications: {
+          lastDisplayedTime: 1616488221213,
+          enabled: true,
+          displayed: ['789ca4669063535df55ccff943ed09b3', 'eaf6e39382a29763e0be2220ee0b16f5'],
+        },
+      },
+      cin: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'light', automatic: true } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1615798776666,
+          enabled: true,
+          displayed: ['789ca4669063535df55ccff943ed09b3'],
+        },
+      },
+    },
+  },
+  {
+    appliedMigration: '2',
+    list: {
+      guest: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'light', efective: 'light', automatic: true } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1616488221213,
+          enabled: true,
+          displayed: ['789ca4669063535df55ccff943ed09b3', 'eaf6e39382a29763e0be2220ee0b16f5'],
+        },
+      },
+      cin: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'light', automatic: true } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1615798776666,
+          enabled: true,
+          displayed: ['789ca4669063535df55ccff943ed09b3'],
+        },
+      },
+    },
+    result: {
+      guest: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'light', efective: 'light', automatic: true } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1616488221213,
+          enabled: true,
+          displayed: ['789ca4669063535df55ccff943ed09b3', 'eaf6e39382a29763e0be2220ee0b16f5'],
+        },
+      },
+      cin: {
+        search: { limit: 20 },
+        controlPanel: {},
+        theme: { configured: 'light', automatic: true } as OldThemePrefs,
+        notifications: {
+          lastDisplayedTime: 1615798776666,
           enabled: true,
           displayed: ['789ca4669063535df55ccff943ed09b3'],
         },
@@ -273,11 +429,14 @@ describe('localStoragePreferences', () => {
     expect(lsPreferences.getPrefs('user2')).toStrictEqual(defaultPrefs);
   });
 
-  describe('Test fixTheme', () => {
-    for (let i = 0; i < fixThemeTests.length; i++) {
-      it('format correct Prefs', () => {
-        const formatted = fixTheme(fixThemeTests[i].list);
-        expect(formatted).toEqual(fixThemeTests[i].result);
+  describe('Apply migrations', () => {
+    for (let i = 0; i < applyMigrationsTests.length; i++) {
+      it('get correct Prefs', () => {
+        if (!isUndefined(applyMigrationsTests[i].appliedMigration)) {
+          window.localStorage.setItem('appliedAHMigration', applyMigrationsTests[i].appliedMigration!);
+        }
+        const prefs = applyMigrations(applyMigrationsTests[i].list);
+        expect(prefs).toEqual(applyMigrationsTests[i].result);
       });
     }
   });
