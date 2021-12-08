@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
-	github.com/aquasecurity/trivy v0.21.0
+	github.com/aquasecurity/trivy v0.21.2
 	github.com/containerd/containerd v1.5.8
 	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/disintegration/imaging v1.6.2
@@ -21,10 +21,10 @@ require (
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/hashicorp/golang-lru v0.5.4
-	github.com/jackc/pgconn v1.10.0
-	github.com/jackc/pgx/v4 v4.13.0
+	github.com/jackc/pgconn v1.10.1
+	github.com/jackc/pgx/v4 v4.14.1
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/open-policy-agent/opa v0.34.2
+	github.com/open-policy-agent/opa v0.35.0
 	github.com/opencontainers/image-spec v1.0.2
 	github.com/operator-framework/api v0.10.7
 	github.com/patrickmn/go-cache v2.1.0+incompatible
@@ -43,12 +43,12 @@ require (
 	github.com/versine/loginauth v0.0.0-20170330164406-8380ec243689
 	github.com/vincent-petithory/dataurl v1.0.0
 	github.com/wagslane/go-password-validator v0.3.0
-	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
+	golang.org/x/crypto v0.0.0-20211202192323-5770296d904e
 	golang.org/x/image v0.0.0-20211028202545-6944b10bf410 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
 	gonum.org/v1/netlib v0.0.0-20210927171344-7274ea1d1842 // indirect
-	google.golang.org/api v0.60.0
+	google.golang.org/api v0.61.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 	helm.sh/helm/v3 v3.6.1-0.20211126171829-5d47255a3d6c
@@ -76,8 +76,7 @@ require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/acomagu/bufpipe v1.0.3 // indirect
-	github.com/aquasecurity/fanal v0.0.0-20211111090223-628ff1de3ee1 // indirect
-	github.com/aquasecurity/go-dep-parser v0.0.0-20211110174639-8257534ffed3 // indirect
+	github.com/aquasecurity/fanal v0.0.0-20211130145558-2c76718ef52e // indirect
 	github.com/aquasecurity/trivy-db v0.0.0-20210916043317-726b7b72a47b // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -143,10 +142,10 @@ require (
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgproto3/v2 v2.1.1 // indirect
+	github.com/jackc/pgproto3/v2 v2.2.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
-	github.com/jackc/pgtype v1.8.1 // indirect
-	github.com/jackc/puddle v1.1.3 // indirect
+	github.com/jackc/pgtype v1.9.1 // indirect
+	github.com/jackc/puddle v1.2.0 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jdkato/prose v1.1.0 // indirect
 	github.com/jmoiron/sqlx v1.3.4 // indirect
@@ -222,14 +221,14 @@ require (
 	golang.org/x/exp v0.0.0-20210126221216-84987778548c // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211110154304-99a53858aa08 // indirect
+	golang.org/x/sys v0.0.0-20211124211545-fe61309f8881 // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.2.0 // indirect
 	gonum.org/v1/gonum v0.8.1-0.20200930085651-eea0b5cb5cc9 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20211111162719-482062a4217b // indirect
+	google.golang.org/genproto v0.0.0-20211118181313-81c1377c94b1 // indirect
 	google.golang.org/grpc v1.42.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/gorp.v1 v1.7.2 // indirect
