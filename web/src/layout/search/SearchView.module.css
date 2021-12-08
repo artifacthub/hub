@@ -63,4 +63,9 @@
     width: 320px;
     min-width: 320px;
   }
+
+  .list {
+    flex-basis: calc(100% - 320px);
+    max-width: calc(100% - 320px);
+  }
 }
