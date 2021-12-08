@@ -15,7 +15,7 @@ interface Props {
 }
 
 const PackageCard = (props: Props) => (
-  <div className="col-12 col-xxl-6 py-sm-3 py-2" role="listitem">
+  <div className={`col-12 col-xxl-6 py-sm-3 py-2 ${styles.cardWrapper}`} role="listitem">
     <div className={`card cardWithHover h-100 mw-100 bg-white ${styles.card} ${props.className}`}>
       <Link
         className={`text-decoration-none text-reset h-100 bg-transparent ${styles.link}`}
