@@ -15,7 +15,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": 3,
-    "iteration": 1614151696179,
+    "iteration": 1638953282885,
     "links": [],
     "panels": [{
             "collapsed": false,
@@ -85,7 +85,7 @@
             },
             "pluginVersion": "7.4.1",
             "targets": [{
-                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status=\"OK\"}[$__interval]))",
+                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status=~\"OK|Created|No Content\"}[$__interval]))",
                 "interval": "",
                 "legendFormat": "",
                 "refId": "A"
@@ -493,10 +493,10 @@
                 "refId": "A"
             }],
             "thresholds": [],
-            "timeFrom": "7d",
+            "timeFrom": "30d",
             "timeRegions": [],
             "timeShift": null,
-            "title": "Last week requests",
+            "title": "Last month requests",
             "tooltip": {
                 "shared": true,
                 "sort": 0,
@@ -601,7 +601,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "sum(rate(http_request_duration_sum{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) / sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval]))",
+                "expr": "sum(rate(http_request_duration_sum{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) / sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval]))",
                 "interval": "",
                 "legendFormat": "API average latency",
                 "refId": "A"
@@ -720,7 +720,7 @@
             "stack": true,
             "steppedLine": false,
             "targets": [{
-                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) by (path)",
+                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) by (path)",
                 "instant": false,
                 "interval": "30s",
                 "intervalFactor": 1,
@@ -944,7 +944,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -1150,7 +1150,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -1356,7 +1356,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -1567,5 +1567,5 @@
     "timezone": "",
     "title": "ArtifactHub",
     "uid": "FBPhb4qWk",
-    "version": 61
+    "version": 63
 }
