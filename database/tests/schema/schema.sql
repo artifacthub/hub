@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(184);
+select plan(185);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -439,6 +439,7 @@ select has_function('get_package_changelog');
 select has_function('get_package_summary');
 select has_function('get_packages_starred_by_user');
 select has_function('get_package_stars');
+select has_function('get_package_views');
 select has_function('get_packages_stats');
 select has_function('get_production_usage');
 select has_function('get_random_packages');

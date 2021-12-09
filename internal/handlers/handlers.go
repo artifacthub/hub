@@ -276,6 +276,7 @@ func (h *Handlers) setupRouter() {
 			r.Get("/{packageID}/{version}/values-schema", h.Packages.GetValuesSchema)
 			r.Get("/{packageID}/{version}/templates", h.Packages.GetChartTemplates)
 			r.Post("/{packageID}/{version}/views", h.Packages.TrackView)
+			r.Get("/{packageID}/views", h.Packages.GetViews)
 			r.Get("/{packageID}/changelog", h.Packages.GetChangelog)
 		})
 

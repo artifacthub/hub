@@ -24,6 +24,7 @@ const (
 	getPkgChangelogDBQ              = `select get_package_changelog($1::uuid)`
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
 	getPkgSummaryDBQ                = `select get_package_summary($1::jsonb)`
+	getPkgViewsDBQ                  = `select get_package_views($1::uuid)`
 	getPkgsStarredByUserDBQ         = `select * from get_packages_starred_by_user($1::uuid, $2::int, $3::int)`
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
 	getProductionUsageDBQ           = `select get_production_usage($1::uuid, $2::text, $3::text)`
@@ -205,6 +206,21 @@ func (m *Manager) GetSummaryJSON(ctx context.Context, input *hub.GetPackageInput
 // identified by the package id and version provided.
 func (m *Manager) GetValuesSchemaJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
 	return util.DBQueryJSON(ctx, m.db, getValuesSchemaDBQ, pkgID, version)
+}
+
+// GetViewsJSON returns a json object with the package views organized by
+// version and day. The json object is built by the database.
+func (m *Manager) GetViewsJSON(ctx context.Context, pkgID string) ([]byte, error) {
+	// Validate input
+	if pkgID == "" {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "package id not provided")
+	}
+	if _, err := uuid.FromString(pkgID); err != nil {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
+	}
+
+	// Get package views from database
+	return util.DBQueryJSON(ctx, m.db, getPkgViewsDBQ, pkgID)
 }
 
 // Register registers the package provided in the database.

@@ -122,6 +122,13 @@ func (m *ManagerMock) GetValuesSchemaJSON(ctx context.Context, pkgID, version st
 	return data, args.Error(1)
 }
 
+// GetViewsJSON implements the PackageManager interface.
+func (m *ManagerMock) GetViewsJSON(ctx context.Context, packageID string) ([]byte, error) {
+	args := m.Called(ctx, packageID)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // Register implements the PackageManager interface.
 func (m *ManagerMock) Register(ctx context.Context, pkg *hub.Package) error {
 	args := m.Called(ctx, pkg)

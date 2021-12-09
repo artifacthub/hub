@@ -2066,6 +2066,38 @@ paths:
           $ref: "#/components/responses/NotFoundResponse"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/views":
+    get:
+      tags:
+        - Packages
+      summary: Get the views of the package provided
+      description: Get the views of the package provided
+      operationId: getPackageViews
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: false
+                additionalProperties: true
+                example:
+                  "1.0.1":
+                    "2021-12-09": 12
+                    "2021-12-08": 30
+                  "1.0.0":
+                    "2021-12-09": 2
+                    "2021-12-08": 5
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
   /subscriptions:
     get:
       tags:
