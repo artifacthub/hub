@@ -886,6 +886,54 @@ func TestGetValuesSchemaJSON(t *testing.T) {
 	})
 }
 
+func TestGetViewsJSON(t *testing.T) {
+	ctx := context.Background()
+	pkgID := "00000000-0000-0000-0000-000000000001"
+
+	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
+		testCases := []struct {
+			errMsg    string
+			packageID string
+		}{
+			{"package id not provided", ""},
+			{"invalid package id", "pkgID"},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil)
+				_, err := m.GetViewsJSON(ctx, tc.packageID)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getPkgViewsDBQ, pkgID).Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		_, err := m.GetViewsJSON(ctx, pkgID)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getPkgViewsDBQ, pkgID).Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetViewsJSON(ctx, pkgID)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestRegister(t *testing.T) {
 	ctx := context.Background()
 

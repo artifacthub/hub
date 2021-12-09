@@ -1115,6 +1115,74 @@ func TestGetValuesSchema(t *testing.T) {
 	})
 }
 
+func TestGetViews(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"packageID"},
+			Values: []string{"pkg1"},
+		},
+	}
+
+	t.Run("get views succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetViewsJSON", r.Context(), "pkg1").Return([]byte("dataJSON"), nil)
+		hw.h.GetViews(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(1*time.Hour), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("error getting views", func(t *testing.T) {
+		testCases := []struct {
+			pmErr              error
+			expectedStatusCode int
+		}{
+			{
+				hub.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				hub.ErrNotFound,
+				http.StatusNotFound,
+			},
+			{
+				tests.ErrFakeDB,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.pmErr.Error(), func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.pm.On("GetViewsJSON", r.Context(), "pkg1").Return(nil, tc.pmErr)
+				hw.h.GetViews(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.assertExpectations(t)
+			})
+		}
+	})
+}
+
 func TestInjectIndexMeta(t *testing.T) {
 	checkIndexMeta := func(expectedTitle, expectedDescription interface{}) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {

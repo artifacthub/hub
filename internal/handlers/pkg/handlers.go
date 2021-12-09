@@ -398,6 +398,18 @@ func (h *Handlers) GetValuesSchema(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
+// GetViews is an http handler used to get the views of the package provided.
+func (h *Handlers) GetViews(w http.ResponseWriter, r *http.Request) {
+	packageID := chi.URLParam(r, "packageID")
+	dataJSON, err := h.pkgManager.GetViewsJSON(r.Context(), packageID)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetViews").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 1*time.Hour, http.StatusOK)
+}
+
 // InjectIndexMeta is a middleware that injects the some index metadata related
 // to a given package,
 func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {

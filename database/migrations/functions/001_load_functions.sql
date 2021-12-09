@@ -42,6 +42,7 @@
 {{ template "packages/get_package_summary.sql" }}
 {{ template "packages/get_packages_starred_by_user.sql" }}
 {{ template "packages/get_package_stars.sql" }}
+{{ template "packages/get_package_views.sql" }}
 {{ template "packages/get_packages_stats.sql" }}
 {{ template "packages/get_production_usage.sql" }}
 {{ template "packages/get_random_packages.sql" }}

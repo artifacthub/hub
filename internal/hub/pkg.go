@@ -128,6 +128,7 @@ type PackageManager interface {
 	GetStatsJSON(ctx context.Context) ([]byte, error)
 	GetSummaryJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
 	GetValuesSchemaJSON(ctx context.Context, pkgID, version string) ([]byte, error)
+	GetViewsJSON(ctx context.Context, packageID string) ([]byte, error)
 	Register(ctx context.Context, pkg *Package) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) (*JSONQueryResult, error)
 	SearchMonocularJSON(ctx context.Context, baseURL, tsQueryWeb string) ([]byte, error)
