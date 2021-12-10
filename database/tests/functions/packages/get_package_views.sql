@@ -21,8 +21,22 @@ insert into package (
 ) values (
     :'package1ID',
     'pkg1',
-    '1.0.0',
+    '1.0.1',
     :'repo1ID'
+);
+insert into snapshot (
+    package_id,
+    version
+) values (
+    :'package1ID',
+    '1.0.0'
+);
+insert into snapshot (
+    package_id,
+    version
+) values (
+    :'package1ID',
+    '1.0.1'
 );
 insert into package (
     package_id,
@@ -34,6 +48,13 @@ insert into package (
     'pkg2',
     '1.0.0',
     :'repo1ID'
+);
+insert into snapshot (
+    package_id,
+    version
+) values (
+    :'package2ID',
+    '1.0.0'
 );
 insert into package_views values (:'package1ID', '1.0.0', '2021-10-08', 10);
 insert into package_views values (:'package1ID', '1.0.0', '2021-12-08', 10);

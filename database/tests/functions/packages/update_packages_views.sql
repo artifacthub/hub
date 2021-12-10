@@ -25,6 +25,20 @@ insert into package (
     '1.0.0',
     :'repo1ID'
 );
+insert into snapshot (
+    package_id,
+    version
+) values (
+    :'package1ID',
+    '1.0.0'
+);
+insert into snapshot (
+    package_id,
+    version
+) values (
+    :'package1ID',
+    '1.0.1'
+);
 insert into package (
     package_id,
     name,
@@ -35,6 +49,13 @@ insert into package (
     'pkg2',
     '1.0.0',
     :'repo1ID'
+);
+insert into snapshot (
+    package_id,
+    version
+) values (
+    :'package2ID',
+    '1.0.0'
 );
 
 -- Run some tests
