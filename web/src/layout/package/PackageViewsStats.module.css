@@ -1,0 +1,41 @@
+.chartWrapper {
+  background-color: var(--bs-white) !important;
+  box-shadow: 0px 0px 5px 0px var(--bs-light);
+  padding: 1rem;
+  padding-bottom: 1.5rem;
+  padding-right: 2rem;
+}
+
+[data-theme='dark'] :global(.card).chartWrapper {
+  background-color: var(--color-black-5) !important;
+}
+
+:global(.apexcharts-tooltip) {
+  background-color: var(--bs-white) !important;
+  border-color: var(--color-1-900) !important;
+  color: var(--font-color) !important;
+}
+
+:global(.apexcharts-tooltip-title) {
+  background-color: var(--color-black-5) !important;
+  border-color: var(--color-1-900) !important;
+}
+
+:global(.apexcharts-xaxistooltip) {
+  background-color: var(--bs-white) !important;
+  color: var(--font-color) !important;
+  border-color: var(--color-1-900) !important;
+}
+
+:global(.apexcharts-xaxistooltip)::before,
+:global(.apexcharts-xaxistooltip)::after {
+  border-bottom-color: var(--color-1-900) !important;
+}
+
+:global(.apexcharts-selected) svg {
+  fill: var(--highlighted) !important;
+}
+
+:global(.apexcharts-legend-text) {
+  color: var(--font-color) !important;
+}

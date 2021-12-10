@@ -58,6 +58,7 @@ import ModalHeader from './ModalHeader';
 import MoreActionsButton from './MoreActionsButton';
 import OrgsUsingPackage from './OrgsUsingPackage';
 import styles from './PackageView.module.css';
+import PackagesViewsStats from './PackageViewsStats';
 import ReadmeWrapper from './readme';
 import RecommendedPackages from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
@@ -1052,6 +1053,8 @@ const PackageView = (props: Props) => {
 
                           {!isNull(additionalInfo) && <>{additionalInfo.content}</>}
                         </div>
+
+                        <PackagesViewsStats packageId={detail.packageId} version={props.version} />
 
                         {!isUndefined(relatedPosition) && relatedPosition === 'content' && (
                           <RelatedPackages
