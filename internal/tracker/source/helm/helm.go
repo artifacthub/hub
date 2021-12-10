@@ -402,7 +402,7 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 		}
 		hc := o.Hc
 		if hc == nil {
-			hc = util.SetupHTTPClient(false)
+			hc = util.SetupHTTPClient(false, util.HTTPClientDefaultTimeout)
 		}
 		resp, err := hc.Do(req)
 		if err != nil {

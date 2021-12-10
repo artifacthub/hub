@@ -65,7 +65,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("authorizer setup failed")
 	}
-	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"))
+	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"), util.HTTPClientDefaultTimeout)
 	rm := repo.NewManager(cfg, db, az, hc)
 	pm := pkg.NewManager(db)
 	is, err := util.SetupImageStore(cfg, db, hc)
