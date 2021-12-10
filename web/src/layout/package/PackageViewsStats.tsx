@@ -209,7 +209,7 @@ const PackagesViewsStats = (props: Props) => {
       }
     }
     getStats();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (!isUndefined(stats)) {
