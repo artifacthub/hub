@@ -697,6 +697,12 @@ export interface AHStats {
   };
 }
 
+export interface PackageViewsStats {
+  [key: string]: {
+    [key: string]: number;
+  };
+}
+
 export interface TOCEntryItem {
   depth: number;
   value: string;

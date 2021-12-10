@@ -23,6 +23,7 @@ import {
   OrganizationPolicy,
   Package,
   PackageStars,
+  PackageViewsStats,
   Profile,
   RegoPlaygroundPolicy,
   RegoPlaygroundResult,
@@ -922,6 +923,10 @@ class API_CLASS {
         method: 'POST',
       },
     });
+  }
+
+  public getViews(packageId: string): Promise<PackageViewsStats> {
+    return this.apiFetch({ url: `${this.API_BASE_URL}/packages/${packageId}/views`, skipCamelConversion: true });
   }
 
   public getChangelog(packageId: string): Promise<ChangeLog[]> {
