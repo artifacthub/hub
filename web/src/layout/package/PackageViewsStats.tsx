@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash';
+import { isUndefined, orderBy } from 'lodash';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -64,12 +64,20 @@ const getMostPopularVersions = (stats: PackageViewsStats): string[] => {
   return sortPkgVersions(versions);
 };
 
-const prepareChartsSeries = (stats: PackageViewsStats): Series[] => {
-  const visibleVersions = getMostPopularVersions(stats);
+const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series[] => {
+  let series: Series[] = [];
+  let visibleVersions: string[] = [];
+  if (version) {
+    if (!isUndefined(stats[version])) {
+      visibleVersions = [version];
+    } else {
+      return [];
+    }
+  } else {
+    visibleVersions = getMostPopularVersions(stats);
+  }
 
   const last30Days = Array.from(Array(30).keys()).map((x: number) => moment().subtract(x, 'days').format('YYYY-MM-DD'));
-
-  let series: Series[] = [];
 
   visibleVersions.forEach((version: string) => {
     const data = last30Days.map((date: string) => {
@@ -84,7 +92,7 @@ const prepareChartsSeries = (stats: PackageViewsStats): Series[] => {
 
   const statsVersions = Object.keys(stats);
 
-  if (statsVersions.length > visibleVersions.length) {
+  if (statsVersions.length > visibleVersions.length && isUndefined(version)) {
     const restVersions = statsVersions.filter((version: string) => !visibleVersions.includes(version));
     const restVersionsPerDates: ViewsPerDate[] = last30Days.map((date: string) => {
       let views = 0;
@@ -109,19 +117,18 @@ const prepareChartsSeries = (stats: PackageViewsStats): Series[] => {
 
 const PackagesViewsStats = (props: Props) => {
   const [series, setSeries] = useState<any[]>([]);
+  const [stats, setStats] = useState<PackageViewsStats | undefined>();
 
   const getStackedChartConfig = (): ApexCharts.ApexOptions => {
     return {
       chart: {
-        type: 'area',
+        id: 'pkg-views',
+        type: 'bar',
         stacked: true,
         redrawOnWindowResize: true,
         redrawOnParentResize: false,
         zoom: {
           enabled: false,
-        },
-        selection: {
-          enabled: true,
         },
         fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
         toolbar: {
@@ -133,8 +140,12 @@ const PackagesViewsStats = (props: Props) => {
         enabled: false,
       },
       tooltip: {
-        shared: true,
-        intersect: false,
+        // shared: true,
+        // intersect: false,
+        followCursor: false,
+        onDatasetHover: {
+          highlightDataSeries: false,
+        },
         x: {
           format: 'dd MMM yy',
         },
@@ -144,7 +155,22 @@ const PackagesViewsStats = (props: Props) => {
           },
         },
       },
+      states: {
+        hover: {
+          filter: {
+            type: 'lighten',
+            value: 0,
+          },
+        },
+        active: {
+          filter: {
+            type: 'darken',
+            value: 0,
+          },
+        },
+      },
       legend: {
+        showForSingleSeries: true,
         position: 'bottom',
         horizontalAlign: 'center',
         itemMargin: {
@@ -176,14 +202,20 @@ const PackagesViewsStats = (props: Props) => {
   useEffect(() => {
     async function getStats() {
       try {
-        const stats = await API.getViews(props.packageId);
-        setSeries(prepareChartsSeries(stats));
+        const data = await API.getViews(props.packageId);
+        setStats(data);
       } catch (err: any) {
-        // Dont' show any error if API request fails
+        // Don't display any error if API request fails
       }
     }
     getStats();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (!isUndefined(stats)) {
+      setSeries(prepareChartsSeries(stats, props.version));
+    }
+  }, [props.version, stats]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (series.length === 0) return null;
 
