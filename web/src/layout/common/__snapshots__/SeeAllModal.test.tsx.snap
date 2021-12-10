@@ -68,7 +68,7 @@ exports[`SeeAllModal creates snapshot 1`] = `
     class="btn btn-link ps-0 d-none d-md-block position-relative text-primary btn"
   >
     <div
-      class="d-flex flex-row align-items-center textLight"
+      class="d-flex flex-row align-items-center"
     >
       <svg
         class="me-1"
