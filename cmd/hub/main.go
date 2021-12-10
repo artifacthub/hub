@@ -55,7 +55,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("authorizer setup failed")
 	}
-	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"))
+	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"), util.HTTPClientDefaultTimeout)
 	vt := pkg.NewViewsTracker(db)
 
 	// Setup and launch http server
@@ -129,7 +129,7 @@ func main() {
 		SubscriptionManager: subscription.NewManager(db),
 		RepositoryManager:   repo.NewManager(cfg, db, az, hc),
 		PackageManager:      pkg.NewManager(db),
-		HTTPClient:          hc,
+		HTTPClient:          util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"), handlers.WebhooksHTTPClientTimeout),
 	}
 	notificationsDispatcher := notification.NewDispatcher(nSvc)
 	wg.Add(1)

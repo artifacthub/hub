@@ -21,6 +21,7 @@ import (
 	"github.com/artifacthub/hub/internal/handlers/webhook"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/gorilla/csrf"
@@ -34,7 +35,13 @@ import (
 
 const csrfHeader = "X-CSRF-Token"
 
-var xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
+var (
+	xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
+
+	// WebhooksHTTPClientTimeout represents the timeout of the http client used
+	// to handle the webhooks requests.
+	WebhooksHTTPClientTimeout = 60 * time.Second
+)
 
 // Services is a wrapper around several internal services used by the handlers.
 type Services struct {
@@ -102,10 +109,13 @@ func Setup(ctx context.Context, cfg *viper.Viper, svc *Services) (*Handlers, err
 			svc.ViewsTracker,
 		),
 		Subscriptions: subscription.NewHandlers(svc.SubscriptionManager),
-		Webhooks:      webhook.NewHandlers(svc.WebhookManager, svc.HTTPClient),
-		APIKeys:       apikey.NewHandlers(svc.APIKeyManager),
-		Static:        static.NewHandlers(cfg, svc.ImageStore),
-		Stats:         stats.NewHandlers(svc.StatsManager),
+		Webhooks: webhook.NewHandlers(
+			svc.WebhookManager,
+			util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"), WebhooksHTTPClientTimeout),
+		),
+		APIKeys: apikey.NewHandlers(svc.APIKeyManager),
+		Static:  static.NewHandlers(cfg, svc.ImageStore),
+		Stats:   stats.NewHandlers(svc.StatsManager),
 	}
 	h.setupRouter()
 	return h, nil

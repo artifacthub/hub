@@ -16,25 +16,29 @@ var (
 	// ErrRestrictedConnection error indicates that connections to the provided
 	// address are restricted.
 	ErrRestrictedConnection = errors.New("restricted connection")
+
+	// HTTPClientDefaultTimeout represents the default timeout used for http
+	// clients.
+	HTTPClientDefaultTimeout = 10 * time.Second
 )
 
 // SetupHTTPClient is a helper that returns an http client. If restricted is
 // set to true, the http client won't be able to make requests to a set of
 // restricted addresses.
-func SetupHTTPClient(restricted bool) hub.HTTPClient {
+func SetupHTTPClient(restricted bool, timeout time.Duration) hub.HTTPClient {
 	if restricted {
-		return setupRestrictedHTTPClient()
+		return setupRestrictedHTTPClient(timeout)
 	}
 	return &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: timeout,
 	}
 }
 
 // setupRestrictedHTTPClient returns an http client that is not allowed to make
 // requests to a set of restricted addresses.
-func setupRestrictedHTTPClient() hub.HTTPClient {
+func setupRestrictedHTTPClient(timeout time.Duration) hub.HTTPClient {
 	dialer := &net.Dialer{
-		Timeout:   10 * time.Second,
+		Timeout:   timeout,
 		DualStack: true,
 		Control:   checkRestrictions,
 	}
@@ -50,10 +54,10 @@ func setupRestrictedHTTPClient() hub.HTTPClient {
 		IdleConnTimeout:       90 * time.Second,
 		MaxIdleConns:          100,
 		Proxy:                 http.ProxyFromEnvironment,
-		TLSHandshakeTimeout:   10 * time.Second,
+		TLSHandshakeTimeout:   timeout,
 	}
 	return &http.Client{
-		Timeout:   10 * time.Second,
+		Timeout:   timeout,
 		Transport: transport,
 	}
 }
