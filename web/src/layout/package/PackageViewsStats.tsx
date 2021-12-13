@@ -1,4 +1,4 @@
-import { isUndefined, orderBy } from 'lodash';
+import { isUndefined } from 'lodash';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -6,7 +6,6 @@ import semver from 'semver';
 
 import API from '../../api';
 import { PackageViewsStats } from '../../types';
-import sumObjectValues from '../../utils/sumObjectValues';
 import styles from './PackageViewsStats.module.css';
 
 interface Props {
@@ -17,11 +16,6 @@ interface Props {
 interface Series {
   name: string;
   data: any[];
-}
-
-interface ViewsPerVersion {
-  version: string;
-  total: number;
 }
 
 interface ViewsPerDate {
@@ -45,23 +39,9 @@ const sortPkgVersions = (availableVersions: string[]): string[] => {
   return [];
 };
 
-const getMostPopularVersions = (stats: PackageViewsStats): string[] => {
-  const totalViewsPerVersion: ViewsPerVersion[] = [];
-  Object.keys(stats).forEach((version: string) => {
-    const totalViews = sumObjectValues(stats[version]);
-    if (totalViews > 0) {
-      totalViewsPerVersion.push({
-        version: version,
-        total: totalViews,
-      });
-    }
-  });
-
-  const versions = orderBy(totalViewsPerVersion, 'total', 'desc')
-    .slice(0, MAX_VISIBLE_VERSIONS)
-    .map((vpv: ViewsPerVersion) => vpv.version);
-
-  return sortPkgVersions(versions);
+const getMostRecentVersions = (stats: PackageViewsStats): string[] => {
+  const sortedVersions = sortPkgVersions(Object.keys(stats));
+  return sortedVersions.slice(0, MAX_VISIBLE_VERSIONS);
 };
 
 const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series[] => {
@@ -74,7 +54,7 @@ const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series
       return [];
     }
   } else {
-    visibleVersions = getMostPopularVersions(stats);
+    visibleVersions = getMostRecentVersions(stats);
   }
 
   const last30Days = Array.from(Array(30).keys()).map((x: number) => moment().subtract(x, 'days').format('YYYY-MM-DD'));
@@ -139,15 +119,18 @@ const PackagesViewsStats = (props: Props) => {
       dataLabels: {
         enabled: false,
       },
+      plotOptions: {
+        bar: {
+          borderRadius: 2,
+        },
+      },
       tooltip: {
         // shared: true,
         // intersect: false,
-        followCursor: false,
-        onDatasetHover: {
-          highlightDataSeries: false,
-        },
         x: {
-          format: 'dd MMM yy',
+          formatter: (val: number, opts?: any): string => {
+            return moment(val).format('DD MMM YY');
+          },
         },
         y: {
           formatter: function (value) {
@@ -158,13 +141,13 @@ const PackagesViewsStats = (props: Props) => {
       states: {
         hover: {
           filter: {
-            type: 'lighten',
+            type: 'none',
             value: 0,
           },
         },
         active: {
           filter: {
-            type: 'darken',
+            type: 'none',
             value: 0,
           },
         },
@@ -189,6 +172,9 @@ const PackagesViewsStats = (props: Props) => {
       },
       yaxis: {
         labels: {
+          formatter: function (value: number) {
+            return value === 0 || value >= 1 ? value.toFixed(0).toString() : '';
+          },
           style: {
             colors: 'var(--color-font)',
             fontSize: '11px',
@@ -223,7 +209,7 @@ const PackagesViewsStats = (props: Props) => {
     <div className="mb-5">
       <h3 className="position-relative mb-4">Views over the last 30 days</h3>
       <div className={`card ${styles.chartWrapper}`}>
-        <ReactApexChart options={getStackedChartConfig()} series={series} type="bar" height="300" />
+        <ReactApexChart options={getStackedChartConfig()} series={series} type="bar" height="300" width="100%" />
       </div>
     </div>
   );
