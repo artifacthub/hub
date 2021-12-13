@@ -55,12 +55,10 @@ const Alert: ElementType = (props: Props) => {
               <button
                 data-testid="closeAlertBtn"
                 type="button"
-                className="close ms-3"
+                className="btn-close ms-3"
                 onClick={props.onClose}
                 aria-label="Close alert"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+              ></button>
             )}
           </div>
         </div>
