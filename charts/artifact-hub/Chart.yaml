@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.4.1-5
-appVersion: 1.4.0
+version: 1.5.0
+appVersion: 1.5.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -34,47 +34,46 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: List of organizations using a package in production
+      description: Display Helm charts default values in package view
     - kind: added
-      description: Packages last year activity view
+      description: Check cosign sigstore signature in Helm OCI repos
     - kind: added
-      description: Applied search filters used are now highlighted in the top bar
+      description: Display graph with number of views for each package over the last month
     - kind: added
-      description: Publisher provided link to report issues with their content
+      description: Allow getting repo metadata from private repos
     - kind: added
-      description: Endpoint to generate a changelog in markdown format
-    - kind: added
-      description: Links to specific targets and images in security report
-    - kind: added
-      description: Allow zooming in and out of screenshots images
-    - kind: added
-      description: Allow using any host on git based repositories urls
-    - kind: added
-      description: Liveness and readiness probe to hub deployment
+      description: Packages views are now being tracked
+      links:
+        - name: pg_partman extension is now required
+          url: https://github.com/pgpartman/pg_partman
     - kind: changed
-      description: Artifact Hub Helm chart now requires k8s version >=1.19
+      description: Frontend is now using Bootstrap 5
     - kind: changed
-      description: Versions released more than 1 year ago are not scanned anymore
+      description: Improve appearance on mobile devices
     - kind: changed
-      description: Bump Trivy to 0.20.2
+      description: DB tests images have been updated and moved to the AH organization
+    - kind: changed
+      description: Bump Trivy to 0.21.2
+    - kind: changed
+      description: Bump OPM to 1.19.5
     - kind: changed
       description: Upgrade backend and frontend dependencies
+    - kind: changed
+      description: Increase webhooks http client timeout to 60s
     - kind: fixed
-      description: Issue handling $ref in schema top level object
-    - kind: fixed
-      description: Issue extracting containers images from Helm charts
+      description: Issue updating private repository credentials
     - kind: fixed
       description: Some bugs and other improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.4.0
+      image: artifacthub/db-migrator:v1.5.0
     - name: hub
-      image: artifacthub/hub:v1.4.0
+      image: artifacthub/hub:v1.5.0
     - name: tracker
-      image: artifacthub/tracker:v1.4.0
+      image: artifacthub/tracker:v1.5.0
     - name: scanner
-      image: artifacthub/scanner:v1.4.0
+      image: artifacthub/scanner:v1.5.0
     - name: trivy
       image: aquasec/trivy:0.21.2
   artifacthub.io/links: |
