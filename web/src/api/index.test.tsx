@@ -14,6 +14,7 @@ import {
   Organization,
   Package,
   PackageStars,
+  PackageViewsStats,
   Profile,
   RegoPlaygroundPolicy,
   RegoPlaygroundResult,
@@ -1869,6 +1870,24 @@ describe('API', () => {
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.0.0/views');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
         expect(response).toBe('');
+      });
+    });
+
+    describe('getViews', () => {
+      it('success', async () => {
+        const views: PackageViewsStats = getData('44') as PackageViewsStats;
+        fetchMock.mockResponse(JSON.stringify(views), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.getViews('id');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/views');
+        expect(response).toEqual(views);
       });
     });
 

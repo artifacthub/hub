@@ -4,6 +4,7 @@
   padding: 1rem;
   padding-bottom: 1.5rem;
   padding-right: 2rem;
+  min-height: 350px;
 }
 
 [data-theme='dark'] :global(.card).chartWrapper {

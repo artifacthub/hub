@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PackageViewsStats creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-5 pb-3"
+  >
+    <span>
+      Views over the last 30 days
+    </span>
+    <div
+      class="card chartWrapper"
+    >
+      <div>
+        Chart
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

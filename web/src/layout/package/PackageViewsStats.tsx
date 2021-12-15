@@ -1,26 +1,23 @@
-import { isUndefined } from 'lodash';
+import { isEmpty, isUndefined } from 'lodash';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import semver from 'semver';
 
-import API from '../../api';
 import { PackageViewsStats } from '../../types';
+import { getSeriesDataPerPkgVersionViews, sumViewsPerVersions } from '../../utils/viewsStats';
+import Loading from '../common/Loading';
 import styles from './PackageViewsStats.module.css';
 
 interface Props {
-  packageId: string;
+  stats?: PackageViewsStats;
   version?: string;
+  title: JSX.Element;
 }
 
 interface Series {
   name: string;
   data: any[];
-}
-
-interface ViewsPerDate {
-  date: string;
-  total: number;
 }
 
 const MAX_VISIBLE_VERSIONS = 3;
@@ -45,6 +42,8 @@ const getMostRecentVersions = (stats: PackageViewsStats): string[] => {
 };
 
 const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series[] => {
+  if (isEmpty(stats)) return [];
+
   let series: Series[] = [];
   let visibleVersions: string[] = [];
   if (version) {
@@ -57,38 +56,19 @@ const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series
     visibleVersions = getMostRecentVersions(stats);
   }
 
-  const last30Days = Array.from(Array(30).keys()).map((x: number) => moment().subtract(x, 'days').format('YYYY-MM-DD'));
-
   visibleVersions.forEach((version: string) => {
-    const data = last30Days.map((date: string) => {
-      return [moment(date).unix() * 1000, stats[version][date] || 0];
-    });
-
     series.push({
       name: version,
-      data: data,
+      data: getSeriesDataPerPkgVersionViews(stats, version),
     });
   });
 
   const statsVersions = Object.keys(stats);
 
   if (statsVersions.length > visibleVersions.length && isUndefined(version)) {
-    const restVersions = statsVersions.filter((version: string) => !visibleVersions.includes(version));
-    const restVersionsPerDates: ViewsPerDate[] = last30Days.map((date: string) => {
-      let views = 0;
-      restVersions.forEach((version: string) => {
-        views = views + (stats[version][date] | 0);
-      });
-      return { date: date, total: views };
-    });
-
-    const data = restVersionsPerDates.map((vpd: ViewsPerDate) => {
-      return [moment(vpd.date).unix() * 1000, vpd.total];
-    });
-
     series.push({
       name: 'Other',
-      data: data,
+      data: sumViewsPerVersions(stats, visibleVersions),
     });
   }
 
@@ -97,7 +77,6 @@ const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series
 
 const PackagesViewsStats = (props: Props) => {
   const [series, setSeries] = useState<any[]>([]);
-  const [stats, setStats] = useState<PackageViewsStats | undefined>();
 
   const getStackedChartConfig = (): ApexCharts.ApexOptions => {
     return {
@@ -121,7 +100,7 @@ const PackagesViewsStats = (props: Props) => {
       },
       plotOptions: {
         bar: {
-          borderRadius: 2,
+          // borderRadius: 2,
         },
       },
       tooltip: {
@@ -175,41 +154,34 @@ const PackagesViewsStats = (props: Props) => {
           formatter: function (value: number) {
             return value === 0 || value >= 1 ? value.toFixed(0).toString() : '';
           },
+          minWidth: 25,
           style: {
             colors: 'var(--color-font)',
             fontSize: '11px',
           },
         },
       },
-      colors: ['#33a1fd', '#06d6a0', '#ffc43d', '#bfc0c0'],
+      colors: ['#33a1fd', '#06d6a0', '#ffc43d', '#ff8e01'],
     };
   };
 
   useEffect(() => {
-    async function getStats() {
-      try {
-        const data = await API.getViews(props.packageId);
-        setStats(data);
-      } catch (err: any) {
-        // Don't display any error if API request fails
-      }
+    if (!isUndefined(props.stats)) {
+      setSeries(prepareChartsSeries(props.stats, props.version));
     }
-    getStats();
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.version, props.stats]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  useEffect(() => {
-    if (!isUndefined(stats)) {
-      setSeries(prepareChartsSeries(stats, props.version));
-    }
-  }, [props.version, stats]); /* eslint-disable-line react-hooks/exhaustive-deps */
-
-  if (series.length === 0) return null;
+  if (series.length === 0 && !isUndefined(props.stats)) return null;
 
   return (
-    <div className="mb-5">
-      <h3 className="position-relative mb-4">Views over the last 30 days</h3>
+    <div className="mb-5 pb-3">
+      {props.title}
       <div className={`card ${styles.chartWrapper}`}>
-        <ReactApexChart options={getStackedChartConfig()} series={series} type="bar" height="300" width="100%" />
+        {isUndefined(props.stats) ? (
+          <Loading />
+        ) : (
+          <ReactApexChart options={getStackedChartConfig()} series={series} type="bar" height="300" width="100%" />
+        )}
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import {
   HelmChartType,
   KeptnData,
   Package,
+  PackageViewsStats,
   RepositoryKind,
   SearchFiltersURL,
   Version as VersionData,
@@ -20,6 +21,7 @@ import ContainersImages from './ContainersImages';
 import Dependencies from './Dependencies';
 import styles from './Details.module.css';
 import Keywords from './Keywords';
+import Last30DaysViews from './Last30DaysViews';
 import LastYearActivity from './LastYearActivity';
 import License from './License';
 import Links from './Links';
@@ -41,6 +43,8 @@ interface Props {
   visibleSection?: string;
   channels?: Channel[] | null;
   eventId?: string;
+  viewsStats?: PackageViewsStats;
+  version?: string;
 }
 
 interface VersionsProps {
@@ -169,6 +173,15 @@ const Details = (props: Props) => {
             />
           </div>
         )}
+      </div>
+
+      <div>
+        <Last30DaysViews
+          stats={props.viewsStats}
+          version={props.version}
+          searchUrlReferer={props.searchUrlReferer}
+          fromStarredPage={props.fromStarredPage}
+        />
       </div>
 
       <div>
