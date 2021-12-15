@@ -58,13 +58,22 @@ const Last30DaysViews = (props: Props) => {
       },
       grid: { borderColor: 'var(--border-md)' },
       tooltip: {
+        style: {
+          fontSize: '10px',
+          fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        },
         fixed: {
           enabled: false,
         },
         x: {
-          show: false,
+          formatter: (val: number, opts?: any): string => {
+            return moment(val).format('DD MMM YY');
+          },
         },
         y: {
+          formatter: function (value: number, opts?: any) {
+            return value.toFixed(0);
+          },
           title: {
             formatter: () => '',
           },
@@ -96,7 +105,7 @@ const Last30DaysViews = (props: Props) => {
         width: 2,
         curve: 'straight',
       },
-      colors: props.version ? ['#33a1fd'] : ['#40c463'],
+      colors: ['#40c463'],
     };
   };
 

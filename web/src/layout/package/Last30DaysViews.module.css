@@ -21,7 +21,6 @@
 :global(.apexcharts-tooltip) {
   box-shadow: none;
   line-height: 1rem;
-  border-color: var(--border-md) !important;
 }
 
 :global(.apexcharts-tooltip-text-y-value) {
@@ -29,6 +28,15 @@
 }
 
 :global(.apexcharts-tooltip-series-group) {
-  padding: 5px 10px !important;
+  padding: 2px 6px !important;
   height: 20px;
+}
+
+:global(.apexcharts-tooltip-title) {
+  padding: 2px 6px !important;
+  margin-bottom: 0 !important;
+}
+
+:global(.apexcharts-tooltip-text) {
+  margin-left: auto;
 }
