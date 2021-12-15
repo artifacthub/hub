@@ -12,7 +12,7 @@ exports[`RandomPackages creates snapshot 1`] = `
         class="d-flex flex-wrap justify-content-center"
       >
         <div
-          class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
+          class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
         >
           <div
             class="d-flex flex-row align-items-center justify-content-center w-100 h-100"

@@ -7,3 +7,8 @@
   width: 4rem !important;
   height: 4rem !important;
 }
+
+.miniSpinner {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}

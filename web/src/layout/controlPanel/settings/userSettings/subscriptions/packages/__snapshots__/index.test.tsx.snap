@@ -18,13 +18,13 @@ exports[`PackagesSection creates snapshot 1`] = `
           Your subscriptions
         </div>
         <div
-          class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
+          class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
         >
           <div
             class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
           >
             <div
-              class="spinner-border text-primary spinner undefined"
+              class="spinner-border text-primary spinner"
               role="status"
             >
               <span
@@ -188,13 +188,13 @@ exports[`PackagesSection creates snapshot 1`] = `
           class="mt-5 pt-3"
         >
           <div
-            class="position-absolute p-5 top-0 bottom-0 start-0 end-0 wrapper undefined"
+            class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
           >
             <div
               class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
             >
               <div
-                class="spinner-border text-primary spinner undefined"
+                class="spinner-border text-primary spinner"
                 role="status"
               >
                 <span

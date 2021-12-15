@@ -23,6 +23,7 @@ import {
   FileModalKind,
   Package,
   PackageLink,
+  PackageViewsStats,
   RepositoryKind,
   SearchFiltersURL,
   Version,
@@ -110,6 +111,7 @@ const PackageView = (props: Props) => {
   const [relatedPosition, setRelatedPosition] = useState<'column' | 'content' | undefined | null>(null);
   const [currentPkgId, setCurrentPkgId] = useState<null | string>(null);
   const [relatedPackages, setRelatedPackages] = useState<Package[] | undefined>(undefined);
+  const [viewsStats, setViewsStats] = useState<PackageViewsStats | undefined>();
 
   useScrollRestorationFix();
 
@@ -183,6 +185,14 @@ const PackageView = (props: Props) => {
     }
   }
 
+  async function getViewsStats(pkgID: string) {
+    try {
+      setViewsStats(await API.getViews(pkgID));
+    } catch (err: any) {
+      // Don't display any error if API request fails
+    }
+  }
+
   async function fetchPackageDetail() {
     try {
       setRelatedPosition(null);
@@ -199,6 +209,8 @@ const PackageView = (props: Props) => {
       setDetail(detailPkg);
       // Track view
       trackView(detailPkg.packageId, detailPkg.version!);
+      // Get pkg views stats
+      getViewsStats(detailPkg.packageId);
       if (currentHash) {
         setCurrentHash(undefined);
       }
@@ -742,6 +754,8 @@ const PackageView = (props: Props) => {
                           package={detail}
                           sortedVersions={sortedVersions}
                           channels={detail.channels}
+                          viewsStats={viewsStats}
+                          version={props.version}
                           searchUrlReferer={props.searchUrlReferer}
                           fromStarredPage={props.fromStarredPage}
                           visibleSecurityReport={false}
@@ -1002,6 +1016,8 @@ const PackageView = (props: Props) => {
                                 visibleImage={props.visibleImage}
                                 visibleTarget={props.visibleTarget}
                                 visibleSection={props.visibleSection}
+                                viewsStats={viewsStats}
+                                version={props.version}
                                 eventId={
                                   !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
                                     ? props.eventId
@@ -1054,7 +1070,17 @@ const PackageView = (props: Props) => {
                           {!isNull(additionalInfo) && <>{additionalInfo.content}</>}
                         </div>
 
-                        <PackagesViewsStats packageId={detail.packageId} version={props.version} />
+                        <PackagesViewsStats
+                          stats={viewsStats}
+                          version={props.version}
+                          title={
+                            <AnchorHeader
+                              level={2}
+                              scrollIntoView={scrollIntoView}
+                              title="Views over the last 30 days"
+                            />
+                          }
+                        />
 
                         {!isUndefined(relatedPosition) && relatedPosition === 'content' && (
                           <RelatedPackages

@@ -1,0 +1,34 @@
+.chartWrapper {
+  padding-top: 2px;
+  height: 44px;
+  border-color: var(--border-md) !important;
+}
+
+.legend {
+  font-size: 0.8rem;
+}
+
+.btn {
+  font-size: 90%;
+  left: -1px;
+}
+
+/*To fix overflow issue on line in reports*/
+:global(.apexcharts-canvas) > svg {
+  overflow: visible;
+}
+
+:global(.apexcharts-tooltip) {
+  box-shadow: none;
+  line-height: 1rem;
+  border-color: var(--border-md) !important;
+}
+
+:global(.apexcharts-tooltip-text-y-value) {
+  margin-left: 0;
+}
+
+:global(.apexcharts-tooltip-series-group) {
+  padding: 5px 10px !important;
+  height: 20px;
+}

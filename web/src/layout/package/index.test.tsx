@@ -9,6 +9,7 @@ import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageView from './index';
 jest.mock('../../api');
 jest.mock('../../utils/updateMetaIndex');
+jest.mock('react-apexcharts', () => () => <div>Chart</div>);
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
@@ -100,6 +101,29 @@ describe('Package index', () => {
         expect(API.trackView).toHaveBeenCalledTimes(1);
         expect(API.trackView).toHaveBeenCalledWith('id', '1.0.0');
       });
+    });
+
+    it('calls getViews', async () => {
+      const mockPackage = getMockPackage('20');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      mocked(API).getViews.mockResolvedValue({ '1.0.0': { '2021-12-09': 1 } });
+
+      render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+        expect(API.getViews).toHaveBeenCalledTimes(1);
+        expect(API.getViews).toHaveBeenCalledWith('id');
+      });
+
+      expect(screen.getByText('Views over the last 30 days')).toBeInTheDocument();
+      expect(screen.getAllByText('Chart')).toHaveLength(2);
+      expect(screen.getByText('See details')).toBeInTheDocument();
+      expect(screen.getByText('(all versions)')).toBeInTheDocument();
     });
 
     it('displays loading spinner', async () => {
