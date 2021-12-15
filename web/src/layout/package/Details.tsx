@@ -176,16 +176,16 @@ const Details = (props: Props) => {
       </div>
 
       <div>
+        <LastYearActivity versions={props.sortedVersions} />
+      </div>
+
+      <div>
         <Last30DaysViews
           stats={props.viewsStats}
           version={props.version}
           searchUrlReferer={props.searchUrlReferer}
           fromStarredPage={props.fromStarredPage}
         />
-      </div>
-
-      <div>
-        <LastYearActivity versions={props.sortedVersions} />
       </div>
 
       {(() => {

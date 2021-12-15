@@ -161,7 +161,7 @@ const PackagesViewsStats = (props: Props) => {
           },
         },
       },
-      colors: ['#33a1fd', '#06d6a0', '#ffc43d', '#ff8e01'],
+      colors: ['#33a1fd', '#ffc43d', '#ff8e01', '#994477'],
     };
   };
 
