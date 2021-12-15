@@ -34,7 +34,7 @@ const SortOptions = (props: Props) => {
   }, [props]);
 
   return (
-    <div className="d-inline flex-nowrap align-items-center">
+    <div className="d-flex flex-nowrap align-items-center">
       <label className="form-label d-none d-sm-inline mb-0">Sort:</label>
       <select
         ref={selectEl}
