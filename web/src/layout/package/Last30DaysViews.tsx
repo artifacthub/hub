@@ -96,7 +96,7 @@ const Last30DaysViews = (props: Props) => {
         width: 2,
         curve: 'straight',
       },
-      colors: ['#ff5400'],
+      colors: props.version ? ['#33a1fd'] : ['#40c463'],
     };
   };
 
