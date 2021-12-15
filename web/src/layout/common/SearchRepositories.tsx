@@ -295,17 +295,23 @@ const SearchRepositories = (props: Props) => {
                         <td className="align-middle">
                           <div className={styles.truncateWrapper}>
                             <div className="text-truncate">
-                              {regexifyString({
-                                pattern: new RegExp(escapeRegExp(searchName), 'gi'),
-                                decorator: (match: string, index: number) => {
-                                  return (
-                                    <span key={`match_${item.name}_${index}`} className="fw-bold hightlighted">
-                                      {match}
-                                    </span>
-                                  );
-                                },
-                                input: item.name,
-                              })}
+                              {searchName === '' ? (
+                                <>{item.name}</>
+                              ) : (
+                                <>
+                                  {regexifyString({
+                                    pattern: new RegExp(escapeRegExp(searchName), 'gi'),
+                                    decorator: (match: string, index: number) => {
+                                      return (
+                                        <span key={`match_${item.name}_${index}`} className="fw-bold hightlighted">
+                                          {match}
+                                        </span>
+                                      );
+                                    },
+                                    input: item.name,
+                                  })}
+                                </>
+                              )}
                             </div>
                           </div>
                         </td>
