@@ -144,7 +144,7 @@ describe('Last30DaysViews', () => {
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        hash: 'views-over-the-last-30-days',
+        hash: 'views',
         pathname: 'test',
         state: {
           fromStarredPage: undefined,

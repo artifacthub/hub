@@ -163,7 +163,7 @@ const Last30DaysViews = (props: Props) => {
                   onClick={() => {
                     history.push({
                       pathname: history.location.pathname,
-                      hash: 'views-over-the-last-30-days',
+                      hash: 'views',
                       state: {
                         searchUrlReferer: props.searchUrlReferer,
                         fromStarredPage: props.fromStarredPage,

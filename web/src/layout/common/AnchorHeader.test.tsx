@@ -6,6 +6,7 @@ import AnchorHeader from './AnchorHeader';
 interface Test {
   title: string;
   id: string;
+  anchor?: string;
 }
 
 const tests: Test[] = [
@@ -22,6 +23,8 @@ const tests: Test[] = [
   },
   { title: 'Example: AWS Route 53', id: 'example-aws-route-53' },
   { title: 'FAQs', id: 'faqs' },
+  { title: 'FAQs', id: 'faqs' },
+  { title: 'Views over the last 30 days', id: 'views', anchor: 'views' },
 ];
 
 const scrollIntoViewMock = jest.fn();
@@ -59,7 +62,7 @@ describe('AnchorHeader', () => {
 
   for (let i = 0; i < tests.length; i++) {
     it('renders proper id and href from title', () => {
-      render(<AnchorHeader {...defaultProps} title={tests[i].title} />);
+      render(<AnchorHeader {...defaultProps} title={tests[i].title} anchorName={tests[i].anchor} />);
       expect(screen.getByText(new RegExp(tests[i].title, 'i'))).toBeInTheDocument();
       const link = screen.getByRole('button');
       expect(link).toHaveProperty('href', `http://localhost/#${tests[i].id}`);

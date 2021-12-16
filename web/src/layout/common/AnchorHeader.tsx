@@ -11,6 +11,7 @@ interface Props {
   title?: string;
   children?: JSX.Element[];
   className?: string;
+  anchorName?: string;
   scrollIntoView: (id?: string) => void;
 }
 
@@ -32,7 +33,7 @@ const AnchorHeader: ElementType = (props: Props) => {
   if (isUndefined(value)) return null;
 
   const Tag = `h${props.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  const anchor = getAnchorValue(value);
+  const anchor = props.anchorName || getAnchorValue(value);
 
   return (
     <span className={styles.header}>
