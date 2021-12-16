@@ -1077,6 +1077,7 @@ const PackageView = (props: Props) => {
                             <AnchorHeader
                               level={2}
                               scrollIntoView={scrollIntoView}
+                              anchorName="views"
                               title="Views over the last 30 days"
                             />
                           }
