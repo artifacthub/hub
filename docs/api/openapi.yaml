@@ -2675,6 +2675,13 @@ paths:
                           items:
                             type: integer
                         nullable: false
+                      views_daily:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        nullable: false
                   repositories:
                     type: object
                     required:
@@ -2775,6 +2782,11 @@ paths:
                         - 917
                       - - 1585699200000
                         - 52
+                    views_daily:
+                      - - 1639731010000
+                        - 800
+                      - - 1639644610000
+                        - 820
                   snapshots:
                     total: 3998
                     running_total:
