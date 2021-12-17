@@ -461,7 +461,7 @@ const StatsView = (props: Props) => {
                             {(stats.packages.viewsDaily!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
                               options={getBarChartConfig('Daily views')}
-                              series={[{ name: 'Packages', data: stats.packages.viewsDaily }]}
+                              series={[{ name: 'Views', data: stats.packages.viewsDaily }]}
                               type="bar"
                               height={300}
                             />

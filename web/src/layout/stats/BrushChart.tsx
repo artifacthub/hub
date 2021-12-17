@@ -234,7 +234,7 @@ const BrushChart = (props: Props) => {
         options={getBarChartConfig()}
         series={[
           {
-            name: 'Packages',
+            name: props.id === 'releases' ? 'Releases' : 'Packages',
             data: props.series,
           },
         ]}
