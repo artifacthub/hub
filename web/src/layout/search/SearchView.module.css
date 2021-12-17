@@ -68,4 +68,9 @@
     flex-basis: calc(100% - 320px);
     max-width: calc(100% - 320px);
   }
+
+  .emptyList {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }

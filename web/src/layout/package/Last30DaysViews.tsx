@@ -49,8 +49,7 @@ const Last30DaysViews = (props: Props) => {
           enabled: true,
         },
         animations: {
-          easing: 'linear',
-          speed: 200,
+          enabled: false,
         },
       },
       fill: {
@@ -66,12 +65,12 @@ const Last30DaysViews = (props: Props) => {
           enabled: false,
         },
         x: {
-          formatter: (val: number, opts?: any): string => {
+          formatter: (val: number): string => {
             return moment(val).format('DD MMM YY');
           },
         },
         y: {
-          formatter: function (value: number, opts?: any) {
+          formatter: function (value: number) {
             return value.toFixed(0);
           },
           title: {
@@ -105,6 +104,19 @@ const Last30DaysViews = (props: Props) => {
         width: 2,
         curve: 'straight',
       },
+      yaxis: {
+        show: false,
+        // Display markers on top and bottom positions
+        min: () => -0.1,
+        max: (max) => max + 0.1,
+      },
+      markers: {
+        size: 0,
+        hover: {
+          size: 5,
+          sizeOffset: 3,
+        },
+      },
       colors: ['#40c463'],
     };
   };
@@ -124,13 +136,13 @@ const Last30DaysViews = (props: Props) => {
             <div className={`position-relative border bg-white ${styles.chartWrapper}`}>
               {isUndefined(props.stats) ? (
                 <div className="d-flex flex-row align-items-center h-100 w-100">
-                  <small className="fst-italic w-100 text-center text-muted">Loading...</small>
+                  <small className="w-100 text-center text-muted">Loading...</small>
                 </div>
               ) : (
                 <>
                   {series.length === 0 ? (
                     <div className="d-flex flex-row align-items-center h-100 w-100">
-                      <small className="fst-italic w-100 text-center text-muted">No views yet</small>
+                      <small className="w-100 text-center text-muted">No views yet</small>
                     </div>
                   ) : (
                     <ReactApexChart
