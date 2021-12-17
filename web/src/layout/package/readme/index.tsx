@@ -14,7 +14,8 @@ interface Props {
   scrollIntoView: (id?: string) => void;
 }
 
-const INITIAL_HEADING = /^(#+) (.*)/;
+// (?![!/[]) - Don't allow images as readme title
+const INITIAL_HEADING = /^(#+) (?![!/[])(.*)/;
 
 const ReadmeWrapper = (props: Props) => {
   const [mainTitle, setMainTitle] = useState<string>('');

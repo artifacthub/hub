@@ -621,7 +621,7 @@ const PackageView = (props: Props) => {
       )}
 
       <div data-testid="mainPackage" className="position-relative flex-grow-1">
-        {isLoadingPackage && <Loading spinnerClassName="position-fixed top-50" />}
+        {(isLoadingPackage || isUndefined(detail)) && <Loading spinnerClassName="position-fixed top-50" />}
 
         {!isUndefined(detail) && (
           <>

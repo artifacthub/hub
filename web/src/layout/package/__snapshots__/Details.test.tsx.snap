@@ -615,7 +615,7 @@ exports[`Details renders correctly 1`] = `
               class="d-flex flex-row align-items-center h-100 w-100"
             >
               <small
-                class="fst-italic w-100 text-center text-muted"
+                class="w-100 text-center text-muted"
               >
                 Loading...
               </small>
