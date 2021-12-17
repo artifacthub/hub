@@ -676,6 +676,7 @@ export interface AHStats {
     total: number;
     runningTotal?: any[];
     createdMonthly?: any[];
+    viewsDaily?: any[];
   };
   repositories: {
     total: number;
