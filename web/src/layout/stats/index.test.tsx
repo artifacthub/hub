@@ -35,8 +35,18 @@ const mockCtx = {
 };
 
 describe('StatsView', () => {
+  let dateNowSpy: any;
+
+  beforeEach(() => {
+    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1639468828000);
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
+  });
+
+  afterAll(() => {
+    dateNowSpy.mockRestore();
   });
 
   it('creates snapshot', async () => {
@@ -73,7 +83,7 @@ describe('StatsView', () => {
       expect(screen.getByText('Packages and releases')).toBeInTheDocument();
       expect(screen.getByText('Repositories')).toBeInTheDocument();
       expect(screen.getByText('Organizations and users')).toBeInTheDocument();
-      expect(screen.getAllByText('Chart')).toHaveLength(7);
+      expect(screen.getAllByText('Chart')).toHaveLength(8);
     });
 
     it('renders only 2 sections', async () => {
@@ -92,7 +102,7 @@ describe('StatsView', () => {
       expect(screen.getByText('Packages and releases')).toBeInTheDocument();
       expect(screen.getByText('Repositories')).toBeInTheDocument();
       expect(screen.queryByText('Organizations and users')).toBeNull();
-      expect(screen.getAllByText('Chart')).toHaveLength(5);
+      expect(screen.getAllByText('Chart')).toHaveLength(6);
     });
   });
 

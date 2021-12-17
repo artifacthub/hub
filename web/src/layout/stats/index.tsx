@@ -11,6 +11,7 @@ import { AHStats } from '../../types';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import getMetaTag from '../../utils/getMetaTag';
 import isWhiteLabel from '../../utils/isWhiteLabel';
+import prettifyNumber from '../../utils/prettifyNumber';
 import AnchorHeader from '../common/AnchorHeader';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
@@ -191,6 +192,102 @@ const StatsView = (props: Props) => {
     };
   };
 
+  const getBarChartConfig = (title: string): ApexCharts.ApexOptions => {
+    return {
+      chart: {
+        height: 300,
+        type: 'bar',
+        redrawOnWindowResize: true,
+        redrawOnParentResize: false,
+        zoom: {
+          enabled: false,
+        },
+        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        toolbar: {
+          show: false,
+        },
+      },
+      grid: { borderColor: 'var(--border-md)' },
+      plotOptions: {
+        bar: {
+          borderRadius: 5,
+          dataLabels: {
+            position: 'top',
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        offsetY: -20,
+        style: {
+          fontSize: '12px',
+          colors: ['var(--color-font)'],
+        },
+        formatter: (value: number) => {
+          if (value === 0) return '';
+          return prettifyNumber(value);
+        },
+      },
+      colors: ['var(--color-1-500)'],
+      xaxis: {
+        type: 'datetime',
+        min: moment().subtract(30, 'days').unix() * 1000,
+        labels: {
+          style: {
+            colors: 'var(--color-font)',
+            fontSize: '11px',
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: ['var(--color-font)'],
+          },
+        },
+      },
+      tooltip: {
+        x: {
+          formatter: (val: number): string => {
+            return moment(val).format('DD MMM YY');
+          },
+        },
+      },
+      title: {
+        text: title,
+        style: {
+          color: 'var(--color-font)',
+        },
+      },
+      responsive: [
+        {
+          breakpoint: 1920,
+          options: {
+            plotOptions: {
+              bar: {
+                columnWidth: '80%',
+              },
+            },
+            dataLabels: {
+              offsetY: -15,
+              style: {
+                fontSize: '9px',
+              },
+            },
+          },
+        },
+        {
+          breakpoint: 768,
+          options: {
+            dataLabels: {
+              enabled: false,
+            },
+          },
+        },
+      ],
+    };
+  };
+
   const checkCurrentStats = (currentStats: AHStats | null) => {
     if (!isNull(currentStats)) {
       const notEmptyItems = Object.keys(currentStats).some((elem: string) => {
@@ -274,7 +371,8 @@ const StatsView = (props: Props) => {
               {(stats.packages.runningTotal ||
                 stats.snapshots.runningTotal ||
                 stats.packages.createdMonthly ||
-                stats.snapshots.createdMonthly) && (
+                stats.snapshots.createdMonthly ||
+                stats.packages.viewsDaily) && (
                 <>
                   <AnchorHeader
                     level={2}
@@ -320,7 +418,7 @@ const StatsView = (props: Props) => {
                   )}
 
                   {(stats.packages.createdMonthly || stats.snapshots.createdMonthly) && (
-                    <div className="row my-4 pb-4">
+                    <div className="row my-4 pb-0 pb-lg-4">
                       {stats.packages.createdMonthly && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.createdMonthly })}>
                           <div className="pe-0 pe-lg-3 pe-xxl-4 mt-4 mb-4 mb-lg-0">
@@ -352,6 +450,24 @@ const StatsView = (props: Props) => {
                           </div>
                         </div>
                       )}
+                    </div>
+                  )}
+
+                  {stats.packages.viewsDaily && (
+                    <div className="row my-4 pb-4">
+                      <div className="col-12">
+                        <div className="mt-4">
+                          <div className={`card ${styles.chartWrapper}`}>
+                            {(stats.packages.viewsDaily!.length === 0 || isLoading) && <Loading />}
+                            <ReactApexChart
+                              options={getBarChartConfig('Daily views')}
+                              series={[{ name: 'Packages', data: stats.packages.viewsDaily }]}
+                              type="bar"
+                              height={300}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </>
