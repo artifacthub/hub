@@ -75,6 +75,11 @@ insert into snapshot (
     '0.0.9',
     '2020-06-17 11:20:34+02'
 );
+insert into package_views values (:'package1ID', '1.0.0', '2021-12-08', 10);
+insert into package_views values (:'package1ID', '0.0.9', '2021-12-08', 20);
+insert into package_views values (:'package1ID', '0.0.9', '2021-12-09', 10);
+insert into package_views values (:'package1ID', '1.0.0', '2021-12-10', 20);
+insert into package_views values (:'package2ID', '1.0.0', '2021-12-10', 20);
 
 -- Some packages have just been seeded
 select is(
@@ -88,6 +93,11 @@ select is(
             ],
             "created_monthly": [
                 [1590969600000, 2]
+            ],
+            "views_daily": [
+                [1638921600000, 30],
+                [1639008000000, 10],
+                [1639094400000, 40]
             ]
         },
         "snapshots": {
