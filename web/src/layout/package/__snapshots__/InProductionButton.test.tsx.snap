@@ -14,11 +14,11 @@ exports[`InProductionButton creates snapshot 1`] = `
         <button
           aria-expanded="false"
           aria-label="Open organzations menu"
-          class="btn p-0 position-relative"
+          class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5 iconWrapper"
           type="button"
         >
           <div
-            class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 fs-5 bg-white iconWrapper"
+            class="d-flex align-items-center justify-content-center"
           >
             <div
               class="loading"

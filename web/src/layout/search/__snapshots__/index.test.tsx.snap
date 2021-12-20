@@ -91,30 +91,22 @@ exports[`Search index creates snapshot 1`] = `
                 <button
                   aria-expanded="false"
                   aria-label="Show menu"
-                  class="btn p-0 position-relative"
+                  class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 iconWrapper"
                   type="button"
                 >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center"
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 20 20"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <div
-                      class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 bg-white iconWrapper"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 20 20"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
+                    <path
+                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                    />
+                  </svg>
                 </button>
                 <div
                   class="dropdown-menu dropdown-menu-end p-0 dropdown"

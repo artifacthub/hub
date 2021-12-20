@@ -133,9 +133,13 @@ const InProductionButton = (props: Props) => {
         tooltipClassName={styles.tooltip}
         element={
           <button
-            className={classnames('btn p-0 position-relative', {
-              [`disabled ${styles.isDisabled}`]: isDisabled,
-            })}
+            className={classnames(
+              'btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5',
+              styles.iconWrapper,
+              {
+                [`disabled ${styles.isDisabled}`]: isDisabled,
+              }
+            )}
             type="button"
             onClick={() => {
               if (!isLoading || isDisabled) {
@@ -145,9 +149,7 @@ const InProductionButton = (props: Props) => {
             aria-label="Open organzations menu"
             aria-expanded={openStatus}
           >
-            <div
-              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 fs-5 bg-white ${styles.iconWrapper}`}
-            >
+            <div className="d-flex align-items-center justify-content-center">
               {isLoading && (
                 <div className={styles.loading}>
                   <div className={`spinner-border text-primary ${styles.spinner}`} role="status">

@@ -18,7 +18,7 @@ const MoreActionsButton = () => {
     <>
       <div className="d-none d-md-block position-relative ms-3">
         <button
-          className="btn p-0 position-relative"
+          className={`btn btn-outline-primary rounded-circle p-0 position-relative lh-1 ${styles.iconWrapper}`}
           type="button"
           onClick={() => {
             setOpenStatus(true);
@@ -26,13 +26,7 @@ const MoreActionsButton = () => {
           aria-label="Show menu"
           aria-expanded={openStatus}
         >
-          <div className="d-flex flex-row align-items-center justify-content-center">
-            <div
-              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 bg-white ${styles.iconWrapper}`}
-            >
-              <HiDotsVertical />
-            </div>
-          </div>
+          <HiDotsVertical />
         </button>
 
         <div

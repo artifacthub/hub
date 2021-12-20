@@ -206,6 +206,20 @@
     }
   }
 
+  .btn-outline-primary {
+    background-color: var(--bs-white);
+    border-color: var(--color-1-500);
+    color: var(--color-1-500);
+
+    &:not(.disabled):not(:disabled):hover,
+    &:focus,
+    &:active {
+      background-color: var(--color-1-600) !important;
+      border-color: var(--color-1-700) !important;
+      color: var(--bs-white);
+    }
+  }
+
   .btn-outline-secondary {
     background-color: var(--bs-white);
     border-color: var(--color-1-700);

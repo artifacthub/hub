@@ -88,7 +88,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
               <button
                 aria-expanded="false"
                 aria-label="Open menu"
-                class="ms-3 mb-2 btn btn-outline-secondary rounded-circle p-0 text-center iconSubsWrapper btnDropdown"
+                class="ms-3 mb-2 btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
               >
                 <svg
                   fill="currentColor"
