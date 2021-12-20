@@ -111,7 +111,7 @@
 
   .table-bordered td,
   .table > :not(:first-child) {
-    border-color: #737475 !important;
+    border-color: var(--border-solid) !important;
   }
 
   .table-hover tbody {
@@ -142,6 +142,7 @@
   .btn-primary,
   .btn-secondary,
   .btn-outline-secondary,
+  .btn-outline-primary,
   .btn-light,
   a.bg-secondary {
     color: var(--color-font) !important;
@@ -157,6 +158,10 @@
       color: $font-color-light !important;
       background-color: #090a0c !important;
     }
+  }
+
+  .btn-outline-primary {
+    border-color: var(--border-solid);
   }
 
   .btn-link {
@@ -636,9 +641,12 @@
     }
   }
 
-  .iconSubsWrapper,
   .userAuth {
     border-color: var(--border-md) !important;
+  }
+
+  .offNotifications {
+    color: var(--color-font) !important;
   }
 
   .tooltip {

@@ -143,9 +143,14 @@ const SubscriptionsButton = (props: Props) => {
         tooltipClassName={styles.tooltip}
         element={
           <button
-            className={classnames('btn p-0 position-relative', styles.subsBtn, {
-              disabled: isDisabled,
-            })}
+            className={classnames(
+              'btn btn-outline-primary p-0 position-relative rounded-circle lh-1 fs-5',
+              styles.subsBtn,
+              styles.iconWrapper,
+              {
+                disabled: isDisabled,
+              }
+            )}
             type="button"
             onClick={() => {
               if (!isDisabled) {
@@ -156,9 +161,7 @@ const SubscriptionsButton = (props: Props) => {
             aria-label="Open subscriptions menu"
             aria-expanded={openStatus}
           >
-            <div
-              className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper border overflow-hidden lh-1 fs-5 bg-white ${styles.iconWrapper}`}
-            >
+            <div className="d-flex align-items-center justify-content-center">
               {isLoading && (
                 <div className={styles.loading}>
                   <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
@@ -167,9 +170,9 @@ const SubscriptionsButton = (props: Props) => {
                 </div>
               )}
               {activeSubscriptions && activeSubscriptions.length > 0 ? (
-                <MdNotificationsActive className="rounded-circle" />
+                <MdNotificationsActive />
               ) : (
-                <MdNotificationsOff className="rounded-circle text-muted" />
+                <MdNotificationsOff className={`offNotifications ${styles.offNotifications}`} />
               )}
             </div>
           </button>
