@@ -225,7 +225,7 @@ const StatsView = (props: Props) => {
         },
         formatter: (value: number) => {
           if (value === 0) return '';
-          return prettifyNumber(value);
+          return prettifyNumber(value, 1);
         },
       },
       colors: ['var(--color-1-500)'],
@@ -277,10 +277,21 @@ const StatsView = (props: Props) => {
           },
         },
         {
-          breakpoint: 768,
+          breakpoint: 992,
           options: {
             dataLabels: {
               enabled: false,
+            },
+          },
+        },
+        {
+          breakpoint: 768,
+          options: {
+            plotOptions: {
+              bar: {
+                borderRadius: 2,
+                columnWidth: '50%',
+              },
             },
           },
         },
