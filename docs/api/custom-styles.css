@@ -1,8 +1,63 @@
+[data-theme='light'] {
+  --color-1-100: #f1f6fa;
+  --color-1-300: #b2cede;
+  --color-1-500: #417598;
+  --color-1-700: #2d4857;
+  --color-1-900: #1c2c35;
+
+  --color-font: #38383f;
+  --dark-font: #3b4151;
+  --body-bg: #f9f9f9;
+  --primary-font: #417598;
+  --bright-font: #38383f;
+  --ah-white: #fff;
+  --ah-black: #000;
+  --bg-section: hsla(0,0%,100%,.8);
+}
+
+[data-theme='dark'] {
+  --color-1-100: #222529;
+  --color-1-300: #222529;
+  --color-1-500: #131216;
+  --color-1-700: #131216;
+  --color-1-900: #0f0e11;
+
+  --color-font: #a3a3a6;
+  --dark-font: #cbd3da;
+  --body-bg: #222529;
+  --primary-font: #f8f9fa;
+  --bright-font: #cbd3da;
+  --ah-white: #000;
+  --ah-black: #f8f9fa;
+  --bg-section: hsla(0,0%,25%,.8);
+}
+
+html {
+  box-sizing: border-box;
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin:0;
+  background: var(--body-bg);
+  color: var(--color-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
 .nav {
   padding: 1rem;
   text-align: left;
   box-shadow: 0 8px 6px -6px rgba(0,0,0,0.15);
-  background-color: #417598;
+  background-color: var(--color-1-500);
 }
 
 .nav-content {
@@ -20,12 +75,58 @@
   opacity: 0;
 }
 
+/* Hides topBar */
+.swagger-ui .topbar { display: none !important; }
+
+.swagger-ui, .swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table {
+  color: var(--color-font);
+}
+
 .swagger-ui .topbar .download-url-wrapper .select-label select {
-  border-color: #417598;
+  border-color: var(--color-1-500);
 }
 
 .swagger-ui .opblock-tag {
   margin: 0 0 25px;
+  color: var(--dark-font);
+}
+
+.swagger-ui .scheme-container {
+  background: var(--ah-white);
+  color: var(--color-font);
+}
+
+.swagger-ui .info .title {
+  color: var(--dark-font);
+}
+
+.swagger-ui, .swagger-ui .opblock-tag, .swagger-ui .opblock-tag small, .swagger-ui .parameter__type, .swagger-ui .opblock .opblock-section-header > label, .swagger-ui .opblock .opblock-section-header h4, .swagger-ui .opblock .opblock-summary-operation-id, .swagger-ui .opblock .opblock-summary-path, .swagger-ui .opblock .opblock-summary-path__deprecated, .swagger-ui .opblock .opblock-summary-description, .swagger-ui .tab li, .swagger-ui .opblock-description-wrapper, .swagger-ui .opblock-external-docs-wrapper, .swagger-ui .opblock-title_normal, .swagger-ui .opblock-description-wrapper h4, .swagger-ui .opblock-external-docs-wrapper h4, .swagger-ui .opblock-title_normal h4, .swagger-ui .opblock-description-wrapper p, .swagger-ui .opblock-external-docs-wrapper p, .swagger-ui .opblock-title_normal p, .swagger-ui .responses-inner h4, .swagger-ui .responses-inner h5, .swagger-ui .response-col_status, .swagger-ui .response-col_links, .swagger-ui .scheme-container .schemes > label, .swagger-ui .loading-container .loading:after, .swagger-ui section h3, .swagger-ui .btn, .swagger-ui label, .swagger-ui .checkbox p, .swagger-ui .dialog-ux .modal-ux-content p, .swagger-ui .dialog-ux .modal-ux-content h4, .swagger-ui .dialog-ux .modal-ux-content h3, .swagger-ui .model, .swagger-ui .servers > label, .swagger-ui table.headers td, .swagger-ui table thead tr td, .swagger-ui table thead tr th, .swagger-ui .parameter__name, .swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table, .swagger-ui .info h1, .swagger-ui .info h2, .swagger-ui .info h3, .swagger-ui .info h4, .swagger-ui .info h5, .swagger-ui .info .base-url, .swagger-ui .info .title, .swagger-ui .auth-container .errors, .swagger-ui .scopes h2, .swagger-ui .errors-wrapper .errors h4, .swagger-ui .errors-wrapper hgroup h4, .swagger-ui .model-title {
+  color: var(--bright-font);
+}
+
+.swagger-ui input[disabled], .swagger-ui select[disabled], .swagger-ui textarea[disabled] {
+  color: #626262;
+}
+
+.swagger-ui .opblock .opblock-section-header {
+  background: var(--bg-section);
+  color: var(--bright-font);
+}
+
+.swagger-ui .info a {
+  color: var(--primary-font);
+}
+
+.swagger-ui .expand-methods svg, .swagger-ui .expand-operation svg, .swagger-ui .authorization__btn svg, svg.arrow {
+  fill: var(--ah-black);
+}
+
+.swagger-ui .tab li:first-of-type:after {
+  background: var(--dark-font);
+}
+
+.swagger-ui .model .property.primitive {
+  color: var(--dark-font);
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -56,6 +157,14 @@
   .opblock-summary {
     flex-direction: column;
     align-items: flex-start !important;
+  }
+
+  .swagger-ui .opblock .opblock-summary-path {
+    max-width: 100%;
+  }
+
+  svg.arrow {
+    margin-top: 10px;
   }
 
   .opblock-summary .opblock-summary-path {
