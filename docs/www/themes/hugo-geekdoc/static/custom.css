@@ -1,5 +1,4 @@
-/* You can add custom styles here. */
-html {
+[data-theme='light'] {
   --color-1-100: #f1f6fa;
   --color-1-300: #b2cede;
   --color-1-500: #417598;
@@ -9,6 +8,32 @@ html {
   --color-font: #38383f;
   --body-bg: #f9f9f9;
   --color-muted: #6c757d;
+  --primary-font: #417598;
+  --secondary-font: #2d4857;
+  --color-black-75: rgba(0,0,0,.075);
+  --color-black-125: rgba(0,0,0,.125);
+  --ah-white: #fff;
+  --light-gray: #f8f9fa;
+  --mid-gray: #f6f8fa;
+}
+
+[data-theme='dark'] {
+  --color-1-100: #222529;
+  --color-1-300: #222529;
+  --color-1-500: #131216;
+  --color-1-700: #131216;
+  --color-1-900: #0f0e11;
+
+  --color-font: #a3a3a6;
+  --body-bg: #222529;
+  --color-muted: #828287;
+  --primary-font: #f8f9fa;
+  --secondary-font: #cbd3da;
+  --color-black-75: rgba(255,255,255,.075);
+  --color-black-125: rgba(255,255,255,.125);
+  --ah-white: #000;
+  --light-gray: #131216;
+  --mid-gray: #131216;
 }
 
 @font-face {
@@ -63,7 +88,7 @@ code {
 .gdoc-header {
   font-size: 1rem;
   background: var(--color-1-500);
-  box-shadow: 0 8px 6px -6px rgba(0,0,0,.15);
+  box-shadow: 0 8px 6px -6px var(--color-black-75);
   border: 0;
 }
 
@@ -93,11 +118,11 @@ code {
 }
 
 .gdoc-markdown *:not(pre) > code {
-  color: var(--color-1-700);
+  color: var(--secondary-font);
   hyphens: none;
   white-space: normal;
   word-wrap: break-word;
-  background-color: #f6f8fa !important;
+  background-color: var(--mid-gray) !important;
   border: 1px solid rgba(28, 44, 53, 0.1) !important;
   border-radius: 3px;
   padding: 0 0.15rem;
@@ -119,8 +144,12 @@ code {
   margin-top: 1.5rem;
 }
 
+.gdoc-markdown table tr:nth-child(2n) {
+  background: var(--light-gray);
+}
+
 .gdoc-page__footer a, .gdoc-page__footer a:visited, .gdoc-page__header a, .gdoc-page__header a:visited, .gdoc-markdown a, .gdoc-markdown a:visited, .gdoc-search .has-hits a, .gdoc-search .has-hits a:visited {
-  color: var(--color-1-500);
+  color: var(--primary-font);
 }
 
 /* Menu */
@@ -135,9 +164,9 @@ code {
 
 .gdoc-nav--main {
   border-radius: .25rem;
-  background-color: #ffffff;
-  border: 1px solid rgba(0,0,0,.125);
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  background-color: var(--ah-white);
+  border: 1px solid var(--color-black-125);
+  box-shadow: 0 .125rem .25rem var(--color-black-75);
   padding: 1rem 0;
 }
 
@@ -174,12 +203,12 @@ ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
 }
 
 .gdoc-nav__list .gdoc-nav__entry:hover {
-  background-color: #f8f9fa;
+  background-color: var(--light-gray);
   text-decoration: none;
 }
 
 .gdoc-nav__entry.is-active {
-  background-color: #f8f9fa;
+  background-color: var(--light-gray);
   text-decoration: none;
 }
 
@@ -209,24 +238,25 @@ ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
 
 .gdoc-markdown h1, .gdoc-markdown h2, .gdoc-markdown h3, .gdoc-markdown h4, .gdoc-markdown h5, .gdoc-markdown h6 {
   font-weight: 700;
-  color: var(--color-1-700);
+  color: var(--secondary-font);
   margin-bottom: 1.5rem;
   line-height: 1.75rem;
 }
 
 .gdoc-markdown h1, .gdoc-markdown h2 {
   padding-bottom: .5rem;
-  border-bottom: 1px solid rgba(0,0,0,.125);
+  border-bottom: 1px solid var(--color-black-125);
 }
 
 .gdoc-page__header {
   padding-left: 0;
+  background-color: transparent;
 }
 
 /* Search */
 .gdoc-search__input {
-  background-color: #ffffff;
-  border-color: rgba(0,0,0,.125);
+  background-color: var(--ah-white);
+  border-color: var(--color-black-125);
 }
 
 .gdoc-search {
@@ -249,11 +279,11 @@ ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
   color: #212529;
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: var(--ah-white);
   background-clip: padding-box;
-  border: 1px solid rgba(0,0,0,.15);
+  border: 1px solid var(--color-black-125);
   border-radius: .25rem;
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  box-shadow: 0 .125rem .25rem var(--color-black-75);
 }
 
 .gdoc-search__arrow {
@@ -277,12 +307,12 @@ ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
 
 .gdoc-search__arrow::before {
   top: 0;
-  border-bottom-color: rgba(0,0,0,.25);
+  border-bottom-color: var(--color-black-125);
 }
 
 .gdoc-search__arrow::after {
   top: 1px;
-  border-bottom-color: #ffffff;
+  border-bottom-color: var(--ah-white);
 }
 
 .has-hits + .gdoc-search__arrow {

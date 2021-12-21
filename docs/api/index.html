@@ -8,29 +8,9 @@
     <link rel="stylesheet" type="text/css" href="./custom-styles.css" >
     <link rel="shortcut icon" type="image/png" href="https://artifacthub.io/static/media/logo_v2.png">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#417598" />
     <link rel="apple-touch-icon" href="https://artifacthub.io/static/media/logo192_v2.png">
     <link rel="apple-touch-icon" sizes="512x512" href="https://artifacthub.io/static/media/logo512_v2.png">
-    <style>
-      html
-      {
-        box-sizing: border-box;
-        overflow: -moz-scrollbars-vertical;
-        overflow-y: scroll;
-      }
-
-      *,
-      *:before,
-      *:after
-      {
-        box-sizing: inherit;
-      }
-
-      body
-      {
-        margin:0;
-        background: #fafafa;
-      }
-    </style>
   </head>
 
   <body>
@@ -45,6 +25,7 @@
 
     <script src="./swagger-ui-bundle.js"> </script>
     <script src="./swagger-ui-standalone-preset.js"> </script>
+    <script src="/static/js/theme.js"> </script>
     <script>
     window.onload = function() {
       const ui = SwaggerUIBundle({
@@ -53,7 +34,7 @@
         deepLinking: true,
         presets: [
           SwaggerUIBundle.presets.apis,
-          SwaggerUIStandalonePreset.slice(1), // Hides topbar
+          SwaggerUIStandalonePreset,
         ],
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl,
