@@ -15,6 +15,10 @@
   --ah-white: #fff;
   --light-gray: #f8f9fa;
   --mid-gray: #f6f8fa;
+  --border-table: #e9ecef;
+  --strong-font: #38383f;
+  --bg-code: #272822;
+  --color-code: #f8f8f2;
 }
 
 [data-theme='dark'] {
@@ -34,6 +38,10 @@
   --ah-white: #000;
   --light-gray: #131216;
   --mid-gray: #131216;
+  --border-table: #49494C;
+  --strong-font: #cbd3da;
+  --bg-code: #131216;
+  --color-code: #a3a3a6;
 }
 
 @font-face {
@@ -111,12 +119,6 @@ code {
   word-wrap: break-word;
 }
 
-.gdoc-markdown pre {
-  overflow-x: auto;
-  border-radius: 3px;
-  padding: .5rem 1rem;
-}
-
 .gdoc-markdown *:not(pre) > code {
   color: var(--secondary-font);
   hyphens: none;
@@ -135,9 +137,12 @@ code {
 }
 
 .gdoc-markdown pre {
-  color:#f8f8f2;
-  background-color:#272822;
+  overflow-x: auto;
+  border-radius: 3px;
+  padding: .5rem 1rem;
   tab-size: 4;
+  background-color: var(--bg-code) !important;
+  color: var(--color-code) !important;
 }
 
 .gdoc-markdown table {
@@ -150,6 +155,10 @@ code {
 
 .gdoc-page__footer a, .gdoc-page__footer a:visited, .gdoc-page__header a, .gdoc-page__header a:visited, .gdoc-markdown a, .gdoc-markdown a:visited, .gdoc-search .has-hits a, .gdoc-search .has-hits a:visited {
   color: var(--primary-font);
+}
+
+.gdoc-markdown table tr td, .gdoc-markdown table tr th {
+  border-color: var(--border-table) !important;
 }
 
 /* Menu */
@@ -200,6 +209,10 @@ ul .gdoc-nav__item {
 ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
   text-transform: none;
   font-weight: normal !important;
+}
+
+strong {
+  color: var(--strong-font) !important;
 }
 
 .gdoc-nav__list .gdoc-nav__entry:hover {
