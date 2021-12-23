@@ -8,8 +8,9 @@
   width: 620px !important;
 }
 
-.legend {
-  font-size: 0.9rem;
+.summary {
+  font-size: 70%;
+  top: -1px;
 }
 
 @media only screen and (min-width: 576px) {
