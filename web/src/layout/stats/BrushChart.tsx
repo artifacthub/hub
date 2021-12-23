@@ -70,7 +70,8 @@ const BrushChart = (props: Props) => {
           colors: ['var(--color-font)'],
         },
         formatter: (value: number) => {
-          return prettifyNumber(value);
+          // Display only one decimal
+          return prettifyNumber(value, 1);
         },
       },
       colors: ['var(--color-1-500)'],
