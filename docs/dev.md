@@ -112,6 +112,24 @@ server:
   cookie:
     hashKey: default-unsafe-key
     secure: false
+theme:
+  colors:
+    primary: "#417598"
+    secondary: "#2D4857"
+  images:
+    appleTouchIcon192: "/static/media/logo192_v2.png"
+    appleTouchIcon512: "/static/media/logo512_v2.png"
+    openGraphImage: "/static/media/artifactHub_v2.png"
+    shortcutIcon: "/static/media/logo_v2.png"
+    websiteLogo: "/static/media/logo/artifacthub-brand-white.svg"
+  siteName: "Artifact Hub"
+  sampleQueries:
+    - name: Packages from verified publishers
+      queryString: "verified_publisher=true"
+    - name: Operators with auto pilot capabilities
+      queryString: "capabilities=auto+pilot"
+    - name: Helm Charts in the storage category
+      queryString: "kind=0&ts_query=storage"
 ```
 
 This sample configuration does not use all options available. For more information please see [the Chart configuration options](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema) and [the Chart hub secret template file](https://github.com/artifacthub/hub/blob/master/charts/artifact-hub/templates/hub_secret.yaml).
