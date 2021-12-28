@@ -263,7 +263,7 @@ tracker:
 # Trivy configuration
 trivy:
   deploy:
-    image: aquasec/trivy:0.21.3
+    image: aquasec/trivy:0.22.0
     resources: {}
   persistence:
     enabled: false
