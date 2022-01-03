@@ -992,10 +992,18 @@ func TestRegister(t *testing.T) {
 				},
 			},
 			{
-				"invalid version (semver expected)",
+				"repository not provided",
 				&hub.Package{
 					Name:    "package1",
-					Version: "invalid",
+					Version: "1.0.0",
+				},
+			},
+			{
+				"invalid version (semver expected)",
+				&hub.Package{
+					Name:       "package1",
+					Version:    "invalid",
+					Repository: &hub.Repository{},
 				},
 			},
 			{
@@ -1004,23 +1012,15 @@ func TestRegister(t *testing.T) {
 					Name:       "package1",
 					Version:    "1.0.0",
 					ContentURL: "invalid",
-				},
-			},
-			{
-				"repository not provided",
-				&hub.Package{
-					Name:    "package1",
-					Version: "1.0.0",
+					Repository: &hub.Repository{},
 				},
 			},
 			{
 				"repository id not provided",
 				&hub.Package{
-					Name:    "package1",
-					Version: "1.0.0",
-					Repository: &hub.Repository{
-						RepositoryID: "",
-					},
+					Name:       "package1",
+					Version:    "1.0.0",
+					Repository: &hub.Repository{},
 				},
 			},
 			{
@@ -1433,8 +1433,9 @@ func TestUnregister(t *testing.T) {
 			{
 				"invalid version (semantic version expected)",
 				&hub.Package{
-					Name:    "package1",
-					Version: "1.0",
+					Name:       "package1",
+					Version:    "1.0",
+					Repository: &hub.Repository{},
 				},
 			},
 		}

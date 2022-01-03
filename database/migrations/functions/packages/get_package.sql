@@ -55,8 +55,12 @@ begin
                 'prerelease', prerelease,
                 'ts', floor(extract(epoch from ts))
             ))
-            from snapshot
-            where package_id = v_package_id
+            from (
+                select *
+                from snapshot
+                where package_id = v_package_id
+                order by ts desc
+            ) s
         ),
         'app_version', s.app_version,
         'digest', s.digest,

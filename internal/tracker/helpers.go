@@ -6,6 +6,7 @@ import (
 	"regexp"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/tracker/source/container"
 	"github.com/artifacthub/hub/internal/tracker/source/falco"
 	"github.com/artifacthub/hub/internal/tracker/source/generic"
 	"github.com/artifacthub/hub/internal/tracker/source/helm"
@@ -91,6 +92,8 @@ func GetRepositories(
 func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 	var source hub.TrackerSource
 	switch i.Repository.Kind {
+	case hub.Container:
+		source = container.NewTrackerSource(i)
 	case hub.Falco:
 		// Temporary solution to maintain backwards compatibility with
 		// the only Falco rules repository registered at the moment in

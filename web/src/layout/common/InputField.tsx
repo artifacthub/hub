@@ -43,6 +43,7 @@ export interface Props {
   disabled?: boolean;
   visiblePassword?: boolean;
   excludedValues?: string[];
+  smallBottomMargin?: boolean;
 }
 
 const VALIDATION_DELAY = 3 * 100; // 300ms
@@ -205,7 +206,7 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
   }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <div className={` mb-4 position-relative ${props.className}`}>
+    <div className={`${props.smallBottomMargin ? 'mb-3' : 'mb-4'} position-relative ${props.className}`}>
       {!isUndefined(props.label) && (
         <label htmlFor={props.name} className={`form-label fw-bold ${styles.label}`}>
           <span className="fw-bold">{props.label}</span>

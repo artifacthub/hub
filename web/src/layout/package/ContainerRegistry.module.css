@@ -1,0 +1,13 @@
+.url {
+  font-size: 0.9rem;
+}
+
+.icon {
+  min-width: 15px;
+  width: 15px;
+  height: auto;
+}
+
+.copyBtn {
+  top: -2px;
+}

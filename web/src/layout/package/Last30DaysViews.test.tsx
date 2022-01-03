@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { RepositoryKind } from '../../types';
 import Last30DaysViews from './Last30DaysViews';
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
 
@@ -91,6 +92,11 @@ const stats = {
   },
 };
 
+const defaultProps = {
+  repoKind: RepositoryKind.Helm,
+  stats: stats,
+};
+
 describe('Last30DaysViews', () => {
   let dateNowSpy: any;
 
@@ -107,13 +113,13 @@ describe('Last30DaysViews', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<Last30DaysViews stats={stats} />);
+    const { asFragment } = render(<Last30DaysViews {...defaultProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<Last30DaysViews stats={stats} />);
+      render(<Last30DaysViews {...defaultProps} />);
 
       expect(screen.getByText('Last 30 days views')).toBeInTheDocument();
       expect(screen.getByText('Chart')).toBeInTheDocument();
@@ -122,8 +128,15 @@ describe('Last30DaysViews', () => {
       expect(screen.getByText('(all versions)')).toBeInTheDocument();
     });
 
-    it('renders component', () => {
-      render(<Last30DaysViews stats={stats} version="21.0.4" />);
+    it('displays correct legend', () => {
+      render(<Last30DaysViews {...defaultProps} repoKind={RepositoryKind.Container} />);
+
+      expect(screen.getByText('(all tags)')).toBeInTheDocument();
+      expect(screen.queryByText('(all versions)')).toBeNull();
+    });
+
+    it('renders component when version is defined', () => {
+      render(<Last30DaysViews {...defaultProps} version="21.0.4" />);
 
       expect(screen.getByText('Last 30 days views')).toBeInTheDocument();
       expect(screen.getByText('Chart')).toBeInTheDocument();
@@ -135,7 +148,7 @@ describe('Last30DaysViews', () => {
     it('goes to Views chart section', () => {
       render(
         <Router>
-          <Last30DaysViews stats={stats} />
+          <Last30DaysViews {...defaultProps} />
         </Router>
       );
 
@@ -154,10 +167,10 @@ describe('Last30DaysViews', () => {
     });
 
     it('when stats are empty', () => {
-      const { rerender } = render(<Last30DaysViews />);
+      const { rerender } = render(<Last30DaysViews repoKind={RepositoryKind.Helm} />);
       expect(screen.getByText('Loading...')).toBeInTheDocument();
 
-      rerender(<Last30DaysViews stats={{}} />);
+      rerender(<Last30DaysViews repoKind={RepositoryKind.Helm} stats={{}} />);
       expect(screen.getByText('Last 30 days views')).toBeInTheDocument();
       expect(screen.getByText('No views yet')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'See views chart' })).toBeDisabled();

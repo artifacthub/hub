@@ -8,6 +8,12 @@ import (
 	"github.com/spf13/viper"
 )
 
+const (
+	// HasNotChanged is a snapshot digest value that indicates that the digest
+	// has not changed.
+	HasNotChanged = "has-not-changed"
+)
+
 // TrackerServices represents a set of services that must be provided to a
 // Tracker instance so that it can perform its tasks.
 type TrackerServices struct {

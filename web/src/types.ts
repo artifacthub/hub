@@ -13,6 +13,7 @@ export enum RepositoryKind {
   CoreDNS,
   Keptn,
   TektonPipeline,
+  Container,
 }
 
 export enum KeptnData {
@@ -51,6 +52,9 @@ export interface Repository {
   authPass?: string | null;
   disabled?: boolean;
   scannerDisabled?: boolean;
+  data?: {
+    tags?: ContainerTag[];
+  };
 }
 
 export interface Maintainer {
@@ -198,6 +202,7 @@ export interface PackageData {
   [KeptnData.Version]?: string;
   [KeptnData.Kind]?: string;
   tasks?: TektonTaskInPipeline[];
+  alternativeLocations?: string[];
 }
 
 export interface TektonTaskInPipeline {
@@ -714,4 +719,10 @@ export enum FileModalKind {
   CustomResourcesDefinition,
   Policy,
   Rules,
+}
+
+export interface ContainerTag {
+  name: string;
+  mutable: boolean;
+  id?: string;
 }

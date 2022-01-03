@@ -51,6 +51,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('tekton-pipeline')).toBe(RepositoryKind.TektonPipeline);
     });
 
+    it('container', () => {
+      expect(methods.getRepoKind('container')).toBe(RepositoryKind.Container);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -103,6 +107,10 @@ describe('repoKind', () => {
 
     it('tekton-pipeline kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.TektonPipeline)).toBe('tekton-pipeline');
+    });
+
+    it('container kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.Container)).toBe('container');
     });
 
     it('unknown kind', () => {

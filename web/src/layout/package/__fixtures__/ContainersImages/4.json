@@ -1,0 +1,202 @@
+[
+  {
+    "name": "",
+    "image": "ibmcom/ibm-apiconnect-operator@sha256:03b51cd1dc47bc69a3040879c9084374400ae585ebe424643ded4eaa9e5a2b35"
+  },
+  {
+    "name": "analytics-analytics-client-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "analytics-analytics-cronjobs-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "analytics-analytics-ingestion-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "analytics-analytics-mq-kafka-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "analytics-analytics-mq-zookeeper-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "analytics-analytics-mtls-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "analytics-analytics-storage-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "analytics-k8s-init-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "apiconnect-configurator-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "gateway-datapower-nonprod-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "gateway-datapower-prod-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-analytics-proxy-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-apim-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-billing-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-client-downloads-server-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-crunchy-pgbadger-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-crunchy-pgbouncer-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-crunchy-postgres-ha-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-hub-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-juhu-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-k8s-init-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-ldap-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-lur-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-nats-operator-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-nats-server-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-nats-streaming-operator-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-nats-streaming-server-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-pgo-apiserver-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-pgo-backrest-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-pgo-backrest-repo-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-pgo-backrest-restore-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-pgo-client-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-pgo-event-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-pgo-rmdata-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-pgo-scheduler-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-portal-proxy-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-postgres-operator-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-task-manager-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-turnstile-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-ui-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-v10-upgrade-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "management-ws-tunnel-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "portal-k8s-init-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "portal-openresty-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "portal-portal-admin-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "portal-portal-db-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "portal-portal-dbproxy-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "portal-portal-web-10.0.1.0-627",
+    "image": ""
+  },
+  {
+    "name": "portal-ws-tunnel-10.0.1.0-627",
+    "image": ""
+  }
+]

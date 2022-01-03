@@ -5,12 +5,13 @@ import ReactApexChart from 'react-apexcharts';
 import { HiPlusCircle } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
-import { PackageViewsStats, SearchFiltersURL } from '../../types';
+import { PackageViewsStats, RepositoryKind, SearchFiltersURL } from '../../types';
 import { getSeriesDataPerPkgVersionViews, sumViewsPerVersions } from '../../utils/viewsStats';
 import SmallTitle from '../common/SmallTitle';
 import styles from './Last30DaysViews.module.css';
 
 interface Props {
+  repoKind: RepositoryKind;
   stats?: PackageViewsStats;
   version?: string;
   searchUrlReferer?: SearchFiltersURL;
@@ -37,6 +38,18 @@ const prepareSeries = (stats: PackageViewsStats, version?: string): Series[] => 
 const Last30DaysViews = (props: Props) => {
   const history = useHistory();
   const [series, setSeries] = useState<any[]>([]);
+
+  const getLegend = (): string => {
+    if (props.version) {
+      return props.version;
+    } else {
+      if (props.repoKind === RepositoryKind.Container) {
+        return 'all tags';
+      } else {
+        return 'all versions';
+      }
+    }
+  };
 
   const getSparkLineConfig = (): ApexCharts.ApexOptions => {
     return {
@@ -193,7 +206,7 @@ const Last30DaysViews = (props: Props) => {
                 </button>
               </div>
               <div className={`ms-auto text-truncate ${styles.legend}`}>
-                <small className="text-muted text-truncate">({props.version || 'all versions'})</small>
+                <small className="text-muted text-truncate">({getLegend()})</small>
               </div>
             </div>
           </div>

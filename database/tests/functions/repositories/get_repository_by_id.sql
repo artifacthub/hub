@@ -30,7 +30,8 @@ insert into repository (
     last_scanning_ts,
     last_scanning_errors,
     last_tracking_ts,
-    last_tracking_errors
+    last_tracking_errors,
+    data
 )
 values (
     :'repo1ID',
@@ -46,7 +47,8 @@ values (
     '2020-06-16 11:20:34+02',
     'error1\nerror2\n',
     '2020-06-16 11:20:34+02',
-    'error1\nerror2\n'
+    'error1\nerror2\n',
+    '{"k1": "v1"}'
 );
 insert into repository (
     repository_id,
@@ -97,7 +99,8 @@ select is(
         "last_scanning_errors": "error1\\nerror2\\n",
         "last_tracking_ts": 1592299234,
         "last_tracking_errors": "error1\\nerror2\\n",
-        "user_alias": "user1"
+        "user_alias": "user1",
+        "data": {"k1": "v1"}
     }'::jsonb,
     'Repository 1 returned as a json object (without credentials)'
 );
@@ -122,7 +125,8 @@ select is(
         "last_scanning_errors": "error1\\nerror2\\n",
         "last_tracking_ts": 1592299234,
         "last_tracking_errors": "error1\\nerror2\\n",
-        "user_alias": "user1"
+        "user_alias": "user1",
+        "data": {"k1": "v1"}
     }'::jsonb,
     'Repository 1 is returned as a json object (with credentials)'
 );

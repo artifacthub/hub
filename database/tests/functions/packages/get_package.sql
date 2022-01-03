@@ -292,16 +292,16 @@ select is(
         "version": "1.0.0",
         "available_versions": [
             {
-                "version": "0.0.9",
-                "contains_security_updates": false,
-                "prerelease": false,
-                "ts": 1592299233
-            },
-            {
                 "version": "1.0.0",
                 "contains_security_updates": true,
                 "prerelease": true,
                 "ts": 1592299234
+            },
+            {
+                "version": "0.0.9",
+                "contains_security_updates": false,
+                "prerelease": false,
+                "ts": 1592299233
             }
         ],
         "app_version": "12.1.0",
@@ -445,16 +445,16 @@ select is(
         "version": "1.0.0",
         "available_versions": [
             {
-                "version": "0.0.9",
-                "contains_security_updates": false,
-                "prerelease": false,
-                "ts": 1592299233
-            },
-            {
                 "version": "1.0.0",
                 "contains_security_updates": true,
                 "prerelease": true,
                 "ts": 1592299234
+            },
+            {
+                "version": "0.0.9",
+                "contains_security_updates": false,
+                "prerelease": false,
+                "ts": 1592299233
             }
         ],
         "app_version": "12.1.0",
@@ -588,16 +588,16 @@ select is(
         "version": "0.0.9",
         "available_versions": [
             {
-                "version": "0.0.9",
-                "contains_security_updates": false,
-                "prerelease": false,
-                "ts": 1592299233
-            },
-            {
                 "version": "1.0.0",
                 "contains_security_updates": true,
                 "prerelease": true,
                 "ts": 1592299234
+            },
+            {
+                "version": "0.0.9",
+                "contains_security_updates": false,
+                "prerelease": false,
+                "ts": 1592299233
             }
         ],
         "app_version": "12.0.0",

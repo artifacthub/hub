@@ -147,12 +147,15 @@ const PackageInfo = (props: Props) => {
               className={`d-none d-md-block card-subtitle text-truncate align-items-baseline position-relative ${styles.subtitle} ${styles.lastLine}`}
             >
               <div className="d-flex flex-row align-items-baseline text-truncate">
-                <span className="text-muted text-uppercase me-1">Version: </span>
+                <span className="text-muted text-uppercase me-1">
+                  {props.package.repository.kind === RepositoryKind.Container ? 'Tag' : 'Version'}:{' '}
+                </span>
                 {cutString(props.package.version || '-')}
 
                 {(() => {
                   switch (props.package.repository.kind) {
                     case RepositoryKind.Helm:
+                    case RepositoryKind.Container:
                       return (
                         <>
                           {props.package.appVersion && (

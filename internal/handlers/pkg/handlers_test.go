@@ -1308,12 +1308,12 @@ func TestRssFeed(t *testing.T) {
 					TS:             1592299234,
 					AvailableVersions: []*hub.Version{
 						{
-							Version: "1.0.0",
-							TS:      1592299234,
-						},
-						{
 							Version: "0.0.9",
 							TS:      1592299233,
+						},
+						{
+							Version: "1.0.0",
+							TS:      1592299234,
 						},
 					},
 					Maintainers: []*hub.Maintainer{
@@ -2013,6 +2013,17 @@ func TestBuildURL(t *testing.T) {
 			},
 			"2.0.0",
 			baseURL + "/packages/tekton-pipeline/repo1/pkg1/2.0.0",
+		},
+		{
+			&hub.Package{
+				NormalizedName: "pkg1",
+				Repository: &hub.Repository{
+					Kind: hub.Container,
+					Name: "repo1",
+				},
+			},
+			"2.0.0",
+			baseURL + "/packages/container/repo1/pkg1/2.0.0",
 		},
 	}
 	for _, tc := range testCases {

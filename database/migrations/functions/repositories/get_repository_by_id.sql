@@ -21,6 +21,7 @@ returns setof json as $$
         'last_scanning_errors', r.last_scanning_errors,
         'last_tracking_ts', floor(extract(epoch from last_tracking_ts)),
         'last_tracking_errors', r.last_tracking_errors,
+        'data', r.data,
         'user_alias', u.alias,
         'organization_name', o.name,
         'organization_display_name', o.display_name

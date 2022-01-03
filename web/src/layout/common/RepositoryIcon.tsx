@@ -57,6 +57,10 @@ const ICONS = {
     default: '/static/media/tekton-pkg.svg',
     white: '/static/media/tekton-pkg-light.svg',
   },
+  [RepositoryKind.Container]: {
+    default: '/static/media/container.svg',
+    white: '/static/media/container-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

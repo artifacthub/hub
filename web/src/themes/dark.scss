@@ -314,6 +314,10 @@
     }
   }
 
+  .registryIcon {
+    filter: invert(1) grayscale(100%) brightness(125%);
+  }
+
   .activeTemplate {
     background-color: #090a0c;
   }

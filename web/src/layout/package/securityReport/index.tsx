@@ -1,7 +1,13 @@
 import { isEmpty, isNull, isUndefined } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 
-import { ContainerImage, SearchFiltersURL, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
+import {
+  ContainerImage,
+  RepositoryKind,
+  SearchFiltersURL,
+  SecurityReportSummary,
+  VulnerabilitySeverity,
+} from '../../../types';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
 import prettifyNumber from '../../../utils/prettifyNumber';
 import sumObjectValues from '../../../utils/sumObjectValues';
@@ -12,6 +18,7 @@ import SecurityModal from './Modal';
 import styles from './SecurityReport.module.css';
 
 interface Props {
+  repoKind: RepositoryKind;
   disabledReport: boolean;
   allContainersImagesWhitelisted: boolean;
   containers: ContainerImage[];
@@ -130,6 +137,7 @@ const SecurityReport = (props: Props) => {
 
             <div className="d-none d-md-block">
               <SecurityModal
+                repoKind={props.repoKind}
                 summary={props.summary!}
                 totalVulnerabilities={total}
                 packageId={props.packageId}

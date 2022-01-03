@@ -26,6 +26,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.Keptn;
     case 'tekton-pipeline':
       return RepositoryKind.TektonPipeline;
+    case 'container':
+      return RepositoryKind.Container;
     default:
       return null;
   }
@@ -57,6 +59,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'keptn';
     case RepositoryKind.TektonPipeline:
       return 'tekton-pipeline';
+    case RepositoryKind.Container:
+      return 'container';
     default:
       return null;
   }

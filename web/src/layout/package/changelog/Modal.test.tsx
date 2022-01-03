@@ -107,7 +107,7 @@ describe('ChangelogModal', () => {
       expect(screen.getByRole('button', { name: 'Get changelog markdown' })).toBeInTheDocument();
     });
 
-    it('does not render component when repo kind is Krew, Falco or Helm plugin', async () => {
+    it('does not render component when repo kind is Krew, Falco, Helm plugin or Container', async () => {
       const props = {
         ...defaultProps,
         repository: {

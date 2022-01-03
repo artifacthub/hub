@@ -4,6 +4,7 @@ Artifact Hub allows publishers to list their content in an automated way. Publis
 
 The following repositories kinds are supported at the moment:
 
+- [Containers images repositories](#container-images-repositories)
 - [CoreDNS plugins repositories](#coredns-plugins-repositories)
 - [Falco rules repositories](#falco-rules-repositories)
 - [Helm charts repositories](#helm-charts-repositories)
@@ -23,6 +24,80 @@ This guide also contains additional information about the following repositories
 - [Official status](#official-status)
 - [Ownership claim](#ownership-claim)
 - [Private repositories](#private-repositories)
+
+## Container images repositories
+
+*This feature is experimental and it's subject to change.*
+
+Container images repositories are expected to be hosted in OCI registries. Each repository represents one package in Artifact Hub, and multiple versions of that package will be created from each of the tags configured when the repository is added. The repository name in the url will be used as the package name. At the moment tags have to be configured manually from the control panel, and they can be marked as `mutable` or `immutable`. Immutable tags will be only processed once, whereas mutable ones will be processed periodically and reindexed when they change. A repository can have a **maximum of 10 tags** listed. In some cases, adding a single mutable tag like `latest` will be enough to have presence on Artifact Hub. We have plans to add a new API endpoint that will allow publishers to push tags programatically as needed replacing old ones.
+
+To add a container image repository, the url used **must** follow the following format:
+
+- `oci://registry/[namespace]/repository` (example: oci://index.docker.io/artifacthub/ah)
+
+The registry host is required, please use `index.docker.io` when referring to repositories hosted in the Docker Hub. The url should not contain any tag.
+
+### Image metadata
+
+For an image tag to be listed on Artifact Hub, it **must** contain some metadata. Depending on the image manifest format, metadata must be provided one way or another: images using OCI manifests must use [annotations](https://github.com/opencontainers/image-spec/blob/main/annotations.md), whereas images using Docker V2 manifests must use [config labels](https://docs.docker.com/engine/reference/builder/#label). Docker V1 manifests are not supported.
+
+The following annotations/labels are supported at the moment:
+
+(all must be provided as strings)
+
+| key                                                | required | description                                                                                                                           |
+| -------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **io.artifacthub.package.readmeURL**               | **yes**  | url of the readme file (in markdown format) for this package version. Please make sure it points to a raw markdown document, not HTML |
+| **org.opencontainers.image.created**               | **yes**  | date and time on which the image was built (RFC3339)                                                                                  |
+| **org.opencontainers.image.description**           | **yes**  | a short description of the package                                                                                                    |
+| **org.opencontainers.image.documentation**         | no       | url to get documentation on the image                                                                                                 |
+| **org.opencontainers.image.source**                | no       | url to get source code for building the image                                                                                         |
+| **org.opencontainers.image.title**                 | no       | name of the package nicely formatted                                                                                                  |
+| **org.opencontainers.image.url**                   | no       | url to find more information on the image                                                                                             |
+| **org.opencontainers.image.vendor**                | no       | name of the distributing entity, organization or individual                                                                           |
+| **org.opencontainers.image.version**               | no       | version of the packaged software                                                                                                      |
+| **io.artifacthub.package.alternativeLocations**    | no       | alternative locations where this image is hosted. They can be provided as a comma separated list of images urls                       |
+| **io.artifacthub.package.containsSecurityUpdates** | no       | boolean that indicates if this image version contains security updates                                                                |
+| **io.artifacthub.package.deprecated**              | no       | boolean that indicates if this image version is deprecated                                                                            |
+| **io.artifacthub.package.keywords**                | no       | a list of comma separated keywords about this image                                                                                   |
+| **io.artifacthub.package.license**                 | no       | SPDX identifier of the package license                                                                                                |
+| **io.artifacthub.package.logoURL**                 | no       | url of the logo image                                                                                                                 |
+| **io.artifacthub.package.maintainers**             | no       | json string with an array of maintainers. Example: `[{"name":"maintainer","email":"maintainer@email.com"}]`                           |
+| **io.artifacthub.package.prerelease**              | no       | boolean that indicates if this image version is a pre-release                                                                         |
+
+You can add annotations and labels to your images at build time (by using `podman`, `buildah` or `docker`), or later at any time by mutating the image with tools like [crane](https://github.com/google/go-containerregistry/tree/main/cmd/crane):
+
+```sh
+crane mutate \
+    --label org.opencontainers.image.description='Artifact Hub command line tool' \
+    --label org.opencontainers.image.version='1.5.0' \
+    --label org.opencontainers.image.created='2021-12-15T10:00:00.00Z' \
+    --label org.opencontainers.image.documentation='https://artifacthub.io/docs/topics/cli' \
+    --label org.opencontainers.image.source='https://github.com/artifacthub/hub/tree/0c0e789ab6f4e74dfa59a4e7c1ece4788881e279/cmd/ah' \
+    --label org.opencontainers.image.vendor='Artifact Hub' \
+    --label io.artifacthub.package.readmeURL='https://raw.githubusercontent.com/artifacthub/hub/0c0e789ab6f4e74dfa59a4e7c1ece4788881e279/docs/cli.md' \
+    --label io.artifacthub.package.maintainers='[{"name":"Artifact Hub maintainers","email":"cncf-artifacthub-maintainers@lists.cncf.io"}]' \
+    --label io.artifacthub.package.logoURL='https://raw.githubusercontent.com/artifacthub/hub/master/docs/logo/logo.svg' \
+    --label io.artifacthub.package.keywords='artifact hub,cli,lint' \
+    --label io.artifacthub.package.license='Apache-2.0' \
+    --label io.artifacthub.package.alternativeLocations='public.ecr.aws/artifacthub/ah:v1.5.0' \
+artifacthub/ah:latest
+```
+
+### Repository metadata
+
+There is an Artifact Hub repository metadata file named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). Once your repository metadata file is ready, you can push it to the OCI registry using [oras](https://oras.land/cli/):
+
+```bash
+oras push \
+  registry/namespace/repository:artifacthub.io \
+  --manifest-config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
+  artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
+```
+
+The repository metadata file is pushed to the registry using a special tag named `artifacthub.io`. Artifact Hub will pull that artifact looking for the `application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml` layer when the repository metadata is needed.
+
+*Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/implementors/). At the time of writing this, the Docker Hub [does not support them yet](https://github.com/docker/roadmap/issues/135).*
 
 ## CoreDNS plugins repositories
 

@@ -74,7 +74,7 @@ exports[`Deletion modal Modal - packages section creates snapshot 1`] = `
                  to confirm:
               </p>
               <div
-                class=" mb-4 position-relative undefined"
+                class="mb-4 position-relative undefined"
               >
                 <input
                   autocomplete="off"

@@ -73,6 +73,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'keptn';
     case RepositoryKind.TektonPipeline:
       return 'tekton-pipeline';
+    case RepositoryKind.Container:
+      return 'container';
     default:
       return null;
   }
@@ -422,7 +424,9 @@ export default function Widget(props: Props) {
                     </TitleWrapper>
                     <div>
                       <Version>
-                        <Legend>Version:</Legend>
+                        <Legend>
+                          {packageSummary.repository.kind === RepositoryKind.Container ? 'Tag' : 'Version'}:
+                        </Legend>
                         {packageSummary.version}
                       </Version>
                     </div>

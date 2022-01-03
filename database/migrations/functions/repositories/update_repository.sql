@@ -61,7 +61,8 @@ begin
             end
         ),
         disabled = (p_repository->>'disabled')::boolean,
-        scanner_disabled = (p_repository->>'scanner_disabled')::boolean
+        scanner_disabled = (p_repository->>'scanner_disabled')::boolean,
+        data = nullif(p_repository->'data', 'null')
     where repository_id = v_repository_id;
 
     -- If the repository has been disabled, remove packages belonging to it and

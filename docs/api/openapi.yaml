@@ -1111,6 +1111,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/container/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get container image details
+      description: Get container image details
+      operationId: getContainerImageDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContainerImage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/coredns/{repoName}/{packageName}":
     get:
       tags:
@@ -1381,6 +1404,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TektonTaskPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/container/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get container image details
+      description: Get container image details
+      operationId: getContainerImageVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContainerImage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3193,6 +3240,27 @@ components:
             name: user1
             total: 3
             filter_key: user
+    ContainerImage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                platforms:
+                  type: array
+                  items:
+                    type: string
+                    nullable: false
+                    example: darwin/amd64
+                alternative_locations:
+                  type: array
+                  items:
+                    type: string
+                    nullable: false
+                    example: public.ecr.aws/artifacthub/ah
     CoreDNSPackage:
       $ref: "#/components/schemas/Package"
     FalcoPackage:
@@ -3868,6 +3936,24 @@ components:
             branch:
               type: string
               nullable: false
+            data:
+              type: object
+              nullable: false
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - name
+                    properties:
+                      name:
+                        type: string
+                        nullable: false
+                        example: stable
+                      mutable:
+                        type: boolean
+                        nullable: false
     RepositoryKind:
       type: integer
       enum:

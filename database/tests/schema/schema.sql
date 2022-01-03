@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(185);
+select plan(186);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -173,6 +173,7 @@ select columns_are('repository', array[
     'scanner_disabled',
     'digest',
     'created_at',
+    'data',
     'repository_kind_id',
     'user_id',
     'organization_id'
@@ -363,7 +364,6 @@ select indexes_are('session', array[
 ]);
 select indexes_are('snapshot', array[
     'snapshot_pkey',
-    'snapshot_package_id_digest_key',
     'snapshot_not_deprecated_with_readme_idx'
 ]);
 select indexes_are('subscription', array[
@@ -444,6 +444,7 @@ select has_function('get_packages_stats');
 select has_function('get_production_usage');
 select has_function('get_random_packages');
 select has_function('get_snapshots_to_scan');
+select has_function('is_latest');
 select has_function('register_package');
 select has_function('search_packages');
 select has_function('search_packages_monocular');
@@ -517,7 +518,8 @@ select results_eq(
         (8, 'KEDA scalers'),
         (9, 'CoreDNS plugins'),
         (10, 'Keptn integrations'),
-        (11, 'Tekton pipelines')
+        (11, 'Tekton pipelines'),
+        (12, 'Containers images')
     $$,
     'Repository kinds should exist'
 );

@@ -204,7 +204,7 @@ const HomeView = (props: Props) => {
                 Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
                 configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
                 configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins,
-                Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins and Keptn integrations.
+                Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations and container images.
                 <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
                   <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
@@ -258,8 +258,6 @@ const HomeView = (props: Props) => {
                       </div>
                     </div>
                   </ExternalLink>
-                </div>
-                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
                   <ExternalLink
                     href="https://krew.sigs.k8s.io"
                     className={`col ${styles.iconLink}`}
@@ -272,6 +270,8 @@ const HomeView = (props: Props) => {
                       </div>
                     </div>
                   </ExternalLink>
+                </div>
+                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
                   <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`} label="Open Tekton site">
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
                       <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
@@ -306,6 +306,18 @@ const HomeView = (props: Props) => {
                       <RepositoryIcon kind={RepositoryKind.Keptn} type="white" className={styles.aboutIcon} />
                       <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
                         <small>Keptn integrations</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://opencontainers.org"
+                    className={`col ${styles.iconLink}`}
+                    label="Open Container Iniciative site"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.Container} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                        <small>Container images</small>
                       </div>
                     </div>
                   </ExternalLink>

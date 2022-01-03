@@ -2,6 +2,7 @@ import md5 from 'crypto-js/md5';
 import { groupBy, isNull, isUndefined } from 'lodash';
 
 import { NotificationsPrefs, PathTips, UserNotification } from '../types';
+import { PKG_DETAIL_PATH } from './data';
 import hasToBeDisplayedNewNotification from './hasToBeDisplayedNewNotification';
 
 const DEFAULT_START_TIME = 3 * 1000; //3s
@@ -10,9 +11,6 @@ const DEFAULT_DISMISS_TIME = 20 * 1000; //20s
 export interface UserNotificationsUpdatesHandler {
   updateUserNotificationsWrapper(notification: UserNotification | null): void;
 }
-
-const detailPkgPath =
-  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn)\//;
 
 const getNotifications = (): UserNotification[] => {
   const list = require('./notifications.json').notifications;
@@ -29,7 +27,7 @@ const getCurrentLocationPath = (location?: string): PathTips | undefined => {
   const currentLocation = location || window.location.pathname;
   if (currentLocation.startsWith('/control-panel')) {
     return PathTips.ControlPanel;
-  } else if (detailPkgPath.test(currentLocation)) {
+  } else if (PKG_DETAIL_PATH.test(currentLocation)) {
     return PathTips.Package;
   } else {
     switch (currentLocation) {

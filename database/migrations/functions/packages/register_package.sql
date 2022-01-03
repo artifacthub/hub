@@ -6,26 +6,36 @@
 create or replace function register_package(p_pkg jsonb)
 returns void as $$
 declare
-    v_previous_latest_version text;
-    v_package_id uuid;
     v_name text := p_pkg->>'name';
     v_display_name text := nullif(p_pkg->>'display_name', '');
     v_description text := nullif(p_pkg->>'description', '');
     v_keywords text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))), '{}'));
     v_version text := p_pkg->>'version';
     v_repository_id uuid := ((p_pkg->'repository')->>'repository_id')::uuid;
+    v_provider text := nullif(p_pkg->>'provider', '');
+    v_signatures text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'signatures', 'null'::jsonb))), '{}'));
+
+    v_latest_version_updated boolean;
     v_maintainer jsonb;
     v_maintainer_id uuid;
-    v_ts timestamptz;
-    v_provider text := nullif(p_pkg->>'provider', '');
-    v_ts_repository text[];
-    v_ts_publisher text[];
+    v_package_id uuid;
+    v_previous_latest_version text;
+    v_previous_latest_version_ts timestamptz;
     v_repository_disabled boolean;
-    v_signatures text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'signatures', 'null'::jsonb))), '{}'));
+    v_repository_kind_id integer;
+    v_ts timestamptz;
+    v_ts_publisher text[];
+    v_ts_repository text[];
 begin
+    -- Convert package version ts to timestamptz when available, otherwise use current
+    v_ts := to_timestamp((p_pkg->>'ts')::int);
+    if v_ts is null then
+        v_ts = current_timestamp;
+    end if;
+
     -- Get some repository information (some of it for tsdoc)
-    select r.disabled, array[r.name, r.display_name], array[u.alias, o.name, o.display_name, v_provider]
-    into v_repository_disabled, v_ts_repository, v_ts_publisher
+    select r.disabled, array[r.name, r.display_name], array[u.alias, o.name, o.display_name, v_provider], repository_kind_id
+    into v_repository_disabled, v_ts_repository, v_ts_publisher, v_repository_kind_id
     from repository r
     left join "user" u using (user_id)
     left join organization o using (organization_id)
@@ -38,13 +48,15 @@ begin
         raise 'repository is disabled';
     end if;
 
-    -- Get package's latest version before registration, if available
-    select latest_version into v_previous_latest_version
-    from package
-    where name = v_name
-    and repository_id = v_repository_id;
+    -- Get package's latest version info before registration, if available
+    select p.latest_version, s.ts into v_previous_latest_version, v_previous_latest_version_ts
+    from package p
+    join snapshot s using (package_id)
+    where p.name = v_name
+    and p.repository_id = v_repository_id
+    and s.version = p.latest_version;
 
-    -- Package
+    -- Package (insert or update if latest has changed)
     insert into package (
         name,
         latest_version,
@@ -70,7 +82,13 @@ begin
         is_operator = excluded.is_operator,
         channels = excluded.channels,
         default_channel = excluded.default_channel
-    where semver_gte(v_version, package.latest_version) = true
+    where is_latest(
+        v_repository_kind_id,
+        v_version,
+        v_previous_latest_version,
+        v_ts,
+        v_previous_latest_version_ts
+    ) = true
     returning package_id into v_package_id;
 
     -- If package record has been created or updated
@@ -122,10 +140,6 @@ begin
     end if;
 
     -- Package snapshot
-    v_ts := to_timestamp((p_pkg->>'ts')::int);
-    if v_ts is null then
-        v_ts = current_timestamp;
-    end if;
     insert into snapshot (
         package_id,
         version,
@@ -227,7 +241,18 @@ begin
         ts = v_ts;
 
     -- Register new release event if package's latest version has been updated
-    if semver_gt(v_version, v_previous_latest_version) then
+    v_latest_version_updated := false;
+    case v_repository_kind_id
+        when 12 then -- Container image
+            if v_ts > v_previous_latest_version_ts then
+                v_latest_version_updated := true;
+            end if;
+        else         -- Any other kind
+            if semver_gt(v_version, v_previous_latest_version) then
+                v_latest_version_updated := true;
+            end if;
+    end case;
+    if v_latest_version_updated then
         insert into event (package_id, package_version, event_kind_id)
         values (v_package_id, v_version, 0);
     end if;

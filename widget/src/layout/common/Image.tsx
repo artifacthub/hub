@@ -53,6 +53,8 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_coredns.png';
         case RepositoryKind.Keptn:
           return '/static/media/placeholder_pkg_keptn.png';
+        case RepositoryKind.Container:
+          return '/static/media/placeholder_pkg_container.png';
         default:
           return PLACEHOLDER_SRC;
       }

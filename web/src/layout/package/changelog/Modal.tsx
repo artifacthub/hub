@@ -97,7 +97,11 @@ const ChangelogModal = (props: Props) => {
     }
   }, [openStatus, changelog]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if ([RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin].includes(props.repository.kind))
+  if (
+    [RepositoryKind.Falco, RepositoryKind.Krew, RepositoryKind.HelmPlugin, RepositoryKind.Container].includes(
+      props.repository.kind
+    )
+  )
     return null;
 
   async function getChangelog() {

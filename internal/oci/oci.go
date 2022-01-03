@@ -122,7 +122,7 @@ func (c *SignatureChecker) HasCosignSignature(
 type TagsGetter struct{}
 
 // Tags returns a list with the tags available for the provided repository.
-func (tg *TagsGetter) Tags(ctx context.Context, r *hub.Repository) ([]string, error) {
+func (tg *TagsGetter) Tags(ctx context.Context, r *hub.Repository, onlySemver bool) ([]string, error) {
 	u := strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix)
 	ociRepo, err := name.NewRepository(u)
 	if err != nil {
@@ -141,16 +141,19 @@ func (tg *TagsGetter) Tags(ctx context.Context, r *hub.Repository) ([]string, er
 	if err != nil {
 		return nil, err
 	}
-	var tagsFiltered []string
-	for _, tag := range tags {
-		if _, err := semver.NewVersion(tag); err == nil {
-			tagsFiltered = append(tagsFiltered, tag)
+	if onlySemver {
+		var semverTags []string
+		for _, tag := range tags {
+			if _, err := semver.NewVersion(tag); err == nil {
+				semverTags = append(semverTags, tag)
+			}
 		}
+		sort.Slice(semverTags, func(i, j int) bool {
+			vi, _ := semver.NewVersion(semverTags[i])
+			vj, _ := semver.NewVersion(semverTags[j])
+			return vj.LessThan(vi)
+		})
+		tags = semverTags
 	}
-	sort.Slice(tagsFiltered, func(i, j int) bool {
-		vi, _ := semver.NewVersion(tagsFiltered[i])
-		vj, _ := semver.NewVersion(tagsFiltered[j])
-		return vj.LessThan(vi)
-	})
-	return tagsFiltered, nil
+	return tags, nil
 }

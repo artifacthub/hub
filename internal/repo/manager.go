@@ -54,7 +54,8 @@ const (
 	// contains the repository metadata in an OCI image.
 	MetadataLayerMediaType = "application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml"
 
-	artifacthubTag = "artifacthub.io"
+	artifacthubTag        = "artifacthub.io"
+	maxContainerImageTags = 10
 )
 
 var (
@@ -77,6 +78,7 @@ var (
 
 	// validRepositoryKinds contains the repository kinds supported.
 	validRepositoryKinds = []hub.RepositoryKind{
+		hub.Container,
 		hub.CoreDNS,
 		hub.Falco,
 		hub.Helm,
@@ -178,6 +180,9 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	if err := m.validateCredentials(r); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 	}
+	if err := validateData(r); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+	}
 
 	// Authorize action if the repository will be added to an organization
 	if orgName != "" {
@@ -258,7 +263,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	// Some extra validation
 	u, _ := url.Parse(r.URL)
 	if r.Kind == hub.OLM && SchemeIsOCI(u) {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "ownership claim not available for olm oci repos")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "ownership claim not available for this repo kind")
 	}
 
 	// Get repository metadata
@@ -424,6 +429,8 @@ func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string 
 	var mdFile string
 	u, _ := url.Parse(r.URL)
 	switch r.Kind {
+	case hub.Container:
+		mdFile = r.URL
 	case hub.Helm:
 		switch u.Scheme {
 		case "http", "https":
@@ -520,7 +527,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 			}
 		case SchemeIsOCI(u):
 			// Digest is obtained by hashing the list of versions available
-			versions, err := m.tg.Tags(ctx, r)
+			versions, err := m.tg.Tags(ctx, r, true)
 			if err != nil {
 				return digest, err
 			}
@@ -715,6 +722,9 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	if err := m.validateCredentials(r); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 	}
+	if err := validateData(r); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+	}
 
 	// Authorize action if the repository is owned by an organization
 	rBefore, err := m.GetByName(ctx, r.Name, false)
@@ -762,6 +772,10 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 		return errors.New("urls with credentials not allowed")
 	}
 	switch r.Kind {
+	case hub.Container:
+		if !SchemeIsOCI(u) {
+			return errors.New("invalid url format")
+		}
 	case hub.Helm:
 		if SchemeIsHTTP(u) {
 			if _, _, err := m.il.LoadIndex(r); err != nil {
@@ -794,6 +808,25 @@ func (m *Manager) validateCredentials(r *hub.Repository) error {
 		return errors.New("private repositories not allowed")
 	}
 	return nil
+}
+
+// validateData checks the kind specific data provided.
+func validateData(r *hub.Repository) error {
+	switch r.Kind {
+	case hub.Container:
+		if r.Data != nil {
+			var data *hub.ContainerImageData
+			if err := json.Unmarshal(r.Data, &data); err != nil {
+				return fmt.Errorf("invalid container image data: %w", err)
+			}
+			if len(data.Tags) > maxContainerImageTags {
+				return fmt.Errorf("too many tags (max allowed: %d)", maxContainerImageTags)
+			}
+		}
+		return nil
+	default:
+		return nil
+	}
 }
 
 // validateSearchInput validates the search input provided, returning an error

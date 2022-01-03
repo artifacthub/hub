@@ -4,6 +4,7 @@ import Platforms from './Platforms';
 
 const defaultProps = {
   platforms: ['darwin', 'linux', 'windows'],
+  title: 'Supported platforms',
 };
 
 describe('Platforms', () => {
@@ -26,14 +27,14 @@ describe('Platforms', () => {
     });
 
     it('renders only uniq platfoms', () => {
-      render(<Platforms platforms={[...defaultProps.platforms, 'darwin']} />);
+      render(<Platforms platforms={[...defaultProps.platforms, 'darwin']} title="Platforms" />);
 
       const platforms = screen.getAllByTestId('platformBadge');
       expect(platforms).toHaveLength(3);
     });
 
     it('does not render component if platforms is undefined', () => {
-      const { container } = render(<Platforms />);
+      const { container } = render(<Platforms title="Platforms" />);
       expect(container).toBeEmptyDOMElement();
     });
   });

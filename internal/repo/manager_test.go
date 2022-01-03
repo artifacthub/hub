@@ -156,6 +156,16 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
+				"invalid url format",
+				"org1",
+				&hub.Repository{
+					Kind: hub.Container,
+					Name: "repo1",
+					URL:  "https://repo1.url",
+				},
+				nil,
+			},
+			{
 				"the url provided does not point to a valid Helm repository",
 				"org1",
 				&hub.Repository{
@@ -174,6 +184,42 @@ func TestAdd(t *testing.T) {
 					URL:      "https://repo1.com",
 					AuthUser: "user1",
 					AuthPass: "pass1",
+				},
+				nil,
+			},
+			{
+				"invalid container image data",
+				"org1",
+				&hub.Repository{
+					Kind: hub.Container,
+					Name: "repo1",
+					URL:  "oci://registry.io/namespace/repo",
+					Data: json.RawMessage("{["),
+				},
+				nil,
+			},
+			{
+				"too many tags",
+				"org1",
+				&hub.Repository{
+					Kind: hub.Container,
+					Name: "repo1",
+					URL:  "oci://registry.io/namespace/repo",
+					Data: json.RawMessage(`{
+						"tags": [
+							{"name": "tag1"},
+							{"name": "tag2"},
+							{"name": "tag3"},
+							{"name": "tag4"},
+							{"name": "tag5"},
+							{"name": "tag6"},
+							{"name": "tag7"},
+							{"name": "tag8"},
+							{"name": "tag9"},
+							{"name": "tag10"},
+							{"name": "tag11"}
+						]
+					}`),
 				},
 				nil,
 			},
@@ -1193,7 +1239,7 @@ func TestGetRemoteDigest(t *testing.T) {
 	t.Run("helm-oci: error getting tags", func(t *testing.T) {
 		t.Parallel()
 		tg := &oci.TagsGetterMock{}
-		tg.On("Tags", ctx, helmOCI).Return(nil, tests.ErrFake)
+		tg.On("Tags", ctx, helmOCI, true).Return(nil, tests.ErrFake)
 		m := NewManager(cfg, nil, nil, nil, WithOCITagsGetter(tg))
 
 		digest, err := m.GetRemoteDigest(ctx, helmOCI)
@@ -1205,7 +1251,7 @@ func TestGetRemoteDigest(t *testing.T) {
 	t.Run("helm-oci: success", func(t *testing.T) {
 		t.Parallel()
 		tg := &oci.TagsGetterMock{}
-		tg.On("Tags", ctx, helmOCI).Return([]string{"2.0.0", "1.0.0"}, nil)
+		tg.On("Tags", ctx, helmOCI, true).Return([]string{"2.0.0", "1.0.0"}, nil)
 		m := NewManager(cfg, nil, nil, nil, WithOCITagsGetter(tg))
 
 		digest, err := m.GetRemoteDigest(ctx, helmOCI)
@@ -1682,6 +1728,15 @@ func TestUpdate(t *testing.T) {
 				nil,
 			},
 			{
+				"invalid url format",
+				&hub.Repository{
+					Kind: hub.Container,
+					Name: "repo1",
+					URL:  "https://repo1.url",
+				},
+				nil,
+			},
+			{
 				"the url provided does not point to a valid Helm repository",
 				&hub.Repository{
 					Name: "repo1",
@@ -1698,6 +1753,40 @@ func TestUpdate(t *testing.T) {
 					URL:      "https://repo1.com",
 					AuthUser: "user1",
 					AuthPass: "pass1",
+				},
+				nil,
+			},
+			{
+				"invalid container image data",
+				&hub.Repository{
+					Kind: hub.Container,
+					Name: "repo1",
+					URL:  "oci://registry.io/namespace/repo",
+					Data: json.RawMessage("{["),
+				},
+				nil,
+			},
+			{
+				"too many tags",
+				&hub.Repository{
+					Kind: hub.Container,
+					Name: "repo1",
+					URL:  "oci://registry.io/namespace/repo",
+					Data: json.RawMessage(`{
+						"tags": [
+							{"name": "tag1"},
+							{"name": "tag2"},
+							{"name": "tag3"},
+							{"name": "tag4"},
+							{"name": "tag5"},
+							{"name": "tag6"},
+							{"name": "tag7"},
+							{"name": "tag8"},
+							{"name": "tag9"},
+							{"name": "tag10"},
+							{"name": "tag11"}
+						]
+					}`),
 				},
 				nil,
 			},

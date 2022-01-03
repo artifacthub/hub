@@ -98,7 +98,7 @@ describe('Repository Modal - repositories section', () => {
       expect(screen.getByRole('switch', { name: 'Disabled' })).toBeInTheDocument();
     });
 
-    it('renders private not Helm charts repo', () => {
+    it('renders private not Helm charts or Container image repo', () => {
       Object.defineProperty(document, 'querySelector', {
         value: () => ({
           getAttribute: () => 'true',

@@ -235,19 +235,21 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	if pkg.Version == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
 	}
-	sv, err := semver.NewVersion(pkg.Version)
-	if err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semver expected)")
+	if pkg.Repository == nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository not provided")
 	}
-	pkg.Version = sv.String()
+	if pkg.Repository.Kind != hub.Container {
+		sv, err := semver.NewVersion(pkg.Version)
+		if err != nil {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semver expected)")
+		}
+		pkg.Version = sv.String()
+	}
 	if pkg.ContentURL != "" {
 		u, err := url.Parse(pkg.ContentURL)
 		if err != nil || u.Scheme == "" || u.Host == "" {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid content url")
 		}
-	}
-	if pkg.Repository == nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository not provided")
 	}
 	if pkg.Repository.RepositoryID == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository id not provided")
@@ -380,8 +382,10 @@ func (m *Manager) Unregister(ctx context.Context, pkg *hub.Package) error {
 	if pkg.Version == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
 	}
-	if _, err := semver.StrictNewVersion(pkg.Version); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semantic version expected)")
+	if pkg.Repository.Kind != hub.Container {
+		if _, err := semver.StrictNewVersion(pkg.Version); err != nil {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semantic version expected)")
+		}
 	}
 
 	// Unregister package from database
