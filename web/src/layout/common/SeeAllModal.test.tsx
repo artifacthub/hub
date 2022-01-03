@@ -24,6 +24,8 @@ describe('SeeAllModal', () => {
   it('opens modal with all items', async () => {
     render(<SeeAllModal items={getItems(12)} {...defaultProps} />);
 
+    expect(screen.getByText('(12)')).toBeInTheDocument();
+
     const btn = screen.getByRole('button', { name: 'See all entries' });
     expect(btn).toHaveTextContent('See all');
     expect(screen.getAllByTestId('item')).toHaveLength(3 + 5);

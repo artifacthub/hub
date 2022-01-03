@@ -57,16 +57,20 @@ const SeeAllModal = (props: Props) => {
             <small className="text-muted fst-italic">Displaying only the first 5 entries</small>
           </div>
 
-          <button
-            className={`btn btn-link ps-0 d-none d-md-block position-relative text-primary ${styles.btn}`}
-            onClick={() => setOpenStatus(true)}
-            aria-label="See all entries"
-          >
-            <div className="d-flex flex-row align-items-center">
-              <HiPlusCircle className="me-1" />
-              <span>See all</span>
-            </div>
-          </button>
+          <div className="d-flex flex-row align-items-baseline">
+            <button
+              className={`btn btn-link ps-0 pe-1 d-none d-md-block position-relative text-primary ${styles.btn}`}
+              onClick={() => setOpenStatus(true)}
+              aria-label="See all entries"
+            >
+              <div className="d-flex flex-row align-items-center">
+                <HiPlusCircle className="me-1" />
+                <span>See all</span>
+              </div>
+            </button>
+
+            <div className={`text-muted position-relative ${styles.summary}`}>({props.items.length})</div>
+          </div>
 
           <Modal
             modalDialogClassName={styles.modalDialog}
