@@ -167,6 +167,8 @@ tracker:
   repositoriesNames: []
   repositoriesKinds: []
   bypassDigestCheck: false
+images:
+  store: pg  
 ```
 
 Once the configuration file is ready, it's time to launch the `tracker` for the first time:
