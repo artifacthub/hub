@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
@@ -24,7 +25,7 @@ const (
 	getPkgChangelogDBQ              = `select get_package_changelog($1::uuid)`
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
 	getPkgSummaryDBQ                = `select get_package_summary($1::jsonb)`
-	getPkgViewsDBQ                  = `select get_package_views($1::uuid)`
+	getPkgViewsDBQ                  = `select get_package_views($1::uuid, $2::date, $3::date)`
 	getPkgsStarredByUserDBQ         = `select * from get_packages_starred_by_user($1::uuid, $2::int, $3::int)`
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
 	getProductionUsageDBQ           = `select get_production_usage($1::uuid, $2::text, $3::text)`
@@ -220,7 +221,9 @@ func (m *Manager) GetViewsJSON(ctx context.Context, pkgID string) ([]byte, error
 	}
 
 	// Get package views from database
-	return util.DBQueryJSON(ctx, m.db, getPkgViewsDBQ, pkgID)
+	start := time.Now().Format("2006-01-02")
+	end := time.Now().AddDate(0, -1, 0).Format("2006-01-02")
+	return util.DBQueryJSON(ctx, m.db, getPkgViewsDBQ, pkgID, start, end)
 }
 
 // Register registers the package provided in the database.

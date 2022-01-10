@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"testing"
+	"time"
 
 	trivyreport "github.com/aquasecurity/trivy/pkg/report"
 	"github.com/artifacthub/hub/internal/hub"
@@ -889,6 +890,8 @@ func TestGetValuesSchemaJSON(t *testing.T) {
 func TestGetViewsJSON(t *testing.T) {
 	ctx := context.Background()
 	pkgID := "00000000-0000-0000-0000-000000000001"
+	start := time.Now().Format("2006-01-02")
+	end := time.Now().AddDate(0, -1, 0).Format("2006-01-02")
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
@@ -913,7 +916,7 @@ func TestGetViewsJSON(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgViewsDBQ, pkgID).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getPkgViewsDBQ, pkgID, start, end).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		_, err := m.GetViewsJSON(ctx, pkgID)
@@ -924,7 +927,7 @@ func TestGetViewsJSON(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPkgViewsDBQ, pkgID).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getPkgViewsDBQ, pkgID, start, end).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetViewsJSON(ctx, pkgID)

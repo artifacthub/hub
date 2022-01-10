@@ -64,7 +64,7 @@ insert into package_views values (:'package2ID', '1.0.0', '2021-10-08', 10);
 
 -- Run some tests
 select is(
-    get_package_views('00000000-0000-0000-0000-000000000001')::jsonb,
+    get_package_views('00000000-0000-0000-0000-000000000001', '2021-12-01', '2021-12-31')::jsonb,
     '{
         "1.0.0": {
             "2021-12-08": 10
@@ -77,12 +77,12 @@ select is(
     'Package1 views should be returned as a json object'
 );
 select is(
-    get_package_views('00000000-0000-0000-0000-000000000002')::jsonb,
+    get_package_views('00000000-0000-0000-0000-000000000002', '2021-12-01', '2021-12-31')::jsonb,
     '{}'::jsonb,
     'Package2 has no views during the last month, empty object expected'
 );
 select is(
-    get_package_views('00000000-0000-0000-0000-000000000003')::jsonb,
+    get_package_views('00000000-0000-0000-0000-000000000003', '2021-12-01', '2021-12-31')::jsonb,
     '{}'::jsonb,
     'Package3 does not exist, empty object expected'
 );
