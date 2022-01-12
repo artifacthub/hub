@@ -29,7 +29,7 @@ interface Props {
 }
 
 const SEARCH_DELAY = 3 * 100; // 300ms
-const MIN_CHARACTERS_SEARCH = 3;
+const MIN_CHARACTERS_SEARCH = 2;
 
 const SearchBar = (props: Props) => {
   const history = useHistory();
