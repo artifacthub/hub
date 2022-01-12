@@ -35,7 +35,7 @@ interface Props {
 
 const DEFAULT_LIMIT = 20;
 const SEARCH_DELAY = 3 * 100; // 300ms
-const MIN_CHARACTERS_SEARCH = 3;
+const MIN_CHARACTERS_SEARCH = 2;
 const ITEM_HEIGHT = 41;
 
 const SearchRepositories = (props: Props) => {

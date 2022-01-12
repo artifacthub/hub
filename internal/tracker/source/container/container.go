@@ -239,16 +239,16 @@ func PreparePackage(
 
 	// Links
 	var links []*hub.Link
-	if documentationURLAnnotation != "" {
+	if v, ok := md[documentationURLAnnotation]; ok {
 		links = append(links, &hub.Link{
 			Name: "documentation",
-			URL:  documentationURLAnnotation,
+			URL:  v,
 		})
 	}
-	if sourceURLAnnotation != "" {
+	if v, ok := md[sourceURLAnnotation]; ok {
 		links = append(links, &hub.Link{
 			Name: "source",
-			URL:  sourceURLAnnotation,
+			URL:  v,
 		})
 	}
 	p.Links = links
