@@ -45,25 +45,25 @@ The following annotations/labels are supported at the moment:
 
 (all must be provided as strings)
 
-| key                                                | required | description                                                                                                                           |
-| -------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **io.artifacthub.package.readmeURL**               | **yes**  | url of the readme file (in markdown format) for this package version. Please make sure it points to a raw markdown document, not HTML |
-| **org.opencontainers.image.created**               | **yes**  | date and time on which the image was built (RFC3339)                                                                                  |
-| **org.opencontainers.image.description**           | **yes**  | a short description of the package                                                                                                    |
-| **org.opencontainers.image.documentation**         | no       | url to get documentation on the image                                                                                                 |
-| **org.opencontainers.image.source**                | no       | url to get source code for building the image                                                                                         |
-| **org.opencontainers.image.title**                 | no       | name of the package nicely formatted                                                                                                  |
-| **org.opencontainers.image.url**                   | no       | url to find more information on the image                                                                                             |
-| **org.opencontainers.image.vendor**                | no       | name of the distributing entity, organization or individual                                                                           |
-| **org.opencontainers.image.version**               | no       | version of the packaged software                                                                                                      |
-| **io.artifacthub.package.alternativeLocations**    | no       | alternative locations where this image is hosted. They can be provided as a comma separated list of images urls                       |
-| **io.artifacthub.package.containsSecurityUpdates** | no       | boolean that indicates if this image version contains security updates                                                                |
-| **io.artifacthub.package.deprecated**              | no       | boolean that indicates if this image version is deprecated                                                                            |
-| **io.artifacthub.package.keywords**                | no       | a list of comma separated keywords about this image                                                                                   |
-| **io.artifacthub.package.license**                 | no       | SPDX identifier of the package license                                                                                                |
-| **io.artifacthub.package.logoURL**                 | no       | url of the logo image                                                                                                                 |
-| **io.artifacthub.package.maintainers**             | no       | json string with an array of maintainers. Example: `[{"name":"maintainer","email":"maintainer@email.com"}]`                           |
-| **io.artifacthub.package.prerelease**              | no       | boolean that indicates if this image version is a pre-release                                                                         |
+| key                                                  | required | description                                                                                                                           |
+| ---------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **io.artifacthub.package.readme-url**                | **yes**  | url of the readme file (in markdown format) for this package version. Please make sure it points to a raw markdown document, not HTML |
+| **org.opencontainers.image.created**                 | **yes**  | date and time on which the image was built (RFC3339)                                                                                  |
+| **org.opencontainers.image.description**             | **yes**  | a short description of the package                                                                                                    |
+| **org.opencontainers.image.documentation**           | no       | url to get documentation on the image                                                                                                 |
+| **org.opencontainers.image.source**                  | no       | url to get source code for building the image                                                                                         |
+| **org.opencontainers.image.title**                   | no       | name of the package nicely formatted                                                                                                  |
+| **org.opencontainers.image.url**                     | no       | url to find more information on the image                                                                                             |
+| **org.opencontainers.image.vendor**                  | no       | name of the distributing entity, organization or individual                                                                           |
+| **org.opencontainers.image.version**                 | no       | version of the packaged software                                                                                                      |
+| **io.artifacthub.package.alternative-locations**     | no       | alternative locations where this image is hosted. They can be provided as a comma separated list of images urls                       |
+| **io.artifacthub.package.contains-security-updates** | no       | boolean that indicates if this image version contains security updates                                                                |
+| **io.artifacthub.package.deprecated**                | no       | boolean that indicates if this image version is deprecated                                                                            |
+| **io.artifacthub.package.keywords**                  | no       | a list of comma separated keywords about this image                                                                                   |
+| **io.artifacthub.package.license**                   | no       | SPDX identifier of the package license                                                                                                |
+| **io.artifacthub.package.logo-url**                  | no       | url of the logo image                                                                                                                 |
+| **io.artifacthub.package.maintainers**               | no       | json string with an array of maintainers. Example: `[{"name":"maintainer","email":"maintainer@email.com"}]`                           |
+| **io.artifacthub.package.prerelease**                | no       | boolean that indicates if this image version is a pre-release                                                                         |
 
 You can add annotations and labels to your images at build time (by using `podman`, `buildah` or `docker`), or later at any time by mutating the image with tools like [crane](https://github.com/google/go-containerregistry/tree/main/cmd/crane):
 
@@ -75,12 +75,12 @@ crane mutate \
     --label org.opencontainers.image.documentation='https://artifacthub.io/docs/topics/cli' \
     --label org.opencontainers.image.source='https://github.com/artifacthub/hub/tree/0c0e789ab6f4e74dfa59a4e7c1ece4788881e279/cmd/ah' \
     --label org.opencontainers.image.vendor='Artifact Hub' \
-    --label io.artifacthub.package.readmeURL='https://raw.githubusercontent.com/artifacthub/hub/0c0e789ab6f4e74dfa59a4e7c1ece4788881e279/docs/cli.md' \
+    --label io.artifacthub.package.readme-url='https://raw.githubusercontent.com/artifacthub/hub/0c0e789ab6f4e74dfa59a4e7c1ece4788881e279/docs/cli.md' \
     --label io.artifacthub.package.maintainers='[{"name":"Artifact Hub maintainers","email":"cncf-artifacthub-maintainers@lists.cncf.io"}]' \
-    --label io.artifacthub.package.logoURL='https://raw.githubusercontent.com/artifacthub/hub/master/docs/logo/logo.svg' \
+    --label io.artifacthub.package.logo-url='https://raw.githubusercontent.com/artifacthub/hub/master/docs/logo/logo.svg' \
     --label io.artifacthub.package.keywords='artifact hub,cli,lint' \
     --label io.artifacthub.package.license='Apache-2.0' \
-    --label io.artifacthub.package.alternativeLocations='public.ecr.aws/artifacthub/ah:v1.5.0' \
+    --label io.artifacthub.package.alternative-locations='public.ecr.aws/artifacthub/ah:v1.5.0' \
 artifacthub/ah:latest
 ```
 
