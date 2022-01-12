@@ -9,7 +9,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
     novalidate=""
   >
     <div
-      class=" mb-4 position-relative undefined"
+      class="mb-4 position-relative undefined"
     >
       <label
         class="form-label fw-bold label"
@@ -44,7 +44,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class=" mb-4 position-relative undefined"
+      class="mb-4 position-relative undefined"
     >
       <label
         class="form-label fw-bold label"
@@ -79,7 +79,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class=" mb-4 position-relative undefined"
+      class="mb-4 position-relative undefined"
     >
       <label
         class="form-label fw-bold label"
@@ -106,7 +106,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       />
     </div>
     <div
-      class=" mb-4 position-relative undefined"
+      class="mb-4 position-relative undefined"
     >
       <label
         class="form-label fw-bold label"
@@ -133,7 +133,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       />
     </div>
     <div
-      class=" mb-4 position-relative undefined"
+      class="mb-4 position-relative undefined"
     >
       <label
         class="form-label fw-bold label"
@@ -163,7 +163,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class=" mb-4 position-relative undefined"
+      class="mb-4 position-relative undefined"
     >
       <label
         class="form-label fw-bold label"

@@ -152,7 +152,7 @@ func TestTrackerSource(t *testing.T) {
 			Svc: sw.Svc,
 		}
 		tg := &oci.TagsGetterMock{}
-		tg.On("Tags", i.Svc.Ctx, i.Repository).Return(nil, tests.ErrFake)
+		tg.On("Tags", i.Svc.Ctx, i.Repository, true).Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
 		packages, err := NewTrackerSource(i, withOCITagsGetter(tg)).GetPackagesAvailable()
@@ -333,7 +333,7 @@ func TestTrackerSource(t *testing.T) {
 			Svc: sw.Svc,
 		}
 		tg := &oci.TagsGetterMock{}
-		tg.On("Tags", i.Svc.Ctx, i.Repository).Return([]string{"1.0.0"}, nil)
+		tg.On("Tags", i.Svc.Ctx, i.Repository, true).Return([]string{"1.0.0"}, nil)
 		ref := strings.TrimPrefix(i.Repository.URL, hub.RepositoryOCIPrefix) + ":1.0.0"
 		sw.Op.On("PullLayer", mock.Anything, ref, ChartContentLayerMediaType, "", "").
 			Return(ocispec.Descriptor{}, nil, oci.ErrArtifactNotFound)
@@ -475,7 +475,7 @@ func TestTrackerSource(t *testing.T) {
 		}
 		ref := strings.TrimPrefix(i.Repository.URL, hub.RepositoryOCIPrefix) + ":1.0.0"
 		tg := &oci.TagsGetterMock{}
-		tg.On("Tags", i.Svc.Ctx, i.Repository).Return([]string{"1.0.0"}, nil)
+		tg.On("Tags", i.Svc.Ctx, i.Repository, true).Return([]string{"1.0.0"}, nil)
 		sc := &oci.SignatureCheckerMock{}
 		sc.On("HasCosignSignature", i.Svc.Ctx, ref, "", "").Return(true, nil)
 		data, _ := os.ReadFile("testdata/pkg1-1.0.0.tgz")
@@ -513,7 +513,7 @@ func TestExtractContainersImages(t *testing.T) {
 		chrt, err := loader.LoadArchive(f)
 		require.NoError(t, err)
 
-		// Extract container images and check expectations
+		// Extract containers images and check expectations
 		containersImages, err := extractContainersImages(chrt)
 		require.NoError(t, err)
 		assert.Equal(t, []string{

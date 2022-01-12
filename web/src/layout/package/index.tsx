@@ -272,7 +272,10 @@ const PackageView = (props: Props) => {
 
   let sortedVersions: Version[] = [];
   if (detail && detail.availableVersions) {
-    sortedVersions = sortPackageVersions(detail.availableVersions);
+    sortedVersions =
+      detail.repository.kind === RepositoryKind.Container
+        ? detail.availableVersions
+        : sortPackageVersions(detail.availableVersions);
   }
 
   // Section for recommended packages and in production (orgs)
@@ -1073,6 +1076,7 @@ const PackageView = (props: Props) => {
                         <PackagesViewsStats
                           stats={viewsStats}
                           version={props.version}
+                          repoKind={detail.repository.kind}
                           title={
                             <AnchorHeader
                               level={2}

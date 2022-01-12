@@ -2,7 +2,7 @@
 {{ define "content" }}
 <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
 <!-- START CENTERED WHITE CONTAINER -->
-  <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Package.Name }} version {{ .Package.Version }} released</span>
+  <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">{{ .Package.Name }} {{ if eq .Package.Repository.Kind "container" }}tag{{ else }}version{{ end }} {{ .Package.Version }} released</span>
   <table class="main line" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; border-radius: 3px;">
     <!-- START MAIN CONTENT AREA -->
     <tr>
@@ -13,7 +13,7 @@
               <img style="margin: 30px;" height="40px" src="{{ .BaseURL }}{{ if .Package.LogoImageID }}/image/{{ .Package.LogoImageID }}@3x{{ else }}/static/media/placeholder_pkg_{{ .Package.Repository.Kind }}.png{{ end }}">
               <h2 class="title" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;"><img style="margin-right: 5px; margin-bottom: -2px;" height="18px" src="{{ .BaseURL }}/static/media/{{ .Package.Repository.Kind }}_icon.png">{{ .Package.Name }}</h2>
               <h4 class="subtitle" style="font-family: sans-serif; margin: 0; Margin-bottom: 15px;">{{ .Package.repository.publisher }} </h4>
-              <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Version <b>{{ .Package.Version }}</b> has been released</p>
+              <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">{{ if eq .Package.Repository.Kind "container" }}Tag{{ else }}Version{{ end }} <b>{{ .Package.Version }}</b> has been released</p>
             </td>
           </tr>
           <tr>
@@ -23,7 +23,7 @@
                   <tbody>
                     <tr>
                       <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: {{ if .Package.ContainsSecurityUpdates }} 15px; {{ else }} 30px;{{ end }}">
-                        <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version is a <b>pre-release</b> and it is not ready for production use.</div>
+                        <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package {{ if eq .Package.Repository.Kind "container" }}tag{{ else }}version{{ end }} is a <b>pre-release</b> and it is not ready for production use.</div>
                       </td>
                     </tr>
                   </tbody>
@@ -38,7 +38,7 @@
                   <tbody>
                     <tr>
                       <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: 30px;">
-                        <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version contains security updates.</div>
+                        <div class="warning" style="border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package {{ if eq .Package.Repository.Kind "container" }}tag{{ else }}version{{ end }} contains security updates.</div>
                       </td>
                     </tr>
                   </tbody>

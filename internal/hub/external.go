@@ -63,5 +63,5 @@ type OCISignatureChecker interface {
 // OCITagsGetter is the interface that wraps the Tags method, used to get all
 // the tags available for a given repository in a OCI registry.
 type OCITagsGetter interface {
-	Tags(ctx context.Context, r *Repository) ([]string, error)
+	Tags(ctx context.Context, r *Repository, onlySemver bool) ([]string, error)
 }

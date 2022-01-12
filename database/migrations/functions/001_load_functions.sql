@@ -47,6 +47,7 @@
 {{ template "packages/get_production_usage.sql" }}
 {{ template "packages/get_random_packages.sql" }}
 {{ template "packages/get_snapshots_to_scan.sql" }}
+{{ template "packages/is_latest.sql" }}
 {{ template "packages/register_package.sql" }}
 {{ template "packages/search_packages.sql" }}
 {{ template "packages/search_packages_monocular.sql" }}

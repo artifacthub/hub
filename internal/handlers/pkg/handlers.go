@@ -492,11 +492,13 @@ func (h *Handlers) RssFeed(w http.ResponseWriter, r *http.Request) {
 			Link:        &feeds.Link{Href: BuildURL(baseURL, p, s.Version)},
 		})
 	}
-	sort.Slice(feed.Items, func(i, j int) bool {
-		vi, _ := semver.NewVersion(feed.Items[i].Title)
-		vj, _ := semver.NewVersion(feed.Items[j].Title)
-		return vj.LessThan(vi)
-	})
+	if p.Repository.Kind != hub.Container {
+		sort.Slice(feed.Items, func(i, j int) bool {
+			vi, _ := semver.NewVersion(feed.Items[i].Title)
+			vj, _ := semver.NewVersion(feed.Items[j].Title)
+			return vj.LessThan(vi)
+		})
+	}
 
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge))
 	_ = feed.WriteRss(w)

@@ -64,6 +64,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.TektonPipeline,
     name: 'Tekton pipeline',
   },
+  {
+    kind: RepositoryKind.Container,
+    name: 'Container image',
+  },
 ];
 
 const Wrapper = styled('span')`

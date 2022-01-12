@@ -1,14 +1,16 @@
 import classnames from 'classnames';
+import { compact, isEmpty, uniq } from 'lodash';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import { nanoid } from 'nanoid';
 import { ChangeEvent, KeyboardEvent, useContext, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
+import { ContainerTag, ErrorKind, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import { OCI_PREFIX, RepoKindDef, REPOSITORY_KINDS } from '../../../utils/data';
 import getMetaTag from '../../../utils/getMetaTag';
@@ -16,6 +18,7 @@ import ExternalLink from '../../common/ExternalLink';
 import InputField from '../../common/InputField';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
+import TagsList from './TagsList';
 
 interface FormValidation {
   isValid: boolean;
@@ -53,6 +56,24 @@ const RepositoryModal = (props: Props) => {
   const [resetFields, setResetFields] = useState<boolean>(false);
   const [authUser, setAuthUser] = useState<string | null>(props.repository ? props.repository.authUser || null : null);
   const [authPass, setAuthPass] = useState<string | null>(props.repository ? props.repository.authPass || null : null);
+
+  const prepareTags = (): ContainerTag[] => {
+    if (props.repository) {
+      if (props.repository.data && props.repository.data.tags && !isEmpty(props.repository.data.tags)) {
+        return props.repository.data.tags.map((tag: ContainerTag) => {
+          return { ...tag, id: nanoid() };
+        });
+      } else {
+        return [];
+      }
+    } else {
+      // By default, we add mutable tag latest for new container images
+      return [{ name: 'latest', mutable: true, id: nanoid() }];
+    }
+  };
+
+  const [containerTags, setContainerTags] = useState<ContainerTag[]>(prepareTags());
+  const [repeatedTagNames, setRepeatedTagNames] = useState<boolean>(false);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsValidInput(e.target.value === props.repository!.name);
@@ -146,14 +167,40 @@ const RepositoryModal = (props: Props) => {
               : authUser,
           authPass: !isUndefined(props.repository) && props.repository.private && !resetFields ? '=' : authPass,
         };
+
+        if (selectedKind === RepositoryKind.Container) {
+          const cleanTags = containerTags.filter((tag: ContainerTag) => tag.name !== '');
+          const readyTags = cleanTags.map((tag: ContainerTag) => ({ name: tag.name, mutable: tag.mutable }));
+          repository.data = {
+            tags: readyTags,
+          };
+        }
       }
       setIsValidated(true);
       return { isValid, repository };
     });
   };
 
+  const checkContainerTags = (): boolean => {
+    if (selectedKind !== RepositoryKind.Container) return true;
+
+    const tagNames = compact(containerTags.map((tag: ContainerTag) => tag.name));
+    const uniqTagNames = uniq(tagNames);
+    if (tagNames.length === uniqTagNames.length) {
+      setRepeatedTagNames(false);
+      return true;
+    } else {
+      setRepeatedTagNames(true);
+      return false;
+    }
+  };
+
   const validateAllFields = async (): Promise<boolean> => {
-    return Promise.all([nameInput.current!.checkIsValid(), urlInput.current!.checkIsValid()]).then((res: boolean[]) => {
+    return Promise.all([
+      nameInput.current!.checkIsValid(),
+      urlInput.current!.checkIsValid(),
+      checkContainerTags(),
+    ]).then((res: boolean[]) => {
       return every(res, (isValid: boolean) => isValid);
     });
   };
@@ -308,6 +355,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Container:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories#container-images-repositories"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Container images
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -315,24 +373,84 @@ const RepositoryModal = (props: Props) => {
     return (
       <div className="text-muted text-break mt-1 mb-4">
         <small>
-          {selectedKind !== RepositoryKind.Helm && (
-            <p
-              className={classnames('mb-2 opacity-100', {
-                [styles.animatedWarning]: urlContainsTreeTxt,
-              })}
-            >
-              Please DO NOT include the git hosting platform specific parts, like 
-              <span className="fw-bold">tree/branch</span>, just the path to your packages like it would show in the
-              filesystem.
-            </p>
-          )}
-          <p className="mb-0">
-            For more information about the url format and the repository structure, please see the {link} section in the{' '}
-            <ExternalLink href="/docs/repositories" className="text-primary fw-bold" label="Open documentation">
-              repositories guide
-            </ExternalLink>
-            .
-          </p>
+          {(() => {
+            switch (selectedKind) {
+              case RepositoryKind.Falco:
+              case RepositoryKind.OLM:
+              case RepositoryKind.OPA:
+              case RepositoryKind.TBAction:
+              case RepositoryKind.Krew:
+              case RepositoryKind.HelmPlugin:
+              case RepositoryKind.TektonTask:
+              case RepositoryKind.KedaScaler:
+              case RepositoryKind.CoreDNS:
+              case RepositoryKind.Keptn:
+              case RepositoryKind.TektonPipeline:
+                return (
+                  <>
+                    <p
+                      className={classnames('mb-2 opacity-100', {
+                        [styles.animatedWarning]: urlContainsTreeTxt,
+                      })}
+                    >
+                      Please DO NOT include the git hosting platform specific parts, like
+                      <span className="fw-bold">tree/branch</span>, just the path to your packages like it would show in
+                      the filesystem.
+                    </p>
+                    <p className="mb-0">
+                      For more information about the url format and the repository structure, please see the {link}{' '}
+                      section in the{' '}
+                      <ExternalLink
+                        href="/docs/repositories"
+                        className="text-primary fw-bold"
+                        label="Open documentation"
+                      >
+                        repositories guide
+                      </ExternalLink>
+                      .
+                    </p>
+                  </>
+                );
+
+              case RepositoryKind.Container:
+                return (
+                  <>
+                    <p className="mb-3">
+                      The url <span className="fw-bold">must</span> follow the following format:
+                    </p>
+                    <p className="mb-3 ms-3">
+                      <code className={`me-2 ${styles.code}`}>oci://registry/[namespace]/repository</code> (example:{' '}
+                      <span className="fst-italic">oci://index.docker.io/artifacthub/ah</span>)
+                    </p>
+                    <p>
+                      The registry host is required, please use <code className={styles.code}>index.docker.io</code>{' '}
+                      when referring to repositories hosted in the Docker Hub. The url should not contain any tag. For
+                      more information please see the {link} section in the{' '}
+                      <ExternalLink
+                        href="/docs/repositories"
+                        className="text-primary fw-bold"
+                        label="Open documentation"
+                      >
+                        repositories guide
+                      </ExternalLink>
+                      .
+                    </p>
+                  </>
+                );
+
+              default:
+                return (
+                  <p className="mb-0">
+                    For more information about the url format and the repository structure, please see the {link}{' '}
+                    section in the{' '}
+                    <ExternalLink href="/docs/repositories" className="text-primary fw-bold" label="Open documentation">
+                      repositories guide
+                    </ExternalLink>
+                    .
+                  </p>
+                );
+            }
+          })()}
         </small>
       </div>
     );
@@ -344,6 +462,8 @@ const RepositoryModal = (props: Props) => {
         return undefined;
       case RepositoryKind.OLM:
         return `(^(https://([A-Za-z0-9_.-]+)/|${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$`;
+      case RepositoryKind.Container:
+        return `^(${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$`;
       default:
         return '^(https://([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$';
     }
@@ -354,6 +474,7 @@ const RepositoryModal = (props: Props) => {
       {(() => {
         switch (selectedKind) {
           case RepositoryKind.Helm:
+          case RepositoryKind.Container:
             return (
               <div className="row">
                 <InputField
@@ -533,7 +654,7 @@ const RepositoryModal = (props: Props) => {
             autoComplete="on"
             noValidate
           >
-            <div className=" w-75 mb-4">
+            <div className="w-75 mb-4">
               <label className={`form-label fw-bold ${styles.label}`} htmlFor="repoKind">
                 Kind
               </label>
@@ -620,12 +741,22 @@ const RepositoryModal = (props: Props) => {
                 resourceKind: ResourceKind.repositoryURL,
                 excluded: props.repository ? [props.repository.url] : [],
               }}
+              placeholder={selectedKind === RepositoryKind.Container ? OCI_PREFIX : ''}
               pattern={getURLPattern()}
               onChange={onUrlInputChange}
               required
             />
 
             {getAdditionalInfo()}
+
+            {selectedKind === RepositoryKind.Container && (
+              <TagsList
+                tags={containerTags}
+                setContainerTags={setContainerTags}
+                repeatedTagNames={repeatedTagNames}
+                setRepeatedTagNames={setRepeatedTagNames}
+              />
+            )}
 
             {[
               RepositoryKind.Falco,
@@ -731,6 +862,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.CoreDNS,
               RepositoryKind.Keptn,
               RepositoryKind.TektonPipeline,
+              RepositoryKind.Container,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

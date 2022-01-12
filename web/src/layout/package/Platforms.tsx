@@ -6,6 +6,7 @@ import SmallTitle from '../common/SmallTitle';
 import styles from './Platforms.module.css';
 
 interface Props {
+  title: string;
   platforms?: string[] | null;
 }
 
@@ -29,7 +30,7 @@ const Platforms = (props: Props) => {
 
   return (
     <>
-      <SmallTitle text="Supported platforms" />
+      <SmallTitle text={props.title} />
       <div className="mb-3 d-flex flex-row flex-wrap">
         {platforms.map((platform: string) => (
           <div

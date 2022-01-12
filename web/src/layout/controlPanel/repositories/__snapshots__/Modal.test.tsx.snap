@@ -45,7 +45,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                 novalidate=""
               >
                 <div
-                  class=" w-75 mb-4"
+                  class="w-75 mb-4"
                 >
                   <label
                     class="form-label fw-bold label"
@@ -59,6 +59,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     name="repoKind"
                     required=""
                   >
+                    <option
+                      value="12"
+                    >
+                      Container images
+                    </option>
                     <option
                       value="9"
                     >
@@ -122,7 +127,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   </select>
                 </div>
                 <div
-                  class=" mb-4 position-relative undefined"
+                  class="mb-4 position-relative undefined"
                 >
                   <label
                     class="form-label fw-bold label"
@@ -177,7 +182,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class=" mb-4 position-relative undefined"
+                  class="mb-4 position-relative undefined"
                 >
                   <label
                     class="form-label fw-bold label"
@@ -203,7 +208,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   />
                 </div>
                 <div
-                  class=" mb-4 position-relative undefined"
+                  class="mb-4 position-relative undefined"
                 >
                   <label
                     class="form-label fw-bold label"
@@ -225,6 +230,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     data-testid="urlInput"
                     id="url"
                     name="url"
+                    placeholder=""
                     required=""
                     spellcheck="false"
                     type="url"

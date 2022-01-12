@@ -1,10 +1,11 @@
 import { isUndefined } from 'lodash';
 
-import { VulnerabilitySeverity } from '../../../types';
+import { RepositoryKind, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
 import styles from './Summary.module.css';
 
 interface Props {
+  repoKind: RepositoryKind;
   totalVulnerabilities: number;
   summary: {
     [key in VulnerabilitySeverity]?: number;
@@ -23,8 +24,8 @@ const SecuritySummary = (props: Props) => {
   return (
     <div className="mb-5">
       <div className="h5 my-3 pt-2">
-        {getVulnerabilitiesNumber()} vulnerabilities have been detected in the{' '}
-        <span className="fw-bold">default images</span> used by this package.
+        {getVulnerabilitiesNumber()} vulnerabilities have been detected in this package's{' '}
+        <span className="fw-bold">{props.repoKind === RepositoryKind.Container ? 'image' : 'images'}</span>.
       </div>
 
       {props.totalVulnerabilities > 0 && (

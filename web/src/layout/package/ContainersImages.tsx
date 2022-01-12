@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { GoPackage } from 'react-icons/go';
 
-import { ContainerImage } from '../../types';
+import { ContainerImage, RepositoryKind } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import ElementWithTooltip from '../common/ElementWithTooltip';
 import SeeAllModal from '../common/SeeAllModal';
@@ -13,6 +13,7 @@ import styles from './ContainersImages.module.css';
 interface Props {
   containers?: ContainerImage[] | null;
   packageId: string;
+  kind: RepositoryKind;
 }
 
 interface ContainersList {
@@ -32,7 +33,13 @@ const ContainersImages = (props: Props) => {
   );
 
   const getAllContainers = useCallback((): ContainersList | null => {
-    if (isUndefined(props.containers) || isNull(props.containers) || props.containers.length === 0) return null;
+    if (
+      isUndefined(props.containers) ||
+      isNull(props.containers) ||
+      props.containers.length === 0 ||
+      props.kind === RepositoryKind.Container
+    )
+      return null;
 
     let items: JSX.Element[] = [];
     let itemsForModal: JSX.Element[] = [];
@@ -108,7 +115,7 @@ const ContainersImages = (props: Props) => {
         </table>
       ),
     };
-  }, [props.containers]);
+  }, [props.containers, props.kind]);
 
   const [containers, setContainers] = useState<ContainersList | null>(getAllContainers());
 

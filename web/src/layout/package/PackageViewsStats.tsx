@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import semver from 'semver';
 
-import { PackageViewsStats } from '../../types';
+import { PackageViewsStats, RepositoryKind } from '../../types';
 import { getSeriesDataPerPkgVersionViews, sumViewsPerVersions } from '../../utils/viewsStats';
 import Loading from '../common/Loading';
 import styles from './PackageViewsStats.module.css';
@@ -12,6 +12,7 @@ import styles from './PackageViewsStats.module.css';
 interface Props {
   stats?: PackageViewsStats;
   version?: string;
+  repoKind: RepositoryKind;
   title: JSX.Element;
 }
 
@@ -41,7 +42,7 @@ const getMostRecentVersions = (stats: PackageViewsStats): string[] => {
   return sortedVersions.slice(0, MAX_VISIBLE_VERSIONS);
 };
 
-const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series[] => {
+const prepareChartsSeries = (repoKind: RepositoryKind, stats: PackageViewsStats, version?: string): Series[] => {
   if (isEmpty(stats)) return [];
 
   let series: Series[] = [];
@@ -53,7 +54,7 @@ const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series
       return [];
     }
   } else {
-    visibleVersions = getMostRecentVersions(stats);
+    visibleVersions = repoKind === RepositoryKind.Container ? [] : getMostRecentVersions(stats);
   }
 
   visibleVersions.forEach((version: string) => {
@@ -67,7 +68,7 @@ const prepareChartsSeries = (stats: PackageViewsStats, version?: string): Series
 
   if (statsVersions.length > visibleVersions.length && isUndefined(version)) {
     series.push({
-      name: 'Other',
+      name: repoKind === RepositoryKind.Container ? 'All tags' : 'Other',
       data: sumViewsPerVersions(stats, visibleVersions),
     });
   }
@@ -167,7 +168,7 @@ const PackagesViewsStats = (props: Props) => {
 
   useEffect(() => {
     if (!isUndefined(props.stats)) {
-      setSeries(prepareChartsSeries(props.stats, props.version));
+      setSeries(prepareChartsSeries(props.repoKind, props.stats, props.version));
     }
   }, [props.version, props.stats]); /* eslint-disable-line react-hooks/exhaustive-deps */
 

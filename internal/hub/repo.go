@@ -2,6 +2,7 @@ package hub
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 
 	helmrepo "helm.sh/helm/v3/pkg/repo"
@@ -16,6 +17,18 @@ const (
 	// repository is stored in a OCI registry.
 	RepositoryOCIPrefix = "oci://"
 )
+
+// ContainerImageData represents some data specific to repositories of the
+// container image kind.
+type ContainerImageData struct {
+	Tags []ContainerImageTag `json:"tags"`
+}
+
+// ContainerImageTag represents some information about a container image tag.
+type ContainerImageTag struct {
+	Name    string `json:"name"`
+	Mutable bool   `json:"mutable"`
+}
 
 // RepositoryKind represents the kind of a given repository.
 type RepositoryKind int64
@@ -57,6 +70,9 @@ const (
 
 	// TektonPipeline represents a repository with Tekton pipelines.
 	TektonPipeline RepositoryKind = 11
+
+	// Container represents a repository with containers images.
+	Container RepositoryKind = 12
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -86,6 +102,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "tekton-task"
 	case TektonPipeline:
 		return "tekton-pipeline"
+	case Container:
+		return "container"
 	default:
 		return ""
 	}
@@ -119,6 +137,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return TektonTask, nil
 	case "tekton-pipeline":
 		return TektonPipeline, nil
+	case "container":
+		return Container, nil
 	default:
 		return -1, errors.New("invalid kind name")
 	}
@@ -144,27 +164,28 @@ type Owner struct {
 
 // Repository represents a packages repository.
 type Repository struct {
-	RepositoryID            string         `json:"repository_id"`
-	Name                    string         `json:"name"`
-	DisplayName             string         `json:"display_name"`
-	URL                     string         `json:"url"`
-	Branch                  string         `json:"branch"`
-	Private                 bool           `json:"private"`
-	AuthUser                string         `json:"auth_user"`
-	AuthPass                string         `json:"auth_pass"`
-	Digest                  string         `json:"digest"`
-	Kind                    RepositoryKind `json:"kind"`
-	UserID                  string         `json:"user_id"`
-	UserAlias               string         `json:"user_alias"`
-	OrganizationID          string         `json:"organization_id"`
-	OrganizationName        string         `json:"organization_name"`
-	OrganizationDisplayName string         `json:"organization_display_name"`
-	LastScanningErrors      string         `json:"last_scanning_errors"`
-	LastTrackingErrors      string         `json:"last_tracking_errors"`
-	VerifiedPublisher       bool           `json:"verified_publisher"`
-	Official                bool           `json:"official"`
-	Disabled                bool           `json:"disabled"`
-	ScannerDisabled         bool           `json:"scanner_disabled"`
+	RepositoryID            string          `json:"repository_id"`
+	Name                    string          `json:"name"`
+	DisplayName             string          `json:"display_name"`
+	URL                     string          `json:"url"`
+	Branch                  string          `json:"branch"`
+	Private                 bool            `json:"private"`
+	AuthUser                string          `json:"auth_user"`
+	AuthPass                string          `json:"auth_pass"`
+	Digest                  string          `json:"digest"`
+	Kind                    RepositoryKind  `json:"kind"`
+	UserID                  string          `json:"user_id"`
+	UserAlias               string          `json:"user_alias"`
+	OrganizationID          string          `json:"organization_id"`
+	OrganizationName        string          `json:"organization_name"`
+	OrganizationDisplayName string          `json:"organization_display_name"`
+	LastScanningErrors      string          `json:"last_scanning_errors"`
+	LastTrackingErrors      string          `json:"last_tracking_errors"`
+	VerifiedPublisher       bool            `json:"verified_publisher"`
+	Official                bool            `json:"official"`
+	Disabled                bool            `json:"disabled"`
+	ScannerDisabled         bool            `json:"scanner_disabled"`
+	Data                    json.RawMessage `json:"data,omitempty"`
 }
 
 // RepositoryCloner describes the methods a RepositoryCloner implementation

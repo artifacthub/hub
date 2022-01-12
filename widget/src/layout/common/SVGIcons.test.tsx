@@ -83,6 +83,11 @@ describe('SVGIcons', () => {
     expect(screen.getByTitle('keptn'));
   });
 
+  it('renders container icon', () => {
+    render(<SVGIcons name="container" />);
+    expect(screen.getByTitle('container'));
+  });
+
   it('does not render when name is not in the list', () => {
     render(<SVGIcons name="not-listed" />);
     expect(screen.getByTestId('iconWrapper')).toBeEmptyDOMElement();

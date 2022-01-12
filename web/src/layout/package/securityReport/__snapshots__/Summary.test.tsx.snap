@@ -13,13 +13,13 @@ exports[`SecuritySummary creates snapshot 1`] = `
       >
         170
       </span>
-       vulnerabilities have been detected in the 
+       vulnerabilities have been detected in this package's 
       <span
         class="fw-bold"
       >
-        default images
+        images
       </span>
-       used by this package.
+      .
     </div>
     <div
       class="progress mb-4"

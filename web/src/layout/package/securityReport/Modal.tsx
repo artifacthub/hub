@@ -6,7 +6,7 @@ import { HiClipboardList } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
-import { SearchFiltersURL, SecurityReport, SecurityReportSummary } from '../../../types';
+import { RepositoryKind, SearchFiltersURL, SecurityReport, SecurityReportSummary } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import isFuture from '../../../utils/isFuture';
 import Modal from '../../common/Modal';
@@ -17,6 +17,7 @@ import SummaryTable from './SummaryTable';
 import SecurityTable from './Table';
 
 interface Props {
+  repoKind: RepositoryKind;
   summary: SecurityReportSummary;
   totalVulnerabilities: number;
   packageId: string;
@@ -191,7 +192,11 @@ const SecurityModal = (props: Props) => {
               </>
             )}
 
-            <SecuritySummary summary={props.summary} totalVulnerabilities={props.totalVulnerabilities} />
+            <SecuritySummary
+              repoKind={props.repoKind}
+              summary={props.summary}
+              totalVulnerabilities={props.totalVulnerabilities}
+            />
 
             {/* We wait until contentHeight is defined to be sure the scroll goes to the correct position */}
             {!isEmpty(report) && !isUndefined(contentHeight) && (

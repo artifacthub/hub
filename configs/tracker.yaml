@@ -7,6 +7,9 @@ db:
   port: "5432"
   database: hub
   user: postgres
+creds:
+  dockerUsername: ""
+  dockerPassword: ""
 tracker:
   concurrency: 10
   repositoriesNames: []

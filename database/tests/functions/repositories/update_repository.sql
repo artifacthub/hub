@@ -109,17 +109,37 @@ select update_repository(:'user1ID', '
     "auth_user": "user1",
     "auth_pass": "pass1",
     "disabled": true,
-    "scanner_disabled": false
+    "scanner_disabled": false,
+    "data": {"k1": "v1"}
 }
 '::jsonb);
 select results_eq(
     $$
-        select name, display_name, url, branch, auth_user, auth_pass, disabled, digest
+        select
+            name,
+            display_name,
+            url,
+            branch,
+            auth_user,
+            auth_pass,
+            disabled,
+            digest,
+            data
         from repository
         where name = 'repo1'
     $$,
     $$
-        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', 'user1', 'pass1', true, null)
+        values (
+            'repo1',
+            'Repo 1 updated',
+            'https://repo1.com/updated',
+            'main',
+            'user1',
+            'pass1',
+            true,
+            null,
+            '{"k1": "v1"}'::jsonb
+        )
     $$,
     'Repository should have been updated by user who owns it'
 );

@@ -26,6 +26,7 @@ begin
         auth_pass,
         disabled,
         scanner_disabled,
+        data,
         repository_kind_id,
         user_id,
         organization_id
@@ -38,6 +39,7 @@ begin
         nullif(p_repository->>'auth_pass', ''),
         (p_repository->>'disabled')::boolean,
         (p_repository->>'scanner_disabled')::boolean,
+        nullif(p_repository->'data', 'null'),
         (p_repository->>'kind')::int,
         v_owner_user_id,
         v_owner_organization_id

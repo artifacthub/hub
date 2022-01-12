@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { ContainerImage } from '../../types';
+import { ContainerImage, RepositoryKind } from '../../types';
 import ContainersImages from './ContainersImages';
 
 const getMockImages = (fixtureId: string): ContainerImage[] => {
@@ -11,6 +11,7 @@ const getMockImages = (fixtureId: string): ContainerImage[] => {
 const defaultProps = {
   title: 'Containers Images',
   packageId: 'id',
+  kind: RepositoryKind.Helm,
 };
 
 describe('ContainersImages', () => {
@@ -53,6 +54,14 @@ describe('ContainersImages', () => {
 
     it('does not render component when containers are undefined', () => {
       const { container } = render(<ContainersImages {...defaultProps} />);
+      expect(container).toBeEmptyDOMElement();
+    });
+
+    it('does not render component when repository kind is Container', () => {
+      const mockContainers = getMockImages('4');
+      const { container } = render(
+        <ContainersImages {...defaultProps} containers={mockContainers} kind={RepositoryKind.Container} />
+      );
       expect(container).toBeEmptyDOMElement();
     });
   });

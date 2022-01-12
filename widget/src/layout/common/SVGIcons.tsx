@@ -824,6 +824,18 @@ const SVGIcons = (props: Props) => (
             </svg>
           );
 
+        case 'container':
+          return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+              <title>{props.name}</title>
+              <path d="M71.576 38.022V14.45H13.217v91.985h58.36V82.863H36.787V38.022h34.788Z" fill="#808285" />
+              <path
+                d="M83.363 14.45h23.572v23.574H83.363V14.45ZM83.363 49.81h23.572v56.625H83.363V49.809Z"
+                fill="#262262"
+              />
+            </svg>
+          );
+
         default:
           return null;
       }

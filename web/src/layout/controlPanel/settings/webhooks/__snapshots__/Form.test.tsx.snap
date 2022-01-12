@@ -43,7 +43,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="col-md-8"
           >
             <div
-              class=" mb-4 position-relative undefined"
+              class="mb-4 position-relative undefined"
             >
               <label
                 class="form-label fw-bold label"
@@ -85,7 +85,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="col-md-8"
           >
             <div
-              class=" mb-4 position-relative undefined"
+              class="mb-4 position-relative undefined"
             >
               <label
                 class="form-label fw-bold label"
@@ -136,7 +136,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="col-md-8"
             >
               <div
-                class=" mb-4 position-relative undefined"
+                class="mb-4 position-relative undefined"
               >
                 <input
                   class="form-control"
@@ -182,7 +182,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="col-md-8"
             >
               <div
-                class=" mb-4 position-relative undefined"
+                class="mb-4 position-relative undefined"
               >
                 <input
                   class="form-control"
@@ -651,7 +651,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="col-md-8"
           >
             <div
-              class=" mb-4 position-relative undefined"
+              class="mb-4 position-relative undefined"
             >
               <label
                 class="form-label fw-bold label"

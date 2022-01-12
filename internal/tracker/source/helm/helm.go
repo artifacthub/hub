@@ -176,7 +176,7 @@ func (s *TrackerSource) getCharts() (map[string][]*helmrepo.ChartVersion, error)
 		}
 	case "oci":
 		// Get versions (tags) available in the repository
-		versions, err := s.tg.Tags(s.i.Svc.Ctx, s.i.Repository)
+		versions, err := s.tg.Tags(s.i.Svc.Ctx, s.i.Repository, true)
 		if err != nil {
 			return nil, fmt.Errorf("error getting repository available versions: %w", err)
 		}

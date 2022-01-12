@@ -1,10 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
+import { RepositoryKind } from '../../types';
 import PackageViewsStats from './PackageViewsStats';
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
 
 const defaultProps = {
   title: <span>Views over the last 30 days</span>,
+  repoKind: RepositoryKind.Helm,
 };
 const stats = {
   '19.0.1': {

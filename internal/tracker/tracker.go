@@ -86,7 +86,7 @@ func (t *Tracker) Run() error {
 
 		// Check if this package version is already registered
 		digest, ok := t.packagesRegistered[pkg.BuildKey(p)]
-		if ok && p.Digest == digest && !bypassDigestCheck {
+		if ok && (p.Digest == digest || p.Digest == hub.HasNotChanged) && !bypassDigestCheck {
 			continue
 		}
 
@@ -151,8 +151,10 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 	var err error
 
 	switch t.r.Kind {
-	case hub.Helm:
-		// Helm repositories are not cloned
+	case
+		hub.Container,
+		hub.Helm:
+		// These repositories are not cloned
 	case hub.OLM:
 		if strings.HasPrefix(t.r.URL, hub.RepositoryOCIPrefix) {
 			tmpDir, err = t.svc.Oe.ExportRepository(t.svc.Ctx, t.r)

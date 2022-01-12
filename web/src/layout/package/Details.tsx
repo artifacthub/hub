@@ -17,6 +17,8 @@ import RSSLinkTitle from '../common/RSSLinkTitle';
 import SeeAllModal from '../common/SeeAllModal';
 import SmallTitle from '../common/SmallTitle';
 import CapabilityLevel from './CapabilityLevel';
+import ContainerAlternativeLocations from './ContainerAlternativeLocations';
+import ContainerRegistry from './ContainerRegistry';
 import ContainersImages from './ContainersImages';
 import Dependencies from './Dependencies';
 import styles from './Details.module.css';
@@ -51,6 +53,17 @@ interface VersionsProps {
   items: JSX.Element[];
   itemsForModal: JSX.Element[] | JSX.Element;
 }
+
+const getVersionsTitle = (repoKind: RepositoryKind): string => {
+  switch (repoKind) {
+    case RepositoryKind.Helm:
+      return 'Chart versions';
+    case RepositoryKind.Container:
+      return 'Tags';
+    default:
+      return 'Versions';
+  }
+};
 
 const Details = (props: Props) => {
   const getAllVersions = useCallback((): VersionsProps => {
@@ -149,6 +162,26 @@ const Details = (props: Props) => {
                 )}
               </>
             );
+          case RepositoryKind.Container:
+            return (
+              <>
+                <div className="mb-3">
+                  <SmallTitle text="Registry" />
+                  <ContainerRegistry url={props.package.repository.url} />
+                </div>
+                {props.package.data && props.package.data.alternativeLocations && (
+                  <ContainerAlternativeLocations locations={props.package.data.alternativeLocations} />
+                )}
+                {props.package.appVersion && (
+                  <div>
+                    <SmallTitle text="Application version" />
+                    <p data-testid="appVersion" className="text-truncate">
+                      {props.package.appVersion}
+                    </p>
+                  </div>
+                )}
+              </>
+            );
           default:
             return null;
         }
@@ -156,7 +189,7 @@ const Details = (props: Props) => {
 
       <div>
         <RSSLinkTitle
-          title={props.package.repository.kind === RepositoryKind.Helm ? 'Chart versions' : 'Versions'}
+          title={getVersionsTitle(props.package.repository.kind)}
           normalizedName={props.package.normalizedName}
           repository={props.package.repository}
           version={props.package.version!}
@@ -166,7 +199,7 @@ const Details = (props: Props) => {
         ) : (
           <div className="mb-3" data-testid="versions">
             <SeeAllModal
-              title={props.package.repository.kind === RepositoryKind.Helm ? 'Chart versions' : 'Versions'}
+              title={getVersionsTitle(props.package.repository.kind)}
               {...versions}
               packageId={props.package.packageId}
               version={props.package.version}
@@ -181,6 +214,7 @@ const Details = (props: Props) => {
 
       <div>
         <Last30DaysViews
+          repoKind={props.package.repository.kind}
           stats={props.viewsStats}
           version={props.version}
           searchUrlReferer={props.searchUrlReferer}
@@ -278,6 +312,7 @@ const Details = (props: Props) => {
       })()}
 
       <SecurityReport
+        repoKind={props.package.repository.kind}
         disabledReport={props.package.repository.scannerDisabled || false}
         allContainersImagesWhitelisted={props.package.allContainersImagesWhitelisted || false}
         summary={props.package.securityReportSummary}
@@ -322,7 +357,11 @@ const Details = (props: Props) => {
         </>
       )}
 
-      <ContainersImages containers={props.package.containersImages} packageId={props.package.packageId} />
+      <ContainersImages
+        containers={props.package.containersImages}
+        packageId={props.package.packageId}
+        kind={props.package.repository.kind}
+      />
 
       {props.package.repository.kind === RepositoryKind.Helm &&
         !isUndefined(props.package.data) &&
@@ -330,10 +369,9 @@ const Details = (props: Props) => {
           <Dependencies dependencies={props.package.data.dependencies} packageId={props.package.packageId} />
         )}
 
-      {props.package.repository.kind === RepositoryKind.Krew &&
-        !isUndefined(props.package.data) &&
-        !isNull(props.package.data) &&
-        !isUndefined(props.package.data.platforms) && <Platforms platforms={props.package.data.platforms} />}
+      {props.package.data && props.package.data.platforms && (
+        <Platforms title="Supported Platforms" platforms={props.package.data.platforms} />
+      )}
 
       <SmallTitle text="Keywords" id="keywords-list" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />

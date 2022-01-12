@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
+import { RepositoryKind } from '../../../types';
 import SecurityReport from './index';
 
 const defaultProps = {
+  repoKind: RepositoryKind.Helm,
   summary: {
     low: 53,
     critical: 2,
