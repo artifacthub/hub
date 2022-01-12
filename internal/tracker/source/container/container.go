@@ -41,17 +41,17 @@ const (
 	vendorAnnotation           = "org.opencontainers.image.vendor"
 
 	// Artifact Hub specific annotations
-	alternativeLocationsAnnotation = "io.artifacthub.package.alternativeLocations"
+	alternativeLocationsAnnotation = "io.artifacthub.package.alternative-locations"
 	deprecatedAnnotation           = "io.artifacthub.package.deprecated"
 	digestAnnotation               = "io.artifacthub.package.digest" // Populated internally in getMetadata
 	keywordsAnnotation             = "io.artifacthub.package.keywords"
 	licenseAnnotation              = "io.artifacthub.package.license"
-	logoURLAnnotation              = "io.artifacthub.package.logoURL"
+	logoURLAnnotation              = "io.artifacthub.package.logo-url"
 	maintainersAnnotation          = "io.artifacthub.package.maintainers"
 	platformsAnnotation            = "io.artifacthub.package.platforms" // Populated internally in getMetadata
 	prereleaseAnnotation           = "io.artifacthub.package.prerelease"
-	readmeURLAnnotation            = "io.artifacthub.package.readmeURL"
-	securityUpdatesAnnotation      = "io.artifacthub.package.containsSecurityUpdates"
+	readmeURLAnnotation            = "io.artifacthub.package.readme-url"
+	securityUpdatesAnnotation      = "io.artifacthub.package.contains-security-updates"
 )
 
 var (

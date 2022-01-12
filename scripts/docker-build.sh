@@ -19,12 +19,12 @@ docker build \
     --label org.opencontainers.image.documentation='https://artifacthub.io/docs/topics/cli' \
     --label org.opencontainers.image.source='https://github.com/artifacthub/hub/tree/${GIT_SHA}/cmd/ah' \
     --label org.opencontainers.image.vendor='Artifact Hub' \
-    --label io.artifacthub.package.readmeURL='https://raw.githubusercontent.com/artifacthub/hub/${GIT_SHA}/docs/cli.md' \
+    --label io.artifacthub.package.readme-url='https://raw.githubusercontent.com/artifacthub/hub/${GIT_SHA}/docs/cli.md' \
     --label io.artifacthub.package.maintainers='[{"name":"Artifact Hub maintainers","email":"cncf-artifacthub-maintainers@lists.cncf.io"}]' \
-    --label io.artifacthub.package.logoURL='https://raw.githubusercontent.com/artifacthub/hub/master/docs/logo/logo.svg' \
+    --label io.artifacthub.package.logo-url='https://raw.githubusercontent.com/artifacthub/hub/master/docs/logo/logo.svg' \
     --label io.artifacthub.package.keywords='artifact hub,cli,lint' \
     --label io.artifacthub.package.license='Apache-2.0' \
-    --label io.artifacthub.package.alternativeLocations='public.ecr.aws/artifacthub/ah' \
+    --label io.artifacthub.package.alternative-locations='public.ecr.aws/artifacthub/ah' \
 .
 
 # hub
