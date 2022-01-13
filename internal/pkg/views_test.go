@@ -30,7 +30,6 @@ func TestViewsTracker(t *testing.T) {
 
 		vt := NewViewsTracker(db)
 		assert.Error(t, vt.TrackView("invalid", version))
-		assert.Error(t, vt.TrackView(package1ID, "invalid"))
 	})
 
 	t.Run("custom flushing frequency", func(t *testing.T) {

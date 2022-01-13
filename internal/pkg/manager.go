@@ -221,8 +221,8 @@ func (m *Manager) GetViewsJSON(ctx context.Context, pkgID string) ([]byte, error
 	}
 
 	// Get package views from database
-	start := time.Now().Format("2006-01-02")
-	end := time.Now().AddDate(0, -1, 0).Format("2006-01-02")
+	end := time.Now().Format("2006-01-02")
+	start := time.Now().AddDate(0, -1, 0).Format("2006-01-02")
 	return util.DBQueryJSON(ctx, m.db, getPkgViewsDBQ, pkgID, start, end)
 }
 
