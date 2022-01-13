@@ -1,4 +1,5 @@
 import { OCI_PREFIX } from '../../utils/data';
+import isValidURL from '../../utils/isValidURL';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import styles from './ContainerRegistry.module.css';
 
@@ -64,34 +65,53 @@ const REGISTRIES: RegistryList = {
 
 const getRegistryData = (url: string): RegistryInfo => {
   let registryType: RegistryType = RegistryType.Unknown;
+  const urlToCheck = url.startsWith(OCI_PREFIX) ? url : `${OCI_PREFIX}${url}`;
 
-  if (url.includes('docker.io')) {
-    registryType = RegistryType.Docker;
-  } else if (url.includes('ecr.aws')) {
-    registryType = RegistryType.Amazon;
-  } else if (url.includes('azurecr.io') || url.includes('microsoft.com')) {
-    registryType = RegistryType.Azure;
-  } else if (url.includes('ghcr.io')) {
-    registryType = RegistryType.Github;
-  } else if (url.includes('gcr.io')) {
-    registryType = RegistryType.Google;
-  } else if (url.includes('quay.io')) {
-    registryType = RegistryType.Quay;
-  } else if (url.includes('bundle.bar')) {
-    registryType = RegistryType.BundleBar;
+  if (isValidURL(urlToCheck)) {
+    const registryUrl = new URL(urlToCheck);
+    const hostname = registryUrl.hostname;
+
+    switch (true) {
+      case /docker\.io/.test(hostname):
+        registryType = RegistryType.Docker;
+        break;
+      case /ecr\.aws/.test(hostname):
+        registryType = RegistryType.Amazon;
+        break;
+      case /azurecr\.io/.test(hostname):
+      case /microsoft\.com/.test(hostname):
+        registryType = RegistryType.Azure;
+        break;
+      case /ghcr\.io/.test(hostname):
+        registryType = RegistryType.Github;
+        break;
+      case /gcr\.io/.test(hostname):
+        registryType = RegistryType.Google;
+        break;
+      case /quay\.io/.test(hostname):
+        registryType = RegistryType.Quay;
+        break;
+      case /bundle\.bar/.test(hostname):
+        registryType = RegistryType.BundleBar;
+        break;
+    }
+
+    let registry: RegistryInfo = {
+      ...REGISTRIES[registryType],
+      url: url.replace(OCI_PREFIX, ''),
+    };
+
+    if (registryType === RegistryType.Unknown) {
+      registry.name = `${hostname}${registryUrl.port ? `:${registryUrl.port}` : ''}`;
+    }
+
+    return registry;
+  } else {
+    return {
+      ...REGISTRIES[registryType],
+      name: url,
+    };
   }
-
-  let registry: RegistryInfo = {
-    ...REGISTRIES[registryType],
-    url: url.replace(OCI_PREFIX, ''),
-  };
-
-  if (registryType === RegistryType.Unknown) {
-    const urlObj = new URL(url);
-    registry.name = `${urlObj.hostname}${urlObj.port ? `:${urlObj.port}` : ''}`;
-  }
-
-  return registry;
 };
 
 const ContainerRegistry = (props: Props) => {
