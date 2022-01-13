@@ -890,8 +890,8 @@ func TestGetValuesSchemaJSON(t *testing.T) {
 func TestGetViewsJSON(t *testing.T) {
 	ctx := context.Background()
 	pkgID := "00000000-0000-0000-0000-000000000001"
-	start := time.Now().Format("2006-01-02")
-	end := time.Now().AddDate(0, -1, 0).Format("2006-01-02")
+	end := time.Now().Format("2006-01-02")
+	start := time.Now().AddDate(0, -1, 0).Format("2006-01-02")
 
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()

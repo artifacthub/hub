@@ -9,7 +9,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
@@ -90,9 +89,6 @@ func (t *ViewsTracker) TrackView(packageID, version string) error {
 	// Validate input
 	if _, err := uuid.FromString(packageID); err != nil {
 		return fmt.Errorf("%w: invalid package id", hub.ErrInvalidInput)
-	}
-	if _, err := semver.StrictNewVersion(version); err != nil {
-		return fmt.Errorf("%w: invalid version", hub.ErrInvalidInput)
 	}
 
 	// Track view
