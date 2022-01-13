@@ -309,6 +309,21 @@ func TestValidatePackageMetadata(t *testing.T) {
 					CreatedAt:   "2006-01-02T15:04:05Z",
 					Description: "description",
 					Changes: []*hub.Change{
+						nil,
+					},
+				},
+				[]string{
+					"invalid change entry",
+				},
+			},
+			{
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Changes: []*hub.Change{
 						{
 							Kind:        "test",
 							Description: "description",
