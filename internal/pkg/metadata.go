@@ -144,6 +144,9 @@ func ValidatePackageMetadata(md *hub.PackageMetadata) error {
 func ValidateChange(change *hub.Change) error {
 	var errs *multierror.Error
 
+	if change == nil {
+		return errors.New("invalid change entry")
+	}
 	if change.Kind != "" && !isValidChangeKind(change.Kind) {
 		errs = multierror.Append(errs, fmt.Errorf("invalid change: invalid kind: %s", change.Kind))
 	}
