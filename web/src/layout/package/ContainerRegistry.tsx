@@ -65,47 +65,54 @@ const REGISTRIES: RegistryList = {
 
 const getRegistryData = (url: string): RegistryInfo => {
   let registryType: RegistryType = RegistryType.Unknown;
-  const urlToCheck = url.startsWith(OCI_PREFIX) ? url : `${OCI_PREFIX}${url}`;
+  // We use http as protocol to be sure that we get correct hostname
+  const urlToCheck = url.startsWith(OCI_PREFIX) ? url.replace(OCI_PREFIX, 'https://') : `https://${url}`;
 
   if (isValidURL(urlToCheck)) {
     const registryUrl = new URL(urlToCheck);
     const hostname = registryUrl.hostname;
+    if (hostname === '') {
+      return {
+        ...REGISTRIES[registryType],
+        name: url,
+      };
+    } else {
+      switch (true) {
+        case /docker\.io/.test(hostname):
+          registryType = RegistryType.Docker;
+          break;
+        case /ecr\.aws/.test(hostname):
+          registryType = RegistryType.Amazon;
+          break;
+        case /azurecr\.io/.test(hostname):
+        case /microsoft\.com/.test(hostname):
+          registryType = RegistryType.Azure;
+          break;
+        case /ghcr\.io/.test(hostname):
+          registryType = RegistryType.Github;
+          break;
+        case /gcr\.io/.test(hostname):
+          registryType = RegistryType.Google;
+          break;
+        case /quay\.io/.test(hostname):
+          registryType = RegistryType.Quay;
+          break;
+        case /bundle\.bar/.test(hostname):
+          registryType = RegistryType.BundleBar;
+          break;
+      }
 
-    switch (true) {
-      case /docker\.io/.test(hostname):
-        registryType = RegistryType.Docker;
-        break;
-      case /ecr\.aws/.test(hostname):
-        registryType = RegistryType.Amazon;
-        break;
-      case /azurecr\.io/.test(hostname):
-      case /microsoft\.com/.test(hostname):
-        registryType = RegistryType.Azure;
-        break;
-      case /ghcr\.io/.test(hostname):
-        registryType = RegistryType.Github;
-        break;
-      case /gcr\.io/.test(hostname):
-        registryType = RegistryType.Google;
-        break;
-      case /quay\.io/.test(hostname):
-        registryType = RegistryType.Quay;
-        break;
-      case /bundle\.bar/.test(hostname):
-        registryType = RegistryType.BundleBar;
-        break;
+      let registry: RegistryInfo = {
+        ...REGISTRIES[registryType],
+        url: url.replace(OCI_PREFIX, ''),
+      };
+
+      if (registryType === RegistryType.Unknown) {
+        registry.name = `${hostname}${registryUrl.port ? `:${registryUrl.port}` : ''}`;
+      }
+
+      return registry;
     }
-
-    let registry: RegistryInfo = {
-      ...REGISTRIES[registryType],
-      url: url.replace(OCI_PREFIX, ''),
-    };
-
-    if (registryType === RegistryType.Unknown) {
-      registry.name = `${hostname}${registryUrl.port ? `:${registryUrl.port}` : ''}`;
-    }
-
-    return registry;
   } else {
     return {
       ...REGISTRIES[registryType],
