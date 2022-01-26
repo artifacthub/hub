@@ -1,5 +1,4 @@
 import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
@@ -18,6 +17,7 @@ import styles from './Modal.module.css';
 interface Props {
   open: boolean;
   optOutList?: OptOutItem[];
+  disabledList: string[];
   onSuccess: () => void;
   onClose: () => void;
   onAuthError: () => void;
@@ -45,13 +45,6 @@ const OptOutModal = (props: Props) => {
 
   const onRepoSelect = (repo: Repository): void => {
     setRepoItem(repo);
-  };
-
-  const getSubscribedReposIds = (): string[] => {
-    if (isUndefined(props.optOutList)) return [];
-
-    const selectedRepos = props.optOutList.filter((item: OptOutItem) => item.eventKind === eventKind);
-    return selectedRepos.map((item: OptOutItem) => item.repository.repositoryId!);
   };
 
   async function getAllUserOrganizations() {
@@ -209,7 +202,7 @@ const OptOutModal = (props: Props) => {
               <SearchRepositories
                 label="repo-subscriptions"
                 disabledRepositories={{
-                  ids: getSubscribedReposIds(),
+                  ids: props.disabledList,
                 }}
                 extraQueryParams={{ user: ctx.user ? [ctx.user.alias] : [], org: userOrganizations || [] }}
                 onSelection={onRepoSelect}

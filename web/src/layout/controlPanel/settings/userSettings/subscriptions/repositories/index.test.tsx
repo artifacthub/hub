@@ -32,7 +32,7 @@ describe('RepositoriesSection', () => {
 
   it('creates snapshot', async () => {
     const mockOptOut = getMockOptOut('1');
-    mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+    mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
     const { asFragment } = render(
       <Router>
@@ -41,7 +41,7 @@ describe('RepositoriesSection', () => {
     );
 
     await waitFor(() => {
-      expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+      expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       expect(asFragment()).toMatchSnapshot();
     });
   });
@@ -49,7 +49,7 @@ describe('RepositoriesSection', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockOptOut = getMockOptOut('2');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -58,7 +58,7 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
       expect(screen.getByText('Opt-out')).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('RepositoriesSection', () => {
 
     it('opens Add opt out modal', async () => {
       const mockOptOut = getMockOptOut('2');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -80,7 +80,7 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
       const btn = screen.getByRole('button', { name: 'Open opt-out modal' });
@@ -96,7 +96,7 @@ describe('RepositoriesSection', () => {
   describe('Opt out list', () => {
     it('renders 3 items', async () => {
       const mockOptOut = getMockOptOut('3');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -112,7 +112,7 @@ describe('RepositoriesSection', () => {
 
     it('does not display list when no packages', async () => {
       const mockOptOut = getMockOptOut('4');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -121,14 +121,14 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
       expect(screen.queryByTestId('repositoriesList')).toBeNull();
     });
 
-    it('calls alertDispatcher when getOptOutList call fails with not Unauthorized error', async () => {
-      mocked(API).getOptOutList.mockRejectedValue({ kind: ErrorKind.Other });
+    it('calls alertDispatcher when getAllOptOut call fails with not Unauthorized error', async () => {
+      mocked(API).getAllOptOut.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <Router>
@@ -146,7 +146,7 @@ describe('RepositoriesSection', () => {
     });
 
     it('calls history push to load login modal when user is not signed in', async () => {
-      mocked(API).getOptOutList.mockRejectedValue({
+      mocked(API).getAllOptOut.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -164,7 +164,7 @@ describe('RepositoriesSection', () => {
   describe('to change opt-out', () => {
     it('to deactivate active opt-out', async () => {
       const mockOptOut = getMockOptOut('5');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
       mocked(API).deleteOptOut.mockResolvedValue('');
 
       render(
@@ -174,68 +174,25 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
       const checkbox: HTMLInputElement = screen.getByTestId(
-        `subs_${mockOptOut.items[0].repository.repositoryId}_2_input`
+        `subs_${mockOptOut[0].repository.repositoryId}_2_input`
       ) as HTMLInputElement;
       expect(checkbox).toBeInTheDocument();
       expect(checkbox).toBeChecked();
 
-      // const label = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_label`);
+      // const label = screen.getByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_label`);
       userEvent.click(checkbox);
 
       await waitFor(() => {
         expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
-        expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut.items[0].optOutId);
+        expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut[0].optOutId);
       });
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(2);
-      });
-    });
-
-    it('loads first page when not subscriptions after deleting one', async () => {
-      const mockOptOut = getMockOptOut('12');
-      mocked(API).deleteOptOut.mockResolvedValue('');
-
-      mocked(API)
-        .getOptOutList.mockResolvedValue(mockOptOut)
-        .mockResolvedValueOnce(mockOptOut)
-        .mockResolvedValueOnce(mockOptOut)
-        .mockResolvedValueOnce({
-          items: [],
-          paginationTotalCount: '12',
-        });
-
-      render(
-        <Router>
-          <RepositoriesSection {...defaultProps} />
-        </Router>
-      );
-
-      await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
-        expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 0 });
-      });
-
-      const nextBtn = screen.getAllByRole('button', { name: 'Open page 2' });
-      userEvent.click(nextBtn[1]);
-
-      await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(2);
-        expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 10 });
-      });
-
-      const input = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_input`);
-      userEvent.click(input);
-
-      await waitFor(() => {
-        expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
-        expect(API.getOptOutList).toHaveBeenCalledTimes(4);
-        expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 10 });
-        expect(API.getOptOutList).toHaveBeenCalledWith({ limit: 10, offset: 0 });
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(2);
       });
     });
   });
@@ -243,7 +200,7 @@ describe('RepositoriesSection', () => {
   describe('when change opt-out entry fails', () => {
     it('generic error', async () => {
       const mockOptOut = getMockOptOut('6');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
       mocked(API).deleteOptOut.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
@@ -253,10 +210,10 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
-      const input = screen.getByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_input`);
+      const input = screen.getByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_input`);
       expect(input).toBeInTheDocument();
       userEvent.click(input);
 
@@ -266,26 +223,24 @@ describe('RepositoriesSection', () => {
       });
 
       expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
-      expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut.items[0].optOutId);
+      expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut[0].optOutId);
 
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: `An error occurred deleting the opt-out entry for tracking errors notifications for repository ${mockOptOut.items[0].repository.name}, please try again later.`,
+        message: `An error occurred deleting the opt-out entry for tracking errors notifications for repository ${mockOptOut[0].repository.name}, please try again later.`,
       });
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(2);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(2);
       });
 
-      expect(
-        await screen.findByTestId(`subs_${mockOptOut.items[0].repository.repositoryId}_2_input`)
-      ).toBeInTheDocument();
+      expect(await screen.findByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
     });
 
     it('UnauthorizedError', async () => {
       const mockOptOut = getMockOptOut('6');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
       mocked(API).deleteOptOut.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
@@ -297,10 +252,10 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
-      const input = screen.getByTestId(`subs_${mockOptOut.items[1].repository.repositoryId}_2_input`);
+      const input = screen.getByTestId(`subs_${mockOptOut[1].repository.repositoryId}_2_input`);
       userEvent.click(input);
 
       await waitFor(() => {
@@ -309,7 +264,7 @@ describe('RepositoriesSection', () => {
 
       await waitFor(() => {
         expect(API.deleteOptOut).toHaveBeenCalledTimes(1);
-        expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut.items[1].optOutId);
+        expect(API.deleteOptOut).toHaveBeenCalledWith(mockOptOut[1].optOutId);
       });
 
       await waitFor(() => {
@@ -321,7 +276,7 @@ describe('RepositoriesSection', () => {
   describe('click links', () => {
     it('on user link click', async () => {
       const mockOptOut = getMockOptOut('7');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -330,7 +285,7 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
       const links = screen.queryAllByTestId('userLink');
@@ -343,7 +298,7 @@ describe('RepositoriesSection', () => {
 
     it('on org link click', async () => {
       const mockOptOut = getMockOptOut('8');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -352,7 +307,7 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
       const link = screen.getByTestId('orgLink');
@@ -364,7 +319,7 @@ describe('RepositoriesSection', () => {
 
     it('on repo link click', async () => {
       const mockOptOut = getMockOptOut('9');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -373,7 +328,7 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
       const links = screen.queryAllByTestId('repoLink');
@@ -388,7 +343,7 @@ describe('RepositoriesSection', () => {
   describe('renders component with different event kinds', () => {
     it('renders properly', async () => {
       const mockOptOut = getMockOptOut('10');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -414,7 +369,7 @@ describe('RepositoriesSection', () => {
 
     it('to activate opt-out for RepositoryScanningErrors', async () => {
       const mockOptOut = getMockOptOut('11');
-      mocked(API).getOptOutList.mockResolvedValue(mockOptOut);
+      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
       mocked(API).addOptOut.mockResolvedValue('');
 
       render(
@@ -424,7 +379,7 @@ describe('RepositoriesSection', () => {
       );
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(1);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(1);
       });
 
       const input = screen.getByTestId('subs_38b8d828-27a9-42a2-81ce-19b24d3e2fad_4_input');
@@ -441,7 +396,7 @@ describe('RepositoriesSection', () => {
       expect(API.addOptOut).toHaveBeenCalledWith('38b8d828-27a9-42a2-81ce-19b24d3e2fad', 4);
 
       await waitFor(() => {
-        expect(API.getOptOutList).toHaveBeenCalledTimes(2);
+        expect(API.getAllOptOut).toHaveBeenCalledTimes(2);
       });
     });
   });

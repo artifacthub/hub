@@ -1,4 +1,4 @@
-import { groupBy, isUndefined } from 'lodash';
+import { isUndefined, sortBy } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
@@ -23,10 +23,6 @@ interface Props {
 
 const DEFAULT_LIMIT = 10;
 
-interface OptOutItemList {
-  [key: string]: OptOutItem[];
-}
-
 interface ChangeSubsProps {
   data: {
     repoId: string;
@@ -37,10 +33,17 @@ interface ChangeSubsProps {
   callback: () => void;
 }
 
+interface OptOutByRepo {
+  repository: Repository;
+  optOutItems: OptOutItem[];
+}
+
 const RepositoriesSection = (props: Props) => {
   const title = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [optOutList, setOptOutList] = useState<OptOutItemList | undefined>(undefined);
+  const [optOutList, setOptOutList] = useState<OptOutByRepo[] | undefined>(undefined);
+  const [optOutFullList, setOptOutFullList] = useState<OptOutByRepo[] | undefined>(undefined);
+  const [repoIdsList, setRepoIdsList] = useState<string[]>([]);
   const [optOutItems, setOptOutItems] = useState<OptOutItem[] | undefined>(undefined);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<number>(1);
@@ -69,20 +72,46 @@ const RepositoriesSection = (props: Props) => {
     return title;
   };
 
+  const getVisibleOptOut = (items: OptOutByRepo[]): OptOutByRepo[] => {
+    if (isUndefined(items)) return [];
+    return items.slice(offset, offset + DEFAULT_LIMIT);
+  };
+
+  const sortOptOutList = (items: OptOutItem[]): OptOutByRepo[] => {
+    let list: OptOutByRepo[] = [];
+
+    items.forEach((item: OptOutItem) => {
+      const itemIndex = list.findIndex(
+        (obr: OptOutByRepo) => obr.repository.repositoryId === item.repository.repositoryId
+      );
+      if (itemIndex >= 0) {
+        list[itemIndex] = { ...list[itemIndex], optOutItems: [...list[itemIndex].optOutItems, item] };
+      } else {
+        list.push({
+          repository: item.repository,
+          optOutItems: [item],
+        });
+      }
+    });
+
+    return sortBy(list, 'repository.name');
+  };
+
   async function getOptOutList(callback?: () => void) {
     try {
       setIsLoading(true);
-      const data = await API.getOptOutList({
-        limit: DEFAULT_LIMIT,
-        offset: offset,
-      });
-      const total = parseInt(data.paginationTotalCount);
-      if (total > 0 && data.items.length === 0) {
+      const items = await API.getAllOptOut();
+      const formattedItems = sortOptOutList(items);
+      setOptOutItems(items);
+      setOptOutFullList(formattedItems);
+      setRepoIdsList(formattedItems ? formattedItems.map((item: OptOutByRepo) => item.repository.repositoryId!) : []);
+      setTotal(formattedItems.length);
+      const newVisibleItems = getVisibleOptOut(formattedItems);
+      // When current page is empty after changes
+      if (newVisibleItems.length === 0 && activePage !== 1) {
         onPageNumberChange(1);
       } else {
-        setOptOutItems(data.items);
-        setOptOutList(groupBy(data.items, (item: OptOutItem) => item.repository.repositoryId));
-        setTotal(total);
+        setOptOutList(newVisibleItems);
       }
       setIsLoading(false);
     } catch (err: any) {
@@ -92,7 +121,8 @@ const RepositoriesSection = (props: Props) => {
           type: 'danger',
           message: 'An error occurred getting your opt-out entries list, please try again later.',
         });
-        setOptOutList({});
+        setOptOutFullList([]);
+        setOptOutList([]);
       } else {
         props.onAuthError();
       }
@@ -132,6 +162,10 @@ const RepositoriesSection = (props: Props) => {
 
   useEffect(() => {
     getOptOutList();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    setOptOutList(getVisibleOptOut(optOutFullList || []));
   }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
@@ -167,7 +201,7 @@ const RepositoriesSection = (props: Props) => {
         </p>
 
         <div className="mt-4 mt-md-5">
-          {!isUndefined(optOutList) && Object.keys(optOutList).length > 0 && (
+          {!isUndefined(optOutList) && optOutList.length > 0 && (
             <div className="row">
               <div className="col-12 col-xxl-10">
                 <table className={`table table-bordered table-hover ${styles.table}`} data-testid="repositoriesList">
@@ -198,10 +232,10 @@ const RepositoriesSection = (props: Props) => {
                     </tr>
                   </thead>
                   <tbody className={styles.body}>
-                    {Object.keys(optOutList).map((repoId: string) => {
-                      const repoInfo: Repository = optOutList[repoId][0].repository;
+                    {optOutList.map((item: OptOutByRepo) => {
+                      const repoInfo: Repository = item.repository;
                       return (
-                        <tr key={`subs_${repoId}`} data-testid="optOutRow">
+                        <tr key={`subs_${repoInfo.repositoryId}`} data-testid="optOutRow">
                           <td className="align-middle text-center d-none d-sm-table-cell">
                             <RepositoryIcon kind={repoInfo.kind} className={`h-auto ${styles.icon}`} />
                           </td>
@@ -263,7 +297,7 @@ const RepositoriesSection = (props: Props) => {
                             )}
                           </td>
                           {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem, index: number) => {
-                            const optItem = optOutList[repoId].find((opt: OptOutItem) => subs.kind === opt.eventKind);
+                            const optItem = item.optOutItems.find((opt: OptOutItem) => subs.kind === opt.eventKind);
 
                             return (
                               <td className="align-middle text-center" key={`td_${repoInfo.name}_${subs.kind}`}>
@@ -306,6 +340,7 @@ const RepositoriesSection = (props: Props) => {
 
       {modalStatus && (
         <OptOutModal
+          disabledList={repoIdsList}
           optOutList={optOutItems}
           onSuccess={getOptOutList}
           onClose={() => setModalStatus(false)}

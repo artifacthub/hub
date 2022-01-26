@@ -1,6 +1,7 @@
 import { isUndefined } from 'lodash';
 import { useState } from 'react';
 
+import useIsMounted from '../../../../../../hooks/useIsMounted';
 import { EventKind, OptOutItem, Repository } from '../../../../../../types';
 import styles from '../SubscriptionsSection.module.css';
 
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const SubscriptionSwitch = (props: Props) => {
+  const isMounted = useIsMounted();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const id = `subs_${props.repoInfo.repositoryId}_${props.kind}`;
 
@@ -45,7 +47,12 @@ const SubscriptionSwitch = (props: Props) => {
                 repoName: props.repoInfo.name,
                 optOutId: props.optOutItem ? props.optOutItem.optOutId : undefined,
               },
-              callback: () => setIsLoading(false),
+              callback: () => {
+                // Loading is hidden when component is mounted
+                if (isMounted()) {
+                  setIsLoading(false);
+                }
+              },
             });
           }}
           checked={isUndefined(props.optOutItem) ? false : true}
