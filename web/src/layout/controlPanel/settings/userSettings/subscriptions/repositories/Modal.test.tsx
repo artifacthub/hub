@@ -44,6 +44,7 @@ const getMockRepos = (repoName?: string) => {
 const defaultProps = {
   open: true,
   optOutList: mockOptOutList,
+  disabledList: [],
   onSuccess: mockOnSuccess,
   onClose: mockOnClose,
   onAuthError: mockOnAuthError,

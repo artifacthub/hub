@@ -1082,6 +1082,10 @@ class API_CLASS {
     return this.getAllItems(`${this.API_BASE_URL}/orgs/${organizationName}/members`) as Promise<Member[]>;
   }
 
+  public getAllOptOut(): Promise<OptOutItem[]> {
+    return this.getAllItems(`${this.API_BASE_URL}/subscriptions/opt-out`) as Promise<OptOutItem[]>;
+  }
+
   private getAllItems(url: string): Promise<any[]> {
     const MAX_LIMIT = 60;
     let formattedUrl = `${url}?limit=${MAX_LIMIT}`;
