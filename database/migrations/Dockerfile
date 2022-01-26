@@ -1,10 +1,10 @@
 # Build tern
-FROM golang:1.17-alpine3.14 AS tern
+FROM golang:1.17-alpine3.15 AS tern
 RUN apk --no-cache add git
 RUN go get -u github.com/jackc/tern
 
 # Build final image
-FROM alpine:3.14
+FROM alpine:3.15
 RUN addgroup -S db-migrator && adduser -S db-migrator -G db-migrator
 USER db-migrator
 WORKDIR /home/db-migrator
