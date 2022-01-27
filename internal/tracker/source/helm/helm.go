@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"path"
 	"regexp"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"sync"
@@ -138,6 +139,11 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 				defer func() {
 					<-limiter
 					wg.Done()
+				}()
+				defer func() {
+					if r := recover(); r != nil {
+						s.i.Svc.Logger.Error().Bytes("stacktrace", debug.Stack()).Interface("recover", r).Send()
+					}
 				}()
 				p, err := s.preparePackage(chartVersion)
 				if err != nil {
