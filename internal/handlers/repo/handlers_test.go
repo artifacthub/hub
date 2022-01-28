@@ -11,6 +11,7 @@ import (
 	"os"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
@@ -437,7 +438,7 @@ func TestSearch(t *testing.T) {
 		hw.rm.AssertExpectations(t)
 	})
 
-	t.Run("valid request, search succeeded", func(t *testing.T) {
+	t.Run("valid authenticated request, search succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		v := url.Values{}
@@ -451,6 +452,7 @@ func TestSearch(t *testing.T) {
 		v.Set("limit", "10")
 		v.Set("offset", "10")
 		r, _ := http.NewRequest("GET", "/?"+v.Encode(), nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
 		hw.rm.On("SearchJSON", r.Context(), &hub.SearchRepositoryInput{
@@ -474,6 +476,34 @@ func TestSearch(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.rm.AssertExpectations(t)
+	})
+
+	t.Run("valid unauthenticated request, search succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.rm.On("SearchJSON", r.Context(), &hub.SearchRepositoryInput{
+			Kinds:  []hub.RepositoryKind{},
+			Limit:  20,
+			Offset: 0,
+		}).Return(&hub.JSONQueryResult{
+			Data:       []byte("dataJSON"),
+			TotalCount: 1,
+		}, nil)
+		hw.h.Search(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
+		assert.Equal(t, helpers.BuildCacheControlHeader(1*time.Hour), h.Get("Cache-Control"))
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.rm.AssertExpectations(t)

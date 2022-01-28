@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
@@ -140,7 +141,11 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set(helpers.PaginationTotalCount, strconv.Itoa(result.TotalCount))
-	helpers.RenderJSON(w, result.Data, 0, http.StatusOK)
+	cacheMaxAge := 1 * time.Hour
+	if r.Context().Value(hub.UserIDKey) != nil {
+		cacheMaxAge = 0
+	}
+	helpers.RenderJSON(w, result.Data, cacheMaxAge, http.StatusOK)
 }
 
 // Transfer is an http handler that transfers the provided repository to a

@@ -234,7 +234,7 @@ func (h *Handlers) setupRouter() {
 
 		// Repositories
 		r.Route("/repositories", func(r chi.Router) {
-			r.Get("/search", h.Repositories.Search)
+			r.With(h.Users.InjectUserID).Get("/search", h.Repositories.Search)
 			r.Group(func(r chi.Router) {
 				r.Use(h.Users.RequireLogin)
 				r.Route("/user", func(r chi.Router) {
