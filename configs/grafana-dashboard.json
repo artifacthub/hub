@@ -1,25 +1,33 @@
 {
     "annotations": {
-        "list": [{
-            "$$hashKey": "object:1017",
-            "builtIn": 1,
-            "datasource": "-- Grafana --",
-            "enable": true,
-            "hide": true,
-            "iconColor": "rgba(0, 211, 255, 1)",
-            "name": "Annotations & Alerts",
-            "type": "dashboard"
-        }]
+        "list": [
+            {
+                "$$hashKey": "object:1017",
+                "builtIn": 1,
+                "datasource": "-- Grafana --",
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
+            }
+        ]
     },
     "editable": true,
-    "gnetId": null,
+    "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
     "id": 3,
-    "iteration": 1638953282885,
     "links": [],
-    "panels": [{
+    "liveNow": false,
+    "panels": [
+        {
             "collapsed": false,
-            "datasource": null,
             "gridPos": {
                 "h": 1,
                 "w": 24,
@@ -32,28 +40,30 @@
             "type": "row"
         },
         {
-            "cacheTimeout": null,
-            "datasource": null,
             "fieldConfig": {
                 "defaults": {
                     "color": {
                         "mode": "thresholds"
                     },
-                    "custom": {},
-                    "mappings": [{
-                        "$$hashKey": "object:641",
-                        "id": 0,
-                        "op": "=",
-                        "text": "N/A",
-                        "type": 1,
-                        "value": "null"
-                    }],
+                    "mappings": [
+                        {
+                            "options": {
+                                "match": "null",
+                                "result": {
+                                    "text": "N/A"
+                                }
+                            },
+                            "type": "special"
+                        }
+                    ],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{
-                            "color": "dark-green",
-                            "value": null
-                        }]
+                        "steps": [
+                            {
+                                "color": "dark-green",
+                                "value": null
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -83,33 +93,39 @@
                 "text": {},
                 "textMode": "auto"
             },
-            "pluginVersion": "7.4.1",
-            "targets": [{
-                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status=~\"OK|Created|No Content\"}[$__interval]))",
-                "interval": "",
-                "legendFormat": "",
-                "refId": "A"
-            }],
-            "timeFrom": null,
-            "timeShift": null,
+            "pluginVersion": "8.3.4",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(increase(http_request_duration_count{path!=\"/\",status=~\"OK|Created|No Content\"}[$__rate_interval]))",
+                    "interval": "",
+                    "legendFormat": "",
+                    "refId": "A"
+                }
+            ],
             "title": "Successful requests processed",
             "transparent": true,
             "type": "stat"
         },
         {
-            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
                     "color": {
                         "mode": "thresholds"
                     },
-                    "custom": {},
                     "decimals": 0,
                     "displayName": "",
                     "mappings": [],
+                    "max": 100,
+                    "min": 0,
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{
+                        "steps": [
+                            {
                                 "color": "dark-red",
                                 "value": null
                             },
@@ -149,43 +165,51 @@
                 "showThresholdMarkers": true,
                 "text": {}
             },
-            "pluginVersion": "7.4.1",
-            "targets": [{
-                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status!=\"Internal Server Error\"}[$__interval])) / sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\"}[$__interval])) * 100",
-                "instant": false,
-                "interval": "",
-                "legendFormat": "",
-                "refId": "A"
-            }],
-            "timeFrom": null,
-            "timeShift": null,
+            "pluginVersion": "8.3.4",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(rate(http_request_duration_count{path!=\"/\",status!=\"Internal Server Error\"}[$__interval])) / sum(rate(http_request_duration_count{path!=\"/\"}[$__interval])) * 100",
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "",
+                    "refId": "A"
+                }
+            ],
             "title": "Successful requests",
             "transparent": true,
             "type": "gauge"
         },
         {
-            "cacheTimeout": null,
-            "datasource": null,
             "fieldConfig": {
                 "defaults": {
                     "color": {
                         "mode": "thresholds"
                     },
-                    "custom": {},
-                    "mappings": [{
-                        "$$hashKey": "object:641",
-                        "id": 0,
-                        "op": "=",
-                        "text": "0",
-                        "type": 1,
-                        "value": "null"
-                    }],
+                    "mappings": [
+                        {
+                            "options": {
+                                "match": "null",
+                                "result": {
+                                    "color": "dark-red",
+                                    "text": "0"
+                                }
+                            },
+                            "type": "special"
+                        }
+                    ],
                     "thresholds": {
                         "mode": "absolute",
-                        "steps": [{
-                            "color": "dark-red",
-                            "value": null
-                        }]
+                        "steps": [
+                            {
+                                "color": "dark-red",
+                                "value": null
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -215,15 +239,20 @@
                 "text": {},
                 "textMode": "auto"
             },
-            "pluginVersion": "7.4.1",
-            "targets": [{
-                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status=\"Internal Server Error\"}[$__interval]))",
-                "interval": "",
-                "legendFormat": "",
-                "refId": "A"
-            }],
-            "timeFrom": null,
-            "timeShift": null,
+            "pluginVersion": "8.3.4",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(increase(http_request_duration_count{path!=\"/\",status=\"Internal Server Error\"}[$__rate_interval]))",
+                    "interval": "",
+                    "legendFormat": "",
+                    "refId": "A"
+                }
+            ],
             "title": "Failed requests processed",
             "transparent": true,
             "type": "stat"
@@ -233,10 +262,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -268,30 +295,38 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": true,
             "renderer": "flot",
-            "seriesOverrides": [{
-                "$$hashKey": "object:279",
-                "alias": "Hour requests",
-                "color": "#F2CC0C"
-            }],
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:279",
+                    "alias": "Hour requests",
+                    "color": "#F2CC0C"
+                }
+            ],
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\"}[$__interval]))",
-                "format": "time_series",
-                "instant": false,
-                "interval": "",
-                "legendFormat": "Hour requests",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(increase(http_request_duration_count{path!=\"/\"}[$__rate_interval]))",
+                    "format": "time_series",
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "Hour requests",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
             "timeFrom": "1d",
             "timeRegions": [],
-            "timeShift": null,
             "title": "Last day requests",
             "tooltip": {
                 "shared": true,
@@ -300,34 +335,26 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:97",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:98",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
@@ -335,10 +362,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -370,30 +395,38 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
-            "seriesOverrides": [{
-                "$$hashKey": "object:279",
-                "alias": "Searches in 15m window",
-                "color": "#5794F2"
-            }],
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:279",
+                    "alias": "Searches in 15m window",
+                    "color": "#5794F2"
+                }
+            ],
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path=\"/api/chartsvc/v1/charts/search\"}[$__interval]))",
-                "format": "time_series",
-                "instant": false,
-                "interval": "",
-                "legendFormat": "Searches in 15m window",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(increase(http_request_duration_count{path=\"/api/chartsvc/v1/charts/search\"}[$__rate_interval]))",
+                    "format": "time_series",
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "Searches in 15m window",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
             "timeFrom": "1d",
             "timeRegions": [],
-            "timeShift": null,
             "title": "Helm CLI searches",
             "tooltip": {
                 "shared": true,
@@ -402,34 +435,26 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:97",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:98",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
@@ -437,10 +462,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -472,30 +495,38 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": true,
             "renderer": "flot",
-            "seriesOverrides": [{
-                "$$hashKey": "object:279",
-                "alias": "Daily requests",
-                "color": "#FFF899"
-            }],
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:279",
+                    "alias": "Daily requests",
+                    "color": "#FFF899"
+                }
+            ],
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\"}[$__interval]))",
-                "format": "time_series",
-                "instant": false,
-                "interval": "",
-                "legendFormat": "Daily requests",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(increase(http_request_duration_count{path!=\"/\"}[$__rate_interval]))",
+                    "format": "time_series",
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "Daily requests",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
             "timeFrom": "30d",
             "timeRegions": [],
-            "timeShift": null,
             "title": "Last month requests",
             "tooltip": {
                 "shared": true,
@@ -504,39 +535,30 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:97",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:98",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
             "collapsed": false,
-            "datasource": null,
             "gridPos": {
                 "h": 1,
                 "w": 24,
@@ -553,10 +575,8 @@
             "bars": true,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -588,28 +608,35 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
-            "seriesOverrides": [{
-                "$$hashKey": "object:3222",
-                "alias": "API average latency",
-                "color": "#FA6400"
-            }],
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:3222",
+                    "alias": "API average latency",
+                    "color": "#FA6400"
+                }
+            ],
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "sum(rate(http_request_duration_sum{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) / sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval]))",
-                "interval": "",
-                "legendFormat": "API average latency",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(rate(http_request_duration_sum{path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__rate_interval])) / sum(rate(http_request_duration_count{path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__rate_interval]))",
+                    "interval": "",
+                    "legendFormat": "API average latency",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "API average latency",
             "tooltip": {
                 "shared": true,
@@ -618,40 +645,31 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:2833",
-                    "decimals": null,
                     "format": "s",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:2834",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
             "collapsed": false,
-            "datasource": null,
             "gridPos": {
                 "h": 1,
                 "w": 24,
@@ -668,11 +686,9 @@
             "bars": true,
             "dashLength": 10,
             "dashes": false,
-            "datasource": "Prometheus",
             "decimals": 2,
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -711,7 +727,7 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -719,18 +735,23 @@
             "spaceLength": 10,
             "stack": true,
             "steppedLine": false,
-            "targets": [{
-                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) by (path)",
-                "instant": false,
-                "interval": "30s",
-                "intervalFactor": 1,
-                "legendFormat": "{{ path }}",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(rate(http_request_duration_count{path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__rate_interval])) by (path)",
+                    "instant": false,
+                    "interval": "30s",
+                    "intervalFactor": 1,
+                    "legendFormat": "{{ path }}",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "Successful requests rate",
             "tooltip": {
                 "shared": true,
@@ -739,35 +760,27 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:1068",
-                    "decimals": null,
                     "format": "reqps",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:1069",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
@@ -775,10 +788,8 @@
             "bars": true,
             "dashLength": 10,
             "dashes": false,
-            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -815,7 +826,7 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -823,18 +834,23 @@
             "spaceLength": 10,
             "stack": true,
             "steppedLine": false,
-            "targets": [{
-                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"Internal Server Error\"}[$__interval])) by (path)",
-                "instant": false,
-                "interval": "10s",
-                "intervalFactor": 1,
-                "legendFormat": "{{ path }}",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "sum(rate(http_request_duration_count{path=~\"/api/.*\",status=\"Internal Server Error\"}[$__rate_interval])) by (path)",
+                    "instant": false,
+                    "interval": "10s",
+                    "intervalFactor": 1,
+                    "legendFormat": "{{ path }}",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "Failed requests rate",
             "tooltip": {
                 "shared": true,
@@ -843,40 +859,31 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:1068",
-                    "decimals": null,
                     "format": "reqps",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:1069",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
             "collapsed": false,
-            "datasource": null,
             "gridPos": {
                 "h": 1,
                 "w": 24,
@@ -893,10 +900,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -933,28 +938,35 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
-            "seriesOverrides": [{
-                "$$hashKey": "object:2346"
-            }],
+            "seriesOverrides": [
+                {
+                    "$$hashKey": "object:2346"
+                }
+            ],
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) by (path, le))",
-                "instant": false,
-                "interval": "10s",
-                "intervalFactor": 1,
-                "legendFormat": "{{ path }}",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__rate_interval])) by (path, le))",
+                    "instant": false,
+                    "interval": "10s",
+                    "intervalFactor": 1,
+                    "legendFormat": "{{ path }}",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "Successful requests duration (p95)",
             "tooltip": {
                 "shared": true,
@@ -963,35 +975,27 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:1068",
-                    "decimals": null,
                     "format": "s",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:1069",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
@@ -999,10 +1003,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -1037,7 +1039,7 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1045,18 +1047,23 @@
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
-                "instant": false,
-                "interval": "10s",
-                "intervalFactor": 1,
-                "legendFormat": "{{ path }}",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{path=~\"/api/.*\",status=\"Internal Server Error\"}[$__rate_interval])) by (path, le))",
+                    "instant": false,
+                    "interval": "10s",
+                    "intervalFactor": 1,
+                    "legendFormat": "{{ path }}",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "Failed requests duration (p95)",
             "tooltip": {
                 "shared": true,
@@ -1065,35 +1072,27 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:1068",
-                    "decimals": null,
                     "format": "s",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:1069",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
@@ -1101,10 +1100,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -1141,7 +1138,7 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1149,18 +1146,23 @@
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) by (path, le))",
-                "instant": false,
-                "interval": "10s",
-                "intervalFactor": 1,
-                "legendFormat": "{{ path }}",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__rate_interval])) by (path, le))",
+                    "instant": false,
+                    "interval": "10s",
+                    "intervalFactor": 1,
+                    "legendFormat": "{{ path }}",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "Successful requests duration (p75)",
             "tooltip": {
                 "shared": true,
@@ -1169,35 +1171,27 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:1068",
-                    "decimals": null,
                     "format": "s",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:1069",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
@@ -1205,10 +1199,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -1243,7 +1235,7 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1251,18 +1243,23 @@
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
-                "instant": false,
-                "interval": "10s",
-                "intervalFactor": 1,
-                "legendFormat": "{{ path }}",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{path=~\"/api/.*\",status=\"Internal Server Error\"}[$__rate_interval])) by (path, le))",
+                    "instant": false,
+                    "interval": "10s",
+                    "intervalFactor": 1,
+                    "legendFormat": "{{ path }}",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "Failed requests duration (p75)",
             "tooltip": {
                 "shared": true,
@@ -1271,35 +1268,27 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:1068",
-                    "decimals": null,
                     "format": "s",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:1069",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
@@ -1307,10 +1296,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -1347,7 +1334,7 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1355,18 +1342,23 @@
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__interval])) by (path, le))",
-                "instant": false,
-                "interval": "10s",
-                "intervalFactor": 1,
-                "legendFormat": "{{ path }}",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{path=~\"/api/.*\",status=~\"OK|Created|No Content\"}[$__rate_interval])) by (path, le))",
+                    "instant": false,
+                    "interval": "10s",
+                    "intervalFactor": 1,
+                    "legendFormat": "{{ path }}",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "Successful requests duration (p50)",
             "tooltip": {
                 "shared": true,
@@ -1375,35 +1367,27 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:1068",
-                    "decimals": null,
                     "format": "s",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:1069",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         },
         {
@@ -1411,10 +1395,8 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
-                    "custom": {},
                     "links": []
                 },
                 "overrides": []
@@ -1449,7 +1431,7 @@
                 "alertThreshold": true
             },
             "percentage": false,
-            "pluginVersion": "7.4.1",
+            "pluginVersion": "8.3.4",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1457,18 +1439,23 @@
             "spaceLength": 10,
             "stack": false,
             "steppedLine": false,
-            "targets": [{
-                "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
-                "instant": false,
-                "interval": "10s",
-                "intervalFactor": 1,
-                "legendFormat": "{{ path }}",
-                "refId": "A"
-            }],
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "000000001"
+                    },
+                    "exemplar": true,
+                    "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{path=~\"/api/.*\",status=\"Internal Server Error\"}[$__rate_interval])) by (path, le))",
+                    "instant": false,
+                    "interval": "10s",
+                    "intervalFactor": 1,
+                    "legendFormat": "{{ path }}",
+                    "refId": "A"
+                }
+            ],
             "thresholds": [],
-            "timeFrom": null,
             "timeRegions": [],
-            "timeShift": null,
             "title": "Failed requests duration (p50)",
             "tooltip": {
                 "shared": true,
@@ -1477,74 +1464,36 @@
             },
             "type": "graph",
             "xaxis": {
-                "buckets": null,
                 "mode": "time",
-                "name": null,
                 "show": true,
                 "values": []
             },
-            "yaxes": [{
+            "yaxes": [
+                {
                     "$$hashKey": "object:1068",
-                    "decimals": null,
                     "format": "s",
                     "label": "",
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": true
                 },
                 {
                     "$$hashKey": "object:1069",
                     "format": "short",
-                    "label": null,
                     "logBase": 1,
-                    "max": null,
-                    "min": null,
                     "show": false
                 }
             ],
             "yaxis": {
-                "align": false,
-                "alignLevel": null
+                "align": false
             }
         }
     ],
-    "refresh": false,
-    "schemaVersion": 27,
+    "refresh": "",
+    "schemaVersion": 34,
     "style": "dark",
     "tags": [],
     "templating": {
-        "list": [{
-            "allValue": null,
-            "current": {
-                "selected": false,
-                "text": "artifacthub-production",
-                "value": "artifacthub-production"
-            },
-            "datasource": null,
-            "definition": "label_values(kubernetes_namespace)",
-            "description": null,
-            "error": null,
-            "hide": 0,
-            "includeAll": false,
-            "label": "",
-            "multi": false,
-            "name": "environment",
-            "options": [],
-            "query": {
-                "query": "label_values(kubernetes_namespace)",
-                "refId": "StandardVariableQuery"
-            },
-            "refresh": 2,
-            "regex": "artifacthub-production|production|staging",
-            "skipUrlSync": false,
-            "sort": 0,
-            "tagValuesQuery": "",
-            "tags": [],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
-        }]
+        "list": []
     },
     "time": {
         "from": "now-1h",
@@ -1567,5 +1516,6 @@
     "timezone": "",
     "title": "ArtifactHub",
     "uid": "FBPhb4qWk",
-    "version": 63
+    "version": 75,
+    "weekStart": ""
 }
