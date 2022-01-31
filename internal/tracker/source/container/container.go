@@ -398,7 +398,10 @@ func getContent(
 	hc hub.HTTPClient,
 	u string,
 ) ([]byte, error) {
-	req, _ := http.NewRequest("GET", u, nil)
+	req, err := http.NewRequest("GET", u, nil)
+	if err != nil {
+		return nil, err
+	}
 	req = req.WithContext(ctx)
 	if _, err := url.Parse(u); err != nil {
 		return nil, err
