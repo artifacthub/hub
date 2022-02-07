@@ -18,14 +18,14 @@ hub:
     rules:
       - http:
           paths:
-            - path: /*
+            - path: /
               pathType: Prefix
               backend:
                 service:
                   name: ssl-redirect
                   port:
                     name: use-annotation
-            - path: /*
+            - path: /
               pathType: Prefix
               backend:
                 # This reference expects a static name of the service.
