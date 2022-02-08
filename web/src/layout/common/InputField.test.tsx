@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 
 import API from '../../api';
 import { ErrorKind, ResourceKind } from '../../types';
