@@ -1,6 +1,6 @@
 {
   "name": "hub",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "dependencies": {
     "@analytics/google-analytics": "^0.5.3",
