@@ -15,6 +15,7 @@ enum RegistryType {
   Google = 'google',
   Quay = 'quay',
   BundleBar = 'bundlebar',
+  Gitlab = 'gitlab',
   Unknown = 'unknown',
 }
 
@@ -57,6 +58,10 @@ const REGISTRIES: RegistryList = {
     name: 'Bundle Bar',
     icon: '/static/media/registries/bundlebar.svg',
   },
+  [RegistryType.Gitlab]: {
+    name: 'GitLab Registry',
+    icon: '/static/media/registries/gitlab.svg',
+  },
   [RegistryType.Unknown]: {
     name: '',
     icon: '/static/media/registries/unknown.svg',
@@ -65,6 +70,7 @@ const REGISTRIES: RegistryList = {
 
 const getRegistryData = (url: string): RegistryInfo => {
   let registryType: RegistryType = RegistryType.Unknown;
+
   // We use http as protocol to be sure that we get correct hostname
   const urlToCheck = url.startsWith(OCI_PREFIX) ? url.replace(OCI_PREFIX, 'https://') : `https://${url}`;
 
@@ -99,6 +105,9 @@ const getRegistryData = (url: string): RegistryInfo => {
           break;
         case /bundle\.bar/.test(hostname):
           registryType = RegistryType.BundleBar;
+          break;
+        case /gitlab\.com/.test(hostname):
+          registryType = RegistryType.Gitlab;
           break;
       }
 
