@@ -2,7 +2,8 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { IconType } from 'react-icons';
 import { BsFlagFill } from 'react-icons/bs';
-import { FaGithub, FaLink } from 'react-icons/fa';
+import { FaCode, FaGithub, FaLink } from 'react-icons/fa';
+import { SiBitbucket, SiGitea, SiGitlab } from 'react-icons/si';
 import { TiHome } from 'react-icons/ti';
 
 import { PackageLink } from '../../types';
@@ -21,16 +22,37 @@ interface IconTypeList {
 
 const ICONS: IconTypeList = {
   homepage: TiHome,
-  source: FaGithub,
+  source: FaCode,
+  source_github: FaGithub,
+  source_gitlab: SiGitlab,
+  source_gitea: SiGitea,
+  source_bitbucket: SiBitbucket,
   support: BsFlagFill,
   default: FaLink,
 };
 
 const Links = (props: Props) => {
-  const getIconLink = (name: string): JSX.Element => {
+  const getIconLink = (name: string, url?: string): JSX.Element => {
     let Icon = ICONS.default;
-    if (!isUndefined(name) && name.toLowerCase() in ICONS) {
-      Icon = ICONS[name.toLowerCase()];
+    let linkName = name ? name.toLowerCase() : name;
+    if (!isUndefined(url) && linkName === 'source') {
+      switch (true) {
+        case /github\.com/.test(url):
+          linkName = `${linkName}_github`;
+          break;
+        case /gitlab\.com/.test(url):
+          linkName = `${linkName}_gitlab`;
+          break;
+        case /bitbucket\.org/.test(url):
+          linkName = `${linkName}_bitbucket`;
+          break;
+        case /gitea\.com/.test(url):
+          linkName = `${linkName}_gitea`;
+          break;
+      }
+    }
+    if (!isUndefined(linkName) && linkName in ICONS) {
+      Icon = ICONS[linkName];
     }
     return <Icon className={`text-muted me-2 ${styles.icon}`} />;
   };
@@ -83,7 +105,7 @@ const Links = (props: Props) => {
               label={`Open ${link.name}`}
             >
               <div className="d-flex flex-row align-items-start mw-100">
-                {getIconLink(link.name)}
+                {getIconLink(link.name, link.url)}
                 <div className={`flex-grow-1 ${styles.linkText}`}>{link.name}</div>
               </div>
             </ExternalLink>
