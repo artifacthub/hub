@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 
 import API from '../../api';
 import { Organization } from '../../types';

@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/dom';
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 
 import API from '../api';
 import { AuthorizerAction } from '../types';
