@@ -11,6 +11,7 @@ const defaultProps = {
     'oci://quay.io/myproject/myimagen',
     'oci://mcr.microsoft.com/myproject/myimagen',
     'oci://bundle.bar/myproject/myimagen',
+    'oci://registry.gitlab.com/myproject/myimagen',
     'oci://localhost:5000/myproject/myimagen',
   ],
 };
@@ -35,9 +36,10 @@ describe('ContainerAlternativeLocations', () => {
       expect(screen.getByText('Google CR')).toBeInTheDocument();
       expect(screen.getByText('Quay')).toBeInTheDocument();
       expect(screen.getByText('Bundle Bar')).toBeInTheDocument();
+      expect(screen.getByText('GitLab Registry')).toBeInTheDocument();
       expect(screen.getByText('localhost:5000')).toBeInTheDocument();
 
-      expect(screen.getAllByRole('button')).toHaveLength(8);
+      expect(screen.getAllByRole('button')).toHaveLength(9);
     });
   });
 
