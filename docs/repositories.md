@@ -70,17 +70,17 @@ You can add annotations and labels to your images at build time (by using `podma
 ```sh
 crane mutate \
     --label org.opencontainers.image.description='Artifact Hub command line tool' \
-    --label org.opencontainers.image.version='1.5.0' \
-    --label org.opencontainers.image.created='2021-12-15T10:00:00.00Z' \
+    --label org.opencontainers.image.version='1.6.0' \
+    --label org.opencontainers.image.created='2022-02-08T15:38:15Z' \
     --label org.opencontainers.image.documentation='https://artifacthub.io/docs/topics/cli' \
-    --label org.opencontainers.image.source='https://github.com/artifacthub/hub/tree/0c0e789ab6f4e74dfa59a4e7c1ece4788881e279/cmd/ah' \
+    --label org.opencontainers.image.source='https://github.com/artifacthub/hub/tree/c2a6e0866ab13422221f2f458026b4506acd6b53/cmd/ah' \
     --label org.opencontainers.image.vendor='Artifact Hub' \
-    --label io.artifacthub.package.readme-url='https://raw.githubusercontent.com/artifacthub/hub/0c0e789ab6f4e74dfa59a4e7c1ece4788881e279/docs/cli.md' \
+    --label io.artifacthub.package.readme-url='https://raw.githubusercontent.com/artifacthub/hub/c2a6e0866ab13422221f2f458026b4506acd6b53/docs/cli.md' \
     --label io.artifacthub.package.maintainers='[{"name":"Artifact Hub maintainers","email":"cncf-artifacthub-maintainers@lists.cncf.io"}]' \
     --label io.artifacthub.package.logo-url='https://raw.githubusercontent.com/artifacthub/hub/master/docs/logo/logo.svg' \
     --label io.artifacthub.package.keywords='artifact hub,cli,lint' \
     --label io.artifacthub.package.license='Apache-2.0' \
-    --label io.artifacthub.package.alternative-locations='public.ecr.aws/artifacthub/ah:v1.5.0' \
+    --label io.artifacthub.package.alternative-locations='public.ecr.aws/artifacthub/ah:v1.6.0' \
 artifacthub/ah:latest
 ```
 
