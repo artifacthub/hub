@@ -46,7 +46,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Run CloMonitor linter
-        run: clomonitor-linter --pass-score 80
+        run: clomonitor-linter --pass-score 80 --url https://github.com/artifacthub/hub
 
   tests-database:
     runs-on: ubuntu-20.04
