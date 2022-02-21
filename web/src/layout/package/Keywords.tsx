@@ -2,9 +2,11 @@ import { compact } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import uniq from 'lodash/uniq';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { prepareQueryString } from '../../utils/prepareQueryString';
+import SmallTitle from '../common/SmallTitle';
 import styles from './Keywords.module.css';
 
 interface Props {
@@ -25,15 +27,20 @@ const Keywords = (props: Props) => {
     return keywords;
   };
 
+  const [keywords, setKeywords] = useState<string[]>(cleanKeywords());
+
+  useEffect(() => {
+    setKeywords(cleanKeywords());
+  }, [props.keywords]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  if (keywords.length === 0) return null;
+
   return (
-    <div className="mb-3" role="list" aria-describedby="keywords-list">
-      {isUndefined(props.keywords) || isNull(props.keywords) || props.keywords.length === 0 ? (
-        <p data-testid="keywords" role="listitem">
-          -
-        </p>
-      ) : (
+    <>
+      <SmallTitle text="Keywords" id="keywords-list" />
+      <div className="mb-3" role="list" aria-describedby="keywords-list">
         <span data-testid="keywords">
-          {cleanKeywords().map((keyword: string) => (
+          {keywords.map((keyword: string) => (
             <button
               className={`btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 ${styles.badge}`}
               key={keyword}
@@ -54,8 +61,8 @@ const Keywords = (props: Props) => {
             </button>
           ))}
         </span>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 

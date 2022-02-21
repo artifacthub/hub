@@ -40,6 +40,7 @@ describe('Keywords', () => {
         </Router>
       );
 
+      expect(screen.getByText('Keywords')).toBeInTheDocument();
       expect(screen.getByTestId('keywords')).toBeInTheDocument();
       const keywords = screen.getAllByRole('listitem', { name: /Filter by/ });
       expect(keywords).toHaveLength(defaultProps.keywords!.length);
@@ -55,18 +56,6 @@ describe('Keywords', () => {
       expect(screen.getByTestId('keywords')).toBeInTheDocument();
       const keywords = screen.getAllByRole('listitem', { name: /Filter by/ });
       expect(keywords).toHaveLength(3);
-    });
-
-    it('renders placeholder if keywords prop is null', () => {
-      render(
-        <Router>
-          <Keywords keywords={null} deprecated={false} />
-        </Router>
-      );
-
-      const keywords = screen.getByTestId('keywords');
-      expect(keywords).toBeInTheDocument();
-      expect(keywords).toHaveTextContent('-');
     });
 
     it('calls history push to click keyword button', () => {
@@ -85,6 +74,38 @@ describe('Keywords', () => {
           tsQueryWeb: defaultProps.keywords[0],
           pageNumber: 1,
         }),
+      });
+    });
+
+    describe('does not render', () => {
+      it('when keywords is null', () => {
+        const { container } = render(
+          <Router>
+            <Keywords keywords={null} deprecated={false} />
+          </Router>
+        );
+
+        expect(container).toBeEmptyDOMElement();
+      });
+
+      it('when keywords is undefined', () => {
+        const { container } = render(
+          <Router>
+            <Keywords deprecated={false} />
+          </Router>
+        );
+
+        expect(container).toBeEmptyDOMElement();
+      });
+
+      it('when keywords is empty', () => {
+        const { container } = render(
+          <Router>
+            <Keywords keywords={[]} deprecated={false} />
+          </Router>
+        );
+
+        expect(container).toBeEmptyDOMElement();
       });
     });
   });
