@@ -86,14 +86,13 @@ describe('Details', () => {
       expect(screen.queryByText('Links')).toBeNull();
       expect(screen.getByText('License')).toBeInTheDocument();
       expect(screen.getByText('Maintainers')).toBeInTheDocument();
-      expect(screen.getByText('Keywords')).toBeInTheDocument();
 
       const maintainer = screen.getByText('maintainerName');
       expect(maintainer).toBeInTheDocument();
       expect(maintainer!.closest('a')).toHaveProperty('href', 'mailto:main@tainer.com');
 
       expect(screen.getByText('1.0.0')).toBeInTheDocument();
-      expect(screen.getAllByText('-')).toHaveLength(2);
+      expect(screen.getByText('-')).toBeInTheDocument();
       expect(screen.getAllByText('MIT')).toHaveLength(2);
     });
 
@@ -121,15 +120,6 @@ describe('Details', () => {
         const keywords = screen.getByTestId('keywords');
         expect(keywords!.children).toHaveLength(mockPackage.keywords!.length);
         expect(keywords!.children[0]).toHaveTextContent(mockPackage.keywords![0]);
-      });
-
-      it('renders placeholder when no keywords', () => {
-        const mockPackage = getMockPackage('6');
-        render(<Details {...defaultProps} package={mockPackage} />);
-
-        const keywords = screen.getByTestId('keywords');
-        expect(keywords).toBeInTheDocument();
-        expect(keywords).toHaveTextContent('-');
       });
 
       it('calls history push on keyword click', () => {

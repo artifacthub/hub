@@ -373,7 +373,6 @@ const Details = (props: Props) => {
         <Platforms title="Supported Platforms" platforms={props.package.data.platforms} />
       )}
 
-      <SmallTitle text="Keywords" id="keywords-list" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />
     </>
   );
