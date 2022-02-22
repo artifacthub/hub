@@ -6,6 +6,7 @@
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub)](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub)
 [![CloMonitor](https://img.shields.io/endpoint?url=https://clomonitor.io/api/projects/artifact-hub/artifact-hub/badge)](https://clomonitor.io/projects/artifact-hub/artifact-hub)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/artifacthub/hub)
+[![Licenses](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fartifacthub%2Fhub.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fartifacthub%2Fhub?ref=badge_shield)
 
 [Artifact Hub](https://artifacthub.io) is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects.
 
@@ -69,6 +70,10 @@ The Artifact Hub is an open source project. Aside from contributing code and fea
 - Attending a meeting. Meetings are on the 2nd Tuesday of the month at 10:30am PT / 1:30pm ET. [Meeting minutes and agenda are in Google Docs](https://docs.google.com/document/d/1nkIgFh4dNPawoDD_9fV7vicVSeKk2Zcdd0C5yovSiKQ/edit).
 - Joining [CNCF slack](https://cloud-native.slack.com) ([join link](https://slack.cncf.io/)) and joining the room #artifact-hub.
 
+## Changelog
+
+The *changelog* is [available on Artifact Hub](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
+
 ## Code of Conduct
 
 This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
@@ -77,6 +82,12 @@ This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundati
 
 To report a security problem in Artifact Hub, please contact the Maintainers Team at <cncf-artifacthub-maintainers@lists.cncf.io>. Please see [SECURITY.md](./SECURITY.md) for more details.
 
+## CloMonitor Report
+
+[![CloMonitor report summary](https://clomonitor.io/api/projects/artifact-hub/artifact-hub/report-summary?theme=dark)](https://clomonitor.io/projects/artifact-hub/artifact-hub)
+
 ## License
 
 Artifact Hub is an Open Source project licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fartifacthub%2Fhub.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fartifacthub%2Fhub?ref=badge_large)
