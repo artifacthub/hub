@@ -88,7 +88,8 @@ exports[`GuestDropdown creates snapshot 1`] = `
               class="form-check"
             >
               <input
-                aria-checked="false"
+                aria-checked="true"
+                checked=""
                 class="form-check-input input"
                 id="desktop-automatic"
                 name="automatic"
@@ -127,8 +128,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
               class="form-check"
             >
               <input
-                aria-checked="true"
-                checked=""
+                aria-checked="false"
                 class="form-check-input input"
                 id="desktop-light"
                 name="light"
