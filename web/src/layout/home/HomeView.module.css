@@ -93,7 +93,7 @@
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1400px) {
   .secondLine::before {
     content: '\00a0 ';
   }

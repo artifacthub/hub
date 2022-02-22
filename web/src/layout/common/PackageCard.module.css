@@ -39,7 +39,7 @@
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1400px) {
   .cardWrapper {
     padding: 0 1rem;
   }

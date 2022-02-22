@@ -173,7 +173,9 @@ const PackageInfo = (props: Props) => {
                 })()}
 
                 {props.package.license && (
-                  <div className={`d-none d-lg-flex flex-row aling-items-baseline text-truncate ${styles.mx50}`}>
+                  <div
+                    className={`d-none d-lg-flex d-xxl-none d-xxxl-flex flex-row aling-items-baseline text-truncate ${styles.mx50}`}
+                  >
                     <span className="text-muted text-uppercase me-1 ms-3">License:</span>
                     <License
                       license={props.package.license}
@@ -191,7 +193,7 @@ const PackageInfo = (props: Props) => {
           <div
             className={`d-none d-${
               props.breakpointForInfoSection || 'md'
-            }-flex flex-column align-items-end mb-auto ms-2`}
+            }-flex d-xxl-none d-xxxl-flex flex-column align-items-end mb-auto ms-2`}
           >
             {starsAndKindInfo}
             <div className="mt-1">{pkgTS}</div>
@@ -205,12 +207,12 @@ const PackageInfo = (props: Props) => {
       <div
         className={`d-flex d-${
           props.breakpointForInfoSection || 'md'
-        }-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-${
+        }-none d-xxl-flex d-xxxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-${
           props.breakpointForInfoSection || 'md'
-        }-0`}
+        }-0 mt-1 mt-${props.breakpointForInfoSection || 'md'}-0 mt-xxl-1 mt-xxxl-0`}
       >
         {pkgTS}
-        <span className="mt-1">{starsAndKindInfo}</span>
+        <span>{starsAndKindInfo}</span>
       </div>
 
       <div className={`d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto ${styles.labelsWrapper}`}>

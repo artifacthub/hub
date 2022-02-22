@@ -9,7 +9,8 @@ $grid-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1920px,
+  xxl: 1400px,
+  xxxl: 1920px,
 );
 
 $container-max-widths: (
@@ -17,7 +18,8 @@ $container-max-widths: (
   md: 720px,
   lg: 930px,
   xl: 1080px,
-  xxl: 1860px,
+  xxl: 1320px,
+  xxxl: 1860px,
 );
 
 $form-check-input-checked-bg-color: var(--highlighted);
