@@ -47,6 +47,7 @@ const LICENSES_LIST: string[] = [
   'mps-2.0',
   'ms-pl',
   'ms-rl',
+  'mulanpsl-2.0',
   'ncsa',
   'odbl-1.0',
   'ofl-1.1',
