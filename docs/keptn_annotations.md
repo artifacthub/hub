@@ -6,7 +6,7 @@ You can provide some extra information about your Keptn integrations by using th
 
 - **keptn/kind** *(string)*
 
-This annotation allows providing the kind of the integration. Supported values: *service* and *sli-provider*. It's possible to add multiple kinds by using a comma separated list, like shown in the example below.
+This annotation allows providing the kind of the integration. Supported values: *webhook*, *testing*, *deployment*, *notification*, *observability* and *sli-provider*. It's possible to add multiple kinds by using a comma separated list, like shown in the example below.
 
 - **keptn/version** *(string)*
 
@@ -17,6 +17,6 @@ Use this annotation to provide the Keptn version(s) your integration is compatib
 ```yaml
 ...
 annotations:
-  keptn/kind: "service,sli-provider"
-  keptn/version: "0.8.4-0.8.7"
+  keptn/kind: "webhook,testing"
+  keptn/version: "0.10.0-0.12.0"
 ```
