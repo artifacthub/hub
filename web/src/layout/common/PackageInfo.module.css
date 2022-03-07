@@ -116,3 +116,9 @@
     margin-right: 0;
   }
 }
+
+@media only screen and (min-width: 1400px) and (max-width: 1991.98px) {
+  .title {
+    font-size: 1.05rem;
+  }
+}

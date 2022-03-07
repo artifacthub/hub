@@ -71,8 +71,9 @@ const PackageInfo = (props: Props) => {
             className={`d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 ${styles.truncateWrapper} ${styles.titleWrapper}`}
           >
             <div className="text-truncate card-title mb-0">
-              <div className="d-flex flex-row align-items-center">
+              <div className="d-flex flex-row align-items-center justify-content-between">
                 <div className={`text-truncate ${styles.title}`}>{props.package.displayName || props.package.name}</div>
+                <div className="d-none d-xxl-flex d-xxxl-none flex-column ms-2">{starsAndKindInfo}</div>
               </div>
             </div>
 
@@ -204,10 +205,12 @@ const PackageInfo = (props: Props) => {
         {props.package.description}
       </div>
 
+      <div className="d-none d-xxl-block d-xxxl-none text-end mt-2">{pkgTS}</div>
+
       <div
         className={`d-flex d-${
           props.breakpointForInfoSection || 'md'
-        }-none d-xxl-flex d-xxxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-${
+        }-none d-xxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-${
           props.breakpointForInfoSection || 'md'
         }-0 mt-1 mt-${props.breakpointForInfoSection || 'md'}-0 mt-xxl-1 mt-xxxl-0`}
       >

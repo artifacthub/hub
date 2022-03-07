@@ -96,7 +96,7 @@ describe('PackageInfo', () => {
       const buttons = screen.getAllByTestId('repoLink');
       expect(buttons).toHaveLength(2);
       const icons = screen.getAllByAltText('Icon');
-      expect(icons).toHaveLength(8);
+      expect(icons).toHaveLength(10);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
       userEvent.click(buttons[0]!);
@@ -144,7 +144,7 @@ describe('PackageInfo', () => {
         </Router>
       );
       const buttons = screen.getAllByTestId('repoIconLabelLink');
-      expect(buttons).toHaveLength(2);
+      expect(buttons).toHaveLength(3);
       userEvent.click(buttons[0]);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
