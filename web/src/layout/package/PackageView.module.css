@@ -230,6 +230,30 @@
   }
 }
 
+@media only screen and (min-width: 1400px) {
+  .mainContent {
+    flex: 0 0 calc(100% - 330px);
+    max-width: calc(100% - 330px);
+  }
+
+  .relatedPackagesWrapper {
+    max-width: 260px;
+  }
+
+  .info {
+    width: 260px;
+  }
+
+  .contentWrapper,
+  .relatedWrapper {
+    margin-right: 0;
+  }
+
+  .manifestWrapper {
+    min-width: 75%;
+  }
+}
+
 @media only screen and (min-width: 1920px) {
   .mainContent {
     flex: 0 0 calc(100% - 380px);
@@ -265,7 +289,7 @@
   border-top: 1px solid var(--color-black-5);
 }
 
-@media only screen and (min-width: 767.98px) and (max-width: 1920px) {
+@media only screen and (min-width: 767.98px) and (max-width: 1400px) {
   .relatedPackagesWrapper {
     max-width: 230px;
   }
