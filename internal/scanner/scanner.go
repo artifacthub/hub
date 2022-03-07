@@ -12,7 +12,7 @@ import (
 	"sort"
 	"strings"
 
-	trivyreport "github.com/aquasecurity/trivy/pkg/report"
+	trivy "github.com/aquasecurity/trivy/pkg/types"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/rs/zerolog/log"
@@ -87,7 +87,7 @@ func (s *Scanner) Scan(sn *hub.SnapshotToScan) (*hub.SnapshotSecurityReport, err
 		Version:   sn.Version,
 	}
 
-	imagesReports := make(map[string]*trivyreport.Report)
+	imagesReports := make(map[string]*trivy.Report)
 	for _, image := range sn.ContainersImages {
 		imageReportJSON, err := s.is.ScanImage(image.Image)
 		if err != nil {
@@ -95,7 +95,7 @@ func (s *Scanner) Scan(sn *hub.SnapshotToScan) (*hub.SnapshotSecurityReport, err
 			s.ec.Append(sn.RepositoryID, err.Error())
 			return report, err
 		}
-		var imageReport *trivyreport.Report
+		var imageReport *trivy.Report
 		if err := json.Unmarshal(imageReportJSON, &imageReport); err != nil {
 			return report, fmt.Errorf("error unmarshalling image %s report: %w", image.Image, err)
 		}
@@ -114,7 +114,7 @@ func (s *Scanner) Scan(sn *hub.SnapshotToScan) (*hub.SnapshotSecurityReport, err
 
 // generateSummary generates a summary of the security report from the images
 // reports.
-func generateSummary(imagesReports map[string]*trivyreport.Report) *hub.SecurityReportSummary {
+func generateSummary(imagesReports map[string]*trivy.Report) *hub.SecurityReportSummary {
 	summary := &hub.SecurityReportSummary{}
 	for _, imageReport := range imagesReports {
 		for _, result := range imageReport.Results {
@@ -140,7 +140,7 @@ func generateSummary(imagesReports map[string]*trivyreport.Report) *hub.Security
 // generateAlertDigest generates an alert digest of the security report from
 // the images reports. At the moment the digest is based on the vulnerabilities
 // with a severity of high or critical.
-func generateAlertDigest(imagesReports map[string]*trivyreport.Report) string {
+func generateAlertDigest(imagesReports map[string]*trivy.Report) string {
 	var vs []string
 	for _, imageReport := range imagesReports {
 		for _, result := range imageReport.Results {

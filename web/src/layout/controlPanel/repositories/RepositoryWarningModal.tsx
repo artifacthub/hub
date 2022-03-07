@@ -10,7 +10,7 @@ const RepositoryWarningModal = () => {
   return (
     <>
       <button
-        className={`d-inline-block ps-0 pe-1 py-0 btn btn-link btn-sm fs-6 textLighter ${styles.trackingWarningBtn}`}
+        className={`d-inline-block ps-0 pe-1 py-0 btn btn-link btn-sm fs-6 text-dark ${styles.trackingWarningBtn}`}
         onClick={() => setOpenStatus(true)}
         aria-label="Open repository warning modal"
       >

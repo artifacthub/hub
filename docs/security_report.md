@@ -24,7 +24,7 @@ Images used by these kinds of packages can be listed using the `containersImages
 
 ## Application dependencies
 
-Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.23.0/vulnerability/detection/language/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used. Please see the [language-specific packages](https://aquasecurity.github.io/trivy/v0.23.0/vulnerability/detection/language/) section in the Trivy documentation (image column) for a full list of the applications dependencies supported.
+Trivy also scans [applications dependencies](https://aquasecurity.github.io/trivy/v0.24.2/vulnerability/detection/language/) for vulnerabilities. To do that, it inspects the files that contain the applications dependencies and the versions used. Please see the [language-specific packages](https://aquasecurity.github.io/trivy/v0.24.2/vulnerability/detection/language/) section in the Trivy documentation (image column) for a full list of the applications dependencies supported.
 
 If you want your application dependencies scanned, please make sure the relevant files are included in your final images. The security report will include a target for each of them.
 

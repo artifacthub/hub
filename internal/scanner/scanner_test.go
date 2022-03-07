@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	trivyreport "github.com/aquasecurity/trivy/pkg/report"
+	trivy "github.com/aquasecurity/trivy/pkg/types"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/spf13/viper"
@@ -102,7 +102,7 @@ func TestScan(t *testing.T) {
 
 		report, err := s.Scan(snapshot)
 		require.Nil(t, err)
-		var expectedImageFullReport *trivyreport.Report
+		var expectedImageFullReport *trivy.Report
 		err = json.Unmarshal(sampleReport1Data, &expectedImageFullReport)
 		require.NoError(t, err)
 		assert.Equal(t, &hub.SnapshotSecurityReport{
@@ -123,14 +123,14 @@ func TestScan(t *testing.T) {
 
 		report, err := s.Scan(snapshot)
 		require.Nil(t, err)
-		var expectedImageFullReport *trivyreport.Report
+		var expectedImageFullReport *trivy.Report
 		err = json.Unmarshal(sampleReport2Data, &expectedImageFullReport)
 		require.NoError(t, err)
 		assert.Equal(t, &hub.SnapshotSecurityReport{
 			PackageID:   packageID,
 			Version:     version,
 			AlertDigest: "a53cf4b4d20faac813dd30d4ed017df345f5675f5f83b52517d229e0c7fdbf5aa89e7a8b7dbc809164352af539990df894bf52824709605fe6fe289133843e1c",
-			ImagesReports: map[string]*trivyreport.Report{
+			ImagesReports: map[string]*trivy.Report{
 				image: expectedImageFullReport,
 			},
 			Summary: &hub.SecurityReportSummary{

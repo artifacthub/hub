@@ -6,7 +6,7 @@
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1400px) {
   .cardsWrapper {
     margin: 0 -0.5rem;
   }

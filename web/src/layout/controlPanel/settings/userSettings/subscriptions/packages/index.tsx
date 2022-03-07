@@ -164,7 +164,7 @@ const PackagesSection = (props: Props) => {
             <>
               <div className="d-none d-sm-inline" data-testid="packagesList">
                 <div className="row">
-                  <div className="col-12 col-xxl-10">
+                  <div className="col-12 col-xxxl-10">
                     <table className={`table table-bordered table-hover ${styles.table}`}>
                       <thead>
                         <tr className={styles.tableTitle}>

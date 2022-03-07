@@ -9,7 +9,7 @@ select results_eq(
     'default_text_search_config is pg_catalog.simple'
 );
 
--- Check pgcrypto extension exist
+-- Check expected extensions exist
 select has_extension('pgcrypto');
 select has_extension('pg_trgm');
 select has_extension('tsm_system_rows');
