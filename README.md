@@ -82,9 +82,9 @@ This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundati
 
 To report a security problem in Artifact Hub, please contact the Maintainers Team at <cncf-artifacthub-maintainers@lists.cncf.io>. Please see [SECURITY.md](./SECURITY.md) for more details.
 
-## CloMonitor Report
+## CLOMonitor Report
 
-[![CloMonitor report summary](https://clomonitor.io/api/projects/artifact-hub/artifact-hub/report-summary?theme=dark)](https://clomonitor.io/projects/artifact-hub/artifact-hub)
+[![CloMonitor report summary](https://clomonitor.io/api/projects/artifact-hub/artifact-hub/report-summary?theme=light)](https://clomonitor.io/projects/artifact-hub/artifact-hub)
 
 ## License
 

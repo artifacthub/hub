@@ -2,7 +2,7 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.6.0
+version: 1.6.1-0
 appVersion: 1.6.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
@@ -73,7 +73,7 @@ annotations:
     - name: scanner
       image: artifacthub/scanner:v1.6.0
     - name: trivy
-      image: aquasec/trivy:0.23.0
+      image: aquasec/trivy:0.24.2
   artifacthub.io/links: |
     - name: source
       url: https://github.com/artifacthub/hub

@@ -48,7 +48,13 @@
                     "type": "string"
                 }
             },
-            "required": ["database", "host", "password", "port", "user"]
+            "required": [
+                "database",
+                "host",
+                "password",
+                "port",
+                "user"
+            ]
         },
         "dbMigrator": {
             "title": "Database migrator configuration",
@@ -66,10 +72,14 @@
                                     "default": "artifacthub/db-migrator"
                                 }
                             },
-                            "required": ["repository"]
+                            "required": [
+                                "repository"
+                            ]
                         }
                     },
-                    "required": ["image"]
+                    "required": [
+                        "image"
+                    ]
                 },
                 "loadSampleData": {
                     "title": "Load demo user and sample repositories",
@@ -87,7 +97,11 @@
                     "default": "/home/db-migrator/.cfg"
                 }
             },
-            "required": ["job", "loadSampleData", "configDir"]
+            "required": [
+                "job",
+                "loadSampleData",
+                "configDir"
+            ]
         },
         "email": {
             "type": "object",
@@ -115,7 +129,10 @@
                             "title": "Authentication mechanism",
                             "type": "string",
                             "default": "plain",
-                            "enum": ["login", "plain"]
+                            "enum": [
+                                "login",
+                                "plain"
+                            ]
                         },
                         "host": {
                             "title": "SMTP host",
@@ -169,7 +186,10 @@
                     "default": false
                 }
             },
-            "required": ["scanningErrors", "trackingErrors"]
+            "required": [
+                "scanningErrors",
+                "trackingErrors"
+            ]
         },
         "hub": {
             "title": "Hub configuration",
@@ -197,7 +217,9 @@
                                     "default": "artifacthub/hub"
                                 }
                             },
-                            "required": ["repository"]
+                            "required": [
+                                "repository"
+                            ]
                         },
                         "livenessProbe": {
                             "title": "Hub pod liveness probe",
@@ -230,7 +252,11 @@
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
-                    "required": ["image", "replicaCount", "resources"]
+                    "required": [
+                        "image",
+                        "replicaCount",
+                        "resources"
+                    ]
                 },
                 "ingress": {
                     "type": "object",
@@ -245,7 +271,9 @@
                                     "default": "nginx"
                                 }
                             },
-                            "required": ["kubernetes.io/ingress.class"]
+                            "required": [
+                                "kubernetes.io/ingress.class"
+                            ]
                         },
                         "enabled": {
                             "title": "Enable Hub ingress",
@@ -271,7 +299,10 @@
                             "default": []
                         }
                     },
-                    "required": ["annotations", "enabled"]
+                    "required": [
+                        "annotations",
+                        "enabled"
+                    ]
                 },
                 "server": {
                     "type": "object",
@@ -321,7 +352,9 @@
                                     "default": "changeme"
                                 }
                             },
-                            "required": ["enabled"]
+                            "required": [
+                                "enabled"
+                            ]
                         },
                         "cookie": {
                             "type": "object",
@@ -337,7 +370,9 @@
                                     "default": false
                                 }
                             },
-                            "required": ["secure"]
+                            "required": [
+                                "secure"
+                            ]
                         },
                         "csrf": {
                             "type": "object",
@@ -353,7 +388,10 @@
                                     "default": false
                                 }
                             },
-                            "required": ["authKey", "secure"]
+                            "required": [
+                                "authKey",
+                                "secure"
+                            ]
                         },
                         "motd": {
                             "title": "Message of the day",
@@ -366,7 +404,11 @@
                             "description": "The color used for the banner will be based on the severity selected.",
                             "type": "string",
                             "default": "info",
-                            "enum": ["info", "warning", "error"]
+                            "enum": [
+                                "info",
+                                "warning",
+                                "error"
+                            ]
                         },
                         "oauth": {
                             "type": "object",
@@ -506,7 +548,16 @@
                             "default": 0
                         }
                     },
-                    "required": ["allowPrivateRepositories", "baseURL", "basicAuth", "configDir", "cookie", "csrf", "shutdownTimeout", "xffIndex"]
+                    "required": [
+                        "allowPrivateRepositories",
+                        "baseURL",
+                        "basicAuth",
+                        "configDir",
+                        "cookie",
+                        "csrf",
+                        "shutdownTimeout",
+                        "xffIndex"
+                    ]
                 },
                 "service": {
                     "type": "object",
@@ -522,7 +573,10 @@
                             "default": "NodePort"
                         }
                     },
-                    "required": ["port", "type"]
+                    "required": [
+                        "port",
+                        "type"
+                    ]
                 },
                 "theme": {
                     "type": "object",
@@ -544,7 +598,10 @@
                                     "default": "#2D4857"
                                 }
                             },
-                            "required": ["primary", "secondary"]
+                            "required": [
+                                "primary",
+                                "secondary"
+                            ]
                         },
                         "images": {
                             "title": "Images used in the website",
@@ -581,7 +638,13 @@
                                     "default": "/static/media/logo/artifacthub-brand-white.svg"
                                 }
                             },
-                            "required": ["appleTouchIcon192", "appleTouchIcon512", "openGraphImage", "shortcutIcon", "websiteLogo"]
+                            "required": [
+                                "appleTouchIcon192",
+                                "appleTouchIcon512",
+                                "openGraphImage",
+                                "shortcutIcon",
+                                "websiteLogo"
+                            ]
                         },
                         "reportURL": {
                             "title": "Abuse report URL",
@@ -603,10 +666,21 @@
                             "default": "Artifact Hub"
                         }
                     },
-                    "required": ["colors", "images", "sampleQueries", "siteName"]
+                    "required": [
+                        "colors",
+                        "images",
+                        "sampleQueries",
+                        "siteName"
+                    ]
                 }
             },
-            "required": ["ingress", "service", "deploy", "server", "theme"]
+            "required": [
+                "ingress",
+                "service",
+                "deploy",
+                "server",
+                "theme"
+            ]
         },
         "imagePullSecrets": {
             "type": "array",
@@ -625,10 +699,14 @@
                     "title": "Store for images",
                     "type": "string",
                     "default": "pg",
-                    "enum": ["pg"]
+                    "enum": [
+                        "pg"
+                    ]
                 }
             },
-            "required": ["store"]
+            "required": [
+                "store"
+            ]
         },
         "log": {
             "type": "object",
@@ -637,7 +715,15 @@
                     "title": "Log level",
                     "type": "string",
                     "default": "info",
-                    "enum": ["trace", "debug", "info", "warn", "error", "fatal", "panic"]
+                    "enum": [
+                        "trace",
+                        "debug",
+                        "info",
+                        "warn",
+                        "error",
+                        "fatal",
+                        "panic"
+                    ]
                 },
                 "pretty": {
                     "title": "Enable pretty logging",
@@ -645,7 +731,10 @@
                     "default": false
                 }
             },
-            "required": ["level", "pretty"]
+            "required": [
+                "level",
+                "pretty"
+            ]
         },
         "nameOverride": {
             "type": "string",
@@ -699,7 +788,9 @@
                                     "default": "artifacthub/scanner"
                                 }
                             },
-                            "required": ["repository"]
+                            "required": [
+                                "repository"
+                            ]
                         },
                         "resources": {
                             "title": "Scanner pod resource requirements",
@@ -708,7 +799,10 @@
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
-                    "required": ["image", "resources"]
+                    "required": [
+                        "image",
+                        "resources"
+                    ]
                 },
                 "trivyURL": {
                     "title": "Trivy server url",
@@ -717,7 +811,12 @@
                     "default": ""
                 }
             },
-            "required": ["concurrency", "configDir", "cronjob", "trivyURL"]
+            "required": [
+                "concurrency",
+                "configDir",
+                "cronjob",
+                "trivyURL"
+            ]
         },
         "tracker": {
             "title": "Tracker configuration",
@@ -762,7 +861,9 @@
                                     "default": "artifacthub/tracker"
                                 }
                             },
-                            "required": ["repository"]
+                            "required": [
+                                "repository"
+                            ]
                         },
                         "resources": {
                             "title": "Tracker pod resource requirements",
@@ -771,7 +872,10 @@
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
-                    "required": ["image", "resources"]
+                    "required": [
+                        "image",
+                        "resources"
+                    ]
                 },
                 "repositoriesKinds": {
                     "title": "Repositories kinds to process ([] = all)",
@@ -793,7 +897,14 @@
                     "uniqueItems": true
                 }
             },
-            "required": ["bypassDigestCheck", "configDir", "concurrency", "cronjob", "repositoriesKinds", "repositoriesNames"]
+            "required": [
+                "bypassDigestCheck",
+                "configDir",
+                "concurrency",
+                "cronjob",
+                "repositoriesKinds",
+                "repositoriesNames"
+            ]
         },
         "trivy": {
             "title": "Trivy configuration",
@@ -805,7 +916,7 @@
                         "image": {
                             "title": "Trivy container image",
                             "type": "string",
-                            "default": "aquasec/trivy:0.23.0"
+                            "default": "aquasec/trivy:0.24.2"
                         },
                         "resources": {
                             "title": "Trivy pod resource requirements",
@@ -814,7 +925,10 @@
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         }
                     },
-                    "required": ["image", "resources"]
+                    "required": [
+                        "image",
+                        "resources"
+                    ]
                 },
                 "persistence": {
                     "type": "object",
@@ -835,13 +949,30 @@
                             "default": ""
                         }
                     },
-                    "required": ["enabled"]
+                    "required": [
+                        "enabled"
+                    ]
                 }
             },
-            "required": ["deploy", "persistence"]
+            "required": [
+                "deploy",
+                "persistence"
+            ]
         }
     },
-    "required": ["db", "dbMigrator", "hub", "images", "log", "postgresql", "pullPolicy", "restrictedHTTPClient", "tracker", "trivy", "scanner"],
+    "required": [
+        "db",
+        "dbMigrator",
+        "hub",
+        "images",
+        "log",
+        "postgresql",
+        "pullPolicy",
+        "restrictedHTTPClient",
+        "tracker",
+        "trivy",
+        "scanner"
+    ],
     "definitions": {
         "sampleQuery": {
             "type": "object",
@@ -856,7 +987,10 @@
                     "description": "Query string that defines the search filters to use. Example: ts_query_web=prometheus&official=true"
                 }
             },
-            "required": ["name", "queryString"]
+            "required": [
+                "name",
+                "queryString"
+            ]
         }
     }
 }
