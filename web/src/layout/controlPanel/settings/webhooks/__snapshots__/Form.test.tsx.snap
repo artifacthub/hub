@@ -329,7 +329,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="mb-3 row"
           >
             <div
-              class="col-12 col-xxl-8"
+              class="col-12 col-xxl-10 col-xxxl-8"
             >
               <div
                 class="position-relative"
@@ -385,7 +385,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="row"
           >
             <div
-              class="col-12 col-xxl-8"
+              class="col-12 col-xxl-10 col-xxxl-8"
             >
               <table
                 class="table table-hover table-sm border transparentBorder text-break table"
@@ -712,7 +712,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="row"
           >
             <div
-              class="col-xxl-8"
+              class="col col-xxl-10 col-xxxl-8"
             >
               <textarea
                 class="form-control textarea"
@@ -758,7 +758,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="row"
           >
             <div
-              class="col-xxl-8 overflow-auto"
+              class="col col-xxxl-8 overflow-auto"
             >
               <small
                 class="text-muted tableWrapper"

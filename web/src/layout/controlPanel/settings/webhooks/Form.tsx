@@ -440,7 +440,7 @@ const WebhookForm = (props: Props) => {
               and the configured url will be called. At least one package must be selected.
             </div>
             <div className="mb-3 row">
-              <div className="col-12 col-xxl-8">
+              <div className="col-12 col-xxl-10 col-xxxl-8">
                 <SearchPackages disabledPackages={getPackagesIds()} onSelection={addPackage} label="webhook-pkg-list" />
               </div>
             </div>
@@ -451,7 +451,7 @@ const WebhookForm = (props: Props) => {
 
             {selectedPackages.length > 0 && (
               <div className="row">
-                <div className="col-12 col-xxl-8">
+                <div className="col-12 col-xxl-10 col-xxxl-8">
                   <table className={`table table-hover table-sm border transparentBorder text-break ${styles.table}`}>
                     <thead>
                       <tr className={styles.tableTitle}>
@@ -623,7 +623,7 @@ const WebhookForm = (props: Props) => {
             )}
 
             <div className="row">
-              <div className="col-xxl-8">
+              <div className="col col-xxl-10 col-xxxl-8">
                 <AutoresizeTextarea
                   name="template"
                   value={payloadKind === PayloadKind.default ? DEFAULT_PAYLOAD_TEMPLATE : template}
@@ -642,7 +642,7 @@ const WebhookForm = (props: Props) => {
               Variables reference
             </label>
             <div className="row">
-              <div className="col-xxl-8 overflow-auto">
+              <div className="col col-xxxl-8 overflow-auto">
                 <small className={`text-muted ${styles.tableWrapper}`}>
                   <table className={`table table-sm border ${styles.variablesTable}`}>
                     <tbody>

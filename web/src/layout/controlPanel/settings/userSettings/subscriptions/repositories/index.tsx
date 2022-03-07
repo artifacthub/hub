@@ -203,7 +203,7 @@ const RepositoriesSection = (props: Props) => {
         <div className="mt-4 mt-md-5">
           {!isUndefined(optOutList) && optOutList.length > 0 && (
             <div className="row">
-              <div className="col-12 col-xxl-10">
+              <div className="col-12 col-xxxl-10">
                 <table className={`table table-bordered table-hover ${styles.table}`} data-testid="repositoriesList">
                   <thead>
                     <tr className={styles.tableTitle}>

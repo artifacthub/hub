@@ -519,7 +519,7 @@ const PackageView = (props: Props) => {
                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Manifest" />
 
                       <div
-                        className={`d-flex d-xxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
+                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={manifest} filename={`${detail.normalizedName}-rules.yaml`} />
                         <SyntaxHighlighter

@@ -396,7 +396,7 @@ const StatsView = (props: Props) => {
                     <div className="row my-4 pb-0 pb-lg-4">
                       {stats.packages.runningTotal && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.runningTotal })}>
-                          <div className="pe-0 pe-lg-3 pe-xxl-4 mt-4 mb-4 mb-lg-0">
+                          <div className="pe-0 pe-lg-3 pe-xxxl-4 mt-4 mb-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.snapshots.runningTotal!.length === 0 || isLoading) && <Loading />}
                               <ReactApexChart
@@ -412,7 +412,7 @@ const StatsView = (props: Props) => {
 
                       {stats.snapshots.runningTotal && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.runningTotal })}>
-                          <div className="ps-0 ps-lg-3 ps-xxl-4 mt-4">
+                          <div className="ps-0 ps-lg-3 ps-xxxl-4 mt-4">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.packages.runningTotal!.length === 0 || isLoading) && <Loading />}
                               <ReactApexChart
@@ -432,7 +432,7 @@ const StatsView = (props: Props) => {
                     <div className="row my-4 pb-0 pb-lg-4">
                       {stats.packages.createdMonthly && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.createdMonthly })}>
-                          <div className="pe-0 pe-lg-3 pe-xxl-4 mt-4 mb-4 mb-lg-0">
+                          <div className="pe-0 pe-lg-3 pe-xxxl-4 mt-4 mb-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.packages.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
@@ -448,7 +448,7 @@ const StatsView = (props: Props) => {
 
                       {stats.snapshots.createdMonthly && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.createdMonthly })}>
-                          <div className="ps-0 ps-lg-3 ps-xxl-4 mt-4">
+                          <div className="ps-0 ps-lg-3 ps-xxxl-4 mt-4">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.snapshots.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
@@ -520,7 +520,7 @@ const StatsView = (props: Props) => {
                   <div className="row my-4">
                     {stats.organizations.runningTotal && (
                       <div className={classnames('col-12', { 'col-lg-6': stats.users.runningTotal })}>
-                        <div className="pe-0 pe-lg-3 pe-xxl-4 pt-4">
+                        <div className="pe-0 pe-lg-3 pe-xxxl-4 pt-4">
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.organizations.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
@@ -541,7 +541,7 @@ const StatsView = (props: Props) => {
 
                     {stats.users.runningTotal && (
                       <div className={classnames('col-12', { 'col-lg-6': stats.organizations.runningTotal })}>
-                        <div className="ps-0 ps-lg-3 ps-xxl-4 pt-4">
+                        <div className="ps-0 ps-lg-3 ps-xxxl-4 pt-4">
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.users.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
