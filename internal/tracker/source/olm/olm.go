@@ -108,7 +108,8 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		return nil, err
 	}
 
-	preparePackagesChannels(packagesAvailable)
+	setPackagesChannels(packagesAvailable)
+	setPackagesDefaultChannel(packagesAvailable)
 
 	return packagesAvailable, nil
 }
@@ -512,8 +513,8 @@ func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
 	return p, nil
 }
 
-// preparePackagesChannels prepares and updates the channels in the packages
-// using the bundle format.
+// setPackagesChannels prepares and updates the channels in the packages which
+// use the bundle format when needed.
 //
 // At the moment, when registering an OLM operator package in Artifact Hub, the
 // the latest version of the package is expected to provide all channels
@@ -522,12 +523,7 @@ func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
 // file. However, when using the Bundle format, this information is not
 // available on a single location, so it needs to be prepared from the data
 // available in all packages' versions.
-func preparePackagesChannels(packages map[string]*hub.Package) {
-	usesBundleFormat := func(p *hub.Package) bool {
-		format, ok := p.Data[formatKey].(string)
-		return ok && format == bundle
-	}
-
+func setPackagesChannels(packages map[string]*hub.Package) {
 	// Pass 1: track latest packages' channels version
 	channels := make(map[string]map[string]string) // packageName:channelName:channelVersion
 	for _, p := range packages {
@@ -573,6 +569,48 @@ func preparePackagesChannels(packages map[string]*hub.Package) {
 		}
 		p.Channels = preparedChannels[p.Name]
 	}
+}
+
+// setPackagesDefaultChannel updates the default channel in the latest version
+// of packages which use the bundle format when it does not contain one. The
+// channel will be obtained from the highest semver version that has a default
+// channel set.
+func setPackagesDefaultChannel(packages map[string]*hub.Package) {
+	// Track latest version of each package and the latest default channel
+	latestPackage := make(map[string]*hub.Package)  // packageName
+	latestDefaultChannel := make(map[string]string) // packageName:channelName
+	for k, p := range packages {
+		if !usesBundleFormat(p) {
+			continue
+		}
+		name, version := pkg.ParseKey(k)
+		if _, ok := latestPackage[name]; !ok {
+			latestPackage[name] = p
+			latestDefaultChannel[name] = p.DefaultChannel
+		} else {
+			versionSV, _ := semver.StrictNewVersion(version)
+			latestVersionSV, _ := semver.StrictNewVersion(latestPackage[name].Version)
+			if versionSV.GreaterThan(latestVersionSV) {
+				latestPackage[name] = p
+				if p.DefaultChannel != "" {
+					latestDefaultChannel[name] = p.DefaultChannel
+				}
+			}
+		}
+	}
+
+	// Set default channel in packages' latest version when it doesn't have one
+	for name, p := range latestPackage {
+		if p.DefaultChannel == "" {
+			p.DefaultChannel = latestDefaultChannel[name]
+		}
+	}
+}
+
+// usesBundleFormat checks if the provided package uses the bundle format.
+func usesBundleFormat(p *hub.Package) bool {
+	format, ok := p.Data[formatKey].(string)
+	return ok && format == bundle
 }
 
 // imagesContain is a helper to check if the image provided is already in a
