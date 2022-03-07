@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PackageCard renders correctly 1`] = `
+exports[`SearchCard creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="col-12 col-xxl-6 col-xxxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative undefined"
+    class="col-12 col-xxxl-6 py-sm-3 py-2 cardWrapper"
     role="listitem"
   >
     <div
-      class="card cardWithHover h-100 card"
+      class="card cardWithHover h-100 mw-100 bg-white card undefined"
     >
       <a
-        class="text-decoration-none text-reset h-100"
+        class="text-decoration-none text-reset h-100 bg-transparent link"
         href="/packages/helm/stable/test"
       >
         <div
@@ -46,55 +46,6 @@ exports[`PackageCard renders correctly 1`] = `
                       class="text-truncate title"
                     >
                       Pretty name
-                    </div>
-                    <div
-                      class="d-none d-xxl-flex d-xxxl-none flex-column ms-2"
-                    >
-                      <div
-                        class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
-                      >
-                        <span
-                          class="visually-hidden"
-                        >
-                          Helm chart
-                        </span>
-                        <button
-                          aria-hidden="true"
-                          aria-label="Filter by Helm chart repository kind"
-                          class="btn btn-link m-0 p-0"
-                          data-testid="repoIconLabelLink"
-                          tabindex="-1"
-                        >
-                          <span
-                            class="badge bg-light text-dark rounded-pill border bg badge"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-center"
-                            >
-                              <div
-                                aria-hidden="true"
-                                class="position-relative icon undefined"
-                              >
-                                <img
-                                  alt="Icon"
-                                  class="mw-100 mh-100 iconLight"
-                                  src="/static/media/helm-chart.svg"
-                                />
-                                <img
-                                  alt="Icon"
-                                  class="mw-100 mh-100 iconDark"
-                                  src="/static/media/helm-chart-light.svg"
-                                />
-                              </div>
-                              <div
-                                class="ms-1"
-                              >
-                                Helm chart
-                              </div>
-                            </div>
-                          </span>
-                        </button>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -505,7 +456,7 @@ exports[`PackageCard renders correctly 1`] = `
                 </div>
               </div>
               <div
-                class="d-none d-md-flex d-xxl-none d-xxxl-flex flex-column align-items-end mb-auto ms-2"
+                class="d-none d-lg-flex d-xxl-flex flex-column align-items-end mb-auto ms-2"
               >
                 <div
                   class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
@@ -570,16 +521,7 @@ exports[`PackageCard renders correctly 1`] = `
             desc
           </div>
           <div
-            class="d-none d-xxl-block d-xxxl-none text-end mt-2"
-          >
-            <small
-              class="text-muted text-nowrap date"
-            >
-              Updated Invalid date
-            </small>
-          </div>
-          <div
-            class="d-flex d-md-none d-xxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-md-0 mt-1 mt-md-0 mt-xxl-1 mt-xxxl-0"
+            class="d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0"
           >
             <small
               class="text-muted text-nowrap date"
@@ -636,7 +578,64 @@ exports[`PackageCard renders correctly 1`] = `
           </div>
           <div
             class="d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto labelsWrapper"
-          />
+          >
+            <div
+              class="d-inline mt-3"
+            >
+              <button
+                aria-hidden="true"
+                aria-label="Open security report"
+                class="btn btn-link text-reset p-0 position-relative link"
+                tabindex="-1"
+              >
+                <div
+                  class="position-relative undefined"
+                >
+                  <div
+                    data-testid="elementWithTooltip"
+                  >
+                    <div
+                      class="fw-bold undefined"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center overflow-hidden labelWrapper custom"
+                      >
+                        <div
+                          class="text-center border border-end-0 position-relative labelIconWrapper iconWrapper"
+                          data-testid="label-wrapper"
+                          style="background-color: rgb(150, 0, 3);"
+                        >
+                          <span
+                            class=""
+                          >
+                            <span
+                              class="position-relative ratingLetter"
+                            >
+                              F
+                            </span>
+                          </span>
+                        </div>
+                        <div
+                          class="text-nowrap border fw-bold labelText"
+                        >
+                          <span
+                            class="d-none d-sm-inline"
+                          >
+                            Images Security Rating
+                          </span>
+                          <span
+                            class="d-inline d-sm-none"
+                          >
+                            Security Rating
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
       </a>
     </div>

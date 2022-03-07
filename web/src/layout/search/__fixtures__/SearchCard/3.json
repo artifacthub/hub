@@ -1,0 +1,15 @@
+{
+  "packageId": "id",
+  "name": "test",
+  "normalizedName": "test",
+  "displayName": "Pretty name",
+  "description": "desc",
+  "appVersion": "1.0.0",
+  "repository": {
+    "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+    "kind": 0,
+    "name": "stable",
+    "url": "repoUrl",
+    "userAlias": "user"
+  }
+}

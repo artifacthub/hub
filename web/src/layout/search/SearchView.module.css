@@ -58,7 +58,7 @@
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1400px) {
   .sidebar {
     width: 320px;
     min-width: 320px;
