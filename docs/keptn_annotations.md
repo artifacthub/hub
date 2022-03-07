@@ -6,7 +6,7 @@ You can provide some extra information about your Keptn integrations by using th
 
 - **keptn/kind** *(string)*
 
-This annotation allows providing the kind of the integration. Supported values: *webhook*, *testing*, *deployment*, *notification*, *observability* and *sli-provider*. It's possible to add multiple kinds by using a comma separated list, like shown in the example below.
+This annotation allows providing the kind of the integration. Supported values: *webhook*, *testing*, *deployment*, *notification*, *observability*, *remediation* and *sli-provider*. It's possible to add multiple kinds by using a comma separated list, like shown in the example below.
 
 - **keptn/version** *(string)*
 
