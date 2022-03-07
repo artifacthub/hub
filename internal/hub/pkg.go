@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	trivyreport "github.com/aquasecurity/trivy/pkg/report"
+	trivy "github.com/aquasecurity/trivy/pkg/types"
 )
 
 const (
@@ -196,11 +196,11 @@ type Screenshot struct {
 // SnapshotSecurityReport represents some information about the security
 // vulnerabilities the images used by a given package's snapshot may have.
 type SnapshotSecurityReport struct {
-	PackageID     string                         `json:"package_id"`
-	Version       string                         `json:"version"`
-	AlertDigest   string                         `json:"alert_digest"`
-	ImagesReports map[string]*trivyreport.Report `json:"images_reports"`
-	Summary       *SecurityReportSummary         `json:"summary"`
+	PackageID     string                   `json:"package_id"`
+	Version       string                   `json:"version"`
+	AlertDigest   string                   `json:"alert_digest"`
+	ImagesReports map[string]*trivy.Report `json:"images_reports"`
+	Summary       *SecurityReportSummary   `json:"summary"`
 }
 
 // SecurityReportSummary represents a summary of the security report.
