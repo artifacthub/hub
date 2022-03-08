@@ -17,7 +17,6 @@ import getSampleQueries from '../../utils/getSampleQueries';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
-import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
 import SampleQueries from '../common/SampleQueries';
 import Sidebar from '../common/Sidebar';
@@ -27,6 +26,7 @@ import FilterBadge from './FilterBadge';
 import Filters from './Filters';
 import MoreActionsButton from './MoreActionsButton';
 import PaginationLimit from './PaginationLimit';
+import SearchCard from './SearchCard';
 import styles from './SearchView.module.css';
 import SortOptions from './SortOptions';
 
@@ -639,7 +639,7 @@ const SearchView = (props: Props) => {
                     <div className="mb-2 noFocus" id="content" tabIndex={-1} aria-label="Packages list">
                       <div className="row" role="list">
                         {searchResults.packages.map((item: Package) => (
-                          <PackageCard
+                          <SearchCard
                             key={item.packageId}
                             package={item}
                             searchUrlReferer={{

@@ -1,3 +1,26 @@
+.card {
+  box-shadow: 0px 0px 5px 0px var(--bs-light);
+}
+
+@media (hover: hover) {
+  .card:hover {
+    border-color: var(--color-black-50);
+    box-shadow: 0px 0px 5px 0px var(--color-black-75);
+  }
+}
+
+.body {
+  padding: 1.75rem !important;
+}
+
+.link {
+  color: var(--gray-dark);
+}
+
+.link:hover {
+  color: inherit;
+}
+
 .imageWrapper {
   min-width: 80px;
   width: 80px;
@@ -104,6 +127,10 @@
     max-width: calc(100% - 9px);
     max-height: calc(100% - 9px);
   }
+
+  .body {
+    padding: 1rem !important;
+  }
 }
 
 @media only screen and (min-width: 992px) {
@@ -117,12 +144,20 @@
   }
 }
 
-@media only screen and (min-width: 1400px) and (max-width: 1991.98px) {
-  .title {
-    font-size: 1.05rem;
+@media only screen and (min-width: 768px) {
+  .card {
+    min-height: 215px;
   }
+}
 
-  .imageWrapper {
-    margin: 0.25rem 0;
+@media (hover: hover) {
+  .link:hover {
+    text-decoration: underline;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .cardWrapper {
+    padding: 0 1rem;
   }
 }
