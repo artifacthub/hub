@@ -53,6 +53,21 @@ describe('SignedBadge', () => {
     expect(screen.getByText(/(Sigstore)/)).toBeInTheDocument();
   });
 
+  it('renders label for Container image with Cosign signature', async () => {
+    render(<SignedBadge repositoryKind={12} signed signatures={[Signature.Cosign]} />);
+    expect(screen.getByText('Signed')).toBeInTheDocument();
+
+    const badge = screen.getByTestId('elementWithTooltip');
+    expect(badge).toBeInTheDocument();
+    userEvent.hover(badge);
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+
+    expect(screen.getByText(/This container image has been signed with/)).toBeInTheDocument();
+    expect(screen.getByText('cosign')).toBeInTheDocument();
+    expect(screen.getByText(/(Sigstore)/)).toBeInTheDocument();
+  });
+
   it('renders label for Helm package with more than one signature', async () => {
     render(<SignedBadge repositoryKind={0} signed signatures={[Signature.Prov, Signature.Cosign]} />);
     expect(screen.getByText('Signed')).toBeInTheDocument();
@@ -69,7 +84,7 @@ describe('SignedBadge', () => {
     expect(screen.getByText(/(Sigstore)/)).toBeInTheDocument();
   });
 
-  it('does not render label for not helm package', () => {
+  it('does not render label for not helm package or container image', () => {
     render(<SignedBadge repositoryKind={1} signed signatures={[Signature.Prov]} />);
     expect(screen.getByText('Signed')).toBeInTheDocument();
 

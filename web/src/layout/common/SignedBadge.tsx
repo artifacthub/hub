@@ -15,24 +15,40 @@ interface Props {
   repositoryKind?: RepositoryKind;
 }
 
-interface Messages {
-  [key: string]: JSX.Element;
-}
+const getMessage = (sign: Signature, repoKind?: RepositoryKind): JSX.Element => {
+  if (isUndefined(repoKind)) return <></>;
 
-const signMessages: Messages = {
-  [Signature.Prov]: <>This chart has a provenance file</>,
-  [Signature.Cosign]: (
-    <span>
-      This chart has been signed with <span className="fw-bold">cosign</span> (Sigstore)
-    </span>
-  ),
+  let pkgName: string = '';
+  switch (repoKind) {
+    case RepositoryKind.Helm:
+      pkgName = 'chart';
+      break;
+
+    case RepositoryKind.Container:
+      pkgName = 'container image';
+      break;
+  }
+
+  switch (sign) {
+    case Signature.Prov:
+      return <>This {pkgName} has a provenance file</>;
+
+    case Signature.Cosign:
+      return (
+        <span>
+          This {pkgName} has been signed with <span className="fw-bold">cosign</span> (Sigstore)
+        </span>
+      );
+  }
 };
+
+const SIGNED_REPO_KINDS = [RepositoryKind.Helm, RepositoryKind.Container];
 
 const SignedBadge = (props: Props) => {
   const getTooltipMessage = (): JSX.Element | string => {
     if (props.signatures) {
       if (props.signatures.length === 1) {
-        return signMessages[props.signatures[0]];
+        return getMessage(props.signatures[0], props.repositoryKind);
       } else {
         return (
           <>
@@ -43,7 +59,7 @@ const SignedBadge = (props: Props) => {
                   key={`message_${sign}`}
                 >
                   <BsDot className={`mt-1 position-relative ${styles.iconDot}`} />
-                  <div className="text-start">{signMessages[sign]}</div>
+                  <div className="text-start">{getMessage(sign, props.repositoryKind)}</div>
                 </div>
               );
             })}
@@ -62,10 +78,10 @@ const SignedBadge = (props: Props) => {
       active={props.signed}
       className={props.className}
       element={<Label text="Signed" icon={<FaAward />} />}
-      tooltipWidth={340}
+      tooltipWidth={385}
       tooltipMessage={message}
       visibleTooltip={
-        !isUndefined(props.repositoryKind) && props.repositoryKind === RepositoryKind.Helm && message !== ''
+        !isUndefined(props.repositoryKind) && SIGNED_REPO_KINDS.includes(props.repositoryKind) && message !== ''
       }
     />
   );
