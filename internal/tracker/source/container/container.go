@@ -16,6 +16,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
@@ -54,6 +55,11 @@ const (
 	securityUpdatesAnnotation      = "io.artifacthub.package.contains-security-updates"
 )
 
+const (
+	// Signatures kinds supported
+	cosign = "cosign"
+)
+
 var (
 	// errUnsupportedMediaType indicates that the image media type is not
 	// supported and should not be processed.
@@ -74,12 +80,20 @@ var (
 // TrackerSource is a hub.TrackerSource implementation for containers images
 // repositories.
 type TrackerSource struct {
-	i *hub.TrackerSourceInput
+	i  *hub.TrackerSourceInput
+	sc hub.OCISignatureChecker
 }
 
 // NewTrackerSource creates a new TrackerSource instance.
-func NewTrackerSource(i *hub.TrackerSourceInput) *TrackerSource {
-	return &TrackerSource{i: i}
+func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource)) *TrackerSource {
+	s := &TrackerSource{i: i}
+	for _, o := range opts {
+		o(s)
+	}
+	if s.sc == nil {
+		s.sc = &oci.SignatureChecker{}
+	}
+	return s
 }
 
 // GetPackagesAvailable implements the TrackerSource interface.
@@ -131,7 +145,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 				<-limiter
 				wg.Done()
 			}()
-			p, err := PreparePackage(s.i.Svc.Ctx, s.i.Svc.Cfg, s.i.Svc.Hc, s.i.Svc.Is, s.i.Repository, tag)
+			p, err := PreparePackage(s.i.Svc.Ctx, s.i.Svc.Cfg, s.i.Svc.Hc, s.i.Svc.Is, s.sc, s.i.Repository, tag)
 			if err != nil {
 				s.warn(fmt.Errorf("error preparing package (tag: %s): %w", tag, err))
 				return
@@ -160,11 +174,13 @@ func PreparePackage(
 	cfg *viper.Viper,
 	hc hub.HTTPClient,
 	is img.Store,
+	sc hub.OCISignatureChecker,
 	r *hub.Repository,
 	tag string,
 ) (*hub.Package, error) {
 	// Get container image metadata
-	md, err := getMetadata(ctx, cfg, r, tag)
+	imageRef := fmt.Sprintf("%s:%s", strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix), tag)
+	md, err := getMetadata(ctx, cfg, r, imageRef)
 	if err != nil {
 		return nil, fmt.Errorf("error getting metadata: %w", err)
 	}
@@ -307,6 +323,20 @@ func PreparePackage(
 		p.Data["alternativeLocations"] = alternativeLocations
 	}
 
+	// Signature
+	hasCosignSignature, err := sc.HasCosignSignature(
+		ctx,
+		imageRef,
+		r.AuthUser,
+		r.AuthPass,
+	)
+	if err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("error checking cosign signature: %w", err))
+	} else if hasCosignSignature {
+		p.Signed = true
+		p.Signatures = []string{cosign}
+	}
+
 	if errs.ErrorOrNil() != nil {
 		return nil, errs
 	}
@@ -316,9 +346,14 @@ func PreparePackage(
 // getMetadata returns the metadata available in annotations and labels in the
 // container image identified by the reference provided. Depending on the image
 // media type the metadata will be obtained from annotations or labels.
-func getMetadata(ctx context.Context, cfg *viper.Viper, r *hub.Repository, tag string) (map[string]string, error) {
+func getMetadata(
+	ctx context.Context,
+	cfg *viper.Viper,
+	r *hub.Repository,
+	imageRef string,
+) (map[string]string, error) {
 	// Prepare options for remote operations
-	ref, err := name.ParseReference(fmt.Sprintf("%s:%s", strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix), tag))
+	ref, err := name.ParseReference(imageRef)
 	if err != nil {
 		return nil, err
 	}
