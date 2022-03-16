@@ -143,6 +143,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                           data-testid="repoUrl"
                         >
                           <div
+                            class="d-flex flex-row flex-wrap undefined"
                             data-testid="attachedIconToTextWrapper"
                             style="line-height: 21px;"
                           >
@@ -348,6 +349,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                             data-testid="repoUrl"
                           >
                             <div
+                              class="d-flex flex-row flex-wrap undefined"
                               data-testid="attachedIconToTextWrapper"
                               style="line-height: 21px;"
                             >
