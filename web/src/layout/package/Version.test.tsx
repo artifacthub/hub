@@ -86,11 +86,22 @@ describe('Version', () => {
     it('renders linked channel badge', () => {
       render(
         <Router>
-          <Version {...defaultProps} linkedChannel="stable" />
+          <Version {...defaultProps} linkedChannels={['stable']} />
         </Router>
       );
 
       expect(screen.getByText('stable')).toBeInTheDocument();
+    });
+
+    it('renders some linked channels badge', () => {
+      render(
+        <Router>
+          <Version {...defaultProps} linkedChannels={['stable', 'candidate']} />
+        </Router>
+      );
+
+      expect(screen.getByText('stable')).toBeInTheDocument();
+      expect(screen.getByText('candidate')).toBeInTheDocument();
     });
 
     it('renders security updates badge', () => {

@@ -102,13 +102,28 @@ describe('VersionInRow', () => {
         <Router>
           <table>
             <tbody>
-              <VersionInRow {...defaultProps} linkedChannel="stable" />
+              <VersionInRow {...defaultProps} linkedChannels={['stable']} />
             </tbody>
           </table>
         </Router>
       );
 
       expect(screen.getByText('stable')).toBeInTheDocument();
+    });
+
+    it('renders some linked channels badge', () => {
+      render(
+        <Router>
+          <table>
+            <tbody>
+              <VersionInRow {...defaultProps} linkedChannels={['stable', 'candidate']} />
+            </tbody>
+          </table>
+        </Router>
+      );
+
+      expect(screen.getByText('stable')).toBeInTheDocument();
+      expect(screen.getByText('candidate')).toBeInTheDocument();
     });
 
     it('renders security updates badge', () => {

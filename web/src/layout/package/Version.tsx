@@ -11,7 +11,7 @@ interface Props {
   version: string;
   containsSecurityUpdates: boolean;
   prerelease: boolean;
-  linkedChannel?: string;
+  linkedChannels?: string[];
   ts: number;
   normalizedName: string;
   repository: Repository;
@@ -43,16 +43,24 @@ const Version = (props: Props) => {
 
   const getBadges = () => (
     <>
-      {(props.containsSecurityUpdates || props.prerelease || props.linkedChannel) && (
+      {(props.containsSecurityUpdates || props.prerelease || props.linkedChannels) && (
         <div className={`d-flex flex-column mb-1 ${styles.badgesWrapper}`}>
-          {props.linkedChannel && (
-            <div className="d-flex flex-row align-items-center">
-              <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-              <span className={`badge rounded-pill my-1 text-truncate border ${styles.badge} ${styles.isHighlighted}`}>
-                <small className="text-uppercase me-1">Channel:</small>
-                {props.linkedChannel}
-              </span>
-            </div>
+          {props.linkedChannels && (
+            <>
+              {props.linkedChannels.map((channel: string) => {
+                return (
+                  <div key={`v_channel_${channel}`} className="d-flex flex-row align-items-center">
+                    <div className={`${styles.badgeDecorator} position-relative mx-1`} />
+                    <span
+                      className={`badge rounded-pill my-1 text-truncate border ${styles.badge} ${styles.isHighlighted}`}
+                    >
+                      <small className="text-uppercase me-1">Channel:</small>
+                      {channel}
+                    </span>
+                  </div>
+                );
+              })}
+            </>
           )}
 
           {props.prerelease && (

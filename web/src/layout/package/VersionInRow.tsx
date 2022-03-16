@@ -10,7 +10,7 @@ interface Props {
   version: string;
   containsSecurityUpdates: boolean;
   prerelease: boolean;
-  linkedChannel?: string;
+  linkedChannels?: string[];
   ts: number;
   normalizedName: string;
   repository: Repository;
@@ -33,23 +33,32 @@ const VersionInRow = (props: Props) => {
   return (
     <tr>
       <td className={`w-75 ${styles.versionCell}`}>
-        <div className="d-flex flex-row align-items-center px-1">
+        <div className="d-flex flex-row align-items-center px-1 overflow-auto">
           {props.isActive ? (
             <div className={`${styles.activeVersion} text-truncate`}>{props.version}</div>
           ) : (
             <button
               onClick={() => openPackagePage()}
-              className="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block text-start"
+              className={`btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block text-start ${styles.versionBtn}`}
               aria-label={`Open version ${props.version}`}
             >
               {props.version}
             </button>
           )}
-          {props.linkedChannel && (
-            <span className={`badge rounded-pill me-2 border ${styles.badge} ${styles.isHighlighted}`}>
-              <small className="text-uppercase me-1">Channel:</small>
-              {props.linkedChannel}
-            </span>
+          {props.linkedChannels && (
+            <>
+              {props.linkedChannels.map((channel: string) => {
+                return (
+                  <span
+                    key={`vir_channel_${channel}`}
+                    className={`badge rounded-pill me-2 border ${styles.badge} ${styles.isHighlighted}`}
+                  >
+                    <small className="text-uppercase me-1">Channel:</small>
+                    {channel}
+                  </span>
+                );
+              })}
+            </>
           )}
           {props.prerelease && <span className={`badge rounded-pill me-2 border ${styles.badge}`}>Pre-release</span>}
           {props.containsSecurityUpdates && (

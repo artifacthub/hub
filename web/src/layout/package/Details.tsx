@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isNull } from 'lodash';
+import { isNull, uniq } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -70,27 +70,39 @@ const Details = (props: Props) => {
     let items: JSX.Element[] = [];
     let itemsForModal: JSX.Element[] = [];
 
-    const getLinkedChannelToVersion = (version: string): string | undefined => {
-      let channelName: string | undefined;
+    const getLinkedChannelsToVersion = (version: string): string[] | undefined => {
+      let linked: string[] | undefined;
       if (props.channels) {
-        const channel = props.channels.find((ch: Channel) => ch.version === version);
-        if (channel) {
-          channelName = channel.name;
+        const channels: string[] = [];
+        props.channels.forEach((ch: Channel) => {
+          if (ch.version === version) {
+            channels.push(ch.name);
+          }
+        });
+        // Sort channels: using defaultChannel as first one
+        if (channels.length > 0) {
+          const sortedChannels = uniq(channels).sort((a, b) => {
+            if (a === props.package.defaultChannel) return -1;
+            if (b === props.package.defaultChannel) return 1;
+            return 0;
+          });
+
+          linked = sortedChannels;
         }
       }
 
-      return channelName;
+      return linked;
     };
 
     props.sortedVersions.forEach((av_version: VersionData, index: number) => {
-      const linkedChannel = getLinkedChannelToVersion(av_version.version);
+      const linkedChannels = getLinkedChannelsToVersion(av_version.version);
 
       items.push(
         <Version
           key={`${av_version.version}_${index}`}
           isActive={av_version.version === props.package.version}
           {...av_version}
-          linkedChannel={linkedChannel}
+          linkedChannels={linkedChannels}
           normalizedName={props.package.normalizedName}
           repository={props.package.repository}
           searchUrlReferer={props.searchUrlReferer}
@@ -103,7 +115,7 @@ const Details = (props: Props) => {
           key={`${av_version.version}_inline_${index}`}
           isActive={av_version.version === props.package.version}
           {...av_version}
-          linkedChannel={linkedChannel}
+          linkedChannels={linkedChannels}
           normalizedName={props.package.normalizedName}
           repository={props.package.repository}
           searchUrlReferer={props.searchUrlReferer}
@@ -138,6 +150,7 @@ const Details = (props: Props) => {
     props.package.version,
     props.searchUrlReferer,
     props.sortedVersions,
+    props.package.defaultChannel,
   ]);
   const [versions, setVersions] = useState<VersionsProps>(getAllVersions());
 
