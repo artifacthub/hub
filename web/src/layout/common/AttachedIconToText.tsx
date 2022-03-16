@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -39,7 +38,7 @@ const AttachedIconToText = (props: Props) => {
     <div
       data-testid="attachedIconToTextWrapper"
       ref={ref}
-      className={props.className}
+      className={`d-flex flex-row flex-wrap ${props.className}`}
       style={{
         fontSize: reducedFontSize ? '90%' : 'inherit',
         lineHeight: `${lineHeight}px`,
@@ -60,7 +59,7 @@ const AttachedIconToText = (props: Props) => {
           );
         }
       })}
-      <div ref={icon} className={classnames('d-inline-block', { 'position-absolute': reducedFontSize })}>
+      <div ref={icon} className="d-inline-block">
         {props.icon}
       </div>
     </div>
