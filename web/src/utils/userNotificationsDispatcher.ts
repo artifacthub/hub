@@ -130,7 +130,7 @@ export class UserNotificationsDispatcher {
       if (
         this.settings.enabled &&
         this.settings.displayed.length < this.notifications.length &&
-        // Only display a maximun of 1 notification per day when dateLimit is true
+        // Only display a maximum of 1 notification per day when dateLimit is true
         hasToBeDisplayedNewNotification(dateLimit, this.settings.lastDisplayedTime)
       ) {
         let notDisplayedNotifications = groupBy(
