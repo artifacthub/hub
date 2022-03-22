@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CapatabilityLevelInfoModal creates snapshot 1`] = `
+exports[`CapabilityLevelInfoModal creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-none d-lg-inline-block ms-2"
