@@ -492,7 +492,7 @@ func TestDeleteUser(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error sending account deleted email nofication", func(t *testing.T) {
+	t.Run("error sending account deleted email notification", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, deleteUserDBQ, "userID", codeHashed).Return("email", nil)
@@ -585,7 +585,7 @@ func TestDisableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error sending tfa enabled email nofication", func(t *testing.T) {
+	t.Run("error sending tfa enabled email notification", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
@@ -694,7 +694,7 @@ func TestEnableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error sending tfa enabled email nofication", func(t *testing.T) {
+	t.Run("error sending tfa enabled email notification", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
