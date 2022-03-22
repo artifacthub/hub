@@ -3087,7 +3087,7 @@ exports[`Schema creates snapshot 1`] = `
         <div
           class="text-truncate comment"
         >
-          # GitHub oauth scopes
+          # GitHub OAuth scopes
         </div>
         <span
           class=""
@@ -3153,7 +3153,7 @@ exports[`Schema creates snapshot 1`] = `
                   <div
                     class="fw-bold text-truncate"
                   >
-                    GitHub oauth scopes
+                    GitHub OAuth scopes
                   </div>
                   <div
                     class="d-flex flex-row align-items-start w-100"
@@ -3241,7 +3241,7 @@ exports[`Schema creates snapshot 1`] = `
         <div
           class="text-truncate comment"
         >
-          # GitHub oauth client id
+          # GitHub OAuth client id
         </div>
         <span
           class=""
@@ -3300,7 +3300,7 @@ exports[`Schema creates snapshot 1`] = `
                   <div
                     class="fw-bold text-truncate"
                   >
-                    GitHub oauth client id
+                    GitHub OAuth client id
                   </div>
                   <div
                     class="d-flex flex-row align-items-start w-100"
@@ -3368,7 +3368,7 @@ exports[`Schema creates snapshot 1`] = `
         <div
           class="text-truncate comment"
         >
-          # GitHub oauth redirect url
+          # GitHub OAuth redirect url
         </div>
         <span
           class=""
@@ -3427,7 +3427,7 @@ exports[`Schema creates snapshot 1`] = `
                   <div
                     class="fw-bold text-truncate"
                   >
-                    GitHub oauth redirect url
+                    GitHub OAuth redirect url
                   </div>
                   <div
                     class="d-flex flex-row align-items-start w-100"
@@ -3495,7 +3495,7 @@ exports[`Schema creates snapshot 1`] = `
         <div
           class="text-truncate comment"
         >
-          # GitHub oauth client secret
+          # GitHub OAuth client secret
         </div>
         <span
           class=""
@@ -3554,7 +3554,7 @@ exports[`Schema creates snapshot 1`] = `
                   <div
                     class="fw-bold text-truncate"
                   >
-                    GitHub oauth client secret
+                    GitHub OAuth client secret
                   </div>
                   <div
                     class="d-flex flex-row align-items-start w-100"

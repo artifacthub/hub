@@ -138,23 +138,23 @@
                       "items": {
                         "type": "string"
                       },
-                      "title": "GitHub oauth scopes",
+                      "title": "GitHub OAuth scopes",
                       "default": ["read:user", "user:email"],
                       "uniqueItems": true
                     },
                     "clientID": {
                       "type": "string",
-                      "title": "GitHub oauth client id",
+                      "title": "GitHub OAuth client id",
                       "default": ""
                     },
                     "redirectURL": {
                       "type": "string",
-                      "title": "GitHub oauth redirect url",
+                      "title": "GitHub OAuth redirect url",
                       "default": ""
                     },
                     "clientSecret": {
                       "type": "string",
-                      "title": "GitHub oauth client secret",
+                      "title": "GitHub OAuth client secret",
                       "default": ""
                     }
                   }

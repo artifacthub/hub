@@ -417,27 +417,27 @@
                                     "type": "object",
                                     "properties": {
                                         "enabled": {
-                                            "title": "Enable GitHub oauth",
+                                            "title": "Enable GitHub OAuth",
                                             "type": "boolean",
                                             "default": false
                                         },
                                         "clientID": {
-                                            "title": "GitHub oauth client id",
+                                            "title": "GitHub OAuth client id",
                                             "type": "string",
                                             "default": ""
                                         },
                                         "clientSecret": {
-                                            "title": "GitHub oauth client secret",
+                                            "title": "GitHub OAuth client secret",
                                             "type": "string",
                                             "default": ""
                                         },
                                         "redirectURL": {
-                                            "title": "GitHub oauth redirect url",
+                                            "title": "GitHub OAuth redirect url",
                                             "type": "string",
                                             "default": ""
                                         },
                                         "scopes": {
-                                            "title": "GitHub oauth scopes",
+                                            "title": "GitHub OAuth scopes",
                                             "type": "array",
                                             "items": {
                                                 "type": "string"

@@ -67,7 +67,7 @@ describe('SchemaLine', () => {
     it('renders array type with default value', () => {
       render(<SchemaLine {...getProps('6')} onActivePathChange={onActivePathChangeMock} />);
 
-      expect(screen.getByText('# GitHub oauth scopes')).toBeInTheDocument();
+      expect(screen.getByText('# GitHub OAuth scopes')).toBeInTheDocument();
       expect(screen.getByText('scopes:')).toBeInTheDocument();
 
       const defaultValue = screen.getByTestId('defaultValue');
