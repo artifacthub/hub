@@ -3881,7 +3881,7 @@ components:
             low:
               type: number
               nullable: false
-            unkown:
+            unknown:
               type: number
               nullable: false
         all_containers_images_whitelisted:
