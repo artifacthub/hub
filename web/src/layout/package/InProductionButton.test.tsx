@@ -99,7 +99,7 @@ describe('InProductionButton', () => {
       </AppCtx.Provider>
     );
 
-    userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+    userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
     await waitFor(() => {
       expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -121,7 +121,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        const button = screen.getByRole('button', { name: /Open organzations menu/ });
+        const button = screen.getByRole('button', { name: /Open organizations menu/ });
         expect(button).toBeInTheDocument();
         expect(button).not.toBeDisabled();
         userEvent.click(button);
@@ -175,7 +175,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        const button = screen.getByRole('button', { name: /Open organzations menu/ });
+        const button = screen.getByRole('button', { name: /Open organizations menu/ });
         expect(button).toBeInTheDocument();
         expect(button).not.toBeDisabled();
         userEvent.click(button);
@@ -210,7 +210,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -258,7 +258,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -306,7 +306,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -338,7 +338,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -370,7 +370,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -419,7 +419,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -464,7 +464,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -513,7 +513,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organzations menu/ }));
+        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -554,7 +554,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        const btn = screen.getByRole('button', { name: /Open organzations menu/ });
+        const btn = screen.getByRole('button', { name: /Open organizations menu/ });
         expect(btn).toBeInTheDocument();
         expect(btn).toHaveClass('disabled');
 
@@ -577,7 +577,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        const btn = screen.getByRole('button', { name: /Open organzations menu/ });
+        const btn = screen.getByRole('button', { name: /Open organizations menu/ });
         expect(btn).toBeInTheDocument();
         expect(btn).toHaveClass('disabled');
       });
