@@ -241,7 +241,7 @@ const SearchRepositories = (props: Props) => {
         <div ref={dropdownRef} className={`dropdown-menu w-100 p-0 shadow-sm show overflow-hidden ${styles.dropdown}`}>
           {repositories.length === 0 ? (
             <p className="m-3 text-center">
-              We can't seem to find any repositores that match your search for{' '}
+              We can't seem to find any repositories that match your search for{' '}
               <span className="fw-bold">{searchName}</span>
             </p>
           ) : (
