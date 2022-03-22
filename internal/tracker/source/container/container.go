@@ -91,7 +91,7 @@ func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource))
 		o(s)
 	}
 	if s.sc == nil {
-		s.sc = &oci.SignatureChecker{}
+		s.sc = oci.NewSignatureChecker(i.Svc.Op)
 	}
 	return s
 }

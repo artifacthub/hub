@@ -72,7 +72,7 @@ func main() {
 		ImageStore:          pg.NewImageStore(cfg, db, hc),
 		Authorizer:          az,
 		HTTPClient:          hc,
-		OCIPuller:           &oci.Puller{},
+		OCIPuller:           oci.NewPuller(cfg),
 		ViewsTracker:        vt,
 	}
 	h, err := handlers.Setup(ctx, cfg, hSvc)

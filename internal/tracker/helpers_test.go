@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/spf13/viper"
@@ -235,6 +236,9 @@ func TestSetupSource(t *testing.T) {
 
 			i := &hub.TrackerSourceInput{
 				Repository: tc.r,
+				Svc: &hub.TrackerSourceServices{
+					Op: &oci.PullerMock{},
+				},
 			}
 			source := SetupSource(i)
 			assert.Equal(t, tc.expectedType, reflect.TypeOf(source).String())

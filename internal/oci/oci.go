@@ -15,6 +15,7 @@ import (
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 	csremote "github.com/sigstore/cosign/pkg/oci/remote"
 	"github.com/sigstore/cosign/pkg/types"
+	"github.com/spf13/viper"
 	"oras.land/oras-go/pkg/content"
 	ctxo "oras.land/oras-go/pkg/context"
 	"oras.land/oras-go/pkg/oras"
@@ -31,18 +32,31 @@ var (
 )
 
 // Puller is a hub.OCIPuller implementation.
-type Puller struct{}
+type Puller struct {
+	cfg *viper.Viper
+}
+
+// NewPuller creates a new Puller instance.
+func NewPuller(cfg *viper.Viper) *Puller {
+	return &Puller{
+		cfg: cfg,
+	}
+}
 
 // PullLayer pulls the first layer of the media type provided from the OCI
 // artifact at the given reference.
 func (p *Puller) PullLayer(
 	ctx context.Context,
-	ref,
+	imageRef,
 	mediaType,
 	username,
 	password string,
 ) (ocispec.Descriptor, []byte, error) {
 	// Pull layers available at the ref provided
+	ref, err := name.ParseReference(imageRef)
+	if err != nil {
+		return ocispec.Descriptor{}, nil, err
+	}
 	resolverOptions := docker.ResolverOptions{}
 	if username != "" || password != "" {
 		resolverOptions.Authorizer = docker.NewDockerAuthorizer(
@@ -50,14 +64,20 @@ func (p *Puller) PullLayer(
 				return username, password, nil
 			}),
 		)
+	} else if p.cfg != nil && strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
+		resolverOptions.Authorizer = docker.NewDockerAuthorizer(
+			docker.WithAuthCreds(func(string) (string, string, error) {
+				return p.cfg.GetString("creds.dockerUsername"), p.cfg.GetString("creds.dockerPassword"), nil
+			}),
+		)
 	}
 	registryStore := content.Registry{Resolver: docker.NewResolver(resolverOptions)}
 	memoryStore := content.NewMemory()
 	var layers []ocispec.Descriptor
-	_, err := oras.Copy(
+	_, err = oras.Copy(
 		ctxo.WithLoggerDiscarded(ctx),
 		registryStore,
-		ref,
+		ref.String(),
 		memoryStore,
 		"",
 		oras.WithPullEmptyNameAllowed(),
@@ -84,7 +104,16 @@ func (p *Puller) PullLayer(
 }
 
 // SignatureChecker is a hub.OCISignatureChecker implementation.
-type SignatureChecker struct{}
+type SignatureChecker struct {
+	op hub.OCIPuller
+}
+
+// NewSignatureChecker creates a new Puller instance.
+func NewSignatureChecker(op hub.OCIPuller) *SignatureChecker {
+	return &SignatureChecker{
+		op: op,
+	}
+}
 
 // HasCosignSignature checks if the OCI artifact identified by the reference
 // provided has a cosign (sigstore) signature.
@@ -105,8 +134,7 @@ func (c *SignatureChecker) HasCosignSignature(
 	}
 
 	// Check if the OCI artifact exists and contains a signature layer
-	p := &Puller{}
-	_, _, err = p.PullLayer(ctx, signatureRef.String(), types.SimpleSigningMediaType, username, password)
+	_, _, err = c.op.PullLayer(ctx, signatureRef.String(), types.SimpleSigningMediaType, username, password)
 	if err != nil {
 		if errors.Is(err, ErrArtifactNotFound) || errors.Is(err, ErrLayerNotFound) {
 			return false, nil
