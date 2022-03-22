@@ -18,7 +18,7 @@ const NoData = (props: Props) => (
     {!isUndefined(props.issuesLinkVisible) && props.issuesLinkVisible && (
       <div className="h6 mt-4">
         If this error persists, please create an issue{' '}
-        <ExternalLink href="https://github.com/artifacthub/hub/issues/new/choose" label="Github issue">
+        <ExternalLink href="https://github.com/artifacthub/hub/issues/new/choose" label="GitHub issue">
           <u>here</u>
         </ExternalLink>
       </div>

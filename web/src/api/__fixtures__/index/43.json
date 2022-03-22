@@ -315,7 +315,7 @@
         "description": "Add pagination support to some endpoints",
         "links": [
           {
-            "name": "Github PR",
+            "name": "GitHub PR",
             "url": "https://github.com/artifacthub/hub/pull/1386"
           }
         ]
@@ -325,7 +325,7 @@
         "description": "Consolidate some repositories API endpoints",
         "links": [
           {
-            "name": "Github PR",
+            "name": "GitHub PR",
             "url": "https://github.com/artifacthub/hub/pull/1382"
           }
         ]
@@ -335,7 +335,7 @@
         "description": "Refactor packages search API endpoint",
         "links": [
           {
-            "name": "Github PR",
+            "name": "GitHub PR",
             "url": "https://github.com/artifacthub/hub/pull/1379"
           }
         ]
@@ -791,7 +791,7 @@
         "description": "Gitpodify Artifact Hub git repository"
       },
       {
-        "description": "Improve Github rate limiting handling"
+        "description": "Improve GitHub rate limiting handling"
       },
       {
         "description": "Add some extra protection to avoid deleting a repository or packages accidentally"

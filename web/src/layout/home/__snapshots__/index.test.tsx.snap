@@ -208,7 +208,7 @@ exports[`Home index creates snapshot 1`] = `
         class="d-flex flex-row align-items-center justify-content-center flex-wrap"
       >
         <a
-          aria-label="Open Github link"
+          aria-label="Open GitHub link"
           class="link btn btn-secondary mb-4 mb-md-2 socialBtn"
           href="https://github.com/artifacthub/hub"
           rel="noopener noreferrer"

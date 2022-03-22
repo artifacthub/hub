@@ -56,7 +56,7 @@ const Footer = (props: Props) => {
                 <ExternalLink
                   className={`mb-1 ${styles.link}`}
                   href="https://github.com/artifacthub/hub"
-                  label="Open Github"
+                  label="Open GitHub"
                 >
                   <div className="d-flex align-items-center">
                     <FaGithub className="me-2" />

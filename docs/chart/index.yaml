@@ -91,17 +91,17 @@ entries:
         - kind: changed
           description: Add pagination support to some endpoints
           links:
-            - name: Github PR
+            - name: GitHub PR
               url: https://github.com/artifacthub/hub/pull/1386
         - kind: changed
           description: Consolidate some repositories API endpoints
           links:
-            - name: Github PR
+            - name: GitHub PR
               url: https://github.com/artifacthub/hub/pull/1382
         - kind: changed
           description: Refactor packages search API endpoint
           links:
-            - name: Github PR
+            - name: GitHub PR
               url: https://github.com/artifacthub/hub/pull/1379
         - kind: changed
           description: Update API documentation
@@ -713,7 +713,7 @@ entries:
         - Allow disabling repositories from control panel
         - Allow disabling security scanner per repository
         - Gitpodify Artifact Hub git repository
-        - Improve Github rate limiting handling
+        - Improve GitHub rate limiting handling
         - Add some extra protection to avoid deleting a repository or packages accidentally
         - Tracker now only exports or clones repos when they have changed
         - Improve repository ownership claim modal

@@ -148,7 +148,7 @@ const HomeView = (props: Props) => {
               <ExternalLink
                 className={`btn btn-secondary mb-4 mb-md-2 ${styles.socialBtn}`}
                 href="https://github.com/artifacthub/hub"
-                label="Open Github link"
+                label="Open GitHub link"
               >
                 <div className="d-flex align-items-center justify-content-center">
                   <FaGithub className="me-2" />

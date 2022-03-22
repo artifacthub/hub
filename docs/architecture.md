@@ -18,7 +18,7 @@ hub
 └── widget
 ```
 
-- **.github:** contains the Github Actions workflows as well as the issues templates.
+- **.github:** contains the GitHub Actions workflows as well as the issues templates.
 
 - **charts/artifact-hub:** contains the Artifact Hub Helm chart, which is the recommended installation method.
 

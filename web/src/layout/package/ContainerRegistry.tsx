@@ -11,7 +11,7 @@ enum RegistryType {
   Amazon = 'amazon',
   Azure = 'azure',
   Docker = 'docker',
-  Github = 'github',
+  GitHub = 'github',
   Google = 'google',
   Quay = 'quay',
   BundleBar = 'bundlebar',
@@ -42,7 +42,7 @@ const REGISTRIES: RegistryList = {
     name: 'Docker Hub',
     icon: '/static/media/registries/docker.svg',
   },
-  [RegistryType.Github]: {
+  [RegistryType.GitHub]: {
     name: 'GitHub Packages CR',
     icon: '/static/media/registries/github.svg',
   },
@@ -95,7 +95,7 @@ const getRegistryData = (url: string): RegistryInfo => {
           registryType = RegistryType.Azure;
           break;
         case /ghcr\.io/.test(hostname):
-          registryType = RegistryType.Github;
+          registryType = RegistryType.GitHub;
           break;
         case /gcr\.io/.test(hostname):
           registryType = RegistryType.Google;
