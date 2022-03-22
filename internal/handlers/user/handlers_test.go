@@ -511,7 +511,7 @@ func TestEnableTFA(t *testing.T) {
 		hw.um.AssertExpectations(t)
 	})
 
-	t.Run("enble tfa succeeded", func(t *testing.T) {
+	t.Run("enable tfa succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"passcode": "123456"}`)
