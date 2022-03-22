@@ -312,7 +312,7 @@ const HomeView = (props: Props) => {
                   <ExternalLink
                     href="https://opencontainers.org"
                     className={`col ${styles.iconLink}`}
-                    label="Open Container Iniciative site"
+                    label="Open Container Initiative site"
                   >
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
                       <RepositoryIcon kind={RepositoryKind.Container} type="white" className={styles.aboutIcon} />

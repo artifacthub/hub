@@ -594,7 +594,7 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
-              aria-label="Open Container Iniciative site"
+              aria-label="Open Container Initiative site"
               class="link col iconLink"
               href="https://opencontainers.org"
               rel="noopener noreferrer"
