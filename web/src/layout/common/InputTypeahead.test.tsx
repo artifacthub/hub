@@ -110,7 +110,7 @@ describe('InputTypeahead', () => {
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
     expect(screen.getAllByText('ke')).toHaveLength(2);
-    expect(screen.getAllByText('ke')[0]).toHaveClass('hightlighted');
+    expect(screen.getAllByText('ke')[0]).toHaveClass('highlighted');
   });
 
   it('filters options on input change when displayItemsInValueLength is defined', () => {
@@ -123,7 +123,7 @@ describe('InputTypeahead', () => {
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
     expect(screen.getAllByText('key')).toHaveLength(2);
-    expect(screen.getAllByText('key')[0]).toHaveClass('hightlighted');
+    expect(screen.getAllByText('key')[0]).toHaveClass('highlighted');
 
     userEvent.type(input, 'ke');
 
@@ -161,7 +161,7 @@ describe('InputTypeahead', () => {
       userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowdown}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
-      expect(options[0]).toHaveClass('dropdown-item option selected hightlighted');
+      expect(options[0]).toHaveClass('dropdown-item option selected highlighted');
     });
 
     it('highlightes last option', () => {
@@ -173,7 +173,7 @@ describe('InputTypeahead', () => {
       userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowup}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
-      expect(options[3]).toHaveClass('dropdown-item option hightlighted');
+      expect(options[3]).toHaveClass('dropdown-item option highlighted');
     });
 
     it('highlightes first option and unselects it', () => {
@@ -186,7 +186,7 @@ describe('InputTypeahead', () => {
       userEvent.type(input, '{arrowdown}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
-      expect(options[0]).toHaveClass('dropdown-item option selected hightlighted');
+      expect(options[0]).toHaveClass('dropdown-item option selected highlighted');
 
       userEvent.type(input, '{enter}');
       expect(onChangeMock).toHaveBeenCalledTimes(1);
@@ -203,7 +203,7 @@ describe('InputTypeahead', () => {
       userEvent.type(input, '{arrowup}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
-      expect(options[3]).toHaveClass('dropdown-item option hightlighted');
+      expect(options[3]).toHaveClass('dropdown-item option highlighted');
 
       userEvent.type(input, '{enter}');
       expect(onChangeMock).toHaveBeenCalledTimes(1);

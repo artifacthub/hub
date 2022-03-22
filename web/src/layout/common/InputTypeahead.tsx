@@ -42,7 +42,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
   const inputEl = useRef<HTMLInputElement>(null);
   const itemsWrapper = useRef<HTMLDivElement | null>(null);
   const [inputValue, setInputValue] = useState('');
-  const [hightlightedText, setHightlightedText] = useState<RegExp | null>(null);
+  const [highlightedText, setHighlightedText] = useState<RegExp | null>(null);
   const [highlightedItem, setHighlightedItem] = useState<number | null>(null);
 
   useImperativeHandle(ref, () => ({
@@ -101,13 +101,13 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
   }, [props.options, props.selected]);
 
   const getOptionName = (name: string): JSX.Element => {
-    if (!isNull(hightlightedText)) {
-      const stringParts: string[] = compact(name.split(hightlightedText));
+    if (!isNull(highlightedText)) {
+      const stringParts: string[] = compact(name.split(highlightedText));
       if (stringParts.length === 1) {
         return (
           <span
             className={classnames({
-              'fw-bold hightlighted': name.toLowerCase() === inputValue.toLowerCase(),
+              'fw-bold highlighted': name.toLowerCase() === inputValue.toLowerCase(),
             })}
           >
             {name}
@@ -121,7 +121,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
             <span
               key={`${name}_${index}`}
               className={classnames({
-                'fw-bold hightlighted': str.toLowerCase() === inputValue.toLowerCase(),
+                'fw-bold highlighted': str.toLowerCase() === inputValue.toLowerCase(),
               })}
             >
               {str}
@@ -153,7 +153,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
     setInputValue(e.target.value);
 
     const escapedValue = escapeRegExp(e.target.value.toLowerCase());
-    setHightlightedText(e.target.value !== '' ? new RegExp(`(${escapedValue})`, 'gi') : null);
+    setHighlightedText(e.target.value !== '' ? new RegExp(`(${escapedValue})`, 'gi') : null);
   };
 
   const onSelect = (filterKey: string, id: string, isSelected: boolean) => {
@@ -290,7 +290,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
                         [styles.selected]: isSelected,
                       },
                       {
-                        [styles.hightlighted]: index === highlightedItem,
+                        [styles.highlighted]: index === highlightedItem,
                       }
                     )}
                     onClick={() => {

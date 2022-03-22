@@ -303,7 +303,7 @@ const SearchRepositories = (props: Props) => {
                                     pattern: new RegExp(escapeRegExp(searchName), 'gi'),
                                     decorator: (match: string, index: number) => {
                                       return (
-                                        <span key={`match_${item.name}_${index}`} className="fw-bold hightlighted">
+                                        <span key={`match_${item.name}_${index}`} className="fw-bold highlighted">
                                           {match}
                                         </span>
                                       );
