@@ -1,6 +1,6 @@
 # Repositories guide
 
-Artifact Hub allows publishers to list their content in an automated way. Publishers can add their repositories from the control panel, accesible from the top right menu after signing in. It's possible to create an organization and add repositories to it instead of adding them to the user's account. Repositories will be indexed periodically to always display the most up-to-date content.
+Artifact Hub allows publishers to list their content in an automated way. Publishers can add their repositories from the control panel, accessible from the top right menu after signing in. It's possible to create an organization and add repositories to it instead of adding them to the user's account. Repositories will be indexed periodically to always display the most up-to-date content.
 
 The following repositories kinds are supported at the moment:
 
