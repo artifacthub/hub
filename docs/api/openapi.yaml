@@ -3888,9 +3888,6 @@ components:
           type: boolean
           nullable: false
           example: false
-        offical:
-          type: boolean
-          nullable: false
         production_organizations_count:
           type: number
           nullable: false
