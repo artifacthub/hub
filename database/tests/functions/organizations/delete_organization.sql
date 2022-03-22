@@ -24,7 +24,7 @@ select throws_ok(
     'Organization delete should fail because requesting user does not belong to it'
 );
 
--- User belonging to an organiation deletes it
+-- User belonging to an organization deletes it
 select delete_organization(:'user1ID', 'org1');
 select is_empty(
     $$
