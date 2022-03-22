@@ -976,7 +976,7 @@ entries:
     version: 0.7.0
   - annotations:
       artifacthub.io/changes: |
-        - Introduce fine grained authorization mechanism based on OPA policies
+        - Introduce fine-grained authorization mechanism based on OPA policies
         - Allow enriching package information using Helm annotations
         - Allow entities to claim repositories ownership
         - Introduce official repository concept
