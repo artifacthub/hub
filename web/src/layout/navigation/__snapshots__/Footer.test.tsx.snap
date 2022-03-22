@@ -63,7 +63,7 @@ exports[`Footer creates snapshot 1`] = `
             <a
               aria-label="Open Github"
               class="link mb-1 link"
-              href="https://github.com/cncf/hub"
+              href="https://github.com/artifacthub/hub"
               rel="noopener noreferrer"
               role="button"
               tabindex="-1"
