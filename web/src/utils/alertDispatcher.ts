@@ -2,7 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import { Alert } from '../types';
 
-const DEFUALT_TIME = 5 * 1000; //5s
+const DEFAULT_TIME = 5 * 1000; //5s
 
 export interface AlertUpdatesHandler {
   updateAlertWrapper(alert: Alert | null): void;
@@ -30,7 +30,7 @@ export class AlertDispatcher {
     if (this.visibleAlert && (isUndefined(this.visibleAlert.autoClose) || this.visibleAlert.autoClose)) {
       this.timeout = setTimeout(() => {
         this.postAlert(null);
-      }, this.visibleAlert.dismissOn || DEFUALT_TIME);
+      }, this.visibleAlert.dismissOn || DEFAULT_TIME);
     }
   }
 

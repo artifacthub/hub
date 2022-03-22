@@ -39,7 +39,7 @@ interface FormValidation {
   webhook: Webhook | null;
 }
 
-const DEAFULT_PAYLOAD_KIND: PayloadKind = PayloadKind.default;
+const DEFAULT_PAYLOAD_KIND: PayloadKind = PayloadKind.default;
 
 export const DEFAULT_PAYLOAD_TEMPLATE = `{
     "specversion" : "1.0",
@@ -91,7 +91,7 @@ const WebhookForm = (props: Props) => {
   const [isSendingTest, setIsSendingTest] = useState<boolean>(false);
 
   const getPayloadKind = (): PayloadKind => {
-    let currentPayloadKind: PayloadKind = DEAFULT_PAYLOAD_KIND;
+    let currentPayloadKind: PayloadKind = DEFAULT_PAYLOAD_KIND;
     if (!isUndefined(props.webhook) && props.webhook.contentType && props.webhook.template) {
       currentPayloadKind = PayloadKind.custom;
     }
