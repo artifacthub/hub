@@ -1,4 +1,4 @@
--- search_repositories searchs repositories in the database that match the
+-- search_repositories searches repositories in the database that match the
 -- criteria in the query provided.
 create or replace function search_repositories(p_input jsonb)
 returns table(data json, total_count bigint) as $$
