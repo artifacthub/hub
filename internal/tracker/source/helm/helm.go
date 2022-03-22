@@ -102,7 +102,7 @@ func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource))
 		s.il = &repo.HelmIndexLoader{}
 	}
 	if s.sc == nil {
-		s.sc = &oci.SignatureChecker{}
+		s.sc = oci.NewSignatureChecker(i.Svc.Op)
 	}
 	if s.tg == nil {
 		s.tg = &oci.TagsGetter{}
@@ -426,7 +426,7 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 	case "oci":
 		op := o.Op
 		if op == nil {
-			op = &oci.Puller{}
+			op = oci.NewPuller(nil)
 		}
 		ref := strings.TrimPrefix(u.String(), hub.RepositoryOCIPrefix)
 		_, data, err := op.PullLayer(ctx, ref, ChartContentLayerMediaType, o.Username, o.Password)

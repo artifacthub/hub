@@ -82,7 +82,7 @@ func main() {
 		Oe:                 &repo.OLMOCIExporter{},
 		Ec:                 ec,
 		Hc:                 hc,
-		Op:                 &oci.Puller{},
+		Op:                 oci.NewPuller(cfg),
 		Is:                 is,
 		SetupTrackerSource: tracker.SetupSource,
 	}
