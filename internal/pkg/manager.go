@@ -402,7 +402,7 @@ func BuildKey(p *hub.Package) string {
 // ParseKey parses a key identifying a package version and returns its name and
 // version.
 func ParseKey(key string) (string, string) {
-	p := strings.Split(key, "@")
+	p := strings.SplitN(key, "@", 2)
 	return p[0], p[1]
 }
 
