@@ -194,7 +194,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
               metadata file
             </ExternalLink>{' '}
             to your repository and include yourself (or the person who will do the request) as an owner. This will be
-            checked during the ownership claim process. Please make sure the email used in the metatata file matches
+            checked during the ownership claim process. Please make sure the email used in the metadata file matches
             with the one you use in {siteName}.
           </p>
         </div>
