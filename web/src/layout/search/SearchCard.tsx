@@ -194,7 +194,7 @@ const SearchCard = (props: Props) => {
 
                       {props.package.license && (
                         <div
-                          className={`d-none d-lg-flex d-xxl-none d-xxxl-flex flex-row aling-items-baseline text-truncate ${styles.mx50}`}
+                          className={`d-none d-lg-flex d-xxl-none d-xxxl-flex flex-row text-truncate ${styles.mx50}`}
                         >
                           <span className="text-muted text-uppercase me-1 ms-3">License:</span>
                           <License

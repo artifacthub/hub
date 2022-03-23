@@ -232,7 +232,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-flex flex-row aling-items-baseline text-truncate"
+                class="d-flex flex-row text-truncate"
               >
                 <div
                   class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
@@ -438,7 +438,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="d-flex flex-row aling-items-baseline text-truncate"
+                  class="d-flex flex-row text-truncate"
                 >
                   <div
                     class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
