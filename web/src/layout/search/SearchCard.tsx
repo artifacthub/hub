@@ -82,7 +82,7 @@ const SearchCard = (props: Props) => {
         >
           <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
             <div className="d-flex align-items-start justify-content-between mw-100">
-              <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
+              <div className={`d-flex align-items-stretch flex-grow-1 h-100 ${styles.truncateWrapper}`}>
                 {packageImage}
 
                 <div

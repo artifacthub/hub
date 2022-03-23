@@ -64,7 +64,7 @@ const PackageInfo = (props: Props) => {
   return (
     <>
       <div className="d-flex align-items-start justify-content-between mw-100">
-        <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
+        <div className={`d-flex align-items-stretch flex-grow-1 h-100 ${styles.truncateWrapper}`}>
           {packageImage}
 
           <div

@@ -83,7 +83,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                           class="d-flex flex-row"
                         >
                           <div
-                            class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar lh-base bg-white inputWrapper"
+                            class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative searchBar lh-base bg-white inputWrapper"
                           >
                             <div
                               class="d-flex align-items-center iconWrapper"

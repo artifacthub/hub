@@ -207,7 +207,7 @@ const SearchRepositories = (props: Props) => {
     <div className="position-relative">
       <div className="d-flex flex-row">
         <div
-          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar lh-base bg-white ${styles.inputWrapper}`}
+          className={`flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative searchBar lh-base bg-white ${styles.inputWrapper}`}
         >
           <div
             data-testid="searchBarIcon"
