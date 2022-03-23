@@ -636,7 +636,7 @@
         "description": "Use chart's appVersion as default image tag"
       },
       {
-        "description": "Setup Gitlab rate limiter based on token presence"
+        "description": "Setup GitLab rate limiter based on token presence"
       },
       {
         "description": "Set timeout for each repository tracked"

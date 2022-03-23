@@ -15,7 +15,7 @@ enum RegistryType {
   Google = 'google',
   Quay = 'quay',
   BundleBar = 'bundlebar',
-  Gitlab = 'gitlab',
+  GitLab = 'gitlab',
   Unknown = 'unknown',
 }
 
@@ -58,7 +58,7 @@ const REGISTRIES: RegistryList = {
     name: 'Bundle Bar',
     icon: '/static/media/registries/bundlebar.svg',
   },
-  [RegistryType.Gitlab]: {
+  [RegistryType.GitLab]: {
     name: 'GitLab Registry',
     icon: '/static/media/registries/gitlab.svg',
   },
@@ -107,7 +107,7 @@ const getRegistryData = (url: string): RegistryInfo => {
           registryType = RegistryType.BundleBar;
           break;
         case /gitlab\.com/.test(hostname):
-          registryType = RegistryType.Gitlab;
+          registryType = RegistryType.GitLab;
           break;
       }
 

@@ -492,7 +492,7 @@ entries:
         - Allow referencing external logo images in artifacthub-pkg.yaml file
         - Allow dynamic resource names in Artifact Hub Helm chart
         - Use chart's appVersion as default image tag
-        - Setup Gitlab rate limiter based on token presence
+        - Setup GitLab rate limiter based on token presence
         - Set timeout for each repository tracked
         - Bump Alpine to 3.13
         - Bump Trivy to 0.16.0
