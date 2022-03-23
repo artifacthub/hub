@@ -18,7 +18,6 @@ import (
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
-	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
 	"github.com/google/go-containerregistry/pkg/v1/types"
@@ -91,7 +90,7 @@ func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource))
 		o(s)
 	}
 	if s.sc == nil {
-		s.sc = oci.NewSignatureChecker(i.Svc.Op)
+		s.sc = oci.NewSignatureChecker(i.Svc.Cfg, i.Svc.Op)
 	}
 	return s
 }
@@ -357,20 +356,7 @@ func getMetadata(
 	if err != nil {
 		return nil, err
 	}
-	options := []remote.Option{
-		remote.WithContext(ctx),
-	}
-	if r.AuthUser != "" || r.AuthPass != "" {
-		options = append(options, remote.WithAuth(&authn.Basic{
-			Username: r.AuthUser,
-			Password: r.AuthPass,
-		}))
-	} else if strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
-		options = append(options, remote.WithAuth(&authn.Basic{
-			Username: cfg.GetString("creds.dockerUsername"),
-			Password: cfg.GetString("creds.dockerPassword"),
-		}))
-	}
+	options := oci.PrepareRemoteOptions(ctx, cfg, ref, r.AuthUser, r.AuthPass)
 
 	// Get image manifest
 	desc, err := remote.Get(ref, options...)
