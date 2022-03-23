@@ -33,7 +33,7 @@ const BigRelatedPackageCard = (props: Props) => {
       >
         <div className="card-body d-flex flex-column h-100 p-3">
           <div className="d-flex align-items-start justify-content-between mw-100">
-            <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
+            <div className={`d-flex align-items-stretch flex-grow-1 h-100 ${styles.truncateWrapper}`}>
               <div
                 className={`position-relative d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border border-2 bg-white ${styles.imageWrapper} imageWrapper`}
               >

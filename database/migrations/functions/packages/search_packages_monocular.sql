@@ -1,4 +1,4 @@
--- search_packages_monocular searchs packages in the database that match the
+-- search_packages_monocular searches packages in the database that match the
 -- criteria in the query provided, returning results in a format that is
 -- compatible with the Monocular search API.
 create or replace function search_packages_monocular(p_base_url text, p_tsquery_web text)

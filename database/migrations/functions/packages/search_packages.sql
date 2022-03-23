@@ -1,4 +1,4 @@
--- search_packages searchs packages in the database that match the criteria in
+-- search_packages searches packages in the database that match the criteria in
 -- the query provided.
 create or replace function search_packages(p_input jsonb)
 returns table(data json, total_count bigint) as $$

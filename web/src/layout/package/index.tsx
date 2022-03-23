@@ -242,8 +242,8 @@ const PackageView = (props: Props) => {
                 this blog post
               </ExternalLink>{' '}
               and{' '}
-              <ExternalLink href="https://github.com/helm/charts/issues/23944" label="Open Github issue">
-                this Github issue
+              <ExternalLink href="https://github.com/helm/charts/issues/23944" label="Open GitHub issue">
+                this GitHub issue
               </ExternalLink>
               .
             </p>

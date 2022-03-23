@@ -147,8 +147,8 @@ const HomeView = (props: Props) => {
             <div className="d-flex flex-row align-items-center justify-content-center flex-wrap">
               <ExternalLink
                 className={`btn btn-secondary mb-4 mb-md-2 ${styles.socialBtn}`}
-                href="https://github.com/cncf/hub"
-                label="Open Github link"
+                href="https://github.com/artifacthub/hub"
+                label="Open GitHub link"
               >
                 <div className="d-flex align-items-center justify-content-center">
                   <FaGithub className="me-2" />
@@ -205,7 +205,7 @@ const HomeView = (props: Props) => {
                 configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
                 configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins,
                 Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations and container images.
-                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
+                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                   <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
                       <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
@@ -271,7 +271,7 @@ const HomeView = (props: Props) => {
                     </div>
                   </ExternalLink>
                 </div>
-                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
+                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                   <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`} label="Open Tekton site">
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
                       <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
@@ -312,7 +312,7 @@ const HomeView = (props: Props) => {
                   <ExternalLink
                     href="https://opencontainers.org"
                     className={`col ${styles.iconLink}`}
-                    label="Open Container Iniciative site"
+                    label="Open Container Initiative site"
                   >
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
                       <RepositoryIcon kind={RepositoryKind.Container} type="white" className={styles.aboutIcon} />

@@ -271,28 +271,28 @@
                       "items": {
                         "type": "string"
                       },
-                      "title": "Github oauth scopes",
+                      "title": "GitHub OAuth scopes",
                       "default": ["read:user", "user:email"],
                       "uniqueItems": true
                     },
                     "enabled": {
                       "type": "boolean",
-                      "title": "Enable Github oauth",
+                      "title": "Enable GitHub OAuth",
                       "default": false
                     },
                     "clientID": {
                       "type": "string",
-                      "title": "Github oauth client id",
+                      "title": "GitHub OAuth client id",
                       "default": ""
                     },
                     "redirectURL": {
                       "type": "string",
-                      "title": "Github oauth redirect url",
+                      "title": "GitHub OAuth redirect url",
                       "default": ""
                     },
                     "clientSecret": {
                       "type": "string",
-                      "title": "Github oauth client secret",
+                      "title": "GitHub OAuth client secret",
                       "default": ""
                     }
                   }
@@ -506,7 +506,7 @@
       "properties": {
         "githubToken": {
           "type": "string",
-          "title": "Authentication token used in Github requests (increases rate limit)",
+          "title": "Authentication token used in GitHub requests (increases rate limit)",
           "default": ""
         },
         "dockerPassword": {

@@ -34,7 +34,7 @@ describe('SignUp', () => {
 
       expect(screen.getByText('Create your account using your email')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open sign up form' })).toBeInTheDocument();
-      expect(screen.getByText('Github')).toBeInTheDocument();
+      expect(screen.getByText('GitHub')).toBeInTheDocument();
       expect(screen.getByText('Google')).toBeInTheDocument();
       expect(screen.getByText('OpenID Connect')).toBeInTheDocument();
     });

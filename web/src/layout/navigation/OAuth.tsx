@@ -29,11 +29,11 @@ const OAuth = (props: Props) => {
     return;
   };
 
-  const isGithubAuth = getMetaTag('githubAuth', true);
+  const isGitHubAuth = getMetaTag('githubAuth', true);
   const isGoogleAuth = getMetaTag('googleAuth', true);
   const isOidcAuth = getMetaTag('oidcAuth', true);
 
-  if (!isGithubAuth && !isGoogleAuth && !isOidcAuth) return null;
+  if (!isGitHubAuth && !isGoogleAuth && !isOidcAuth) return null;
 
   return (
     <>
@@ -45,17 +45,17 @@ const OAuth = (props: Props) => {
       <div>
         <div className="d-flex flex-column mb-1">
           <div className="d-grid gap-4">
-            {isGithubAuth && (
+            {isGitHubAuth && (
               <button
                 type="button"
                 onClick={() => goToOAuthPage('github')}
                 className={`btn btn-outline-secondary ${styles.btn}`}
                 disabled={props.isLoading.status}
-                aria-label="Sign in with Github"
+                aria-label="Sign in with GitHub"
               >
                 <div className="d-flex align-items-center">
-                  <img alt="Github Logo" src={GITHUB_LOGO} className={`lh-base ${styles.logo}`} />
-                  <div className="flex-grow-1 text-center">Github</div>
+                  <img alt="GitHub Logo" src={GITHUB_LOGO} className={`lh-base ${styles.logo}`} />
+                  <div className="flex-grow-1 text-center">GitHub</div>
                 </div>
               </button>
             )}

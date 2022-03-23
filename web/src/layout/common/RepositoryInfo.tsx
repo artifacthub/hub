@@ -101,7 +101,7 @@ const RepositoryInfo = (props: Props) => {
           </div>
         </div>
 
-        <div className="d-flex flex-row aling-items-baseline text-truncate">
+        <div className="d-flex flex-row text-truncate">
           <div className="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase">
             <small>Repo:</small>
             {props.visibleIcon && (

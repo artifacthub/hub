@@ -2,7 +2,7 @@
   "value": {
     "type": "array",
     "items": { "type": "string" },
-    "title": "Github oauth scopes",
+    "title": "GitHub OAuth scopes",
     "default": ["read:user", "user:email"],
     "uniqueItems": true
   },

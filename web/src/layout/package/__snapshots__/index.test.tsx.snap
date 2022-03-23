@@ -84,9 +84,9 @@ exports[`Package index creates snapshot 1`] = `
             class="d-flex flex-column text-start"
           >
             <a
-              aria-label="Open Github"
+              aria-label="Open GitHub"
               class="link mb-1 link"
-              href="https://github.com/cncf/hub"
+              href="https://github.com/artifacthub/hub"
               rel="noopener noreferrer"
               role="button"
               tabindex="-1"

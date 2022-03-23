@@ -64,7 +64,7 @@ const PackageInfo = (props: Props) => {
   return (
     <>
       <div className="d-flex align-items-start justify-content-between mw-100">
-        <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
+        <div className={`d-flex align-items-stretch flex-grow-1 h-100 ${styles.truncateWrapper}`}>
           {packageImage}
 
           <div
@@ -174,9 +174,7 @@ const PackageInfo = (props: Props) => {
                 })()}
 
                 {props.package.license && (
-                  <div
-                    className={`d-none d-lg-flex d-xxl-none d-xxxl-flex flex-row aling-items-baseline text-truncate ${styles.mx50}`}
-                  >
+                  <div className={`d-none d-lg-flex d-xxl-none d-xxxl-flex flex-row text-truncate ${styles.mx50}`}>
                     <span className="text-muted text-uppercase me-1 ms-3">License:</span>
                     <License
                       license={props.package.license}

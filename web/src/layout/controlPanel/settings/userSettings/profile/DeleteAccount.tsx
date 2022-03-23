@@ -134,7 +134,7 @@ const DeleteAccount = (props: Props) => {
                   complete the process.
                 </p>
                 <p className="mb-0">
-                  Please note that the link <span className="fw-bold">is only valid for 15 minures</span>. If you
+                  Please note that the link <span className="fw-bold">is only valid for 15 minutes</span>. If you
                   haven't clicked the link by then you'll need to start the process from the beginning.
                 </p>
               </div>

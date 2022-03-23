@@ -1,6 +1,6 @@
 # Authorization
 
-Artifact Hub includes a fine grained authorization mechanism that allows organizations to define what actions can be performed by their members. It is based on customizable authorization policies that are enforced by the [Open Policy Agent](https://www.openpolicyagent.org). Policies are written using [rego](https://www.openpolicyagent.org/docs/latest/#rego) and their data files are expected to be [json](https://www.json.org/json-en.html) documents. Out of the box, when the authorization mechanism is disabled, all members of an organization can perform all actions on it.
+Artifact Hub includes a fine-grained authorization mechanism that allows organizations to define what actions can be performed by their members. It is based on customizable authorization policies that are enforced by the [Open Policy Agent](https://www.openpolicyagent.org). Policies are written using [rego](https://www.openpolicyagent.org/docs/latest/#rego) and their data files are expected to be [json](https://www.json.org/json-en.html) documents. Out of the box, when the authorization mechanism is disabled, all members of an organization can perform all actions on it.
 
 Authorization can be set up using [predefined](#using-predefined-policies) or [custom policies](#using-custom-policies) from the Artifact Hub control panel, in the organization settings tab.
 

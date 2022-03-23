@@ -343,7 +343,7 @@ describe('ChangelogModal', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred getting package changelog markodwn, please try again later.',
+        message: 'An error occurred getting package changelog markdown, please try again later.',
       });
     });
   });

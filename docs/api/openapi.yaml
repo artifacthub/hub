@@ -3881,16 +3881,13 @@ components:
             low:
               type: number
               nullable: false
-            unkown:
+            unknown:
               type: number
               nullable: false
         all_containers_images_whitelisted:
           type: boolean
           nullable: false
           example: false
-        offical:
-          type: boolean
-          nullable: false
         production_organizations_count:
           type: number
           nullable: false
@@ -4387,7 +4384,7 @@ components:
       schema:
         type: boolean
       required: false
-      description: Whether to get only official repositoties
+      description: Whether to get only official repositories
     SortParam:
       in: query
       name: sort

@@ -143,15 +143,15 @@ hub:
       secure: false
     oauth:
       github:
-        # Enable Github oauth
+        # Enable GitHub OAuth
         enabled: false
-        # Github oauth client id
+        # GitHub OAuth client id
         clientID: ""
-        # Github oauth client secret
+        # GitHub OAuth client secret
         clientSecret: ""
-        # Github oauth redirect url
+        # GitHub OAuth redirect url
         redirectURL: ""
-        # Github oauth scopes
+        # GitHub OAuth scopes
         scopes:
           - read:user
           - user:email

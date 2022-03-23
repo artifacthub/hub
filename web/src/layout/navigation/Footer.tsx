@@ -53,7 +53,11 @@ const Footer = (props: Props) => {
             <div>
               <div className="h6 fw-bold text-uppercase">Community</div>
               <div className="d-flex flex-column text-start">
-                <ExternalLink className={`mb-1 ${styles.link}`} href="https://github.com/cncf/hub" label="Open Github">
+                <ExternalLink
+                  className={`mb-1 ${styles.link}`}
+                  href="https://github.com/artifacthub/hub"
+                  label="Open GitHub"
+                >
                   <div className="d-flex align-items-center">
                     <FaGithub className="me-2" />
                     GitHub

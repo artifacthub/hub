@@ -135,7 +135,7 @@ const Filters = (props: Props) => {
         return active.includes(facetOptionId.toString());
       };
 
-      const sortedCapabililties = sortBy(capabilities.options, [
+      const sortedCapabilities = sortBy(capabilities.options, [
         (facet: FacetOption) => {
           return OPERATOR_CAPABILITIES.findIndex((level: string) => level === facet.id);
         },
@@ -149,7 +149,7 @@ const Filters = (props: Props) => {
             id={`pkg-${capabilities.filterKey}-${props.device}`}
           />
           <div className="mt-3" role="group" aria-labelledby={`pkg-${capabilities.filterKey}-${props.device}`}>
-            {sortedCapabililties.map((option: FacetOption) => (
+            {sortedCapabilities.map((option: FacetOption) => (
               <CheckBox
                 key={`capabilities_${option.id.toString()}`}
                 name={capabilities.filterKey!}

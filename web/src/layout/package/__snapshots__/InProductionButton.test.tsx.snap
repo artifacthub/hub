@@ -13,7 +13,7 @@ exports[`InProductionButton creates snapshot 1`] = `
       >
         <button
           aria-expanded="false"
-          aria-label="Open organzations menu"
+          aria-label="Open organizations menu"
           class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5 iconWrapper"
           type="button"
         >

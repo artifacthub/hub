@@ -137,7 +137,7 @@ const OrganizationInfo = (props: Props) => {
         </div>
       </div>
 
-      <div className="d-flex flex-row aling-items-start text-truncate">
+      <div className="d-flex flex-row align-items-start text-truncate">
         {props.visibleLegend && (
           <div className="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase">
             <small>Org:</small>

@@ -44,15 +44,15 @@ describe('OAuth', () => {
     it('renders component', () => {
       render(<OAuth {...defaultProps} />);
 
-      expect(screen.getByText('Github')).toBeInTheDocument();
+      expect(screen.getByText('GitHub')).toBeInTheDocument();
       expect(screen.getByText('Google')).toBeInTheDocument();
       expect(screen.getByText('OpenID Connect')).toBeInTheDocument();
     });
 
-    it('goes to correct route on Github btn click', async () => {
+    it('goes to correct route on GitHub btn click', async () => {
       render(<OAuth {...defaultProps} />);
 
-      const btn = screen.getByText('Github');
+      const btn = screen.getByText('GitHub');
       userEvent.click(btn);
 
       await waitFor(() => {
@@ -112,7 +112,7 @@ describe('OAuth', () => {
 
       render(<OAuth {...defaultProps} />);
 
-      const btn = screen.getByText('Github');
+      const btn = screen.getByText('GitHub');
       userEvent.click(btn);
 
       await waitFor(() => {
@@ -140,7 +140,7 @@ describe('OAuth', () => {
 
       render(<OAuth {...defaultProps} />);
 
-      const btn = screen.getByText('Github');
+      const btn = screen.getByText('GitHub');
       userEvent.click(btn);
 
       await waitFor(() => {

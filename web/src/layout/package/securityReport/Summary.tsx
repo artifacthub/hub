@@ -46,7 +46,7 @@ const SecuritySummary = (props: Props) => {
                   width: `${(props.summary[severity]! * 100) / props.totalVulnerabilities}%`,
                   backgroundColor: SEVERITY_RATING[severity]!.color,
                 }}
-                aria-label={`Vulnerabilites number - ${severity}`}
+                aria-label={`Vulnerabilities number - ${severity}`}
               >
                 <span className={`badge rounded-pill bg-light text-dark text-center ${styles.badgeSummary}`}>
                   {props.summary[severity]}

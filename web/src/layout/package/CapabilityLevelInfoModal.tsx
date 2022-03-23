@@ -3,9 +3,9 @@ import { MdInfoOutline } from 'react-icons/md';
 
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
-import styles from './CapatabilityLevelInfoModal.module.css';
+import styles from './CapabilityLevelInfoModal.module.css';
 
-const CapatabilityLevelInfoModal = () => {
+const CapabilityLevelInfoModal = () => {
   const [onLoadedImage, setOnLoadedImage] = useState<boolean>(false);
 
   return (
@@ -30,4 +30,4 @@ const CapatabilityLevelInfoModal = () => {
   );
 };
 
-export default CapatabilityLevelInfoModal;
+export default CapabilityLevelInfoModal;

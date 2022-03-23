@@ -338,7 +338,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                   class="d-flex flex-row"
                 >
                   <div
-                    class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white searchBar inputWrapper"
+                    class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative lh-base bg-white searchBar inputWrapper"
                   >
                     <div
                       class="d-flex align-items-center iconWrapper"

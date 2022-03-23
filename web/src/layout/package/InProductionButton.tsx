@@ -146,7 +146,7 @@ const InProductionButton = (props: Props) => {
                 fetchOrganizations(true);
               }
             }}
-            aria-label="Open organzations menu"
+            aria-label="Open organizations menu"
             aria-expanded={openStatus}
           >
             <div className="d-flex align-items-center justify-content-center">

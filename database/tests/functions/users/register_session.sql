@@ -8,7 +8,7 @@ values ('00000000-0000-0000-0000-000000000001', 'user1', 'user1@email.com');
 insert into "user" (user_id, alias, email, tfa_enabled)
 values ('00000000-0000-0000-0000-000000000002', 'user2', 'user2@email.com', true);
 
--- Register session for user with tfa disabled
+-- Register session for user with 2fa disabled
 select register_session('
 {
     "session_id": "hashed-session-id-user1",
@@ -42,7 +42,7 @@ select results_eq(
     'Session for user1 should exist'
 );
 
--- Register session for user with tfa enabled
+-- Register session for user with 2fa enabled
 select register_session('
 {
     "session_id": "hashed-session-id-user2",

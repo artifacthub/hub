@@ -120,7 +120,7 @@ describe('Claim Repository Modal - repositories section', () => {
       expect(screen.getByRole('combobox', { name: 'org-select' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Claim ownership' })).toBeInTheDocument();
       expect(
-        screen.getByText(/Please make sure the email used in the metatata file matches with the one you use in/g)
+        screen.getByText(/Please make sure the email used in the metadata file matches with the one you use in/g)
       ).toBeInTheDocument();
       expect(
         screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
@@ -158,7 +158,7 @@ describe('Claim Repository Modal - repositories section', () => {
       expect(screen.getByRole('combobox', { name: 'org-select' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Claim ownership' })).toBeInTheDocument();
       expect(
-        screen.getByText(/Please make sure the email used in the metatata file matches with the one you use in/g)
+        screen.getByText(/Please make sure the email used in the metadata file matches with the one you use in/g)
       ).toBeInTheDocument();
       expect(
         screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
