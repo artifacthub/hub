@@ -102,7 +102,7 @@ func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource))
 		s.il = &repo.HelmIndexLoader{}
 	}
 	if s.sc == nil {
-		s.sc = oci.NewSignatureChecker(i.Svc.Op)
+		s.sc = oci.NewSignatureChecker(i.Svc.Cfg, i.Svc.Op)
 	}
 	if s.tg == nil {
 		s.tg = &oci.TagsGetter{}

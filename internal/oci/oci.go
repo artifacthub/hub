@@ -8,7 +8,6 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/containerd/containerd/remotes/docker"
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
@@ -57,21 +56,20 @@ func (p *Puller) PullLayer(
 	if err != nil {
 		return ocispec.Descriptor{}, nil, err
 	}
-	resolverOptions := docker.ResolverOptions{}
-	if username != "" || password != "" {
-		resolverOptions.Authorizer = docker.NewDockerAuthorizer(
-			docker.WithAuthCreds(func(string) (string, string, error) {
-				return username, password, nil
-			}),
-		)
-	} else if p.cfg != nil && strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
-		resolverOptions.Authorizer = docker.NewDockerAuthorizer(
-			docker.WithAuthCreds(func(string) (string, string, error) {
-				return p.cfg.GetString("creds.dockerUsername"), p.cfg.GetString("creds.dockerPassword"), nil
-			}),
-		)
+	if username == "" && password == "" && p.cfg != nil && registryIsDockerHub(ref) {
+		username = p.cfg.GetString("creds.dockerUsername")
+		password = p.cfg.GetString("creds.dockerPassword")
 	}
-	registryStore := content.Registry{Resolver: docker.NewResolver(resolverOptions)}
+	options := content.RegistryOptions{
+		Username:  username,
+		Password:  password,
+		Insecure:  false,
+		PlainHTTP: false,
+	}
+	registryStore, err := content.NewRegistry(options)
+	if err != nil {
+		return ocispec.Descriptor{}, nil, err
+	}
 	memoryStore := content.NewMemory()
 	var layers []ocispec.Descriptor
 	_, err = oras.Copy(
@@ -105,13 +103,15 @@ func (p *Puller) PullLayer(
 
 // SignatureChecker is a hub.OCISignatureChecker implementation.
 type SignatureChecker struct {
-	op hub.OCIPuller
+	cfg *viper.Viper
+	op  hub.OCIPuller
 }
 
 // NewSignatureChecker creates a new Puller instance.
-func NewSignatureChecker(op hub.OCIPuller) *SignatureChecker {
+func NewSignatureChecker(cfg *viper.Viper, op hub.OCIPuller) *SignatureChecker {
 	return &SignatureChecker{
-		op: op,
+		cfg: cfg,
+		op:  op,
 	}
 }
 
@@ -128,7 +128,8 @@ func (c *SignatureChecker) HasCosignSignature(
 	if err != nil {
 		return false, err
 	}
-	signatureRef, err := csremote.SignatureTag(artifactRef)
+	options := PrepareRemoteOptions(ctx, c.cfg, artifactRef, username, password)
+	signatureRef, err := csremote.SignatureTag(artifactRef, csremote.WithRemoteOptions(options...))
 	if err != nil {
 		return false, err
 	}
@@ -184,4 +185,37 @@ func (tg *TagsGetter) Tags(ctx context.Context, r *hub.Repository, onlySemver bo
 		tags = semverTags
 	}
 	return tags, nil
+}
+
+// prepareRemoteOptions prepares some options used to interact with a remote
+// registry.
+func PrepareRemoteOptions(
+	ctx context.Context,
+	cfg *viper.Viper,
+	ref name.Reference,
+	username,
+	password string,
+) []remote.Option {
+	options := []remote.Option{}
+	if ctx != nil {
+		options = append(options, remote.WithContext(ctx))
+	}
+	if username != "" || password != "" {
+		options = append(options, remote.WithAuth(&authn.Basic{
+			Username: username,
+			Password: password,
+		}))
+	} else if cfg != nil && registryIsDockerHub(ref) {
+		options = append(options, remote.WithAuth(&authn.Basic{
+			Username: cfg.GetString("creds.dockerUsername"),
+			Password: cfg.GetString("creds.dockerPassword"),
+		}))
+	}
+	return options
+}
+
+// registryIsDockerHub checks if the registry name of the reference provided is
+// docker.io.
+func registryIsDockerHub(ref name.Reference) bool {
+	return strings.HasSuffix(ref.Context().Registry.Name(), "docker.io")
 }
