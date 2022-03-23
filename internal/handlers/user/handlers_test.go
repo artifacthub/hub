@@ -430,7 +430,7 @@ func TestDisableTFA(t *testing.T) {
 		}
 	})
 
-	t.Run("disable tfa failed", func(t *testing.T) {
+	t.Run("disable 2fa failed", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"passcode": "123456"}`)
@@ -446,7 +446,7 @@ func TestDisableTFA(t *testing.T) {
 		hw.um.AssertExpectations(t)
 	})
 
-	t.Run("disable tfa succeeded", func(t *testing.T) {
+	t.Run("disable 2fa succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"passcode": "123456"}`)
@@ -495,7 +495,7 @@ func TestEnableTFA(t *testing.T) {
 		}
 	})
 
-	t.Run("enable tfa failed", func(t *testing.T) {
+	t.Run("enable 2fa failed", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"passcode": "123456"}`)
@@ -511,7 +511,7 @@ func TestEnableTFA(t *testing.T) {
 		hw.um.AssertExpectations(t)
 	})
 
-	t.Run("enable tfa succeeded", func(t *testing.T) {
+	t.Run("enable 2fa succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"passcode": "123456"}`)
@@ -793,7 +793,7 @@ func TestLogin(t *testing.T) {
 		hw.um.AssertExpectations(t)
 	})
 
-	t.Run("login succeeded (tfa enabled)", func(t *testing.T) {
+	t.Run("login succeeded (2fa enabled)", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
@@ -1488,7 +1488,7 @@ func TestResetPassword(t *testing.T) {
 }
 
 func TestSetupTFA(t *testing.T) {
-	t.Run("tfa setup failed", func(t *testing.T) {
+	t.Run("2fa setup failed", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", nil)
@@ -1503,7 +1503,7 @@ func TestSetupTFA(t *testing.T) {
 		hw.um.AssertExpectations(t)
 	})
 
-	t.Run("tfa setup succeeded", func(t *testing.T) {
+	t.Run("2fa setup succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", nil)
