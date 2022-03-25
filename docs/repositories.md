@@ -221,9 +221,9 @@ There is an extra metadata file that you can add at the repository URL's path na
 
 Once you have added your repository, you are all set up. As you add new versions of your charts or even new charts to your repository, they'll be automatically indexed and listed in Artifact Hub.
 
-### OCI experimental support
+### OCI support
 
-Artifact Hub is able to process chart repositories stored in [OCI registries](https://github.com/opencontainers/distribution-spec/blob/master/spec.md). This feature is experimental and it's subject to change.
+Artifact Hub is able to process chart repositories stored in [OCI registries](https://github.com/opencontainers/distribution-spec/blob/master/spec.md).
 
 To add a repository stored in a OCI registry, the url used **must** follow the following format:
 
