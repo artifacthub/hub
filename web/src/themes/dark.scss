@@ -653,6 +653,10 @@
     color: var(--color-font) !important;
   }
 
+  .trademark {
+    background-color: var(--color-white-50);
+  }
+
   .tooltip {
     &.bs-tooltip-bottom .tooltip-arrow::before {
       border-bottom-color: var(--gray) !important;
