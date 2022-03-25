@@ -1,6 +1,9 @@
 .footer {
-  padding: 3.5rem 1.5rem;
   background-color: var(--color-1-900);
+}
+
+.mainFooter {
+  padding: 3.5rem 1.5rem;
 }
 
 .invisibleFooter {
@@ -35,6 +38,10 @@
 .AHlink:focus {
   color: inherit !important;
   text-decoration: none;
+}
+
+.trademark {
+  background-color: var(--color-black-50);
 }
 
 @media only screen and (min-width: 992px) {
