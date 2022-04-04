@@ -86,7 +86,7 @@ describe('EnableModal', () => {
       expect(await screen.findByText('Authentication app')).toBeInTheDocument();
       expect(
         screen.getByText(
-          /Please scan the image below with your 2FA authentication app. If you can't scan it, you can use/g
+          /Please scan the image below with your 2FA authentication app. If you can't scan it, you can use/
         )
       ).toBeInTheDocument();
       expect(screen.getByText('this text code')).toBeInTheDocument();
@@ -111,7 +111,7 @@ describe('EnableModal', () => {
       // Step 3
       expect(
         await screen.findByText(
-          /Two-factor authentication has been successfully enabled. We recommend you to sign out and back in to your account./g
+          /Two-factor authentication has been successfully enabled. We recommend you to sign out and back in to your account./
         )
       ).toBeInTheDocument();
       expect(screen.getByText('Close')).toBeInTheDocument();

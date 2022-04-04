@@ -50,7 +50,7 @@ describe('SecurityReport', () => {
       render(<SecurityReport {...defaultProps} />);
       expect(screen.getByText('Security Report')).toBeInTheDocument();
       expect(screen.getByText('179')).toBeInTheDocument();
-      expect(screen.getByText(/vulnerabilities found/g)).toBeInTheDocument();
+      expect(screen.getByText(/vulnerabilities found/)).toBeInTheDocument();
 
       const items = screen.getAllByTestId('summaryItem');
       expect(items).toHaveLength(5);
@@ -103,7 +103,7 @@ describe('SecurityReport', () => {
       render(<SecurityReport {...props} />);
 
       expect(screen.getByText('24.5k')).toBeInTheDocument();
-      expect(screen.getByText(/vulnerabilities found/g)).toBeInTheDocument();
+      expect(screen.getByText(/vulnerabilities found/)).toBeInTheDocument();
     });
 
     it('renders scanner disabled repository security badge', () => {

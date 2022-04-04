@@ -92,8 +92,8 @@ describe('ChartTemplatesModal', () => {
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
-      expect(screen.getByText(/This chart version contains/g)).toBeInTheDocument();
-      expect(screen.getByText(/built-in objects and functions/g)).toBeInTheDocument();
+      expect(screen.getByText(/This chart version contains/)).toBeInTheDocument();
+      expect(screen.getByText(/built-in objects and functions/)).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: /Show template/ })).toHaveLength(16);
       expect(screen.getByTestId('activeTmpl')).toBeInTheDocument();
     });

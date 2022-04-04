@@ -47,7 +47,7 @@ describe('HelmInstall', () => {
     it('renders component with content url', () => {
       render(<HelmInstall {...defaultProps} contentUrl="http://content.url" />);
 
-      expect(screen.getByText(/You can also download this package's content directly using/g)).toBeInTheDocument();
+      expect(screen.getByText(/You can also download this package's content directly using/)).toBeInTheDocument();
       const contentUrl = screen.getAllByRole('button')[3];
       expect(contentUrl).toBeInTheDocument();
       expect(contentUrl).toHaveTextContent('this link');

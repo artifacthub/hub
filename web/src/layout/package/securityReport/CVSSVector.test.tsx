@@ -68,12 +68,12 @@ describe('CVSSVector', () => {
       expect(screen.getByText('Score:')).toBeInTheDocument();
       expect(screen.getByText('9.8')).toBeInTheDocument();
       expect(screen.getByText('Exploitability Metrics')).toBeInTheDocument();
-      expect(screen.getByText(/Attack Vector/g)).toBeInTheDocument();
+      expect(screen.getByText(/Attack Vector/)).toBeInTheDocument();
       expect(screen.getByText('Physical')).toBeInTheDocument();
       expect(screen.getByText('Local')).toBeInTheDocument();
       expect(screen.getByText('Adjacent Network')).toBeInTheDocument();
       expect(screen.getByText('Network')).toBeInTheDocument();
-      expect(screen.getByText(/Attack Complexity/g)).toBeInTheDocument();
+      expect(screen.getByText(/Attack Complexity/)).toBeInTheDocument();
       expect(screen.getAllByText('High')).toHaveLength(5);
       expect(screen.getAllByText('Low')).toHaveLength(5);
       expect(screen.getByText('Changed')).toBeInTheDocument();
@@ -81,9 +81,9 @@ describe('CVSSVector', () => {
       expect(screen.getByText('Required')).toBeInTheDocument();
       expect(screen.getAllByText('None')).toHaveLength(5);
       expect(screen.getByText('Impact Metrics')).toBeInTheDocument();
-      expect(screen.getByText(/Confidentiality/g)).toBeInTheDocument();
-      expect(screen.getByText(/Integrity/g)).toBeInTheDocument();
-      expect(screen.getByText(/Availability/g)).toBeInTheDocument();
+      expect(screen.getByText(/Confidentiality/)).toBeInTheDocument();
+      expect(screen.getByText(/Integrity/)).toBeInTheDocument();
+      expect(screen.getByText(/Availability/)).toBeInTheDocument();
     });
 
     it('renders CVSS v2 when v3 is not provided', () => {
@@ -100,30 +100,30 @@ describe('CVSSVector', () => {
       );
       expect(screen.getByText('CVSS v2 Vector')).toBeInTheDocument();
       expect(screen.getByText('Exploitability Metrics')).toBeInTheDocument();
-      expect(screen.getByText(/Access Vector/g)).toBeInTheDocument();
+      expect(screen.getByText(/Access Vector/)).toBeInTheDocument();
       expect(screen.getByText('Local')).toBeInTheDocument();
       expect(screen.getByText('Adjacent Network')).toBeInTheDocument();
       expect(screen.getByText('Network')).toBeInTheDocument();
-      expect(screen.getByText(/Access Complexity/g)).toBeInTheDocument();
+      expect(screen.getByText(/Access Complexity/)).toBeInTheDocument();
       expect(screen.getByText('High')).toBeInTheDocument();
       expect(screen.getByText('Medium')).toBeInTheDocument();
       expect(screen.getByText('Low')).toBeInTheDocument();
-      expect(screen.getByText(/Authentication/g)).toBeInTheDocument();
+      expect(screen.getByText(/Authentication/)).toBeInTheDocument();
       expect(screen.getByText('Multiple')).toBeInTheDocument();
       expect(screen.getByText('Single')).toBeInTheDocument();
       expect(screen.getAllByText('None')).toHaveLength(4);
       expect(screen.getByText('Impact Metrics')).toBeInTheDocument();
-      expect(screen.getByText(/Confidentiality/g)).toBeInTheDocument();
+      expect(screen.getByText(/Confidentiality/)).toBeInTheDocument();
       expect(screen.getAllByText('Partial')).toHaveLength(3);
       expect(screen.getAllByText('Complete')).toHaveLength(3);
-      expect(screen.getByText(/Integrity/g)).toBeInTheDocument();
-      expect(screen.getByText(/Availability/g)).toBeInTheDocument();
+      expect(screen.getByText(/Integrity/)).toBeInTheDocument();
+      expect(screen.getByText(/Availability/)).toBeInTheDocument();
     });
 
     it('renders correct value when source is provided', () => {
       render(<CVSSVector {...defaultProps} source="source1" />);
 
-      expect(screen.getByText(/source1/g)).toBeInTheDocument();
+      expect(screen.getByText(/source1/)).toBeInTheDocument();
       expect(screen.getByText('8.1')).toBeInTheDocument();
     });
 

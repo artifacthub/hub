@@ -358,7 +358,7 @@ describe('Filters', () => {
     it('calls onchange mock when any checkbox is clicked', () => {
       render(<Filters {...defaultProps} />);
 
-      const opt = screen.getByLabelText(/Helm charts/g);
+      const opt = screen.getByLabelText(/Helm charts/);
       expect(opt).toBeInTheDocument();
       userEvent.click(opt);
       expect(onChangeMock).toHaveBeenCalledTimes(1);

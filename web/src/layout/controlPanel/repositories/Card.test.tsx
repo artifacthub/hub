@@ -279,11 +279,11 @@ describe('Repository Card - packages section', () => {
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
-        screen.getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./g)
+        screen.getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./)
       ).toBeInTheDocument();
       expect(
         screen.getByText(
-          /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./g
+          /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./
         )
       ).toBeInTheDocument();
 
@@ -314,12 +314,12 @@ describe('Repository Card - packages section', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
         screen.getByText(
-          /It looks like the last security vulnerabilities scan of this repository worked fine and no errors were produced./g
+          /It looks like the last security vulnerabilities scan of this repository worked fine and no errors were produced./
         )
       ).toBeInTheDocument();
       expect(
         screen.getByText(
-          /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./g
+          /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./
         )
       ).toBeInTheDocument();
 

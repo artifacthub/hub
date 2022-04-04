@@ -153,7 +153,7 @@ describe('DeleteAccount', () => {
         ).toBeInTheDocument();
         expect(
           screen.getByText(
-            /If you haven't clicked the link by then you'll need to start the process from the beginning/g
+            /If you haven't clicked the link by then you'll need to start the process from the beginning/
           )
         ).toBeInTheDocument();
       });
@@ -203,7 +203,7 @@ describe('DeleteAccount', () => {
         ).toBeInTheDocument();
         expect(
           screen.getByText(
-            /If you haven't clicked the link by then you'll need to start the process from the beginning/g
+            /If you haven't clicked the link by then you'll need to start the process from the beginning/
           )
         ).toBeInTheDocument();
 
