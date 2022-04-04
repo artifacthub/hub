@@ -11,6 +11,10 @@
   border-top-color: transparent !important;
 }
 
+.invisibleFooter .mainFooter {
+  opacity: 0;
+}
+
 .hexagon {
   line-height: 1rem;
   font-size: 5rem;
@@ -42,6 +46,10 @@
 
 .trademark {
   background-color: var(--color-black-50);
+}
+
+.invisibleFooter .trademark {
+  opacity: 0;
 }
 
 @media only screen and (min-width: 992px) {
