@@ -194,7 +194,7 @@ describe('ValuesSchema', () => {
       expect(screen.getByText('image:')).toBeInTheDocument();
       expect(screen.getByText('array')).toBeInTheDocument();
       expect(screen.getByText('(unique)')).toBeInTheDocument();
-      expect(screen.getAllByText(/\[\]/g)).toHaveLength(2);
+      expect(screen.getAllByText(/\[\]/)).toHaveLength(2);
     });
 
     // cmak

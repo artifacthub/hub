@@ -37,7 +37,7 @@ describe('SearchTipsModal', () => {
 
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('d-block');
-      expect(screen.getByText(/Search tips/g)).toBeInTheDocument();
+      expect(screen.getByText(/Search tips/)).toBeInTheDocument();
       expect(screen.getAllByRole('listitem')).toHaveLength(SEARH_TIPS.length);
     });
 

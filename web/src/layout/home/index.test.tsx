@@ -105,7 +105,7 @@ describe('Home index', () => {
 
       const heading = await screen.findByRole('banner');
       expect(heading).toBeInTheDocument();
-      expect(screen.getByText(/Find, install and publish/g)).toBeInTheDocument();
+      expect(screen.getByText(/Find, install and publish/)).toBeInTheDocument();
       expect(screen.getByText('Kubernetes packages')).toBeInTheDocument();
     });
   });

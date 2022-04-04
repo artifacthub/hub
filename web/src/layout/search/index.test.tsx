@@ -199,7 +199,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opts = await screen.findAllByLabelText(/Chart/g);
+      const opts = await screen.findAllByLabelText(/Chart/);
       userEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -362,7 +362,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opts = await screen.findAllByLabelText(/Falco rules/g);
+      const opts = await screen.findAllByLabelText(/Falco rules/);
       userEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -387,7 +387,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opts = await screen.findAllByLabelText(/Helm charts/g);
+      const opts = await screen.findAllByLabelText(/Helm charts/);
       userEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -412,7 +412,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opts = await screen.findAllByLabelText(/Helm charts/g);
+      const opts = await screen.findAllByLabelText(/Helm charts/);
       userEvent.click(opts[0]);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);

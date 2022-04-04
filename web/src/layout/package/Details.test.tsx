@@ -272,7 +272,7 @@ describe('Details', () => {
       expect(screen.getByText('License')).toBeInTheDocument();
       expect(screen.getAllByText(mockPackage.license!)).toHaveLength(2);
 
-      expect(screen.getByText(/Containers Images/g)).toBeInTheDocument();
+      expect(screen.getByText(/Containers Images/)).toBeInTheDocument();
       expect(screen.getByTestId('containerImage')).toBeInTheDocument();
       expect(screen.getByTestId('containerImage')).toHaveTextContent(mockPackage.containersImages![0].image);
 
@@ -306,7 +306,7 @@ describe('Details', () => {
       expect(screen.getByText('License')).toBeInTheDocument();
       expect(screen.getAllByText(mockPackage.license!)).toHaveLength(2);
 
-      expect(screen.getByText(/Containers Images/g)).toBeInTheDocument();
+      expect(screen.getByText(/Containers Images/)).toBeInTheDocument();
       expect(screen.getByTestId('containerImage')).toBeInTheDocument();
       expect(screen.getByTestId('containerImage')).toHaveTextContent(mockPackage.containersImages![0].image);
 
