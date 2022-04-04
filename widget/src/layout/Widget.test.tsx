@@ -67,10 +67,10 @@ describe('Widget', () => {
       )
     ).toBeInTheDocument();
     expect(screen.getByTitle('logo')).toBeInTheDocument();
-    expect(screen.getByText(/Artifact Hub/g)).toBeInTheDocument();
+    expect(screen.getAllByText(/Artifact Hub/)).toHaveLength(2);
     expect(screen.getByText('26')).toBeInTheDocument();
-    expect(screen.getByText(/Published by/g)).toBeInTheDocument();
-    expect(screen.getByText(/Version/g)).toBeInTheDocument();
+    expect(screen.getByText(/Published by/)).toBeInTheDocument();
+    expect(screen.getByText(/Version/)).toBeInTheDocument();
     expect(screen.getByText('0.20.0')).toBeInTheDocument();
     expect(screen.getByTitle('logo')).toBeInTheDocument();
     expect(screen.getByTitle('helm')).toBeInTheDocument();
@@ -147,10 +147,10 @@ describe('Widget', () => {
       )
     ).toBeInTheDocument();
     expect(screen.getByTitle('logo')).toBeInTheDocument();
-    expect(screen.getByText(/Artifact Hub/g)).toBeInTheDocument();
+    expect(screen.getAllByText(/Artifact Hub/)).toHaveLength(2);
     expect(screen.getByText('26')).toBeInTheDocument();
-    expect(screen.getByText(/Published by/g)).toBeInTheDocument();
-    expect(screen.getByText(/Version/g)).toBeInTheDocument();
+    expect(screen.getByText(/Published by/)).toBeInTheDocument();
+    expect(screen.getByText(/Version/)).toBeInTheDocument();
     expect(screen.getByText('0.20.0')).toBeInTheDocument();
     expect(screen.getByTitle('logo')).toBeInTheDocument();
     expect(screen.getByTitle('helm')).toBeInTheDocument();
