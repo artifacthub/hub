@@ -176,7 +176,7 @@ const MembersSection = (props: Props) => {
                 </NoData>
               ) : (
                 <>
-                  <div className="row mt-4 mt-md-5">
+                  <div className="row mt-4 mt-md-5 gx-0 gx-xxl-4">
                     {members.map((member: Member) => (
                       <MemberCard
                         key={`member_${member.alias}`}

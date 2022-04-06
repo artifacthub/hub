@@ -109,11 +109,11 @@ const RepositoryCard = (props: Props) => {
         )}
         {hasErrors ? (
           <>
-            <FaExclamation className="ms-2 text-warning" />
+            <FaExclamation className="mx-1 text-warning" />
             <RepositoryWarningModal />
           </>
         ) : (
-          <FaCheck className="mx-2 text-success" />
+          <FaCheck className="mx-1 text-success" />
         )}
       </>
     );
@@ -134,8 +134,8 @@ const RepositoryCard = (props: Props) => {
             buttonContent={
               <div className="d-flex flex-row align-items-center">
                 <HiExclamation className="me-2" />
-                <span className="d-none d-sm-inline">Show tracking errors log</span>
-                <span className="d-inline d-sm-none">Logs</span>
+                <span className="d-none d-xl-inline d-xxl-none d-xxxl-inline">Show tracking errors log</span>
+                <span className="d-inline d-xl-none d-xxl-inline d-xxxl-none">Logs</span>
               </div>
             }
             header={

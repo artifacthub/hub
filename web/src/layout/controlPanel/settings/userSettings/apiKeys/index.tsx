@@ -141,7 +141,7 @@ const APIKeysSection = (props: Props) => {
                   </NoData>
                 ) : (
                   <>
-                    <div className="row mt-4 mt-md-5" data-testid="apiKeysList">
+                    <div className="row mt-4 mt-md-5 gx-0 gx-xxl-4" data-testid="apiKeysList">
                       {apiKeysList.map((apiKey: APIKey) => (
                         <APIKeyCard
                           key={apiKey.apiKeyId!}
