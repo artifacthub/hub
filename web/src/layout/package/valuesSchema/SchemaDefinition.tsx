@@ -386,7 +386,7 @@ const SchemaDefinition = (props: Props) => {
                       <ButtonCopyToClipboard
                         text={props.path}
                         contentBtn="Copy path to clipboard"
-                        className={`btn-link textLighter text-muted p-0 ${styles.btnClip}`}
+                        className={`btn-link text-muted p-0 ${styles.btnClip}`}
                         visibleBtnText
                         label="Copy path to clipboard"
                       />

@@ -1,6 +1,7 @@
 .badge {
   background-color: var(--badge-bg);
   border-color: var(--gray) !important;
+  height: 19px;
 }
 
 .size-xs {
