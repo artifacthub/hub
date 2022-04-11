@@ -68,6 +68,7 @@
     "typescript": "4.4.3"
   },
   "resolutions": {
+    "@types/react": "17.0.42",
     "react-scripts/**/nth-check": "^2.0.1"
   },
   "proxy": "http://localhost:8000",
