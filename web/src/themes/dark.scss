@@ -364,7 +364,7 @@
     color: $font-color-light !important;
   }
 
-  .hightlighted {
+  .highlighted {
     color: var(--highlighted);
   }
 
@@ -651,6 +651,10 @@
 
   .offNotifications {
     color: var(--color-font) !important;
+  }
+
+  .trademark {
+    background-color: var(--color-white-50);
   }
 
   .tooltip {

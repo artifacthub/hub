@@ -15,8 +15,8 @@ interface Props {
 const PLACEHOLDER_SRC = '/static/media/package_placeholder.svg';
 
 const StyledImage = styled('img')`
-  max-width: calc(100% - 8px);
-  max-height: calc(100% - 8px);
+  max-width: calc(100% - 12px);
+  max-height: calc(100% - 12px);
 `;
 
 const Image = (props: Props) => {

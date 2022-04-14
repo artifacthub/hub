@@ -417,27 +417,27 @@
                                     "type": "object",
                                     "properties": {
                                         "enabled": {
-                                            "title": "Enable Github oauth",
+                                            "title": "Enable GitHub OAuth",
                                             "type": "boolean",
                                             "default": false
                                         },
                                         "clientID": {
-                                            "title": "Github oauth client id",
+                                            "title": "GitHub OAuth client id",
                                             "type": "string",
                                             "default": ""
                                         },
                                         "clientSecret": {
-                                            "title": "Github oauth client secret",
+                                            "title": "GitHub OAuth client secret",
                                             "type": "string",
                                             "default": ""
                                         },
                                         "redirectURL": {
-                                            "title": "Github oauth redirect url",
+                                            "title": "GitHub OAuth redirect url",
                                             "type": "string",
                                             "default": ""
                                         },
                                         "scopes": {
-                                            "title": "Github oauth scopes",
+                                            "title": "GitHub OAuth scopes",
                                             "type": "array",
                                             "items": {
                                                 "type": "string"
@@ -916,7 +916,7 @@
                         "image": {
                             "title": "Trivy container image",
                             "type": "string",
-                            "default": "aquasec/trivy:0.24.2"
+                            "default": "aquasec/trivy:0.24.4"
                         },
                         "resources": {
                             "title": "Trivy pod resource requirements",

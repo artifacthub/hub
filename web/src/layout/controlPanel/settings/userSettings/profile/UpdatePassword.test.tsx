@@ -72,7 +72,7 @@ describe('Update password - user settings', () => {
       });
     });
 
-    it("doesn`t pass form validation when passwords don't match", async () => {
+    it("doesn't pass form validation when passwords don't match", async () => {
       render(<UpdatePassword />);
 
       const oldPassword = screen.getByTestId('oldPasswordInput') as HTMLInputElement;

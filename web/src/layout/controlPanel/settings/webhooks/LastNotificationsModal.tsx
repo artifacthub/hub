@@ -70,7 +70,7 @@ const LastNotificationsModal = (props: Props) => {
 
           {notificationsWithErrors.length > 0 && (
             <>
-              <div className="h5 mt-5 mb-4 text-upercase fw-bold">Errors logs</div>
+              <div className="h5 mt-5 mb-4 text-uppercase fw-bold">Errors logs</div>
 
               <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
                 <thead>

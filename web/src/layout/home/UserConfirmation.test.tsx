@@ -43,7 +43,7 @@ describe('UserConfirmation', () => {
     await waitFor(() => {
       expect(API.verifyEmail).toHaveBeenCalledTimes(1);
     });
-    expect(screen.getByText(/You email has been verified! Please, login to/g)).toBeInTheDocument();
+    expect(screen.getByText(/You email has been verified! Please, login to/)).toBeInTheDocument();
   });
 
   it('does not render component when email code is undefined', () => {

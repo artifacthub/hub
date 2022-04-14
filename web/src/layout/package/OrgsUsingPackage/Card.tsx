@@ -22,7 +22,7 @@ const OrgCard = (props: Props) => {
               <Image
                 alt={props.organization.displayName || props.organization.name}
                 imageId={props.organization.logoImageId}
-                className={`m-auto ${styles.image}`}
+                className={`m-auto rounded-circle ${styles.image}`}
                 placeholderIcon={<MdBusiness />}
               />
             </div>

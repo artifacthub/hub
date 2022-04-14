@@ -11,11 +11,11 @@ enum RegistryType {
   Amazon = 'amazon',
   Azure = 'azure',
   Docker = 'docker',
-  Github = 'github',
+  GitHub = 'github',
   Google = 'google',
   Quay = 'quay',
   BundleBar = 'bundlebar',
-  Gitlab = 'gitlab',
+  GitLab = 'gitlab',
   Unknown = 'unknown',
 }
 
@@ -42,7 +42,7 @@ const REGISTRIES: RegistryList = {
     name: 'Docker Hub',
     icon: '/static/media/registries/docker.svg',
   },
-  [RegistryType.Github]: {
+  [RegistryType.GitHub]: {
     name: 'GitHub Packages CR',
     icon: '/static/media/registries/github.svg',
   },
@@ -58,7 +58,7 @@ const REGISTRIES: RegistryList = {
     name: 'Bundle Bar',
     icon: '/static/media/registries/bundlebar.svg',
   },
-  [RegistryType.Gitlab]: {
+  [RegistryType.GitLab]: {
     name: 'GitLab Registry',
     icon: '/static/media/registries/gitlab.svg',
   },
@@ -95,7 +95,7 @@ const getRegistryData = (url: string): RegistryInfo => {
           registryType = RegistryType.Azure;
           break;
         case /ghcr\.io/.test(hostname):
-          registryType = RegistryType.Github;
+          registryType = RegistryType.GitHub;
           break;
         case /gcr\.io/.test(hostname):
           registryType = RegistryType.Google;
@@ -107,7 +107,7 @@ const getRegistryData = (url: string): RegistryInfo => {
           registryType = RegistryType.BundleBar;
           break;
         case /gitlab\.com/.test(hostname):
-          registryType = RegistryType.Gitlab;
+          registryType = RegistryType.GitLab;
           break;
       }
 

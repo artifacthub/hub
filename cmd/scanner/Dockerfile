@@ -1,5 +1,5 @@
 # Build scanner
-FROM golang:1.17-alpine3.15 AS scanner-builder
+FROM golang:1.18-alpine3.15 AS scanner-builder
 WORKDIR /go/src/github.com/artifacthub/scanner
 COPY go.* ./
 COPY cmd/scanner cmd/scanner
@@ -10,7 +10,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /scanner .
 # Trivy installer
 FROM alpine:3.15 AS trivy-installer
 RUN apk --no-cache add curl
-RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin v0.24.2
+RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin v0.24.4
 
 # Final stage
 FROM alpine:3.15

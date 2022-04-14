@@ -16,10 +16,10 @@ describe('PublisherInstructionsInstall', () => {
         <PublisherInstructionsInstall install="## Install using Helm\n\n```\nhelm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/cve-2019-11246/custom-rules.yaml stable/falco\n```\n" />
       );
 
-      expect(screen.getByText(/Install using Helm/g)).toBeInTheDocument();
+      expect(screen.getByText(/Install using Helm/)).toBeInTheDocument();
       expect(
         screen.getByText(
-          /helm upgrade falco -f https:\/\/api.securityhub.dev\/resources\/falco-rules\/cve-2019-11246\/custom-rules.yaml stable\/falco/g
+          /helm upgrade falco -f https:\/\/api.securityhub.dev\/resources\/falco-rules\/cve-2019-11246\/custom-rules.yaml stable\/falco/
         )
       ).toBeInTheDocument();
     });

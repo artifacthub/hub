@@ -179,7 +179,7 @@ const ChangelogModal = (props: Props) => {
       } catch {
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred getting package changelog markodwn, please try again later.',
+          message: 'An error occurred getting package changelog markdown, please try again later.',
         });
         setIsGettingMd(false);
       }

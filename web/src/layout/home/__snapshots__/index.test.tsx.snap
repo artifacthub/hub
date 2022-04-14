@@ -208,9 +208,9 @@ exports[`Home index creates snapshot 1`] = `
         class="d-flex flex-row align-items-center justify-content-center flex-wrap"
       >
         <a
-          aria-label="Open Github link"
+          aria-label="Open GitHub link"
           class="link btn btn-secondary mb-4 mb-md-2 socialBtn"
-          href="https://github.com/cncf/hub"
+          href="https://github.com/artifacthub/hub"
           rel="noopener noreferrer"
           role="button"
           tabindex="-1"
@@ -325,7 +325,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations and container images.
           <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
           >
             <a
               aria-label="Open Helm site"
@@ -487,7 +487,7 @@ exports[`Home index creates snapshot 1`] = `
             </a>
           </div>
           <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
           >
             <a
               aria-label="Open Tekton site"
@@ -594,7 +594,7 @@ exports[`Home index creates snapshot 1`] = `
               </div>
             </a>
             <a
-              aria-label="Open Container Iniciative site"
+              aria-label="Open Container Initiative site"
               class="link col iconLink"
               href="https://opencontainers.org"
               rel="noopener noreferrer"

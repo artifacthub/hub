@@ -28,19 +28,26 @@ describe('Footer', () => {
       expect(screen.getByRole('contentinfo')).toBeInTheDocument();
 
       const links = screen.getAllByRole('button');
-      expect(links).toHaveLength(6);
+      expect(links).toHaveLength(8);
       expect(links[0]).toHaveTextContent('Documentation');
       expect(links[1]).toHaveTextContent('Blog');
       expect(links[2]).toHaveTextContent('GitHub');
       expect(links[3]).toHaveTextContent('Slack');
       expect(links[4]).toHaveTextContent('Twitter');
       expect(links[5]).toHaveTextContent('Apache License 2.0');
+      expect(links[6]).toHaveTextContent('The Linux Foundation');
+      expect(links[7]).toHaveTextContent('Trademark Usage');
 
       const statsLink = screen.getByText('Statistics');
       expect(statsLink).toBeInTheDocument();
       expect(statsLink).toHaveAttribute('href', '/stats');
 
       expect(screen.getByText('© The Artifact Hub Authors')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          /The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation/
+        )
+      ).toBeInTheDocument();
     });
 
     it('adds proper styles for hiding footer', () => {

@@ -27,7 +27,7 @@ exports[`OrgCard creates snapshot 1`] = `
             <img
               alt="Artifact Hub"
               aria-hidden="true"
-              class="m-auto image"
+              class="m-auto rounded-circle image"
               src="/image/35c5d3c7-421e-4b4a-97b0-86f4602a2f59"
               srcset="/image/35c5d3c7-421e-4b4a-97b0-86f4602a2f59@1x 1x, /image/35c5d3c7-421e-4b4a-97b0-86f4602a2f59@2x 2x, /image/35c5d3c7-421e-4b4a-97b0-86f4602a2f59@3x 3x, /image/35c5d3c7-421e-4b4a-97b0-86f4602a2f59@4x 4x"
             />

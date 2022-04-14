@@ -42,7 +42,7 @@ const WidgetModal = (props: Props) => {
   const [theme, setTheme] = useState<string>(DEFAULT_THEME);
   const [header, setHeader] = useState<boolean>(whiteLabel ? false : true);
   const [stars, setStars] = useState<boolean>(true);
-  const [responsive, setRepsonsive] = useState<boolean>(false);
+  const [responsive, setResponsive] = useState<boolean>(false);
 
   const buildWidgetCode = (): string => {
     const url = `${window.location.origin}${window.location.pathname}`;
@@ -64,7 +64,7 @@ const WidgetModal = (props: Props) => {
   const resetValues = () => {
     setTheme(DEFAULT_THEME);
     setHeader(true);
-    setRepsonsive(false);
+    setResponsive(false);
     setWidgetCode(buildWidgetCode());
   };
 
@@ -186,7 +186,7 @@ const WidgetModal = (props: Props) => {
                   role="switch"
                   className="form-check-input position-absolute ms-2"
                   value="true"
-                  onChange={() => setRepsonsive(!responsive)}
+                  onChange={() => setResponsive(!responsive)}
                   checked={responsive}
                 />
               </div>

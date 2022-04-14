@@ -94,7 +94,7 @@ export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: 
       if (redirectUrl === currentUrl) {
         history.replace(redirectUrl);
       } else {
-        // Redirect to correct route when neccessary
+        // Redirect to correct route when necessary
         history.push(redirectUrl);
       }
     }

@@ -1,11 +1,11 @@
 module github.com/artifacthub/hub
 
-go 1.17
+go 1.18
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/aquasecurity/trivy v0.24.2
-	github.com/containerd/containerd v1.6.1
+	github.com/containerd/containerd v1.6.1 // indirect
 	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/disintegration/imaging v1.6.2
 	github.com/domodwyer/mailyak v3.1.1+incompatible
@@ -64,11 +64,8 @@ require (
 	contrib.go.opencensus.io/exporter/prometheus v0.4.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/BurntSushi/toml v1.0.0 // indirect
-	github.com/CycloneDX/cyclonedx-go v0.4.0 // indirect
 	github.com/MakeNowJust/heredoc v0.0.0-20170808103936-bb23615498cd // indirect
 	github.com/Masterminds/goutils v1.1.1 // indirect
-	github.com/Masterminds/semver v1.5.0 // indirect
-	github.com/Masterminds/sprig v2.22.0+incompatible // indirect
 	github.com/Masterminds/sprig/v3 v3.2.2 // indirect
 	github.com/Masterminds/squirrel v1.5.2 // indirect
 	github.com/Microsoft/go-winio v0.5.1 // indirect
@@ -78,7 +75,6 @@ require (
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/acomagu/bufpipe v1.0.3 // indirect
 	github.com/aquasecurity/fanal v0.0.0-20220303080309-254063f95ea0 // indirect
-	github.com/aquasecurity/go-dep-parser v0.0.0-20220302151315-ff6d77c26988 // indirect
 	github.com/aquasecurity/trivy-db v0.0.0-20220130223604-df65ebde46f4 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -184,10 +180,7 @@ require (
 	github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
-	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
-	github.com/owenrumney/go-sarif/v2 v2.0.17 // indirect
-	github.com/package-url/packageurl-go v0.1.1-0.20220203205134-d70459300c8a // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect

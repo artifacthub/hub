@@ -323,7 +323,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
         expect(
-          screen.getByText('An error occurred transfering the repository, please try again later.')
+          screen.getByText('An error occurred transferring the repository, please try again later.')
         ).toBeInTheDocument();
       });
 
@@ -357,7 +357,7 @@ describe('Transfer Repository Modal - packages section', () => {
         rerender(component);
 
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(screen.getByText('An error occurred transfering the repository: custom error')).toBeInTheDocument();
+        expect(screen.getByText('An error occurred transferring the repository: custom error')).toBeInTheDocument();
       });
     });
 

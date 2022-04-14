@@ -65,7 +65,7 @@
     "name": "oauth2-proxy",
     "normalized_name": "oauth2-proxy",
     "stars": 1,
-    "description": "A reverse proxy that provides authentication with Google, Github or other providers",
+    "description": "A reverse proxy that provides authentication with Google, GitHub or other providers",
     "version": "3.2.1",
     "app_version": "5.1.0",
     "deprecated": false,

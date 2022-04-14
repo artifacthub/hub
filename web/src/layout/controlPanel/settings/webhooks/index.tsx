@@ -160,7 +160,7 @@ const WebhooksSection = (props: Props) => {
                       </NoData>
                     ) : (
                       <>
-                        <div className="row mt-3 mt-md-4">
+                        <div className="row mt-3 mt-md-4 gx-0 gx-xxl-4">
                           {webhooks.map((webhook: Webhook) => (
                             <WebhookCard
                               key={`webhook_${webhook.webhookId}`}

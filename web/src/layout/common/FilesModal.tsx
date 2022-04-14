@@ -225,7 +225,7 @@ const FilesModal = (props: Props) => {
           breakPoint="md"
         >
           <div className="h-100 mw-100">
-            <div className="d-flex flex-row align-items-strecht g-0 h-100 mh-100">
+            <div className="d-flex flex-row align-items-stretch g-0 h-100 mh-100">
               <div className="col-3 h-100 overflow-auto">
                 <div className="position-relative w-100 pe-2">
                   <div className="mb-3 input-group-sm">

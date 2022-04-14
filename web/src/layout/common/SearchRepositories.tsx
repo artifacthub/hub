@@ -207,7 +207,7 @@ const SearchRepositories = (props: Props) => {
     <div className="position-relative">
       <div className="d-flex flex-row">
         <div
-          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative searchBar lh-base bg-white ${styles.inputWrapper}`}
+          className={`flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative searchBar lh-base bg-white ${styles.inputWrapper}`}
         >
           <div
             data-testid="searchBarIcon"
@@ -241,7 +241,7 @@ const SearchRepositories = (props: Props) => {
         <div ref={dropdownRef} className={`dropdown-menu w-100 p-0 shadow-sm show overflow-hidden ${styles.dropdown}`}>
           {repositories.length === 0 ? (
             <p className="m-3 text-center">
-              We can't seem to find any repositores that match your search for{' '}
+              We can't seem to find any repositories that match your search for{' '}
               <span className="fw-bold">{searchName}</span>
             </p>
           ) : (
@@ -303,7 +303,7 @@ const SearchRepositories = (props: Props) => {
                                     pattern: new RegExp(escapeRegExp(searchName), 'gi'),
                                     decorator: (match: string, index: number) => {
                                       return (
-                                        <span key={`match_${item.name}_${index}`} className="fw-bold hightlighted">
+                                        <span key={`match_${item.name}_${index}`} className="fw-bold highlighted">
                                           {match}
                                         </span>
                                       );

@@ -1,11 +1,18 @@
 .footer {
-  padding: 3.5rem 1.5rem;
   background-color: var(--color-1-900);
+}
+
+.mainFooter {
+  padding: 3.5rem 1.5rem;
 }
 
 .invisibleFooter {
   background-color: var(--color-white-50);
   border-top-color: transparent !important;
+}
+
+.invisibleFooter .mainFooter {
+  opacity: 0;
 }
 
 .hexagon {
@@ -35,6 +42,14 @@
 .AHlink:focus {
   color: inherit !important;
   text-decoration: none;
+}
+
+.trademark {
+  background-color: var(--color-black-50);
+}
+
+.invisibleFooter .trademark {
+  opacity: 0;
 }
 
 @media only screen and (min-width: 992px) {

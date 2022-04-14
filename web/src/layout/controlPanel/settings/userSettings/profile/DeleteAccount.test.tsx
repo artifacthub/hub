@@ -145,7 +145,7 @@ describe('DeleteAccount', () => {
         });
 
         expect(screen.getByText("We've just sent you a confirmation email")).toBeInTheDocument();
-        expect(screen.getByText('is only valid for 15 minures')).toBeInTheDocument();
+        expect(screen.getByText('is only valid for 15 minutes')).toBeInTheDocument();
         expect(
           screen.getByText(
             'Please click on the link that has just been sent to your email account to delete your account and complete the process.'
@@ -153,7 +153,7 @@ describe('DeleteAccount', () => {
         ).toBeInTheDocument();
         expect(
           screen.getByText(
-            /If you haven't clicked the link by then you'll need to start the process from the beginning/g
+            /If you haven't clicked the link by then you'll need to start the process from the beginning/
           )
         ).toBeInTheDocument();
       });
@@ -195,7 +195,7 @@ describe('DeleteAccount', () => {
 
         expect(screen.queryByRole('button', { name: 'Delete account' })).toBeNull();
         expect(screen.getByText("We've just sent you a confirmation email")).toBeInTheDocument();
-        expect(screen.getByText('is only valid for 15 minures')).toBeInTheDocument();
+        expect(screen.getByText('is only valid for 15 minutes')).toBeInTheDocument();
         expect(
           screen.getByText(
             'Please click on the link that has just been sent to your email account to delete your account and complete the process.'
@@ -203,7 +203,7 @@ describe('DeleteAccount', () => {
         ).toBeInTheDocument();
         expect(
           screen.getByText(
-            /If you haven't clicked the link by then you'll need to start the process from the beginning/g
+            /If you haven't clicked the link by then you'll need to start the process from the beginning/
           )
         ).toBeInTheDocument();
 

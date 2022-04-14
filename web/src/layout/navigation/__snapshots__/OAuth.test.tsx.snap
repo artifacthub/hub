@@ -22,7 +22,7 @@ exports[`OAuth creates snapshot 1`] = `
         class="d-grid gap-4"
       >
         <button
-          aria-label="Sign in with Github"
+          aria-label="Sign in with GitHub"
           class="btn btn-outline-secondary btn"
           type="button"
         >
@@ -30,14 +30,14 @@ exports[`OAuth creates snapshot 1`] = `
             class="d-flex align-items-center"
           >
             <img
-              alt="Github Logo"
+              alt="GitHub Logo"
               class="lh-base logo"
               src="/static/media/github-mark.svg"
             />
             <div
               class="flex-grow-1 text-center"
             >
-              Github
+              GitHub
             </div>
           </div>
         </button>

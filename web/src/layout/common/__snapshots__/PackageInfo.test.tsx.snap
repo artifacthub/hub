@@ -6,7 +6,7 @@ exports[`PackageInfo creates snapshot 1`] = `
     class="d-flex align-items-start justify-content-between mw-100"
   >
     <div
-      class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
+      class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
     >
       <div
         class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border position-relative bg-white imageWrapper imageWrapper"
@@ -232,7 +232,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-flex flex-row aling-items-baseline text-truncate"
+                class="d-flex flex-row text-truncate"
               >
                 <div
                   class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
@@ -438,7 +438,7 @@ exports[`PackageInfo creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="d-flex flex-row aling-items-baseline text-truncate"
+                  class="d-flex flex-row text-truncate"
                 >
                   <div
                     class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"

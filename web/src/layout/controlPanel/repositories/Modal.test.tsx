@@ -119,12 +119,12 @@ describe('Repository Modal - repositories section', () => {
     it('displays warning about repo url', () => {
       render(<Modal {...defaultProps} repository={{ ...repoMock, kind: RepositoryKind.OLM }} />);
 
-      expect(screen.getByText(/Please DO NOT include the git hosting platform specific parts/g)).toBeInTheDocument();
+      expect(screen.getByText(/Please DO NOT include the git hosting platform specific parts/)).toBeInTheDocument();
       expect(screen.getByText('tree/branch')).toBeInTheDocument();
 
       userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'https://github.com/test/tree/test');
 
-      expect(screen.getByText(/Please DO NOT include the git hosting platform specific parts/g)).toHaveClass(
+      expect(screen.getByText(/Please DO NOT include the git hosting platform specific parts/)).toHaveClass(
         'animatedWarning'
       );
     });
@@ -476,7 +476,7 @@ describe('Repository Modal - repositories section', () => {
           userEvent.click(toggle);
 
           expect(await screen.findByText('Disable repository')).toBeInTheDocument();
-          expect(screen.getByText(/Please read this carefully./g)).toBeInTheDocument();
+          expect(screen.getByText(/Please read this carefully./)).toBeInTheDocument();
           expect(screen.getByText('This operation cannot be undone.')).toBeInTheDocument();
           expect(screen.getByRole('textbox')).toBeInTheDocument();
           expect(screen.getByRole('button', { name: 'Disable repository' })).toBeInTheDocument();
@@ -522,7 +522,7 @@ describe('Repository Modal - repositories section', () => {
 
           expect(await screen.findByText('Disable repository')).toBeInTheDocument();
 
-          expect(screen.getByText(/Please read this carefully./g)).toBeInTheDocument();
+          expect(screen.getByText(/Please read this carefully./)).toBeInTheDocument();
           expect(screen.getByText('This operation cannot be undone.')).toBeInTheDocument();
           expect(screen.getByRole('textbox')).toBeInTheDocument();
           expect(screen.getByRole('button', { name: 'Disable repository' })).toBeInTheDocument();

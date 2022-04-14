@@ -36,14 +36,14 @@ changes: # (optional - it is also possible to provide a list of strings with jus
   - kind: added # Supported kinds are: added, changed, deprecated, removed, fixed and security
     description: cool feature
     links:
-      - name: Github Issue
+      - name: GitHub Issue
         url: https://github.com/issue-url
-      - name: Github PR
+      - name: GitHub PR
         url: https://github.com/pr-url
   - kind: fixed
     description: minor bug
     links:
-      - name: Github Issue
+      - name: GitHub Issue
         url: https://github.com/issue-url
 maintainers: # (optional)
   - name: The maintainer name (required for each maintainer)

@@ -57,7 +57,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		md, err := GetMetadata(pluginMetadataPath)
 		if err != nil {
 			if !errors.Is(err, os.ErrNotExist) {
-				s.warn(fmt.Errorf("error getting pluging metadata (path: %s): %w", pluginMetadataPath, err))
+				s.warn(fmt.Errorf("error getting plugin metadata (path: %s): %w", pluginMetadataPath, err))
 			}
 			return nil
 		}

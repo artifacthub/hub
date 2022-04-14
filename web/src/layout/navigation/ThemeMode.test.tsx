@@ -51,9 +51,9 @@ describe('ThemeMode', () => {
     );
 
     expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
-    expect(screen.getByText(/Automatic/g)).toBeInTheDocument();
-    expect(screen.getByText(/Light/g)).toBeInTheDocument();
-    expect(screen.getByText(/Dark/g)).toBeInTheDocument();
+    expect(screen.getByText(/Automatic/)).toBeInTheDocument();
+    expect(screen.getByText(/Light/)).toBeInTheDocument();
+    expect(screen.getByText(/Dark/)).toBeInTheDocument();
   });
 
   it('when theme is light', () => {
@@ -135,7 +135,7 @@ describe('ThemeMode', () => {
     const lightOpt = screen.getByRole('radio', { name: 'Light' });
     expect(lightOpt).toBeChecked();
 
-    const darkLabel = screen.getByText(/Dark/g);
+    const darkLabel = screen.getByText(/Dark/);
     const darkOpt = screen.getByRole('radio', { name: 'Dark' });
     expect(darkOpt).not.toBeChecked();
     userEvent.click(darkLabel);

@@ -85,7 +85,7 @@ func TestApproveSession(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error getting tfa config from database", func(t *testing.T) {
+	t.Run("error getting 2fa config from database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserIDFromSessionIDDBQ, hash(sessionID)).Return("userID", nil)
@@ -492,7 +492,7 @@ func TestDeleteUser(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error sending account deleted email nofication", func(t *testing.T) {
+	t.Run("error sending account deleted email notification", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, deleteUserDBQ, "userID", codeHashed).Return("email", nil)
@@ -550,7 +550,7 @@ func TestDisableTFA(t *testing.T) {
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
-	t.Run("error getting tfa config from database", func(t *testing.T) {
+	t.Run("error getting 2fa config from database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(nil, tests.ErrFakeDB)
@@ -572,7 +572,7 @@ func TestDisableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error setting tfa as disabled in the database", func(t *testing.T) {
+	t.Run("error setting 2fa as disabled in the database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
@@ -585,7 +585,7 @@ func TestDisableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error sending tfa enabled email nofication", func(t *testing.T) {
+	t.Run("error sending 2fa enabled email notification", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
@@ -601,7 +601,7 @@ func TestDisableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("tfa disabled successfully", func(t *testing.T) {
+	t.Run("2fa disabled successfully", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
@@ -617,7 +617,7 @@ func TestDisableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("tfa disabled successfully (using valid recovery code)", func(t *testing.T) {
+	t.Run("2fa disabled successfully (using valid recovery code)", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
@@ -659,7 +659,7 @@ func TestEnableTFA(t *testing.T) {
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
-	t.Run("error getting tfa config from database", func(t *testing.T) {
+	t.Run("error getting 2fa config from database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(nil, tests.ErrFakeDB)
@@ -681,7 +681,7 @@ func TestEnableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error setting tfa as enabled in the database", func(t *testing.T) {
+	t.Run("error setting 2fa as enabled in the database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
@@ -694,7 +694,7 @@ func TestEnableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error sending tfa enabled email nofication", func(t *testing.T) {
+	t.Run("error sending 2fa enabled email notification", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
@@ -710,7 +710,7 @@ func TestEnableTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("tfa enabled successfully", func(t *testing.T) {
+	t.Run("2fa enabled successfully", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getTFAConfigDBQ, "userID").Return(tfaConfigJSON, nil)
@@ -1266,7 +1266,7 @@ func TestSetupTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("error storing tfa info in database", func(t *testing.T) {
+	t.Run("error storing 2fa info in database", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)
@@ -1279,7 +1279,7 @@ func TestSetupTFA(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("setup tfa succeeded", func(t *testing.T) {
+	t.Run("setup 2fa succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserEmailDBQ, "userID").Return("email", nil)

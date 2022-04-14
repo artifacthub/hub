@@ -35,7 +35,7 @@ describe('SecurityRating', () => {
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
     expect(screen.getByText('No vulnerabilities found')).toBeInTheDocument();
-    expect(screen.getAllByText(/Vulnerabilities of severity/g)).toHaveLength(5);
+    expect(screen.getAllByText(/Vulnerabilities of severity/)).toHaveLength(5);
   });
 
   it('renders A label', () => {

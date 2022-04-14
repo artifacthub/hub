@@ -72,7 +72,7 @@ const TagsList = (props: Props) => {
         <>
           {props.tags.map((item: ContainerTag, idx: number) => {
             return (
-              <div className="d-flex flex-row align-items-strecht justify-content-between" key={`tag_${item.id!}`}>
+              <div className="d-flex flex-row align-items-stretch justify-content-between" key={`tag_${item.id!}`}>
                 <InputField
                   className="flex-grow-1"
                   type="text"

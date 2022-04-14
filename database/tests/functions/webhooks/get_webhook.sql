@@ -115,7 +115,7 @@ select throws_ok(
     'Webhook get should fail because requesting user is not the owner'
 );
 
--- Onwer user gets webhook
+-- Owner user gets webhook
 select is(
     get_webhook(
         '00000000-0000-0000-0000-000000000001',

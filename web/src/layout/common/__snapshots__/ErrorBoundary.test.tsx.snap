@@ -15,7 +15,7 @@ exports[`ErrorBoundary creates error snapshot 1`] = `
       >
         Please 
         <a
-          aria-label="Github issue"
+          aria-label="GitHub issue"
           class="link undefined"
           href="https://github.com/artifacthub/hub/issues/new/choose"
           rel="noopener noreferrer"
@@ -27,7 +27,7 @@ exports[`ErrorBoundary creates error snapshot 1`] = `
             file an issue
           </u>
         </a>
-         in Github indicating the URL of the package you are experiencing problems with.
+         in GitHub indicating the URL of the package you are experiencing problems with.
       </div>
     </div>
   </div>

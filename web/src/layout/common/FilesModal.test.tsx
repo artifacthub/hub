@@ -136,7 +136,7 @@ describe('Files modal', () => {
       },
     });
 
-    expect(screen.getByText(/This package version contains/g)).toBeInTheDocument();
+    expect(screen.getByText(/This package version contains/)).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
   });
 

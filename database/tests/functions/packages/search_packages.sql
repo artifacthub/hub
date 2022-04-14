@@ -1356,7 +1356,7 @@ select results_eq(
     'Facets: false TSQueryWeb: kw1 Kinds: 1, 2 | No packages or facets expected'
 );
 
--- Tests with with orgs and users filters
+-- Tests with orgs and users filters
 select results_eq(
     $$
         select data::jsonb, total_count::integer from search_packages('{
@@ -1528,7 +1528,7 @@ select results_eq(
     'TSQueryWeb: - Org: org1 User: user1 | Packages 1 and 3 expected - Facets not expected'
 );
 
--- Tests with with license filter
+-- Tests with license filter
 select results_eq(
     $$
         select data::jsonb, total_count::integer from search_packages('{
@@ -1575,7 +1575,7 @@ select results_eq(
     'TSQueryWeb: - License: Apache-2.0 | Package 1 expected - Facets not expected'
 );
 
--- Tests with with capabilities filter
+-- Tests with capabilities filter
 select results_eq(
     $$
         select data::jsonb, total_count::integer from search_packages('{

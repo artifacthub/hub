@@ -83,14 +83,14 @@ annotations:
     - kind: added
       description: Cool feature
       links:
-        - name: Github Issue
+        - name: GitHub Issue
           url: https://github.com/issue-url
-        - name: Github PR
+        - name: GitHub PR
           url: https://github.com/pr-url
     - kind: fixed
       description: Minor bug
       links:
-        - name: Github Issue
+        - name: GitHub Issue
           url: https://github.com/issue-url
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |

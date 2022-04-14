@@ -16,7 +16,7 @@ interface Props {
   withLink?: string;
   withoutTooltip?: boolean;
   onlyIcon?: boolean;
-  tooltipAligment?: 'right' | 'left';
+  tooltipAlignment?: 'right' | 'left';
 }
 
 const SecurityRating = (props: Props) => {

@@ -1,26 +1,26 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import CapatabilityLevelInfoModal from './CapatabilityLevelInfoModal';
+import CapabilityLevelInfoModal from './CapabilityLevelInfoModal';
 
-describe('CapatabilityLevelInfoModal', () => {
+describe('CapabilityLevelInfoModal', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<CapatabilityLevelInfoModal />);
+    const { asFragment } = render(<CapabilityLevelInfoModal />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<CapatabilityLevelInfoModal />);
+      render(<CapabilityLevelInfoModal />);
       expect(screen.getByText('Capability level')).toBeInTheDocument();
     });
 
     it('opens modal', () => {
-      render(<CapatabilityLevelInfoModal />);
+      render(<CapabilityLevelInfoModal />);
 
       expect(screen.getByRole('dialog')).not.toHaveClass('active');
       const btn = screen.getByRole('button', { name: /Open modal/ });

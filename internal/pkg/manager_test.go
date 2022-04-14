@@ -1473,3 +1473,60 @@ func TestUnregister(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 }
+
+func TestBuildKey(t *testing.T) {
+	testCases := []struct {
+		p           *hub.Package
+		expectedKey string
+	}{
+		{
+			&hub.Package{
+				Name:    "package1",
+				Version: "1.0",
+			},
+			"package1@1.0",
+		},
+		{
+			&hub.Package{
+				Name:    "package1",
+				Version: "1.0@something-else",
+			},
+			"package1@1.0@something-else",
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.expectedKey, func(t *testing.T) {
+			t.Parallel()
+			assert.Equal(t, tc.expectedKey, BuildKey(tc.p))
+		})
+	}
+}
+
+func TestParseKey(t *testing.T) {
+	testCases := []struct {
+		key             string
+		expectedName    string
+		expectedVersion string
+	}{
+		{
+			"package1@1.0",
+			"package1",
+			"1.0",
+		},
+		{
+			"package1@1.0@something-else",
+			"package1",
+			"1.0@something-else",
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.key, func(t *testing.T) {
+			t.Parallel()
+			name, version := ParseKey(tc.key)
+			assert.Equal(t, tc.expectedName, name)
+			assert.Equal(t, tc.expectedVersion, version)
+		})
+	}
+}

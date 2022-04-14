@@ -29,7 +29,7 @@ describe('SecuritySummary', () => {
     it('renders component', () => {
       render(<SecuritySummary {...defaultProps} />);
       expect(screen.getByText('170')).toBeInTheDocument();
-      expect(screen.getByText(/vulnerabilities have been detected in this package's/g)).toBeInTheDocument();
+      expect(screen.getByText(/vulnerabilities have been detected in this package's/)).toBeInTheDocument();
       expect(screen.getByText('2')).toBeInTheDocument();
       expect(screen.getByText('10')).toBeInTheDocument();
       expect(screen.getByText('53')).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe('SecuritySummary', () => {
           }}
         />
       );
-      expect(screen.getByText(/No vulnerabilities have been detected in this package's/g)).toBeInTheDocument();
+      expect(screen.getByText(/No vulnerabilities have been detected in this package's/)).toBeInTheDocument();
       expect(screen.getByText('images')).toBeInTheDocument();
     });
 
@@ -65,7 +65,7 @@ describe('SecuritySummary', () => {
           }}
         />
       );
-      expect(screen.getByText(/No vulnerabilities have been detected in this package's/g)).toBeInTheDocument();
+      expect(screen.getByText(/No vulnerabilities have been detected in this package's/)).toBeInTheDocument();
       expect(screen.getByText('image')).toBeInTheDocument();
     });
   });

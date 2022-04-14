@@ -26,7 +26,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
       style="height: 25px;"
     >
       <div
-        aria-label="Vulnerabilites number - critical"
+        aria-label="Vulnerabilities number - critical"
         class="progress-bar text-dark px-1 fw-bold progressBar"
         role="progressbar"
         style="width: 1.1764705882352942%; background-color: rgb(150, 0, 3);"
@@ -38,7 +38,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
         </span>
       </div>
       <div
-        aria-label="Vulnerabilites number - high"
+        aria-label="Vulnerabilities number - high"
         class="progress-bar text-dark px-1 fw-bold progressBar"
         role="progressbar"
         style="width: 5.882352941176471%; background-color: rgb(223, 42, 25);"
@@ -50,7 +50,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
         </span>
       </div>
       <div
-        aria-label="Vulnerabilites number - medium"
+        aria-label="Vulnerabilities number - medium"
         class="progress-bar text-dark px-1 fw-bold progressBar"
         role="progressbar"
         style="width: 61.76470588235294%; background-color: rgb(247, 134, 15);"
@@ -62,7 +62,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
         </span>
       </div>
       <div
-        aria-label="Vulnerabilites number - low"
+        aria-label="Vulnerabilities number - low"
         class="progress-bar text-dark px-1 fw-bold progressBar"
         role="progressbar"
         style="width: 31.176470588235293%; background-color: rgb(244, 189, 12);"

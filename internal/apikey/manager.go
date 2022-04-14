@@ -17,12 +17,12 @@ import (
 
 const (
 	// Database queries
-	addAPIKeyDBQ       = `select add_api_key($1::jsonb)`
-	deleteAPIKeyDBQ    = `select delete_api_key($1::uuid, $2::uuid)`
-	getAPIKeyDBQ       = `select get_api_key($1::uuid, $2::uuid)`
-	getAPIKeyUserIDDBQ = `select user_id, secret from api_key where api_key_id = $1`
-	getUserAPIKeysDBQ  = `select * from get_user_api_keys($1::uuid, $2::int, $3::int)`
-	updateAPIKeyDBQ    = `select update_api_key($1::jsonb)`
+	addAPIKeyDBQ       = `select add_api_key($1::jsonb)`                               //#nosec
+	deleteAPIKeyDBQ    = `select delete_api_key($1::uuid, $2::uuid)`                   //#nosec
+	getAPIKeyDBQ       = `select get_api_key($1::uuid, $2::uuid)`                      //#nosec
+	getAPIKeyUserIDDBQ = `select user_id, secret from api_key where api_key_id = $1`   //#nosec
+	getUserAPIKeysDBQ  = `select * from get_user_api_keys($1::uuid, $2::int, $3::int)` //#nosec
+	updateAPIKeyDBQ    = `select update_api_key($1::jsonb)`                            //#nosec
 )
 
 // Manager provides an API to manage api keys.

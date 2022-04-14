@@ -549,7 +549,7 @@ func (h *Handlers) OauthRedirect(w http.ResponseWriter, r *http.Request) {
 }
 
 // RegisterDeleteUserCode is an http handler used to register a code to
-// delete a user accouint. The code will be emailed to the address provided.
+// delete a user account. The code will be emailed to the address provided.
 func (h *Handlers) RegisterDeleteUserCode(w http.ResponseWriter, r *http.Request) {
 	err := h.userManager.RegisterDeleteUserCode(r.Context())
 	if err != nil {
@@ -612,7 +612,7 @@ func (h *Handlers) registerUserWithOauth(
 	var err error
 	switch provider {
 	case "github":
-		u, err = h.newUserFromGithubProfile(ctx, oauthToken)
+		u, err = h.newUserFromGitHubProfile(ctx, oauthToken)
 	case "google":
 		u, err = h.newUserFromGoogleProfile(ctx, providerConfig, oauthToken)
 	case "oidc":
@@ -659,9 +659,9 @@ func (h *Handlers) registerUserWithOauth(
 	return userID, nil
 }
 
-// newUserFromGithubProfile builds a new hub.User instance from the user's
-// Github profile.
-func (h *Handlers) newUserFromGithubProfile(
+// newUserFromGitHubProfile builds a new hub.User instance from the user's
+// GitHub profile.
+func (h *Handlers) newUserFromGitHubProfile(
 	ctx context.Context,
 	oauthToken *oauth2.Token,
 ) (*hub.User, error) {

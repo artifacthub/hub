@@ -2,7 +2,7 @@
 
 Artifact Hub includes a command line interface tool named `ah`. You can check that your packages are ready to be listed on AH by using the `lint` subcommand.
 
-Integrating the linter into your CI workflow may help catching errors early. You can find an example of how to do it with Github Actions [here](https://github.com/artifacthub/hub/blob/ac49ca921ac7c7711b03d0701f52c33acaaaa6f9/.github/workflows/ci.yml#L28-L37).
+Integrating the linter into your CI workflow may help catching errors early. You can find an example of how to do it with GitHub Actions [here](https://github.com/artifacthub/hub/blob/ac49ca921ac7c7711b03d0701f52c33acaaaa6f9/.github/workflows/ci.yml#L28-L37).
 
 ## Install
 

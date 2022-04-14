@@ -25,7 +25,7 @@ select results_eq(
 select is(
     verify_email(:'code'),
     true,
-    'Email should be verified succesfully'
+    'Email should be verified successfully'
 );
 select results_eq(
     $$ select email_verified from "user" where alias = 'alias' $$,

@@ -31,7 +31,7 @@ from session where session_id = :'session2ID';
 select is(
     '{code2}',
     tfa_recovery_codes,
-    'code1 should have been removed from tfa recovery codes list'
+    'code1 should have been removed from 2fa recovery codes list'
 )
 from "user" where user_id = (select user_id from session where session_id = :'session2ID');
 

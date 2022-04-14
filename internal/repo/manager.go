@@ -120,7 +120,7 @@ func NewManager(
 		db:  db,
 		il:  &HelmIndexLoader{},
 		tg:  &oci.TagsGetter{},
-		op:  &oci.Puller{},
+		op:  oci.NewPuller(cfg),
 		az:  az,
 		hc:  hc,
 	}

@@ -172,7 +172,7 @@ const SearchPackages = (props: Props) => {
     <div className="position-relative">
       <div className="d-flex flex-row">
         <div
-          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative lh-base bg-white searchBar ${styles.inputWrapper}`}
+          className={`flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative lh-base bg-white searchBar ${styles.inputWrapper}`}
         >
           <div
             data-testid="searchPkgIcon"

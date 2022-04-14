@@ -70,7 +70,7 @@ const SummaryTable = (props: Props) => {
                     <SecurityRating
                       summary={summary}
                       onlyBadge
-                      tooltipAligment="left"
+                      tooltipAlignment="left"
                       tooltipClassName={styles.tooltip}
                       withoutTooltip={!visibleTooltip}
                     />
