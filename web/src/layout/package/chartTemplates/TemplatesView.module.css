@@ -1,0 +1,15 @@
+.templateWrapper {
+  border-radius: 3px;
+  border-color: var(--color-black-15) !important;
+  background-color: var(--extra-light-gray);
+}
+
+.pre {
+  font-size: 80%;
+  overscroll-behavior: contain;
+}
+
+.errorAlert {
+  white-space: pre-wrap;
+  width: calc(100% - 6rem);
+}

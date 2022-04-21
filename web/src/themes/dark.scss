@@ -50,6 +50,13 @@
 
   $border-solid: #737475;
 
+  // Templates diff
+  --diff-text-color: #c9d1d9 !important;
+  --diff-gutter-insert-background-color: rgba(63, 185, 80, 0.3) !important;
+  --diff-gutter-delete-background-color: rgba(248, 81, 73, 0.3) !important;
+  --diff-code-insert-background-color: rgba(46, 160, 67, 0.15) !important;
+  --diff-code-delete-background-color: rgba(248, 81, 73, 0.15) !important;
+
   body {
     background-color: var(--body-bg);
     color: var(--color-font);

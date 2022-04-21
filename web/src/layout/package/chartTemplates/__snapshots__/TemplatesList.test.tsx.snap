@@ -780,10 +780,10 @@ exports[`TemplatesList creates snapshot 1`] = `
           class="d-flex flex-column"
         >
           <div
-            class="mb-1 text-truncate"
+            class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="d-inline-block legend"
+              class="legend"
             >
               <small
                 class="text-muted text-uppercase"
@@ -791,7 +791,11 @@ exports[`TemplatesList creates snapshot 1`] = `
                 Helper:
               </small>
             </div>
-            _helpers.tpl
+            <div
+              class="text-truncate templateName"
+            >
+              _helpers.tpl
+            </div>
           </div>
         </div>
       </button>
