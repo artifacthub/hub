@@ -76,8 +76,7 @@ const CompareView = (props: Props) => {
         } else {
           tmpls.push({
             ...tmpl,
-            data: '',
-            compareData: tmpl.data,
+            compareData: '',
             status: CompareChartTemplateStatus.Added,
           });
         }
@@ -86,8 +85,8 @@ const CompareView = (props: Props) => {
       others.forEach((tmpl: ChartTemplate) => {
         tmpls.push({
           ...tmpl,
-          data: tmpl.data,
-          compareData: '',
+          data: '',
+          compareData: tmpl.data,
           status: CompareChartTemplateStatus.Deleted,
         });
       });
