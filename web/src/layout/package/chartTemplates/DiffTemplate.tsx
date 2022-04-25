@@ -103,7 +103,7 @@ const Changes = (props: DiffProps) => {
   useEffect(() => {
     props.removeLoading();
     scrollTop();
-  }, [props.diffText]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.fileName]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return <>{files.map(renderFile)}</>;
 };
@@ -121,8 +121,8 @@ const DiffTemplate = (props: Props) => {
         DiffLibrary.createTwoFilesPatch(
           '  ',
           '  ',
-          props.template.data,
           props.template.compareData,
+          props.template.data,
           props.diffVersion,
           props.currentVersion,
           { context: props.expanded ? Number.MAX_SAFE_INTEGER : 2 }

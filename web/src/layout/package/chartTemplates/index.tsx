@@ -108,6 +108,7 @@ const ChartTemplatesModal = (props: Props) => {
   const [comparedVersion, setComparedVersion] = useState<string>(props.compareVersionTo || '');
   const [visibleDropdown, setVisibleDropdown] = useState<boolean>(false);
   const ref = useRef(null);
+  const versionsWrapper = useRef<HTMLDivElement>(null);
   useOutsideClick([ref], visibleDropdown, () => setVisibleDropdown(false));
 
   const cleanUrl = () => {
@@ -288,6 +289,9 @@ const ChartTemplatesModal = (props: Props) => {
                           className="dropdown-item"
                           onClick={() => {
                             setVisibleDropdown(false);
+                            if (versionsWrapper && versionsWrapper.current) {
+                              versionsWrapper.current.scroll(0, 0);
+                            }
                             setEnabledDiff(false);
                             setComparedVersion('');
                           }}
@@ -303,6 +307,7 @@ const ChartTemplatesModal = (props: Props) => {
                     )}
 
                     <div
+                      ref={versionsWrapper}
                       className={classnames('overflow-scroll h-100', { [`pt-2 ${styles.versionsList}`]: enabledDiff })}
                     >
                       {props.sortedVersions.map((v: VersionData) => {
