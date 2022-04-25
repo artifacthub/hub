@@ -1,21 +1,37 @@
-.anchor {
-  margin-top: -20px;
+.diffLine {
+  height: 3rem;
 }
 
-.templateWrapper {
-  border-radius: 3px;
-  border-color: var(--color-black-15) !important;
-  background-color: var(--extra-light-gray);
+.label {
+  font-size: 0.8rem;
 }
 
-.pre {
-  font-size: 80%;
-  overscroll-behavior: contain;
+.selectWrapper {
+  max-width: 100%;
+  width: 120px;
 }
 
-.errorAlert {
-  white-space: pre-wrap;
-  width: calc(100% - 6rem);
+.itemIcon {
+  width: 14px;
+}
+
+.dropdown {
+  margin-top: 2.35rem;
+  width: 14rem;
+  height: 17rem;
+  font-size: 0.9rem;
+}
+
+.removeVersionBtn {
+  border-left: 1px solid var(--bs-white) !important;
+}
+
+.versionsList {
+  max-height: calc(100% - 40px);
+}
+
+.btnItem {
+  padding: 0.5rem 1rem;
 }
 
 @media only screen and (max-width: 767.98px) {

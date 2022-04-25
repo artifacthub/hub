@@ -2,20 +2,21 @@ import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { GoDiffAdded, GoDiffModified, GoDiffRemoved } from 'react-icons/go';
 
-import { ChartTemplate, ChartTmplTypeFile } from '../../../types';
+import { ChartTmplTypeFile, CompareChartTemplate, CompareChartTemplateStatus } from '../../../types';
+import styles from './CompareTemplatesList.module.css';
 import ResourceLabel from './ResourceLabel';
-import styles from './TemplatesList.module.css';
 
 interface Props {
-  templates: ChartTemplate[] | null;
+  templates?: CompareChartTemplate[] | null;
   activeTemplateName?: string;
-  onTemplateChange: (template: ChartTemplate | null) => void;
+  onTemplateChange: (template: CompareChartTemplate | null) => void;
 }
 
-const TemplatesList = (props: Props) => {
+const CompareTemplatesList = (props: Props) => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [visibleTemplates, setVisibleTemplates] = useState<ChartTemplate[]>(props.templates || []);
+  const [visibleTemplates, setVisibleTemplates] = useState<CompareChartTemplate[]>(props.templates || []);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation();
@@ -24,22 +25,53 @@ const TemplatesList = (props: Props) => {
     setInputValue(e.target.value);
   };
 
+  const getStatusIcon = (status: CompareChartTemplateStatus): JSX.Element => {
+    return (
+      <>
+        {(() => {
+          switch (status) {
+            case CompareChartTemplateStatus.Deleted:
+              return (
+                <div className="text-danger">
+                  <GoDiffRemoved />
+                </div>
+              );
+            case CompareChartTemplateStatus.Added:
+              return (
+                <span className="text-success">
+                  <GoDiffAdded />
+                </span>
+              );
+            case CompareChartTemplateStatus.Modified:
+              return (
+                <span className={styles.modifiedIcon}>
+                  <GoDiffModified />
+                </span>
+              );
+            default:
+              return null;
+          }
+        })()}
+      </>
+    );
+  };
+
   useEffect(() => {
-    const getVisibleTemplates = (): ChartTemplate[] => {
+    const getVisibleTemplates = (): CompareChartTemplate[] => {
       const tmpls = props.templates || [];
-      return tmpls.filter((tmpl: ChartTemplate) => {
+      return tmpls.filter((tmpl: CompareChartTemplate) => {
         const term = `${tmpl.name} ${tmpl.resourceKinds ? tmpl.resourceKinds.join(' ') : ''}`.toLowerCase();
         return term.includes(inputValue.toLowerCase());
       });
     };
 
-    const reviewActiveTemplate = (filteredTemplates: ChartTemplate[]) => {
+    const reviewActiveTemplate = (filteredTemplates: CompareChartTemplate[]) => {
       if (filteredTemplates.length === 0 && !isUndefined(props.activeTemplateName)) {
         props.onTemplateChange(null);
       } else {
         if (props.activeTemplateName) {
           const activeTemplate = filteredTemplates.find(
-            (tmpl: ChartTemplate) => tmpl.name === props.activeTemplateName
+            (tmpl: CompareChartTemplate) => tmpl.name === props.activeTemplateName
           );
           if (isUndefined(activeTemplate)) {
             props.onTemplateChange(filteredTemplates[0]);
@@ -52,7 +84,7 @@ const TemplatesList = (props: Props) => {
 
     if (inputValue === '') {
       setVisibleTemplates(props.templates || []);
-      if (isUndefined(props.activeTemplateName) && !isNull(props.templates)) {
+      if (isUndefined(props.activeTemplateName) && props.templates) {
         props.onTemplateChange(props.templates[0]);
       }
     } else {
@@ -60,9 +92,9 @@ const TemplatesList = (props: Props) => {
       reviewActiveTemplate(filteredTemplates);
       setVisibleTemplates(filteredTemplates);
     }
-  }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [inputValue, props.templates]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isNull(props.templates)) return null;
+  if (isNull(props.templates) || isUndefined(props.templates)) return null;
   return (
     <div className="h-100 d-flex flex-column overflow-auto pe-2">
       <div className="position-relative w-100">
@@ -71,20 +103,14 @@ const TemplatesList = (props: Props) => {
             type="text"
             placeholder="Search by template or resource kind"
             className={`flex-grow-1 form-control ps-3 pe-4 ${styles.input}`}
-            name="chartTemplateInput"
+            name="CompareChartTemplateInput"
             value={inputValue}
             onChange={onChange}
             spellCheck="false"
+            disabled={isUndefined(props.templates) || props.templates.length === 0}
           />
 
           <FaSearch className={`text-muted position-absolute ${styles.searchIcon}`} />
-
-          <div className="alert p-0 mt-3">
-            <small className="text-muted text-break fst-italic">
-              This chart version contains <span className="fw-bold">{props.templates.length}</span>{' '}
-              {props.templates.length === 1 ? 'template' : 'templates'}
-            </small>
-          </div>
         </div>
       </div>
 
@@ -99,7 +125,7 @@ const TemplatesList = (props: Props) => {
         </div>
       ) : (
         <>
-          {visibleTemplates.map((template: ChartTemplate, index: number) => {
+          {visibleTemplates.map((template: CompareChartTemplate, index: number) => {
             const isActive: boolean =
               !isUndefined(props.activeTemplateName) && props.activeTemplateName === template.name;
             return (
@@ -127,6 +153,7 @@ const TemplatesList = (props: Props) => {
                                   <small className="text-muted text-uppercase">Template:</small>
                                 </div>
                                 <div className={`text-truncate ${styles.templateName}`}>{template.name}</div>
+                                <div className="ps-2 ms-auto">{getStatusIcon(template.status)}</div>
                               </div>
                               <div className="d-flex flex-row mb-1">
                                 <div className={styles.legend}>
@@ -155,6 +182,7 @@ const TemplatesList = (props: Props) => {
                                 <small className="text-muted text-uppercase">Helper:</small>
                               </div>
                               <div className={`text-truncate ${styles.templateName}`}>{template.name}</div>
+                              <div className="ps-2 ms-auto">{getStatusIcon(template.status)}</div>
                             </div>
                           );
                       }
@@ -170,4 +198,4 @@ const TemplatesList = (props: Props) => {
   );
 };
 
-export default TemplatesList;
+export default CompareTemplatesList;

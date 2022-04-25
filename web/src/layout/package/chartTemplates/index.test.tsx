@@ -23,10 +23,14 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+const itemScrollMock = jest.fn();
+Object.defineProperty(HTMLElement.prototype, 'scroll', { configurable: true, value: itemScrollMock });
+
 const defaultProps = {
   normalizedName: 'pkg',
   packageId: 'id',
   version: '1.1.1',
+  sortedVersions: [{ version: '1.1.1' }, { version: '1.1.0' }, { version: '1.0.1' }, { version: '1.0.0' }],
   repoKind: RepositoryKind.Helm,
   visibleChartTemplates: false,
 };
@@ -111,7 +115,7 @@ describe('ChartTemplatesModal', () => {
       await waitFor(() => {
         expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
         expect(API.getChartTemplates).toHaveBeenCalledWith('id', '1.1.1');
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
         expect(mockHistoryReplace).toHaveBeenCalledWith({
           search: '?modal=template&template=db_migrator_install_job.yaml',
           state: {
@@ -171,7 +175,7 @@ describe('ChartTemplatesModal', () => {
       userEvent.click(openBtn);
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(5);
       expect(mockHistoryReplace).toHaveBeenLastCalledWith({
         search: '?modal=template&template=db_migrator_install_job.yaml',
         state: {

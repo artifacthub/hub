@@ -87,6 +87,7 @@ interface Props {
   visibleSection?: string;
   eventId?: string;
   visibleTemplate?: string;
+  compareVersionTo?: string;
   visibleFile?: string;
   visibleVersion?: string;
 }
@@ -818,6 +819,7 @@ const PackageView = (props: Props) => {
                               normalizedName={detail.normalizedName}
                               packageId={detail.packageId}
                               version={detail.version!}
+                              sortedVersions={sortedVersions}
                               repoKind={detail.repository.kind}
                               visibleChartTemplates={
                                 !isUndefined(props.visibleModal) && props.visibleModal === 'template'
@@ -825,6 +827,11 @@ const PackageView = (props: Props) => {
                               visibleTemplate={
                                 !isUndefined(props.visibleModal) && props.visibleModal === 'template'
                                   ? props.visibleTemplate
+                                  : undefined
+                              }
+                              compareVersionTo={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'template'
+                                  ? props.compareVersionTo
                                   : undefined
                               }
                               searchUrlReferer={props.searchUrlReferer}

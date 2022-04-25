@@ -1,27 +1,37 @@
-import { compact, isNull, uniq } from 'lodash';
+import classnames from 'classnames';
+import { compact, isUndefined, uniq } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
+import { GoCheck } from 'react-icons/go';
 import { ImInsertTemplate } from 'react-icons/im';
 import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
-import { ChartTemplate, ChartTmplTypeFile, ErrorKind, RepositoryKind, SearchFiltersURL } from '../../../types';
+import useOutsideClick from '../../../hooks/useOutsideClick';
+import {
+  ChartTemplate,
+  ChartTmplTypeFile,
+  ErrorKind,
+  RepositoryKind,
+  SearchFiltersURL,
+  TemplatesQuery,
+  Version as VersionData,
+} from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
-import BlockCodeButtons from '../../common/BlockCodeButtons';
-import ErrorBoundary from '../../common/ErrorBoundary';
-import Loading from '../../common/Loading';
 import Modal from '../../common/Modal';
 import styles from './ChartTemplatesModal.module.css';
-import Template from './Template';
-import TemplatesList from './TemplatesList';
+import CompareView from './CompareView';
+import TemplatesView from './TemplatesView';
 
 interface Props {
   normalizedName: string;
   packageId: string;
   version: string;
+  sortedVersions: VersionData[];
   repoKind: RepositoryKind;
   visibleChartTemplates: boolean;
   visibleTemplate?: string;
+  compareVersionTo?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
 }
@@ -88,43 +98,39 @@ const formatTemplates = (templates: ChartTemplate[]): ChartTemplate[] => {
 
 const ChartTemplatesModal = (props: Props) => {
   const history = useHistory();
-  const anchor = useRef<HTMLDivElement>(null);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [templates, setTemplates] = useState<ChartTemplate[] | null | undefined>();
-  const [activeTemplate, setActiveTemplate] = useState<ChartTemplate | null>(null);
   const [values, setValues] = useState<any | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
   const [currentVersion, setCurrentVersion] = useState<string>(props.version);
-  const [isChangingTemplate, setIsChangingTemplate] = useState<boolean>(false);
-
-  const onTemplateChange = (template: ChartTemplate | null) => {
-    setIsChangingTemplate(true);
-    setActiveTemplate(template);
-    updateUrl(template ? template.name : undefined);
-    if (!isNull(template)) {
-      if (anchor && anchor.current) {
-        anchor.current.scrollIntoView({
-          block: 'start',
-          inline: 'nearest',
-          behavior: 'smooth',
-        });
-      }
-    }
-  };
-
-  const updateUrl = (templateName?: string) => {
-    history.replace({
-      search: `?modal=template${templateName ? `&template=${templateName}` : ''}`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
-  };
+  const [enabledDiff, setEnabledDiff] = useState<boolean>(!isUndefined(props.compareVersionTo));
+  const [comparedVersion, setComparedVersion] = useState<string>(props.compareVersionTo || '');
+  const [visibleDropdown, setVisibleDropdown] = useState<boolean>(false);
+  const ref = useRef(null);
+  useOutsideClick([ref], visibleDropdown, () => setVisibleDropdown(false));
 
   const cleanUrl = () => {
     history.replace({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
+  };
+
+  const updateUrl = (q: TemplatesQuery) => {
+    history.replace({
+      search: `?modal=template${q.template ? `&template=${q.template}` : ''}${
+        q.compareTo ? `&compare-to=${q.compareTo}` : ''
+      }`,
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
+  };
+
+  const onVersionChange = (version: string) => {
+    setComparedVersion(version);
+    updateUrl({ template: props.visibleTemplate, compareTo: version });
+    setVisibleDropdown(false);
+    setEnabledDiff(true);
   };
 
   useEffect(() => {
@@ -156,16 +162,6 @@ const ChartTemplatesModal = (props: Props) => {
         const formattedTemplates = formatTemplates(data.templates);
         if (formattedTemplates.length > 0) {
           setTemplates(formattedTemplates);
-          let activeTmpl;
-          if (props.visibleTemplate) {
-            activeTmpl = formattedTemplates.find((tmpl: ChartTemplate) => tmpl.name === props.visibleTemplate);
-            if (!activeTmpl) {
-              updateUrl(formattedTemplates[0].name);
-            }
-          } else {
-            updateUrl(formattedTemplates[0].name);
-          }
-          setActiveTemplate(activeTmpl || formattedTemplates[0]);
           setValues(data ? { Values: { ...data.values } } : null);
           setOpenStatus(true);
         } else {
@@ -209,7 +205,7 @@ const ChartTemplatesModal = (props: Props) => {
   const onOpenModal = () => {
     if (templates && props.packageId === currentPkgId && props.version === currentVersion) {
       setOpenStatus(true);
-      updateUrl(templates[0].name);
+      updateUrl({ template: templates[0].name });
     } else {
       getChartTemplates();
     }
@@ -217,7 +213,8 @@ const ChartTemplatesModal = (props: Props) => {
 
   const onCloseModal = () => {
     setOpenStatus(false);
-    setActiveTemplate(templates ? templates[0] : null);
+    setEnabledDiff(false);
+    setComparedVersion('');
     history.replace({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
@@ -252,15 +249,98 @@ const ChartTemplatesModal = (props: Props) => {
         <Modal
           modalDialogClassName={styles.modalDialog}
           modalClassName="h-100"
-          header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Templates</div>}
+          header={
+            <div className="d-flex flex-row align-items-center flex-grow-1">
+              <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Templates</div>
+              <div className="mx-4">
+                <div className="btn-group" role="group">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary btn-sm dropdown-toggle"
+                    onClick={() => setVisibleDropdown(!visibleDropdown)}
+                  >
+                    <span className="pe-2">
+                      {enabledDiff ? (
+                        <span>
+                          Comparing to version:
+                          <span className="fw-bold ps-2">{comparedVersion}</span>
+                        </span>
+                      ) : (
+                        'Compare to version ...'
+                      )}
+                    </span>
+                  </button>
+                  <div
+                    ref={ref}
+                    role="complementary"
+                    className={classnames(
+                      'dropdown-menu dropdown-menu-end text-nowrap overflow-hidden',
+                      styles.dropdown,
+                      {
+                        show: visibleDropdown,
+                      }
+                    )}
+                  >
+                    {enabledDiff && (
+                      <>
+                        <button
+                          type="button"
+                          className="dropdown-item"
+                          onClick={() => {
+                            setVisibleDropdown(false);
+                            setEnabledDiff(false);
+                            setComparedVersion('');
+                          }}
+                        >
+                          <div className="d-flex flex-row align-items-center">
+                            <MdClose />
+                            <div className="ms-2">Exit compare mode</div>
+                          </div>
+                        </button>
+
+                        <div className="dropdown-divider mb-0" />
+                      </>
+                    )}
+
+                    <div
+                      className={classnames('overflow-scroll h-100', { [`pt-2 ${styles.versionsList}`]: enabledDiff })}
+                    >
+                      {props.sortedVersions.map((v: VersionData) => {
+                        if (v.version === props.version) return null;
+                        return (
+                          <button
+                            key={`opt_${v.version}`}
+                            className={`dropdown-item ${styles.btnItem}`}
+                            onClick={() => onVersionChange(v.version)}
+                          >
+                            <div className="d-flex flex-row align-items-center">
+                              <div className={styles.itemIcon}>
+                                {v.version === comparedVersion && <GoCheck className="text-success" />}
+                              </div>
+                              <div className="ms-2 text-truncate">{v.version}</div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
           onClose={onCloseModal}
           closeButton={
             <div className="w-100 d-flex flex-row align-items-center justify-content-between">
               <small className="me-3">
-                <span className="fw-bold">TIP:</span> some extra info may be displayed when hovering over{' '}
-                <span className="fw-bold">values</span> entries and other{' '}
-                <span className="fw-bold">built-in objects and functions</span>.
+                {!enabledDiff && (
+                  <>
+                    <span className="fw-bold">TIP:</span> some extra info may be displayed when hovering over{' '}
+                    <span className="fw-bold">values</span> entries and other{' '}
+                    <span className="fw-bold">built-in objects and functions</span>.
+                  </>
+                )}
               </small>
+
               <button
                 className="btn btn-sm btn-outline-secondary text-uppercase"
                 onClick={() => setOpenStatus(false)}
@@ -277,45 +357,29 @@ const ChartTemplatesModal = (props: Props) => {
           breakPoint="md"
         >
           <div className="h-100 mw-100">
-            <div className="d-flex flex-row align-items-stretch g-0 h-100 mh-100">
-              <div className="col-3 h-100">
-                <TemplatesList
-                  templates={templates}
-                  activeTemplateName={activeTemplate ? activeTemplate.name : undefined}
-                  onTemplateChange={onTemplateChange}
-                />
-              </div>
-
-              <div className="col-9 ps-3 h-100">
-                <div className={`position-relative h-100 mh-100 border ${styles.templateWrapper}`}>
-                  {isChangingTemplate && activeTemplate && <Loading />}
-                  {activeTemplate && (
-                    <BlockCodeButtons
-                      filename={`${props.normalizedName}-${activeTemplate.name}`}
-                      content={activeTemplate.data}
-                      boxShadowColor="var(--extra-light-gray)"
-                    />
-                  )}
-                  <pre className={`text-muted h-100 mh-100 mb-0 overflow-auto position-relative ${styles.pre}`}>
-                    {activeTemplate && (
-                      <ErrorBoundary
-                        className={styles.errorAlert}
-                        message="Something went wrong rendering the template."
-                      >
-                        <>
-                          <div className={`position-absolute ${styles.anchor}`} ref={anchor} />
-                          <Template
-                            template={activeTemplate!}
-                            values={values}
-                            setIsChangingTemplate={setIsChangingTemplate}
-                          />
-                        </>
-                      </ErrorBoundary>
-                    )}
-                  </pre>
-                </div>
-              </div>
-            </div>
+            {!isUndefined(templates) && (
+              <>
+                {enabledDiff ? (
+                  <CompareView
+                    packageId={props.packageId}
+                    templates={templates}
+                    currentVersion={props.version}
+                    updateUrl={updateUrl}
+                    comparedVersion={comparedVersion}
+                    visibleTemplate={props.visibleTemplate}
+                    formatTemplates={formatTemplates}
+                  />
+                ) : (
+                  <TemplatesView
+                    templates={templates}
+                    values={values}
+                    normalizedName={props.normalizedName}
+                    visibleTemplate={props.visibleTemplate}
+                    updateUrl={updateUrl}
+                  />
+                )}
+              </>
+            )}
           </div>
         </Modal>
       )}

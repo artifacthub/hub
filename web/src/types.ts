@@ -661,9 +661,25 @@ export interface ChartTemplate {
   data: string;
 }
 
+export interface CompareChartTemplate {
+  name: string;
+  fileName?: string;
+  resourceKinds?: string[];
+  type: ChartTmplTypeFile;
+  data: string;
+  compareData: string;
+  status: CompareChartTemplateStatus;
+}
+
 export enum ChartTmplTypeFile {
   Template,
   Helper,
+}
+
+export enum CompareChartTemplateStatus {
+  Added = 'added',
+  Deleted = 'deleted',
+  Modified = 'modified',
 }
 
 export enum ChartTemplateSpecialType {
@@ -725,4 +741,9 @@ export interface ContainerTag {
   name: string;
   mutable: boolean;
   id?: string;
+}
+
+export interface TemplatesQuery {
+  template?: string;
+  compareTo?: string;
 }

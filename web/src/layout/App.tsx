@@ -132,6 +132,7 @@ export default function App() {
                       hash={location.hash}
                       visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       visibleTemplate={getQueryParam(location.search, 'template') || undefined}
+                      compareVersionTo={getQueryParam(location.search, 'compare-to') || undefined}
                       visibleFile={getQueryParam(location.search, 'file') || undefined}
                       visibleVersion={getQueryParam(location.search, 'version') || undefined}
                       visibleValuesPath={getQueryParam(location.search, 'path') || undefined}
