@@ -1,6 +1,8 @@
 name: CI
 on: [push, pull_request]
 
+permissions: read-all
+
 jobs:
   linter-backend:
     runs-on: ubuntu-20.04
