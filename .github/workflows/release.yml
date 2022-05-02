@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@v3
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
@@ -37,7 +37,7 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@v1
       - name: Checkout Helm charts repo
-        uses: actions/checkout@master
+        uses: actions/checkout@v3
         with:
           repository: artifacthub/helm-charts
           path: helm-charts
