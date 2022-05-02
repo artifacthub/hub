@@ -84,7 +84,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Setup Go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v3
         with:
           go-version: 1.18
       - name: Cache Go modules
@@ -157,7 +157,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Setup Go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v3
         with:
           go-version: 1.18
       - name: Cache Go modules
