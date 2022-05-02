@@ -61,14 +61,18 @@ describe('StarButton', () => {
 
     await waitFor(() => {
       expect(API.getStars).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText('Star')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     describe('when user is signed in', () => {
-      it('renders unstarred package', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
+      xit('renders unstarred package', async () => {
+        mocked(API)
+          .getStars.mockResolvedValue({ stars: 5, starredByUser: true })
+          .mockResolvedValueOnce({ stars: 4, starredByUser: false });
         mocked(API).toggleStar.mockResolvedValue('');
 
         render(
@@ -84,23 +88,37 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledWith(defaultProps.packageId);
         });
 
-        expect(screen.getByText('Star')).toBeInTheDocument();
-        expect(screen.getAllByText('4')).toHaveLength(1);
+        expect(await screen.findByText('Star')).toBeInTheDocument();
+        expect(screen.getByText('4')).toBeInTheDocument();
         expect(screen.queryByRole('status')).toBeNull();
 
-        const btn = screen.getByRole('button', { name: 'Star package' });
+        const btn = await screen.findByRole('button', { name: 'Star package' });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.toggleStar).toHaveBeenCalledTimes(1);
           expect(API.toggleStar).toHaveBeenCalledWith(defaultProps.packageId);
-          expect(screen.getByRole('status')).toBeInTheDocument();
         });
+
+        await waitFor(() => {
+          expect(screen.queryByRole('status')).toBeNull();
+        });
+
+        await waitFor(() => {
+          expect(API.getStars).toHaveBeenCalledTimes(2);
+          expect(API.getStars).toHaveBeenCalledWith(defaultProps.packageId);
+        });
+
+        expect(await screen.findByRole('button', { name: 'Unstar package' })).toBeInTheDocument();
+        expect(screen.getByRole('button')).not.toHaveClass('disabled');
+        expect(screen.getByText('5')).toBeInTheDocument();
       });
 
-      it('renders starred package', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: true });
+      xit('renders starred package', async () => {
+        mocked(API)
+          .getStars.mockResolvedValue({ stars: 4, starredByUser: false })
+          .mockResolvedValueOnce({ stars: 5, starredByUser: true });
         mocked(API).toggleStar.mockResolvedValue('');
 
         render(
@@ -115,15 +133,29 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        expect(screen.getByText('Unstar')).toBeInTheDocument();
-        const btn = screen.getByRole('button', { name: 'Unstar package' });
+        expect(await screen.findByText('Unstar')).toBeInTheDocument();
+        expect(screen.queryByRole('status')).toBeNull();
+        const btn = await screen.findByRole('button', { name: 'Unstar package' });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.toggleStar).toHaveBeenCalledTimes(1);
           expect(API.toggleStar).toHaveBeenCalledWith(defaultProps.packageId);
         });
+
+        await waitFor(() => {
+          expect(screen.queryByRole('status')).toBeNull();
+        });
+
+        await waitFor(() => {
+          expect(API.getStars).toHaveBeenCalledTimes(2);
+          expect(API.getStars).toHaveBeenCalledWith(defaultProps.packageId);
+        });
+
+        expect(await screen.findByRole('button', { name: 'Star package' })).toBeInTheDocument();
+        expect(screen.getByRole('button')).not.toHaveClass('disabled');
+        expect(screen.getByText('4')).toBeInTheDocument();
       });
     });
 
@@ -144,9 +176,9 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', { name: 'Star package' });
+        const btn = await screen.findByRole('button', { name: 'Star package' });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
@@ -173,9 +205,9 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', { name: 'Unstar package' });
+        const btn = await screen.findByRole('button', { name: 'Unstar package' });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
@@ -199,7 +231,7 @@ describe('StarButton', () => {
           </AppCtx.Provider>
         );
 
-        const { rerender } = render(component);
+        const { rerender, container } = render(component);
 
         rerender(component);
 
@@ -209,6 +241,10 @@ describe('StarButton', () => {
 
         expect(screen.queryByRole('button', { name: 'Star package' })).toBeNull();
         expect(screen.queryByText('Star')).toBeNull();
+
+        await waitFor(() => {
+          expect(container).toBeEmptyDOMElement();
+        });
       });
     });
 
@@ -247,9 +283,9 @@ describe('StarButton', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', { name: 'Unstar package' });
+        const btn = await screen.findByRole('button', { name: 'Unstar package' });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(mockDispatch).toHaveBeenCalledTimes(1);

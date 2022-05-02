@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { mocked } from 'jest-mock';
 
 import API from '../api';
@@ -38,8 +38,10 @@ describe('Group', () => {
     const { asFragment } = render(<Group {...defaultProps} />);
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', async () => {
@@ -57,7 +59,7 @@ describe('Group', () => {
       expect(API.searchPackages).toHaveBeenCalledWith('https://localhost:8000', '');
     });
 
-    expect(screen.queryByRole('status')).toBeNull();
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     expect(screen.getAllByTestId('cardWrapper')).toHaveLength(5);
   });
 
@@ -71,6 +73,7 @@ describe('Group', () => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     const wrapper = screen.getByTestId('wrapper');
     expect(wrapper).toHaveClass('fixedWidth');
     expect(wrapper).toHaveStyle('width: 1800px');
@@ -86,6 +89,7 @@ describe('Group', () => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     expect(screen.getByTestId('wrapper')).toHaveStyle('--color-ah-primary: #F57C00');
   });
 
@@ -99,6 +103,7 @@ describe('Group', () => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     expect(screen.getByTestId('wrapper')).toHaveStyle('--color-ah-primary: #131216');
   });
 
@@ -113,6 +118,8 @@ describe('Group', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
+      await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+
       expect(container).toBeEmptyDOMElement();
     });
 
@@ -124,6 +131,8 @@ describe('Group', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
+
+      await waitForElementToBeRemoved(() => screen.queryByRole('status'));
 
       expect(container).toBeEmptyDOMElement();
     });

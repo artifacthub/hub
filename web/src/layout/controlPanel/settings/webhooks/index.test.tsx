@@ -72,8 +72,10 @@ describe('WebhooksSection', () => {
 
     await waitFor(() => {
       expect(API.getWebhooks).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findAllByRole('listitem')).toHaveLength(5);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -93,9 +95,9 @@ describe('WebhooksSection', () => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Webhooks')).toBeInTheDocument();
+      expect(await screen.findByText('Webhooks')).toBeInTheDocument();
       expect(screen.getByText('Webhooks notify external services when certain events happen.')).toBeInTheDocument();
-      expect(screen.getAllByRole('listitem')).toHaveLength(5);
+      expect(await screen.findAllByRole('listitem')).toHaveLength(5);
       expect(screen.getByRole('button', { name: 'Open webhook form' })).toBeInTheDocument();
     });
 
@@ -115,8 +117,12 @@ describe('WebhooksSection', () => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
       });
 
+      await waitFor(() => {
+        expect(screen.queryAllByRole('listitem')).toHaveLength(0);
+      });
+
       expect(
-        screen.getByText(
+        await screen.findByText(
           'You have not created any webhook yet. You can create your first one by clicking on the button below.'
         )
       ).toBeInTheDocument();
@@ -139,10 +145,10 @@ describe('WebhooksSection', () => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
       });
 
-      const btn = screen.getByRole('button', { name: 'Open webhook form' });
-      userEvent.click(btn);
+      const btn = await screen.findByRole('button', { name: 'Open webhook form' });
+      await userEvent.click(btn);
 
-      expect(screen.getByTestId('webhookForm')).toBeInTheDocument();
+      expect(await screen.findByTestId('webhookForm')).toBeInTheDocument();
     });
 
     it('calls getWebhooks with selected org', async () => {
@@ -161,6 +167,8 @@ describe('WebhooksSection', () => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
         expect(API.getWebhooks).toHaveBeenCalledWith({ limit: 10, offset: 0 }, 'test');
       });
+
+      expect(await screen.findAllByRole('listitem')).toHaveLength(5);
     });
 
     it('loads first page when not webhooks in a different one', async () => {
@@ -205,7 +213,9 @@ describe('WebhooksSection', () => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
       });
 
-      expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('default error', async () => {
@@ -223,7 +233,9 @@ describe('WebhooksSection', () => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('An error occurred getting webhooks, please try again later.')).toBeInTheDocument();
+      expect(
+        await screen.findByText('An error occurred getting webhooks, please try again later.')
+      ).toBeInTheDocument();
     });
   });
 });

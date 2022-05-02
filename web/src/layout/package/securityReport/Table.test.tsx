@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { SecurityReportResult } from '../../../types';
@@ -59,7 +59,7 @@ describe('SecurityTable', () => {
       expect(screen.queryByTestId('btnExpand')).toBeNull();
     });
 
-    it('collapses report', () => {
+    it('collapses report', async () => {
       const mockReports = getMockSecurityReport('4');
 
       render(
@@ -72,10 +72,12 @@ describe('SecurityTable', () => {
 
       expect(screen.getByTestId('securityReportInfo')).toBeInTheDocument();
       const reportBtn = screen.getByRole('button', { name: 'Close target image vulnerabilities' });
-      userEvent.click(reportBtn);
+      await userEvent.click(reportBtn);
 
-      expect(mockSetExpandedTarget).toHaveBeenCalledTimes(1);
-      expect(mockSetExpandedTarget).toHaveBeenCalledWith(null);
+      await waitFor(() => {
+        expect(mockSetExpandedTarget).toHaveBeenCalledTimes(1);
+        expect(mockSetExpandedTarget).toHaveBeenCalledWith(null);
+      });
     });
 
     it('renders expanded target report', () => {

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { mocked } from 'jest-mock';
 
 import API from '../api';
@@ -38,8 +38,10 @@ describe('Widget', () => {
     const { asFragment } = render(<Widget {...defaultProps} />);
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', async () => {
@@ -56,11 +58,13 @@ describe('Widget', () => {
       );
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+
     const mainWrapper = screen.getByTestId('mainWrapper');
     expect(mainWrapper).toBeInTheDocument();
     expect(mainWrapper).toHaveStyle('--color-ah-primary: #417598');
 
-    expect(screen.getByText('artifact-hub')).toBeInTheDocument();
+    expect(await screen.findByText('artifact-hub')).toBeInTheDocument();
     expect(
       screen.getByText(
         'Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.'
@@ -100,6 +104,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     expect(screen.queryByTitle('logo')).toBeNull();
   });
 
@@ -113,6 +118,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     expect(screen.queryByText('13')).toBeNull();
   });
 
@@ -126,6 +132,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     const wrapper = screen.getByTestId('cardWrapper');
     expect(wrapper).toBeInTheDocument();
     expect(wrapper).toHaveClass('responsive');
@@ -180,6 +187,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     const mainWrapper = screen.getByTestId('mainWrapper');
     expect(mainWrapper).toBeInTheDocument();
     expect(mainWrapper).toHaveStyle('--color-ah-primary: inherit');
@@ -198,6 +206,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     const mainWrapper = screen.getByTestId('mainWrapper');
     expect(mainWrapper).toBeInTheDocument();
     expect(mainWrapper).toHaveStyle('--color-ah-primary: #131216');
@@ -213,6 +222,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     expect(screen.getByText('2.69k')).toBeInTheDocument();
   });
 
@@ -226,6 +236,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     const cardBody = screen.getByTestId('cardBody');
     expect(cardBody).toBeInTheDocument();
     expect(cardBody).toHaveClass('groupedItem');
@@ -242,6 +253,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     const cardBody = screen.getByTestId('cardBody');
     expect(cardBody).toBeInTheDocument();
     expect(cardBody).toHaveClass('groupedItem');
@@ -276,6 +288,7 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
     const cardBody = screen.getByTestId('cardBody');
     expect(cardBody).toBeInTheDocument();
     expect(cardBody).toHaveClass('groupedItem');
@@ -298,7 +311,10 @@ describe('Widget', () => {
         expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
       });
 
-      expect(container).toBeEmptyDOMElement();
+      await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+      await waitFor(() => {
+        expect(container).toBeEmptyDOMElement();
+      });
     });
   });
 });

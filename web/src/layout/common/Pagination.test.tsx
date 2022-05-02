@@ -44,22 +44,22 @@ describe('Pagination', () => {
     expect(nextBtn.closest('li')).toHaveClass('page-item disabled');
   });
 
-  it('calls onChange event when not active page button is clicked', () => {
+  it('calls onChange event when not active page button is clicked', async () => {
     render(<Pagination limit={15} total={50} offset={0} active={1} onChange={mockOnChange} />);
 
     const page2Btn = screen.getByText('2');
     expect(page2Btn).toBeInTheDocument();
-    userEvent.click(page2Btn);
+    await userEvent.click(page2Btn);
     expect(mockOnChange).toHaveBeenCalled();
     expect(mockOnChange).toHaveBeenCalledTimes(1);
   });
 
-  it('does not call onChange event when active page button is clicked', () => {
+  it('does not call onChange event when active page button is clicked', async () => {
     render(<Pagination limit={15} total={50} offset={0} active={1} onChange={mockOnChange} />);
 
     const page1Btn = screen.getByText('1');
     expect(page1Btn).toBeInTheDocument();
-    userEvent.click(page1Btn);
+    await userEvent.click(page1Btn);
     expect(mockOnChange).not.toHaveBeenCalled();
   });
 

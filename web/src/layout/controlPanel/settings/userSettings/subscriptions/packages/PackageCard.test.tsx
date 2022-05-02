@@ -107,7 +107,7 @@ describe('PackageCard', () => {
   });
 
   describe('Subscriptions', () => {
-    it('renders active New releases subscription', () => {
+    it('renders active New releases subscription', async () => {
       const mockPackage = getMockPackage('10');
 
       render(
@@ -117,7 +117,8 @@ describe('PackageCard', () => {
       );
       const btn = screen.getByRole('switch', { name: 'New releases' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
+
       expect(mockChangeSubscription).toHaveBeenCalledTimes(1);
       expect(mockChangeSubscription).toHaveBeenCalledWith('0acb228c-17ab-4e50-85e9-ffc7102ea423', 0, true, 'airflow');
     });

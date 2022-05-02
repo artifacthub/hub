@@ -58,11 +58,15 @@ describe('InputField', () => {
   });
 
   describe('validates input on blur', () => {
-    it('valid field', () => {
+    it('valid field', async () => {
       render(<InputField {...defaultProps} type="password" validateOnBlur minLength={6} value="1qa2ws" autoFocus />);
       const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
       expect(input.minLength).toBe(6);
-      input.blur();
+
+      act(() => {
+        input.blur();
+      });
+
       expect(input).toBeValid();
       expect(onSetValidationStatusMock).toHaveBeenCalledTimes(1);
     });
@@ -71,14 +75,18 @@ describe('InputField', () => {
       render(<InputField {...defaultProps} type="password" validateOnBlur minLength={6} required autoFocus />);
       const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
       expect(input).toBeRequired();
-      input.blur();
+
+      act(() => {
+        input.blur();
+      });
+
       expect(input).toBeInvalid();
     });
   });
 
   describe('validates input on change', () => {
     it('valid field', () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers('legacy');
 
       render(<InputField {...defaultProps} type="password" validateOnChange minLength={6} value="" autoFocus />);
       const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
@@ -86,7 +94,7 @@ describe('InputField', () => {
       fireEvent.change(input, { target: { value: '1qa2ws' } });
 
       act(() => {
-        jest.runTimersToTime(300);
+        jest.advanceTimersByTime(300);
       });
 
       expect(onSetValidationStatusMock).toHaveBeenCalledTimes(1);
@@ -96,7 +104,7 @@ describe('InputField', () => {
     });
 
     it('invalid field', () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers('legacy');
 
       render(
         <InputField {...defaultProps} type="text" value="" validateOnChange excludedValues={['user1']} autoFocus />
@@ -105,7 +113,7 @@ describe('InputField', () => {
       fireEvent.change(input, { target: { value: 'user1' } });
 
       act(() => {
-        jest.runTimersToTime(300);
+        jest.advanceTimersByTime(300);
       });
 
       expect(onSetValidationStatusMock).toHaveBeenCalledTimes(1);
@@ -134,8 +142,15 @@ describe('InputField', () => {
         />
       );
       const input = screen.getByRole('textbox');
-      input.blur();
-      expect(API.checkAvailability).toBeCalledTimes(1);
+
+      act(() => {
+        input.blur();
+      });
+
+      await waitFor(() => {
+        expect(API.checkAvailability).toBeCalledTimes(1);
+      });
+
       await waitFor(() => {
         expect(input).toBeValid();
       });
@@ -160,9 +175,13 @@ describe('InputField', () => {
       );
       const input = screen.getByRole('textbox');
       expect(screen.getByText(defaultProps.invalidText.default)).toBeInTheDocument();
-      input.blur();
+      act(() => {
+        input.blur();
+      });
 
-      expect(API.checkAvailability).toBeCalledTimes(1);
+      await waitFor(() => {
+        expect(API.checkAvailability).toBeCalledTimes(1);
+      });
 
       const invalidText = await screen.findByText(defaultProps.invalidText.customError);
       expect(invalidText).toBeInTheDocument();
@@ -187,8 +206,12 @@ describe('InputField', () => {
         />
       );
       const input = screen.getByRole('textbox');
-      input.blur();
-      expect(API.checkAvailability).toBeCalledTimes(1);
+      act(() => {
+        input.blur();
+      });
+      await waitFor(() => {
+        expect(API.checkAvailability).toBeCalledTimes(1);
+      });
       await waitFor(() => {
         expect(input).toBeValid();
       });
@@ -214,8 +237,12 @@ describe('InputField', () => {
         />
       );
       const input = screen.getByRole('textbox');
-      input.blur();
-      expect(API.checkAvailability).toBeCalledTimes(1);
+      act(() => {
+        input.blur();
+      });
+      await waitFor(() => {
+        expect(API.checkAvailability).toBeCalledTimes(1);
+      });
       expect(await screen.findByTestId(`${defaultProps.name}Input`)).toBeValid();
     });
 
@@ -238,16 +265,20 @@ describe('InputField', () => {
       );
       const input = screen.getByRole('textbox');
       expect(screen.getByText(defaultProps.invalidText.default)).toBeInTheDocument();
-      input.blur();
+      act(() => {
+        input.blur();
+      });
 
-      expect(API.checkAvailability).toBeCalledTimes(1);
+      await waitFor(() => {
+        expect(API.checkAvailability).toBeCalledTimes(1);
+      });
 
       const invalidText = await screen.findByText(defaultProps.invalidText.customError);
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });
 
-    it('value is part of the excluded list', () => {
+    it('value is part of the excluded list', async () => {
       mocked(API).checkAvailability.mockResolvedValue(false);
 
       render(
@@ -255,9 +286,11 @@ describe('InputField', () => {
       );
       const input = screen.getByRole('textbox');
       expect(screen.getByText(defaultProps.invalidText.default)).toBeInTheDocument();
-      input.blur();
+      act(() => {
+        input.blur();
+      });
 
-      expect(screen.getByText(defaultProps.invalidText.excluded)).toBeInTheDocument();
+      expect(await screen.findByText(defaultProps.invalidText.excluded)).toBeInTheDocument();
       expect(input).toBeInvalid();
     });
   });
@@ -270,10 +303,14 @@ describe('InputField', () => {
         <InputField {...defaultProps} type="password" value="abc123" checkPasswordStrength validateOnBlur autoFocus />
       );
       const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
-      input.blur();
+      act(() => {
+        input.blur();
+      });
 
-      expect(API.checkPasswordStrength).toBeCalledTimes(1);
-      expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
+      await waitFor(() => {
+        expect(API.checkPasswordStrength).toBeCalledTimes(1);
+        expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
+      });
 
       await waitFor(() => {
         expect(input).toBeValid();
@@ -290,10 +327,14 @@ describe('InputField', () => {
         <InputField {...defaultProps} type="password" value="abc123" checkPasswordStrength validateOnBlur autoFocus />
       );
       const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
-      input.blur();
+      act(() => {
+        input.blur();
+      });
 
-      expect(API.checkPasswordStrength).toBeCalledTimes(1);
-      expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
+      await waitFor(() => {
+        expect(API.checkPasswordStrength).toBeCalledTimes(1);
+        expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
+      });
 
       const invalidText = await screen.findByText('Insecure password...');
       expect(invalidText).toBeInTheDocument();

@@ -65,17 +65,19 @@ describe('APIKeyModal - API keys section', () => {
 
       expect(screen.getByText('Add API key')).toBeInTheDocument();
       expect(screen.getByText('Add')).toBeInTheDocument();
-      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test');
-      userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
+      await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test');
+      await userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
 
       await waitFor(() => {
         expect(API.addAPIKey).toHaveBeenCalledTimes(1);
         expect(API.addAPIKey).toHaveBeenCalledWith('test');
       });
 
-      expect(onSuccessMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+      });
 
-      expect(screen.getByText('API-KEY-ID')).toBeInTheDocument();
+      expect(await screen.findByText('API-KEY-ID')).toBeInTheDocument();
       expect(screen.getByText('API-KEY-SECRET')).toBeInTheDocument();
       expect(
         screen.getByText(
@@ -89,7 +91,7 @@ describe('APIKeyModal - API keys section', () => {
       expect(screen.getByText(/the API key you've just generated can be used to perform/i)).toBeInTheDocument();
       expect(screen.getByText('Close')).toBeInTheDocument();
 
-      const btns = screen.getAllByRole('button');
+      const btns = await screen.findAllByRole('button');
       expect(btns[3]).toHaveTextContent('API docs');
       expect(btns[3]).toHaveAttribute('href', '/docs/api');
     });
@@ -102,8 +104,8 @@ describe('APIKeyModal - API keys section', () => {
       const component = <Modal {...defaultProps} />;
       const { rerender } = render(component);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test2');
-      userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
+      await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test2');
+      await userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
 
       await waitFor(() => {
         expect(API.addAPIKey).toHaveBeenCalledTimes(1);
@@ -111,8 +113,12 @@ describe('APIKeyModal - API keys section', () => {
 
       rerender(component);
 
-      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-      expect(screen.getByText('An error occurred adding the API key, please try again later.')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      });
+      expect(
+        await screen.findByText('An error occurred adding the API key, please try again later.')
+      ).toBeInTheDocument();
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -121,14 +127,16 @@ describe('APIKeyModal - API keys section', () => {
       });
       render(<Modal {...defaultProps} />);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test2');
-      userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
+      await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'test2');
+      await userEvent.click(screen.getByRole('button', { name: 'Add API key' }));
 
       await waitFor(() => {
         expect(API.addAPIKey).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
@@ -139,15 +147,17 @@ describe('APIKeyModal - API keys section', () => {
 
       expect(screen.getByText('Update API key')).toBeInTheDocument();
       expect(screen.getByText('Update')).toBeInTheDocument();
-      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
-      userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
+      await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
+      await userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
 
       await waitFor(() => {
         expect(API.updateAPIKey).toHaveBeenCalledTimes(1);
         expect(API.updateAPIKey).toHaveBeenCalledWith(APIKeyMock.apiKeyId, 'key1-a');
       });
 
-      expect(onSuccessMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('displays default Api error', async () => {
@@ -158,8 +168,8 @@ describe('APIKeyModal - API keys section', () => {
       const component = <Modal {...defaultProps} apiKey={APIKeyMock} />;
       const { rerender } = render(component);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
-      userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
+      await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
+      await userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
 
       await waitFor(() => {
         expect(API.updateAPIKey).toHaveBeenCalledTimes(1);
@@ -167,8 +177,12 @@ describe('APIKeyModal - API keys section', () => {
 
       rerender(component);
 
-      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-      expect(screen.getByText('An error occurred updating the API key, please try again later.')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      });
+      expect(
+        await screen.findByText('An error occurred updating the API key, please try again later.')
+      ).toBeInTheDocument();
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -177,14 +191,16 @@ describe('APIKeyModal - API keys section', () => {
       });
       render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
-      userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
+      await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), '-a');
+      await userEvent.click(screen.getByRole('button', { name: 'Update API key' }));
 
       await waitFor(() => {
         expect(API.updateAPIKey).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

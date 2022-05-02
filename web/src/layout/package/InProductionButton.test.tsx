@@ -99,12 +99,14 @@ describe('InProductionButton', () => {
       </AppCtx.Provider>
     );
 
-    userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+    await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
     await waitFor(() => {
       expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByRole('menu')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -124,7 +126,7 @@ describe('InProductionButton', () => {
         const button = screen.getByRole('button', { name: /Open organizations menu/ });
         expect(button).toBeInTheDocument();
         expect(button).not.toBeDisabled();
-        userEvent.click(button);
+        await userEvent.click(button);
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -178,7 +180,7 @@ describe('InProductionButton', () => {
         const button = screen.getByRole('button', { name: /Open organizations menu/ });
         expect(button).toBeInTheDocument();
         expect(button).not.toBeDisabled();
-        userEvent.click(button);
+        await userEvent.click(button);
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -210,17 +212,17 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+        await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', {
+        const btn = await screen.findByRole('button', {
           name: "Delete Artifact Hub organization from package's production users list",
         });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.deleteProductionUsage).toHaveBeenCalledTimes(1);
@@ -242,7 +244,9 @@ describe('InProductionButton', () => {
           });
         });
 
-        expect(await screen.findByRole('menu')).not.toHaveClass('show');
+        await waitFor(() => {
+          expect(screen.getByRole('menu')).not.toHaveClass('show');
+        });
       });
 
       it("adds org to pkg's production users list", async () => {
@@ -258,17 +262,17 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+        await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', {
+        const btn = await screen.findByRole('button', {
           name: "Add Org test organization to package's production users list",
         });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.addProductionUsage).toHaveBeenCalledTimes(1);
@@ -290,7 +294,9 @@ describe('InProductionButton', () => {
           });
         });
 
-        expect(await screen.findByRole('menu')).not.toHaveClass('show');
+        await waitFor(() => {
+          expect(screen.getByRole('menu')).not.toHaveClass('show');
+        });
       });
     });
 
@@ -306,7 +312,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+        await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -338,7 +344,7 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+        await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
@@ -370,17 +376,17 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+        await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', {
+        const btn = await screen.findByRole('button', {
           name: "Add Org test organization to package's production users list",
         });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.addProductionUsage).toHaveBeenCalledTimes(1);
@@ -403,7 +409,9 @@ describe('InProductionButton', () => {
           });
         });
 
-        expect(await screen.findByRole('menu')).not.toHaveClass('show');
+        await waitFor(() => {
+          expect(screen.getByRole('menu')).not.toHaveClass('show');
+        });
       });
 
       it('when user is not authorized', async () => {
@@ -419,17 +427,17 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+        await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', {
+        const btn = await screen.findByRole('button', {
           name: "Add Org test organization to package's production users list",
         });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.addProductionUsage).toHaveBeenCalledTimes(1);
@@ -464,17 +472,17 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+        await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', {
+        const btn = await screen.findByRole('button', {
           name: "Delete Artifact Hub organization from package's production users list",
         });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.deleteProductionUsage).toHaveBeenCalledTimes(1);
@@ -497,7 +505,9 @@ describe('InProductionButton', () => {
           });
         });
 
-        expect(await screen.findByRole('menu')).not.toHaveClass('show');
+        await waitFor(() => {
+          expect(screen.getByRole('menu')).not.toHaveClass('show');
+        });
       });
 
       it('when user is not authorized', async () => {
@@ -513,17 +523,17 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
+        await userEvent.click(screen.getByRole('button', { name: /Open organizations menu/ }));
 
         await waitFor(() => {
           expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', {
+        const btn = await screen.findByRole('button', {
           name: "Delete Artifact Hub organization from package's production users list",
         });
         expect(btn).toBeInTheDocument();
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.deleteProductionUsage).toHaveBeenCalledTimes(1);
@@ -554,11 +564,13 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        const btn = screen.getByRole('button', { name: /Open organizations menu/ });
+        const btn = await screen.findByRole('button', {
+          name: /Open organizations menu/,
+        });
         expect(btn).toBeInTheDocument();
         expect(btn).toHaveClass('disabled');
 
-        userEvent.hover(btn);
+        await userEvent.hover(btn);
 
         expect(await screen.findByRole('tooltip')).toBeInTheDocument();
         expect(
@@ -568,7 +580,7 @@ describe('InProductionButton', () => {
         ).toBeInTheDocument();
       });
 
-      it('when user is undefined', () => {
+      it('when user is undefined', async () => {
         render(
           <AppCtx.Provider value={{ ctx: mockUndefinedUserCtx, dispatch: jest.fn() }}>
             <Router>
@@ -577,7 +589,9 @@ describe('InProductionButton', () => {
           </AppCtx.Provider>
         );
 
-        const btn = screen.getByRole('button', { name: /Open organizations menu/ });
+        const btn = await screen.findByRole('button', {
+          name: /Open organizations menu/,
+        });
         expect(btn).toBeInTheDocument();
         expect(btn).toHaveClass('disabled');
       });

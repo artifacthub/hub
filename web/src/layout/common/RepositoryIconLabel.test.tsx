@@ -37,12 +37,12 @@ describe('RepositoryIconLabel', () => {
     expect(screen.getByText('Helm charts')).toBeInTheDocument();
   });
 
-  it('renders button', () => {
+  it('renders button', async () => {
     render(<RepositoryIconLabel kind={RepositoryKind.Helm} clickable />);
     const btn = screen.getByTestId('repoIconLabelLink');
     expect(btn).toBeInTheDocument();
 
-    userEvent.click(btn);
+    await userEvent.click(btn);
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
     expect(mockHistoryPush).toHaveBeenCalledWith({
       pathname: '/packages/search',

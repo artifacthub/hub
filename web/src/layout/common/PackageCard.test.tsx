@@ -93,7 +93,7 @@ describe('PackageCard', () => {
   });
 
   describe('Repository button', () => {
-    it('renders repository link', () => {
+    it('renders repository link', async () => {
       const mockPackage = getMockPackage('6');
 
       render(
@@ -107,7 +107,7 @@ describe('PackageCard', () => {
       expect(icons).toHaveLength(10);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
-      userEvent.click(buttons[0]!);
+      await userEvent.click(buttons[0]!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -120,7 +120,7 @@ describe('PackageCard', () => {
       });
     });
 
-    it('renders user link', () => {
+    it('renders user link', async () => {
       const mockPackage = getMockPackage('7');
 
       render(
@@ -130,7 +130,7 @@ describe('PackageCard', () => {
       );
       const button = screen.getByTestId('userLink');
       expect(button).toBeInTheDocument();
-      userEvent.click(button);
+      await userEvent.click(button);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -145,7 +145,7 @@ describe('PackageCard', () => {
   });
 
   describe('Detail', () => {
-    it('opens detail page', () => {
+    it('opens detail page', async () => {
       const mockPackage = getMockPackage('9');
       const urlReferer = {
         tsQueryWeb: 'test',
@@ -159,7 +159,7 @@ describe('PackageCard', () => {
       );
       const link = screen.getByRole('link');
       expect(link).toBeInTheDocument();
-      userEvent.click(link!);
+      await userEvent.click(link!);
       expect(mockSaveScrollPosition).toHaveBeenCalledTimes(1);
       expect(window.location.pathname).toBe('/packages/helm/test/test');
     });

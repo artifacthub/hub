@@ -55,10 +55,10 @@ describe('Update profile - user settings', () => {
       render(<UpdateProfile {...defaultProps} />);
 
       const alias = screen.getByDisplayValue(profile.alias);
-      userEvent.type(alias, '1');
+      await userEvent.type(alias, '1');
 
       const btn = screen.getByRole('button', { name: 'Update profile' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);
@@ -83,19 +83,21 @@ describe('Update profile - user settings', () => {
       render(<UpdateProfile {...defaultProps} />);
 
       const alias = screen.getByDisplayValue(profile.alias);
-      userEvent.type(alias, '1');
+      await userEvent.type(alias, '1');
 
       const btn = screen.getByRole('button', { name: 'Update profile' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred updating your profile: custom error',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred updating your profile: custom error',
+        });
       });
     });
 
@@ -108,16 +110,18 @@ describe('Update profile - user settings', () => {
       render(<UpdateProfile {...defaultProps} />);
 
       const alias = screen.getByDisplayValue(profile.alias);
-      userEvent.type(alias, '1');
+      await userEvent.type(alias, '1');
 
       const btn = screen.getByRole('button', { name: 'Update profile' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('without custom error message', async () => {
@@ -129,19 +133,21 @@ describe('Update profile - user settings', () => {
       render(<UpdateProfile {...defaultProps} />);
 
       const alias = screen.getByDisplayValue(profile.alias);
-      userEvent.type(alias, '1');
+      await userEvent.type(alias, '1');
 
       const btn = screen.getByRole('button', { name: 'Update profile' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred updating your profile, please try again later.',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred updating your profile, please try again later.',
+        });
       });
     });
   });

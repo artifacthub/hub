@@ -46,8 +46,14 @@ describe('AccountDeletion', () => {
     expect(asFragment()).toMatchSnapshot();
     await waitFor(() => {
       expect(API.deleteUser).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(
+      await screen.findByText(
+        "You account has been successfully deleted. We're sorry to see you go, but you are always welcome back."
+      )
+    ).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -71,7 +77,7 @@ describe('AccountDeletion', () => {
       });
 
       expect(
-        screen.getByText(
+        await screen.findByText(
           "You account has been successfully deleted. We're sorry to see you go, but you are always welcome back."
         )
       ).toBeInTheDocument();
@@ -94,7 +100,7 @@ describe('AccountDeletion', () => {
         expect(API.deleteUser).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Sorry, the code provided is not valid.')).toBeInTheDocument();
+      expect(await screen.findByText('Sorry, the code provided is not valid.')).toBeInTheDocument();
     });
   });
 

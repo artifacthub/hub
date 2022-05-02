@@ -1,11 +1,10 @@
 module.exports = {
   babel: {
     presets: [],
-    plugins: [
-        ["babel-plugin-styled-components", { "displayName": true }]
-    ],
-    loaderOptions: {},
-    loaderOptions: (babelLoaderOptions) => { return babelLoaderOptions; }
+    plugins: [['babel-plugin-styled-components', { displayName: true }]],
+    loaderOptions: (babelLoaderOptions) => {
+      return babelLoaderOptions;
+    },
   },
   webpack: {
     configure: {
@@ -15,7 +14,6 @@ module.exports = {
       optimization: {
         runtimeChunk: false,
         splitChunks: {
-          chunks: 'all',
           cacheGroups: {
             default: false,
             vendors: false,
@@ -23,6 +21,6 @@ module.exports = {
           },
         },
       },
-    }
-  }
-}
+    },
+  },
+};

@@ -7,33 +7,1187 @@ exports[`Package index creates snapshot 1`] = `
     data-testid="mainPackage"
   >
     <div
-      class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
+      class="jumbotron package-detail-jumbotron rounded-0 mb-2 jumbotron"
     >
       <div
-        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+        class="container-lg px-sm-4 px-lg-0 position-relative"
       >
         <div
-          class="spinner-border text-primary spinner position-fixed top-50"
-          role="status"
+          class="d-flex align-items-start w-100 mb-3"
         >
-          <span
-            class="visually-hidden"
+          <div
+            class="d-flex align-items-center flex-grow-1 mw-100"
           >
-            Loading...
-          </span>
+            <div
+              class="d-flex align-items-center justify-content-center p-1 p-md-2 overflow-hidden border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+            >
+              <img
+                alt="Pretty name"
+                aria-hidden="true"
+                class="image"
+                src="/image/imageId"
+                srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+              />
+            </div>
+            <div
+              class="ms-3 flex-grow-1 wrapperWithContentEllipsis"
+            >
+              <div
+                class="d-flex flex-row align-items-center titleWrapper"
+              >
+                <div
+                  class="h3 mb-0 text-nowrap text-truncate title"
+                >
+                  Pretty name
+                </div>
+                <div
+                  class="d-none d-md-flex ms-3"
+                >
+                  <div
+                    class="d-none d-lg-inline"
+                  />
+                </div>
+              </div>
+              <div
+                class="d-flex d-md-none text-truncate mt-2 w-100 mobileSubtitle"
+              >
+                <small
+                  class="text-muted text-uppercase"
+                >
+                  Repo: 
+                </small>
+                <div
+                  class="mx-1 d-inline mobileIcon"
+                >
+                  <img
+                    alt="Icon"
+                    class="w-auto repoIcon iconLight"
+                    src="/static/media/helm-chart.svg"
+                  />
+                  <img
+                    alt="Icon"
+                    class="w-auto repoIcon iconDark"
+                    src="/static/media/helm-chart-light.svg"
+                  />
+                </div>
+                <span
+                  class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
+                >
+                  incubator
+                </span>
+              </div>
+              <div
+                class="d-none d-md-flex flex-row align-items-baseline mt-2 subtitle"
+              >
+                <div
+                  class="me-2 text-truncate d-flex flex-row align-items-baseline mw50"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                      role="complementary"
+                    />
+                  </div>
+                  <div
+                    class="d-flex flex-row align-items-start text-truncate"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                    >
+                      <small>
+                        Org:
+                      </small>
+                    </div>
+                    <button
+                      aria-expanded="false"
+                      aria-hidden="true"
+                      aria-label="Organization info"
+                      class="p-0 border-0 text-dark text-truncate flex-grow-1 bg-transparent position-relative link undefined"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        Helm
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="text-truncate d-flex flex-row align-items-baseline mw50"
+                >
+                  <div
+                    class="position-absolute"
+                  >
+                    <div
+                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                      role="complementary"
+                    >
+                      <div
+                        class="content"
+                      >
+                        <div
+                          class="d-flex flex-column"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <small
+                              class="text-muted text-uppercase me-1"
+                            >
+                              Repo: 
+                            </small>
+                            <img
+                              alt="Icon"
+                              class="me-1 w-auto repoIconMini iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="me-1 w-auto repoIconMini iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                            <div
+                              class="text-reset text-truncate labelContent"
+                            >
+                              incubator
+                            </div>
+                          </div>
+                          <div
+                            class="mt-2 d-flex flex-row align-items-baseline"
+                          >
+                            <small
+                              class="text-muted text-uppercase me-1"
+                            >
+                              Url: 
+                            </small>
+                            <div
+                              class="text-reset text-break labelContent"
+                              data-testid="repoUrl"
+                            >
+                              <div
+                                class="d-flex flex-row flex-wrap undefined"
+                                data-testid="attachedIconToTextWrapper"
+                                style="line-height: 21px;"
+                              >
+                                <div
+                                  class="d-inline"
+                                >
+                                  h
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  t
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  t
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  p
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  s
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  :
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  /
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  /
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  r
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  e
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  p
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  o
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  .
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  u
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  r
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  l
+                                </div>
+                                <div
+                                  class="d-inline-block"
+                                >
+                                  <div
+                                    class="position-relative d-inline"
+                                  >
+                                    <button
+                                      aria-label="Copy repository url to clipboard"
+                                      class="btn btn-sm bg-transparent"
+                                      type="button"
+                                    >
+                                      <div
+                                        aria-hidden="true"
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <svg
+                                          fill="none"
+                                          height="1em"
+                                          stroke="currentColor"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          viewBox="0 0 24 24"
+                                          width="1em"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <rect
+                                            height="13"
+                                            rx="2"
+                                            ry="2"
+                                            width="13"
+                                            x="9"
+                                            y="9"
+                                          />
+                                          <path
+                                            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                          />
+                                        </svg>
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex flex-row text-truncate"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                    >
+                      <small>
+                        Repo:
+                      </small>
+                      <span
+                        class="visually-hidden"
+                      >
+                        Helm chart
+                      </span>
+                      <button
+                        aria-hidden="true"
+                        aria-label="Filter by Helm chart repository kind"
+                        class="btn btn-link m-0 p-0"
+                        data-testid="repoIconLabelLink"
+                        tabindex="-1"
+                      >
+                        <span
+                          class="badge bg-light text-dark rounded-pill border bg badge ms-1"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              aria-hidden="true"
+                              class="position-relative icon undefined"
+                            >
+                              <img
+                                alt="Icon"
+                                class="mw-100 mh-100 iconLight"
+                                src="/static/media/helm-chart.svg"
+                              />
+                              <img
+                                alt="Icon"
+                                class="mw-100 mh-100 iconDark"
+                                src="/static/media/helm-chart-light.svg"
+                              />
+                            </div>
+                            <div
+                              class="ms-1"
+                            >
+                              Helm chart
+                            </div>
+                          </div>
+                        </span>
+                      </button>
+                    </div>
+                    <span
+                      class="visually-hidden"
+                    >
+                      incubator
+                    </span>
+                    <button
+                      aria-expanded="false"
+                      aria-hidden="true"
+                      aria-label="Filter by repo incubator"
+                      class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link moreMarginTop"
+                      data-testid="repoLink"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        incubator
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p
+          class="mb-0 overflow-hidden text-break description"
+        >
+          desc
+        </p>
+        <div
+          class="d-flex flex-wrap d-md-none"
+        >
+          <div
+            class="d-none d-lg-inline"
+          />
+        </div>
+        <div
+          class="position-absolute d-flex flex-row align-items-center top-0 end-0 optsWrapper"
+        >
+          <div
+            class="d-none d-md-block position-relative ms-2"
+          >
+            <div
+              class="position-relative undefined"
+            >
+              <div
+                data-testid="elementWithTooltip"
+              >
+                <button
+                  aria-expanded="false"
+                  aria-label="Open organizations menu"
+                  class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5 iconWrapper disabled isDisabled"
+                  type="button"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-center"
+                  >
+                    <svg
+                      class="rounded-circle text-muted"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g>
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M12 7a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm0 1.5l1.323 2.68 2.957.43-2.14 2.085.505 2.946L12 17.25l-2.645 1.39.505-2.945-2.14-2.086 2.957-.43L12 10.5zM18 2v3l-1.363 1.138A9.935 9.935 0 0 0 13 5.049L13 2 18 2zm-7-.001v3.05a9.935 9.935 0 0 0-3.636 1.088L6 5V2l5-.001z"
+                          fill-rule="nonzero"
+                        />
+                      </g>
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="dropdown-menu dropdown-menu-end p-0 dropdown"
+              role="menu"
+            >
+              <div
+                class="dropdown-arrow arrow"
+              />
+              <div
+                class="p-4 text-center emptyListMsg"
+              >
+                Here you'll be able to specify which of the organizations you belong to are using this package in production.
+              </div>
+            </div>
+          </div>
+          <div
+            class="d-none d-md-block position-relative ms-2"
+          >
+            <button
+              aria-expanded="false"
+              aria-label="Open menu"
+              class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5 iconWrapper"
+              type="button"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 20 20"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-menu dropdown-menu-end p-0 dropdown"
+              role="menu"
+            >
+              <div
+                class="dropdown-arrow arrow"
+              />
+              <button
+                aria-label="Open embed widget modal"
+                class="dropdown-item btn btn-sm rounded-0 text-dark"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <svg
+                    class="me-2 position-relative icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.293 6.293 2.586 12l5.707 5.707 1.414-1.414L5.414 12l4.293-4.293zm7.414 11.414L21.414 12l-5.707-5.707-1.414 1.414L18.586 12l-4.293 4.293z"
+                    />
+                  </svg>
+                  <div>
+                    Embed widget
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row align-items-baseline d-md-none"
+        >
+          <div
+            class="col mt-3 btnMobileWrapper"
+          >
+            <div
+              class="position-relative buttonWrapper"
+            >
+              <button
+                aria-label="Open modal"
+                class="fw-bold text-uppercase position-relative btn w-100 btn btn-outline-secondary btn-sm text-nowrap"
+                type="button"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center"
+                >
+                  <svg
+                    class="me-2"
+                    fill="none"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="12"
+                      x2="12"
+                      y1="5"
+                      y2="19"
+                    />
+                    <line
+                      x1="5"
+                      x2="19"
+                      y1="12"
+                      y2="12"
+                    />
+                  </svg>
+                  <span>
+                    Info
+                  </span>
+                </div>
+              </button>
+            </div>
+            <div
+              aria-modal="false"
+              class="modal modal"
+              role="dialog"
+            >
+              <div
+                class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+              >
+                <div
+                  class="modal-content border border-3 mx-auto content"
+                >
+                  <div
+                    class="modal-header d-flex flex-row align-items-center header undefined"
+                  >
+                    <div
+                      class="d-flex align-items-center flex-grow-1"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-center p-1 overflow-hidden border border-2 bg-white rounded-circle imageWrapper imageWrapper"
+                      >
+                        <img
+                          alt="Pretty name"
+                          aria-hidden="true"
+                          class="image"
+                          src="/image/imageId"
+                          srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+                        />
+                      </div>
+                      <div
+                        class="ms-3 flex-grow-1"
+                      >
+                        <div
+                          class="h5 mb-0"
+                        >
+                          Pretty name
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      aria-label="Close"
+                      class="btn-close"
+                      type="button"
+                    />
+                  </div>
+                  <div
+                    class="modal-body p-4 h-100 d-flex flex-column"
+                  >
+                    <div>
+                      <div
+                        class="overflow-hidden alertWrapper"
+                        data-testid="alertWrapper"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="modal-footer p-3"
+                  >
+                    <button
+                      aria-label="Close modal"
+                      class="btn btn-sm btn-outline-secondary text-uppercase"
+                      type="button"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <svg
+                          class="me-2"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                        <div>
+                          Close
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col mt-3 btnMobileWrapper"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="container-lg px-sm-4 px-lg-0"
+    >
+      <div
+        class="d-flex flex-column-reverse d-md-block px-xs-0 px-sm-3 px-lg-0"
+      >
+        <div
+          class="ms-0 ms-md-5 mb-5 position-relative float-none float-md-end additionalInfo"
+        >
+          <div
+            class="rightColumnWrapper"
+          >
+            <div
+              class="d-none d-md-block"
+            >
+              <div
+                class="mb-2"
+              />
+              <div
+                class="d-none d-lg-block"
+              >
+                <div
+                  class="mb-2"
+                >
+                  <div
+                    class="text-center"
+                  >
+                    <button
+                      aria-label="Open templates modal"
+                      class="btn btn-outline-secondary btn-sm text-nowrap w-100"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-center"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          version="1.1"
+                          viewBox="0 0 16 16"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M6 3h2v1h-2zM9 3h2v1h-2zM14 3v4h-3v-1h2v-2h-1v-1zM5 6h2v1h-2zM8 6h2v1h-2zM3 4v2h1v1h-2v-4h3v1zM6 9h2v1h-2zM9 9h2v1h-2zM14 9v4h-3v-1h2v-2h-1v-1zM5 12h2v1h-2zM8 12h2v1h-2zM3 10v2h1v1h-2v-4h3v1zM15 1h-14v14h14v-14zM16 0v0 16h-16v-16h16z"
+                          />
+                        </svg>
+                        <span
+                          class="ms-2 fw-bold text-uppercase"
+                        >
+                          Templates
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-none d-lg-block"
+              />
+              <div
+                class="d-none d-lg-block"
+              />
+              <div
+                class="d-none d-lg-block"
+              />
+              <div
+                class="mb-2"
+              >
+                <button
+                  aria-label="Open default values modal"
+                  class="btn btn-outline-secondary btn-sm w-100"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center text-uppercase"
+                  >
+                    <svg
+                      class="me-2"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 16 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M14 3v1H2V3h12zm-1 3v1H6V6h7zm0 3v1H5V9h8zm0 3v1H5v-1h8z"
+                      />
+                      <path
+                        d="M5 4h1v9H5z"
+                      />
+                    </svg>
+                    <span
+                      class="fw-bold"
+                    >
+                      Default values
+                    </span>
+                  </div>
+                </button>
+              </div>
+              <div
+                class="mb-2"
+              >
+                <div
+                  class="position-relative undefined"
+                >
+                  <div
+                    data-testid="elementWithTooltip"
+                  >
+                    <button
+                      aria-disabled="true"
+                      aria-label="Open Changelog modal"
+                      class="btn btn-outline-secondary btn-sm text-nowrap w-100 disabled"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-center text-uppercase"
+                      >
+                        <svg
+                          fill="none"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M7 18H17V16H7V18Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M17 14H7V12H17V14Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M7 10H11V8H7V10Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            clip-rule="evenodd"
+                            d="M6 2C4.34315 2 3 3.34315 3 5V19C3 20.6569 4.34315 22 6 22H18C19.6569 22 21 20.6569 21 19V9C21 5.13401 17.866 2 14 2H6ZM6 4H13V9H19V19C19 19.5523 18.5523 20 18 20H6C5.44772 20 5 19.5523 5 19V5C5 4.44772 5.44772 4 6 4ZM15 4.10002C16.6113 4.4271 17.9413 5.52906 18.584 7H15V4.10002Z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                        <span
+                          class="ms-2 fw-bold"
+                        >
+                          Changelog
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="card shadow-sm position-relative info info"
+              >
+                <div
+                  class="card-body detailsBody"
+                >
+                  <div>
+                    <div
+                      class="mt-2 mb-1 undefined"
+                      data-testid="smallTitle"
+                    >
+                      <small
+                        class="card-title text-muted text-uppercase"
+                      >
+                        <span
+                          aria-level="5"
+                          role="heading"
+                        >
+                          Application version
+                        </span>
+                      </small>
+                    </div>
+                    <p
+                      class="text-truncate"
+                      data-testid="appVersion"
+                    >
+                      1.0.0
+                    </p>
+                  </div>
+                  <div>
+                    <div
+                      class="d-flex flex-row align-items-center mt-2 mb-1"
+                    >
+                      <div
+                        data-testid="smallTitle"
+                      >
+                        <small
+                          class="card-title text-muted text-uppercase"
+                        >
+                          Chart versions
+                        </small>
+                      </div>
+                      <small>
+                        <a
+                          class="badge rounded-pill bg-secondary rssBadge ms-3"
+                          href="/api/v1/packages/helm/incubator/pr/feed/rss"
+                          rel="alternate noopener noreferrer"
+                          role="button"
+                          target="_blank"
+                          type="application/rss+xml"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-1"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 448 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"
+                              />
+                            </svg>
+                            <div>
+                              RSS
+                            </div>
+                          </div>
+                        </a>
+                      </small>
+                    </div>
+                    <p
+                      data-testid="versions"
+                    >
+                      -
+                    </p>
+                  </div>
+                  <div />
+                  <div>
+                    <div
+                      class="mt-2 mb-1 undefined"
+                      data-testid="smallTitle"
+                    >
+                      <small
+                        class="card-title text-muted text-uppercase"
+                      >
+                        <span
+                          aria-level="5"
+                          role="heading"
+                        >
+                          Last 30 days views
+                        </span>
+                      </small>
+                    </div>
+                    <div
+                      class="w-100 mb-3 pt-2"
+                      data-testid="lastViews"
+                    >
+                      <div
+                        class="d-flex flex-column"
+                      >
+                        <div>
+                          <div
+                            class="position-relative border bg-white chartWrapper"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center h-100 w-100"
+                            >
+                              <small
+                                class="w-100 text-center text-muted"
+                              >
+                                Loading...
+                              </small>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex flex-row justify-content-between w-100 legend"
+                          >
+                            <div>
+                              <small
+                                class="text-muted"
+                              >
+                                23 Sep
+                              </small>
+                            </div>
+                            <div>
+                              <small
+                                class="text-muted"
+                              >
+                                08 Oct
+                              </small>
+                            </div>
+                            <div>
+                              <small
+                                class="text-muted"
+                              >
+                                23 Oct
+                              </small>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex flex-row justify-content-between align-items-baseline w-100"
+                          >
+                            <div
+                              class="d-none d-md-block"
+                            >
+                              <button
+                                aria-label="See views chart"
+                                class="btn btn-link ps-0 position-relative text-primary btn"
+                                disabled=""
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center text-nowrap"
+                                >
+                                  <svg
+                                    class="me-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 20 20"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      clip-rule="evenodd"
+                                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                                      fill-rule="evenodd"
+                                    />
+                                  </svg>
+                                  <span>
+                                    See details
+                                  </span>
+                                </div>
+                              </button>
+                            </div>
+                            <div
+                              class="ms-auto text-truncate legend"
+                            >
+                              <small
+                                class="text-muted text-truncate"
+                              >
+                                (all versions)
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="mt-2 mb-1 undefined"
+                    data-testid="smallTitle"
+                  >
+                    <small
+                      class="card-title text-muted text-uppercase"
+                    >
+                      <span
+                        aria-level="5"
+                        id="keywords-list"
+                        role="heading"
+                      >
+                        Keywords
+                      </span>
+                    </small>
+                  </div>
+                  <div
+                    aria-describedby="keywords-list"
+                    class="mb-3"
+                    role="list"
+                  >
+                    <span
+                      data-testid="keywords"
+                    >
+                      <button
+                        aria-label="Filter by key1"
+                        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 badge"
+                        role="listitem"
+                      >
+                        <div
+                          class="text-truncate"
+                        >
+                          key1
+                        </div>
+                      </button>
+                      <button
+                        aria-label="Filter by key2"
+                        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 badge"
+                        role="listitem"
+                      >
+                        <div
+                          class="text-truncate"
+                        >
+                          key2
+                        </div>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          aria-label="Package detail"
+          class="noFocus mainContent"
+          id="content"
+          tabindex="-1"
+        >
+          <div>
+            <div
+              class="contentWrapper"
+            >
+              <div
+                class="alert alert-primary ms-auto me-auto my-5 text-center p-4 p-sm-5 border wrapper w-100 noReadmeAlert bg-transparent"
+                role="alert"
+              >
+                <div
+                  class="h4"
+                >
+                  <div>
+                    <div
+                      class="mb-4 fileIcon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M416 221.25V416a48 48 0 01-48 48H144a48 48 0 01-48-48V96a48 48 0 0148-48h98.75a32 32 0 0122.62 9.37l141.26 141.26a32 32 0 019.37 22.62z"
+                          fill="none"
+                          stroke-linejoin="round"
+                          stroke-width="32"
+                        />
+                        <path
+                          d="M256 56v120a32 32 0 0032 32h120m-232 80h160m-160 80h160"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="32"
+                        />
+                      </svg>
+                    </div>
+                    <p
+                      class="h4 mb-3"
+                    >
+                      This package version does not provide a README file
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-5 pb-3"
+          >
+            <span
+              class="header"
+            >
+              <h2
+                class="position-relative anchorHeader headingWrapper undefined"
+              >
+                <div
+                  class="position-absolute headerAnchor"
+                  data-testid="anchor"
+                  id="views"
+                />
+                <a
+                  aria-label="Views over the last 30 days"
+                  class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
+                  href="/#views"
+                  role="button"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 16 16"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                Views over the last 30 days
+              </h2>
+            </span>
+            <div
+              class="card chartWrapper"
+            >
+              <div
+                class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
+              >
+                <div
+                  class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                >
+                  <div
+                    class="spinner-border text-primary spinner"
+                    role="status"
+                  >
+                    <span
+                      class="visually-hidden"
+                    >
+                      Loading...
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <footer
-    class="position-relative text-white footer invisibleFooter"
+    class="position-relative text-white footer"
     role="contentinfo"
   >
     <div
       class="mainFooter"
     >
       <div
-        class="container-lg px-4 invisible"
+        class="container-lg px-4"
       >
         <div
           class="d-flex flex-row flex-wrap align-items-stretch justify-content-between footerContent"

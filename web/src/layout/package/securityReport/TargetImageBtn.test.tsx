@@ -40,7 +40,7 @@ describe('TargetImageBtn', () => {
       render(<TargetImageBtn {...defaultProps} />);
 
       const btn = screen.getByRole('button');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(onClickMock).toHaveBeenCalledTimes(1);

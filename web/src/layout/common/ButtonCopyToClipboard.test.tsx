@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
@@ -30,7 +30,7 @@ describe('ButtonCopyToClipboard', () => {
     expect(screen.queryByRole('tooltip')).toBeNull();
 
     const btn = screen.getByRole('button', { name: 'Copy to clipboard' });
-    userEvent.click(btn);
+    await userEvent.click(btn);
 
     expect(clipboardWriteTextMock).toHaveBeenCalledTimes(1);
     expect(clipboardWriteTextMock).toHaveBeenCalledWith('Text to copy');
@@ -43,7 +43,7 @@ describe('ButtonCopyToClipboard', () => {
     expect(screen.queryByRole('tooltip')).toBeNull();
 
     const btn = screen.getByRole('button', { name: 'Copy to clipboard' });
-    userEvent.click(btn);
+    await userEvent.click(btn);
 
     expect(clipboardWriteTextMock).toHaveBeenCalledTimes(1);
     expect(clipboardWriteTextMock).toHaveBeenCalledWith('Text to copy');
@@ -58,31 +58,11 @@ describe('ButtonCopyToClipboard', () => {
     expect(screen.queryByRole('tooltip')).toBeNull();
 
     const btn = screen.getByRole('button', { name: 'Copy to clipboard' });
-    userEvent.click(btn);
+    await userEvent.click(btn);
 
     await waitFor(() => expect(copyToClipboardMock).toHaveBeenCalledWith('copy'));
     expect(copyToClipboardMock).toHaveBeenCalledTimes(1);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
-  });
-
-  it('hides tooltip after 2 seconds', async () => {
-    jest.useFakeTimers();
-
-    render(<ButtonCopyToClipboard text="Text to copy" />);
-    expect(screen.queryByRole('tooltip')).toBeNull();
-
-    const btn = screen.getByRole('button', { name: 'Copy to clipboard' });
-    userEvent.click(btn);
-
-    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
-
-    act(() => {
-      jest.advanceTimersByTime(2000);
-    });
-
-    expect(screen.queryByRole('tooltip')).toBeNull();
-
-    jest.useRealTimers();
   });
 });

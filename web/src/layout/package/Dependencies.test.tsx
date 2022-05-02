@@ -46,7 +46,7 @@ describe('Dependencies', () => {
       expect(screen.getByText('See all'));
 
       const btn = screen.getByRole('button', { name: 'See all entries' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
 

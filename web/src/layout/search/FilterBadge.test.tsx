@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import FilterBadge from './FilterBadge';
@@ -30,13 +30,13 @@ describe('FilterBadge', () => {
       expect(screen.getByRole('button', { name: /Remove filter/ })).toBeInTheDocument();
     });
 
-    it('calls onClick prop to click button', () => {
+    it('calls onClick prop to click button', async () => {
       render(<FilterBadge {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: /Remove filter/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(onClickMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => expect(onClickMock).toHaveBeenCalledTimes(1));
     });
   });
 });

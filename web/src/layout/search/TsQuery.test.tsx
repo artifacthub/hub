@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import TsQuery from './TsQuery';
@@ -61,11 +61,12 @@ describe('TsQuery', () => {
       expect(checkboxes[9]).not.toBeChecked();
     });
 
-    it('calls on change event', () => {
+    it('calls on change event', async () => {
       render(<TsQuery {...defaultProps} />);
       const opt1 = screen.getByLabelText('Database');
-      userEvent.click(opt1);
-      expect(onChangeMock).toHaveBeenCalledTimes(1);
+      await userEvent.click(opt1);
+
+      await waitFor(() => expect(onChangeMock).toHaveBeenCalledTimes(1));
     });
   });
 });

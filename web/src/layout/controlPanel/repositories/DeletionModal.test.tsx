@@ -95,17 +95,17 @@ describe('Deletion modal Modal - packages section', () => {
       );
 
       const input = screen.getByRole('textbox');
-      userEvent.type(input, 'repoTest');
+      await userEvent.type(input, 'repoTest');
 
-      const btn = screen.getByRole('button', { name: 'Delete repository' });
-      userEvent.click(btn);
+      const btn = await screen.findByRole('button', { name: 'Delete repository' });
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteRepository).toHaveBeenCalledTimes(1);
       });
     });
 
-    it('renders disabled input until user enters repo name', () => {
+    it('renders disabled input until user enters repo name', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <DeletionModal {...defaultProps} />
@@ -116,7 +116,7 @@ describe('Deletion modal Modal - packages section', () => {
       expect(btn).toBeDisabled();
 
       const input = screen.getByRole('textbox');
-      userEvent.type(input, 'repoTest');
+      await userEvent.type(input, 'repoTest');
 
       expect(btn).toBeEnabled();
     });
@@ -134,10 +134,10 @@ describe('Deletion modal Modal - packages section', () => {
       );
 
       const input = screen.getByRole('textbox');
-      userEvent.type(input, 'repoTest');
+      await userEvent.type(input, 'repoTest');
 
-      const btn = screen.getByRole('button', { name: 'Delete repository' });
-      userEvent.click(btn);
+      const btn = await screen.findByRole('button', { name: 'Delete repository' });
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteRepository).toHaveBeenCalledTimes(1);
@@ -161,16 +161,18 @@ describe('Deletion modal Modal - packages section', () => {
       );
 
       const input = screen.getByRole('textbox');
-      userEvent.type(input, 'repoTest');
+      await userEvent.type(input, 'repoTest');
 
-      const btn = screen.getByRole('button', { name: 'Delete repository' });
-      userEvent.click(btn);
+      const btn = await screen.findByRole('button', { name: 'Delete repository' });
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteRepository).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

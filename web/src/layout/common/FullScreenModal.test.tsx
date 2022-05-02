@@ -28,12 +28,12 @@ describe('FullScreenModal', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    it('closes modal pressing ESC', () => {
+    it('closes modal pressing ESC', async () => {
       const { container } = render(<FullScreenModal {...defaultProps} />);
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
 
-      userEvent.keyboard('{esc}');
+      await userEvent.keyboard('{Escape}');
 
       expect(container).toBeEmptyDOMElement();
     });

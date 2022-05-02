@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import PaginationLimit from './PaginationLimit';
@@ -32,14 +32,16 @@ describe('Filters', () => {
       expect(screen.getByText('60'));
     });
 
-    it('calls updateLimit on select change', () => {
+    it('calls updateLimit on select change', async () => {
       render(<PaginationLimit {...defaultProps} />);
 
       const select = screen.getByLabelText('pagination-limit');
-      userEvent.selectOptions(select, '60');
+      await userEvent.selectOptions(select, '60');
 
-      expect(updateLimitMock).toBeCalledTimes(1);
-      expect(updateLimitMock).toHaveBeenCalledWith(60);
+      await waitFor(() => {
+        expect(updateLimitMock).toBeCalledTimes(1);
+        expect(updateLimitMock).toHaveBeenCalledWith(60);
+      });
     });
 
     it('renders disabled select component', () => {

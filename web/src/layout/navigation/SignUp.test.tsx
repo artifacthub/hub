@@ -43,7 +43,7 @@ describe('SignUp', () => {
       render(<SignUp {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: 'Open sign up form' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByTestId('createAnAccountForm')).toBeInTheDocument();
     });

@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import ExpandableList from './ExpandableList';
 
@@ -16,7 +17,7 @@ describe('ExpandableList', () => {
     expect(asFragment).toMatchSnapshot();
   });
 
-  it('changes button to click on it and renders proper items number', () => {
+  it('changes button to click on it and renders proper items number', async () => {
     render(<ExpandableList items={getItems(12)} />);
 
     const btn = screen.getByTestId('expandableListBtn');
@@ -24,7 +25,7 @@ describe('ExpandableList', () => {
     expect(btn).toHaveTextContent('Show more...');
     expect(screen.queryAllByTestId('item')).toHaveLength(5);
 
-    fireEvent.click(btn);
+    await userEvent.click(btn);
 
     expect(btn).toHaveTextContent('Show less...');
     expect(screen.queryAllByTestId('item')).toHaveLength(12);
@@ -43,13 +44,13 @@ describe('ExpandableList', () => {
     expect(screen.queryAllByTestId('item')).toHaveLength(8);
   });
 
-  it('calls onBtnClick mock on status changes when is defined', () => {
+  it('calls onBtnClick mock on status changes when is defined', async () => {
     const onBtnClickMock = jest.fn();
     render(<ExpandableList items={getItems(12)} onBtnClick={onBtnClickMock} />);
 
     const btn = screen.getByTestId('expandableListBtn');
 
-    fireEvent.click(btn);
+    await userEvent.click(btn);
 
     expect(onBtnClickMock).toHaveBeenCalledTimes(1);
     expect(onBtnClickMock).toHaveBeenCalledWith(true);

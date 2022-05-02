@@ -62,8 +62,10 @@ describe('Organization profile settings index', () => {
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText('Profile information')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -83,8 +85,8 @@ describe('Organization profile settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Profile information')).toBeInTheDocument();
-      expect(screen.getAllByText('Delete organization')).toHaveLength(3);
+      expect(await screen.findByText('Profile information')).toBeInTheDocument();
+      expect(screen.getByText('Delete organization')).toBeInTheDocument();
     });
   });
 
@@ -104,7 +106,7 @@ describe('Organization profile settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByRole('alert');
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(screen.getByText('Sorry, the organization you requested was not found.')).toBeInTheDocument();
     });
@@ -124,7 +126,7 @@ describe('Organization profile settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByRole('alert');
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(
         screen.getByText(/An error occurred getting the organization details, please try again later./i)
@@ -148,7 +150,9 @@ describe('Organization profile settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

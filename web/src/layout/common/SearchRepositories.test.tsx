@@ -46,13 +46,13 @@ describe('SearchRepositories', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'sec');
+      await userEvent.type(input, 'sec');
 
       await waitFor(() => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getAllByRole('button')).toHaveLength(3);
+      expect(await screen.findAllByRole('button')).toHaveLength(3);
     });
 
     it('selects repo', async () => {
@@ -65,14 +65,14 @@ describe('SearchRepositories', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'sec');
+      await userEvent.type(input, 'sec');
 
       await waitFor(() => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      const repos = screen.getAllByTestId('repoItem');
-      userEvent.click(repos[0]);
+      const repos = await screen.findAllByTestId('repoItem');
+      await userEvent.click(repos[0]);
 
       expect(mockOnSelection).toHaveBeenCalledTimes(1);
       expect(mockOnSelection).toHaveBeenCalledWith(mockSearch.items![0]);
@@ -89,17 +89,17 @@ describe('SearchRepositories', () => {
         />
       );
 
-      userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
 
       await waitFor(() => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      const repos = screen.getAllByTestId('repoItem');
+      const repos = await screen.findAllByTestId('repoItem');
       expect(repos[0]).toHaveClass('disabledCell');
       expect(repos[1]).toHaveClass('disabledCell');
 
-      userEvent.click(repos[0]);
+      await userEvent.click(repos[0]);
       expect(mockOnSelection).toHaveBeenCalledTimes(0);
     });
 
@@ -111,7 +111,7 @@ describe('SearchRepositories', () => {
 
         render(<SearchRepositories {...defaultProps} />);
 
-        userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
@@ -131,7 +131,7 @@ describe('SearchRepositories', () => {
 
         render(<SearchRepositories {...defaultProps} />);
 
-        userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'sec');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
@@ -141,11 +141,11 @@ describe('SearchRepositories', () => {
       });
     });
 
-    it('forces focus to click search icon', () => {
+    it('forces focus to click search icon', async () => {
       render(<SearchRepositories {...defaultProps} />);
 
       const icon = screen.getByTestId('searchBarIcon');
-      userEvent.click(icon);
+      await userEvent.click(icon);
 
       expect(screen.getByRole('textbox', { name: 'Search repositories' })).toHaveFocus();
     });

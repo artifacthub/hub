@@ -94,7 +94,7 @@ describe('Organization Card - organization section', () => {
       const btn = screen.getByRole('button', { name: 'Confirm membership' });
       expect(btn).toBeInTheDocument();
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
@@ -111,10 +111,10 @@ describe('Organization Card - organization section', () => {
 
       const modalBtn = screen.getByRole('button', { name: 'Open modal' });
       expect(modalBtn).toBeInTheDocument();
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
-      const btn = screen.getByRole('button', { name: 'Leave organization' });
-      userEvent.click(btn);
+      const btn = await screen.findByRole('button', { name: 'Leave organization' });
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
@@ -136,19 +136,21 @@ describe('Organization Card - organization section', () => {
 
       const modalBtn = screen.getByRole('button', { name: 'Open modal' });
       expect(modalBtn).toBeInTheDocument();
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
-      const btn = screen.getByRole('button', { name: 'Leave organization' });
-      userEvent.click(btn);
+      const btn = await screen.findByRole('button', { name: 'Leave organization' });
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred leaving the organization, please try again later.',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred leaving the organization, please try again later.',
+        });
       });
     });
 
@@ -164,16 +166,18 @@ describe('Organization Card - organization section', () => {
 
       const modalBtn = screen.getByRole('button', { name: 'Open modal' });
       expect(modalBtn).toBeInTheDocument();
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
-      const btn = screen.getByRole('button', { name: 'Leave organization' });
-      userEvent.click(btn);
+      const btn = await screen.findByRole('button', { name: 'Leave organization' });
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

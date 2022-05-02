@@ -44,7 +44,7 @@ describe('OrganizationInfo', () => {
 
   it('calls history push to click org link', async () => {
     render(<OrganizationInfo {...defaultProps} />);
-    userEvent.click(screen.getByLabelText('Organization info'));
+    await userEvent.click(screen.getByLabelText('Organization info'));
 
     await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
     expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -59,19 +59,19 @@ describe('OrganizationInfo', () => {
   });
 
   it('displays org info to enter on link and hides on leave', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     const mockOrganization = getMockOrganization('1');
     mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
     render(<OrganizationInfo {...defaultProps} />);
-    userEvent.hover(screen.getByLabelText('Organization info'));
+    await userEvent.hover(screen.getByLabelText('Organization info'));
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);
     });
 
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(await screen.findByRole('button')).toBeInTheDocument();
     expect(screen.getByAltText(mockOrganization.displayName!)).toBeInTheDocument();
     expect(screen.getByAltText(mockOrganization.displayName!)).toHaveProperty(
       'src',
@@ -85,7 +85,7 @@ describe('OrganizationInfo', () => {
 
     expect(await screen.findByRole('complementary')).toHaveClass('show');
 
-    userEvent.unhover(screen.getByLabelText('Organization info'));
+    await userEvent.unhover(screen.getByLabelText('Organization info'));
 
     act(() => {
       jest.advanceTimersByTime(50);
@@ -97,20 +97,20 @@ describe('OrganizationInfo', () => {
   });
 
   it('hides org info to leave org dropdown', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     const mockOrganization = getMockOrganization('1');
     mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
     render(<OrganizationInfo {...defaultProps} />);
-    userEvent.hover(screen.getByLabelText('Organization info'));
+    await userEvent.hover(screen.getByLabelText('Organization info'));
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);
     });
 
-    userEvent.hover(screen.getByRole('complementary'));
-    userEvent.unhover(screen.getByLabelText('Organization info'));
+    await userEvent.hover(screen.getByRole('complementary'));
+    await userEvent.unhover(screen.getByLabelText('Organization info'));
 
     act(() => {
       jest.advanceTimersByTime(100);
@@ -118,7 +118,7 @@ describe('OrganizationInfo', () => {
 
     expect(await screen.findByRole('complementary')).toHaveClass('show');
 
-    userEvent.unhover(screen.getByRole('complementary'));
+    await userEvent.unhover(screen.getByRole('complementary'));
 
     act(() => {
       jest.advanceTimersByTime(50);
@@ -133,7 +133,7 @@ describe('OrganizationInfo', () => {
     mocked(API).getOrganization.mockRejectedValue('');
 
     render(<OrganizationInfo {...defaultProps} />);
-    userEvent.hover(screen.getByLabelText('Organization info'));
+    await userEvent.hover(screen.getByLabelText('Organization info'));
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);
@@ -143,31 +143,31 @@ describe('OrganizationInfo', () => {
   });
 
   it('does not call getOrganization if user is over link less than 100ms', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     const mockOrganization = getMockOrganization('1');
     mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
     render(<OrganizationInfo {...defaultProps} />);
-    userEvent.hover(screen.getByLabelText('Organization info'));
+    await userEvent.hover(screen.getByLabelText('Organization info'));
 
     act(() => {
       jest.advanceTimersByTime(50);
     });
 
-    userEvent.unhover(screen.getByLabelText('Organization info'));
+    await userEvent.unhover(screen.getByLabelText('Organization info'));
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(0);
     });
 
-    userEvent.hover(screen.getByLabelText('Organization info'));
+    await userEvent.hover(screen.getByLabelText('Organization info'));
 
     act(() => {
       jest.advanceTimersByTime(150);
     });
 
-    userEvent.unhover(screen.getByLabelText('Organization info'));
+    await userEvent.unhover(screen.getByLabelText('Organization info'));
 
     await waitFor(() => {
       expect(API.getOrganization).toHaveBeenCalledTimes(1);

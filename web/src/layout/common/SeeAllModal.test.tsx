@@ -31,7 +31,7 @@ describe('SeeAllModal', () => {
     expect(screen.getAllByTestId('item')).toHaveLength(3 + 5);
     expect(screen.getByText('Displaying only the first 5 entries')).toBeInTheDocument();
 
-    userEvent.click(btn);
+    await userEvent.click(btn);
 
     expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
 

@@ -63,8 +63,10 @@ describe('Members section index', () => {
 
     await waitFor(() => {
       expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText('Members')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -83,6 +85,8 @@ describe('Members section index', () => {
       await waitFor(() => {
         expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
       });
+
+      expect(await screen.findByText('Members')).toBeInTheDocument();
     });
 
     it('displays no data component when no members', async () => {
@@ -116,9 +120,7 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      await waitFor(() => {
-        expect(screen.getAllByTestId('memberCard')).toHaveLength(2);
-      });
+      expect(await screen.findAllByTestId('memberCard')).toHaveLength(2);
     });
 
     it('renders organization form when add org button is clicked', async () => {
@@ -138,7 +140,7 @@ describe('Members section index', () => {
 
       expect(screen.queryByText('Username')).toBeNull();
 
-      userEvent.click(addBtn);
+      await userEvent.click(addBtn);
 
       expect(await screen.findByText('Username')).toBeInTheDocument();
     });
@@ -159,7 +161,7 @@ describe('Members section index', () => {
       expect(screen.queryByText('Username')).toBeNull();
       expect(firstBtn).toBeInTheDocument();
 
-      userEvent.click(firstBtn);
+      await userEvent.click(firstBtn);
 
       expect(await screen.findByText('Username')).toBeInTheDocument();
     });
@@ -204,7 +206,7 @@ describe('Members section index', () => {
 
       await waitFor(() => expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1));
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => expect(onAuthErrorMock).toHaveBeenCalledTimes(1));
     });
 
     it('rest API errors', async () => {

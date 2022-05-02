@@ -142,7 +142,6 @@ exports[`AccountDeletion creates snapshot 2`] = `
             <button
               aria-label="Close"
               class="btn-close"
-              disabled=""
               type="button"
             />
           </div>
@@ -152,29 +151,32 @@ exports[`AccountDeletion creates snapshot 2`] = `
             <div
               class="d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative content"
             >
-              <div
-                class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper position-relative"
+              <svg
+                class="display-4 text-dark mb-4"
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <div
-                  class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                >
-                  <div
-                    class="spinner-border text-primary spinner mt-0"
-                    role="status"
-                  >
-                    <span
-                      class="visually-hidden"
-                    >
-                      Loading...
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <small
-                class="text-muted"
-              >
-                We are deleting your account...
-              </small>
+                <path
+                  clip-rule="evenodd"
+                  d="M8 11C10.2091 11 12 9.20914 12 7C12 4.79086 10.2091 3 8 3C5.79086 3 4 4.79086 4 7C4 9.20914 5.79086 11 8 11ZM8 9C9.10457 9 10 8.10457 10 7C10 5.89543 9.10457 5 8 5C6.89543 5 6 5.89543 6 7C6 8.10457 6.89543 9 8 9Z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                />
+                <path
+                  d="M11 14C11.5523 14 12 14.4477 12 15V21H14V15C14 13.3431 12.6569 12 11 12H5C3.34315 12 2 13.3431 2 15V21H4V15C4 14.4477 4.44772 14 5 14H11Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M22 9H16V11H22V9Z"
+                  fill="currentColor"
+                />
+              </svg>
+              You account has been successfully deleted. We're sorry to see you go, but you are always welcome back.
             </div>
             <div>
               <div
@@ -189,7 +191,6 @@ exports[`AccountDeletion creates snapshot 2`] = `
             <button
               aria-label="Close modal"
               class="btn btn-sm btn-outline-secondary text-uppercase"
-              disabled=""
               type="button"
             >
               <div

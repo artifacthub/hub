@@ -4,6 +4,8 @@ import { AppCtx } from '../../../context/AppCtx';
 import { UserNotification } from '../../../types';
 import userNotificationsDispatcher from '../../../utils/userNotificationsDispatcher';
 import UserNotificationsController from './index';
+jest.mock('react-markdown', () => () => <div />);
+jest.mock('remark-gfm', () => () => <div />);
 jest.mock('../../../utils/userNotificationsDispatcher', () => ({
   subscribe: jest.fn(),
   close: jest.fn(),

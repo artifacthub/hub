@@ -74,15 +74,17 @@ describe('Members Modal - members section', () => {
       );
 
       const input = screen.getByRole('textbox', { name: /Username/ });
-      userEvent.type(input, 'test');
-      userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
+      await userEvent.type(input, 'test');
+      await userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
 
       await waitFor(() => {
         expect(API.addOrganizationMember).toHaveBeenCalledTimes(1);
         expect(API.addOrganizationMember).toHaveBeenLastCalledWith('orgTest', 'test');
       });
 
-      expect(onSuccessMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('Other api error', async () => {
@@ -100,8 +102,8 @@ describe('Members Modal - members section', () => {
       const { rerender } = render(component);
 
       const input = screen.getByRole('textbox', { name: /Username/ });
-      userEvent.type(input, 'test');
-      userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
+      await userEvent.type(input, 'test');
+      await userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
 
       await waitFor(() => {
         expect(API.addOrganizationMember).toHaveBeenCalledTimes(1);
@@ -109,7 +111,9 @@ describe('Members Modal - members section', () => {
 
       rerender(component);
 
-      expect(screen.getByText('An error occurred adding the new member, please try again later.')).toBeInTheDocument();
+      expect(
+        await screen.findByText('An error occurred adding the new member, please try again later.')
+      ).toBeInTheDocument();
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -124,14 +128,16 @@ describe('Members Modal - members section', () => {
       );
 
       const input = screen.getByRole('textbox', { name: /Username/ });
-      userEvent.type(input, 'test');
-      userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
+      await userEvent.type(input, 'test');
+      await userEvent.click(screen.getByRole('button', { name: 'Invite member' }));
 
       await waitFor(() => {
         expect(API.addOrganizationMember).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

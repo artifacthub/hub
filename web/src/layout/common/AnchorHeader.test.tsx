@@ -52,11 +52,11 @@ describe('AnchorHeader', () => {
     expect(header.tagName).toBe('H2');
   });
 
-  it('calls scroll into view', () => {
+  it('calls scroll into view', async () => {
     render(<AnchorHeader {...defaultProps} />);
     const link = screen.getByRole('button');
     expect(link).toBeInTheDocument();
-    userEvent.click(link);
+    await userEvent.click(link);
     expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
   });
 

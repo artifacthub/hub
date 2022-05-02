@@ -88,8 +88,10 @@ describe('Claim Repository Modal - repositories section', () => {
 
     await waitFor(() => {
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText(mockOrganizations[0].name)).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -109,8 +111,8 @@ describe('Claim Repository Modal - repositories section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Claim repository ownership')).toBeInTheDocument();
-      const form = screen.getByTestId('claimRepoForm');
+      expect(await screen.findByText('Claim repository ownership')).toBeInTheDocument();
+      const form = await screen.findByTestId('claimRepoForm');
       expect(form).toBeInTheDocument();
       expect(screen.getByRole('radio', { name: 'Transfer to: My user' })).toBeInTheDocument();
       expect(screen.getByRole('radio', { name: 'Transfer to: My user' })).not.toBeChecked();
@@ -126,7 +128,7 @@ describe('Claim Repository Modal - repositories section', () => {
         screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
       ).toBeInTheDocument();
 
-      expect(screen.getByText(mockOrganizations[0].name)).toBeInTheDocument();
+      expect(await screen.findByText(mockOrganizations[0].name)).toBeInTheDocument();
       expect(screen.getByText(mockOrganizations[1].name)).toBeInTheDocument();
       expect(screen.getByText(mockOrganizations[2].name)).toBeInTheDocument();
     });
@@ -147,7 +149,7 @@ describe('Claim Repository Modal - repositories section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Claim repository ownership')).toBeInTheDocument();
+      expect(await screen.findByText('Claim repository ownership')).toBeInTheDocument();
       const form = screen.getByTestId('claimRepoForm');
       expect(form).toBeInTheDocument();
       expect(screen.getByRole('radio', { name: 'Transfer to: My user' })).toBeInTheDocument();
@@ -164,7 +166,7 @@ describe('Claim Repository Modal - repositories section', () => {
         screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
       ).toBeInTheDocument();
 
-      expect(screen.getByText(mockOrganizations[0].name)).toBeInTheDocument();
+      expect(await screen.findByText(mockOrganizations[0].name)).toBeInTheDocument();
       expect(screen.getByText(mockOrganizations[1].name)).toBeInTheDocument();
       expect(screen.getByText(mockOrganizations[2].name)).toBeInTheDocument();
     });
@@ -187,9 +189,9 @@ describe('Claim Repository Modal - repositories section', () => {
 
       expect(screen.getByText('Claim repository ownership')).toBeInTheDocument();
 
-      const input = screen.getByRole('textbox', { name: 'Search repositories' });
+      const input = await screen.findByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
-      userEvent.type(input, 'repo');
+      await userEvent.type(input, 'repo');
 
       await waitFor(() => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
@@ -219,9 +221,9 @@ describe('Claim Repository Modal - repositories section', () => {
         });
 
         const radio = screen.getByText('My user');
-        userEvent.click(radio);
+        await userEvent.click(radio);
 
-        userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'repo');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Search repositories' }), 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
@@ -229,17 +231,17 @@ describe('Claim Repository Modal - repositories section', () => {
 
         const buttons = await screen.findAllByTestId('repoItem');
         expect(buttons).toHaveLength(3);
-        userEvent.click(buttons[0]);
+        await userEvent.click(buttons[0]);
 
-        const activeRepo = screen.getByTestId('activeRepoItem');
+        const activeRepo = await screen.findByTestId('activeRepoItem');
 
         expect(activeRepo).toBeInTheDocument();
         expect(activeRepo).toHaveTextContent(
           'community-operators (https://github.com/operator-framework/community-operators/upstream-community-operators)/(Publisher: demo)(Publisher: demo)'
         );
 
-        const btn = screen.getByRole('button', { name: 'Claim ownership' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Claim ownership' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -268,25 +270,25 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = screen.getByRole('textbox', { name: 'Search repositories' });
+        const input = await screen.findByRole('textbox', { name: 'Search repositories' });
         expect(input).toBeInTheDocument();
-        userEvent.type(input, 'repo');
+        await userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
         const buttons = await screen.findAllByTestId('repoItem');
-        userEvent.click(buttons[1]);
+        await userEvent.click(buttons[1]);
 
-        const radio = screen.getByText('Organization');
-        userEvent.click(radio);
+        const radio = await screen.findByText('Organization');
+        await userEvent.click(radio);
 
-        const select = screen.getByRole('combobox', { name: 'org-select' });
-        userEvent.selectOptions(select, mockOrganizations[2].name);
+        const select = await screen.findByRole('combobox', { name: 'org-select' });
+        await userEvent.selectOptions(select, mockOrganizations[2].name);
 
-        const btn = screen.getByRole('button', { name: 'Claim ownership' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Claim ownership' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -319,24 +321,26 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = screen.getByRole('textbox', { name: 'Search repositories' });
-        userEvent.type(input, 'repo');
+        const input = await screen.findByRole('textbox', { name: 'Search repositories' });
+        await userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
         const buttons = await screen.findAllByTestId('repoItem');
-        userEvent.click(buttons[1]);
+        await userEvent.click(buttons[1]);
 
-        const btn = screen.getByRole('button', { name: 'Claim ownership' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Claim ownership' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        });
       });
 
       it('default error', async () => {
@@ -360,18 +364,18 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = screen.getByRole('textbox', { name: 'Search repositories' });
-        userEvent.type(input, 'repo');
+        const input = await screen.findByRole('textbox', { name: 'Search repositories' });
+        await userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
         const buttons = await screen.findAllByTestId('repoItem');
-        userEvent.click(buttons[1]);
+        await userEvent.click(buttons[1]);
 
-        const btn = screen.getByRole('button', { name: 'Claim ownership' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Claim ownership' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -379,9 +383,11 @@ describe('Claim Repository Modal - repositories section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        });
         expect(
-          screen.getByText('An error occurred claiming the repository, please try again later.')
+          await screen.findByText('An error occurred claiming the repository, please try again later.')
         ).toBeInTheDocument();
       });
 
@@ -407,18 +413,18 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = screen.getByRole('textbox', { name: 'Search repositories' });
-        userEvent.type(input, 'repo');
+        const input = await screen.findByRole('textbox', { name: 'Search repositories' });
+        await userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
         const buttons = await screen.findAllByTestId('repoItem');
-        userEvent.click(buttons[1]);
+        await userEvent.click(buttons[1]);
 
-        const btn = screen.getByRole('button', { name: 'Claim ownership' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Claim ownership' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -426,8 +432,10 @@ describe('Claim Repository Modal - repositories section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(screen.getByText('An error occurred claiming the repository: custom error')).toBeInTheDocument();
+        await waitFor(() => {
+          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        });
+        expect(await screen.findByText('An error occurred claiming the repository: custom error')).toBeInTheDocument();
       });
 
       it('with Forbidden error', async () => {
@@ -451,18 +459,18 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const input = screen.getByRole('textbox', { name: 'Search repositories' });
-        userEvent.type(input, 'repo');
+        const input = await screen.findByRole('textbox', { name: 'Search repositories' });
+        await userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
         const buttons = await screen.findAllByTestId('repoItem');
-        userEvent.click(buttons[1]);
+        await userEvent.click(buttons[1]);
 
-        const btn = screen.getByRole('button', { name: 'Claim ownership' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Claim ownership' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
@@ -470,9 +478,11 @@ describe('Claim Repository Modal - repositories section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        });
         expect(
-          screen.getByText(
+          await screen.findByText(
             'You do not have permissions to claim this repository ownership. Please make sure your metadata file has been setup correctly.'
           )
         ).toBeInTheDocument();
@@ -495,7 +505,9 @@ describe('Claim Repository Modal - repositories section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        });
       });
 
       it('default error', async () => {
@@ -517,9 +529,11 @@ describe('Claim Repository Modal - repositories section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        });
         expect(
-          screen.getByText('An error occurred getting your organizations, please try again later.')
+          await screen.findByText('An error occurred getting your organizations, please try again later.')
         ).toBeInTheDocument();
       });
     });
@@ -539,13 +553,15 @@ describe('Claim Repository Modal - repositories section', () => {
         );
 
         const input = screen.getByRole('textbox', { name: 'Search repositories' });
-        userEvent.type(input, 'repo');
+        await userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        });
       });
 
       it('default error', async () => {
@@ -562,7 +578,7 @@ describe('Claim Repository Modal - repositories section', () => {
         );
 
         const input = screen.getByRole('textbox', { name: 'Search repositories' });
-        userEvent.type(input, 'repo');
+        await userEvent.type(input, 'repo');
 
         await waitFor(() => {
           expect(API.searchRepositories).toHaveBeenCalledTimes(1);

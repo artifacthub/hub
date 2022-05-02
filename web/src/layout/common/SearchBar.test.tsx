@@ -53,14 +53,14 @@ describe('SearchBar', () => {
     expect(input.disabled).toBeTruthy();
   });
 
-  it('focuses input when clean button is clicked', () => {
+  it('focuses input when clean button is clicked', async () => {
     render(<SearchBar {...defaultProps} isSearching={false} />);
 
     const cleanBtn = screen.getByRole('button', { name: 'Close' });
     const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
     expect(input.value).toBe('test');
-    userEvent.click(cleanBtn);
+    await userEvent.click(cleanBtn);
     expect(input).toBe(document.activeElement);
     expect(input.value).toBe('');
   });
@@ -71,7 +71,7 @@ describe('SearchBar', () => {
     const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
     expect(input.value).toBe('test');
-    userEvent.type(input, 'ing');
+    await userEvent.type(input, 'ing');
     expect(input.value).toBe('testing');
 
     await waitFor(() => {
@@ -90,13 +90,13 @@ describe('SearchBar', () => {
 
       expect(input.value).toBe('test');
       input.focus();
-      userEvent.type(input, 'ing');
+      await userEvent.type(input, 'ing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByRole('listbox')).toBeInTheDocument();
+      expect(await screen.findByRole('listbox')).toBeInTheDocument();
       expect(screen.getAllByRole('option')).toHaveLength(3);
     });
 
@@ -110,7 +110,7 @@ describe('SearchBar', () => {
 
       expect(input.value).toBe('test');
       input.focus();
-      userEvent.type(input, 'ing');
+      await userEvent.type(input, 'ing');
       input.blur();
 
       await waitFor(() => {
@@ -118,16 +118,18 @@ describe('SearchBar', () => {
         input.blur();
       });
 
-      expect(screen.queryByRole('listbox')).toBeNull();
+      await waitFor(() => {
+        expect(screen.queryByRole('listbox')).toBeNull();
+      });
     });
   });
 
   describe('History push', () => {
-    it('calls on Enter key press', () => {
+    it('calls on Enter key press', async () => {
       render(<SearchBar {...defaultProps} isSearching={false} />);
 
       const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
-      userEvent.type(input, 'ing{enter}');
+      await userEvent.type(input, 'ing{enter}');
       expect(input).not.toBe(document.activeElement);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -139,11 +141,11 @@ describe('SearchBar', () => {
       });
     });
 
-    it('calls history push on Enter key press when text is empty with undefined text', () => {
+    it('calls history push on Enter key press when text is empty with undefined text', async () => {
       render(<SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />);
 
       const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
-      userEvent.type(input, '{enter}');
+      await userEvent.type(input, '{enter}');
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -154,11 +156,11 @@ describe('SearchBar', () => {
       });
     });
 
-    it('forces focus to click search bar icon', () => {
+    it('forces focus to click search bar icon', async () => {
       render(<SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />);
 
       const icon = screen.getByTestId('searchBarIcon');
-      userEvent.click(icon);
+      await userEvent.click(icon);
 
       expect(screen.getByPlaceholderText('Search packages')).toHaveFocus();
     });

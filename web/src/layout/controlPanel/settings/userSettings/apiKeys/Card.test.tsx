@@ -57,29 +57,32 @@ describe('API key Card - API keys section', () => {
 
       const modalBtn = screen.getByRole('button', { name: 'Open deletion modal' });
       expect(modalBtn).toBeInTheDocument();
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
       expect(screen.getByText('Are you sure you want to remove this API key?')).toBeInTheDocument();
 
       const btn = screen.getByRole('button', { name: 'Delete API key' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteAPIKey).toHaveBeenCalledTimes(1);
       });
     });
 
-    it('calls setModalStatusMock when Edit button is clicked', () => {
+    it('calls setModalStatusMock when Edit button is clicked', async () => {
       render(<Card {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: 'Open API key modal' });
       expect(btn).toBeInTheDocument();
 
-      userEvent.click(btn);
-      expect(setModalStatusMock).toHaveBeenCalledTimes(1);
-      expect(setModalStatusMock).toHaveBeenCalledWith({
-        open: true,
-        apiKey: APIKeyMock,
+      await userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(setModalStatusMock).toHaveBeenCalledTimes(1);
+        expect(setModalStatusMock).toHaveBeenCalledWith({
+          open: true,
+          apiKey: APIKeyMock,
+        });
       });
     });
   });
@@ -93,19 +96,21 @@ describe('API key Card - API keys section', () => {
 
       const modalBtn = screen.getByRole('button', { name: 'Open deletion modal' });
       expect(modalBtn).toBeInTheDocument();
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
       const btn = screen.getByRole('button', { name: 'Delete API key' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteAPIKey).toHaveBeenCalledTimes(1);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred deleting the API key, please try again later.',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred deleting the API key, please try again later.',
+        });
       });
     });
 
@@ -117,16 +122,18 @@ describe('API key Card - API keys section', () => {
 
       const modalBtn = screen.getByRole('button', { name: 'Open deletion modal' });
       expect(modalBtn).toBeInTheDocument();
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
       const btn = screen.getByRole('button', { name: 'Delete API key' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteAPIKey).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

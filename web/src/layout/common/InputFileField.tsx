@@ -1,4 +1,4 @@
-import 'react-image-crop/dist/ReactCrop.css';
+import 'react-image-crop/src/ReactCrop.scss';
 
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
@@ -6,7 +6,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { BiCrop, BiImageAlt } from 'react-icons/bi';
 import { MdAddAPhoto } from 'react-icons/md';
-import ReactCrop from 'react-image-crop';
+import ReactCrop, { centerCrop, Crop, makeAspectCrop, PercentCrop, PixelCrop } from 'react-image-crop';
 
 import API from '../../api';
 import { ErrorKind, LogoImage } from '../../types';
@@ -26,14 +26,12 @@ interface Props {
   placeholderIcon?: JSX.Element;
 }
 
-const DEFAULT_CROP: ReactCrop.Crop = { aspect: 1 };
-
 const InputFileField = (props: Props) => {
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
   const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
-  const [crop, setCrop] = useState<ReactCrop.Crop>(DEFAULT_CROP);
-  const [completedCrop, setCompletedCrop] = useState<ReactCrop.Crop | null>(null);
+  const [crop, setCrop] = useState<Crop | undefined>();
+  const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
   const [isSending, setIsSending] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -64,7 +62,7 @@ const InputFileField = (props: Props) => {
     if (!isNull(fileInput) && !isNull(fileInput.current)) {
       fileInput.current!.value = '';
     }
-    setCrop(DEFAULT_CROP);
+    setCrop(undefined);
     setUpImg(null);
     setCompletedCrop(null);
     setImage(null);
@@ -133,42 +131,28 @@ const InputFileField = (props: Props) => {
     }
   };
 
-  const onLoad = useCallback((img) => {
-    const initialCrop = () => {
-      const width = img.width > img.height ? (img.height / img.width) * 100 : 100;
-      const height = img.height > img.width ? (img.width / img.height) * 100 : 100;
-      const x = width === 100 ? 0 : (100 - width) / 2;
-      const y = height === 100 ? 0 : (100 - height) / 2;
+  const onImageLoad = useCallback((e: any) => {
+    const { width, height } = e.currentTarget;
 
-      setCrop({
-        unit: '%',
-        aspect: 1,
+    const cropped = centerCrop(
+      makeAspectCrop(
+        {
+          // You don't need to pass a complete crop into
+          // makeAspectCrop or centerCrop.
+          unit: '%',
+          width: 90,
+        },
+        1,
         width,
-        height,
-        x,
-        y,
-      });
-    };
+        height
+      ),
+      width,
+      height
+    );
 
-    imgRef.current = img;
-    initialCrop();
-    return false;
+    imgRef.current = e.currentTarget;
+    setCrop(cropped);
   }, []);
-
-  // Update completedCrop after loading image
-  useEffect(() => {
-    if (openStatus && isNull(completedCrop) && crop !== DEFAULT_CROP) {
-      const img: any = imgRef.current;
-      setCompletedCrop({
-        unit: 'px',
-        aspect: 1,
-        width: (img.width * crop.width!) / 100,
-        height: (img.height * crop.height!) / 100,
-        x: (img.width * crop.x!) / 100,
-        y: (img.height * crop.y!) / 100,
-      });
-    }
-  }, [openStatus, crop, completedCrop]);
 
   useEffect(() => {
     if (!isNull(completedCrop) && openStatus) {
@@ -302,13 +286,14 @@ const InputFileField = (props: Props) => {
               <div className="overflow-auto mx-auto mw-100 mh-100">
                 {upImg && (
                   <ReactCrop
-                    src={upImg as string}
-                    onImageLoaded={onLoad}
                     crop={crop}
+                    aspect={1}
                     circularCrop
-                    onChange={(c) => setCrop(c)}
-                    onComplete={(c: ReactCrop.Crop) => setCompletedCrop(c)}
-                  />
+                    onChange={(c, percentCrop) => setCrop(c)}
+                    onComplete={(c: PixelCrop, percentCrop: PercentCrop) => setCompletedCrop(c)}
+                  >
+                    <img alt={props.label} src={upImg as string} onLoad={onImageLoad} />
+                  </ReactCrop>
                 )}
               </div>
             </div>
@@ -317,7 +302,9 @@ const InputFileField = (props: Props) => {
               <div
                 className={`overflow-hidden position-relative border border-3 rounded-circle bg-white ${styles.imageWrapper}`}
               >
-                <canvas className={`rounded-circle mw-100 mh-100 ${styles.imageAsBg}`} ref={previewCanvasRef} />
+                {completedCrop && (
+                  <canvas className={`rounded-circle mw-100 mh-100 ${styles.imageAsBg}`} ref={previewCanvasRef} />
+                )}
               </div>
             </div>
           </div>

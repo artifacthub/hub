@@ -5,6 +5,10 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
+    ignore:
+      - dependency-name: "react-router-dom"
+      - dependency-name: "react-scripts"
+      - dependency-name: "unified"
   - package-ecosystem: "npm"
     directory: "/widget"
     schedule:

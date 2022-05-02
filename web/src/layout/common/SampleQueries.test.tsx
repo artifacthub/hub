@@ -146,7 +146,7 @@ describe('SampleQueries', () => {
       expect(screen.getByTestId('sampleQueryBreakLine')).toBeInTheDocument();
     });
 
-    it('opens first sample query', () => {
+    it('opens first sample query', async () => {
       render(
         <Router>
           <SampleQueries />
@@ -154,7 +154,7 @@ describe('SampleQueries', () => {
       );
 
       const links = screen.getAllByRole('link', { name: /Filter by/ });
-      userEvent.click(links[0]);
+      await userEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe('?kind=3&ts_query_web=database');

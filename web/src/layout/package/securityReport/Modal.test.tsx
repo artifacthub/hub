@@ -56,8 +56,10 @@ describe('SecurityModal', () => {
 
     await waitFor(() => {
       expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -69,7 +71,7 @@ describe('SecurityModal', () => {
 
       const btn = screen.getByText('Open full report');
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
@@ -90,16 +92,16 @@ describe('SecurityModal', () => {
       expect(screen.queryByRole('dialog')).toBeNull();
 
       const btn = screen.getByText('Open full report');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getByText('Security report')).toBeInTheDocument();
       expect(screen.getByText('Summary')).toBeInTheDocument();
-      expect(screen.getByText('Vulnerabilities details')).toBeInTheDocument();
+      expect(await screen.findByText('Vulnerabilities details')).toBeInTheDocument();
     });
 
     it('renders last scan time', () => {
@@ -116,7 +118,7 @@ describe('SecurityModal', () => {
       const { rerender } = render(<SecurityModal {...defaultProps} />);
 
       const btn = screen.getByText('Open full report');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
@@ -127,18 +129,18 @@ describe('SecurityModal', () => {
         );
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       rerender(<SecurityModal {...defaultProps} version="1.0.0" />);
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(2);
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, '1.0.0', undefined);
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
     });
 
     it('calls to getSnapshotSecurityReport when packageId is different', async () => {
@@ -148,7 +150,7 @@ describe('SecurityModal', () => {
       const { rerender } = render(<SecurityModal {...defaultProps} />);
 
       const btn = screen.getByText('Open full report');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
@@ -161,14 +163,14 @@ describe('SecurityModal', () => {
 
       rerender(<SecurityModal {...defaultProps} packageId="pkgID2" />);
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(2);
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith('pkgID2', defaultProps.version, undefined);
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
     });
 
     it('activates target when report has only one image and one target', async () => {
@@ -180,12 +182,12 @@ describe('SecurityModal', () => {
       expect(screen.queryByRole('dialog')).toBeNull();
 
       const btn = screen.getByText('Open full report');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
 
-      expect(screen.getByText('ID')).toBeInTheDocument();
+      expect(await screen.findByText('ID')).toBeInTheDocument();
       expect(screen.getByText('Severity')).toBeInTheDocument();
       expect(screen.getByText('Package')).toBeInTheDocument();
       expect(screen.getByText('Version')).toBeInTheDocument();
@@ -201,14 +203,18 @@ describe('SecurityModal', () => {
       expect(screen.queryByRole('dialog')).toBeNull();
 
       const btn = screen.getByText('Open full report');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
-      expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+      });
 
-      expect(
-        screen.queryByText('No vulnerabilities have been detected in the default images used by this package.')
-      ).toBeNull();
+      await waitFor(() => {
+        expect(
+          screen.queryByText('No vulnerabilities have been detected in the default images used by this package.')
+        ).toBeNull();
+      });
     });
 
     it('opens modal', async () => {
@@ -226,7 +232,7 @@ describe('SecurityModal', () => {
         );
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
     });
   });
 });

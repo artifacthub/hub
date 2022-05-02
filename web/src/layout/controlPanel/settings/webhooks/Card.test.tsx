@@ -112,7 +112,7 @@ describe('WebhookCard', () => {
       expect(screen.queryByText('Active')).toBeNull();
     });
 
-    it('opens Edit form', () => {
+    it('opens Edit form', async () => {
       const mockWebhook = getmockWebhook('4');
 
       render(
@@ -125,8 +125,11 @@ describe('WebhookCard', () => {
 
       const btn = screen.getByRole('button', { name: 'Edit webhook' });
       expect(btn).toHaveTextContent('Edit');
-      userEvent.click(btn);
-      expect(mockOnEdition).toHaveBeenCalledTimes(1);
+      await userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(mockOnEdition).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
@@ -148,21 +151,23 @@ describe('WebhookCard', () => {
       expect(modal).toBeNull();
 
       const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(screen.getByRole('dialog')).toHaveClass('active');
+      expect(await screen.findByRole('dialog')).toHaveClass('active');
       expect(screen.getByText('Are you sure you want to delete this webhook?')).toBeInTheDocument();
 
       const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
       expect(deleteBtn).toBeInTheDocument();
-      userEvent.click(deleteBtn);
+      await userEvent.click(deleteBtn);
 
       await waitFor(() => {
         expect(API.deleteWebhook).toHaveBeenCalledTimes(1);
         expect(API.deleteWebhook).toHaveBeenCalledWith(mockWebhook.webhookId, undefined);
       });
 
-      expect(mockOnDeletion).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnDeletion).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('when context is org', async () => {
@@ -182,19 +187,21 @@ describe('WebhookCard', () => {
       expect(modal).toBeNull();
 
       const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(screen.getByRole('dialog')).toHaveClass('active');
 
       const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
-      userEvent.click(deleteBtn);
+      await userEvent.click(deleteBtn);
 
       await waitFor(() => {
         expect(API.deleteWebhook).toHaveBeenCalledTimes(1);
         expect(API.deleteWebhook).toHaveBeenCalledWith(mockWebhook.webhookId, 'test');
       });
 
-      expect(mockOnDeletion).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnDeletion).toHaveBeenCalledTimes(1);
+      });
     });
 
     describe('when fails', () => {
@@ -214,17 +221,19 @@ describe('WebhookCard', () => {
         );
 
         const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
-        userEvent.click(deleteBtn);
+        await userEvent.click(deleteBtn);
 
         await waitFor(() => {
           expect(API.deleteWebhook).toHaveBeenCalledTimes(1);
           expect(API.deleteWebhook).toHaveBeenCalledWith(mockWebhook.webhookId, undefined);
         });
 
-        expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+        });
       });
 
       it('default error', async () => {
@@ -241,20 +250,22 @@ describe('WebhookCard', () => {
         );
 
         const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
-        userEvent.click(deleteBtn);
+        await userEvent.click(deleteBtn);
 
         await waitFor(() => {
           expect(API.deleteWebhook).toHaveBeenCalledTimes(1);
           expect(API.deleteWebhook).toHaveBeenCalledWith(mockWebhook.webhookId, undefined);
         });
 
-        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-          type: 'danger',
-          message: 'An error occurred deleting the webhook, please try again later.',
+        await waitFor(() => {
+          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+            type: 'danger',
+            message: 'An error occurred deleting the webhook, please try again later.',
+          });
         });
       });
     });
@@ -323,7 +334,7 @@ describe('WebhookCard', () => {
 
       const badge = screen.getByTestId('elementWithTooltip');
       expect(badge).toBeInTheDocument();
-      userEvent.hover(badge);
+      await userEvent.hover(badge);
 
       expect(await screen.findByRole('tooltip')).toBeInTheDocument();
       expect(screen.getByText('This webhook is not associated to any packages.')).toBeInTheDocument();

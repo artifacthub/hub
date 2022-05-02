@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import TektonManifestModal from './TektonManifestModal';
@@ -50,7 +50,7 @@ describe('TektonManifestModal', () => {
       expect(screen.queryByRole('dialog')).toBeNull();
 
       const btn = screen.getByRole('button', { name: 'Open Manifest' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getAllByText('Manifest')).toHaveLength(2);
@@ -64,10 +64,12 @@ describe('TektonManifestModal', () => {
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '?modal=manifest',
-        state: { fromStarredPage: undefined, searchUrlReferer: undefined },
+      await waitFor(() => {
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+        expect(mockHistoryReplace).toHaveBeenCalledWith({
+          search: '?modal=manifest',
+          state: { fromStarredPage: undefined, searchUrlReferer: undefined },
+        });
       });
     });
 
@@ -77,12 +79,14 @@ describe('TektonManifestModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       const btn = screen.getByRole('button', { name: 'Close' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-      expect(mockHistoryReplace).toHaveBeenLastCalledWith({
-        search: '',
-        state: { fromStarredPage: undefined, searchUrlReferer: undefined },
+      await waitFor(() => {
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
+        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+          search: '',
+          state: { fromStarredPage: undefined, searchUrlReferer: undefined },
+        });
       });
     });
   });

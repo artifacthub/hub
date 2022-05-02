@@ -59,7 +59,7 @@ describe('LogOut', () => {
       );
 
       const btn = screen.getByRole('button', { name: 'Sign out' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.logout).toBeCalledTimes(1);
@@ -75,7 +75,7 @@ describe('LogOut', () => {
       );
 
       const btn = screen.getByRole('button', { name: 'Sign out' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -96,7 +96,7 @@ describe('LogOut', () => {
       );
 
       const btn = screen.getByRole('button', { name: 'Sign out' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
@@ -119,7 +119,7 @@ describe('LogOut', () => {
       );
 
       const btn = screen.getByRole('button', { name: 'Sign out' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);

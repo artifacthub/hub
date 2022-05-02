@@ -37,13 +37,13 @@ describe('Update password - user settings', () => {
       const newPassword = screen.getByTestId('passwordInput') as HTMLInputElement;
       const repeatNewPassword = screen.getByTestId('confirmPasswordInput') as HTMLInputElement;
 
-      userEvent.type(oldPassword, 'oldpass');
-      userEvent.type(newPassword, 'newpass');
-      userEvent.type(repeatNewPassword, 'newpass');
+      await userEvent.type(oldPassword, 'oldpass');
+      await userEvent.type(newPassword, 'newpass');
+      await userEvent.type(repeatNewPassword, 'newpass');
 
       const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toBeCalledTimes(1);
@@ -58,13 +58,13 @@ describe('Update password - user settings', () => {
       const newPassword = screen.getByTestId('passwordInput') as HTMLInputElement;
       const repeatNewPassword = screen.getByTestId('confirmPasswordInput') as HTMLInputElement;
 
-      userEvent.type(oldPassword, 'oldpass');
-      userEvent.type(newPassword, 'newpass$^');
-      userEvent.type(repeatNewPassword, 'newpass$^');
+      await userEvent.type(oldPassword, 'oldpass');
+      await userEvent.type(newPassword, 'newpass$^');
+      await userEvent.type(repeatNewPassword, 'newpass$^');
 
       const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toBeCalledTimes(1);
@@ -79,13 +79,13 @@ describe('Update password - user settings', () => {
       const newPassword = screen.getByTestId('passwordInput') as HTMLInputElement;
       const repeatNewPassword = screen.getByTestId('confirmPasswordInput') as HTMLInputElement;
 
-      userEvent.type(oldPassword, 'oldpass');
-      userEvent.type(newPassword, 'newpass');
-      userEvent.type(repeatNewPassword, 'noMatch');
+      await userEvent.type(oldPassword, 'oldpass');
+      await userEvent.type(newPassword, 'newpass');
+      await userEvent.type(repeatNewPassword, 'noMatch');
 
       const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toBeCalledTimes(0);
@@ -102,22 +102,24 @@ describe('Update password - user settings', () => {
 
       render(<UpdatePassword />);
 
-      userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
-      userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
-      userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      await userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
 
       const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toHaveBeenCalledTimes(1);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred updating your password: custom error',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred updating your password: custom error',
+        });
       });
     });
 
@@ -128,23 +130,25 @@ describe('Update password - user settings', () => {
 
       render(<UpdatePassword />);
 
-      userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
-      userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
-      userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      await userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
 
       const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toHaveBeenCalledTimes(1);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message:
-          'An error occurred updating your password, please make sure you have entered your old password correctly',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message:
+            'An error occurred updating your password, please make sure you have entered your old password correctly',
+        });
       });
     });
 
@@ -155,22 +159,24 @@ describe('Update password - user settings', () => {
 
       render(<UpdatePassword />);
 
-      userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
-      userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
-      userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      await userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
 
       const btn = screen.getByRole('button', { name: 'Update password' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updatePassword).toHaveBeenCalledTimes(1);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred updating your password, please try again later.',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred updating your password, please try again later.',
+        });
       });
     });
   });

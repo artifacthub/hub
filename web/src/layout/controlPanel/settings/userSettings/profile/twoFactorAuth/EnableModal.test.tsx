@@ -63,7 +63,7 @@ describe('EnableModal', () => {
       render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: 'Open modal' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.setUpTFA).toHaveBeenCalledTimes(1);
@@ -80,7 +80,7 @@ describe('EnableModal', () => {
       ).toBeInTheDocument();
       expect(screen.getByText('Cancel')).toBeInTheDocument();
 
-      userEvent.click(screen.getByText('Next'));
+      await userEvent.click(screen.getByText('Next'));
 
       // Step 2
       expect(await screen.findByText('Authentication app')).toBeInTheDocument();
@@ -100,8 +100,8 @@ describe('EnableModal', () => {
       const passcodeInput = screen.getByRole('textbox');
       expect(passcodeInput).toBeInTheDocument();
 
-      userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
-      userEvent.click(screen.getByText('Enable'));
+      await userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
+      await userEvent.click(screen.getByText('Enable'));
 
       await waitFor(() => {
         expect(API.enableTFA).toHaveBeenCalledTimes(1);
@@ -126,16 +126,18 @@ describe('EnableModal', () => {
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
         const btn = screen.getByRole('button', { name: 'Open modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.setUpTFA).toHaveBeenCalledTimes(1);
         });
 
-        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-          type: 'danger',
-          message: 'An error occurred turning on two-factor authentication, please try again later.',
+        await waitFor(() => {
+          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+            type: 'danger',
+            message: 'An error occurred turning on two-factor authentication, please try again later.',
+          });
         });
       });
 
@@ -145,16 +147,18 @@ describe('EnableModal', () => {
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
         const btn = screen.getByRole('button', { name: 'Open modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.setUpTFA).toHaveBeenCalledTimes(1);
         });
 
-        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-          type: 'danger',
-          message: 'An error occurred turning on two-factor authentication: custom error',
+        await waitFor(() => {
+          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+            type: 'danger',
+            message: 'An error occurred turning on two-factor authentication: custom error',
+          });
         });
       });
 
@@ -164,13 +168,15 @@ describe('EnableModal', () => {
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
         const btn = screen.getByRole('button', { name: 'Open modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.setUpTFA).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        });
       });
     });
 
@@ -182,28 +188,28 @@ describe('EnableModal', () => {
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
         const btn = screen.getByRole('button', { name: 'Open modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.setUpTFA).toHaveBeenCalledTimes(1);
         });
 
         expect(await screen.findByText('Recovery codes')).toBeInTheDocument();
-        userEvent.click(screen.getByText('Next'));
+        await userEvent.click(screen.getByText('Next'));
 
         expect(await screen.findByText('Authentication app')).toBeInTheDocument();
 
         const passcodeInput = screen.getByRole('textbox');
-        userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
-        userEvent.click(screen.getByText('Enable'));
+        await userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
+        await userEvent.click(screen.getByText('Enable'));
 
         await waitFor(() => {
           expect(API.enableTFA).toHaveBeenCalledTimes(1);
         });
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
         expect(
-          screen.getByText('An error occurred turning on two-factor authentication, please try again later.')
+          await screen.findByText('An error occurred turning on two-factor authentication, please try again later.')
         ).toBeInTheDocument();
       });
 
@@ -214,28 +220,28 @@ describe('EnableModal', () => {
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
         const btn = screen.getByRole('button', { name: 'Open modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.setUpTFA).toHaveBeenCalledTimes(1);
         });
 
         expect(await screen.findByText('Recovery codes')).toBeInTheDocument();
-        userEvent.click(screen.getByText('Next'));
+        await userEvent.click(screen.getByText('Next'));
 
         expect(await screen.findByText('Authentication app')).toBeInTheDocument();
 
         const passcodeInput = screen.getByRole('textbox');
-        userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
-        userEvent.click(screen.getByText('Enable'));
+        await userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
+        await userEvent.click(screen.getByText('Enable'));
 
         await waitFor(() => {
           expect(API.enableTFA).toHaveBeenCalledTimes(1);
         });
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
         expect(
-          screen.getByText('An error occurred turning on two-factor authentication: custom error')
+          await screen.findByText('An error occurred turning on two-factor authentication: custom error')
         ).toBeInTheDocument();
       });
 
@@ -246,26 +252,26 @@ describe('EnableModal', () => {
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
         const btn = screen.getByRole('button', { name: 'Open modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.setUpTFA).toHaveBeenCalledTimes(1);
         });
 
         expect(await screen.findByText('Recovery codes')).toBeInTheDocument();
-        userEvent.click(screen.getByText('Next'));
+        await userEvent.click(screen.getByText('Next'));
 
         expect(await screen.findByText('Authentication app')).toBeInTheDocument();
 
         const passcodeInput = screen.getByRole('textbox');
-        userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
-        userEvent.click(screen.getByText('Enable'));
+        await userEvent.type(passcodeInput, '77cbfe85-5dfe-4b68-aef5-08d5a82a4f1b');
+        await userEvent.click(screen.getByText('Enable'));
 
         await waitFor(() => {
           expect(API.enableTFA).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onAuthErrorMock).toHaveBeenCalledTimes(1));
       });
     });
   });

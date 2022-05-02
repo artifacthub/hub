@@ -254,56 +254,8 @@ exports[`Template creates snapshot 1`] = `
                       <div
                         class="content"
                       >
-                        <div
-                          class="p-2"
-                        >
-                          <h1
-                            class="text-dark lh-1 fw-bold header"
-                          >
-                            nindent function 
-                            <a
-                              class="d-inline-block text-dark"
-                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <svg
-                                class="position-relative linkIcon"
-                                fill="none"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                                />
-                                <polyline
-                                  points="15 3 21 3 21 9"
-                                />
-                                <line
-                                  x1="10"
-                                  x2="21"
-                                  y1="14"
-                                  y2="3"
-                                />
-                              </svg>
-                            </a>
-                          </h1>
-                          
-
-                          <p>
-                            The 
-                            <strong>
-                              nindent
-                            </strong>
-                             function is the same as the indent function, but prepends a new line to the beginning of the string.
-                          </p>
-                        </div>
+                        # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
                       </div>
                     </div>
                   </div>
@@ -473,56 +425,8 @@ exports[`Template creates snapshot 1`] = `
                       <div
                         class="content"
                       >
-                        <div
-                          class="p-2"
-                        >
-                          <h1
-                            class="text-dark lh-1 fw-bold header"
-                          >
-                            nindent function 
-                            <a
-                              class="d-inline-block text-dark"
-                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <svg
-                                class="position-relative linkIcon"
-                                fill="none"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                                />
-                                <polyline
-                                  points="15 3 21 3 21 9"
-                                />
-                                <line
-                                  x1="10"
-                                  x2="21"
-                                  y1="14"
-                                  y2="3"
-                                />
-                              </svg>
-                            </a>
-                          </h1>
-                          
-
-                          <p>
-                            The 
-                            <strong>
-                              nindent
-                            </strong>
-                             function is the same as the indent function, but prepends a new line to the beginning of the string.
-                          </p>
-                        </div>
+                        # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
                       </div>
                     </div>
                   </div>
@@ -851,56 +755,8 @@ exports[`Template creates snapshot 1`] = `
                       <div
                         class="content"
                       >
-                        <div
-                          class="p-2"
-                        >
-                          <h1
-                            class="text-dark lh-1 fw-bold header"
-                          >
-                            nindent function 
-                            <a
-                              class="d-inline-block text-dark"
-                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <svg
-                                class="position-relative linkIcon"
-                                fill="none"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                                />
-                                <polyline
-                                  points="15 3 21 3 21 9"
-                                />
-                                <line
-                                  x1="10"
-                                  x2="21"
-                                  y1="14"
-                                  y2="3"
-                                />
-                              </svg>
-                            </a>
-                          </h1>
-                          
-
-                          <p>
-                            The 
-                            <strong>
-                              nindent
-                            </strong>
-                             function is the same as the indent function, but prepends a new line to the beginning of the string.
-                          </p>
-                        </div>
+                        # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
                       </div>
                     </div>
                   </div>
@@ -1090,56 +946,8 @@ exports[`Template creates snapshot 1`] = `
                       <div
                         class="content"
                       >
-                        <div
-                          class="p-2"
-                        >
-                          <h1
-                            class="text-dark lh-1 fw-bold header"
-                          >
-                            nindent function 
-                            <a
-                              class="d-inline-block text-dark"
-                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <svg
-                                class="position-relative linkIcon"
-                                fill="none"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                                />
-                                <polyline
-                                  points="15 3 21 3 21 9"
-                                />
-                                <line
-                                  x1="10"
-                                  x2="21"
-                                  y1="14"
-                                  y2="3"
-                                />
-                              </svg>
-                            </a>
-                          </h1>
-                          
-
-                          <p>
-                            The 
-                            <strong>
-                              nindent
-                            </strong>
-                             function is the same as the indent function, but prepends a new line to the beginning of the string.
-                          </p>
-                        </div>
+                        # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
                       </div>
                     </div>
                   </div>

@@ -17,16 +17,16 @@ describe('HoverableItem', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('calls events', () => {
+  it('calls events', async () => {
     render(<HoverableItem {...defaultProps}>hi</HoverableItem>);
 
     const item = screen.getByText('hi');
     expect(item).toBeInTheDocument();
 
-    userEvent.hover(item);
+    await userEvent.hover(item);
     expect(onHoverMock).toHaveBeenCalledTimes(1);
 
-    userEvent.unhover(item);
+    await userEvent.unhover(item);
     expect(onLeaveMock).toHaveBeenCalledTimes(1);
   });
 });

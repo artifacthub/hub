@@ -85,7 +85,7 @@ describe('PackageInfo', () => {
   });
 
   describe('Repository button', () => {
-    it('renders repository link', () => {
+    it('renders repository link', async () => {
       const mockPackage = getMockPackage('6');
 
       render(
@@ -99,7 +99,7 @@ describe('PackageInfo', () => {
       expect(icons).toHaveLength(10);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
-      userEvent.click(buttons[0]!);
+      await userEvent.click(buttons[0]!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -112,7 +112,7 @@ describe('PackageInfo', () => {
       });
     });
 
-    it('renders user link', () => {
+    it('renders user link', async () => {
       const mockPackage = getMockPackage('7');
 
       render(
@@ -122,7 +122,7 @@ describe('PackageInfo', () => {
       );
       const button = screen.getByTestId('userLink');
       expect(button).toBeInTheDocument();
-      userEvent.click(button);
+      await userEvent.click(button);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -135,7 +135,7 @@ describe('PackageInfo', () => {
       });
     });
 
-    it('renders repo kind link', () => {
+    it('renders repo kind link', async () => {
       const mockPackage = getMockPackage('8');
 
       render(
@@ -145,7 +145,7 @@ describe('PackageInfo', () => {
       );
       const buttons = screen.getAllByTestId('repoIconLabelLink');
       expect(buttons).toHaveLength(3);
-      userEvent.click(buttons[0]);
+      await userEvent.click(buttons[0]);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',

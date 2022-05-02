@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -60,7 +60,7 @@ describe('OrgsUsingPackage', () => {
       expect(link).toHaveAttribute('href', 'https://artifacthub.io');
     });
 
-    it('opens modal after clicking see all btn', () => {
+    it('opens modal after clicking see all btn', async () => {
       render(
         <Router>
           <OrgsUsingPackage {...defaultProps} />
@@ -71,12 +71,14 @@ describe('OrgsUsingPackage', () => {
 
       const btn = screen.getByRole('button', { name: 'See all organizations using this package in production' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+      });
     });
 
-    it('closes modal - see all', () => {
+    it('closes modal - see all', async () => {
       render(
         <Router>
           <OrgsUsingPackage {...defaultProps} />
@@ -87,14 +89,16 @@ describe('OrgsUsingPackage', () => {
 
       const btn = screen.getByRole('button', { name: 'See all organizations using this package in production' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
 
       const closeBtn = screen.getByRole('button', { name: 'Close' });
-      userEvent.click(closeBtn);
+      await userEvent.click(closeBtn);
 
-      expect(screen.queryByRole('dialog')).toBeNull();
+      await waitFor(() => {
+        expect(screen.queryByRole('dialog')).toBeNull();
+      });
     });
 
     describe('does not render component', () => {

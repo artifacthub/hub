@@ -76,24 +76,6 @@ exports[`WebhooksSection creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-        >
-          <div
-            class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-          >
-            <div
-              class="spinner-border text-primary spinner"
-              role="status"
-            >
-              <span
-                class="visually-hidden"
-              >
-                Loading...
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
           class="mt-4 mt-md-5"
         >
           <p
@@ -101,6 +83,726 @@ exports[`WebhooksSection creates snapshot 1`] = `
           >
             Webhooks notify external services when certain events happen.
           </p>
+          <div
+            class="row mt-3 mt-md-4 gx-0 gx-xxl-4"
+          >
+            <div
+              class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+              >
+                <div
+                  class="card-body position-relative"
+                >
+                  <div
+                    class="d-flex flex-row"
+                  >
+                    <div
+                      class="h5 card-title mb-3 me-3 lh-1 text-break"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-start"
+                      >
+                        <div>
+                          test
+                        </div>
+                        <span
+                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-dark text-dark text-uppercase badge inactiveBadge"
+                        >
+                          Inactive
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="ms-auto"
+                    >
+                      <div
+                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                      >
+                        <div
+                          class="dropdown-arrow arrow"
+                        />
+                        <button
+                          aria-label="Edit webhook"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                              />
+                            </svg>
+                            <span>
+                              Edit
+                            </span>
+                          </div>
+                        </button>
+                        <button
+                          aria-label="Open deletion webhook modal"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 448 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                              />
+                            </svg>
+                            <span>
+                              Delete
+                            </span>
+                          </div>
+                        </button>
+                      </div>
+                      <button
+                        aria-expanded="false"
+                        aria-label="Open menu"
+                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 16 16"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex flex-column"
+                  >
+                    <div
+                      class="card-subtitle d-flex flex-column mw-100 mt-1"
+                    >
+                      <p
+                        class="card-text"
+                      >
+                        This is a sample webhook
+                      </p>
+                    </div>
+                    <div
+                      class="text-truncate"
+                    >
+                      <small
+                        class="text-muted text-uppercase me-2"
+                      >
+                        Url:
+                      </small>
+                      <small>
+                        https://hooks.com
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex flex-row justify-content-between align-items-baseline"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+              >
+                <div
+                  class="card-body position-relative"
+                >
+                  <div
+                    class="d-flex flex-row"
+                  >
+                    <div
+                      class="h5 card-title mb-3 me-3 lh-1 text-break"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-start"
+                      >
+                        <div>
+                          test1
+                        </div>
+                        <span
+                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase badge"
+                        >
+                          Active
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="ms-auto"
+                    >
+                      <div
+                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                      >
+                        <div
+                          class="dropdown-arrow arrow"
+                        />
+                        <button
+                          aria-label="Edit webhook"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                              />
+                            </svg>
+                            <span>
+                              Edit
+                            </span>
+                          </div>
+                        </button>
+                        <button
+                          aria-label="Open deletion webhook modal"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 448 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                              />
+                            </svg>
+                            <span>
+                              Delete
+                            </span>
+                          </div>
+                        </button>
+                      </div>
+                      <button
+                        aria-expanded="false"
+                        aria-label="Open menu"
+                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 16 16"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex flex-column"
+                  >
+                    <div
+                      class="card-subtitle d-flex flex-column mw-100 mt-1"
+                    >
+                      <p
+                        class="card-text"
+                      >
+                        retry
+                      </p>
+                    </div>
+                    <div
+                      class="text-truncate"
+                    >
+                      <small
+                        class="text-muted text-uppercase me-2"
+                      >
+                        Url:
+                      </small>
+                      <small>
+                        http://skdhkdhjdfs
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex flex-row justify-content-between align-items-baseline"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+              >
+                <div
+                  class="card-body position-relative"
+                >
+                  <div
+                    class="d-flex flex-row"
+                  >
+                    <div
+                      class="h5 card-title mb-3 me-3 lh-1 text-break"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-start"
+                      >
+                        <div>
+                          dfgfgdhg
+                        </div>
+                        <span
+                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase badge"
+                        >
+                          Active
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="ms-auto"
+                    >
+                      <div
+                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                      >
+                        <div
+                          class="dropdown-arrow arrow"
+                        />
+                        <button
+                          aria-label="Edit webhook"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                              />
+                            </svg>
+                            <span>
+                              Edit
+                            </span>
+                          </div>
+                        </button>
+                        <button
+                          aria-label="Open deletion webhook modal"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 448 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                              />
+                            </svg>
+                            <span>
+                              Delete
+                            </span>
+                          </div>
+                        </button>
+                      </div>
+                      <button
+                        aria-expanded="false"
+                        aria-label="Open menu"
+                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 16 16"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex flex-column"
+                  >
+                    <div
+                      class="card-subtitle d-flex flex-column mw-100 mt-1"
+                    >
+                      <p
+                        class="card-text"
+                      />
+                    </div>
+                    <div
+                      class="text-truncate"
+                    >
+                      <small
+                        class="text-muted text-uppercase me-2"
+                      >
+                        Url:
+                      </small>
+                      <small>
+                        http://sdkljflkjds
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex flex-row justify-content-between align-items-baseline"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+              >
+                <div
+                  class="card-body position-relative"
+                >
+                  <div
+                    class="d-flex flex-row"
+                  >
+                    <div
+                      class="h5 card-title mb-3 me-3 lh-1 text-break"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-start"
+                      >
+                        <div>
+                          testdefault
+                        </div>
+                        <span
+                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-dark text-dark text-uppercase badge inactiveBadge"
+                        >
+                          Inactive
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="ms-auto"
+                    >
+                      <div
+                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                      >
+                        <div
+                          class="dropdown-arrow arrow"
+                        />
+                        <button
+                          aria-label="Edit webhook"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                              />
+                            </svg>
+                            <span>
+                              Edit
+                            </span>
+                          </div>
+                        </button>
+                        <button
+                          aria-label="Open deletion webhook modal"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 448 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                              />
+                            </svg>
+                            <span>
+                              Delete
+                            </span>
+                          </div>
+                        </button>
+                      </div>
+                      <button
+                        aria-expanded="false"
+                        aria-label="Open menu"
+                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 16 16"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex flex-column"
+                  >
+                    <div
+                      class="card-subtitle d-flex flex-column mw-100 mt-1"
+                    >
+                      <p
+                        class="card-text"
+                      >
+                        lkdjklfsd
+                      </p>
+                    </div>
+                    <div
+                      class="text-truncate"
+                    >
+                      <small
+                        class="text-muted text-uppercase me-2"
+                      >
+                        Url:
+                      </small>
+                      <small>
+                        http://lksdjfkdl
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex flex-row justify-content-between align-items-baseline"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+              >
+                <div
+                  class="card-body position-relative"
+                >
+                  <div
+                    class="d-flex flex-row"
+                  >
+                    <div
+                      class="h5 card-title mb-3 me-3 lh-1 text-break"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-start"
+                      >
+                        <div>
+                          ffdsffdfgdsd
+                        </div>
+                        <span
+                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase badge"
+                        >
+                          Active
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="ms-auto"
+                    >
+                      <div
+                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                      >
+                        <div
+                          class="dropdown-arrow arrow"
+                        />
+                        <button
+                          aria-label="Edit webhook"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                              />
+                            </svg>
+                            <span>
+                              Edit
+                            </span>
+                          </div>
+                        </button>
+                        <button
+                          aria-label="Open deletion webhook modal"
+                          class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <svg
+                              class="me-2 btnIcon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 448 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                              />
+                            </svg>
+                            <span>
+                              Delete
+                            </span>
+                          </div>
+                        </button>
+                      </div>
+                      <button
+                        aria-expanded="false"
+                        aria-label="Open menu"
+                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 16 16"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex flex-column"
+                  >
+                    <div
+                      class="card-subtitle d-flex flex-column mw-100 mt-1"
+                    >
+                      <p
+                        class="card-text"
+                      >
+                        fgdfg
+                      </p>
+                    </div>
+                    <div
+                      class="text-truncate"
+                    >
+                      <small
+                        class="text-muted text-uppercase me-2"
+                      >
+                        Url:
+                      </small>
+                      <small>
+                        http://jksdhfkjfds
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex flex-row justify-content-between align-items-baseline"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mx-auto"
+          />
         </div>
       </div>
     </main>

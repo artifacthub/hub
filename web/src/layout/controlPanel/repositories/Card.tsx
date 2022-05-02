@@ -148,9 +148,11 @@ const RepositoryCard = (props: Props) => {
           >
             <div className="mt-3 mw-100">
               <div className="mb-2">{moment.unix(props.repository.lastTrackingTs!).format('llll Z')}</div>
-              <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
-                {props.repository.lastTrackingErrors}
-              </SyntaxHighlighter>
+              {props.repository.lastTrackingErrors && (
+                <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
+                  {props.repository.lastTrackingErrors}
+                </SyntaxHighlighter>
+              )}
             </div>
           </Modal>
           <span className="ms-3 fst-italic text-muted">{nextCheckMsg}</span>
@@ -246,9 +248,11 @@ const RepositoryCard = (props: Props) => {
             onClose={() => setOpenErrorsModal(false)}
           >
             <div className="mt-3 mw-100">
-              <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
-                {props.repository.lastScanningErrors}
-              </SyntaxHighlighter>
+              {props.repository.lastScanningErrors && (
+                <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
+                  {props.repository.lastScanningErrors}
+                </SyntaxHighlighter>
+              )}
             </div>
           </Modal>
           <span className="ms-3 fst-italic text-muted">{nextCheckMsg}</span>

@@ -24,14 +24,14 @@ describe('NotFoundView', () => {
     expect(screen.getByText("The page you were looking for wasn't found")).toBeInTheDocument();
   });
 
-  it('opens Home link', () => {
+  it('opens Home link', async () => {
     render(
       <Router>
         <NotFoundView />
       </Router>
     );
 
-    userEvent.click(screen.getByText(/Back Home/i));
+    await userEvent.click(screen.getByText(/Back Home/i));
     expect(window.location.pathname).toBe('/');
   });
 });

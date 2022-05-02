@@ -41,9 +41,9 @@ exports[`TOC creates snapshot 1`] = `
         <h1
           class="mb-0 lh-base title"
         >
-          <p>
+          <div>
             Readme
-          </p>
+          </div>
         </h1>
       </div>
     </div>

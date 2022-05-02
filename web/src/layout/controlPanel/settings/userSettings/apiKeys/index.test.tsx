@@ -36,8 +36,10 @@ describe('API keys section index', () => {
 
     await waitFor(() => {
       expect(API.getAPIKeys).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -54,6 +56,8 @@ describe('API keys section index', () => {
       await waitFor(() => {
         expect(API.getAPIKeys).toHaveBeenCalledTimes(1);
       });
+
+      expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
     });
 
     it('displays no data component when no API keys', async () => {
@@ -85,8 +89,8 @@ describe('API keys section index', () => {
 
       expect(screen.queryByText('Name')).toBeNull();
 
-      const addBtn = screen.getByRole('button', { name: 'Open API key modal to add the first one' });
-      userEvent.click(addBtn);
+      const addBtn = await screen.findByRole('button', { name: 'Open API key modal to add the first one' });
+      await userEvent.click(addBtn);
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
@@ -104,8 +108,8 @@ describe('API keys section index', () => {
 
       expect(screen.queryByText('Name')).toBeNull();
 
-      const addBtn = screen.getByRole('button', { name: 'Open modal to add API key' });
-      userEvent.click(addBtn);
+      const addBtn = await screen.findByRole('button', { name: 'Open modal to add API key' });
+      await userEvent.click(addBtn);
       expect(screen.queryByText('Name')).toBeInTheDocument();
     });
   });
@@ -158,7 +162,7 @@ describe('API keys section index', () => {
 
       await waitFor(() => expect(API.getAPIKeys).toHaveBeenCalledTimes(1));
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => expect(onAuthErrorMock).toHaveBeenCalledTimes(1));
     });
 
     it('rest API errors - displays generic error message', async () => {

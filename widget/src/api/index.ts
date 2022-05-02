@@ -52,7 +52,7 @@ class API_CLASS {
     },
   ];
 
-  private toCamelCase(r: any): any {
+  public toCamelCase(r: any): any {
     if (isArray(r)) {
       return r.map((v) => this.toCamelCase(v));
     } else if (isObject(r)) {

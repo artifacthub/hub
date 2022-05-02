@@ -12,20 +12,2243 @@ exports[`RandomPackages creates snapshot 1`] = `
         class="d-flex flex-wrap justify-content-center"
       >
         <div
-          class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
+          class="w-100 my-2"
+          data-testid="randomPackagesList"
         >
           <div
-            class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+            aria-level="4"
+            class="h4 text-center text-dark mt-3 mt-md-2 mb-4"
+          >
+            Explore and discover packages
+          </div>
+          <div
+            class="pt-2 row g-0 justify-content-center"
+            role="list"
           >
             <div
-              class="spinner-border text-primary spinner position-relative"
-              role="status"
+              class="col-12 col-xxl-6 col-xxxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
+              role="listitem"
             >
-              <span
-                class="visually-hidden"
+              <div
+                class="card cardWithHover h-100 card"
               >
-                Loading...
-              </span>
+                <a
+                  class="text-decoration-none text-reset h-100"
+                  href="/packages/helm/halkeye/undefined"
+                >
+                  <div
+                    class="card-body d-flex flex-column h-100 body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mw-100"
+                    >
+                      <div
+                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border position-relative bg-white imageWrapper imageWrapper"
+                        >
+                          <img
+                            alt="Logo mosquitto"
+                            aria-hidden="true"
+                            class="image"
+                            src="/image/aca0e134-7e18-411c-9662-1245f92f438d"
+                            srcset="/image/aca0e134-7e18-411c-9662-1245f92f438d@1x 1x, /image/aca0e134-7e18-411c-9662-1245f92f438d@2x 2x, /image/aca0e134-7e18-411c-9662-1245f92f438d@3x 3x, /image/aca0e134-7e18-411c-9662-1245f92f438d@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                        >
+                          <div
+                            class="text-truncate card-title mb-0"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center justify-content-between"
+                            >
+                              <div
+                                class="text-truncate title"
+                              >
+                                mosquitto
+                              </div>
+                              <div
+                                class="d-none d-xxl-flex d-xxxl-none flex-column ms-2"
+                              >
+                                <div
+                                  class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                                >
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    Helm chart
+                                  </span>
+                                  <button
+                                    aria-hidden="true"
+                                    aria-label="Filter by Helm chart repository kind"
+                                    class="btn btn-link m-0 p-0"
+                                    data-testid="repoIconLabelLink"
+                                    tabindex="-1"
+                                  >
+                                    <span
+                                      class="badge bg-light text-dark rounded-pill border bg badge"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <div
+                                          aria-hidden="true"
+                                          class="position-relative icon undefined"
+                                        >
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                        </div>
+                                        <div
+                                          class="ms-1"
+                                        >
+                                          Helm chart
+                                        </div>
+                                      </div>
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-block d-md-none"
+                          >
+                            <div
+                              class="card-subtitle align-items-baseline subtitle"
+                            >
+                              <div
+                                class="d-inline d-md-none text-truncate w-100"
+                              >
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    role="complementary"
+                                  >
+                                    <div
+                                      class="content"
+                                    >
+                                      <div
+                                        class="d-flex flex-column"
+                                      >
+                                        <div
+                                          class="d-flex flex-row align-items-center"
+                                        >
+                                          <small
+                                            class="text-muted text-uppercase me-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                          <div
+                                            class="text-reset text-truncate labelContent"
+                                          >
+                                            halkeye
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex flex-row text-truncate"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                  >
+                                    <small>
+                                      Repo:
+                                    </small>
+                                  </div>
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    halkeye
+                                  </span>
+                                  <button
+                                    aria-expanded="false"
+                                    aria-hidden="true"
+                                    aria-label="Filter by repo halkeye"
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                    data-testid="repoLink"
+                                    tabindex="-1"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      halkeye
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                User: 
+                              </span>
+                              <span
+                                class="visually-hidden"
+                              >
+                                user
+                              </span>
+                              <button
+                                aria-hidden="true"
+                                aria-label="Filter by user"
+                                class="p-0 border-0 text-truncate text-dark mw-100 bg-transparent link mx50"
+                                data-testid="userLink"
+                                tabindex="-1"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      role="complementary"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase me-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconLight"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconDark"
+                                              src="/static/media/helm-chart-light.svg"
+                                            />
+                                            <div
+                                              class="text-reset text-truncate labelContent"
+                                            >
+                                              halkeye
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <span
+                                      class="visually-hidden"
+                                    >
+                                      halkeye
+                                    </span>
+                                    <button
+                                      aria-expanded="false"
+                                      aria-hidden="true"
+                                      aria-label="Filter by repo halkeye"
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                      data-testid="repoLink"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="text-truncate"
+                                      >
+                                        halkeye
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline position-relative subtitle lastLine"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase me-1 ms-3"
+                              >
+                                App Version: 
+                              </span>
+                              1.6.8
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-flex d-xxl-none d-xxxl-flex flex-column align-items-end mb-auto ms-2"
+                        >
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          >
+                            <span
+                              class="visually-hidden"
+                            >
+                              Helm chart
+                            </span>
+                            <button
+                              aria-hidden="true"
+                              aria-label="Filter by Helm chart repository kind"
+                              class="btn btn-link m-0 p-0"
+                              data-testid="repoIconLabelLink"
+                              tabindex="-1"
+                            >
+                              <span
+                                class="badge bg-light text-dark rounded-pill border bg badge"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    aria-hidden="true"
+                                    class="position-relative icon undefined"
+                                  >
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconLight"
+                                      src="/static/media/helm-chart.svg"
+                                    />
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconDark"
+                                      src="/static/media/helm-chart-light.svg"
+                                    />
+                                  </div>
+                                  <div
+                                    class="ms-1"
+                                  >
+                                    Helm chart
+                                  </div>
+                                </div>
+                              </span>
+                            </button>
+                          </div>
+                          <div
+                            class="mt-1"
+                          >
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description text-truncate"
+                    />
+                    <div
+                      class="d-none d-xxl-block d-xxxl-none text-end mt-2"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex d-md-none d-xxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-md-0 mt-1 mt-md-0 mt-xxl-1 mt-xxxl-0"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                      <span>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                        >
+                          <span
+                            class="visually-hidden"
+                          >
+                            Helm chart
+                          </span>
+                          <button
+                            aria-hidden="true"
+                            aria-label="Filter by Helm chart repository kind"
+                            class="btn btn-link m-0 p-0"
+                            data-testid="repoIconLabelLink"
+                            tabindex="-1"
+                          >
+                            <span
+                              class="badge bg-light text-dark rounded-pill border bg badge"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  aria-hidden="true"
+                                  class="position-relative icon undefined"
+                                >
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconLight"
+                                    src="/static/media/helm-chart.svg"
+                                  />
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconDark"
+                                    src="/static/media/helm-chart-light.svg"
+                                  />
+                                </div>
+                                <div
+                                  class="ms-1"
+                                >
+                                  Helm chart
+                                </div>
+                              </div>
+                            </span>
+                          </button>
+                        </div>
+                      </span>
+                    </div>
+                    <div
+                      class="d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto labelsWrapper"
+                    />
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 col-xxl-6 col-xxxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover h-100 card"
+              >
+                <a
+                  class="text-decoration-none text-reset h-100"
+                  href="/packages/helm/halkeye/undefined"
+                >
+                  <div
+                    class="card-body d-flex flex-column h-100 body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mw-100"
+                    >
+                      <div
+                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border position-relative bg-white imageWrapper imageWrapper"
+                        >
+                          <img
+                            alt="Logo pihole"
+                            aria-hidden="true"
+                            class="image"
+                            src="/image/18db8f84-f8a7-4203-9116-60f24d34914f"
+                            srcset="/image/18db8f84-f8a7-4203-9116-60f24d34914f@1x 1x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@2x 2x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@3x 3x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                        >
+                          <div
+                            class="text-truncate card-title mb-0"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center justify-content-between"
+                            >
+                              <div
+                                class="text-truncate title"
+                              >
+                                pihole
+                              </div>
+                              <div
+                                class="d-none d-xxl-flex d-xxxl-none flex-column ms-2"
+                              >
+                                <div
+                                  class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                                >
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    Helm chart
+                                  </span>
+                                  <button
+                                    aria-hidden="true"
+                                    aria-label="Filter by Helm chart repository kind"
+                                    class="btn btn-link m-0 p-0"
+                                    data-testid="repoIconLabelLink"
+                                    tabindex="-1"
+                                  >
+                                    <span
+                                      class="badge bg-light text-dark rounded-pill border bg badge"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <div
+                                          aria-hidden="true"
+                                          class="position-relative icon undefined"
+                                        >
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                        </div>
+                                        <div
+                                          class="ms-1"
+                                        >
+                                          Helm chart
+                                        </div>
+                                      </div>
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-block d-md-none"
+                          >
+                            <div
+                              class="card-subtitle align-items-baseline subtitle"
+                            >
+                              <div
+                                class="d-inline d-md-none text-truncate w-100"
+                              >
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    role="complementary"
+                                  >
+                                    <div
+                                      class="content"
+                                    >
+                                      <div
+                                        class="d-flex flex-column"
+                                      >
+                                        <div
+                                          class="d-flex flex-row align-items-center"
+                                        >
+                                          <small
+                                            class="text-muted text-uppercase me-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                          <div
+                                            class="text-reset text-truncate labelContent"
+                                          >
+                                            halkeye
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex flex-row text-truncate"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                  >
+                                    <small>
+                                      Repo:
+                                    </small>
+                                  </div>
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    halkeye
+                                  </span>
+                                  <button
+                                    aria-expanded="false"
+                                    aria-hidden="true"
+                                    aria-label="Filter by repo halkeye"
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                    data-testid="repoLink"
+                                    tabindex="-1"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      halkeye
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                User: 
+                              </span>
+                              <span
+                                class="visually-hidden"
+                              >
+                                user
+                              </span>
+                              <button
+                                aria-hidden="true"
+                                aria-label="Filter by user"
+                                class="p-0 border-0 text-truncate text-dark mw-100 bg-transparent link mx50"
+                                data-testid="userLink"
+                                tabindex="-1"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      role="complementary"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase me-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconLight"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconDark"
+                                              src="/static/media/helm-chart-light.svg"
+                                            />
+                                            <div
+                                              class="text-reset text-truncate labelContent"
+                                            >
+                                              halkeye
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <span
+                                      class="visually-hidden"
+                                    >
+                                      halkeye
+                                    </span>
+                                    <button
+                                      aria-expanded="false"
+                                      aria-hidden="true"
+                                      aria-label="Filter by repo halkeye"
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                      data-testid="repoLink"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="text-truncate"
+                                      >
+                                        halkeye
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline position-relative subtitle lastLine"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase me-1 ms-3"
+                              >
+                                App Version: 
+                              </span>
+                              4.3.2-1
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-flex d-xxl-none d-xxxl-flex flex-column align-items-end mb-auto ms-2"
+                        >
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          >
+                            <span
+                              class="visually-hidden"
+                            >
+                              Helm chart
+                            </span>
+                            <button
+                              aria-hidden="true"
+                              aria-label="Filter by Helm chart repository kind"
+                              class="btn btn-link m-0 p-0"
+                              data-testid="repoIconLabelLink"
+                              tabindex="-1"
+                            >
+                              <span
+                                class="badge bg-light text-dark rounded-pill border bg badge"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    aria-hidden="true"
+                                    class="position-relative icon undefined"
+                                  >
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconLight"
+                                      src="/static/media/helm-chart.svg"
+                                    />
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconDark"
+                                      src="/static/media/helm-chart-light.svg"
+                                    />
+                                  </div>
+                                  <div
+                                    class="ms-1"
+                                  >
+                                    Helm chart
+                                  </div>
+                                </div>
+                              </span>
+                            </button>
+                          </div>
+                          <div
+                            class="mt-1"
+                          >
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description text-truncate"
+                    />
+                    <div
+                      class="d-none d-xxl-block d-xxxl-none text-end mt-2"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex d-md-none d-xxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-md-0 mt-1 mt-md-0 mt-xxl-1 mt-xxxl-0"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                      <span>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                        >
+                          <span
+                            class="visually-hidden"
+                          >
+                            Helm chart
+                          </span>
+                          <button
+                            aria-hidden="true"
+                            aria-label="Filter by Helm chart repository kind"
+                            class="btn btn-link m-0 p-0"
+                            data-testid="repoIconLabelLink"
+                            tabindex="-1"
+                          >
+                            <span
+                              class="badge bg-light text-dark rounded-pill border bg badge"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  aria-hidden="true"
+                                  class="position-relative icon undefined"
+                                >
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconLight"
+                                    src="/static/media/helm-chart.svg"
+                                  />
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconDark"
+                                    src="/static/media/helm-chart-light.svg"
+                                  />
+                                </div>
+                                <div
+                                  class="ms-1"
+                                >
+                                  Helm chart
+                                </div>
+                              </div>
+                            </span>
+                          </button>
+                        </div>
+                      </span>
+                    </div>
+                    <div
+                      class="d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto labelsWrapper"
+                    />
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 col-xxl-6 col-xxxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover h-100 card"
+              >
+                <a
+                  class="text-decoration-none text-reset h-100"
+                  href="/packages/helm/gabibbo97/undefined"
+                >
+                  <div
+                    class="card-body d-flex flex-column h-100 body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mw-100"
+                    >
+                      <div
+                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border position-relative bg-white imageWrapper imageWrapper"
+                        >
+                          <img
+                            alt="Logo fcgi-nginx-frontend"
+                            aria-hidden="true"
+                            class="image"
+                            data-testid="placeholderImg"
+                            src="/static/media/placeholder_pkg_helm.png"
+                          />
+                        </div>
+                        <div
+                          class="d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                        >
+                          <div
+                            class="text-truncate card-title mb-0"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center justify-content-between"
+                            >
+                              <div
+                                class="text-truncate title"
+                              >
+                                fcgi-nginx-frontend
+                              </div>
+                              <div
+                                class="d-none d-xxl-flex d-xxxl-none flex-column ms-2"
+                              >
+                                <div
+                                  class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                                >
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    Helm chart
+                                  </span>
+                                  <button
+                                    aria-hidden="true"
+                                    aria-label="Filter by Helm chart repository kind"
+                                    class="btn btn-link m-0 p-0"
+                                    data-testid="repoIconLabelLink"
+                                    tabindex="-1"
+                                  >
+                                    <span
+                                      class="badge bg-light text-dark rounded-pill border bg badge"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <div
+                                          aria-hidden="true"
+                                          class="position-relative icon undefined"
+                                        >
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                        </div>
+                                        <div
+                                          class="ms-1"
+                                        >
+                                          Helm chart
+                                        </div>
+                                      </div>
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-block d-md-none"
+                          >
+                            <div
+                              class="card-subtitle align-items-baseline subtitle"
+                            >
+                              <div
+                                class="d-inline d-md-none text-truncate w-100"
+                              >
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    role="complementary"
+                                  >
+                                    <div
+                                      class="content"
+                                    >
+                                      <div
+                                        class="d-flex flex-column"
+                                      >
+                                        <div
+                                          class="d-flex flex-row align-items-center"
+                                        >
+                                          <small
+                                            class="text-muted text-uppercase me-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                          <div
+                                            class="text-reset text-truncate labelContent"
+                                          >
+                                            gabibbo97
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex flex-row text-truncate"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                  >
+                                    <small>
+                                      Repo:
+                                    </small>
+                                  </div>
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    gabibbo97
+                                  </span>
+                                  <button
+                                    aria-expanded="false"
+                                    aria-hidden="true"
+                                    aria-label="Filter by repo gabibbo97"
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                    data-testid="repoLink"
+                                    tabindex="-1"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      gabibbo97
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                User: 
+                              </span>
+                              <span
+                                class="visually-hidden"
+                              >
+                                user1
+                              </span>
+                              <button
+                                aria-hidden="true"
+                                aria-label="Filter by user1"
+                                class="p-0 border-0 text-truncate text-dark mw-100 bg-transparent link mx50"
+                                data-testid="userLink"
+                                tabindex="-1"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user1
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      role="complementary"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase me-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconLight"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconDark"
+                                              src="/static/media/helm-chart-light.svg"
+                                            />
+                                            <div
+                                              class="text-reset text-truncate labelContent"
+                                            >
+                                              gabibbo97
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <span
+                                      class="visually-hidden"
+                                    >
+                                      gabibbo97
+                                    </span>
+                                    <button
+                                      aria-expanded="false"
+                                      aria-hidden="true"
+                                      aria-label="Filter by repo gabibbo97"
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                      data-testid="repoLink"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="text-truncate"
+                                      >
+                                        gabibbo97
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline position-relative subtitle lastLine"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase me-1 ms-3"
+                              >
+                                App Version: 
+                              </span>
+                              1.17.8
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-flex d-xxl-none d-xxxl-flex flex-column align-items-end mb-auto ms-2"
+                        >
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          >
+                            <span
+                              class="visually-hidden"
+                            >
+                              Helm chart
+                            </span>
+                            <button
+                              aria-hidden="true"
+                              aria-label="Filter by Helm chart repository kind"
+                              class="btn btn-link m-0 p-0"
+                              data-testid="repoIconLabelLink"
+                              tabindex="-1"
+                            >
+                              <span
+                                class="badge bg-light text-dark rounded-pill border bg badge"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    aria-hidden="true"
+                                    class="position-relative icon undefined"
+                                  >
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconLight"
+                                      src="/static/media/helm-chart.svg"
+                                    />
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconDark"
+                                      src="/static/media/helm-chart-light.svg"
+                                    />
+                                  </div>
+                                  <div
+                                    class="ms-1"
+                                  >
+                                    Helm chart
+                                  </div>
+                                </div>
+                              </span>
+                            </button>
+                          </div>
+                          <div
+                            class="mt-1"
+                          >
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description text-truncate"
+                    />
+                    <div
+                      class="d-none d-xxl-block d-xxxl-none text-end mt-2"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex d-md-none d-xxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-md-0 mt-1 mt-md-0 mt-xxl-1 mt-xxxl-0"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                      <span>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                        >
+                          <span
+                            class="visually-hidden"
+                          >
+                            Helm chart
+                          </span>
+                          <button
+                            aria-hidden="true"
+                            aria-label="Filter by Helm chart repository kind"
+                            class="btn btn-link m-0 p-0"
+                            data-testid="repoIconLabelLink"
+                            tabindex="-1"
+                          >
+                            <span
+                              class="badge bg-light text-dark rounded-pill border bg badge"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  aria-hidden="true"
+                                  class="position-relative icon undefined"
+                                >
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconLight"
+                                    src="/static/media/helm-chart.svg"
+                                  />
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconDark"
+                                    src="/static/media/helm-chart-light.svg"
+                                  />
+                                </div>
+                                <div
+                                  class="ms-1"
+                                >
+                                  Helm chart
+                                </div>
+                              </div>
+                            </span>
+                          </button>
+                        </div>
+                      </span>
+                    </div>
+                    <div
+                      class="d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto labelsWrapper"
+                    />
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 col-xxl-6 col-xxxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover h-100 card"
+              >
+                <a
+                  class="text-decoration-none text-reset h-100"
+                  href="/packages/helm/halkeye/undefined"
+                >
+                  <div
+                    class="card-body d-flex flex-column h-100 body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mw-100"
+                    >
+                      <div
+                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border position-relative bg-white imageWrapper imageWrapper"
+                        >
+                          <img
+                            alt="Logo sevendaysdie"
+                            aria-hidden="true"
+                            class="image"
+                            src="/image/56724a8a-d8de-4700-8f23-1cf828220d51"
+                            srcset="/image/56724a8a-d8de-4700-8f23-1cf828220d51@1x 1x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@2x 2x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@3x 3x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                        >
+                          <div
+                            class="text-truncate card-title mb-0"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center justify-content-between"
+                            >
+                              <div
+                                class="text-truncate title"
+                              >
+                                sevendaysdie
+                              </div>
+                              <div
+                                class="d-none d-xxl-flex d-xxxl-none flex-column ms-2"
+                              >
+                                <div
+                                  class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                                >
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    Helm chart
+                                  </span>
+                                  <button
+                                    aria-hidden="true"
+                                    aria-label="Filter by Helm chart repository kind"
+                                    class="btn btn-link m-0 p-0"
+                                    data-testid="repoIconLabelLink"
+                                    tabindex="-1"
+                                  >
+                                    <span
+                                      class="badge bg-light text-dark rounded-pill border bg badge"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <div
+                                          aria-hidden="true"
+                                          class="position-relative icon undefined"
+                                        >
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                        </div>
+                                        <div
+                                          class="ms-1"
+                                        >
+                                          Helm chart
+                                        </div>
+                                      </div>
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-block d-md-none"
+                          >
+                            <div
+                              class="card-subtitle align-items-baseline subtitle"
+                            >
+                              <div
+                                class="d-inline d-md-none text-truncate w-100"
+                              >
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    role="complementary"
+                                  >
+                                    <div
+                                      class="content"
+                                    >
+                                      <div
+                                        class="d-flex flex-column"
+                                      >
+                                        <div
+                                          class="d-flex flex-row align-items-center"
+                                        >
+                                          <small
+                                            class="text-muted text-uppercase me-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                          <div
+                                            class="text-reset text-truncate labelContent"
+                                          >
+                                            halkeye
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex flex-row text-truncate"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                  >
+                                    <small>
+                                      Repo:
+                                    </small>
+                                  </div>
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    halkeye
+                                  </span>
+                                  <button
+                                    aria-expanded="false"
+                                    aria-hidden="true"
+                                    aria-label="Filter by repo halkeye"
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                    data-testid="repoLink"
+                                    tabindex="-1"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      halkeye
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                User: 
+                              </span>
+                              <span
+                                class="visually-hidden"
+                              >
+                                user
+                              </span>
+                              <button
+                                aria-hidden="true"
+                                aria-label="Filter by user"
+                                class="p-0 border-0 text-truncate text-dark mw-100 bg-transparent link mx50"
+                                data-testid="userLink"
+                                tabindex="-1"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      role="complementary"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase me-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconLight"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconDark"
+                                              src="/static/media/helm-chart-light.svg"
+                                            />
+                                            <div
+                                              class="text-reset text-truncate labelContent"
+                                            >
+                                              halkeye
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <span
+                                      class="visually-hidden"
+                                    >
+                                      halkeye
+                                    </span>
+                                    <button
+                                      aria-expanded="false"
+                                      aria-hidden="true"
+                                      aria-label="Filter by repo halkeye"
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                      data-testid="repoLink"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="text-truncate"
+                                      >
+                                        halkeye
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline position-relative subtitle lastLine"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase me-1 ms-3"
+                              >
+                                App Version: 
+                              </span>
+                              latest
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-flex d-xxl-none d-xxxl-flex flex-column align-items-end mb-auto ms-2"
+                        >
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          >
+                            <span
+                              class="visually-hidden"
+                            >
+                              Helm chart
+                            </span>
+                            <button
+                              aria-hidden="true"
+                              aria-label="Filter by Helm chart repository kind"
+                              class="btn btn-link m-0 p-0"
+                              data-testid="repoIconLabelLink"
+                              tabindex="-1"
+                            >
+                              <span
+                                class="badge bg-light text-dark rounded-pill border bg badge"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    aria-hidden="true"
+                                    class="position-relative icon undefined"
+                                  >
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconLight"
+                                      src="/static/media/helm-chart.svg"
+                                    />
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconDark"
+                                      src="/static/media/helm-chart-light.svg"
+                                    />
+                                  </div>
+                                  <div
+                                    class="ms-1"
+                                  >
+                                    Helm chart
+                                  </div>
+                                </div>
+                              </span>
+                            </button>
+                          </div>
+                          <div
+                            class="mt-1"
+                          >
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description text-truncate"
+                    />
+                    <div
+                      class="d-none d-xxl-block d-xxxl-none text-end mt-2"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex d-md-none d-xxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-md-0 mt-1 mt-md-0 mt-xxl-1 mt-xxxl-0"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                      <span>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                        >
+                          <span
+                            class="visually-hidden"
+                          >
+                            Helm chart
+                          </span>
+                          <button
+                            aria-hidden="true"
+                            aria-label="Filter by Helm chart repository kind"
+                            class="btn btn-link m-0 p-0"
+                            data-testid="repoIconLabelLink"
+                            tabindex="-1"
+                          >
+                            <span
+                              class="badge bg-light text-dark rounded-pill border bg badge"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  aria-hidden="true"
+                                  class="position-relative icon undefined"
+                                >
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconLight"
+                                    src="/static/media/helm-chart.svg"
+                                  />
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconDark"
+                                    src="/static/media/helm-chart-light.svg"
+                                  />
+                                </div>
+                                <div
+                                  class="ms-1"
+                                >
+                                  Helm chart
+                                </div>
+                              </div>
+                            </span>
+                          </button>
+                        </div>
+                      </span>
+                    </div>
+                    <div
+                      class="d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto labelsWrapper"
+                    />
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 col-xxl-6 col-xxxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
+              role="listitem"
+            >
+              <div
+                class="card cardWithHover h-100 card"
+              >
+                <a
+                  class="text-decoration-none text-reset h-100"
+                  href="/packages/helm/billimek/undefined"
+                >
+                  <div
+                    class="card-body d-flex flex-column h-100 body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mw-100"
+                    >
+                      <div
+                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 p-md-2 border position-relative bg-white imageWrapper imageWrapper"
+                        >
+                          <img
+                            alt="Logo digitalocean-dyndns"
+                            aria-hidden="true"
+                            class="image"
+                            src="/image/2fbaacae-e538-4706-a9fc-bcf443218af1"
+                            srcset="/image/2fbaacae-e538-4706-a9fc-bcf443218af1@1x 1x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@2x 2x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@3x 3x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="d-flex flex-column justify-content-between ms-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                        >
+                          <div
+                            class="text-truncate card-title mb-0"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-center justify-content-between"
+                            >
+                              <div
+                                class="text-truncate title"
+                              >
+                                digitalocean-dyndns
+                              </div>
+                              <div
+                                class="d-none d-xxl-flex d-xxxl-none flex-column ms-2"
+                              >
+                                <div
+                                  class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                                >
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    Helm chart
+                                  </span>
+                                  <button
+                                    aria-hidden="true"
+                                    aria-label="Filter by Helm chart repository kind"
+                                    class="btn btn-link m-0 p-0"
+                                    data-testid="repoIconLabelLink"
+                                    tabindex="-1"
+                                  >
+                                    <span
+                                      class="badge bg-light text-dark rounded-pill border bg badge"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <div
+                                          aria-hidden="true"
+                                          class="position-relative icon undefined"
+                                        >
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="mw-100 mh-100 iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                        </div>
+                                        <div
+                                          class="ms-1"
+                                        >
+                                          Helm chart
+                                        </div>
+                                      </div>
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-block d-md-none"
+                          >
+                            <div
+                              class="card-subtitle align-items-baseline subtitle"
+                            >
+                              <div
+                                class="d-inline d-md-none text-truncate w-100"
+                              >
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    role="complementary"
+                                  >
+                                    <div
+                                      class="content"
+                                    >
+                                      <div
+                                        class="d-flex flex-column"
+                                      >
+                                        <div
+                                          class="d-flex flex-row align-items-center"
+                                        >
+                                          <small
+                                            class="text-muted text-uppercase me-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconLight"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <img
+                                            alt="Icon"
+                                            class="me-1 w-auto repoIconMini iconDark"
+                                            src="/static/media/helm-chart-light.svg"
+                                          />
+                                          <div
+                                            class="text-reset text-truncate labelContent"
+                                          >
+                                            billimek
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex flex-row text-truncate"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                  >
+                                    <small>
+                                      Repo:
+                                    </small>
+                                  </div>
+                                  <span
+                                    class="visually-hidden"
+                                  >
+                                    billimek
+                                  </span>
+                                  <button
+                                    aria-expanded="false"
+                                    aria-hidden="true"
+                                    aria-label="Filter by repo billimek"
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                    data-testid="repoLink"
+                                    tabindex="-1"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      billimek
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                User: 
+                              </span>
+                              <span
+                                class="visually-hidden"
+                              >
+                                user2
+                              </span>
+                              <button
+                                aria-hidden="true"
+                                aria-label="Filter by user2"
+                                class="p-0 border-0 text-truncate text-dark mw-100 bg-transparent link mx50"
+                                data-testid="userLink"
+                                tabindex="-1"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user2
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      role="complementary"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase me-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconLight"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <img
+                                              alt="Icon"
+                                              class="me-1 w-auto repoIconMini iconDark"
+                                              src="/static/media/helm-chart-light.svg"
+                                            />
+                                            <div
+                                              class="text-reset text-truncate labelContent"
+                                            >
+                                              billimek
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <span
+                                      class="visually-hidden"
+                                    >
+                                      billimek
+                                    </span>
+                                    <button
+                                      aria-expanded="false"
+                                      aria-hidden="true"
+                                      aria-label="Filter by repo billimek"
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link"
+                                      data-testid="repoLink"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="text-truncate"
+                                      >
+                                        billimek
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline position-relative subtitle lastLine"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase me-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase me-1 ms-3"
+                              >
+                                App Version: 
+                              </span>
+                              1.0
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-flex d-xxl-none d-xxxl-flex flex-column align-items-end mb-auto ms-2"
+                        >
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          >
+                            <span
+                              class="visually-hidden"
+                            >
+                              Helm chart
+                            </span>
+                            <button
+                              aria-hidden="true"
+                              aria-label="Filter by Helm chart repository kind"
+                              class="btn btn-link m-0 p-0"
+                              data-testid="repoIconLabelLink"
+                              tabindex="-1"
+                            >
+                              <span
+                                class="badge bg-light text-dark rounded-pill border bg badge"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    aria-hidden="true"
+                                    class="position-relative icon undefined"
+                                  >
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconLight"
+                                      src="/static/media/helm-chart.svg"
+                                    />
+                                    <img
+                                      alt="Icon"
+                                      class="mw-100 mh-100 iconDark"
+                                      src="/static/media/helm-chart-light.svg"
+                                    />
+                                  </div>
+                                  <div
+                                    class="ms-1"
+                                  >
+                                    Helm chart
+                                  </div>
+                                </div>
+                              </span>
+                            </button>
+                          </div>
+                          <div
+                            class="mt-1"
+                          >
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description text-truncate"
+                    />
+                    <div
+                      class="d-none d-xxl-block d-xxxl-none text-end mt-2"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex d-md-none d-xxl-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-2 pt-md-0 mt-1 mt-md-0 mt-xxl-1 mt-xxxl-0"
+                    >
+                      <small
+                        class="text-muted text-nowrap date"
+                      >
+                        Updated Invalid date
+                      </small>
+                      <span>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                        >
+                          <span
+                            class="visually-hidden"
+                          >
+                            Helm chart
+                          </span>
+                          <button
+                            aria-hidden="true"
+                            aria-label="Filter by Helm chart repository kind"
+                            class="btn btn-link m-0 p-0"
+                            data-testid="repoIconLabelLink"
+                            tabindex="-1"
+                          >
+                            <span
+                              class="badge bg-light text-dark rounded-pill border bg badge"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  aria-hidden="true"
+                                  class="position-relative icon undefined"
+                                >
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconLight"
+                                    src="/static/media/helm-chart.svg"
+                                  />
+                                  <img
+                                    alt="Icon"
+                                    class="mw-100 mh-100 iconDark"
+                                    src="/static/media/helm-chart-light.svg"
+                                  />
+                                </div>
+                                <div
+                                  class="ms-1"
+                                >
+                                  Helm chart
+                                </div>
+                              </div>
+                            </span>
+                          </button>
+                        </div>
+                      </span>
+                    </div>
+                    <div
+                      class="d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto labelsWrapper"
+                    />
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>

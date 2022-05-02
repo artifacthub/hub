@@ -78,10 +78,10 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
   }));
 
   const checkValidity = (): boolean => {
-    let isValid = true;
+    let isInputValid = true;
     if (input.current) {
-      isValid = input.current!.checkValidity();
-      if (!isValid && !isUndefined(props.invalidText)) {
+      isInputValid = input.current!.checkValidity();
+      if (!isInputValid && !isUndefined(props.invalidText)) {
         let errorTxt = props.invalidText.default;
         const validityState: ValidityState | undefined = input.current.validity;
         if (!isUndefined(validityState)) {
@@ -107,12 +107,12 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
         }
         setInvalidText(errorTxt);
       }
-      setIsValid(isValid);
+      setIsValid(isInputValid);
       if (!isUndefined(props.setValidationStatus)) {
         props.setValidationStatus(false);
       }
     }
-    return isValid;
+    return isInputValid;
   };
 
   const isValidField = async (): Promise<boolean> => {

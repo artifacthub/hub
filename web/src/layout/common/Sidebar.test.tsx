@@ -24,13 +24,13 @@ describe('Sidebar', () => {
     expect(screen.getByText('Sidebar content')).toBeInTheDocument();
   });
 
-  it('opens sidebar', () => {
+  it('opens sidebar', async () => {
     render(<Sidebar {...defaultProps} />);
     const sidebar = screen.getByRole('complementary', { name: 'Sidebar' });
     expect(sidebar).toBeInTheDocument();
     expect(sidebar).not.toHaveClass('active');
     const btn = screen.getByRole('button', { name: /Open sidebar/ });
-    userEvent.click(btn);
+    await userEvent.click(btn);
     expect(sidebar).toHaveClass('active');
   });
 });

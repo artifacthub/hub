@@ -10,6 +10,10 @@ import PackageView from './index';
 jest.mock('../../api');
 jest.mock('../../utils/updateMetaIndex');
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
+jest.mock('react-markdown', () => (props) => {
+  return <>{props.children}</>;
+});
+jest.mock('remark-gfm', () => () => <div />);
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
@@ -65,8 +69,10 @@ describe('Package index', () => {
 
     await waitFor(() => {
       expect(API.getPackage).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -84,6 +90,8 @@ describe('Package index', () => {
       await waitFor(() => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
+
+      expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
     });
 
     it('calls track view', async () => {
@@ -101,6 +109,8 @@ describe('Package index', () => {
         expect(API.trackView).toHaveBeenCalledTimes(1);
         expect(API.trackView).toHaveBeenCalledWith('id', '1.0.0');
       });
+
+      expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
     });
 
     it('calls getViews', async () => {
@@ -120,27 +130,10 @@ describe('Package index', () => {
         expect(API.getViews).toHaveBeenCalledWith('id');
       });
 
-      expect(screen.getByText('Views over the last 30 days')).toBeInTheDocument();
+      expect(await screen.findByText('Views over the last 30 days')).toBeInTheDocument();
       expect(screen.getAllByText('Chart')).toHaveLength(2);
       expect(screen.getByText('See details')).toBeInTheDocument();
       expect(screen.getByText('(all versions)')).toBeInTheDocument();
-    });
-
-    it('displays loading spinner', async () => {
-      const mockPackage = getMockPackage('3');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
-
-      const props = {
-        ...defaultProps,
-      };
-
-      render(
-        <Router>
-          <PackageView {...props} />
-        </Router>
-      );
-
-      expect(await screen.findByRole('status')).toBeTruthy();
     });
   });
 
@@ -164,7 +157,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByRole('alert');
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting this package, please try again later./i);
     });
@@ -188,7 +181,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByRole('alert');
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('Sorry, the package you requested was not found.');
       expect(
@@ -218,7 +211,7 @@ describe('Package index', () => {
 
       const goBack = await screen.findByRole('button', { name: /Back to results/ });
       expect(goBack).toBeInTheDocument();
-      userEvent.click(goBack);
+      await userEvent.click(goBack);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -241,7 +234,7 @@ describe('Package index', () => {
 
       const link = await screen.findByTestId('repoLink');
       expect(link).toBeInTheDocument();
-      userEvent.click(link);
+      await userEvent.click(link);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -323,7 +316,9 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getAllByText('Verified Publisher')).toHaveLength(2);
+      expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
+
+      expect(await screen.findAllByText('Verified Publisher')).toHaveLength(2);
     });
   });
 
@@ -342,7 +337,9 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('CRDs')).toBeInTheDocument();
+      expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
+
+      expect(await screen.findByText('CRDs')).toBeInTheDocument();
     });
   });
 
@@ -361,7 +358,9 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('CRDs')).toBeInTheDocument();
+      expect(await screen.findAllByText('Akka Cluster Operator')).toHaveLength(2);
+
+      expect(await screen.findByText('CRDs')).toBeInTheDocument();
     });
   });
 
@@ -380,8 +379,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByTestId('mainPackage')).toBeInTheDocument();
-      expect(screen.getByText('Rules')).toBeInTheDocument();
+      expect(await screen.findAllByText('CVE-2019-14287')).toHaveLength(2);
+      expect(await screen.findByText('Rules')).toBeInTheDocument();
     });
   });
 
@@ -400,7 +399,9 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Manifest')).toBeInTheDocument();
+      expect(await screen.findAllByText('Tekton CLI')).toHaveLength(2);
+
+      expect(await screen.findByText('Manifest')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open Manifest' })).toBeInTheDocument();
     });
   });
@@ -420,7 +421,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Manifest')).toBeInTheDocument();
+      expect(await screen.findAllByText('advise-psp')).toHaveLength(3);
+      expect(await screen.findByText('Manifest')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
     });
@@ -453,7 +455,7 @@ describe('Package index', () => {
             false
           );
         });
-        expect(screen.getByText('Related packages')).toBeInTheDocument();
+        expect(await screen.findByText('Related packages')).toBeInTheDocument();
       });
     });
 
@@ -488,7 +490,9 @@ describe('Package index', () => {
         </Router>
       );
 
-      expect(await screen.findAllByTestId('relatedPackageLink')).toHaveLength(8);
+      await waitFor(() => {
+        expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(8);
+      });
     });
 
     describe('does not render', () => {
@@ -508,7 +512,10 @@ describe('Package index', () => {
           expect(API.getPackage).toHaveBeenCalledTimes(1);
           expect(API.searchPackages).toHaveBeenCalledTimes(1);
         });
-        expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
+
+        await waitFor(() => {
+          expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
+        });
       });
 
       it('when list contains only selected package', async () => {
@@ -527,7 +534,10 @@ describe('Package index', () => {
           expect(API.getPackage).toHaveBeenCalledTimes(1);
           expect(API.searchPackages).toHaveBeenCalledTimes(1);
         });
-        expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
+
+        await waitFor(() => {
+          expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
+        });
       });
 
       it('when SearchPackages call fails', async () => {
@@ -545,7 +555,10 @@ describe('Package index', () => {
           expect(API.getPackage).toHaveBeenCalledTimes(1);
           expect(API.searchPackages).toHaveBeenCalledTimes(1);
         });
-        expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
+
+        await waitFor(() => {
+          expect(screen.queryAllByTestId('relatedPackageLink')).toHaveLength(0);
+        });
       });
     });
   });
@@ -565,10 +578,10 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByTestId('more-details-section')).toBeInTheDocument();
+      expect(await screen.findByTestId('more-details-section')).toBeInTheDocument();
       expect(screen.getByText(/recommended by the publisher/)).toBeInTheDocument();
 
-      const pkgs = screen.getAllByTestId('recommended-pkg');
+      const pkgs = await screen.findAllByTestId('recommended-pkg');
       expect(pkgs).toHaveLength(2);
       expect(pkgs[0]).toHaveTextContent('artifact-hub');
       expect(pkgs[1]).toHaveTextContent('kube-prometheus-stack');
@@ -588,7 +601,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByTestId('more-details-section')).toBeInTheDocument();
+      expect(await screen.findByTestId('more-details-section')).toBeInTheDocument();
       expect(screen.getByText(/Organizations using this package in production/)).toBeInTheDocument();
 
       const orgs = screen.getAllByTestId('org-using-pkg');
@@ -602,7 +615,7 @@ describe('Package index', () => {
       expect(link).toHaveAttribute('href', 'https://artifacthub.io');
     });
 
-    it('does not render when recommendes and production usage are undefined', async () => {
+    it('does not render when recommended and production usage are undefined', async () => {
       const mockPackage = getMockPackage('18');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
@@ -616,7 +629,11 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.queryByTestId('more-details-section')).toBeNull();
+      expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
+
+      await waitFor(() => {
+        expect(screen.queryAllByTestId('more-details-section')).toHaveLength(0);
+      });
     });
   });
 });

@@ -25,7 +25,7 @@ jest.mock('./notifications.json', () => {
 
 describe('userNotificationsDispatcher', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     const mockMath = Object.create(global.Math);
     mockMath.random = () => 0;

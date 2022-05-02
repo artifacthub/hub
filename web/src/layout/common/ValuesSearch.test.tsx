@@ -27,29 +27,29 @@ describe('SchemaValuesSearch', () => {
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
-  it('displays options', () => {
+  it('displays options', async () => {
     render(<ValuesSearch {...defaultProps} />);
 
-    userEvent.type(screen.getByRole('textbox'), 'sub');
+    await userEvent.type(screen.getByRole('textbox'), 'sub');
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
   });
 
-  it('renders component using pathsObj prop', () => {
+  it('renders component using pathsObj prop', async () => {
     render(<ValuesSearch onSearch={onSearchMock} pathsObj={{ 10: 'test', 12: 'test1', 15: 'other' }} />);
 
-    userEvent.type(screen.getByRole('textbox'), 'tes');
+    await userEvent.type(screen.getByRole('textbox'), 'tes');
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
   });
 
-  it('calls onSearch with selected path', () => {
+  it('calls onSearch with selected path', async () => {
     render(<ValuesSearch {...defaultProps} />);
 
-    userEvent.type(screen.getByRole('textbox'), 'sub');
+    await userEvent.type(screen.getByRole('textbox'), 'sub');
 
-    const opts = screen.getAllByTestId('typeaheadDropdownBtn');
-    userEvent.click(opts[0]);
+    const opts = await screen.findAllByTestId('typeaheadDropdownBtn');
+    await userEvent.click(opts[0]);
 
     expect(onSearchMock).toHaveBeenCalledTimes(1);
     expect(onSearchMock).toHaveBeenCalledWith('path1.subpath1');
@@ -58,10 +58,10 @@ describe('SchemaValuesSearch', () => {
   it('calls onSearch twice', async () => {
     render(<ValuesSearch {...defaultProps} activePath="path1.subpath1" />);
 
-    userEvent.type(screen.getByRole('textbox'), 'sub');
+    await userEvent.type(screen.getByRole('textbox'), 'sub');
 
-    const opts = screen.getAllByTestId('typeaheadDropdownBtn');
-    userEvent.click(opts[0]);
+    const opts = await screen.findAllByTestId('typeaheadDropdownBtn');
+    await userEvent.click(opts[0]);
 
     await waitFor(() => expect(onSearchMock).toHaveBeenCalledTimes(2));
     expect(onSearchMock).toHaveBeenNthCalledWith(1, undefined);

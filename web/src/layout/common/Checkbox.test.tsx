@@ -47,9 +47,9 @@ describe('Checkbox', () => {
     expect(label).toHaveTextContent(`${props.label}(${props.legend})`);
   });
 
-  it('calls onChange to click checkbox label', () => {
+  it('calls onChange to click checkbox label', async () => {
     render(<Checkbox {...defaultProps} />);
-    userEvent.click(screen.getByTestId('checkboxLabel'));
+    await userEvent.click(screen.getByTestId('checkboxLabel'));
     expect(onChangeMock).toHaveBeenCalledTimes(1);
   });
 });

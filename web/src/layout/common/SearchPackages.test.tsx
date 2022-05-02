@@ -44,13 +44,13 @@ describe('SearchPackages', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'ing');
+      await userEvent.type(input, 'ing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getAllByRole('button')).toHaveLength(2);
+      expect(await screen.findAllByRole('button')).toHaveLength(2);
     });
 
     it('selects package', async () => {
@@ -63,17 +63,19 @@ describe('SearchPackages', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'ing');
+      await userEvent.type(input, 'ing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const packages = screen.getAllByTestId('packageItem');
-      userEvent.click(packages[0]);
+      const packages = await screen.findAllByTestId('packageItem');
+      await userEvent.click(packages[0]);
 
-      expect(mockOnSelection).toHaveBeenCalledTimes(1);
-      expect(mockOnSelection).toHaveBeenCalledWith(mockSearch.packages![0]);
+      await waitFor(() => {
+        expect(mockOnSelection).toHaveBeenCalledTimes(1);
+        expect(mockOnSelection).toHaveBeenCalledWith(mockSearch.packages![0]);
+      });
     });
 
     it('when searchPackage fails', async () => {
@@ -85,16 +87,18 @@ describe('SearchPackages', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'ing');
+      await userEvent.type(input, 'ing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred searching packages, please try again later.',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred searching packages, please try again later.',
+        });
       });
     });
 
@@ -108,17 +112,19 @@ describe('SearchPackages', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'ing');
+      await userEvent.type(input, 'ing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const firstPackage = screen.getAllByTestId('packageItem')[0];
-      expect(firstPackage).toHaveClass('disabledCell');
-      userEvent.click(firstPackage);
+      const firstPackage = await screen.findAllByTestId('packageItem');
+      expect(firstPackage[0]).toHaveClass('disabledCell');
+      await userEvent.click(firstPackage[0]);
 
-      expect(mockOnSelection).toHaveBeenCalledTimes(0);
+      await waitFor(() => {
+        expect(mockOnSelection).toHaveBeenCalledTimes(0);
+      });
     });
 
     it('calls again searchPackages', async () => {
@@ -133,15 +139,15 @@ describe('SearchPackages', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'ing');
+      await userEvent.type(input, 'ing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getAllByTestId('packageItem')).toHaveLength(2);
+      expect(await screen.findAllByTestId('packageItem')).toHaveLength(2);
 
-      userEvent.type(input, '1{enter}');
+      await userEvent.type(input, '1{enter}');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(2);

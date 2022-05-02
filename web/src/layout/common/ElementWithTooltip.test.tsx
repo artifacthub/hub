@@ -32,12 +32,12 @@ describe('ElementWithTooltip', () => {
   });
 
   it('displays tooltip', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     render(<ElementWithTooltip {...defaultProps} />);
 
     const badge = screen.getByTestId('elementWithTooltip');
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
     expect(screen.getByText(defaultProps.tooltipMessage)).toBeInTheDocument();
@@ -46,17 +46,17 @@ describe('ElementWithTooltip', () => {
   });
 
   it('hides tooltip on mouse leave', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     render(<ElementWithTooltip {...defaultProps} />);
 
     const badge = screen.getByTestId('elementWithTooltip');
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
     expect(screen.getByText(defaultProps.tooltipMessage)).toBeInTheDocument();
 
-    userEvent.unhover(badge);
+    await userEvent.unhover(badge);
 
     act(() => {
       jest.advanceTimersByTime(50);
@@ -67,7 +67,7 @@ describe('ElementWithTooltip', () => {
     jest.useRealTimers();
   });
 
-  it('does not display tooltip when visibleTooltip is false', () => {
+  it('does not display tooltip when visibleTooltip is false', async () => {
     const props = {
       ...defaultProps,
       visibleTooltip: false,
@@ -75,7 +75,7 @@ describe('ElementWithTooltip', () => {
     render(<ElementWithTooltip {...props} />);
 
     const badge = screen.getByTestId('elementWithTooltip');
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(screen.queryByRole('tooltip')).toBeNull();
   });

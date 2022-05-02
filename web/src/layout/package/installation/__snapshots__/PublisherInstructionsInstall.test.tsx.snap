@@ -5,28 +5,8 @@ exports[`PublisherInstructionsInstall creates snapshot 1`] = `
   <span
     data-testid="readme"
   >
-    <div
-      class="mt-3 mb-5 md"
-    >
-      <div
-        class="my-2"
-      >
-        <div
-          class="h2 text-muted pt-2 pb-1"
-        >
-          <div
-            class="mdHeader"
-          >
-            Install using Helm\\n\\n
-            <code
-              class="border inlineCode"
-            >
-              \\nhelm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/cve-2019-11246/custom-rules.yaml stable/falco\\n
-            </code>
-            \\n
-          </div>
-        </div>
-      </div>
+    <div>
+      Install using Helm
     </div>
   </span>
 </DocumentFragment>

@@ -87,9 +87,9 @@ describe('Organization Form - organizations section', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
         fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
@@ -117,9 +117,9 @@ describe('Organization Form - organizations section', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
         fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
@@ -144,9 +144,9 @@ describe('Organization Form - organizations section', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
         fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
@@ -168,9 +168,9 @@ describe('Organization Form - organizations section', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name2');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Home URL' }), 'http://test.org');
         fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
@@ -199,8 +199,8 @@ describe('Organization Form - organizations section', () => {
         );
 
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
         fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
@@ -228,8 +228,8 @@ describe('Organization Form - organizations section', () => {
         );
 
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
         fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
@@ -255,8 +255,8 @@ describe('Organization Form - organizations section', () => {
         );
 
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
         fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {
@@ -280,8 +280,8 @@ describe('Organization Form - organizations section', () => {
         );
 
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
         fireEvent.submit(screen.getByTestId('organizationForm'));
 
         await waitFor(() => {

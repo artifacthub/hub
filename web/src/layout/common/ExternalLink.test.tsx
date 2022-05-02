@@ -30,7 +30,7 @@ describe('External link', () => {
     expect(link).toHaveProperty('rel', 'noopener noreferrer');
   });
 
-  it('renders proper content when btnType is enabled', () => {
+  it('renders proper content when btnType is enabled', async () => {
     const props = {
       ...defaultProps,
       btnType: true,
@@ -40,7 +40,7 @@ describe('External link', () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveProperty('type', 'button');
 
-    userEvent.click(link);
+    await userEvent.click(link);
     expect(openMock).toHaveBeenCalledTimes(1);
     expect(openMock).toHaveBeenCalledWith('http://test.com', '_blank');
   });

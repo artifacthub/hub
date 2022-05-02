@@ -66,31 +66,31 @@ describe('InputTypeahead', () => {
     expect(opts[3]).toHaveTextContent('Option 2 (17)');
   });
 
-  it('unselects option', () => {
+  it('unselects option', async () => {
     render(<InputTypeahead {...defaultProps} />);
 
     const opts = screen.getAllByTestId('typeaheadDropdownBtn');
-    userEvent.click(opts[0]);
+    await userEvent.click(opts[0]);
 
     expect(onChangeMock).toHaveBeenCalledTimes(1);
     expect(onChangeMock).toHaveBeenCalledWith('key1', 'opt2', false);
   });
 
-  it('selects option', () => {
+  it('selects option', async () => {
     render(<InputTypeahead {...defaultProps} />);
 
     const opts = screen.getAllByTestId('typeaheadDropdownBtn');
-    userEvent.click(opts[2]);
+    await userEvent.click(opts[2]);
 
     expect(onChangeMock).toHaveBeenCalledTimes(1);
     expect(onChangeMock).toHaveBeenCalledWith('key2', 'opt11', true);
   });
 
-  it('calls Clear all', () => {
+  it('calls Clear all', async () => {
     render(<InputTypeahead {...defaultProps} />);
 
     const clearBtn = screen.getByRole('button', { name: 'Clear all' });
-    userEvent.click(clearBtn);
+    await userEvent.click(clearBtn);
 
     expect(onClearMock).toHaveBeenCalledTimes(1);
   });
@@ -101,41 +101,41 @@ describe('InputTypeahead', () => {
     expect(screen.queryByRole('button', { name: 'Clear all' })).toBeNull();
   });
 
-  it('filters options on input change', () => {
+  it('filters options on input change', async () => {
     render(<InputTypeahead {...defaultProps} />);
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
 
-    userEvent.type(screen.getByRole('textbox'), 'ke');
+    await userEvent.type(screen.getByRole('textbox'), 'ke');
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
     expect(screen.getAllByText('ke')).toHaveLength(2);
     expect(screen.getAllByText('ke')[0]).toHaveClass('highlighted');
   });
 
-  it('filters options on input change when displayItemsInValueLength is defined', () => {
+  it('filters options on input change when displayItemsInValueLength is defined', async () => {
     render(<InputTypeahead {...defaultProps} displayItemsInValueLength={3} />);
 
     expect(screen.queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
 
     const input = screen.getByPlaceholderText('Search test');
-    userEvent.type(input, 'key');
+    await userEvent.type(input, 'key');
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
     expect(screen.getAllByText('key')).toHaveLength(2);
     expect(screen.getAllByText('key')[0]).toHaveClass('highlighted');
 
-    userEvent.type(input, 'ke');
+    await userEvent.type(input, 'ke');
 
     expect(screen.queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
   });
 
-  it('renders placeholder when any results', () => {
+  it('renders placeholder when any results', async () => {
     render(<InputTypeahead {...defaultProps} />);
 
     expect(screen.getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
 
-    userEvent.type(screen.getByPlaceholderText('Search test'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Search test'), 'test');
 
     expect(screen.queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
     expect(screen.getByText('Sorry, no matches found')).toBeInTheDocument();
@@ -152,60 +152,60 @@ describe('InputTypeahead', () => {
   });
 
   describe('on key down', () => {
-    it('highlightes first option', () => {
+    it('highlightes first option', async () => {
       render(<InputTypeahead {...defaultProps} />);
 
       const options = screen.getAllByTestId('typeaheadDropdownBtn');
       expect(options).toHaveLength(4);
 
-      userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowdown}');
+      await userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowdown}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
       expect(options[0]).toHaveClass('dropdown-item option selected highlighted');
     });
 
-    it('highlightes last option', () => {
+    it('highlightes last option', async () => {
       render(<InputTypeahead {...defaultProps} />);
 
       const options = screen.getAllByTestId('typeaheadDropdownBtn');
       expect(options).toHaveLength(4);
 
-      userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowup}');
+      await userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowup}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
       expect(options[3]).toHaveClass('dropdown-item option highlighted');
     });
 
-    it('highlightes first option and unselects it', () => {
+    it('highlightes first option and unselects it', async () => {
       render(<InputTypeahead {...defaultProps} />);
 
       const options = screen.getAllByTestId('typeaheadDropdownBtn');
       expect(options).toHaveLength(4);
 
       const input = screen.getByPlaceholderText('Search test');
-      userEvent.type(input, '{arrowdown}');
+      await userEvent.type(input, '{arrowdown}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
       expect(options[0]).toHaveClass('dropdown-item option selected highlighted');
 
-      userEvent.type(input, '{enter}');
+      await userEvent.type(input, '{enter}');
       expect(onChangeMock).toHaveBeenCalledTimes(1);
       expect(onChangeMock).toHaveBeenCalledWith('key1', 'opt2', false);
     });
 
-    it('highlightes last option and selects it', () => {
+    it('highlightes last option and selects it', async () => {
       render(<InputTypeahead {...defaultProps} />);
 
       const options = screen.getAllByTestId('typeaheadDropdownBtn');
       expect(options).toHaveLength(4);
 
       const input = screen.getByPlaceholderText('Search test');
-      userEvent.type(input, '{arrowup}');
+      await userEvent.type(input, '{arrowup}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
       expect(options[3]).toHaveClass('dropdown-item option highlighted');
 
-      userEvent.type(input, '{enter}');
+      await userEvent.type(input, '{enter}');
       expect(onChangeMock).toHaveBeenCalledTimes(1);
       expect(onChangeMock).toHaveBeenCalledWith('key2', 'opt12', true);
     });

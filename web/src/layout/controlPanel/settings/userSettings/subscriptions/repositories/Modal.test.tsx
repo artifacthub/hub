@@ -84,8 +84,10 @@ describe('OptOutModal', () => {
 
     await waitFor(() => {
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText('Add opt-out entry')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -102,7 +104,7 @@ describe('OptOutModal', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Add opt-out entry')).toBeInTheDocument();
+      expect(await screen.findByText('Add opt-out entry')).toBeInTheDocument();
       expect(screen.getByText('Events')).toBeInTheDocument();
       expect(screen.getByText('Repository')).toBeInTheDocument();
 
@@ -132,9 +134,9 @@ describe('OptOutModal', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const input = screen.getByRole('textbox', { name: 'Search repositories' });
+      const input = await screen.findByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
-      userEvent.type(input, 'sec');
+      await userEvent.type(input, 'sec');
 
       await waitFor(() => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
@@ -142,7 +144,7 @@ describe('OptOutModal', () => {
 
       const buttons = await screen.findAllByTestId('repoItem');
       expect(buttons).toHaveLength(3);
-      userEvent.click(buttons[1]);
+      await userEvent.click(buttons[1]);
 
       const activeRepo = await screen.findByTestId('activeRepoItem');
 
@@ -152,7 +154,7 @@ describe('OptOutModal', () => {
       expect(screen.queryByTestId('searchRepositoriesInput')).toBeNull();
 
       const btn = screen.getByRole('button', { name: 'Add opt-out entry' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addOptOut).toHaveBeenCalledTimes(1);
@@ -180,16 +182,16 @@ describe('OptOutModal', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const input = screen.getByRole('textbox', { name: 'Search repositories' });
+      const input = await screen.findByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
-      userEvent.type(input, 'sec');
+      await userEvent.type(input, 'sec');
 
       await waitFor(() => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
       const buttons = await screen.findAllByTestId('repoItem');
-      userEvent.click(buttons[1]);
+      await userEvent.click(buttons[1]);
 
       const activeRepo = await screen.findByTestId('activeRepoItem');
 
@@ -199,18 +201,20 @@ describe('OptOutModal', () => {
       expect(screen.queryByRole('textbox', { name: 'Search repositories' })).toBeNull();
 
       const btn = screen.getByRole('button', { name: 'Add opt-out entry' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addOptOut).toHaveBeenCalledTimes(1);
         expect(API.addOptOut).toHaveBeenCalledWith('f0cebfe4-c4b2-4310-a6f8-e34525177ff6', 2);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message:
-          'An error occurred adding the opt-out entry for tracking errors notifications for repository security-hub, please try again later.',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message:
+            'An error occurred adding the opt-out entry for tracking errors notifications for repository security-hub, please try again later.',
+        });
       });
     });
   });

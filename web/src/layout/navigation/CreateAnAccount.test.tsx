@@ -60,12 +60,12 @@ describe('CreateAnAccount', () => {
 
       render(<CreateAnAccount {...defaultProps} />);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
-      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
-      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
-      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
-      userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
-      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
+      await userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      await userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      await userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
 
       const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
@@ -88,12 +88,12 @@ describe('CreateAnAccount', () => {
 
       render(<CreateAnAccount {...defaultProps} />);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
-      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
-      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
-      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
-      userEvent.type(screen.getByTestId('passwordInput'), '123qwe*$');
-      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe*$');
+      await userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      await userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      await userEvent.type(screen.getByTestId('passwordInput'), '123qwe*$');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe*$');
 
       const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
@@ -116,18 +116,26 @@ describe('CreateAnAccount', () => {
 
       render(<CreateAnAccount {...defaultProps} />);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
-      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
-      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
-      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
-      userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
-      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
+      await waitFor(() => {
+        userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+        userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+        userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+        userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+        userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
+        userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
+      });
 
-      const form = screen.getByTestId('createAnAccountForm');
+      const form = await screen.findByTestId('createAnAccountForm');
       fireEvent.submit(form);
+
+      expect(form).toHaveClass('needs-validation');
 
       await waitFor(() => {
         expect(API.register).toHaveBeenCalledTimes(0);
+      });
+
+      await waitFor(() => {
+        expect(form).toHaveClass('was-validated');
       });
     });
   });
@@ -142,12 +150,12 @@ describe('CreateAnAccount', () => {
 
       render(<CreateAnAccount {...defaultProps} />);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
-      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
-      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
-      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
-      userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
-      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
+      await userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      await userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      await userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
 
       const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
@@ -155,8 +163,11 @@ describe('CreateAnAccount', () => {
       await waitFor(() => {
         expect(API.register).toHaveBeenCalledTimes(0);
       });
-      expect(setApiErrorMock).toHaveBeenCalledTimes(1);
-      expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user: custom error');
+
+      await waitFor(() => {
+        expect(setApiErrorMock).toHaveBeenCalledTimes(1);
+        expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user: custom error');
+      });
     });
 
     it('default error message', async () => {
@@ -167,12 +178,12 @@ describe('CreateAnAccount', () => {
 
       render(<CreateAnAccount {...defaultProps} />);
 
-      userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
-      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
-      userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
-      userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
-      userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
-      userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
+      await userEvent.type(screen.getByRole('textbox', { name: /Username/ }), 'userAlias');
+      await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'test@email.com');
+      await userEvent.type(screen.getByRole('textbox', { name: 'First Name' }), 'John');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Last Name' }), 'Smith');
+      await userEvent.type(screen.getByTestId('passwordInput'), '123qwe');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), '123qwe');
 
       const form = screen.getByTestId('createAnAccountForm');
       fireEvent.submit(form);
@@ -181,8 +192,10 @@ describe('CreateAnAccount', () => {
         expect(API.register).toHaveBeenCalledTimes(0);
       });
 
-      expect(setApiErrorMock).toHaveBeenCalledTimes(1);
-      expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user, please try again later.');
+      await waitFor(() => {
+        expect(setApiErrorMock).toHaveBeenCalledTimes(1);
+        expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user, please try again later.');
+      });
     });
   });
 });

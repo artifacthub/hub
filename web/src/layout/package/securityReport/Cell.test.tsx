@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { VulnerabilitySeverity } from '../../../types';
@@ -186,7 +186,7 @@ describe('SecuritySummary', () => {
       expect(cell).toHaveTextContent('-');
     });
 
-    it('opens vulnerability detail', () => {
+    it('opens vulnerability detail', async () => {
       const { rerender } = render(
         <table>
           <tbody>
@@ -197,10 +197,12 @@ describe('SecuritySummary', () => {
 
       expect(screen.queryByTestId('vulnerabilityDetail')).toBeNull();
       const cell = screen.getByTestId('vulnerabilityCell');
-      userEvent.click(cell);
+      await userEvent.click(cell);
 
-      expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
-      expect(mockSetVisibleVulnerability).toHaveBeenCalledWith('CVE-2020-8492_1');
+      await waitFor(() => {
+        expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
+        expect(mockSetVisibleVulnerability).toHaveBeenCalledWith('CVE-2020-8492_1');
+      });
 
       rerender(
         <table>
@@ -210,10 +212,12 @@ describe('SecuritySummary', () => {
         </table>
       );
 
-      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      });
     });
 
-    it('Closes vulnerability detail', () => {
+    it('Closes vulnerability detail', async () => {
       render(
         <table>
           <tbody>
@@ -224,10 +228,12 @@ describe('SecuritySummary', () => {
 
       expect(screen.getByTestId('vulnerabilityDetail')).toBeInTheDocument();
       const cell = screen.getByTestId('vulnerabilityCell');
-      userEvent.click(cell);
+      await userEvent.click(cell);
 
-      expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
-      expect(mockSetVisibleVulnerability).toHaveBeenCalledWith(undefined);
+      await waitFor(() => {
+        expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
+        expect(mockSetVisibleVulnerability).toHaveBeenCalledWith(undefined);
+      });
     });
   });
 

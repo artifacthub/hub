@@ -1,6 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import ReadmeWrapper from './index';
+jest.mock('react-markdown', () => (props) => {
+  return <>{props.children}</>;
+});
+jest.mock('remark-gfm', () => () => <div />);
 
 const defaultProps = {
   packageName: 'package-name',
@@ -22,7 +26,7 @@ describe('ReadmeWrapper', () => {
     it('renders properly', () => {
       render(<ReadmeWrapper {...defaultProps} />);
 
-      expect(screen.getByText('package-name')).toBeInTheDocument();
+      expect(screen.getByText(/package-name/)).toBeInTheDocument();
     });
 
     it('does not render image as title', () => {
@@ -39,8 +43,8 @@ describe('ReadmeWrapper', () => {
     it('renders provided Readme title as title and not use package name', () => {
       render(<ReadmeWrapper {...defaultProps} markdownContent="# title" />);
 
-      expect(screen.queryByText('package-name')).toBeNull();
-      expect(screen.getByText('title')).toBeInTheDocument();
+      expect(screen.queryByText(/package-name/)).toBeNull();
+      expect(screen.getByText(/title/)).toBeInTheDocument();
     });
   });
 });

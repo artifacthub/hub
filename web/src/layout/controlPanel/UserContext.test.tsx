@@ -88,8 +88,10 @@ describe('UserContext', () => {
 
     await waitFor(() => {
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByRole('button', { name: 'Open context' })).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -108,6 +110,8 @@ describe('UserContext', () => {
       await waitFor(() => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
+
+      expect(await screen.findByRole('button', { name: 'Open context' })).toBeInTheDocument();
     });
 
     it('displays spinner to get organizations', async () => {
@@ -122,7 +126,13 @@ describe('UserContext', () => {
         </AppCtx.Provider>
       );
 
-      expect(await screen.findByRole('status')).toBeTruthy();
+      expect(await screen.findByRole('status')).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
+      });
+
+      expect(await screen.findByRole('button', { name: 'Open context' })).toBeInTheDocument();
     });
 
     it('displays dropdown with ctx', async () => {
@@ -141,14 +151,14 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const ctxBtn = screen.getByRole('button', { name: 'Open context' });
-      const ctxDropdown = screen.getByRole('menu');
+      const ctxBtn = await screen.findByRole('button', { name: 'Open context' });
+      const ctxDropdown = await screen.findByRole('menu');
 
       expect(ctxBtn).toBeInTheDocument();
       expect(ctxDropdown).toBeInTheDocument();
       expect(ctxDropdown).not.toHaveClass('show');
 
-      userEvent.click(ctxBtn);
+      await userEvent.click(ctxBtn);
 
       expect(ctxDropdown).toHaveClass('show');
 
@@ -156,7 +166,7 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(2);
       });
 
-      expect(screen.getByRole('button', { name: 'Activate user context' })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Activate user context' })).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: /Activate org/ })).toHaveLength(mockOrgs.length);
     });
 
@@ -176,7 +186,7 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByRole('button', { name: 'Activate user context' })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Activate user context' })).toBeInTheDocument();
       expect(screen.queryAllByTestId('orgCtxBtn')).toHaveLength(0);
     });
 
@@ -196,14 +206,14 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const ctxBtn = screen.getByRole('button', { name: 'Open context' });
-      const ctxDropdown = screen.getByRole('menu');
+      const ctxBtn = await screen.findByRole('button', { name: 'Open context' });
+      const ctxDropdown = await screen.findByRole('menu');
 
       expect(ctxBtn).toBeInTheDocument();
       expect(ctxDropdown).toBeInTheDocument();
       expect(ctxDropdown).not.toHaveClass('show');
 
-      userEvent.click(ctxBtn);
+      await userEvent.click(ctxBtn);
 
       expect(ctxDropdown).toHaveClass('show');
 
@@ -211,10 +221,10 @@ describe('UserContext', () => {
 
       expect(screen.getByRole('button', { name: 'Activate user context' })).toBeInTheDocument();
 
-      const orgBtns = screen.getAllByRole('button', { name: /Activate org/ });
+      const orgBtns = await screen.findAllByRole('button', { name: /Activate org/ });
       expect(orgBtns).toHaveLength(mockOrgs.length);
 
-      userEvent.click(orgBtns[0]);
+      await userEvent.click(orgBtns[0]);
 
       await waitFor(() => {
         expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -240,13 +250,13 @@ describe('UserContext', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      const ctxBtn = screen.getByRole('button', { name: 'Open context' });
-      userEvent.click(ctxBtn);
+      const ctxBtn = await screen.findByRole('button', { name: 'Open context' });
+      await userEvent.click(ctxBtn);
 
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(2);
 
-      const userCtxBtn = screen.getByRole('button', { name: 'Activate user context' });
-      userEvent.click(userCtxBtn);
+      const userCtxBtn = await screen.findByRole('button', { name: 'Activate user context' });
+      await userEvent.click(userCtxBtn);
 
       await waitFor(() => {
         expect(mockDispatch).toHaveBeenCalledTimes(1);

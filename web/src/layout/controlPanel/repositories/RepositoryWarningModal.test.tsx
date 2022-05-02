@@ -25,7 +25,7 @@ describe('RepositoryWarningModal', () => {
       render(<RepositoryWarningModal />);
 
       const btn = screen.getByRole('button', { name: 'Open repository warning modal' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
