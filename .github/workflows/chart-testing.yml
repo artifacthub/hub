@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
       - name: Lint chart
         id: lint
-        uses: helm/chart-testing-action@v1.0.0
+        uses: helm/chart-testing-action@v2.2.1
         with:
           command: lint
           config: .ct.yaml
@@ -24,7 +24,7 @@ jobs:
         uses: helm/kind-action@v1.2.0
         if: steps.lint.outputs.changed == 'true'
       - name: Install chart
-        uses: helm/chart-testing-action@v1.0.0
+        uses: helm/chart-testing-action@v2.2.1
         if: steps.lint.outputs.changed == 'true'
         with:
           command: install
