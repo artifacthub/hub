@@ -33,7 +33,7 @@
     "remark-gfm": "^1.0.0",
     "remark-parse": "^9.0.0",
     "remark-strip-html": "^1.0.2",
-    "remark-unlink": "^3.1.0",
+    "remark-unlink": "^4.0.1",
     "semver": "^7.3.2",
     "tinycolor2": "^1.4.2",
     "unified": "^9.2.1",
