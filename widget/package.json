@@ -17,7 +17,7 @@
     "@testing-library/react-hooks": "^7.0.1",
     "@testing-library/user-event": "^13.2.0",
     "@types/jest": "^27.0.3",
-    "@types/lodash": "^4.14.168",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^16.11.9",
     "@types/react": "^17.0.35",
     "@types/react-dom": "^16.9.8",
