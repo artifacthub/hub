@@ -3,16 +3,23 @@ updates:
   - package-ecosystem: "npm"
     directory: "/web"
     schedule:
-      interval: daily
+      interval: "weekly"
+      day: "wednesday"
   - package-ecosystem: "npm"
     directory: "/widget"
     schedule:
-      interval: daily
+      interval: "weekly"
+      day: "wednesday"
   - package-ecosystem: gomod
     directory: "/"
     schedule:
-      interval: daily
+      interval: "weekly"
+      day: "wednesday"
+    ignore:
+      - dependency-name: "k8s.io/apimachinery"
+      - dependency-name: "k8s.io/client-go"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "wednesday"
