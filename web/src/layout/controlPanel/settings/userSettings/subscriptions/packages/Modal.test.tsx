@@ -65,13 +65,13 @@ describe('SubscriptionModal', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'testing');
+      await userEvent.type(input, 'testing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = screen.getAllByTestId('packageItem');
+      const buttons = await screen.findAllByTestId('packageItem');
       expect(buttons).toHaveLength(8);
       expect(buttons[0]).toHaveClass('disabledCell');
       expect(buttons[1]).toHaveClass('disabledCell');
@@ -93,13 +93,13 @@ describe('SubscriptionModal', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'testing');
+      await userEvent.type(input, 'testing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = screen.getAllByTestId('packageItem');
+      const buttons = await screen.findAllByTestId('packageItem');
       expect(buttons[0]).toHaveClass('clickableCell');
       expect(buttons[1]).toHaveClass('clickableCell');
     });
@@ -114,13 +114,13 @@ describe('SubscriptionModal', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'testing');
+      await userEvent.type(input, 'testing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = screen.getAllByTestId('packageItem');
+      const buttons = await screen.findAllByTestId('packageItem');
       expect(buttons[0]).toHaveClass('disabledCell');
       expect(buttons[1]).toHaveClass('disabledCell');
     });
@@ -135,13 +135,13 @@ describe('SubscriptionModal', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'testing');
+      await userEvent.type(input, 'testing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = screen.getAllByTestId('packageItem');
+      const buttons = await screen.findAllByTestId('packageItem');
       expect(buttons[0]).toHaveClass('disabledCell');
       expect(buttons[1]).toHaveClass('clickableCell');
     });
@@ -159,16 +159,16 @@ describe('SubscriptionModal', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'testing');
+      await userEvent.type(input, 'testing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = screen.getAllByTestId('packageItem');
-      userEvent.click(buttons[0]);
+      const buttons = await screen.findAllByTestId('packageItem');
+      await userEvent.click(buttons[0]);
 
-      const activePackage = screen.getByTestId('activePackageItem');
+      const activePackage = await screen.findByTestId('activePackageItem');
 
       expect(activePackage).toBeInTheDocument();
       expect(activePackage).toHaveTextContent('airflow/Helm(Repo: Stable)Helm(Repo: Stable)');
@@ -176,7 +176,7 @@ describe('SubscriptionModal', () => {
       expect(screen.queryByRole('textbox', { name: 'Search packages' })).toBeNull();
 
       const btn = screen.getByRole('button', { name: 'Add subscription' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addSubscription).toHaveBeenCalledTimes(1);
@@ -200,16 +200,16 @@ describe('SubscriptionModal', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
-      userEvent.type(input, 'testing');
+      await userEvent.type(input, 'testing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = screen.getAllByTestId('packageItem');
-      userEvent.click(buttons[0]);
+      const buttons = await screen.findAllByTestId('packageItem');
+      await userEvent.click(buttons[0]);
 
-      const activePackage = screen.getByTestId('activePackageItem');
+      const activePackage = await screen.findByTestId('activePackageItem');
 
       expect(activePackage).toBeInTheDocument();
       expect(activePackage).toHaveTextContent('airflow/Helm(Repo: Stable)Helm(Repo: Stable)');
@@ -217,17 +217,19 @@ describe('SubscriptionModal', () => {
       expect(screen.queryByRole('textbox', { name: 'Search packages' })).toBeNull();
 
       const btn = screen.getByRole('button', { name: 'Add subscription' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addSubscription).toHaveBeenCalledTimes(1);
         expect(API.addSubscription).toHaveBeenCalledWith(mockSearch.packages![0].packageId, 0);
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: `An error occurred subscribing to new releases notification for airflow package, please try again later.`,
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: `An error occurred subscribing to new releases notification for airflow package, please try again later.`,
+        });
       });
     });
   });

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import SchemaLine from './SchemaLine';
@@ -130,15 +130,17 @@ describe('SchemaLine', () => {
       expect(screen.getAllByText('1000')).toHaveLength(2);
     });
 
-    it('activates line', () => {
+    it('activates line', async () => {
       render(<SchemaLine {...getProps('11')} onActivePathChange={onActivePathChangeMock} />);
 
       const btn = screen.getByTestId('lineContent');
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(onActivePathChangeMock).toHaveBeenCalledTimes(1);
-      expect(onActivePathChangeMock).toHaveBeenCalledWith('db.host');
+      await waitFor(() => {
+        expect(onActivePathChangeMock).toHaveBeenCalledTimes(1);
+        expect(onActivePathChangeMock).toHaveBeenCalledWith('db.host');
+      });
     });
   });
 });

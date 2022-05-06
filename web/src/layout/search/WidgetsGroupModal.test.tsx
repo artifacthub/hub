@@ -66,14 +66,14 @@ describe('WidgetsGroupModal', () => {
       expect(screen.getByText('Display Artifact Hub header at the top of the widget.')).toBeInTheDocument();
     });
 
-    it('displays fixed width input', () => {
+    it('displays fixed width input', async () => {
       render(<WidgetsGroupModal {...defaultProps} />);
 
       expect(screen.queryByTestId('fixedWidthInput')).toBeNull();
       const label = screen.getByText('fixed');
       const radioFixed = screen.getByRole('radio', { name: /fixed/ });
       expect(radioFixed).not.toBeChecked();
-      userEvent.click(label);
+      await userEvent.click(label);
 
       expect(radioFixed).toBeChecked();
       expect(screen.getByTestId('fixedWidthInput')).toBeInTheDocument();
@@ -86,9 +86,9 @@ describe('WidgetsGroupModal', () => {
         '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
 
-      userEvent.click(screen.getByText('fixed'));
-      userEvent.click(screen.getByRole('switch', { name: /Loading spinner/ }));
-      userEvent.type(screen.getByTestId('fixedWidthInput'), '0');
+      await userEvent.click(screen.getByText('fixed'));
+      await userEvent.click(screen.getByRole('switch', { name: /Loading spinner/ }));
+      await userEvent.type(screen.getByTestId('fixedWidthInput'), '0');
 
       expect(await screen.findByTestId('block-content')).toHaveTextContent(
         '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="false" data-width="7600" data-loading="false"></div><script async src="http://localhost/artifacthub-widget.js"></script>'

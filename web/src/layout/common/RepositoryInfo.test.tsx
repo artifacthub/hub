@@ -46,7 +46,7 @@ describe('RepositoryInfo', () => {
 
   it('calls history push to click repo link', async () => {
     render(<RepositoryInfo {...defaultProps} />);
-    userEvent.click(screen.getByTestId('repoLink'));
+    await userEvent.click(screen.getByTestId('repoLink'));
 
     await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
     expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -63,7 +63,7 @@ describe('RepositoryInfo', () => {
 
   it('calls proper history push to click repo label', async () => {
     render(<RepositoryInfo {...defaultProps} deprecated />);
-    userEvent.click(screen.getByTestId('repoLink'));
+    await userEvent.click(screen.getByTestId('repoLink'));
 
     await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
     expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -79,14 +79,14 @@ describe('RepositoryInfo', () => {
   });
 
   it('displays repo info to enter on link and hides on leave', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     render(<RepositoryInfo {...defaultProps} />);
     expect(screen.getAllByText(defaultProps.repository.displayName!)).toHaveLength(2);
     expect(screen.getByTestId('repoUrl')).toBeInTheDocument();
     expect(screen.getByTestId('repoUrl')).toHaveTextContent(defaultProps.repository.url);
 
-    userEvent.hover(screen.getByTestId('repoLink'));
+    await userEvent.hover(screen.getByTestId('repoLink'));
 
     act(() => {
       jest.advanceTimersByTime(100);
@@ -94,7 +94,7 @@ describe('RepositoryInfo', () => {
 
     expect(await screen.findByRole('complementary')).toHaveClass('show');
 
-    userEvent.unhover(screen.getByTestId('repoLink'));
+    await userEvent.unhover(screen.getByTestId('repoLink'));
 
     act(() => {
       jest.advanceTimersByTime(50);
@@ -106,13 +106,13 @@ describe('RepositoryInfo', () => {
   });
 
   it('hides repo info to leave dropdown', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     render(<RepositoryInfo {...defaultProps} />);
-    userEvent.hover(screen.getByTestId('repoLink'));
+    await userEvent.hover(screen.getByTestId('repoLink'));
 
-    userEvent.hover(screen.getByRole('complementary'));
-    userEvent.unhover(screen.getByTestId('repoLink'));
+    await userEvent.hover(screen.getByRole('complementary'));
+    await userEvent.unhover(screen.getByTestId('repoLink'));
 
     act(() => {
       jest.advanceTimersByTime(100);
@@ -120,7 +120,7 @@ describe('RepositoryInfo', () => {
 
     expect(await screen.findByRole('complementary')).toHaveClass('show');
 
-    userEvent.unhover(screen.getByRole('complementary'));
+    await userEvent.unhover(screen.getByRole('complementary'));
 
     act(() => {
       jest.advanceTimersByTime(50);

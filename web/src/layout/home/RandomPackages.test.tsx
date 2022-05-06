@@ -28,8 +28,10 @@ describe('RandomPackages', () => {
 
     await waitFor(() => {
       expect(API.getRandomPackages).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText('Explore and discover packages')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -46,6 +48,8 @@ describe('RandomPackages', () => {
       await waitFor(() => {
         expect(API.getRandomPackages).toHaveBeenCalledTimes(1);
       });
+
+      expect(await screen.findByText('Explore and discover packages')).toBeInTheDocument();
     });
 
     it('renders default message when list is empty', async () => {
@@ -63,7 +67,7 @@ describe('RandomPackages', () => {
       });
 
       expect(
-        screen.getByText(
+        await screen.findByText(
           "It looks like you haven't added any content yet. You can add repositories from the control panel once you log in."
         )
       ).toBeInTheDocument();

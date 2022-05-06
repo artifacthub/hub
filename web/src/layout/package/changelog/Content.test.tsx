@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Content from './Content';
@@ -112,10 +112,12 @@ describe('Changelog content ', () => {
       render(<Content {...defaultProps} />);
 
       const btn = screen.getByLabelText('Update active version in querystring to 0.5.0');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(updateVersionInQueryStringMock).toHaveBeenCalledTimes(1);
-      expect(updateVersionInQueryStringMock).toHaveBeenCalledWith('0.5.0', 1);
+      await waitFor(() => {
+        expect(updateVersionInQueryStringMock).toHaveBeenCalledTimes(1);
+        expect(updateVersionInQueryStringMock).toHaveBeenCalledWith('0.5.0', 1);
+      });
     });
   });
 });

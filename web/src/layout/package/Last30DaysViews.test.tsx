@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { RepositoryKind } from '../../types';
@@ -145,7 +146,7 @@ describe('Last30DaysViews', () => {
       expect(screen.getByText('(21.0.4)')).toBeInTheDocument();
     });
 
-    it('goes to Views chart section', () => {
+    it('goes to Views chart section', async () => {
       render(
         <Router>
           <Last30DaysViews {...defaultProps} />
@@ -153,7 +154,7 @@ describe('Last30DaysViews', () => {
       );
 
       const btn = screen.getByRole('button', { name: 'See views chart' });
-      fireEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({

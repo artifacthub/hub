@@ -41,7 +41,7 @@ describe('SearchTipsModal', () => {
       expect(screen.getAllByRole('listitem')).toHaveLength(SEARH_TIPS.length);
     });
 
-    it('closes modal', () => {
+    it('closes modal', async () => {
       render(
         <Router>
           <SearchTipsModal {...defaultProps} />
@@ -52,7 +52,7 @@ describe('SearchTipsModal', () => {
       expect(modal).toHaveClass('d-block');
 
       const closeBtn = screen.getByRole('button', { name: 'Close' });
-      userEvent.click(closeBtn);
+      await userEvent.click(closeBtn);
 
       expect(openTipsMock).toHaveBeenCalledTimes(1);
       expect(openTipsMock).toHaveBeenCalledWith(false);
@@ -71,7 +71,7 @@ describe('SearchTipsModal', () => {
       });
     }
 
-    it('clicks first search tip', () => {
+    it('clicks first search tip', async () => {
       render(
         <Router>
           <SearchTipsModal {...defaultProps} />
@@ -82,7 +82,7 @@ describe('SearchTipsModal', () => {
       expect(modal).toHaveClass('d-block');
 
       const tips = screen.getAllByRole('link', { name: /Filter by/ });
-      userEvent.click(tips[0]);
+      await userEvent.click(tips[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe('?ts_query_web=kafka+operator&sort=relevance&page=1');

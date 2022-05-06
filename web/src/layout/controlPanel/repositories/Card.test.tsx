@@ -154,7 +154,7 @@ describe('Repository Card - packages section', () => {
       );
 
       const btn = screen.getByRole('button', { name: 'Open delete repository modal' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByRole('button', { name: 'Delete repository' })).toBeInTheDocument();
     });
@@ -168,7 +168,7 @@ describe('Repository Card - packages section', () => {
 
       const btn = screen.getByRole('button', { name: 'Open badge modal' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByTestId('badgeModalContent')).toBeInTheDocument();
     });
@@ -182,7 +182,7 @@ describe('Repository Card - packages section', () => {
 
       const btn = screen.getByRole('button', { name: 'Open update repository modal' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => expect(setModalStatusMock).toHaveBeenCalledTimes(1));
       expect(setModalStatusMock).toHaveBeenCalledWith({
@@ -200,7 +200,7 @@ describe('Repository Card - packages section', () => {
 
       const btn = screen.getByRole('button', { name: 'Open transfer repository modal' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByText('Transfer repository')).toBeInTheDocument();
     });

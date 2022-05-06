@@ -50,11 +50,11 @@ describe('SectionPanel', () => {
     expect(screen.getByText('Content 0')).toBeInTheDocument();
   });
 
-  it('changes active section', () => {
+  it('changes active section', async () => {
     render(<SectionPanel {...defaultProps} />);
 
     const btns = screen.getAllByRole('button', { name: /Go to section/ });
-    userEvent.click(btns[1]);
+    await userEvent.click(btns[1]);
 
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
     expect(mockHistoryPush).toHaveBeenCalledWith('/opt1');

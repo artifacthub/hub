@@ -27,8 +27,10 @@ describe('UserInvitation', () => {
 
     await waitFor(() => {
       expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText('You have accepted the invitation to join the organization.')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('when org name is valid', async () => {
@@ -42,8 +44,8 @@ describe('UserInvitation', () => {
 
     await waitFor(() => {
       expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-      expect(screen.getByText('You have accepted the invitation to join the organization.')).toBeInTheDocument();
     });
+    expect(await screen.findByText('You have accepted the invitation to join the organization.')).toBeInTheDocument();
   });
 
   it('does not render component when email code is undefined', () => {
@@ -71,8 +73,9 @@ describe('UserInvitation', () => {
 
       await waitFor(() => {
         expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-        expect(screen.getByText('The request sent was not valid')).toBeInTheDocument();
       });
+
+      expect(await screen.findByText('The request sent was not valid')).toBeInTheDocument();
     });
 
     it('UnauthorizedError', async () => {
@@ -88,12 +91,13 @@ describe('UserInvitation', () => {
 
       await waitFor(() => {
         expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-        expect(
-          screen.getByText(
-            'Please sign in to accept the invitation to join the organization. You can accept it from the Control Panel, in the organizations tab, or from the link you received in the invitation email.'
-          )
-        ).toBeInTheDocument();
       });
+
+      expect(
+        await screen.findByText(
+          'Please sign in to accept the invitation to join the organization. You can accept it from the Control Panel, in the organizations tab, or from the link you received in the invitation email.'
+        )
+      ).toBeInTheDocument();
     });
 
     it('without message', async () => {
@@ -109,10 +113,11 @@ describe('UserInvitation', () => {
 
       await waitFor(() => {
         expect(API.confirmOrganizationMembership).toHaveBeenCalledTimes(1);
-        expect(
-          screen.getByText('An error occurred accepting your invitation, please contact us about this issue.')
-        ).toBeInTheDocument();
       });
+
+      expect(
+        await screen.findByText('An error occurred accepting your invitation, please contact us about this issue.')
+      ).toBeInTheDocument();
     });
   });
 });

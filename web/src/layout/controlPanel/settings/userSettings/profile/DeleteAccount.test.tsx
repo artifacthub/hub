@@ -84,10 +84,10 @@ describe('DeleteAccount', () => {
       expect(modal).not.toHaveClass('d-block');
 
       const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(
-        screen.getByText(
+        await screen.findByText(
           'If you delete your account all repositories belonging to it will be deleted. Please consider transferring them to another user.'
         )
       ).toBeInTheDocument();
@@ -103,7 +103,7 @@ describe('DeleteAccount', () => {
 
       expect(screen.getByRole('button', { name: 'Delete account' })).toBeInTheDocument();
       const cancelBtn = screen.getByText('Cancel');
-      userEvent.click(cancelBtn);
+      await userEvent.click(cancelBtn);
 
       expect(await screen.findByRole('dialog')).not.toHaveClass('d-block');
     });
@@ -122,7 +122,7 @@ describe('DeleteAccount', () => {
         expect(modal).not.toHaveClass('d-block');
 
         const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
@@ -133,18 +133,18 @@ describe('DeleteAccount', () => {
         expect(deleteBtn).toBeDisabled();
 
         const input = screen.getByRole('textbox');
-        userEvent.type(input, 'test');
+        await userEvent.type(input, 'test');
 
         expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
-        userEvent.click(deleteBtn);
+        await userEvent.click(deleteBtn);
 
-        expect(screen.getByText('Deleting...')).toBeInTheDocument();
+        expect(await screen.findByText('Deleting...')).toBeInTheDocument();
 
         await waitFor(() => {
           expect(API.registerDeleteUserCode).toHaveBeenCalledTimes(1);
         });
 
-        expect(screen.getByText("We've just sent you a confirmation email")).toBeInTheDocument();
+        expect(await screen.findByText("We've just sent you a confirmation email")).toBeInTheDocument();
         expect(screen.getByText('is only valid for 15 minutes')).toBeInTheDocument();
         expect(
           screen.getByText(
@@ -171,7 +171,7 @@ describe('DeleteAccount', () => {
         expect(modal).not.toHaveClass('d-block');
 
         const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
@@ -182,19 +182,21 @@ describe('DeleteAccount', () => {
         expect(deleteBtn).toBeDisabled();
 
         const input = screen.getByRole('textbox');
-        userEvent.type(input, 'test');
+        await userEvent.type(input, 'test');
 
         expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
-        userEvent.click(deleteBtn);
+        await userEvent.click(deleteBtn);
 
-        expect(screen.getByText('Deleting...')).toBeInTheDocument();
+        expect(await screen.findByText('Deleting...')).toBeInTheDocument();
 
         await waitFor(() => {
           expect(API.registerDeleteUserCode).toHaveBeenCalledTimes(1);
         });
 
-        expect(screen.queryByRole('button', { name: 'Delete account' })).toBeNull();
-        expect(screen.getByText("We've just sent you a confirmation email")).toBeInTheDocument();
+        await waitFor(() => {
+          expect(screen.queryByRole('button', { name: 'Delete account' })).toBeNull();
+        });
+        expect(await screen.findByText("We've just sent you a confirmation email")).toBeInTheDocument();
         expect(screen.getByText('is only valid for 15 minutes')).toBeInTheDocument();
         expect(
           screen.getByText(
@@ -207,11 +209,11 @@ describe('DeleteAccount', () => {
           )
         ).toBeInTheDocument();
 
-        userEvent.click(screen.getByText('Close'));
+        await userEvent.click(screen.getByText('Close'));
 
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
-        expect(screen.getByRole('dialog')).toHaveClass('d-block');
+        expect(await screen.findByRole('dialog')).toHaveClass('d-block');
         expect(screen.getByRole('button', { name: 'Delete account' })).toBeInTheDocument();
       });
 
@@ -228,26 +230,28 @@ describe('DeleteAccount', () => {
           );
 
           const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
-          userEvent.click(btn);
+          await userEvent.click(btn);
 
           expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
           const deleteBtn = screen.getByRole('button', { name: 'Delete account' });
 
           const input = screen.getByRole('textbox');
-          userEvent.type(input, 'test');
+          await userEvent.type(input, 'test');
 
           expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
-          userEvent.click(deleteBtn);
+          await userEvent.click(deleteBtn);
 
           await waitFor(() => {
             expect(API.registerDeleteUserCode).toHaveBeenCalledTimes(1);
           });
 
-          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-            type: 'danger',
-            message: 'An error occurred deleting your account, please try again later.',
+          await waitFor(() => {
+            expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+            expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+              type: 'danger',
+              message: 'An error occurred deleting your account, please try again later.',
+            });
           });
         });
 
@@ -263,23 +267,25 @@ describe('DeleteAccount', () => {
           );
 
           const btn = screen.getByRole('button', { name: 'Open deletion account modal' });
-          userEvent.click(btn);
+          await userEvent.click(btn);
 
           expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
           const deleteBtn = screen.getByRole('button', { name: 'Delete account' });
 
           const input = screen.getByRole('textbox');
-          userEvent.type(input, 'test');
+          await userEvent.type(input, 'test');
 
           expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
-          userEvent.click(deleteBtn);
+          await userEvent.click(deleteBtn);
 
           await waitFor(() => {
             expect(API.registerDeleteUserCode).toHaveBeenCalledTimes(1);
           });
 
-          expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+          await waitFor(() => {
+            expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+          });
         });
       });
     });

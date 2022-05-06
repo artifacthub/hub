@@ -9,6 +9,10 @@ import alertDispatcher from '../../../utils/alertDispatcher';
 import ChartTemplatesModal from './index';
 jest.mock('../../../utils/alertDispatcher');
 jest.mock('../../../api');
+jest.mock('react-markdown', () => (props) => {
+  return <>{props.children}</>;
+});
+jest.mock('remark-gfm', () => () => <div />);
 
 const getMockChartTemplates = (fixtureId: string): ChartTemplatesData => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as ChartTemplatesData;
@@ -52,8 +56,10 @@ describe('ChartTemplatesModal', () => {
 
     await waitFor(() => {
       expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -71,6 +77,8 @@ describe('ChartTemplatesModal', () => {
         expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
         expect(API.getChartTemplates).toHaveBeenCalledWith('id', '1.1.1');
       });
+
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
     });
 
     it('opens modal', async () => {
@@ -87,7 +95,7 @@ describe('ChartTemplatesModal', () => {
 
       const modalBtn = screen.getByRole('button', { name: /Open templates modal/ });
       expect(modalBtn).toHaveTextContent('Templates');
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
       await waitFor(() => {
         expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
@@ -99,7 +107,7 @@ describe('ChartTemplatesModal', () => {
       expect(screen.getByText(/This chart version contains/)).toBeInTheDocument();
       expect(screen.getByText(/built-in objects and functions/)).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: /Show template/ })).toHaveLength(16);
-      expect(screen.getByTestId('activeTmpl')).toBeInTheDocument();
+      expect(await screen.findByTestId('activeTmpl')).toBeInTheDocument();
     });
 
     it('updates path querystring when active template is not available', async () => {
@@ -167,21 +175,24 @@ describe('ChartTemplatesModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       const btn = screen.getByText('Close');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(screen.queryByRole('dialog')).toBeNull();
 
       const openBtn = screen.getByRole('button', { name: /Open templates modal/ });
-      userEvent.click(openBtn);
+      await userEvent.click(openBtn);
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(5);
-      expect(mockHistoryReplace).toHaveBeenLastCalledWith({
-        search: '?modal=template&template=db_migrator_install_job.yaml',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
+
+      await waitFor(() => {
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(5);
+        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+          search: '?modal=template&template=db_migrator_install_job.yaml',
+          state: {
+            fromStarredPage: undefined,
+            searchUrlReferer: undefined,
+          },
+        });
       });
     });
   });
@@ -311,14 +322,17 @@ describe('ChartTemplatesModal', () => {
 
       await waitFor(() => expect(API.getChartTemplates).toHaveBeenCalledTimes(1));
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
 
       rerender(
         <Router>
           <ChartTemplatesModal {...defaultProps} packageId="id2" />
         </Router>
       );
-      expect(screen.queryByRole('dialog')).toBeNull();
+
+      await waitFor(() => {
+        expect(screen.queryByRole('dialog')).toBeNull();
+      });
     });
   });
 });

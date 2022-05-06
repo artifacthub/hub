@@ -91,19 +91,28 @@ exports[`Transfer Repository Modal - packages section creates snapshot 1`] = `
                     <select
                       aria-label="org-select"
                       class="form-select"
-                    />
+                    >
+                      <option
+                        value=""
+                      >
+                        Select organization
+                      </option>
+                      <option
+                        value="test"
+                      >
+                        test
+                      </option>
+                      <option
+                        value="helm"
+                      >
+                        helm
+                      </option>
+                    </select>
                     <div
                       class="invalid-feedback fieldFeedback"
                     >
                       This field is required
                     </div>
-                  </div>
-                  <div
-                    class="d-inline ms-3"
-                  >
-                    <span
-                      class="spinner-border spinner-border-sm text-primary"
-                    />
                   </div>
                 </div>
                 <small

@@ -55,8 +55,10 @@ describe('Organizations section index', () => {
 
     await waitFor(() => {
       expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findAllByTestId('organizationCard')).toHaveLength(2);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -75,6 +77,8 @@ describe('Organizations section index', () => {
       await waitFor(() => {
         expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
       });
+
+      expect(await screen.findAllByTestId('organizationCard')).toHaveLength(2);
     });
 
     it('displays no data component when no organizations', async () => {
@@ -117,8 +121,8 @@ describe('Organizations section index', () => {
       expect(screen.queryByText('Home URL')).toBeNull();
       expect(screen.queryByText('Description')).toBeNull();
 
-      const addBtn = screen.getByRole('button', { name: 'Open modal for adding first organization' });
-      userEvent.click(addBtn);
+      const addBtn = await screen.findByRole('button', { name: 'Open modal for adding first organization' });
+      await userEvent.click(addBtn);
       expect(screen.queryByText('Name')).toBeInTheDocument();
       expect(screen.queryByText('Display name')).toBeInTheDocument();
       expect(screen.queryByText('Home URL')).toBeInTheDocument();
@@ -145,7 +149,7 @@ describe('Organizations section index', () => {
       expect(screen.queryByText('Home URL')).toBeNull();
       expect(screen.queryByText('Description')).toBeNull();
 
-      userEvent.click(addBtn);
+      await userEvent.click(addBtn);
 
       expect(screen.queryByText('Name')).toBeInTheDocument();
       expect(screen.queryByText('Display name')).toBeInTheDocument();
@@ -187,7 +191,7 @@ describe('Organizations section index', () => {
 
       await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => expect(onAuthErrorMock).toHaveBeenCalledTimes(1));
     });
 
     it('rest API errors - displays generic error message', async () => {
@@ -203,7 +207,7 @@ describe('Organizations section index', () => {
 
       await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));
 
-      expect(screen.getByRole('alert')).toBeInTheDocument();
+      await waitFor(() => expect(screen.getByRole('alert')).toBeInTheDocument());
       expect(
         screen.getByText(/An error occurred getting your organizations, please try again later./i)
       ).toBeInTheDocument();

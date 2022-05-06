@@ -33,10 +33,10 @@ describe('BlockCodeButtons', () => {
     expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
   });
 
-  it('download file', () => {
+  it('download file', async () => {
     render(<BlockCodeButtons {...defaultProps} />);
 
-    userEvent.click(screen.getByRole('button', { name: 'Download' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Download' }));
 
     const blob = new Blob([defaultProps.content], {
       type: 'text/yaml',

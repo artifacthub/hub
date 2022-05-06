@@ -2,6 +2,11 @@ import { render, screen } from '@testing-library/react';
 
 import Template from './Template';
 
+jest.mock('react-markdown', () => (props) => {
+  return <>{props.children}</>;
+});
+jest.mock('remark-gfm', () => () => <div />);
+
 const setIsChangingTemplateMock = jest.fn();
 
 const defaultProps = {
@@ -125,25 +130,25 @@ describe('Template', () => {
       expect(betweenBrackets[0]).toHaveTextContent('{{- if DEFAULT:true.Values.hub.ingress.enabled -}}');
       expect(betweenBrackets[1]).toHaveTextContent('{{ include "chart.resourceNamePrefix" . }}');
       expect(betweenBrackets[2]).toHaveTextContent(
-        '{{- include "chart.labels" . | nindent function The nindent function is the same as the indent function, but prepends a new line to the beginning of the string.nindent 4 }}'
+        '{{- include "chart.labels" . | # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent) The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.nindent 4 }}'
       );
       expect(betweenBrackets[3]).toHaveTextContent(
         '{{- with DEFAULT:{ "kubernetes.io/ingress.class": "nginx" }.Values.hub.ingress.annotations }}'
       );
       expect(betweenBrackets[4]).toHaveTextContent(
-        '{{- toYaml . | nindent function The nindent function is the same as the indent function, but prepends a new line to the beginning of the string.nindent 4 }}'
+        '{{- toYaml . | # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent) The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.nindent 4 }}'
       );
       expect(betweenBrackets[5]).toHaveTextContent('{{- end }}');
       expect(betweenBrackets[6]).toHaveTextContent('{{ include "chart.resourceNamePrefix" . }}');
       expect(betweenBrackets[7]).toHaveTextContent('{{ DEFAULT:80.Values.hub.service.port }}');
       expect(betweenBrackets[8]).toHaveTextContent('{{- with DEFAULT:[].Values.hub.ingress.rules }}');
       expect(betweenBrackets[9]).toHaveTextContent(
-        '{{- toYaml . | nindent function The nindent function is the same as the indent function, but prepends a new line to the beginning of the string.nindent 4 }}'
+        '{{- toYaml . | # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent) The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.nindent 4 }}'
       );
       expect(betweenBrackets[10]).toHaveTextContent('{{- end }}');
       expect(betweenBrackets[11]).toHaveTextContent('{{- with DEFAULT:[].Values.hub.ingress.tls }}');
       expect(betweenBrackets[12]).toHaveTextContent(
-        '{{- toYaml . | nindent function The nindent function is the same as the indent function, but prepends a new line to the beginning of the string.nindent 4 }}'
+        '{{- toYaml . | # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent) The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.nindent 4 }}'
       );
       expect(betweenBrackets[13]).toHaveTextContent('{{- end }}');
       expect(betweenBrackets[14]).toHaveTextContent('{{- end }}');
@@ -165,7 +170,7 @@ describe('Template', () => {
 
       // Functions
       const functionsSample = screen.getAllByText('nindent');
-      expect(functionsSample).toHaveLength(12);
+      expect(functionsSample).toHaveLength(6);
       expect(functionsSample[1]).toHaveClass('tmplFunction');
 
       // Built-in

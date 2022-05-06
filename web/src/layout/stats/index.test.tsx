@@ -61,8 +61,12 @@ describe('StatsView', () => {
 
     await waitFor(() => {
       expect(API.getAHStats).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    await waitFor(() => {
+      expect(screen.getAllByText('Chart')).toHaveLength(8);
+    });
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -79,11 +83,15 @@ describe('StatsView', () => {
       await waitFor(() => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
+
+      await waitFor(() => {
+        expect(screen.getAllByText('Chart')).toHaveLength(8);
+      });
+
       expect(screen.getByText('Report generated at:')).toBeInTheDocument();
       expect(screen.getByText('Packages and releases')).toBeInTheDocument();
       expect(screen.getByText('Repositories')).toBeInTheDocument();
       expect(screen.getByText('Organizations and users')).toBeInTheDocument();
-      expect(screen.getAllByText('Chart')).toHaveLength(8);
     });
 
     it('renders only 2 sections', async () => {
@@ -99,9 +107,12 @@ describe('StatsView', () => {
       await waitFor(() => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
-      expect(screen.getByText('Packages and releases')).toBeInTheDocument();
+      expect(await screen.findByText('Packages and releases')).toBeInTheDocument();
       expect(screen.getByText('Repositories')).toBeInTheDocument();
-      expect(screen.queryByText('Organizations and users')).toBeNull();
+
+      await waitFor(() => {
+        expect(screen.queryByText('Organizations and users')).toBeNull();
+      });
       expect(screen.getAllByText('Chart')).toHaveLength(6);
     });
   });
@@ -151,8 +162,8 @@ describe('StatsView', () => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
 
-      const anchors = screen.getAllByRole('button');
-      userEvent.click(anchors[0]);
+      const anchors = await screen.findAllByRole('button');
+      await userEvent.click(anchors[0]);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
     });
@@ -171,12 +182,16 @@ describe('StatsView', () => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
 
-      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      });
 
-      const anchors = screen.getAllByRole('button');
-      userEvent.click(anchors[0]);
+      const anchors = await screen.findAllByRole('button');
+      await userEvent.click(anchors[0]);
 
-      expect(scrollIntoViewMock).toHaveBeenCalledTimes(2);
+      await waitFor(() => {
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(2);
+      });
     });
   });
 });

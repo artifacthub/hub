@@ -2,6 +2,10 @@ import { render, screen } from '@testing-library/react';
 
 import { RepositoryKind } from '../../../types';
 import Modal from './Modal';
+jest.mock('react-markdown', () => (props) => {
+  return <>{props.children}</>;
+});
+jest.mock('remark-gfm', () => () => <div />);
 
 const mockHistoryReplace = jest.fn();
 

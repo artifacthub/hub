@@ -291,7 +291,7 @@ describe('WebhookForm', () => {
       expect(screen.getByRole('button', { name: 'Add webhook' })).toBeInTheDocument();
     });
 
-    it('closes form on back button click', () => {
+    it('closes form on back button click', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
@@ -301,12 +301,14 @@ describe('WebhookForm', () => {
       );
 
       const btn = screen.getByRole('button', { name: 'Back to webhooks list' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(mockOnClose).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnClose).toHaveBeenCalledTimes(1);
+      });
     });
 
-    it('closes form on Cancel button click', () => {
+    it('closes form on Cancel button click', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
@@ -316,14 +318,16 @@ describe('WebhookForm', () => {
       );
 
       const btn = screen.getByText('Cancel');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(mockOnClose).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnClose).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
   describe('Form submission', () => {
-    it('when incomplete form', () => {
+    it('when incomplete form', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
@@ -333,9 +337,9 @@ describe('WebhookForm', () => {
       );
 
       const btn = screen.getByRole('button', { name: 'Add webhook' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(screen.getAllByText('This field is required')).toHaveLength(4);
+      expect(await screen.findAllByText('This field is required')).toHaveLength(4);
       expect(screen.getByText('At least one package has to be selected')).toBeInTheDocument();
     });
 
@@ -352,11 +356,11 @@ describe('WebhookForm', () => {
       );
 
       const input = screen.getByRole('textbox', { name: /Name/ });
-      userEvent.clear(input);
-      userEvent.type(input, 'test');
+      await userEvent.clear(input);
+      await userEvent.type(input, 'test');
 
       const btn = screen.getByRole('button', { name: 'Add webhook' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -369,8 +373,10 @@ describe('WebhookForm', () => {
         );
       });
 
-      expect(mockOnSuccess).toHaveBeenCalledTimes(1);
-      expect(mockOnClose).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnSuccess).toHaveBeenCalledTimes(1);
+        expect(mockOnClose).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('calls updateWebhook with selected org context', async () => {
@@ -386,11 +392,11 @@ describe('WebhookForm', () => {
       );
 
       const input = screen.getByRole('textbox', { name: /Name/ });
-      userEvent.clear(input);
-      userEvent.type(input, 'test');
+      await userEvent.clear(input);
+      await userEvent.type(input, 'test');
 
       const btn = screen.getByRole('button', { name: 'Add webhook' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -403,8 +409,10 @@ describe('WebhookForm', () => {
         );
       });
 
-      expect(mockOnSuccess).toHaveBeenCalledTimes(1);
-      expect(mockOnClose).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnSuccess).toHaveBeenCalledTimes(1);
+        expect(mockOnClose).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('calls updateWebhook with securityAlert event selected', async () => {
@@ -422,11 +430,11 @@ describe('WebhookForm', () => {
       const checkboxes = screen.getAllByRole('checkbox');
       expect(checkboxes).toHaveLength(2);
       expect(checkboxes[1]).not.toBeChecked();
-      userEvent.click(checkboxes[1]);
+      await userEvent.click(checkboxes[1]);
       expect(checkboxes[1]).toBeChecked();
 
       const btn = screen.getByRole('button', { name: 'Add webhook' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -439,8 +447,10 @@ describe('WebhookForm', () => {
         );
       });
 
-      expect(mockOnSuccess).toHaveBeenCalledTimes(1);
-      expect(mockOnClose).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnSuccess).toHaveBeenCalledTimes(1);
+        expect(mockOnClose).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('calls addWebhook', async () => {
@@ -457,23 +467,23 @@ describe('WebhookForm', () => {
       );
 
       const nameInput = screen.getByRole('textbox', { name: /Name/ });
-      userEvent.type(nameInput, 'test');
+      await userEvent.type(nameInput, 'test');
 
       const urlInput = screen.getByRole('textbox', { name: /Url/ });
-      userEvent.type(urlInput, 'http://url.com');
+      await userEvent.type(urlInput, 'http://url.com');
 
       const input = screen.getByRole('textbox', { name: 'Search packages' });
-      userEvent.type(input, 'testing');
+      await userEvent.type(input, 'testing');
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const packages = screen.getAllByTestId('packageItem');
-      userEvent.click(packages[0]);
+      const packages = await screen.findAllByTestId('packageItem');
+      await userEvent.click(packages[0]);
 
       const btn = screen.getByRole('button', { name: 'Add webhook' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.addWebhook).toHaveBeenCalledTimes(1);
@@ -491,8 +501,10 @@ describe('WebhookForm', () => {
         );
       });
 
-      expect(mockOnSuccess).toHaveBeenCalledTimes(1);
-      expect(mockOnClose).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnSuccess).toHaveBeenCalledTimes(1);
+        expect(mockOnClose).toHaveBeenCalledTimes(1);
+      });
     });
 
     describe('when fails', () => {
@@ -511,11 +523,11 @@ describe('WebhookForm', () => {
         );
 
         const input = screen.getByRole('textbox', { name: /Name/ });
-        userEvent.clear(input);
-        userEvent.type(input, 'test');
+        await userEvent.clear(input);
+        await userEvent.type(input, 'test');
 
         const btn = screen.getByRole('button', { name: 'Add webhook' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -528,7 +540,9 @@ describe('WebhookForm', () => {
           );
         });
 
-        expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+        });
       });
 
       it('with error message', async () => {
@@ -547,11 +561,11 @@ describe('WebhookForm', () => {
         );
 
         const input = screen.getByRole('textbox', { name: /Name/ });
-        userEvent.clear(input);
-        userEvent.type(input, 'test');
+        await userEvent.clear(input);
+        await userEvent.type(input, 'test');
 
         const btn = screen.getByRole('button', { name: 'Add webhook' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -564,9 +578,7 @@ describe('WebhookForm', () => {
           );
         });
 
-        await waitFor(() => {
-          expect(screen.getByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
-        });
+        expect(await screen.findByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
       });
 
       it('without error message', async () => {
@@ -583,11 +595,11 @@ describe('WebhookForm', () => {
         const { rerender } = render(component);
 
         const input = screen.getByRole('textbox', { name: /Name/ });
-        userEvent.clear(input);
-        userEvent.type(input, 'test');
+        await userEvent.clear(input);
+        await userEvent.type(input, 'test');
 
         const btn = screen.getByRole('button', { name: 'Add webhook' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -624,10 +636,10 @@ describe('WebhookForm', () => {
 
       const btns = screen.getAllByRole('button', { name: 'Delete package from webhook' });
       expect(btns).toHaveLength(mockWebhook.packages.length);
-      userEvent.click(btns[0]);
+      await userEvent.click(btns[0]);
 
       const btn = screen.getByRole('button', { name: 'Add webhook' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.updateWebhook).toHaveBeenCalledTimes(1);
@@ -658,7 +670,7 @@ describe('WebhookForm', () => {
       const btn = screen.getByRole('button', { name: 'Test webhook' });
       expect(btn).toBeInTheDocument();
       expect(btn).toBeEnabled();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -668,7 +680,7 @@ describe('WebhookForm', () => {
         });
       });
 
-      expect(screen.getByTestId('testWebhookTick')).toBeInTheDocument();
+      expect(await screen.findByTestId('testWebhookTick')).toBeInTheDocument();
     });
 
     it('triggers test on webhook addition', async () => {
@@ -687,10 +699,10 @@ describe('WebhookForm', () => {
       expect(btn).toBeDisabled();
 
       const urlInput = screen.getByRole('textbox', { name: /Url/ });
-      userEvent.type(urlInput, 'http://url.com');
+      await userEvent.type(urlInput, 'http://url.com');
 
       expect(btn).toBeEnabled();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -700,10 +712,10 @@ describe('WebhookForm', () => {
         });
       });
 
-      expect(screen.getByTestId('testWebhookTick')).toBeInTheDocument();
+      expect(await screen.findByTestId('testWebhookTick')).toBeInTheDocument();
     });
 
-    it('disables test btn when webhook for testing is not valid', () => {
+    it('disables test btn when webhook for testing is not valid', async () => {
       const mockWebhook = getMockWebhook('10');
 
       render(
@@ -719,8 +731,8 @@ describe('WebhookForm', () => {
       expect(btn).toBeEnabled();
 
       const urlInput = screen.getByRole('textbox', { name: /Url/ });
-      userEvent.clear(urlInput);
-      userEvent.type(urlInput, 'wrongUrl');
+      await userEvent.clear(urlInput);
+      await userEvent.type(urlInput, 'wrongUrl');
 
       expect(btn).toBeDisabled();
     });
@@ -741,7 +753,7 @@ describe('WebhookForm', () => {
         );
 
         const btn = screen.getByRole('button', { name: 'Test webhook' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -751,7 +763,9 @@ describe('WebhookForm', () => {
           });
         });
 
-        expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+        await waitFor(() => {
+          expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+        });
       });
 
       it('with custom error', async () => {
@@ -771,7 +785,7 @@ describe('WebhookForm', () => {
         const { rerender } = render(component);
 
         const btn = screen.getByRole('button', { name: 'Test webhook' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
@@ -802,7 +816,7 @@ describe('WebhookForm', () => {
         const { rerender } = render(component);
 
         const btn = screen.getByRole('button', { name: 'Test webhook' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);

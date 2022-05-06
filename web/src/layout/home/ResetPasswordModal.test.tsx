@@ -25,11 +25,12 @@ describe('ResetPasswordModal', () => {
       </Router>
     );
 
-    expect(asFragment()).toMatchSnapshot();
     await waitFor(() => {
       expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByTestId('resetPwdForm')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -49,7 +50,7 @@ describe('ResetPasswordModal', () => {
         expect(API.verifyPasswordResetCode).toHaveBeenCalledWith('123');
       });
 
-      expect(screen.getByTestId('resetPwdForm')).toBeInTheDocument();
+      expect(await screen.findByTestId('resetPwdForm')).toBeInTheDocument();
       expect(screen.getByTestId('passwordInput')).toBeInTheDocument();
       expect(screen.getByTestId('confirmPasswordInput')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Reset password' })).toBeInTheDocument();
@@ -75,7 +76,7 @@ describe('ResetPasswordModal', () => {
         });
 
         expect(
-          screen.getByText('This password reset link is no longer valid, please get a new one.')
+          await screen.findByText('This password reset link is no longer valid, please get a new one.')
         ).toBeInTheDocument();
 
         expect(screen.getByTestId('resetPasswordForm')).toBeInTheDocument();
@@ -101,7 +102,7 @@ describe('ResetPasswordModal', () => {
           expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
         });
 
-        expect(screen.getByText('Sorry, custom error')).toBeInTheDocument();
+        expect(await screen.findByText('Sorry, custom error')).toBeInTheDocument();
       });
 
       it('default error', async () => {
@@ -119,7 +120,7 @@ describe('ResetPasswordModal', () => {
           expect(API.verifyPasswordResetCode).toHaveBeenCalledTimes(1);
         });
 
-        expect(screen.getByText('An error occurred with your password reset code.')).toBeInTheDocument();
+        expect(await screen.findByText('An error occurred with your password reset code.')).toBeInTheDocument();
       });
     });
 
@@ -140,11 +141,11 @@ describe('ResetPasswordModal', () => {
       const passwordInput = await screen.findByTestId('passwordInput');
       const confirmPasswordInput = screen.getByTestId('confirmPasswordInput');
 
-      userEvent.type(passwordInput, '123abc');
-      userEvent.type(confirmPasswordInput, '123abc');
+      await userEvent.type(passwordInput, '123abc');
+      await userEvent.type(confirmPasswordInput, '123abc');
 
       const btn = screen.getByRole('button', { name: 'Reset password' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.resetPassword).toHaveBeenCalledTimes(1);
@@ -179,17 +180,17 @@ describe('ResetPasswordModal', () => {
         const passwordInput = await screen.findByTestId('passwordInput');
         const confirmPasswordInput = screen.getByTestId('confirmPasswordInput');
 
-        userEvent.type(passwordInput, '123abc');
-        userEvent.type(confirmPasswordInput, '123abc');
+        await userEvent.type(passwordInput, '123abc');
+        await userEvent.type(confirmPasswordInput, '123abc');
 
         const btn = screen.getByRole('button', { name: 'Reset password' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.resetPassword).toHaveBeenCalledTimes(1);
         });
 
-        expect(screen.getByText('An error occurred resetting the password: custom error')).toBeInTheDocument();
+        expect(await screen.findByText('An error occurred resetting the password: custom error')).toBeInTheDocument();
       });
 
       it('default error', async () => {
@@ -211,18 +212,18 @@ describe('ResetPasswordModal', () => {
         const passwordInput = await screen.findByTestId('passwordInput');
         const confirmPasswordInput = screen.getByTestId('confirmPasswordInput');
 
-        userEvent.type(passwordInput, '123abc');
-        userEvent.type(confirmPasswordInput, '123abc');
+        await userEvent.type(passwordInput, '123abc');
+        await userEvent.type(confirmPasswordInput, '123abc');
 
         const btn = screen.getByRole('button', { name: 'Reset password' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.resetPassword).toHaveBeenCalledTimes(1);
         });
 
         expect(
-          screen.getByText('An error occurred resetting the password, please try again later.')
+          await screen.findByText('An error occurred resetting the password, please try again later.')
         ).toBeInTheDocument();
       });
     });

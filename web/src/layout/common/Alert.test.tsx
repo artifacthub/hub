@@ -48,14 +48,14 @@ describe('Alert', () => {
     expect(screen.getByTestId('closeAlertBtn')).toBeInTheDocument();
   });
 
-  it('calls close alert', () => {
+  it('calls close alert', async () => {
     render(<Alert {...defaultProps} message="errorMessage" />);
 
     const alertWrapper = screen.getByTestId('alertWrapper');
     expect(alertWrapper).toHaveClass('isAlertActive');
 
     const closeBtn = screen.getByTestId('closeAlertBtn');
-    userEvent.click(closeBtn);
+    await userEvent.click(closeBtn);
 
     expect(onCloseMock).toHaveBeenCalledTimes(1);
   });

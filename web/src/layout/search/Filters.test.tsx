@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Facets } from '../../types';
@@ -315,7 +315,7 @@ describe('Filters', () => {
       expect(screen.queryByRole('button', { name: /Reset filters/ })).toBeNull();
     });
 
-    it('renders reset btn when active filters is not empty and calls mock to click', () => {
+    it('renders reset btn when active filters is not empty and calls mock to click', async () => {
       const props = {
         ...defaultProps,
         activeFilters: { kind: ['0'] },
@@ -323,45 +323,48 @@ describe('Filters', () => {
       };
       render(<Filters {...props} />);
       const resetBtn = screen.getByRole('button', { name: /Reset filters/ });
-      userEvent.click(resetBtn);
+      await userEvent.click(resetBtn);
 
-      expect(onResetFiltersMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => expect(onResetFiltersMock).toHaveBeenCalledTimes(1));
     });
 
-    it('calls deprecated mock when deprecated checkbox is clicked', () => {
+    it('calls deprecated mock when deprecated checkbox is clicked', async () => {
       render(<Filters {...defaultProps} />);
 
       const opt = screen.getByLabelText('Include deprecated');
       expect(opt).toBeInTheDocument();
-      userEvent.click(opt);
+      await userEvent.click(opt);
       expect(onDeprecatedChangeMock).toHaveBeenCalledTimes(1);
     });
 
-    it('calls verifiedPublisherChange mock when verified publisher checkbox is clicked', () => {
+    it('calls verifiedPublisherChange mock when verified publisher checkbox is clicked', async () => {
       render(<Filters {...defaultProps} />);
 
       const opt = screen.getByLabelText('Verified publishers');
       expect(opt).toBeInTheDocument();
-      userEvent.click(opt);
-      expect(onVerifiedPublisherChangeMock).toHaveBeenCalledTimes(1);
+      await userEvent.click(opt);
+
+      await waitFor(() => expect(onVerifiedPublisherChangeMock).toHaveBeenCalledTimes(1));
     });
 
-    it('calls officalChange mock when official checkbox is clicked', () => {
+    it('calls officalChange mock when official checkbox is clicked', async () => {
       render(<Filters {...defaultProps} />);
 
       const opt = screen.getByLabelText('Official');
       expect(opt).toBeInTheDocument();
-      userEvent.click(opt);
-      expect(onOfficialChangeMock).toHaveBeenCalledTimes(1);
+      await userEvent.click(opt);
+
+      await waitFor(() => expect(onOfficialChangeMock).toHaveBeenCalledTimes(1));
     });
 
-    it('calls onchange mock when any checkbox is clicked', () => {
+    it('calls onchange mock when any checkbox is clicked', async () => {
       render(<Filters {...defaultProps} />);
 
       const opt = screen.getByLabelText(/Helm charts/);
       expect(opt).toBeInTheDocument();
-      userEvent.click(opt);
-      expect(onChangeMock).toHaveBeenCalledTimes(1);
+      await userEvent.click(opt);
+
+      await waitFor(() => expect(onChangeMock).toHaveBeenCalledTimes(1));
     });
 
     it('renders facets in correct order', () => {

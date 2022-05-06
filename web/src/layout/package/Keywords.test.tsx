@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -58,7 +58,7 @@ describe('Keywords', () => {
       expect(keywords).toHaveLength(3);
     });
 
-    it('calls history push to click keyword button', () => {
+    it('calls history push to click keyword button', async () => {
       render(
         <Router>
           <Keywords {...defaultProps} />
@@ -66,14 +66,17 @@ describe('Keywords', () => {
       );
 
       const keywordBtn = screen.getByText(defaultProps.keywords[0]);
-      userEvent.click(keywordBtn);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: defaultProps.keywords[0],
-          pageNumber: 1,
-        }),
+      await userEvent.click(keywordBtn);
+
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: defaultProps.keywords[0],
+            pageNumber: 1,
+          }),
+        });
       });
     });
 

@@ -80,7 +80,7 @@ describe('Navbar', () => {
   });
 
   describe('common elements', () => {
-    it('goes to Homepage to click brand link', () => {
+    it('goes to Homepage to click brand link', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -89,7 +89,7 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
       const brandLink = screen.getByTestId('brandLink');
-      userEvent.click(brandLink);
+      await userEvent.click(brandLink);
       expect(window.location.pathname).toBe('/');
     });
   });
@@ -145,12 +145,12 @@ describe('Navbar', () => {
       );
 
       const btn = screen.getByText('Sign in');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByTestId('loginForm')).toBeInTheDocument();
     });
 
-    it('opens Sign up modal to click Sign up button', () => {
+    it('opens Sign up modal to click Sign up button', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -160,9 +160,9 @@ describe('Navbar', () => {
       );
 
       const btn = screen.getByText('Sign up');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(screen.getByText('Create your account using your email')).toBeInTheDocument();
+      expect(await screen.findByText('Create your account using your email')).toBeInTheDocument();
     });
   });
 

@@ -114,16 +114,16 @@ describe('Files modal', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<FilesModal {...defaultProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('opens modal', () => {
+  it('opens modal', async () => {
     render(<FilesModal {...defaultProps} />);
 
     const btn = screen.getByRole('button', { name: 'Open CRDs modal' });
-    userEvent.click(btn);
+    await userEvent.click(btn);
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
 
@@ -140,7 +140,7 @@ describe('Files modal', () => {
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
   });
 
-  it('filters file', () => {
+  it('filters file', async () => {
     render(<FilesModal {...defaultProps} visibleModal />);
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
@@ -148,12 +148,12 @@ describe('Files modal', () => {
 
     const input = screen.getByPlaceholderText('Search by name or resource kind');
     expect(input).toBeInTheDocument();
-    userEvent.type(input, 'database');
+    await userEvent.type(input, 'database');
 
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(1);
   });
 
-  it('displays warning message when no matches', () => {
+  it('displays warning message when no matches', async () => {
     render(<FilesModal {...defaultProps} visibleModal />);
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
@@ -161,17 +161,17 @@ describe('Files modal', () => {
 
     const input = screen.getByPlaceholderText('Search by name or resource kind');
     expect(input).toBeInTheDocument();
-    userEvent.type(input, 'notmatch');
+    await userEvent.type(input, 'notmatch');
 
     expect(screen.getByText('Sorry, no matches found')).toBeInTheDocument();
   });
 
-  it('renders message when not example provided', () => {
+  it('renders message when not example provided', async () => {
     render(<FilesModal {...defaultProps} visibleModal />);
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
-    userEvent.click(screen.getAllByRole('button', { name: /Show CRDs/ })[2]);
+    await userEvent.click(screen.getAllByRole('button', { name: /Show CRDs/ })[2]);
 
     expect(screen.getByText('Aqua Security Enforcer Deployment with Aqua Operator')).toBeInTheDocument();
     expect(screen.getByText('No example provided')).toBeInTheDocument();

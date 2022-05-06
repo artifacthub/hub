@@ -87,7 +87,7 @@ describe('PackageCard', () => {
   });
 
   describe('Repository button', () => {
-    it('renders repository link', () => {
+    it('renders repository link', async () => {
       const mockPackage = getMockPackage('7');
 
       render(
@@ -101,7 +101,8 @@ describe('PackageCard', () => {
       expect(icons).toHaveLength(10);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
-      userEvent.click(buttons[0]!);
+      await userEvent.click(buttons[0]!);
+
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -116,7 +117,7 @@ describe('PackageCard', () => {
   });
 
   describe('Detail', () => {
-    it('opens detail page', () => {
+    it('opens detail page', async () => {
       const mockPackage = getMockPackage('9');
       render(
         <Router>
@@ -125,7 +126,7 @@ describe('PackageCard', () => {
       );
       const link = screen.getByRole('link');
       expect(link).toBeInTheDocument();
-      userEvent.click(link);
+      await userEvent.click(link);
       expect(window.location.pathname).toBe('/packages/helm/stable/test');
     });
   });

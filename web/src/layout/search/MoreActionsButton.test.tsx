@@ -25,7 +25,7 @@ describe('MoreActionsButton', () => {
       expect(btn).toBeInTheDocument();
     });
 
-    it('displays dropdown', () => {
+    it('displays dropdown', async () => {
       render(<MoreActionsButton />);
 
       const dropdown = screen.getByRole('menu');
@@ -35,13 +35,13 @@ describe('MoreActionsButton', () => {
       const btn = screen.getByRole('button', { name: /Show menu/ });
       expect(btn).toBeInTheDocument();
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(dropdown).toHaveClass('show');
       expect(screen.getByText('Embed results')).toBeInTheDocument();
     });
 
-    it('opens modal', () => {
+    it('opens modal', async () => {
       render(
         <>
           <meta name="artifacthub:siteName" content="test" />
@@ -52,14 +52,14 @@ describe('MoreActionsButton', () => {
       const btn = screen.getByRole('button', { name: /Show menu/ });
       expect(btn).toBeInTheDocument();
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      const widgetBtn = screen.getByRole('button', { name: /Open embed results modal/ });
+      const widgetBtn = await screen.findByRole('button', { name: /Open embed results modal/ });
       expect(widgetBtn).toBeInTheDocument();
 
-      userEvent.click(widgetBtn);
+      await userEvent.click(widgetBtn);
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
     });
   });
 });

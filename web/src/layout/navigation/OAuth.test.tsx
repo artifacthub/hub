@@ -53,7 +53,7 @@ describe('OAuth', () => {
       render(<OAuth {...defaultProps} />);
 
       const btn = screen.getByText('GitHub');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
@@ -70,7 +70,7 @@ describe('OAuth', () => {
       render(<OAuth {...defaultProps} />);
 
       const btn = screen.getByText('Google');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
@@ -87,7 +87,7 @@ describe('OAuth', () => {
       render(<OAuth {...defaultProps} />);
 
       const btn = screen.getByText('OpenID Connect');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
@@ -113,7 +113,7 @@ describe('OAuth', () => {
       render(<OAuth {...defaultProps} />);
 
       const btn = screen.getByText('GitHub');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
@@ -141,7 +141,7 @@ describe('OAuth', () => {
       render(<OAuth {...defaultProps} />);
 
       const btn = screen.getByText('GitHub');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(setIsLoadingMock).toHaveBeenCalledTimes(1);

@@ -77,15 +77,15 @@ describe('WidgetModal', () => {
       expect(screen.getByText('Display Artifact Hub header at the top of the widget.')).toBeInTheDocument();
     });
 
-    it('updates block content to change different options', () => {
+    it('updates block content to change different options', async () => {
       render(<WidgetModal {...defaultProps} />);
 
       expect(screen.getByTestId('block-content')).toHaveTextContent(
         '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
       );
 
-      userEvent.click(screen.getByText('dark'));
-      userEvent.click(screen.getByText('Responsive'));
+      await userEvent.click(screen.getByText('dark'));
+      await userEvent.click(screen.getByText('Responsive'));
 
       expect(screen.getByTestId('block-content')).toHaveTextContent(
         '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="dark" data-header="true" data-stars="true" data-responsive="true"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'

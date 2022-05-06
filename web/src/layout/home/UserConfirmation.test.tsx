@@ -27,8 +27,10 @@ describe('UserConfirmation', () => {
 
     await waitFor(() => {
       expect(API.verifyEmail).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText(/You email has been verified! Please, login to/)).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('when email code is valid', async () => {
@@ -43,7 +45,7 @@ describe('UserConfirmation', () => {
     await waitFor(() => {
       expect(API.verifyEmail).toHaveBeenCalledTimes(1);
     });
-    expect(screen.getByText(/You email has been verified! Please, login to/)).toBeInTheDocument();
+    expect(await screen.findByText(/You email has been verified! Please, login to/)).toBeInTheDocument();
   });
 
   it('does not render component when email code is undefined', () => {
@@ -72,7 +74,7 @@ describe('UserConfirmation', () => {
       await waitFor(() => {
         expect(API.verifyEmail).toHaveBeenCalledTimes(1);
       });
-      expect(screen.getByText('Sorry, custom error')).toBeInTheDocument();
+      expect(await screen.findByText('Sorry, custom error')).toBeInTheDocument();
     });
 
     it('Code has expired', async () => {
@@ -91,7 +93,7 @@ describe('UserConfirmation', () => {
         expect(API.verifyEmail).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Sorry, email verification code has expired.')).toBeInTheDocument();
+      expect(await screen.findByText('Sorry, email verification code has expired.')).toBeInTheDocument();
     });
 
     it('default error message', async () => {
@@ -110,7 +112,7 @@ describe('UserConfirmation', () => {
       });
 
       expect(
-        screen.getByText('An error occurred verifying your email, please contact us about this issue.')
+        await screen.findByText('An error occurred verifying your email, please contact us about this issue.')
       ).toBeInTheDocument();
     });
   });

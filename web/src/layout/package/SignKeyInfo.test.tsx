@@ -39,11 +39,11 @@ describe('SignKeyInfo', () => {
       expect(screen.getByText('View key info')).toBeInTheDocument();
     });
 
-    it('opens modal', () => {
+    it('opens modal', async () => {
       render(<SignKeyInfo {...defaultProps} />);
 
       const btn = screen.getByText('View key info');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({
@@ -75,7 +75,7 @@ describe('SignKeyInfo', () => {
 
       const btn = screen.getByRole('button', { name: 'Open sign key modal' });
       expect(btn).toHaveClass('disabled');
-      userEvent.hover(btn);
+      await userEvent.hover(btn);
 
       expect(await screen.findByRole('tooltip')).toBeInTheDocument();
 

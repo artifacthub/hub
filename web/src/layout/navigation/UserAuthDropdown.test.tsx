@@ -87,7 +87,7 @@ describe('UserAuthDropdown', () => {
       expect(screen.getByText('Sign out')).toBeInTheDocument();
     });
 
-    it('loads starred packages page', () => {
+    it('loads starred packages page', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -98,11 +98,11 @@ describe('UserAuthDropdown', () => {
 
       const link = screen.getByRole('link', { name: 'Starred packages' });
       expect(link).toBeInTheDocument();
-      userEvent.click(link);
+      await userEvent.click(link);
       expect(window.location.pathname).toBe('/packages/starred');
     });
 
-    it('loads control panel page', () => {
+    it('loads control panel page', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -113,7 +113,7 @@ describe('UserAuthDropdown', () => {
 
       const link = screen.getByRole('link', { name: 'Control Panel' });
       expect(link).toBeInTheDocument();
-      userEvent.click(link);
+      await userEvent.click(link);
       expect(window.location.pathname).toBe('/control-panel');
     });
   });

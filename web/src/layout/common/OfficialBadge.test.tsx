@@ -19,7 +19,7 @@ describe('OfficialBadge', () => {
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
 
@@ -34,7 +34,7 @@ describe('OfficialBadge', () => {
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
 

@@ -81,10 +81,10 @@ describe('ChangelogModal', () => {
 
     await waitFor(() => {
       expect(API.getChangelog).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
 
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -96,14 +96,14 @@ describe('ChangelogModal', () => {
 
       const btn = screen.getByRole('button', { name: 'Open Changelog modal' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
         expect(API.getChangelog).toHaveBeenCalledWith('id');
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Get changelog markdown' })).toBeInTheDocument();
     });
 
@@ -133,13 +133,13 @@ describe('ChangelogModal', () => {
       render(<ChangelogModal {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: 'Open Changelog modal' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getAllByText('Changelog')).toHaveLength(2);
 
       const blocks = screen.getAllByTestId('changelogBlock');
@@ -153,15 +153,18 @@ describe('ChangelogModal', () => {
       render(<ChangelogModal {...defaultProps} currentVersion="0.3.0" />);
 
       const btn = screen.getByText('Changelog');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const els = screen.getAllByText(/0.3.0/);
+      const els = await screen.findAllByText(/0.3.0/);
       expect(els).toHaveLength(2);
-      expect(els[0].parentElement).toHaveClass('activeVersionBtnWrapper');
+
+      await waitFor(() => {
+        expect(els[0].parentElement).toHaveClass('activeVersionBtnWrapper');
+      });
     });
 
     it('closes modal', async () => {
@@ -174,8 +177,8 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const close = screen.getByText('Close');
-      userEvent.click(close);
+      const close = await screen.findByText('Close');
+      await userEvent.click(close);
 
       await waitFor(() => {
         expect(screen.queryByRole('dialog')).toBeNull();
@@ -192,8 +195,11 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const versionBtns = screen.getAllByTestId('versionBtnWrapper');
-      expect(versionBtns[0]).toHaveClass('activeVersionBtnWrapper');
+      const versionBtns = await screen.findAllByTestId('versionBtnWrapper');
+
+      await waitFor(() => {
+        expect(versionBtns[0]).toHaveClass('activeVersionBtnWrapper');
+      });
     });
 
     it('does not render blocks when changes is null', async () => {
@@ -206,7 +212,7 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      const btnTitles = screen.getAllByRole('button', { name: /Open version/i });
+      const btnTitles = await screen.findAllByRole('button', { name: /Open version/i });
       expect(btnTitles).toHaveLength(1);
       expect(screen.queryByText('0.4.0')).toBeNull();
     });
@@ -218,7 +224,7 @@ describe('ChangelogModal', () => {
       const { rerender } = render(<ChangelogModal {...defaultProps} />);
 
       const btn = screen.getByText('Changelog');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
@@ -227,7 +233,7 @@ describe('ChangelogModal', () => {
 
       rerender(<ChangelogModal {...defaultProps} packageId="id2" />);
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(2);
@@ -242,13 +248,13 @@ describe('ChangelogModal', () => {
       render(<ChangelogModal {...defaultProps} />);
 
       const btn = screen.getByText('Changelog');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Contains security updates')).toBeInTheDocument();
+      expect(await screen.findByText('Contains security updates')).toBeInTheDocument();
     });
 
     it('dislays pre-release badge', async () => {
@@ -258,13 +264,13 @@ describe('ChangelogModal', () => {
       render(<ChangelogModal {...defaultProps} />);
 
       const btn = screen.getByText('Changelog');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Pre-release')).toBeInTheDocument();
+      expect(await screen.findByText('Pre-release')).toBeInTheDocument();
     });
 
     it('calls again to getChangelog to render a different version', async () => {
@@ -277,13 +283,15 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       rerender(<ChangelogModal {...defaultProps} currentVersion="0.6.0" visibleChangelog />);
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(2);
       });
+
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
     });
 
     it('calls getChangelogMD', async () => {
@@ -294,14 +302,14 @@ describe('ChangelogModal', () => {
       render(<ChangelogModal {...defaultProps} />);
 
       const btn = screen.getByText('Changelog');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
       });
 
       const btnMD = screen.getByRole('button', { name: 'Get changelog markdown' });
-      userEvent.click(btnMD);
+      await userEvent.click(btnMD);
 
       await waitFor(() => {
         expect(API.getChangelogMD).toHaveBeenCalledTimes(1);
@@ -321,7 +329,7 @@ describe('ChangelogModal', () => {
       render(<ChangelogModal {...defaultProps} />);
 
       const btn = screen.getByText('Changelog');
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -329,7 +337,7 @@ describe('ChangelogModal', () => {
       });
 
       const btnMD = screen.getByRole('button', { name: 'Get changelog markdown' });
-      userEvent.click(btnMD);
+      await userEvent.click(btnMD);
 
       await waitFor(() => {
         expect(API.getChangelogMD).toHaveBeenCalledTimes(1);
@@ -340,10 +348,12 @@ describe('ChangelogModal', () => {
         });
       });
 
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred getting package changelog markdown, please try again later.',
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred getting package changelog markdown, please try again later.',
+        });
       });
     });
   });

@@ -184,19 +184,33 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
                       aria-label="org-select"
                       class="form-select"
                       required=""
-                    />
+                    >
+                      <option
+                        value=""
+                      >
+                        Select organization
+                      </option>
+                      <option
+                        value="test"
+                      >
+                        test
+                      </option>
+                      <option
+                        value="orgTest"
+                      >
+                        orgTest
+                      </option>
+                      <option
+                        value="helm"
+                      >
+                        helm
+                      </option>
+                    </select>
                     <div
                       class="invalid-feedback fieldFeedback"
                     >
                       This field is required
                     </div>
-                  </div>
-                  <div
-                    class="d-inline ms-3"
-                  >
-                    <span
-                      class="spinner-border spinner-border-sm text-primary"
-                    />
                   </div>
                 </div>
                 <small

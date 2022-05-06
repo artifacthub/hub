@@ -54,8 +54,10 @@ describe('User settings index', () => {
 
     await waitFor(() => {
       expect(API.getUserProfile).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText('Profile information')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -75,8 +77,8 @@ describe('User settings index', () => {
         expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Profile information')).toBeInTheDocument();
-      expect(screen.getByText('Change password')).toBeInTheDocument();
+      expect(await screen.findByText('Profile information')).toBeInTheDocument();
+      expect(await screen.findByText('Change password')).toBeInTheDocument();
       expect(
         screen.getByText(
           'Deleting your account will also delete all the content that belongs to it (repositories, subscriptions, webhooks, etc), as well as all organizations where you are the only member.'
@@ -101,9 +103,11 @@ describe('User settings index', () => {
         expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.queryByText('Profile information')).toBeNull();
-      expect(screen.queryByTestId('updateProfileForm')).toBeNull();
-      expect(screen.queryByText('Change password')).toBeNull();
+      await waitFor(() => {
+        expect(screen.queryByText('Profile information')).toBeNull();
+        expect(screen.queryByTestId('updateProfileForm')).toBeNull();
+        expect(screen.queryByText('Change password')).toBeNull();
+      });
     });
 
     it('calls onAuthError if error is UnauthorizedError', async () => {
@@ -123,7 +127,9 @@ describe('User settings index', () => {
         expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

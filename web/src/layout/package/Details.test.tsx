@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Package, PackageLink, Version } from '../../types';
@@ -122,20 +122,23 @@ describe('Details', () => {
         expect(keywords!.children[0]).toHaveTextContent(mockPackage.keywords![0]);
       });
 
-      it('calls history push on keyword click', () => {
+      it('calls history push on keyword click', async () => {
         const mockPackage = getMockPackage('7');
         render(<Details {...defaultProps} package={mockPackage} />);
 
         const keywordBtn = screen.getByText(mockPackage.keywords![0])!.closest('button');
         expect(keywordBtn).toBeInTheDocument();
-        userEvent.click(keywordBtn!);
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith({
-          pathname: '/packages/search',
-          search: prepareQueryString({
-            tsQueryWeb: mockPackage.keywords![0],
-            pageNumber: 1,
-          }),
+        await userEvent.click(keywordBtn!);
+
+        await waitFor(() => {
+          expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+          expect(mockHistoryPush).toHaveBeenCalledWith({
+            pathname: '/packages/search',
+            search: prepareQueryString({
+              tsQueryWeb: mockPackage.keywords![0],
+              pageNumber: 1,
+            }),
+          });
         });
       });
     });

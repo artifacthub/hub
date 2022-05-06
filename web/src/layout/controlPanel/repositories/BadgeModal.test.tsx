@@ -49,15 +49,15 @@ describe('Badge Modal - repositories section', () => {
       ).toBeInTheDocument();
     });
 
-    it('renders ascii tab', () => {
+    it('renders ascii tab', async () => {
       render(<BadgeModal {...defaultProps} />);
 
       expect(screen.getAllByText('AsciiDoc')).toHaveLength(2);
       const btns = screen.getAllByRole('button', { name: /Open tab/ });
       expect(btns[1]).toHaveTextContent('AsciiDoc');
-      userEvent.click(btns[1]);
+      await userEvent.click(btns[1]);
 
-      const badge = screen.getByAltText('Artifact HUB badge');
+      const badge = await screen.findByAltText('Artifact HUB badge');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveProperty(
         'src',

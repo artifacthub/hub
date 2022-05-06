@@ -36,8 +36,10 @@ describe('Home index', () => {
 
     await waitFor(() => {
       expect(API.getStats).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -54,6 +56,8 @@ describe('Home index', () => {
       await waitFor(() => {
         expect(API.getStats).toHaveBeenCalledTimes(1);
       });
+
+      expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
     });
 
     it('renders dash symbol when results are 0', async () => {
@@ -90,7 +94,7 @@ describe('Home index', () => {
       );
 
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
-      expect(screen.getAllByText('-')).toHaveLength(2);
+      expect(await screen.findAllByText('-')).toHaveLength(2);
     });
 
     it('renders project definition', async () => {
@@ -105,8 +109,8 @@ describe('Home index', () => {
 
       const heading = await screen.findByRole('banner');
       expect(heading).toBeInTheDocument();
-      expect(screen.getByText(/Find, install and publish/)).toBeInTheDocument();
-      expect(screen.getByText('Kubernetes packages')).toBeInTheDocument();
+      expect(await screen.findByText(/Find, install and publish/)).toBeInTheDocument();
+      expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
     });
   });
 
@@ -123,7 +127,7 @@ describe('Home index', () => {
 
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
 
-      const links = screen.getAllByRole('button');
+      const links = await screen.findAllByRole('button');
       expect(links).toHaveLength(18);
 
       expect(links[2]).toHaveProperty('href', 'https://github.com/artifacthub/hub');

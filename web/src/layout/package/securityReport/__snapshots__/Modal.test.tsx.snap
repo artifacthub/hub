@@ -10,18 +10,321 @@ exports[`SecurityModal creates snapshot 1`] = `
       <small
         class="d-flex flex-row align-items-center text-uppercase"
       >
-        <span
-          aria-hidden="true"
-          class="spinner-grow spinner-grow-sm"
-          role="status"
-        />
-        <span
-          class="ms-2"
+        <svg
+          class="me-2"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 20 20"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Getting report...
+          <path
+            d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <span>
+          Open full report
         </span>
       </small>
     </button>
+  </div>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+      >
+        <div
+          class="modal-content border border-3 mx-auto content h-100"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center header undefined"
+          >
+            <div
+              class="h3 m-2 flex-grow-1 title"
+            >
+              Security report
+            </div>
+            <button
+              aria-label="Close"
+              class="btn-close"
+              type="button"
+            />
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="m-3 h-100"
+            >
+              <div
+                class="position-relative btnWrapper "
+              >
+                <button
+                  class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inSection"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="h5 text-dark text-uppercase fw-bold mt-0 pb-2"
+                >
+                  Summary
+                </div>
+              </div>
+              <div
+                class="w-100 my-4 tableWrapper"
+              >
+                <table
+                  class="table table-bordered table-md mb-0 table"
+                >
+                  <thead>
+                    <tr
+                      class="tableTitle"
+                    >
+                      <th
+                        class="w-auto"
+                        scope="col"
+                      >
+                        Image
+                      </th>
+                      <th
+                        class="text-center"
+                        scope="col"
+                      >
+                        Rating
+                      </th>
+                      <th
+                        class="col text-center text-capitalize"
+                      >
+                        critical
+                      </th>
+                      <th
+                        class="col text-center text-capitalize"
+                      >
+                        high
+                      </th>
+                      <th
+                        class="col text-center text-capitalize"
+                      >
+                        medium
+                      </th>
+                      <th
+                        class="col text-center text-capitalize"
+                      >
+                        low
+                      </th>
+                      <th
+                        class="col text-center text-capitalize"
+                      >
+                        unknown
+                      </th>
+                      <th
+                        class="text-center"
+                        scope="col"
+                      >
+                        Total
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div
+                          class="d-table w-100 imageNameWrapper"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            rook/ceph:v1.1.1
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        <div
+                          class="d-inline-block"
+                        />
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        4
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        22
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        461
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        455
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        0
+                      </td>
+                      <td
+                        class="text-center fw-bold"
+                      >
+                        942
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="mb-5"
+              >
+                <div
+                  class="h5 my-3 pt-2"
+                >
+                  <span
+                    class="fw-bold"
+                  >
+                    109
+                  </span>
+                   vulnerabilities have been detected in this package's 
+                  <span
+                    class="fw-bold"
+                  >
+                    images
+                  </span>
+                  .
+                </div>
+                <div
+                  class="progress mb-4"
+                  style="height: 25px;"
+                >
+                  <div
+                    aria-label="Vulnerabilities number - critical"
+                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    role="progressbar"
+                    style="width: 3.669724770642202%; background-color: rgb(150, 0, 3);"
+                  >
+                    <span
+                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                    >
+                      4
+                    </span>
+                  </div>
+                  <div
+                    aria-label="Vulnerabilities number - high"
+                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    role="progressbar"
+                    style="width: 7.339449541284404%; background-color: rgb(223, 42, 25);"
+                  >
+                    <span
+                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                    >
+                      8
+                    </span>
+                  </div>
+                  <div
+                    aria-label="Vulnerabilities number - medium"
+                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    role="progressbar"
+                    style="width: 27.522935779816514%; background-color: rgb(247, 134, 15);"
+                  >
+                    <span
+                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                    >
+                      30
+                    </span>
+                  </div>
+                  <div
+                    aria-label="Vulnerabilities number - low"
+                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    role="progressbar"
+                    style="width: 61.46788990825688%; background-color: rgb(244, 189, 12);"
+                  >
+                    <span
+                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                    >
+                      67
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="overflow-hidden alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              aria-label="Close modal"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  class="me-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <div>
+                  Close
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

@@ -65,8 +65,10 @@ describe('Repository index', () => {
 
     await waitFor(() => {
       expect(API.searchRepositories).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByRole('button', { name: 'Refresh repositories list' })).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -86,7 +88,7 @@ describe('Repository index', () => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByRole('button', { name: 'Refresh repositories list' })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Refresh repositories list' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open claim repository modal' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open add repository modal' })).toBeInTheDocument();
     });
@@ -141,7 +143,7 @@ describe('Repository index', () => {
 
       const refreshBtn = await screen.findByRole('button', { name: 'Refresh repositories list' });
       expect(refreshBtn).toBeInTheDocument();
-      userEvent.click(refreshBtn);
+      await userEvent.click(refreshBtn);
 
       await waitFor(() => expect(API.searchRepositories).toHaveBeenCalledTimes(2));
     });
@@ -206,7 +208,9 @@ describe('Repository index', () => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('on error different to UnauthorizedError', async () => {
@@ -224,7 +228,7 @@ describe('Repository index', () => {
         expect(API.searchRepositories).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByRole('alert');
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting the repositories, please try again later./i);
     });

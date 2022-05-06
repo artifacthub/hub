@@ -87,7 +87,7 @@ describe('RelatedPackageCard', () => {
   });
 
   describe('Detail', () => {
-    it('opens detail page', () => {
+    it('opens detail page', async () => {
       const mockProps = getMockProps('5');
 
       render(
@@ -97,7 +97,7 @@ describe('RelatedPackageCard', () => {
       );
       const link = screen.getByTestId('relatedPackageLink');
       expect(link).toBeInTheDocument();
-      userEvent.click(link!);
+      await userEvent.click(link!);
       expect(window.location.pathname).toBe('/packages/helm/incubator/test');
     });
   });

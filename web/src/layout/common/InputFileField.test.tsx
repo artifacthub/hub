@@ -50,12 +50,12 @@ describe('InputFileField', () => {
     render(<InputFileField {...defaultProps} />);
     const input = screen.getByLabelText('message');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
-    userEvent.upload(input, file);
+    await userEvent.upload(input, file);
 
     expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-    const saveBtn = screen.getByRole('button', { name: 'Save original' });
-    userEvent.click(saveBtn);
+    const saveBtn = await screen.findByRole('button', { name: 'Save original' });
+    await userEvent.click(saveBtn);
 
     await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 
@@ -68,12 +68,12 @@ describe('InputFileField', () => {
     render(<InputFileField {...defaultProps} />);
     const input = screen.getByLabelText('message');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
-    userEvent.upload(input, file);
+    await userEvent.upload(input, file);
 
     expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-    const saveBtn = screen.getByRole('button', { name: 'Save original' });
-    userEvent.click(saveBtn);
+    const saveBtn = await screen.findByRole('button', { name: 'Save original' });
+    await userEvent.click(saveBtn);
 
     await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 
@@ -91,12 +91,12 @@ describe('InputFileField', () => {
     render(<InputFileField {...defaultProps} />);
     const input = screen.getByLabelText('message');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
-    userEvent.upload(input, file);
+    await userEvent.upload(input, file);
 
     expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-    const saveBtn = screen.getByRole('button', { name: 'Save original' });
-    userEvent.click(saveBtn);
+    const saveBtn = await screen.findByRole('button', { name: 'Save original' });
+    await userEvent.click(saveBtn);
 
     await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 
@@ -108,7 +108,7 @@ describe('InputFileField', () => {
     render(<InputFileField {...defaultProps} />);
     const input = screen.getByLabelText('message');
     const file = new File(['(text)'], 'text.txt', { type: 'text/text' });
-    userEvent.upload(input, file);
+    await userEvent.upload(input, file);
 
     await waitFor(() => expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1));
     expect(alertDispatcher.postAlert).toHaveBeenCalledWith({

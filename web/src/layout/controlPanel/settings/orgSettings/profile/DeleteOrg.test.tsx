@@ -85,14 +85,14 @@ describe('DeleteOrg', () => {
       expect(modal).not.toHaveClass('d-block');
 
       const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(screen.getByRole('button', { name: 'Delete organization' })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Delete organization' })).toBeInTheDocument();
       expect(screen.getByText('Cancel')).toBeInTheDocument();
       expect(modal).toHaveClass('d-block');
 
-      const cancelBtn = screen.getByText('Cancel');
-      userEvent.click(cancelBtn);
+      const cancelBtn = await screen.findByText('Cancel');
+      await userEvent.click(cancelBtn);
 
       expect(await screen.findByRole('dialog')).not.toHaveClass('d-block');
     });
@@ -111,21 +111,21 @@ describe('DeleteOrg', () => {
         expect(modal).not.toHaveClass('d-block');
 
         const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
-        const txt = screen.getByTestId('confirmationText');
+        const txt = await screen.findByTestId('confirmationText');
         expect(txt).toHaveTextContent('Please type orgTest to confirm:');
 
         const deleteBtn = screen.getByRole('button', { name: 'Delete organization' });
         expect(deleteBtn).toBeDisabled();
 
         const input = screen.getByRole('textbox');
-        userEvent.type(input, 'orgTest');
+        await userEvent.type(input, 'orgTest');
 
         expect(await screen.findByRole('button', { name: 'Delete organization' })).toBeEnabled();
-        userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
         expect(screen.getByText('Deleting...')).toBeInTheDocument();
 
@@ -134,8 +134,10 @@ describe('DeleteOrg', () => {
           expect(API.deleteOrganization).toHaveBeenCalledWith('orgTest');
         });
 
-        expect(mockDispatch).toHaveBeenCalledTimes(1);
-        expect(mockDispatch).toHaveBeenCalledWith({ type: 'unselectOrg' });
+        await waitFor(() => {
+          expect(mockDispatch).toHaveBeenCalledTimes(1);
+          expect(mockDispatch).toHaveBeenCalledWith({ type: 'unselectOrg' });
+        });
       });
 
       describe('on error', () => {
@@ -151,24 +153,26 @@ describe('DeleteOrg', () => {
           );
 
           const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
-          userEvent.click(btn);
+          await userEvent.click(btn);
 
           expect(await screen.getByRole('dialog')).toHaveClass('d-block');
 
           const input = screen.getByRole('textbox');
-          userEvent.type(input, 'orgTest');
+          await userEvent.type(input, 'orgTest');
 
           expect(await screen.findByRole('button', { name: 'Delete organization' })).toBeEnabled();
-          userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
+          await userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
           await waitFor(() => {
             expect(API.deleteOrganization).toHaveBeenCalledTimes(1);
           });
 
-          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-            type: 'danger',
-            message: 'An error occurred deleting the organization, please try again later.',
+          await waitFor(() => {
+            expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+            expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+              type: 'danger',
+              message: 'An error occurred deleting the organization, please try again later.',
+            });
           });
         });
 
@@ -184,24 +188,26 @@ describe('DeleteOrg', () => {
           );
 
           const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
-          userEvent.click(btn);
+          await userEvent.click(btn);
 
           expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
           const input = screen.getByRole('textbox');
-          userEvent.type(input, 'orgTest');
+          await userEvent.type(input, 'orgTest');
 
           expect(await screen.getByRole('button', { name: 'Delete organization' })).toBeEnabled();
-          userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
+          await userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
           await waitFor(() => {
             expect(API.deleteOrganization).toHaveBeenCalledTimes(1);
           });
 
-          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-            type: 'danger',
-            message: 'You do not have permissions to delete the organization.',
+          await waitFor(() => {
+            expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+            expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+              type: 'danger',
+              message: 'You do not have permissions to delete the organization.',
+            });
           });
         });
 
@@ -217,21 +223,23 @@ describe('DeleteOrg', () => {
           );
 
           const btn = screen.getByRole('button', { name: 'Open delete organization modal' });
-          userEvent.click(btn);
+          await userEvent.click(btn);
 
           expect(await screen.findByRole('dialog')).toHaveClass('d-block');
 
           const input = screen.getByRole('textbox');
-          userEvent.type(input, 'orgTest');
+          await userEvent.type(input, 'orgTest');
 
           expect(await screen.findByRole('button', { name: 'Delete organization' })).toBeEnabled();
-          userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
+          await userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
           await waitFor(() => {
             expect(API.deleteOrganization).toHaveBeenCalledTimes(1);
           });
 
-          expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+          await waitFor(() => {
+            expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+          });
         });
       });
     });

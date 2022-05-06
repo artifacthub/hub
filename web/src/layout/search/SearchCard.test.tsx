@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -85,7 +85,7 @@ describe('SearchCard', () => {
   });
 
   describe('Repository button', () => {
-    it('renders repository link', () => {
+    it('renders repository link', async () => {
       const mockPackage = getMockPackage('6');
 
       render(
@@ -99,20 +99,23 @@ describe('SearchCard', () => {
       expect(icons).toHaveLength(8);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
-      userEvent.click(buttons[0]!);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          filters: {
-            repo: [mockPackage.repository.name],
-          },
-        }),
+      await userEvent.click(buttons[0]!);
+
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            pageNumber: 1,
+            filters: {
+              repo: [mockPackage.repository.name],
+            },
+          }),
+        });
       });
     });
 
-    it('renders user link', () => {
+    it('renders user link', async () => {
       const mockPackage = getMockPackage('7');
 
       render(
@@ -122,20 +125,23 @@ describe('SearchCard', () => {
       );
       const button = screen.getByTestId('userLink');
       expect(button).toBeInTheDocument();
-      userEvent.click(button);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          filters: {
-            user: [mockPackage.repository.userAlias!],
-          },
-        }),
+      await userEvent.click(button);
+
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            pageNumber: 1,
+            filters: {
+              user: [mockPackage.repository.userAlias!],
+            },
+          }),
+        });
       });
     });
 
-    it('renders repo kind link', () => {
+    it('renders repo kind link', async () => {
       const mockPackage = getMockPackage('8');
 
       render(
@@ -145,16 +151,19 @@ describe('SearchCard', () => {
       );
       const buttons = screen.getAllByTestId('repoIconLabelLink');
       expect(buttons).toHaveLength(2);
-      userEvent.click(buttons[0]);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          filters: {
-            kind: ['1'],
-          },
-        }),
+      await userEvent.click(buttons[0]);
+
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            pageNumber: 1,
+            filters: {
+              kind: ['1'],
+            },
+          }),
+        });
       });
     });
   });

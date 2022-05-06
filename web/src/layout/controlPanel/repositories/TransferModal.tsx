@@ -219,7 +219,7 @@ const TransferRepositoryModal = (props: Props) => {
               <div className={`invalid-feedback ${styles.fieldFeedback}`}>This field is required</div>
             </div>
             {isFetchingOrgs && (
-              <div className="d-inline ms-3">
+              <div className="d-inline ms-3" role="status">
                 <span className="spinner-border spinner-border-sm text-primary" />
               </div>
             )}

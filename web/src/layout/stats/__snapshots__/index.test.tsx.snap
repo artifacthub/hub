@@ -85,24 +85,6 @@ exports[`StatsView creates snapshot 1`] = `
               <div
                 class="card chartWrapper"
               >
-                <div
-                  class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="spinner-border text-primary spinner"
-                      role="status"
-                    >
-                      <span
-                        class="visually-hidden"
-                      >
-                        Loading...
-                      </span>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   Chart
                 </div>
@@ -118,24 +100,59 @@ exports[`StatsView creates snapshot 1`] = `
               <div
                 class="card chartWrapper"
               >
-                <div
-                  class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="spinner-border text-primary spinner"
-                      role="status"
-                    >
-                      <span
-                        class="visually-hidden"
-                      >
-                        Loading...
-                      </span>
-                    </div>
-                  </div>
+                <div>
+                  Chart
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row my-4 pb-0 pb-lg-4"
+        >
+          <div
+            class="col-12 col-lg-6"
+          >
+            <div
+              class="pe-0 pe-lg-3 pe-xxxl-4 mt-4 mb-4 mb-lg-0"
+            >
+              <div
+                class="card chartWrapper"
+              >
+                <div>
+                  Chart
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-12 col-lg-6"
+          >
+            <div
+              class="ps-0 ps-lg-3 ps-xxxl-4 mt-4"
+            >
+              <div
+                class="card chartWrapper"
+              >
+                <div>
+                  Chart
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row my-4 pb-4"
+        >
+          <div
+            class="col-12"
+          >
+            <div
+              class="mt-4"
+            >
+              <div
+                class="card chartWrapper"
+              >
                 <div>
                   Chart
                 </div>
@@ -187,24 +204,6 @@ exports[`StatsView creates snapshot 1`] = `
             <div
               class="card chartWrapper"
             >
-              <div
-                class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-              >
-                <div
-                  class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                >
-                  <div
-                    class="spinner-border text-primary spinner"
-                    role="status"
-                  >
-                    <span
-                      class="visually-hidden"
-                    >
-                      Loading...
-                    </span>
-                  </div>
-                </div>
-              </div>
               <div>
                 Chart
               </div>
@@ -258,24 +257,6 @@ exports[`StatsView creates snapshot 1`] = `
               <div
                 class="card chartWrapper"
               >
-                <div
-                  class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="spinner-border text-primary spinner"
-                      role="status"
-                    >
-                      <span
-                        class="visually-hidden"
-                      >
-                        Loading...
-                      </span>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   Chart
                 </div>
@@ -291,24 +272,6 @@ exports[`StatsView creates snapshot 1`] = `
               <div
                 class="card chartWrapper"
               >
-                <div
-                  class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="spinner-border text-primary spinner"
-                      role="status"
-                    >
-                      <span
-                        class="visually-hidden"
-                      >
-                        Loading...
-                      </span>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   Chart
                 </div>

@@ -38,8 +38,9 @@ describe('StarredPackagesView', () => {
 
     await waitFor(() => {
       expect(API.getStarredByUser).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+    expect(await screen.findByText('Your starred packages')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -56,7 +57,7 @@ describe('StarredPackagesView', () => {
       await waitFor(() => {
         expect(API.getStarredByUser).toHaveBeenCalledTimes(1);
       });
-      expect(screen.getByText('Your starred packages')).toBeInTheDocument();
+      expect(await screen.findByText('Your starred packages')).toBeInTheDocument();
     });
   });
 

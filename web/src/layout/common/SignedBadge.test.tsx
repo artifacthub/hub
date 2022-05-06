@@ -20,7 +20,7 @@ describe('SignedBadge', () => {
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(screen.queryByRole('tooltip')).toBeNull();
   });
@@ -31,7 +31,7 @@ describe('SignedBadge', () => {
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
 
@@ -44,7 +44,7 @@ describe('SignedBadge', () => {
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
 
@@ -59,7 +59,7 @@ describe('SignedBadge', () => {
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
 
@@ -74,7 +74,7 @@ describe('SignedBadge', () => {
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
 
@@ -84,13 +84,13 @@ describe('SignedBadge', () => {
     expect(screen.getByText(/(Sigstore)/)).toBeInTheDocument();
   });
 
-  it('does not render label for not helm package or container image', () => {
+  it('does not render label for not helm package or container image', async () => {
     render(<SignedBadge repositoryKind={1} signed signatures={[Signature.Prov]} />);
     expect(screen.getByText('Signed')).toBeInTheDocument();
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
-    userEvent.hover(badge);
+    await userEvent.hover(badge);
 
     expect(screen.queryByText('This chart has a provenance file')).toBeNull();
     expect(screen.queryByRole('tooltip')).toBeNull();

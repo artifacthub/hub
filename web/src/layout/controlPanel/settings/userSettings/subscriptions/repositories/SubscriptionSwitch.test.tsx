@@ -72,7 +72,7 @@ describe('SubscriptionSwitch', () => {
       expect(checkbox).not.toBeChecked();
       expect(checkbox).toBeEnabled();
 
-      userEvent.click(checkbox);
+      await userEvent.click(checkbox);
 
       expect(await screen.findByRole('status')).toBeInTheDocument();
 

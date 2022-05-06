@@ -38,10 +38,10 @@ describe('ResetPassword visibleTitle', () => {
 
       render(<ResetPassword visibleTitle />);
 
-      userEvent.type(screen.getByRole('textbox', { name: 'Email' }), 'test@email.com');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Email' }), 'test@email.com');
 
       const btn = screen.getByRole('button', { name: 'Send password reset email' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.requestPasswordResetCode).toHaveBeenCalledTimes(1);
@@ -61,16 +61,18 @@ describe('ResetPassword visibleTitle', () => {
 
       render(<ResetPassword visibleTitle onFinish={onFinishMock} />);
 
-      userEvent.type(screen.getByRole('textbox', { name: 'Email' }), 'test@email.com');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Email' }), 'test@email.com');
 
       const btn = screen.getByRole('button', { name: 'Send password reset email' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.requestPasswordResetCode).toHaveBeenCalledTimes(1);
       });
 
-      expect(onFinishMock).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(onFinishMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

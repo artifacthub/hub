@@ -98,15 +98,15 @@ describe('Member Card - members section', () => {
 
       const modalBtn = screen.getByRole('button', { name: 'Open leave organization modal' });
       expect(modalBtn).toBeInTheDocument();
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
       expect(
         screen.getByText('Are you sure you want to remove this member from this organization?')
       ).toBeInTheDocument();
 
-      const btn = screen.getByRole('button', { name: 'Remove member' });
+      const btn = await screen.findByRole('button', { name: 'Remove member' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
@@ -133,12 +133,12 @@ describe('Member Card - members section', () => {
 
       const modalBtn = screen.getByRole('button', { name: 'Open leave organization modal' });
       expect(modalBtn).toBeInTheDocument();
-      userEvent.click(modalBtn);
+      await userEvent.click(modalBtn);
 
       expect(screen.getByText('Are you sure you want to leave this organization?')).toBeInTheDocument();
 
-      const btn = screen.getByRole('button', { name: 'Leave organization' });
-      userEvent.click(btn);
+      const btn = await screen.findByRole('button', { name: 'Leave organization' });
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);

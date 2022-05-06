@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -128,7 +128,7 @@ describe('MobileSettings', () => {
       expect(screen.getByText('Sign out')).toBeInTheDocument();
     });
 
-    it('loads starred packages page', () => {
+    it('loads starred packages page', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -139,11 +139,11 @@ describe('MobileSettings', () => {
 
       const link = screen.getByRole('link', { name: 'Starred packages' });
       expect(link).toBeInTheDocument();
-      userEvent.click(link);
+      await userEvent.click(link);
       expect(window.location.pathname).toBe('/packages/starred');
     });
 
-    it('loads control panel page', () => {
+    it('loads control panel page', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -154,7 +154,7 @@ describe('MobileSettings', () => {
 
       const link = screen.getByRole('link', { name: 'Control Panel' });
       expect(link).toBeInTheDocument();
-      userEvent.click(link);
+      await userEvent.click(link);
       expect(window.location.pathname).toBe('/control-panel');
     });
   });
@@ -173,7 +173,7 @@ describe('MobileSettings', () => {
       expect(screen.getByText('Sign up')).toBeInTheDocument();
     });
 
-    it('calls open Sign in modal to click Sign in button', () => {
+    it('calls open Sign in modal to click Sign in button', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -183,11 +183,13 @@ describe('MobileSettings', () => {
       );
 
       const btn = screen.getByText('Sign in');
-      userEvent.click(btn);
-      expect(setOpenLogInMock).toHaveBeenCalledTimes(1);
+      await userEvent.click(btn);
+      await waitFor(() => {
+        expect(setOpenLogInMock).toHaveBeenCalledTimes(1);
+      });
     });
 
-    it('calls open Sign up modal to click Sign up button', () => {
+    it('calls open Sign up modal to click Sign up button', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -197,8 +199,10 @@ describe('MobileSettings', () => {
       );
 
       const btn = screen.getByText('Sign up');
-      userEvent.click(btn);
-      expect(setOpenSignUpMock).toHaveBeenCalledTimes(1);
+      await userEvent.click(btn);
+      await waitFor(() => {
+        expect(setOpenSignUpMock).toHaveBeenCalledTimes(1);
+      });
     });
   });
 

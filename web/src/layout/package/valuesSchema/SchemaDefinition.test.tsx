@@ -119,7 +119,7 @@ describe('SchemaDefinition', () => {
       expect(screen.getByText('Enum')).toBeInTheDocument();
     });
 
-    it('calls setActivePathMock', () => {
+    it('calls setActivePathMock', async () => {
       const props = getProps('6');
       render(<SchemaDefinition {...props} {...defaultProps} isExpanded={false} />);
 
@@ -127,10 +127,12 @@ describe('SchemaDefinition', () => {
       expect(screen.queryByText('Constraints')).toBeNull();
 
       const btn = screen.getByRole('button', { name: /Show detail/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
-      expect(onActivePathChangeMock).toHaveBeenCalledTimes(1);
-      expect(onActivePathChangeMock).toHaveBeenCalledWith('currentPath');
+      await waitFor(() => {
+        expect(onActivePathChangeMock).toHaveBeenCalledTimes(1);
+        expect(onActivePathChangeMock).toHaveBeenCalledWith('currentPath');
+      });
     });
 
     it('renders ENUM', () => {
@@ -156,7 +158,7 @@ describe('SchemaDefinition', () => {
       expect(screen.getByText('Required')).toHaveClass('bg-success');
     });
 
-    it('renders value with different options', () => {
+    it('renders value with different options', async () => {
       const props = getProps('9');
       const { rerender } = render(<SchemaDefinition {...props} {...defaultProps} />);
 
@@ -164,7 +166,7 @@ describe('SchemaDefinition', () => {
       expect(select).toBeInTheDocument();
       expect(screen.getByText('object')).toBeInTheDocument();
 
-      userEvent.selectOptions(select, '2');
+      await userEvent.selectOptions(select, '2');
 
       expect(setValueMock).toHaveBeenCalledTimes(1);
       expect(setValueMock).toHaveBeenCalledWith({
@@ -220,7 +222,7 @@ describe('SchemaDefinition', () => {
       expect(screen.getByText('null')).toBeInTheDocument();
     });
 
-    it('renders 2 different types', () => {
+    it('renders 2 different types', async () => {
       const props = getProps('10');
       render(<SchemaDefinition {...props} {...defaultProps} />);
 
@@ -229,7 +231,7 @@ describe('SchemaDefinition', () => {
       expect(select).toBeInTheDocument();
       expect(screen.getByText('Constraints')).toBeInTheDocument();
 
-      userEvent.selectOptions(select, 'null');
+      await userEvent.selectOptions(select, 'null');
 
       expect(screen.queryByText('Constraints')).toBeNull();
     });

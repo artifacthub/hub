@@ -19,12 +19,12 @@ describe('CapabilityLevelInfoModal', () => {
       expect(screen.getByText('Capability level')).toBeInTheDocument();
     });
 
-    it('opens modal', () => {
+    it('opens modal', async () => {
       render(<CapabilityLevelInfoModal />);
 
       expect(screen.getByRole('dialog')).not.toHaveClass('active');
       const btn = screen.getByRole('button', { name: /Open modal/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(screen.getByRole('dialog')).toHaveClass('active');
       expect(screen.getByAltText('Capability Level Diagram')).toBeInTheDocument();

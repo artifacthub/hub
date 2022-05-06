@@ -58,7 +58,7 @@ describe('ScreenshotsModal', () => {
   });
 
   describe('Render', () => {
-    it('opens next screenshot', () => {
+    it('opens next screenshot', async () => {
       render(
         <Router>
           <ScreenshotsModal {...defaultProps} />
@@ -68,7 +68,7 @@ describe('ScreenshotsModal', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
 
       const nextBtn = screen.getByRole('button', { name: 'Go to next screenshot' });
-      userEvent.click(nextBtn);
+      await userEvent.click(nextBtn);
 
       expect(screen.getByText('Packages search')).toBeInTheDocument();
     });
@@ -82,7 +82,7 @@ describe('ScreenshotsModal', () => {
 
       const btn = screen.getByRole('button', { name: 'Open screenshots modal' });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getByText('Home page')).toBeInTheDocument();

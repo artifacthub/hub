@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -123,7 +123,7 @@ describe('ThemeMode', () => {
     expect(automaticOpt).toBeChecked();
   });
 
-  it('changes active theme', () => {
+  it('changes active theme', async () => {
     render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
@@ -138,12 +138,14 @@ describe('ThemeMode', () => {
     const darkLabel = screen.getByText(/Dark/);
     const darkOpt = screen.getByRole('radio', { name: 'Dark' });
     expect(darkOpt).not.toBeChecked();
-    userEvent.click(darkLabel);
+    await userEvent.click(darkLabel);
 
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'updateTheme',
-      theme: 'dark',
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledTimes(1);
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'updateTheme',
+        theme: 'dark',
+      });
     });
   });
 });

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { ChartTemplate } from '../../../types';
@@ -73,7 +73,7 @@ describe('TemplatesList', () => {
       expect(btns[1]).toHaveTextContent('Template:db_migrator_secret.yamlResource:Secret');
     });
 
-    it('filters templates', () => {
+    it('filters templates', async () => {
       render(
         <TemplatesList
           {...defaultProps}
@@ -85,12 +85,12 @@ describe('TemplatesList', () => {
       expect(screen.getAllByRole('button', { name: /Show template/ })).toHaveLength(16);
 
       const input = screen.getByPlaceholderText('Search by template or resource kind');
-      userEvent.type(input, 'role');
+      await userEvent.type(input, 'role');
 
-      expect(screen.getAllByRole('button', { name: /Show template/ })).toHaveLength(1);
+      expect(await screen.findAllByRole('button', { name: /Show template/ })).toHaveLength(1);
     });
 
-    it('changes active template', () => {
+    it('changes active template', async () => {
       render(
         <TemplatesList
           {...defaultProps}
@@ -100,15 +100,17 @@ describe('TemplatesList', () => {
       );
 
       const btns = screen.getAllByRole('button', { name: /Show template/ });
-      userEvent.click(btns[4]);
+      await userEvent.click(btns[4]);
 
-      expect(onTemplateChangeMock).toHaveBeenCalledTimes(1);
-      expect(onTemplateChangeMock).toHaveBeenCalledWith({
-        data: '{{- if .Values.hub.ingress.enabled -}}\napiVersion: networking.k8s.io/v1beta1\nkind: Ingress\nmetadata:\n  name: {{ include "chart.resourceNamePrefix" . }}hub\n  labels:\n    app.kubernetes.io/component: hub\n    {{- include "chart.labels" . | nindent 4 }}\n  {{- with .Values.hub.ingress.annotations }}\n  annotations:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\nspec:\n  backend:\n    serviceName: {{ include "chart.resourceNamePrefix" . }}hub\n    servicePort: {{ .Values.hub.service.port }}\n  {{- with .Values.hub.ingress.rules }}\n  rules:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n  {{- with .Values.hub.ingress.tls }}\n  tls:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n{{- end }}\n',
-        fileName: 'hub_ingress',
-        name: 'hub_ingress.yaml',
-        resourceKinds: ['Ingress'],
-        type: 0,
+      await waitFor(() => {
+        expect(onTemplateChangeMock).toHaveBeenCalledTimes(1);
+        expect(onTemplateChangeMock).toHaveBeenCalledWith({
+          data: '{{- if .Values.hub.ingress.enabled -}}\napiVersion: networking.k8s.io/v1beta1\nkind: Ingress\nmetadata:\n  name: {{ include "chart.resourceNamePrefix" . }}hub\n  labels:\n    app.kubernetes.io/component: hub\n    {{- include "chart.labels" . | nindent 4 }}\n  {{- with .Values.hub.ingress.annotations }}\n  annotations:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\nspec:\n  backend:\n    serviceName: {{ include "chart.resourceNamePrefix" . }}hub\n    servicePort: {{ .Values.hub.service.port }}\n  {{- with .Values.hub.ingress.rules }}\n  rules:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n  {{- with .Values.hub.ingress.tls }}\n  tls:\n    {{- toYaml . | nindent 4 }}\n  {{- end }}\n{{- end }}\n',
+          fileName: 'hub_ingress',
+          name: 'hub_ingress.yaml',
+          resourceKinds: ['Ingress'],
+          type: 0,
+        });
       });
     });
   });

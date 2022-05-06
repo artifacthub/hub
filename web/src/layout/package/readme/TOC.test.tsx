@@ -1,7 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import TOC from './TOC';
+jest.mock('react-markdown', () => () => <div>Readme</div>);
+jest.mock('remark-gfm', () => () => <div />);
 
 const defaultProps = {
   title: 'Readme',
@@ -65,11 +67,11 @@ describe('TOC', () => {
       expect(screen.getByRole('button', { name: /Table of contents/ })).toBeInTheDocument();
     });
 
-    it('displays dropdown', () => {
+    it('displays dropdown', async () => {
       render(<TOC {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: /Table of contents/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(screen.getByRole('listbox')).toBeInTheDocument();
       expect(screen.getByText('Title 1')).toBeInTheDocument();
@@ -81,15 +83,17 @@ describe('TOC', () => {
       expect(screen.getByText('Subtitle 2')).toBeInTheDocument();
     });
 
-    it('displays dropdown', () => {
+    it('displays dropdown', async () => {
       render(<TOC {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: /Table of contents/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
       expect(screen.getByRole('listbox')).toBeInTheDocument();
 
-      userEvent.click(btn);
-      expect(screen.queryByRole('listbox')).toBeNull();
+      await userEvent.click(btn);
+      await waitFor(() => {
+        expect(screen.queryByRole('listbox')).toBeNull();
+      });
     });
 
     it('renders support button', () => {

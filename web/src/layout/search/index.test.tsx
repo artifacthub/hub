@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -57,8 +57,10 @@ describe('Search index', () => {
 
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(await screen.findByRole('status')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -75,6 +77,8 @@ describe('Search index', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
+
+      expect(await screen.findByRole('status')).toBeInTheDocument();
     });
 
     it('displays correct search results text', async () => {
@@ -91,9 +95,9 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const results = screen.getByRole('status');
-      expect(results).toBeInTheDocument();
-      expect(results).toHaveTextContent('1 - 7 of 7 results for "test"');
+      await waitFor(() => {
+        expect(screen.getByRole('status')).toHaveTextContent('1 - 7 of 7 results for "test"');
+      });
     });
 
     it('renders correct legend with some filters applied', async () => {
@@ -110,9 +114,7 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const results = screen.getByRole('status');
-      expect(results).toBeInTheDocument();
-      expect(screen.getByText(/(some filters applied)/i)).toBeInTheDocument();
+      expect(await screen.findByText(/(some filters applied)/i)).toBeInTheDocument();
 
       expect(screen.getByRole('button', { name: 'Remove filter: Repository - Stable' })).toBeInTheDocument();
     });
@@ -130,7 +132,7 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByRole('alert');
+      const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('An error occurred searching packages, please try again later.');
     });
@@ -182,7 +184,7 @@ describe('Search index', () => {
       );
 
       const facets = await screen.findAllByRole('menuitem');
-      const options = screen.getAllByRole('checkbox');
+      const options = await screen.findAllByRole('checkbox');
 
       // Desktop + mobile (sidebar)
       expect(facets).toHaveLength(2 * 3);
@@ -200,17 +202,19 @@ describe('Search index', () => {
       );
 
       const opts = await screen.findAllByLabelText(/Chart/);
-      userEvent.click(opts[0]);
+      await userEvent.click(opts[0]);
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: { kind: ['0'] },
-          deprecated: false,
-        }),
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: 'test',
+            pageNumber: 1,
+            filters: { kind: ['0'] },
+            deprecated: false,
+          }),
+        });
       });
     });
 
@@ -224,10 +228,10 @@ describe('Search index', () => {
         </Router>
       );
 
-      await waitFor(() => {
-        expect(screen.queryAllByTestId('facetBlock')).toHaveLength(0);
-        expect(screen.queryByRole('complementary')).toBeNull();
-      });
+      const packages = await screen.findAllByRole('listitem');
+      expect(packages).toHaveLength(7);
+
+      expect(screen.queryAllByRole('menuitem')).toHaveLength(0);
     });
   });
 
@@ -245,8 +249,11 @@ describe('Search index', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
-      const pagination = screen.queryByLabelText('pagination');
-      expect(pagination).toBeNull();
+
+      await waitFor(() => {
+        const pagination = screen.queryByLabelText('pagination');
+        expect(pagination).toBeNull();
+      });
     });
 
     it('renders pagination', async () => {
@@ -262,8 +269,7 @@ describe('Search index', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
-      const pagination = screen.getByLabelText('pagination');
-      expect(pagination).toBeInTheDocument();
+      expect(await screen.findByLabelText('pagination')).toBeInTheDocument();
     });
 
     it('calls history push on page change keeping current active filters', async () => {
@@ -285,20 +291,22 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const pagination = screen.getByLabelText('pagination');
-      expect(pagination).toBeInTheDocument();
+      expect(await screen.findByLabelText('pagination')).toBeInTheDocument();
 
-      const button = within(pagination!).getByText('2');
-      userEvent.click(button);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: 'test',
-          pageNumber: 2,
-          filters: { kind: ['0'] },
-          deprecated: false,
-        }),
+      const button = screen.getByText('2');
+      await userEvent.click(button);
+
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: 'test',
+            pageNumber: 2,
+            filters: { kind: ['0'] },
+            deprecated: false,
+          }),
+        });
       });
     });
   });
@@ -313,6 +321,8 @@ describe('Search index', () => {
           <SearchView {...defaultProps} />
         </Router>
       );
+
+      expect(await screen.findByLabelText('pagination')).toBeInTheDocument();
 
       const paginationLimit = (await screen.findByLabelText('pagination-limit')) as HTMLSelectElement;
       expect(paginationLimit.value).toBe('20');
@@ -333,20 +343,24 @@ describe('Search index', () => {
         </Router>
       );
 
+      expect(await screen.findByLabelText('pagination')).toBeInTheDocument();
+
       const paginationLimit = (await screen.findByLabelText('pagination-limit')) as HTMLSelectElement;
       expect(paginationLimit.value).toBe('20');
 
-      userEvent.selectOptions(paginationLimit, '60');
+      await userEvent.selectOptions(paginationLimit, '60');
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: {},
-          deprecated: false,
-        }),
+      await waitFor(() => {
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+        expect(mockHistoryReplace).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: 'test',
+            pageNumber: 1,
+            filters: {},
+            deprecated: false,
+          }),
+        });
       });
     });
   });
@@ -363,17 +377,19 @@ describe('Search index', () => {
       );
 
       const opts = await screen.findAllByLabelText(/Falco rules/);
-      userEvent.click(opts[0]);
+      await userEvent.click(opts[0]);
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: { kind: ['1'] },
-          deprecated: false,
-        }),
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: 'test',
+            pageNumber: 1,
+            filters: { kind: ['1'] },
+            deprecated: false,
+          }),
+        });
       });
     });
 
@@ -388,17 +404,19 @@ describe('Search index', () => {
       );
 
       const opts = await screen.findAllByLabelText(/Helm charts/);
-      userEvent.click(opts[0]);
+      await userEvent.click(opts[0]);
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: { repo: ['stable'], kind: ['0'] },
-          deprecated: false,
-        }),
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: 'test',
+            pageNumber: 1,
+            filters: { repo: ['stable'], kind: ['0'] },
+            deprecated: false,
+          }),
+        });
       });
     });
 
@@ -413,17 +431,19 @@ describe('Search index', () => {
       );
 
       const opts = await screen.findAllByLabelText(/Helm charts/);
-      userEvent.click(opts[0]);
+      await userEvent.click(opts[0]);
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: { repo: ['stable'], kind: ['0'] },
-          deprecated: false,
-        }),
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: 'test',
+            pageNumber: 1,
+            filters: { repo: ['stable'], kind: ['0'] },
+            deprecated: false,
+          }),
+        });
       });
     });
   });
@@ -455,7 +475,7 @@ describe('Search index', () => {
       const main = await screen.findByRole('main');
 
       expect(main).toBeInTheDocument();
-      const checks = screen.getAllByRole('checkbox');
+      const checks = await screen.findAllByRole('checkbox');
       expect(checks).toHaveLength(38);
 
       rerender(
@@ -500,18 +520,20 @@ describe('Search index', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
-      const buttons = screen.getAllByRole('button', { name: 'Reset filters' });
+      const buttons = await screen.findAllByRole('button', { name: 'Reset filters' });
       expect(buttons).toHaveLength(2);
       expect(buttons[0]).toHaveTextContent('Reset');
-      userEvent.click(buttons[0]);
+      await userEvent.click(buttons[0]);
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          tsQueryWeb: 'test',
-        }),
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            pageNumber: 1,
+            tsQueryWeb: 'test',
+          }),
+        });
       });
     });
 
@@ -529,17 +551,19 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const browseAllBtn = screen.getByRole('button', { name: /Browse all packages/i });
+      const browseAllBtn = await screen.findByRole('button', { name: /Browse all packages/i });
       expect(browseAllBtn).toBeInTheDocument();
-      userEvent.click(browseAllBtn);
+      await userEvent.click(browseAllBtn);
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          tsQueryWeb: '',
-        }),
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            pageNumber: 1,
+            tsQueryWeb: '',
+          }),
+        });
       });
     });
 
@@ -557,18 +581,20 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = screen.getAllByRole('button', { name: 'Reset filters' });
+      const buttons = await screen.findAllByRole('button', { name: 'Reset filters' });
       expect(buttons).toHaveLength(3);
       expect(buttons[2]).toHaveTextContent('reset the filters');
-      userEvent.click(buttons[2]);
+      await userEvent.click(buttons[2]);
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          tsQueryWeb: 'test',
-        }),
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            pageNumber: 1,
+            tsQueryWeb: 'test',
+          }),
+        });
       });
     });
   });
@@ -584,6 +610,10 @@ describe('Search index', () => {
         </Router>
       );
 
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
       const sortOpts = (await screen.findByLabelText('sort-options')) as HTMLSelectElement;
       expect(sortOpts.value).toBe('relevance');
     });
@@ -598,21 +628,27 @@ describe('Search index', () => {
         </Router>
       );
 
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
       const sortOpts = (await screen.findByLabelText('sort-options')) as HTMLSelectElement;
       expect(sortOpts.value).toBe('relevance');
 
       fireEvent.change(sortOpts, { target: { value: 'stars' } });
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: {},
-          deprecated: false,
-          sort: 'stars',
-        }),
+      await waitFor(() => {
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+        expect(mockHistoryReplace).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: 'test',
+            pageNumber: 1,
+            filters: {},
+            deprecated: false,
+            sort: 'stars',
+          }),
+        });
       });
     });
 
@@ -627,6 +663,10 @@ describe('Search index', () => {
           </Router>
         );
 
+        await waitFor(() => {
+          expect(API.searchPackages).toHaveBeenCalledTimes(1);
+        });
+
         const sortOpts = await waitFor(() => screen.queryByLabelText('sort-options') as HTMLSelectElement);
         expect(sortOpts).toBeNull();
       });
@@ -640,6 +680,10 @@ describe('Search index', () => {
             <SearchView {...defaultProps} tsQueryWeb="" />
           </Router>
         );
+
+        await waitFor(() => {
+          expect(API.searchPackages).toHaveBeenCalledTimes(1);
+        });
 
         const sortOpts = await waitFor(() => screen.queryByLabelText('sort-options') as HTMLSelectElement);
         expect(sortOpts).toBeNull();
@@ -662,7 +706,7 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByRole('button', { name: 'Remove filter: Only official' })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Remove filter: Only official' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Remove filter: Only verified publishers' })).toBeInTheDocument();
     });
 
@@ -680,17 +724,19 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      userEvent.click(screen.getByRole('button', { name: 'Remove filter: Only official' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Remove filter: Only official' }));
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          deprecated: false,
-          verifiedPublisher: true,
-        }),
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/search',
+          search: prepareQueryString({
+            tsQueryWeb: 'test',
+            pageNumber: 1,
+            deprecated: false,
+            verifiedPublisher: true,
+          }),
+        });
       });
     });
 
@@ -708,7 +754,7 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByRole('button', { name: 'Remove filter: Category - Database' })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Remove filter: Category - Database' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Remove filter: Category - Logging and Tracing' })).toBeInTheDocument();
     });
   });

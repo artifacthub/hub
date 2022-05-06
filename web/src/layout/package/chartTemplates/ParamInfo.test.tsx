@@ -2,6 +2,8 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import ParamInfo from './ParamInfo';
+jest.mock('react-markdown', () => () => <div />);
+jest.mock('remark-gfm', () => () => <div />);
 
 const defaultProps = {
   element: <span>element</span>,
@@ -29,7 +31,7 @@ describe('ParamInfo', () => {
     });
 
     it('displays info dropdown to enter on info text and hides on leave', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers('legacy');
 
       render(<ParamInfo {...defaultProps} />);
 
@@ -37,7 +39,7 @@ describe('ParamInfo', () => {
 
       expect(infoDropdown).not.toHaveClass('visible');
 
-      userEvent.hover(screen.getByTestId('infoText'));
+      await userEvent.hover(screen.getByTestId('infoText'));
 
       act(() => {
         jest.advanceTimersByTime(100);
@@ -45,7 +47,7 @@ describe('ParamInfo', () => {
 
       expect(infoDropdown).toHaveClass('visible');
 
-      userEvent.unhover(screen.getByTestId('infoText'));
+      await userEvent.unhover(screen.getByTestId('infoText'));
 
       act(() => {
         jest.advanceTimersByTime(50);
@@ -57,15 +59,15 @@ describe('ParamInfo', () => {
     });
 
     it('hides info dropdown to leave it', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers('legacy');
 
       render(<ParamInfo {...defaultProps} />);
 
       const infoDropdown = screen.getByTestId('infoDropdown');
 
-      userEvent.hover(screen.getByTestId('infoText'));
-      userEvent.hover(screen.getByTestId('infoDropdown'));
-      userEvent.unhover(screen.getByTestId('infoText'));
+      await userEvent.hover(screen.getByTestId('infoText'));
+      await userEvent.hover(screen.getByTestId('infoDropdown'));
+      await userEvent.unhover(screen.getByTestId('infoText'));
 
       act(() => {
         jest.advanceTimersByTime(100);
@@ -73,7 +75,7 @@ describe('ParamInfo', () => {
 
       expect(infoDropdown).toHaveClass('visible');
 
-      userEvent.unhover(screen.getByTestId('infoDropdown'));
+      await userEvent.unhover(screen.getByTestId('infoDropdown'));
 
       act(() => {
         jest.advanceTimersByTime(50);

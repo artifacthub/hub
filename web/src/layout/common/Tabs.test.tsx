@@ -50,7 +50,7 @@ describe('Tabs', () => {
     const btns = screen.getAllByRole('button', { name: /Open tab/ });
     expect(btns[0]).toHaveClass('active');
 
-    userEvent.click(btns[2]);
+    await userEvent.click(btns[2]);
 
     expect(await screen.findByText('Content 3')).toBeInTheDocument();
     expect(btns[2]).toHaveClass('active');

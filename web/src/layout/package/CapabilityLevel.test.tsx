@@ -52,14 +52,14 @@ describe('CapabilityLevel', () => {
       expect(steps[4]).toHaveClass('activeStep');
     });
 
-    it('opens modal', () => {
+    it('opens modal', async () => {
       render(<CapabilityLevel capabilityLevel="deep insights" />);
 
       const modal = screen.getByRole('dialog');
       expect(modal).not.toHaveClass('d-block');
 
       const btn = screen.getByRole('button', { name: /Open modal/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(modal).toHaveClass('d-block');
       expect(screen.getByAltText('Capability Level Diagram')).toBeInTheDocument();

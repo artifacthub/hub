@@ -116,15 +116,15 @@ describe('Repository Modal - repositories section', () => {
       expect(screen.queryByRole('textbox', { name: 'Username' })).toBeNull();
     });
 
-    it('displays warning about repo url', () => {
+    it('displays warning about repo url', async () => {
       render(<Modal {...defaultProps} repository={{ ...repoMock, kind: RepositoryKind.OLM }} />);
 
       expect(screen.getByText(/Please DO NOT include the git hosting platform specific parts/)).toBeInTheDocument();
       expect(screen.getByText('tree/branch')).toBeInTheDocument();
 
-      userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'https://github.com/test/tree/test');
+      await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'https://github.com/test/tree/test');
 
-      expect(screen.getByText(/Please DO NOT include the git hosting platform specific parts/)).toHaveClass(
+      expect(await screen.findByText(/Please DO NOT include the git hosting platform specific parts/)).toHaveClass(
         'animatedWarning'
       );
     });
@@ -143,10 +143,10 @@ describe('Repository Modal - repositories section', () => {
 
         expect(screen.getByText('Add repository')).toBeInTheDocument();
         expect(screen.getByText('Add')).toBeInTheDocument();
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
-        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        await userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -166,7 +166,7 @@ describe('Repository Modal - repositories section', () => {
           );
         });
 
-        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
       });
 
       it('calls add repo for org', async () => {
@@ -184,10 +184,10 @@ describe('Repository Modal - repositories section', () => {
           </AppCtx.Provider>
         );
 
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
-        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        await userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -207,7 +207,7 @@ describe('Repository Modal - repositories section', () => {
           );
         });
 
-        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
       });
 
       it('displays default Api error', async () => {
@@ -220,10 +220,10 @@ describe('Repository Modal - repositories section', () => {
         const component = <Modal {...defaultProps} />;
         const { rerender } = render(component);
 
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
-        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        await userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -231,7 +231,7 @@ describe('Repository Modal - repositories section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
         expect(
           screen.getByText('An error occurred adding the repository, please try again later.')
         ).toBeInTheDocument();
@@ -248,10 +248,10 @@ describe('Repository Modal - repositories section', () => {
         const component = <Modal {...defaultProps} />;
         const { rerender } = render(component);
 
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
-        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        await userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -259,7 +259,7 @@ describe('Repository Modal - repositories section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
         expect(screen.getByText('An error occurred adding the repository: custom error')).toBeInTheDocument();
       });
 
@@ -271,16 +271,16 @@ describe('Repository Modal - repositories section', () => {
         });
         render(<Modal {...defaultProps} />);
 
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
-        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        await userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onAuthErrorMock).toHaveBeenCalledTimes(1));
       });
     });
 
@@ -294,9 +294,9 @@ describe('Repository Modal - repositories section', () => {
         expect(screen.getByText('Update repository')).toBeInTheDocument();
         expect(screen.getByText('Update')).toBeInTheDocument();
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
-        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -309,7 +309,7 @@ describe('Repository Modal - repositories section', () => {
           );
         });
 
-        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
       });
 
       it('calls update repository for org', async () => {
@@ -323,9 +323,9 @@ describe('Repository Modal - repositories section', () => {
         );
 
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
-        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -338,7 +338,7 @@ describe('Repository Modal - repositories section', () => {
           );
         });
 
-        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
       });
 
       it('displays default Api error', async () => {
@@ -352,9 +352,9 @@ describe('Repository Modal - repositories section', () => {
         const { rerender } = render(component);
 
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
-        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -362,9 +362,9 @@ describe('Repository Modal - repositories section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
         expect(
-          screen.getByText('An error occurred updating the repository, please try again later.')
+          await screen.findByText('An error occurred updating the repository, please try again later.')
         ).toBeInTheDocument();
       });
 
@@ -380,9 +380,9 @@ describe('Repository Modal - repositories section', () => {
         const { rerender } = render(component);
 
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
-        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -390,7 +390,7 @@ describe('Repository Modal - repositories section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
         expect(screen.getByText('An error occurred updating the repository: custom error')).toBeInTheDocument();
       });
 
@@ -402,15 +402,15 @@ describe('Repository Modal - repositories section', () => {
         render(<Modal {...defaultProps} repository={repoMock} />);
 
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.clear(displayNameInput);
-        userEvent.type(displayNameInput, 'Pretty name');
-        userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
         await waitFor(() => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onAuthErrorMock).toHaveBeenCalledTimes(1));
       });
     });
 
@@ -424,18 +424,18 @@ describe('Repository Modal - repositories section', () => {
         expect(screen.getByText('Add repository')).toBeInTheDocument();
         expect(screen.getByText('Add')).toBeInTheDocument();
         const nameInput = screen.getByRole('textbox', { name: /Name/ });
-        userEvent.type(nameInput, 'name');
+        await userEvent.type(nameInput, 'name');
         const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
-        userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.type(displayNameInput, 'Pretty name');
         const urlInput = screen.getByRole('textbox', { name: /Url/ });
-        userEvent.type(urlInput, 'http://test.com');
+        await userEvent.type(urlInput, 'http://test.com');
 
         const toggle = screen.getByRole('switch', { name: 'Disabled' });
         expect(toggle).toBeInTheDocument();
         expect(toggle).not.toBeChecked();
-        userEvent.click(toggle);
+        await userEvent.click(toggle);
 
-        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -455,7 +455,7 @@ describe('Repository Modal - repositories section', () => {
           );
         });
 
-        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
       });
 
       describe('existing repo', () => {
@@ -473,7 +473,7 @@ describe('Repository Modal - repositories section', () => {
           const toggle = screen.getByRole('switch', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).not.toBeChecked();
-          userEvent.click(toggle);
+          await userEvent.click(toggle);
 
           expect(await screen.findByText('Disable repository')).toBeInTheDocument();
           expect(screen.getByText(/Please read this carefully./)).toBeInTheDocument();
@@ -481,14 +481,14 @@ describe('Repository Modal - repositories section', () => {
           expect(screen.getByRole('textbox')).toBeInTheDocument();
           expect(screen.getByRole('button', { name: 'Disable repository' })).toBeInTheDocument();
 
-          userEvent.type(screen.getByRole('textbox'), 'repoTest');
-          userEvent.click(screen.getByRole('button', { name: 'Disable repository' }));
+          await userEvent.type(screen.getByRole('textbox'), 'repoTest');
+          await userEvent.click(screen.getByRole('button', { name: 'Disable repository' }));
 
           await waitFor(() => {
             expect(screen.getByText('Update repository')).toBeInTheDocument();
           });
 
-          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -501,7 +501,7 @@ describe('Repository Modal - repositories section', () => {
             );
           });
 
-          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+          await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
         });
 
         it('does not confirm action', async () => {
@@ -518,7 +518,7 @@ describe('Repository Modal - repositories section', () => {
           const toggle = screen.getByRole('switch', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).not.toBeChecked();
-          userEvent.click(toggle);
+          await userEvent.click(toggle);
 
           expect(await screen.findByText('Disable repository')).toBeInTheDocument();
 
@@ -527,14 +527,14 @@ describe('Repository Modal - repositories section', () => {
           expect(screen.getByRole('textbox')).toBeInTheDocument();
           expect(screen.getByRole('button', { name: 'Disable repository' })).toBeInTheDocument();
 
-          userEvent.type(screen.getByRole('textbox'), 'repoTest');
-          userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+          await userEvent.type(screen.getByRole('textbox'), 'repoTest');
+          await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
 
           await waitFor(() => {
             expect(screen.getByText('Update repository')).toBeInTheDocument();
           });
 
-          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -546,7 +546,7 @@ describe('Repository Modal - repositories section', () => {
             );
           });
 
-          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+          await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
         });
 
         it('does not render confirmation info', async () => {
@@ -569,13 +569,13 @@ describe('Repository Modal - repositories section', () => {
           const toggle = screen.getByRole('switch', { name: 'Disabled' });
           expect(toggle).toBeInTheDocument();
           expect(toggle).toBeChecked();
-          userEvent.click(toggle);
+          await userEvent.click(toggle);
 
           await waitFor(() => {
             expect(toggle).not.toBeChecked();
           });
 
-          userEvent.click(toggle);
+          await userEvent.click(toggle);
 
           await waitFor(() => {
             expect(toggle).toBeChecked();
@@ -616,12 +616,12 @@ describe('Repository Modal - repositories section', () => {
 
         expect(screen.getByText('Add repository')).toBeInTheDocument();
         expect(screen.getByText('Add')).toBeInTheDocument();
-        userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
-        userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
-        userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
-        userEvent.type(screen.getByRole('textbox', { name: 'Username' }), 'username');
-        userEvent.type(screen.getByTestId('authPassInput'), 'pass123');
-        userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), 'Pretty name');
+        await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'http://test.com');
+        await userEvent.type(screen.getByRole('textbox', { name: 'Username' }), 'username');
+        await userEvent.type(screen.getByTestId('authPassInput'), 'pass123');
+        await userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
 
         await waitFor(() => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
@@ -641,7 +641,7 @@ describe('Repository Modal - repositories section', () => {
           );
         });
 
-        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
       });
 
       describe('Update repo with credentials', () => {
@@ -670,8 +670,8 @@ describe('Repository Modal - repositories section', () => {
           const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
           expect(resetBtn).toBeInTheDocument();
 
-          userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
-          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
+          await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -686,7 +686,7 @@ describe('Repository Modal - repositories section', () => {
             );
           });
 
-          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+          await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
         });
 
         it('when reset credentials with empty values', async () => {
@@ -714,8 +714,8 @@ describe('Repository Modal - repositories section', () => {
           const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
           expect(resetBtn).toBeInTheDocument();
 
-          userEvent.click(resetBtn);
-          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          await userEvent.click(resetBtn);
+          await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -729,7 +729,7 @@ describe('Repository Modal - repositories section', () => {
             );
           });
 
-          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+          await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
         });
 
         it('when reset credentials with new values', async () => {
@@ -757,12 +757,12 @@ describe('Repository Modal - repositories section', () => {
           const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
           expect(resetBtn).toBeInTheDocument();
 
-          userEvent.click(resetBtn);
+          await userEvent.click(resetBtn);
 
-          userEvent.type(screen.getByTestId('authUserInput'), 'new-user');
-          userEvent.type(screen.getByTestId('authPassInput'), 'new-pass');
+          await userEvent.type(screen.getByTestId('authUserInput'), 'new-user');
+          await userEvent.type(screen.getByTestId('authPassInput'), 'new-pass');
 
-          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -776,7 +776,7 @@ describe('Repository Modal - repositories section', () => {
             );
           });
 
-          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+          await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
         });
 
         it('when credentials with token pass after resetting pass', async () => {
@@ -804,13 +804,13 @@ describe('Repository Modal - repositories section', () => {
           const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
           expect(resetBtn).toBeInTheDocument();
 
-          userEvent.click(resetBtn);
+          await userEvent.click(resetBtn);
 
           expect(screen.getByText('Authentication token')).toBeInTheDocument();
           expect(screen.getByText('Authentication token used in private git based repositories.')).toBeInTheDocument();
 
-          userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
-          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
+          await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -825,7 +825,7 @@ describe('Repository Modal - repositories section', () => {
             );
           });
 
-          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+          await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
         });
 
         it('when credentials with same token pass', async () => {
@@ -850,8 +850,8 @@ describe('Repository Modal - repositories section', () => {
             )
           ).toBeInTheDocument();
 
-          userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
-          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          await userEvent.type(screen.getByRole('textbox', { name: 'Display name' }), '1');
+          await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -866,7 +866,7 @@ describe('Repository Modal - repositories section', () => {
             );
           });
 
-          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+          await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
         });
 
         it('when credentials with token pass after resetting pass and add a new pass', async () => {
@@ -894,13 +894,13 @@ describe('Repository Modal - repositories section', () => {
           const resetBtn = screen.getByRole('button', { name: 'Reset credentials' });
           expect(resetBtn).toBeInTheDocument();
 
-          userEvent.click(resetBtn);
+          await userEvent.click(resetBtn);
 
           expect(screen.getByText('Authentication token')).toBeInTheDocument();
           expect(screen.getByText('Authentication token used in private git based repositories.')).toBeInTheDocument();
 
-          userEvent.type(screen.getByTestId('authPassInput'), 'new-pass');
-          userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+          await userEvent.type(screen.getByTestId('authPassInput'), 'new-pass');
+          await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
 
           await waitFor(() => {
             expect(API.updateRepository).toHaveBeenCalledTimes(1);
@@ -914,7 +914,7 @@ describe('Repository Modal - repositories section', () => {
             );
           });
 
-          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+          await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
         });
       });
     });

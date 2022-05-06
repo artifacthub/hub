@@ -40,7 +40,7 @@ describe('RecommendedPackageCard', () => {
       expect(pkg).toHaveTextContent('artifact-hub');
     });
 
-    it('opens package', () => {
+    it('opens package', async () => {
       render(
         <Router>
           <RecommendedPackageCard {...defaultProps} />
@@ -48,7 +48,7 @@ describe('RecommendedPackageCard', () => {
       );
 
       const pkg = screen.getByTestId('recommended-pkg');
-      userEvent.click(pkg);
+      await userEvent.click(pkg);
 
       expect(window.location.pathname).toBe('/packages/helm/artifact-hub/artifact-hub');
     });

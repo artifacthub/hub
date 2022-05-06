@@ -36,11 +36,11 @@ describe('TOCEntry', () => {
       expect(link).toHaveProperty('href', 'http://localhost/#installing-the-chart');
     });
 
-    it('clicks link', () => {
+    it('clicks link', async () => {
       render(<TOCEntry {...defaultProps} />);
 
       const link = screen.getByText('Installing the Chart');
-      userEvent.click(link);
+      await userEvent.click(link);
 
       expect(setVisibleTOCMock).toHaveBeenCalledTimes(1);
       expect(setVisibleTOCMock).toHaveBeenCalledWith(false);

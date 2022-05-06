@@ -55,7 +55,7 @@ describe('ActionBtn', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders enabled button', () => {
+  it('renders enabled button', async () => {
     render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <ActionBtn {...defaultProps}>
@@ -68,13 +68,13 @@ describe('ActionBtn', () => {
     expect(btn).toBeInTheDocument();
     expect(btn).not.toHaveClass('disabled');
 
-    userEvent.click(btn);
+    await userEvent.click(btn);
     expect(onClickMock).toHaveBeenCalledTimes(1);
 
     expect(screen.getByText('button content')).toBeInTheDocument();
   });
 
-  it('renders disabled button', () => {
+  it('renders disabled button', async () => {
     render(
       <AppCtx.Provider
         value={{
@@ -95,14 +95,14 @@ describe('ActionBtn', () => {
     expect(btn).toBeInTheDocument();
     expect(btn).toHaveClass('disabled');
 
-    userEvent.click(btn);
+    await userEvent.click(btn);
     expect(onClickMock).toHaveBeenCalledTimes(0);
 
     expect(screen.getByText('button content')).toBeInTheDocument();
   });
 
   it('displays tooltip', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers('legacy');
 
     render(
       <AppCtx.Provider
@@ -121,7 +121,7 @@ describe('ActionBtn', () => {
     );
 
     const btn = screen.getByRole('button');
-    userEvent.hover(btn);
+    await userEvent.hover(btn);
 
     act(() => {
       jest.advanceTimersByTime(2000);

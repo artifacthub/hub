@@ -18,24 +18,6 @@ exports[`PackagesSection creates snapshot 1`] = `
           Your subscriptions
         </div>
         <div
-          class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-        >
-          <div
-            class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-          >
-            <div
-              class="spinner-border text-primary spinner"
-              role="status"
-            >
-              <span
-                class="visually-hidden"
-              >
-                Loading...
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
           class="d-flex flex-row align-items-start justify-content-between pb-2 mt-5"
         >
           <div
@@ -106,7 +88,2594 @@ exports[`PackagesSection creates snapshot 1`] = `
           </p>
           <div
             class="mt-4 mt-md-5"
-          />
+          >
+            <div
+              class="d-none d-sm-inline"
+              data-testid="packagesList"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col-12 col-xxxl-10"
+                >
+                  <table
+                    class="table table-bordered table-hover table"
+                  >
+                    <thead>
+                      <tr
+                        class="tableTitle"
+                      >
+                        <th
+                          class="align-middle text-center d-none d-sm-table-cell fitCell"
+                          scope="col"
+                        >
+                          Kind
+                        </th>
+                        <th
+                          class="align-middle w-50"
+                          scope="col"
+                        >
+                          Package
+                        </th>
+                        <th
+                          class="align-middle w-50"
+                          scope="col"
+                        >
+                          Publisher
+                        </th>
+                        <th
+                          class="align-middle text-nowrap fitCell"
+                          scope="col"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center justify-content-center"
+                          >
+                            <svg
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                              />
+                            </svg>
+                            <span
+                              class="d-none d-lg-inline ms-2"
+                            >
+                              New releases
+                            </span>
+                          </div>
+                        </th>
+                        <th
+                          class="align-middle text-nowrap fitCell"
+                          scope="col"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center justify-content-center"
+                          >
+                            <svg
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                              />
+                            </svg>
+                            <span
+                              class="d-none d-lg-inline ms-2"
+                            >
+                              Security alerts
+                            </span>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      class="body"
+                    >
+                      <tr
+                        data-testid="subsTableCell"
+                      >
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
+                        >
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </td>
+                        <td
+                          class="align-middle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="airflow"
+                                aria-hidden="true"
+                                class="fs-4 image"
+                                src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
+                                srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
+                              />
+                            </div>
+                            <a
+                              aria-label="Open airflow package"
+                              class="ms-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/stable/airflow"
+                            >
+                              airflow
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
+                        >
+                          <a
+                            aria-label="Filter by Helm organization"
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?org=helm&sort=relevance&page=1"
+                          >
+                            Helm
+                          </a>
+                          <small
+                            class="ms-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              aria-label="Filter by Stable repository"
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?repo=stable&sort=relevance&page=1"
+                            >
+                              Stable
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input checkbox"
+                                data-testid="airflow_newRelease_input"
+                                id="subs_0acb228c-17ab-4e50-85e9-ffc7102ea423_0"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                class="form-check-input checkbox"
+                                data-testid="airflow_securityAlert_input"
+                                id="subs_0acb228c-17ab-4e50-85e9-ffc7102ea423_1"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
+                      >
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
+                        >
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </td>
+                        <td
+                          class="align-middle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="cerebro"
+                                aria-hidden="true"
+                                class="fs-4 image"
+                                data-testid="placeholderImg"
+                                src="/static/media/placeholder_pkg_helm.png"
+                              />
+                            </div>
+                            <a
+                              aria-label="Open cerebro package"
+                              class="ms-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/stable/cerebro"
+                            >
+                              cerebro
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
+                        >
+                          <a
+                            aria-label="Filter by Helm organization"
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?org=helm&sort=relevance&page=1"
+                          >
+                            Helm
+                          </a>
+                          <small
+                            class="ms-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              aria-label="Filter by Stable repository"
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?repo=stable&sort=relevance&page=1"
+                            >
+                              Stable
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input checkbox"
+                                data-testid="cerebro_newRelease_input"
+                                id="subs_11d84cdc-e414-43c7-9be0-1f6b11912eb2_0"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                class="form-check-input checkbox"
+                                data-testid="cerebro_securityAlert_input"
+                                id="subs_11d84cdc-e414-43c7-9be0-1f6b11912eb2_1"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
+                      >
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
+                        >
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </td>
+                        <td
+                          class="align-middle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="elastic-stack"
+                                aria-hidden="true"
+                                class="fs-4 image"
+                                data-testid="placeholderImg"
+                                src="/static/media/placeholder_pkg_helm.png"
+                              />
+                            </div>
+                            <a
+                              aria-label="Open elastic-stack package"
+                              class="ms-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/stable/elastic-stack"
+                            >
+                              elastic-stack
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
+                        >
+                          <a
+                            aria-label="Filter by Helm organization"
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?org=helm&sort=relevance&page=1"
+                          >
+                            Helm
+                          </a>
+                          <small
+                            class="ms-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              aria-label="Filter by Stable repository"
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?repo=stable&sort=relevance&page=1"
+                            >
+                              Stable
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input checkbox"
+                                data-testid="elastic-stack_newRelease_input"
+                                id="subs_eedf0ee0-841e-4434-bf0b-4c2a175cb8c8_0"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                class="form-check-input checkbox"
+                                data-testid="elastic-stack_securityAlert_input"
+                                id="subs_eedf0ee0-841e-4434-bf0b-4c2a175cb8c8_1"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
+                      >
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
+                        >
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </td>
+                        <td
+                          class="align-middle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="ibm-redis"
+                                aria-hidden="true"
+                                class="fs-4 image"
+                                src="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88"
+                                srcset="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@1x 1x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@2x 2x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@3x 3x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@4x 4x"
+                              />
+                            </div>
+                            <a
+                              aria-label="Open ibm-redis package"
+                              class="ms-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/ibm-charts/ibm-redis"
+                            >
+                              ibm-redis
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
+                        >
+                          <a
+                            aria-label="Filter by Org 1 organization"
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?org=org1&sort=relevance&page=1"
+                          >
+                            Org 1
+                          </a>
+                          <small
+                            class="ms-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              aria-label="Filter by IBM charts repository"
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?repo=ibm-charts&sort=relevance&page=1"
+                            >
+                              IBM charts
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input checkbox"
+                                data-testid="ibm-redis_newRelease_input"
+                                id="subs_cfa55ea2-eb69-4703-8be7-73937c6efc4b_0"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                class="form-check-input checkbox"
+                                data-testid="ibm-redis_securityAlert_input"
+                                id="subs_cfa55ea2-eb69-4703-8be7-73937c6efc4b_1"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
+                      >
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
+                        >
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconLight"
+                            src="/static/media/falco-rules.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconDark"
+                            src="/static/media/falco-rules-light.svg"
+                          />
+                        </td>
+                        <td
+                          class="align-middle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="SSH connections"
+                                aria-hidden="true"
+                                class="fs-4 image"
+                                src="/image/23baee82-817d-4443-bb12-164913cb631b"
+                                srcset="/image/23baee82-817d-4443-bb12-164913cb631b@1x 1x, /image/23baee82-817d-4443-bb12-164913cb631b@2x 2x, /image/23baee82-817d-4443-bb12-164913cb631b@3x 3x, /image/23baee82-817d-4443-bb12-164913cb631b@4x 4x"
+                              />
+                            </div>
+                            <a
+                              aria-label="Open SSH connections package"
+                              class="ms-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/falco/falco/ssh-connections"
+                            >
+                              SSH connections
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
+                        >
+                          <a
+                            aria-label="Filter by Org 2 organization"
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?org=org2&sort=relevance&page=1"
+                          >
+                            Org 2
+                          </a>
+                          <small
+                            class="ms-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              aria-label="Filter by Falco rules repository"
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?repo=falco&sort=relevance&page=1"
+                            >
+                              Falco rules
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input checkbox"
+                                data-testid="SSH connections_newRelease_input"
+                                id="subs_ccd1553a-e9bd-45b5-93a3-9ee127dddcb0_0"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                class="form-check-input checkbox"
+                                data-testid="SSH connections_securityAlert_input"
+                                id="subs_ccd1553a-e9bd-45b5-93a3-9ee127dddcb0_1"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
+                      >
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
+                        >
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconLight"
+                            src="/static/media/falco-rules.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconDark"
+                            src="/static/media/falco-rules-light.svg"
+                          />
+                        </td>
+                        <td
+                          class="align-middle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Traefik"
+                                aria-hidden="true"
+                                class="fs-4 image"
+                                src="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b"
+                                srcset="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b@1x 1x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@2x 2x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@3x 3x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@4x 4x"
+                              />
+                            </div>
+                            <a
+                              aria-label="Open Traefik package"
+                              class="ms-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/falco/falco/traefik"
+                            >
+                              Traefik
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
+                        >
+                          <a
+                            aria-label="Filter by Org 2 organization"
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?org=org2&sort=relevance&page=1"
+                          >
+                            Org 2
+                          </a>
+                          <small
+                            class="ms-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              aria-label="Filter by Falco rules repository"
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?repo=falco&sort=relevance&page=1"
+                            >
+                              Falco rules
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input checkbox"
+                                data-testid="Traefik_newRelease_input"
+                                id="subs_e63b8968-a688-4525-889d-cbbf3df82f9f_0"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                class="form-check-input checkbox"
+                                data-testid="Traefik_securityAlert_input"
+                                id="subs_e63b8968-a688-4525-889d-cbbf3df82f9f_1"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
+                      >
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
+                        >
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconLight"
+                            src="/static/media/opa-policies.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconDark"
+                            src="/static/media/opa-policies-light.svg"
+                          />
+                        </td>
+                        <td
+                          class="align-middle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Trusted Registry Images"
+                                aria-hidden="true"
+                                class="fs-4 image"
+                                src="/image/828583b3-e3a0-4970-899f-27a903fd72cb"
+                                srcset="/image/828583b3-e3a0-4970-899f-27a903fd72cb@1x 1x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@2x 2x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@3x 3x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@4x 4x"
+                              />
+                            </div>
+                            <a
+                              aria-label="Open Trusted Registry Images package"
+                              class="ms-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/opa/opa/trusted-registry-images"
+                            >
+                              Trusted Registry Images
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
+                        >
+                          <a
+                            aria-label="Filter by OPA organization"
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?org=opa&sort=relevance&page=1"
+                          >
+                            OPA
+                          </a>
+                          <small
+                            class="ms-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              aria-label="Filter by OPA policies repository"
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?repo=opa&sort=relevance&page=1"
+                            >
+                              OPA policies
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input checkbox"
+                                data-testid="Trusted Registry Images_newRelease_input"
+                                id="subs_2052b061-2459-4d9f-8cd3-a5e8dbb4b804_0"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                class="form-check-input checkbox"
+                                data-testid="Trusted Registry Images_securityAlert_input"
+                                id="subs_2052b061-2459-4d9f-8cd3-a5e8dbb4b804_1"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
+                      >
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
+                        >
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="h-auto icon iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </td>
+                        <td
+                          class="align-middle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="zookeeper"
+                                aria-hidden="true"
+                                class="fs-4 image"
+                                src="/image/4c7230bf-5b08-49dc-b095-c93aef119f47"
+                                srcset="/image/4c7230bf-5b08-49dc-b095-c93aef119f47@1x 1x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@2x 2x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@3x 3x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@4x 4x"
+                              />
+                            </div>
+                            <a
+                              aria-label="Open zookeeper package"
+                              class="ms-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/incubator/zookeeper"
+                            >
+                              zookeeper
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
+                        >
+                          <a
+                            aria-label="Filter by Helm organization"
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?org=helm&sort=relevance&page=1"
+                          >
+                            Helm
+                          </a>
+                          <small
+                            class="ms-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              aria-label="Filter by Incubator repository"
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?repo=incubator&sort=relevance&page=1"
+                            >
+                              Incubator
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input checkbox"
+                                data-testid="zookeeper_newRelease_input"
+                                id="subs_d3945a69-2aae-4ff9-8fb3-ce3b720d0384_0"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle text-center"
+                        >
+                          <div
+                            class="text-center"
+                          >
+                            <div
+                              class="form-switch"
+                            >
+                              <input
+                                class="form-check-input checkbox"
+                                data-testid="zookeeper_securityAlert_input"
+                                id="subs_d3945a69-2aae-4ff9-8fb3-ce3b720d0384_1"
+                                role="switch"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-inline d-sm-none"
+            >
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card cardWithHover h-100 bg-white mw-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none text-reset bg-transparent link"
+                        data-testid="packageCardLink"
+                        href="/packages/helm/stable/airflow"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Logo airflow"
+                                aria-hidden="true"
+                                class="image"
+                                src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
+                                srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
+                              />
+                            </div>
+                            <div
+                              class="ms-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title fw-bolder mb-2 lh-1"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  airflow
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Helm
+                                  </p>
+                                </div>
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Stable
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input checkbox"
+                            id="airflow_newRelease"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="newRelease_label"
+                            for="airflow_newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            class="form-check-input checkbox"
+                            id="airflow_securityAlert"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="securityAlert_label"
+                            for="airflow_securityAlert"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                Security alerts
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card cardWithHover h-100 bg-white mw-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none text-reset bg-transparent link"
+                        data-testid="packageCardLink"
+                        href="/packages/helm/stable/cerebro"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Logo cerebro"
+                                aria-hidden="true"
+                                class="image"
+                                data-testid="placeholderImg"
+                                src="/static/media/placeholder_pkg_helm.png"
+                              />
+                            </div>
+                            <div
+                              class="ms-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title fw-bolder mb-2 lh-1"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  cerebro
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Helm
+                                  </p>
+                                </div>
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Stable
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input checkbox"
+                            id="cerebro_newRelease"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="newRelease_label"
+                            for="cerebro_newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            class="form-check-input checkbox"
+                            id="cerebro_securityAlert"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="securityAlert_label"
+                            for="cerebro_securityAlert"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                Security alerts
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card cardWithHover h-100 bg-white mw-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none text-reset bg-transparent link"
+                        data-testid="packageCardLink"
+                        href="/packages/helm/stable/elastic-stack"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Logo elastic-stack"
+                                aria-hidden="true"
+                                class="image"
+                                data-testid="placeholderImg"
+                                src="/static/media/placeholder_pkg_helm.png"
+                              />
+                            </div>
+                            <div
+                              class="ms-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title fw-bolder mb-2 lh-1"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  elastic-stack
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Helm
+                                  </p>
+                                </div>
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Stable
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input checkbox"
+                            id="elastic-stack_newRelease"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="newRelease_label"
+                            for="elastic-stack_newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            class="form-check-input checkbox"
+                            id="elastic-stack_securityAlert"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="securityAlert_label"
+                            for="elastic-stack_securityAlert"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                Security alerts
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card cardWithHover h-100 bg-white mw-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none text-reset bg-transparent link"
+                        data-testid="packageCardLink"
+                        href="/packages/helm/ibm-charts/ibm-redis"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Logo ibm-redis"
+                                aria-hidden="true"
+                                class="image"
+                                src="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88"
+                                srcset="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@1x 1x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@2x 2x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@3x 3x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@4x 4x"
+                              />
+                            </div>
+                            <div
+                              class="ms-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title fw-bolder mb-2 lh-1"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  ibm-redis
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Org 1
+                                  </p>
+                                </div>
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    IBM charts
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input checkbox"
+                            id="ibm-redis_newRelease"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="newRelease_label"
+                            for="ibm-redis_newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            class="form-check-input checkbox"
+                            id="ibm-redis_securityAlert"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="securityAlert_label"
+                            for="ibm-redis_securityAlert"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                Security alerts
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card cardWithHover h-100 bg-white mw-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none text-reset bg-transparent link"
+                        data-testid="packageCardLink"
+                        href="/packages/falco/falco/ssh-connections"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Logo SSH connections"
+                                aria-hidden="true"
+                                class="image"
+                                src="/image/23baee82-817d-4443-bb12-164913cb631b"
+                                srcset="/image/23baee82-817d-4443-bb12-164913cb631b@1x 1x, /image/23baee82-817d-4443-bb12-164913cb631b@2x 2x, /image/23baee82-817d-4443-bb12-164913cb631b@3x 3x, /image/23baee82-817d-4443-bb12-164913cb631b@4x 4x"
+                              />
+                            </div>
+                            <div
+                              class="ms-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title fw-bolder mb-2 lh-1"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  SSH connections
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Org 2
+                                  </p>
+                                </div>
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Falco rules
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconLight"
+                              src="/static/media/falco-rules.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconDark"
+                              src="/static/media/falco-rules-light.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input checkbox"
+                            id="SSH connections_newRelease"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="newRelease_label"
+                            for="SSH connections_newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            class="form-check-input checkbox"
+                            id="SSH connections_securityAlert"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="securityAlert_label"
+                            for="SSH connections_securityAlert"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                Security alerts
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card cardWithHover h-100 bg-white mw-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none text-reset bg-transparent link"
+                        data-testid="packageCardLink"
+                        href="/packages/falco/falco/traefik"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Logo Traefik"
+                                aria-hidden="true"
+                                class="image"
+                                src="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b"
+                                srcset="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b@1x 1x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@2x 2x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@3x 3x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@4x 4x"
+                              />
+                            </div>
+                            <div
+                              class="ms-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title fw-bolder mb-2 lh-1"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  Traefik
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Org 2
+                                  </p>
+                                </div>
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Falco rules
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconLight"
+                              src="/static/media/falco-rules.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconDark"
+                              src="/static/media/falco-rules-light.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input checkbox"
+                            id="Traefik_newRelease"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="newRelease_label"
+                            for="Traefik_newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            class="form-check-input checkbox"
+                            id="Traefik_securityAlert"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="securityAlert_label"
+                            for="Traefik_securityAlert"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                Security alerts
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card cardWithHover h-100 bg-white mw-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none text-reset bg-transparent link"
+                        data-testid="packageCardLink"
+                        href="/packages/opa/opa/trusted-registry-images"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Logo Trusted Registry Images"
+                                aria-hidden="true"
+                                class="image"
+                                src="/image/828583b3-e3a0-4970-899f-27a903fd72cb"
+                                srcset="/image/828583b3-e3a0-4970-899f-27a903fd72cb@1x 1x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@2x 2x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@3x 3x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@4x 4x"
+                              />
+                            </div>
+                            <div
+                              class="ms-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title fw-bolder mb-2 lh-1"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  Trusted Registry Images
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    OPA
+                                  </p>
+                                </div>
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    OPA policies
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconLight"
+                              src="/static/media/opa-policies.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconDark"
+                              src="/static/media/opa-policies-light.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input checkbox"
+                            id="Trusted Registry Images_newRelease"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="newRelease_label"
+                            for="Trusted Registry Images_newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            class="form-check-input checkbox"
+                            id="Trusted Registry Images_securityAlert"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="securityAlert_label"
+                            for="Trusted Registry Images_securityAlert"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                Security alerts
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card cardWithHover h-100 bg-white mw-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none text-reset bg-transparent link"
+                        data-testid="packageCardLink"
+                        href="/packages/helm/incubator/zookeeper"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Logo zookeeper"
+                                aria-hidden="true"
+                                class="image"
+                                src="/image/4c7230bf-5b08-49dc-b095-c93aef119f47"
+                                srcset="/image/4c7230bf-5b08-49dc-b095-c93aef119f47@1x 1x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@2x 2x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@3x 3x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@4x 4x"
+                              />
+                            </div>
+                            <div
+                              class="ms-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title fw-bolder mb-2 lh-1"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  zookeeper
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Helm
+                                  </p>
+                                </div>
+                                <div
+                                  class="me-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase me-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Incubator
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="h-auto icon iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input checkbox"
+                            id="zookeeper_newRelease"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="newRelease_label"
+                            for="zookeeper_newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="form-check form-switch clickable"
+                        >
+                          <input
+                            class="form-check-input checkbox"
+                            id="zookeeper_securityAlert"
+                            role="switch"
+                            type="checkbox"
+                          />
+                          <label
+                            class="form-check-label"
+                            data-testid="securityAlert_label"
+                            for="zookeeper_securityAlert"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ms-1"
+                              >
+                                Security alerts
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mx-auto"
+              />
+            </div>
+          </div>
         </div>
         <div>
           <div
@@ -187,24 +2756,6 @@ exports[`PackagesSection creates snapshot 1`] = `
         <div
           class="mt-5 pt-3"
         >
-          <div
-            class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-          >
-            <div
-              class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-            >
-              <div
-                class="spinner-border text-primary spinner"
-                role="status"
-              >
-                <span
-                  class="visually-hidden"
-                >
-                  Loading...
-                </span>
-              </div>
-            </div>
-          </div>
           <div
             class="d-flex flex-row align-items-start justify-content-between pb-2"
           >

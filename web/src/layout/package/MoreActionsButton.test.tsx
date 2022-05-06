@@ -40,7 +40,7 @@ describe('MoreActionsButton', () => {
       expect(btn).toBeInTheDocument();
     });
 
-    it('displays dropdown', () => {
+    it('displays dropdown', async () => {
       render(<MoreActionsButton {...defaultProps} />);
 
       const dropdown = screen.getByRole('menu');
@@ -50,24 +50,24 @@ describe('MoreActionsButton', () => {
       const btn = screen.getByRole('button', { name: 'Open menu' });
       expect(btn).toBeInTheDocument();
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(dropdown).toHaveClass('show');
       expect(screen.getByText('Embed widget')).toBeInTheDocument();
     });
 
-    it('opens modal', () => {
+    it('opens modal', async () => {
       render(<MoreActionsButton {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: 'Open menu' });
       expect(btn).toBeInTheDocument();
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       const widgetBtn = screen.getByRole('button', { name: 'Open embed widget modal' });
       expect(widgetBtn).toBeInTheDocument();
 
-      userEvent.click(widgetBtn);
+      await userEvent.click(widgetBtn);
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
 
@@ -82,7 +82,7 @@ describe('MoreActionsButton', () => {
     });
 
     describe('report abuse', () => {
-      it('opens url', () => {
+      it('opens url', async () => {
         Object.defineProperty(document, 'querySelector', {
           value: (selector: any) => {
             switch (selector) {
@@ -106,20 +106,20 @@ describe('MoreActionsButton', () => {
         const btn = screen.getByRole('button', { name: 'Open menu' });
         expect(btn).toBeInTheDocument();
 
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         expect(dropdown).toHaveClass('show');
 
         const reportURLBtn = screen.getByRole('button', { name: 'Open report abuse url' });
         expect(reportURLBtn).toBeInTheDocument();
 
-        userEvent.click(reportURLBtn);
+        await userEvent.click(reportURLBtn);
 
         expect(openMock).toHaveBeenCalledTimes(1);
         expect(openMock).toHaveBeenCalledWith('http://test.com', '_blank');
       });
 
-      it('does not render when url is undefined', () => {
+      it('does not render when url is undefined', async () => {
         Object.defineProperty(document, 'querySelector', {
           value: (selector: any) => {
             switch (selector) {
@@ -143,14 +143,14 @@ describe('MoreActionsButton', () => {
         const btn = screen.getByRole('button', { name: 'Open menu' });
         expect(btn).toBeInTheDocument();
 
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         expect(dropdown).toHaveClass('show');
         expect(screen.queryByRole('button', { name: 'Open report abuse url' })).toBeNull();
       });
     });
 
-    it('does not render when url is an empty string', () => {
+    it('does not render when url is an empty string', async () => {
       Object.defineProperty(document, 'querySelector', {
         value: (selector: any) => {
           switch (selector) {
@@ -174,7 +174,7 @@ describe('MoreActionsButton', () => {
       const btn = screen.getByRole('button', { name: 'Open menu' });
       expect(btn).toBeInTheDocument();
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(dropdown).toHaveClass('show');
       expect(screen.queryByRole('button', { name: 'Open report abuse url' })).toBeNull();

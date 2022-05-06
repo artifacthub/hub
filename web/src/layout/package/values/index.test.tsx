@@ -215,8 +215,10 @@ describe('Values', () => {
 
     await waitFor(() => {
       expect(API.getChartValues).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -227,12 +229,14 @@ describe('Values', () => {
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
       expect(btn).toBeInTheDocument();
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(1);
         expect(API.getChartValues).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
+
+      await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
     });
 
     it('opens modal', async () => {
@@ -241,7 +245,7 @@ describe('Values', () => {
       render(<Values {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -255,7 +259,7 @@ describe('Values', () => {
         });
       });
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
       expect(screen.getAllByText('Default values')).toHaveLength(2);
     });
 
@@ -271,7 +275,7 @@ describe('Values', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       const close = screen.getByRole('button', { name: 'Close modal' });
-      userEvent.click(close);
+      await userEvent.click(close);
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
       expect(mockHistoryReplace).toHaveBeenLastCalledWith({
@@ -282,7 +286,7 @@ describe('Values', () => {
         },
       });
 
-      expect(screen.queryByRole('dialog')).toBeNull();
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     });
 
     it('calls again to getChartValues when version is different', async () => {
@@ -291,7 +295,7 @@ describe('Values', () => {
       const { rerender } = render(<Values {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -301,11 +305,11 @@ describe('Values', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       const close = screen.getByText('Close');
-      userEvent.click(close);
+      await userEvent.click(close);
 
       rerender(<Values {...defaultProps} version="1.0.0" />);
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(2);
@@ -321,7 +325,7 @@ describe('Values', () => {
       const { rerender } = render(<Values {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -331,11 +335,11 @@ describe('Values', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       const close = screen.getByText('Close');
-      userEvent.click(close);
+      await userEvent.click(close);
 
       rerender(<Values {...defaultProps} packageId="id2" />);
 
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(2);
@@ -351,14 +355,14 @@ describe('Values', () => {
       const { rerender } = render(<Values {...defaultProps} />);
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(API.getChartValues).toHaveBeenCalledTimes(1);
 
       rerender(<Values {...defaultProps} packageId="id2" />);
 
-      expect(screen.queryByRole('dialog')).toBeNull();
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     });
 
     describe('search', () => {
@@ -373,9 +377,9 @@ describe('Values', () => {
 
         expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
-        userEvent.type(screen.getByRole('textbox'), 'name');
+        await userEvent.type(screen.getByRole('textbox'), 'name');
 
-        const opts = screen.getAllByTestId('typeaheadDropdownBtn');
+        const opts = await screen.findAllByTestId('typeaheadDropdownBtn');
         expect(opts).toHaveLength(10);
         expect(opts[0]).toHaveTextContent('nameOverride');
         expect(opts[1]).toHaveTextContent('fullnameOverride');
@@ -400,11 +404,11 @@ describe('Values', () => {
 
         expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
-        userEvent.type(screen.getByRole('textbox'), 'name');
+        await userEvent.type(screen.getByRole('textbox'), 'name');
 
         const opts = screen.getAllByTestId('typeaheadDropdownBtn');
 
-        userEvent.click(opts[8]);
+        await userEvent.click(opts[8]);
 
         await waitFor(() => {
           expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
@@ -444,7 +448,7 @@ describe('Values', () => {
         render(<Values {...defaultProps} />);
 
         const btn = screen.getByRole('button', { name: /Open default values modal/ });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -467,7 +471,7 @@ describe('Values', () => {
         render(<Values {...defaultProps} />);
 
         const btn = screen.getByRole('button', { name: /Open default values modal/ });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.getChartValues).toHaveBeenCalledTimes(1);

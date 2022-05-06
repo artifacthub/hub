@@ -104,7 +104,7 @@ describe('BannerMOTD', () => {
       expect(alert).toBeInTheDocument();
 
       const btn = screen.getByRole('button', { name: 'Close banner' });
-      userEvent.click(btn);
+      await userEvent.click(btn);
 
       await waitFor(() => {
         expect(container).toBeEmptyDOMElement();

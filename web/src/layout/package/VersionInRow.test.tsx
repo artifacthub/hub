@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -77,7 +77,7 @@ describe('VersionInRow', () => {
       expect(screen.queryByRole('button', { name: /Open version/ })).toBeNull();
     });
 
-    it('calls history push to click version', () => {
+    it('calls history push to click version', async () => {
       render(
         <Router>
           <table>
@@ -89,11 +89,14 @@ describe('VersionInRow', () => {
       );
 
       const versionLink = screen.getByRole('button', { name: /Open version/ });
-      userEvent.click(versionLink);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/helm/repo/pr/1.0.1',
-        state: { searchUrlReferer: undefined, fromStarred: undefined },
+      await userEvent.click(versionLink);
+
+      await waitFor(() => {
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
+          pathname: '/packages/helm/repo/pr/1.0.1',
+          state: { searchUrlReferer: undefined, fromStarred: undefined },
+        });
       });
     });
 

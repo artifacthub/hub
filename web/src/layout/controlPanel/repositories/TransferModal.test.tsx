@@ -89,8 +89,12 @@ describe('Transfer Repository Modal - packages section', () => {
 
     await waitFor(() => {
       expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -108,8 +112,8 @@ describe('Transfer Repository Modal - packages section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Transfer repository')).toBeInTheDocument();
-      const form = screen.getByTestId('transferRepoForm');
+      expect(await screen.findByText('Transfer repository')).toBeInTheDocument();
+      const form = await screen.findByTestId('transferRepoForm');
       expect(form).toBeInTheDocument();
       expect(screen.getByRole('radio', { name: 'Transfer to my user' })).toBeInTheDocument();
       expect(screen.getByRole('radio', { name: 'Transfer to my user' })).toBeChecked();
@@ -121,8 +125,8 @@ describe('Transfer Repository Modal - packages section', () => {
       expect(
         screen.getByText('It may take a few minutes for this change to be visible across the Hub.')
       ).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Transfer repository' })).toBeInTheDocument();
-      expect(screen.getByText(mockOrganizations[0].name)).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Transfer repository' })).toBeInTheDocument();
+      expect(await screen.findByText(mockOrganizations[0].name)).toBeInTheDocument();
       expect(screen.getByText(mockOrganizations[2].name)).toBeInTheDocument();
       expect(screen.queryByText('orgTest')).toBeNull(); // Does not render selected org in context
     });
@@ -141,8 +145,8 @@ describe('Transfer Repository Modal - packages section', () => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Transfer repository')).toBeInTheDocument();
-      const form = screen.getByTestId('transferRepoForm');
+      expect(await screen.findByText('Transfer repository')).toBeInTheDocument();
+      const form = await screen.findByTestId('transferRepoForm');
       expect(form).toBeInTheDocument();
       expect(screen.queryByRole('radio', { name: 'Transfer to my user' })).toBeNull();
       expect(screen.queryByRole('radio', { name: 'Transfer to organization' })).toBeNull();
@@ -172,7 +176,7 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        userEvent.click(screen.getByRole('button', { name: 'Transfer repository' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Transfer repository' }));
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -203,17 +207,17 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        expect(screen.getByTestId('selectOrgsWrapper')).toHaveClass('invisible');
+        expect(await screen.findByTestId('selectOrgsWrapper')).toHaveClass('invisible');
         expect(screen.getByRole('combobox', { name: 'org-select' })).not.toBeRequired();
 
-        const radio = screen.getByText('Transfer to organization');
-        userEvent.click(radio);
+        const radio = await screen.findByText('Transfer to organization');
+        await userEvent.click(radio);
 
-        const select = screen.getByRole('combobox', { name: 'org-select' });
-        userEvent.selectOptions(select, mockOrganizations[2].name);
+        const select = await screen.findByRole('combobox', { name: 'org-select' });
+        await userEvent.selectOptions(select, mockOrganizations[2].name);
 
         const btn = screen.getByRole('button', { name: 'Transfer repository' });
-        userEvent.click(btn);
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -244,11 +248,17 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const select = screen.getByRole('combobox', { name: 'org-select' });
-        userEvent.selectOptions(select, mockOrganizations[2].name);
+        await waitFor(() => {
+          expect(screen.queryByRole('status')).toBeNull();
+        });
 
-        const btn = screen.getByRole('button', { name: 'Transfer repository' });
-        userEvent.click(btn);
+        expect(await screen.findByTestId('selectOrgsWrapper')).not.toHaveClass('invisible');
+
+        const select = await screen.findByRole('combobox', { name: 'org-select' });
+        await userEvent.selectOptions(select, 'helm');
+
+        const btn = await screen.findByRole('button', { name: 'Transfer repository' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -283,14 +293,14 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', { name: 'Transfer repository' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Transfer repository' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onAuthErrorMock).toHaveBeenCalledTimes(1));
       });
 
       it('default error', async () => {
@@ -312,8 +322,8 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', { name: 'Transfer repository' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Transfer repository' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -321,9 +331,9 @@ describe('Transfer Repository Modal - packages section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
         expect(
-          screen.getByText('An error occurred transferring the repository, please try again later.')
+          await screen.findByText('An error occurred transferring the repository, please try again later.')
         ).toBeInTheDocument();
       });
 
@@ -347,8 +357,8 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        const btn = screen.getByRole('button', { name: 'Transfer repository' });
-        userEvent.click(btn);
+        const btn = await screen.findByRole('button', { name: 'Transfer repository' });
+        await userEvent.click(btn);
 
         await waitFor(() => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
@@ -356,8 +366,10 @@ describe('Transfer Repository Modal - packages section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(screen.getByText('An error occurred transferring the repository: custom error')).toBeInTheDocument();
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
+        expect(
+          await screen.findByText('An error occurred transferring the repository: custom error')
+        ).toBeInTheDocument();
       });
     });
 
@@ -377,7 +389,7 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onAuthErrorMock).toHaveBeenCalledTimes(1));
       });
 
       it('default error', async () => {
@@ -399,9 +411,9 @@ describe('Transfer Repository Modal - packages section', () => {
 
         rerender(component);
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(scrollIntoViewMock).toHaveBeenCalledTimes(1));
         expect(
-          screen.getByText('An error occurred getting your organizations, please try again later.')
+          await screen.findByText('An error occurred getting your organizations, please try again later.')
         ).toBeInTheDocument();
       });
     });
