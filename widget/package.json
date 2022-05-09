@@ -13,7 +13,7 @@
   "devDependencies": {
     "@craco/craco": "^6.4.3",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
+    "@testing-library/react": "^13.2.0",
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/user-event": "^14.1.1",
     "@types/jest": "^27.5.0",
@@ -27,7 +27,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "jest-fetch-mock": "^3.0.3",
-    "jest-mock": "^28.0.2",
+    "jest-mock": "^28.1.0",
     "prettier": "^2.6.2",
     "react-scripts": "^5.0.1",
     "typescript": "4.6.4",
