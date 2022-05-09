@@ -21,8 +21,8 @@ require (
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/hashicorp/golang-lru v0.5.4
-	github.com/jackc/pgconn v1.12.0
-	github.com/jackc/pgx/v4 v4.16.0
+	github.com/jackc/pgconn v1.12.1
+	github.com/jackc/pgx/v4 v4.16.1
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/open-policy-agent/opa v0.40.0
 	github.com/opencontainers/image-spec v1.0.3-0.20220114050600-8b9d41f48198
