@@ -9,6 +9,7 @@ updates:
       - dependency-name: "react-router-dom"
       - dependency-name: "react-scripts"
       - dependency-name: "unified"
+      - dependency-name: "remark-parse"
   - package-ecosystem: "npm"
     directory: "/widget"
     schedule:
