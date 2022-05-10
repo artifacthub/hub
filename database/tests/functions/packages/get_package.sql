@@ -377,14 +377,7 @@ select is(
             "subscriptions": 1,
             "webhooks": 0
         },
-        "production_organizations": [
-            {
-                "name": "org2",
-                "display_name": "Organization 2",
-                "home_url": "https://org2.com",
-                "logo_image_id": "00000000-0000-0000-0000-000000000003"
-            }
-        ]
+        "production_organizations_count": 1
     }'::jsonb,
     'Last package1 version is returned as a json object'
 );
@@ -530,14 +523,7 @@ select is(
             "subscriptions": 1,
             "webhooks": 0
         },
-        "production_organizations": [
-            {
-                "name": "org2",
-                "display_name": "Organization 2",
-                "home_url": "https://org2.com",
-                "logo_image_id": "00000000-0000-0000-0000-000000000003"
-            }
-        ]
+        "production_organizations_count": 1
     }'::jsonb,
     'Last package1 version is returned as a json object'
 );
@@ -633,14 +619,7 @@ select is(
             "subscriptions": 1,
             "webhooks": 0
         },
-        "production_organizations": [
-            {
-                "name": "org2",
-                "display_name": "Organization 2",
-                "home_url": "https://org2.com",
-                "logo_image_id": "00000000-0000-0000-0000-000000000003"
-            }
-        ]
+        "production_organizations_count": 1
     }'::jsonb,
     'Requested package version is returned as a json object'
 );
@@ -688,7 +667,8 @@ select is(
         "stats": {
             "subscriptions": 0,
             "webhooks": 1
-        }
+        },
+        "production_organizations_count": 0
     }'::jsonb,
     'Last package2 version is returned as a json object'
 );

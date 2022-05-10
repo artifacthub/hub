@@ -48,7 +48,7 @@ exports[`VerifiedPublisherBadge creates snapshot 1`] = `
           <div
             class="text-nowrap border fw-bold labelText"
           >
-            In Production
+            Production users
           </div>
         </div>
       </div>

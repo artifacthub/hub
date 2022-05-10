@@ -10,7 +10,7 @@ import PackageView from './index';
 jest.mock('../../api');
 jest.mock('../../utils/updateMetaIndex');
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
-jest.mock('react-markdown', () => (props) => {
+jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);
@@ -585,34 +585,6 @@ describe('Package index', () => {
       expect(pkgs).toHaveLength(2);
       expect(pkgs[0]).toHaveTextContent('artifact-hub');
       expect(pkgs[1]).toHaveTextContent('kube-prometheus-stack');
-    });
-
-    it('renders orgs using package', async () => {
-      const mockPackage = getMockPackage('17');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
-
-      render(
-        <Router>
-          <PackageView {...defaultProps} />
-        </Router>
-      );
-
-      await waitFor(() => {
-        expect(API.getPackage).toHaveBeenCalledTimes(1);
-      });
-
-      expect(await screen.findByTestId('more-details-section')).toBeInTheDocument();
-      expect(screen.getByText(/Organizations using this package in production/)).toBeInTheDocument();
-
-      const orgs = screen.getAllByTestId('org-using-pkg');
-      expect(orgs).toHaveLength(3);
-      expect(orgs[0]).toHaveTextContent('Artifact Hub');
-      expect(orgs[1]).toHaveTextContent('test');
-      expect(orgs[2]).toHaveTextContent('Organization');
-
-      const link = screen.getByRole('button', { name: 'Open organization url' });
-      expect(link).toBeInTheDocument();
-      expect(link).toHaveAttribute('href', 'https://artifacthub.io');
     });
 
     it('does not render when recommended and production usage are undefined', async () => {
