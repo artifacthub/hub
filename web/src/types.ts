@@ -118,7 +118,6 @@ export interface Package {
   signKey?: HelmChartSignKey;
   signatures?: Signature[];
   screenshots?: Screenshot[];
-  productionOrganizations?: Organization[];
   productionOrganizationsCount?: number;
 }
 

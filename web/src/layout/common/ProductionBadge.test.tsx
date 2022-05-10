@@ -15,7 +15,7 @@ describe('VerifiedPublisherBadge', () => {
 
   it('renders label', async () => {
     render(<ProductionBadge productionOrganizationsCount={7} />);
-    expect(screen.getByText('In Production')).toBeInTheDocument();
+    expect(screen.getByText('Production users')).toBeInTheDocument();
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe('VerifiedPublisherBadge', () => {
 
   it('renders label with tooltip msg in singular', async () => {
     render(<ProductionBadge productionOrganizationsCount={1} />);
-    expect(screen.getByText('In Production')).toBeInTheDocument();
+    expect(screen.getByText('Production users')).toBeInTheDocument();
 
     const badge = screen.getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();

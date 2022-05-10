@@ -57,7 +57,6 @@ import InProductionButton from './InProductionButton';
 import InstallationModal from './installation/Modal';
 import ModalHeader from './ModalHeader';
 import MoreActionsButton from './MoreActionsButton';
-import OrgsUsingPackage from './OrgsUsingPackage';
 import styles from './PackageView.module.css';
 import PackagesViewsStats from './PackageViewsStats';
 import ReadmeWrapper from './readme';
@@ -283,27 +282,15 @@ const PackageView = (props: Props) => {
   const renderMoreDetails = (): JSX.Element | null => {
     if (detail) {
       const recommendations = detail.recommendations && detail.recommendations.length > 0;
-      const orgsUsingPkg = detail.productionOrganizations && detail.productionOrganizations.length > 0;
 
-      if (recommendations || orgsUsingPkg) {
+      if (recommendations) {
         return (
           <div
             data-testid="more-details-section"
             className={`d-none d-md-block px-3 ${styles.moreDetailsSectionWrapper}`}
           >
             <div className="container-lg px-sm-4 px-lg-0 py-2 d-flex flex-column position-relative">
-              {orgsUsingPkg && (
-                <OrgsUsingPackage
-                  organizations={detail.productionOrganizations!}
-                  className={recommendations ? 'mb-2' : 'mb-3'}
-                />
-              )}
-              {recommendations && (
-                <RecommendedPackages
-                  recommendations={detail.recommendations}
-                  className={orgsUsingPkg ? 'mt-2' : 'mt-3'}
-                />
-              )}
+              {recommendations && <RecommendedPackages recommendations={detail.recommendations} className="mt-3" />}
             </div>
           </div>
         );
@@ -710,7 +697,10 @@ const PackageView = (props: Props) => {
 
                     <p className={`mb-0 overflow-hidden text-break ${styles.description}`}>{detail.description}</p>
 
-                    <Stats packageStats={detail.stats} />
+                    <Stats
+                      packageStats={detail.stats}
+                      productionOrganizationsCount={detail.productionOrganizationsCount}
+                    />
 
                     <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
 
