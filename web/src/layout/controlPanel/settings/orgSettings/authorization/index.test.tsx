@@ -460,11 +460,9 @@ describe('Authorization settings index', () => {
           expect(API.getAllOrganizationMembers).toHaveBeenCalledWith('orgTest');
         });
 
-        const switchBtn = await screen.findByText('Fine-grained access control');
-        await userEvent.click(switchBtn);
+        await userEvent.click(await screen.findByText('Fine-grained access control'));
 
-        const btn = await screen.findByRole('button', { name: 'Update authorization policy' });
-        await userEvent.click(btn);
+        await userEvent.click(await screen.findByRole('button', { name: 'Update authorization policy' }));
 
         rerender(component);
 
@@ -482,9 +480,7 @@ describe('Authorization settings index', () => {
           await screen.findByText('You do not have permissions to update the policy from the organization.')
         ).toBeInTheDocument();
 
-        waitFor(() => {
-          expect(switchBtn).toBeDisabled();
-        });
+        expect(await screen.findByRole('switch')).toBeDisabled();
       });
 
       it('Custom error', async () => {
