@@ -140,6 +140,44 @@ func TestTrackerSource(t *testing.T) {
 		sw.AssertExpectations(t)
 	})
 
+	t.Run("repository index mismatch", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				URL: "https://repo.url",
+			},
+			RepositoryDigest: "digest",
+			Svc:              sw.Svc,
+		}
+		il := &repo.HelmIndexLoaderMock{}
+		il.On("LoadIndex", i.Repository).Return(&helmrepo.IndexFile{
+			Entries: map[string]helmrepo.ChartVersions{
+				"pkg1": []*helmrepo.ChartVersion{
+					{
+						Metadata: &chart.Metadata{
+							APIVersion: "v2",
+							Name:       "pkg1",
+							Version:    "1.0.0",
+						},
+						URLs: []string{
+							"https://repo.url/pkg1-1.0.0.tgz",
+						},
+					},
+				},
+			},
+		}, "other-digest", nil)
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i, withIndexLoader(il)).GetPackagesAvailable()
+		assert.Nil(t, packages)
+		assert.Equal(t, errRepositoryIndexMismatch, err)
+		il.AssertExpectations(t)
+		sw.AssertExpectations(t)
+	})
+
 	t.Run("error loading oci repository tags", func(t *testing.T) {
 		t.Parallel()
 

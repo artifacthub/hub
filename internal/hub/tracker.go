@@ -46,6 +46,7 @@ type TrackerSource interface {
 // the packages available in a repository when tracking it.
 type TrackerSourceInput struct {
 	Repository         *Repository
+	RepositoryDigest   string
 	PackagesRegistered map[string]string
 	BasePath           string
 	Svc                *TrackerSourceServices
