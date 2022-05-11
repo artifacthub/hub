@@ -16,12 +16,9 @@ import (
 // Tracker is in charge of tracking the packages available in the repository
 // provided, registering and unregistering them as needed.
 type Tracker struct {
-	svc                *hub.TrackerServices
-	r                  *hub.Repository
-	md                 *hub.RepositoryMetadata
-	packagesRegistered map[string]string
-	basePath           string
-	logger             zerolog.Logger
+	svc    *hub.TrackerServices
+	r      *hub.Repository
+	logger zerolog.Logger
 }
 
 // New creates a new Tracker instance.
@@ -57,20 +54,36 @@ func (t *Tracker) Run() error {
 	if tmpDir != "" {
 		defer os.RemoveAll(tmpDir)
 	}
-	t.basePath = filepath.Join(tmpDir, packagesPath)
-	t.md, err = t.svc.Rm.GetMetadata(t.r, t.basePath)
+	basePath := filepath.Join(tmpDir, packagesPath)
+	md, err := t.svc.Rm.GetMetadata(t.r, basePath)
 	if err != nil && !errors.Is(err, repo.ErrMetadataNotFound) {
 		t.warn(fmt.Errorf("error getting repository metadata: %w", err))
 	}
 
 	// Load packages already registered from this repository
-	t.packagesRegistered, err = t.svc.Rm.GetPackagesDigest(t.svc.Ctx, t.r.RepositoryID)
+	packagesRegistered, err := t.svc.Rm.GetPackagesDigest(t.svc.Ctx, t.r.RepositoryID)
 	if err != nil {
 		return fmt.Errorf("error getting packages registered: %w", err)
 	}
 
 	// Get packages available in repository
-	packagesAvailable, err := t.getPackagesAvailable()
+	i := &hub.TrackerSourceInput{
+		Repository:         t.r,
+		RepositoryDigest:   remoteDigest,
+		PackagesRegistered: packagesRegistered,
+		BasePath:           basePath,
+		Svc: &hub.TrackerSourceServices{
+			Ctx:    t.svc.Ctx,
+			Cfg:    t.svc.Cfg,
+			Ec:     t.svc.Ec,
+			Hc:     t.svc.Hc,
+			Op:     t.svc.Op,
+			Is:     t.svc.Is,
+			Logger: t.logger,
+		},
+	}
+	source := t.svc.SetupTrackerSource(i)
+	packagesAvailable, err := source.GetPackagesAvailable()
 	if err != nil {
 		return fmt.Errorf("error getting packages available: %w", err)
 	}
@@ -85,13 +98,13 @@ func (t *Tracker) Run() error {
 		}
 
 		// Check if this package version is already registered
-		digest, ok := t.packagesRegistered[pkg.BuildKey(p)]
+		digest, ok := packagesRegistered[pkg.BuildKey(p)]
 		if ok && (p.Digest == digest || p.Digest == hub.HasNotChanged) && !bypassDigestCheck {
 			continue
 		}
 
 		// Check if this package should be ignored
-		if shouldIgnorePackage(t.md, p.Name, p.Version) {
+		if shouldIgnorePackage(md, p.Name, p.Version) {
 			continue
 		}
 
@@ -104,7 +117,7 @@ func (t *Tracker) Run() error {
 
 	// Unregister packages not available anymore
 	if len(packagesAvailable) > 0 {
-		for key := range t.packagesRegistered {
+		for key := range packagesRegistered {
 			// Return ASAP if context is cancelled
 			select {
 			case <-t.svc.Ctx.Done():
@@ -115,7 +128,7 @@ func (t *Tracker) Run() error {
 			// Unregister pkg if it's not available anymore or if it's ignored
 			name, version := pkg.ParseKey(key)
 			_, ok := packagesAvailable[key]
-			if !ok || shouldIgnorePackage(t.md, name, version) {
+			if !ok || shouldIgnorePackage(md, name, version) {
 				t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering package")
 				p := &hub.Package{
 					Name:       name,
@@ -130,7 +143,7 @@ func (t *Tracker) Run() error {
 	}
 
 	// Set verified publisher flag if needed
-	if err := setVerifiedPublisherFlag(t.svc.Ctx, t.svc.Rm, t.r, t.md); err != nil {
+	if err := setVerifiedPublisherFlag(t.svc.Ctx, t.svc.Rm, t.r, md); err != nil {
 		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
 	}
 
@@ -176,28 +189,6 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 	}
 
 	return tmpDir, packagesPath, err
-}
-
-// getPackagesAvailable returns the packages available in the repository. The
-// tracker source used to get the packages will depend on the kind of the repo
-// being tracked.
-func (t *Tracker) getPackagesAvailable() (map[string]*hub.Package, error) {
-	i := &hub.TrackerSourceInput{
-		Repository:         t.r,
-		PackagesRegistered: t.packagesRegistered,
-		BasePath:           t.basePath,
-		Svc: &hub.TrackerSourceServices{
-			Ctx:    t.svc.Ctx,
-			Cfg:    t.svc.Cfg,
-			Ec:     t.svc.Ec,
-			Hc:     t.svc.Hc,
-			Op:     t.svc.Op,
-			Is:     t.svc.Is,
-			Logger: t.logger,
-		},
-	}
-	source := t.svc.SetupTrackerSource(i)
-	return source.GetPackagesAvailable()
 }
 
 // warn is a helper that sends the error provided to the errors collector and

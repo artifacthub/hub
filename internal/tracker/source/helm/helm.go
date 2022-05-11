@@ -73,6 +73,10 @@ var (
 	// errInvalidAnnotation indicates that the annotation provided is not valid.
 	errInvalidAnnotation = errors.New("invalid annotation")
 
+	// errRepositoryIndexMismatch indicates that the index.yaml file received
+	// does not match the one we were expecting.
+	errRepositoryIndexMismatch = errors.New("repository index mismatch: unexpected index.yaml file received (stale copy?), we'll retry soon")
+
 	// validOperatorCapabilities represents the valid operator capabilities
 	// values that can be provided.
 	validOperatorCapabilities = []string{
@@ -169,9 +173,12 @@ func (s *TrackerSource) getCharts() (map[string][]*helmrepo.ChartVersion, error)
 	switch u.Scheme {
 	case "http", "https":
 		// Load repository index file
-		indexFile, _, err := s.il.LoadIndex(s.i.Repository)
+		indexFile, indexDigest, err := s.il.LoadIndex(s.i.Repository)
 		if err != nil {
 			return nil, fmt.Errorf("error loading repository index file: %w", err)
+		}
+		if s.i.RepositoryDigest != "" && s.i.RepositoryDigest != indexDigest {
+			return nil, errRepositoryIndexMismatch
 		}
 
 		// Read available charts versions from index file
