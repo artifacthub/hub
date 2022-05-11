@@ -246,6 +246,7 @@ const Values = (props: Props) => {
           onClose={onCloseModal}
           open={openStatus}
           breakPoint="md"
+          footerClassName={styles.modalFooter}
         >
           <div className="mw-100 h-100 d-flex flex-column overflow-hidden">
             {lines && (

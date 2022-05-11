@@ -9,7 +9,7 @@ import alertDispatcher from '../../../utils/alertDispatcher';
 import ChartTemplatesModal from './index';
 jest.mock('../../../utils/alertDispatcher');
 jest.mock('../../../api');
-jest.mock('react-markdown', () => (props) => {
+jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);
@@ -34,7 +34,12 @@ const defaultProps = {
   normalizedName: 'pkg',
   packageId: 'id',
   version: '1.1.1',
-  sortedVersions: [{ version: '1.1.1' }, { version: '1.1.0' }, { version: '1.0.1' }, { version: '1.0.0' }],
+  sortedVersions: [
+    { version: '1.1.1', containsSecurityUpdates: false, prerelease: false, ts: 0 },
+    { version: '1.1.0', containsSecurityUpdates: false, prerelease: false, ts: 0 },
+    { version: '1.0.1', containsSecurityUpdates: false, prerelease: false, ts: 0 },
+    { version: '1.0.0', containsSecurityUpdates: false, prerelease: false, ts: 0 },
+  ],
   repoKind: RepositoryKind.Helm,
   visibleChartTemplates: false,
 };

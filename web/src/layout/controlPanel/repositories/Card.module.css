@@ -30,6 +30,18 @@
   min-width: 30px;
 }
 
+.modalSyntaxWrapper {
+  padding: 1rem 0;
+}
+
+.modalSyntaxTrackerWrapper {
+  padding: 0 0 1rem 0;
+}
+
+.trackingTime {
+  margin-top: 1rem;
+}
+
 @media only screen and (max-width: 575.98px) {
   .titleCard {
     font-size: 1rem;
@@ -51,6 +63,34 @@
   }
 }
 
+@media only screen and (max-height: 700px) {
+  .modalDialog {
+    min-height: calc(100% - 6rem) !important;
+    max-height: calc(100% - 6rem) !important;
+    margin: 3rem auto !important;
+  }
+
+  .modalFooter {
+    display: none;
+  }
+
+  .title {
+    font-size: 1.35rem;
+  }
+
+  .modalSyntaxWrapper,
+  .modalSyntaxTrackerWrapper {
+    padding: 0;
+  }
+
+  .modalSyntaxWrapper pre {
+    margin-bottom: 0 !important;
+  }
+
+  .trackingTime {
+    margin-top: 0;
+  }
+}
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;

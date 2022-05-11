@@ -214,7 +214,7 @@ export interface OPAPolicies {
   [key: string]: string;
 }
 
-export interface FileModalItem {
+export interface ContentDefaultModalItem {
   name: string;
   file: string;
 }
@@ -730,7 +730,7 @@ export interface TOCEntryItem {
   children?: TOCEntryItem[];
 }
 
-export enum FileModalKind {
+export enum ContentDefaultModalKind {
   CustomResourcesDefinition,
   Policy,
   Rules,

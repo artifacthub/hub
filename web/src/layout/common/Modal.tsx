@@ -33,6 +33,7 @@ interface Props {
   size?: string;
   unclosable?: boolean;
   visibleContentBackdrop?: boolean;
+  footerClassName?: string;
 }
 
 const Modal = (props: Props) => {
@@ -142,7 +143,7 @@ const Modal = (props: Props) => {
             </div>
 
             {(isUndefined(props.noFooter) || !props.noFooter) && (
-              <div className="modal-footer p-3">
+              <div className={`modal-footer p-3 ${props.footerClassName}`}>
                 {isUndefined(props.closeButton) ? (
                   <button
                     type="button"

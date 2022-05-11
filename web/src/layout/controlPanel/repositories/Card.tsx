@@ -129,6 +129,7 @@ const RepositoryCard = (props: Props) => {
           {content}
           <Modal
             modalDialogClassName={styles.modalDialog}
+            modalClassName="mh-100"
             className={`d-inline-block ${styles.modal}`}
             buttonType={`ms-1 btn badge btn-outline-secondary ${styles.btn}`}
             buttonContent={
@@ -145,14 +146,27 @@ const RepositoryCard = (props: Props) => {
             }
             open={openErrorsModal}
             onClose={() => setOpenErrorsModal(false)}
+            footerClassName={styles.modalFooter}
           >
-            <div className="mt-3 mw-100">
-              <div className="mb-2">{moment.unix(props.repository.lastTrackingTs!).format('llll Z')}</div>
-              {props.repository.lastTrackingErrors && (
-                <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
-                  {props.repository.lastTrackingErrors}
-                </SyntaxHighlighter>
-              )}
+            <div className="d-flex h-100 mw-100 overflow-hidden">
+              <div className="d-flex flex-column w-100">
+                <div className={`mb-2 ${styles.trackingTime}`}>
+                  {moment.unix(props.repository.lastTrackingTs!).format('llll Z')}
+                </div>
+                <div
+                  className={`position-relative flex-grow-1 mw-100 mh-100 overflow-hidden ${styles.modalSyntaxTrackerWrapper}`}
+                >
+                  {props.repository.lastTrackingErrors && (
+                    <SyntaxHighlighter
+                      language="bash"
+                      style={tomorrowNight}
+                      customStyle={{ fontSize: '90%', height: '100%' }}
+                    >
+                      {props.repository.lastTrackingErrors}
+                    </SyntaxHighlighter>
+                  )}
+                </div>
+              </div>
             </div>
           </Modal>
           <span className="ms-3 fst-italic text-muted">{nextCheckMsg}</span>
@@ -230,6 +244,7 @@ const RepositoryCard = (props: Props) => {
           {content}
           <Modal
             modalDialogClassName={styles.modalDialog}
+            modalClassName="mh-100"
             className={`d-inline-block ${styles.modal}`}
             buttonType={`ms-1 btn badge btn-outline-secondary ${styles.btn}`}
             buttonContent={
@@ -246,13 +261,20 @@ const RepositoryCard = (props: Props) => {
             }
             open={openScanningErrorsModal}
             onClose={() => setOpenErrorsModal(false)}
+            footerClassName={styles.modalFooter}
           >
-            <div className="mt-3 mw-100">
-              {props.repository.lastScanningErrors && (
-                <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
-                  {props.repository.lastScanningErrors}
-                </SyntaxHighlighter>
-              )}
+            <div className="d-flex h-100 mw-100 overflow-hidden">
+              <div className={`d-flex overflow-scroll ${styles.modalSyntaxWrapper}`}>
+                {props.repository.lastScanningErrors && (
+                  <SyntaxHighlighter
+                    language="bash"
+                    style={tomorrowNight}
+                    customStyle={{ fontSize: '90%', height: '100%', marginBottom: '0' }}
+                  >
+                    {props.repository.lastScanningErrors}
+                  </SyntaxHighlighter>
+                )}
+              </div>
             </div>
           </Modal>
           <span className="ms-3 fst-italic text-muted">{nextCheckMsg}</span>
