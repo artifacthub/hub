@@ -38,13 +38,9 @@ const ThemeMode = (props: Props) => {
               aria-checked={configured === 'automatic'}
               tabIndex={0}
               checked={configured === 'automatic'}
-              readOnly
+              onChange={() => onHandleChange('automatic')}
             />
-            <label
-              className={`form-check-label fw-bold w-100 ${styles.label}`}
-              htmlFor={`${props.device}-automatic`}
-              onClick={() => onHandleChange('automatic')}
-            >
+            <label className={`form-check-label fw-bold w-100 ${styles.label}`} htmlFor={`${props.device}-automatic`}>
               <GoBrowser className={`mx-1 position-relative ${styles.icon}`} />
               Automatic
             </label>
@@ -62,13 +58,9 @@ const ThemeMode = (props: Props) => {
               aria-checked={configured === 'light'}
               tabIndex={-1}
               checked={configured === 'light'}
-              readOnly
+              onChange={() => onHandleChange('light')}
             />
-            <label
-              className={`form-check-label fw-bold w-100 ${styles.label}`}
-              htmlFor={`${props.device}-light`}
-              onClick={() => onHandleChange('light')}
-            >
+            <label className={`form-check-label fw-bold w-100 ${styles.label}`} htmlFor={`${props.device}-light`}>
               <FiSun className={`mx-1 position-relative ${styles.icon}`} />
               Light
             </label>
@@ -86,13 +78,9 @@ const ThemeMode = (props: Props) => {
               aria-checked={configured === 'dark'}
               tabIndex={-1}
               checked={configured === 'dark'}
-              readOnly
+              onChange={() => onHandleChange('dark')}
             />
-            <label
-              className={`form-check-label fw-bold w-100 ${styles.label}`}
-              htmlFor={`${props.device}-dark`}
-              onClick={() => onHandleChange('dark')}
-            >
+            <label className={`form-check-label fw-bold w-100 ${styles.label}`} htmlFor={`${props.device}-dark`}>
               <FiMoon className={`mx-1 position-relative ${styles.icon}`} />
               Dark
             </label>
