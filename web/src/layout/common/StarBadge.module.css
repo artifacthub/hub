@@ -5,8 +5,9 @@
 }
 
 .size-xs {
-  font-size: 0.45rem;
+  font-size: 0.5rem;
   padding: 0.15em 0.4em;
+  height: 14px;
 }
 
 .size-xs .icon {
