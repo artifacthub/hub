@@ -141,16 +141,12 @@ const WidgetsGroupModal = (props: Props) => {
                       id={themeOpt.name}
                       value={themeOpt.name}
                       checked={theme === themeOpt.name}
-                      required
-                      readOnly
-                    />
-                    <label
-                      className="form-label text-capitalize form-check-label"
-                      htmlFor={themeOpt.name}
-                      onClick={() => {
+                      onChange={() => {
                         setTheme(themeOpt.name);
                       }}
-                    >
+                      required
+                    />
+                    <label className="form-label text-capitalize form-check-label" htmlFor={themeOpt.name}>
                       <div className="d-flex flex-row align-items-center">
                         {themeOpt.icon}
                         <span className="ms-1">{themeOpt.name}</span>
@@ -217,13 +213,7 @@ const WidgetsGroupModal = (props: Props) => {
                           id={wrapperOpt.name}
                           value={wrapperOpt.name}
                           checked={groupWrapperWidthOpt === wrapperOpt.name}
-                          required
-                          readOnly
-                        />
-                        <label
-                          className="text-capitalize form-check-label"
-                          htmlFor={wrapperOpt.name}
-                          onClick={() => {
+                          onChange={() => {
                             if (wrapperOpt.name === 'fixed') {
                               setFixedWidth((WIDGET_WIDTH * 2).toString());
                             } else {
@@ -232,7 +222,9 @@ const WidgetsGroupModal = (props: Props) => {
                             }
                             setGroupWrapperWidthOpt(wrapperOpt.name);
                           }}
-                        >
+                          required
+                        />
+                        <label className="text-capitalize form-check-label" htmlFor={wrapperOpt.name}>
                           <div className="d-flex flex-row align-items-center">
                             {wrapperOpt.icon}
                             <span className="ms-1">{wrapperOpt.name}</span>
