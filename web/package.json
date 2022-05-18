@@ -37,7 +37,7 @@
     "semver": "^7.3.7",
     "tinycolor2": "^1.4.2",
     "unified": "^9.2.1",
-    "yaml": "^2.0.1"
+    "yaml": "^2.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
