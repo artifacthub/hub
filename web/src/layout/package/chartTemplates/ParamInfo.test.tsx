@@ -10,6 +10,7 @@ const defaultProps = {
   info: 'this is a sample',
   fixedWidth: false,
 };
+const user = userEvent.setup({ delay: null });
 
 describe('ParamInfo', () => {
   afterEach(() => {
@@ -31,7 +32,7 @@ describe('ParamInfo', () => {
     });
 
     it('displays info dropdown to enter on info text and hides on leave', async () => {
-      jest.useFakeTimers('legacy');
+      jest.useFakeTimers();
 
       render(<ParamInfo {...defaultProps} />);
 
@@ -39,7 +40,7 @@ describe('ParamInfo', () => {
 
       expect(infoDropdown).not.toHaveClass('visible');
 
-      await userEvent.hover(screen.getByTestId('infoText'));
+      await user.hover(screen.getByTestId('infoText'));
 
       act(() => {
         jest.advanceTimersByTime(100);
@@ -47,7 +48,7 @@ describe('ParamInfo', () => {
 
       expect(infoDropdown).toHaveClass('visible');
 
-      await userEvent.unhover(screen.getByTestId('infoText'));
+      await user.unhover(screen.getByTestId('infoText'));
 
       act(() => {
         jest.advanceTimersByTime(50);
@@ -59,15 +60,13 @@ describe('ParamInfo', () => {
     });
 
     it('hides info dropdown to leave it', async () => {
-      jest.useFakeTimers('legacy');
+      jest.useFakeTimers();
 
       render(<ParamInfo {...defaultProps} />);
 
       const infoDropdown = screen.getByTestId('infoDropdown');
 
-      await userEvent.hover(screen.getByTestId('infoText'));
-      await userEvent.hover(screen.getByTestId('infoDropdown'));
-      await userEvent.unhover(screen.getByTestId('infoText'));
+      await user.hover(screen.getByTestId('infoText'));
 
       act(() => {
         jest.advanceTimersByTime(100);
@@ -75,7 +74,7 @@ describe('ParamInfo', () => {
 
       expect(infoDropdown).toHaveClass('visible');
 
-      await userEvent.unhover(screen.getByTestId('infoDropdown'));
+      await user.unhover(screen.getByTestId('infoDropdown'));
 
       act(() => {
         jest.advanceTimersByTime(50);

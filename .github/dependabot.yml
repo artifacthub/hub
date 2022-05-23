@@ -8,8 +8,9 @@ updates:
     ignore:
       - dependency-name: "react-router-dom"
       - dependency-name: "react-scripts"
-      - dependency-name: "unified"
       - dependency-name: "remark-parse"
+      - dependency-name: "unified"
+      - dependency-name: "yaml"
   - package-ecosystem: "npm"
     directory: "/widget"
     schedule:
