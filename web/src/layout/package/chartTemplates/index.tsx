@@ -18,6 +18,7 @@ import {
   Version as VersionData,
 } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
 import styles from './ChartTemplatesModal.module.css';
 import CompareView from './CompareView';
@@ -222,6 +223,8 @@ const ChartTemplatesModal = (props: Props) => {
     });
   };
 
+  const isDisabledDiffView = props.sortedVersions.length <= 1;
+
   return (
     <div className="mb-2">
       <div className="text-center">
@@ -255,22 +258,34 @@ const ChartTemplatesModal = (props: Props) => {
               <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Templates</div>
               <div className="mx-4">
                 <div className="btn-group" role="group">
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary btn-sm dropdown-toggle"
-                    onClick={() => setVisibleDropdown(!visibleDropdown)}
-                  >
-                    <span className="pe-2">
-                      {enabledDiff ? (
-                        <span>
-                          Comparing to version:
-                          <span className="fw-bold ps-2">{comparedVersion}</span>
+                  <ElementWithTooltip
+                    element={
+                      <button
+                        type="button"
+                        className={classnames('btn btn-outline-primary btn-sm dropdown-toggle', {
+                          disabled: isDisabledDiffView,
+                        })}
+                        onClick={() => setVisibleDropdown(!visibleDropdown)}
+                        aria-label="Open diff template view"
+                        aria-disabled={isDisabledDiffView}
+                      >
+                        <span className="pe-2">
+                          {enabledDiff ? (
+                            <span>
+                              Comparing to version:
+                              <span className="fw-bold ps-2">{comparedVersion}</span>
+                            </span>
+                          ) : (
+                            'Compare to version ...'
+                          )}
                         </span>
-                      ) : (
-                        'Compare to version ...'
-                      )}
-                    </span>
-                  </button>
+                      </button>
+                    }
+                    visibleTooltip={isDisabledDiffView}
+                    tooltipMessage="There is only one version of this chart"
+                    active
+                  />
+
                   <div
                     ref={ref}
                     role="complementary"

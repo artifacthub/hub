@@ -71,16 +71,26 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                     class="btn-group"
                     role="group"
                   >
-                    <button
-                      class="btn btn-outline-primary btn-sm dropdown-toggle"
-                      type="button"
+                    <div
+                      class="position-relative undefined"
                     >
-                      <span
-                        class="pe-2"
+                      <div
+                        data-testid="elementWithTooltip"
                       >
-                        Compare to version ...
-                      </span>
-                    </button>
+                        <button
+                          aria-disabled="false"
+                          aria-label="Open diff template view"
+                          class="btn btn-outline-primary btn-sm dropdown-toggle"
+                          type="button"
+                        >
+                          <span
+                            class="pe-2"
+                          >
+                            Compare to version ...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
                     <div
                       class="dropdown-menu dropdown-menu-end text-nowrap overflow-hidden dropdown"
                       role="complementary"
