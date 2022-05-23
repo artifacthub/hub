@@ -14,7 +14,7 @@ describe('alertDispatcher', () => {
   });
 
   it('receives alert after subscription', async () => {
-    jest.useFakeTimers('legacy');
+    jest.useFakeTimers();
 
     alertDispatcher.subscribe({
       updateAlertWrapper: (alert: Alert | null) => subscriptionMock(alert),
@@ -30,7 +30,7 @@ describe('alertDispatcher', () => {
   });
 
   it('dismiss alert when default time has finished', async () => {
-    jest.useFakeTimers('legacy');
+    jest.useFakeTimers();
 
     alertDispatcher.subscribe({
       updateAlertWrapper: (alert: Alert | null) => subscriptionMock(alert),
@@ -50,7 +50,7 @@ describe('alertDispatcher', () => {
   });
 
   it('dismiss alert with custom time', async () => {
-    jest.useFakeTimers('legacy');
+    jest.useFakeTimers();
 
     alertDispatcher.subscribe({
       updateAlertWrapper: (alert: Alert | null) => subscriptionMock(alert),

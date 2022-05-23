@@ -127,8 +127,6 @@ describe('DeleteOrg', () => {
         expect(await screen.findByRole('button', { name: 'Delete organization' })).toBeEnabled();
         await userEvent.click(screen.getByRole('button', { name: 'Delete organization' }));
 
-        expect(screen.getByText('Deleting...')).toBeInTheDocument();
-
         await waitFor(() => {
           expect(API.deleteOrganization).toHaveBeenCalledTimes(1);
           expect(API.deleteOrganization).toHaveBeenCalledWith('orgTest');

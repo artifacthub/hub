@@ -27,6 +27,7 @@ const defaultProps = {
   deprecated: false,
   withLabels: true,
 };
+const user = userEvent.setup({ delay: null });
 
 describe('RepositoryInfo', () => {
   afterEach(() => {
@@ -79,14 +80,14 @@ describe('RepositoryInfo', () => {
   });
 
   it('displays repo info to enter on link and hides on leave', async () => {
-    jest.useFakeTimers('legacy');
+    jest.useFakeTimers();
 
     render(<RepositoryInfo {...defaultProps} />);
     expect(screen.getAllByText(defaultProps.repository.displayName!)).toHaveLength(2);
     expect(screen.getByTestId('repoUrl')).toBeInTheDocument();
     expect(screen.getByTestId('repoUrl')).toHaveTextContent(defaultProps.repository.url);
 
-    await userEvent.hover(screen.getByTestId('repoLink'));
+    await user.hover(screen.getByTestId('repoLink'));
 
     act(() => {
       jest.advanceTimersByTime(100);
@@ -94,7 +95,7 @@ describe('RepositoryInfo', () => {
 
     expect(await screen.findByRole('complementary')).toHaveClass('show');
 
-    await userEvent.unhover(screen.getByTestId('repoLink'));
+    await user.unhover(screen.getByTestId('repoLink'));
 
     act(() => {
       jest.advanceTimersByTime(50);
@@ -106,13 +107,13 @@ describe('RepositoryInfo', () => {
   });
 
   it('hides repo info to leave dropdown', async () => {
-    jest.useFakeTimers('legacy');
+    jest.useFakeTimers();
 
     render(<RepositoryInfo {...defaultProps} />);
-    await userEvent.hover(screen.getByTestId('repoLink'));
 
-    await userEvent.hover(screen.getByRole('complementary'));
-    await userEvent.unhover(screen.getByTestId('repoLink'));
+    expect(screen.getByTestId('repoUrl')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('repoLink'));
 
     act(() => {
       jest.advanceTimersByTime(100);
@@ -120,7 +121,7 @@ describe('RepositoryInfo', () => {
 
     expect(await screen.findByRole('complementary')).toHaveClass('show');
 
-    await userEvent.unhover(screen.getByRole('complementary'));
+    await user.unhover(screen.getByRole('complementary'));
 
     act(() => {
       jest.advanceTimersByTime(50);

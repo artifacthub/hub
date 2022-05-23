@@ -16,6 +16,7 @@ jest.mock('../../utils/authorizer', () => ({
 }));
 
 const onClickMock = jest.fn();
+const user = userEvent.setup({ delay: null });
 
 const defaultProps = {
   onClick: onClickMock,
@@ -102,7 +103,7 @@ describe('ActionBtn', () => {
   });
 
   it('displays tooltip', async () => {
-    jest.useFakeTimers('legacy');
+    jest.useFakeTimers();
 
     render(
       <AppCtx.Provider
@@ -121,7 +122,7 @@ describe('ActionBtn', () => {
     );
 
     const btn = screen.getByRole('button');
-    await userEvent.hover(btn);
+    await user.hover(btn);
 
     act(() => {
       jest.advanceTimersByTime(2000);

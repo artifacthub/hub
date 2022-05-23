@@ -138,8 +138,6 @@ describe('DeleteAccount', () => {
         expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
         await userEvent.click(deleteBtn);
 
-        expect(await screen.findByText('Deleting...')).toBeInTheDocument();
-
         await waitFor(() => {
           expect(API.registerDeleteUserCode).toHaveBeenCalledTimes(1);
         });
@@ -186,8 +184,6 @@ describe('DeleteAccount', () => {
 
         expect(await screen.findByRole('button', { name: 'Delete account' })).toBeEnabled();
         await userEvent.click(deleteBtn);
-
-        expect(await screen.findByText('Deleting...')).toBeInTheDocument();
 
         await waitFor(() => {
           expect(API.registerDeleteUserCode).toHaveBeenCalledTimes(1);
