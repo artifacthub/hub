@@ -115,16 +115,12 @@ const WidgetModal = (props: Props) => {
                       id={themeOpt.name}
                       value={themeOpt.name}
                       checked={theme === themeOpt.name}
-                      required
-                      readOnly
-                    />
-                    <label
-                      className="form-label text-capitalize form-check-label"
-                      htmlFor={themeOpt.name}
-                      onClick={() => {
+                      onChange={() => {
                         setTheme(themeOpt.name);
                       }}
-                    >
+                      required
+                    />
+                    <label className="form-label text-capitalize form-check-label" htmlFor={themeOpt.name}>
                       <div className="d-flex flex-row align-items-center">
                         {themeOpt.icon}
                         <span className="ms-1">{themeOpt.name}</span>
