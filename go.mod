@@ -26,7 +26,7 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/open-policy-agent/opa v0.40.0
 	github.com/opencontainers/image-spec v1.0.3-0.20220114050600-8b9d41f48198
-	github.com/operator-framework/api v0.14.0
+	github.com/operator-framework/api v0.15.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.3.0
 	github.com/prometheus/client_golang v1.12.2

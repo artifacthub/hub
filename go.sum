@@ -1856,8 +1856,8 @@ github.com/openzipkin/zipkin-go v0.1.6/go.mod h1:QgAqvLzwWbR/WpD4A3cGpPtJrZXNIiJ
 github.com/openzipkin/zipkin-go v0.2.1/go.mod h1:NaW6tEwdmWMaCDZzg8sh+IBNOxHMPnhQw8ySjnjRyN4=
 github.com/openzipkin/zipkin-go v0.2.2/go.mod h1:NaW6tEwdmWMaCDZzg8sh+IBNOxHMPnhQw8ySjnjRyN4=
 github.com/openzipkin/zipkin-go v0.2.5/go.mod h1:KpXfKdgRDnnhsxw4pNIH9Md5lyFqKUa4YDFlwRYAMyE=
-github.com/operator-framework/api v0.14.0 h1:5nk8fQL8l+dDxi11hZi0T7nqhhoIQLn+qL2DhMEGnoE=
-github.com/operator-framework/api v0.14.0/go.mod h1:r/erkmp9Kc1Al4dnxmRkJYc0uCtD5FohN9VuJ5nTxz0=
+github.com/operator-framework/api v0.15.0 h1:4f9i0drtqHj7ykLoHxv92GR43S7MmQHhmFQkfm5YaGI=
+github.com/operator-framework/api v0.15.0/go.mod h1:scnY9xqSeCsOdtJtNoHIXd7OtHZ14gj1hkDA4+DlgLY=
 github.com/otiai10/copy v1.2.0/go.mod h1:rrF5dJ5F0t/EWSYODDu4j9/vEeYHMkc8jt0zJChqQWw=
 github.com/otiai10/curr v0.0.0-20150429015615-9b4961190c95/go.mod h1:9qAhocn7zKJG+0mI8eUu6xqkFDYS2kb2saOteoSB3cE=
 github.com/otiai10/curr v1.0.0/go.mod h1:LskTG5wDwr8Rs+nNQ+1LlxRjAtTZZjtJW4rMXl6j4vs=
