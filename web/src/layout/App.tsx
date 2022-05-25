@@ -120,32 +120,35 @@ export default function App() {
             <Route
               path="/packages/:repositoryKind/:repositoryName/:packageName/:version?"
               exact
-              render={({ location, match }) => (
-                <>
-                  <Navbar
-                    isSearching={isSearching}
-                    redirect={getQueryParam(location.search, 'redirect') || undefined}
-                    visibleModal={getQueryParam(location.search, 'modal') || undefined}
-                  />
-                  <div className="d-flex flex-column flex-grow-1">
-                    <PackageView
-                      hash={location.hash}
+              render={({ location, match }) => {
+                const state = location.state ? (location.state as Object) : {};
+                return (
+                  <>
+                    <Navbar
+                      isSearching={isSearching}
+                      redirect={getQueryParam(location.search, 'redirect') || undefined}
                       visibleModal={getQueryParam(location.search, 'modal') || undefined}
-                      visibleTemplate={getQueryParam(location.search, 'template') || undefined}
-                      compareVersionTo={getQueryParam(location.search, 'compare-to') || undefined}
-                      visibleFile={getQueryParam(location.search, 'file') || undefined}
-                      visibleVersion={getQueryParam(location.search, 'version') || undefined}
-                      visibleValuesPath={getQueryParam(location.search, 'path') || undefined}
-                      visibleImage={getQueryParam(location.search, 'image') || undefined}
-                      visibleTarget={getQueryParam(location.search, 'target') || undefined}
-                      visibleSection={getQueryParam(location.search, 'section') || undefined}
-                      eventId={getQueryParam(location.search, 'event-id') || undefined}
-                      {...location.state}
-                      {...match.params}
                     />
-                  </div>
-                </>
-              )}
+                    <div className="d-flex flex-column flex-grow-1">
+                      <PackageView
+                        hash={location.hash}
+                        visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                        visibleTemplate={getQueryParam(location.search, 'template') || undefined}
+                        compareVersionTo={getQueryParam(location.search, 'compare-to') || undefined}
+                        visibleFile={getQueryParam(location.search, 'file') || undefined}
+                        visibleVersion={getQueryParam(location.search, 'version') || undefined}
+                        visibleValuesPath={getQueryParam(location.search, 'path') || undefined}
+                        visibleImage={getQueryParam(location.search, 'image') || undefined}
+                        visibleTarget={getQueryParam(location.search, 'target') || undefined}
+                        visibleSection={getQueryParam(location.search, 'section') || undefined}
+                        eventId={getQueryParam(location.search, 'event-id') || undefined}
+                        {...state}
+                        {...match.params}
+                      />
+                    </div>
+                  </>
+                );
+              }}
             />
 
             <Route
