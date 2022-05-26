@@ -21,10 +21,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-const (
-	repositoryTimeout = 10 * time.Minute
-)
-
 var (
 	errTimeout = errors.New("repository tracking timed out")
 )
@@ -93,6 +89,7 @@ func main() {
 		log.Fatal().Err(err).Msg("error getting repositories")
 	}
 	cfg.SetDefault("tracker.concurrency", 1)
+	cfg.SetDefault("tracker.repositoryTimeout", 15*time.Minute)
 	limiter := make(chan struct{}, cfg.GetInt("tracker.concurrency"))
 	var wg sync.WaitGroup
 L:
@@ -129,7 +126,7 @@ L:
 			}()
 			select {
 			case <-done:
-			case <-time.After(repositoryTimeout):
+			case <-time.After(cfg.GetDuration("tracker.repositoryTimeout")):
 				logger.Error().Err(errTimeout).Send()
 				svc.Ec.Append(r.RepositoryID, errTimeout.Error())
 			}

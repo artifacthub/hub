@@ -12,6 +12,7 @@ creds:
   dockerPassword: ""
 tracker:
   concurrency: 10
+  repositoryTimeout: 15m
   repositoriesNames: []
   repositoriesKinds: []
   bypassDigestCheck: false
