@@ -82,7 +82,6 @@
 {{ template "subscriptions/get_user_subscriptions.sql" }}
 
 {{ template "users/approve_session.sql" }}
-{{ template "users/check_user_alias_availability.sql" }}
 {{ template "users/delete_user.sql" }}
 {{ template "users/get_user_profile.sql" }}
 {{ template "users/get_user_tfa_config.sql" }}

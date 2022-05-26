@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(186);
+select plan(185);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -480,7 +480,6 @@ select has_function('get_user_package_subscriptions');
 select has_function('get_user_subscriptions');
 -- Users
 select has_function('approve_session');
-select has_function('check_user_alias_availability');
 select has_function('delete_user');
 select has_function('get_user_profile');
 select has_function('get_user_tfa_config');
