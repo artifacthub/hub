@@ -253,6 +253,8 @@ tracker:
   configDir: "/home/tracker/.cfg"
   # Number of repositories to process concurrently
   concurrency: 10
+  # Maximum duration for the tracking of a single repository
+  repositoryTimeout: 15m
   # Repositories names to process ([] = all)
   repositoriesNames: []
   # Repositories kinds to process ([] = all)
