@@ -6,17 +6,6 @@ declare
     v_user_id uuid;
     v_email_verification_code uuid;
 begin
-    -- If there is a user already registered with the email provided and the
-    -- email wasn't verified within the allowed period, delete both the user
-    -- and the email verification code
-    delete from "user" where user_id = (
-        select user_id
-        from "user" u
-        join email_verification_code c using (user_id)
-        where u.email = p_user->>'email'
-        and c.created_at + '1 day'::interval < current_timestamp
-    );
-
     -- Register user
     insert into "user" (
         alias,

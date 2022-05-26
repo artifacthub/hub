@@ -36,9 +36,9 @@ select throws_ok(
 -- Reset password successfully for user1
 select reset_user_password(:'code1ID', 'pass') as email1 \gset
 select results_eq(
-    $$ select password from "user" where alias = 'user1' $$,
-    $$ values ('pass') $$,
-    'User password should have been updated'
+    $$ select password, email_verified from "user" where alias = 'user1' $$,
+    $$ values ('pass', true) $$,
+    'User password should have been updated and the email marked as verified'
 );
 select is_empty(
     $$

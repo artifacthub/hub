@@ -1,12 +1,10 @@
 -- Start transaction and plan tests
 begin;
-select plan(4);
+select plan(3);
 
 -- Seed user
-insert into "user" (user_id, alias, email, email_verified)
-values ('00000000-0000-0000-0000-000000000001', 'user1', 'user1@email.com', true);
-insert into "user" (user_id, alias, email, email_verified)
-values ('00000000-0000-0000-0000-000000000002', 'user2', 'user2@email.com', false);
+insert into "user" (user_id, alias, email)
+values ('00000000-0000-0000-0000-000000000001', 'user1', 'user1@email.com');
 
 -- Register password reset code
 select register_password_reset_code('user1@email.com', 'code1');
@@ -30,20 +28,12 @@ from password_reset_code
 join "user" using (user_id)
 where alias = 'user1';
 
--- Try registering password reset code using non verified email
+-- Try registering password reset code using unregistered email
 select throws_ok(
     $$ select register_password_reset_code('user2@email.com', 'code') $$,
     'P0001',
     'invalid email',
-    'No password reset code should be registered for non verified email user2@email.com'
-);
-
--- Try registering password reset code using unregistered email
-select throws_ok(
-    $$ select register_password_reset_code('user3@email.com', 'code') $$,
-    'P0001',
-    'invalid email',
-    'No password reset code should be registered for unregistered email user3@email.com'
+    'No password reset code should be registered for unregistered email user2@email.com'
 );
 
 -- Finish tests and rollback transaction

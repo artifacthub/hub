@@ -30,7 +30,7 @@ import (
 const (
 	// Database queries
 	approveSessionDBQ            = `select approve_session($1::text, $2::text)`
-	checkUserAliasAvailDBQ       = `select check_user_alias_availability($1::text)`
+	checkUserAliasAvailDBQ       = `select user_id from "user" where alias = $1::text`
 	checkUserCredsDBQ            = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true` //#nosec
 	deleteSessionDBQ             = `delete from session where session_id = $1`
 	deleteUserDBQ                = `select delete_user($1::uuid, $2::text)`

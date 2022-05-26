@@ -4,7 +4,7 @@ create or replace function register_password_reset_code(p_email text, p_code tex
 returns void as $$
 begin
     insert into password_reset_code (password_reset_code_id, user_id)
-    select p_code, user_id from "user" where email = p_email and email_verified = true
+    select p_code, user_id from "user" where email = p_email
     on conflict (user_id) do update set
         password_reset_code_id = p_code,
         created_at = current_timestamp;

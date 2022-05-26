@@ -15,8 +15,11 @@ begin
     join password_reset_code prc using (user_id)
     where password_reset_code_id = p_code;
 
-    -- Update user password
-    update "user" set password = p_new_password where user_id = v_user_id;
+    -- Update user password and mark email as verified
+    update "user" set
+        password = p_new_password,
+        email_verified = true
+    where user_id = v_user_id;
 
     -- Delete password reset code
     delete from password_reset_code where user_id = v_user_id;

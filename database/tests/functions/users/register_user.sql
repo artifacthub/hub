@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(6);
+select plan(5);
 
 -- Register user
 select register_user('
@@ -69,29 +69,6 @@ select throws_ok(
     23505,
     'duplicate key value violates unique constraint "user_email_key"',
     'Registering the same user again should fail'
-);
-
--- Set email verification code created_at timestamp to two days ago
-update email_verification_code
-set created_at = created_at - '2 days'::interval
-where email_verification_code_id = :'code';
-
--- Try registering user using the same email again
-select lives_ok(
-    $$
-        select register_user('
-        {
-            "alias": "alias2",
-            "first_name": "first_name",
-            "last_name": "last_name",
-            "email": "email",
-            "email_verified": false,
-            "password": "password",
-            "profile_image_id": "00000000-0000-0000-0000-000000000001"
-        }
-        ')
-    $$,
-    'Registering the same user again should work as the email was not verified on time'
 );
 
 -- Register new user (email already verified, oauth registration)
