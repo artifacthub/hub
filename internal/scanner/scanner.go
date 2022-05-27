@@ -170,7 +170,7 @@ type TrivyScanner struct {
 func (s *TrivyScanner) ScanImage(image string) ([]byte, error) {
 	// Setup trivy command
 	trivyURL := s.cfg.GetString("scanner.trivyURL")
-	cmd := exec.CommandContext(s.ctx, "trivy", "--quiet", "client", "--remote", trivyURL, "-f", "json", image) // #nosec
+	cmd := exec.CommandContext(s.ctx, "trivy", "--quiet", "image", "--server", trivyURL, "-f", "json", image) // #nosec
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
