@@ -103,7 +103,7 @@ scanner:
     resources:
       requests:
         cpu: 2
-        memory: 4000Mi
+        memory: 8000Mi
 
 tracker:
   cronjob:
