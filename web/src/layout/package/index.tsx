@@ -15,12 +15,12 @@ import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import {
+  ContentDefaultModalItem,
+  ContentDefaultModalKind,
   CustomResourcesDefinition,
   CustomResourcesDefinitionExample,
   ErrorKind,
   FalcoRules,
-  FileModalItem,
-  FileModalKind,
   Package,
   PackageLink,
   PackageViewsStats,
@@ -35,8 +35,8 @@ import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
 import BlockCodeButtons from '../common/BlockCodeButtons';
+import ContentDefaultModal from '../common/ContentDefaultModal';
 import ExternalLink from '../common/ExternalLink';
-import FilesModal from '../common/FilesModal';
 import Image from '../common/Image';
 import Label from '../common/Label';
 import Loading from '../common/Loading';
@@ -312,8 +312,8 @@ const PackageView = (props: Props) => {
     </div>
   );
 
-  const getFalcoRules = (): FileModalItem[] | undefined => {
-    let rules: FileModalItem[] | undefined;
+  const getFalcoRules = (): ContentDefaultModalItem[] | undefined => {
+    let rules: ContentDefaultModalItem[] | undefined;
     if (
       !isUndefined(detail) &&
       !isNull(detail) &&
@@ -343,8 +343,8 @@ const PackageView = (props: Props) => {
     return rules;
   };
 
-  const getOPAPolicies = (): FileModalItem[] | undefined => {
-    let policies: FileModalItem[] | undefined;
+  const getOPAPolicies = (): ContentDefaultModalItem[] | undefined => {
+    let policies: ContentDefaultModalItem[] | undefined;
     if (
       !isUndefined(detail) &&
       !isNull(detail) &&
@@ -830,8 +830,8 @@ const PackageView = (props: Props) => {
                           </div>
 
                           <div className="d-none d-lg-block">
-                            <FilesModal
-                              kind={FileModalKind.CustomResourcesDefinition}
+                            <ContentDefaultModal
+                              kind={ContentDefaultModalKind.CustomResourcesDefinition}
                               packageId={detail.packageId}
                               modalName="crds"
                               language="yaml"
@@ -856,8 +856,8 @@ const PackageView = (props: Props) => {
                           </div>
 
                           <div className="d-none d-lg-block">
-                            <FilesModal
-                              kind={FileModalKind.Rules}
+                            <ContentDefaultModal
+                              kind={ContentDefaultModalKind.Rules}
                               packageId={detail.packageId}
                               modalName="rules"
                               language="yaml"
@@ -882,8 +882,8 @@ const PackageView = (props: Props) => {
                           </div>
 
                           <div className="d-none d-lg-block">
-                            <FilesModal
-                              kind={FileModalKind.Policy}
+                            <ContentDefaultModal
+                              kind={ContentDefaultModalKind.Policy}
                               packageId={detail.packageId}
                               modalName="policies"
                               language="text"

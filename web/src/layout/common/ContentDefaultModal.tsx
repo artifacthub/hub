@@ -7,15 +7,15 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { stringify } from 'yaml';
 
-import { CustomResourcesDefinition, FileModalKind, SearchFiltersURL } from '../../types';
+import { ContentDefaultModalKind, CustomResourcesDefinition, SearchFiltersURL } from '../../types';
 import BlockCodeButtons from './BlockCodeButtons';
-import styles from './FilesModal.module.css';
+import styles from './ContentDefaultModal.module.css';
 import Loading from './Loading';
 import Modal from './Modal';
 
 interface Props {
   packageId: string;
-  kind: FileModalKind;
+  kind: ContentDefaultModalKind;
   language: string;
   modalName: string;
   visibleModal: boolean;
@@ -29,21 +29,21 @@ interface Props {
 }
 
 const FILE_TYPE = {
-  [FileModalKind.CustomResourcesDefinition]: {
+  [ContentDefaultModalKind.CustomResourcesDefinition]: {
     singular: 'resource',
     plural: 'resources',
   },
-  [FileModalKind.Policy]: {
+  [ContentDefaultModalKind.Policy]: {
     singular: 'policy',
     plural: 'policies',
   },
-  [FileModalKind.Rules]: {
+  [ContentDefaultModalKind.Rules]: {
     singular: 'rules',
     plural: 'rules',
   },
 };
 
-const FilesModal = (props: Props) => {
+const ContentDefaultModal = (props: Props) => {
   const history = useHistory();
   const anchor = useRef<HTMLDivElement>(null);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -61,7 +61,7 @@ const FilesModal = (props: Props) => {
     const getContent = (): string | undefined => {
       let content: string | undefined;
       switch (props.kind) {
-        case FileModalKind.CustomResourcesDefinition:
+        case ContentDefaultModalKind.CustomResourcesDefinition:
           if (!isNull(file) && !isUndefined(file.example)) {
             content = stringify(file.example, { sortMapEntries: true });
           }
@@ -168,11 +168,11 @@ const FilesModal = (props: Props) => {
 
   const getSelectedFileName = (): string => {
     switch (props.kind) {
-      case FileModalKind.CustomResourcesDefinition:
+      case ContentDefaultModalKind.CustomResourcesDefinition:
         return `${props.normalizedName}-${selectedItem.kind}.yaml`;
-      case FileModalKind.Rules:
+      case ContentDefaultModalKind.Rules:
         return `${props.normalizedName}-${selectedItem.name.replace('.yaml', '')}.yaml`;
-      case FileModalKind.Policy:
+      case ContentDefaultModalKind.Policy:
         return `${props.normalizedName}-${selectedItem.name}`;
     }
   };
@@ -223,6 +223,7 @@ const FilesModal = (props: Props) => {
           onClose={onCloseModal}
           open={openStatus}
           breakPoint="md"
+          footerClassName={styles.modalFooter}
         >
           <div className="h-100 mw-100">
             <div className="d-flex flex-row align-items-stretch g-0 h-100 mh-100">
@@ -232,10 +233,10 @@ const FilesModal = (props: Props) => {
                     <input
                       type="text"
                       placeholder={`Search by name ${
-                        props.kind === FileModalKind.CustomResourcesDefinition ? 'or resource kind' : ''
+                        props.kind === ContentDefaultModalKind.CustomResourcesDefinition ? 'or resource kind' : ''
                       }`}
                       className={`flex-grow-1 form-control ps-3 pe-4 ${styles.input}`}
-                      name="fileModalInput"
+                      name="contentDefaultModalInput"
                       value={inputValue}
                       onChange={onChange}
                       spellCheck="false"
@@ -282,7 +283,7 @@ const FilesModal = (props: Props) => {
                           <div className="d-flex flex-column align-self-center">
                             {(() => {
                               switch (props.kind) {
-                                case FileModalKind.CustomResourcesDefinition:
+                                case ContentDefaultModalKind.CustomResourcesDefinition:
                                   const resource = file as CustomResourcesDefinition;
                                   return (
                                     <>
@@ -334,7 +335,7 @@ const FilesModal = (props: Props) => {
                       <>
                         {(() => {
                           switch (props.kind) {
-                            case FileModalKind.CustomResourcesDefinition:
+                            case ContentDefaultModalKind.CustomResourcesDefinition:
                               return (
                                 <div className={`p-3 border-bottom ${styles.extraInfo}`}>
                                   <div className="h6 fw-bold">{selectedItem.displayName || selectedItem.name}</div>
@@ -414,4 +415,4 @@ const FilesModal = (props: Props) => {
   );
 };
 
-export default FilesModal;
+export default ContentDefaultModal;

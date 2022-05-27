@@ -11817,7 +11817,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="modal-footer p-3"
+            class="modal-footer p-3 modalFooter"
           >
             <button
               aria-label="Close modal"

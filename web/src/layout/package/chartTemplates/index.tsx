@@ -375,6 +375,7 @@ const ChartTemplatesModal = (props: Props) => {
           }
           open={openStatus}
           breakPoint="md"
+          footerClassName={styles.modalFooter}
         >
           <div className="h-100 mw-100">
             {!isUndefined(templates) && (

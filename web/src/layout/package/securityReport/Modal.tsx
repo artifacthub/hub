@@ -176,6 +176,7 @@ const SecurityModal = (props: Props) => {
           onClose={onCloseModal}
           open={openStatus}
           breakPoint="md"
+          footerClassName={styles.modalFooter}
         >
           <div ref={contentWrapper} className="m-3 h-100">
             <SectionBtn

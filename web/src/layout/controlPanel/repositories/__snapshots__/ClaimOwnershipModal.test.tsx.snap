@@ -230,7 +230,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="modal-footer p-3"
+            class="modal-footer p-3 undefined"
           >
             <button
               aria-label="Claim ownership"

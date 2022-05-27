@@ -145,6 +145,7 @@ const ValuesSchema = (props: Props) => {
           onClose={onCloseModal}
           open={openStatus}
           breakPoint="md"
+          footerClassName={styles.modalFooter}
         >
           <ErrorBoundary message="Something went wrong rendering the VALUES SCHEMA of this package.">
             <div className="mb-3 mx-3 mw-100">

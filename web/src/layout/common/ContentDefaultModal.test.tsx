@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { FileModalKind } from '../../types';
-import FilesModal from './FilesModal';
+import { ContentDefaultModalKind } from '../../types';
+import ContentDefaultModal from './ContentDefaultModal';
 
 const mockHistoryReplace = jest.fn();
 
@@ -18,7 +18,7 @@ window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   packageId: 'id',
-  kind: FileModalKind.CustomResourcesDefinition,
+  kind: ContentDefaultModalKind.CustomResourcesDefinition,
   language: 'yaml',
   modalName: 'crds',
   visibleModal: false,
@@ -115,12 +115,12 @@ describe('Files modal', () => {
   });
 
   it('creates snapshot', async () => {
-    const { asFragment } = render(<FilesModal {...defaultProps} />);
+    const { asFragment } = render(<ContentDefaultModal {...defaultProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('opens modal', async () => {
-    render(<FilesModal {...defaultProps} />);
+    render(<ContentDefaultModal {...defaultProps} />);
 
     const btn = screen.getByRole('button', { name: 'Open CRDs modal' });
     await userEvent.click(btn);
@@ -141,7 +141,7 @@ describe('Files modal', () => {
   });
 
   it('filters file', async () => {
-    render(<FilesModal {...defaultProps} visibleModal />);
+    render(<ContentDefaultModal {...defaultProps} visibleModal />);
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
@@ -154,7 +154,7 @@ describe('Files modal', () => {
   });
 
   it('displays warning message when no matches', async () => {
-    render(<FilesModal {...defaultProps} visibleModal />);
+    render(<ContentDefaultModal {...defaultProps} visibleModal />);
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
@@ -167,7 +167,7 @@ describe('Files modal', () => {
   });
 
   it('renders message when not example provided', async () => {
-    render(<FilesModal {...defaultProps} visibleModal />);
+    render(<ContentDefaultModal {...defaultProps} visibleModal />);
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
@@ -179,12 +179,12 @@ describe('Files modal', () => {
 
   describe('does not render component', () => {
     it('when files array is empty', () => {
-      const { container } = render(<FilesModal {...defaultProps} visibleModal files={[]} />);
+      const { container } = render(<ContentDefaultModal {...defaultProps} visibleModal files={[]} />);
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when files is undefined', () => {
-      const { container } = render(<FilesModal {...defaultProps} visibleModal files={undefined} />);
+      const { container } = render(<ContentDefaultModal {...defaultProps} visibleModal files={undefined} />);
       expect(container).toBeEmptyDOMElement();
     });
   });

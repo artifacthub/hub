@@ -29,6 +29,7 @@ const LastNotificationsModal = (props: Props) => {
         }
         modalDialogClassName={styles.modalDialog}
         header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Last notifications</div>}
+        footerClassName={styles.modalFooter}
       >
         <div className="m-3">
           <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>

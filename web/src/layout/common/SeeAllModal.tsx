@@ -78,6 +78,7 @@ const SeeAllModal = (props: Props) => {
             header={<div className={`h3 m-2 flex-grow-1 text-truncate ${styles.title}`}>{props.title}</div>}
             open={openStatus}
             onClose={() => setOpenStatus(false)}
+            footerClassName={styles.modalFooter}
           >
             <div className="my-3 mw-100">
               <div className="d-none d-md-block">{props.itemsForModal || props.items}</div>
