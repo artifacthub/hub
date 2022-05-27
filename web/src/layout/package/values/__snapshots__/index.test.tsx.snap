@@ -53,9 +53,115 @@ exports[`Values creates snapshot 1`] = `
             class="modal-header d-flex flex-row align-items-center header undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="d-flex flex-row align-items-center flex-grow-1"
             >
-              Default values
+              <div
+                class="h3 m-2 flex-grow-1 title"
+              >
+                Default values
+              </div>
+              <div
+                class="mx-4"
+              >
+                <div
+                  class="btn-group"
+                  role="group"
+                >
+                  <div
+                    class="position-relative undefined"
+                  >
+                    <div
+                      data-testid="elementWithTooltip"
+                    >
+                      <button
+                        aria-disabled="false"
+                        aria-label="Open diff template view"
+                        class="btn btn-outline-primary btn-sm dropdown-toggle"
+                        type="button"
+                      >
+                        <span
+                          class="pe-2"
+                        >
+                          Compare to version ...
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="dropdown-menu dropdown-menu-end text-nowrap overflow-hidden versionsDropdown"
+                    role="complementary"
+                  >
+                    <div
+                      class="overflow-scroll h-100"
+                    >
+                      <button
+                        class="dropdown-item btnItem"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <div
+                            class="itemIcon"
+                          />
+                          <div
+                            class="ms-2 text-truncate"
+                          >
+                            1.1.1
+                          </div>
+                        </div>
+                      </button>
+                      <button
+                        class="dropdown-item btnItem"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <div
+                            class="itemIcon"
+                          />
+                          <div
+                            class="ms-2 text-truncate"
+                          >
+                            1.1.0
+                          </div>
+                        </div>
+                      </button>
+                      <button
+                        class="dropdown-item btnItem"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <div
+                            class="itemIcon"
+                          />
+                          <div
+                            class="ms-2 text-truncate"
+                          >
+                            1.0.1
+                          </div>
+                        </div>
+                      </button>
+                      <button
+                        class="dropdown-item btnItem"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <div
+                            class="itemIcon"
+                          />
+                          <div
+                            class="ms-2 text-truncate"
+                          >
+                            1.0.0
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <button
               aria-label="Close"
@@ -171,7 +277,7 @@ exports[`Values creates snapshot 1`] = `
                   </button>
                 </div>
                 <div
-                  class="overflow-auto h-100 position-relative codeWrapper"
+                  class="overflow-auto h-100 position-relative border codeWrapper"
                 >
                   <div
                     id="line_59"

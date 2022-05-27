@@ -746,3 +746,7 @@ export interface TemplatesQuery {
   template?: string;
   compareTo?: string;
 }
+
+export interface ValuesQuery extends TemplatesQuery {
+  selectedLine?: string;
+}

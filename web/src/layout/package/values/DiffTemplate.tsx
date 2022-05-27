@@ -1,0 +1,95 @@
+import 'react-diff-view/style/index.css';
+
+import classnames from 'classnames';
+import { isNull } from 'lodash';
+import { useEffect, useState } from 'react';
+import { Decoration, Diff, Hunk, parseDiff } from 'react-diff-view';
+
+import styles from './DiffTemplate.module.css';
+
+const DiffLibrary = require('diff');
+
+interface Props {
+  currentVersion: string;
+  diffVersion: string;
+  compareData: string;
+  data: string;
+  expanded: boolean;
+}
+
+interface DiffProps {
+  diffText: string;
+}
+
+const Changes = (props: DiffProps) => {
+  const files = parseDiff(props.diffText);
+
+  const renderFile = ({ oldPath, newPath, oldRevision, newRevision, type, hunks }: any) => {
+    return (
+      <div key={`${oldRevision}-${newRevision}`} className="file-diff h-100">
+        <header
+          className={`d-flex flex-row align-items-center justify-content-between diff-header fw-bold py-1 ${styles.header}`}
+        >
+          <div className="pe-5 me-3">
+            <span className={`pe-2 ${styles.versionTitle}`}>Changes from</span>
+            <span className="badge bg-dark px-2 py-1 badge-md">{oldPath}</span>
+            <span className={`px-2 ${styles.versionTitle}`}>to</span>
+            <span className="badge bg-dark px-2 py-1 badge-md">{newPath}</span>
+          </div>
+        </header>
+        <div className={`overflow-scroll border-top py-2 ${styles.codeWrapper}`}>
+          <Diff viewType="unified" diffType={type} hunks={hunks || []}>
+            {(hunks: any[]) => (
+              <>
+                {hunks.map((hunk, index) => {
+                  return [
+                    <Decoration key={`deco-${hunk.content}-${index}`}>
+                      <div
+                        className={classnames(
+                          'hunk-header py-1 px-3 fw-bold',
+                          styles.hunkHeader,
+                          { 'mb-2': index === 0 },
+                          { 'my-2': index !== 0 }
+                        )}
+                      >
+                        {hunk.content}
+                      </div>
+                    </Decoration>,
+                    <Hunk key={`${hunk.content}-${index}`} hunk={hunk} />,
+                  ];
+                })}
+              </>
+            )}
+          </Diff>
+        </div>
+      </div>
+    );
+  };
+  return <>{files.map(renderFile)}</>;
+};
+
+const DiffTemplate = (props: Props) => {
+  const [diffContent, setDiffContent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const prepareDiff = () => {
+      setDiffContent(
+        DiffLibrary.createTwoFilesPatch(
+          '  ',
+          '  ',
+          props.compareData,
+          props.data,
+          props.diffVersion,
+          props.currentVersion,
+          { context: props.expanded ? Number.MAX_SAFE_INTEGER : 2 }
+        )
+      );
+    };
+
+    prepareDiff();
+  }, [props.compareData, props.expanded]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  return <>{!isNull(diffContent) && <Changes diffText={`diff --git \n ${diffContent}`} />}</>;
+};
+
+export default DiffTemplate;

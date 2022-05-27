@@ -931,6 +931,7 @@ const PackageView = (props: Props) => {
                                         packageId={detail.packageId}
                                         version={detail.version!}
                                         normalizedName={detail.normalizedName}
+                                        sortedVersions={sortedVersions}
                                         searchUrlReferer={props.searchUrlReferer}
                                         fromStarredPage={props.fromStarredPage}
                                         visibleValues={
@@ -939,6 +940,11 @@ const PackageView = (props: Props) => {
                                         visibleValuesPath={
                                           !isUndefined(props.visibleModal) && props.visibleModal === 'values'
                                             ? props.visibleValuesPath
+                                            : undefined
+                                        }
+                                        compareVersionTo={
+                                          !isUndefined(props.visibleModal) && props.visibleModal === 'values'
+                                            ? props.compareVersionTo
                                             : undefined
                                         }
                                       />
