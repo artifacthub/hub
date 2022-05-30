@@ -230,7 +230,7 @@ scanner:
       repository: artifacthub/scanner
     resources: {}
   # Number of snapshots to process concurrently
-  concurrency: 10
+  concurrency: 3
   # Trivy server url. Defaults to the Trivy service's internal URL
   trivyURL: ""
   # Cache directory path. If set, the cache directory for the Trivy client will be explicitly set (otherwise defaults

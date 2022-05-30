@@ -763,7 +763,7 @@
                 "concurrency": {
                     "title": "Snapshots to process concurrently",
                     "type": "integer",
-                    "default": 10,
+                    "default": 3,
                     "minimum": 1
                 },
                 "configDir": {
