@@ -104,6 +104,7 @@ scanner:
       requests:
         cpu: 2
         memory: 8000Mi
+  concurrency: 5
 
 tracker:
   cronjob:
