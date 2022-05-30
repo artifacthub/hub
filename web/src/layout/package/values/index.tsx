@@ -1,28 +1,30 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { GoCheck } from 'react-icons/go';
+import { MdClose } from 'react-icons/md';
 import { VscListTree } from 'react-icons/vsc';
 import { useHistory } from 'react-router-dom';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { isDocument, isMap, isSeq, LineCounter, parseDocument } from 'yaml';
 
 import API from '../../../api';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { ErrorKind, SearchFiltersURL } from '../../../types';
+import { ErrorKind, SearchFiltersURL, ValuesQuery, Version as VersionData } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchema';
-import BlockCodeButtons from '../../common/BlockCodeButtons';
-import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
+import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
-import ValuesSearch from '../../common/ValuesSearch';
+import CompareView from './CompareView';
 import styles from './Values.module.css';
+import ValuesView from './ValuesView';
 
 interface Props {
   packageId: string;
   version: string;
+  sortedVersions: VersionData[];
   normalizedName: string;
   visibleValues: boolean;
+  compareVersionTo?: string;
   visibleValuesPath?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -62,33 +64,27 @@ const getPathsPerLine = (values: any): Lines => {
 
 const Values = (props: Props) => {
   const history = useHistory();
-  const code = useRef<HTMLDivElement | null>(null);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [values, setValues] = useState<string | undefined | null>();
   const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [activeLine, setActiveLine] = useState<string | undefined>();
   const [lines, setLines] = useState<Lines | undefined>();
-  const [clickedLine, setClickedLine] = useState<number | undefined>();
-  const [topPositionMenu, setTopPositionMenu] = useState<number | undefined>();
-  const [arrowLeftMargin, setArrowLeftMargin] = useState<number | undefined>();
-  const [fullWidth, setFullWidth] = useState<number | undefined>();
+  const [enabledDiff, setEnabledDiff] = useState<boolean>(!isUndefined(props.compareVersionTo));
+  const [comparedVersion, setComparedVersion] = useState<string>(props.compareVersionTo || '');
+  const [visibleDropdown, setVisibleDropdown] = useState<boolean>(false);
+  const ref = useRef(null);
+  const versionsWrapper = useRef<HTMLDivElement>(null);
+  useOutsideClick([ref], visibleDropdown, () => setVisibleDropdown(false));
 
-  const cleanClickedLine = () => {
-    setClickedLine(undefined);
-    setTopPositionMenu(undefined);
-    setArrowLeftMargin(undefined);
-  };
-
-  useOutsideClick([code], !isUndefined(clickedLine), cleanClickedLine);
-
-  const updateUrl = (lineNumber?: string) => {
+  const updateUrl = (q: ValuesQuery) => {
     let selectedPath;
-    if (!isUndefined(lineNumber) && !isUndefined(lines)) {
-      selectedPath = lines[parseInt(lineNumber)];
+    if (!isUndefined(q.selectedLine) && !isUndefined(lines)) {
+      selectedPath = lines[parseInt(q.selectedLine)];
     }
     history.replace({
-      search: `?modal=values${selectedPath ? `&path=${selectedPath}` : ''}`,
+      search: `?modal=values${selectedPath ? `&path=${selectedPath}` : ''}${
+        q.template ? `&template=${q.template}` : ''
+      }${q.compareTo ? `&compare-to=${q.compareTo}` : ''}`,
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
@@ -123,21 +119,27 @@ const Values = (props: Props) => {
 
   const onOpenModal = () => {
     getValues();
-    history.replace({
-      search: `?modal=values${props.visibleValuesPath ? `&path=${props.visibleValuesPath}` : ''}`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    if (!props.visibleValues) {
+      updateUrl({});
+    }
   };
 
   const onCloseModal = () => {
     setValues(undefined);
     setOpenStatus(false);
-    setActiveLine(undefined);
-    cleanClickedLine();
+    setEnabledDiff(false);
+    setComparedVersion('');
     history.replace({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
+  };
+
+  const onVersionChange = (version: string) => {
+    setComparedVersion(version);
+    updateUrl({ compareTo: version });
+    setVisibleDropdown(false);
+    setEnabledDiff(true);
   };
 
   useEffect(() => {
@@ -152,69 +154,7 @@ const Values = (props: Props) => {
     }
   }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  const onSearch = (selectedLine?: string) => {
-    setActiveLine(selectedLine);
-    updateUrl(selectedLine);
-  };
-
-  useEffect(() => {
-    const scrollIntoView = (path: string) => {
-      if (isUndefined(path) || path === '') return;
-
-      try {
-        const element = document.getElementById(`line_${path}`);
-        if (element && code && code.current) {
-          code.current.scrollTo({
-            top: element.offsetTop,
-            left: 0, // Force horizontal scroll to 0
-            behavior: 'smooth',
-          });
-        }
-      } finally {
-        return;
-      }
-    };
-
-    if (!isUndefined(activeLine)) {
-      scrollIntoView(activeLine);
-    }
-  }, [activeLine]);
-
-  useLayoutEffect(() => {
-    if (isUndefined(activeLine) && !isUndefined(props.visibleValuesPath) && !isUndefined(lines)) {
-      const selectedLine = Object.keys(lines).find((line: string) => lines[parseInt(line)] === props.visibleValuesPath);
-      if (selectedLine) {
-        setTimeout(() => {
-          setActiveLine(selectedLine);
-        }, 100);
-      } else {
-        history.replace({
-          search: '?modal=values',
-          state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-        });
-      }
-    }
-  }, [props.visibleValuesPath, lines]); /* eslint-disable-line react-hooks/exhaustive-deps */
-
-  useEffect(() => {
-    if (!isUndefined(clickedLine)) {
-      if (code && code.current && isUndefined(fullWidth)) {
-        setFullWidth(code.current.scrollWidth);
-      }
-      const element = document.getElementById(`line_${clickedLine}`);
-      if (element) {
-        const attr = element.querySelector('.hljs-attr');
-        if (attr) {
-          const lineBoundingX = element.getBoundingClientRect().x;
-          const attrBounding = attr.getBoundingClientRect();
-          setArrowLeftMargin(attrBounding.width / 2.0 + attrBounding.x - lineBoundingX - 6);
-        }
-        setTopPositionMenu(element.offsetTop + element.offsetHeight + 5);
-      }
-    } else {
-      setTopPositionMenu(undefined);
-    }
-  }, [clickedLine, fullWidth]);
+  const isDisabledDiffView = props.sortedVersions.length <= 1;
 
   return (
     <>
@@ -242,96 +182,128 @@ const Values = (props: Props) => {
         <Modal
           modalDialogClassName={styles.modalDialog}
           modalClassName="h-100"
-          header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Default values</div>}
+          header={
+            <div className="d-flex flex-row align-items-center flex-grow-1">
+              <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Default values</div>
+              <div className="mx-4">
+                <div className="btn-group" role="group">
+                  <ElementWithTooltip
+                    element={
+                      <button
+                        type="button"
+                        className={classnames('btn btn-outline-primary btn-sm dropdown-toggle', {
+                          disabled: isDisabledDiffView,
+                        })}
+                        onClick={() => setVisibleDropdown(!visibleDropdown)}
+                        aria-label="Open diff template view"
+                        aria-disabled={isDisabledDiffView}
+                      >
+                        <span className="pe-2">
+                          {enabledDiff ? (
+                            <span>
+                              Comparing to version:
+                              <span className="fw-bold ps-2">{comparedVersion}</span>
+                            </span>
+                          ) : (
+                            'Compare to version ...'
+                          )}
+                        </span>
+                      </button>
+                    }
+                    visibleTooltip={isDisabledDiffView}
+                    tooltipMessage="There is only one version of this chart"
+                    active
+                  />
+
+                  <div
+                    ref={ref}
+                    role="complementary"
+                    className={classnames(
+                      'dropdown-menu dropdown-menu-end text-nowrap overflow-hidden',
+                      styles.versionsDropdown,
+                      {
+                        show: visibleDropdown,
+                      }
+                    )}
+                  >
+                    {enabledDiff && (
+                      <>
+                        <button
+                          type="button"
+                          className="dropdown-item"
+                          onClick={() => {
+                            setVisibleDropdown(false);
+                            if (versionsWrapper && versionsWrapper.current) {
+                              versionsWrapper.current.scroll(0, 0);
+                            }
+                            setEnabledDiff(false);
+                            setComparedVersion('');
+                          }}
+                        >
+                          <div className="d-flex flex-row align-items-center">
+                            <MdClose />
+                            <div className="ms-2">Exit compare mode</div>
+                          </div>
+                        </button>
+
+                        <div className="dropdown-divider mb-0" />
+                      </>
+                    )}
+
+                    <div
+                      ref={versionsWrapper}
+                      className={classnames('overflow-scroll h-100', { [`pt-2 ${styles.versionsList}`]: enabledDiff })}
+                    >
+                      {props.sortedVersions.map((v: VersionData) => {
+                        if (v.version === props.version) return null;
+                        return (
+                          <button
+                            key={`opt_${v.version}`}
+                            className={`dropdown-item ${styles.btnItem}`}
+                            onClick={() => onVersionChange(v.version)}
+                          >
+                            <div className="d-flex flex-row align-items-center">
+                              <div className={styles.itemIcon}>
+                                {v.version === comparedVersion && <GoCheck className="text-success" />}
+                              </div>
+                              <div className="ms-2 text-truncate">{v.version}</div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
           onClose={onCloseModal}
           open={openStatus}
           breakPoint="md"
           footerClassName={styles.modalFooter}
         >
           <div className="mw-100 h-100 d-flex flex-column overflow-hidden">
-            {lines && (
-              <ValuesSearch pathsObj={lines} activePath={activeLine} onSearch={onSearch} wrapperClassName="w-50" />
-            )}
-
             {values && (
-              <div className={`position-relative flex-grow-1 ${styles.content}`}>
-                <BlockCodeButtons
-                  filename={`values-${props.normalizedName}.yaml`}
-                  content={values}
-                  tooltipType="light"
-                />
-
-                <div ref={code} className={`overflow-auto h-100 position-relative ${styles.codeWrapper}`}>
-                  {!isUndefined(lines) && !isUndefined(clickedLine) && !isUndefined(topPositionMenu) && (
-                    <div
-                      role="complementary"
-                      className={classnames('dropdown-menu dropdown-menu-left show', styles.dropdown)}
-                      style={{ top: topPositionMenu }}
-                    >
-                      <div
-                        className={`dropdown-arrow ${styles.arrow}`}
-                        style={{ left: arrowLeftMargin ? `${arrowLeftMargin}px` : '1rem' }}
-                      />
-
-                      <ButtonCopyToClipboard
-                        className="dropdown-item mw-100"
-                        text={lines[clickedLine]}
-                        contentBtn="Copy entry path to clipboard"
-                        visibleBtnText
-                        label="Copy entry path to clipboard"
-                        onClick={() => {
-                          setClickedLine(undefined);
-                          setTopPositionMenu(undefined);
-                        }}
-                        noTooltip
-                      />
-                    </div>
-                  )}
-
-                  <SyntaxHighlighter
-                    language="yaml"
-                    style={tomorrowNight}
-                    customStyle={{
-                      backgroundColor: 'transparent',
-                      padding: '1.5rem',
-                      paddingLeft: '4.5rem',
-                      lineHeight: '1.25rem',
-                      marginBottom: '0',
-                      height: '100%',
-                      fontSize: '80%',
-                      color: '#f8f9fa',
-                      overflow: 'visible',
-                    }}
-                    lineNumberStyle={{
-                      display: 'none',
-                    }}
-                    className="customYAML"
-                    useInlineStyles={false}
-                    showLineNumbers
-                    wrapLines
-                    lineProps={(lineNumber) => {
-                      return {
-                        id: `line_${lineNumber}`,
-                        className: 'line',
-                        style: { position: 'relative', width: fullWidth ? `${fullWidth}px` : 'auto' },
-                        'data-line-number': lineNumber,
-                        'data-clickable-line': lines && lines[lineNumber] ? 'true' : 'false',
-                        'data-active-line': lineNumber === clickedLine,
-                        onClick() {
-                          const isClicked = clickedLine === lineNumber;
-                          if (lines && !isUndefined(lines[lineNumber]) && !isClicked) {
-                            setClickedLine(lineNumber);
-                          } else {
-                            cleanClickedLine();
-                          }
-                        },
-                      };
-                    }}
-                  >
-                    {values}
-                  </SyntaxHighlighter>
-                </div>
-              </div>
+              <>
+                {enabledDiff ? (
+                  <CompareView
+                    packageId={props.packageId}
+                    values={values}
+                    currentVersion={props.version}
+                    comparedVersion={comparedVersion}
+                  />
+                ) : (
+                  <ValuesView
+                    values={values}
+                    lines={lines}
+                    normalizedName={props.normalizedName}
+                    updateUrl={updateUrl}
+                    visibleValuesPath={props.visibleValuesPath}
+                    searchUrlReferer={props.searchUrlReferer}
+                    fromStarredPage={props.fromStarredPage}
+                  />
+                )}
+              </>
             )}
           </div>
         </Modal>

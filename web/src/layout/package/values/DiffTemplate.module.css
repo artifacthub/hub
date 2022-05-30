@@ -1,0 +1,39 @@
+:global(.diff),
+.table {
+  table-layout: auto;
+}
+
+:global(.diff-gutter) {
+  cursor: auto;
+}
+
+:global(.diff-code) {
+  white-space: pre;
+  padding-right: 2rem;
+}
+
+.header {
+  margin: 16px;
+}
+
+.versionTitle {
+  font-size: 85%;
+}
+
+.codeWrapper {
+  height: calc(100% - 60px);
+}
+
+.newLine {
+  font-size: 0.8rem;
+  margin: 0 0.25rem;
+}
+
+.diffHeader {
+  background-color: var(--color-black-15);
+  color: var(--bs-dark);
+}
+
+.hunkHeader {
+  background-color: var(--color-black-5);
+}

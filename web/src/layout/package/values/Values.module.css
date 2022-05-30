@@ -3,9 +3,10 @@
 }
 
 .codeWrapper {
-  background-color: #343a40;
-  border-radius: 3px;
   overscroll-behavior: contain;
+  border-radius: 3px;
+  border-color: var(--color-black-15) !important;
+  background-color: var(--extra-light-gray);
 }
 
 :global(.linenumber) {
@@ -14,11 +15,20 @@
 
 :global(.customYAML .hljs-attr),
 :global(.customYAML .hljs-bullet) {
-  color: #f8f9fa;
+  color: var(--color-font);
 }
 
 :global(.customYAML .hljs-comment) {
-  color: #8e908c;
+  color: var(--mid-gray);
+}
+
+[data-theme='light'] :global(.customYAML .hljs-comment) {
+  color: var(--color-black-35);
+}
+
+[data-theme='light'] :global(.customYAML .hljs-string ~ .hljs-number),
+[data-theme='light'] :global(.customYAML .hljs-string) {
+  color: #ff9800;
 }
 
 :global(.customYAML span),
@@ -43,11 +53,14 @@
   text-align: right;
   left: -4.25rem;
   padding-right: 1rem;
-  color: #f8f9fa;
-  opacity: 0.5;
+  color: var(--mid-gray);
   user-select: none;
   font-size: 0.8rem;
   line-height: 1.5rem;
+}
+
+[data-theme='light'] [data-line-number]::before {
+  color: var(--color-black-35);
 }
 
 [data-clickable-line='true'] {
@@ -57,7 +70,7 @@
 [data-clickable-line='true']:hover::after {
   content: '';
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-black-5);
   top: 0;
   height: 1.5rem;
   width: calc(100% + 2rem);
@@ -65,7 +78,7 @@
 }
 
 [data-clickable-line='true']:hover::before {
-  opacity: 1;
+  color: var(--color-black-90);
 }
 
 [data-line-number] {
@@ -73,18 +86,18 @@
 }
 
 [data-active-line='true']::before {
-  opacity: 1;
+  color: var(--color-black-90);
 }
 
 [data-active-line='true']::after {
   content: '';
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-black-5);
   top: 0;
   height: 1.5rem;
   width: calc(100% + 2rem);
   left: -0.5rem;
-  border-left: 2px solid #f8f9fa;
+  border-left: 2px solid var(--color-font);
 }
 
 .dropdown {
@@ -93,6 +106,34 @@
 
 .arrow {
   right: auto;
+}
+
+.versionsDropdown {
+  margin-top: 2.35rem;
+  width: 14rem;
+  height: 17rem;
+  font-size: 0.9rem;
+}
+
+.selectWrapper {
+  max-width: 100%;
+  width: 120px;
+}
+
+.removeVersionBtn {
+  border-left: 1px solid var(--bs-white) !important;
+}
+
+.versionsList {
+  max-height: calc(100% - 40px);
+}
+
+.btnItem {
+  padding: 0.5rem 1rem;
+}
+
+.itemIcon {
+  width: 14px;
 }
 
 @media only screen and (max-width: 767.98px) {

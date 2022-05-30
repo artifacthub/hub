@@ -30,6 +30,12 @@ const defaultProps = {
   version: '0.1.0',
   visibleValues: false,
   normalizedName: 'pkg',
+  sortedVersions: [
+    { version: '1.1.1', ts: 1, containsSecurityUpdates: false, prerelease: false },
+    { version: '1.1.0', ts: 1, containsSecurityUpdates: false, prerelease: false },
+    { version: '1.0.1', ts: 1, containsSecurityUpdates: false, prerelease: false },
+    { version: '1.0.0', ts: 1, containsSecurityUpdates: false, prerelease: false },
+  ],
 };
 
 const YAMLSample = `nameOverride: ""
@@ -277,8 +283,8 @@ describe('Values', () => {
       const close = screen.getByRole('button', { name: 'Close modal' });
       await userEvent.click(close);
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-      expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({
         search: '',
         state: {
           fromStarredPage: undefined,
@@ -411,8 +417,8 @@ describe('Values', () => {
         await userEvent.click(opts[8]);
 
         await waitFor(() => {
-          expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-          expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+          expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+          expect(mockHistoryReplace).toHaveBeenCalledWith({
             search: '?modal=values&path=tracker.repositoriesNames',
             state: {
               fromStarredPage: undefined,
