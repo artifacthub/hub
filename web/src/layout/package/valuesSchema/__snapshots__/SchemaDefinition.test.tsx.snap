@@ -44,7 +44,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
                 Database host
               </div>
               <select
-                class="w-50 my-2"
+                class="w-50 form-select select my-2"
               >
                 <option
                   value="0"

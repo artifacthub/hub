@@ -61,7 +61,7 @@ const Schema = (props: Props) => {
         />
       )}
       <div className="row">
-        <div className="col-7 pt-3 bg-dark position-relative">
+        <div className={`col-7 pt-3 position-relative border border-bottom-0 ${styles.code}`}>
           {props.schema.title && (
             <div className={`text-truncate font-monospace ${styles.comment}`}># {props.schema.title}</div>
           )}
@@ -70,7 +70,6 @@ const Schema = (props: Props) => {
               className={styles.btns}
               content={valuesYAML}
               filename={`values-${props.normalizedName}.yaml`}
-              tooltipType="light"
             />
           )}
         </div>

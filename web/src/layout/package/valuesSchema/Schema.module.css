@@ -3,9 +3,20 @@
   margin-left: -15px;
 }
 
+.code {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-color: var(--color-black-15) !important;
+  background-color: var(--extra-light-gray);
+}
+
 .comment {
   font-size: 80%;
-  color: #8e908c;
+  color: var(--mid-gray);
+}
+
+[data-theme='light'] .comment {
+  color: var(--color-black-35);
 }
 
 .btns {

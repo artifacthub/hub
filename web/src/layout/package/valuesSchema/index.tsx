@@ -161,7 +161,7 @@ const ValuesSchema = (props: Props) => {
                 onPathChange={onPathChange}
               />
               <div className="row">
-                <div className="col-7 pt-3 bg-dark" />
+                <div className={`col-7 pt-3 border border-top-0 ${styles.endCode}`} />
               </div>
             </div>
           </ErrorBoundary>
