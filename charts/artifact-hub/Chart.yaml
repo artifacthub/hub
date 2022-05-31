@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.7.1-3
-appVersion: 1.7.0
+version: 1.8.0
+appVersion: 1.8.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -35,49 +35,31 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for comparing Helm charts templates versions
+      description: Support for comparing Helm charts default values
     - kind: added
-      description: Display cosign signature in container image packages
-    - kind: added
-      description: New screen breakpoint to UI
-    - kind: added
-      description: Display all channels pointing to a version in OLM pkgs
-    - kind: added
-      description: Migration mechanism for local storage data
-    - kind: added
-      description: CLOMonitor linter to CI workflow
-    - kind: added
-      description: CLOMonitor badges to readme file
+      description: Make tracker repository timeout configurable
     - kind: changed
-      description: Stop displaying production users links on package view
-    - kind: changed
-      description: Updated supported keptn/kind annotation values
+      description: Reduce modals height on small screens
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: changed
-      description: Bump Go to 1.18
-    - kind: changed
-      description: Bump Trivy to 0.27.0
-    - kind: changed
-      description: Bump OPM to 1.21.0
+      description: Bump Trivy to 0.28.1
     - kind: fixed
-      description: Issue getting default channel in OLM packages
+      description: Issue checking user alias availability
     - kind: fixed
-      description: Docker rate limit issue
-    - kind: fixed
-      description: Some spelling issues
+      description: Check for index.yaml mismatches in charts repos
     - kind: fixed
       description: Some bugs and other improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.7.0
+      image: artifacthub/db-migrator:v1.8.0
     - name: hub
-      image: artifacthub/hub:v1.7.0
+      image: artifacthub/hub:v1.8.0
     - name: tracker
-      image: artifacthub/tracker:v1.7.0
+      image: artifacthub/tracker:v1.8.0
     - name: scanner
-      image: artifacthub/scanner:v1.7.0
+      image: artifacthub/scanner:v1.8.0
     - name: trivy
       image: aquasec/trivy:0.28.1
   artifacthub.io/links: |
