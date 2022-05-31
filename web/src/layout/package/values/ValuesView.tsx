@@ -118,7 +118,7 @@ const ValuesView = (props: Props) => {
       )}
 
       <div className={`position-relative flex-grow-1 ${styles.content}`}>
-        <BlockCodeButtons filename={`values-${props.normalizedName}.yaml`} content={props.values} tooltipType="light" />
+        <BlockCodeButtons filename={`values-${props.normalizedName}.yaml`} content={props.values} />
 
         <div ref={code} className={`overflow-auto h-100 position-relative border ${styles.codeWrapper}`}>
           {!isUndefined(props.lines) && !isUndefined(clickedLine) && !isUndefined(topPositionMenu) && (
