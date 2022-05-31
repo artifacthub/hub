@@ -61,6 +61,13 @@ const ValuesSchema = (props: Props) => {
   const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const cleanUrl = () => {
+    history.replace({
+      search: '',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
+  };
+
   async function getValuesSchema() {
     try {
       setIsLoading(true);
@@ -76,6 +83,7 @@ const ValuesSchema = (props: Props) => {
         message: 'An error occurred getting the values schema, please try again later.',
       });
       setIsLoading(false);
+      cleanUrl();
     }
   }
 
@@ -97,10 +105,7 @@ const ValuesSchema = (props: Props) => {
   const onCloseModal = () => {
     setValuesSchema(undefined);
     setOpenStatus(false);
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    cleanUrl();
   };
 
   useEffect(() => {

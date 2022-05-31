@@ -4,8 +4,11 @@ import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
 
 import API from '../../../api';
+import { ErrorKind } from '../../../types';
+import alertDispatcher from '../../../utils/alertDispatcher';
 import ValuesSchema from './';
 jest.mock('../../../api');
+jest.mock('../../../utils/alertDispatcher');
 
 const getMockValuesSchema = (fixtureId: string): JSONSchema => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as JSONSchema;
@@ -403,6 +406,38 @@ describe('ValuesSchema', () => {
       rerender(<ValuesSchema {...defaultProps} packageId="id2" />);
 
       expect(screen.queryByRole('dialog')).toBeNull();
+    });
+
+    it('when fails', async () => {
+      mocked(API).getValuesSchema.mockRejectedValue({ kind: ErrorKind.Other });
+
+      render(<ValuesSchema {...defaultProps} />);
+
+      const btn = screen.getByRole('button', { name: /Open values schema modal/ });
+      await userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+      });
+
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred getting the values schema, please try again later.',
+        });
+      });
+
+      await waitFor(() => {
+        expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
+        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+          search: '',
+          state: {
+            fromStarredPage: undefined,
+            searchUrlReferer: undefined,
+          },
+        });
+      });
     });
   });
 });

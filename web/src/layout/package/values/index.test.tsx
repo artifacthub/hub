@@ -490,6 +490,17 @@ describe('Values', () => {
             message: 'An error occurred getting chart default values, please try again later.',
           });
         });
+
+        await waitFor(() => {
+          expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
+          expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+            search: '',
+            state: {
+              fromStarredPage: undefined,
+              searchUrlReferer: undefined,
+            },
+          });
+        });
       });
     });
   });
