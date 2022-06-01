@@ -57,8 +57,8 @@ const getPathsPerLine = (values: any): Lines => {
       }
     }
   };
-  extractKeys(doc);
 
+  extractKeys(doc);
   return lines;
 };
 
@@ -75,6 +75,13 @@ const Values = (props: Props) => {
   const ref = useRef(null);
   const versionsWrapper = useRef<HTMLDivElement>(null);
   useOutsideClick([ref], visibleDropdown, () => setVisibleDropdown(false));
+
+  const cleanUrl = () => {
+    history.replace({
+      search: '',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
+  };
 
   const updateUrl = (q: ValuesQuery) => {
     let selectedPath;
@@ -114,6 +121,7 @@ const Values = (props: Props) => {
       }
       setValues(null);
       setIsLoading(false);
+      cleanUrl();
     }
   }
 
@@ -129,10 +137,7 @@ const Values = (props: Props) => {
     setOpenStatus(false);
     setEnabledDiff(false);
     setComparedVersion('');
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    cleanUrl();
   };
 
   const onVersionChange = (version: string) => {
