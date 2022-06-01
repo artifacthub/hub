@@ -1,6 +1,8 @@
 .content {
   font-size: 80%;
   cursor: pointer;
+  border-color: var(--color-black-15) !important;
+  background-color: var(--extra-light-gray);
 }
 
 .description {
@@ -39,7 +41,15 @@
 }
 
 .comment {
-  color: #8e908c;
+  color: var(--mid-gray);
+}
+
+[data-theme='light'] .comment {
+  color: var(--color-black-35);
+}
+
+[data-theme='light'] .content :global(.text-warning) {
+  color: #ff9800 !important;
 }
 
 @media (hover: hover) {

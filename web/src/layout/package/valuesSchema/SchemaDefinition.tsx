@@ -291,12 +291,25 @@ const SchemaDefinition = (props: Props) => {
                   <small className={`text-muted text-uppercase ${styles.errorMsg}`}>Raw</small>
                 ) : (
                   <>
-                    {def.title && <div className="fw-bold text-truncate">{def.title}</div>}
+                    {def.title && (
+                      <div
+                        className={classnames('fw-bold text-truncate', {
+                          [styles.titleWithRequiredLabel]: props.isRequired,
+                        })}
+                      >
+                        {def.title}
+                      </div>
+                    )}
 
                     {!isNull(props.def.combinationType) && (
                       <>
                         <select
-                          className={classnames('w-50', { 'my-2': def.title }, { 'mb-2': isUndefined(def.title) })}
+                          className={classnames(
+                            'w-50 form-select',
+                            styles.select,
+                            { 'my-2': def.title },
+                            { 'mb-2': isUndefined(def.title) }
+                          )}
                           value={props.def.active}
                           onClick={(e: ReactMouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
                           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
@@ -324,6 +337,7 @@ const SchemaDefinition = (props: Props) => {
                         {def.type && isArray(def.type) ? (
                           <select
                             aria-label="Type selection"
+                            className={`ms-1 d-inline form-select position-relative ${styles.select} ${styles.selectInLine}`}
                             value={activeType}
                             onClick={(e: ReactMouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
                             onChange={(e: ChangeEvent<HTMLSelectElement>) => {

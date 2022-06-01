@@ -40,7 +40,7 @@ exports[`Schema creates snapshot 1`] = `
     class="row"
   >
     <div
-      class="col-7 pt-3 bg-dark position-relative"
+      class="col-7 pt-3 position-relative border border-bottom-0 code"
     >
       <div
         class="text-truncate font-monospace comment"
@@ -118,7 +118,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -181,7 +181,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database configuration
                   </div>
@@ -226,7 +226,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -293,7 +293,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database host
                   </div>
@@ -359,7 +359,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -426,7 +426,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database port
                   </div>
@@ -492,7 +492,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -559,7 +559,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database user
                   </div>
@@ -625,7 +625,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -692,7 +692,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database name
                   </div>
@@ -758,7 +758,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -825,7 +825,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database password
                   </div>
@@ -891,7 +891,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -954,7 +954,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub configuration
                   </div>
@@ -999,7 +999,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -1091,7 +1091,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -1218,7 +1218,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -1310,7 +1310,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -1437,7 +1437,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -1564,7 +1564,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -1691,7 +1691,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -1818,7 +1818,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -1945,7 +1945,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2072,7 +2072,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2170,7 +2170,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2268,7 +2268,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2335,7 +2335,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub image repository (without the tag)
                   </div>
@@ -2401,7 +2401,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2468,7 +2468,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub pod resource requirements
                   </div>
@@ -2534,7 +2534,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2601,7 +2601,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Number of Hub replicas
                   </div>
@@ -2667,7 +2667,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2795,7 +2795,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2893,7 +2893,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -2985,7 +2985,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -3077,7 +3077,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -3231,7 +3231,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -3358,7 +3358,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -3485,7 +3485,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -3612,7 +3612,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -3704,7 +3704,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -3858,7 +3858,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -3985,7 +3985,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -4112,7 +4112,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -4239,7 +4239,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -4337,7 +4337,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -4404,7 +4404,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Enable Hub secure cookies
                   </div>
@@ -4470,7 +4470,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -4597,7 +4597,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -4664,7 +4664,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub server base url
                   </div>
@@ -4730,7 +4730,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -4797,7 +4797,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     X-Forwarded-For IP index
                   </div>
@@ -4863,7 +4863,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -4961,7 +4961,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -5028,7 +5028,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Enable Hub basic auth
                   </div>
@@ -5094,7 +5094,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -5221,7 +5221,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -5348,7 +5348,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -5415,7 +5415,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub server shutdown timeout
                   </div>
@@ -5481,7 +5481,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -5579,7 +5579,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -5707,7 +5707,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -5774,7 +5774,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Enable Hub ingress
                   </div>
@@ -5840,7 +5840,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -5903,7 +5903,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub ingress annotations
                   </div>
@@ -5948,7 +5948,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -6015,7 +6015,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub ingress class
                   </div>
@@ -6081,7 +6081,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -6179,7 +6179,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -6246,7 +6246,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub service port
                   </div>
@@ -6312,7 +6312,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -6379,7 +6379,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Hub service type
                   </div>
@@ -6445,7 +6445,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -6537,7 +6537,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -6664,7 +6664,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -6762,7 +6762,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -6829,7 +6829,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Log level
                   </div>
@@ -6895,7 +6895,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -6962,7 +6962,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Enable pretty logging
                   </div>
@@ -7028,7 +7028,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -7091,7 +7091,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Trivy configuration
                   </div>
@@ -7136,7 +7136,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -7234,7 +7234,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -7357,7 +7357,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -7424,7 +7424,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Trivy pod resource requirements
                   </div>
@@ -7490,7 +7490,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -7617,7 +7617,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -7744,7 +7744,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -7871,7 +7871,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -7969,7 +7969,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -8096,7 +8096,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -8163,7 +8163,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Use persistent volume to store data
                   </div>
@@ -8229,7 +8229,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -8356,7 +8356,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -8419,7 +8419,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Scanner configuration
                   </div>
@@ -8464,7 +8464,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -8562,7 +8562,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -8660,7 +8660,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -8727,7 +8727,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Scanner image repository (without the tag)
                   </div>
@@ -8793,7 +8793,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -8860,7 +8860,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Scanner pod resource requirements
                   </div>
@@ -8926,7 +8926,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -8993,7 +8993,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Trivy server url
                   </div>
@@ -9059,7 +9059,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -9126,7 +9126,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Snapshots to process concurrently
                   </div>
@@ -9192,7 +9192,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -9255,7 +9255,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Tracker configuration
                   </div>
@@ -9300,7 +9300,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -9398,7 +9398,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -9525,7 +9525,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -9623,7 +9623,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -9721,7 +9721,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -9788,7 +9788,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Tracker image repository (without the tag)
                   </div>
@@ -9854,7 +9854,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -9921,7 +9921,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Tracker pod resource requirements
                   </div>
@@ -9987,7 +9987,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -10054,7 +10054,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Store for images
                   </div>
@@ -10120,7 +10120,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -10187,7 +10187,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Repositories to process concurrently
                   </div>
@@ -10253,7 +10253,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -10320,7 +10320,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Bypass digest check
                   </div>
@@ -10386,7 +10386,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -10451,7 +10451,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Repositories kinds to process ([] = all)
                   </div>
@@ -10525,7 +10525,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -10590,7 +10590,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Repositories names to process ([] = all)
                   </div>
@@ -10664,7 +10664,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -10731,7 +10731,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Tag used when pulling images
                   </div>
@@ -10797,7 +10797,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -10860,7 +10860,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database migrator configuration
                   </div>
@@ -10905,7 +10905,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -11003,7 +11003,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -11101,7 +11101,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -11168,7 +11168,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database migrator image repository (without the tag)
                   </div>
@@ -11234,7 +11234,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -11301,7 +11301,7 @@ exports[`Schema creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Load demo user and sample repositories
                   </div>
@@ -11367,7 +11367,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -11490,7 +11490,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -11607,7 +11607,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >
@@ -11724,7 +11724,7 @@ exports[`Schema creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content pt-4"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
       data-testid="lineContent"
       role="button"
     >

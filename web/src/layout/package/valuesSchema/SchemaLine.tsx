@@ -188,7 +188,7 @@ const SchemaLine = (props: Props) => {
       <div className={`row position-relative ${styles.wrapper}`} data-testid="schemaLine">
         <div
           data-testid="lineContent"
-          className={`col-7 bg-dark text-light position-relative py-1 user-select-none ${styles.content} ${props.className}`}
+          className={`col-7 border-start border-end position-relative py-1 user-select-none ${styles.content} ${props.className}`}
           onClick={() => props.onActivePathChange(!isExpanded ? currentPath : undefined)}
           role="button"
         >

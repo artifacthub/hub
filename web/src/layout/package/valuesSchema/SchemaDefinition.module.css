@@ -44,3 +44,17 @@
 .errorMsg {
   line-height: 1.15rem;
 }
+
+.select {
+  padding: 0.1rem 0.35rem;
+  font-size: 0.75rem;
+  border-radius: 0.1rem;
+}
+
+.selectInLine {
+  top: -1px;
+}
+
+.titleWithRequiredLabel {
+  max-width: calc(100% - 75px);
+}

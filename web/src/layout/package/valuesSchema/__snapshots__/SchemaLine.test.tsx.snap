@@ -7,7 +7,7 @@ exports[`SchemaLine creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >
@@ -74,7 +74,7 @@ exports[`SchemaLine creates snapshot 1`] = `
                   class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="fw-bold text-truncate"
+                    class="fw-bold text-truncate titleWithRequiredLabel"
                   >
                     Database host
                   </div>
