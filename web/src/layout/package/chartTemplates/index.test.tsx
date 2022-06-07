@@ -18,12 +18,12 @@ const getMockChartTemplates = (fixtureId: string): ChartTemplatesData => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as ChartTemplatesData;
 };
 
-const mockHistoryReplace = jest.fn();
+const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
-    replace: mockHistoryReplace,
+    push: mockHistoryPush,
   }),
 }));
 
@@ -128,8 +128,8 @@ describe('ChartTemplatesModal', () => {
       await waitFor(() => {
         expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
         expect(API.getChartTemplates).toHaveBeenCalledWith('id', '1.1.1');
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
+        expect(mockHistoryPush).toHaveBeenCalledTimes(2);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
           search: '?modal=template&template=db_migrator_install_job.yaml',
           state: {
             fromStarredPage: undefined,
@@ -152,8 +152,8 @@ describe('ChartTemplatesModal', () => {
       await waitFor(() => {
         expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
         expect(API.getChartTemplates).toHaveBeenCalledWith('id', '1.1.1');
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
+        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPush).toHaveBeenCalledWith({
           search: '',
           state: {
             fromStarredPage: undefined,
@@ -190,8 +190,8 @@ describe('ChartTemplatesModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       await waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(5);
-        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
+        expect(mockHistoryPush).toHaveBeenCalledTimes(5);
+        expect(mockHistoryPush).toHaveBeenLastCalledWith({
           search: '?modal=template&template=db_migrator_install_job.yaml',
           state: {
             fromStarredPage: undefined,
@@ -303,8 +303,8 @@ describe('ChartTemplatesModal', () => {
       );
 
       expect(container).toBeEmptyDOMElement();
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
         search: '',
         state: {
           fromStarredPage: undefined,

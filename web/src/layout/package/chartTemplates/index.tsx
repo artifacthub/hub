@@ -11,6 +11,7 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 import {
   ChartTemplate,
   ChartTmplTypeFile,
+  DefinedTemplatesList,
   ErrorKind,
   RepositoryKind,
   SearchFiltersURL,
@@ -32,6 +33,7 @@ interface Props {
   repoKind: RepositoryKind;
   visibleChartTemplates: boolean;
   visibleTemplate?: string;
+  visibleLine?: string;
   compareVersionTo?: string;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -43,6 +45,7 @@ interface FileProps {
 }
 
 const KIND = /(\nkind: [A-Za-z0-9"]*|^kind: [A-Za-z0-9"]*)/g;
+const HELPER_TEMPLATE_NAME = /define "(.*?)"/;
 
 const getFileNameAndExt = (str: string): FileProps => {
   const file = str.split('/').pop() || str;
@@ -97,10 +100,39 @@ const formatTemplates = (templates: ChartTemplate[]): ChartTemplate[] => {
   return [...finalTemplates, ...finalHelpers];
 };
 
+const getDefinedTemplates = (templates: ChartTemplate[]): DefinedTemplatesList => {
+  let tmplsInHelpers: DefinedTemplatesList = {};
+  const helpers = templates.filter((tmpl: ChartTemplate) => tmpl.type === ChartTmplTypeFile.Helper);
+  if (helpers) {
+    helpers.forEach((tmpl: ChartTemplate) => {
+      tmplsInHelpers = { ...tmplsInHelpers, ...readLines(tmpl) };
+    });
+  }
+  return tmplsInHelpers;
+};
+
+const readLines = (template: ChartTemplate): DefinedTemplatesList => {
+  const tmpls = template.data.split('\n\n');
+  const tmplsLines = template.data.split(/\r?\n/);
+  const tmplsInHelpers: DefinedTemplatesList = {};
+  tmpls.forEach((code: string) => {
+    const matches = code.match(HELPER_TEMPLATE_NAME);
+    if (matches) {
+      const currentLine = tmplsLines.findIndex((line: string) => line.includes(matches[0]));
+      tmplsInHelpers[matches[1]] = {
+        template: template.name,
+        line: currentLine + 1,
+      };
+    }
+  });
+  return tmplsInHelpers;
+};
+
 const ChartTemplatesModal = (props: Props) => {
   const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [templates, setTemplates] = useState<ChartTemplate[] | null | undefined>();
+  const [templatesInHelpers, setTemplatesInHelpers] = useState<DefinedTemplatesList>({});
   const [values, setValues] = useState<any | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
@@ -113,15 +145,15 @@ const ChartTemplatesModal = (props: Props) => {
   useOutsideClick([ref], visibleDropdown, () => setVisibleDropdown(false));
 
   const cleanUrl = () => {
-    history.replace({
+    history.push({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
 
   const updateUrl = (q: TemplatesQuery) => {
-    history.replace({
-      search: `?modal=template${q.template ? `&template=${q.template}` : ''}${
+    history.push({
+      search: `?modal=template${q.template ? `&template=${q.template}` : ''}${q.line ? `&line=${q.line}` : ''}${
         q.compareTo ? `&compare-to=${q.compareTo}` : ''
       }`,
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
@@ -163,6 +195,7 @@ const ChartTemplatesModal = (props: Props) => {
       if (data && data.templates) {
         const formattedTemplates = formatTemplates(data.templates);
         if (formattedTemplates.length > 0) {
+          setTemplatesInHelpers(getDefinedTemplates(formattedTemplates));
           setTemplates(formattedTemplates);
           setValues(data ? { Values: { ...data.values } } : null);
           setOpenStatus(true);
@@ -217,7 +250,7 @@ const ChartTemplatesModal = (props: Props) => {
     setOpenStatus(false);
     setEnabledDiff(false);
     setComparedVersion('');
-    history.replace({
+    history.push({
       search: '',
       state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
@@ -393,9 +426,11 @@ const ChartTemplatesModal = (props: Props) => {
                 ) : (
                   <TemplatesView
                     templates={templates}
+                    templatesInHelpers={templatesInHelpers}
                     values={values}
                     normalizedName={props.normalizedName}
                     visibleTemplate={props.visibleTemplate}
+                    visibleLine={props.visibleLine}
                     updateUrl={updateUrl}
                   />
                 )}

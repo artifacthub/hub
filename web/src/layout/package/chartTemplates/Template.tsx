@@ -1,10 +1,10 @@
 import classnames from 'classnames';
-import { get, isEmpty, isNull, isObject, isString } from 'lodash';
+import { get, isEmpty, isNull, isObject, isString, isUndefined } from 'lodash';
 import { Dispatch, Fragment, memo, SetStateAction, useContext, useEffect, useState } from 'react';
 import regexifyString from 'regexify-string';
 
 import { AppCtx } from '../../../context/AppCtx';
-import { ChartTemplate, ChartTemplateSpecialType } from '../../../types';
+import { ChartTemplate, ChartTemplateSpecialType, DefinedTemplate, DefinedTemplatesList } from '../../../types';
 import processHelmTemplate from '../../../utils/processHelmTemplate';
 import AutoresizeTextarea from '../../common/AutoresizeTextarea';
 import ParamInfo from './ParamInfo';
@@ -12,6 +12,9 @@ import styles from './Template.module.css';
 
 interface Props {
   template: ChartTemplate;
+  visibleLine?: string;
+  templatesInHelpers: DefinedTemplatesList;
+  onDefinedTemplateClick: (templateName: string, line: string, lineNumber: string) => void;
   setIsChangingTemplate: Dispatch<SetStateAction<boolean>>;
   values?: any;
 }
@@ -21,6 +24,8 @@ const FUNCTIONS_DEFINITIONS = require('./functions.json');
 const BUILTIN_DEFINITIONS = require('./builtIn.json');
 const SPECIAL_CHARACTERS = /[^|({})-]+/;
 const TOKENIZE_RE = /[^\s"']+|"([^"]*)"|'([^']*)/g;
+const INITIAL_HELPER_COMMENT = /{{\/\*|{{- \/\*/;
+const FINAL_HELPER_COMMENT = /\*\/}}|\*\/ -}}$/;
 
 const Template = (props: Props) => {
   const { ctx } = useContext(AppCtx);
@@ -29,6 +34,7 @@ const Template = (props: Props) => {
 
   useEffect(() => {
     props.setIsChangingTemplate(false);
+    goToLine();
   }, [activeTemplate]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
@@ -36,6 +42,19 @@ const Template = (props: Props) => {
       setActiveTemplate(props.template);
     }
   }, [activeTemplate, props.template]);
+
+  useEffect(() => {
+    goToLine();
+  }, [props.visibleLine]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  const goToLine = () => {
+    if (props.visibleLine) {
+      const element = document.getElementById(`line_${props.visibleLine}`);
+      if (element) {
+        element.scrollIntoView({ block: 'start' }); //, inline: 'nearest', behavior: 'smooth' });
+      }
+    }
+  };
 
   const processActiveTemplate = (tmpl: string): JSX.Element | null => {
     const rows = tmpl.split('\n');
@@ -49,15 +68,30 @@ const Template = (props: Props) => {
       }
     }
 
+    let isComment = false;
+
     const rowsContent = cleanRows.map((line: string, index: number) => {
+      if (line.match(INITIAL_HELPER_COMMENT) && !line.match(FINAL_HELPER_COMMENT)) {
+        isComment = true;
+      } else if (line.match(FINAL_HELPER_COMMENT)) {
+        isComment = false;
+      }
+
       return (
-        <div className="d-flex flex-row my-1" key={`active-tmps-${index}`}>
+        <div className="d-flex flex-row my-1 position-relative" key={`active-tmps-${index}`}>
+          <div data-testid="anchor" className={`position-absolute ${styles.anchor}`} id={`line_${index + 1}`} />
           <div className={`text-end me-3 ${styles.lineNumber}`}>{index + 1}</div>
-          <div className="flex-grow-1">
-            {line.startsWith('#') ? (
+          <div className="flex-grow-1 position-relative">
+            {props.visibleLine && parseInt(props.visibleLine) === index + 1 && (
+              <div className={`position-absolute ${styles.activeLine}`} />
+            )}
+            {line.startsWith('#') ||
+            line.match(INITIAL_HELPER_COMMENT) ||
+            line.match(FINAL_HELPER_COMMENT) ||
+            isComment ? (
               <span className={`${styles.tmplComment} ${styles[`${effective}Theme`]}`}>{line}</span>
             ) : (
-              <>{processLine(line)}</>
+              <>{processLine(line, index + 1)}</>
             )}
           </div>
           <div className="ps-2" />
@@ -137,13 +171,53 @@ const Template = (props: Props) => {
     }
   };
 
-  const tokenizeContent = (str: string, lineNumber: number): JSX.Element | null => {
+  const renderDefinedTemplate = (word: string, lineNumber: string): JSX.Element => {
+    let templateInHelper: DefinedTemplate | undefined = !isEmpty(props.templatesInHelpers)
+      ? props.templatesInHelpers[word.replace(/"/g, '')]
+      : undefined;
+    if (isUndefined(templateInHelper)) {
+      return <>{word}</>;
+    } else {
+      return (
+        <>
+          <ParamInfo
+            element={<span className={`${styles.tmplDefinedTemplate}  ${styles[`${effective}Theme`]}`}>{word}</span>}
+            info={
+              <div className="d-flex flex-column p-2">
+                <div className="text-nowrap">
+                  Template defined in <span className="fw-bold">{templateInHelper.template}</span> line{' '}
+                  <span className="fw-bold">{templateInHelper.line}</span>
+                </div>
+                <div>
+                  <button
+                    className="ps-0 btn btn-sm btn-link"
+                    onClick={() => {
+                      props.onDefinedTemplateClick(
+                        templateInHelper!.template,
+                        templateInHelper!.line.toString(),
+                        lineNumber
+                      );
+                      goToLine();
+                    }}
+                  >
+                    <small>Go to definition</small>
+                  </button>
+                </div>
+              </div>
+            }
+          />
+        </>
+      );
+    }
+  };
+
+  const tokenizeContent = (str: string, lineNumber: string): JSX.Element | null => {
     const parts = str.match(TOKENIZE_RE);
     if (isNull(parts)) return null;
     return (
       <span className={`badge fw-normal border bg-white ${styles.badge}`}>
         {parts.map((word: string, idx: number) => {
-          if (word === ')' || word === '|' || word.startsWith(`"`))
+          if (word === ')' || word === '|')
             return (
               <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
                 <span
@@ -157,6 +231,18 @@ const Template = (props: Props) => {
                 </span>{' '}
               </Fragment>
             );
+
+          if (word.startsWith('"')) {
+            // Only render defined template when is after template or include
+            if (['template', 'include'].includes(parts[idx - 1])) {
+              return (
+                <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>{renderDefinedTemplate(word, lineNumber)} </Fragment>
+              );
+            } else {
+              return <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>{word}</Fragment>;
+            }
+          }
+
           return (
             <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
               {regexifyString({
@@ -199,13 +285,13 @@ const Template = (props: Props) => {
     );
   };
 
-  const processLine = (line: string) => {
+  const processLine = (line: string, lineNumber: number) => {
     return regexifyString({
       pattern: HIGHLIGHT_PATTERN,
       decorator: (match, index) => {
         return (
           <span data-testid="betweenBracketsContent" key={`line_${index}`}>
-            {tokenizeContent(match, index)}
+            {tokenizeContent(match, lineNumber.toString())}
           </span>
         );
       },

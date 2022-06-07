@@ -5,6 +5,7 @@
 }
 
 .pre {
+  white-space: pre-wrap;
   font-size: 80%;
   overscroll-behavior: contain;
 }
