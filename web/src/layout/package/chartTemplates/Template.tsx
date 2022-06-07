@@ -239,7 +239,11 @@ const Template = (props: Props) => {
                 <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>{renderDefinedTemplate(word, lineNumber)} </Fragment>
               );
             } else {
-              return <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>{word}</Fragment>;
+              return (
+                <Fragment key={`helmTmpl_${lineNumber}_${idx}`}>
+                  <span className="d-inline-flex">{word}</span>{' '}
+                </Fragment>
+              );
             }
           }
 
