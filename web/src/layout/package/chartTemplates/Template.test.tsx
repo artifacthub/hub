@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import Template from './Template';
 
-jest.mock('react-markdown', () => (props) => {
+jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);
@@ -18,6 +18,8 @@ const defaultProps = {
     type: 0,
   },
   setIsChangingTemplate: setIsChangingTemplateMock,
+  onDefinedTemplateClick: jest.fn(),
+  templatesInHelpers: {},
   values: {
     Values: {
       fullnameOverride: '',

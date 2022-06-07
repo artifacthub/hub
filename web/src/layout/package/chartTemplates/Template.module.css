@@ -7,6 +7,23 @@
   color: var(--color-black-25);
 }
 
+.activeLine {
+  opacity: 0;
+  top: -3px;
+  bottom: -3px;
+  left: -10px;
+  right: -24px;
+  background-color: var(--color-black-15);
+  border-left: 2px solid var(--color-black-75);
+  animation: blinker 1s linear 1;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 1;
+  }
+}
+
 .badge {
   border-color: var(--color-black-15) !important;
   color: var(--color-font);
@@ -21,6 +38,15 @@
 
 .prevSpace::before {
   content: ' ';
+}
+
+.definedTmplWrapper {
+  border-radius: 3px;
+  border-color: var(--color-black-15) !important;
+  background-color: var(--extra-light-gray);
+  overscroll-behavior: contain;
+  font-size: 0.75rem;
+  max-height: 180px;
 }
 
 .tmplBuiltIn {
@@ -72,6 +98,14 @@
   color: #ff9191;
 }
 
+.tmplDefinedTemplate {
+  color: #c09b28;
+}
+
+.tmplDefinedTemplate.darkTheme {
+  color: #f1c232;
+}
+
 .textarea :global(.form-control) {
   font-size: 100%;
   opacity: 1 !important;
@@ -80,4 +114,8 @@
 
 .textarea textarea[disabled] {
   color: var(--color-font) !important;
+}
+
+.anchor {
+  top: -5px;
 }

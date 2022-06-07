@@ -1,7 +1,7 @@
-import { isNull } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 
-import { ChartTemplate, TemplatesQuery } from '../../../types';
+import { ChartTemplate, DefinedTemplatesList, TemplatesQuery } from '../../../types';
 import BlockCodeButtons from '../../common/BlockCodeButtons';
 import ErrorBoundary from '../../common/ErrorBoundary';
 import Loading from '../../common/Loading';
@@ -11,9 +11,11 @@ import styles from './TemplatesView.module.css';
 
 interface Props {
   templates: ChartTemplate[] | null;
+  templatesInHelpers: DefinedTemplatesList;
   values?: any;
   normalizedName: string;
   visibleTemplate?: string;
+  visibleLine?: string;
   updateUrl: (q: TemplatesQuery) => void;
 }
 
@@ -22,38 +24,69 @@ const TemplatesView = (props: Props) => {
   const [activeTemplate, setActiveTemplate] = useState<ChartTemplate | null>(null);
   const [isChangingTemplate, setIsChangingTemplate] = useState<boolean>(false);
 
-  const onTemplateChange = (template: ChartTemplate | null) => {
-    setIsChangingTemplate(true);
-    setActiveTemplate(template);
-    props.updateUrl({ template: template ? template.name : undefined });
-    if (!isNull(template)) {
-      if (tmplWrapper && tmplWrapper.current) {
-        tmplWrapper.current.scroll(0, 0);
+  const getChartTemplate = (name: string): ChartTemplate | null => {
+    if (!isNull(props.templates)) {
+      const selectedTemplate = props.templates.find((tmpl: ChartTemplate) => tmpl.name === name);
+      return selectedTemplate || null;
+    }
+    return null;
+  };
+
+  const onTemplateChange = (template: ChartTemplate | null, line?: string) => {
+    props.updateUrl({ template: template ? template.name : undefined, line: line });
+    if (template !== activeTemplate || isNull(template)) {
+      setIsChangingTemplate(true);
+    }
+    if (isNull(template)) {
+      setActiveTemplate(null);
+    } else {
+      if (isUndefined(line)) {
+        if (tmplWrapper && tmplWrapper.current) {
+          tmplWrapper.current.scroll(0, 0);
+        }
       }
+    }
+  };
+
+  const onDefinedTemplateClick = (templateName: string, line: string, lineNumber: string) => {
+    props.updateUrl({ template: activeTemplate!.name, line: lineNumber });
+    const tmpl = getChartTemplate(templateName);
+    if (!isNull(tmpl)) {
+      onTemplateChange(tmpl, line);
     }
   };
 
   useEffect(() => {
     if (props.templates) {
-      let activeTmpl;
+      let activeTmpl = null;
       if (props.visibleTemplate) {
-        activeTmpl = props.templates.find((tmpl: ChartTemplate) => tmpl.name === props.visibleTemplate);
-        if (!activeTmpl) {
-          props.updateUrl({ template: props.templates[0].name });
-        }
-      } else {
+        activeTmpl = getChartTemplate(props.visibleTemplate);
+      }
+      if (!activeTmpl) {
         props.updateUrl({ template: props.templates[0].name });
       }
       setActiveTemplate(activeTmpl || props.templates[0]);
     }
   }, [props.templates]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  useEffect(() => {
+    if (props.templates && props.visibleTemplate) {
+      const activeTmpl = getChartTemplate(props.visibleTemplate);
+      if (!activeTmpl) {
+        props.updateUrl({ template: props.templates[0].name });
+      }
+      if (isNull(activeTemplate) || (activeTmpl && activeTemplate.name !== activeTmpl.name)) {
+        setActiveTemplate(activeTmpl || props.templates[0]);
+      }
+    }
+  }, [props.visibleTemplate]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   return (
     <div className="d-flex flex-row align-items-stretch g-0 h-100 mh-100">
       <div className="col-3 h-100">
         <TemplatesList
           templates={props.templates}
-          activeTemplateName={activeTemplate ? activeTemplate.name : undefined}
+          activeTemplateName={activeTemplate ? activeTemplate.name : props.visibleTemplate}
           onTemplateChange={onTemplateChange}
         />
       </div>
@@ -76,7 +109,10 @@ const TemplatesView = (props: Props) => {
               <ErrorBoundary className={styles.errorAlert} message="Something went wrong rendering the template.">
                 <Template
                   template={activeTemplate!}
+                  templatesInHelpers={props.templatesInHelpers}
                   values={props.values}
+                  visibleLine={props.visibleLine}
+                  onDefinedTemplateClick={onDefinedTemplateClick}
                   setIsChangingTemplate={setIsChangingTemplate}
                 />
               </ErrorBoundary>

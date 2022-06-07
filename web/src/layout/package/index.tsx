@@ -88,6 +88,7 @@ interface Props {
   visibleTemplate?: string;
   compareVersionTo?: string;
   visibleFile?: string;
+  visibleLine?: string;
   visibleVersion?: string;
 }
 
@@ -817,6 +818,11 @@ const PackageView = (props: Props) => {
                               visibleTemplate={
                                 !isUndefined(props.visibleModal) && props.visibleModal === 'template'
                                   ? props.visibleTemplate
+                                  : undefined
+                              }
+                              visibleLine={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'template'
+                                  ? props.visibleLine
                                   : undefined
                               }
                               compareVersionTo={

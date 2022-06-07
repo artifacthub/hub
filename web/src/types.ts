@@ -745,8 +745,18 @@ export interface ContainerTag {
 export interface TemplatesQuery {
   template?: string;
   compareTo?: string;
+  line?: string;
 }
 
 export interface ValuesQuery extends TemplatesQuery {
   selectedLine?: string;
+}
+
+export interface DefinedTemplatesList {
+  [key: string]: DefinedTemplate;
+}
+
+export interface DefinedTemplate {
+  template: string;
+  line: number;
 }

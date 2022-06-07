@@ -10,15 +10,20 @@ exports[`Template creates snapshot 1`] = `
         class="codeWrapper"
       >
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_1"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             1
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
             <span
               data-testid="betweenBracketsContent"
@@ -81,15 +86,20 @@ exports[`Template creates snapshot 1`] = `
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_2"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             2
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
             apiVersion: networking.k8s.io/v1beta1
           </div>
@@ -98,15 +108,20 @@ exports[`Template creates snapshot 1`] = `
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_3"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             3
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
             kind: Ingress
           </div>
@@ -115,15 +130,20 @@ exports[`Template creates snapshot 1`] = `
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_4"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             4
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
             metadata:
           </div>
@@ -132,15 +152,20 @@ exports[`Template creates snapshot 1`] = `
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_5"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             5
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               name: 
             <span
@@ -155,13 +180,7 @@ exports[`Template creates snapshot 1`] = `
                 >
                   include
                 </span>
-                 
-                <span
-                  class="d-inline-flex prevSpace"
-                >
-                  "chart.resourceNamePrefix"
-                </span>
-                 . }}
+                 "chart.resourceNamePrefix" . }}
               </span>
             </span>
             hub
@@ -171,15 +190,20 @@ exports[`Template creates snapshot 1`] = `
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_6"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             6
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               labels:
           </div>
@@ -188,15 +212,20 @@ exports[`Template creates snapshot 1`] = `
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_7"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             7
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
                 app.kubernetes.io/component: hub
           </div>
@@ -205,15 +234,20 @@ exports[`Template creates snapshot 1`] = `
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_8"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             8
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
                 
             <span
@@ -228,13 +262,7 @@ exports[`Template creates snapshot 1`] = `
                 >
                   include
                 </span>
-                 
-                <span
-                  class="d-inline-flex prevSpace"
-                >
-                  "chart.labels"
-                </span>
-                 . 
+                 "chart.labels" . 
                 <span
                   class="d-inline-flex prevSpace"
                 >
@@ -279,15 +307,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_9"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             9
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               
             <span
@@ -365,15 +398,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_10"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             10
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               annotations:
           </div>
@@ -382,15 +420,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_11"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             11
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
                 
             <span
@@ -450,15 +493,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_12"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             12
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               
             <span
@@ -482,15 +530,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_13"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             13
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
             spec:
           </div>
@@ -499,15 +552,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_14"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             14
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               backend:
           </div>
@@ -516,15 +574,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_15"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             15
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
                 serviceName: 
             <span
@@ -539,13 +602,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                 >
                   include
                 </span>
-                 
-                <span
-                  class="d-inline-flex prevSpace"
-                >
-                  "chart.resourceNamePrefix"
-                </span>
-                 . }}
+                 "chart.resourceNamePrefix" . }}
               </span>
             </span>
             hub
@@ -555,15 +612,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_16"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             16
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
                 servicePort: 
             <span
@@ -621,15 +683,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_17"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             17
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               
             <span
@@ -695,15 +762,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_18"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             18
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               rules:
           </div>
@@ -712,15 +784,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_19"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             19
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
                 
             <span
@@ -780,15 +857,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_20"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             20
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               
             <span
@@ -812,15 +894,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_21"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             21
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               
             <span
@@ -886,15 +973,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_22"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             22
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               tls:
           </div>
@@ -903,15 +995,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_23"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             23
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
                 
             <span
@@ -971,15 +1068,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_24"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             24
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
               
             <span
@@ -1003,15 +1105,20 @@ The **nindent** function is the same as the indent function, but prepends a new 
           />
         </div>
         <div
-          class="d-flex flex-row my-1"
+          class="d-flex flex-row my-1 position-relative"
         >
+          <div
+            class="position-absolute anchor"
+            data-testid="anchor"
+            id="line_25"
+          />
           <div
             class="text-end me-3 lineNumber"
           >
             25
           </div>
           <div
-            class="flex-grow-1"
+            class="flex-grow-1 position-relative"
           >
             <span
               data-testid="betweenBracketsContent"
