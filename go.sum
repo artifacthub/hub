@@ -896,8 +896,8 @@ github.com/go-openapi/runtime v0.19.15/go.mod h1:dhGWCTKRXlAfGnQG0ONViOZpjfg0m2g
 github.com/go-openapi/runtime v0.19.16/go.mod h1:5P9104EJgYcizotuXhEuUrzVc+j1RiSjahULvYmlv98=
 github.com/go-openapi/runtime v0.19.24/go.mod h1:Lm9YGCeecBnUUkFTxPC4s1+lwrkJ0pthx8YvyjCfkgk=
 github.com/go-openapi/runtime v0.21.0/go.mod h1:aQg+kaIQEn+A2CRSY1TxbM8+sT9g2V3aLc1FbIAnbbs=
-github.com/go-openapi/runtime v0.23.3 h1:/dxjx4KCOQI5ImBMz036F6v/DzZ2NUjSRvbLJs1rgoE=
-github.com/go-openapi/runtime v0.23.3/go.mod h1:AKurw9fNre+h3ELZfk6ILsfvPN+bvvlaU/M9q/r9hpk=
+github.com/go-openapi/runtime v0.24.1 h1:Sml5cgQKGYQHF+M7yYSHaH1eOjvTykrddTE/KtQVjqo=
+github.com/go-openapi/runtime v0.24.1/go.mod h1:AKurw9fNre+h3ELZfk6ILsfvPN+bvvlaU/M9q/r9hpk=
 github.com/go-openapi/spec v0.0.0-20160808142527-6aced65f8501/go.mod h1:J8+jY1nAiCcj+friV/PDoE1/3eeccG9LYBs0tYvLOWc=
 github.com/go-openapi/spec v0.17.0/go.mod h1:XkF/MOi14NmjsfZ8VtAKf8pIlbZzyoTvZsdfssdxcBI=
 github.com/go-openapi/spec v0.18.0/go.mod h1:XkF/MOi14NmjsfZ8VtAKf8pIlbZzyoTvZsdfssdxcBI=
@@ -2046,6 +2046,7 @@ github.com/seccomp/libseccomp-golang v0.9.1/go.mod h1:GbW5+tmTXfcxTToHLXlScSlAvW
 github.com/seccomp/libseccomp-golang v0.9.2-0.20210429002308-3879420cc921/go.mod h1:JA8cRccbGaA1s33RQf7Y1+q9gHmZX1yB/z9WDN1C6fg=
 github.com/secure-systems-lab/go-securesystemslib v0.2.0/go.mod h1:eIjBmIP8LD2MLBL/DkQWayLiz006Q4p+hCu79rvWleY=
 github.com/secure-systems-lab/go-securesystemslib v0.3.0/go.mod h1:o8hhjkbNl2gOamKUA/eNW3xUrntHT9L4W89W1nfj43U=
+github.com/secure-systems-lab/go-securesystemslib v0.3.1/go.mod h1:o8hhjkbNl2gOamKUA/eNW3xUrntHT9L4W89W1nfj43U=
 github.com/securego/gosec/v2 v2.9.1/go.mod h1:oDcDLcatOJxkCGaCaq8lua1jTnYf6Sou4wdiJ1n4iHc=
 github.com/segmentio/ksuid v1.0.4/go.mod h1:/XUiZBD3kVx5SmUOl55voK5yeAbBNNIed+2O73XgrPE=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
@@ -2066,8 +2067,8 @@ github.com/shurcooL/go-goon v0.0.0-20170922171312-37c2f522c041/go.mod h1:N5mDOms
 github.com/shurcooL/graphql v0.0.0-20181231061246-d48a9a75455f/go.mod h1:AuYgA5Kyo4c7HfUmvRGs/6rGlMMV/6B1bVnB9JxJEEg=
 github.com/shurcooL/sanitized_anchor_name v0.0.0-20170918181015-86672fcb3f95/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
 github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
-github.com/sigstore/cosign v1.8.0 h1:wFUGt8ijnZ5xngLawNghotsDlNb4DJGaiN7Yl8roUCk=
-github.com/sigstore/cosign v1.8.0/go.mod h1:lYUOnjD6Blysi5CBFYUN8ZRV489ku+/VvDmbdI9zoFQ=
+github.com/sigstore/cosign v1.9.0 h1:E1Kkc6I99dNCGfjwU0B7XTJNEpltNi2GUVEQcswY2Ow=
+github.com/sigstore/cosign v1.9.0/go.mod h1:AkVaXopS0Z/3h/hVOyvIwKrXMOilKmlLgUlr8FkrKQM=
 github.com/sigstore/rekor v0.4.1-0.20220114213500-23f583409af3 h1:mbqXrm8YZXN/cJMGeBkgPnswtfrOxDE1f7QZdJ+POQE=
 github.com/sigstore/rekor v0.4.1-0.20220114213500-23f583409af3/go.mod h1:u9clLqaVjqV9pExVL1XkM37dGyMCOX/LMocS9nsnWDY=
 github.com/sigstore/sigstore v1.0.2-0.20211210190220-04746d994282/go.mod h1:SuM+QIHtnnR9eGsURRLv5JfxM6KeaU0XKA1O7FmLs4Q=
@@ -2185,8 +2186,8 @@ github.com/tenntenn/text/transform v0.0.0-20200319021203-7eef512accb3/go.mod h1:
 github.com/tent/canonical-json-go v0.0.0-20130607151641-96e4ba3a7613/go.mod h1:g6AnIpDSYMcphz193otpSIzN+11Rs+AAIIC6rm1enug=
 github.com/tetafro/godot v1.4.11/go.mod h1:LR3CJpxDVGlYOWn3ZZg1PgNZdTUvzsZWu8xaEohUpn8=
 github.com/theupdateframework/go-tuf v0.0.0-20211203210025-7ded50136bf9/go.mod h1:n2n6wwC9BEnYS/C/APAtNln0eM5zYAYOkOTx6VEG/mA=
-github.com/theupdateframework/go-tuf v0.0.0-20220211205608-f0c3294f63b9 h1:U8bHY5mmNuZHc3+e7l2/LAmfTk7oiMiB3Qn8fsp4z5g=
-github.com/theupdateframework/go-tuf v0.0.0-20220211205608-f0c3294f63b9/go.mod h1:ENa0O55YQfI0U/nn4AAuqPydrbkqQCiq9GDw6YLCyXU=
+github.com/theupdateframework/go-tuf v0.3.0 h1:od2sc5+BSkKZhmUG2o2rmruy0BGSmhrbDhCnpxh87X8=
+github.com/theupdateframework/go-tuf v0.3.0/go.mod h1:E5XP0wXitrFUHe4b8cUcAAdxBW4LbfnqF4WXXGLgWNo=
 github.com/tidwall/pretty v1.0.0/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
 github.com/tidwall/pretty v1.2.0 h1:RWIZEg2iJ8/g6fDDYzMpobmaoGh5OLl4AXtGUGPcqCs=
 github.com/tidwall/pretty v1.2.0/go.mod h1:ITEVvHYasfjBbM0u2Pg8T2nJnzm8xPwvNhhsoaGGjNU=
