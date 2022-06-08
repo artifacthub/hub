@@ -10438,10 +10438,10 @@ react-icons@^4.3.1:
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.4.0.tgz#a13a8a20c254854e1ec9aecef28a95cdf24ef703"
   integrity sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==
 
-react-image-crop@^10.0.0:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-10.0.1.tgz#5fd96c5ff359d3d5d64c7b407b11cf9b1b88c28f"
-  integrity sha512-tKnTF5c91BHjmp00Ga81W9Y/QkODLZeJkPtJwNKyM7cg9wsDwbA6tQxNu7alYkXZB5VvOBdKfqjqAoeqS+l5CQ==
+react-image-crop@^10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-10.0.2.tgz#e14c3e0f99c06ef260d50991df59b67ee8e34d33"
+  integrity sha512-aOsnQRaEQBDyVoYCRmoviKIcp0iaPMo5Hy81j6IKP75qn36cU0xmssXzptDyF+eSxxadLrpmArXNUCR/kGyp6A==
   dependencies:
     clsx "^1.1.1"
 
