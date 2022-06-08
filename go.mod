@@ -50,7 +50,7 @@ require (
 	gonum.org/v1/netlib v0.0.0-20220323200511-14de99971b2d // indirect
 	google.golang.org/api v0.81.0
 	gopkg.in/yaml.v2 v2.4.0
-	gopkg.in/yaml.v3 v3.0.0
+	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.9.0
 	k8s.io/apimachinery v0.24.0
 	oras.land/oras-go v1.1.1
