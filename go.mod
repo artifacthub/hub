@@ -37,7 +37,7 @@ require (
 	github.com/sigstore/cosign v1.8.0
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.12.0
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.7.2
 	github.com/tektoncd/pipeline v0.28.0
 	github.com/unrolled/secure v1.10.0
 	github.com/versine/loginauth v0.0.0-20170330164406-8380ec243689
@@ -50,7 +50,7 @@ require (
 	gonum.org/v1/netlib v0.0.0-20220323200511-14de99971b2d // indirect
 	google.golang.org/api v0.81.0
 	gopkg.in/yaml.v2 v2.4.0
-	gopkg.in/yaml.v3 v3.0.0
+	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.9.0
 	k8s.io/apimachinery v0.24.0
 	oras.land/oras-go v1.1.1
