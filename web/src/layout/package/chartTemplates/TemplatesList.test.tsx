@@ -2,9 +2,17 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { ChartTemplate } from '../../../types';
+// import isVisibleItemInContainer from '../../../utils/isVisibleItemInContainer';
 import TemplatesList from './TemplatesList';
 
+const isVisibleItemInContainer = require('../../../utils/isVisibleItemInContainer');
+
+jest.mock('../../../utils/isVisibleItemInContainer', () => jest.fn());
+
 const onTemplateChangeMock = jest.fn();
+const scrollIntoViewMock = jest.fn();
+
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   activeTemplateName: 'test',
@@ -22,6 +30,10 @@ const getMockChartTemplates = (fixtureId: string): ChartTmpl => {
 describe('TemplatesList', () => {
   afterEach(() => {
     jest.resetAllMocks();
+  });
+
+  beforeEach(() => {
+    isVisibleItemInContainer.mockImplementation(() => true);
   });
 
   it('creates snapshot', () => {
@@ -94,7 +106,7 @@ describe('TemplatesList', () => {
       render(
         <TemplatesList
           {...defaultProps}
-          templates={getMockChartTemplates('3').templates}
+          templates={getMockChartTemplates('4').templates}
           activeTemplateName="db_migrator_secret.yaml"
         />
       );
@@ -111,6 +123,30 @@ describe('TemplatesList', () => {
           resourceKinds: ['Ingress'],
           type: 0,
         });
+      });
+    });
+
+    it('scrolls to active template when is not visible', async () => {
+      isVisibleItemInContainer.mockImplementationOnce(() => true).mockImplementation(() => false);
+
+      const { rerender } = render(
+        <TemplatesList
+          {...defaultProps}
+          templates={getMockChartTemplates('5').templates}
+          activeTemplateName="db_migrator_secret.yaml"
+        />
+      );
+
+      rerender(
+        <TemplatesList
+          {...defaultProps}
+          templates={getMockChartTemplates('5').templates}
+          activeTemplateName="_helpers.tpl"
+        />
+      );
+
+      await waitFor(() => {
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
       });
     });
   });

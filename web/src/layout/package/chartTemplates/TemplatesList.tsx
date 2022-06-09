@@ -1,9 +1,10 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 import { ChartTemplate, ChartTmplTypeFile } from '../../../types';
+import isVisibleItemInContainer from '../../../utils/isVisibleItemInContainer';
 import ResourceLabel from './ResourceLabel';
 import styles from './TemplatesList.module.css';
 
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const TemplatesList = (props: Props) => {
+  const templatesListWrapper = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState<string>('');
   const [visibleTemplates, setVisibleTemplates] = useState<ChartTemplate[]>(props.templates || []);
 
@@ -62,9 +64,22 @@ const TemplatesList = (props: Props) => {
     }
   }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  // Display active template in list
+  useLayoutEffect(() => {
+    if (props.activeTemplateName) {
+      const element = document.getElementById(`tmpl_${props.activeTemplateName}`);
+      if (element && templatesListWrapper && templatesListWrapper.current) {
+        const isVisible = isVisibleItemInContainer(element as HTMLDivElement, templatesListWrapper.current);
+        if (!isVisible) {
+          element.scrollIntoView({ block: 'start' });
+        }
+      }
+    }
+  }, [props.activeTemplateName]);
+
   if (isNull(props.templates)) return null;
   return (
-    <div className="h-100 d-flex flex-column overflow-auto pe-2">
+    <div ref={templatesListWrapper} className="h-100 d-flex flex-column overflow-auto pe-2">
       <div className="position-relative w-100">
         <div className="mb-3 input-group-sm">
           <input
@@ -103,7 +118,7 @@ const TemplatesList = (props: Props) => {
             const isActive: boolean =
               !isUndefined(props.activeTemplateName) && props.activeTemplateName === template.name;
             return (
-              <div key={`template_${index}`}>
+              <div id={`tmpl_${template.name}`} key={`template_${index}`}>
                 <button
                   className={classnames('btn btn-light btn-sm mb-2 text-start w-100', styles.btn, {
                     [`activeTemplate ${styles.active}`]: isActive,
