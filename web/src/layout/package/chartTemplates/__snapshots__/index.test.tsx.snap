@@ -217,7 +217,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </div>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_db_migrator_install_job.yaml"
+                      >
                         <button
                           aria-label="Show template db_migrator_install_job.yaml"
                           aria-pressed="false"
@@ -261,7 +263,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_db_migrator_secret.yaml"
+                      >
                         <button
                           aria-label="Show template db_migrator_secret.yaml"
                           aria-pressed="false"
@@ -305,7 +309,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_db_migrator_upgrade_job.yaml"
+                      >
                         <button
                           aria-label="Show template db_migrator_upgrade_job.yaml"
                           aria-pressed="false"
@@ -349,7 +355,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_hub_deployment.yaml"
+                      >
                         <button
                           aria-label="Show template hub_deployment.yaml"
                           aria-pressed="false"
@@ -393,7 +401,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_hub_ingress.yaml"
+                      >
                         <button
                           aria-label="Show template hub_ingress.yaml"
                           aria-pressed="false"
@@ -437,7 +447,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_hub_secret.yaml"
+                      >
                         <button
                           aria-label="Show template hub_secret.yaml"
                           aria-pressed="false"
@@ -481,7 +493,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_hub_service.yaml"
+                      >
                         <button
                           aria-label="Show template hub_service.yaml"
                           aria-pressed="false"
@@ -525,7 +539,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_hub_serviceaccount.yaml"
+                      >
                         <button
                           aria-label="Show template hub_serviceaccount.yaml"
                           aria-pressed="false"
@@ -569,7 +585,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_scanner_cronjob.yaml"
+                      >
                         <button
                           aria-label="Show template scanner_cronjob.yaml"
                           aria-pressed="false"
@@ -613,7 +631,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_scanner_secret.yaml"
+                      >
                         <button
                           aria-label="Show template scanner_secret.yaml"
                           aria-pressed="false"
@@ -657,7 +677,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_tracker_cronjob.yaml"
+                      >
                         <button
                           aria-label="Show template tracker_cronjob.yaml"
                           aria-pressed="false"
@@ -701,7 +723,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_tracker_secret.yaml"
+                      >
                         <button
                           aria-label="Show template tracker_secret.yaml"
                           aria-pressed="false"
@@ -745,7 +769,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_trivy_deployment.yaml"
+                      >
                         <button
                           aria-label="Show template trivy_deployment.yaml"
                           aria-pressed="false"
@@ -789,7 +815,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_trivy_pvc.yaml"
+                      >
                         <button
                           aria-label="Show template trivy_pvc.yaml"
                           aria-pressed="false"
@@ -833,7 +861,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl_trivy_service.yaml"
+                      >
                         <button
                           aria-label="Show template trivy_service.yaml"
                           aria-pressed="false"
@@ -877,7 +907,9 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                       </div>
-                      <div>
+                      <div
+                        id="tmpl__helpers.tpl"
+                      >
                         <button
                           aria-label="Show template _helpers.tpl"
                           aria-pressed="false"
