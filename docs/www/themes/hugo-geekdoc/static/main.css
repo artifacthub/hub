@@ -625,13 +625,14 @@ img {
   transition-property: transform,margin-left,opacity;
   will-change: transform,margin-left
 }
-@media screen and (max-width:39rem) {
+@media screen and (max-width:55rem) {
   .gdoc-nav {
     margin-left: -16rem;
     font-size: 16px
   }
   .gdoc-nav__control {
-    display: inline-block
+    display: inline-block;
+    margin-right: 1.5rem;
   }
   .gdoc-header .icon {
     width: 1.5rem;
@@ -639,9 +640,6 @@ img {
   }
   .gdoc-brand {
     font-size: 1.5rem
-  }
-  .gdoc-brand__img {
-    display: none
   }
   .gdoc-error {
     padding: 6rem 1rem

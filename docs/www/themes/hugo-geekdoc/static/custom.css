@@ -332,7 +332,7 @@ strong {
   display: block;
 }
 
-@media screen and (max-width: 39rem) {
+@media screen and (max-width: 55rem) {
   .gdoc-nav {
     margin-left: -20rem;
   }
