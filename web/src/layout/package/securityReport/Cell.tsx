@@ -1,12 +1,14 @@
 import { isUndefined } from 'lodash';
 import moment from 'moment';
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { Dispatch, ElementType, SetStateAction, useEffect, useRef } from 'react';
 import { FaCaretDown, FaCaretRight, FaLink } from 'react-icons/fa';
+import ReactMarkdown from 'react-markdown';
 
 import { Vulnerability, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_RATING } from '../../../utils/data';
 import isFuture from '../../../utils/isFuture';
 import ExternalLink from '../../common/ExternalLink';
+import CommandBlock from '../installation/CommandBlock';
 import styles from './Cell.module.css';
 import CVSSVector from './CVSSVector';
 
@@ -15,6 +17,16 @@ interface Props {
   vulnerability: Vulnerability;
   isExpanded: boolean;
   setVisibleVulnerability: Dispatch<SetStateAction<string | undefined>>;
+}
+
+interface HeadingProps {
+  level: number;
+  children: any;
+}
+
+interface CodeProps {
+  inline: boolean;
+  children: any;
 }
 
 const SecurityCell = (props: Props) => {
@@ -46,6 +58,24 @@ const SecurityCell = (props: Props) => {
   };
 
   const severity: VulnerabilitySeverity = props.vulnerability.Severity.toLowerCase() as VulnerabilitySeverity;
+
+  const Heading: ElementType = (props: HeadingProps) => (
+    <div className="h6 text-muted pt-2 pb-1">
+      <div className={styles.mdHeader}>{props.children}</div>
+    </div>
+  );
+
+  const Code: ElementType = (props: CodeProps) => {
+    if (props.inline) {
+      return <code className={`border ${styles.inlineCode}`}>{props.children}</code>;
+    }
+    if (props.children) {
+      const content = String(props.children).replace(/\n$/, '');
+      return <CommandBlock command={content} />;
+    } else {
+      return null;
+    }
+  };
 
   useEffect(() => {
     // Scrolls content into view when a vulnerability is expanded
@@ -112,7 +142,23 @@ const SecurityCell = (props: Props) => {
                 <>
                   <div className="h6">{props.vulnerability.Title}</div>
                   {props.vulnerability.Description && (
-                    <p className="text-muted mb-1">{props.vulnerability.Description}</p>
+                    <ReactMarkdown
+                      children={props.vulnerability.Description}
+                      components={{
+                        h1: Heading,
+                        h2: Heading,
+                        h3: Heading,
+                        h4: Heading,
+                        h5: Heading,
+                        h6: Heading,
+                        code: Code,
+                        p: ({ node, ...props }) => <p className="text-muted mb-1" {...props} />,
+                      }}
+                      linkTarget="_blank"
+                      skipHtml
+                    />
+
+                    // <p className="text-muted mb-1">{props.vulnerability.Description}</p>
                   )}
                   <div className="d-flex flex-column text-end">
                     {!isUndefined(props.vulnerability.LastModifiedDate) &&

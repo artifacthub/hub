@@ -19,3 +19,23 @@
   background-color: var(--bs-white) !important;
   box-shadow: none;
 }
+
+/* Markdown */
+
+.mdHeader {
+  font-size: 55%;
+}
+
+.md p code {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+}
+
+.inlineCode {
+  hyphens: none;
+  color: var(--bs-dark);
+  background-color: var(--code-bg-md);
+  border-color: var(--color-1-20) !important;
+  border-radius: 3px;
+  padding: 0 0.15rem;
+}
