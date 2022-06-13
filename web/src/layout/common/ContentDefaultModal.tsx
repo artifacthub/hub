@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -8,6 +8,7 @@ import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { stringify } from 'yaml';
 
 import { ContentDefaultModalKind, CustomResourcesDefinition, SearchFiltersURL } from '../../types';
+import isVisibleItemInContainer from '../../utils/isVisibleItemInContainer';
 import BlockCodeButtons from './BlockCodeButtons';
 import styles from './ContentDefaultModal.module.css';
 import Loading from './Loading';
@@ -44,6 +45,7 @@ const FILE_TYPE = {
 };
 
 const ContentDefaultModal = (props: Props) => {
+  const contentListWrapper = useRef<HTMLDivElement>(null);
   const history = useHistory();
   const anchor = useRef<HTMLDivElement>(null);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -164,6 +166,19 @@ const ContentDefaultModal = (props: Props) => {
     }
   }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  // Display active file in list
+  useLayoutEffect(() => {
+    if (props.visibleFile && openStatus) {
+      const element = document.getElementById(`file_${props.visibleFile.toLowerCase()}`);
+      if (element && contentListWrapper && contentListWrapper.current) {
+        const isVisible = isVisibleItemInContainer(element as HTMLDivElement, contentListWrapper.current);
+        if (!isVisible) {
+          element.scrollIntoView({ block: 'start' });
+        }
+      }
+    }
+  }, [props.visibleFile, openStatus]);
+
   if (isUndefined(props.files) || props.files.length === 0) return null;
 
   const getSelectedFileName = (): string => {
@@ -227,7 +242,7 @@ const ContentDefaultModal = (props: Props) => {
         >
           <div className="h-100 mw-100">
             <div className="d-flex flex-row align-items-stretch g-0 h-100 mh-100">
-              <div className="col-3 h-100 overflow-auto">
+              <div ref={contentListWrapper} className="col-3 h-100 overflow-auto">
                 <div className="position-relative w-100 pe-2">
                   <div className="mb-3 input-group-sm">
                     <input
@@ -268,6 +283,7 @@ const ContentDefaultModal = (props: Props) => {
                       const isActive = selectedItem === file;
                       return (
                         <button
+                          id={`file_${file.name.toLowerCase()}`}
                           key={`file_${file.name}_${index}`}
                           className={classnames('btn btn-light btn-sm mb-2 text-start w-100', styles.btn, {
                             [`activeTemplate ${styles.active}`]: isActive,

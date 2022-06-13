@@ -1,8 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { ContentDefaultModalKind } from '../../types';
 import ContentDefaultModal from './ContentDefaultModal';
+
+const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer');
+
+jest.mock('../../utils/isVisibleItemInContainer', () => jest.fn());
 
 const mockHistoryReplace = jest.fn();
 
@@ -114,6 +118,10 @@ describe('Files modal', () => {
     jest.resetAllMocks();
   });
 
+  beforeEach(() => {
+    isVisibleItemInContainer.mockImplementation(() => true);
+  });
+
   it('creates snapshot', async () => {
     const { asFragment } = render(<ContentDefaultModal {...defaultProps} />);
     expect(asFragment()).toMatchSnapshot();
@@ -175,6 +183,16 @@ describe('Files modal', () => {
 
     expect(screen.getByText('Aqua Security Enforcer Deployment with Aqua Operator')).toBeInTheDocument();
     expect(screen.getByText('No example provided')).toBeInTheDocument();
+  });
+
+  it('scrolls to active file when is not visible', async () => {
+    isVisibleItemInContainer.mockImplementation(() => false);
+
+    render(<ContentDefaultModal visibleFile="aquadatabases.operator.aquasec.com" {...defaultProps} visibleModal />);
+
+    await waitFor(() => {
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('does not render component', () => {

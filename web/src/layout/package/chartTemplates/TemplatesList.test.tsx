@@ -2,7 +2,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { ChartTemplate } from '../../../types';
-// import isVisibleItemInContainer from '../../../utils/isVisibleItemInContainer';
 import TemplatesList from './TemplatesList';
 
 const isVisibleItemInContainer = require('../../../utils/isVisibleItemInContainer');
