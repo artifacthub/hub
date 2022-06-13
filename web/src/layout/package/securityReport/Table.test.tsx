@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event';
 import { SecurityReportResult } from '../../../types';
 import SecurityTable from './Table';
 
+jest.mock('react-markdown', () => () => <div />);
+
 const getMockSecurityReport = (fixtureId: string): SecurityReportResult[] => {
   return require(`./__fixtures__/Table/${fixtureId}.json`) as SecurityReportResult[];
 };

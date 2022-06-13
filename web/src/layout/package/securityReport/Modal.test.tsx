@@ -5,8 +5,9 @@ import { mocked } from 'jest-mock';
 import API from '../../../api';
 import { SecurityReport, VulnerabilitySeverity } from '../../../types';
 import SecurityModal from './Modal';
-jest.mock('../../../api');
 
+jest.mock('../../../api');
+jest.mock('react-markdown', () => () => <div />);
 jest.mock('moment', () => ({
   ...(jest.requireActual('moment') as {}),
   unix: () => ({
@@ -29,6 +30,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const defaultProps = {
+  repoKind: 0,
   totalVulnerabilities: 109,
   summary: {
     [VulnerabilitySeverity.Critical]: 4,
