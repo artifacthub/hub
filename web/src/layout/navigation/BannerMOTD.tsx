@@ -27,7 +27,8 @@ const BannerMOTD = () => {
       className={classnames(
         'alert mb-0 py-2 rounded-0 text-center',
         `alert-${severityType} ${styles[`${severityType}Alert`]}`,
-        styles.wrapper
+        styles.wrapper,
+        'motdBanner'
       )}
       role="alert"
       aria-live="assertive"
