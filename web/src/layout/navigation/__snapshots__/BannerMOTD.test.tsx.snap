@@ -5,7 +5,7 @@ exports[`BannerMOTD creates snapshot 1`] = `
   <div
     aria-atomic="true"
     aria-live="assertive"
-    class="alert mb-0 py-2 rounded-0 text-center alert-info infoAlert wrapper"
+    class="alert mb-0 py-2 rounded-0 text-center alert-info infoAlert wrapper motdBanner"
     role="alert"
   >
     <div

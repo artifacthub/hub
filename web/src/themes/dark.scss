@@ -540,6 +540,12 @@
     display: inline;
   }
 
+  .motdBanner {
+    background-color: var(--color-1-100) !important;
+    color: $font-color-light;
+    border-color: var(--border-md) !important;
+  }
+
   .bg-white {
     background-color: var(--bs-white) !important;
   }
