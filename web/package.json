@@ -16,7 +16,7 @@
     "json-schema-merge-allof": "^0.8.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
-    "nanoid": "^3.3.4",
+    "nanoid": "^4.0.0",
     "react": "^18.1.0",
     "react-apexcharts": "^1.4.0",
     "react-codemirror2": "^7.2.1",
