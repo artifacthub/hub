@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
-	github.com/aquasecurity/trivy v0.28.1
+	github.com/aquasecurity/trivy v0.29.1
 	github.com/containerd/containerd v1.6.6 // indirect
 	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/disintegration/imaging v1.6.2
@@ -25,7 +25,7 @@ require (
 	github.com/jackc/pgx/v4 v4.16.1
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/open-policy-agent/opa v0.41.0
-	github.com/opencontainers/image-spec v1.0.3-0.20220114050600-8b9d41f48198
+	github.com/opencontainers/image-spec v1.0.3-0.20220303224323-02efb9a75ee1
 	github.com/operator-framework/api v0.15.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.3.0
@@ -52,7 +52,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.9.0
-	k8s.io/apimachinery v0.24.0
+	k8s.io/apimachinery v0.24.1
 	oras.land/oras-go v1.1.1
 	sigs.k8s.io/krew v0.4.3
 	sigs.k8s.io/yaml v1.3.0
@@ -74,20 +74,15 @@ require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/acomagu/bufpipe v1.0.3 // indirect
-	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/agnivade/levenshtein v1.0.1 // indirect
-	github.com/alecthomas/chroma v0.10.0 // indirect
-	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
-	github.com/aquasecurity/defsec v0.58.2 // indirect
-	github.com/aquasecurity/fanal v0.0.0-20220519114754-f9a9d959763a // indirect
-	github.com/aquasecurity/go-dep-parser v0.0.0-20220503151658-d316f5cc2cff // indirect
-	github.com/aquasecurity/trivy-db v0.0.0-20220510190819-8ca06716f46e // indirect
+	github.com/aquasecurity/fanal v0.0.0-20220615115521-e411bc995c6d // indirect
+	github.com/aquasecurity/trivy-db v0.0.0-20220602091213-39d8a6798e07 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/blendle/zapdriver v1.3.1 // indirect
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
-	github.com/caarlos0/env/v6 v6.9.1 // indirect
+	github.com/caarlos0/env/v6 v6.9.3 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/chai2010/gettext-go v0.0.0-20160711120539-c6fed771bfd5 // indirect
@@ -95,7 +90,6 @@ require (
 	github.com/cyphar/filepath-securejoin v0.2.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-minhash v0.0.0-20170608043002-7fe510aff544 // indirect
-	github.com/dlclark/regexp2 v1.4.0 // indirect
 	github.com/docker/cli v20.10.16+incompatible // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/docker v20.10.16+incompatible // indirect
@@ -148,7 +142,6 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/hashicorp/hcl/v2 v2.12.0 // indirect
 	github.com/hhatto/gorst v0.0.0-20181029133204-ca9f730cac5b // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
@@ -170,8 +163,6 @@ require (
 	github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 // indirect
 	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
 	github.com/letsencrypt/boulder v0.0.0-20220331220046-b23ab962616e // indirect
-	github.com/liamg/iamgo v0.0.6 // indirect
-	github.com/liamg/jfather v0.0.7 // indirect
 	github.com/lib/pq v1.10.4 // indirect
 	github.com/liggitt/tabwriter v0.0.0-20181228230101-89fcab3d43de // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
@@ -195,7 +186,6 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
-	github.com/owenrumney/squealer v1.0.1-0.20220510063705-c0be93f0edea // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
@@ -231,9 +221,8 @@ require (
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
-	github.com/xlab/treeprint v0.0.0-20181112141820-a009c3971eca // indirect
+	github.com/xlab/treeprint v1.1.0 // indirect
 	github.com/yashtewari/glob-intersection v0.1.0 // indirect
-	github.com/zclconf/go-cty v1.10.0 // indirect
 	go.mongodb.org/mongo-driver v1.8.3 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.starlark.net v0.0.0-20200306205701-8dd3e2ee1dd5 // indirect
@@ -244,7 +233,7 @@ require (
 	golang.org/x/net v0.0.0-20220607020251-c690dde0001d // indirect
 	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f // indirect
 	golang.org/x/sys v0.0.0-20220610221304-9f5ed59c137d // indirect
-	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
+	golang.org/x/term v0.0.0-20220411215600-e5f449aeb171 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f // indirect
 	gomodules.xyz/jsonpatch/v2 v2.2.0 // indirect
@@ -258,15 +247,15 @@ require (
 	gopkg.in/neurosnap/sentences.v1 v1.0.6 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
-	k8s.io/api v0.24.0 // indirect
+	k8s.io/api v0.24.1 // indirect
 	k8s.io/apiextensions-apiserver v0.24.0 // indirect
-	k8s.io/apiserver v0.24.0 // indirect
-	k8s.io/cli-runtime v0.24.0 // indirect
+	k8s.io/apiserver v0.24.1 // indirect
+	k8s.io/cli-runtime v0.24.1 // indirect
 	k8s.io/client-go v11.0.0+incompatible // indirect
-	k8s.io/component-base v0.24.0 // indirect
+	k8s.io/component-base v0.24.1 // indirect
 	k8s.io/klog/v2 v2.60.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20220328201542-3ee0da9b0b42 // indirect
-	k8s.io/kubectl v0.24.0 // indirect
+	k8s.io/kubectl v0.24.1 // indirect
 	k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9 // indirect
 	knative.dev/pkg v0.0.0-20220325200448-1f7514acd0c2 // indirect
 	sigs.k8s.io/json v0.0.0-20211208200746-9f7c6b3444d2 // indirect
