@@ -37,7 +37,7 @@ require (
 	github.com/sigstore/cosign v1.9.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
-	github.com/stretchr/testify v1.7.4
+	github.com/stretchr/testify v1.7.5
 	github.com/tektoncd/pipeline v0.28.0
 	github.com/unrolled/secure v1.10.0
 	github.com/versine/loginauth v0.0.0-20170330164406-8380ec243689
