@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "lodash": "^4.17.21",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-shadow": "^19.0.3",
