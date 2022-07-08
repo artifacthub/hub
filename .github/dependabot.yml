@@ -6,6 +6,7 @@ updates:
       interval: "weekly"
       day: "wednesday"
     ignore:
+      - dependency-name: "eslint-plugin-prettier"
       - dependency-name: "nanoid"
       - dependency-name: "react-router-dom"
       - dependency-name: "react-scripts"
@@ -17,6 +18,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
+    ignore:
+      - dependency-name: "eslint-plugin-prettier"
   - package-ecosystem: gomod
     directory: "/"
     schedule:
