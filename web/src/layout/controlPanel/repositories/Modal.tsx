@@ -366,6 +366,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Kubewarden:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories#kubewarden-policies-repositories"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Kubewarden policies
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -386,6 +397,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.CoreDNS:
               case RepositoryKind.Keptn:
               case RepositoryKind.TektonPipeline:
+              case RepositoryKind.Kubewarden:
                 return (
                   <>
                     <p
@@ -770,6 +782,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.CoreDNS,
               RepositoryKind.Keptn,
               RepositoryKind.TektonPipeline,
+              RepositoryKind.Kubewarden,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -863,6 +876,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Keptn,
               RepositoryKind.TektonPipeline,
               RepositoryKind.Container,
+              RepositoryKind.Kubewarden,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

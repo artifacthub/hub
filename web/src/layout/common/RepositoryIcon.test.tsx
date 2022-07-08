@@ -100,6 +100,13 @@ describe('RepositoryIcon', () => {
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/container-light.svg');
   });
 
+  it('renders Kubewarden integration icon', () => {
+    render(<RepositoryIcon kind={RepositoryKind.Kubewarden} type="white" />);
+    const icon = screen.getByAltText('Icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/kubewarden-light.svg');
+  });
+
   it('renders Chart icon - default type', () => {
     render(<RepositoryIcon kind={RepositoryKind.Helm} />);
     const icons = screen.getAllByAltText('Icon');

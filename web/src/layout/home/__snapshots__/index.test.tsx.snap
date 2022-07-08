@@ -323,7 +323,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations and container images.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images and Kubewarden policies.
           <div
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
           >
@@ -615,6 +615,32 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <small>
                     Container images
+                  </small>
+                </div>
+              </div>
+            </a>
+            <a
+              aria-label="Open Kubewarden site"
+              class="link col iconLink"
+              href="https://www.kubewarden.io"
+              rel="noopener noreferrer"
+              role="button"
+              tabindex="-1"
+              target="_blank"
+            >
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon"
+                  src="/static/media/kubewarden-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                >
+                  <small>
+                    Kubewarden policies
                   </small>
                 </div>
               </div>

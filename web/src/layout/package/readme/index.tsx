@@ -38,7 +38,7 @@ const ReadmeWrapper = (props: Props) => {
         let hasTitle = false;
         if (mdContent.length > 1) {
           const secondLine = mdContent[1];
-          if (secondLine.includes('===') || secondLine.includes('---')) {
+          if (secondLine.includes('===') || (secondLine.includes('---') && !secondLine.includes('|'))) {
             hasTitle = true;
             title = mdContent[0];
             // Remove main title from readmeTmp

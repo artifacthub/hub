@@ -1295,6 +1295,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/kubewarden/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getKubewardenPoliciesDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KubewardenPoliciesPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/opa/{repoName}/{packageName}":
     get:
       tags:
@@ -1596,6 +1619,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/KrewPluginsPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/kubewarden/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getKubewardenPoliciesVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KubewardenPoliciesPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3414,6 +3461,21 @@ components:
                   additionalProperties:
                     type: string
                   example: "apiVersion: krew.googlecontainertools.github.com/v1alpha2"
+    KubewardenPoliciesPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                kubewarden/resources:
+                  type: string
+                  example: "Pod"
+                kubewarden/mutation:
+                  type: string
+                  example: "true"
     Link:
       type: object
       nullable: false
@@ -3978,6 +4040,8 @@ components:
           * `9` - Core DNS plugins
           * `10` - Keptn integrations
           * `11` - Tekton pipelines
+          * `12` - Container images
+          * `13` - Kubewarden policies
     RepositoryKindParam:
       type: string
       enum:
@@ -3993,6 +4057,8 @@ components:
         - coredns
         - keptn
         - tekton-pipeline
+        - container
+        - kubewarden
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4007,6 +4073,8 @@ components:
         * `coredns` - Core DNS plugins
         * `keptn` - Keptn integrations
         * `tekton-pipeline` - Tekton pipelines
+        * `container` - Container images
+        * `kubewarden` - Kubewarden policies
     RepositorySummary:
       type: object
       required:
@@ -4501,6 +4569,8 @@ components:
           * `9` - Core DNS plugins
           * `10` - Keptn integrations
           * `11` - Tekton pipelines
+          * `12` - Container images
+          * `13` - Kubewarden policies
     PackageNameParam:
       in: path
       name: packageName

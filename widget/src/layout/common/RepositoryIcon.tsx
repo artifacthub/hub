@@ -25,6 +25,7 @@ const ICONS: IconsList = {
   [RepositoryKind.Keptn]: <SVGIcons name="keptn" />,
   [RepositoryKind.TektonPipeline]: <SVGIcons name="tekton" />,
   [RepositoryKind.Container]: <SVGIcons name="container" />,
+  [RepositoryKind.Kubewarden]: <SVGIcons name="kubewarden" />,
 };
 
 const RepositoryIcon = (props: Props) => (

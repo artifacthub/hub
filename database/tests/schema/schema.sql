@@ -518,7 +518,8 @@ select results_eq(
         (9, 'CoreDNS plugins'),
         (10, 'Keptn integrations'),
         (11, 'Tekton pipelines'),
-        (12, 'Containers images')
+        (12, 'Containers images'),
+        (13, 'Kubewarden policies')
     $$,
     'Repository kinds should exist'
 );

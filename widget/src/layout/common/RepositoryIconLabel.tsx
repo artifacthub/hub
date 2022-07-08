@@ -68,6 +68,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Container,
     name: 'Container image',
   },
+  {
+    kind: RepositoryKind.Kubewarden,
+    name: 'Kubewarden policy',
+  },
 ];
 
 const Wrapper = styled('span')`

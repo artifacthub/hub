@@ -14,11 +14,17 @@ export enum RepositoryKind {
   Keptn,
   TektonPipeline,
   Container,
+  Kubewarden,
 }
 
 export enum KeptnData {
   Version = 'keptnVersion',
   Kind = 'keptnKind',
+}
+
+export enum KubewardenData {
+  Resources = 'kubewardenResources',
+  Mutation = 'kubewardenMutation',
 }
 
 export enum HelmChartType {
@@ -200,6 +206,8 @@ export interface PackageData {
   kubeVersion?: string;
   [KeptnData.Version]?: string;
   [KeptnData.Kind]?: string;
+  [KubewardenData.Resources]?: string;
+  [KubewardenData.Mutation]?: string;
   tasks?: TektonTaskInPipeline[];
   alternativeLocations?: string[];
 }

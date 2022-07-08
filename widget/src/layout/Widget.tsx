@@ -75,6 +75,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'tekton-pipeline';
     case RepositoryKind.Container:
       return 'container';
+    case RepositoryKind.Kubewarden:
+      return 'kubewarden';
     default:
       return null;
   }

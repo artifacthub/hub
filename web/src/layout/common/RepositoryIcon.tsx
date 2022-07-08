@@ -61,6 +61,10 @@ const ICONS = {
     default: '/static/media/container.svg',
     white: '/static/media/container-light.svg',
   },
+  [RepositoryKind.Kubewarden]: {
+    default: '/static/media/kubewarden.svg',
+    white: '/static/media/kubewarden-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

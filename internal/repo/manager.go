@@ -86,11 +86,12 @@ var (
 		hub.KedaScaler,
 		hub.Keptn,
 		hub.Krew,
+		hub.Kubewarden,
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
-		hub.TektonTask,
 		hub.TektonPipeline,
+		hub.TektonTask,
 	}
 )
 
@@ -276,11 +277,12 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		hub.KedaScaler,
 		hub.Keptn,
 		hub.Krew,
+		hub.Kubewarden,
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
-		hub.TektonTask,
-		hub.TektonPipeline:
+		hub.TektonPipeline,
+		hub.TektonTask:
 		tmpDir, packagesPath, err := m.rc.CloneRepository(ctx, r)
 		if err != nil {
 			return err
@@ -446,11 +448,12 @@ func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string 
 		hub.KedaScaler,
 		hub.Keptn,
 		hub.Krew,
+		hub.Kubewarden,
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
-		hub.TektonTask,
-		hub.TektonPipeline:
+		hub.TektonPipeline,
+		hub.TektonTask:
 		mdFile = filepath.Join(basePath, hub.RepositoryMetadataFile)
 	}
 	return mdFile
@@ -789,11 +792,12 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 		hub.KedaScaler,
 		hub.Keptn,
 		hub.Krew,
+		hub.Kubewarden,
 		hub.OLM,
 		hub.OPA,
 		hub.TBAction,
-		hub.TektonTask,
-		hub.TektonPipeline:
+		hub.TektonPipeline,
+		hub.TektonTask:
 		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
 			return errors.New("invalid url format")
 		}

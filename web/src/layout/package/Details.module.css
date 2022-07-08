@@ -17,3 +17,12 @@
 .text {
   font-size: 0.9rem;
 }
+
+.badge {
+  background-color: var(--color-black-15) !important;
+  color: var(--color-font);
+}
+
+.icon {
+  font-size: 0.7rem;
+}

@@ -161,6 +161,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     active: true,
   },
   {
+    kind: RepositoryKind.Kubewarden,
+    label: 'kubewarden',
+    name: 'Kubewarden policies',
+    singular: 'Kubewarden policy',
+    plural: 'Kubewarden policies',
+    icon: <RepositoryIcon kind={RepositoryKind.Kubewarden} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.OLM,
     label: 'olm',
     name: 'OLM operators',

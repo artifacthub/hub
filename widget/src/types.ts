@@ -36,6 +36,7 @@ export enum RepositoryKind {
   Keptn,
   TektonPipeline,
   Container,
+  Kubewarden,
 }
 
 export interface SearchResults {
