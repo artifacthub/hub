@@ -83,6 +83,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.KedaScaler:
         case RepositoryKind.CoreDNS:
         case RepositoryKind.Keptn:
+        case RepositoryKind.Kubewarden:
           if (isUndefined(pkg.install)) {
             output.errorMessage = 'This package does not include installation instructions yet.';
             hasError = true;
