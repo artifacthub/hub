@@ -7,6 +7,7 @@ import {
   Channel,
   HelmChartType,
   KeptnData,
+  KubewardenData,
   Package,
   PackageViewsStats,
   RepositoryKind,
@@ -319,6 +320,45 @@ const Details = (props: Props) => {
                 )}
               </>
             );
+
+          case RepositoryKind.Kubewarden:
+            const resources: string[] =
+              props.package.data &&
+              !isUndefined(props.package.data[KubewardenData.Resources]) &&
+              props.package.data[KubewardenData.Resources] !== ''
+                ? props.package.data[KubewardenData.Resources]!.split(',')
+                : [];
+
+            const isMutationTrue =
+              props.package.data &&
+              !isUndefined(
+                props.package.data[KubewardenData.Mutation] && props.package.data[KubewardenData.Mutation] === 'true'
+              );
+
+            return (
+              <>
+                {resources.length > 0 && (
+                  <div>
+                    <SmallTitle text="Resources" />
+                    {resources.map((resource: string) => (
+                      <p
+                        data-testid="kubewardenResource"
+                        className="text-truncate mb-1"
+                        key={`kubewarden-resource-${resource}`}
+                      >
+                        {resource}
+                      </p>
+                    ))}
+                    {props.package.data && !isUndefined(props.package.data[KubewardenData.Mutation]) && (
+                      <div className="mb-3 text-muted">
+                        <small>{`Validation ${isMutationTrue ? '+ Mutation ' : ''}policy`}</small>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            );
+
           default:
             return null;
         }

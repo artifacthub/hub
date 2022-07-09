@@ -62,6 +62,14 @@ jest.mock('../../utils/getSampleQueries', () => () => {
       name: 'Tekton tasks',
       queryString: 'kind=7',
     },
+    {
+      name: 'Container images',
+      queryString: 'kind=12',
+    },
+    {
+      name: 'Kubewarden policies',
+      queryString: 'kind=13',
+    },
   ];
 });
 

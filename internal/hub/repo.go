@@ -73,11 +73,16 @@ const (
 
 	// Container represents a repository with containers images.
 	Container RepositoryKind = 12
+
+	// Kubewarden represents a repository with Kubewarden policies.
+	Kubewarden RepositoryKind = 13
 )
 
 // GetKindName returns the name of the provided repository kind.
 func GetKindName(kind RepositoryKind) string {
 	switch kind {
+	case Container:
+		return "container"
 	case CoreDNS:
 		return "coredns"
 	case Falco:
@@ -92,18 +97,18 @@ func GetKindName(kind RepositoryKind) string {
 		return "keptn"
 	case Krew:
 		return "krew"
+	case Kubewarden:
+		return "kubewarden"
 	case OLM:
 		return "olm"
 	case OPA:
 		return "opa"
 	case TBAction:
 		return "tbaction"
-	case TektonTask:
-		return "tekton-task"
 	case TektonPipeline:
 		return "tekton-pipeline"
-	case Container:
-		return "container"
+	case TektonTask:
+		return "tekton-task"
 	default:
 		return ""
 	}
@@ -113,6 +118,8 @@ func GetKindName(kind RepositoryKind) string {
 // provided.
 func GetKindFromName(kind string) (RepositoryKind, error) {
 	switch kind {
+	case "container":
+		return Container, nil
 	case "coredns":
 		return CoreDNS, nil
 	case "falco":
@@ -127,18 +134,18 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Keptn, nil
 	case "krew":
 		return Krew, nil
+	case "kubewarden":
+		return Kubewarden, nil
 	case "olm":
 		return OLM, nil
 	case "opa":
 		return OPA, nil
 	case "tbaction":
 		return TBAction, nil
-	case "tekton-task":
-		return TektonTask, nil
 	case "tekton-pipeline":
 		return TektonPipeline, nil
-	case "container":
-		return Container, nil
+	case "tekton-task":
+		return TektonTask, nil
 	default:
 		return -1, errors.New("invalid kind name")
 	}

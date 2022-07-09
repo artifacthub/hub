@@ -204,7 +204,8 @@ const HomeView = (props: Props) => {
                 Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
                 configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
                 configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins,
-                Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations and container images.
+                Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images and
+                Kubewarden policies.
                 <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                   <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
@@ -318,6 +319,18 @@ const HomeView = (props: Props) => {
                       <RepositoryIcon kind={RepositoryKind.Container} type="white" className={styles.aboutIcon} />
                       <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
                         <small>Container images</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://www.kubewarden.io"
+                    className={`col ${styles.iconLink}`}
+                    label="Open Kubewarden site"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.Kubewarden} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                        <small>Kubewarden policies</small>
                       </div>
                     </div>
                   </ExternalLink>
