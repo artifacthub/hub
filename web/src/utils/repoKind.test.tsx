@@ -55,6 +55,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('container')).toBe(RepositoryKind.Container);
     });
 
+    it('kubewarden', () => {
+      expect(methods.getRepoKind('kubewarden')).toBe(RepositoryKind.Kubewarden);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -111,6 +115,10 @@ describe('repoKind', () => {
 
     it('container kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.Container)).toBe('container');
+    });
+
+    it('kubewarden kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.Kubewarden)).toBe('kubewarden');
     });
 
     it('unknown kind', () => {
