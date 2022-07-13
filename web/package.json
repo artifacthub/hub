@@ -29,7 +29,7 @@
     "react-router-dom": "^5.3.1",
     "react-router-scroll-memory": "^2.0.7",
     "react-syntax-highlighter": "^15.5.0",
-    "regexify-string": "^1.0.17",
+    "regexify-string": "^1.0.18",
     "remark-gfm": "^3.0.1",
     "remark-parse": "^9.0.0",
     "remark-strip-html": "^1.0.2",

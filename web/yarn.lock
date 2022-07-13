@@ -10748,10 +10748,10 @@ regex-parser@^2.2.11:
   resolved "https://registry.yarnpkg.com/regex-parser/-/regex-parser-2.2.11.tgz#3b37ec9049e19479806e878cabe7c1ca83ccfe58"
   integrity sha512-jbD/FT0+9MBU2XAZluI7w2OBs1RBi6p9M83nkoZayQXXU9e8Robt69FcZc7wU4eJD/YFTjn1JdCk3rbMJajz8Q==
 
-regexify-string@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/regexify-string/-/regexify-string-1.0.17.tgz#b9e571b51c8ec566eb82b7121744dae0d8e829de"
-  integrity sha512-mmD0AUNaY/piGW2AyACWdQOjIAwNuWz+KIvxfBZPDdCBAexiROeQxdxTaYAWcIxwtUAOwojdTta6CMMil84jXw==
+regexify-string@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/regexify-string/-/regexify-string-1.0.18.tgz#5f2d5c34b68a8a9df5bfd76c841f9777b9310166"
+  integrity sha512-jp9wx0Wbf4R2NZEhaWCw1KN0wvo7brVkjIAWe9hOVtmr1cpm+Q5QL7yy8Tr+zs7zbzDNFAp33sWfyrK+SKpCaA==
 
 regexp.prototype.flags@^1.2.0, regexp.prototype.flags@^1.4.1, regexp.prototype.flags@^1.4.3:
   version "1.4.3"
