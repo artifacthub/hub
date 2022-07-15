@@ -46,7 +46,7 @@
     "@testing-library/user-event": "^14.1.1",
     "@types/bootstrap": "^5.1.11",
     "@types/crypto-js": "^4.1.1",
-    "@types/jest": "^28.1.1",
+    "@types/jest": "^28.1.5",
     "@types/json-schema": "^7.0.11",
     "@types/json-schema-merge-allof": "^0.6.1",
     "@types/lodash": "^4.14.182",
