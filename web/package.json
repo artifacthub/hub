@@ -7,7 +7,7 @@
     "@apidevtools/json-schema-ref-parser": "^9.0.9",
     "analytics": "^0.8.1",
     "apexcharts": "^3.35.0",
-    "bootstrap": "^5.1.3",
+    "bootstrap": ">= 5.1.3 < 5.2.0",
     "classnames": "^2.3.1",
     "codemirror": "^5.65.3",
     "codemirror-rego": "^1.2.2",

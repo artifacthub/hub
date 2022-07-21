@@ -6,6 +6,7 @@ updates:
       interval: "weekly"
       day: "wednesday"
     ignore:
+      - dependency-name: "bootstrap"
       - dependency-name: "eslint-plugin-prettier"
       - dependency-name: "nanoid"
       - dependency-name: "react-router-dom"
