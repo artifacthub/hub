@@ -51,7 +51,7 @@ require (
 	google.golang.org/api v0.88.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
-	helm.sh/helm/v3 v3.9.1
+	helm.sh/helm/v3 v3.9.2
 	k8s.io/apimachinery v0.24.2
 	oras.land/oras-go v1.2.0
 	sigs.k8s.io/krew v0.4.3
