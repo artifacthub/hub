@@ -68,6 +68,21 @@ describe('SignedBadge', () => {
     expect(screen.getByText(/(Sigstore)/)).toBeInTheDocument();
   });
 
+  it('renders label for Kubewarden policy with Cosign signature', async () => {
+    render(<SignedBadge repositoryKind={13} signed signatures={[Signature.Cosign]} />);
+    expect(screen.getByText('Signed')).toBeInTheDocument();
+
+    const badge = screen.getByTestId('elementWithTooltip');
+    expect(badge).toBeInTheDocument();
+    await userEvent.hover(badge);
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+
+    expect(screen.getByText(/This policy has been signed with/)).toBeInTheDocument();
+    expect(screen.getByText('cosign')).toBeInTheDocument();
+    expect(screen.getByText(/(Sigstore)/)).toBeInTheDocument();
+  });
+
   it('renders label for Helm package with more than one signature', async () => {
     render(<SignedBadge repositoryKind={0} signed signatures={[Signature.Prov, Signature.Cosign]} />);
     expect(screen.getByText('Signed')).toBeInTheDocument();

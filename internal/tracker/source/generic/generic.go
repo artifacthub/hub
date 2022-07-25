@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
 	ignore "github.com/sabhiram/go-gitignore"
 )
@@ -29,6 +30,10 @@ const (
 	// opaPoliciesSuffix is the suffix that each of the policies files in the
 	// package must use.
 	opaPoliciesSuffix = ".rego"
+
+	// kubewardenPolicyImageName is the name that Kubewarden policies packages
+	// should use to identify the image containing the policy.
+	kubewardenPolicyImageName = "policy"
 )
 
 // TrackerSource is a hub.TrackerSource implementation used by several kinds
@@ -38,8 +43,8 @@ type TrackerSource struct {
 }
 
 // NewTrackerSource creates a new TrackerSource instance.
-func NewTrackerSource(i *hub.TrackerSourceInput) *TrackerSource {
-	return &TrackerSource{i}
+func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource)) *TrackerSource {
+	return &TrackerSource{i: i}
 }
 
 // GetPackagesAvailable implements the TrackerSource interface.
@@ -77,11 +82,30 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			return nil
 		}
 		packagesAvailable[pkg.BuildKey(p)] = p
+
+		// Prepare and store logo image when available
 		logoImageID, err := s.prepareLogoImage(md, pkgPath)
 		if err != nil {
 			s.warn(fmt.Errorf("error preparing package %s version %s logo image: %w", md.Name, md.Version, err))
 		} else {
 			p.LogoImageID = logoImageID
+		}
+
+		// Check if the package is signed (for applicable kinds)
+		switch p.Repository.Kind {
+		case hub.Kubewarden:
+			for _, entry := range p.ContainersImages {
+				if entry.Name == kubewardenPolicyImageName {
+					hasCosignSignature, err := s.i.Svc.Sc.HasCosignSignature(s.i.Svc.Ctx, entry.Image, "", "")
+					if err != nil {
+						s.warn(fmt.Errorf("error checking package %s version %s signature: %w", md.Name, md.Version, err))
+					} else if hasCosignSignature {
+						p.Signed = true
+						p.Signatures = []string{oci.Cosign}
+						break
+					}
+				}
+			}
 		}
 
 		return nil

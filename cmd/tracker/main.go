@@ -69,6 +69,7 @@ func main() {
 		log.Fatal().Err(err).Msg("image store setup failed")
 	}
 	ec := repo.NewErrorsCollector(rm, repo.Tracker)
+	op := oci.NewPuller(cfg)
 	svc := &hub.TrackerServices{
 		Ctx:                ctx,
 		Cfg:                cfg,
@@ -78,8 +79,9 @@ func main() {
 		Oe:                 &repo.OLMOCIExporter{},
 		Ec:                 ec,
 		Hc:                 hc,
-		Op:                 oci.NewPuller(cfg),
+		Op:                 op,
 		Is:                 is,
+		Sc:                 oci.NewSignatureChecker(cfg, op),
 		SetupTrackerSource: tracker.SetupSource,
 	}
 

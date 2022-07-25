@@ -28,6 +28,9 @@ var (
 	// ErrLayerNotFound indicates that the requested layer was not found in the
 	// OCI artifact provided.
 	ErrLayerNotFound = errors.New("layer not found")
+
+	// Cosign represents the cosign signature kind.
+	Cosign = "cosign"
 )
 
 // Puller is a hub.OCIPuller implementation.

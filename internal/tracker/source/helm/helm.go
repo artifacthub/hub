@@ -60,9 +60,8 @@ const (
 	kubeVersionKey  = "kubeVersion"
 	typeKey         = "type"
 
-	// Signatures kinds
-	prov   = "prov"
-	cosign = "cosign"
+	// Provisioning file signature
+	prov = "prov"
 )
 
 var (
@@ -92,7 +91,6 @@ var (
 type TrackerSource struct {
 	i  *hub.TrackerSourceInput
 	il hub.HelmIndexLoader
-	sc hub.OCISignatureChecker
 	tg hub.OCITagsGetter
 }
 
@@ -104,9 +102,6 @@ func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource))
 	}
 	if s.il == nil {
 		s.il = &repo.HelmIndexLoader{}
-	}
-	if s.sc == nil {
-		s.sc = oci.NewSignatureChecker(i.Svc.Cfg, i.Svc.Op)
 	}
 	if s.tg == nil {
 		s.tg = &oci.TagsGetter{}
@@ -301,7 +296,7 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		}
 		if repo.SchemeIsOCI(chartURL) {
 			ref := strings.TrimPrefix(chartURL.String(), hub.RepositoryOCIPrefix)
-			hasCosignSignature, err := s.sc.HasCosignSignature(
+			hasCosignSignature, err := s.i.Svc.Sc.HasCosignSignature(
 				s.i.Svc.Ctx,
 				ref,
 				s.i.Repository.AuthUser,
@@ -311,7 +306,7 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 				s.warn(md, fmt.Errorf("error checking cosign signature: %w", err))
 			}
 			if hasCosignSignature {
-				signatures = append(signatures, cosign)
+				signatures = append(signatures, oci.Cosign)
 			}
 		}
 		if len(signatures) > 0 {
