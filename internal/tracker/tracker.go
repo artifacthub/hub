@@ -79,6 +79,7 @@ func (t *Tracker) Run() error {
 			Hc:     t.svc.Hc,
 			Op:     t.svc.Op,
 			Is:     t.svc.Is,
+			Sc:     t.svc.Sc,
 			Logger: t.logger,
 		},
 	}

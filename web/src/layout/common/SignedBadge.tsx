@@ -27,6 +27,10 @@ const getMessage = (sign: Signature, repoKind?: RepositoryKind): JSX.Element => 
     case RepositoryKind.Container:
       pkgName = 'container image';
       break;
+
+    case RepositoryKind.Kubewarden:
+      pkgName = 'policy';
+      break;
   }
 
   switch (sign) {
@@ -42,7 +46,7 @@ const getMessage = (sign: Signature, repoKind?: RepositoryKind): JSX.Element => 
   }
 };
 
-const SIGNED_REPO_KINDS = [RepositoryKind.Helm, RepositoryKind.Container];
+const SIGNED_REPO_KINDS = [RepositoryKind.Helm, RepositoryKind.Container, RepositoryKind.Kubewarden];
 
 const SignedBadge = (props: Props) => {
   const getTooltipMessage = (): JSX.Element | string => {

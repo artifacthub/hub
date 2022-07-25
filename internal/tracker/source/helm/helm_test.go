@@ -514,8 +514,7 @@ func TestTrackerSource(t *testing.T) {
 		ref := strings.TrimPrefix(i.Repository.URL, hub.RepositoryOCIPrefix) + ":1.0.0"
 		tg := &oci.TagsGetterMock{}
 		tg.On("Tags", i.Svc.Ctx, i.Repository, true).Return([]string{"1.0.0"}, nil)
-		sc := &oci.SignatureCheckerMock{}
-		sc.On("HasCosignSignature", i.Svc.Ctx, ref, "", "").Return(true, nil)
+		sw.Sc.On("HasCosignSignature", i.Svc.Ctx, ref, "", "").Return(true, nil)
 		data, _ := os.ReadFile("testdata/pkg1-1.0.0.tgz")
 		sw.Op.On("PullLayer", mock.Anything, ref, ChartContentLayerMediaType, "", "").
 			Return(ocispec.Descriptor{}, data, nil)
@@ -524,7 +523,7 @@ func TestTrackerSource(t *testing.T) {
 		sw.Is.On("DownloadAndSaveImage", sw.Svc.Ctx, logoImageURL).Return("logoImageID", nil)
 
 		// Run test and check expectations
-		packages, err := NewTrackerSource(i, withOCITagsGetter(tg), withOCISignatureChecker(sc)).GetPackagesAvailable()
+		packages, err := NewTrackerSource(i, withOCITagsGetter(tg)).GetPackagesAvailable()
 		p := source.ClonePackage(basePkg)
 		p.ContentURL = "oci://registry/namespace/pkg1:1.0.0"
 		p.Repository = i.Repository
@@ -1129,12 +1128,6 @@ fingerprint: 0011223344
 func withIndexLoader(il hub.HelmIndexLoader) func(s *TrackerSource) {
 	return func(s *TrackerSource) {
 		s.il = il
-	}
-}
-
-func withOCISignatureChecker(sc hub.OCISignatureChecker) func(s *TrackerSource) {
-	return func(s *TrackerSource) {
-		s.sc = sc
 	}
 }
 

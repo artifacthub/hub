@@ -21,6 +21,7 @@ type TestsServicesWrapper struct {
 	Hc  *tests.HTTPClientMock
 	Op  *oci.PullerMock
 	Is  *img.StoreMock
+	Sc  *oci.SignatureCheckerMock
 	Svc *hub.TrackerSourceServices
 }
 
@@ -31,6 +32,7 @@ func NewTestsServicesWrapper() *TestsServicesWrapper {
 	hc := &tests.HTTPClientMock{}
 	op := &oci.PullerMock{}
 	is := &img.StoreMock{}
+	sc := &oci.SignatureCheckerMock{}
 
 	// Setup tracker source services using mocks
 	svc := &hub.TrackerSourceServices{
@@ -40,6 +42,7 @@ func NewTestsServicesWrapper() *TestsServicesWrapper {
 		Hc:     hc,
 		Op:     op,
 		Is:     is,
+		Sc:     sc,
 		Logger: zerolog.Nop(),
 	}
 
@@ -49,6 +52,7 @@ func NewTestsServicesWrapper() *TestsServicesWrapper {
 		Hc:  hc,
 		Op:  op,
 		Is:  is,
+		Sc:  sc,
 		Svc: svc,
 	}
 }
@@ -60,6 +64,7 @@ func (sw *TestsServicesWrapper) AssertExpectations(t *testing.T) {
 	sw.Hc.AssertExpectations(t)
 	sw.Op.AssertExpectations(t)
 	sw.Is.AssertExpectations(t)
+	sw.Sc.AssertExpectations(t)
 }
 
 // ClonePackage clones the provided package returning a new one.

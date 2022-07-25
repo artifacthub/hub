@@ -27,6 +27,7 @@ type TrackerServices struct {
 	Hc                 HTTPClient
 	Op                 OCIPuller
 	Is                 img.Store
+	Sc                 OCISignatureChecker
 	SetupTrackerSource TrackerSourceLoader
 }
 
@@ -65,5 +66,6 @@ type TrackerSourceServices struct {
 	Hc     HTTPClient
 	Op     OCIPuller
 	Is     img.Store
+	Sc     OCISignatureChecker
 	Logger zerolog.Logger
 }

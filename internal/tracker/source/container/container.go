@@ -54,11 +54,6 @@ const (
 	securityUpdatesAnnotation      = "io.artifacthub.package.contains-security-updates"
 )
 
-const (
-	// Signatures kinds supported
-	cosign = "cosign"
-)
-
 var (
 	// errUnsupportedMediaType indicates that the image media type is not
 	// supported and should not be processed.
@@ -79,20 +74,12 @@ var (
 // TrackerSource is a hub.TrackerSource implementation for containers images
 // repositories.
 type TrackerSource struct {
-	i  *hub.TrackerSourceInput
-	sc hub.OCISignatureChecker
+	i *hub.TrackerSourceInput
 }
 
 // NewTrackerSource creates a new TrackerSource instance.
-func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource)) *TrackerSource {
-	s := &TrackerSource{i: i}
-	for _, o := range opts {
-		o(s)
-	}
-	if s.sc == nil {
-		s.sc = oci.NewSignatureChecker(i.Svc.Cfg, i.Svc.Op)
-	}
-	return s
+func NewTrackerSource(i *hub.TrackerSourceInput) *TrackerSource {
+	return &TrackerSource{i: i}
 }
 
 // GetPackagesAvailable implements the TrackerSource interface.
@@ -144,7 +131,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 				<-limiter
 				wg.Done()
 			}()
-			p, err := PreparePackage(s.i.Svc.Ctx, s.i.Svc.Cfg, s.i.Svc.Hc, s.i.Svc.Is, s.sc, s.i.Repository, tag)
+			p, err := PreparePackage(s.i.Svc.Ctx, s.i.Svc.Cfg, s.i.Svc.Hc, s.i.Svc.Is, s.i.Svc.Sc, s.i.Repository, tag)
 			if err != nil {
 				s.warn(fmt.Errorf("error preparing package (tag: %s): %w", tag, err))
 				return
@@ -333,7 +320,7 @@ func PreparePackage(
 		errs = multierror.Append(errs, fmt.Errorf("error checking cosign signature: %w", err))
 	} else if hasCosignSignature {
 		p.Signed = true
-		p.Signatures = []string{cosign}
+		p.Signatures = []string{oci.Cosign}
 	}
 
 	if errs.ErrorOrNil() != nil {
