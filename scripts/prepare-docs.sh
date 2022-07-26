@@ -12,3 +12,4 @@ cat docs/www/headers/olm_annotations docs/olm_annotations.md > docs/www/content/
 cat docs/www/headers/krew_annotations docs/krew_annotations.md > docs/www/content/topics/annotations/krew.md
 cat docs/www/headers/tekton_annotations docs/tekton_annotations.md > docs/www/content/topics/annotations/tekton.md
 cat docs/www/headers/keptn_annotations docs/keptn_annotations.md > docs/www/content/topics/annotations/keptn.md
+cat docs/www/headers/kubewarden_annotations docs/kubewarden_annotations.md > docs/www/content/topics/annotations/kubewarden.md
