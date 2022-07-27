@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
-	github.com/aquasecurity/trivy v0.29.2
+	github.com/aquasecurity/trivy v0.30.4
 	github.com/containerd/containerd v1.6.6 // indirect
 	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/disintegration/imaging v1.6.2
@@ -52,7 +52,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.9.2
-	k8s.io/apimachinery v0.24.2
+	k8s.io/apimachinery v0.25.0-alpha.2
 	oras.land/oras-go v1.2.0
 	sigs.k8s.io/krew v0.4.3
 	sigs.k8s.io/yaml v1.3.0
@@ -75,7 +75,7 @@ require (
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/acomagu/bufpipe v1.0.3 // indirect
 	github.com/agnivade/levenshtein v1.0.1 // indirect
-	github.com/aquasecurity/trivy-db v0.0.0-20220602091213-39d8a6798e07 // indirect
+	github.com/aquasecurity/trivy-db v0.0.0-20220627104749-930461748b63 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
@@ -97,7 +97,7 @@ require (
 	github.com/docker/go-metrics v0.0.1 // indirect
 	github.com/docker/go-units v0.4.0 // indirect
 	github.com/ekzhu/minhash-lsh v0.0.0-20171225071031-5c06ee8586a1 // indirect
-	github.com/emicklei/go-restful v2.15.0+incompatible // indirect
+	github.com/emicklei/go-restful/v3 v3.8.0 // indirect
 	github.com/emirpasic/gods v1.12.0 // indirect
 	github.com/evanphx/json-patch v4.12.0+incompatible // indirect
 	github.com/evanphx/json-patch/v5 v5.6.0 // indirect
@@ -142,7 +142,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hhatto/gorst v0.0.0-20181029133204-ca9f730cac5b // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
-	github.com/imdario/mergo v0.3.12 // indirect
+	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
@@ -210,7 +210,7 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/objx v0.4.0 // indirect
-	github.com/subosito/gotenv v1.3.0 // indirect
+	github.com/subosito/gotenv v1.4.0 // indirect
 	github.com/theupdateframework/go-tuf v0.3.0 // indirect
 	github.com/titanous/rocacheck v0.0.0-20171023193734-afe73141d399 // indirect
 	github.com/vbatts/tar-split v0.11.2 // indirect
@@ -231,7 +231,7 @@ require (
 	golang.org/x/net v0.0.0-20220708220712-1185a9018129 // indirect
 	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f // indirect
 	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
-	golang.org/x/term v0.0.0-20220411215600-e5f449aeb171 // indirect
+	golang.org/x/term v0.0.0-20220526004731-065cf7ba2467 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f // indirect
 	gomodules.xyz/jsonpatch/v2 v2.2.0 // indirect
@@ -245,15 +245,15 @@ require (
 	gopkg.in/neurosnap/sentences.v1 v1.0.6 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
-	k8s.io/api v0.24.2 // indirect
+	k8s.io/api v0.25.0-alpha.2 // indirect
 	k8s.io/apiextensions-apiserver v0.24.2 // indirect
 	k8s.io/apiserver v0.24.2 // indirect
-	k8s.io/cli-runtime v0.24.2 // indirect
+	k8s.io/cli-runtime v0.24.3 // indirect
 	k8s.io/client-go v11.0.0+incompatible // indirect
-	k8s.io/component-base v0.24.2 // indirect
-	k8s.io/klog/v2 v2.60.1 // indirect
-	k8s.io/kube-openapi v0.0.0-20220328201542-3ee0da9b0b42 // indirect
-	k8s.io/kubectl v0.24.2 // indirect
+	k8s.io/component-base v0.24.3 // indirect
+	k8s.io/klog/v2 v2.70.0 // indirect
+	k8s.io/kube-openapi v0.0.0-20220603121420-31174f50af60 // indirect
+	k8s.io/kubectl v0.24.3 // indirect
 	k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9 // indirect
 	knative.dev/pkg v0.0.0-20220325200448-1f7514acd0c2 // indirect
 	sigs.k8s.io/json v0.0.0-20211208200746-9f7c6b3444d2 // indirect
