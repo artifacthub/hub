@@ -96,7 +96,7 @@ describe('PackageInfo', () => {
       const buttons = screen.getAllByTestId('repoLink');
       expect(buttons).toHaveLength(2);
       const icons = screen.getAllByAltText('Icon');
-      expect(icons).toHaveLength(10);
+      expect(icons).toHaveLength(16);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
       await userEvent.click(buttons[0]!);

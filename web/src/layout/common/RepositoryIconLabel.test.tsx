@@ -22,10 +22,10 @@ describe('RepositoryIconLabel', () => {
 
   it('renders proper content', () => {
     render(<RepositoryIconLabel kind={RepositoryKind.Helm} />);
-    expect(screen.getByText('Helm chart')).toBeInTheDocument();
+    expect(screen.getAllByText('Helm chart')).toHaveLength(2);
 
     const icons = screen.getAllByAltText('Icon');
-    expect(icons).toHaveLength(2);
+    expect(icons).toHaveLength(4);
     expect(icons[0]).toHaveProperty('src', 'http://localhost/static/media/helm-chart.svg');
     expect(icons[0]).toHaveClass('iconLight');
     expect(icons[1]).toHaveProperty('src', 'http://localhost/static/media/helm-chart-light.svg');
@@ -34,7 +34,7 @@ describe('RepositoryIconLabel', () => {
 
   it('renders proper content with isPlural', () => {
     render(<RepositoryIconLabel kind={RepositoryKind.Helm} isPlural />);
-    expect(screen.getByText('Helm charts')).toBeInTheDocument();
+    expect(screen.getAllByText('Helm charts')).toHaveLength(2);
   });
 
   it('renders button', async () => {
