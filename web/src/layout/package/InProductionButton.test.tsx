@@ -105,7 +105,7 @@ describe('InProductionButton', () => {
       expect(API.getProductionUsage).toHaveBeenCalledTimes(1);
     });
 
-    expect(await screen.findByRole('menu')).toBeInTheDocument();
+    expect(await screen.findAllByRole('button')).toHaveLength(4);
     expect(asFragment()).toMatchSnapshot();
   });
 

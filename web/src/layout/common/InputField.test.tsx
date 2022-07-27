@@ -86,7 +86,7 @@ describe('InputField', () => {
 
   describe('validates input on change', () => {
     it('valid field', () => {
-      jest.useFakeTimers('legacy');
+      jest.useFakeTimers();
 
       render(<InputField {...defaultProps} type="password" validateOnChange minLength={6} value="" autoFocus />);
       const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
@@ -104,7 +104,7 @@ describe('InputField', () => {
     });
 
     it('invalid field', () => {
-      jest.useFakeTimers('legacy');
+      jest.useFakeTimers();
 
       render(
         <InputField {...defaultProps} type="text" value="" validateOnChange excludedValues={['user1']} autoFocus />

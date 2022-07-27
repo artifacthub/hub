@@ -76,7 +76,7 @@ describe('Deletion modal Modal - packages section', () => {
       expect(screen.getByText('Please read this carefully.')).toBeInTheDocument();
       expect(
         screen.getByText(
-          /All information related to your repository or packages will be permanently deleted as well. This includes packages' stars, users subscriptions to packages, webhooks, events and notifications./g
+          /All information related to your repository or packages will be permanently deleted as well. This includes packages' stars, users subscriptions to packages, webhooks, events and notifications./
         )
       ).toBeInTheDocument();
       expect(screen.getByText('repoTest')).toBeInTheDocument();

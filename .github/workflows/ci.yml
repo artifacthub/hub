@@ -153,7 +153,7 @@ jobs:
         run: yarn lint
       - name: Run widget tests
         working-directory: ./widget
-        run: yarn test --watchAll=false --passWithNoTests --verbose
+        run: yarn test --watchAll=false --passWithNoTests --verbose --maxWorkers=4
 
   build-backend:
     runs-on: ubuntu-20.04
