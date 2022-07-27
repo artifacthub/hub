@@ -24,10 +24,9 @@ describe('GuestDropdown', () => {
   it('displays dropdown', async () => {
     render(<GuestDropdown />);
 
-    const dropdown = screen.getByRole('menu');
-    expect(dropdown).not.toHaveClass('show');
+    expect(screen.getByRole('menu')).not.toHaveClass('show');
     const btn = screen.getByRole('button', { name: 'Guest dropdown button' });
     await userEvent.click(btn);
-    expect(dropdown).toHaveClass('show');
+    expect(await screen.findByRole('menu')).toHaveClass('show');
   });
 });

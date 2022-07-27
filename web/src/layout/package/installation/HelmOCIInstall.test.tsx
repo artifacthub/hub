@@ -42,7 +42,7 @@ describe('HelmOCIInstall', () => {
       ).toBeInTheDocument();
       expect(
         screen.getByText(
-          /corresponds to the release name, feel free to change it to suit your needs. You can also add additional flags to the/g
+          /corresponds to the release name, feel free to change it to suit your needs. You can also add additional flags to the/
         )
       ).toBeInTheDocument();
     });
