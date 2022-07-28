@@ -45,36 +45,39 @@ const RepositoryIconLabel = (props: Props) => {
 
   return (
     <>
-      {!isUndefined(props.clickable) && props.clickable ? (
-        <>
-          <span className="visually-hidden">{props.isPlural ? repo.plural : repo.singular}</span>
+      <div className="d-none d-md-inline-block">
+        {!isUndefined(props.clickable) && props.clickable ? (
+          <>
+            <span className="visually-hidden">{props.isPlural ? repo.plural : repo.singular}</span>
 
-          <button
-            data-testid="repoIconLabelLink"
-            className="btn btn-link m-0 p-0"
-            onClick={(e) => {
-              e.preventDefault();
-              history.push({
-                pathname: '/packages/search',
-                search: prepareQueryString({
-                  pageNumber: 1,
-                  filters: {
-                    kind: [props.kind.toString()],
-                  },
-                  deprecated: props.deprecated,
-                }),
-              });
-            }}
-            aria-label={`Filter by ${props.isPlural ? repo.plural : repo.singular} repository kind`}
-            aria-hidden="true"
-            tabIndex={-1}
-          >
-            {label}
-          </button>
-        </>
-      ) : (
-        <>{label}</>
-      )}
+            <button
+              data-testid="repoIconLabelLink"
+              className="btn btn-link m-0 p-0"
+              onClick={(e) => {
+                e.preventDefault();
+                history.push({
+                  pathname: '/packages/search',
+                  search: prepareQueryString({
+                    pageNumber: 1,
+                    filters: {
+                      kind: [props.kind.toString()],
+                    },
+                    deprecated: props.deprecated,
+                  }),
+                });
+              }}
+              aria-label={`Filter by ${props.isPlural ? repo.plural : repo.singular} repository kind`}
+              aria-hidden="true"
+              tabIndex={-1}
+            >
+              {label}
+            </button>
+          </>
+        ) : (
+          <div className="d-flex fs-6">{label}</div>
+        )}
+      </div>
+      <div className="d-flex d-md-none fs-6">{label}</div>
     </>
   );
 };

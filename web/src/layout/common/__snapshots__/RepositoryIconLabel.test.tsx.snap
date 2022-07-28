@@ -2,33 +2,73 @@
 
 exports[`RepositoryIconLabel creates snapshot 1`] = `
 <DocumentFragment>
-  <span
-    class="badge bg-light text-dark rounded-pill border bg badge"
+  <div
+    class="d-none d-md-inline-block"
   >
     <div
-      class="d-flex flex-row align-items-center"
+      class="d-flex fs-6"
+    >
+      <span
+        class="badge bg-light text-dark rounded-pill border bg badge"
+      >
+        <div
+          class="d-flex flex-row align-items-center"
+        >
+          <div
+            aria-hidden="true"
+            class="position-relative icon undefined"
+          >
+            <img
+              alt="Icon"
+              class="mw-100 mh-100 iconLight"
+              src="/static/media/helm-chart.svg"
+            />
+            <img
+              alt="Icon"
+              class="mw-100 mh-100 iconDark"
+              src="/static/media/helm-chart-light.svg"
+            />
+          </div>
+          <div
+            class="ms-1"
+          >
+            Helm chart
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+  <div
+    class="d-flex d-md-none fs-6"
+  >
+    <span
+      class="badge bg-light text-dark rounded-pill border bg badge"
     >
       <div
-        aria-hidden="true"
-        class="position-relative icon undefined"
+        class="d-flex flex-row align-items-center"
       >
-        <img
-          alt="Icon"
-          class="mw-100 mh-100 iconLight"
-          src="/static/media/helm-chart.svg"
-        />
-        <img
-          alt="Icon"
-          class="mw-100 mh-100 iconDark"
-          src="/static/media/helm-chart-light.svg"
-        />
+        <div
+          aria-hidden="true"
+          class="position-relative icon undefined"
+        >
+          <img
+            alt="Icon"
+            class="mw-100 mh-100 iconLight"
+            src="/static/media/helm-chart.svg"
+          />
+          <img
+            alt="Icon"
+            class="mw-100 mh-100 iconDark"
+            src="/static/media/helm-chart-light.svg"
+          />
+        </div>
+        <div
+          class="ms-1"
+        >
+          Helm chart
+        </div>
       </div>
-      <div
-        class="ms-1"
-      >
-        Helm chart
-      </div>
-    </div>
-  </span>
+    </span>
+  </div>
 </DocumentFragment>
 `;
