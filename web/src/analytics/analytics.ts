@@ -1,5 +1,5 @@
 // @ts-ignore
-import googleAnalytics from '@analytics/google-analytics';
+import googleAnalyticsV3 from '@analytics/google-analytics-v3';
 import Analytics, { AnalyticsPlugin } from 'analytics';
 import { isNull } from 'lodash';
 
@@ -11,7 +11,7 @@ const getPlugins = (): AnalyticsPlugin[] => {
 
   if (!isNull(analyticsConfig) && analyticsConfig !== '' && analyticsConfig !== '{{ .gaTrackingID }}') {
     plugins.push(
-      googleAnalytics({
+      googleAnalyticsV3({
         trackingId: analyticsConfig,
       })
     );
