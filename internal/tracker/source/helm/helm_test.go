@@ -722,7 +722,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 `,
 			},
 			&hub.Package{},
-			"invalid container image: could not parse reference",
+			"invalid image reference: could not parse reference",
 		},
 		// License
 		{

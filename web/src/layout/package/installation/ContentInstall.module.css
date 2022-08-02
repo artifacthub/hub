@@ -46,6 +46,15 @@
   margin-bottom: 1rem;
 }
 
+.btnInLegend {
+  font-size: 80%;
+}
+
+.selectWrapper {
+  width: 30%;
+  min-width: 180px;
+}
+
 @media only screen and (max-width: 767.98px) {
   .blockWrapper {
     font-size: 0.9rem;

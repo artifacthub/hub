@@ -13,7 +13,7 @@ import (
 func TestGetPackageMetadata(t *testing.T) {
 	t.Run("error reading package metadata file", func(t *testing.T) {
 		t.Parallel()
-		_, err := GetPackageMetadata("testdata/not-exists")
+		_, err := GetPackageMetadata(hub.Keptn, "testdata/not-exists")
 		assert.Error(t, err)
 		assert.Equal(t, "error reading package metadata file: open testdata/not-exists.yaml: no such file or directory", err.Error())
 		assert.True(t, errors.Is(err, os.ErrNotExist))
@@ -21,27 +21,27 @@ func TestGetPackageMetadata(t *testing.T) {
 
 	t.Run("error unmarshaling package metadata file", func(t *testing.T) {
 		t.Parallel()
-		_, err := GetPackageMetadata("testdata/invalid")
+		_, err := GetPackageMetadata(hub.Keptn, "testdata/invalid")
 		assert.Error(t, err)
 		assert.Equal(t, "error unmarshaling package metadata file: yaml: line 2: found unexpected end of stream", err.Error())
 	})
 
 	t.Run("error validating package metadata file", func(t *testing.T) {
 		t.Parallel()
-		_, err := GetPackageMetadata("testdata/no-version")
+		_, err := GetPackageMetadata(hub.Keptn, "testdata/no-version")
 		assert.Error(t, err)
 		assert.Equal(t, "error validating package metadata file: 5 errors occurred:\n\t* invalid metadata: version not provided\n\t* invalid metadata: name not provided\n\t* invalid metadata: display name not provided\n\t* invalid metadata: createdAt not provided\n\t* invalid metadata: description not provided\n\n", err.Error())
 	})
 
 	t.Run("success with .yml", func(t *testing.T) {
 		t.Parallel()
-		_, err := GetPackageMetadata("testdata/valid1")
+		_, err := GetPackageMetadata(hub.Keptn, "testdata/valid1")
 		assert.NoError(t, err)
 	})
 
 	t.Run("success with .yaml", func(t *testing.T) {
 		t.Parallel()
-		_, err := GetPackageMetadata("testdata/valid2")
+		_, err := GetPackageMetadata(hub.Keptn, "testdata/valid2")
 		assert.NoError(t, err)
 	})
 }
@@ -203,10 +203,12 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 func TestValidatePackageMetadata(t *testing.T) {
 	t.Run("invalid metadata", func(t *testing.T) {
 		testCases := []struct {
+			kind           hub.RepositoryKind
 			md             *hub.PackageMetadata
 			expectedErrors []string
 		}{
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{},
 				[]string{
 					"invalid metadata: version not provided",
@@ -217,6 +219,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version: "invalid",
 				},
@@ -229,6 +232,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version: "1.0.0",
 				},
@@ -240,6 +244,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version: "1.0.0",
 					Name:    "pkg1",
@@ -251,6 +256,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -262,6 +268,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -274,6 +281,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -285,6 +293,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -302,6 +311,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -317,6 +327,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -335,6 +346,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -352,6 +364,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -375,6 +388,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -398,6 +412,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 			},
 			{
+				hub.Keptn,
 				&hub.PackageMetadata{
 					Version:     "1.0.0",
 					Name:        "pkg1",
@@ -411,7 +426,89 @@ func TestValidatePackageMetadata(t *testing.T) {
 					},
 				},
 				[]string{
-					"invalid container image: could not parse reference",
+					"invalid image reference: could not parse reference",
+				},
+			},
+			{
+				hub.Kubewarden,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+				},
+				[]string{
+					`"policy" image not provided`,
+				},
+			},
+			{
+				hub.Kubewarden,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`"policy" image not provided`,
+				},
+			},
+			{
+				hub.Kubewarden,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "policy",
+							Image: "registry.io/namespace/policy:tag",
+						},
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`only "policy" and "policy-alternative-location" images can be provided`,
+				},
+			},
+			{
+				hub.Kubewarden,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "policy",
+							Image: "registry.io/namespace/policy:tag",
+						},
+						{
+							Name:  "policy-alternative-location",
+							Image: "registry2.io/namespace/policy:tag",
+						},
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`only "policy" and "policy-alternative-location" images can be provided`,
 				},
 			},
 		}
@@ -419,7 +516,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 			tc := tc
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
 				t.Parallel()
-				err := ValidatePackageMetadata(tc.md)
+				err := ValidatePackageMetadata(tc.kind, tc.md)
 				assert.True(t, errors.Is(err, ErrInvalidMetadata))
 				for _, expectedErr := range tc.expectedErrors {
 					assert.Contains(t, err.Error(), expectedErr)
@@ -429,27 +526,96 @@ func TestValidatePackageMetadata(t *testing.T) {
 	})
 
 	t.Run("valid metadata", func(t *testing.T) {
-		t.Parallel()
-		md := &hub.PackageMetadata{
-			Version:     "1.0.0",
-			Name:        "pkg1",
-			DisplayName: "Package 1",
-			CreatedAt:   "2006-01-02T15:04:05Z",
-			Description: "Package description",
-			Changes: []*hub.Change{
-				{
-					Kind:        "Added",
-					Description: "feature 1",
-					Links: []*hub.Link{
+		testCases := []struct {
+			kind hub.RepositoryKind
+			md   *hub.PackageMetadata
+		}{
+			{
+				hub.Keptn,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "Package description",
+					Changes: []*hub.Change{
 						{
-							Name: "link1",
-							URL:  "https://link1.url",
+							Kind:        "Added",
+							Description: "feature 1",
+							Links: []*hub.Link{
+								{
+									Name: "link1",
+									URL:  "https://link1.url",
+								},
+							},
+						},
+					},
+				},
+			},
+			{
+				hub.Kubewarden,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "policy",
+							Image: "registry.io/namespace/policy:tag",
+						},
+					},
+				},
+			},
+			{
+				hub.Kubewarden,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "policy",
+							Image: "registry.io/namespace/policy:tag",
+						},
+						{
+							Name:  "policy-alternative-location",
+							Image: "registry2.io/namespace/policy:tag",
+						},
+					},
+				},
+			},
+			{
+				hub.Kubewarden,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "policy-alternative-location",
+							Image: "registry2.io/namespace/policy:tag",
+						},
+						{
+							Name:  "policy",
+							Image: "registry.io/namespace/policy:tag",
 						},
 					},
 				},
 			},
 		}
-		err := ValidatePackageMetadata(md)
-		assert.Nil(t, err)
+		for i, tc := range testCases {
+			tc := tc
+			t.Run(strconv.Itoa(i), func(t *testing.T) {
+				t.Parallel()
+				err := ValidatePackageMetadata(tc.kind, tc.md)
+				assert.Nil(t, err)
+			})
+		}
 	})
 }

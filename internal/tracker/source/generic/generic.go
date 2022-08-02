@@ -30,10 +30,6 @@ const (
 	// opaPoliciesSuffix is the suffix that each of the policies files in the
 	// package must use.
 	opaPoliciesSuffix = ".rego"
-
-	// kubewardenPolicyImageName is the name that Kubewarden policies packages
-	// should use to identify the image containing the policy.
-	kubewardenPolicyImageName = "policy"
 )
 
 // TrackerSource is a hub.TrackerSource implementation used by several kinds
@@ -67,7 +63,10 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		// Get package version metadata
-		md, err := pkg.GetPackageMetadata(filepath.Join(pkgPath, hub.PackageMetadataFile))
+		md, err := pkg.GetPackageMetadata(
+			s.i.Repository.Kind,
+			filepath.Join(pkgPath, hub.PackageMetadataFile),
+		)
 		if err != nil {
 			if !errors.Is(err, os.ErrNotExist) {
 				s.warn(fmt.Errorf("error getting package metadata (path: %s): %w", pkgPath, err))
@@ -94,17 +93,22 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		// Check if the package is signed (for applicable kinds)
 		switch p.Repository.Kind {
 		case hub.Kubewarden:
+			// We'll consider the package signed if all images are signed
+			signedImages := 0
 			for _, entry := range p.ContainersImages {
-				if entry.Name == kubewardenPolicyImageName {
-					hasCosignSignature, err := s.i.Svc.Sc.HasCosignSignature(s.i.Svc.Ctx, entry.Image, "", "")
-					if err != nil {
-						s.warn(fmt.Errorf("error checking package %s version %s signature: %w", md.Name, md.Version, err))
-					} else if hasCosignSignature {
-						p.Signed = true
-						p.Signatures = []string{oci.Cosign}
-						break
-					}
+				hasCosignSignature, err := s.i.Svc.Sc.HasCosignSignature(s.i.Svc.Ctx, entry.Image, "", "")
+				if err != nil {
+					s.warn(fmt.Errorf(
+						"error checking package %s version %s image %s signature: %w",
+						md.Name, md.Version, entry.Image, err,
+					))
+				} else if hasCosignSignature {
+					signedImages++
 				}
+			}
+			if len(p.ContainersImages) > 0 && signedImages == len(p.ContainersImages) {
+				p.Signed = true
+				p.Signatures = []string{oci.Cosign}
 			}
 		}
 

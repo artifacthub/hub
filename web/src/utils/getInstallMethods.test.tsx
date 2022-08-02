@@ -1,4 +1,4 @@
-import { HelmChartType, Package } from '../types';
+import { HelmChartType, Package, Signature } from '../types';
 import getInstallMethods, { InstallMethodOutput } from './getInstallMethods';
 
 interface Tests {
@@ -1336,6 +1336,304 @@ const tests: Tests[] = [
           subscriptions: 0,
           webhooks: 0,
         },
+      },
+    },
+    output: {
+      methods: [
+        {
+          label: 'publisher',
+          title: 'Publisher instructions',
+          kind: 0,
+          props: {
+            install: '###Custom install',
+          },
+        },
+      ],
+    },
+  },
+  {
+    title: 'Kubewarden policy with one image',
+    input: {
+      pkg: {
+        packageId: '72ce6bcb-f31b-40d0-8223-ffa191731e61',
+        name: 'allow-privilege-escalation-psp',
+        normalizedName: 'allow-privilege-escalation-psp',
+        isOperator: false,
+        displayName: 'Allow Privilege Escalation PSP',
+        description: 'A Pod Security Policy that controls usage of `allowPrivilegeEscalation`',
+        keywords: ['psp', 'container', 'privilege escalation'],
+        homeUrl: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy',
+        readme:
+          '\n Continuous integration | License\n -----------------------|--------\n![Continuous integration](https://github.com/kubewarden/allow-privilege-escalation-psp-policy/workflows/Continuous%20integration/badge.svg) | [![License: Apache 2.0](https://img.shields.io/badge/License-Apache2.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)\n\nThis Kubewarden Policy is a replacement for the Kubernetes Pod Security Policy\nthat limits the usage of the [`allowPrivilegeEscalation`](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/).\n\n# How the policy works\n\nThis policy rejects all the Pods that have at least one container or\ninit container with the `allowPrivilegeEscalation` security context\nenabled.\n\nThe policy can also mutate Pods to ensure they have `allowPrivilegeEscalation`\nset to `false` whenever the user is not explicit about that.\nThis is a replacement of the `DefaultAllowPrivilegeEscalation` configuration\noption of the original Kubernetes PSP.\n\n# Configuration\n\nThe policy can be configured in this way:\n\n```yaml\ndefault_allow_privilege_escalation: false\n```\n\nSets the default for the allowPrivilegeEscalation option. The default behavior without this is to allow privilege escalation so as to not break setuid binaries. If that behavior is not desired, this field can be used to default to disallow, while still permitting pods to request allowPrivilegeEscalation explicitly.\n\nBy default `default_allow_privilege_escalation` is set to `true`.\n\n# Examples\n\nThe following Pod will be rejected because the nginx container has\n`allowPrivilegeEscalation` enabled:\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: nginx\nspec:\n  containers:\n  - name: nginx\n    image: nginx\n    securityContext:\n      allowPrivilegeEscalation: true\n  - name: sidecar\n    image: sidecar\n```\n\nThe following Pod would be blocked because one of the init containers\nhas `allowPrivilegeEscalation` enabled:\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: nginx\nspec:\n  containers:\n  - name: nginx\n    image: nginx\n  - name: sidecar\n    image: sidecar\n  initContainers:\n  - name: init-myservice\n    image: init-myservice\n    securityContext:\n      allowPrivilegeEscalation: true\n```\n\n# Obtain policy\n\nThe policy is automatically published as an OCI artifact inside of\n[this](https://github.com/orgs/kubewarden/packages/container/package/policies%2Fpsp-allow-privilege-escalation)\ncontainer registry.\n\n# Using the policy\n\nThe easiest way to use this policy is through the [kubewarden-controller](https://github.com/kubewarden/kubewarden-controller).\n',
+        links: [
+          {
+            url: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy/releases/download/v0.1.11/policy.wasm',
+            name: 'policy',
+          },
+          {
+            url: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy',
+            name: 'source',
+          },
+        ],
+        data: {
+          kubewardenMutation: 'true',
+          kubewardenResources: 'Pod',
+        },
+        version: '0.1.11',
+        availableVersions: [
+          {
+            version: '0.1.11',
+            containsSecurityUpdates: false,
+            prerelease: false,
+            ts: 1658234781,
+          },
+        ],
+        deprecated: false,
+        containsSecurityUpdates: false,
+        prerelease: false,
+        license: 'Apache-2.0',
+        signed: true,
+        signatures: [Signature.Cosign],
+        containersImages: [
+          {
+            name: 'policy',
+            image: 'ghcr.io/kubewarden/policies/allow-privilege-escalation-psp:v0.1.11',
+            whitelisted: false,
+          },
+        ],
+        allContainersImagesWhitelisted: false,
+        provider: 'kubewarden',
+        hasValuesSchema: false,
+        hasChangelog: false,
+        ts: 1658234781,
+        recommendations: [
+          {
+            url: 'https://artifacthub.io/packages/helm/kubewarden/kubewarden-controller',
+          },
+        ],
+        repository: {
+          repositoryId: '4a970f83-70af-45db-84a5-7439c85f28f4',
+          name: 'kube-test3',
+          url: 'https://github.com/cynthia-sg/allow-privilege-escalation-psp-policy',
+          private: false,
+          kind: 13,
+          verifiedPublisher: false,
+          official: false,
+          scannerDisabled: false,
+          userAlias: 'cynthia-sg',
+        },
+        stats: {
+          subscriptions: 0,
+          webhooks: 0,
+        },
+        productionOrganizationsCount: 0,
+      },
+    },
+    output: {
+      methods: [
+        {
+          label: 'kubewarden',
+          title: 'Kubewarden CLI',
+          kind: 9,
+          props: {
+            images: [
+              {
+                name: 'policy',
+                image: 'ghcr.io/kubewarden/policies/allow-privilege-escalation-psp:v0.1.11',
+                whitelisted: false,
+              },
+            ],
+            isPrivate: false,
+          },
+        },
+      ],
+    },
+  },
+  {
+    title: 'Kubewarden policy with more than one image',
+    input: {
+      pkg: {
+        packageId: '72ce6bcb-f31b-40d0-8223-ffa191731e61',
+        name: 'allow-privilege-escalation-psp',
+        normalizedName: 'allow-privilege-escalation-psp',
+        isOperator: false,
+        displayName: 'Allow Privilege Escalation PSP',
+        description: 'A Pod Security Policy that controls usage of `allowPrivilegeEscalation`',
+        keywords: ['psp', 'container', 'privilege escalation'],
+        homeUrl: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy',
+        readme:
+          '\n Continuous integration | License\n -----------------------|--------\n![Continuous integration](https://github.com/kubewarden/allow-privilege-escalation-psp-policy/workflows/Continuous%20integration/badge.svg) | [![License: Apache 2.0](https://img.shields.io/badge/License-Apache2.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)\n\nThis Kubewarden Policy is a replacement for the Kubernetes Pod Security Policy\nthat limits the usage of the [`allowPrivilegeEscalation`](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/).\n\n# How the policy works\n\nThis policy rejects all the Pods that have at least one container or\ninit container with the `allowPrivilegeEscalation` security context\nenabled.\n\nThe policy can also mutate Pods to ensure they have `allowPrivilegeEscalation`\nset to `false` whenever the user is not explicit about that.\nThis is a replacement of the `DefaultAllowPrivilegeEscalation` configuration\noption of the original Kubernetes PSP.\n\n# Configuration\n\nThe policy can be configured in this way:\n\n```yaml\ndefault_allow_privilege_escalation: false\n```\n\nSets the default for the allowPrivilegeEscalation option. The default behavior without this is to allow privilege escalation so as to not break setuid binaries. If that behavior is not desired, this field can be used to default to disallow, while still permitting pods to request allowPrivilegeEscalation explicitly.\n\nBy default `default_allow_privilege_escalation` is set to `true`.\n\n# Examples\n\nThe following Pod will be rejected because the nginx container has\n`allowPrivilegeEscalation` enabled:\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: nginx\nspec:\n  containers:\n  - name: nginx\n    image: nginx\n    securityContext:\n      allowPrivilegeEscalation: true\n  - name: sidecar\n    image: sidecar\n```\n\nThe following Pod would be blocked because one of the init containers\nhas `allowPrivilegeEscalation` enabled:\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: nginx\nspec:\n  containers:\n  - name: nginx\n    image: nginx\n  - name: sidecar\n    image: sidecar\n  initContainers:\n  - name: init-myservice\n    image: init-myservice\n    securityContext:\n      allowPrivilegeEscalation: true\n```\n\n# Obtain policy\n\nThe policy is automatically published as an OCI artifact inside of\n[this](https://github.com/orgs/kubewarden/packages/container/package/policies%2Fpsp-allow-privilege-escalation)\ncontainer registry.\n\n# Using the policy\n\nThe easiest way to use this policy is through the [kubewarden-controller](https://github.com/kubewarden/kubewarden-controller).\n',
+        links: [
+          {
+            url: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy/releases/download/v0.1.11/policy.wasm',
+            name: 'policy',
+          },
+          {
+            url: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy',
+            name: 'source',
+          },
+        ],
+        data: {
+          kubewardenMutation: 'true',
+          kubewardenResources: 'Pod',
+        },
+        version: '0.1.11',
+        availableVersions: [
+          {
+            version: '0.1.11',
+            containsSecurityUpdates: false,
+            prerelease: false,
+            ts: 1658234781,
+          },
+        ],
+        deprecated: false,
+        containsSecurityUpdates: false,
+        prerelease: false,
+        license: 'Apache-2.0',
+        signed: true,
+        signatures: [Signature.Cosign],
+        containersImages: [
+          {
+            name: 'policy',
+            image: 'ghcr.io/kubewarden/policies/allow-privilege-escalation-psp:v0.1.11',
+            whitelisted: false,
+          },
+          {
+            name: 'policy-alternative-location',
+            image: 'ghcr.io/xxx/policies/allow-privilege-escalation-psp:v0.1.11',
+            whitelisted: false,
+          },
+        ],
+        allContainersImagesWhitelisted: false,
+        provider: 'kubewarden',
+        hasValuesSchema: false,
+        hasChangelog: false,
+        ts: 1658234781,
+        recommendations: [
+          {
+            url: 'https://artifacthub.io/packages/helm/kubewarden/kubewarden-controller',
+          },
+        ],
+        repository: {
+          repositoryId: '4a970f83-70af-45db-84a5-7439c85f28f4',
+          name: 'kube-test3',
+          url: 'https://github.com/cynthia-sg/allow-privilege-escalation-psp-policy',
+          private: false,
+          kind: 13,
+          verifiedPublisher: false,
+          official: false,
+          scannerDisabled: false,
+          userAlias: 'cynthia-sg',
+        },
+        stats: {
+          subscriptions: 0,
+          webhooks: 0,
+        },
+        productionOrganizationsCount: 0,
+      },
+    },
+    output: {
+      methods: [
+        {
+          label: 'kubewarden',
+          title: 'Kubewarden CLI',
+          kind: 9,
+          props: {
+            images: [
+              {
+                name: 'policy',
+                image: 'ghcr.io/kubewarden/policies/allow-privilege-escalation-psp:v0.1.11',
+                whitelisted: false,
+              },
+              {
+                name: 'policy-alternative-location',
+                image: 'ghcr.io/xxx/policies/allow-privilege-escalation-psp:v0.1.11',
+                whitelisted: false,
+              },
+            ],
+            isPrivate: false,
+          },
+        },
+      ],
+    },
+  },
+  {
+    title: 'Kubewarden policy with custom install instructions',
+    input: {
+      pkg: {
+        packageId: '72ce6bcb-f31b-40d0-8223-ffa191731e61',
+        name: 'allow-privilege-escalation-psp',
+        normalizedName: 'allow-privilege-escalation-psp',
+        isOperator: false,
+        displayName: 'Allow Privilege Escalation PSP',
+        description: 'A Pod Security Policy that controls usage of `allowPrivilegeEscalation`',
+        keywords: ['psp', 'container', 'privilege escalation'],
+        homeUrl: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy',
+        readme:
+          '\n Continuous integration | License\n -----------------------|--------\n![Continuous integration](https://github.com/kubewarden/allow-privilege-escalation-psp-policy/workflows/Continuous%20integration/badge.svg) | [![License: Apache 2.0](https://img.shields.io/badge/License-Apache2.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)\n\nThis Kubewarden Policy is a replacement for the Kubernetes Pod Security Policy\nthat limits the usage of the [`allowPrivilegeEscalation`](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/).\n\n# How the policy works\n\nThis policy rejects all the Pods that have at least one container or\ninit container with the `allowPrivilegeEscalation` security context\nenabled.\n\nThe policy can also mutate Pods to ensure they have `allowPrivilegeEscalation`\nset to `false` whenever the user is not explicit about that.\nThis is a replacement of the `DefaultAllowPrivilegeEscalation` configuration\noption of the original Kubernetes PSP.\n\n# Configuration\n\nThe policy can be configured in this way:\n\n```yaml\ndefault_allow_privilege_escalation: false\n```\n\nSets the default for the allowPrivilegeEscalation option. The default behavior without this is to allow privilege escalation so as to not break setuid binaries. If that behavior is not desired, this field can be used to default to disallow, while still permitting pods to request allowPrivilegeEscalation explicitly.\n\nBy default `default_allow_privilege_escalation` is set to `true`.\n\n# Examples\n\nThe following Pod will be rejected because the nginx container has\n`allowPrivilegeEscalation` enabled:\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: nginx\nspec:\n  containers:\n  - name: nginx\n    image: nginx\n    securityContext:\n      allowPrivilegeEscalation: true\n  - name: sidecar\n    image: sidecar\n```\n\nThe following Pod would be blocked because one of the init containers\nhas `allowPrivilegeEscalation` enabled:\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: nginx\nspec:\n  containers:\n  - name: nginx\n    image: nginx\n  - name: sidecar\n    image: sidecar\n  initContainers:\n  - name: init-myservice\n    image: init-myservice\n    securityContext:\n      allowPrivilegeEscalation: true\n```\n\n# Obtain policy\n\nThe policy is automatically published as an OCI artifact inside of\n[this](https://github.com/orgs/kubewarden/packages/container/package/policies%2Fpsp-allow-privilege-escalation)\ncontainer registry.\n\n# Using the policy\n\nThe easiest way to use this policy is through the [kubewarden-controller](https://github.com/kubewarden/kubewarden-controller).\n',
+        links: [
+          {
+            url: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy/releases/download/v0.1.11/policy.wasm',
+            name: 'policy',
+          },
+          {
+            url: 'https://github.com/kubewarden/allow-privilege-escalation-psp-policy',
+            name: 'source',
+          },
+        ],
+        data: {
+          kubewardenMutation: 'true',
+          kubewardenResources: 'Pod',
+        },
+        version: '0.1.11',
+        availableVersions: [
+          {
+            version: '0.1.11',
+            containsSecurityUpdates: false,
+            prerelease: false,
+            ts: 1658234781,
+          },
+        ],
+        install: '###Custom install',
+        deprecated: false,
+        containsSecurityUpdates: false,
+        prerelease: false,
+        license: 'Apache-2.0',
+        signed: true,
+        signatures: [Signature.Cosign],
+        containersImages: [
+          {
+            name: 'policy',
+            image: 'ghcr.io/kubewarden/policies/allow-privilege-escalation-psp:v0.1.11',
+            whitelisted: false,
+          },
+        ],
+        allContainersImagesWhitelisted: false,
+        provider: 'kubewarden',
+        hasValuesSchema: false,
+        hasChangelog: false,
+        ts: 1658234781,
+        recommendations: [
+          {
+            url: 'https://artifacthub.io/packages/helm/kubewarden/kubewarden-controller',
+          },
+        ],
+        repository: {
+          repositoryId: '4a970f83-70af-45db-84a5-7439c85f28f4',
+          name: 'kube-test3',
+          url: 'https://github.com/cynthia-sg/allow-privilege-escalation-psp-policy',
+          private: false,
+          kind: 13,
+          verifiedPublisher: false,
+          official: false,
+          scannerDisabled: false,
+          userAlias: 'cynthia-sg',
+        },
+        stats: {
+          subscriptions: 0,
+          webhooks: 0,
+        },
+        productionOrganizationsCount: 0,
       },
     },
     output: {
