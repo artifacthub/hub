@@ -163,7 +163,7 @@ func lintGeneric(basePath string, kind hub.RepositoryKind) *lintReport {
 
 		// Get package version metadata and prepare entry package
 		mdFilePath := filepath.Join(pkgPath, hub.PackageMetadataFile)
-		md, err := pkg.GetPackageMetadata(mdFilePath)
+		md, err := pkg.GetPackageMetadata(kind, mdFilePath)
 		if err != nil {
 			if errors.Is(err, os.ErrNotExist) {
 				return nil

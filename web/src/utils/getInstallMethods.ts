@@ -1,6 +1,6 @@
 import { isNull, isUndefined } from 'lodash';
 
-import { Channel, HelmChartType, Package, Repository, RepositoryKind } from '../types';
+import { Channel, ContainerImage, HelmChartType, Package, Repository, RepositoryKind } from '../types';
 import { OCI_PREFIX } from './data';
 
 export interface InstallMethod {
@@ -19,6 +19,7 @@ export interface InstallMethod {
     install?: string;
     isGlobalOperator?: boolean;
     isPrivate?: boolean;
+    images?: ContainerImage[] | null;
   };
 }
 
@@ -41,6 +42,7 @@ export enum InstallMethodKind {
   Krew,
   HelmPlugin,
   Tekton,
+  Kubewarden,
 }
 
 const SPECIAL_OLM = 'community-operators';
@@ -83,7 +85,6 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.KedaScaler:
         case RepositoryKind.CoreDNS:
         case RepositoryKind.Keptn:
-        case RepositoryKind.Kubewarden:
           if (isUndefined(pkg.install)) {
             output.errorMessage = 'This package does not include installation instructions yet.';
             hasError = true;
@@ -239,6 +240,19 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
             props: {
               contentUrl: pkg.contentUrl,
               repository: pkg.repository,
+              isPrivate: pkg.repository!.private,
+            },
+          });
+        }
+        break;
+      case RepositoryKind.Kubewarden:
+        if (isUndefined(pkg.install)) {
+          output.methods.push({
+            label: 'kubewarden',
+            title: 'Kubewarden CLI',
+            kind: InstallMethodKind.Kubewarden,
+            props: {
+              images: pkg.containersImages,
               isPrivate: pkg.repository!.private,
             },
           });

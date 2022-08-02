@@ -477,7 +477,7 @@ func EnrichPackageFromChart(p *hub.Package, chrt *chart.Chart) {
 		for _, imageRef := range imagesRefs {
 			containersImages = append(containersImages, &hub.ContainerImage{Image: imageRef})
 		}
-		if err := pkg.ValidateContainersImages(containersImages); err == nil {
+		if err := pkg.ValidateContainersImages(hub.Helm, containersImages); err == nil {
 			p.ContainersImages = containersImages
 		}
 	}
@@ -628,7 +628,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 		if err := yaml.Unmarshal([]byte(v), &images); err != nil {
 			errs = multierror.Append(errs, fmt.Errorf("%w: invalid images value", errInvalidAnnotation))
 		} else {
-			if err := pkg.ValidateContainersImages(images); err != nil {
+			if err := pkg.ValidateContainersImages(hub.Helm, images); err != nil {
 				errs = multierror.Append(errs, fmt.Errorf("%w: %s", errInvalidAnnotation, err.Error()))
 			} else {
 				p.ContainersImages = images

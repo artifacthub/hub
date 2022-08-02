@@ -384,7 +384,7 @@ func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := pkg.ValidateContainersImages(containersImages); err != nil {
+	if err := pkg.ValidateContainersImages(hub.OLM, containersImages); err != nil {
 		return nil, err
 	}
 	p.ContainersImages = containersImages

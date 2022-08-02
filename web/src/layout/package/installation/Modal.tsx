@@ -19,6 +19,7 @@ import HelmInstall from './HelmInstall';
 import HelmOCIInstall from './HelmOCIInstall';
 import HelmPluginInstall from './HelmPluginInstall';
 import KrewInstall from './KrewInstall';
+import KubewardenInstall from './KubewardenInstall';
 import OLMInstall from './OLMInstall';
 import OLMOCIInstall from './OLMOCIInstall';
 import PublisherInstructionsInstall from './PublisherInstructionsInstall';
@@ -194,6 +195,10 @@ const InstallationModal = (props: Props) => {
                                 isPrivate={method.props.isPrivate}
                                 repository={method.props.repository!}
                               />
+                            );
+                          case InstallMethodKind.Kubewarden:
+                            return (
+                              <KubewardenInstall images={method.props.images!} isPrivate={method.props.isPrivate} />
                             );
                           default:
                             return null;

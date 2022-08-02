@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"sort"
 	"strings"
 	"time"
 
@@ -12,6 +13,16 @@ import (
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/hashicorp/go-multierror"
 	"gopkg.in/yaml.v2"
+)
+
+const (
+	// kwPolicyImage represents the name that must be used for the policy image
+	// in a Kubewarden policy package.
+	kwPolicyImage = "policy"
+
+	// kwPolicyImageAlternativeLoc represents the name that must be used for
+	// the policy image alternative location in a Kubewarden policy package.
+	kwPolicyImageAlternativeLoc = "policy-alternative-location"
 )
 
 var (
@@ -30,7 +41,7 @@ var (
 )
 
 // GetPackageMetadata reads, parses and validates the package metadata file provided.
-func GetPackageMetadata(mdFile string) (*hub.PackageMetadata, error) {
+func GetPackageMetadata(kind hub.RepositoryKind, mdFile string) (*hub.PackageMetadata, error) {
 	var data []byte
 	var err error
 	for _, extension := range []string{".yml", ".yaml"} {
@@ -47,7 +58,7 @@ func GetPackageMetadata(mdFile string) (*hub.PackageMetadata, error) {
 	if err = yaml.UnmarshalStrict(data, &md); err != nil || md == nil {
 		return nil, fmt.Errorf("error unmarshaling package metadata file: %w", err)
 	}
-	if err := ValidatePackageMetadata(md); err != nil {
+	if err := ValidatePackageMetadata(kind, md); err != nil {
 		return nil, fmt.Errorf("error validating package metadata file: %w", err)
 	}
 
@@ -101,7 +112,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 }
 
 // ValidatePackageMetadata validates if the package metadata provided is valid.
-func ValidatePackageMetadata(md *hub.PackageMetadata) error {
+func ValidatePackageMetadata(kind hub.RepositoryKind, md *hub.PackageMetadata) error {
 	var errs *multierror.Error
 
 	if md.Version == "" {
@@ -133,7 +144,7 @@ func ValidatePackageMetadata(md *hub.PackageMetadata) error {
 			errs = multierror.Append(errs, fmt.Errorf("%w: %v", ErrInvalidMetadata, err))
 		}
 	}
-	if err := ValidateContainersImages(md.ContainersImages); err != nil {
+	if err := ValidateContainersImages(kind, md.ContainersImages); err != nil {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %v", ErrInvalidMetadata, err))
 	}
 
@@ -181,13 +192,45 @@ func isValidChangeKind(kind string) bool {
 }
 
 // ValidateContainersImages checks if the provided containers images are valid.
-func ValidateContainersImages(images []*hub.ContainerImage) error {
+func ValidateContainersImages(kind hub.RepositoryKind, images []*hub.ContainerImage) error {
 	var errs *multierror.Error
 
+	// Common validation
 	for _, image := range images {
 		// Check if the image reference is valid
 		if _, err := name.ParseReference(image.Image); err != nil {
-			errs = multierror.Append(errs, fmt.Errorf("invalid container image: %w", err))
+			errs = multierror.Append(errs, fmt.Errorf("invalid image reference: %w", err))
+		}
+	}
+
+	// Repository kind specific validation
+	switch kind {
+	case hub.Kubewarden:
+		// Policy image is required
+		if len(images) == 0 || (len(images) == 1 && images[0].Name != kwPolicyImage) {
+			errs = multierror.Append(errs, fmt.Errorf(`"%s" image not provided`, kwPolicyImage))
+		}
+
+		// A second policy image pointing to an alternative location may be provided
+		if len(images) == 2 {
+			imagesNames := []string{images[0].Name, images[1].Name}
+			sort.Strings(imagesNames)
+			if imagesNames[0] != kwPolicyImage || imagesNames[1] != kwPolicyImageAlternativeLoc {
+				errs = multierror.Append(errs, fmt.Errorf(
+					`only "%s" and "%s" images can be provided`,
+					kwPolicyImage,
+					kwPolicyImageAlternativeLoc,
+				))
+			}
+		}
+
+		// Providing more than two images is not allowed
+		if len(images) > 2 {
+			errs = multierror.Append(errs, fmt.Errorf(
+				`only "%s" and "%s" images can be provided`,
+				kwPolicyImage,
+				kwPolicyImageAlternativeLoc,
+			))
 		}
 	}
 
