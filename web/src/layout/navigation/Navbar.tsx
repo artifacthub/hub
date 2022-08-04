@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
 import getMetaTag from '../../utils/getMetaTag';
+import ExternalLink from '../common/ExternalLink';
 import SearchBar from '../common/SearchBar';
 import SearchTipsModal from '../common/SearchTipsModal';
 import GuestDropdown from './GuestDropdown';
@@ -76,6 +77,20 @@ const Navbar = (props: Props) => {
 
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav align-items-center ms-auto">
+              <li className="nav-item ms-4 position-relative">
+                <ExternalLink
+                  className={classnames(
+                    'btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white',
+                    styles.button
+                  )}
+                  href="/docs"
+                  label="Open documentation"
+                  target="_self"
+                >
+                  Docs
+                </ExternalLink>
+              </li>
+
               <li className="nav-item ms-4 position-relative">
                 <Link
                   className={classnames(

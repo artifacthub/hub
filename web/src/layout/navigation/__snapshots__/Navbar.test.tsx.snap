@@ -38,6 +38,21 @@ exports[`Navbar creates snapshot 1`] = `
             class="nav-item ms-4 position-relative"
           >
             <a
+              aria-label="Open documentation"
+              class="link btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white button"
+              href="/docs"
+              rel="noopener noreferrer"
+              role="button"
+              tabindex="-1"
+              target="_self"
+            >
+              Docs
+            </a>
+          </li>
+          <li
+            class="nav-item ms-4 position-relative"
+          >
+            <a
               class="btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white button"
               href="/stats"
             >
