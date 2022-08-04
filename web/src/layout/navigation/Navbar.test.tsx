@@ -118,9 +118,42 @@ describe('Navbar', () => {
         </AppCtx.Provider>
       );
 
+      expect(screen.getByText('Docs')).toBeInTheDocument();
+      expect(screen.getByText('Stats')).toBeInTheDocument();
       expect(screen.getByText('Sign in')).toBeInTheDocument();
       expect(screen.getByText('Sign up')).toBeInTheDocument();
       expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
+    });
+
+    it('opens Stats page', async () => {
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
+          <Router>
+            <Navbar {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const link = screen.getByRole('link', { name: 'Stats' });
+      expect(link).toBeInTheDocument();
+      await userEvent.click(link);
+      expect(window.location.pathname).toBe('/stats');
+    });
+
+    it('renders documentation link', () => {
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
+          <Router>
+            <Navbar {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const link = screen.getByRole('button', { name: 'Open documentation' });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveProperty('target', '_self');
+      expect(link).toHaveProperty('href', 'http://localhost/docs');
+      expect(link).toHaveProperty('rel', 'noopener noreferrer');
     });
 
     it('opens Sign in modal when redirect is defined', async () => {

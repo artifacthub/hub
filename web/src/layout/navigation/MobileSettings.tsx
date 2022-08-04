@@ -5,9 +5,11 @@ import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { FaCog, FaEdit, FaSignInAlt, FaStar, FaUserCircle } from 'react-icons/fa';
 import { GoThreeBars } from 'react-icons/go';
 import { HiChartSquareBar } from 'react-icons/hi';
+import { ImBooks } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
+import ExternalLink from '../common/ExternalLink';
 import Image from '../common/Image';
 import Sidebar from '../common/Sidebar';
 import LogOut from './LogOut';
@@ -86,6 +88,13 @@ const MobileSettings = (props: Props) => {
 
                     <div className="dropdown-divider my-3" />
 
+                    <ExternalLink className="dropdown-item my-2" href="/docs" label="Open documentation" target="_self">
+                      <div className="d-flex align-items-center">
+                        <ImBooks className="me-2" />
+                        <div>Documentation</div>
+                      </div>
+                    </ExternalLink>
+
                     <Link
                       className="dropdown-item my-2"
                       onClick={() => {
@@ -138,6 +147,13 @@ const MobileSettings = (props: Props) => {
                     <ThemeMode device="mobile" onSelection={() => setOpenSideBarStatus(false)} />
 
                     <div className="dropdown-divider my-3" />
+
+                    <ExternalLink className="dropdown-item my-2" href="/docs" label="Open documentation" target="_self">
+                      <div className="d-flex align-items-center">
+                        <ImBooks className="me-2" />
+                        <div>Documentation</div>
+                      </div>
+                    </ExternalLink>
 
                     <Link
                       className="dropdown-item my-2"

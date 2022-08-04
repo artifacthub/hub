@@ -122,10 +122,43 @@ describe('MobileSettings', () => {
       expect(signedText).toHaveTextContent('Signed in as test');
 
       expect(screen.getByAltText('User profile')).toBeInTheDocument();
+      expect(screen.getByText('Stats')).toBeInTheDocument();
+      expect(screen.getByText('Documentation')).toBeInTheDocument();
       expect(screen.getByText('Starred packages')).toBeInTheDocument();
       expect(screen.getByText('Control Panel')).toBeInTheDocument();
       expect(screen.getByTestId('themeOptions')).toBeInTheDocument();
       expect(screen.getByText('Sign out')).toBeInTheDocument();
+    });
+
+    it('loads stats page', async () => {
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
+          <Router>
+            <MobileSettings {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const link = screen.getByRole('link', { name: 'Stats' });
+      expect(link).toBeInTheDocument();
+      await userEvent.click(link);
+      expect(window.location.pathname).toBe('/stats');
+    });
+
+    it('renders documentation link', () => {
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
+          <Router>
+            <MobileSettings {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const link = screen.getByRole('button', { name: 'Open documentation' });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveProperty('target', '_self');
+      expect(link).toHaveProperty('href', 'http://localhost/docs');
+      expect(link).toHaveProperty('rel', 'noopener noreferrer');
     });
 
     it('loads starred packages page', async () => {
