@@ -1,4 +1,4 @@
-import { isEmpty, sortBy } from 'lodash';
+import { isEmpty, isNull, sortBy } from 'lodash';
 
 import { Prefs, ThemePrefs } from '../types';
 import detectActiveThemeMode from './detectActiveThemeMode';
@@ -76,34 +76,40 @@ const migrations: Migration[] = [
 
 export const applyMigrations = (lsActual: PreferencesList): PreferencesList => {
   let lsUpdated: PreferencesList = { ...lsActual };
-  if (isEmpty(lsUpdated)) {
-    return { guest: DEFAULT_PREFS };
-  }
-  const sortedMigrations: Migration[] = sortBy(migrations, 'key');
-  let migrationsToApply = [...sortedMigrations];
-  const migrationApplied = window.localStorage.getItem(APPLIED_MIGRATION);
   const lastMigration = getLastMigrationNumber();
 
-  if (migrationApplied) {
-    // If latest migration has been applied, we don't do anything
-    if (lastMigration === parseInt(migrationApplied)) {
-      migrationsToApply = [];
-    } else {
-      // Migrations newest than current one are applied to prefs
-      migrationsToApply = sortedMigrations.filter((migration: Migration) => migration.key > parseInt(migrationApplied));
-    }
-  }
+  if (isEmpty(lsUpdated)) {
+    lsUpdated = { guest: DEFAULT_PREFS };
+  } else {
+    const sortedMigrations: Migration[] = sortBy(migrations, 'key');
+    let migrationsToApply = [...sortedMigrations];
+    const migrationApplied = window.localStorage.getItem(APPLIED_MIGRATION);
 
-  migrationsToApply.forEach((migration: Migration, index: number) => {
-    lsUpdated = migration.method(lsUpdated);
-  });
+    if (migrationApplied) {
+      // If latest migration has been applied, we don't do anything
+      if (lastMigration === parseInt(migrationApplied)) {
+        migrationsToApply = [];
+      } else {
+        // Migrations newest than current one are applied to prefs
+        migrationsToApply = sortedMigrations.filter(
+          (migration: Migration) => migration.key > parseInt(migrationApplied)
+        );
+      }
+    }
+
+    migrationsToApply.forEach((migration: Migration, index: number) => {
+      lsUpdated = migration.method(lsUpdated);
+    });
+  }
 
   // Saved last migration
   try {
+    window.localStorage.setItem(LS_ITEM, JSON.stringify(lsUpdated));
     window.localStorage.setItem(APPLIED_MIGRATION, lastMigration.toString());
   } catch {
     // Incognite mode
   }
+
   return lsUpdated;
 };
 
@@ -118,11 +124,7 @@ export class LocalStoragePreferences {
   constructor() {
     try {
       const preferences = window.localStorage.getItem(LS_ITEM);
-      if (preferences) {
-        this.savedPreferences = applyMigrations(JSON.parse(preferences));
-      } else {
-        this.setPrefs(DEFAULT_PREFS);
-      }
+      this.savedPreferences = applyMigrations(!isNull(preferences) ? JSON.parse(preferences) : {});
     } catch {
       // Incognite mode
     }
