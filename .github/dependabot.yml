@@ -28,6 +28,26 @@ updates:
     ignore:
       - dependency-name: "k8s.io/apimachinery"
       - dependency-name: "k8s.io/client-go"
+  - package-ecosystem: "docker"
+    directory: "/cmd/ah"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+  - package-ecosystem: "docker"
+    directory: "/cmd/hub"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+  - package-ecosystem: "docker"
+    directory: "/cmd/scanner"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+  - package-ecosystem: "docker"
+    directory: "/cmd/tracker"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
