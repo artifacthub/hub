@@ -90,6 +90,7 @@ const HomeView = (props: Props) => {
             isSearching={props.isSearching}
             openTips={openTips}
             setOpenTips={setOpenTips}
+            autoFocus={true}
           />
           <SearchTipsModal size="big" openTips={openTips} setOpenTips={setOpenTips} />
           <SearchTip />
