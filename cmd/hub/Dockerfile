@@ -25,7 +25,7 @@ RUN yarn install
 RUN yarn build
 
 # Build docs
-FROM klakegg/hugo:0.78.2 AS docs-builder
+FROM klakegg/hugo:0.101.0 AS docs-builder
 WORKDIR /
 COPY scripts scripts
 COPY docs docs
