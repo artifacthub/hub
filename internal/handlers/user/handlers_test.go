@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -557,7 +557,7 @@ func TestGetProfile(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1237,7 +1237,7 @@ func TestRequireLogin(t *testing.T) {
 					resp := w.Result()
 					defer resp.Body.Close()
 					h := resp.Header
-					data, _ := ioutil.ReadAll(resp.Body)
+					data, _ := io.ReadAll(resp.Body)
 
 					assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
 					assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1259,7 +1259,7 @@ func TestRequireLogin(t *testing.T) {
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
-			data, _ := ioutil.ReadAll(resp.Body)
+			data, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1281,7 +1281,7 @@ func TestRequireLogin(t *testing.T) {
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
-			data, _ := ioutil.ReadAll(resp.Body)
+			data, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1323,7 +1323,7 @@ func TestRequireLogin(t *testing.T) {
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
-			data, _ := ioutil.ReadAll(resp.Body)
+			data, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1347,7 +1347,7 @@ func TestRequireLogin(t *testing.T) {
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
-			data, _ := ioutil.ReadAll(resp.Body)
+			data, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1372,7 +1372,7 @@ func TestRequireLogin(t *testing.T) {
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
-			data, _ := ioutil.ReadAll(resp.Body)
+			data, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1412,7 +1412,7 @@ func TestRequireLogin(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1514,7 +1514,7 @@ func TestSetupTFA(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusCreated, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))

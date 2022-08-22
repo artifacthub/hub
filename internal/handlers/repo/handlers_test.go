@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -154,7 +154,7 @@ func TestBadge(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -471,7 +471,7 @@ func TestSearch(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
@@ -499,7 +499,7 @@ func TestSearch(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")

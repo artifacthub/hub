@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strconv"
@@ -508,11 +508,11 @@ func TestClaimOwnership(t *testing.T) {
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", true).Return(helmRepoJSON, nil)
 		hc := &tests.HTTPClientMock{}
 		hc.On("Do", mdYmlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		hc.On("Do", mdYamlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		m := NewManager(cfg, db, nil, hc)
@@ -964,11 +964,11 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
 		hc.On("Do", ymlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		hc.On("Do", yamlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
@@ -987,11 +987,11 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
 		hc.On("Do", ymlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusForbidden,
 		}, nil)
 		hc.On("Do", yamlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusForbidden,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
@@ -1010,11 +1010,11 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
 		hc.On("Do", ymlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(tests.ErrReader(0)),
+			Body:       io.NopCloser(tests.ErrReader(0)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		hc.On("Do", yamlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(tests.ErrReader(0)),
+			Body:       io.NopCloser(tests.ErrReader(0)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
@@ -1033,7 +1033,7 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
 		hc.On("Do", ymlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(bytes.NewReader(expectedMetadataYaml)),
+			Body:       io.NopCloser(bytes.NewReader(expectedMetadataYaml)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
@@ -1054,7 +1054,7 @@ func TestGetMetadata(t *testing.T) {
 		ymlReqWithCreds := ymlReq.Clone(ymlReq.Context())
 		ymlReqWithCreds.SetBasicAuth("user", "pass")
 		hc.On("Do", ymlReqWithCreds).Return(&http.Response{
-			Body:       ioutil.NopCloser(bytes.NewReader(expectedMetadataYaml)),
+			Body:       io.NopCloser(bytes.NewReader(expectedMetadataYaml)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)
@@ -1075,11 +1075,11 @@ func TestGetMetadata(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
 		hc.On("Do", ymlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		hc.On("Do", yamlReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(bytes.NewReader(expectedMetadataYaml)),
+			Body:       io.NopCloser(bytes.NewReader(expectedMetadataYaml)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		m := NewManager(cfg, nil, nil, hc)

@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -287,13 +286,13 @@ func lintKrew(basePath string) *lintReport {
 
 	// Process plugins available in the path provided
 	pluginsPath := filepath.Join(basePath, "plugins")
-	pluginManifestFiles, err := ioutil.ReadDir(pluginsPath)
+	pluginManifestFiles, err := os.ReadDir(pluginsPath)
 	if err != nil {
 		return report
 	}
 	for _, file := range pluginManifestFiles {
 		// Only process plugins files
-		if !file.Mode().IsRegular() || filepath.Ext(file.Name()) != ".yaml" {
+		if !file.Type().IsRegular() || filepath.Ext(file.Name()) != ".yaml" {
 			continue
 		}
 

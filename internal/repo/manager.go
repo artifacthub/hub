@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -467,7 +467,7 @@ func (m *Manager) readMetadataFile(mdFile, username, password string) ([]byte, e
 		if _, err := os.Stat(mdFile); os.IsNotExist(err) {
 			return nil, ErrMetadataNotFound
 		}
-		data, err = ioutil.ReadFile(mdFile)
+		data, err = os.ReadFile(mdFile)
 		if err != nil {
 			return nil, fmt.Errorf("error reading repository metadata file: %w", err)
 		}
@@ -488,7 +488,7 @@ func (m *Manager) readMetadataFile(mdFile, username, password string) ([]byte, e
 		default:
 			return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
 		}
-		data, err = ioutil.ReadAll(resp.Body)
+		data, err = io.ReadAll(resp.Body)
 		if err != nil {
 			return nil, fmt.Errorf("error reading repository metadata file: %w", err)
 		}

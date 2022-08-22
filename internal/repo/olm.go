@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"strings"
@@ -22,7 +21,7 @@ type OLMOCIExporter struct{}
 // to delete it when done.
 func (e *OLMOCIExporter) ExportRepository(ctx context.Context, r *hub.Repository) (string, error) {
 	// Setup temporary directory to store content
-	tmpDir, err := ioutil.TempDir("", "artifact-hub")
+	tmpDir, err := os.MkdirTemp("", "artifact-hub")
 	if err != nil {
 		return "", fmt.Errorf("error creating temp dir: %w", err)
 	}

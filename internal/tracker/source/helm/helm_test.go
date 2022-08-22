@@ -2,7 +2,7 @@ package helm
 
 import (
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strconv"
@@ -345,7 +345,7 @@ func TestTrackerSource(t *testing.T) {
 		req, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
 		req.Header.Set("Accept-Encoding", "*")
 		sw.Hc.On("Do", req).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		expectedErr := "error preparing package: error loading chart (https://repo.url/pkg1-1.0.0.tgz): not found (package: pkg1 version: 1.0.0)"
@@ -424,7 +424,7 @@ func TestTrackerSource(t *testing.T) {
 		}, nil)
 		reqProv, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
 		sw.Hc.On("Do", reqProv).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		sw.Is.On("DownloadAndSaveImage", sw.Svc.Ctx, logoImageURL).Return("", tests.ErrFake)
@@ -481,7 +481,7 @@ func TestTrackerSource(t *testing.T) {
 		}, nil)
 		reqProv, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
 		sw.Hc.On("Do", reqProv).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		sw.Is.On("DownloadAndSaveImage", sw.Svc.Ctx, logoImageURL).Return("logoImageID", nil)

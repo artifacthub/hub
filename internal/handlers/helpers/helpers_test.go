@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -157,7 +157,7 @@ func TestRenderJSON(t *testing.T) {
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
-			data, _ := ioutil.ReadAll(resp.Body)
+			data, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, tc.code, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -212,7 +212,7 @@ func TestRenderErrorJSON(t *testing.T) {
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
-			data, _ := ioutil.ReadAll(resp.Body)
+			data, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -254,7 +254,7 @@ func TestRenderErrorWithCodeJSON(t *testing.T) {
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
-			data, _ := ioutil.ReadAll(resp.Body)
+			data, _ := io.ReadAll(resp.Body)
 
 			assert.Equal(t, tc.code, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))

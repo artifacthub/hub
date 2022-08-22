@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -80,7 +80,7 @@ func TestImage(t *testing.T) {
 			tc := tc
 			t.Run(fmt.Sprintf("Test %d: %s", i, tc.expectedContentType), func(t *testing.T) {
 				t.Parallel()
-				imgData, err := ioutil.ReadFile(tc.imgPath)
+				imgData, err := os.ReadFile(tc.imgPath)
 				require.NoError(t, err)
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
@@ -92,7 +92,7 @@ func TestImage(t *testing.T) {
 				resp := w.Result()
 				defer resp.Body.Close()
 				h := resp.Header
-				data, _ := ioutil.ReadAll(resp.Body)
+				data, _ := io.ReadAll(resp.Body)
 
 				assert.Equal(t, http.StatusOK, resp.StatusCode)
 				assert.Equal(t, tc.expectedContentType, h.Get("Content-Type"))
@@ -114,7 +114,7 @@ func TestIndex(t *testing.T) {
 	resp := w.Result()
 	defer resp.Body.Close()
 	h := resp.Header
-	data, _ := ioutil.ReadAll(resp.Body)
+	data, _ := io.ReadAll(resp.Body)
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, helpers.BuildCacheControlHeader(indexCacheMaxAge), h.Get("Cache-Control"))
@@ -150,7 +150,7 @@ func TestSaveImage(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -183,7 +183,7 @@ func TestServeStaticFile(t *testing.T) {
 		require.NoError(t, err)
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, helpers.BuildCacheControlHeader(StaticCacheMaxAge), h.Get("Cache-Control"))

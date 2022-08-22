@@ -1,7 +1,7 @@
 package krew
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -81,7 +81,7 @@ func TestTrackerSource(t *testing.T) {
 		}
 
 		// Run test and check expectations
-		manifestRaw, _ := ioutil.ReadFile("testdata/path4/plugins/manifest.yaml")
+		manifestRaw, _ := os.ReadFile("testdata/path4/plugins/manifest.yaml")
 		p := &hub.Package{
 			Name:        "test-plugin",
 			DisplayName: "My test plugin",

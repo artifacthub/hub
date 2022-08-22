@@ -3,7 +3,6 @@ package tekton
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -135,7 +134,7 @@ func GetManifest(kind hub.RepositoryKind, pkgPath string) (interface{}, []byte, 
 	// Process matches, returning the first valid resource manifest found
 	for _, match := range matches {
 		// Read and parse manifest file
-		manifestData, err := ioutil.ReadFile(match)
+		manifestData, err := os.ReadFile(match)
 		if err != nil {
 			continue
 		}
@@ -299,7 +298,7 @@ func PreparePackage(
 	}
 
 	// Include readme file if available
-	readme, err := ioutil.ReadFile(filepath.Join(pkgPath, "README.md"))
+	readme, err := os.ReadFile(filepath.Join(pkgPath, "README.md"))
 	if err == nil {
 		p.Readme = string(readme)
 	}

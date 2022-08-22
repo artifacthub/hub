@@ -3,7 +3,7 @@ package repo
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -35,7 +35,7 @@ func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string
 	}
 
 	// Clone git repository
-	tmpDir, err := ioutil.TempDir("", "artifact-hub")
+	tmpDir, err := os.MkdirTemp("", "artifact-hub")
 	if err != nil {
 		return "", "", fmt.Errorf("error creating temp dir: %w", err)
 	}
