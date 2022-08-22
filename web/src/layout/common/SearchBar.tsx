@@ -27,6 +27,7 @@ interface Props {
   isSearching: boolean;
   openTips: boolean;
   setOpenTips: (status: boolean) => void;
+  autoFocus?: boolean;
 }
 
 const SEARCH_DELAY = 3 * 100; // 300ms
@@ -250,6 +251,7 @@ const SearchBar = (props: Props) => {
             onChange={onChange}
             onKeyDown={onKeyDown}
             disabled={props.isSearching}
+            autoFocus={props.autoFocus}
           />
 
           <div className="d-none" tabIndex={0}>

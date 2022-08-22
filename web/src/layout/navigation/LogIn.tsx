@@ -268,6 +268,7 @@ const LogIn = (props: Props) => {
                   onChange={onEmailChange}
                   validateOnBlur={email !== ''}
                   required
+                  autoFocus={true}
                 />
 
                 <InputField
