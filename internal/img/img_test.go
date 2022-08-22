@@ -5,8 +5,9 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 
@@ -21,9 +22,9 @@ func TestGenerateVersions(t *testing.T) {
 	t.Parallel()
 
 	// Read sample images
-	validImgData, err := ioutil.ReadFile("testdata/valid.png")
+	validImgData, err := os.ReadFile("testdata/valid.png")
 	require.NoError(t, err)
-	invalidImgData, err := ioutil.ReadFile("testdata/invalid.png")
+	invalidImgData, err := os.ReadFile("testdata/invalid.png")
 	require.NoError(t, err)
 
 	// Check the data provided must be a valid image
@@ -37,13 +38,13 @@ func TestGenerateVersions(t *testing.T) {
 		// Update image1 versions in testdata
 		for _, iv := range imgVersions {
 			name := fmt.Sprintf("testdata/valid@%s.png", iv.Version)
-			err := ioutil.WriteFile(name, iv.Data, 0600)
+			err := os.WriteFile(name, iv.Data, 0600)
 			require.NoError(t, err)
 		}
 	}
 	for _, iv := range imgVersions {
 		name := fmt.Sprintf("testdata/valid@%s.png", iv.Version)
-		ivGolden, err := ioutil.ReadFile(name)
+		ivGolden, err := os.ReadFile(name)
 		require.NoError(t, err)
 		assert.Equal(t, ivGolden, iv.Data)
 	}
@@ -90,7 +91,7 @@ func TestDownload(t *testing.T) {
 		hc := &tests.HTTPClientMock{}
 		req, _ := http.NewRequest("GET", imageURL, nil)
 		hc.On("Do", req).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 
@@ -105,7 +106,7 @@ func TestDownload(t *testing.T) {
 		hc := &tests.HTTPClientMock{}
 		req, _ := http.NewRequest("GET", imageURL, nil)
 		hc.On("Do", req).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusOK,
 		}, nil)
 

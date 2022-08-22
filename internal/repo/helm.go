@@ -3,7 +3,7 @@ package repo
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"io/ioutil"
+	"io"
 	"net/url"
 	"path"
 	"time"
@@ -72,7 +72,7 @@ func downloadIndexFile(r *helmrepo.ChartRepository) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	return ioutil.ReadAll(resp)
+	return io.ReadAll(resp)
 }
 
 // loadIndexFile reads and parses a Helm repository's index file.

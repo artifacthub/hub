@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -276,7 +276,7 @@ func TestGenerateChangelogMD(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		expectedData := []byte(`
 # Changelog
@@ -373,7 +373,7 @@ func TestGet(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -461,7 +461,7 @@ func TestGetChangelog(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		expectedData, _ := json.Marshal(changelog)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
@@ -568,7 +568,7 @@ func TestGetChartValues(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/yaml", h.Get("Content-Type"))
@@ -633,7 +633,7 @@ func TestGetChartTemplates(t *testing.T) {
 		hw.h.GetChartTemplates(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		expectedData := []byte(`{"templates":[{"name":"templates/template.yaml","data":"a2V5OiB7eyAuVmFsdWVzLmtleSB9fQo="}],"values":{"key":"value"}}`)
@@ -654,7 +654,7 @@ func TestGetHarborReplicationDump(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -691,7 +691,7 @@ func TestGetHelmExporterDump(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -736,7 +736,7 @@ func TestGetProductionUsage(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -774,7 +774,7 @@ func TestGetRandom(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -819,7 +819,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -864,7 +864,7 @@ func TestGetStarredByUser(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
@@ -950,7 +950,7 @@ func TestGetStars(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -972,7 +972,7 @@ func TestGetStats(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1059,7 +1059,7 @@ func TestGetSummary(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1089,7 +1089,7 @@ func TestGetValuesSchema(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1135,7 +1135,7 @@ func TestGetViews(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1369,7 +1369,7 @@ func TestRssFeed(t *testing.T) {
 				resp := w.Result()
 				defer resp.Body.Close()
 				h := resp.Header
-				data, _ := ioutil.ReadAll(resp.Body)
+				data, _ := io.ReadAll(resp.Body)
 
 				assert.Equal(t, http.StatusOK, resp.StatusCode)
 				assert.Equal(t, "text/xml; charset=utf-8", h.Get("Content-Type"))
@@ -1482,7 +1482,7 @@ func TestSearch(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
@@ -1520,7 +1520,7 @@ func TestSearchMonocular(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -1742,7 +1742,7 @@ func TestGetChartArchive(t *testing.T) {
 			{
 				"server returned an unexpected status code",
 				&http.Response{
-					Body:       ioutil.NopCloser(strings.NewReader("")),
+					Body:       io.NopCloser(strings.NewReader("")),
 					StatusCode: http.StatusNotFound,
 				},
 				nil,
@@ -1792,7 +1792,7 @@ func TestGetChartArchive(t *testing.T) {
 		tgzReq = tgzReq.WithContext(ctx)
 		tgzReq.Header.Set("Accept-Encoding", "*")
 		hw.hc.On("Do", tgzReq).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusOK,
 		}, nil)
 		chrt, err := hw.h.getChartArchive(ctx, packageID, version)

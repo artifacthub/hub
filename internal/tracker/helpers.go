@@ -24,11 +24,11 @@ const (
 // GetRepositories gets the repositories the tracker will process based on the
 // configuration provided:
 //
-// - If a list of repositories names, those will be the repositories returned
-//   provided they are found.
-// - If a list of repositories kinds is provided, all repositories of those
-//   kinds will be returned.
-// - Otherwise, all the repositories will be returned.
+//   - If a list of repositories names, those will be the repositories returned
+//     provided they are found.
+//   - If a list of repositories kinds is provided, all repositories of those
+//     kinds will be returned.
+//   - Otherwise, all the repositories will be returned.
 //
 // NOTE: disabled repositories will be filtered out.
 func GetRepositories(

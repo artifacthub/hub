@@ -3,7 +3,7 @@ package krew
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"sort"
 
@@ -31,8 +31,8 @@ const (
 	screenshotsAnnotation     = "artifacthub.io/screenshots"
 
 	// Platform keys
-	os   = "os"
-	arch = "arch"
+	osKey   = "os"
+	archKey = "arch"
 )
 
 const (
@@ -67,7 +67,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 
 	// Iterate over the path provided looking for available packages
 	pluginsPath := filepath.Join(s.i.BasePath, "plugins")
-	pluginManifestFiles, err := ioutil.ReadDir(pluginsPath)
+	pluginManifestFiles, err := os.ReadDir(pluginsPath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading plugins directory: %w", err)
 	}
@@ -80,7 +80,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		// Only process plugins files
-		if !file.Mode().IsRegular() || filepath.Ext(file.Name()) != ".yaml" {
+		if !file.Type().IsRegular() || filepath.Ext(file.Name()) != ".yaml" {
 			continue
 		}
 
@@ -117,7 +117,7 @@ func (s *TrackerSource) warn(err error) {
 
 // GetManifest reads and parses the plugin manifest.
 func GetManifest(pluginManifestPath string) (*index.Plugin, []byte, error) {
-	manifestRaw, err := ioutil.ReadFile(pluginManifestPath)
+	manifestRaw, err := os.ReadFile(pluginManifestPath)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error reading plugin manifest file: %w", err)
 	}
@@ -165,14 +165,14 @@ func PreparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byt
 	for _, platform := range manifest.Spec.Platforms {
 		l := platform.Selector.MatchLabels
 		switch {
-		case l[os] != "" && l[arch] != "":
-			platforms = append(platforms, fmt.Sprintf("%s/%s", l[os], l[arch]))
-		case l[os] != "":
-			platforms = append(platforms, l[os])
+		case l[osKey] != "" && l[archKey] != "":
+			platforms = append(platforms, fmt.Sprintf("%s/%s", l[osKey], l[archKey]))
+		case l[osKey] != "":
+			platforms = append(platforms, l[osKey])
 		}
 		for _, e := range platform.Selector.MatchExpressions {
 			if e.Operator == metav1.LabelSelectorOpIn {
-				if e.Key == os {
+				if e.Key == osKey {
 					platforms = append(platforms, e.Values...)
 				}
 			}

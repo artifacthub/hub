@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"os"
 	"sync"
 	"testing"
 
@@ -32,7 +33,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 	cfg := viper.New()
 	ctx := context.Background()
 	svgImgURL := "https://raw.githubusercontent.com/image.svg"
-	svgImgData, err := ioutil.ReadFile("testdata/image.svg")
+	svgImgData, err := os.ReadFile("testdata/image.svg")
 	require.NoError(t, err)
 	sumSvgImg := sha256.Sum256(svgImgData)
 	svgImgHash := sumSvgImg[:]
@@ -45,7 +46,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		hc := &tests.HTTPClientMock{}
 		req, _ := http.NewRequest("GET", svgImgURL, nil)
 		hc.On("Do", req).Return(&http.Response{
-			Body:       ioutil.NopCloser(bytes.NewReader(svgImgData)),
+			Body:       io.NopCloser(bytes.NewReader(svgImgData)),
 			StatusCode: http.StatusOK,
 		}, nil)
 		s := NewImageStore(cfg, db, hc)
@@ -97,7 +98,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		hc := &tests.HTTPClientMock{}
 		req, _ := http.NewRequest("GET", svgImgURL, nil)
 		hc.On("Do", req).Return(&http.Response{
-			Body:       ioutil.NopCloser(bytes.NewReader(svgImgData)),
+			Body:       io.NopCloser(bytes.NewReader(svgImgData)),
 			StatusCode: http.StatusOK,
 		}, nil).Once()
 		s := NewImageStore(cfg, db, hc)
@@ -170,11 +171,11 @@ func TestGetImage(t *testing.T) {
 }
 
 func TestSaveImage(t *testing.T) {
-	pngImgData, err := ioutil.ReadFile("testdata/image.png")
+	pngImgData, err := os.ReadFile("testdata/image.png")
 	require.NoError(t, err)
 	sumPngImg := sha256.Sum256(pngImgData)
 	pngImgHash := sumPngImg[:]
-	svgImgData, err := ioutil.ReadFile("testdata/image.svg")
+	svgImgData, err := os.ReadFile("testdata/image.svg")
 	require.NoError(t, err)
 	sumSvgImg := sha256.Sum256(svgImgData)
 	svgImgHash := sumSvgImg[:]

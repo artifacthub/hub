@@ -1,7 +1,7 @@
 package olm
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -103,7 +103,7 @@ func TestTrackerSource(t *testing.T) {
 			isGlobalOperatorKey: true,
 		},
 	}
-	imageData, _ := ioutil.ReadFile("testdata/red-dot.png")
+	imageData, _ := os.ReadFile("testdata/red-dot.png")
 
 	t.Run("no packages in path", func(t *testing.T) {
 		t.Parallel()

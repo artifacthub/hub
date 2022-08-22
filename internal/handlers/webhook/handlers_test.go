@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -263,7 +263,7 @@ func TestGet(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
@@ -300,7 +300,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
@@ -387,7 +387,7 @@ func TestGetOwnedByUser(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, h.Get(helpers.PaginationTotalCount), "1")
@@ -424,7 +424,7 @@ func TestTriggerTest(t *testing.T) {
 				hw.h.TriggerTest(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
-				data, _ := ioutil.ReadAll(resp.Body)
+				data, _ := io.ReadAll(resp.Body)
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 				assert.Equal(t, hub.ErrInvalidInput.Error(), getErrorMessage(t, data))
@@ -465,7 +465,7 @@ func TestTriggerTest(t *testing.T) {
 				hw.h.TriggerTest(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
-				data, _ := ioutil.ReadAll(resp.Body)
+				data, _ := io.ReadAll(resp.Body)
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 				assert.True(t, strings.HasPrefix(getErrorMessage(t, data), tc.err))
@@ -489,7 +489,7 @@ func TestTriggerTest(t *testing.T) {
 		hw.h.TriggerTest(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 		assert.True(t, strings.HasPrefix(getErrorMessage(t, data), "error doing request:"))
@@ -512,7 +512,7 @@ func TestTriggerTest(t *testing.T) {
 		hw.h.TriggerTest(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
-		data, _ := ioutil.ReadAll(resp.Body)
+		data, _ := io.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 		assert.Equal(t, "received unexpected status code: 404", getErrorMessage(t, data))
@@ -576,7 +576,7 @@ func TestTriggerTest(t *testing.T) {
 					assert.Equal(t, "POST", r.Method)
 					assert.Equal(t, contentType, r.Header.Get("Content-Type"))
 					assert.Equal(t, tc.secret, r.Header.Get("X-ArtifactHub-Secret"))
-					payload, _ := ioutil.ReadAll(r.Body)
+					payload, _ := io.ReadAll(r.Body)
 					assert.Equal(t, tc.expectedPayload, payload)
 				}))
 				defer ts.Close()

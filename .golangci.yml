@@ -19,7 +19,6 @@ linters:
     - prealloc
     - revive
     - staticcheck
-    - structcheck
     - stylecheck
     - typecheck
     - unconvert
@@ -36,4 +35,4 @@ linters-settings:
     min-occurrences: 5
 
 service:
-  golangci-lint-version: 1.33.x
+  golangci-lint-version: 1.48.x

@@ -2,7 +2,7 @@ package notification
 
 import (
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -229,7 +229,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n2, nil)
 		sw.pm.On("Get", sw.ctx, gpi).Return(p, nil)
 		sw.hc.On("Do", mock.Anything).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, mock.Anything).Return(nil)
@@ -247,7 +247,7 @@ func TestWorker(t *testing.T) {
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n2, nil)
 		sw.pm.On("Get", sw.ctx, gpi).Return(p, nil)
 		sw.hc.On("Do", mock.Anything).Return(&http.Response{
-			Body:       ioutil.NopCloser(strings.NewReader("")),
+			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusOK,
 		}, nil)
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, nil).Return(nil)
@@ -316,7 +316,7 @@ func TestWorker(t *testing.T) {
 					assert.Equal(t, "POST", r.Method)
 					assert.Equal(t, contentType, r.Header.Get("Content-Type"))
 					assert.Equal(t, tc.secret, r.Header.Get("X-ArtifactHub-Secret"))
-					payload, _ := ioutil.ReadAll(r.Body)
+					payload, _ := io.ReadAll(r.Body)
 					assert.Equal(t, tc.expectedPayload, payload)
 				}))
 				defer ts.Close()

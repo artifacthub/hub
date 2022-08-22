@@ -81,11 +81,12 @@ func main() {
 	}
 	addr := cfg.GetString("server.addr")
 	srv := &http.Server{
-		Addr:         addr,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 30 * time.Second,
-		IdleTimeout:  1 * time.Minute,
-		Handler:      h.Router,
+		Addr:              addr,
+		ReadTimeout:       5 * time.Second,
+		ReadHeaderTimeout: 5 * time.Second,
+		WriteTimeout:      30 * time.Second,
+		IdleTimeout:       1 * time.Minute,
+		Handler:           h.Router,
 	}
 	go func() {
 		if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {

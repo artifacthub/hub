@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -64,7 +64,7 @@ func Download(
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode == http.StatusOK {
-		return ioutil.ReadAll(resp.Body)
+		return io.ReadAll(resp.Body)
 	}
 	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
 }

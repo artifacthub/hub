@@ -14,6 +14,7 @@ import (
 )
 
 // BaseTmpl represents the base template used by emails.
+//
 //go:embed template/base.tmpl
 var BaseTmpl string
 

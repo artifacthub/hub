@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"path"
@@ -420,7 +420,7 @@ func getContent(
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode == http.StatusOK {
-		return ioutil.ReadAll(resp.Body)
+		return io.ReadAll(resp.Body)
 	}
 	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
 }

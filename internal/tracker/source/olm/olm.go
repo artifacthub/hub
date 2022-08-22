@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -255,7 +254,7 @@ func getManifest(path string) (*manifests.PackageManifest, error) {
 	manifestPath := matches[0]
 
 	// Read and parse manifest file
-	manifestData, err := ioutil.ReadFile(manifestPath)
+	manifestData, err := os.ReadFile(manifestPath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading manifest file: %w", err)
 	}
@@ -276,7 +275,7 @@ func getBundleAnnotations(path string) (*manifests.Annotations, error) {
 	}
 
 	// Read and parse annotations file
-	annotationsData, err := ioutil.ReadFile(annotationsPath)
+	annotationsData, err := os.ReadFile(annotationsPath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading annotations file: %w", err)
 	}
@@ -302,7 +301,7 @@ func getCSV(path string) (*operatorsv1alpha1.ClusterServiceVersion, []byte, erro
 	csvPath := matches[0]
 
 	// Read and parse cluster service version file
-	csvData, err := ioutil.ReadFile(csvPath)
+	csvData, err := os.ReadFile(csvPath)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error reading csv file: %w", err)
 	}

@@ -8,7 +8,6 @@ import (
 	"net/url"
 	"sort"
 	"strconv"
-	"strings"
 	"text/template"
 	"time"
 
@@ -21,6 +20,8 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 	"helm.sh/helm/v3/pkg/chart"
 )
 
@@ -66,7 +67,9 @@ func NewHandlers(
 // changelog in markdown format.
 func setupChangelogMDTmpl() *template.Template {
 	funcMap := template.FuncMap{
-		"Capitalize": strings.Title,
+		"Capitalize": func(s string) string {
+			return cases.Title(language.English).String(s)
+		},
 		"GetChanges": func(versionChanges *hub.VersionChanges, kind string) []string {
 			var changes []string
 			for _, change := range versionChanges.Changes {

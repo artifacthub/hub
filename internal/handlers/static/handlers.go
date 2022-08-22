@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"path"
@@ -70,7 +70,7 @@ func NewHandlers(cfg *viper.Viper, imageStore img.Store) *Handlers {
 // setupIndexTemplate parses the index.html template for later use.
 func (h *Handlers) setupIndexTemplate() {
 	path := path.Join(h.cfg.GetString("server.webBuildPath"), "index.html")
-	text, err := ioutil.ReadFile(path)
+	text, err := os.ReadFile(path)
 	if err != nil {
 		log.Panic().Err(err).Msg("error reading index.html template")
 	}
@@ -177,7 +177,7 @@ func (h *Handlers) Index(w http.ResponseWriter, r *http.Request) {
 
 // SaveImage is an http handler that stores the provided image returning its id.
 func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
-	data, err := ioutil.ReadAll(r.Body)
+	data, err := io.ReadAll(r.Body)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "SaveImage").Msg("error reading body data")
 		helpers.RenderErrorJSON(w, err)

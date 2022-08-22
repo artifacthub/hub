@@ -1,7 +1,7 @@
 package tekton
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -68,7 +68,7 @@ func TestTrackerSource(t *testing.T) {
 		}
 
 		// Run test and check expectations
-		manifestRaw, _ := ioutil.ReadFile("testdata/path3/task1/0.1/task1.yaml")
+		manifestRaw, _ := os.ReadFile("testdata/path3/task1/0.1/task1.yaml")
 		var tasks []map[string]interface{}
 		p := &hub.Package{
 			Name:        "task1",
@@ -153,7 +153,7 @@ func TestTrackerSource(t *testing.T) {
 		}
 
 		// Run test and check expectations
-		manifestRaw, _ := ioutil.ReadFile("testdata/path4/pipeline1/0.1/pipeline1.yaml")
+		manifestRaw, _ := os.ReadFile("testdata/path4/pipeline1/0.1/pipeline1.yaml")
 		p := &hub.Package{
 			Name:        "pipeline1",
 			DisplayName: "Pipeline 1",

@@ -3,7 +3,7 @@ package pkg
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"sort"
 	"strings"
 	"time"
@@ -45,7 +45,7 @@ func GetPackageMetadata(kind hub.RepositoryKind, mdFile string) (*hub.PackageMet
 	var data []byte
 	var err error
 	for _, extension := range []string{".yml", ".yaml"} {
-		data, err = ioutil.ReadFile(mdFile + extension)
+		data, err = os.ReadFile(mdFile + extension)
 		if err == nil {
 			break
 		}

@@ -2,7 +2,6 @@ package falco
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -53,7 +52,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		// Read and parse rules metadata file
-		data, err := ioutil.ReadFile(pkgPath)
+		data, err := os.ReadFile(pkgPath)
 		if err != nil {
 			s.warn(fmt.Errorf("error reading rules metadata file: %w", err))
 			return nil
