@@ -2,6 +2,10 @@ import history from './history';
 
 jest.mock('./updateMetaIndex', () => jest.fn());
 
+jest.mock('./getMetaTag', () => () => {
+  return 'test';
+});
+
 jest.mock('../analytics/analytics', () => ({
   page: jest.fn(),
 }));
