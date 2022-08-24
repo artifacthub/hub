@@ -38,6 +38,9 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
+    ignore:
+      - dependency-name: "node"
+        versions: ["18-alpine3.16"]
   - package-ecosystem: "docker"
     directory: "/cmd/scanner"
     schedule:
