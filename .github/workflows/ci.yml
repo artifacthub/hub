@@ -43,6 +43,19 @@ jobs:
         working-directory: ./charts/artifact-hub
         run: ah lint
 
+  linter-clomonitor:
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    container:
+      image: public.ecr.aws/clomonitor/linter:latest
+      options: --user root
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run CloMonitor linter
+        run: clomonitor-linter --path . --url https://github.com/artifacthub/hub
+
   tests-database:
     runs-on: ubuntu-20.04
     container:
