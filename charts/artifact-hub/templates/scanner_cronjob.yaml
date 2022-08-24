@@ -1,3 +1,4 @@
+{{- if .Values.scanner.enabled -}}
 {{- if .Capabilities.APIVersions.Has "batch/v1/CronJob" }}
 apiVersion: batch/v1
 {{- else }}
@@ -57,3 +58,4 @@ spec:
           - name: cache-dir
             emptyDir: {}
           {{- end }}
+{{- end }}

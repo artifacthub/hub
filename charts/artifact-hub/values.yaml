@@ -224,6 +224,7 @@ hub:
 
 # Scanner configuration
 scanner:
+  enabled: true
   cronjob:
     image:
       # Scanner image repository (without the tag)
@@ -264,6 +265,7 @@ tracker:
 
 # Trivy configuration
 trivy:
+  enabled: true
   deploy:
     image: aquasec/trivy:0.31.3
     resources: {}
