@@ -355,6 +355,11 @@ const Readme = (props: Props) => {
     return <>{props.children}</>;
   };
 
+  useEffect(() => {
+    // Scrolls to hash (if necessary) when readme is loaded
+    props.scrollIntoView();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   return (
     <ReactMarkdown
       className={`mt-3 mb-5 position-relative ${styles.md}`}

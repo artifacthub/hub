@@ -220,7 +220,6 @@ const PackageView = (props: Props) => {
       setRelatedPosition(undefined);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
       setIsLoadingPackage(false);
-      scrollIntoView();
     } catch (err: any) {
       if (err.kind === ErrorKind.NotFound) {
         setApiError(
