@@ -33,15 +33,7 @@ spec:
       serviceAccountName: {{ include "chart.serviceAccountName" . }}
       {{- end }}
       initContainers:
-      - name: check-db-ready
-        image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
-        imagePullPolicy: {{ .Values.pullPolicy }}
-        env:
-          - name: PGHOST
-            value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
-          - name: PGPORT
-            value: "{{ .Values.db.port }}"
-        command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+      - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 8 }}
       {{- if .Release.IsInstall }}
       - name: check-db-migrator-run
         image: "bitnami/kubectl:{{ template "chart.KubernetesVersion" . }}"

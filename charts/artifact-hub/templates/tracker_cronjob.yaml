@@ -21,15 +21,7 @@ spec:
         {{- end }}
           restartPolicy: Never
           initContainers:
-          - name: check-db-ready
-            image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
-            imagePullPolicy: {{ .Values.pullPolicy }}
-            env:
-              - name: PGHOST
-                value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
-              - name: PGPORT
-                value: "{{ .Values.db.port }}"
-            command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+          - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 12 }}
           containers:
           - name: tracker
             image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}

@@ -85,3 +85,20 @@ Create the name of the service account to use
   {{- .Values.hub.serviceAccount.name | default "default" -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Provide an init container to verify the database is accessible
+*/}}
+{{- define "chart.checkDbIsReadyInitContainer" -}}
+name: check-db-ready
+image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+imagePullPolicy: {{ .Values.pullPolicy }}
+env:
+  - name: PGHOST
+    value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
+  - name: PGPORT
+    value: "{{ .Values.db.port }}"
+  - name: PGUSER
+    value: "{{ .Values.db.user }}"
+command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+{{- end -}}
