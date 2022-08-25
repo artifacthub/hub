@@ -304,6 +304,21 @@
                         "enabled"
                     ]
                 },
+                "rbac": {
+                    "title": "RBAC",
+                    "type":"object",
+                    "properties": {
+                        "create": {
+                            "title": "Create RBAC",
+                            "description": "Enable creation and role and role binding",
+                            "type": "boolean",
+                            "default": true
+                        }
+                    },
+                    "required": [
+                        "create"
+                    ]
+                },
                 "server": {
                     "type": "object",
                     "properties": {
@@ -578,6 +593,34 @@
                         "type"
                     ]
                 },
+                "serviceAccount": {
+                    "title": "Artifact Hub service account",
+                    "type": "object",
+                    "properties": {
+                        "create": {
+                            "title": "Create service account",
+                            "description": "Enables the creation of a ServiceAccount for the Artifact Hub pod",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "name": {
+                            "title": "Service account name",
+                            "description": "The name of the ServiceAccount to use. If not set and create is true, a name is generated",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "automountServiceAccountToken": {
+                            "title": "Automount service account token",
+                            "description": "Allows auto mount of the ServiceAccountToken on the servicea account created",
+                            "type": "boolean",
+                            "default": true
+                        }
+                    },
+                    "required": [
+                        "create",
+                        "automountServiceAccountToken"
+                    ]
+                },
                 "theme": {
                     "type": "object",
                     "properties": {
@@ -675,9 +718,11 @@
                 }
             },
             "required": [
-                "ingress",
-                "service",
                 "deploy",
+                "ingress",
+                "rbac",
+                "service",
+                "serviceAccount",
                 "server",
                 "theme"
             ]

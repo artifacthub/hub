@@ -75,3 +75,13 @@ longest resource name ("db-migrator-install" = 19 chars).
 {{- end -}}
 {{- end -}}
 
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "chart.serviceAccountName" -}}
+{{- if .Values.hub.serviceAccount.create -}}
+  {{- .Values.hub.serviceAccount.name | default (printf "%s%s" (include "chart.resourceNamePrefix" .) "hub") -}}
+{{- else -}}
+  {{- .Values.hub.serviceAccount.name | default "default" -}}
+{{- end -}}
+{{- end -}}
