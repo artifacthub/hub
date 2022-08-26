@@ -6,7 +6,7 @@ import { HiPlusCircle } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
 import { PackageViewsStats, RepositoryKind, SearchFiltersURL } from '../../types';
-import { getSeriesDataPerPkgVersionViews, sumViewsPerVersions } from '../../utils/viewsStats';
+import { getSeriesDataPerPkgVersionViewsWithTimestamp, sumViewsPerVersionsWithTimestamp } from '../../utils/viewsStats';
 import SmallTitle from '../common/SmallTitle';
 import styles from './Last30DaysViews.module.css';
 
@@ -27,9 +27,9 @@ const prepareSeries = (stats: PackageViewsStats, version?: string): Series[] => 
 
   let data: number[][] = [];
   if (isUndefined(version)) {
-    data = sumViewsPerVersions(stats);
+    data = sumViewsPerVersionsWithTimestamp(stats);
   } else {
-    data = getSeriesDataPerPkgVersionViews(stats, version);
+    data = getSeriesDataPerPkgVersionViewsWithTimestamp(stats, version);
   }
 
   return data.length > 0 ? [{ data: data }] : [];
