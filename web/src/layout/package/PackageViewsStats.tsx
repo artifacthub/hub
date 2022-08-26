@@ -5,7 +5,7 @@ import ReactApexChart from 'react-apexcharts';
 import semver from 'semver';
 
 import { PackageViewsStats, RepositoryKind } from '../../types';
-import { getSeriesDataPerPkgVersionViews, sumViewsPerVersions } from '../../utils/viewsStats';
+import { getLast30Days, getSeriesDataPerPkgVersionViews, sumViewsPerVersions } from '../../utils/viewsStats';
 import Loading from '../common/Loading';
 import styles from './PackageViewsStats.module.css';
 
@@ -99,14 +99,7 @@ const PackagesViewsStats = (props: Props) => {
       dataLabels: {
         enabled: false,
       },
-      plotOptions: {
-        bar: {
-          // borderRadius: 2,
-        },
-      },
       tooltip: {
-        // shared: true,
-        // intersect: false,
         x: {
           formatter: (val: number, opts?: any): string => {
             return moment(val).format('DD MMM YY');
@@ -149,6 +142,7 @@ const PackagesViewsStats = (props: Props) => {
             fontSize: '11px',
           },
         },
+        categories: getLast30Days(),
       },
       yaxis: {
         labels: {

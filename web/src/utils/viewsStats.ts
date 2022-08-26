@@ -9,17 +9,41 @@ interface ViewsPerDate {
 }
 
 const getLast30Days = (): string[] =>
-  Array.from(Array(30).keys()).map((x: number) => moment().subtract(x, 'days').format('YYYY-MM-DD'));
+  Array.from(Array(30).keys())
+    .map((x: number) => moment().subtract(x, 'days').format('YYYY-MM-DD'))
+    .reverse();
 
-const sumViewsPerVersions = (stats: PackageViewsStats, excludedVersions?: string[]): number[][] => {
-  const last30Days = getLast30Days();
+const prepareVersions = (stats: PackageViewsStats, excludedVersions?: string[]): string[] => {
   const statsVersions = Object.keys(stats);
   let versions = [...statsVersions];
   if (!isUndefined(excludedVersions)) {
     versions = statsVersions.filter((version: string) => !excludedVersions.includes(version));
   }
+  return versions;
+};
+
+const sumViewsPerVersions = (stats: PackageViewsStats, excludedVersions?: string[]): number[] => {
+  const last30Days = getLast30Days();
+
+  let versions = prepareVersions(stats, excludedVersions);
   if (versions.length === 0) return [];
-  const versionsPerDates: ViewsPerDate[] = last30Days.map((date: string) => {
+
+  return last30Days.map((date: string) => {
+    let views = 0;
+    versions.forEach((version: string) => {
+      views = views + (stats[version][date] | 0);
+    });
+    return views;
+  });
+};
+
+const sumViewsPerVersionsWithTimestamp = (stats: PackageViewsStats, excludedVersions?: string[]): number[][] => {
+  const last30Days = getLast30Days();
+
+  let versions = prepareVersions(stats, excludedVersions);
+  if (versions.length === 0) return [];
+
+  const versionsPerDates = last30Days.map((date: string) => {
     let views = 0;
     versions.forEach((version: string) => {
       views = views + (stats[version][date] | 0);
@@ -32,7 +56,15 @@ const sumViewsPerVersions = (stats: PackageViewsStats, excludedVersions?: string
   });
 };
 
-const getSeriesDataPerPkgVersionViews = (stats: PackageViewsStats, version: string): number[][] => {
+const getSeriesDataPerPkgVersionViews = (stats: PackageViewsStats, version: string): number[] => {
+  const last30Days = getLast30Days();
+  if (isEmpty(stats) || !Object.keys(stats).includes(version)) return [];
+  return last30Days.map((date: string) => {
+    return stats[version][date] || 0;
+  });
+};
+
+const getSeriesDataPerPkgVersionViewsWithTimestamp = (stats: PackageViewsStats, version: string): number[][] => {
   const last30Days = getLast30Days();
   if (isEmpty(stats) || !Object.keys(stats).includes(version)) return [];
   return last30Days.map((date: string) => {
@@ -40,4 +72,10 @@ const getSeriesDataPerPkgVersionViews = (stats: PackageViewsStats, version: stri
   });
 };
 
-export { getLast30Days, getSeriesDataPerPkgVersionViews, sumViewsPerVersions };
+export {
+  getLast30Days,
+  getSeriesDataPerPkgVersionViews,
+  getSeriesDataPerPkgVersionViewsWithTimestamp,
+  sumViewsPerVersions,
+  sumViewsPerVersionsWithTimestamp,
+};
