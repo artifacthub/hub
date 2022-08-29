@@ -35,8 +35,8 @@ RUN hugo
 
 # Final stage
 FROM alpine:3.16.2
-RUN apk --no-cache add ca-certificates && addgroup -S hub && adduser -S hub -G hub
-USER hub
+RUN apk --no-cache add ca-certificates && addgroup -S hub -g 1000 && adduser -S hub -u 1000 -G hub
+USER 1000
 WORKDIR /home/hub
 COPY --from=backend-builder /hub ./
 COPY --from=frontend-builder /web/build ./web

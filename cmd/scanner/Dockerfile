@@ -14,8 +14,8 @@ RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contri
 
 # Final stage
 FROM alpine:3.16.2
-RUN apk --no-cache add ca-certificates && addgroup -S scanner && adduser -S scanner -G scanner
-USER scanner
+RUN apk --no-cache add ca-certificates && addgroup -S scanner -g 1000 && adduser -S scanner -u 1000 -G scanner
+USER 1000
 WORKDIR /home/scanner
 COPY --from=scanner-builder /scanner ./
 COPY --from=trivy-installer /usr/local/bin/trivy /usr/local/bin
