@@ -191,6 +191,12 @@
                 "trackingErrors"
             ]
         },
+        "extraDeploy": {
+            "title": "Extra deploy objects",
+            "description": "Extra objects to deploy (value evaluated as a template)",
+            "type": "array",
+            "default": "[]"
+        },
         "hub": {
             "title": "Hub configuration",
             "type": "object",

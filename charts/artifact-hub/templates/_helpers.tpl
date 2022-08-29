@@ -102,3 +102,16 @@ env:
     value: "{{ .Values.db.user }}"
 command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
 {{- end -}}
+
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "chart.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+*/}}
+{{- define "chart.tplvalues.render" -}}
+{{- if typeIs "string" .value }}
+  {{- tpl .value .context }}
+{{- else }}
+  {{- tpl (.value | toYaml) .context }}
+{{- end }}
+{{- end -}}

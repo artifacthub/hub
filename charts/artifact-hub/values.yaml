@@ -302,3 +302,6 @@ postgresql:
   postgresqlPassword: postgres
   postgresqlDatabase: hub
   postgresqlDataDir: /data/pgdata
+
+# Extra objects to deploy (value evaluated as a template)
+extraDeploy: []
