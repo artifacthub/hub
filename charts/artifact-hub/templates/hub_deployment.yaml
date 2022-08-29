@@ -36,7 +36,7 @@ spec:
       - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 8 }}
       {{- if .Release.IsInstall }}
       - name: check-db-migrator-run
-        image: "bitnami/kubectl:{{ template "chart.KubernetesVersion" . }}"
+        image: "{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.repository }}:{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.tag | default (include "chart.KubernetesVersion" . ) }}"
         imagePullPolicy: IfNotPresent
         command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/{{ include "chart.resourceNamePrefix" . }}db-migrator-install', '--timeout=60s']
       {{- end }}

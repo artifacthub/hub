@@ -119,6 +119,11 @@ hub:
       # Hub image repository (without the tag)
       repository: artifacthub/hub
     resources: {}
+    initContainers:
+      checkDbMigrator:
+        image:
+          repository: bitnami/kubectl
+          # tag: 1.21
   server:
     # Allow adding private repositories to the Hub
     allowPrivateRepositories: false

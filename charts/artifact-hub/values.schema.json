@@ -221,6 +221,35 @@
                                 "repository"
                             ]
                         },
+                        "initContainers": {
+                            "title": "Init containers",
+                            "type": "object",
+                            "properties": {
+                                "checkDbMigrator": {
+                                    "title": "Check DB migrator",
+                                    "type": "object",
+                                    "properties": {
+                                        "image": {
+                                            "title": "image",
+                                            "type": "object",
+                                            "properties": {
+                                                "repository": {
+                                                    "title": "Check DB migrator repository",
+                                                    "type": "string",
+                                                    "default": "bitnami/kubectl"
+                                                },
+                                                "tag": {
+                                                    "title": "Check DB migrator tag",
+                                                    "description": "Tag used when pulling check-db-migrator initContainer image. Defaults to the K8s API version",
+                                                    "type": "string",
+                                                    "default": ""
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         "livenessProbe": {
                             "title": "Hub pod liveness probe",
                             "type": "object",
