@@ -7,6 +7,11 @@ const tests = [
   { input: '⚠️ Special alert', result: 'Special alert' },
   { input: '📝 Notes', result: 'Notes' },
   { input: '⚖️ License', result: 'License' },
+  { input: 'Supported cloud provider ☁', result: 'Supported cloud provider' },
+  { input: 'GoFish (deprecated 🕸️)', result: 'GoFish (deprecated )' },
+  { input: 'Legal Disclaimer 👮', result: 'Legal Disclaimer' },
+  { input: 'Libraries & Tools 🔥', result: 'Libraries & Tools' },
+  { input: '    txt with extra spaces    ', result: 'txt with extra spaces' },
 ];
 
 describe('removeEmojis', () => {
