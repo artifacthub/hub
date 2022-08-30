@@ -35,19 +35,25 @@ spec:
                 value: {{ .Values.scanner.cacheDir | quote }}
             {{- end }}
             volumeMounts:
+              - name: scanner-config
+                mountPath: {{ .Values.scanner.configDir | quote }}
+                readOnly: true
+              {{- if .Values.scanner.cacheDir }}
+              - name: cache-dir
+                mountPath: {{ .Values.scanner.cacheDir | quote }}
+              {{- end }}
+              {{- if .Values.scanner.cronjob.extraVolumeMounts }}
+                {{- include "chart.tplvalues.render" (dict "value" .Values.scanner.cronjob.extraVolumeMounts "context" $) | nindent 14 }}
+              {{- end }}
+          volumes:
             - name: scanner-config
-              mountPath: {{ .Values.scanner.configDir | quote }}
-              readOnly: true
+              secret:
+                secretName: {{ include "chart.resourceNamePrefix" . }}scanner-config
             {{- if .Values.scanner.cacheDir }}
             - name: cache-dir
-              mountPath: {{ .Values.scanner.cacheDir | quote }}
+              emptyDir: {}
             {{- end }}
-          volumes:
-          - name: scanner-config
-            secret:
-              secretName: {{ include "chart.resourceNamePrefix" . }}scanner-config
-          {{- if .Values.scanner.cacheDir }}
-          - name: cache-dir
-            emptyDir: {}
-          {{- end }}
+            {{- if .Values.scanner.cronjob.extraVolumes }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.scanner.cronjob.extraVolumes "context" $) | nindent 12 }}
+            {{- end }}
 {{- end }}

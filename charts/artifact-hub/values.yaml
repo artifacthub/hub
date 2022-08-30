@@ -124,6 +124,10 @@ hub:
         image:
           repository: bitnami/kubectl
           # tag: 1.21
+    # Optionally specify extra list of additional volumes for the hub deployment
+    extraVolumes: []
+    # Optionally specify extra list of additional volume mounts for the hub deployment
+    extraVolumeMounts: []
   server:
     # Allow adding private repositories to the Hub
     allowPrivateRepositories: false
@@ -247,6 +251,10 @@ scanner:
       # Scanner image repository (without the tag)
       repository: artifacthub/scanner
     resources: {}
+    # Optionally specify extra list of additional volumes for the scanner cronjob
+    extraVolumes: []
+    # Optionally specify extra list of additional volume mounts for the scanner cronjob
+    extraVolumeMounts: []
   # Number of snapshots to process concurrently
   concurrency: 3
   # Trivy server url. Defaults to the Trivy service's internal URL
@@ -264,6 +272,10 @@ tracker:
       # Tracker image repository (without the tag)
       repository: artifacthub/tracker
     resources: {}
+    # Optionally specify extra list of additional volumes for the tracker cronjob
+    extraVolumes: []
+    # Optionally specify extra list of additional volume mounts for the tracker cronjob
+    extraVolumeMounts: []
   # Cache directory path. If set, the cache directory for the Helm client will be explicitly set (otherwise defaults
   # to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
   cacheDir: ""
@@ -286,6 +298,10 @@ trivy:
   deploy:
     image: aquasec/trivy:0.31.3
     resources: {}
+    # Optionally specify extra list of additional volumes for the trivy deployment
+    extraVolumes: []
+    # Optionally specify extra list of additional volume mounts for the trivy deployment
+    extraVolumeMounts: []
   persistence:
     enabled: false
     size: 10Gi

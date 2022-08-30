@@ -214,6 +214,18 @@
                 "deploy": {
                     "type": "object",
                     "properties": {
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the hub deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the hub deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -859,6 +871,18 @@
                 "cronjob": {
                     "type": "object",
                     "properties": {
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the scanner cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the scanner cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -938,6 +962,18 @@
                 "cronjob": {
                     "type": "object",
                     "properties": {
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the tracker cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the tracker cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -1011,6 +1047,18 @@
                 "deploy": {
                     "type": "object",
                     "properties": {
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the trivy deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the trivy deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "title": "Trivy container image",
                             "type": "string",

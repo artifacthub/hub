@@ -34,18 +34,24 @@ spec:
                 value: {{ .Values.tracker.cacheDir | quote }}
             {{- end }}
             volumeMounts:
+              - name: tracker-config
+                mountPath: {{ .Values.tracker.configDir | quote }}
+                readOnly: true
+              {{- if .Values.tracker.cacheDir }}
+              - name: cache-dir
+                mountPath: {{ .Values.tracker.cacheDir | quote }}
+              {{- end }}
+              {{- if .Values.tracker.cronjob.extraVolumeMounts }}
+                {{- include "chart.tplvalues.render" (dict "value" .Values.tracker.cronjob.extraVolumeMounts "context" $) | nindent 14 }}
+              {{- end }}
+          volumes:
             - name: tracker-config
-              mountPath: {{ .Values.tracker.configDir | quote }}
-              readOnly: true
+              secret:
+                secretName: {{ include "chart.resourceNamePrefix" . }}tracker-config
             {{- if .Values.tracker.cacheDir }}
             - name: cache-dir
-              mountPath: {{ .Values.tracker.cacheDir | quote }}
+              emptyDir: {}
             {{- end }}
-          volumes:
-          - name: tracker-config
-            secret:
-              secretName: {{ include "chart.resourceNamePrefix" . }}tracker-config
-          {{- if .Values.tracker.cacheDir }}
-          - name: cache-dir
-            emptyDir: {}
-          {{- end }}
+            {{- if .Values.tracker.cronjob.extraVolumes }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.tracker.cronjob.extraVolumes "context" $) | nindent 12 }}
+            {{- end }}

@@ -50,13 +50,16 @@ spec:
               value: {{ .Values.hub.server.cacheDir | quote }}
           {{- end }}
           volumeMounts:
-          - name: hub-config
-            mountPath: {{ .Values.hub.server.configDir | quote }}
-            readOnly: true
-          {{- if .Values.hub.server.cacheDir }}
-          - name: cache-dir
-            mountPath: {{ .Values.hub.server.cacheDir | quote }}
-          {{- end }}
+            - name: hub-config
+              mountPath: {{ .Values.hub.server.configDir | quote }}
+              readOnly: true
+            {{- if .Values.hub.server.cacheDir }}
+            - name: cache-dir
+              mountPath: {{ .Values.hub.server.cacheDir | quote }}
+            {{- end }}
+            {{- if .Values.hub.deploy.extraVolumeMounts }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.hub.deploy.extraVolumeMounts "context" $) | nindent 12 }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 8000
@@ -72,10 +75,13 @@ spec:
             {{- toYaml .Values.hub.deploy.readinessProbe | nindent 12}}
           {{- end }}
       volumes:
-      - name: hub-config
-        secret:
-          secretName: {{ include "chart.resourceNamePrefix" . }}hub-config
-      {{- if .Values.hub.server.cacheDir }}
-      - name: cache-dir
-        emptyDir: {}
-      {{- end }}
+        - name: hub-config
+          secret:
+            secretName: {{ include "chart.resourceNamePrefix" . }}hub-config
+        {{- if .Values.hub.server.cacheDir }}
+        - name: cache-dir
+          emptyDir: {}
+        {{- end }}
+        {{- if .Values.hub.deploy.extraVolumes }}
+          {{- include "chart.tplvalues.render" (dict "value" .Values.hub.deploy.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
