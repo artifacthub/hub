@@ -15,20 +15,20 @@ spec:
     {{- end }}
       restartPolicy: Never
       initContainers:
-      - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 8 }}
+        - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 10 }}
       containers:
-      - name: db-migrator
-        image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
-        imagePullPolicy: {{ .Values.pullPolicy }}
-        env:
-          - name: TERN_CONF
-            value: {{ .Values.dbMigrator.configDir }}/tern.conf
-        volumeMounts:
-          - name: db-migrator-config
-            mountPath: {{ .Values.dbMigrator.configDir }}
-            readOnly: true
-        command: ["./migrate.sh"]
+        - name: db-migrator
+          image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          env:
+            - name: TERN_CONF
+              value: {{ .Values.dbMigrator.configDir }}/tern.conf
+          volumeMounts:
+            - name: db-migrator-config
+              mountPath: {{ .Values.dbMigrator.configDir }}
+              readOnly: true
+          command: ["./migrate.sh"]
       volumes:
-      - name: db-migrator-config
-        secret:
-          secretName: {{ include "chart.resourceNamePrefix" . }}db-migrator-config
+        - name: db-migrator-config
+          secret:
+            secretName: {{ include "chart.resourceNamePrefix" . }}db-migrator-config
