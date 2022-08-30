@@ -37,6 +37,7 @@ db:
   database: hub
   user: postgres
   password: postgres
+  sslmode: prefer
 
 # Email configuration
 email:

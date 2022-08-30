@@ -42,6 +42,12 @@
                     "default": "5432",
                     "type": "string"
                 },
+                "sslmode": {
+                    "title": "Database SSL mode",
+                    "description": "Sets SSL mode if supported by db client",
+                    "default": "prefer",
+                    "type": "string"
+                },
                 "user": {
                     "title": "Database user",
                     "default": "postgres",
@@ -53,6 +59,7 @@
                 "host",
                 "password",
                 "port",
+                "sslmode",
                 "user"
             ]
         },
