@@ -29,14 +29,14 @@ require (
 	github.com/pquerna/otp v1.3.0
 	github.com/prometheus/client_golang v1.13.0
 	github.com/rs/cors v1.8.2
-	github.com/rs/zerolog v1.27.0
+	github.com/rs/zerolog v1.28.0
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06
 	github.com/satori/uuid v1.2.0
 	github.com/sigstore/cosign v1.11.1
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
 	github.com/stretchr/testify v1.8.0
-	github.com/tektoncd/pipeline v0.39.0
+	github.com/tektoncd/pipeline v0.32.4
 	github.com/unrolled/secure v1.12.0
 	github.com/versine/loginauth v0.0.0-20170330164406-8380ec243689
 	github.com/vincent-petithory/dataurl v1.0.0
