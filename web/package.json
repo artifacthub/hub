@@ -55,7 +55,7 @@
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.0.3",
     "@types/react-router-dom": "^5.3.3",
-    "@types/react-syntax-highlighter": "^15.5.4",
+    "@types/react-syntax-highlighter": "^15.5.5",
     "@types/semver": "^7.3.9",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
