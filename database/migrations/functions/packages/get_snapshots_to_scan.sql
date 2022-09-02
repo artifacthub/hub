@@ -30,6 +30,7 @@ returns setof json as $$
             or (security_report_created_at < (current_timestamp - '1 day'::interval) and s.version = p.latest_version)
             or security_report_created_at < (current_timestamp - '1 week'::interval)
         )
+        and r.repository_kind_id <> 13 -- Kubewarden policies are excluded for now
         order by s.created_at desc
     ) s;
 $$ language sql;

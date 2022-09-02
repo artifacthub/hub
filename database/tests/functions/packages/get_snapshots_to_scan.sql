@@ -8,11 +8,13 @@ select plan(2);
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
 \set repo3ID '00000000-0000-0000-0000-000000000003'
+\set repo4ID '00000000-0000-0000-0000-000000000004'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
 \set package3ID '00000000-0000-0000-0000-000000000003'
 \set package4ID '00000000-0000-0000-0000-000000000004'
 \set package5ID '00000000-0000-0000-0000-000000000005'
+\set package6ID '00000000-0000-0000-0000-000000000006'
 
 -- No snapshots at this point
 select is(
@@ -31,6 +33,8 @@ insert into repository (repository_id, name, display_name, url, repository_kind_
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
 insert into repository (repository_id, name, display_name, url, scanner_disabled, repository_kind_id, organization_id)
 values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com', true, 0, :'org1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo4ID', 'repo4', 'Repo 4', 'https://repo4.com', 13, :'org1ID');
 insert into package (
     package_id,
     name,
@@ -165,7 +169,7 @@ insert into snapshot (
     :'package4ID',
     '1.0.0',
     '[{"image": "quay.io/org/pkg4:1.0.0"}]',
-    '2020-06-16 11:20:33+02'
+    '2020-06-16 11:20:32+02'
 );
 insert into package (
     package_id,
@@ -188,8 +192,32 @@ insert into snapshot (
     :'package5ID',
     '1.0.0',
     '[{"image": "quay.io/org/pkg5:1.0.0"}]',
-    '2010-06-16 11:20:33+02',
-    '2010-06-16 11:20:33+02'
+    '2010-06-16 11:20:31+02',
+    '2010-06-16 11:20:31+02'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package6ID',
+    'package6',
+    '1.0.0',
+    :'repo4ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    ts,
+    created_at
+) values (
+    :'package6ID',
+    '1.0.0',
+    '[{"image": "quay.io/org/pkg6:1.0.0"}]',
+    current_timestamp - '2 weeks'::interval,
+    '2010-06-16 11:20:30+02'
 );
 
 -- Run some tests
