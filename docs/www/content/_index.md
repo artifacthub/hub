@@ -11,7 +11,7 @@ The documentation is organized in the following topics:
 
 | Topic                                                         | Description                                                                                                                                             |
 | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Repositories guide](/docs/topics/repositories)               | The repositories guide explains how to add repositories to Artifact Hub, as well as other related concepts like Verified Publisher or Ownership Claim.  |
+| [Repositories guide](/docs/topics/repositories)               | The repositories guide explains how to add repositories to Artifact Hub, as well as other related concepts like Verified publisher or Ownership Claim.  |
 | [Helm annotations](/docs/topics/annotations/helm)             | Describes some custom annotations that allow enriching the existing metadata in Helm Charts to improve users' experience in Artifact Hub.               |
 | [OLM annotations](/docs/topics/annotations/olm)               | Describes some custom annotations that allow enriching the existing metadata in OLM operators to improve users' experience in Artifact Hub.             |
 | [Krew annotations](/docs/topics/annotations/krew)             | Describes some custom annotations that allow enriching the existing metadata in Krew kubectl plugins to improve users' experience in Artifact Hub.      |
