@@ -51,14 +51,12 @@ const RelatedPackageCard = (props: Props) => {
               <div className="d-flex flex-row justify-content-between">
                 <div className="text-truncate w-100">
                   <div className={`d-flex flex-row align-items-center justify-content-between ${styles.legend}`}>
-                    <div className={styles.kind}>
-                      <RepositoryIconLabel
-                        kind={props.repository.kind}
-                        className={`fw-bold ${styles.badge}`}
-                        iconClassName={styles.badgeIcon}
-                        noBackground
-                      />
-                    </div>
+                    <RepositoryIconLabel
+                      kind={props.repository.kind}
+                      className={`fw-bold ${styles.badge}`}
+                      iconClassName={styles.badgeIcon}
+                      noBackground
+                    />
                     <StarBadge starsNumber={props.stars} size="xs" />
                   </div>
                   <div className={`align-self-end text-truncate card-title mb-2 ${styles.title}`}>
