@@ -42,6 +42,12 @@
                     "default": "5432",
                     "type": "string"
                 },
+                "sslmode": {
+                    "title": "Database SSL mode",
+                    "description": "Sets SSL mode if supported by db client",
+                    "default": "prefer",
+                    "type": "string"
+                },
                 "user": {
                     "title": "Database user",
                     "default": "postgres",
@@ -53,6 +59,7 @@
                 "host",
                 "password",
                 "port",
+                "sslmode",
                 "user"
             ]
         },
@@ -191,6 +198,12 @@
                 "trackingErrors"
             ]
         },
+        "extraDeploy": {
+            "title": "Extra deploy objects",
+            "description": "Extra objects to deploy (value evaluated as a template)",
+            "type": "array",
+            "default": "[]"
+        },
         "hub": {
             "title": "Hub configuration",
             "type": "object",
@@ -208,6 +221,18 @@
                 "deploy": {
                     "type": "object",
                     "properties": {
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the hub deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the hub deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -220,6 +245,35 @@
                             "required": [
                                 "repository"
                             ]
+                        },
+                        "initContainers": {
+                            "title": "Init containers",
+                            "type": "object",
+                            "properties": {
+                                "checkDbMigrator": {
+                                    "title": "Check DB migrator",
+                                    "type": "object",
+                                    "properties": {
+                                        "image": {
+                                            "title": "image",
+                                            "type": "object",
+                                            "properties": {
+                                                "repository": {
+                                                    "title": "Check DB migrator repository",
+                                                    "type": "string",
+                                                    "default": "bitnami/kubectl"
+                                                },
+                                                "tag": {
+                                                    "title": "Check DB migrator tag",
+                                                    "description": "Tag used when pulling check-db-migrator initContainer image. Defaults to the K8s API version",
+                                                    "type": "string",
+                                                    "default": ""
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "livenessProbe": {
                             "title": "Hub pod liveness probe",
@@ -302,6 +356,21 @@
                     "required": [
                         "annotations",
                         "enabled"
+                    ]
+                },
+                "rbac": {
+                    "title": "RBAC",
+                    "type":"object",
+                    "properties": {
+                        "create": {
+                            "title": "Create RBAC",
+                            "description": "Enable creation and role and role binding",
+                            "type": "boolean",
+                            "default": true
+                        }
+                    },
+                    "required": [
+                        "create"
                     ]
                 },
                 "server": {
@@ -578,6 +647,34 @@
                         "type"
                     ]
                 },
+                "serviceAccount": {
+                    "title": "Artifact Hub service account",
+                    "type": "object",
+                    "properties": {
+                        "create": {
+                            "title": "Create service account",
+                            "description": "Enables the creation of a ServiceAccount for the Artifact Hub pod",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "name": {
+                            "title": "Service account name",
+                            "description": "The name of the ServiceAccount to use. If not set and create is true, a name is generated",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "automountServiceAccountToken": {
+                            "title": "Automount service account token",
+                            "description": "Allows auto mount of the ServiceAccountToken on the servicea account created",
+                            "type": "boolean",
+                            "default": true
+                        }
+                    },
+                    "required": [
+                        "create",
+                        "automountServiceAccountToken"
+                    ]
+                },
                 "theme": {
                     "type": "object",
                     "properties": {
@@ -675,9 +772,11 @@
                 }
             },
             "required": [
-                "ingress",
-                "service",
                 "deploy",
+                "ingress",
+                "rbac",
+                "service",
+                "serviceAccount",
                 "server",
                 "theme"
             ]
@@ -779,6 +878,18 @@
                 "cronjob": {
                     "type": "object",
                     "properties": {
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the scanner cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the scanner cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -804,10 +915,15 @@
                         "resources"
                     ]
                 },
+                "enabled": {
+                    "title": "Enable security scanner cronjob",
+                    "type": "boolean",
+                    "default": true
+                },
                 "trivyURL": {
                     "title": "Trivy server url",
                     "type": "string",
-                    "description": "Defaults to the Trivy service's internal URL.",
+                    "description": "Defaults to the Trivy service's internal URL. If Trivy is not enabled via this chart, the URL must be set to an external Trivy service.",
                     "default": ""
                 }
             },
@@ -815,6 +931,7 @@
                 "concurrency",
                 "configDir",
                 "cronjob",
+                "enabled",
                 "trivyURL"
             ]
         },
@@ -852,6 +969,18 @@
                 "cronjob": {
                     "type": "object",
                     "properties": {
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the tracker cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the tracker cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -916,9 +1045,27 @@
             "title": "Trivy configuration",
             "type": "object",
             "properties": {
+                "enabled": {
+                    "title": "Enable Trivy security scanner deployment",
+                    "description": "If the Trivy security scanner deployment is disabled while the scanner cronJob is enabled, Trivy must be deployed separately from this chart. Use `scanner.trivyURL` to reference the separate Trivy instance.",
+                    "type": "boolean",
+                    "default": true
+                },
                 "deploy": {
                     "type": "object",
                     "properties": {
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the trivy deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the trivy deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "title": "Trivy container image",
                             "type": "string",
@@ -962,6 +1109,7 @@
             },
             "required": [
                 "deploy",
+                "enabled",
                 "persistence"
             ]
         }

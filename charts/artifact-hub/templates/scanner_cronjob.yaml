@@ -1,3 +1,4 @@
+{{- if .Values.scanner.enabled -}}
 {{- if .Capabilities.APIVersions.Has "batch/v1/CronJob" }}
 apiVersion: batch/v1
 {{- else }}
@@ -17,43 +18,42 @@ spec:
         spec:
         {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
         {{- end }}
           restartPolicy: Never
           initContainers:
-          - name: check-db-ready
-            image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
-            imagePullPolicy: {{ .Values.pullPolicy }}
-            env:
-              - name: PGHOST
-                value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
-              - name: PGPORT
-                value: "{{ .Values.db.port }}"
-            command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+            - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 14 }}
           containers:
-          - name: scanner
-            image: {{ .Values.scanner.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
-            imagePullPolicy: {{ .Values.pullPolicy }}
-            resources:
-              {{- toYaml .Values.scanner.cronjob.resources | nindent 14 }}
-            {{- if .Values.scanner.cacheDir }}
-            env:
-              - name: TRIVY_CACHE_DIR
-                value: {{ .Values.scanner.cacheDir | quote }}
-            {{- end }}
-            volumeMounts:
+            - name: scanner
+              image: {{ .Values.scanner.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
+              imagePullPolicy: {{ .Values.pullPolicy }}
+              resources:
+                {{- toYaml .Values.scanner.cronjob.resources | nindent 16 }}
+              {{- if .Values.scanner.cacheDir }}
+              env:
+                - name: TRIVY_CACHE_DIR
+                  value: {{ .Values.scanner.cacheDir | quote }}
+              {{- end }}
+              volumeMounts:
+                - name: scanner-config
+                  mountPath: {{ .Values.scanner.configDir | quote }}
+                  readOnly: true
+                {{- if .Values.scanner.cacheDir }}
+                - name: cache-dir
+                  mountPath: {{ .Values.scanner.cacheDir | quote }}
+                {{- end }}
+                {{- if .Values.scanner.cronjob.extraVolumeMounts }}
+                  {{- include "chart.tplvalues.render" (dict "value" .Values.scanner.cronjob.extraVolumeMounts "context" $) | nindent 16 }}
+                {{- end }}
+          volumes:
             - name: scanner-config
-              mountPath: {{ .Values.scanner.configDir | quote }}
-              readOnly: true
+              secret:
+                secretName: {{ include "chart.resourceNamePrefix" . }}scanner-config
             {{- if .Values.scanner.cacheDir }}
             - name: cache-dir
-              mountPath: {{ .Values.scanner.cacheDir | quote }}
+              emptyDir: {}
             {{- end }}
-          volumes:
-          - name: scanner-config
-            secret:
-              secretName: {{ include "chart.resourceNamePrefix" . }}scanner-config
-          {{- if .Values.scanner.cacheDir }}
-          - name: cache-dir
-            emptyDir: {}
-          {{- end }}
+            {{- if .Values.scanner.cronjob.extraVolumes }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.scanner.cronjob.extraVolumes "context" $) | nindent 12 }}
+            {{- end }}
+{{- end }}

@@ -21,39 +21,37 @@ spec:
         {{- end }}
           restartPolicy: Never
           initContainers:
-          - name: check-db-ready
-            image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
-            imagePullPolicy: {{ .Values.pullPolicy }}
-            env:
-              - name: PGHOST
-                value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
-              - name: PGPORT
-                value: "{{ .Values.db.port }}"
-            command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+            - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 14 }}
           containers:
-          - name: tracker
-            image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
-            imagePullPolicy: {{ .Values.pullPolicy }}
-            resources:
-              {{- toYaml .Values.tracker.cronjob.resources | nindent 14 }}
-            {{- if .Values.tracker.cacheDir }}
-            env:
-              - name: XDG_CACHE_HOME
-                value: {{ .Values.tracker.cacheDir | quote }}
-            {{- end }}
-            volumeMounts:
+            - name: tracker
+              image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
+              imagePullPolicy: {{ .Values.pullPolicy }}
+              resources:
+                {{- toYaml .Values.tracker.cronjob.resources | nindent 16 }}
+              {{- if .Values.tracker.cacheDir }}
+              env:
+                - name: XDG_CACHE_HOME
+                  value: {{ .Values.tracker.cacheDir | quote }}
+              {{- end }}
+              volumeMounts:
+                - name: tracker-config
+                  mountPath: {{ .Values.tracker.configDir | quote }}
+                  readOnly: true
+                {{- if .Values.tracker.cacheDir }}
+                - name: cache-dir
+                  mountPath: {{ .Values.tracker.cacheDir | quote }}
+                {{- end }}
+                {{- if .Values.tracker.cronjob.extraVolumeMounts }}
+                  {{- include "chart.tplvalues.render" (dict "value" .Values.tracker.cronjob.extraVolumeMounts "context" $) | nindent 16 }}
+                {{- end }}
+          volumes:
             - name: tracker-config
-              mountPath: {{ .Values.tracker.configDir | quote }}
-              readOnly: true
+              secret:
+                secretName: {{ include "chart.resourceNamePrefix" . }}tracker-config
             {{- if .Values.tracker.cacheDir }}
             - name: cache-dir
-              mountPath: {{ .Values.tracker.cacheDir | quote }}
+              emptyDir: {}
             {{- end }}
-          volumes:
-          - name: tracker-config
-            secret:
-              secretName: {{ include "chart.resourceNamePrefix" . }}tracker-config
-          {{- if .Values.tracker.cacheDir }}
-          - name: cache-dir
-            emptyDir: {}
-          {{- end }}
+            {{- if .Values.tracker.cronjob.extraVolumes }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.tracker.cronjob.extraVolumes "context" $) | nindent 12 }}
+            {{- end }}

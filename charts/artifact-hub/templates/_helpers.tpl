@@ -75,3 +75,43 @@ longest resource name ("db-migrator-install" = 19 chars).
 {{- end -}}
 {{- end -}}
 
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "chart.serviceAccountName" -}}
+{{- if .Values.hub.serviceAccount.create -}}
+  {{- .Values.hub.serviceAccount.name | default (printf "%s%s" (include "chart.resourceNamePrefix" .) "hub") -}}
+{{- else -}}
+  {{- .Values.hub.serviceAccount.name | default "default" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Provide an init container to verify the database is accessible
+*/}}
+{{- define "chart.checkDbIsReadyInitContainer" -}}
+name: check-db-ready
+image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+imagePullPolicy: {{ .Values.pullPolicy }}
+env:
+  - name: PGHOST
+    value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
+  - name: PGPORT
+    value: "{{ .Values.db.port }}"
+  - name: PGUSER
+    value: "{{ .Values.db.user }}"
+command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+{{- end -}}
+
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "chart.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+*/}}
+{{- define "chart.tplvalues.render" -}}
+{{- if typeIs "string" .value }}
+  {{- tpl .value .context }}
+{{- else }}
+  {{- tpl (.value | toYaml) .context }}
+{{- end }}
+{{- end -}}

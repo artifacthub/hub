@@ -1,3 +1,4 @@
+{{- if .Values.trivy.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,19 +25,26 @@ spec:
           image: {{ .Values.trivy.deploy.image }}
           command: ['trivy', '--debug', '--cache-dir', '/trivy', 'server', '--listen', '0.0.0.0:8081']
           volumeMounts:
-          - name: trivy
-            mountPath: "/trivy"
+            - name: trivy
+              mountPath: "/trivy"
+            {{- if .Values.trivy.deploy.extraVolumeMounts }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.trivy.deploy.extraVolumeMounts "context" $) | nindent 12 }}
+            {{- end }}
           ports:
-          - name: http
-            containerPort: 8081
-            protocol: TCP
+            - name: http
+              containerPort: 8081
+              protocol: TCP
           resources:
             {{- toYaml .Values.trivy.deploy.resources | nindent 12 }}
       volumes:
-      - name: trivy
-      {{- if .Values.trivy.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ include "chart.resourceNamePrefix" . }}trivy
-      {{- else }}
-        emptyDir: {}
-      {{- end -}}
+        - name: trivy
+        {{- if .Values.trivy.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "chart.resourceNamePrefix" . }}trivy
+        {{- else }}
+          emptyDir: {}
+        {{- end -}}
+        {{- if .Values.trivy.deploy.extraVolumes }}
+          {{- include "chart.tplvalues.render" (dict "value" .Values.trivy.deploy.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
+{{- end }}

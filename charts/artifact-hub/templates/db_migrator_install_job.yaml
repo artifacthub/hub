@@ -12,29 +12,21 @@ spec:
     {{- end }}
       restartPolicy: Never
       initContainers:
-      - name: check-db-ready
-        image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
-        imagePullPolicy: {{ .Values.pullPolicy }}
-        env:
-          - name: PGHOST
-            value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
-          - name: PGPORT
-            value: "{{ .Values.db.port }}"
-        command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+        - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 10 }}
       containers:
-      - name: db-migrator
-        image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
-        imagePullPolicy: {{ .Values.pullPolicy }}
-        env:
-          - name: TERN_CONF
-            value: {{ .Values.dbMigrator.configDir }}/tern.conf
-        volumeMounts:
-          - name: db-migrator-config
-            mountPath: {{ .Values.dbMigrator.configDir }}
-            readOnly: true
-        command: ["./migrate.sh"]
+        - name: db-migrator
+          image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          env:
+            - name: TERN_CONF
+              value: {{ .Values.dbMigrator.configDir }}/tern.conf
+          volumeMounts:
+            - name: db-migrator-config
+              mountPath: {{ .Values.dbMigrator.configDir }}
+              readOnly: true
+          command: ["./migrate.sh"]
       volumes:
-      - name: db-migrator-config
-        secret:
-          secretName: {{ include "chart.resourceNamePrefix" . }}db-migrator-config
+        - name: db-migrator-config
+          secret:
+            secretName: {{ include "chart.resourceNamePrefix" . }}db-migrator-config
 {{- end }}
