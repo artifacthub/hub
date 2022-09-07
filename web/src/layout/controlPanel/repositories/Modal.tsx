@@ -226,7 +226,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Helm:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#helm-charts-repositories"
+            href="/docs/topics/repositories/helm-charts"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -237,7 +237,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.OLM:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#olm-operators-repositories"
+            href="/docs/topics/repositories/olm-operators"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -248,7 +248,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Falco:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#falco-rules-repositories"
+            href="/docs/topics/repositories/falco-rules"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -259,7 +259,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.OPA:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#opa-policies-repositories"
+            href="/docs/topics/repositories/opa-policies"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -270,7 +270,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.TBAction:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#tinkerbell-actions-repositories"
+            href="/docs/topics/repositories/tinkerbell-actions"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -281,7 +281,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Krew:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#krew-kubectl-plugins-repositories"
+            href="/docs/topics/repositories/krew-kubectl-plugins"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -292,7 +292,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.HelmPlugin:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#helm-plugins-repositories"
+            href="/docs/topics/repositories/helm-plugins"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -303,7 +303,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.TektonTask:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#tekton-tasks-repositories"
+            href="/docs/topics/repositories/tekton-tasks"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -314,7 +314,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.KedaScaler:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#keda-scalers-repositories"
+            href="/docs/topics/repositories/keda-scalers"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -325,7 +325,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.CoreDNS:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#coredns-plugins-repositories"
+            href="/docs/topics/repositories/coredns-plugins"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -336,7 +336,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Keptn:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#keptn-integrations-repositories"
+            href="/docs/topics/repositories/keptn-integrations"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -347,7 +347,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.TektonPipeline:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#tekton-pipelines-repositories"
+            href="/docs/topics/repositories/tekton-pipelines"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -358,7 +358,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Container:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#container-images-repositories"
+            href="/docs/topics/repositories/container-images"
             className="text-primary fw-bold"
             label="Open documentation"
           >
@@ -369,7 +369,7 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Kubewarden:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories#kubewarden-policies-repositories"
+            href="/docs/topics/repositories/kubewarden-policies"
             className="text-primary fw-bold"
             label="Open documentation"
           >

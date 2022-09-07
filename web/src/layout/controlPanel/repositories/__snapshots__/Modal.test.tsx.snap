@@ -258,7 +258,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       <a
                         aria-label="Open documentation"
                         class="link text-primary fw-bold"
-                        href="/docs/topics/repositories#helm-charts-repositories"
+                        href="/docs/topics/repositories/helm-charts"
                         rel="noopener noreferrer"
                         role="button"
                         tabindex="-1"

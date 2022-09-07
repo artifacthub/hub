@@ -5,19 +5,19 @@ Artifact Hub allows publishers to list their content in an automated way. Publis
 The following repositories kinds are supported at the moment:
 
 - [Containers images repositories](https://github.com/artifacthub/hub/blob/master/docs/container_images_repositories.md)
-- [CoreDNS plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/coredns-plugins-repositories)
-- [Falco rules repositories](https://github.com/artifacthub/hub/blob/master/docs/falco-rules-repositories)
-- [Helm charts repositories](https://github.com/artifacthub/hub/blob/master/docs/helm-charts-repositories)
-- [Helm plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/helm-plugins-repositories)
-- [KEDA scalers repositories](https://github.com/artifacthub/hub/blob/master/docs/keda-scalers-repositories)
-- [Keptn integrations repositories](https://github.com/artifacthub/hub/blob/master/docs/keptn-integrations-repositories)
-- [Krew kubectl plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/krew-kubectl-plugins-repositories)
-- [Kubewarden policies repositories](https://github.com/artifacthub/hub/blob/master/docs/kubewarden-policies-repositories)
-- [OLM operators repositories](https://github.com/artifacthub/hub/blob/master/docs/olm-operators-repositories)
-- [OPA policies repositories](https://github.com/artifacthub/hub/blob/master/docs/opa-policies-repositories)
-- [Tekton pipelines repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton-pipelines-repositories)
-- [Tekton tasks repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton-tasks-repositories)
-- [Tinkerbell actions repositories](https://github.com/artifacthub/hub/blob/master/docs/tinkerbell-actions-repositories)
+- [CoreDNS plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/coredns_plugins_repositories.md)
+- [Falco rules repositories](https://github.com/artifacthub/hub/blob/master/docs/falco_rules_repositories.md)
+- [Helm charts repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_charts_repositories.md)
+- [Helm plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_plugins_repositories.md)
+- [KEDA scalers repositories](https://github.com/artifacthub/hub/blob/master/docs/keda_scalers_repositories.md)
+- [Keptn integrations repositories](https://github.com/artifacthub/hub/blob/master/docs/keptn_integrations_repositories.md)
+- [Krew kubectl plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/krew_kubectl_plugins_repositories.md)
+- [Kubewarden policies repositories](https://github.com/artifacthub/hub/blob/master/docs/kubewarden_policies_repositories.md)
+- [OLM operators repositories](https://github.com/artifacthub/hub/blob/master/docs/olm_operators_repositories.md)
+- [OPA policies repositories](https://github.com/artifacthub/hub/blob/master/docs/opa_policies_repositories.md)
+- [Tekton pipelines repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_pipelines_repositories.md)
+- [Tekton tasks repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_tasks_repositories.md)
+- [Tinkerbell actions repositories](https://github.com/artifacthub/hub/blob/master/docs/tinkerbell_actions_repositories.md)
 
 This guide also contains additional information about the following repositories topics:
 
