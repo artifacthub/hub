@@ -44,7 +44,7 @@ require (
 	golang.org/x/crypto v0.0.0-20220829220503-c86fa9a7ed90
 	golang.org/x/oauth2 v0.0.0-20220822191816-0ebed06d0094
 	golang.org/x/text v0.3.8-0.20211004125949-5bd84dd9b33b
-	google.golang.org/api v0.94.0
+	google.golang.org/api v0.95.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.9.4
