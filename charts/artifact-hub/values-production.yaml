@@ -102,7 +102,7 @@ scanner:
   cronjob:
     resources:
       requests:
-        cpu: 2
+        cpu: 3
         memory: 8000Mi
   concurrency: 5
 
