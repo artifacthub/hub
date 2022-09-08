@@ -15,6 +15,7 @@ export enum RepositoryKind {
   TektonPipeline,
   Container,
   Kubewarden,
+  Gatekeeper,
 }
 
 export enum KeptnData {
@@ -125,6 +126,7 @@ export interface Package {
   signatures?: Signature[];
   screenshots?: Screenshot[];
   productionOrganizationsCount?: number;
+  relativePath?: string;
 }
 
 export interface Screenshot {
@@ -193,12 +195,14 @@ export interface RecommendedPackage {
 
 export interface PackageData {
   policies?: OPAPolicies;
+  samples?: GatekeeperSamples;
   rules?: { Raw: string; Name: string }[] | FalcoRules;
   dependencies?: Dependency[];
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];
   isGlobalOperator?: boolean;
   manifestRaw?: string;
+  template?: string;
   pipelinesMinVersion?: string;
   platforms?: string[];
   apiVersion?: string;
@@ -216,6 +220,10 @@ export interface TektonTaskInPipeline {
   name: string;
   runAfter?: string[];
   artifacthubRepositoryName?: string;
+}
+
+export interface GatekeeperSamples {
+  [key: string]: string;
 }
 
 export interface OPAPolicies {
@@ -742,6 +750,7 @@ export enum ContentDefaultModalKind {
   CustomResourcesDefinition,
   Policy,
   Rules,
+  Samples,
 }
 
 export interface ContainerTag {

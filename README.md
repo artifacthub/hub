@@ -17,6 +17,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [Containers images](https://opencontainers.org)
 - [CoreDNS plugins](https://coredns.io/)
 - [Falco configurations](https://falco.org/)
+- [Gatekeeper policies](https://open-policy-agent.github.io/gatekeeper/website/docs/)
 - [Helm charts](https://helm.sh/)
 - [Helm plugins](https://helm.sh/docs/topics/plugins/)
 - [KEDA scalers](https://keda.sh/)

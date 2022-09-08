@@ -77,6 +77,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'container';
     case RepositoryKind.Kubewarden:
       return 'kubewarden';
+    case RepositoryKind.Gatekeeper:
+      return 'gatekeeper';
     default:
       return null;
   }

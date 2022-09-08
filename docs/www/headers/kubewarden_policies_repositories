@@ -1,6 +1,6 @@
 ---
 title: "Kubewarden policies"
-weight: 9
+weight: 10
 aliases: [
   "/kubewarden_policies_repositories",
 ]

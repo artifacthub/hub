@@ -70,6 +70,10 @@ jest.mock('../../utils/getSampleQueries', () => () => {
       name: 'Kubewarden policies',
       queryString: 'kind=13',
     },
+    {
+      name: 'Gatekeeper policies',
+      queryString: 'kind=14',
+    },
   ];
 });
 

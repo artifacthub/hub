@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"image"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -19,6 +20,14 @@ const (
 	// contains the raw rules.
 	FalcoRulesKey = "rules"
 
+	// GatekeeperTemplateKey represents the key used in the package's data field
+	// that contains the template.
+	GatekeeperTemplateKey = "template"
+
+	// GatekeeperSamplesKey represents the key used in the package's data field
+	// that contains the samples.
+	GatekeeperSamplesKey = "samples"
+
 	// OPAPoliciesKey represents the key used in the package's data field that
 	// contains the raw policies.
 	OPAPoliciesKey = "policies"
@@ -26,6 +35,10 @@ const (
 	// falcoRulesSuffix is the suffix that each of the rules files in the
 	// package must use.
 	falcoRulesSuffix = "-rules.yaml"
+
+	// gatekeeperSamplesSuffix is the suffix that each of the samples files in
+	// the package must use.
+	gatekeeperSamplesSuffix = ".yaml"
 
 	// opaPoliciesSuffix is the suffix that each of the policies files in the
 	// package must use.
@@ -80,6 +93,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			s.warn(err)
 			return nil
 		}
+		p.RelativePath = strings.TrimPrefix(pkgPath, s.i.BasePath)
 		packagesAvailable[pkg.BuildKey(p)] = p
 
 		// Prepare and store logo image when available
@@ -178,6 +192,8 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 	switch r.Kind {
 	case hub.Falco:
 		kindData, err = prepareFalcoData(pkgPath, ignorer)
+	case hub.Gatekeeper:
+		kindData, err = prepareGatekeeperData(pkgPath, ignorer)
 	case hub.OPA:
 		kindData, err = prepareOPAData(pkgPath, ignorer)
 	}
@@ -212,6 +228,30 @@ func prepareFalcoData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]i
 	}, nil
 }
 
+// prepareGatekeeperData reads and formats Gatekeeper specific data available
+// in the path provided, returning the resulting data structure.
+func prepareGatekeeperData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]interface{}, error) {
+	// Read template file
+	templatePath := path.Join(pkgPath, "template.yaml")
+	template, err := os.ReadFile(templatePath)
+	if err != nil {
+		return nil, fmt.Errorf("error reading gatekeeper template file: %w", err)
+	}
+
+	// Read samples files
+	samplesPath := path.Join(pkgPath, "samples")
+	samples, err := getFilesWithSuffix(gatekeeperSamplesSuffix, samplesPath, ignorer)
+	if err != nil {
+		return nil, fmt.Errorf("error getting gatekeeper samples files: %w", err)
+	}
+
+	// Return package data field
+	return map[string]interface{}{
+		GatekeeperTemplateKey: string(template),
+		GatekeeperSamplesKey:  samples,
+	}, nil
+}
+
 // prepareOPAData reads and formats OPA specific data available in the path
 // provided, returning the resulting data structure.
 func prepareOPAData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]interface{}, error) {
@@ -229,16 +269,16 @@ func prepareOPAData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]int
 
 // getFilesWithSuffix returns the files with a given suffix in the path
 // provided, ignoring the ones the ignorer matches.
-func getFilesWithSuffix(suffix, pkgPath string, ignorer ignore.IgnoreParser) (map[string]string, error) {
+func getFilesWithSuffix(suffix, rootPath string, ignorer ignore.IgnoreParser) (map[string]string, error) {
 	files := make(map[string]string)
-	err := filepath.Walk(pkgPath, func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return fmt.Errorf("error reading files: %w", err)
 		}
 		if info.IsDir() {
 			return nil
 		}
-		name := strings.TrimPrefix(path, pkgPath+"/")
+		name := strings.TrimPrefix(path, rootPath+"/")
 		if ignorer.MatchesPath(name) {
 			return nil
 		}

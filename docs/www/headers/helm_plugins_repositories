@@ -1,6 +1,6 @@
 ---
 title: "Helm plugins"
-weight: 5
+weight: 6
 aliases: [
   "/helm_plugins_repositories",
 ]

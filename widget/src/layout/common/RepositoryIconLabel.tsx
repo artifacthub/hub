@@ -72,6 +72,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Kubewarden,
     name: 'Kubewarden policy',
   },
+  {
+    kind: RepositoryKind.Gatekeeper,
+    name: 'Gatekeeper policy',
+  },
 ];
 
 const Wrapper = styled('span')`

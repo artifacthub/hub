@@ -362,6 +362,25 @@ const PackageView = (props: Props) => {
     return policies;
   };
 
+  const getGatekeeperSamples = (): ContentDefaultModalItem[] | undefined => {
+    let samples: ContentDefaultModalItem[] | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.samples)
+    ) {
+      samples = Object.keys(detail.data.samples).map((sampleName: string) => {
+        return {
+          name: sampleName,
+          file: detail.data!.samples![sampleName],
+        };
+      });
+    }
+    return samples;
+  };
+
   const getManifestRaw = (): string | undefined => {
     let manifest: string | undefined;
     if (
@@ -372,6 +391,20 @@ const PackageView = (props: Props) => {
       !isUndefined(detail.data.manifestRaw)
     ) {
       manifest = detail.data.manifestRaw as string;
+    }
+    return manifest;
+  };
+
+  const getGatekeeperTemplate = (): string | undefined => {
+    let manifest: string | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.template)
+    ) {
+      manifest = detail.data.template as string;
     }
     return manifest;
   };
@@ -530,6 +563,48 @@ const PackageView = (props: Props) => {
                           showLineNumbers
                         >
                           {manifest}
+                        </SyntaxHighlighter>
+                      </div>
+                    </div>
+                  )}
+                </>
+              );
+
+            case RepositoryKind.Gatekeeper:
+              let tmpl: string | undefined = getGatekeeperTemplate();
+              if (!isUndefined(tmpl)) {
+                additionalTitles += '# Template\n';
+              }
+              return (
+                <>
+                  {!isUndefined(tmpl) && (
+                    <div className={`mb-5 ${styles.codeWrapper}`}>
+                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Template" />
+
+                      <div
+                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
+                      >
+                        <BlockCodeButtons content={tmpl} filename={`${detail.normalizedName}-template.yaml`} />
+                        <SyntaxHighlighter
+                          language="yaml"
+                          style={docco}
+                          customStyle={{
+                            backgroundColor: 'transparent',
+                            padding: '1.5rem',
+                            lineHeight: '1.25rem',
+                            marginBottom: '0',
+                            height: '100%',
+                            fontSize: '80%',
+                            color: '#636a6e',
+                          }}
+                          lineNumberStyle={{
+                            color: 'var(--color-black-25)',
+                            marginRight: '5px',
+                            fontSize: '0.8rem',
+                          }}
+                          showLineNumbers
+                        >
+                          {tmpl}
                         </SyntaxHighlighter>
                       </div>
                     </div>
@@ -907,6 +982,32 @@ const PackageView = (props: Props) => {
                               normalizedName={detail.normalizedName}
                               title="Policies"
                               files={getOPAPolicies() as any}
+                              searchUrlReferer={props.searchUrlReferer}
+                              fromStarredPage={props.fromStarredPage}
+                            />
+                          </div>
+
+                          <div className="d-none d-lg-block">
+                            <ContentDefaultModal
+                              kind={ContentDefaultModalKind.Samples}
+                              packageId={detail.packageId}
+                              modalName="samples"
+                              language="yaml"
+                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'samples'}
+                              visibleFile={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'samples'
+                                  ? props.visibleFile
+                                  : undefined
+                              }
+                              btnModalContent={
+                                <div className="d-flex flex-row align-items-center justify-content-center">
+                                  <FiCode />
+                                  <span className="ms-2 fw-bold text-uppercase">Samples</span>
+                                </div>
+                              }
+                              normalizedName={detail.normalizedName}
+                              title="Samples"
+                              files={getGatekeeperSamples() as any}
                               searchUrlReferer={props.searchUrlReferer}
                               fromStarredPage={props.fromStarredPage}
                             />

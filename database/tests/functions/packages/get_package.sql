@@ -107,6 +107,7 @@ insert into snapshot (
     recommendations,
     screenshots,
     sign_key,
+    relative_path,
     ts
 ) values (
     :'package1ID',
@@ -152,6 +153,7 @@ insert into snapshot (
         }
     ]'::jsonb,
     '{"fingerprint": "0011223344", "url": "https://key.url"}',
+    'path1/path2',
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -377,7 +379,8 @@ select is(
             "subscriptions": 1,
             "webhooks": 0
         },
-        "production_organizations_count": 1
+        "production_organizations_count": 1,
+        "relative_path": "path1/path2"
     }'::jsonb,
     'Last package1 version is returned as a json object'
 );
@@ -523,7 +526,8 @@ select is(
             "subscriptions": 1,
             "webhooks": 0
         },
-        "production_organizations_count": 1
+        "production_organizations_count": 1,
+        "relative_path": "path1/path2"
     }'::jsonb,
     'Last package1 version is returned as a json object'
 );

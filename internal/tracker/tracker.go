@@ -178,6 +178,7 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 	case
 		hub.CoreDNS,
 		hub.Falco,
+		hub.Gatekeeper,
 		hub.HelmPlugin,
 		hub.KedaScaler,
 		hub.Keptn,

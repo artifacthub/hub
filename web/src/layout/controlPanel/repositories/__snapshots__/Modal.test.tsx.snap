@@ -85,6 +85,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Helm plugins
                     </option>
                     <option
+                      value="14"
+                    >
+                      Gatekeeper policies
+                    </option>
+                    <option
                       value="8"
                     >
                       KEDA scalers

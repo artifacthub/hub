@@ -59,6 +59,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('kubewarden')).toBe(RepositoryKind.Kubewarden);
     });
 
+    it('gatekeeper', () => {
+      expect(methods.getRepoKind('gatekeeper')).toBe(RepositoryKind.Gatekeeper);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -119,6 +123,10 @@ describe('repoKind', () => {
 
     it('kubewarden kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.Kubewarden)).toBe('kubewarden');
+    });
+
+    it('gatekeeper kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.Gatekeeper)).toBe('gatekeeper');
     });
 
     it('unknown kind', () => {

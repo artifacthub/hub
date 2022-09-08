@@ -172,6 +172,7 @@ begin
         recommendations,
         screenshots,
         sign_key,
+        relative_path,
         ts
     ) values (
         v_package_id,
@@ -205,6 +206,7 @@ begin
         nullif(p_pkg->'recommendations', 'null'),
         nullif(p_pkg->'screenshots', 'null'),
         nullif(p_pkg->'sign_key', 'null'),
+        nullif(p_pkg->>'relative_path', ''),
         v_ts
     )
     on conflict (package_id, version) do update
@@ -238,6 +240,7 @@ begin
         recommendations = excluded.recommendations,
         screenshots = excluded.screenshots,
         sign_key = excluded.sign_key,
+        relative_path = excluded.relative_path,
         ts = v_ts;
 
     -- Register new release event if package's latest version has been updated

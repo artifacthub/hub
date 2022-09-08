@@ -1226,6 +1226,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/gatekeeper/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getGatekeeperPoliciesDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GatekeeperPolicy"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/keda-scaler/{repoName}/{packageName}":
     get:
       tags:
@@ -1481,6 +1504,54 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/falco/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getFalcoRulesVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FalcoPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/gatekeeper/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getGatekeeperPoliciesVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GatekeeperPolicy"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/helm/{repoName}/{packageName}/{version}":
     get:
       tags:
@@ -1523,30 +1594,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HelmPluginPackage"
-        "404":
-          $ref: "#/components/responses/NotFoundResponse"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-  "/packages/falco/{repoName}/{packageName}/{version}":
-    get:
-      tags:
-        - Packages
-      summary: Get package version details
-      description: Get package version details
-      operationId: getFalcoRulesVersionDetails
-      parameters:
-        - $ref: "#/components/parameters/RepoNameParam"
-        - $ref: "#/components/parameters/PackageNameParam"
-        - $ref: "#/components/parameters/VersionParam"
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FalcoPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3336,6 +3383,35 @@ components:
                     - type: object
                       nullable: false
                       additionalProperties: true
+    GatekeeperPolicy:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            relative_path:
+              type: string
+              nullable: false
+              example: /general/allowedrepos
+            data:
+              type: object
+              nullable: false
+              properties:
+                template:
+                  type: string
+                  nullable: false
+                  example: >-
+                    apiVersion: templates.gatekeeper.sh/v1
+                    kind: ConstraintTemplate
+                    metadata:
+                      name: k8sallowedrepos
+                      annotations:
+                        metadata.gatekeeper.sh/title: "Kubernetes Allowed Repositories"
+                        description: >-
+                          Requires container images to begin with a string from the specified list.
+                samples:
+                  type: object
+                  nullable: false
+                  additionalProperties: true
     HelmPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -4042,6 +4118,7 @@ components:
           * `11` - Tekton pipelines
           * `12` - Container images
           * `13` - Kubewarden policies
+          * `14` - Gatekeeper policies
     RepositoryKindParam:
       type: string
       enum:
@@ -4059,6 +4136,7 @@ components:
         - tekton-pipeline
         - container
         - kubewarden
+        - gatekeeper
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4075,6 +4153,7 @@ components:
         * `tekton-pipeline` - Tekton pipelines
         * `container` - Container images
         * `kubewarden` - Kubewarden policies
+        * `gatekeeper` - Gatekeeper policies
     RepositorySummary:
       type: object
       required:
@@ -4571,6 +4650,7 @@ components:
           * `11` - Tekton pipelines
           * `12` - Container images
           * `13` - Kubewarden policies
+          * `14` - Gatekeeper policies
     PackageNameParam:
       in: path
       name: packageName

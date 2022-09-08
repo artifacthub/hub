@@ -1,6 +1,14 @@
 import { isNull, isUndefined } from 'lodash';
 
-import { Channel, ContainerImage, HelmChartType, Package, Repository, RepositoryKind } from '../types';
+import {
+  Channel,
+  ContainerImage,
+  GatekeeperSamples,
+  HelmChartType,
+  Package,
+  Repository,
+  RepositoryKind,
+} from '../types';
 import { OCI_PREFIX } from './data';
 
 export interface InstallMethod {
@@ -20,6 +28,8 @@ export interface InstallMethod {
     isGlobalOperator?: boolean;
     isPrivate?: boolean;
     images?: ContainerImage[] | null;
+    relativePath?: string;
+    samples?: GatekeeperSamples;
   };
 }
 
@@ -43,6 +53,8 @@ export enum InstallMethodKind {
   HelmPlugin,
   Tekton,
   Kubewarden,
+  KustomizeGatekeeperInstall,
+  KubectlGatekeeperInstall,
 }
 
 const SPECIAL_OLM = 'community-operators';
@@ -257,6 +269,29 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
             },
           });
         }
+        break;
+      case RepositoryKind.Gatekeeper:
+        output.methods.push(
+          {
+            label: 'kustomize',
+            title: 'Kustomize',
+            kind: InstallMethodKind.KustomizeGatekeeperInstall,
+            props: {
+              repository: pkg.repository,
+              relativePath: pkg.relativePath!,
+            },
+          },
+          {
+            label: 'kubectl',
+            title: 'Kubectl',
+            kind: InstallMethodKind.KubectlGatekeeperInstall,
+            props: {
+              repository: pkg.repository,
+              samples: pkg.data!.samples,
+              relativePath: pkg.relativePath!,
+            },
+          }
+        );
         break;
     }
   }

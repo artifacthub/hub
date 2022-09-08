@@ -76,6 +76,9 @@ const (
 
 	// Kubewarden represents a repository with Kubewarden policies.
 	Kubewarden RepositoryKind = 13
+
+	// Gatekeeper represents a repository with Gatekeeper policies.
+	Gatekeeper RepositoryKind = 14
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -87,6 +90,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "coredns"
 	case Falco:
 		return "falco"
+	case Gatekeeper:
+		return "gatekeeper"
 	case Helm:
 		return "helm"
 	case HelmPlugin:
@@ -124,6 +129,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return CoreDNS, nil
 	case "falco":
 		return Falco, nil
+	case "gatekeeper":
+		return Gatekeeper, nil
 	case "helm":
 		return Helm, nil
 	case "helm-plugin":

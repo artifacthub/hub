@@ -123,6 +123,13 @@ describe('Image', () => {
     expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_kubewarden.png');
   });
 
+  it('renders Gatekeeper icon', () => {
+    render(<Image {...defaultProps} kind={RepositoryKind.Gatekeeper} />);
+    const image = screen.getByAltText('alt image');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_gatekeeper.png');
+  });
+
   it('renders placeholder icon', () => {
     render(<Image {...defaultProps} placeholderIcon={<>icon</>} />);
     expect(screen.getByText('icon')).toBeInTheDocument();

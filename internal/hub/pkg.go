@@ -107,6 +107,7 @@ type Package struct {
 	TS                             int64                  `json:"ts,omitempty"`
 	Stats                          *PackageStats          `json:"stats"`
 	ProductionOrganizations        []*Organization        `json:"production_organizations"`
+	RelativePath                   string                 `json:"relative_path"`
 }
 
 // PackageManager describes the methods a PackageManager implementation must
