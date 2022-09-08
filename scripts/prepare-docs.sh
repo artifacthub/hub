@@ -4,6 +4,7 @@ cat docs/www/headers/architecture docs/architecture.md > docs/www/content/topics
 cat docs/www/headers/authorization docs/authorization.md > docs/www/content/topics/authorization.md
 cat docs/www/headers/dev docs/dev.md > docs/www/content/topics/dev.md
 cat docs/www/headers/infrastructure docs/infrastructure.md > docs/www/content/topics/infrastructure.md
+mkdir docs/www/content/topics/repositories
 cat docs/www/headers/repositories docs/repositories.md > docs/www/content/topics/repositories/_index.md
 cat docs/www/headers/container_images_repositories docs/container_images_repositories.md > docs/www/content/topics/repositories/container-images.md
 cat docs/www/headers/coredns_plugins_repositories docs/coredns_plugins_repositories.md > docs/www/content/topics/repositories/coredns-plugins.md
