@@ -227,7 +227,8 @@ select columns_are('snapshot', array[
     'recommendations',
     'screenshots',
     'sign_key',
-    'signatures'
+    'signatures',
+    'relative_path'
 ]);
 select columns_are('subscription', array[
     'user_id',
@@ -519,7 +520,8 @@ select results_eq(
         (10, 'Keptn integrations'),
         (11, 'Tekton pipelines'),
         (12, 'Containers images'),
-        (13, 'Kubewarden policies')
+        (13, 'Kubewarden policies'),
+        (14, 'Gatekeeper policies')
     $$,
     'Repository kinds should exist'
 );

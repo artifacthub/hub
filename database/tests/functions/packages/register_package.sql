@@ -114,6 +114,7 @@ select register_package('
         "fingerprint": "0011223344",
         "url": "https://key.url"
     },
+    "relative_path": "path1/path2",
     "repository": {
         "repository_id": "00000000-0000-0000-0000-000000000001"
     }
@@ -184,6 +185,7 @@ select results_eq(
             s.recommendations,
             s.screenshots,
             s.sign_key,
+            s.relative_path,
             s.ts
         from snapshot s
         join package p using (package_id)
@@ -232,6 +234,7 @@ select results_eq(
                 }
             ]'::jsonb,
             '{"fingerprint": "0011223344", "url": "https://key.url"}'::jsonb,
+            'path1/path2',
             '2020-06-16 11:20:34+02'::timestamptz
         )
     $$,

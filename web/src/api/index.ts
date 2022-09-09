@@ -84,7 +84,17 @@ type SecurityReportRaw = {
 };
 
 class API_CLASS {
-  private EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples', 'crds_examples'];
+  private EXCEPTIONS = [
+    'policies',
+    'rules',
+    'policyData',
+    'roles',
+    'crds',
+    'crdsExamples',
+    'crds_examples',
+    'samples',
+    'template',
+  ];
   private HEADERS = {
     csrf: 'X-Csrf-Token',
     sessionApproved: 'X-Session-Approved',

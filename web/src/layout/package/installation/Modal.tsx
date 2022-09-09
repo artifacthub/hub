@@ -19,7 +19,9 @@ import HelmInstall from './HelmInstall';
 import HelmOCIInstall from './HelmOCIInstall';
 import HelmPluginInstall from './HelmPluginInstall';
 import KrewInstall from './KrewInstall';
+import KubectlGatekeeperInstall from './KubectlGatekeeperInstall';
 import KubewardenInstall from './KubewardenInstall';
+import KustomizeGatekeeperInstall from './KustomizeGatekeeperInstall';
 import OLMInstall from './OLMInstall';
 import OLMOCIInstall from './OLMOCIInstall';
 import PublisherInstructionsInstall from './PublisherInstructionsInstall';
@@ -199,6 +201,21 @@ const InstallationModal = (props: Props) => {
                           case InstallMethodKind.Kubewarden:
                             return (
                               <KubewardenInstall images={method.props.images!} isPrivate={method.props.isPrivate} />
+                            );
+                          case InstallMethodKind.KustomizeGatekeeperInstall:
+                            return (
+                              <KustomizeGatekeeperInstall
+                                repository={method.props.repository!}
+                                relativePath={method.props.relativePath!}
+                              />
+                            );
+                          case InstallMethodKind.KubectlGatekeeperInstall:
+                            return (
+                              <KubectlGatekeeperInstall
+                                repository={method.props.repository!}
+                                samples={method.props.samples}
+                                relativePath={method.props.relativePath!}
+                              />
                             );
                           default:
                             return null;

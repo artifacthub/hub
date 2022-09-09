@@ -360,7 +360,7 @@
                 },
                 "rbac": {
                     "title": "RBAC",
-                    "type":"object",
+                    "type": "object",
                     "properties": {
                         "create": {
                             "title": "Create RBAC",
@@ -1013,7 +1013,7 @@
                 },
                 "repositoriesKinds": {
                     "title": "Repositories kinds to process ([] = all)",
-                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task, keda-scaler, coredns, keptn, tekton-pipeline, container, kubewarden",
+                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task, keda-scaler, coredns, keptn, tekton-pipeline, container, kubewarden, gatekeeper",
                     "type": "array",
                     "items": {
                         "type": "string"

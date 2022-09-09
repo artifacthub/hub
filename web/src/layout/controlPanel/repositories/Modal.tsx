@@ -377,6 +377,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Gatekeeper:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/gatekeeper-policies"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Gatekeeper policies
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -398,6 +409,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.Keptn:
               case RepositoryKind.TektonPipeline:
               case RepositoryKind.Kubewarden:
+              case RepositoryKind.Gatekeeper:
                 return (
                   <>
                     <p
@@ -783,6 +795,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Keptn,
               RepositoryKind.TektonPipeline,
               RepositoryKind.Kubewarden,
+              RepositoryKind.Gatekeeper,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -877,6 +890,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TektonPipeline,
               RepositoryKind.Container,
               RepositoryKind.Kubewarden,
+              RepositoryKind.Gatekeeper,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

@@ -50,9 +50,17 @@
   font-size: 80%;
 }
 
+.btnInText {
+  top: -2px;
+}
+
 .selectWrapper {
   width: 30%;
   min-width: 180px;
+}
+
+.gatekeeperInstallContent {
+  height: 335px;
 }
 
 @media only screen and (max-width: 767.98px) {

@@ -100,7 +100,8 @@ begin
         'production_organizations_count', (
             select count(*) from production_usage
             where package_id = v_package_id
-        )
+        ),
+        'relative_path', s.relative_path
     ))
     from package p
     join snapshot s using (package_id)

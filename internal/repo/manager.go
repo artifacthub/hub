@@ -81,6 +81,7 @@ var (
 		hub.Container,
 		hub.CoreDNS,
 		hub.Falco,
+		hub.Gatekeeper,
 		hub.Helm,
 		hub.HelmPlugin,
 		hub.KedaScaler,
@@ -273,6 +274,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	case
 		hub.CoreDNS,
 		hub.Falco,
+		hub.Gatekeeper,
 		hub.HelmPlugin,
 		hub.KedaScaler,
 		hub.Keptn,
@@ -444,6 +446,7 @@ func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string 
 	case
 		hub.CoreDNS,
 		hub.Falco,
+		hub.Gatekeeper,
 		hub.HelmPlugin,
 		hub.KedaScaler,
 		hub.Keptn,
@@ -788,6 +791,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 	case
 		hub.CoreDNS,
 		hub.Falco,
+		hub.Gatekeeper,
 		hub.HelmPlugin,
 		hub.KedaScaler,
 		hub.Keptn,

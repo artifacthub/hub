@@ -203,9 +203,9 @@ const HomeView = (props: Props) => {
               <div className="text-center px-3 px-xs-0">
                 Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
                 configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
-                configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions, kubectl plugins,
-                Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images and
-                Kubewarden policies.
+                configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions,
+                kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations,
+                container images, and Kubewarden policies.
                 <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                   <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
@@ -231,7 +231,7 @@ const HomeView = (props: Props) => {
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
                       <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
                       <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>OPA policies</small>
+                        <small>OPA and Gatekeeper policies</small>
                       </div>
                     </div>
                   </ExternalLink>
@@ -334,6 +334,18 @@ const HomeView = (props: Props) => {
                       </div>
                     </div>
                   </ExternalLink>
+                  {/* <ExternalLink
+                    href="https://open-policy-agent.github.io/gatekeeper/website/docs/howto/"
+                    className={`col ${styles.iconLink}`}
+                    label="Open Gatekeeper site"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.Gatekeeper} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                        <small>Gatekeeper policies</small>
+                      </div>
+                    </div>
+                  </ExternalLink> */}
                 </div>
                 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to
                 share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a

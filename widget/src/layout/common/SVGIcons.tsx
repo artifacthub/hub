@@ -194,6 +194,7 @@ const SVGIcons = (props: Props) => (
           );
 
         case 'opa':
+        case 'gatekeeper':
           return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="16.37 -1.63 395.51 435.76">
               <title>{props.name}</title>
