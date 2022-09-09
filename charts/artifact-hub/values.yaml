@@ -125,6 +125,9 @@ hub:
         image:
           repository: bitnami/kubectl
           # tag: 1.21
+        resources: {}
+      checkDbIsReady:
+        resources: {}
     # Optionally specify extra list of additional volumes for the hub deployment
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the hub deployment

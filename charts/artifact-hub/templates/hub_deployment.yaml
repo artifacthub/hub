@@ -38,6 +38,8 @@ spec:
         - name: check-db-migrator-run
           image: "{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.repository }}:{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.tag | default (include "chart.KubernetesVersion" . ) }}"
           imagePullPolicy: IfNotPresent
+          resources:
+            {{- toYaml .Values.hub.deploy.checkDbMigrator.resources | nindent 12 }}
           command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/{{ include "chart.resourceNamePrefix" . }}db-migrator-install', '--timeout=60s']
         {{- end }}
       containers:
