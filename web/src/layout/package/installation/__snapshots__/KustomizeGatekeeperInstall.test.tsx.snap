@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KustomizeGatekeeperInstall creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-3 gatekeeperInstallContent"
+  >
+    <p
+      class="text-muted"
+    >
+      First, create a 
+      <code
+        class="border inlineCode"
+      >
+        kustomization.yaml
+      </code>
+       file:
+    </p>
+    <div
+      class="d-flex align-items-start"
+    >
+      <div
+        class="flex-grow-1 me-3 blockWrapper"
+      >
+        <pre
+          style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+        >
+          <code
+            class="language-yaml"
+            style="white-space: pre;"
+          >
+            <span
+              class="hljs-attr"
+            >
+              apiVersion:
+            </span>
+            <span>
+               
+            </span>
+            <span
+              style="color: rgb(33, 145, 97);"
+            >
+              kustomize.config.k8s.io/v1beta1
+            </span>
+            <span>
+              
+
+            </span>
+            <span />
+            <span
+              class="hljs-attr"
+            >
+              kind:
+            </span>
+            <span>
+               
+            </span>
+            <span
+              style="color: rgb(33, 145, 97);"
+            >
+              Kustomization
+            </span>
+            <span>
+              
+
+            </span>
+            <span />
+            <span
+              class="hljs-attr"
+            >
+              resources:
+            </span>
+            <span>
+              
+
+            </span>
+            <span>
+                
+            </span>
+            <span
+              style="color: rgb(153, 0, 115);"
+            >
+              -
+            </span>
+            <span>
+               
+            </span>
+            <span
+              style="color: rgb(33, 145, 97);"
+            >
+              github.com/tegioz/gatekeeper-library/library/general/storageclass
+            </span>
+            <span>
+              
+
+            </span>
+            <span>
+                
+            </span>
+            <span
+              style="color: rgb(153, 0, 115);"
+            >
+              -
+            </span>
+            <span>
+               
+            </span>
+            <span
+              style="color: rgb(33, 145, 97);"
+            >
+              constraints.yaml
+            </span>
+          </code>
+        </pre>
+      </div>
+      <div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy command to clipboard"
+            class="btn btn-sm btn-primary rounded-circle copyBtn"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p
+      class="text-muted"
+    >
+      Then define your constraints in a file called 
+      <code
+        class="border inlineCode"
+      >
+        constraints.yaml
+      </code>
+       in the same directory. Example constraints can be found in the "samples" folders.
+    </p>
+    <p
+      class="text-muted"
+    >
+      You can install everything with 
+      <code
+        class="border inlineCode"
+      >
+        kustomize build . | kubectl apply -f -
+      </code>
+    </p>
+    <p
+      class="text-muted"
+    >
+      More information can be found in the 
+      <a
+        aria-label="Kustomization documentation"
+        class="link btn btn-link p-0 fw-bold position-relative btnInText"
+        href="https://kubectl.docs.kubernetes.io/installation/kustomize/"
+        rel="noopener noreferrer"
+        role="button"
+        tabindex="-1"
+        target="_blank"
+      >
+        kustomization documentation
+      </a>
+      .
+    </p>
+  </div>
+</DocumentFragment>
+`;
