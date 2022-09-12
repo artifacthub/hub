@@ -271,27 +271,29 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         }
         break;
       case RepositoryKind.Gatekeeper:
-        output.methods.push(
-          {
-            label: 'kustomize',
-            title: 'Kustomize',
-            kind: InstallMethodKind.KustomizeGatekeeperInstall,
-            props: {
-              repository: pkg.repository,
-              relativePath: pkg.relativePath!,
+        if (isUndefined(pkg.install)) {
+          output.methods.push(
+            {
+              label: 'kustomize',
+              title: 'Kustomize',
+              kind: InstallMethodKind.KustomizeGatekeeperInstall,
+              props: {
+                repository: pkg.repository,
+                relativePath: pkg.relativePath!,
+              },
             },
-          },
-          {
-            label: 'kubectl',
-            title: 'Kubectl',
-            kind: InstallMethodKind.KubectlGatekeeperInstall,
-            props: {
-              repository: pkg.repository,
-              samples: pkg.data!.samples,
-              relativePath: pkg.relativePath!,
-            },
-          }
-        );
+            {
+              label: 'kubectl',
+              title: 'Kubectl',
+              kind: InstallMethodKind.KubectlGatekeeperInstall,
+              props: {
+                repository: pkg.repository,
+                samples: pkg.data!.samples,
+                relativePath: pkg.relativePath!,
+              },
+            }
+          );
+        }
         break;
     }
   }
