@@ -1518,10 +1518,10 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
-"@jest/types@^29.0.2":
-  version "29.0.2"
-  resolved "https://registry.yarnpkg.com/@jest/types/-/types-29.0.2.tgz#5a5391fa7f7f41bf4b201d6d2da30e874f95b6c1"
-  integrity sha512-5WNMesBLmlkt1+fVkoCjHa0X3i3q8zc4QLTDkdHgCa2gyPZc7rdlZBWgVLqwS1860ZW5xJuCDwAzqbGaXIr/ew==
+"@jest/types@^29.0.2", "@jest/types@^29.0.3":
+  version "29.0.3"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-29.0.3.tgz#0be78fdddb1a35aeb2041074e55b860561c8ef63"
+  integrity sha512-coBJmOQvurXjN1Hh5PzF7cmsod0zLIOXpP8KD161mqNlroMhLcwpODiEzi7ZsRl5Z/AIuxpeNm8DCl43F4kz8A==
   dependencies:
     "@jest/schemas" "^29.0.0"
     "@types/istanbul-lib-coverage" "^2.0.0"
@@ -5752,12 +5752,12 @@ jest-mock@^27.5.1:
     "@jest/types" "^27.5.1"
     "@types/node" "*"
 
-jest-mock@^29.0.2:
-  version "29.0.2"
-  resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-29.0.2.tgz#d7810966a6338aca6a440c3cd9f19276477840ad"
-  integrity sha512-giWXOIT23UCxHCN2VUfUJ0Q7SmiqQwfSFXlCaIhW5anITpNQ+3vuLPQdKt5wkuwM37GrbFyHIClce8AAK9ft9g==
+jest-mock@^29.0.3:
+  version "29.0.3"
+  resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-29.0.3.tgz#4f0093f6a9cb2ffdb9c44a07a3912f0c098c8de9"
+  integrity sha512-ort9pYowltbcrCVR43wdlqfAiFJXBx8l4uJDsD8U72LgBcetvEp+Qxj1W9ZYgMRoeAo+ov5cnAGF2B6+Oth+ww==
   dependencies:
-    "@jest/types" "^29.0.2"
+    "@jest/types" "^29.0.3"
     "@types/node" "*"
 
 jest-pnp-resolver@^1.2.2:
