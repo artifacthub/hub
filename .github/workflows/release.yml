@@ -35,7 +35,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GHT_RELEASE }}
       - name: Set up Helm
-        uses: azure/setup-helm@v3.3
+        uses: azure/setup-helm@v3
       - name: Checkout Helm charts repo
         uses: actions/checkout@v3
         with:
